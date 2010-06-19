@@ -4,6 +4,7 @@ import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 
 /**
@@ -66,6 +67,12 @@ public class AscensiaBreeze2 extends AscensiaMeter //SerialProtocol
     	super(portName, writer);
     }
 
+    
+    public AscensiaBreeze2(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(comm_parameters, writer, da);
+    }
+    
 
 
     //************************************************

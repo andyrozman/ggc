@@ -4,6 +4,7 @@ import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -55,6 +56,12 @@ public class AccuChekCompact extends AccuChekSmartPixMeter
     public AccuChekCompact(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
+    }
+    
+    
+    public AccuChekCompact(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(comm_parameters, writer, da);
     }
     
     

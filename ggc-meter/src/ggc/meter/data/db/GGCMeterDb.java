@@ -82,6 +82,7 @@ public class GGCMeterDb extends PluginDb
             Criteria criteria = this.getSession().createCriteria(DayValueH.class);
             criteria.add(Expression.eq("person_id", (int)m_da.getCurrentUserId()));
             criteria.add(Expression.gt("bg", 0));
+            criteria.add(Expression.like("extended", "%URINE%"));
             //criteria.createCriteria("person_id", (int)m_da.getCurrentUserId());
             criteria.setProjection(Projections.rowCount());
             in = (Integer) criteria.list().get(0);
@@ -150,6 +151,7 @@ public class GGCMeterDb extends PluginDb
                 mdr.writeStatus(counter);
             }
 
+            mdr.writeStatus(-2);
         }
         catch (Exception ex)
         {

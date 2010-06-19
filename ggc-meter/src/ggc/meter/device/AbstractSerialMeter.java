@@ -6,7 +6,9 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPortEvent;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -69,14 +71,14 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     }
     
     
-
     /**
      * Constructor
      * @param da
      */
-    public AbstractSerialMeter(DataAccessMeter da)
+    //public FreestyleMeter(String portName, OutputWriter writer, DataAccessPlugInBase da)
+    public AbstractSerialMeter(String parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(da);
+        super(parameters, writer, da);
     }
 
 
@@ -209,25 +211,12 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     }
 
 
-    /**
-     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
-     *    special comment about device (for example pix device, doesn't display anything till the end, which
-     *    would be nice if user knew. 
-     */
-    public String getDeviceSpecialComment()
-    {
-        return "";
-    }
 
     // ************************************************
     // *** Device Implemented methods ***
     // ************************************************
 
 
-
-
-
-    
 
     
     protected void deviceDisconnected()

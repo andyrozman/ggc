@@ -12,6 +12,7 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
 
 import java.util.ArrayList;
@@ -91,15 +92,23 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     
     
+    
+    public OneTouchUltraSmart(String portName, OutputWriter writer)
+    {
+        this(portName, writer, DataAccessMeter.getInstance());
+    }
+
+    
+    
     /**
      * Constructor used by most classes
      * 
      * @param portName
      * @param writer
      */
-    public OneTouchUltraSmart(String portName, OutputWriter writer)
+    public OneTouchUltraSmart(String portName, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(DataAccessMeter.getInstance());
+        super(portName, writer, da);
         
         setCommunicationSettings( 
             38400,

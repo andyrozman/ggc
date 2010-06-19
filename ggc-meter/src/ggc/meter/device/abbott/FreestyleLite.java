@@ -4,6 +4,7 @@ import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -73,6 +74,11 @@ public class FreestyleLite extends FreestyleMeter
         super(portName, writer);
     }
     
+    
+    public FreestyleLite(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(comm_parameters, writer, da);
+    }
     
 
     /**

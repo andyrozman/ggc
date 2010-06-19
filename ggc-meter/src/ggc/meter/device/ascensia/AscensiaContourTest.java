@@ -13,6 +13,7 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
@@ -105,9 +106,13 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
      */
     public AscensiaContourTest(String portName, OutputWriter writer)
     {
-        
-        super(DataAccessMeter.getInstance()); 
+        this(portName, writer, DataAccessMeter.getInstance()); 
+    }
 
+
+
+    public AscensiaContourTest(String portName, OutputWriter writer, DataAccessPlugInBase da)
+    {
         // communcation settings for this meter(s)
         this.setCommunicationSettings( 
                   9600,
@@ -159,14 +164,12 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
         catch(Exception ex)
         {
             log.error("Exception on create:" + ex, ex);
-            //System.out.println("AscensiaMeter -> Exception on create: " + ex);
-            //ex.printStackTrace();
         }
         
     }
-
-
-
+    
+    
+    
 
     
     //************************************************

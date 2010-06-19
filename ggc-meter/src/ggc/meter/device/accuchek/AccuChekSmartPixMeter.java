@@ -12,6 +12,7 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         super(cmp, DataAccessMeter.getInstance());
         this.setMeterType(cmp.getName(), getName());
     }
-    
+
     
     /**
      * Constructor
@@ -85,7 +86,19 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
      */
     public AccuChekSmartPixMeter(String conn_parameter, OutputWriter writer)
     {
-        super(conn_parameter, writer, DataAccessMeter.getInstance()); 
+        this(conn_parameter, writer, DataAccessMeter.getInstance()); 
+    }
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param conn_parameter
+     * @param writer
+     */
+    public AccuChekSmartPixMeter(String conn_parameter, OutputWriter writer, DataAccessPlugInBase m_da)
+    {
+        super(conn_parameter, writer, m_da); 
     }
     
     

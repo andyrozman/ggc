@@ -3,6 +3,7 @@ package ggc.meter.device.onetouch;
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,6 +50,13 @@ public class OneTouchBasic extends OneTouchMeter
     }
 
 
+    public OneTouchBasic(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(comm_parameters, writer, da);
+    }
+    
+    
+    
     /**
      * Constructor
      */

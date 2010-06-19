@@ -13,6 +13,7 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
@@ -79,6 +80,12 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         super(cmp);
     }
     
+
+    
+    public OneTouchMeter2(String portName, OutputWriter writer)
+    {
+        this(portName, writer, DataAccessMeter.getInstance());
+    }
     
     
     /**
@@ -87,9 +94,9 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
      * @param portName
      * @param writer
      */
-    public OneTouchMeter2(String portName, OutputWriter writer)
+    public OneTouchMeter2(String portName, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(DataAccessMeter.getInstance());
+        super(portName, writer, da);
 
     	empty_tzi = new SimpleTimeZone(0,
 				"Europe/Empty",
@@ -154,7 +161,6 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
      */
     public OneTouchMeter2(boolean n)
     {
-    	
     }
     
 

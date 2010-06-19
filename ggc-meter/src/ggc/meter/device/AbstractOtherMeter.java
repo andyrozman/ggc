@@ -120,19 +120,6 @@ public abstract class AbstractOtherMeter extends AbstractMeter /**extends XmlPro
     
     
     /**
-     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
-     *    special comment about device (for example pix device, doesn't display anything till the end, which
-     *    would be nice if user knew. 
-     */
-    public String getDeviceSpecialComment()
-    {
-        return "";
-    }
-    
-    
-
-
-    /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
      * sort of specific device data - in most cases we call them generics, and they don't have ability
      * to read data)

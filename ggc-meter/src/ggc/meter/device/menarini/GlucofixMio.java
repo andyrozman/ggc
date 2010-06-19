@@ -13,6 +13,7 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
 
 import java.util.ArrayList;
@@ -73,6 +74,13 @@ public class GlucofixMio extends AbstractSerialMeter
     }
     
     
+
+    public GlucofixMio(String portName, OutputWriter writer)
+    {
+        this(portName, writer, DataAccessMeter.getInstance()); 
+    }
+    
+    
     
     /**
      * Constructor
@@ -80,10 +88,9 @@ public class GlucofixMio extends AbstractSerialMeter
      * @param portName
      * @param writer
      */
-    public GlucofixMio(String portName, OutputWriter writer)
+    public GlucofixMio(String portName, OutputWriter writer, DataAccessPlugInBase da)
     {
-        
-        super(DataAccessMeter.getInstance()); 
+        super(portName, writer, da);
 
         // communcation settings for this meter(s)
         this.setCommunicationSettings( 

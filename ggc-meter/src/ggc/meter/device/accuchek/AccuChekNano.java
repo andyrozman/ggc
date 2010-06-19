@@ -4,6 +4,7 @@ import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -57,6 +58,11 @@ public class AccuChekNano extends AccuChekSmartPixMeter
         super(drive_letter, writer);
     }
 
+    
+    public AccuChekNano(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(comm_parameters, writer, da);
+    }
     
     
     //************************************************
@@ -149,7 +155,7 @@ public class AccuChekNano extends AccuChekSmartPixMeter
      */
     public int getNrOfElementsFor1s()
     {
-        return 12;
+        return 20;
     }
 
     

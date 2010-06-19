@@ -14,6 +14,7 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
@@ -88,7 +89,8 @@ public class OptiumXceed extends AbstractSerialMeter
      */
     public OptiumXceed(String portName, OutputWriter writer)
     {
-        super(DataAccessMeter.getInstance());
+        this(portName, writer, DataAccessMeter.getInstance());
+        //super(DataAccessMeter.getInstance());
         
         this.setCommunicationSettings( 
                   9600,
@@ -134,6 +136,54 @@ public class OptiumXceed extends AbstractSerialMeter
     }
 
 
+    
+    public OptiumXceed(String portName, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(portName, writer, da);
+        
+        this.setCommunicationSettings( 
+                  9600,
+                  SerialPort.DATABITS_8, 
+                  SerialPort.STOPBITS_1, 
+                  SerialPort.PARITY_NONE,
+                  SerialPort.FLOWCONTROL_NONE, 
+                  SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT|SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+                
+        // output writer, this is how data is returned (for testing new devices, we can use Consol
+        this.output_writer = writer; 
+        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        
+        // set meter type (this will be deprecated in future, but it's needed for now
+        this.setMeterType("Abbott", this.getName());
+
+        // set device company (needed for now, will also be deprecated)
+        this.setDeviceCompany(new Abbott());
+        
+
+        // settting serial port in com library
+        try
+        {
+            this.setSerialPort(portName);
+    
+            if (!this.open())
+            {
+                this.m_status = 1;
+                this.deviceDisconnected();
+                return;
+            }
+
+            this.output_writer.writeHeader();
+            
+        }
+        catch(Exception ex)
+        {
+            log.error("OptiumXceed: Error connecting !\nException: " + ex, ex);
+            System.out.println("OptiumXceed: Error connecting !\nException: " + ex);
+        }
+        
+    }
+
+    
    // public static final byte ENQ = 0x05;
     
     
@@ -145,7 +195,7 @@ public class OptiumXceed extends AbstractSerialMeter
      */
     public void readDeviceDataFull()
     {
-        //System.out.println("readDeviceDataFull()");
+        System.out.println("readDeviceDataFull()");
         try
         {
             
@@ -422,6 +472,7 @@ public class OptiumXceed extends AbstractSerialMeter
         }
         catch(Exception ex)
         {
+            log.error("Error reading info. Ex: " + ex, ex);
             throw new PlugInBaseException(ex);
         }
     

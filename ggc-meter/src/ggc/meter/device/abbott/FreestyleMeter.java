@@ -14,6 +14,7 @@ import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
@@ -97,7 +98,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         super(cmp);
     }
     
-    
+
     
     /**
      * Constructor
@@ -107,7 +108,19 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
      */
     public FreestyleMeter(String portName, OutputWriter writer)
     {
-        super(DataAccessMeter.getInstance());
+       this(portName, writer, DataAccessMeter.getInstance()); 
+    }
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param portName
+     * @param writer
+     */
+    public FreestyleMeter(String portName, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(portName, writer, da);
         
         this.setCommunicationSettings( 
                   19200,

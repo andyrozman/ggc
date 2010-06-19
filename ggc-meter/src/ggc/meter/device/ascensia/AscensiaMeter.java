@@ -13,6 +13,7 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
@@ -109,23 +110,29 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
      */
     public AscensiaMeter(String portName, OutputWriter writer)
     {
-    	
-		super(DataAccessMeter.getInstance()); 
+        this(portName, writer, DataAccessMeter.getInstance());
+    }
 
-		// communcation settings for this meter(s)
-		this.setCommunicationSettings( 
-			      9600,
-			      SerialPort.DATABITS_8, 
-			      SerialPort.STOPBITS_1, 
-			      SerialPort.PARITY_NONE,
-			      SerialPort.FLOWCONTROL_NONE,
-			      SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT|SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
-				
-		// output writer, this is how data is returned (for testing new devices, we can use Consol
-		this.output_writer = writer; 
-		this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
 
-		// set meter type (this will be deprecated in future, but it's needed for now
+
+    public AscensiaMeter(String portName, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(portName, writer, da); 
+
+        // communcation settings for this meter(s)
+        this.setCommunicationSettings( 
+                  9600,
+                  SerialPort.DATABITS_8, 
+                  SerialPort.STOPBITS_1, 
+                  SerialPort.PARITY_NONE,
+                  SerialPort.FLOWCONTROL_NONE,
+                  SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT|SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+                
+        // output writer, this is how data is returned (for testing new devices, we can use Consol
+        this.output_writer = writer; 
+        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+
+        // set meter type (this will be deprecated in future, but it's needed for now
         this.setMeterType("Ascensia/Bayer", this.getName());
 
         // set device company (needed for now, will also be deprecated)
@@ -133,44 +140,42 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         
 
         // settting serial port in com library
-		try
-		{
-	        this.setSerialPort(portName);
-	
-		    if (!this.open())
-		    {
-		    	//this.m_status = 1;
-		        return;
-		    }
-		    
-	        this.output_writer.writeHeader();
+        try
+        {
+            this.setSerialPort(portName);
+    
+            if (!this.open())
+            {
+                //this.m_status = 1;
+                return;
+            }
+            
+            this.output_writer.writeHeader();
 
-	        //this.serialPort.notifyOnOutputEmpty(true);  // notify on empty for stopping
-	        //this.serialPort.notifyOnBreakInterrupt(true); // notify on break interrupt for stopping
-	        
+            //this.serialPort.notifyOnOutputEmpty(true);  // notify on empty for stopping
+            //this.serialPort.notifyOnBreakInterrupt(true); // notify on break interrupt for stopping
+            
             // setting specific for this driver 
-	        this.end_strings = new String[2];
-	        end_strings[0] = (new Character((char)3)).toString(); // ETX - End of Text
-	        end_strings[1] = (new Character((char)4)).toString(); // EOT - End of Transmission
-	        //end_strings[2] = (new Character((char)23)).toString(); // ETB - End of Text
-	        
-	        this.text_def = new String[3];
-	        this.text_def[0] = (new Character((char)2)).toString(); // STX - Start of Text
-	        this.text_def[1] = (new Character((char)3)).toString(); // ETX - Start of Text
-	        this.text_def[2] = (new Character((char)13)).toString(); // EOL - Start of Text
-	        
-		}
-		catch(Exception ex)
-		{
-		    log.error("Exception on create:" + ex, ex);
-		    //System.out.println("AscensiaMeter -> Exception on create: " + ex);
-		    //ex.printStackTrace();
-		}
-		
+            this.end_strings = new String[2];
+            end_strings[0] = (new Character((char)3)).toString(); // ETX - End of Text
+            end_strings[1] = (new Character((char)4)).toString(); // EOT - End of Transmission
+            //end_strings[2] = (new Character((char)23)).toString(); // ETB - End of Text
+            
+            this.text_def = new String[3];
+            this.text_def[0] = (new Character((char)2)).toString(); // STX - Start of Text
+            this.text_def[1] = (new Character((char)3)).toString(); // ETX - Start of Text
+            this.text_def[2] = (new Character((char)13)).toString(); // EOL - Start of Text
+            
+        }
+        catch(Exception ex)
+        {
+            log.error("Exception on create:" + ex, ex);
+            //System.out.println("AscensiaMeter -> Exception on create: " + ex);
+            //ex.printStackTrace();
+        }
+        
     }
-
-
-
+    
 
     
     //************************************************

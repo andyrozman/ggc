@@ -104,6 +104,10 @@ public class MeterDataReader extends OldDataReaderAbstract
             log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: 40% read from database");
             log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: Started to sort through data (progress will not be displayed)");
         }
+        else if (current_entry==-2)
+        {
+            this.m_drr.setOldDataReadingProgress(100);
+        }
         else
         {
             int proc = this.getElementProcent(current_entry);

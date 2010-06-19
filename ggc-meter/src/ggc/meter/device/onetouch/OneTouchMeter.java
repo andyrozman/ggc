@@ -12,6 +12,7 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
@@ -90,6 +91,12 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         super(cmp);
     }
     
+
+    public OneTouchMeter(String portName, OutputWriter writer)
+    {
+        this(portName, writer, DataAccessMeter.getInstance());
+    }
+    
     
     
     /**
@@ -98,9 +105,9 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      * @param portName
      * @param writer
      */
-    public OneTouchMeter(String portName, OutputWriter writer)
+    public OneTouchMeter(String portName, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(DataAccessMeter.getInstance());
+        super(portName, writer, da);
         
         this.setCommunicationSettings( 
                   9600,

@@ -4,6 +4,7 @@ import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPortEventListener;
 
 
@@ -68,6 +69,12 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     	super(portName, writer);
     }
 
+    
+    public AscensiaContour(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(comm_parameters, writer, da);
+    }
+    
     
     //************************************************
     //***      Meter Identification Methods        ***
