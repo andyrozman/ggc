@@ -136,10 +136,16 @@ public class OptiumXceed extends AbstractSerialMeter
     }
 
 
-    
-    public OptiumXceed(String portName, OutputWriter writer, DataAccessPlugInBase da)
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters 
+     * @param writer
+     * @param da
+     */
+    public OptiumXceed(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(portName, writer, da);
+        super(comm_parameters, writer, da);
         
         this.setCommunicationSettings( 
                   9600,
@@ -163,7 +169,7 @@ public class OptiumXceed extends AbstractSerialMeter
         // settting serial port in com library
         try
         {
-            this.setSerialPort(portName);
+            this.setSerialPort(comm_parameters);
     
             if (!this.open())
             {

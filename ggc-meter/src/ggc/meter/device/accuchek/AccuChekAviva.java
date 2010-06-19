@@ -59,6 +59,13 @@ public class AccuChekAviva extends AccuChekSmartPixMeter
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters 
+     * @param writer
+     * @param da
+     */
     public AccuChekAviva(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(comm_parameters, writer, da);

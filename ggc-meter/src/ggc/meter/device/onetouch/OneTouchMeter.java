@@ -92,9 +92,16 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     }
     
 
-    public OneTouchMeter(String portName, OutputWriter writer)
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters
+     * @param writer
+     * @param da 
+     */
+    public OneTouchMeter(String comm_parameters, OutputWriter writer)
     {
-        this(portName, writer, DataAccessMeter.getInstance());
+        this(comm_parameters, writer, DataAccessMeter.getInstance());
     }
     
     
@@ -104,6 +111,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      * 
      * @param portName
      * @param writer
+     * @param da 
      */
     public OneTouchMeter(String portName, OutputWriter writer, DataAccessPlugInBase da)
     {

@@ -82,7 +82,7 @@ public abstract class AbstractOtherMeter extends AbstractMeter /**extends XmlPro
     {
         this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification();
+        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
         

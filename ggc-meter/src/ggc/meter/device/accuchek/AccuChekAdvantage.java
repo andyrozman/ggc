@@ -59,6 +59,13 @@ public class AccuChekAdvantage extends AccuChekSmartPixMeter
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters 
+     * @param writer
+     * @param da
+     */
     public AccuChekAdvantage(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(comm_parameters, writer, da);

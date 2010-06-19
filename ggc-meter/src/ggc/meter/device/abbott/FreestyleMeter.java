@@ -117,6 +117,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
      * 
      * @param portName
      * @param writer
+     * @param da 
      */
     public FreestyleMeter(String portName, OutputWriter writer, DataAccessPlugInBase da)
     {

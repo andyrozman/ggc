@@ -73,10 +73,18 @@ public class Freestyle extends FreestyleMeter
     {
         super(portName, writer);
     }
+
     
-    public Freestyle(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
+    /**
+     * Constructor
+     * 
+     * @param params
+     * @param writer
+     * @param da
+     */
+    public Freestyle(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(comm_parameters, writer, da);
+        super(params, writer, da);
     }
     
 

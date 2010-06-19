@@ -95,6 +95,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
      * 
      * @param conn_parameter
      * @param writer
+     * @param m_da 
      */
     public AccuChekSmartPixMeter(String conn_parameter, OutputWriter writer, DataAccessPlugInBase m_da)
     {
@@ -346,7 +347,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
     {
         //this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification();
+        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
         

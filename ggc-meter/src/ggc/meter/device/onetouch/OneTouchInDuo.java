@@ -47,8 +47,14 @@ public class OneTouchInDuo extends OneTouchMeter
         super(portName, writer);
     }
 
-
     
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters
+     * @param writer
+     * @param da 
+     */
     public OneTouchInDuo(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(comm_parameters, writer, da);

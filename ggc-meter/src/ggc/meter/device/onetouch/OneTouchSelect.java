@@ -51,6 +51,13 @@ public class OneTouchSelect extends OneTouchMeter2
     }
 
 
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters
+     * @param writer
+     * @param da 
+     */
     public OneTouchSelect(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(comm_parameters, writer, da);

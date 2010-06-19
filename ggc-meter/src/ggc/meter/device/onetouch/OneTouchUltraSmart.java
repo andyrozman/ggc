@@ -93,9 +93,16 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     
     
     
-    public OneTouchUltraSmart(String portName, OutputWriter writer)
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters
+     * @param writer
+     * @param da 
+     */
+    public OneTouchUltraSmart(String comm_parameters, OutputWriter writer)
     {
-        this(portName, writer, DataAccessMeter.getInstance());
+        this(comm_parameters, writer, DataAccessMeter.getInstance());
     }
 
     
@@ -103,12 +110,13 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     /**
      * Constructor used by most classes
      * 
-     * @param portName
+     * @param comm_parameters
      * @param writer
+     * @param da 
      */
-    public OneTouchUltraSmart(String portName, OutputWriter writer, DataAccessPlugInBase da)
+    public OneTouchUltraSmart(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(portName, writer, da);
+        super(comm_parameters, writer, da);
         
         setCommunicationSettings( 
             38400,
@@ -131,7 +139,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         // settting serial port in com library
         try
         {
-            this.setSerialPort(portName);
+            this.setSerialPort(comm_parameters);
     
             if (!this.open())
             {

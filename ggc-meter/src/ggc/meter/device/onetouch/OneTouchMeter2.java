@@ -82,21 +82,29 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     
 
     
-    public OneTouchMeter2(String portName, OutputWriter writer)
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters
+     * @param writer
+     * @param da 
+     */
+    public OneTouchMeter2(String comm_parameters, OutputWriter writer)
     {
-        this(portName, writer, DataAccessMeter.getInstance());
+        this(comm_parameters, writer, DataAccessMeter.getInstance());
     }
     
     
     /**
      * Constructor
      * 
-     * @param portName
+     * @param comm_parameters
      * @param writer
+     * @param da 
      */
-    public OneTouchMeter2(String portName, OutputWriter writer, DataAccessPlugInBase da)
+    public OneTouchMeter2(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(portName, writer, da);
+        super(comm_parameters, writer, da);
 
     	empty_tzi = new SimpleTimeZone(0,
 				"Europe/Empty",
@@ -132,7 +140,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         // settting serial port in com library
         try
         {
-            this.setSerialPort(portName);
+            this.setSerialPort(comm_parameters);
     
             if (!this.open())
             {

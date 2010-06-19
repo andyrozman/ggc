@@ -73,9 +73,11 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     
     /**
      * Constructor
+     * 
+     * @param parameters 
+     * @param writer 
      * @param da
      */
-    //public FreestyleMeter(String portName, OutputWriter writer, DataAccessPlugInBase da)
     public AbstractSerialMeter(String parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(parameters, writer, da);
@@ -120,7 +122,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     {
 //        this.device_name = device;
         
-        DeviceIdentification di = new DeviceIdentification();
+        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
         

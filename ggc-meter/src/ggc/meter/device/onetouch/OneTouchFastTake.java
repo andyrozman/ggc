@@ -57,6 +57,7 @@ public class OneTouchFastTake extends OneTouchMeter
     {
         super();
     }
+
     
     /**
      * Constructor for device manager
@@ -68,6 +69,14 @@ public class OneTouchFastTake extends OneTouchMeter
         super(cmp);
     }
 
+    
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters
+     * @param writer
+     * @param da 
+     */
     public OneTouchFastTake(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(comm_parameters, writer, da);

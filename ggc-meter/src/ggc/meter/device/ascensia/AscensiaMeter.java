@@ -115,9 +115,16 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
 
 
-    public AscensiaMeter(String portName, OutputWriter writer, DataAccessPlugInBase da)
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters 
+     * @param writer
+     * @param da
+     */
+    public AscensiaMeter(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(portName, writer, da); 
+        super(comm_parameters, writer, da); 
 
         // communcation settings for this meter(s)
         this.setCommunicationSettings( 
@@ -142,7 +149,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         // settting serial port in com library
         try
         {
-            this.setSerialPort(portName);
+            this.setSerialPort(comm_parameters);
     
             if (!this.open())
             {

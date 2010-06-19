@@ -110,7 +110,13 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     }
 
 
-
+    /**
+     * Constructor
+     * 
+     * @param portName 
+     * @param writer
+     * @param da
+     */
     public AscensiaContourTest(String portName, OutputWriter writer, DataAccessPlugInBase da)
     {
         // communcation settings for this meter(s)

@@ -75,6 +75,13 @@ public class FreestyleFlash extends FreestyleMeter
     }
     
     
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters 
+     * @param writer
+     * @param da
+     */
     public FreestyleFlash(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(comm_parameters, writer, da);
