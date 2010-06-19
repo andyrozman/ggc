@@ -7,6 +7,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.device.AbstractPump;
 
 /**
@@ -61,6 +62,12 @@ public abstract class DanaPump extends AbstractPump
     public DanaPump(String params, OutputWriter writer)
     {
         super(); //params, writer);
+    }
+    
+    
+    public DanaPump(String params, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(params, writer, da);
     }
     
     
@@ -277,17 +284,6 @@ public abstract class DanaPump extends AbstractPump
         return 0;
     }
 
-
-    /**
-     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
-     *    special comment about device (for example pix device, doesn't display anything till the end, which
-     *    would be nice if user knew. 
-     * @return 
-     */
-    public String getDeviceSpecialComment()
-    {
-        return null;
-    }
 
 
     /**

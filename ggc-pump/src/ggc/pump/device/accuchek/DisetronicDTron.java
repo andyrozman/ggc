@@ -4,6 +4,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -46,6 +47,12 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     public DisetronicDTron(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
+    }
+    
+    
+    public DisetronicDTron(String params, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(params, writer, da);
     }
     
     

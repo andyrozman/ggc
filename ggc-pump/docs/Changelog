@@ -2,6 +2,11 @@
 Changes file for GGC Pump Tool
 ==============================
 
+1.2.1 [18.6.2010]
+    * PLUGIN_BASE: Required 0.5
+    * Changed main Constructor for device classes
+    
+
 1.2.0 [4.6.2010]
     * Finalizing work on Spirit pump download
     * Added support for reading files 

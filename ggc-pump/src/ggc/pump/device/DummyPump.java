@@ -350,8 +350,7 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
      */
     public String getDeviceSpecialComment()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "DEVICE_DUMMY_SPECIAL_COMMENT";
     }
 
     /** 

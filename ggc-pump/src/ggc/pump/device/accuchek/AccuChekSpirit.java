@@ -4,6 +4,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -46,6 +47,12 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
     public AccuChekSpirit(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
+    }
+    
+    
+    public AccuChekSpirit(String params, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(params, writer, da);
     }
     
     

@@ -121,15 +121,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     
     
     
-    /**
-     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
-     *    special comment about device (for example pix device, doesn't display anything till the end, which
-     *    would be nice if user knew. 
-     */
-    public String getDeviceSpecialComment()
-    {
-        return "";
-    }
     
     
     

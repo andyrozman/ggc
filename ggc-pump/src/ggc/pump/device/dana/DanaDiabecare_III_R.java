@@ -9,6 +9,7 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpTempValues;
 import ggc.pump.data.PumpValuesEntryConfig;
 import ggc.pump.data.PumpValuesEntryProfile;
@@ -240,11 +241,19 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
      * @param portName the port name
      * @param writer 
      */
-    public DanaDiabecare_III_R(String portName, OutputWriter writer)
+    public DanaDiabecare_III_R(String params, OutputWriter writer)
     {
+        this(params, writer, DataAccessPump.getInstance());
+        //super(); //DataAccessPump.getInstance()); 
+    }
+    
+    
+    
+    public DanaDiabecare_III_R(String params, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(params, writer, da);
         
-        super(); //DataAccessPump.getInstance()); 
-
+        
         // communcation settings for this meter(s)
         this.setCommunicationSettings( 
                   19200,
@@ -274,7 +283,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         // settting serial port in com library
         try
         {
-            this.setSerialPort(portName);
+            this.setSerialPort(params);
     
             if (!open())
             {
@@ -287,7 +296,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
         catch(javax.comm.NoSuchPortException ex)
         {
-            log.error("Port [" + portName + "] not found");
+            log.error("Port [" + params + "] not found");
             setDeviceStopped();
         }
         catch(Exception ex)
@@ -295,6 +304,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             log.error("Exception on create:" + ex, ex);
             this.setDeviceStopped();
         }
+        
     }
     
     
@@ -919,16 +929,6 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         alarm_map.put("26410", PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW);
     }
 
-
-    /**
-     * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
-     *    special comment about device (for example pix device, doesn't display anything till the end, which
-     *    would be nice if user knew. 
-     */
-    public String getDeviceSpecialComment()
-    {
-        return "";
-    }
 
 
     /**

@@ -5,6 +5,7 @@ import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.util.DataAccessPump;
 
 /**
@@ -73,6 +74,12 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         super(DataAccessPump.getInstance(), ow);
         this.parameter = param;
+    }
+    
+    
+    public AbstractPump(String params, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(params, writer, da);
     }
     
     

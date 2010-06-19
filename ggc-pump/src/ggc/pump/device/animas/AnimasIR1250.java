@@ -4,6 +4,7 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -57,6 +58,13 @@ public class AnimasIR1250 extends AnimasPump
     {
         super(params, writer);
     }
+    
+    
+    public AnimasIR1250(String params, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(params, writer, da);
+    }
+
     
     /**
      * Constructor

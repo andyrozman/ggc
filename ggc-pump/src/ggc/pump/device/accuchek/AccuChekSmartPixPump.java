@@ -7,6 +7,7 @@ import ggc.plugin.device.impl.accuchek.AccuChekSmartPix;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryProfile;
 import ggc.pump.data.defs.PumpAlarms;
@@ -93,15 +94,22 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     }
     
     
+    
+    public AccuChekSmartPixPump(String conn_parameter, OutputWriter writer)
+    {
+        this(conn_parameter, writer, DataAccessPump.getInstance());
+    }
+    
+    
     /**
      * Constructor
      * 
      * @param conn_parameter
      * @param writer
      */
-    public AccuChekSmartPixPump(String conn_parameter, OutputWriter writer)
+    public AccuChekSmartPixPump(String conn_parameter, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(conn_parameter, writer, DataAccessPump.getInstance()); 
+        super(conn_parameter, writer, da); 
         loadPumpSpecificValues();
         this.setDeviceType("Accu-Chek/Roche", getName(), DeviceAbstract.DEVICE_TYPE_PUMP);
     }

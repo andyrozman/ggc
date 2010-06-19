@@ -3,7 +3,9 @@ package ggc.pump.device;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.BlueToothProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.util.DataAccessPump;
 
 import javax.comm.SerialPortEvent;
@@ -59,6 +61,10 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     }
 
     
+    public AbstractBlueToothPump(String params, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(params, writer, da);
+    }
     
     
     /**
