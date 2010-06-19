@@ -142,7 +142,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     
     private void saveData()
     {
-        this.saveItemData(false);
+        this.saveItemData();
         
         DeviceConfiguration dc = m_da.getDeviceConfiguration();
         dc.setNewConfigData(data);
@@ -690,7 +690,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     /**
      * Save Item Data
      */
-    public void saveItemData(boolean is_new)
+    public void saveItemData()
     {
         DeviceConfigEntry dce = new DeviceConfigEntry(m_ic);
         
@@ -782,7 +782,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             return;
         
         act = true;
-        saveItemData(false);
+        saveItemData();
         String en = (String)this.cb_entry.getSelectedItem();
 
         if (en.startsWith(m_ic.getMessage("NEW__")))

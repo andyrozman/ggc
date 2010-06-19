@@ -109,6 +109,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public int m_BG_unit = BG_MMOL;
 
     
+    /**
+     * Special Configs Collection
+     */
     public static Hashtable<String, DeviceSpecialConfigPanelAbstract> special_configs = new Hashtable<String, DeviceSpecialConfigPanelAbstract>(); 
     
     /**

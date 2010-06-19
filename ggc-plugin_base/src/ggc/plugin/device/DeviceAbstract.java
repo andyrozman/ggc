@@ -126,6 +126,13 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     }
 
     
+    /**
+     * Constructor
+     * 
+     * @param parameters
+     * @param writer
+     * @param da
+     */
     public DeviceAbstract(String parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
         this.m_da = da;
@@ -559,7 +566,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public void setDeviceType(String group, String device, int type)
     {
-        DeviceIdentification di = new DeviceIdentification();
+        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
         

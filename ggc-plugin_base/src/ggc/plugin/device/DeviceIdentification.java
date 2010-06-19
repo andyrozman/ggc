@@ -1,7 +1,5 @@
 package ggc.plugin.device;
 
-import ggc.core.util.DataAccess;
-
 import com.atech.i18n.I18nControlAbstract;
 
 /**
@@ -33,6 +31,10 @@ import com.atech.i18n.I18nControlAbstract;
 
 public class DeviceIdentification
 {
+    
+    private I18nControlAbstract m_ic = null;
+    
+    
     /**
      * Company
      */
@@ -97,21 +99,21 @@ public class DeviceIdentification
      * 
      * @param ic
      */
-/*    public DeviceIdentification(I18nControlAbstract ic)
+    public DeviceIdentification(I18nControlAbstract ic)
     {
         this.m_ic = ic;
     }
-  */  
+    
 
     /**
      * Constructor 
      * 
      * @param ic
      */
-    public DeviceIdentification()
+/*    public DeviceIdentification()
     {
     }
-    
+  */  
     
     /**
      * Get Information
@@ -122,7 +124,7 @@ public class DeviceIdentification
     public String getInformation(String prefix)
     {
         StringBuffer sb = new StringBuffer();
-        I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
+        //I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
         
         sb.append(prefix);
         sb.append(" " + m_ic.getMessage("DEVICE_NAME_BIG") + " Company: " + this.company);
@@ -159,7 +161,7 @@ public class DeviceIdentification
         }
         
         StringBuffer sb = new StringBuffer();
-        I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
+        //I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
         
         sb.append(this.company);
         sb.append(" - " + this.device_selected);
@@ -187,7 +189,7 @@ public class DeviceIdentification
     private String getShortInformationFile()
     {
         StringBuffer sb = new StringBuffer();
-        I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
+        //I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
         
         sb.append(this.company);
         sb.append(" - " + this.device_selected);

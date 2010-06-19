@@ -157,9 +157,16 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     }
 
     
-    public SerialProtocol(String parameters, OutputWriter writer, DataAccessPlugInBase da)
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters
+     * @param writer
+     * @param da 
+     */
+    public SerialProtocol(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(parameters, writer, da);
+        super(comm_parameters, writer, da);
     }
 
     

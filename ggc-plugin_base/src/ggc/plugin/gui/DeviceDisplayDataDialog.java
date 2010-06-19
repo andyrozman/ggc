@@ -557,7 +557,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     public DeviceIdentification getDeviceIdentification()
     {
         if (device_ident==null)
-            device_ident = new DeviceIdentification();
+            device_ident = new DeviceIdentification(m_da.getI18nControlInstance());
         return device_ident;
     }
 

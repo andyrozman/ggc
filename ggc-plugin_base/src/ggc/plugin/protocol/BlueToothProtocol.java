@@ -170,10 +170,17 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
         super(adc, da);
     }
     
-    
-    public BlueToothProtocol(String parameters, OutputWriter writer, DataAccessPlugInBase da)
+        
+    /**
+     * Constructor
+     * 
+     * @param comm_parameters
+     * @param writer
+     * @param da 
+     */
+    public BlueToothProtocol(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
-        super(parameters, writer, da);
+        super(comm_parameters, writer, da);
     }
     
     
