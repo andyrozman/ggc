@@ -126,6 +126,20 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     }
 
     
+    public DeviceAbstract(String parameters, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        this.m_da = da;
+        this.ic = da.getI18nControlInstance();
+        this.output_writer = writer;
+        loadFileContexts();
+        this.initSpecialConfig();
+        this.setConnectionParameters(parameters);
+    }
+
+    
+    
+    
+    
     // Device Interface
     
     /** 
@@ -722,6 +736,13 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return true;
     }
+    
+    
+    public String getDeviceSpecialComment()
+    {
+        return "";
+    }
+    
     
     
 }

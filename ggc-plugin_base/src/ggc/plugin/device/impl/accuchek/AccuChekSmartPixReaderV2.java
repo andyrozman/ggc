@@ -49,14 +49,15 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
     public AccuChekSmartPixReaderV2(DataAccessPlugInBase da, OutputWriter ow, AccuChekSmartPix par)
     {
         super(da, ow, par);
-        System.out.println("Constructor [Smart Pix Reader v3] !");
+        this.drive_path = par.getRootDrive();
+        //System.out.println("Constructor [Smart Pix Reader v2] !");
     }
     
     
     public void readDevice()
     {
         
-        System.out.println("Read Device [Smart Pix Reader v2] !");
+//        System.out.println("Read Device [Smart Pix Reader v2] !");
         
         // start working
         String drv = this.parent.getConnectionPort();
@@ -64,7 +65,7 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
         
         cmd = m_da.pathResolver(cmd);
 
-        System.out.println("Cmd: " + cmd);
+//        System.out.println("Cmd: " + cmd);
         
         
         this.setStatus(5, "PIX_ABORT_AUTOSCAN");
@@ -72,7 +73,7 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
         
         // abort auto scan
         File f = new File(cmd + "TRG09.PNG");
-        System.out.println("TRG09: " +  f.exists());
+//        System.out.println("TRG09: " +  f.exists());
         
 //        f.setLastModified(System.currentTimeMillis());
         writeToFile(f);
@@ -112,7 +113,7 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
             
             int st = readStatusFromConfig(drv);
             
-            System.out.println("Status: " + st);
+//            System.out.println("Status: " + st);
             
             if (st==1)
             {
@@ -234,7 +235,7 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
             //boolean error_found = false;
             //boolean image_found = false;
             
-            System.out.println("Scan path: " + m_da.pathResolver(drive + "\\REPORT\\SCAN.HTM"));
+//            System.out.println("Scan path: " + m_da.pathResolver(drive + "\\REPORT\\SCAN.HTM"));
             
             BufferedReader br = new BufferedReader(new FileReader(new File(m_da.pathResolver(drive + "\\REPORT\\SCAN.HTM"))));
             
@@ -253,7 +254,7 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
                 }
                 else if (line.contains("img/"))
                 {
-                    System.out.println("Image: " + line);
+//                    System.out.println("Image: " + line);
                     if (line.contains("Scanning.gif"))
                     {
                         this.parent.writeStatus("PIX_SCANNING");
@@ -284,7 +285,7 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
                 }
                 else if (line.contains("ReportPresent "))
                 {
-                    System.out.println("L: " + line);
+//                    System.out.println("L: " + line);
                     
                     if (line.contains("parent.BgReportPresent = "))
                     {

@@ -74,6 +74,8 @@ public class AccuChekSmartPixSpecialConfig extends DeviceSpecialConfigPanelAbstr
 
     public void initPanel()
     {
+        System.out.println("Init panel");
+        
         this.config_panel = new JPanel();
         this.config_panel.setLayout(null);
         
@@ -127,6 +129,12 @@ public class AccuChekSmartPixSpecialConfig extends DeviceSpecialConfigPanelAbstr
     public void loadParametersToGUI()
     {
         String p1 = this.parameters.get("SMARTPIX_VERSION");
+        
+        if (this.cb_versions==null)
+        {
+            this.initPanel();
+        }
+        
         
         if (p1.equals("2.x"))
             this.cb_versions.setSelectedIndex(0);

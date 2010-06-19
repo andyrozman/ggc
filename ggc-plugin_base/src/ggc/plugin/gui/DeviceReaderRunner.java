@@ -152,8 +152,8 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                 
                 Class<?> c = Class.forName(className);
                 
-                Constructor<?> cnst = c.getDeclaredConstructor(String.class, OutputWriter.class);
-                this.m_mi = (DeviceInterface)cnst.newInstance(this.configured_device.communication_port, this);
+                Constructor<?> cnst = c.getDeclaredConstructor(String.class, OutputWriter.class, DataAccessPlugInBase.class);
+                this.m_mi = (DeviceInterface)cnst.newInstance(this.configured_device.communication_port_raw, this, m_da);
                 this.setDeviceComment(this.m_mi.getDeviceSpecialComment());
                 this.setStatus(AbstractOutputWriter.STATUS_DOWNLOADING);
                 
@@ -190,7 +190,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                     log.debug(lg);
                     writeLog(LogEntryType.DEBUG, lg);
                     
-//                    System.out.println("Transfer type: " + this.m_ddh.getTransferType()); 
+                    System.out.println("Transfer type: " + this.m_ddh.getTransferType()); 
                     
                     if (this.m_ddh.getTransferType()==DeviceDataHandler.TRANSFER_READ_DATA)
                     {

@@ -77,15 +77,13 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
         this.m_ic = da.getI18nControlInstance();
         this.dev_interface = di;
         this.parameters = new Hashtable<String,String>();
-        this.initParameters();
         this.initPanel();
+        this.initParameters();
     }
     
     
     
-    public void initPanel()
-    {
-    }
+    public abstract void initPanel();
 
 
     /**

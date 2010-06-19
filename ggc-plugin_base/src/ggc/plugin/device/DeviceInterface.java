@@ -92,7 +92,7 @@ public interface DeviceInterface extends SelectableInterface
     
     /**
      * getComment - Get Comment for device 
-     * Should be implemented by meter class.
+     * Should be implemented by device class.
      * 
      * @return comment or null
      */

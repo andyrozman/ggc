@@ -142,8 +142,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     
     private void saveData()
     {
-        // FIXME
-        this.saveItemData();
+        this.saveItemData(false);
         
         DeviceConfiguration dc = m_da.getDeviceConfiguration();
         dc.setNewConfigData(data);
@@ -174,12 +173,14 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     {
         this.current_device = null;
         
+        
+        
         showDevice();
 
         
         // FIXME
-//        this.comm_port_comp.setCommunicationPort(m_ic.getMessage("NOT_SET"));
-        //this.comm_settings.setParameters(null);
+        //this.comm_port_comp.setCommunicationPort(m_ic.getMessage("NOT_SET"));
+        this.comm_settings.setParameters(null);
 
         
         
@@ -364,23 +365,12 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     private void refreshCommunicationSettings()
     {
-
-//        this.comm_settings.setCurrentDevice(this.current_device);
-        
         int start_y = 275; 
         
-        
-        
-        //this.remove(this.comm_settings);
-        
-        
-        if ((this.current_device.hasDefaultParameter()) || (this.current_device.hasSpecialConfig()))
+        if ((this.current_device!=null) && ((this.current_device.hasDefaultParameter()) || (this.current_device.hasSpecialConfig())))
         {
-            //System.out.println("Parameters used !");
-            
-            start_y += comm_settings.getBounds().height;
-            //this.comm_settings.
-            //this.add(this.comm_settings);
+            this.comm_settings.setCurrentDevice(this.current_device);
+            start_y += comm_settings.getHeight(); //.getBounds().height;
             this.comm_settings.setVisible(true);
         }
         else
@@ -388,13 +378,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             //System.out.println("No pramaters used !");
             this.comm_settings.setVisible(false);
         }
-        //else
             
-        
-           
-        
-        
-        //comm_settings.getBounds().height; //.getHeight();
         
         if (this.dcd.doesDeviceSupportTimeFix())
         {
@@ -409,20 +393,6 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         setSize(450, start_y + 80);
         main_panel.setBounds(0, 0, 450, start_y + 80);
         
-        
-        /*
-        if (special_config==null)
-        {
-            //pan_comm_settings = ATSwingUtils.getPanel(440, 140, 410, 100,
-            //this.comm_port_comp
-        }
-        else
-        {
-            
-        }
-        */
-        //showDevice();
-        
     }
     
     
@@ -431,22 +401,42 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     {
         if (this.current_device==null)
         {
+            System.out.println("current device: " + this.current_device);
             this.lbl_company.setText(m_ic.getMessage("NO_COMPANY_SELECTED")); 
             this.lbl_device.setText(m_ic.getMessage("NO_DEVICE_SELECTED"));
             //this.comm_port_comp.setProtocol(0);
+            this.comm_settings.setProtocol(0);
+            this.comm_settings.setParameters(null);
+            
+            this.refreshCommunicationSettings();
         }
         else
         {
             this.lbl_company.setText(this.current_device.getColumnValue(1)); 
             this.lbl_device.setText(this.current_device.getColumnValue(2));
             //this.comm_port_comp.setProtocol(this.current_device.getConnectionProtocol());
+
+            System.out.println("current device: " + this.current_device);
+            
+            this.refreshCommunicationSettings();
+            
+            if (this.comm_settings!=null)
+            {
+                this.comm_settings.setCurrentDevice(this.current_device);
+                
+                if (this.current_entry!=null) 
+                    this.comm_settings.setParameters(this.current_entry.communication_port_raw);
+                else
+                    this.comm_settings.setParameters(null);
+                    
+        
+                //this.comm_settings.setParameters(this.current_device.)
+//x                this.refreshCommunicationSettings();
+            }
+            
+            
         }
         
-        this.comm_settings.setCurrentDevice(this.current_device);
-        this.comm_settings.setParameters(this.current_entry.communication_port_raw);
-
-        //this.comm_settings.setParameters(this.current_device.)
-        this.refreshCommunicationSettings();
         
     }
     
@@ -506,6 +496,9 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             if (dsd.wasAction())
             {
                 this.current_device = (DeviceInterface)dsd.getSelectedObject();
+                this.current_entry = new DeviceConfigEntry(m_ic);
+                this.refreshCommunicationSettings();
+                this.comm_settings.setParameters(null);
                 showDevice();
             }
             
@@ -664,7 +657,6 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         if (this.current_entry == null)
             return;
         
-        
         this.current_device = findDevice();
 //        this.current_entry = this.data.get(en);
 //        loadItemData();
@@ -672,12 +664,6 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         this.showDevice();
         
         this.tf_name.setText(this.current_entry.name);
-        
-        //if m_da.
-        
-        //this.comm_port_comp.setCommunicationPort(this.current_entry.communication_port);
-        
-        
         
         
         if (!dcd.doesDeviceSupportTimeFix())
@@ -704,14 +690,19 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     /**
      * Save Item Data
      */
-    public void saveItemData()
+    public void saveItemData(boolean is_new)
     {
         DeviceConfigEntry dce = new DeviceConfigEntry(m_ic);
         
         dce.name = this.tf_name.getText();
         dce.device_company = this.lbl_company.getText();
         dce.device_device = this.lbl_device.getText();
-        dce.communication_port_raw = this.comm_settings.getParameters(); //.comm_port_comp.getCommunicationPort();
+        
+//        if (is_new)
+//            dce.communication_port_raw = "";
+//        else
+            dce.communication_port_raw = this.comm_settings.getParameters(); //.comm_port_comp.getCommunicationPort();
+        
         dce.processCommunicationSettings();
         
         if (dcd.doesDeviceSupportTimeFix())
@@ -791,10 +782,9 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             return;
         
         act = true;
-        saveItemData();
-        
+        saveItemData(false);
         String en = (String)this.cb_entry.getSelectedItem();
-        
+
         if (en.startsWith(m_ic.getMessage("NEW__")))
         {
             String en_num = en.substring(en.indexOf("[")+1, en.indexOf("]"));
@@ -845,9 +835,6 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     {
         return this.m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Configuration";
     }
-    
-    
-    
     
     
 }

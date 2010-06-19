@@ -8,6 +8,7 @@ import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.manager.DeviceManager;
@@ -79,7 +80,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     /**
      * Plugin Version
      */
-    public String plugin_version = "0.4.5";
+    public String plugin_version = "0.4.6";
 
 
     /**
@@ -108,7 +109,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public int m_BG_unit = BG_MMOL;
 
     
-    
+    public static Hashtable<String, DeviceSpecialConfigPanelAbstract> special_configs = new Hashtable<String, DeviceSpecialConfigPanelAbstract>(); 
     
     /**
      * The hdb.

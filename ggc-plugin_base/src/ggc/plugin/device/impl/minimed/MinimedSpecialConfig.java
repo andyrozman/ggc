@@ -70,5 +70,12 @@ public class MinimedSpecialConfig extends DeviceSpecialConfigPanelAbstract
         
     }
 
+    @Override
+    public void initPanel()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
 
 }

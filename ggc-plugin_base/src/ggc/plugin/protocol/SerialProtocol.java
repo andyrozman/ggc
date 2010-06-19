@@ -2,6 +2,7 @@ package ggc.plugin.protocol;
 
 import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
@@ -25,7 +26,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
- *
+ * 
  *  See AUTHORS for copyright information.
  * 
  *  This program is free software; you can redistribute it and/or modify it under
@@ -156,6 +157,14 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     }
 
     
+    public SerialProtocol(String parameters, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        super(parameters, writer, da);
+    }
+
+    
+    
+        
     /**
      * Set Communication Settings
      * 

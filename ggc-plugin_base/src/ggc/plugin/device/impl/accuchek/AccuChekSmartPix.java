@@ -4,6 +4,7 @@ package ggc.plugin.device.impl.accuchek;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
@@ -89,13 +90,15 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         this.ic = m_da.getI18nControlInstance();
         
         
+        this.setConnectionParameters(params);
+        
         // FIXME
         
         //this.special_config.loadConnectionParameters(params);
         
         //this.special_config.loadConnectionParameters("/media/SMART_PIX/#;#SMARTPIX_VERSION!=3.x");
         
-        this.setConnectionParameters("/media/SMART_PIX/#;#SMARTPIX_VERSION!=3.x");
+        //this.setConnectionParameters("/media/SMART_PIX/#;#SMARTPIX_VERSION!=3.x");
         
         //this.setConnectionParameters(this.special_config.getDefaultParameter());
         initReader();
@@ -139,6 +142,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     public AccuChekSmartPix(String params, OutputWriter writer, DataAccessPlugInBase da, int max_records_)
     {
         this(params, writer, da);
+        this.setConnectionParameters(params);
         this.max_records = max_records_;
     }
 
@@ -375,8 +379,12 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public boolean open() throws PlugInBaseException
     {
-        System.out.println("m_da: " + m_da);
+        //System.out.println("open():: m_da: " + m_da);
+        //System.out.println("open():: getMainConnectionParameter: " + this.getMainConnectionParameter());
         File f = new File(m_da.pathResolver(this.getMainConnectionParameter()));
+        
+        //System.out.println("open():: " + m_da.pathResolver(this.getMainConnectionParameter()));
+        
         
         if (f.exists())
             communication_established = true;
@@ -405,7 +413,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
 
     public String getDeviceSpecialComment()
     {
-        return "";
+        return "DEVICE_PIX_SPECIAL_COMMENT";
     }
     
     
@@ -414,7 +422,16 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public void initSpecialConfig()
     {
-        this.special_config = new AccuChekSmartPixSpecialConfig(m_da, this);
+        if (DataAccessPlugInBase.special_configs.containsKey("AccuChekSmartPix"))
+        {
+            this.special_config = (AccuChekSmartPixSpecialConfig)DataAccessPlugInBase.special_configs.get("AccuChekSmartPix");
+        }
+        else
+        {
+            //System.out.println("!!!!!!!! inti Special config");
+            this.special_config = new AccuChekSmartPixSpecialConfig(m_da, this);
+            DataAccessPlugInBase.special_configs.put("AccuChekSmartPix", (DeviceSpecialConfigPanelAbstract)this.special_config);
+        }
     }
     
     
@@ -460,5 +477,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     {
         return this.getMainConnectionParameter();
     }
+
+    
     
 }
