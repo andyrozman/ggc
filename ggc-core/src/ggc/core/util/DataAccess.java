@@ -81,7 +81,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.4.18";
+    public static String CORE_VERSION = "0.4.19";
     
     /**
      * Current Db Version
@@ -213,7 +213,11 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static final String CONVERTER_BG = "BG";
     
-    
+
+    /**
+     * Extended Handler: Daily Values Row
+     */
+    public static final String EXTENDED_HANDLER_DailyValuesRow = "DailyValuesRow";
     
     
     private int current_person_id = 1;
@@ -1834,7 +1838,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     
     public void loadExtendedHandlers()
     {
-        this.extended_handlers.put("DailyValuesRow", new ExtendedDailyValue(this));
+        this.extended_handlers.put(DataAccess.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValue(this));
     }
     
     
