@@ -74,7 +74,7 @@ public class AccuChekSmartPixSpecialConfig extends DeviceSpecialConfigPanelAbstr
 
     public void initPanel()
     {
-        System.out.println("Init panel");
+        //System.out.println("Init panel");
         
         this.config_panel = new JPanel();
         this.config_panel.setLayout(null);

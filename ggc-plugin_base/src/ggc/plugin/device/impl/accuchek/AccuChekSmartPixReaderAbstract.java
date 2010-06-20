@@ -88,6 +88,11 @@ public abstract class AccuChekSmartPixReaderAbstract
     public abstract void preInitDevice();
     
     
-    
+    /**
+     * Has Pre Init
+     * 
+     * @return
+     */
+    public abstract boolean hasPreInit();
     
 }

@@ -30,6 +30,7 @@ import javax.swing.JDialog;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.atech.db.ext.ExtendedHandler;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesGroup;
@@ -80,7 +81,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     /**
      * Plugin Version
      */
-    public String plugin_version = "0.4.6";
+    public String plugin_version = "0.5.2";
 
 
     /**
@@ -1541,6 +1542,22 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         }
     }
     
+    
+    /**
+     * Add Extended Handler
+     * 
+     * @param key
+     * @param eh
+     */
+    public void addExtendedHandler(String key, ExtendedHandler eh)
+    {
+        if (this.extended_handlers==null)
+        {
+            this.extended_handlers = new Hashtable<String,ExtendedHandler>();
+        }
+     
+        this.extended_handlers.put(key, eh);
+    }
     
 
 }

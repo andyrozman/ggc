@@ -67,6 +67,24 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         //this.setDeviceType(group, device, type)
     }
     
+
+    /**
+     * Constructor
+     * 
+     * @param params 
+     * 
+     * @param drive_letter
+     * @param writer
+     * @param da 
+     * @param max_records_ 
+     */
+    public AccuChekSmartPix(String params, OutputWriter writer, DataAccessPlugInBase da, int max_records_)
+    {
+        this(params, writer, da);
+        this.setConnectionParameters(params);
+        this.max_records = max_records_;
+    }
+    
     
     /**
      * Constructor
@@ -101,11 +119,25 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         //this.setConnectionParameters("/media/SMART_PIX/#;#SMARTPIX_VERSION!=3.x");
         
         //this.setConnectionParameters(this.special_config.getDefaultParameter());
-        initReader();
+        //initReader();
         
         
         
     }
+    
+    
+    /**
+     * Set Connection Parameters
+     * 
+     * @param param 
+     */
+    public void setConnectionParameters(String param)
+    {
+        super.setConnectionParameters(param);
+        this.initReader();
+    }
+    
+    
     
     
     private void initReader()
@@ -129,22 +161,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     }
     
     
-    /**
-     * Constructor
-     * 
-     * @param params 
-     * 
-     * @param drive_letter
-     * @param writer
-     * @param da 
-     * @param max_records_ 
-     */
-    public AccuChekSmartPix(String params, OutputWriter writer, DataAccessPlugInBase da, int max_records_)
-    {
-        this(params, writer, da);
-        this.setConnectionParameters(params);
-        this.max_records = max_records_;
-    }
 
     
     /**
@@ -445,7 +461,16 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public boolean hasPreInit()
     {
-        return true;
+        if (this.reader==null)
+        {
+            System.out.println("hasPreInit() problem: reader==null");
+            return false;
+        }
+        else
+        {
+            return this.reader.hasPreInit();
+        }
+        
     }
     
     

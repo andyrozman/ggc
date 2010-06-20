@@ -401,7 +401,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     {
         if (this.current_device==null)
         {
-            System.out.println("current device: " + this.current_device);
+            //System.out.println("current device: " + this.current_device);
             this.lbl_company.setText(m_ic.getMessage("NO_COMPANY_SELECTED")); 
             this.lbl_device.setText(m_ic.getMessage("NO_DEVICE_SELECTED"));
             //this.comm_port_comp.setProtocol(0);
@@ -415,8 +415,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             this.lbl_company.setText(this.current_device.getColumnValue(1)); 
             this.lbl_device.setText(this.current_device.getColumnValue(2));
             //this.comm_port_comp.setProtocol(this.current_device.getConnectionProtocol());
-
-            System.out.println("current device: " + this.current_device);
+            //System.out.println("current device: " + this.current_device);
             
             this.refreshCommunicationSettings();
             

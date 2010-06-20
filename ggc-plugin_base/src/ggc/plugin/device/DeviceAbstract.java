@@ -101,11 +101,18 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     public DeviceAbstract(AbstractDeviceCompany adc, DataAccessPlugInBase da)
     {
         this(da);
+/*        this.m_da = da;
+        this.ic = da.getI18nControlInstance();
+        loadFileContexts();
+        this.initSpecialConfig();*/
+        
+        //System.out.println("DA: " + this.m_da);
+        
         this.setDeviceCompany(adc);
 /*        this.m_da = da;
         this.ic = da.getI18nControlInstance();
         loadFileContexts();*/
-        this.initSpecialConfig();
+        //this.initSpecialConfig();
     }
     
     
@@ -144,7 +151,22 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     }
 
     
-    
+    /**
+     * Pre Init Init
+     * 
+     * @param parameters
+     * @param writer
+     * @param da
+     */
+    public void preInitInit(String parameters, OutputWriter writer, DataAccessPlugInBase da)
+    {
+        this.m_da = da;
+        this.ic = da.getI18nControlInstance();
+        this.output_writer = writer;
+        loadFileContexts();
+        this.initSpecialConfig();
+        this.setConnectionParameters(parameters);
+    }
     
     
     // Device Interface
@@ -620,7 +642,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
             else
                 this.connection_parameters = this.connection_parameters_raw;
         }
-
+        
     }
     
     
@@ -750,6 +772,15 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return "";
     }
     
+
+    /**
+     * Get Output Writer instance
+     * @return
+     */
+    public OutputWriter getOutputWriter()
+    {
+        return this.output_writer;
+    }
     
     
 }

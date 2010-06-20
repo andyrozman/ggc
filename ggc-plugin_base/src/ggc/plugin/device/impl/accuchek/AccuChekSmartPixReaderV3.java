@@ -421,11 +421,17 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
     
     public void preInitDevice()
     {
+//        System.out.println("preInitDevice: Reader [v3]");
         this.sendCommandToDevice("Abort");
         readStatusUntilState("NOSCAN", 5000);
     }
     
     
+    @Override
+    public boolean hasPreInit()
+    {
+        return true;
+    }
     
     
 }

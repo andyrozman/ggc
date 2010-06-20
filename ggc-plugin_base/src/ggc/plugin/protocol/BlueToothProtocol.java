@@ -25,8 +25,6 @@ import javax.comm.UnsupportedCommOperationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.atech.i18n.I18nControlAbstract;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -96,10 +94,10 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
     public static final byte ASCII_STX = 0x02;
     
     
-    private static Log log = LogFactory.getLog("ProtocolLog");
+    private static Log log = LogFactory.getLog(BlueToothProtocol.class);
     
-    protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
-    protected DataAccessPlugInBase m_da = null; //DataAccessMeter.getInstance();
+    //protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
+    //protected DataAccessPlugInBase m_da = null; //DataAccessMeter.getInstance();
 
 
     protected boolean isPortOpen = false;

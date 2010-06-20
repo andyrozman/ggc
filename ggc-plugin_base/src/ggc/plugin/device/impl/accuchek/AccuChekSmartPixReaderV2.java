@@ -367,6 +367,14 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
     public void preInitDevice()
     {
     }
+
+
+    
+    @Override
+    public boolean hasPreInit()
+    {
+        return false;
+    }
     
     
     

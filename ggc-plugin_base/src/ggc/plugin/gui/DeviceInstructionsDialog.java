@@ -3,10 +3,12 @@ package ggc.plugin.gui;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.gui.file.ImportFileSelectorDialog;
 import ggc.plugin.gui.file.MultipleFileSelectorDialog;
+import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -74,6 +76,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     JButton button_start, help_button;
     JLabel label_waiting;
     boolean reading_old_done = false;
+    boolean is_preinit_done = true;
     //DeviceTransferData m_dtd = null;
     
     //Hashtable<String,?> device_data = null;
@@ -156,6 +159,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         this.continuing_type = _continued_type; 
         this.m_ddh.setTransferType(this.continuing_type);
 
+
+        button_start = new JButton(m_ic.getMessage("START_DOWNLOAD")); 
         
         if (!loadConfiguration())
         {
@@ -299,14 +304,20 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         
         this.m_ddh.setDeviceInterface(this.device_interface);
         
-        /*
+        DeviceAbstract dva = (DeviceAbstract)mi;
+        dva.preInitInit(this.configured_device.communication_port_raw, new ConsoleOutputWriter(), m_da);
+        
+        
         if (mi.hasPreInit())
         {
-            DeviceAbstract dva = (DeviceAbstract)mi;
+            is_preinit_done = false;
+            this.button_start.setEnabled(false);
             dva.setDataAccessInstance(m_da);
             dva.setOutputWriter(new ConsoleOutputWriter());
-            dva.preInitDevice();
-        }*/
+            
+            DevicePreInitRunner dpir = new DevicePreInitRunner(m_da, dva, this);
+            dpir.start();
+        }
         
         return (this.device_interface!=null);
     }
@@ -338,7 +349,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     private static final int DEVICE_INTERFACE_PARAM_STATUS = 2;
     
     
-    private String getMeterInterfaceParameter(int param)
+    private String getDeviceInterfaceParameter(int param)
     {
         switch(param)
         {
@@ -438,7 +449,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         ATSwingUtils.getLabel(m_ic.getMessage("CONNECTION_TYPE") + ":", 
             15, 80, 320, 25, panel_device, ATSwingUtils.FONT_NORMAL_BOLD);
         
-        ATSwingUtils.getLabel(this.getMeterInterfaceParameter(DEVICE_INTERFACE_PARAM_CONNECTION_TYPE), 
+        ATSwingUtils.getLabel(this.getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_CONNECTION_TYPE), 
             130, 80, 320, 25, panel_device, ATSwingUtils.FONT_NORMAL);
 
 
@@ -479,7 +490,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         ATSwingUtils.getLabel(m_ic.getMessage("STATUS") + ":", 
             15, 140, 320, 25, panel_device, ATSwingUtils.FONT_NORMAL_BOLD);
         
-        label = ATSwingUtils.getLabel(this.getMeterInterfaceParameter(DEVICE_INTERFACE_PARAM_STATUS), 
+        label = ATSwingUtils.getLabel(this.getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_STATUS), 
             130, 140, 320, 25, panel_device, ATSwingUtils.FONT_NORMAL);
         
         
@@ -513,21 +524,34 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
             ATSwingUtils.FONT_NORMAL, null, "cancel", this, m_da);
         
 
-        label_waiting = ATSwingUtils.getLabel(m_ic.getMessage("WAIT_UNTIL_OLD_DATA_IS_READ"), 
-            310, 495, 300, 25, panel, ATSwingUtils.FONT_NORMAL);
+        label_waiting = ATSwingUtils.getLabel(m_ic.getMessage("WAIT_UNTIL_DEVICE_PREINIT"), 
+            310, 498, 300, 25, panel, ATSwingUtils.FONT_NORMAL);
         label_waiting.setVerticalAlignment(JLabel.TOP);
         label_waiting.setHorizontalAlignment(JLabel.RIGHT);
 
+        
+        button_start.setBounds(370, 520, 240, 25);
+        button_start.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
+        button_start.setActionCommand("start_download");
+        panel.add(button_start);
+        
+        
+        this.preInitDone(false);
+        
+        
+        // FIXME
+        /*
         button_start = ATSwingUtils.getButton(m_ic.getMessage("START_DOWNLOAD"), 370, 520, 240, 25, panel, 
             ATSwingUtils.FONT_NORMAL, null, "start_download", this, m_da);
-        this.button_start.setEnabled(false);
+        */
+        //this.button_start.setEnabled(false);
 
-        
+        /*
         if (this.reading_old_done)
         {
             this.button_start.setEnabled(true);
             this.label_waiting.setText("");
-        }
+        }*/
         
             
         //this.m_ddh.setReadingFinishedObject(this);
@@ -674,6 +698,30 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Read_Instruction";
     }
     
+
+    /**
+     * Preinit Done
+     * 
+     * @param set 
+     */
+    public void preInitDone(boolean set)
+    {
+        if (set)
+        {
+            this.is_preinit_done = true;
+        }
+        
+        if (this.is_preinit_done) 
+        {
+            if (this.label_waiting!=null)
+            {
+                this.button_start.setEnabled(true);
+                this.label_waiting.setVisible(false);
+            }
+        }
+        
+        
+    }
     
     
 }

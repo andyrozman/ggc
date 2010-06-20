@@ -2,6 +2,13 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.5.2 [20.6.2010]
+    * PreInit
+
+0.5.1 [19.6.2010]
+    * finished AccuChek
+    * finished Meter Tool Framework v2
+
 0.5 [18.6.2010]
     * New Configuration finished
     * doing testing on AccuChek from Base, and making changes

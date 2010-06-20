@@ -37,8 +37,8 @@ import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 
 /**
- * Application: GGC - GNU Gluco Control Plug-in: GGC PlugIn Base (base class for
- * all plugins)
+ * Application: GGC - GNU Gluco Control 
+ * Plug-in: GGC PlugIn Base (base class for all plugins)
  * 
  * See AUTHORS for copyright information.
  * 
