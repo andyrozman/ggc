@@ -1,5 +1,6 @@
 package ggc.meter.data;
 
+import ggc.core.data.ExtendedDailyValue;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.util.DataAccess;
@@ -16,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.atech.db.ext.ExtendedHandler;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATechDate;
 
@@ -66,6 +68,8 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	private String bg_original = null;
 	private OutputUtil util = OutputUtil.getInstance();
 	private String value_db = null;
+	
+	private static ExtendedHandler eh_dailyValue;
 	
 	private float bg_mmolL;
 	private int bg_mgdL;
@@ -368,6 +372,58 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	    }
 	}
 
+	
+    /**
+     * Prepare Entry [Framework v2]
+     */
+    public void prepareEntry_v2()
+    {
+        // SPECIAL_METER_FLAGS
+        // we use this for old values, to correctly read extended flags, if you used special meters codes 
+        // (non BG), then you will need to modify this
+        
+        if (eh_dailyValue==null)
+        {
+            eh_dailyValue = DataAccessMeter.getInstance().getExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow);
+        }
+        
+        if (this.entry_object==null)
+            return;
+        
+        Hashtable<String,String> dt = eh_dailyValue.loadExtended(this.entry_object.getExtended());
+
+        // URINE
+        if (eh_dailyValue.isExtendedValueSet(ExtendedDailyValue.EXTENDED_URINE, dt))
+        {
+            this.special_entry=true;
+            
+            String val = eh_dailyValue.getExtendedValue(ExtendedDailyValue.EXTENDED_URINE, dt);
+            val = val.toUpperCase();
+            //String val = dt.get(ExtendedDailyValue.EXTENDED_URINE).toUpperCase();
+            
+            if (val.contains("MG"))
+            {
+                this.special_entry_id = MeterValuesEntry.SPECIAL_ENTRY_URINE_MGDL;
+                this.special_entry_value = val.substring(0, val.indexOf("MG")).trim();
+            }
+            else
+            {
+                this.special_entry_id = MeterValuesEntry.SPECIAL_ENTRY_URINE_MMOLL;
+                
+                if (val.contains("MMOL"))
+                {
+                    this.special_entry_value = val.substring(0, val.indexOf("MMOL")).trim();
+                }
+                else
+                {
+                    this.special_entry_value = val.trim();
+                }
+            }
+        }  // URINE
+        
+    }
+	
+	
 	
 	
 	/**
@@ -892,6 +948,21 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     {
         return this.value_db;
     }
+    
+    
+    /**
+     * Get Value of object
+     * 
+     * @return
+     */
+    public String getValueFull()
+    {
+        if (this.isSpecialEntry())
+            return this.getSpecialEntryValue();
+        else
+            return this.value_db;
+    }
+    
     
     
     long old_id;

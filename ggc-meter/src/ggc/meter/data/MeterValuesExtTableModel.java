@@ -48,11 +48,11 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
 //                                     m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"), m_ic.getMessage(""), };
 
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = -660580365600276458L;
+    private int column_width[] = { 120, 150, 200, 90, 50 };
+    private String column_names[] = { m_ic.getMessage("DATETIME"), m_ic.getMessage("ENTRY_TYPE"), m_ic.getMessage("VALUE"), m_ic.getMessage("STATUS"), ""};
 
+    
     /**
      * Constructor
      * 
@@ -64,6 +64,7 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
         super(DataAccessMeter.getInstance(), ddh, source);
     }
 
+    
     /**
      * Get Column Count
      * 
@@ -73,7 +74,6 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
     {
         return 5;
     }
-
 
     
     /**
@@ -86,8 +86,6 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
         return 4;
     }
     
-    private int column_width[] = { 120, 150, 200, 90, 50 };
-    
     
     /**
      * Get Column Width
@@ -99,61 +97,8 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
     public int getColumnWidth(int column, int width)
     {
         return this.column_width[column];
-        
-        /*
-        if (column == 0)
-        {
-            return 100; // third column is bigger
-        }
-        else
-        {
-            return 50;
-        }*/
-
     }
     
- 
-    
-    
-    
-    /**
-     * Should be displayed filter
-     * 
-     * @param status
-     * @return
-     */
-    /*public boolean shouldBeDisplayed(int status)
-    {
-        //System.out.println("Should be displayed: " + status);
-        switch (this.current_filter)
-        //switch (status)
-        {
-            case DeviceDisplayDataDialog.FILTER_ALL:
-                return true;
-                
-            case DeviceDisplayDataDialog.FILTER_NEW:
-                return (status == DeviceValuesEntry.STATUS_NEW);
-    
-            case DeviceDisplayDataDialog.FILTER_CHANGED:
-                return (status == DeviceValuesEntry.STATUS_CHANGED);
-                
-            case DeviceDisplayDataDialog.FILTER_EXISTING:
-                return (status == DeviceValuesEntry.STATUS_OLD);
-                
-            case DeviceDisplayDataDialog.FILTER_UNKNOWN:
-                return (status == DeviceValuesEntry.STATUS_UNKNOWN);
-                
-            case DeviceDisplayDataDialog.FILTER_NEW_CHANGED:
-                return ((status == DeviceValuesEntry.STATUS_NEW) ||
-                        (status == DeviceValuesEntry.STATUS_CHANGED));
-                
-            case DeviceDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
-                return (status != DeviceValuesEntry.STATUS_OLD);
-        }
-        return false;
-
-    }*/
-
 
     /**
      * Get Value At
@@ -165,45 +110,26 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
 
         switch (column)
         {
-        case 0:
-            return mve.getDateTimeObject().getDateTimeString();
-
-        case 1:
-            return mve.getExtendedTypeDescription();
-
-        case 2:
-            return mve.getExtendedTypeValue();
-
-        case 3:
-            return new Integer(mve.getStatus());
-
-        case 4:
-            return new Boolean(mve.getChecked());
-
-        default:
-            return "";
-        }
-
-        
-    }
-
-/*    
-    public void addEntry(DeviceValuesEntry dve)
-    {
-        MeterValuesEntry mve = (MeterValuesEntry)dve; 
-        
-        processMeterValuesEntry(mve);
-        this.dl_data.add(mve);
-        
-        if (this.shouldBeDisplayed(mve.status))
-        {
-            this.displayed_dl_data.add(mve);
-        }
-        this.fireTableDataChanged();
-    }
-*/
-
+            case 0:
+                return mve.getDateTimeObject().getDateTimeString();
     
+            case 1:
+                return mve.getExtendedTypeDescription();
+    
+            case 2:
+                return mve.getExtendedTypeValue();
+    
+            case 3:
+                return new Integer(mve.getStatus());
+    
+            case 4:
+                return new Boolean(mve.getChecked());
+    
+            default:
+                return "";
+        }
+        
+    }
 
     
     /**
@@ -225,18 +151,17 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
             else
             {
                 MeterValuesEntry mve2 = (MeterValuesEntry)mve; 
-
                 MeterValuesEntry mve_old = (MeterValuesEntry)this.m_ddh.getOldData().get(mve.getSpecialId());
                 
                 //DayValueH gvh = (DayValueH)this.m_ddh.getOldData().get("" + dt);
-                  
                 //int vl = Integer.parseInt(mve2.getBGValue(OutputUtil.BG_MGDL));
+                mve_old.prepareEntry_v2();
                 
-                //System.out.println(mve_old.getDateTimeObject() + "=" + mve_old.getValue());
-                //System.out.println(mve2.getDateTimeObject() + "=" + mve2.getValue());
                 
-                //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
-                if (mve_old.getValue().equals(mve2.getValue()))
+                System.out.println("MeterValuesExtTableModel: " + mve_old.getDateTimeObject());
+                System.out.println("old=" + mve_old.getValueFull() + ", new=" + mve2.getValueFull());
+                
+                if (mve_old.getValueFull().equals(mve2.getValueFull()))
                 {
                     mve2.setStatus(MeterValuesEntry.STATUS_OLD);
                     mve2.object_status = MeterValuesEntry.OBJECT_STATUS_OLD;
@@ -246,12 +171,7 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
                     mve2.setStatus(MeterValuesEntry.STATUS_CHANGED);
                     mve2.object_status = MeterValuesEntry.OBJECT_STATUS_EDIT;
                     mve2.entry_object = mve_old.getHibernateObject();
-                    
-                    //System.out.println("Changed: " + gvh.getId());
-                    
                 }
-                    
-                //gvh.getBg()
             }
         }
         else
@@ -260,100 +180,8 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
             mve.setStatus(MeterValuesEntry.STATUS_NEW);
         }
         
-        
-        
-        
-/*        
-        if (this.m_ddh.hasOldData())
-        {
-//            System.out.println("oldData != null");
-            long dt = mve.getDateTime(); //.getATDateTimeAsLong();
-            
-//            System.out.println("Dt='" + dt + "'");
-//            System.out.println("Found: " + this.m_ddh.getOldData().containsKey("" + dt));
-            
-            
-            if (!this.m_ddh.getOldData().containsKey("" + dt))
-            {
-//                System.out.println("not Contains");
-                mve.setStatus(DeviceValuesEntry.STATUS_NEW);
-                mve.setObjectStatus(MeterValuesEntry.OBJECT_STATUS_NEW);
-            }
-            else
-            {
-                
-                MeterValuesEntry mve2 = (MeterValuesEntry)mve; 
-                
-//                System.out.println("Found !!!");
-                
-                DayValueH gvh = (DayValueH)this.m_ddh.getOldData().get("" + dt);
-                  
-                int vl = Integer.parseInt(mve2.getBGValue(OutputUtil.BG_MGDL));
-                
-                //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
-                if (gvh.getBg()==vl)
-                {
-                    mve2.setStatus(MeterValuesEntry.STATUS_OLD);
-                    mve2.object_status = MeterValuesEntry.OBJECT_STATUS_OLD;
-                }
-                else
-                {
-                    mve2.setStatus(MeterValuesEntry.STATUS_CHANGED);
-                    mve2.object_status = MeterValuesEntry.OBJECT_STATUS_EDIT;
-                    mve2.entry_object = gvh;
-                    
-                    //System.out.println("Changed: " + gvh.getId());
-                    
-                }
-                    
-                //gvh.getBg()
-            }
-        }
-        else
-        {
-//            System.out.println("oldData == null");
-            mve.setStatus(MeterValuesEntry.STATUS_NEW);
-        }
-        */
-        
-        
     }
     
-    /*
-    public Hashtable<String,ArrayList<DayValueH>> getCheckedEntries()
-    {
-        
-        Hashtable<String,ArrayList<DayValueH>> ht = new Hashtable<String,ArrayList<DayValueH>>();
-        
-        ht.put("ADD", new ArrayList<DayValueH>());
-        ht.put("EDIT", new ArrayList<DayValueH>());
-        
-        
-        for(int i=0; i<this.dl_data.size(); i++)
-        {
-            MeterValuesEntry mve = this.dl_data.get(i);
-            
-            if (!mve.checked)
-                continue;
-            
-            mve.prepareEntry();
-            
-            if (mve.object_status==MeterValuesEntry.OBJECT_STATUS_NEW)
-            {
-                ht.get("ADD").add(mve.getDbObject());
-            }
-            else if (mve.object_status==MeterValuesEntry.OBJECT_STATUS_EDIT)
-            {
-                ht.get("EDIT").add(mve.getDbObject());
-            }
-        }
-        
-        return ht;
-    }
-    */
-    
-    
-    private String column_names[] = { m_ic.getMessage("DATETIME"), m_ic.getMessage("ENTRY_TYPE"), m_ic.getMessage("VALUE"), m_ic.getMessage("STATUS"), ""};
     
     /**
      * Get Column Name
@@ -366,6 +194,7 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
         return column_names[column];
     }
 
+    
     /**
      * Get Column Class
      * 
@@ -382,6 +211,7 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
         // return getValueAt(0,c).getClass();
     }
 
+    
     /**
      * Is Cell Editable
      * 
@@ -396,6 +226,7 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
             return false;
     }
 
+    
     /**
      * Set Value At
      * 
@@ -435,6 +266,7 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
         }
     }
 
+    
     /**
      * Get Empty ArrayList
      * 
@@ -446,7 +278,5 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
         return new ArrayList<DayValueH>();
     }
 
-
-  
 
 }

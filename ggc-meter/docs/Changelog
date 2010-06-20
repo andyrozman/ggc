@@ -2,6 +2,10 @@
 Changes file for GGC Meter Tool
 ===============================
 
+1.2.1 [20.6.2010]
+    * fixed v2 framework
+    * PLUGIN_BASE: Required 0.5.2
+
 1.1.8 [18.6.2010]
     * finalizing changes for v2 framework
     * PLUGIN_BASE: Required 0.5

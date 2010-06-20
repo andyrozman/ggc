@@ -251,6 +251,9 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         da_local.setCurrentUserId(((DataAccess)m_da).current_user_id);
         da_local.createDb(m_da.getHibernateDb());
         
+        da_local.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, m_da.getExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow));
+
+        
         //DataAccessMeter.getInstance().setBGMeasurmentType(m_da.get)
     }
    

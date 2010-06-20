@@ -229,8 +229,8 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
                   
                 //int vl = Integer.parseInt(mve2.getBGValue(OutputUtil.BG_MGDL));
                 
-                //System.out.println(mve_old.getDateTimeObject() + "=" + mve_old.getValue());
-                //System.out.println(mve2.getDateTimeObject() + "=" + mve2.getValue());
+                System.out.println(mve_old.getDateTimeObject() + "=" + mve_old.getValue());
+                System.out.println(mve2.getDateTimeObject() + "=" + mve2.getValue());
                 
                 //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
                 if (mve_old.getValue().equals(mve2.getValue()))
