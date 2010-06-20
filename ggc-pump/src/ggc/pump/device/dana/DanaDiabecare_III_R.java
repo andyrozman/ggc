@@ -272,7 +272,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         
         loadPumpSpecificValues();
         
-        this.m_ic = DataAccessPump.getInstance().getI18nControlInstance();
+        //this.m_ic = DataAccessPump.getInstance().getI18nControlInstance();
 
         this.error_count = 0;
         
@@ -1182,7 +1182,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     private void incrementError()
     {
         this.error_count++;
-        this.output_writer.setSubStatus(String.format(m_ic.getMessage("ERROR_COUNT"), "" + this.error_count));
+        this.output_writer.setSubStatus(String.format(ic.getMessage("ERROR_COUNT"), "" + this.error_count));
     }
     
     
@@ -1418,9 +1418,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
                 writeConfiguration("PCFG_BOLUS_BLOCK", "" + hex_utils.getByteFromArray(10), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
                 
                 if (hex_utils.getByteFromArray(11)==0)
-                    writeConfiguration("PCFG_BASAL_UNIT", m_ic.getMessage("UNIT_PER_HOUR"), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
+                    writeConfiguration("PCFG_BASAL_UNIT", ic.getMessage("UNIT_PER_HOUR"), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
                 else
-                    writeConfiguration("PCFG_BASAL_UNIT", m_ic.getMessage("UNIT_PER_DAY"), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
+                    writeConfiguration("PCFG_BASAL_UNIT", ic.getMessage("UNIT_PER_DAY"), PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
                 
                 // PROFILE = 12
                 this.current_basal_profile = (hex_utils.getByteFromArray(12) + 1);
@@ -1435,9 +1435,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             else if (cmd==COMMAND_SETT_GLUCOMODE)
             {
                 if (hex_utils.getByteFromArray(6)==1)
-                    writeConfiguration("PCFG_GLUCOSE_UNIT", m_ic.getMessage("UNIT_MMOLL"), PumpConfiguration.PUMP_CONFIG_GROUP_BLOOD_GLUCOSE );
+                    writeConfiguration("PCFG_GLUCOSE_UNIT", ic.getMessage("UNIT_MMOLL"), PumpConfiguration.PUMP_CONFIG_GROUP_BLOOD_GLUCOSE );
                 else
-                    writeConfiguration("PCFG_GLUCOSE_UNIT", m_ic.getMessage("UNIT_MGDL"), PumpConfiguration.PUMP_CONFIG_GROUP_BLOOD_GLUCOSE );
+                    writeConfiguration("PCFG_GLUCOSE_UNIT", ic.getMessage("UNIT_MGDL"), PumpConfiguration.PUMP_CONFIG_GROUP_BLOOD_GLUCOSE );
                     
                 writeConfiguration("PCFG_EASY_MODE", "" + getTrueOrFalse(hex_utils.getByteFromArray(8)), PumpConfiguration.PUMP_CONFIG_GROUP_GENERAL );
             }
@@ -1478,7 +1478,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         if (!config_mode)
             return;
         
-        PumpValuesEntryConfig pvec = new PumpValuesEntryConfig(m_ic.getMessage(key), value, config_group);
+        PumpValuesEntryConfig pvec = new PumpValuesEntryConfig(ic.getMessage(key), value, config_group);
         this.output_writer.writeData(pvec);
         
         //System.out.println(m_ic.getMessage(key) + " = " + value);
@@ -1488,9 +1488,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     private String getTrueOrFalse(byte val)
     {
         if (val==0)
-            return m_ic.getMessage("FALSE");
+            return ic.getMessage("FALSE");
         else
-            return m_ic.getMessage("TRUE");
+            return ic.getMessage("TRUE");
     }
     
     
