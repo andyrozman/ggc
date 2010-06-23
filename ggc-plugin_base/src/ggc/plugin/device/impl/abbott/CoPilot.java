@@ -24,8 +24,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.ext.DeclHandler;
 import org.xml.sax.ext.LexicalHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 import com.atech.utils.file.FileReaderContext;
 
@@ -229,13 +227,12 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
     
     //private XmlStartTag stag;
     //private XmlEndTag etag;
-    private static final boolean USE_SB = true
-    ;
-    private StringBuffer buf = new StringBuffer();
-    int [] holderForStartAndLength = new int[2];
+    //private static final boolean USE_SB = true;
+    //private StringBuffer buf = new StringBuffer();
+    //int [] holderForStartAndLength = new int[2];
 
     
-    @SuppressWarnings("unused")
+    /*
     private void processXmlPull(String filename)
     {
         try
@@ -312,7 +309,7 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         }
         
     }
-    
+    */
     
     
     
