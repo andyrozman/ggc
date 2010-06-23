@@ -1,11 +1,11 @@
 package ggc.gui.dialogs;
 
+import ggc.core.data.Converter_mgdL_mmolL;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.ExtendedDailyValue;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
-import ggc.pump.util.DataAccessPump;
 import ggc.shared.bolushelper.BolusHelper;
 import ggc.shared.fooddesc.FoodDescriptionDialog;
 
@@ -1002,7 +1002,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             // System.out.println("focus lost: bg2");
             int val = m_da.getJFormatedTextValueInt(ftf_bg1);
 //            float v_2 = m_da.getBGValueDifferent(DataAccess.BG_MGDL, val);
-            float v_2 = m_da.getBGConverter().getValueByType(DataAccessPump.BG_MGDL, DataAccessPump.BG_MMOL, val);
+            float v_2 = m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mg_dL, Converter_mgdL_mmolL.UNIT_mmol_L, val);
             this.ftf_bg2.setValue(new Float(v_2));
         }
         else if (src.equals(this.ftf_bg2))
@@ -1019,7 +1019,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             // System.out.println("focus lost: bg2");
             float val = m_da.getJFormatedTextValueFloat(ftf_bg2);
 //            int v_2 = (int) m_da.getBGValueDifferent(DataAccess.BG_MMOL, val);
-            int v_2 = (int)m_da.getBGConverter().getValueByType(DataAccessPump.BG_MMOL, DataAccessPump.BG_MGDL, val);
+            int v_2 = (int)m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mmol_L, Converter_mgdL_mmolL.UNIT_mg_dL, val);
             this.ftf_bg1.setValue(new Integer(v_2));
         }
         else
