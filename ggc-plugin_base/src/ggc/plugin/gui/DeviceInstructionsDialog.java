@@ -533,6 +533,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         button_start.setBounds(370, 520, 240, 25);
         button_start.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
         button_start.setActionCommand("start_download");
+        button_start.addActionListener(this);
+        //button_start.setEnabled(true);
         panel.add(button_start);
         
         
@@ -593,7 +595,6 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         }
         else if (action.equals("start_download"))
         {
-            
             if ((this.m_da.getDeviceConfigurationDefinition().doesDeviceSupportTimeFix()) &&
                 (this.configured_device.ds_fix))
             {
@@ -652,6 +653,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      */
     public void readingFinished()
     {
+        /*
         checkReading(true);
         //System.out.println("DeviceInstructionDialog:readingFinished");
         
@@ -659,7 +661,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         {
             this.button_start.setEnabled(true);
             this.label_waiting.setText("");
-        }
+        }*/
     }
 
     
@@ -718,6 +720,9 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
                 this.button_start.setEnabled(true);
                 this.label_waiting.setVisible(false);
             }
+            else
+                this.button_start.setEnabled(true);
+
         }
         
         
