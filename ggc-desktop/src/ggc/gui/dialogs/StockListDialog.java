@@ -259,6 +259,10 @@ public class StockListDialog extends JDialog implements ActionListener
     }
     
     
+    
+    
+    
+    
     /**
      * Invoked when an action occurs.
      */
