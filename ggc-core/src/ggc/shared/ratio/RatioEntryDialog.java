@@ -72,7 +72,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
     private DataAccess m_da = DataAccess.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
-    private boolean m_actionDone = false;
+    private boolean m_action_done = false;
 
     JLabel label_title = new JLabel();
 
@@ -132,6 +132,35 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
      * Constructor
      * 
      * @param dialog
+     * @param tdd 
+     * @param re 
+     */
+    public RatioEntryDialog(JDialog dialog, float tdd, RatioEntry re) 
+    {
+        super(dialog, "", true);
+        
+        //m_parent = dialog;
+        m_da.addComponent(this);
+
+        this.ratio_entry = re;
+        init();
+        load();
+        
+        action = ACTION_EDIT;
+        setTitle();
+        
+        this.setVisible(true);
+
+    }
+    
+    
+    
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param dialog
      * @param re 
      */
 /*    public RatioEntryDialog(JDialog dialog, RatioEntry re) 
@@ -157,6 +186,10 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
      */
     private void load()
     {
+        if (this.ratio_entry==null)
+            return;
+        
+        
         // FIXME
         /*
         this.dtf_ch_ins.setValue(this.m_da.getSettings().getRatio_CH_Insulin());
@@ -171,10 +204,20 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
      */
     private void save()
     {
+        if (this.ratio_entry == null)
+            this.ratio_entry = new RatioEntry();
+        
+        this.ratio_entry.from = this.tc_from.getTime();
+        this.ratio_entry.to = this.tc_to.getTime();
+        this.ratio_entry.procent = ((Integer)this.procents.getValue()).floatValue();
+        
 //        this.m_da.getSettings().setRatio_CH_Insulin(m_da.getFloatValue(this.dtf_ch_ins.getCurrentValue()));
 //        this.m_da.getSettings().setRatio_BG_Insulin(m_da.getFloatValue(this.dtf_ins_bg.getCurrentValue()));
         
-        this.m_da.getSettings().save();
+        //this.m_da.getSettings().save();
+        
+        
+        
     }
 
     
@@ -219,6 +262,9 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         tc_from = new TimeComponent();
         //tc_from.setBounds(205, 75, 100, 25);
         tc_from.setBounds(90, 75, 70, 25);
+        tc_from.setActionCommand("time_from");
+        tc_from.addActionListener(this);
+        //tc_from.
         panel.add(tc_from);
 
         
@@ -226,6 +272,8 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         ATSwingUtils.getLabel(" -> ", 180, 115, 150, 25, panel, ATSwingUtils.FONT_NORMAL);
         tc_to = new TimeComponent();
         tc_to.setBounds(205, 75, 100, 25);
+        tc_to.setActionCommand("time_to");
+        tc_to.addActionListener(this);
         panel.add(tc_to);
         
         
@@ -279,11 +327,25 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         }
         else if (action.equals("ok"))
         {
-            
+            this.m_action_done = true;
+            this.save();
+            m_da.removeComponent(this);
+            this.dispose();
         }
-        
+        else if (action.equals("time_from"))
+        {
+            if (tc_from.getTime() > tc_to.getTime())
+                tc_to.setTime(tc_from.getTime());
+            //System.out.println("RatioEntryDialog::unknown command: Time From"+ action);
+        }
+        else if (action.equals("time_to"))
+        {
+            if (tc_to.getTime() < tc_from.getTime() )
+                tc_from.setTime(tc_to.getTime());
+            //System.out.println("RatioEntryDialog::unknown command: Time To " + action);
+        }
         else
-            System.out.println("RatioBaseDialog::unknown command: " + action);
+            System.out.println("RatioEntryDialog::unknown command: " + action);
 
     }
 
@@ -319,10 +381,20 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
      */
     public boolean actionSuccesful()
     {
-        return m_actionDone;
+        return m_action_done;
     }
 
-
+    
+    /**
+     * Get Result Object
+     * 
+     * @return
+     */
+    public RatioEntry getResultObject()
+    {
+        
+        return this.ratio_entry;
+    }
     
     
     
@@ -351,7 +423,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
      */
     public String getHelpId()
     {
-        return "GGC_Ratio_Base";
+        return "GGC_Ratio_Entry";
     }
 
 

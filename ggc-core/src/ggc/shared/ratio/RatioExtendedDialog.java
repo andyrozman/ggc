@@ -1,31 +1,3 @@
-/*
- *  GGC - GNU Gluco Control
- *
- *  A pure java app to help you manage your diabetes.
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Filename: DailyRowDialog
- *
- *  Purpose:  Dialog for adding entry for day and time
- *
- *  Author:   andyrozman {andy@atech-software.com}
- *
- */
 package ggc.shared.ratio;
 
 import ggc.core.util.DataAccess;
@@ -47,16 +19,14 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.AbstractTableModel;
 
-import com.atech.graphics.components.ATTableData;
-import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
@@ -97,7 +67,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
     JComboBox cb_time_range, cb_icarb_rule, cb_sens_rule;
     ArrayList<RatioEntry> list_ratios = new ArrayList<RatioEntry>(); 
     RatioEntryDisplay red = null;
-    
+    JTable table_list_ratios;
     
 
     boolean in_action = false;
@@ -115,8 +85,8 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 
 
 
-    JTextField DateField, TimeField, /*BGField, Ins1Field, Ins2Field, BUField,*/
-            ActField, CommentField, UrineField;
+    //JTextField DateField, TimeField, /*BGField, Ins1Field, Ins2Field, BUField,*/
+    //        ActField, CommentField, UrineField;
 
     JComboBox cob_bg_type; //= new JComboBox();
 
@@ -293,7 +263,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         
 
         ATSwingUtils.getButton("", 400, 20, 30, 30, 
-            p2, ATSwingUtils.FONT_NORMAL, "table_sql_check.png", "check_row", this, m_da);
+            p2, ATSwingUtils.FONT_NORMAL, "table_sql_check.png", "check_data", this, m_da);
         
         
         /*
@@ -323,43 +293,41 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         
         
         
-        JTable table_1 = new JTable();
+        this.table_list_ratios = new JTable();
+        
+        this.table_list_ratios.setModel(new AbstractTableModel() 
+        {
 
-        this.createModel(this.list_ratios, table_1, this.red);
+            private static final long serialVersionUID = -3326447034673814643L;
 
-        table_1.setRowSelectionAllowed(true);
-        table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table_1.setDoubleBuffered(true);
+            public int getColumnCount()
+            {
+                return 4;
+            }
 
-        JScrollPane scroll_1 = new JScrollPane(table_1);
+            public int getRowCount()
+            {
+                return list_ratios.size();
+            }
+
+            public Object getValueAt(int rowIndex, int columnIndex)
+            {
+                return list_ratios.get(rowIndex).getColumnValue(columnIndex);
+            }
+            
+        }
+        );
+        
+
+        //this.createModel(this.list_ratios, this.table_list_ratios, this.red);
+
+        this.table_list_ratios.setRowSelectionAllowed(true);
+        this.table_list_ratios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.table_list_ratios.setDoubleBuffered(true);
+
+        JScrollPane scroll_1 = new JScrollPane(this.table_list_ratios);
         scroll_1.setBounds(10, 55, 430, 160); // 30, 305, 460, 160 
         p2.add(scroll_1, null); 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         
@@ -393,7 +361,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
     }
 
     
-    
+/*    
     private void createModel(ArrayList<?> lst, JTable table, ATTableData object)
     {
         ATTableModel model = new ATTableModel(lst, object);
@@ -410,7 +378,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         }
 
     }
-    
+  */  
     
     
     private static final int RATIO_CH_INSULIN = 1;
@@ -607,25 +575,81 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         }
         else if (action.equals("add_row"))
         {
-            new RatioEntryDialog(this, tdd, 100);
+            RatioEntryDialog red = new RatioEntryDialog(this, tdd, 100);
+            
+            if (red.actionSuccesful())
+            {
+                this.list_ratios.add(red.getResultObject());
+                ((AbstractTableModel)this.table_list_ratios.getModel()).fireTableDataChanged();
+            }
+        }
+        else if (action.equals("edit_row"))
+        {
+            if (this.table_list_ratios.getSelectedRow() == -1)
+            {
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"),
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            RatioEntry re = this.list_ratios.get(this.table_list_ratios.getSelectedRow());
+            
+            RatioEntryDialog red = new RatioEntryDialog(this, tdd, re);
+
+            if (red.actionSuccesful())
+            {
+                ((AbstractTableModel)this.table_list_ratios.getModel()).fireTableDataChanged();
+            }
+            
+        }
+        else if (action.equals("delete_row"))
+        {
+            if (this.table_list_ratios.getSelectedRow() == -1)
+            {
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"),
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            int option_selected = JOptionPane.showOptionDialog(this, m_ic.getMessage("ARE_YOU_SURE_DELETE_ROW"), m_ic
+                    .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                m_da.options_yes_no, JOptionPane.YES_OPTION);
+
+            if (option_selected == JOptionPane.NO_OPTION)
+            {
+                // System.out.println("Option NO was here!");
+                return;
+            }
+            // System.out.println("Option YES was here!");
+
+            try
+            {
+                RatioEntry re = this.list_ratios.get(this.table_list_ratios.getSelectedRow());
+                this.list_ratios.remove(re);
+                ((AbstractTableModel)this.table_list_ratios.getModel()).fireTableDataChanged();
+            }
+            catch (Exception ex)
+            {
+                System.out.println("RatioExtendedDialog:Action:Delete Row: " + ex);
+                //log.error("Action::Delete Row::Exception: " + ex, ex);
+            }
+            
+        }
+        else if (action.equals("check_data"))
+        {
+            System.out.println("RatioExtendedDialog::CheckData not implemented. " );
+
+//            JOptionPane.showMessageDialog(this, m_ic.getMessage("CHECK_RATIOEXTENDED_FAILED"), m_ic.getMessage("INFORMATION"),
+//                JOptionPane.INFORMATION_MESSAGE);
+            
+            
         }
         else
-            System.out.println("RatioDialog::unknown command: " + action);
+            System.out.println("RatioExtendedDialog::unknown command: " + action);
 
     }
 
-/*
-    String button_command[] = { "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"),
-            "edit_food", m_ic.getMessage("EDIT_FOOD"),
-            "ok", m_ic.getMessage("OK"),
-            "cancel", m_ic.getMessage("CANCEL"),
-//                                  "help", m_ic.getMessage("HELP")
-    
-  */  
-    
-    
-    
-    
+
     
     
     
@@ -722,10 +746,6 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         return m_actionDone;
     }
 
-
-
-
-    
     
     
     // ****************************************************************

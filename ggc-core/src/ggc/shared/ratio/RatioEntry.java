@@ -36,4 +36,43 @@ public class RatioEntry
     
     float procent = 100.0f;
     
+    
+    /**
+     * Get Column Value
+     * 
+     * @param column
+     * @return
+     */
+    public String getColumnValue(int column)
+    {
+        switch(column)
+        {
+        case 1:
+            return "" + this.from;
+        case 2:
+            return "" + this.to;
+        case 3:
+            return "" + this.procent;
+            default:
+                return "";
+        }
+        
+        
+    }
+    
+    
+    /**
+     * Get Columns
+     * 
+     * @return
+     */
+    public int getColumns()
+    {
+        return 3;
+    }
+    
+    
+    
+    
+    
 }
