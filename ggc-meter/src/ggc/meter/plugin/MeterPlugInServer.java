@@ -234,10 +234,14 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     public void initPlugIn()
     {
         //I18nControl.getInstance().setLanguage(this.selected_lang);
+        ic = m_da.getI18nControlInstance();
         
         if (da_local==null)
             da_local = DataAccessMeter.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
         
+        this.initPlugInServer((DataAccess)m_da, da_local);
+        
+/*        
         ic = da_local.getI18nControlInstance();
         
         da_local.setParentI18nControlInstance(m_da.getI18nControlInstance());
@@ -250,6 +254,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         da_local.setHelpContext(m_da.getHelpContext());
         da_local.setCurrentUserId(((DataAccess)m_da).current_user_id);
         da_local.createDb(m_da.getHibernateDb());
+*/
         
         da_local.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, m_da.getExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow));
 
