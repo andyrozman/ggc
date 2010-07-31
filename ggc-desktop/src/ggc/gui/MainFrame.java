@@ -218,7 +218,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         m_da.addComponent(this);
         
-        m_da.developer_version = developer_version;
+        m_da.setDeveloperMode(developer_version);
 
         statusPanel = new StatusBar(this);
 
