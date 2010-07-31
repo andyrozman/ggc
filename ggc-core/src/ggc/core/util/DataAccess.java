@@ -226,7 +226,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Developer Version
      */
-    public boolean developer_version = false;
+//    public boolean developer_version = false;
 
     // ********************************************************
     // ****** Constructors and Access methods *****
