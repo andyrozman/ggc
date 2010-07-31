@@ -110,7 +110,7 @@ public abstract class DevicePlugInServer extends PlugInServer
         
         da_plugin.setBGMeasurmentType(m_da.getIntValueFromString(da_ggc_core.getSpecialParameters().get("BG")));
         da_plugin.setGraphConfigProperties(da_ggc_core.getGraphConfigProperties());
-        
+        da_plugin.setDeveloperMode(da_ggc_core.getDeveloperMode());
         
         
     }
