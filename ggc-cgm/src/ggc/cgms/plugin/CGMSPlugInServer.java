@@ -223,11 +223,9 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     public void initPlugIn()
     {
         ic = m_da.getI18nControlInstance();
-        //I18nControl.getInstance().setLanguage(this.selected_lang);
         
         if (da_local==null)
             da_local = DataAccessCGMS.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
-       
         
         this.initPlugInServer((DataAccess)m_da, da_local);
         
