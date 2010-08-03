@@ -216,26 +216,49 @@ public class CommunicationSettingsPanel extends JPanel
         {
             if (this.current_device.hasDefaultParameter())
             {
-                if (m_ic.getMessage("NOT_SET").equals(this.comm_port_comp.getCommunicationPort()))
+                return checkIfDefaultParameterSet();
+                /*if (m_ic.getMessage("NOT_SET").equals(this.comm_port_comp.getCommunicationPort()))
                     return false;
                 
                 if (this.comm_port_comp.getCommunicationPort().trim().length()==0)
                     return false;
                 else
-                    return true;
+                    return true;*/
             }
             else
                 return true;
         }
         else
         {
-            this.special_config.setDefaultParameter(this.comm_port_comp.getCommunicationPort());
-            return this.special_config.areConnectionParametersValid();
+            if (this.current_device.hasDefaultParameter())
+            {
+                if (checkIfDefaultParameterSet())
+                {
+                    this.special_config.setDefaultParameter(this.comm_port_comp.getCommunicationPort());
+                    return this.special_config.areConnectionParametersValid();
+                }
+                else
+                   return false;
+            }
+            else
+                return this.special_config.areConnectionParametersValid();
+            
         }
         
      
     }
     
+    
+    private boolean checkIfDefaultParameterSet()
+    {
+        if (m_ic.getMessage("NOT_SET").equals(this.comm_port_comp.getCommunicationPort()))
+            return false;
+        
+        if (this.comm_port_comp.getCommunicationPort().trim().length()==0)
+            return false;
+        else
+            return true;
+    }
     
     
     public int getHeight()
