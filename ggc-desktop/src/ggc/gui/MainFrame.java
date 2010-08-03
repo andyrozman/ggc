@@ -53,8 +53,12 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.graphics.dialogs.GUIListDialog;
 import com.atech.graphics.graphs.GraphViewer;
+import com.atech.gui_fw.MainAppFrame;
 import com.atech.help.HelpContext;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.refresh.EventObserverInterface;
@@ -93,6 +97,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 {
 
     private static final long serialVersionUID = -8971779470148201332L;
+    private static Log log = LogFactory.getLog(MainFrame.class);
 
     
     /**
@@ -570,7 +575,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
     {
 //        HelpContext hc = new HelpContext("../data/help/GGC.hs");
 //        m_da.setHelpContext(hc);
-        boolean help_debug = true;
+        boolean help_debug = false;
         
         if (help_debug)
             System.out.println("Help Init");
@@ -625,7 +630,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
             if (main_help_set != null)
             {
-                System.out.println("Help: Main Help Set present, creating broker");
+                log.debug("Help: Main Help Set present, creating broker");
                 main_help_broker = main_help_set.createHelpBroker();
             }
 
