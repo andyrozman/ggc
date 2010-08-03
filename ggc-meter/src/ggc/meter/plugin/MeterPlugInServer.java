@@ -241,6 +241,8 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         
         this.initPlugInServer((DataAccess)m_da, da_local);
         
+        this.backup_restore_enabled = false;
+        
 /*        
         ic = da_local.getI18nControlInstance();
         
@@ -341,14 +343,14 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     public JMenu getPlugInMainMenu()
     {
 
-        JMenu menu_meter = ATSwingUtils.createMenu("MN_METERS", null, ic);
+        JMenu menu_meter = ATSwingUtils.createMenu("MN_METERS", null, this.ic_local);
         
         JMenuItem mi = ATSwingUtils.createMenuItem(menu_meter, 
             "MN_METERS_READ", 
             "MN_METERS_READ_DESC", 
             "meters_read", 
             this, null, 
-            ic, DataAccessMeter.getInstance(), parent);
+            this.ic_local, DataAccessMeter.getInstance(), parent);
         
         if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
             mi.setEnabled(true);
@@ -363,7 +365,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
             "MN_METERS_READ_FILE_DESC", 
             "meters_read_file", 
             this, null, 
-            ic, DataAccessMeter.getInstance(), parent);
+            this.ic_local, DataAccessMeter.getInstance(), parent);
 
         if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
             mi.setEnabled(true);
@@ -386,7 +388,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
             "MN_METERS_LIST_DESC", 
             "meters_list", 
             this, null, 
-            ic, DataAccessMeter.getInstance(), parent);
+            this.ic_local, DataAccessMeter.getInstance(), parent);
         
         menu_meter.addSeparator();
         
@@ -395,7 +397,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
             "MN_METERS_CONFIG_DESC", 
             "meters_config", 
             this, null, 
-            ic, DataAccessMeter.getInstance(), parent);
+            this.ic_local, DataAccessMeter.getInstance(), parent);
         
         menu_meter.addSeparator();
         
@@ -404,7 +406,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
             "MN_METERS_ABOUT_DESC", 
             "meters_about", 
             this, null, 
-            ic, DataAccessMeter.getInstance(), parent);
+            this.ic_local, DataAccessMeter.getInstance(), parent);
         
         //System.out.println("MenuMeter Plugin");
         
