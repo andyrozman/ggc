@@ -57,7 +57,10 @@ import com.atech.utils.ATSwingUtils;
 
 public class NutriPlugInServer extends PlugInServer implements ActionListener
 {
+    
+    DataAccessNutri da_local; // = DataAccessMeter.getInstance();
 
+    
     /**
      * Command: Db USDA Tree
      */
@@ -94,6 +97,9 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
      */
     public static final int COMMAND_RECALCULATE_CH = 6;
     
+    
+    
+    private I18nControlAbstract ic_local = null;
     
     
 /*    
@@ -241,24 +247,40 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     @Override
     public void initPlugIn()
     {
+        
         ic = m_da.getI18nControlInstance();
+        
+        if (da_local==null)
+            da_local = DataAccessNutri.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
+        
+        //this.initPlugInServer((DataAccess)m_da, da_local);
+        
+        
+        
+//        ic = m_da.getI18nControlInstance();
         //I18nControl.getInstance().setLanguage(this.selected_lang);
         
-        DataAccessNutri da = DataAccessNutri.getInstance();
-        da.addComponent(this.parent);
-        da.setHelpContext(this.m_da.getHelpContext());
-        da.setPlugInServerInstance(this);
-        da.setParentI18nControlInstance(ic);
+        
+        //DataAccessNutri da = DataAccessNutri.getInstance();
+        da_local.addComponent(this.parent);
+        da_local.setHelpContext(this.m_da.getHelpContext());
+        da_local.setPlugInServerInstance(this);
+        da_local.setParentI18nControlInstance(ic);
 //        da.createDb(m_da.getHibernateDb());
 //        da.initAllObjects();
-        da.loadSpecialParameters();
+        da_local.loadSpecialParameters();
+
         
         GGCDbNutri _db = new GGCDbNutri(((DataAccess)m_da).getDb());
-        da.setNutriDb(_db);
+        da_local.setNutriDb(_db);
         
         this.backup_restore_enabled = true;
         m_da.loadSpecialParameters();
         //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
+        
+        
+        
+        this.ic_local = da_local.getI18nControlInstance();
         
         //da.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
     }
@@ -332,13 +354,13 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     public JMenu getPlugInMainMenu()
     {
         // food menu
-        JMenu menu_food = ATSwingUtils.createMenu("MN_FOOD", null, ic);
+        JMenu menu_food = ATSwingUtils.createMenu("MN_FOOD", null, this.ic_local);
         ATSwingUtils.createMenuItem(menu_food, 
                                     "MN_NUTRDB_USDB", 
                                     "MN_NUTRDB_USDB_DESC", 
                                     "food_nutrition_1", 
                                     this, null, 
-                                    ic, DataAccessNutri.getInstance(), parent);
+                                    this.ic_local, DataAccessNutri.getInstance(), parent);
         //.createAction(this.menu_food, "MN_NUTRDB_USDB", "MN_NUTRDB_USDB_DESC", "food_nutrition_1", null);
         menu_food.addSeparator();
 
@@ -347,7 +369,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
             "MN_NUTRDB_USER_DESC", 
             "food_nutrition_2", 
             this, null, 
-            ic, DataAccessNutri.getInstance(), parent);
+            this.ic_local, DataAccessNutri.getInstance(), parent);
         
 //        this.createAction(this.menu_food, "MN_NUTRDB_USER", "MN_NUTRDB_USER_DESC", "food_nutrition_2", null);
         menu_food.addSeparator();
@@ -357,7 +379,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
             "MN_MEALS_DESC", 
             "food_meals", 
             this, null, 
-            ic, DataAccessNutri.getInstance(), parent);
+            this.ic_local, DataAccessNutri.getInstance(), parent);
                 
 //        this.createAction(this.menu_food, "MN_MEALS", "MN_MEALS_DESC", "food_meals", null);
         
@@ -375,14 +397,14 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     @Override
     public JMenu[] getPlugInPrintMenus()
     {
-        JMenu menu_reports_foodmenu = ATSwingUtils.createMenu("MN_FOODMENU", "MN_FOODMENU_DESC", ic);
+        JMenu menu_reports_foodmenu = ATSwingUtils.createMenu("MN_FOODMENU", "MN_FOODMENU_DESC", this.ic_local);
         
         ATSwingUtils.createMenuItem(menu_reports_foodmenu, 
             "MN_FOODMENU_SIMPLE", 
             "MN_FOODMENU_SIMPLE_DESC", 
             "report_foodmenu_simple",
             this, "print.png", 
-            ic, DataAccessNutri.getInstance(), parent);
+            this.ic_local, DataAccessNutri.getInstance(), parent);
         
         
         ATSwingUtils.createMenuItem(menu_reports_foodmenu,
@@ -390,7 +412,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
             "MN_FOODMENU_EXT1_DESC", 
             "report_foodmenu_ext1", 
             this, "print.png", 
-            ic, DataAccessNutri.getInstance(), parent);
+            this.ic_local, DataAccessNutri.getInstance(), parent);
         
         
         ATSwingUtils.createMenuItem(menu_reports_foodmenu,
@@ -398,7 +420,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
             "MN_FOODMENU_EXT2_DESC", 
             "report_foodmenu_ext2", 
             this, "print.png", 
-            ic, DataAccessNutri.getInstance(), parent);
+            this.ic_local, DataAccessNutri.getInstance(), parent);
         
         JMenu[] mns = new JMenu[1];
         mns[0] = menu_reports_foodmenu;
