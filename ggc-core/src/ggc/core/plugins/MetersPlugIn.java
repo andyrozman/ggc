@@ -137,7 +137,7 @@ public class MetersPlugIn extends PlugInClient
             ex.printStackTrace();
         }
 
-        System.out.println("Installed [" + this.getNameBase() + ": " + this.installed);
+        //System.out.println("Installed [" + this.getNameBase() + ": " + this.installed);
         
     }
 
