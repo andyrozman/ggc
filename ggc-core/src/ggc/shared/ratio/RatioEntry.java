@@ -47,12 +47,16 @@ public class RatioEntry
     {
         switch(column)
         {
-        case 1:
-            return "" + this.from;
-        case 2:
-            return "" + this.to;
-        case 3:
-            return "" + this.procent;
+            case 1:
+                return "" + this.from;
+            case 2:
+                return "" + this.to;
+            case 3:
+                return "" + this.ch_insulin;
+            case 4:
+                return "" + this.bg_insulin;
+            case 5:
+                return "" + this.procent;
             default:
                 return "";
         }
@@ -68,7 +72,7 @@ public class RatioEntry
      */
     public int getColumns()
     {
-        return 3;
+        return 5;
     }
     
     

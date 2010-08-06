@@ -299,10 +299,11 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         {
 
             private static final long serialVersionUID = -3326447034673814643L;
+            RatioEntry re = new RatioEntry();
 
             public int getColumnCount()
             {
-                return 4;
+                return re.getColumns();
             }
 
             public int getRowCount()

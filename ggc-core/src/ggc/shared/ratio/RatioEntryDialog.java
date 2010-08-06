@@ -18,6 +18,7 @@ import javax.swing.event.ChangeListener;
 import com.atech.graphics.components.TimeComponent;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
 
 
@@ -202,8 +203,16 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
     /**
      * Save data
      */
-    private void save()
+    private boolean save()
     {
+        
+        if (this.tc_from.getTime() == this.tc_to.getTime())
+        {
+            m_da.showDialog(this, ATDataAccessAbstract.DIALOG_ERROR, "RATIO_TIMERANGE_NOT_SET_CORRECTLY");
+            return false;
+        }
+        
+        
         if (this.ratio_entry == null)
             this.ratio_entry = new RatioEntry();
         
@@ -211,13 +220,17 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         this.ratio_entry.to = this.tc_to.getTime();
         this.ratio_entry.procent = ((Integer)this.procents.getValue()).floatValue();
         
+        this.ratio_entry.bg_insulin = m_da.getJFormatedTextValueFloat(this.rep.dtf_ins_bg);
+        this.ratio_entry.ch_insulin = m_da.getJFormatedTextValueFloat(this.rep.dtf_ch_ins);
+        
+        
 //        this.m_da.getSettings().setRatio_CH_Insulin(m_da.getFloatValue(this.dtf_ch_ins.getCurrentValue()));
 //        this.m_da.getSettings().setRatio_BG_Insulin(m_da.getFloatValue(this.dtf_ins_bg.getCurrentValue()));
         
         //this.m_da.getSettings().save();
         
         
-        
+        return true;
     }
 
     
@@ -327,10 +340,12 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         }
         else if (action.equals("ok"))
         {
-            this.m_action_done = true;
-            this.save();
-            m_da.removeComponent(this);
-            this.dispose();
+            if (this.save())
+            {
+                this.m_action_done = true;
+                m_da.removeComponent(this);
+                this.dispose();
+            }
         }
         else if (action.equals("time_from"))
         {

@@ -21,6 +21,7 @@ import javax.swing.border.TitledBorder;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -389,6 +390,10 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
                 m_da.removeComponent(this);
                 this.dispose();
             }
+        }
+        else if (action.equals("get_db_data"))
+        {
+            m_da.showDialog(this, ATDataAccessAbstract.DIALOG_WARNING, "RATIO_DB_IMPORT_NA");
         }
         else if (action.equals("calculate"))
         {
