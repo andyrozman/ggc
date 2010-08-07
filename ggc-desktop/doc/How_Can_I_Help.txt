@@ -189,20 +189,7 @@ environment.
     Add following site url: http://subclipse.tigris.org/update_1.6.x
     Wait few seconds that entry is added and file list downloaded. Select Subclipse plugin.
     
-3.) Create new workspace. Add Libraries. Libraries are stored under ggc-support/eclipse. You need to
-    expand each file. Name of library is name of zip file (not of directory inside). If you add all 
-    libraries, you should be able to just import all projects, without problem.
-
-    Since this task (Adding Libraried) is quite lengthy one, here is a shortcut. 
-      a.) Extract all files in ggc-support, into some root directory
-      b.) Open ggc-support/eclipse_add.txt, replace 'D\:/java/libs' with you root directory
-      c.) Select and copy content of whole file, open file 
-          <workspace>\.metadata\.plugins\org.eclipse.core.runtime\.settings\org.eclipse.jdt.core.prefs
-          Paste copied content
-      d.) You will probably have to recheck all libraries using native files (rxtx)
-
-    Note: IBMComm - this one runs only on windows and linux and its used for BlueTooth Connections
-                just for one device so far (Pumps -> Dana pump)
+3.) Create new workspace. 
     
     Open Windows->Preferences. Go to group Java->Code style->Formatter. Use Import option and add xml
     file stored under ggc-support/eclipse.
@@ -221,9 +208,28 @@ environment.
 
 
     You should have 8 projects. 
+
+5.) Add Libraries. 
+	a.) Libraries are stored under ggc-support/eclipse. You need to expand each zip file into 
+	    common directory (for example: c:\java\libs) 
+	b.) Copy ggc_libs.userlibraries to some directory on your disk
+	c.) Open this file in editor and replace all instances of 'D:/java/libs/' with your directory 
+	    (in our example c:/java/libs/, Notes: you need last '/' and you can't use \, you must use
+	     / instead (c:\java is in this case c:/java))
+	d.) - Right click on one project (any will do), right click Build Path -> Add Libraries...  
+	    - Select 'User Libraries' and click 'Next'
+	    - Click button 'User Libraries...'
+	    - Click button 'Import...'
+	    - Select file you edited in c.)
+	    
+	Now libraries are added. You will have to probably change setting for native files for all
+	libraries that have it (rxtx-2.2 and IBMComm). 
+	 
+    Note: IBMComm - this one runs only on windows and linux and its used for BlueTooth Connections
+                just for one device so far (Pumps -> Dana pump)
     
 
-5.) Run GGC
+6.) Run GGC
 
     Go to GGC Gluco Control/src/ggc-desktop/GGC.java (Right click on it, select Run As...->Java application
     
@@ -243,7 +249,7 @@ environment.
     - Go to working directory. Select other.
     - Click on Workspace... Select GNU Gluco Control/bin
     
-6.) Eclipse Preferences: You will have to do this on every project or use Workspace settings
+7.) Eclipse Preferences: You will have to do this on every project or use Workspace settings
      Go into Project -> Properties
      
      - Java Compiler: 
@@ -281,14 +287,14 @@ environment.
 	   simple stuff, just stuff you feel could be hard to understand. 
     
 
-7.) If you wish to test GGC Meter Tool, GGC Pump tool you will also need to set binaries for rxtx library. If 
+8.) If you wish to test GGC Meter Tool, GGC Pump tool you will also need to set binaries for rxtx library. If 
     your development OS is either windows, linux, macos, sparc you are in luck. 
     
     Go to rxtx entry, right click on it, select Build Path -> Configure Build path
     Set Native Library Location
 
 
-8.) If you wish to use any other database you need to have basic knowledge of JDBC
+9.) If you wish to use any other database you need to have basic knowledge of JDBC
 
     A) Install database software. I advise PostgreSQL 8.x (drivers were already added)
     
@@ -311,4 +317,4 @@ environment.
        d) Run InitDb
 
 
-9.) Now you can start the real work... Good luck...
+10.) Now you can start the real work... Good luck...
