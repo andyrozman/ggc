@@ -58,7 +58,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.graphics.dialogs.GUIListDialog;
 import com.atech.graphics.graphs.GraphViewer;
-import com.atech.gui_fw.MainAppFrame;
 import com.atech.help.HelpContext;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.refresh.EventObserverInterface;
