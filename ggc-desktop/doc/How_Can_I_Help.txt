@@ -231,7 +231,7 @@ environment.
 
 6.) Run GGC
 
-    Go to GGC Gluco Control/src/ggc-desktop/GGC.java (Right click on it, select Run As...->Java application
+    Go to GGC Desktop/src/ggc/GGC.java (Right click on it, select Run As...->Java application
     
     Copy files from ggc-support/data
     
@@ -276,7 +276,7 @@ environment.
               target to 1.5 is not enough.
 	
 	Javadoc. We are trying to start writing documentation and Javadoc is first step towards that.
-	   Old code will be commented with time, mostly be people who created code. All new code needs
+	   Old code will be commented with time, mostly by the people who created the code. All new code needs
 	   to have comments (javadoc and othwerwise). Eclipse will help you with making empty javadoc
 	   comments, and then just fill all the data (upper javadoc wont check if arguments are filled, 
 	   but they should be, since after some time we will enable that function, but for now we haven't 
@@ -288,7 +288,7 @@ environment.
     
 
 8.) If you wish to test GGC Meter Tool, GGC Pump tool you will also need to set binaries for rxtx library. If 
-    your development OS is either windows, linux, macos, sparc you are in luck. 
+    your development OS is either windows, linux, MacOS or sparc you are in luck. 
     
     Go to rxtx entry, right click on it, select Build Path -> Configure Build path
     Set Native Library Location

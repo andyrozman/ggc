@@ -12,7 +12,7 @@ Last change: 22/03/2009
 1.) How does Java handle translations? And how does GGC?
 --------------------------------------------------------
 
-In Java translations are written in separate files, each ending with ceratain endings. Usually this
+In Java translations are written in separate files, each ending with certain endings. Usually this
 is done like this: en_US, which means that language is English, and subset is American. We simplified 
 things here in GGC, so that we have just en, which means English translation.
 
@@ -28,7 +28,7 @@ with caron or \u010C for big C with caron. This is probably the harder way, but 
 Easier way to translate will be probably to write in your native characters and then later convert file to
 plain ASCII. How to do that we will see later.
 
-   
+
 
 2.) How to start?
 -----------------
@@ -56,7 +56,7 @@ task...
 At first you will need to decide how you wish to help us translate. There are two ways.
 
 a.) Offline mode
-In this "mode" you will receive your files to translate and you will send them back regullary (we can determine
+In this "mode" you will receive your files to translate and you will send them back regularly (we can determine
 how often later). In addition to that, you will receive each month another package, with "new" translation files.
 This will be english files, which you will need to compare to your translations (with tool 1) and add all new
 keywords, there were added. 
@@ -64,7 +64,7 @@ keywords, there were added.
   
 b.) Online mode
 In online mode, you will need to get SVN tree of all sources and you will need to check files regulary, but you 
-will get your changed files (EN) directly from SVN tree. If you plan to help with development this is preffered 
+will get your changed files (EN) directly from SVN tree. If you plan to help with development this is the preferred 
 way. For working in this mode, you will need to either install development environment (see document 
 How_Can_I_Help.txt, section D) or SVN application for managing source files. If you don't plan to help with 
 development you should go with second option. We need to know this to know how to add you (as developers or 
@@ -179,7 +179,7 @@ Next lines should be
 #     Untranslated:    #     #    #    #      (untranslated words)
 #     Same:            #     #    #    #      (words that are same in your and english language)
 #
-#     Procents translated:   # %              (how many procents need to be translated)
+#     Percent translated:   # %               (how many percent need to be translated)
 
 Following two values need to set:
 
