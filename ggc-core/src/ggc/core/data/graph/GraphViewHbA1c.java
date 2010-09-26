@@ -13,6 +13,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.util.Rotation;
 
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.graphics.graphs.GraphViewControlerInterface;
@@ -120,7 +121,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
         if (hbValues==null)
             hbValues = ((DataAccess)m_da).getDb().getHbA1c(new GregorianCalendar(), false);        
     }
-
+ 
     
     /**
      * Get Data Set
@@ -133,7 +134,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
     }
 
     /**
-     * Preprocess Data
+     * Preprocess Data, choose which data to show in the plot.
      */
     public void preprocessData()
     {
@@ -144,17 +145,24 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
         //        + hbValues.getPercentOfDaysInClass(4));
         
         //System.out.println("m_ic: " + m_ic);
-        
+        if(hbValues.getPercentOfDaysInClass(0) > 0) //just draw the sections of the plot which have values.
         dataset.insertValue(0, m_ic.getMessage("DAYS_WITH_READINGS_0_1"), hbValues.getPercentOfDaysInClass(0));
-        dataset.insertValue(1, m_ic.getMessage("DAYS_WITH_READINGS_2_3"), hbValues.getPercentOfDaysInClass(1));
-        dataset.insertValue(2, m_ic.getMessage("DAYS_WITH_READINGS_4_5"), hbValues.getPercentOfDaysInClass(2));
-        dataset.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"), hbValues.getPercentOfDaysInClass(3));
-        dataset.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"), hbValues.getPercentOfDaysInClass(4));
         
+        if(hbValues.getPercentOfDaysInClass(1) > 0)
+        dataset.insertValue(1, m_ic.getMessage("DAYS_WITH_READINGS_2_3"), hbValues.getPercentOfDaysInClass(1));
+        
+        if(hbValues.getPercentOfDaysInClass(2) > 0)
+        dataset.insertValue(2, m_ic.getMessage("DAYS_WITH_READINGS_4_5"), hbValues.getPercentOfDaysInClass(2));
+        
+        if(hbValues.getPercentOfDaysInClass(3) > 0)
+        dataset.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"), hbValues.getPercentOfDaysInClass(3));
+        
+        if(hbValues.getPercentOfDaysInClass(4) > 0)
+        dataset.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"), hbValues.getPercentOfDaysInClass(4));
     }
 
     /**
-     * Set Plot
+     * Set Plot Properties
      * 
      * @param chart JFreeChart instance
      */
@@ -164,11 +172,14 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
 
         //chart.setRenderingHints(renderingHints);
 
-        plot.setBackgroundPaint(Color.white); //backgroundColor);
+        plot.setBackgroundPaint(Color.WHITE); //backgroundColor);
         plot.setCircular(true);
         //plot.setBackgroundAlpha(0.5f);
-        plot.setForegroundAlpha(0.5f);
-        //plot.s
+        plot.setForegroundAlpha(0.7f);
+        plot.setInteriorGap(0);
+        plot.setStartAngle(45);
+        Rotation direction = Rotation.ANTICLOCKWISE;
+        plot.setDirection(direction);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_0_1"), Color.RED);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_2_3"), Color.BLUE);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_4_5"), Color.YELLOW);
@@ -183,6 +194,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
     public void createChart()
     {
         chart = ChartFactory.createPieChart3D(null, (DefaultPieDataset)dataset, true, true, false);
+        setPlot(chart);
     }
 
 
