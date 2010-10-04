@@ -116,8 +116,8 @@ public class ProfileSelector extends SelectorAbstractDialog
         {
             PumpProfileH pr = pe.getResult();
             
-            System.out.println("PumpProfile: " + pr);
-            System.out.println("PumpProfile(till=" + pr.getActive_till());
+//            System.out.println("PumpProfile: " + pr);
+//            System.out.println("PumpProfile(till=" + pr.getActive_till());
             
             boolean added = false;
             

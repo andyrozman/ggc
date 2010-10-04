@@ -566,38 +566,45 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
                 return this.getName();
     
             case 2:
-                if (this.getActive_till() <= 0)
+                return getDateDisplay(this.getActive_till());
+/*                if (this.getActive_till() <= 0)
                     return "";
                 else
-                    return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());
+                    return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());*/
     
             default:
-                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_from());
+                return getDateDisplay(this.getActive_from());
+//                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_from());
 
         }
     }
 
+    
+    private String getDateDisplay(long dt)
+    {
+        if (dt <= 0)
+            return "";
+        else
+        {
+            String s = "" + dt;
+            
+            if (s.length()==12)
+                dt *= 100;
+            
+            return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, dt);
+        }
+        
+    }
+    
+    
+    
 
     /** 
      * getColumnValueObject
      */
     public Object getColumnValueObject(int num)
     {
-        switch (num)
-        {
-            case 3:
-                return this.getName();
-    
-            case 2:
-                if (this.getActive_till() <= 0)
-                    return "";
-                else
-                    return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());
-    
-            default:
-                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_from());
-
-        }
+        return getColumnValue(num);
     }
 
 

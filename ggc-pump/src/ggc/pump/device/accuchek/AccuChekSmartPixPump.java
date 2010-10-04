@@ -539,7 +539,12 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
         for(int i=0; i<active_profiles.size(); i++)
         {
-            pvep.add(active_profiles.get(i).createDbObject());
+            Profile p = active_profiles.get(i);
+            
+//            p.profile_active_from = ATechDate.convertATDate(p.profile_active_from, ATechDate.FORMAT_DATE_AND_TIME_S, ATechDate.FORMAT_DATE_AND_TIME_MIN); 
+//            p.profile_active_till = ATechDate.convertATDate(p.profile_active_till, ATechDate.FORMAT_DATE_AND_TIME_S, ATechDate.FORMAT_DATE_AND_TIME_MIN); 
+            
+            pvep.add(p.createDbObject());
         }
        
         log.info("Profile processing - END");

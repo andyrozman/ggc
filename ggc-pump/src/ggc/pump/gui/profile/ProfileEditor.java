@@ -132,7 +132,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     private void load()
     {
         this.tf_name.setText(this.m_profile.getName());
-        this.dtc_from.setDateTime(this.m_profile.getActive_from());
+        this.dtc_from.setDateTime(getDateCorrected(this.m_profile.getActive_from()));
         
         if (this.m_profile.getActive_till() <= 0)
         {
@@ -142,8 +142,9 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         else
         {
             this.cb_enabled_till.setSelected(true);
-            this.dtc_till.setDateTime(this.m_profile.getActive_till());
+            this.dtc_till.setDateTime(getDateCorrected(this.m_profile.getActive_till()));
         }
+        
         this.sp_base.setValue(this.m_profile.getBasal_base());
         this.loadSubEntries(this.m_profile.getBasal_diffs());
         
@@ -153,6 +154,26 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         graphview_pe.refreshData();
         
     }
+    
+    
+    
+    private long getDateCorrected(long dt)
+    {
+        if (dt <= 0)
+            return dt;
+        else
+        {
+            String s = "" + dt;
+            
+            if (s.length()==12)
+                dt *= 100;
+            
+            return dt;
+        }
+        
+    }
+    
+    
     
     private void loadSubEntries(String subs)
     {
@@ -243,11 +264,11 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
             ATSwingUtils.FONT_NORMAL, "cancel.png", "select_profile", this, m_da);
         
         
-        ATSwingUtils.getLabel(m_ic.getMessage("DATE_FROM") + ":", 80, 110, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
+        ATSwingUtils.getLabel(m_ic.getMessage("DATE_FROM") + ":", 80, 110, 250, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
 
         dtc_from = new DateTimeComponent(m_da, DateTimeComponent.ALIGN_HORIZONTAL, 30, DateTimeComponent.TIME_MAXIMAL_SECOND);
         dtc_from.setBounds(190, 110, 120, 25);
-        dtc_from.setDateTimeType(DateTimeComponent.TIME_MAXIMAL_MINUTE);
+        dtc_from.setDateTimeType(DateTimeComponent.TIME_MAXIMAL_SECOND);
         dtc_from.setDateTimeAsCurrent();
         //dtc_from.setD
         panel.add(dtc_from);
@@ -257,7 +278,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         
         dtc_till = new DateTimeComponent(m_da, DateTimeComponent.ALIGN_HORIZONTAL, 30, DateTimeComponent.TIME_MAXIMAL_SECOND);
         dtc_till.setBounds(190, 145, 120, 25);
-        dtc_till.setDateTimeType(DateTimeComponent.TIME_MAXIMAL_MINUTE);
+        dtc_till.setDateTimeType(DateTimeComponent.TIME_MAXIMAL_SECOND);
         dtc_till.setDateTimeAsCurrent();
         dtc_till.setEnabled(false);
         panel.add(dtc_till);
@@ -466,6 +487,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         else if (action.equals("select_profile"))
         {
             ProfileSelectorPump psp = new ProfileSelectorPump(m_da, this);
+
             if (psp.wasAction())
             {
                 this.tf_name.setText(psp.getSelectedObject().toString());
