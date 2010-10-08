@@ -177,17 +177,24 @@ NOTE: For development we use Eclipse environment. We have several ant build file
 If you are developer and would like to help, please follow this instructions to create build 
 environment.
 
-1.) Download full SVN sources from sourceforge.net then download SVN for atech-tools project
+1.) Download full SVN sources from sourceforge.net then download SVN for atech-tools project.
+    Write this(beginning with svn...) in a terminal window:
+   [gast@frodo ~]$ svn co https://ggc.svn.sourceforge.net/svnroot/ggc/trunk ggc
+   ,respectively:
+   [gast@frodo ~]$ svn co https://atech-tools.svn.sourceforge.net/svnroot/atech-tools/trunk atech-tools .
+   After downloading the sources you will have two folders ../folder/gcc and ../folder/atech-tools inside of your folder.
 
-2.) Download Eclipse. Eclipse is our official development tool, but you can use any other you 
-    wish. I am advising to use Galileo (Eclipse 3.5). Link 
-    http://download.eclipse.org/eclipse/downloads/, take latest stable build.
+2.) Download Eclipse. Eclipse is our official development tool, but you can use any other you wish.
+    I am advising to use Galileo (Eclipse 3.5). Link http://download.eclipse.org/eclipse/downloads/, 
+    take latest stable build. Or you may find a downloadable package from your favorite repository that is already built and ready to 
+    use for your system - just download it as you would with any software.
     
-    Install subclipse: (you need to do this step before you go to 3.
+    Install subclipse for Eclipse: (you need to do this step before you go to 3. Subclipse is often already packed and ready for download from your 
+    favorite repository or follow the instructions below.
     
-    Go to Help -> Software Updates. Tab Available software, click on add site.
-    Add following site url: http://subclipse.tigris.org/update_1.6.x
-    Wait few seconds that entry is added and file list downloaded. Select Subclipse plugin.
+    Go to Eclipse Window -> Preferences -> Install/Update -> Available Software Sites -> Add -> Location: http://subclipse.tigris.org/update_1.6.x .
+    Mark the Location you just added and press Enable button and Ok. Go to Help -> Check for Updates. Wait a few seconds so that the entry is added and 
+    the file list is downloaded. Select Subclipse plugin.
     
 3.) Create new workspace. 
     
@@ -197,12 +204,12 @@ environment.
 4.) a.) ATech-Tools
          * On workspace (Left window) do Import...
          * use General->Existing projects into workspace
-         * In Select root directory, select <AtechToolsRoot>/trunk/java           
+         * In Select root directory -> Browse... for ../folder/atech-tools .         
 
     b.) GGC 
          * On workspace (Left window) do Import...
          * use General->Existing projects into workspace
-         * In Select root directory, select <GGC>/trunk           
+         * In Select root directory -> Browse... for  ../folder/gcc .          
       
     Import all projects except "GGC Web Page"  (ggc-core, ggc-desktop, ggc-meter, ggc-pump, ggc-cgm, ggc-plugin_base, ggc-nutri)
 
