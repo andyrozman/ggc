@@ -65,7 +65,7 @@ public class GGCGraphUtil extends GraphUtil
 
     //private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
     
-    String unitLabel = "mg/dl";
+    String unitLabel; //removed ="mg/dl" to reflect changes  made in properties
     
     DataAccess m_da_local;
 
@@ -200,10 +200,22 @@ public class GGCGraphUtil extends GraphUtil
     /**
      * Get Unit Label
      * 
-     * @return
+     * @return Label of unit in mmol/l or mg/dl.
      */
     public String getUnitLabel()
     {
+        BGUnit = settings.getBG_unit();
+        switch (BGUnit)
+        {
+            case DataAccess.BG_MMOL:
+                unitLabel = "mmol/l";
+                break;
+
+            case DataAccess.BG_MGDL:
+            default:
+                unitLabel = "mg/dl";
+                break;
+        }
         return this.unitLabel;
     }
     
