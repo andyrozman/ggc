@@ -39,6 +39,8 @@ you check-in rights.
 
 <h3 class="header">Translation</h3>
 Translation "protocol" was now revised, so please see Documentation, for more info on how to do translations.
+There is also Translation Tool now available, which should help with translation considerably (see Projects->Translation Tool)
+
 
 
 <br><br>

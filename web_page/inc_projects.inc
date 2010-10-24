@@ -47,7 +47,7 @@ Meter Tool implementation is now finished. All that remains is adding support fo
     <ul>
         <li>Ascensia/Bayer - Contour, Countour Link, Dex, Elite, Breeze </li>
         <li>Roche/Accu-Chek - All devices supported through Smart Pix device</li>
-        <li>Lifescan - OT Ultra, OT Ultra2, OT Ultra Smart (partitial), OT Easy/Mini </li>
+        <li>Lifescan - OT Ultra, <strike>OT Ultra2</strike>, OT Ultra Smart (partitial), OT Easy/Mini </li>
     </ul>
 </ul>
 <br>
@@ -147,12 +147,13 @@ At first you need to install Java JRE 1.5 (or higher), and then you need to read
 You need to install following three packages and then you are ready to go (only latest versions are available here, if 
 you need older version you will need to visit our files section on sourceforge.net):
 <ul>
-	<li><a href="https://sourceforge.net/projects/ggc/files/Translation%20Tool/TranslationTool_1.2.zip/download">Translation Tool 1.2</a></li>
+	<li><a href="https://sourceforge.net/projects/ggc/files/Translation%20Tool/TranslationTool_1.2.2.zip/download">Translation Tool 1.2.2</a></li>
 	<li><a href="https://sourceforge.net/projects/ggc/files/Translation%20Tool/GGC_Base_1.zip/download">GGC Base Pack v1</a></li>
 	<li><a href="https://sourceforge.net/projects/ggc/files/Translation%20Tool/GGC_Lang_1.zip/download">GGC Lang Pack v1 (for GGC 0.4.17)</a></li>
+	<li><a href="https://sourceforge.net/projects/ggc/files/Translation%20Tool/GGC_Lang_2.zip/download">GGC Lang Pack v2 (for GGC 0.4.20)</a></li>
 </ul> 
 <br>
-Currently supported languages: English (100%), German (~50%), Slovenian (95%), French (~10%).<br>
+Currently supported languages: English (100%), German (~50%), Slovenian (90%), French (~70%).<br>
 If you are willing to translate GGC into your language, please contact us.
 <br>
 

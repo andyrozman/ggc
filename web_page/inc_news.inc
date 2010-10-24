@@ -5,6 +5,23 @@
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
+<td width="150">2010-08-07 12:45</td>
+<td>Translation Tool - new version</td>
+</tr>
+<tr>
+<td colspan="2">
+New version of translation tool (1.2.2) and also new version of GGC Lang pack. We plan next 
+release of GGC in next month, so this Lang pack is intended for 0.4.20 version.
+See section <a href="index.php?show=projects">Projects</a> for more info.
+</td>
+</tr>
+</table> 
+
+<br><br>
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
 <td width="150">2010-04-08 21:45</td>
 <td>Translation Tool</td>
 </tr>
