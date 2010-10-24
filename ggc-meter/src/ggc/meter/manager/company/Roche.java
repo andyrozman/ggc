@@ -3,6 +3,7 @@ package ggc.meter.manager.company;
 import ggc.meter.device.accuchek.AccuChekActive;
 import ggc.meter.device.accuchek.AccuChekAdvantage;
 import ggc.meter.device.accuchek.AccuChekAviva;
+import ggc.meter.device.accuchek.AccuChekAvivaCombo;
 import ggc.meter.device.accuchek.AccuChekComfort;
 import ggc.meter.device.accuchek.AccuChekCompact;
 import ggc.meter.device.accuchek.AccuChekCompactPlus;
@@ -71,6 +72,7 @@ public class Roche extends AbstractDeviceCompany
         this.addDevice(new AccuChekPerforma(this));
         this.addDevice(new AccuChekSensor(this));
         this.addDevice(new AccuChekNano(this));
+        this.addDevice(new AccuChekAvivaCombo(this));
     }
     
     

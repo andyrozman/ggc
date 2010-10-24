@@ -269,11 +269,26 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         {
             mve.setBgValue(""+10);
         }
+        else if (el.attributeValue("Val").toUpperCase().startsWith("---"))
+        {
+            
+        }   
         else
             mve.setBgValue(el.attributeValue("Val"));
         
         // <BG Val="5.1" Dt="2005-06-07" Tm="18:01" D="1"/>
 
+        
+        String element_attribute = el.attributeValue("Carb");
+        
+        if (element_attribute!=null)
+        {
+            mve.setSpecialEntry(MeterValuesEntry.SPECIAL_ENTRY_CH, element_attribute);
+        }
+        
+        
+        
+        
         //System.out.println(mve);
         
         this.output_writer.writeData(mve);

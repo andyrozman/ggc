@@ -121,4 +121,6 @@ public class OneTouchUltraMini extends OneTouchUltraEasy
         return "Ultra Mini";
     }
 
+    
+    
 }

@@ -391,7 +391,7 @@ public class OptiumXceed extends AbstractSerialMeter
         this.output_writer.setSubStatus(null);
         this.output_writer.endOutput();
         this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
-        System.out.println("Reading finished prematurely !");
+//        System.out.println("Reading finished prematurely !");
     }
     
     

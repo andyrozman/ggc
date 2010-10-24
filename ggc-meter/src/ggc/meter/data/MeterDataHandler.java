@@ -66,9 +66,9 @@ public class MeterDataHandler extends DeviceDataHandler
      */
     public void executeExportDb()
     {
-        System.out.println("executeExportDb");
+//        System.out.println("executeExportDb");
         
-        System.out.println("  -- Start");
+//        System.out.println("  -- Start");
         
         // Andy [8.3.2010] - in V1 we used setReturnData to write data into database, now each
         //      plugin has it's own access to database. 
@@ -83,8 +83,8 @@ public class MeterDataHandler extends DeviceDataHandler
         Hashtable<String, ArrayList<DeviceValuesEntry>> ll = getDeviceValuesTableModel().getCheckedDVE(); 
         //    this.m_model.getCheckedDVE();
             
-        System.out.println("Size [add]: " + ll.get("ADD").size());
-        System.out.println("Size [edit]: " + ll.get("EDIT").size());
+//        System.out.println("Size [add]: " + ll.get("ADD").size());
+//        System.out.println("Size [edit]: " + ll.get("EDIT").size());
         
         
         //float full_count = 0.0f;
@@ -171,7 +171,7 @@ public class MeterDataHandler extends DeviceDataHandler
         this.element_count_all += ht_edit.size();
         this.element_count_all += ht_add_edit.size();
 
-        System.out.println("  -- Element count: " + this.element_count_all);
+//        System.out.println("  -- Element count: " + this.element_count_all);
         
         
         // we retrieve list of all pump reading
@@ -204,6 +204,7 @@ public class MeterDataHandler extends DeviceDataHandler
                 // process pump data, since we now support more than one data type, we have a 
                 // little more to do
                 
+                
                 if (mve.getPumpMappedType()!=-1)
                 {
                     PumpDataExtendedH pdeh = null;
@@ -216,10 +217,21 @@ public class MeterDataHandler extends DeviceDataHandler
                         
                         if (mve.isSpecialEntry())
                         {
-                            if (!pdeh.getValue().equals(mve.getSpecialEntryValue()))
+                            if (mve.doWeTransferUnitsForSpecialEntry())
                             {
-                                pdeh.setValue(mve.getSpecialEntryValue());
-                                db.editHibernate(pdeh);
+                                if (!pdeh.getValue().equals(mve.getSpecialEntryValue()))
+                                {
+                                    pdeh.setValue(mve.getSpecialEntryValue());
+                                    db.editHibernate(pdeh);
+                                }
+                            }
+                            else
+                            {
+                                if (!pdeh.getValue().equals(mve.getSpecialEntryValueWithoutUnit()))
+                                {
+                                    pdeh.setValue(mve.getSpecialEntryValueWithoutUnit());
+                                    db.editHibernate(pdeh);
+                                }
                             }
                             
                         }
@@ -242,7 +254,10 @@ public class MeterDataHandler extends DeviceDataHandler
 
                         if (mve.isSpecialEntry())
                         {
-                            pdeh.setValue(mve.getSpecialEntryValue());
+                            if (mve.doWeTransferUnitsForSpecialEntry())
+                                pdeh.setValue(mve.getSpecialEntryValue());
+                            else
+                                pdeh.setValue(mve.getSpecialEntryValueWithoutUnit());
                         }
                         else
                         {
@@ -277,7 +292,7 @@ public class MeterDataHandler extends DeviceDataHandler
         // each component for pump
         setCustomStatus(3, 0);
 
-        System.out.println("  -- End");
+//        System.out.println("  -- End");
         
     }
     
@@ -374,7 +389,7 @@ public class MeterDataHandler extends DeviceDataHandler
         
         MeterInterface mi = (MeterInterface)m_da.getSelectedDeviceInstance();
         
-        System.out.println("getDeviceValuesTableModel(): " + mi.getInterfaceTypeForMeter() );
+//        System.out.println("getDeviceValuesTableModel(): " + mi.getInterfaceTypeForMeter() );
         
         if (mi.getInterfaceTypeForMeter()==MeterInterface.METER_INTERFACE_SIMPLE)
             return m_model;

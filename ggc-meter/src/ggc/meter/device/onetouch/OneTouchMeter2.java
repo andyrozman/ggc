@@ -607,6 +607,13 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     }
     
     
+    //public static final int CMD_GET_SOFTWARE_VERSION = 1;
+    
+    
+    //public abstract String getDeviceCommand(int command);
+    
+    
+    
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
      *    normal progress status, but with some special devices we calculate progress through other means.

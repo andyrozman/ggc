@@ -158,8 +158,8 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
                 mve_old.prepareEntry_v2();
                 
                 
-                System.out.println("MeterValuesExtTableModel: " + mve_old.getDateTimeObject());
-                System.out.println("old=" + mve_old.getValueFull() + ", new=" + mve2.getValueFull());
+//                System.out.println("MeterValuesExtTableModel: " + mve_old.getDateTimeObject());
+//                System.out.println("old=" + mve_old.getValueFull() + ", new=" + mve2.getValueFull());
                 
                 if (mve_old.getValueFull().equals(mve2.getValueFull()))
                 {

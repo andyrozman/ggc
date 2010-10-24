@@ -55,7 +55,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.2.1";
+    public static final String PLUGIN_VERSION = "1.2.2";
     
     private static DataAccessMeter s_da = null; // This is handle to unique 
 
@@ -224,10 +224,10 @@ public class DataAccessMeter extends DataAccessPlugInBase
         
         
         fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer"));
-        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
-        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Ultra2, Profile, Easy, UltraSmart"));
-        
+        fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer (except Contour USB and Didget)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche (except Aviva Combo)"));
+        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Profile, Easy, UltraSmart"));
+        // FIXME
         lst_features.add(fg);
         
         
@@ -238,8 +238,9 @@ public class DataAccessMeter extends DataAccessPlugInBase
 
         
         fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
-        //fg.addFeaturesEntry(new FeaturesEntry("LifeScan (end of 2008)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Abbott (in 2009)"));
+        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra2 (in 2011)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche: Aviva Combo (end of 2010, start of 2011)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Abbott (in 2011)"));
         fg.addFeaturesEntry(new FeaturesEntry("???"));
         
         lst_features.add(fg);
@@ -276,7 +277,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         
         this.loadWebLister();
         
-        I18nControlAbstract ic = getI18nControlInstance();
+        //I18nControlAbstract ic = getI18nControlInstance();
         
         weblister_items = new ArrayList<BaseListEntry>();
         weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/meters/abbott.html", 4));
@@ -294,7 +295,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         weblister_items.add(new BaseListEntry("WaveSense", "/meters/wavesense.html", 5));
         
         //weblister_title = ic.getMessage("METERS_LIST_WEB");
-        weblister_desc = ic.getMessage("METERS_LIST_WEB_DESC");
+        weblister_desc = i18n_plugin.getMessage("METERS_LIST_WEB_DESC");
     }
         
     

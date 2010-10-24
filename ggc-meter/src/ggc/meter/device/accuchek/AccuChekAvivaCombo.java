@@ -1,5 +1,6 @@
 package ggc.meter.device.accuchek;
 
+import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -84,7 +85,7 @@ public class AccuChekAvivaCombo extends AccuChekSmartPixMeter
      */
     public String getName()
     {
-        return "Aviva";
+        return "Aviva Combo";
     }
 
     
@@ -95,7 +96,7 @@ public class AccuChekAvivaCombo extends AccuChekSmartPixMeter
      */
     public String getIconName()
     {
-        return "ac_aviva.jpg";
+        return "ac_combo.jpg";
     }
     
 
@@ -107,7 +108,7 @@ public class AccuChekAvivaCombo extends AccuChekSmartPixMeter
      */
     public int getDeviceId()
     {
-        return MeterDevicesIds.METER_ACCUCHEK_AVIVA;
+        return MeterDevicesIds.METER_ACCUCHEK_AVIVA_COMBO;
     }
 
     
@@ -121,7 +122,7 @@ public class AccuChekAvivaCombo extends AccuChekSmartPixMeter
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_ACCUCHEK_AVIVA";
+        return "INSTRUCTIONS_ACCUCHEK_AVIVA_COMBO";
     }
     
     /**
@@ -152,7 +153,7 @@ public class AccuChekAvivaCombo extends AccuChekSmartPixMeter
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.accuchek.AccuChekAviva";
+        return "ggc.meter.device.accuchek.AccuChekAvivaCombo";
     }
     
     
@@ -173,6 +174,19 @@ public class AccuChekAvivaCombo extends AccuChekSmartPixMeter
     {
         return 500;
     }
+
+    
+    /**
+     * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
+     *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
+     *    ... - OT Smart, etc), this devices require more extended data display. 
+     * @return
+     */
+    public int getInterfaceTypeForMeter()
+    {
+        return MeterInterface.METER_INTERFACE_EXTENDED;
+    }
+    
     
     
 }

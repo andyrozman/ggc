@@ -205,6 +205,12 @@ public class MeterDevicesIds
      */
     public static final int METER_ACCUCHEK_NANO           = 20012;
     
+
+    /**
+     * Meter Device: Accu Chek Nano
+     */
+    public static final int METER_ACCUCHEK_AVIVA_COMBO    = 20013;
+    
     
     /**
      * 

@@ -284,8 +284,8 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
             }
             else
             {
-                System.out.println("util: " + this.util);
-                System.out.println("bg_org: " + this.bg_original);
+//                System.out.println("util: " + this.util);
+//                System.out.println("bg_org: " + this.bg_original);
                 
                 if (this.bg_original==null)
                 {
@@ -801,7 +801,14 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
             Transaction tx = sess.beginTransaction();
             
             if (this.special_entry)
-                this.entry_object.setExtended(this.getSpecialEntryDbEntry());
+            {
+                if (this.special_entry_id==SPECIAL_ENTRY_CH)
+                {
+                    this.entry_object.setCh(Float.parseFloat(this.special_entry_value));
+                }
+                else
+                    this.entry_object.setExtended(this.getSpecialEntryDbEntry());
+            }
             else
                 this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
             
@@ -825,7 +832,15 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
             this.entry_object.setPerson_id((int)DataAccessMeter.getInstance().getCurrentUserId());
             
             if (this.special_entry)
-                this.entry_object.setExtended(this.getSpecialEntryDbEntry()+";" + "SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
+            {
+                if (this.special_entry_id==SPECIAL_ENTRY_CH)
+                {
+                    this.entry_object.setCh(Float.parseFloat(this.special_entry_value));
+                    this.entry_object.setExtended("SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
+                }
+                else
+                    this.entry_object.setExtended(this.getSpecialEntryDbEntry()+";" + "SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
+            }
             else
             {
                 this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
@@ -843,9 +858,9 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
             log.debug("Added. Status was Add. Action was: " + act);
             Long id = (Long) sess.save(this.entry_object);
 
-            System.out.println("Dt: " + this.getDateTimeObject().getDateTimeString() + this.getBgValue());
+//            System.out.println("Dt: " + this.getDateTimeObject().getDateTimeString() + this.getBgValue());
             
-            System.out.println("Add: Id=" + id.longValue());
+//            System.out.println("Add: Id=" + id.longValue());
             
             tx.commit();
 
@@ -894,7 +909,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
      */
     public String getObjectName()
     {
-        return "";
+        return getDVEName();
     }
 
 
@@ -1028,6 +1043,11 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
      */
     public static final int SPECIAL_ENTRY_URINE_MGDL = 2;
     
+    /**
+     * Special Entry: CH
+     */
+    public static final int SPECIAL_ENTRY_CH = 3;
+    
     
     /**
      * Set Special Entry
@@ -1043,11 +1063,11 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     }
     
     
-    String special_entry_tags[] = { "", "URINE", "URINE" };
-    String special_entry_units[] = { "", " mmol/L", " mg/dL" };  // this are not required, if your special 
-                                                                 // entry has no unit, leave this empty (have at least one space as unit), so that code will work
+    String special_entry_tags[] = { "", "URINE", "URINE", "CH" };
+    String special_entry_units[] = { "", " mmol/L", " mg/dL", " g" };  // this are not required, if your special 
+    boolean special_entry_transfer_unit[] = { false, true, true, false };                                                             // entry has no unit, leave this empty (have at least one space as unit), so that code will work
     
-    int special_entry_pump_map[] = { -1, 4, 4 };
+    int special_entry_pump_map[] = { -1, 4, 4, 5 };
     
     /**
      * Get Special Entry DbEntry
@@ -1067,6 +1087,16 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     }
     
     
+    /**
+     * Do we Transfer Units For Special Entry
+     * 
+     * @return
+     */
+    public boolean doWeTransferUnitsForSpecialEntry()
+    {
+        return special_entry_transfer_unit[this.special_entry_id]; 
+    }
+    
     
     /**
      * Get Special Entry Value
@@ -1083,6 +1113,16 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         return sb.toString();
     }
     
+
+    /**
+     * Get Special Entry Value
+     * 
+     * @return
+     */
+    public String getSpecialEntryValueWithoutUnit()
+    {
+        return this.special_entry_value;
+    }
     
     
     /**

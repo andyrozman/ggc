@@ -170,7 +170,7 @@ public class OneTouchSelect extends OneTouchMeter2
         switch(command)
         {
             case OneTouchMeter2.COMMAND_READ_SW_VERSION_AND_CREATE:
-                return "02" + "09" + "00" + "05" + "0D" + "02" + "03" + "E8" + "42";
+                return "02" + "09" + "00" + "05" + "0D" + "03" + "03" + "EB" + "42";
 
             case OneTouchMeter2.COMMAND_READ_SERIAL_NUMBER:    
                 return "02" + "12" + "00" + "05" + // STX Len Link
