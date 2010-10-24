@@ -348,15 +348,6 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         
         help_button = m_da.createHelpButtonByBounds(360, 150, 110, 25, this);
         panel.add(help_button);
-        
-        
-        
-
-        
-        
-
-//        panel.add(help_button);
-
         m_da.enableHelp(this);
         
     }
