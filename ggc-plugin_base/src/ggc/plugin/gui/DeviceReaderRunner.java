@@ -190,7 +190,7 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
                     log.debug(lg);
                     writeLog(LogEntryType.DEBUG, lg);
                     
-                    System.out.println("Transfer type: " + this.m_ddh.getTransferType()); 
+//                    System.out.println("Transfer type: " + this.m_ddh.getTransferType()); 
                     
                     if (this.m_ddh.getTransferType()==DeviceDataHandler.TRANSFER_READ_DATA)
                     {

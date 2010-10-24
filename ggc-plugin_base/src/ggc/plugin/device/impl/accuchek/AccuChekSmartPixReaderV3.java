@@ -104,6 +104,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
             }
             sleep(2000);
             
+            debug("Before 10");
             
             if (!checkFinished(finished, 10, "PIX_ABORT_AUTOSCAN"))
                 return;
@@ -130,6 +131,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
                 
             }
 
+            debug("Before 15");
             
             if (!checkFinished(finished, 15, null))
                 return;
@@ -139,9 +141,13 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
             
             status = readStatusUntilState("SCAN", "FOUND", 20000);
             
+            debug("Before 20");
+            
+            
             if (!checkFinished(status, 20, "PIX_READING_ELEMENT"))
                 return;
-            //System.out.println("Device Found !");
+            
+            System.out.println("Device Found !");
             
             
             status = readStatusUntilState("SCAN", "REQUEST", 120000);
@@ -151,10 +157,10 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
             
             
             
-            //System.out.println("Report is beeing created !");
+            System.out.println("Report is beeing created !");
             
-            status = readStatusUntilState("NOSCAN", "REPORT", 10000);
-//            System.out.println("Report Created !");
+            status = readStatusUntilState("NOSCAN", "REPORT", 120000); //10000
+            System.out.println("Report Created !");
 
             if (!checkFinished(status, 95, "PIX_FINISHED_REPORT_READY"))
                 return;
@@ -220,6 +226,11 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
     {
         try
         {
+            
+            if (!new File(m_da.pathResolver(drive_path)).exists())
+                return;
+            
+            
 //            System.out.println("Send " + command);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(new File(m_da.pathResolver(drive_path + "/" + System.currentTimeMillis() + ".txt"))),"ISO-8859-1"));
@@ -266,6 +277,9 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         while(System.currentTimeMillis() < end_time)
         {
             String st = readStatus();
+            
+            writeStatus(st);
+            
             if (st.equals(state))
                 return true;
             else
@@ -292,17 +306,34 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         boolean reading_data = false;
         
         if ((state1.equals("SCAN")) && (state2.equals("REQUEST")))
+        {
             reading_data = true;
+            System.out.println("Reading data");
+        }
         
         
         while(System.currentTimeMillis() < end_time)
         {
             String st[] = readStatuses();
             
-            //if ((st.length==2) && (st[1].equals(state1)) && (st[2].contains(state2)))
-            if ((st[1].equals(state1)) && (st[2].contains(state2)))
-                return true;
-            else
+            writeStatus(st);
+            
+            if (st.length==2)
+            {
+                if ((st[1].equals(state1)))
+                    return true;
+                else
+                    sleep(250);
+            }
+            else if (st.length>2)
+            {
+                //if ((st.length==2) && (st[1].equals(state1)) && (st[2].contains(state2)))
+                if ((st[1].equals(state1)) && (st[2].contains(state2)))
+                    return true;
+                else
+                    sleep(250);
+            }
+            else 
                 sleep(250);
             
             if (this.parent.isDeviceStopped())
@@ -349,6 +380,10 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         BufferedReader br=null;
         try
         {
+//            if (!new File(m_da.pathResolver(this.drive_path + "/MISC/STATUS.TXT")).exists())
+//                return "";
+            
+            
             br = new BufferedReader(new FileReader(m_da.pathResolver(this.drive_path + "/MISC/STATUS.TXT")));
             
             while((line=br.readLine())!=null)
@@ -422,8 +457,14 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
     public void preInitDevice()
     {
 //        System.out.println("preInitDevice: Reader [v3]");
+        
+        
+        
         this.sendCommandToDevice("Abort");
         readStatusUntilState("NOSCAN", 5000);
+        
+        this.sendCommandToDevice("EraseReport");
+        
     }
     
     
@@ -432,6 +473,33 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
     {
         return true;
     }
+    
+    
+    private void writeStatus(String[] status)
+    {
+/*        
+        for(int i=0; i<status.length; i++)
+        {
+            System.out.print("["+i+"] " + status[i] + " ");
+        }
+        
+        System.out.print("\n");
+  */      
+    }
+    
+
+    private void writeStatus(String status)
+    {
+//        System.out.print("[0] " + status + " \n");
+    }
+    
+    
+    private void debug(String status)
+    {
+//        System.out.print(status);
+    }
+    
+    
     
     
 }

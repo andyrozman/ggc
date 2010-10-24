@@ -504,7 +504,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         ArrayList<DatabaseObjectHibernate> list_add = new ArrayList<DatabaseObjectHibernate>();
         ArrayList<DatabaseObjectHibernate> list_edit = new ArrayList<DatabaseObjectHibernate>();
         
-        System.out.println("getCheckedDOHObjects()");
+        //System.out.println("getCheckedDOHObjects()");
         
         
         for(int i=0; i<this.displayed_dl_data.size(); i++)

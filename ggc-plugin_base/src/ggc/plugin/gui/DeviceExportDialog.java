@@ -260,11 +260,11 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         if (this.progress!=null)
             this.progress.setValue(status);
         
-        System.out.println("setStatus: " + status);
+//        System.out.println("setStatus: " + status);
         
         if (status==100)
         {
-            System.out.println("setStatusXXXX: " + status);
+//            System.out.println("setStatusXXXX: " + status);
             bt_close.setEnabled(true);
             this.lbl_status.setText(m_ic.getMessage("EXPORT_STATUS_FINISHED"));
             bt_close.setEnabled(true);

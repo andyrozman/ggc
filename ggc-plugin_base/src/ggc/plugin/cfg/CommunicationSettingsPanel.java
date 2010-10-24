@@ -135,6 +135,8 @@ public class CommunicationSettingsPanel extends JPanel
                 panel.setBounds(5, 55, 400, 35);
                 panel.setEnabled(true);
                 this.add(panel);
+                
+                this.special_config.loadParametersToGUI();
                 //panel.setBounds(40, 40, 400, 35);
                 
             }
