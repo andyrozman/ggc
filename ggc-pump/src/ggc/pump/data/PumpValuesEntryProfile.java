@@ -854,7 +854,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      */
     public String getMultiLineToolTip(int index)
     {
-        System.out.println("getMultiLIneToolTip");
+//        System.out.println("getMultiLIneToolTip");
         
         if (index==4)
             return this.value_multiline;

@@ -303,6 +303,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     public void deleteInstance()
     {
         m_i18n = null;
+        i18n_plugin = null;
     }
 
 /* 
@@ -646,13 +647,13 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.data_download_screen_wide = true;
         
         this.columns_table = new String[7];
-        this.columns_table[0] = m_i18n.getMessage("DATETIME"); 
-        this.columns_table[1] = m_i18n.getMessage("ENTRY_TYPE");
-        this.columns_table[2] = m_i18n.getMessage("BASE_TYPE");
-        this.columns_table[3] = m_i18n.getMessage("SUB_TYPE");
-        this.columns_table[4] = m_i18n.getMessage("VALUE");
-        this.columns_table[5] = m_i18n.getMessage("STATUS");
-        this.columns_table[6] = m_i18n.getMessage("");
+        this.columns_table[0] = i18n_plugin.getMessage("DATETIME"); 
+        this.columns_table[1] = i18n_plugin.getMessage("ENTRY_TYPE");
+        this.columns_table[2] = i18n_plugin.getMessage("BASE_TYPE");
+        this.columns_table[3] = i18n_plugin.getMessage("SUB_TYPE");
+        this.columns_table[4] = i18n_plugin.getMessage("VALUE");
+        this.columns_table[5] = i18n_plugin.getMessage("STATUS");
+        this.columns_table[6] = ""; //i18n_plugin.getMessage("");
         
         this.column_widths_table = new int[7];
         this.column_widths_table[0] = 100;

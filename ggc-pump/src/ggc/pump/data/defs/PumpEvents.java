@@ -186,6 +186,15 @@ public class PumpEvents
      */
     public static final int PUMP_EVENT_BG_FROM_METER = 70;
     
+    
+    /**
+     * Pump Event: Bolus Cancelled
+     */
+    public static final int PUMP_EVENT_BOLUS_CANCELLED   = 80;
+    
+    
+    
+    
     /**
      * Constructor
      */
@@ -222,6 +231,12 @@ public class PumpEvents
         // EVENT_SET_MAX_BASAL, EVENT_SET_MAX_BOLUS
         // EVENT_BATERRY_REMOVED, EVENT_BATERRY_REPLACED, EVENT_BATERRY_LOW, EVENT_BATERRY_LOW_DESC, EVENT_BG_FROM_METER
 
+        setEventDesc(PumpEvents.PUMP_EVENT_BOLUS_CANCELLED, "ALARM_BOLUS_CANCELED");
+        
+        
+        
+        
+        
         // EVENT_RESERVOIR_LOW, EVENT_RESERVOIR_LOW_DESC, EVENT_SET_TEMPORARY_BASAL_RATE_TYPE, EVENT_SET_BASAL_PATTERN
      // EVENT_SELF_TEST, EVENT_DOWNLOAD
         

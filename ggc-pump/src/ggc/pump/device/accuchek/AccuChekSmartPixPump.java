@@ -395,7 +395,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             
             if (profile.isCompleteProfile())
             {
-                System.out.println("Profile id: " + profile.profile_id);
+                //System.out.println("Profile id: " + profile.profile_id);
                 if (profiles_sorted.containsKey(profile.profile_id))
                 {
                     profiles_sorted.get(profile.profile_id).add(profile);
@@ -1272,6 +1272,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         this.event_mappings.put("time / date set", new Integer(PumpEvents.PUMP_EVENT_DATETIME_SET));
         this.event_mappings.put("time / date corrected", new Integer(PumpEvents.PUMP_EVENT_DATETIME_CORRECTED));
         this.event_mappings.put("time / date set (time shift back)", PumpEvents.PUMP_EVENT_DATETIME_CORRECTED);
+        this.event_mappings.put("W1", PumpEvents.PUMP_EVENT_RESERVOIR_LOW);
+        this.event_mappings.put("W8", PumpEvents.PUMP_EVENT_BOLUS_CANCELLED);
+        this.event_mappings.put("W2", PumpEvents.PUMP_EVENT_BATERRY_LOW);
         
         
         this.error_mappings = new Hashtable<String,Integer>();

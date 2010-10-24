@@ -173,7 +173,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.accuchek.AccuChekCombo";
+        return "ggc.pump.device.accuchek.AccuChekCombo";
     }
 
 
@@ -227,7 +227,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public float getBasalStep()
     {
-        return 0.1f;
+        return 0.01f;
     }
     
     
