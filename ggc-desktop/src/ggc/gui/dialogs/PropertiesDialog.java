@@ -74,6 +74,8 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     int current_index = 0;
     boolean ok_action = false;
 
+    private PrefFontsAndColorPane pfacpane=null; //used for updating preferences correctly when changes are made to mg/dl or mmol/l.
+    private PrefRenderingQualityPane prqpane=null; //used for updating preferences correctly when changes are made to mg/dl or mmol/l.
 
     /**
      * Config types
@@ -282,8 +284,10 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         addPanel(m_ic.getMessage("MODE"), PANEL_MODE, new PrefModePane(this));
         addPanel(m_ic.getMessage("GENERAL"), this.PANEL_GENERAL, new PrefGeneralPane(this));
         addPanel(m_ic.getMessage("MEDICAL_DATA"), this.PANEL_MEDICAL_DATA, new PrefMedicalDataPane(this));
-        addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, new PrefFontsAndColorPane(this));
-        addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, new PrefRenderingQualityPane(this));
+        pfacpane = new PrefFontsAndColorPane(this); //to be able to use updateGraphView with an instance later.
+        addPanel(m_ic.getMessage("COLORS_AND_FONTS"), PANEL_COLORS, pfacpane); //
+        prqpane = new PrefRenderingQualityPane(this);//to be able to use updateGraphView with an instance later.
+        addPanel(m_ic.getMessage("RENDERING_QUALITY"), PANEL_RENDERING, prqpane);
         addPanel(m_ic.getMessage("PRINTING"), PANEL_PRINTING, new PrefPrintingPane(this));
         addPanel(m_ic.getMessage("LANGUAGE"), PANEL_LANGUAGE, new PrefLanguagePane(this));
 //        addPanel(m_ic.getMessage("METER_CONFIGURATION"), PANEL_METER, new PrefMeterConfPane(this));
@@ -347,7 +351,9 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     
     	String id = panel_id.get(s); */
     
-    	prefPane.remove(1);
+        pfacpane.updateGraphView(); //Used to remove inconsistencies when updating charts with mmol/l or mg/dl in preferences.
+        prqpane.updateGraphView(); //Used to remove inconsistencies when updating charts with mmol/l or mg/dl in preferences.
+        prefPane.remove(1);
     	prefPane.add(panels.get(index), BorderLayout.CENTER);
     	selected_panel = panels.get(index);
     	prefPane.invalidate();
