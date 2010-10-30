@@ -89,7 +89,11 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     private DailyGraphView dgv = null;
     long selected_id = 0;
 
-    
+    private JPanel schemePanel;//Moved declarations out of the init() to be able to use them later in updateGraphView.
+    private JPanel colorPanel;
+    private JPanel testingPanel;
+    private Box box;           //End Moved declarations out of the init() to be able to use them later in updateGraphView.
+
     /**
      * Constructor
      * 
@@ -128,7 +132,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     {
         setLayout(new BorderLayout());
 
-        JPanel schemePanel = new JPanel(new GridLayout(1, 3));
+        schemePanel = new JPanel(new GridLayout(1, 3));
         schemePanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_SCHEME_SELECT")));
 
         schemePanel.add(new JLabel(m_ic.getMessage("SELECTED_COLOR_SCHEME") + ":"));
@@ -149,7 +153,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         itemList.addListSelectionListener(this);
 
-        JPanel colorPanel = new JPanel(new BorderLayout());
+        colorPanel = new JPanel(new BorderLayout());
         colorPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLORS")));
 
         JPanel a = new JPanel(new GridLayout(1, 1));
@@ -163,13 +167,13 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         colorPanel.add(itemList, BorderLayout.WEST);
         colorPanel.add(a, BorderLayout.CENTER);
 
-        JPanel testingPanel = new JPanel(new BorderLayout());
+        testingPanel = new JPanel(new BorderLayout());
         testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
         dgv = new DailyGraphView(selected_sheme, createDailyGraphValues());
         testingPanel.setPreferredSize(new Dimension(150, 170));
         testingPanel.add(dgv, BorderLayout.CENTER);
 
-        Box box = Box.createVerticalBox();
+        box = Box.createVerticalBox();
         box.add(schemePanel);
         box.add(colorPanel);
         box.add(testingPanel);
@@ -178,6 +182,27 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
         itemList.setSelectedIndex(0);
     }
+    
+    /**
+     * updateGraphView() updates the graphs in the preferences section to reflect
+     * changes in mmol/l or mg/dl and the other values(high/low BG etc).
+     * @author henrik
+     */
+    
+   public void updateGraphView()
+   {
+       
+        box.remove(testingPanel);
+        testingPanel = new JPanel(new BorderLayout());
+        testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
+        dgv = new DailyGraphView(selected_sheme, createDailyGraphValues());
+        testingPanel.setPreferredSize(new Dimension(150, 170));
+        testingPanel.add(dgv, BorderLayout.CENTER);
+        box.add(testingPanel);
+        box.validate();
+        box.repaint();
+        
+   }
 
     /**
      * Creates a sample piece of <code>{@link DailyValues data}</code> for the
