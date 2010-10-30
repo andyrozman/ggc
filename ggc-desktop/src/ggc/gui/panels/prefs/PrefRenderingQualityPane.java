@@ -27,20 +27,27 @@
 
 package ggc.gui.panels.prefs;
 
+import ggc.core.util.DataAccess;
 import ggc.gui.dialogs.PropertiesDialog;
 import ggc.gui.graphs.DailyGraphView;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.ItemEvent;
+import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 
 import com.atech.help.HelpCapable;
@@ -81,6 +88,7 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
 
     private DailyGraphView dgv;
     private JPanel testingPanel;
+    private Box box; //Moved Box out of init().
 
     /**
      * Constructor
@@ -94,55 +102,64 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
         // m_da.enableHelp(this);
     }
 
-    private void init()
+    private void init() //Did a total rewrite of init() to get a better grip of what is happening in the code as well as updating the graphs in the preferences section correctly.
     {
-
-        this.setBorder(new TitledBorder(m_ic.getMessage("RENDERING_QUALITY")));
-
-        JPanel a = new JPanel(new GridLayout(0, 1));
-        a.add(new JLabel(m_ic.getMessage("ANTIALIASING") + ":"));
-        a.add(new JLabel(m_ic.getMessage("COLOR_RENDERING") + ":"));
-        a.add(new JLabel(m_ic.getMessage("DITHERING") + ":"));
-        a.add(new JLabel(m_ic.getMessage("FRACTIONAL_METRICS") + ":"));
-        a.add(new JLabel(m_ic.getMessage("INTERPOLATION") + ":"));
-        a.add(new JLabel(m_ic.getMessage("TEXT_ANTIALIASING") + ":"));
-        a.add(new JLabel(m_ic.getMessage("RENDERING") + ":"));
-
-        JPanel b = new JPanel(new GridLayout(0, 1));
-
-        Object[] o1 = { RenderingHints.VALUE_ANTIALIAS_DEFAULT, RenderingHints.VALUE_ANTIALIAS_OFF,
-                       RenderingHints.VALUE_ANTIALIAS_ON };
-        b.add(comboAntiAliasing = new JComboBox(o1));
-
-        Object[] o2 = { RenderingHints.VALUE_COLOR_RENDER_DEFAULT, RenderingHints.VALUE_COLOR_RENDER_QUALITY,
-                       RenderingHints.VALUE_COLOR_RENDER_SPEED };
-        b.add(comboColorRendering = new JComboBox(o2));
-
-        Object[] o3 = { RenderingHints.VALUE_DITHER_DEFAULT, RenderingHints.VALUE_DITHER_DISABLE,
-                       RenderingHints.VALUE_DITHER_ENABLE };
-        b.add(comboDithering = new JComboBox(o3));
-
-        Object[] o4 = { RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT, RenderingHints.VALUE_FRACTIONALMETRICS_OFF,
-                       RenderingHints.VALUE_FRACTIONALMETRICS_ON };
-        b.add(comboFractionalMetrics = new JComboBox(o4));
-
-        Object[] o5 = { RenderingHints.VALUE_INTERPOLATION_BICUBIC, RenderingHints.VALUE_INTERPOLATION_BILINEAR,
-                       RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR };
-        b.add(comboInterpolation = new JComboBox(o5));
-
-        Object[] o6 = { RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF,
-                       RenderingHints.VALUE_TEXT_ANTIALIAS_ON };
-        b.add(comboTextAntiAliasing = new JComboBox(o6));
-
-        Object[] o7 = { RenderingHints.VALUE_RENDER_DEFAULT, RenderingHints.VALUE_RENDER_QUALITY,
-                       RenderingHints.VALUE_RENDER_SPEED };
-        b.add(comboRendering = new JComboBox(o7));
-
-        Box myBox = Box.createHorizontalBox();
-        myBox.add(a);
-        myBox.add(b);
-
         setLayout(new BorderLayout());
+        //this.setBorder(new TitledBorder(m_ic.getMessage("RENDERING_QUALITY")));
+        
+        JPanel a = new JPanel(new GridLayout(7, 2));
+        a.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("RENDERING_QUALITY")));
+        
+        Object[] o1 = { RenderingHints.VALUE_ANTIALIAS_DEFAULT, RenderingHints.VALUE_ANTIALIAS_OFF,
+                        RenderingHints.VALUE_ANTIALIAS_ON };
+        
+        Object[] o2 = { RenderingHints.VALUE_COLOR_RENDER_DEFAULT, RenderingHints.VALUE_COLOR_RENDER_QUALITY,
+                        RenderingHints.VALUE_COLOR_RENDER_SPEED };
+        
+        Object[] o3 = { RenderingHints.VALUE_DITHER_DEFAULT, RenderingHints.VALUE_DITHER_DISABLE,
+                        RenderingHints.VALUE_DITHER_ENABLE };
+        
+        Object[] o4 = { RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT, RenderingHints.VALUE_FRACTIONALMETRICS_OFF,
+                        RenderingHints.VALUE_FRACTIONALMETRICS_ON };
+        
+        Object[] o5 = { RenderingHints.VALUE_INTERPOLATION_BICUBIC, RenderingHints.VALUE_INTERPOLATION_BILINEAR,
+                        RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR };
+        
+        Object[] o6 = { RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF,
+                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON };
+        
+        Object[] o7 = { RenderingHints.VALUE_RENDER_DEFAULT, RenderingHints.VALUE_RENDER_QUALITY,
+                        RenderingHints.VALUE_RENDER_SPEED };
+        
+        a.add(new JLabel(m_ic.getMessage("ANTIALIASING") + ":"), BorderLayout.WEST);
+        a.add(comboAntiAliasing = new JComboBox(o1));
+        
+        a.add(new JLabel(m_ic.getMessage("COLOR_RENDERING") + ":"), BorderLayout.WEST);
+        a.add(comboColorRendering = new JComboBox(o2));
+
+        a.add(new JLabel(m_ic.getMessage("DITHERING") + ":"), BorderLayout.WEST);
+        a.add(comboDithering = new JComboBox(o3));
+        
+        a.add(new JLabel(m_ic.getMessage("FRACTIONAL_METRICS") + ":"), BorderLayout.WEST);
+        a.add(comboFractionalMetrics = new JComboBox(o4));
+        
+        
+        a.add(new JLabel(m_ic.getMessage("INTERPOLATION") + ":"), BorderLayout.WEST);
+        a.add(comboInterpolation = new JComboBox(o5));
+        
+        a.add(new JLabel(m_ic.getMessage("TEXT_ANTIALIASING") + ":"), BorderLayout.WEST);
+        a.add(comboTextAntiAliasing = new JComboBox(o6));
+        
+        a.add(new JLabel(m_ic.getMessage("RENDERING") + ":"), BorderLayout.WEST);
+        a.add(comboRendering = new JComboBox(o7));
+
+        //JPanel b = new JPanel(new GridLayout(7, 2));
+        //a.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("RENDERING_QUALITY")));
+
+       // JPanel c = new JPanel(new GridLayout(0, 1));
+       // c.add(new JLabel("  haloooo                        ")); //fill empty space to the right of JComboBox'es
+        
+
 
         comboAntiAliasing.setSelectedIndex(m_da.getSettings().getAntiAliasing());
         comboColorRendering.setSelectedIndex(m_da.getSettings().getColorRendering());
@@ -160,15 +177,37 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
         comboTextAntiAliasing.addItemListener(this);
         comboRendering.addItemListener(this);
 
-        add(myBox, BorderLayout.NORTH);
 
-        testingPanel = new JPanel();
+        testingPanel =new JPanel(new BorderLayout());
+        testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("RENDERING_QUALITY")));
         // testingPanel.setBackground(Color.white);
 
-        dgv = new DailyGraphView(PrefFontsAndColorPane.createDailyGraphValues());
-
+        dgv = new DailyGraphView(m_da.getSettings().getSelectedColorScheme(), PrefFontsAndColorPane.createDailyGraphValues());
+        testingPanel.setPreferredSize(new Dimension(150, 170));
         testingPanel.add(dgv, BorderLayout.CENTER);
-        add(dgv, BorderLayout.CENTER);
+        
+        box = Box.createVerticalBox();
+        box.add(a);
+        //box.add(b);
+        box.add(testingPanel);
+        add(box);
+    }
+
+    /**
+     * updateGraphView() updates the graphs in the preferences section to reflect
+     * changes in mmol/l or mg/dl.
+     * @author henrik
+     */
+    public void updateGraphView()
+    {
+        box.remove(testingPanel);
+        testingPanel =new JPanel(new BorderLayout());
+        dgv = new DailyGraphView(m_da.getSettings().getSelectedColorScheme(), PrefFontsAndColorPane.createDailyGraphValues());
+        testingPanel.setPreferredSize(new Dimension(150, 170));
+        testingPanel.add(dgv, BorderLayout.CENTER);
+        box.add(testingPanel);
+        box.validate();
+        box.repaint();
     }
 
     /**
