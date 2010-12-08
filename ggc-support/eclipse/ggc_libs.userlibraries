@@ -37,6 +37,59 @@
     <library name="iText-2.0.7" systemlibrary="false">
         <archive path="D:/java/libs/iText-2.0.7/iText-2.0.7.jar" source="D:/java/libs/iText-2.0.7/iText-src-2.0.7.zip"/>
     </library>
+    <library name="jasperreports-3.7.1" systemlibrary="false">
+        <archive path="D:/java/libs/jasperreports-3.7.1/ant-1.7.1.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/antlr-2.7.5.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/barbecue-1.5-beta1.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/barcode4j-2.0.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-anim.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-awt-util.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-bridge.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-css.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-dom.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-ext.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-gvt.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-parser.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-script.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-svg-dom.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-svggen.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-util.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/batik-xml.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/bcel-5.2.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/bsh-2.0b4.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/commons-beanutils-1.8.0.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/commons-collections-2.1.1.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/commons-digester-1.7.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/commons-javaflow-20060411.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/commons-logging-1.0.4.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/groovy-all-1.5.5.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/hibernate3.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/hsqldb-1.8.0-10.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/iText-2.1.7.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/jasperreports-3.7.1.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/jasperreports-applet-3.7.1.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/jasperreports-fonts-3.7.1.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/jasperreports-javaflow-3.7.1.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/jaxen-1.1.1.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/jcommon-1.0.15.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/jdt-compiler-3.1.1.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/jfreechart-1.0.12.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/jpa.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/jxl-2.6.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/log4j-1.2.15.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/mondrian-3.1.1.12687.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/png-encoder-1.5.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/poi-3.5-FINAL-20090928.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/rhino-1.7R1.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/saaj-api-1.3.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/servlet.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/spring-beans-2.5.5.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/spring-core-2.5.5.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/xalan-2.6.0.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/xercesImpl-2.7.0.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/xml-apis.jar"/>
+        <archive path="D:/java/libs/jasperreports-3.7.1/xml-apis-ext.jar"/>
+    </library>
     <library name="JavaHelp-2.0.5" systemlibrary="false">
         <archive path="D:/java/libs/javahelp-2.0.5/lib/jhall.jar"/>
     </library>
@@ -61,11 +114,8 @@
         <archive path="D:/java/libs/pygmy-0.2/pygmy-handlers-0.2.jar"/>
         <archive path="D:/java/libs/pygmy-0.2/pygmy-core-0.2.jar"/>
     </library>
-    <library name="rxtx-2.1.7" systemlibrary="false">
-        <archive nativelibpaths="D:/java/libs/rxtx-2.1.7/bin/i368-mingw32" path="D:/java/libs/rxtx-2.1.7/RXTXcomm.jar" source="D:/java/libs/rxtx-2.1.7/rxtx_src.zip"/>
-    </library>
     <library name="rxtx-2.2" systemlibrary="false">
-        <archive path="E:/java/libs/rxtx-2.2/RXTXcomm-2.2.p2.jar"/>
+        <archive path="D:/java/libs/rxtx-2.2/RXTXcomm-2.2.p2.jar"/>
     </library>
     <library name="Servlet-Development-Tomcat-5.5" systemlibrary="false">
         <archive path="D:/java/libs/servlet-development-tc-5.5/servlet-api.jar"/>
