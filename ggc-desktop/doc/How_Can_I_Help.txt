@@ -325,3 +325,13 @@ environment.
 
 
 10.) Now you can start the real work... Good luck...
+
+
+11.) Usefull libraries/tools for Eclipse:
+     Window Builder Pro - http://dl.google.com/eclipse/inst/d2wbpro/latest/3.5
+         GUI editor. Quite good, can be usefull for new GUIs.
+     JAutoDoc - 
+         For auto documentation of classes
+     TK Eclipse Plugin HTML Editor - http://sourceforge.net/projects/amateras/ (DL)
+         HTML editor
+
