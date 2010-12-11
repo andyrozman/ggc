@@ -269,7 +269,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public ArrayList<FoodGroup> getUSDAFoodGroups()
     {
 
@@ -282,7 +281,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst order by pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -307,7 +306,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * @param id 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public FoodGroup getUSDAFoodGroup(long id)
     {
 
@@ -320,7 +318,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst where pst.id=" + id);
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -345,7 +343,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * @param id 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public FoodGroup getUserFoodGroup(long id)
     {
         logInfo("getUserFoodGroup(id=" + id + ")");
@@ -357,7 +354,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst order by pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -383,7 +380,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public ArrayList<FoodGroup> getUserFoodGroups()
     {
         logInfo("getUserFoodGroups()");
@@ -395,7 +391,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst order by pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -425,7 +421,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public ArrayList<FoodGroup> getUserFoodGroups(long parent_id)
     {
         logInfo("getUserFoodGroups()");
@@ -437,7 +432,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst where pst.parent_id=" + parent_id + " order by pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -465,7 +460,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public ArrayList<MealGroup> getMealGroups()
     {
 
@@ -478,7 +472,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst order by pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -503,7 +497,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public ArrayList<MealGroup> getMealGroups(long parent_id)
     {
 
@@ -516,7 +509,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.parent_id=" + parent_id + " order by pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -565,7 +558,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public ArrayList<FoodDescription> getUSDAFoodDescriptions()
     {
         logInfo("getUSDAFoodDescriptions()");
@@ -577,7 +569,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst order by pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -603,7 +595,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public ArrayList<FoodDescription> getUSDAFoodDescriptionsByParent(long parent_id)
     {
         logInfo("getUSDAFoodDescriptionsByParent(parent_id=" + parent_id + ")");
@@ -615,7 +606,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst where pst.group_id=" + parent_id + " order by pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -641,7 +632,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * @param id 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public FoodDescription getUSDAFoodDescriptionById(long id)
     {
         logInfo("getUSDAFoodDescriptionById(id=" + id + ")");
@@ -651,7 +641,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst where pst.id=" + id);
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -696,7 +686,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * @param id 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public FoodDescription getUserFoodDescriptionById(long id)
     {
 
@@ -709,7 +698,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
             Query q = getSession(2).createQuery(
                 "select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst where pst.id=" + id);
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -737,7 +726,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * @param parent_id 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public ArrayList<FoodDescription> getUserFoodDescriptionsByParent(long parent_id)
     {
 
@@ -750,7 +738,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
             Query q = getSession(2).createQuery(
                 "select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst where pst.group_id=" + parent_id + " order by pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -776,7 +764,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public ArrayList<FoodDescription> getUserFoodDescriptions()
     {
 
@@ -789,7 +776,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
             Query q = getSession(2).createQuery(
                 "select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst order by pst.group_id, pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -814,7 +801,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public ArrayList<Meal> getMeals()
     {
         logInfo("getMeals()");
@@ -827,7 +813,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
             Query q = getSession(2).createQuery(
                 "select pst from ggc.core.db.hibernate.MealH as pst order by pst.group_id, pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -856,7 +842,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * @param meal_id 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public Meal getMealById(int type, long meal_id)
     {
         logInfo("getMealById()");
@@ -867,7 +852,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.id=" + meal_id);
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -894,7 +879,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public ArrayList<Meal> getMealsByParent(long parent_id)
     {
         logInfo("getMealsByParent()");
@@ -907,7 +891,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
             Query q = getSession(2).createQuery(
                 "select pst from ggc.core.db.hibernate.MealH as pst where pst.group_id=" + parent_id  + " order by pst.group_id, pst.name");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -934,7 +918,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public Meal getMealById(long id)
     {
         logInfo("getMealById(id=" + id + ")");
@@ -944,7 +927,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.id=" + id);
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -968,7 +951,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * 
      * @return
      */
-    @SuppressWarnings("unchecked")
     public MealGroup getMealGroupById(long id)
     {
         logInfo("getMealGroupById(id=" + id + ")");
@@ -978,7 +960,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.id=" + id);
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -997,7 +979,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
     
     
     
-    @SuppressWarnings("unchecked")
     private void loadNutritionDefinitions()
     {
 
@@ -1014,7 +995,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
             Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.NutritionDefinitionH as pst");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -1061,7 +1042,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
     }
 
-    @SuppressWarnings("unchecked")
     private void loadHomeWeights()
     {
 
@@ -1075,7 +1055,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
             Query q = getSession(2)
                     .createQuery("select pst from ggc.core.db.hibernate.NutritionHomeWeightTypeH as pst");
 
-            Iterator it = q.iterate();
+            Iterator<?> it = q.iterate();
 
             while (it.hasNext())
             {
@@ -1156,7 +1136,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * @param day
      * @return
      */
-    @SuppressWarnings("unchecked")
     public HbA1cValues loadHbA1c(GregorianCalendar day)
     {
         // System.out.println("Hibernate: getHbA1c() B1 Stat:" + m_loadStatus);
@@ -1181,7 +1160,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
                 "SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv " + "WHERE dv.bg > 0 AND dv.dt_info >=  "
                         + sDay + " AND dv.dt_info <= " + eDay + " ORDER BY dv.dt_info");
 
-            Iterator it = q.list().iterator();
+            Iterator<?> it = q.list().iterator();
 
             while (it.hasNext())
             {
@@ -1210,7 +1189,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * @param day
      * @return
      */
-    @SuppressWarnings("unchecked")
     public DailyValues getDayStats(GregorianCalendar day)
     {
 
@@ -1233,7 +1211,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
                 "SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + sDay
                         + "0000 AND dv.dt_info <= " + sDay + "2359 ORDER BY dv.dt_info");
 
-            Iterator it = q.list().iterator();
+            Iterator<?> it = q.list().iterator();
 
             while (it.hasNext())
             {
@@ -1263,7 +1241,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * @param month
      * @return
      */
-    @SuppressWarnings("unchecked")
     public MonthlyValues getMonthlyValues(int year, int month)
     {
 
@@ -1282,7 +1259,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
                 "SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + days
                         + "010000 AND dv.dt_info <= " + days + "312359 ORDER BY dv.dt_info");
 
-            Iterator it = q.list().iterator();
+            Iterator<?> it = q.list().iterator();
 
             while (it.hasNext())
             {
@@ -1310,7 +1287,6 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
      * @param till
      * @return
      */
-    @SuppressWarnings("unchecked")
     public DayValuesData getDayValuesData(long from, long till)
     {
 
@@ -1327,7 +1303,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
                 "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + from
                         + "0000 AND dv.dt_info <= " + till + "2359 ORDER BY dv.dt_info");
 
-            Iterator it = q.list().iterator();
+            Iterator<?> it = q.list().iterator();
 
             while (it.hasNext())
             {

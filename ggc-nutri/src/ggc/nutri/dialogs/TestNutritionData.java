@@ -329,14 +329,14 @@ public class TestNutritionData
         return new Meal(fuh);
     }
 
-    @SuppressWarnings({ "unchecked", "unused" })
+    @SuppressWarnings({ "unused" })
     private void getKeywords(GGCDb _db)
     {
 
         ArrayList<FoodDescription> lst = new ArrayList<FoodDescription>(); //_db.getUSDAFoodDescriptions();
         // ArrayList<SelectableInterface> lst = sb.getNutritionHomeWeights();
 
-        Hashtable ht = new Hashtable();
+        Hashtable<String,String> ht = new Hashtable<String,String>();
 
         for (int i = 0; i < lst.size(); i++)
         {
@@ -374,7 +374,7 @@ public class TestNutritionData
 
         ArrayList<String> lst1 = new ArrayList<String>();
 
-        for (Enumeration en = ht.keys(); en.hasMoreElements();)
+        for (Enumeration<String> en = ht.keys(); en.hasMoreElements();)
         {
             String s = (String) en.nextElement();
 

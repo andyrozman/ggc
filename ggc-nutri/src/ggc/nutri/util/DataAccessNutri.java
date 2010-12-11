@@ -53,7 +53,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.3.1";
+    public static final String PLUGIN_VERSION = "1.3.2";
     
     private static DataAccessNutri s_da = null; // This is handle to unique 
 
@@ -510,6 +510,15 @@ public class DataAccessNutri extends DataAccessPlugInBase
         
     }
     
+
+    /**
+     * Get Name of Plugin (for internal use)
+     * @return
+     */
+    public String getPluginName()
+    {
+        return "GGC Nutrition Plugin";
+    }
     
     
 }
