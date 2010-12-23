@@ -2,6 +2,8 @@ package ggc.plugin.output;
 
 import ggc.plugin.device.DeviceIdentification;
 
+import java.util.ArrayList;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -200,5 +202,17 @@ public interface OutputWriter
      * @return 
      */
     public abstract String getDeviceSource();
+    
+    
+    
+    public void addErrorMessage(String msg);
+    
+    
+    public int getErrorMessageCount();
+    
+    
+    public ArrayList<String> getErrorMessages();
+    
+    
     
 }

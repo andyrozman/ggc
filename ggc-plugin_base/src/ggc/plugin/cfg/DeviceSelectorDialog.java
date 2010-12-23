@@ -96,7 +96,8 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
         setSelectorName(String.format(ic.getMessage("SELECTOR_DEVICE"), ic.getMessage("DEVICE_NAME_BIG")));
 	    setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
 	    this.setColumnSortingEnabled(false);
-	    this.setHelpEnabled(false);
+	    this.setHelpStringId("DeviceTool_Configuration_DeviceSelector");
+        this.setHelpEnabled(true);
     }
 
 

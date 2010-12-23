@@ -325,7 +325,8 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
      */
     public String getHelpId()
     {
-        return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Export_Data";
+        //return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Export_Data";
+        return "DeviceTool_Export_Data";
     }
     
     

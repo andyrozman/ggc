@@ -832,7 +832,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
      */
     public String getHelpId()
     {
-        return this.m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Configuration";
+        //return this.m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Configuration";
+        return "DeviceTool_Configuration";
     }
     
     

@@ -110,6 +110,8 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         
         this.setConnectionParameters(params);
         
+        
+
         // FIXME
         
         //this.special_config.loadConnectionParameters(params);

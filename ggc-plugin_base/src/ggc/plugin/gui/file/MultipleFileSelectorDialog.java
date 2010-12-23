@@ -95,6 +95,7 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
 		
 		this.setBounds(0, 0, 400, 320);
 
+		this.m_da.enableHelp(this);
 	}
 	
 	
@@ -120,7 +121,7 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
 	
 	public String getHelpId() 
 	{
-		return null;
+		return "DeviceTool_File_Import_Type";
 	}
 
 	

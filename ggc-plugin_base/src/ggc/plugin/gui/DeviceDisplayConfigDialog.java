@@ -17,6 +17,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -702,7 +703,8 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
      */
     public String getHelpId()
     {
-        return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Config_Reading_View";
+        //return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Config_Reading_View";
+        return "DeviceTool_Reading_Config_View";
     }
     
     
@@ -759,6 +761,27 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
      */
     public void setIndeterminateProgress()
     {
+    }
+
+
+    public void addErrorMessage(String msg)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public int getErrorMessageCount()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public ArrayList<String> getErrorMessages()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
     
     

@@ -42,6 +42,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     private static final long serialVersionUID = -1649768167774901903L;
     OutputWriter output_writer = null;
     private static Log log = LogFactory.getLog(DeviceValuesWriter.class);
+    public boolean is_silent_mode = false;
 
     
     /**
@@ -49,6 +50,15 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
      */
     public DeviceValuesWriter()
     {
+        this(false);
+    }
+    
+    /**
+     * Constructor
+     */
+    public DeviceValuesWriter(boolean is_silent)
+    {
+        this.is_silent_mode = is_silent;
     }
     
     
@@ -87,7 +97,9 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
         {
             _value = _value.replace(',', '.');
             DeviceTempValues dtv = this.get(_type);
-            output_writer.writeData(dtv.getData(_datetime, _value));
+            
+            if (!this.is_silent_mode)
+                output_writer.writeData(dtv.getData(_datetime, _value));
             return true;
         }
         else
@@ -115,7 +127,9 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
             if (_value!=null)
                 _value = _value.replace(',', '.');
             DeviceTempValues dtv = this.get(_type);
-            output_writer.writeData(dtv.getData(_datetime, code_type, _value));
+
+            if (!this.is_silent_mode)
+                output_writer.writeData(dtv.getData(_datetime, code_type, _value));
             return true;
         }
         else

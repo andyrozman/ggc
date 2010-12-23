@@ -50,6 +50,17 @@ public abstract class DeviceTempValues
     {
         this(_object_type, _base_type, _sub_type, null);
     }
+
+    
+    /**
+     * @param _object_type
+     * @param _base_type
+     * @param _sub_type
+     */
+    public DeviceTempValues(int _object_type, int _base_type)
+    {
+        this(_object_type, _base_type, 0, null);
+    }
     
     
     /**

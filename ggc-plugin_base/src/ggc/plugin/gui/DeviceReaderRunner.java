@@ -12,6 +12,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.plugin.util.LogEntryType;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -570,6 +571,30 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     public void setIndeterminateProgress()
     {
         getOutputWriter().setIndeterminateProgress();
+    }
+
+
+
+    public void addErrorMessage(String msg)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+
+    public int getErrorMessageCount()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+
+    public ArrayList<String> getErrorMessages()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
     
     

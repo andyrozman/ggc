@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -860,7 +861,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public String getHelpId()
     {
-        return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Reading_View";
+        //return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Reading_View";
+        return "DeviceTool_Reading_View";
     }
 
     /**
@@ -915,6 +917,27 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         this.progress.setIndeterminate(true);
         // this.progress.setString(null);
         this.progress.setStringPainted(false);
+    }
+
+
+    public void addErrorMessage(String msg)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public int getErrorMessageCount()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    public ArrayList<String> getErrorMessages()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

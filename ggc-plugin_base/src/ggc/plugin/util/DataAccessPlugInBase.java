@@ -302,6 +302,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     	this.i18n_plugin = new I18nControlPlugin(lm, icr);
     	loadIcons();
         initSpecial();
+        this.help_enabled = true;
     } 
 
 
@@ -1558,6 +1559,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      
         this.extended_handlers.put(key, eh);
     }
+
+    /**
+     * Get Name of Plugin (for internal use)
+     * @return
+     */
+    public abstract String getPluginName();
     
 
 }

@@ -112,8 +112,6 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
         //help_button.setFont(normal);
         this.add(help_button);
        
-        //m_da.enableHelp(this);
-        
         ATSwingUtils.getButton("", 115, 250, 60, 25, this, 
             ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
 
@@ -134,6 +132,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
 	        b_prev.setVisible(true);
 		}
 		
+        m_da.enableHelp(this);
 		
 		
 	}
@@ -195,7 +194,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
 	
 	public String getHelpId() 
 	{
-		return null;
+		return "DeviceTool_File_Import";
 	}
 
 

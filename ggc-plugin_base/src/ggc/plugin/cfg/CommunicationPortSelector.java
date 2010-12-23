@@ -499,7 +499,8 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
      */
     public String getHelpId()
     {
-        return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Configuration_PortSelector";
+        //return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Configuration_PortSelector";
+        return "DeviceTool_Configuration_PortSelector";
     }
     
     

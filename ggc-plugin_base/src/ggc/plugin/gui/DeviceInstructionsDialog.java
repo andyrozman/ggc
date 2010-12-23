@@ -697,7 +697,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      */
     public String getHelpId()
     {
-        return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Read_Instruction";
+        //return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Read_Instruction";
+        return "DeviceTool_Read_Instruction";
     }
     
 

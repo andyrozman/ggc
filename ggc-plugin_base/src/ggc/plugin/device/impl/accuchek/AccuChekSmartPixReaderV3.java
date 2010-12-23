@@ -380,8 +380,8 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         BufferedReader br=null;
         try
         {
-//            if (!new File(m_da.pathResolver(this.drive_path + "/MISC/STATUS.TXT")).exists())
-//                return "";
+            if (!new File(m_da.pathResolver(this.drive_path + "/MISC/STATUS.TXT")).exists())
+                return "";
             
             
             br = new BufferedReader(new FileReader(m_da.pathResolver(this.drive_path + "/MISC/STATUS.TXT")));
@@ -412,7 +412,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         
         return null;
     }
-    
+     
 
     
     private String[] readStatuses()

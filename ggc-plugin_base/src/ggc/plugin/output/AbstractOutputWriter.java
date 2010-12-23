@@ -2,6 +2,8 @@ package ggc.plugin.output;
 
 import ggc.plugin.device.DeviceIdentification;
 
+import java.util.ArrayList;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -35,6 +37,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     OutputUtil out_util; 
     DeviceIdentification device_info = null;
     String sub_status;
+    protected ArrayList<String> error_list = null;
     
     
     /**
@@ -301,6 +304,32 @@ public abstract class AbstractOutputWriter implements OutputWriter
     public void setIndeterminateProgress()
     {
     }
+    
+    
+    
+    public void addErrorMessage(String msg)
+    {
+        if (this.error_list==null)
+            this.error_list= new ArrayList<String>();
+        
+        this.error_list.add(msg);
+    }
+    
+    
+    public int getErrorMessageCount()
+    {
+        if (this.error_list==null)
+            return 0;
+        else
+            return this.error_list.size();
+    }
+    
+    
+    public ArrayList<String> getErrorMessages()
+    {
+        return this.error_list;
+    }
+    
     
     
 }
