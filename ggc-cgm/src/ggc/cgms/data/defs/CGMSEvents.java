@@ -41,38 +41,58 @@ public class CGMSEvents
     /**
      * 
      */
-    public static final int CGM_EVENT_POWER_DOWN = 22;
+    public static final int CGMS_EVENT_CONTROLER_POWER_DOWN = 1;
     /**
      * 
      */
-    public static final int CGM_EVENT_POWER_UP = 23;
+    public static final int CGMS_EVENT_CONTROLER_POWER_UP = 2;
     
     
     // date/time
     /**
      * 
      */
-    public static final int CGM_EVENT_DATETIME_SET = 40;
+    public static final int CGMS_EVENT_DATETIME_SET = 3;
     /**
      * 
      */
-    public static final int CGM_EVENT_DATETIME_CORRECT = 41;
-    /**
-     * 
-     */
-    public static final int CGM_EVENT_DATETIME_CORRECT_TIME_SHIFT_BACK = 42;
-    /**
-     * 
-     */
-    public static final int CGM_EVENT_DATETIME_CORRECT_TIME_SHIFT_FORWARD = 43;
+    public static final int CGMS_EVENT_DATETIME_CHANGED = 4;
     
     
     
     
+    // SENSOR - basic functions
 
     
+    public static final int CGMS_EVENT_SENSOR_POWER_DOWN = 40;
+
+    
+    public static final int CGMS_EVENT_SENSOR_POWER_UP = 41;
     
     
+    public static final int CGMS_EVENT_SENSOR_LOST = 42;
+    
+    
+    public static final int CGMS_EVENT_SENSOR_CALIBRATION_METER_BG_NOW = 50;
     
 
+    public static final int CGMS_EVENT_SENSOR_CALIBRATION_WAITING = 51;
+    
+    
+    public static final int CGMS_EVENT_SENSOR_CALIBRATION_FACTOR = 52;
+    
+    
+    // sensor init/operation
+
+    public static final int CGMS_EVENT_SENSOR_PRE_INIT = 60;
+    
+    
+    public static final int CGMS_EVENT_SENSOR_INIT = 61;
+
+
+    public static final int CGMS_EVENT_SENSOR_BURST = 62;
+    
+
+    public static final int CGMS_EVENT_SENSOR_WEAK_SIGNAL = 63;
+    
 }

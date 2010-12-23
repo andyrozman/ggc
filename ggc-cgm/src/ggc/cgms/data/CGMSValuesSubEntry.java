@@ -54,6 +54,16 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     public static final int METER_CALIBRATION_READING = 2;
     
     
+    
+    public static final int CGMS_ALARM = 3;
+    
+    
+    public static final int CGMS_EVENT = 4;
+    
+    
+    public static final int CGMS_ERROR = 5;
+
+    
     /**
      * DateTime
      */
@@ -78,6 +88,11 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
      * Type 
      */
     public int type = 0;
+    
+    
+    // NEW
+    public int sub_type = 0;
+    
     
     /**
      * Source
@@ -231,7 +246,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
 
     public String getSpecialId()
     {
-        return "CDS_" + this.datetime + "_" + this.type ;
+        return "CDS_" + this.datetime + "_" + this.type;
     }
 
 

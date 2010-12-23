@@ -75,6 +75,12 @@ public class CGMSErrors
     
     
     
+    
+    // sensor
+    
+    public static final int CGMS_ERROR_SENSOR_CALIBRATION_ERROR = 40; //___________________160
+    
+    
 /*  
  * 
  *   Minimed

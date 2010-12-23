@@ -1,8 +1,10 @@
 package ggc.cgms.test;
 
 import ggc.cgms.device.dexcom.FRC_DexcomXml_DM3;
-import ggc.cgms.device.minimed.MinimedCareLink;
+import ggc.cgms.device.minimed.file.MinimedCareLinkCGMS;
 import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.db.GGCDb;
+import ggc.core.util.DataAccess;
 import ggc.core.util.GGCLanguageManagerRunner;
 import ggc.plugin.output.ConsoleOutputWriter;
 
@@ -43,6 +45,8 @@ public class CGMSConsoleTester //extends JFrame
 {
     
     TimerThread thread;
+    String path_to_test_files = "../../test/";
+
     
     /**
      * Constructor
@@ -65,10 +69,10 @@ public class CGMSConsoleTester //extends JFrame
         {
 //          startDexcom();
             
-            startFileSelector();
+            //startFileSelector();
             
             
-            //this.startMiniMed("");
+            this.startMinimed("");
             //startAscensia(portName);
             //this.startOneTouchUltra(portName);
             
@@ -118,27 +122,55 @@ public class CGMSConsoleTester //extends JFrame
     }
     
     
-    @SuppressWarnings("unused")
-    private void startMiniMed(String portName) throws Exception
+    /**
+     * Start Minimed
+     * 
+     * @param file
+     * @throws Exception
+     */
+    public void startMinimed(String file) throws Exception
     {
+        //MinimedCareLink mcl = new MinimedCareLink();
+        //mcl.parseExportFile(new File(file));
+            //MinimedSMP msp = new MinimedSMP("f:\\Rozman_A_Plus_20090423.mmp");
         
-        MinimedCareLink mcl = new MinimedCareLink();
+        DataAccess da = DataAccess.getInstance();
         
-        mcl.parseExportFile(new File("./data/CareLink-Export-2008-05-18--06-01.csv"));
+        GGCDb db = new GGCDb(da);
+        //db.initDb();
+        
+        da.setDb(db);
         
         
-/*        
-        ConsoleOutputWriter cow = new ConsoleOutputWriter();
         
-//a        thread.addJob(cow.getOutputUtil());
+        DataAccessCGMS dap = DataAccessCGMS.createInstance(da.getLanguageManager());
+        //dap.setHelpContext(da.getHelpContext());
+        //dap.setPlugInServerInstance(this);
+//        dap.createDb(da.getHibernateDb());
+        dap.initAllObjects();
+        dap.loadSpecialParameters();
+        //this.backup_restore_enabled = true;
         
-        displaySerialPorts();
+        da.loadSpecialParameters();
+        //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
         
-        OneTouchUltra otu = new OneTouchUltra(portName, cow);
-        //m_meter = new OneTouchUltra(portName, cow);
-        otu.loadInitialData();
-*/
+        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+        
+        System.out.println(new File(".").getAbsolutePath());
+        
+        
+        MinimedCareLinkCGMS mcl = new MinimedCareLinkCGMS(dap, new ConsoleOutputWriter());
+        //mcl.parseExportFile(new File(path_to_test_files + "CareLink-Export-1213803114904.csv"));
+        mcl.parseExportFile(new File(path_to_test_files + "CareLink-Export-2008-05-18--06-01.csv"));
+        
+        
+        //MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp", DataAccessPump.getInstance());
+        //msp.readData();
+        
     }
+    
+    
+    
     
     
     /**

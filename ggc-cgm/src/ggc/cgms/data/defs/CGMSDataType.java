@@ -39,8 +39,11 @@ public class CGMSDataType
     /**
      * 
      */
-    public static final int CGMS_DATA_DATA    = 1; 
+    public static final int CGMS_BG_READING    = 1; 
     
+
+    
+    public static final int CGMS_METER_CALIBRATION   = 2; 
     
     /**
      * 

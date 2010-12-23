@@ -577,5 +577,17 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     {
     }    
     
+
+    
+    /**
+     * Get Name of Plugin (for internal use)
+     * @return
+     */
+    public String getPluginName()
+    {
+        return "GGC CGMS Plugin";
+    }
+    
+    
     
 }
