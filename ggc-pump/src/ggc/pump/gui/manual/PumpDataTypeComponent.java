@@ -1043,7 +1043,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                            pve.setValue("" + this.num_tf_1_d2.getCurrentValue());
                            
                        } break;
-                       
+                   
+                   //case PumpBolusType.PUMP_BOLUS_DUAL_SQUARE:    
                    case PumpBolusType.PUMP_BOLUS_SQUARE:
                        {
                            pve.setValue(this.bolus_sq.getValue());

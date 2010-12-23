@@ -1127,9 +1127,23 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 }
                 
             }
+            else if (info.startsWith("W"))
+            {
+                if (this.getEventMappings().containsKey(info))
+                {
+                    pve.setBaseType(PumpBaseType.PUMP_DATA_EVENT);
+                    pve.setSubType(this.getEventMappings().get(info));
+                    pve.setValue(info);
+                }
+                else
+                {
+                    log.error("Unknown Pump Warning [info=" + info + ",desc=" + desc + "]");
+                }
+            }
             else
             {
 
+                
                 if (this.getEventMappings().containsKey(desc))
                 {
                     pve.setBaseType(PumpBaseType.PUMP_DATA_EVENT);

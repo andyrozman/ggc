@@ -1,10 +1,5 @@
 package ggc.pump.data.defs;
 
-import ggc.pump.util.DataAccessPump;
-
-import java.util.Hashtable;
-
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -33,16 +28,14 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class PumpAlarms
+public class PumpAlarms extends PumpDefsAbstract
 {
 
-    DataAccessPump da = DataAccessPump.getInstance();
-    I18nControlAbstract ic = da.getI18nControlInstance();
 
     /**
      * Alarm Descriptions
      */
-    private String[] alarms_desc = {  
+/*    private String[] alarms_desc = {  
                        ic.getMessage("ALARM_UNKNOWN"),
                        ic.getMessage("ALARM_CARTRIDGE_LOW"),             
                        ic.getMessage("ALARM_BATTERY_LOW"),             
@@ -52,9 +45,9 @@ public class PumpAlarms
                        ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"),             
                        ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"),             
                        ic.getMessage("ALARM_BOLUS_CANCELED"),             
-    };
+    };*/
     
-
+/*
     private String[] alarms_desc_comp = {  
                                      ic.getMessage("SELECT_SUBTYPE"),
                                      ic.getMessage("ALARM_CARTRIDGE_LOW"),             
@@ -66,10 +59,10 @@ public class PumpAlarms
                                      ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"),             
                                      ic.getMessage("ALARM_BOLUS_CANCELED"),             
                   };
+  */  
     
     
-    
-    Hashtable<String,String> alarms_mapping = new Hashtable<String,String>(); 
+    //Hashtable<String,String> alarms_mapping = new Hashtable<String,String>(); 
     
 
     /**
@@ -119,21 +112,29 @@ public class PumpAlarms
     public final static int PUMP_ALARM_BOLUS_CANCELED = 8;
     
 
+    /**
+     * Pump Alarm: No Delivery
+     */
+    public final static int PUMP_ALARM_NO_DELIVERY = 10;
+    
+    
     
     /**
      * Constructor
      */
     public PumpAlarms()
     {
-        alarms_mapping.put(ic.getMessage("ALARM_UNKNOWN"), "0");             
-        alarms_mapping.put(ic.getMessage("ALARM_CARTRIDGE_LOW"), "1");             
-        alarms_mapping.put(ic.getMessage("ALARM_BATTERY_LOW"), "2");             
-        alarms_mapping.put(ic.getMessage("ALARM_REVIEW_DATETIME"), "3");             
-        alarms_mapping.put(ic.getMessage("ALARM_ALARM_CLOCK"), "4");             
-        alarms_mapping.put(ic.getMessage("ALARM_PUMP_TIMER"), "5");             
-        alarms_mapping.put(ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"), "6");             
-        alarms_mapping.put(ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"), "7");             
-        alarms_mapping.put(ic.getMessage("ALARM_BOLUS_CANCELED"), "8");             
+        super();
+        this.setDataDesc(PumpAlarms.PUMP_ALARM_UNKNOWN,ic.getMessage("ALARM_UNKNOWN"));             
+        this.setDataDesc(PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW, ic.getMessage("ALARM_CARTRIDGE_LOW"));             
+        this.setDataDesc(PumpAlarms.PUMP_ALARM_BATTERY_LOW, ic.getMessage("ALARM_BATTERY_LOW"));             
+        this.setDataDesc(PumpAlarms.PUMP_ALARM_REVIEW_DATETIME, ic.getMessage("ALARM_REVIEW_DATETIME"));             
+        this.setDataDesc(PumpAlarms.PUMP_ALARM_ALARM_CLOCK, ic.getMessage("ALARM_ALARM_CLOCK"));             
+        this.setDataDesc(PumpAlarms.PUMP_ALARM_PUMP_TIMER, ic.getMessage("ALARM_PUMP_TIMER"));             
+        this.setDataDesc(PumpAlarms.PUMP_ALARM_TEMPORARY_BASAL_RATE_CANCELED, ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"));            
+        this.setDataDesc(PumpAlarms.PUMP_ALARM_TEMPORARY_BASAL_RATE_OVER, ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"));             
+        this.setDataDesc(PumpAlarms.PUMP_ALARM_BOLUS_CANCELED, ic.getMessage("ALARM_BOLUS_CANCELED"));
+        this.setDataDesc(PumpAlarms.PUMP_ALARM_NO_DELIVERY, ic.getMessage("ALARM_NO_DELIVERY"));
     }
 
     
@@ -143,7 +144,7 @@ public class PumpAlarms
      * @param str type as string
      * @return type as int
      */
-    public int getTypeFromDescription(String str)
+/*    public int getTypeFromDescription(String str)
     {
         String s = "0";
         
@@ -153,30 +154,19 @@ public class PumpAlarms
             s = "0";
         
         return Integer.parseInt(s);
-    }
+    }*/
     
     /**
      * Get Descriptions
      * 
      * @return
      */
-    public String[] getDescriptions()
+/*    public String[] getDescriptions()
     {
         return alarms_desc_comp;
-    }
+    }*/
     
     
-    /**
-     * Get Description by ID
-     * 
-     * @param id
-     * @return
-     */
-    public String getDescriptionByID(int id)
-    {
-        //System.out.println("getDescriptionByID [" + id + "]: " + this.alarms_desc[id]); 
-        return this.alarms_desc[id];
-    }
     
     
     

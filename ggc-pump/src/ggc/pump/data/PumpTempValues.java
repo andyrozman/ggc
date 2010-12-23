@@ -61,11 +61,21 @@ public class PumpTempValues extends DeviceTempValues
     }
 
     
+    public PumpTempValues(int _object_type, int _base_type)
+    {
+        super(_object_type, _base_type);
+    }
+
+
     /**
      * Pump Object: Base
      */
     public static final int OBJECT_BASE = 1;
 
+    
+    // we have base object, and value is in fact sub_type
+    public static final int OBJECT_BASE_SET_SUBTYPE = 4;
+    
     /**
      * Pump Object: Extended
      */
@@ -116,6 +126,15 @@ public class PumpTempValues extends DeviceTempValues
             {
                 pve.setValue(this.value_template + "=" + val);
             }
+            
+            return pve;
+        }
+        else if (this.object_type == PumpTempValues.OBJECT_BASE_SET_SUBTYPE)
+        {
+            PumpValuesEntry pve = new PumpValuesEntry();
+            pve.setBaseType(this.base_type);
+            pve.setSubType(Integer.parseInt(val));
+            pve.setDateTimeObject(dt);
             
             return pve;
         }

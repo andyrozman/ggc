@@ -33,14 +33,14 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 
-public class PumpBolusType
+public class PumpBolusType extends PumpDefsAbstract
 {
 
-    DataAccessPump da = DataAccessPump.getInstance();
-    I18nControlAbstract ic = da.getI18nControlInstance();
+    //DataAccessPump da = DataAccessPump.getInstance();
+    //I18nControlAbstract ic = da.getI18nControlInstance();
 
     /**
-     * Bolus Descriptions
+     * Bolus Descriptions (for manual entry module)
      */
     public String[] bolus_desc = { ic.getMessage("SELECT_BOLUS_TYPE"),
                        ic.getMessage("BOLUS_STANDARD"),             
@@ -52,6 +52,8 @@ public class PumpBolusType
     
     Hashtable<String,String> bolus_mapping = new Hashtable<String,String>(); 
     
+    
+    // "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s"
     
     /**
      * Pump Bolus: None
@@ -98,35 +100,25 @@ public class PumpBolusType
      */
     public PumpBolusType()
     {
-        this.bolus_mapping.put(ic.getMessage("BOLUS_STANDARD"), "1");             
-        this.bolus_mapping.put(ic.getMessage("BOLUS_AUDIO"), "2");             
-        this.bolus_mapping.put(ic.getMessage("BOLUS_SQUARE"), "3");             
-        this.bolus_mapping.put(ic.getMessage("BOLUS_MULTIWAVE"), "4");             
+        super();
+        
+        this.setDataDesc(PumpBolusType.PUMP_BOLUS_STANDARD, ic.getMessage("BOLUS_STANDARD"));
+        this.setDataDesc(PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL, ic.getMessage("BOLUS_AUDIO"));
+        this.setDataDesc(PumpBolusType.PUMP_BOLUS_SQUARE, ic.getMessage("BOLUS_SQUARE"), "AMOUNT_SQUARE=%s;DURATION=%s");
+        this.setDataDesc(PumpBolusType.PUMP_BOLUS_MULTIWAVE, ic.getMessage("BOLUS_MULTIWAVE"), "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s");
+        this.setDataDesc(PumpBolusType.PUMP_BOLUS_DUAL_NORMAL, ic.getMessage("BOLUS_DUAL_NORMAL"));
+        this.setDataDesc(PumpBolusType.PUMP_BOLUS_DUAL_SQUARE, ic.getMessage("BOLUS_DUAL_SQUARE"), "AMOUNT_SQUARE=%s;DURATION=%s");
+        this.setDataDesc(PumpBolusType.PUMP_BOLUS_NONE, ic.getMessage("BOLUS_NONE"));
     }
     
     
-    /**
-     * Get Type from Description
-     * 
-     * @param str type as string
-     * @return type as int
-     */
-    public int getTypeFromDescription(String str)
-    {
-        String s = "0";
-        
-        if (this.bolus_mapping.containsKey(str))
-            s = this.bolus_mapping.get(str);
-        
-        return Integer.parseInt(s);
-    }
     
     /**
      * Get Descriptions (array)
      * 
      * @return array of strings with description
      */
-    public String[] getDescriptions()
+    public String[] getDescriptionsArray()
     {
         return this.bolus_desc;
     }
