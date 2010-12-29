@@ -260,10 +260,13 @@ public class DataAccess extends ATDataAccessLMAbstract
         //System.out.println("init Special");
         //this.tree_roots = new Hashtable<String, GGCTreeRoot>();
 
-        // Help Context Init
-        HelpContext hc = new HelpContext("../data/help/en/GGC.hs");
-        this.setHelpContext(hc);
         
+        
+        // Help Context Init
+        //HelpContext hc = new HelpContext("../data/help/en/GGC.hs");
+        HelpContext hc = new HelpContext("../data/" + this.lang_mgr.getHelpSet());
+        this.setHelpContext(hc);
+        this.help_enabled = true;
         
         //System.out.println("config File");
         this.m_configFile = new DbToolApplicationGGC();
