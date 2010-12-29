@@ -230,12 +230,14 @@ public class MainFrame extends JFrame implements EventObserverInterface
         MainFrame.developer_version = developer_version;
 
         
-        String title_full = "GGC - GNU Gluco Control (" + GGC.full_version + ")";
+        String title_full = "  GGC - GNU Gluco Control (" + GGC.full_version + ")";
 
         if (developer_version)
             title_full += " - Developer edition";
         
         setTitle(title_full);
+
+        this.setIconImage(m_da.getImageIcon_22x22("diabetesbluecircle.png", this).getImage());
         
         
         setJMenuBar(menuBar);
@@ -311,7 +313,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             return;
         
         
-        String title_full = "GGC - GNU Gluco Control (" + GGC.full_version + ")";
+        String title_full = "  GGC - GNU Gluco Control (" + GGC.full_version + ")";
 
         if (developer_version)
             title_full += " - Developer edition";
@@ -574,10 +576,15 @@ public class MainFrame extends JFrame implements EventObserverInterface
     {
 //        HelpContext hc = new HelpContext("../data/help/GGC.hs");
 //        m_da.setHelpContext(hc);
-        boolean help_debug = false;
+        boolean help_debug = true;
         
         if (help_debug)
             System.out.println("Help Init");
+        
+        System.out.println("Help. Selected language: " + m_da.getLanguageManager().getSelectedLanguage());
+        
+        //String selected_language = m_da.getLanguageManager().getSelectedLanguage();
+        //String default_help = m_da.getLanguageManager().getDefaultHelp();
         
         HelpContext hc = m_da.getHelpContext();
         
@@ -586,7 +593,10 @@ public class MainFrame extends JFrame implements EventObserverInterface
         helpItem.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
         hc.setHelpItem(helpItem);
 
-        String mainHelpSetName = "../data/help/en/GGC.hs"; // added en
+        //String mainHelpSetName = "../data/help/en/GGC.hs"; // added en
+        
+        String mainHelpSetName = "../data/" + m_da.getLanguageManager().getHelpSet(); 
+        
         mainHelpSetName = mainHelpSetName.replace("/", File.separator);
 
         hc.setMainHelpSetName(mainHelpSetName);
@@ -604,15 +614,19 @@ public class MainFrame extends JFrame implements EventObserverInterface
             // X ClassLoader cl = MainFrame.class.getClassLoader();
             // String help_url = "jar:file:pis_lang-0.1.jar!/help/PIS.hs";
 
-            String help_url = "jar:file:ggc_help-0.1.jar!/help/en/GGC.hs";
+            //String help_url = "jar:file:ggc_help-0.1.jar!/help/en/GGC.hs";
+            
+            String help_url = "jar:file:ggc_help-0.1.jar!/" + m_da.getLanguageManager().getHelpSet();
 
+            System.out.println("URL: " + help_url);
+            
             try
             {
                 URL hsURL = new URL(help_url);
 
-                if (hsURL == null)
-                    System.out.println("HelpSet " + help_url + " not found.");
-                else
+                //if (hsURL == null)
+                //    System.out.println("HelpSet " + help_url + " not found.");
+                //else
                     main_help_set = new HelpSet(null, hsURL);
             }
             catch (HelpSetException ee)
