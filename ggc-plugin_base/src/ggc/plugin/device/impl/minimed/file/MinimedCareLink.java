@@ -53,6 +53,7 @@ public abstract class MinimedCareLink
 
     
     public Hashtable<String,Integer> alarm_mappings = new Hashtable<String,Integer>(); 
+    public Hashtable<String,Integer> error_mappings = new Hashtable<String,Integer>(); 
     
     
     

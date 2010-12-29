@@ -8,6 +8,7 @@ import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.graph.PlugInGraphContext;
 import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.plugin.list.BaseListEntry;
@@ -245,6 +246,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     PlugInServer plugin_server;
 
+    /**
+     * Graph Context
+     */
+    protected PlugInGraphContext graph_context = null;
+    
+    
     
     /**
      * Entry Status Icons 
@@ -1565,6 +1572,17 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      * @return
      */
     public abstract String getPluginName();
+ 
+    
+    /**
+     * Get Graph Context
+     * 
+     * @return
+     */
+    public PlugInGraphContext getGraphContext()
+    {
+        return this.graph_context;
+    }
     
 
 }
