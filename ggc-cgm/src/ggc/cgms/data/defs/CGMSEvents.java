@@ -95,4 +95,8 @@ public class CGMSEvents
 
     public static final int CGMS_EVENT_SENSOR_WEAK_SIGNAL = 63;
     
+    
+    // Data 
+    public static final int CGMS_EVENT_DATA_LOW_BG = 64; 
+    
 }

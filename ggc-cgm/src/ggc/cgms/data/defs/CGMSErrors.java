@@ -80,6 +80,15 @@ public class CGMSErrors
     
     public static final int CGMS_ERROR_SENSOR_CALIBRATION_ERROR = 40; //___________________160
     
+
+    
+    public static final int CGMS_ERROR_SENSOR_END_OF_LIFE = 41; //___________________160
+    
+    
+    public static final int CGMS_ERROR_SENSOR_BAD = 42; //___________________160
+    
+    
+    
     
 /*  
  * 

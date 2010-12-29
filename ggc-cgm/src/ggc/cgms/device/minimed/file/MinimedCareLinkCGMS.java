@@ -47,6 +47,8 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
     {
         // FIXME
         // new PumpAlarms();
+        
+        // alarms
         this.alarm_mappings.put("101", CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE);
         this.alarm_mappings.put("102", CGMSAlarms.CGMS_ALARM_LOW_GLUCOSE);
 
@@ -63,6 +65,10 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
         this.alarm_mappings.put("114", CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
         this.alarm_mappings.put("115", CGMSAlarms.CGMS_ALARM_LOW_GLUCOSE_PREDICTED);
         
+        // errors
+        
+        this.error_mappings.put("bad", CGMSErrors.CGMS_ERROR_SENSOR_BAD);
+        this.error_mappings.put("end", CGMSErrors.CGMS_ERROR_SENSOR_END_OF_LIFE);
         
         /*
         Sensor Alert: Meter BG Now (104)
@@ -97,8 +103,36 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
         this.config = new Hashtable<String, MinimedCareLinkCGMSData>();
 
         
-        this.defs_cgms_config.put("x1", "");
-        this.defs_cgms_config.put("x2", "");
+        this.defs_cgms_config.put("CurrentTimeDisplayFormat", "");
+        this.defs_cgms_config.put("CurrentParadigmLinkEnable", "");
+        this.defs_cgms_config.put("CurrentChildBlockEnable", "");
+        this.defs_cgms_config.put("CurrentKeypadLockedEnable", "");
+        this.defs_cgms_config.put("CurrentAlarmClockEnable", "");
+        this.defs_cgms_config.put("CurrentSensorCalReminderEnable", "");
+        this.defs_cgms_config.put("CurrentSensorEnable", "");
+        this.defs_cgms_config.put("CurrentDisplayLanguage", "");
+        this.defs_cgms_config.put("CurrentParadigmLinkID", "");
+
+        
+        this.defs_cgms_config.put("CurrentSensorCalReminderTime", "");
+        this.defs_cgms_config.put("CurrentSensorAlarmSnoozeTime", "");
+        this.defs_cgms_config.put("CurrentSensorHighGlucoseSnoozeTime", "");
+        this.defs_cgms_config.put("CurrentSensorLowGlucoseSnoozeTime", "");
+        this.defs_cgms_config.put("CurrentSensorMissedDataTime", "");
+        this.defs_cgms_config.put("ChangeSensorGlucoseLimitPattern", "");
+        this.defs_cgms_config.put("ChangeSensorGlucoseLimitProfile", "");
+        this.defs_cgms_config.put("CurrentSensorPredictiveAlertPattern", "");
+        this.defs_cgms_config.put("CurrentSensorPredictiveAlertProfile", "");
+        this.defs_cgms_config.put("ChangeSensorSetupConfig2", "");
+        this.defs_cgms_config.put("x4", "");
+        this.defs_cgms_config.put("x5", "");
+        this.defs_cgms_config.put("x6", "");
+        this.defs_cgms_config.put("x7", "");
+        this.defs_cgms_config.put("x8", "");
+        this.defs_cgms_config.put("x9", "");
+        
+        
+/*        this.defs_cgms_config.put("x2", "");
         this.defs_cgms_config.put("x3", "");
         this.defs_cgms_config.put("x4", "");
         this.defs_cgms_config.put("x5", "");
@@ -106,6 +140,10 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
         this.defs_cgms_config.put("x7", "");
         this.defs_cgms_config.put("x8", "");
         this.defs_cgms_config.put("x9", "");
+  */      
+        
+        
+        
         
         
         /*
@@ -162,7 +200,15 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
     
     
     long debug = 0L;
-    MinimedCareLinkCGMSData BGTargetRange = null;
+    //MinimedCareLinkCGMSData BGLimit = null;
+    
+    
+    public static final int SPECIAL_DATA_GLUCOSE_LIMIT = 0;
+    public static final int SPECIAL_DATA_PREDICTIVE_ALARM = 1;
+    public static final int SPECIAL_DATA_MAX = 1;
+    
+    MinimedCareLinkCGMSData[] special_data = new MinimedCareLinkCGMSData[2]; 
+    
     
     public void readLineData(String line, int count)
     {
@@ -186,41 +232,29 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
             else*/ 
             if (mcld.isConfigData())
             {
-                /*
-                if (mcld.isDebuged())
+                if (mcld.getKey().startsWith("ChangeSensorGlucoseLimit"))
                 {
-                    System.out.println(mcld.toString());
-                    System.out.println(line);
-                    
-                    System.out.println(mcld.raw_type + " = " + mcld.processed_value);
-                    
-                }*/
-
-          /*      
-                if (mcld.getKey().startsWith("CurrentBGTargetRange"))
-                {
-                    if (mcld.getKey().equals("CurrentBGTargetRangePattern"))
+                    if (mcld.getKey().equals("ChangeSensorGlucoseLimitPattern"))
                     {
-                        if (BGTargetRange == null)
+                        if (special_data[SPECIAL_DATA_GLUCOSE_LIMIT] == null)
                         {
-                            BGTargetRange = mcld;
-                            BGTargetRange.children = new ArrayList<MinimedCareLinkCGMSData>();
+                            special_data[SPECIAL_DATA_GLUCOSE_LIMIT] = mcld;
+                            special_data[SPECIAL_DATA_GLUCOSE_LIMIT].children = new ArrayList<MinimedCareLinkCGMSData>();
                         }
                         else
                         {
-                            if (BGTargetRange.dt_long < mcld.dt_long)
+                            if (special_data[SPECIAL_DATA_GLUCOSE_LIMIT].dt_long < mcld.dt_long)
                             {
-                                BGTargetRange = mcld;
-                                BGTargetRange.children = new ArrayList<MinimedCareLinkCGMSData>();
+                                special_data[SPECIAL_DATA_GLUCOSE_LIMIT] = mcld;
+                                special_data[SPECIAL_DATA_GLUCOSE_LIMIT].children = new ArrayList<MinimedCareLinkCGMSData>();
                             }
                         }
                     }
                     else
                     {
-                        if (BGTargetRange.dt_long==mcld.dt_long)
-                            BGTargetRange.children.add(mcld);
+                        if (special_data[SPECIAL_DATA_GLUCOSE_LIMIT].dt_long==mcld.dt_long)
+                            special_data[SPECIAL_DATA_GLUCOSE_LIMIT].children.add(mcld);
                     }
-                    
                     
                     
 //                    CurrentBGTargetRangePattern,"ORIGINAL_UNITS=mmol l, SIZE=1",861682954,2232381,93,Paradigm 522
@@ -228,7 +262,32 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
                     
                     
                 }
-                else */
+                else if (mcld.getKey().startsWith("CurrentSensorPredictiveAlert"))
+                {
+                    if (mcld.getKey().equals("CurrentSensorPredictiveAlertPattern"))
+                    {
+                        if (special_data[SPECIAL_DATA_PREDICTIVE_ALARM] == null)
+                        {
+                            special_data[SPECIAL_DATA_PREDICTIVE_ALARM] = mcld;
+                            special_data[SPECIAL_DATA_PREDICTIVE_ALARM].children = new ArrayList<MinimedCareLinkCGMSData>();
+                        }
+                        else
+                        {
+                            if (special_data[SPECIAL_DATA_PREDICTIVE_ALARM].dt_long < mcld.dt_long)
+                            {
+                                special_data[SPECIAL_DATA_PREDICTIVE_ALARM] = mcld;
+                                special_data[SPECIAL_DATA_PREDICTIVE_ALARM].children = new ArrayList<MinimedCareLinkCGMSData>();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (special_data[SPECIAL_DATA_PREDICTIVE_ALARM].dt_long==mcld.dt_long)
+                            special_data[SPECIAL_DATA_PREDICTIVE_ALARM].children.add(mcld);
+                    }
+                    //CurrentSensorPredictiveAlertPattern
+                }
+                else 
                 {
                     if (config.containsKey(mcld.getKey()))
                     {
@@ -345,6 +404,11 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
         this.dvw.put("SensorStatus_lost", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY, 
             CGMSDataType.CGMS_DATA_EVENT, CGMSEvents.CGMS_EVENT_SENSOR_LOST));
         
+        this.dvw.put("GlucoseSensorDataLow", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY, 
+            CGMSDataType.CGMS_DATA_EVENT, CGMSEvents.CGMS_EVENT_DATA_LOW_BG));
+        
+        this.dvw.put("SensorError", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY, 
+            CGMSDataType.CGMS_DATA_ERROR));
         
         
         
@@ -439,7 +503,12 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
             String key = en.nextElement();
             MinimedCareLinkCGMSData mcld = this.config.get(key);
             
-            System.out.println(mcld.raw_type + " = " + mcld.processed_value);
+            if (mcld.hasItems())
+            {
+                System.out.println(mcld.getKey() + " = " + mcld.getItems());
+            }
+            else
+                System.out.println(mcld.getKey() + " = " + mcld.processed_value);
         }
         
         System.out.println(" ===  Config entries -- End");
