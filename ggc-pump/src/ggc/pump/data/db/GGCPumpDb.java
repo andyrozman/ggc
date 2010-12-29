@@ -4,9 +4,13 @@ import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.plugin.data.DeviceValuesDay;
+import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.db.PluginDb;
+import ggc.plugin.graph.GraphValuesCapable;
+import ggc.plugin.graph.GraphValuesCollection;
+import ggc.plugin.graph.PlugInGraphDb;
 import ggc.pump.data.PumpDataReader;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
@@ -58,7 +62,7 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class GGCPumpDb extends PluginDb
+public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 {
     private static Log log = LogFactory.getLog(GGCPumpDb.class);
     DataAccessPump m_da = DataAccessPump.getInstance();
@@ -582,6 +586,31 @@ public class GGCPumpDb extends PluginDb
         }
         
         return dt;
+    }
+
+
+    public GraphValuesCollection getGraphData(GregorianCalendar gc_from, GregorianCalendar gc_to, int filter)
+    {
+        GraphValuesCollection gvc = new GraphValuesCollection(gc_from, gc_to);
+        
+        DeviceValuesRange dvr = getRangePumpValues(gc_from, gc_to);
+        ArrayList<DeviceValuesEntry> list = dvr.getAllEntries();
+        
+        for(int i=0; i<list.size(); i++)
+        {
+            DeviceValuesEntry dve = list.get(i);
+            
+            if (dve instanceof GraphValuesCapable)
+            {
+                gvc.addCollection(((GraphValuesCapable) dve).getGraphValues());
+            }
+            
+        }
+        
+        //dvr.
+        
+        // TODO Auto-generated method stub
+        return null;
     }
     
     

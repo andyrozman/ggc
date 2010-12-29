@@ -16,6 +16,7 @@ import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
+import ggc.pump.graph.PumpGraphContext;
 import ggc.pump.manager.PumpManager;
 
 import java.util.ArrayList;
@@ -165,6 +166,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         loadWebLister();
         this.loadConverters();
         this.loadSorters();
+        this.loadGraphContext();
     }
     
     
@@ -912,6 +914,15 @@ public class DataAccessPump extends DataAccessPlugInBase
     public String getPluginName()
     {
         return "GGC Pump Plugin";
+    }
+    
+
+    /**
+     * Load Graph Context
+     */
+    public void loadGraphContext()
+    {
+        this.graph_context = new PumpGraphContext();
     }
     
     

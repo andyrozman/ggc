@@ -260,14 +260,6 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
         
         
     
-    public void isIgnored()
-    {
-        /*
-        this.raw_type.equals("ClearAlarm")
-        
-        
-        */
-    }
     
     
     public boolean isProfileData()
@@ -745,91 +737,6 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
     }
   */  
     
-    private String getDataBetween(String source, String f1, String f2)
-    {
-        String s = source;
-
-        s = s.substring(s.indexOf(f1) + f1.length(), s.indexOf(f2) );
-        s = s.trim();
-        
-        if (s.substring(s.length()-1).equals(","))
-            s = s.substring(0, s.length()-1);
-        
-        //s = this.mcl.m_da.replaceExpression(s, " ", "");
-        //s = s.replace(',', '.');
-        
-        return s;
-        
-        
-    }
-
-    
-    private String getDataAfter(String source, String f1)
-    {
-        String s = source;
-
-        s = s.substring(s.indexOf(f1) + f1.length());
-        s = s.trim();
-        
-        if (s.substring(s.length()-1).equals(","))
-            s = s.substring(0, s.length()-1);
-        
-        //s = this.mcl.m_da.replaceExpression(s, " ", "");
-        //s = s.replace(',', '.');
-        
-        return s;
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-
-    public String getDataNumber(String source, String f1, String f2)
-    {
-        String s = getDataBetween(source, f1, f2);
-        
-        s = this.mcl.m_da.replaceExpression(s, " ", "");
-        s = s.replace(',', '.');
-        
-        return s;
-    }
-    
-    
-    public String getDataDuration(String source, String f1, String f2)
-    {
-
-        String s2 = getDataBetween(source, f1, f2);
-        
-        long tm = Long.parseLong(s2);
-        
-        if (tm==0)
-            return null;
-        
-        tm /= 1000;
-        tm /= 60;
-        
-        int h = (int)(tm / 60.0);
-        
-        s2 = "" + h;
-        
-        if (s2.length()==1)
-            s2 = "0" + s2;
-       
-        long m = tm - h*60;
-        
-        s2 += ":";
-        
-        if (m<10)
-            s2 += "0" + m;
-        else
-            s2 += m;
-        
-        return s2;
-    }
     
     
     

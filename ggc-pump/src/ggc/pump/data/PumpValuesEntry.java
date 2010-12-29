@@ -3,6 +3,8 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.graph.GraphValue;
+import ggc.plugin.graph.GraphValuesCapable;
 import ggc.plugin.output.OutputWriterType;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBasalSubType;
@@ -52,7 +54,7 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem, PumpValuesEntryInterface
+public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem, PumpValuesEntryInterface, GraphValuesCapable
 //extends PumpDataH implements DatabaseObjectHibernate   // extends PumpValuesEntryAbstract
 {
     
@@ -1752,6 +1754,35 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     public int getAdditionalDataCount()
     {
         return this.additional_data.size();
+    }
+
+
+    public ArrayList<GraphValue> getGraphValues()
+    {
+        ArrayList<GraphValue> list = new ArrayList<GraphValue>();
+ 
+        for(Enumeration<PumpValuesEntryExt> en=this.additional_data.elements(); en.hasMoreElements(); )
+        {
+            //PumpValuesEntryExt ex = en.nextElement();
+            GraphValue gv = en.nextElement().getGraphValue();
+            
+            if (gv!=null)
+                list.add(gv);
+        }
+        
+        // FIXME - Add also current object if necessary
+        
+        
+        //list.add(this.additional_data.elements());
+        
+        // TODO Auto-generated method stub
+        return list;
+    }
+
+
+    public GraphValue getGraphValue()
+    {
+        return null;
     }
     
     

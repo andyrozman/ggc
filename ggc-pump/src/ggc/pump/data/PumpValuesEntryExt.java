@@ -3,9 +3,12 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.graph.GraphValue;
+import ggc.plugin.graph.GraphValuesCapable;
 import ggc.plugin.output.OutputWriterType;
 import ggc.plugin.util.DeviceValuesEntryUtil;
 import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.graph.PumpGraphContext;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
@@ -44,7 +47,7 @@ import com.atech.utils.ATechDate;
  */
 
 
-public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesEntryInterface,   /*PumpValuesEntryAbstract,*/ DatabaseObjectHibernate 
+public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesEntryInterface,   /*PumpValuesEntryAbstract,*/ DatabaseObjectHibernate, GraphValuesCapable 
 {
 
     private static final long serialVersionUID = 2300422547257308019L;
@@ -858,6 +861,31 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     
     public void prepareEntry_v2()
     {
+
     }
+
+
+    public ArrayList<GraphValue> getGraphValues()
+    {
+        return null;
+    }
+
+
+    public GraphValue getGraphValue()
+    {
+        int map = this.da.getGraphContext().getObjectMapping(PumpGraphContext.OBJECT_PUMP_EXT_VALUES, this.getType());
+        
+        if (map!=-1)
+        {
+            return new GraphValue(this.getDt_info(), map, this.getValue());
+        }
+        else
+            return null;
+    }
+
+    
+    
+    
+    
     
 }	
