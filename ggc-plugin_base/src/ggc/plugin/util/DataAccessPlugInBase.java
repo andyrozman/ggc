@@ -246,12 +246,6 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     PlugInServer plugin_server;
 
-    /**
-     * Graph Context
-     */
-    protected PlugInGraphContext graph_context = null;
-    
-    
     
     /**
      * Entry Status Icons 
@@ -287,6 +281,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     protected I18nControlAbstract m_parent_i18n = null;    
     
 
+    protected PlugInGraphContext graph_context = null;    
+    
+    
     // ********************************************************
     // ******      Constructors and Access methods        *****    
     // ********************************************************
