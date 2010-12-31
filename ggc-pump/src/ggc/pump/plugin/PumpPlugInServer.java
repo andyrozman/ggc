@@ -7,6 +7,7 @@ import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.graph.PlugInGraphDialog;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
@@ -520,6 +521,24 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             ic_local, DataAccessPump.getInstance(), parent);
         
         menu_pump.addSeparator();
+
+        
+        if (this.da_local.isDeveloperMode())
+        {
+            JMenu m = ATSwingUtils.createMenu("MN_PUMPS_GRAPHS", 
+                "MN_PUMPS_GRAPHS_DESC", 
+                menu_pump, ic_local);
+            
+            ATSwingUtils.createMenuItem(m, 
+                "MN_PUMPS_GRAPH_CUSTOM", 
+                "MN_PUMPS_GRAPH_CUSTOM_DESC", 
+                "pumps_graph_custom", 
+                this, null, 
+                ic_local, DataAccessPump.getInstance(), parent);
+    
+            menu_pump.addSeparator();
+        }
+        
         
         ATSwingUtils.createMenuItem(menu_pump, 
             "MN_PUMPS_CONFIG", 
@@ -529,6 +548,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             ic_local, DataAccessPump.getInstance(), parent);
 
         menu_pump.addSeparator();
+
         
         ATSwingUtils.createMenuItem(menu_pump, 
             "MN_PUMPS_ABOUT", 
@@ -647,6 +667,10 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         {
             new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this, DeviceDataHandler.TRANSFER_READ_FILE);
             this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_READ_DATA);
+        }
+        else if (command.equals("pumps_graph_custom"))
+        {
+            new PlugInGraphDialog(DataAccessPump.getInstance(), null);
         }
         else if (command.equals("pumps_about"))
         {
