@@ -85,7 +85,6 @@ public abstract class DevicePlugInServer extends PlugInServer
      */
     public void initPlugInServer(DataAccess da_ggc_core, DataAccessPlugInBase da_plugin)
     {
-        
         da_plugin.loadManager();
         
         ic_local = da_plugin.getI18nControlInstance();
@@ -93,7 +92,7 @@ public abstract class DevicePlugInServer extends PlugInServer
         
         
         //System.out.println(da_local.getI18nControlInstance().toString());
-        
+        da_plugin.setMainParent(da_ggc_core.getMainParent());
         
         da_plugin.addComponent(this.parent);
         da_plugin.setHelpContext(this.m_da.getHelpContext());

@@ -1,15 +1,11 @@
-package ggc.plugin.graph;
+package ggc.plugin.graph.data;
 
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
-
-import com.atech.utils.ATechDate;
 
 public class GraphValuesCollection
 {

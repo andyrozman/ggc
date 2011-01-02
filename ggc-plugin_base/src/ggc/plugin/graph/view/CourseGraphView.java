@@ -27,7 +27,7 @@
  *  
  */
 
-package ggc.plugin.graph;
+package ggc.plugin.graph.view;
 
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.GlucoValues;

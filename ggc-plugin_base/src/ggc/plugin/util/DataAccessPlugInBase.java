@@ -8,7 +8,7 @@ import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.device.DeviceInterface;
-import ggc.plugin.graph.PlugInGraphContext;
+import ggc.plugin.graph.util.PlugInGraphContext;
 import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.plugin.list.BaseListEntry;

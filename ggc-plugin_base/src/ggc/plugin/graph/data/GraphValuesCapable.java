@@ -1,4 +1,5 @@
-package ggc.plugin.graph;
+package ggc.plugin.graph.data;
+
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package ggc.plugin.graph;
+package ggc.plugin.graph.view;
 
 import ggc.core.util.DataAccess;
 
