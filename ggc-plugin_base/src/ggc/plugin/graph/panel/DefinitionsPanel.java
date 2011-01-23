@@ -33,17 +33,17 @@ public class DefinitionsPanel extends JPanel
         setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("GRAPH_DEFINITION")));        
         this.setBackground(Color.yellow);
         
-        ATSwingUtils.getLabel("Graph Definitions:", 20, 10, 120, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel("Graph Definitions:", 10, 15, 200, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
         
         Vector<String> defs = new Vector<String>();
         defs.add("Custom...");
 
-        ATSwingUtils.getComboBox(defs, 20, 30, 120, 25, this, ATSwingUtils.FONT_NORMAL);
+        ATSwingUtils.getComboBox(defs, 10, 35, 220, 25, this, ATSwingUtils.FONT_NORMAL);
         
         
-        ATSwingUtils.getLabel("Graph Types:", 20, 70, 120, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel("Graph Types:", 10, 90, 120, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
         
-        ATSwingUtils.getComboBox(m_da.getGraphContext().getGraphTypes().getGraphTypesVector(), 20, 90, 120, 25, this, ATSwingUtils.FONT_NORMAL);
+        ATSwingUtils.getComboBox(m_da.getGraphContext().getGraphTypes().getGraphTypesVector(), 10, 110, 220, 25, this, ATSwingUtils.FONT_NORMAL);
         
     }
     

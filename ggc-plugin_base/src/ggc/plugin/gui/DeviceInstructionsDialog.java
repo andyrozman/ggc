@@ -34,7 +34,7 @@ import com.atech.db.DbDataReadingFinishedInterface;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
-import com.atech.utils.TimeZoneUtil;
+import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control

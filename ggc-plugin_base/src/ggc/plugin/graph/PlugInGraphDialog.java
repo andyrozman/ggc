@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import com.atech.graphics.calendar.DateRangeData;
 import com.atech.graphics.calendar.DateRangeSelectionPanel2;
 import com.atech.graphics.layout.ZeroLayout;
 import com.atech.help.HelpCapable;
@@ -53,7 +54,8 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
     /**
      * 
      */
-    private static final long serialVersionUID = -8683824481065899261L;
+    private static final long serialVersionUID = -1657001410904620188L;
+    
     private DataAccessPlugInBase m_da = null;
     private I18nControlAbstract m_ic = null;
 
@@ -71,6 +73,7 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
      * Constructor
      * 
      * @param da
+     * @param selected_name 
      */
     public PlugInGraphDialog(DataAccessPlugInBase da, String selected_name)
     {
@@ -119,7 +122,7 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
     	
     	
     	
-        dRS = new DateRangeSelectionPanel2(m_da);
+        dRS = new DateRangeSelectionPanel2(m_da, DateRangeData.RANGE_TWO_WEEKS);
         dRS.setBounds(0, 450, 200, 150);
         
         main_panel.add(dRS, ZeroLayout.STATIC_ON_LOWER_EDGE);

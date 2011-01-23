@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.CRCUtils;
+import com.atech.utils.data.CRCUtils;
 
 // TODO: Auto-generated Javadoc
 /**

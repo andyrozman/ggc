@@ -8,7 +8,7 @@ import java.util.Comparator;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.components.MultiLineTooltip;
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 
 /**

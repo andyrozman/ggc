@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.GregorianCalendar;
 
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control

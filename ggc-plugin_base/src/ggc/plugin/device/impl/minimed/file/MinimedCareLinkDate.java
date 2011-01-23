@@ -2,7 +2,7 @@ package ggc.plugin.device.impl.minimed.file;
 
 import ggc.plugin.util.DataAccessPlugInBase;
 
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 public class MinimedCareLinkDate
 {

@@ -2,7 +2,7 @@ package ggc.plugin.data;
 
 import ggc.plugin.output.OutputWriterData;
 
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 
 /**

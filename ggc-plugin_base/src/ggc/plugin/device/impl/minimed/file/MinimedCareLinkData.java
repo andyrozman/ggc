@@ -2,7 +2,7 @@ package ggc.plugin.device.impl.minimed.file;
 
 import java.util.Hashtable;
 
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control

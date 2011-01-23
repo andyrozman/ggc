@@ -18,7 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.CRCUtils;
+import com.atech.utils.data.CRCUtils;
 
 
 // NOTE: This is only class that will be implemented for first phase of MiniMed testing
