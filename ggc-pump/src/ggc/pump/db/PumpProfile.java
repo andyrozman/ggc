@@ -15,7 +15,7 @@ import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control

@@ -14,7 +14,7 @@ import org.hibernate.Transaction;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control

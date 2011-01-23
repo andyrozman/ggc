@@ -16,8 +16,8 @@ import java.io.File;
 import java.util.Vector;
 
 import com.atech.i18n.mgr.LanguageManager;
-import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
+import com.atech.utils.data.TimeZoneUtil;
 
 // TODO: Auto-generated Javadoc
 /**

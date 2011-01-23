@@ -3,7 +3,7 @@ package ggc.pump.data;
 import ggc.plugin.data.DeviceTempValues;
 import ggc.plugin.output.OutputWriterData;
 
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 
 /**

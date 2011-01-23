@@ -8,9 +8,9 @@ import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.db.PluginDb;
-import ggc.plugin.graph.GraphValuesCapable;
-import ggc.plugin.graph.GraphValuesCollection;
-import ggc.plugin.graph.PlugInGraphDb;
+import ggc.plugin.graph.data.GraphValuesCapable;
+import ggc.plugin.graph.data.GraphValuesCollection;
+import ggc.plugin.graph.data.PlugInGraphDb;
 import ggc.pump.data.PumpDataReader;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
@@ -33,7 +33,7 @@ import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
 
 import com.atech.db.hibernate.HibernateDb;
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control

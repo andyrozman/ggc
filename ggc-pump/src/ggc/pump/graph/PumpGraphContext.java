@@ -1,7 +1,7 @@
 package ggc.pump.graph;
 
-import ggc.plugin.graph.PlugInGraphConstants;
-import ggc.plugin.graph.PlugInGraphContext;
+import ggc.plugin.graph.data.PlugInGraphConstants;
+import ggc.plugin.graph.util.PlugInGraphContext;
 
 import java.util.Hashtable;
 

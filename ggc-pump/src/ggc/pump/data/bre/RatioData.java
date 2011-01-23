@@ -2,7 +2,7 @@ package ggc.pump.data.bre;
 
 import ggc.pump.util.DataAccessPump;
 
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 // TODO: Auto-generated Javadoc
 /**

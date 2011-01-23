@@ -3,8 +3,8 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.graph.GraphValue;
-import ggc.plugin.graph.GraphValuesCapable;
+import ggc.plugin.graph.data.GraphValue;
+import ggc.plugin.graph.data.GraphValuesCapable;
 import ggc.plugin.output.OutputWriterType;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBasalSubType;
@@ -25,7 +25,7 @@ import org.hibernate.Transaction;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.misc.statistics.StatisticsObject;
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control

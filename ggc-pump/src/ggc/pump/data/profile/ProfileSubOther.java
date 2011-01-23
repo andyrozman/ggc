@@ -1,6 +1,6 @@
 package ggc.pump.data.profile;
 
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control

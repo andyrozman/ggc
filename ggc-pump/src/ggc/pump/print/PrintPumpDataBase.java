@@ -8,7 +8,7 @@ import ggc.pump.data.PumpValuesEntry;
 
 import java.util.GregorianCalendar;
 
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;

@@ -2,7 +2,7 @@ package ggc.pump.data.profile;
 
 import ggc.pump.util.DataAccessPump;
 
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 
 /**

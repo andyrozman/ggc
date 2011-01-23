@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 
 
