@@ -11,8 +11,8 @@ import ggc.plugin.output.ConsoleOutputWriter;
 import java.io.File;
 
 import com.atech.i18n.mgr.LanguageManager;
-import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
+import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control

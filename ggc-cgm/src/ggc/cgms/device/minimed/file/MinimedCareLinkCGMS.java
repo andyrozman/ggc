@@ -1,7 +1,6 @@
 package ggc.cgms.device.minimed.file;
 
 import ggc.cgms.data.CGMSTempValues;
-import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.defs.CGMSAlarms;
 import ggc.cgms.data.defs.CGMSDataType;
 import ggc.cgms.data.defs.CGMSErrors;

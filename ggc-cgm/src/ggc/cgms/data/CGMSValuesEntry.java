@@ -17,7 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.atech.misc.statistics.StatisticsItem;
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
