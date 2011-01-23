@@ -2,8 +2,6 @@ package ggc.plugin.device.impl.minimed.file;
 
 import java.util.Hashtable;
 
-import com.atech.utils.data.ATechDate;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -47,6 +45,9 @@ public abstract class MinimedCareLinkData
     private Hashtable<String,String> data_cgms = new Hashtable<String,String>();
     private Hashtable<String,String> data_pump = new Hashtable<String,String>();
     
+    public String processed_value = null;
+    public long dt_long = 0L;
+
     
 //  Index[0],Date,Time,Timestamp,New Device Time,BG Reading (mmol/L)[5],
 //  Linked BG Meter ID, Temp Basal Amount (U/h),Temp Basal Type,Temp Basal Duration (hh:mm:ss),Bolus Type[10],
@@ -73,7 +74,7 @@ public abstract class MinimedCareLinkData
     };
     
     
-    protected String raw_type;        // 33
+    public String raw_type;        // 33
     public String raw_values;      // 34
 
     
@@ -657,6 +658,104 @@ public abstract class MinimedCareLinkData
     
     public abstract void processData();
 
+    
+ 
+    
+    
+    protected String getDataBetween(String source, String f1, String f2)
+    {
+        String s = source;
+
+        s = s.substring(s.indexOf(f1) + f1.length(), s.indexOf(f2) );
+        s = s.trim();
+        
+        if (s.substring(s.length()-1).equals(","))
+            s = s.substring(0, s.length()-1);
+        
+        //s = this.mcl.m_da.replaceExpression(s, " ", "");
+        //s = s.replace(',', '.');
+        
+        return s;
+        
+        
+    }
+
+    
+    protected String getDataAfter(String source, String f1)
+    {
+        String s = source;
+
+        s = s.substring(s.indexOf(f1) + f1.length());
+        s = s.trim();
+        
+        if (s.substring(s.length()-1).equals(","))
+            s = s.substring(0, s.length()-1);
+        
+        //s = this.mcl.m_da.replaceExpression(s, " ", "");
+        //s = s.replace(',', '.');
+        
+        return s;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+
+    protected String getDataNumber(String source, String f1, String f2)
+    {
+        String s = getDataBetween(source, f1, f2);
+        
+        s = this.mcl.m_da.replaceExpression(s, " ", "");
+        s = s.replace(',', '.');
+        
+        return s;
+    }
+    
+    
+    protected String getDataDuration(String source, String f1, String f2)
+    {
+        String s2 = getDataBetween(source, f1, f2);
+        
+        return getHMDuration(s2);
+    }
+    
+
+    protected String getHMDuration(String s2)
+    {
+
+        //String s2 = getDataBetween(source, f1, f2);
+        
+        long tm = Long.parseLong(s2);
+        
+        if (tm==0)
+            return "00:00";
+        
+        tm /= 1000;
+        tm /= 60;
+        
+        int h = (int)(tm / 60.0);
+        
+        s2 = "" + h;
+        
+        if (s2.length()==1)
+            s2 = "0" + s2;
+       
+        long m = tm - h*60;
+        
+        s2 += ":";
+        
+        if (m<10)
+            s2 += "0" + m;
+        else
+            s2 += m;
+        
+        return s2;
+    }
+    
     
     
     

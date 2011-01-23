@@ -125,7 +125,7 @@ public class MinimedCareLinkDate
     }
     
     
-    public ATechDate getAtechDate(String date, String time)
+    public long getAtechDateLong(String date, String time)
     {
         
         String[] time_p = m_da.splitString(time, time_delimiter);
@@ -159,7 +159,13 @@ public class MinimedCareLinkDate
         
         dt += Long.parseLong(y) * 10000000000L;
         
-        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, dt);
+        return dt;
+    }
+    
+    
+    public ATechDate getAtechDate(String date, String time)
+    {
+        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, getAtechDateLong(date, time));
     }
     
 
