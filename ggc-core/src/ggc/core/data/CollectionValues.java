@@ -5,7 +5,7 @@ import ggc.core.util.DataAccess;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control

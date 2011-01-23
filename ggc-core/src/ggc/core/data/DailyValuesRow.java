@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.db.ext.ExtendedCapable;
 import com.atech.db.ext.ExtendedHandler;
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control

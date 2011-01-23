@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
