@@ -19,8 +19,8 @@ import gnu.io.SerialPortEvent;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import com.atech.utils.ATechDate;
-import com.atech.utils.TimeZoneUtil;
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control

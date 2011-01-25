@@ -35,8 +35,8 @@ import ggc.plugin.protocol.SerialProtocol;
 
 import java.util.Vector;
 
-import com.atech.utils.TimeZoneUtil;
 import com.atech.utils.TimerThread;
+import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control

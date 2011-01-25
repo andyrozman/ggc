@@ -4,7 +4,7 @@ import ggc.meter.util.DataAccessMeter;
 
 import java.util.GregorianCalendar;
 
-import com.atech.utils.TimeZoneUtil;
+import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control

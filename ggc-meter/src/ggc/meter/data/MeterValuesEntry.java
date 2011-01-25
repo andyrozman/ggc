@@ -19,7 +19,7 @@ import org.hibernate.Transaction;
 
 import com.atech.db.ext.ExtendedHandler;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATechDate;
+import com.atech.utils.data.ATechDate;
 
 
 /**

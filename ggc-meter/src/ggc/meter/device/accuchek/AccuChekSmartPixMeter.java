@@ -22,8 +22,8 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
 
-import com.atech.utils.ATechDate;
-import com.atech.utils.TimeZoneUtil;
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control

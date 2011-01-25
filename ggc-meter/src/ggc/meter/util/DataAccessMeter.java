@@ -518,6 +518,14 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         // TODO Auto-generated method stub
         
+    }
+
+
+    @Override
+    public String getPluginName()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }    
     
     
