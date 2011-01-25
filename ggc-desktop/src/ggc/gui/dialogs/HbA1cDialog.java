@@ -67,6 +67,13 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
     GraphViewHbA1c gv; // = new GraphViewHbA1c();
     private HbA1cValues hbValues;
 
+    
+    public HbA1cDialog()
+    {
+        init();
+    }
+    
+    
     /**
      * Constructor
      * 

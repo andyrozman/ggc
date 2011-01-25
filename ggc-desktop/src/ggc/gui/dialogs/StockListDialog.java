@@ -116,6 +116,14 @@ public class StockListDialog extends JDialog implements ActionListener
     Font font_normal, font_normal_bold;
 
 
+    public StockListDialog()
+    {
+        setBounds(175, 150, 450, 380);
+        initComponents();
+        this.setVisible(true);
+    }
+    
+    
     /**
      * Constructor
      * 
@@ -125,19 +133,14 @@ public class StockListDialog extends JDialog implements ActionListener
     {
         super(frame, "", true);
 
+        
         Rectangle rec = frame.getBounds();
         int x = rec.x + (rec.width/2);
         int y = rec.y + (rec.height/2);
 
-        setBounds(x-175, y-150, 450, 380);
-        this.setLayout(null);
-
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-        font_normal_bold = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
-
-        gc = new GregorianCalendar();
+        setBounds(x-175, y-150, 450, 380);        
         
-        init();
+        initComponents();
 
         this.list_full = new ArrayList<DoctorH>();
         populateList();
@@ -149,9 +152,19 @@ public class StockListDialog extends JDialog implements ActionListener
 
 
 
-    private void init() 
+    private void initComponents() 
     {
 
+        
+        this.setLayout(null);
+
+        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+        font_normal_bold = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
+
+        gc = new GregorianCalendar();
+                
+        
+        
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 450, 350);
         panel.setLayout(null);
