@@ -18,5 +18,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mdbtools-0.1"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rxtx-2.2"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Lib USB 4j WO (libusb4jwo)"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

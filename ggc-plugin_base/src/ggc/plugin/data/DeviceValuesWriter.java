@@ -42,6 +42,9 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     private static final long serialVersionUID = -1649768167774901903L;
     OutputWriter output_writer = null;
     private static Log log = LogFactory.getLog(DeviceValuesWriter.class);
+    /**
+     * Is Silent Mode
+     */
     public boolean is_silent_mode = false;
 
     
@@ -55,6 +58,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     
     /**
      * Constructor
+     * @param is_silent 
      */
     public DeviceValuesWriter(boolean is_silent)
     {
