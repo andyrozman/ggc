@@ -2,7 +2,6 @@
 
 package ggc.plugin.graph;
 
-import ggc.core.data.GlucoValues;
 import ggc.plugin.graph.panel.AxesEditorPanel;
 import ggc.plugin.graph.panel.DefinitionsPanel;
 import ggc.plugin.util.DataAccessPlugInBase;

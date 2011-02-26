@@ -9,7 +9,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Xpp Xml Parser 3-1.1.4c"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate-3.1"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jna-3.0.9"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/IBMComm">
 		<attributes>
@@ -18,6 +17,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mdbtools-0.1"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rxtx-2.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jna-3.2.7"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Lib USB 4j WO (libusb4jwo)"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
