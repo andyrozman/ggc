@@ -186,13 +186,15 @@ environment.
 
 2.) Download Eclipse. Eclipse is our official development tool, but you can use any other you wish.
     I am advising to use Galileo (Eclipse 3.5). Link http://download.eclipse.org/eclipse/downloads/, 
-    take latest stable build. Or you may find a downloadable package from your favorite repository that is already built and ready to 
-    use for your system - just download it as you would with any software.
+    take latest stable build. Or you may find a downloadable package from your favorite repository that 
+    is already built and ready to use for your system - just download it as you would with any software.
     
-    Install subclipse for Eclipse: (you need to do this step before you go to 3. Subclipse is often already packed and ready for download from your 
+    Install subclipse for Eclipse: (you need to do this step before you go to 3. Subclipse is often 
+    already packed and ready for download from your 
     favorite repository or follow the instructions below.
     
-    Go to Eclipse Window -> Preferences -> Install/Update -> Available Software Sites -> Add -> Location: http://subclipse.tigris.org/update_1.6.x .
+    Go to Eclipse Window -> Preferences -> Install/Update -> Available Software Sites -> Add -> 
+    Location: http://subclipse.tigris.org/update_1.6.x .
     Mark the Location you just added and press Enable button and Ok. Go to Help -> Check for Updates. Wait a few seconds so that the entry is added and 
     the file list is downloaded. Select Subclipse plugin.
     
