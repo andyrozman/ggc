@@ -117,7 +117,7 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
                 return mve.getExtendedTypeDescription();
     
             case 2:
-                return mve.getExtendedTypeValue();
+                return mve.getExtendedTypeValue(true);
     
             case 3:
                 return new Integer(mve.getStatus());

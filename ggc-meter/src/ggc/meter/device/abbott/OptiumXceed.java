@@ -1,6 +1,7 @@
 package ggc.meter.device.abbott;
 
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.data.MeterValuesEntrySpecial;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterDevicesIds;
@@ -525,7 +526,7 @@ public class OptiumXceed extends AbstractSerialMeter
         MeterValuesEntry mve = new MeterValuesEntry();
         
         mve.setDateTimeObject(adt);
-        mve.setSpecialEntry(MeterValuesEntry.SPECIAL_ENTRY_URINE_MMOLL, 
+        mve.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MMOLL, 
                             DataAccessMeter.Decimal1Format.format(m_da.getBGValueByType(DataAccessMeter.BG_MGDL, DataAccessMeter.BG_MMOL, data)));
         
 //        mve.setBgValue("" + m_da.getIntValueFromString(data));

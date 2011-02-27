@@ -1,19 +1,24 @@
 package ggc.meter.test;
 
+import ggc.core.util.GGCLanguageManagerRunner;
 import ggc.meter.device.abbott.OptiumXceed;
-import ggc.meter.device.accuchek.AccuChekAviva;
+import ggc.meter.device.accuchek.AccuChekAvivaCombo;
 import ggc.meter.device.ascensia.AscensiaContour;
+import ggc.meter.device.ascensia.AscensiaContourUSB;
 import ggc.meter.device.menarini.GlucofixMio;
 import ggc.meter.device.onetouch.OneTouchUltra;
 import ggc.meter.device.onetouch.OneTouchUltraEasy;
+import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 
+import java.io.File;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.atech.i18n.mgr.LanguageManager;
 import com.atech.utils.TimerThread;
 import com.atech.utils.data.TimeZoneUtil;
 
@@ -47,6 +52,8 @@ import com.atech.utils.data.TimeZoneUtil;
 public class MeterConsoleTester 
 {
 
+    String path_to_test_files = "../../test/";
+    
     private static Log logDevice = LogFactory.getLog("deviceLogger");
     private static Log logDeviceCat = LogFactory.getLog("deviceLogger");
     
@@ -79,13 +86,13 @@ public class MeterConsoleTester
     	    
     	    // this.startOneTouchEasy(portName);
     	    //startOptiumXceed(portName);
-    	    this.startMenarini(portName);
+    	    //this.startMenarini(portName);
     	    
     	    //testLogger();
     	    
     	    
     	    //startAccuChekAviva();
-    	    
+    	    startAscensiaUsb();
     	    
     	    /*
     		//GGCFileOutputWriter gfo = new GGCFileOutputWriter();
@@ -145,6 +152,45 @@ public class MeterConsoleTester
     }
 
     
+    
+    /**
+     * Ascensia Testing
+     * 
+     * @param portName
+     * @throws Exception
+     */
+    public void startAscensiaUsb() throws Exception
+    {
+        //GGCFileOutputWriter ow = new GGCFileOutputWriter();
+        ConsoleOutputWriter ow = new ConsoleOutputWriter();
+        
+        //thread.addJob(cow.getOutputUtil());
+        //thread.addJob(ow.getOutputUtil());
+        
+        //displaySerialPorts();
+        
+        DataAccessMeter dap = DataAccessMeter.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
+        //dap.setHelpContext(da.getHelpContext());
+        //dap.setPlugInServerInstance(this);
+        //dap.createDb(da.getHibernateDb());
+        dap.initAllObjects();
+        dap.loadSpecialParameters();
+          
+        AscensiaContourUSB asc_meter = new AscensiaContourUSB("", ow);
+        //asc_meter.setPort(portName);
+        
+       
+        
+        asc_meter.readDeviceDataFull(); 
+        
+        System.out.println("We are back in tester !!!!");
+        
+        System.exit(0);
+        
+    }
+        
+    
+    
     /**
      * Roche Testing
      */
@@ -152,14 +198,33 @@ public class MeterConsoleTester
     {
         try
         {
-            ConsoleOutputWriter ow = new ConsoleOutputWriter();
             
-            AccuChekAviva acv = new AccuChekAviva("g:", ow);
-            acv.readDeviceDataFull();
+            DataAccessMeter dap = DataAccessMeter.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
+            //dap.setHelpContext(da.getHelpContext());
+            //dap.setPlugInServerInstance(this);
+            //dap.createDb(da.getHibernateDb());
+            dap.initAllObjects();
+            dap.loadSpecialParameters();
+            //this.backup_restore_enabled = true;
+            
+            //da.loadSpecialParameters();
+            
+            
+            //ConsoleOutputWriter ow = new ConsoleOutputWriter();
+            
+            //AccuChekAviva acv = new AccuChekAviva("g:", ow);
+            //acv.readDeviceDataFull();
+            
+            AccuChekAvivaCombo acv = new AccuChekAvivaCombo("", new ConsoleOutputWriter());
+            acv.processXml(new File(path_to_test_files + "G0079225_1112_2010.XML"));
+            
+            // G0079225_1112_2010.XML
+            
         }
         catch(Exception ex)
         {
             System.out.println("Exception: " + ex);
+            ex.printStackTrace();
         }
     }
     

@@ -2,6 +2,7 @@
 package ggc.meter.device.accuchek;
 
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.data.MeterValuesEntrySpecial;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.DataAccessMeter;
@@ -100,6 +101,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
     public AccuChekSmartPixMeter(String conn_parameter, OutputWriter writer, DataAccessPlugInBase m_da)
     {
         super(conn_parameter, writer, m_da); 
+        this.setMeterType("Accu-Chek/Roche", getName());
     }
     
     
@@ -166,7 +168,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
         
         Node nd = getNode("IMPORT/ACSPIX");
-        //System.out.println(nd);
+        System.out.println(nd);
         
         StringBuffer sb = new StringBuffer();
         
@@ -245,13 +247,78 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         
         for(int i=0; i<nodes.size(); i++)
         {
-            lst.add(getDataEntry(nodes.get(i)));
+            lst.addAll(getDataEntries(nodes.get(i)));
         }
         
     }
     
+
+    private ArrayList<MeterValuesEntry> getDataEntries(Node entry)
+    {
+        Element el = (Element)entry;
+        boolean just_ch = false;
+     
+        ArrayList<MeterValuesEntry> list = new ArrayList<MeterValuesEntry>();
+        
+        MeterValuesEntry mve = getEmptyEntry(el);
+
+        if (el.attributeValue("Val").toUpperCase().startsWith("HI"))
+        {
+            mve.setBgValue(""+600);
+        }
+        else if (el.attributeValue("Val").toUpperCase().startsWith("LO"))
+        {
+            mve.setBgValue(""+10);
+        }
+        else if (el.attributeValue("Val").toUpperCase().startsWith("---"))
+        {
+            just_ch = true;
+        }   
+        else
+            mve.setBgValue(el.attributeValue("Val"));
+
+        if (!just_ch)
+        {
+            this.output_writer.writeData(mve);
+            list.add(mve);
+        }
+        
+        
+        // check for presence of ch
+        String element_attribute = el.attributeValue("Carb");
+        
+        if (element_attribute!=null)
+        {
+            mve = getEmptyEntry(el);
+            mve.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH, element_attribute);
+            
+            this.output_writer.writeData(mve);
+            list.add(mve);
+        }
+        
+        return list;
+       
+        
+        
+        // dt_info > 201012100000 AND 
+        // dt_info < 201012102359  
+        //
+        
+    }
+
+    
+    private MeterValuesEntry getEmptyEntry(Element el)
+    {
+        MeterValuesEntry mve = new MeterValuesEntry();
+        mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")))));
+        mve.setBgUnit(this.bg_unit);
+        
+        return mve;
+    }
     
     
+    
+    @SuppressWarnings("unused")
     private MeterValuesEntry getDataEntry(Node entry)
     {
         Element el = (Element)entry;
@@ -277,13 +344,25 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
             mve.setBgValue(el.attributeValue("Val"));
         
         // <BG Val="5.1" Dt="2005-06-07" Tm="18:01" D="1"/>
-
+        /*
+        <BG Val="8.4" Dt="2010-12-10" Tm="16:35" Carb="20" D="1"/>
+        <BG Val="8.3" Dt="2010-12-10" Tm="12:07" Carb="130" D="1"/>
+        <BG Val="10.9" Dt="2010-12-10" Tm="09:34" D="1"/>
+        <BG Val="---" Dt="2010-12-09" Tm="22:57" Carb="45" D="1"/>
+        <BG Val="10.6" Dt="2010-12-09" Tm="20:25" Carb="60" D="1"/>
+        <BG Val="---" Dt="2010-12-09" Tm="17:49" Carb="60" D="1"/>
+        <BG Val="8.9" Dt="2010-12-09" Tm="14:42" Carb="132" D="1"/>
+        <BG Val="---" Dt="2010-12-09" Tm="00:03" Carb="30" D="1"/>
+        <BG Val="---" Dt="2010-12-08" Tm="23:18" Carb="40" D="1"/>
+        <BG Val="---" Dt="2010-12-08" Tm="19:20" Carb="45" D="1"/>
+        <BG Val="---" Dt="2010-12-08" Tm="18:52" Carb="45" D="1"/>
+        */
         
         String element_attribute = el.attributeValue("Carb");
         
         if (element_attribute!=null)
         {
-            mve.setSpecialEntry(MeterValuesEntry.SPECIAL_ENTRY_CH, element_attribute);
+            mve.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH, element_attribute);
         }
         
         

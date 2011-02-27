@@ -521,12 +521,14 @@ public class DataAccessMeter extends DataAccessPlugInBase
     }
 
 
-    @Override
+    /**
+     * Get Name of Plugin (for internal use)
+     * @return
+     */
     public String getPluginName()
     {
-        // TODO Auto-generated method stub
-        return null;
-    }    
+        return "GGC Meter Plugin";
+    }
     
     
 }

@@ -171,26 +171,12 @@ public class GGCMeterDb extends PluginDb
      */
     public Hashtable<String, PumpDataExtendedH> getPumpData(Hashtable<Long,String> time_marks)
     {
-        /*
-        StringBuffer sb = new StringBuffer();
-        sb.append(" (");
-        
-        for(Enumeration<Long> en = time_marks.keys(); en.hasMoreElements(); )
-        {
-            sb.append(en.nextElement() + ", ");
-        }
-        sb.append(")");
-        */
-
         Hashtable<String, PumpDataExtendedH> pump_data = new Hashtable<String, PumpDataExtendedH>();
         
         MeterValuesEntry mve = new MeterValuesEntry();
         
-        //getAllowedPumpMappedTypes
-
         if (time_marks.size()==0)
             return pump_data;
-        
         
         try
         {
@@ -212,19 +198,64 @@ public class GGCMeterDb extends PluginDb
                 pump_data.put(time + "_" + pde.getType(), pde);
             }
             
-            
         }
         catch(Exception ex)
         {
             log.error("Error getting pump data: " + ex, ex);
         }
         
-        
         return pump_data;
-        
     }
 
 
+    
+    /**
+     * Get Meter Data (with help of time marks)
+     * 
+     * @param time_marks
+     * @return
+     */
+    public Hashtable<Long, MeterValuesEntry> getMeterData(Hashtable<Long,String> time_marks)
+    {
+
+        Hashtable<Long, MeterValuesEntry> meter_data = new Hashtable<Long, MeterValuesEntry>();
+        
+        if (time_marks.size()==0)
+            return meter_data;
+        
+        
+        try
+        {
+            log.debug("getMeterData() - Process");
+    
+            
+            Query q = this.getSession().createQuery(
+                " SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + 
+                " WHERE person_id=" + m_da.getCurrentUserId() + " AND dv.dt_info IN " + getDataListForSQL(time_marks) +
+                " ORDER BY dv.dt_info ASC");
+            
+            Iterator<?> it = q.list().iterator();
+            
+            while(it.hasNext())
+            {
+                MeterValuesEntry mve = new MeterValuesEntry((DayValueH)it.next());
+                meter_data.put(mve.getDateTime(), mve);
+            }
+            
+            
+        }
+        catch(Exception ex)
+        {
+            log.error("Error getting meter data: " + ex, ex);
+        }
+        
+        
+        return meter_data;
+        
+    }
+    
+    
+    
     
     private String getDataListForSQL(Hashtable<?,?> ht)
     {
