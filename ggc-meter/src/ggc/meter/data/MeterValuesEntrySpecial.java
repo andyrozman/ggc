@@ -1,5 +1,8 @@
 package ggc.meter.data;
 
+import ggc.core.data.ExtendedDailyValue;
+import ggc.meter.util.DataAccessMeter;
+
 import java.util.Hashtable;
 
 public class MeterValuesEntrySpecial
@@ -14,15 +17,26 @@ public class MeterValuesEntrySpecial
      * Special Entry: Urine - Ketones (mmol/L)
      */
     public static final int SPECIAL_ENTRY_URINE_MGDL = 2;
+
+    /**
+     * Special Entry: Urine - Ketones (mmol/L)
+     */
+    public static final int SPECIAL_ENTRY_URINE_DESCRIPTIVE = 3;
     
     /**
      * Special Entry: CH
      */
-    public static final int SPECIAL_ENTRY_CH = 3;
+    public static final int SPECIAL_ENTRY_CH = 4;
     
     
     
-    public static final int SPECIAL_ENTRY_MAX = 3;
+    public static final int SPECIAL_ENTRY_MAX = 4;
+
+    
+    public static final int SPECIAL_ENTRY_BG = -2;
+
+    
+    public static final int SPECIAL_ENTRY_URINE_COMBINED = 100;
     
     
     /**
@@ -52,8 +66,15 @@ public class MeterValuesEntrySpecial
     
     public MeterValuesEntrySpecial(int id, String value)
     {
-        this.special_entry_id = id;
-        this.special_entry_value = value;
+        if (id==SPECIAL_ENTRY_URINE_COMBINED)
+        {
+            processUrine(value);
+        }
+        else
+        {
+            this.special_entry_id = id;
+            this.special_entry_value = value;
+        }
     }
     
     
@@ -69,6 +90,48 @@ public class MeterValuesEntrySpecial
         
         return allowed_types;
     }
+    
+    public void processUrine(String value)
+    {
+        if (value.toLowerCase().contains("mmol/"))
+        {
+            this.special_entry_id = MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MMOLL;
+
+            int idx = value.toLowerCase().indexOf("mmol/");
+            
+            this.special_entry_value = value.substring(0, idx);
+            this.special_entry_value = this.special_entry_value.trim();
+        }
+        else if (value.toLowerCase().contains("mg/"))
+        {
+            this.special_entry_id = MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MMOLL;
+
+            int idx = value.toLowerCase().indexOf("mg/");
+            
+            this.special_entry_value = value.substring(0, idx);
+            this.special_entry_value = this.special_entry_value.trim();
+        }
+        else
+        {
+            this.special_entry_id = MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_DESCRIPTIVE;
+            this.special_entry_value = value;
+        }
+        
+        
+    }
+    
+    public int whichSpecialIsDVE(int dv_type)
+    {
+        switch(dv_type)
+        {
+            case ExtendedDailyValue.EXTENDED_URINE:
+                return SPECIAL_ENTRY_URINE_COMBINED;
+                
+            default:
+                return -1;
+        }
+    }
+    
     
     
     /**
@@ -135,10 +198,11 @@ public class MeterValuesEntrySpecial
         if (this.special_entries==null)
         {
             this.special_entries = new Hashtable<String, SpecialEntryDefinition>();
-            this.special_entries.put("1", new SpecialEntryDefinition(1, "URINE", "mmol/L", true, 4));
-            this.special_entries.put("2", new SpecialEntryDefinition(2, "URINE", "mg/dL", true, 4));
-            this.special_entries.put("3", new SpecialEntryDefinition(3, "CH", "g", false, 5));
-            this.special_entries.put("-2", new SpecialEntryDefinition(-2, "BG", "", false, 3));
+            this.special_entries.put("1", new SpecialEntryDefinition(1, "URINE", "mmol/L", true, 4, ExtendedDailyValue.EXTENDED_URINE));
+            this.special_entries.put("2", new SpecialEntryDefinition(2, "URINE", "mg/dL", true, 4, ExtendedDailyValue.EXTENDED_URINE));
+            this.special_entries.put("2", new SpecialEntryDefinition(3, "URINE", "", false, 4, ExtendedDailyValue.EXTENDED_URINE));
+            this.special_entries.put("3", new SpecialEntryDefinition(4, "CH", "g", false, 5, -1));
+            this.special_entries.put("-2", new SpecialEntryDefinition(-2, "BG", "", false, 3, -1));
             
             /*
 //    String special_entry_tags[] = { "", "URINE", "URINE", "CH" };
@@ -167,6 +231,18 @@ public class MeterValuesEntrySpecial
     }
     
     
+    public String getTypeDescription()
+    {
+        return DataAccessMeter.getInstance().getI18nControlInstance().getMessage(this.special_entries.get("" + this.special_entry_id).tag);
+    }
+    
+    public String getExtendedFreetypeDescription()
+    {
+        return this.getTypeDescription() + ": " + this.getPackedValue();
+    }
+    
+    
+    
   
     private class SpecialEntryDefinition
     {
@@ -175,21 +251,23 @@ public class MeterValuesEntrySpecial
         public String unit;
         boolean transfer_unit;
         public int pump_map;
+        public int dailyvalue_ext_map;
 
         
         public SpecialEntryDefinition(int id_, String tag_, String unit_, boolean transfer_unit_ )
         {
-            this(id_, tag_, unit_, transfer_unit_, -1);
+            this(id_, tag_, unit_, transfer_unit_, -1, -1);
         }
         
         
-        public SpecialEntryDefinition(int id_, String tag_, String unit_, boolean transfer_unit_, int pump_map_ )
+        public SpecialEntryDefinition(int id_, String tag_, String unit_, boolean transfer_unit_, int pump_map_, int dv_ext_map )
         {
             this.id = id_;
             this.tag = tag_;
             this.unit = unit_;
             this.transfer_unit = transfer_unit_;
             this.pump_map = pump_map_;
+            this.dailyvalue_ext_map = dv_ext_map;
         }
         
         

@@ -707,8 +707,6 @@ public class MeterDataHandler extends DeviceDataHandler
         }
         else if (type==2)
         {
-            // FIXME
-            
             element_current++;
             
             float f = ((element_current*(1.0f)) / element_count_all) * 90.0f;

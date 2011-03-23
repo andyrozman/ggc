@@ -81,7 +81,8 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	//new Hashtable<Integer, MeterValuesEntrySpecial>();
 	int special_entry_first = -1;
 	
-	private boolean entry_changed = false;
+	@SuppressWarnings("unused")
+    private boolean entry_changed = false;
 	
     /**
      * Entry object
@@ -402,9 +403,24 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	}
 
 
+    /**
+     * Entry: None
+     */
     public static final int ENTRY_NONE = 0;
-	public static final int ENTRY_BG = 1;
+
+    /**
+     * Entry: BG
+     */
+    public static final int ENTRY_BG = 1;
+
+    /**
+     * Entry: Special
+     */
     public static final int ENTRY_SPECIAL = 2;
+
+    /**
+     * Entry: Combined
+     */
     public static final int ENTRY_COMBINED = 3;
 
 	//public int entry_type = 0;
@@ -1153,12 +1169,22 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     }
     
     
+    /**
+     * Has BG entry
+     * 
+     * @return
+     */
     public boolean hasBgEntry()
     {
         return (this.bg_original!=null);
     }
     
     
+    /**
+     * Has special entries
+     * 
+     * @return
+     */
     public boolean hasSpecialEntries()
     {
         if (this.special_entries == null)
@@ -1167,32 +1193,63 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
             return (this.special_entries.size()!=0);
     }
     
+    Hashtable<String,String> ht_ext = null;
     
-    public void loadSpecialEntries(String s)
+    
+    private void loadSpecialEntries(String s)
     {
+        // extend this method if you wish to extended this class to use other DailyValuesExtended entries 
+        this.ht_ext = this.da.getExtendedDailyValueHandler().loadExtended(s);
+        
         // FIXME
+        // ExtendedDailyValue
+        
+        for (Enumeration<String> en = ht_ext.keys(); en.hasMoreElements(); )
+        {
+            String key = en.nextElement();
+            
+            if (key.equals(ExtendedDailyValue.EXTENDED_URINE))
+            {
+                // urine is only one that is not uniquely processed
+                String val = ht_ext.get(key);
+                
+                if (val.toLowerCase().contains("mmol"))
+                {
+                    this.special_entries.put(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MMOLL, 
+                        new MeterValuesEntrySpecial(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MMOLL, val));
+                }
+                else if (val.toLowerCase().contains("mg"))
+                {
+                    this.special_entries.put(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MGDL, 
+                        new MeterValuesEntrySpecial(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MGDL, val));
+                    
+                }
+                else
+                {
+                    this.special_entries.put(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_DESCRIPTIVE, 
+                        new MeterValuesEntrySpecial(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MGDL, val));
+                }
+                
+            }
+            /*else
+            {
+               We should do automatic processing here, but for now not neccesary, as we have only urine
+            }*/
+        }
     }
     
 
     
-    public void saveSpecialEntries()
+    private void saveSpecialEntries()
     {
+        //this.da.getExtendedDailyValueHandler().setExtendedValue(type, val, ht)
+        //ExtendedDailyValue 
+
+        // extend this method if you wish to extended this class to use other DailyValuesExtended entries 
+        
+        
         // FIXME
     }
-    
-    
-    
-
-/*    
-    String special_entry_tags[] = { "", "URINE", "URINE", "CH" };
-    String special_entry_units[] = { "", " mmol/L", " mg/dL", " g" };  // this are not required, if your special 
-    boolean special_entry_transfer_unit[] = { false, true, true, false };                                                             // entry has no unit, leave this empty (have at least one space as unit), so that code will work
-    
-    int special_entry_pump_map[] = { -1, 4, 4, 5 };
-  */  
-    
-    
-    
     
     
     /**
@@ -1202,14 +1259,23 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
      */
     public String getExtendedTypeDescription()
     {
-        // FIXME
-        return null;
-        /*
-        if (this.special_entry)
-            return m_ic.getMessage(this.special_entry_tags[this.special_entry_id]);
-        else
-            return m_ic.getMessage("BG");
-           */
+        
+        if (this.getEntryType()==MeterValuesEntry.ENTRY_NONE)
+            return "No data";
+        else if (this.getEntryType()==MeterValuesEntry.ENTRY_BG)
+        {
+            return "BG";
+        }
+        else if (this.getEntryType()==MeterValuesEntry.ENTRY_SPECIAL)
+        {
+            MeterValuesEntrySpecial mves = this.special_entries.elements().nextElement();
+            return mves.getTypeDescription(); 
+        }
+        else 
+        {
+            return DataAccessMeter.getInstance().getI18nControlInstance().getMessage("MULTIPLE");
+        }
+        
     }
     
     /**
@@ -1229,39 +1295,46 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
             if (both_bg)
                 return this.bg_mgdL + " mg/dL (" + DataAccessMeter.Decimal1Format.format(this.bg_mmolL) + " mmol/L";            
             else
-                return "BG: " + this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit());
+                return this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit());
         }
         else if (this.getEntryType()==MeterValuesEntry.ENTRY_SPECIAL)
         {
-            // FIXME
-            return null;
+            MeterValuesEntrySpecial mves = this.special_entries.elements().nextElement();
+            return mves.getPackedValue(); //.getExtendedFreetypeDescription();
         }
         else 
         {
-            // FIXME
-            // COMBINED
-            return this.getDateTimeObject().getDateTimeString() + "  BG: " + this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit());
-        }
+            StringBuffer sb = new StringBuffer();
+            boolean first = true;
             
-      
-        
-        
-        
-        
-//            return this.special_entry_value + this.special_entry_units[this.special_entry_id];
+            if (this.hasBgEntry())
+            {
+                sb.append("BG: " + this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit()));
+                first = false;
+            }
+            
+            for(Enumeration<MeterValuesEntrySpecial> en = this.special_entries.elements(); en.hasMoreElements(); )
+            {
+                MeterValuesEntrySpecial el = en.nextElement();
+                
+                if (el.special_entry_id!=MeterValuesEntrySpecial.SPECIAL_ENTRY_BG)
+                {
+                    if (first)
+                    {
+                        first = false;
+                    }
+                    else
+                    {
+                        sb.append(", ");
+                    }
+                    
+                    sb.append(el.getExtendedFreetypeDescription());
+                }
+            }
+            
+            return sb.toString();
+        }
     }
-    
-
-    /**
-     * Is Special Entry
-     * 
-     * @return
-     */
-/*    public boolean isSpecialEntry()
-    {
-        return this.entry_type == this.ENTRY_SPECIAL;
-    }
-  */  
     
     
     /**
@@ -1272,48 +1345,24 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     public Hashtable<String,String> getAllowedPumpMappedTypes()
     {
         return MeterValuesEntrySpecial.getAllowedPumpMappedTypes();
-        
-        /*
-        Hashtable<String,String> ht = new Hashtable<String,String>();
-        
-        for(int i=0; i<this.special_entry_pump_map.length; i++)
-        {
-            if (this.special_entry_pump_map[i]!=-1)
-            {
-                if (!ht.containsKey(""+this.special_entry_pump_map[i]))
-                {
-                    ht.put(""+this.special_entry_pump_map[i], "");
-                }
-            }
-            
-        }
-        
-        return ht; */
     }
     
-
-    /*
-    public int getPumpMappedType()
-    {
-        if (this.entry_type==ENTRY_BG)
-            return 3;
-        else if (this.entry_type==ENTRY_SPECIAL)
-            return this.special_entries.get(this.special_entry_first).getPumpMappedType();
-        else
-            return -1;
-    }*/
     
-    
+    /**
+     * Get Entry Type
+     * 
+     * @return
+     */
     public int getEntryType()
     {
         if (!this.hasBgEntry())
         {
             if (!this.hasSpecialEntries())
                 return ENTRY_NONE;
-            else //if (this.special_entries.size()==1)
+            else if (this.special_entries.size()==1)
                 return ENTRY_SPECIAL;
-            //else
-            //    return ENTRY_COMBINED;
+            else
+                return ENTRY_COMBINED;
         }
         else
         {
@@ -1324,13 +1373,6 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         }
     }
     
-/*
-    public String getSpecialEntriesDesc()
-    {
-        // FIXME
-    }
-  */  
-    
     
     /**
      * Create data for extended field in database (special entries without CH)
@@ -1339,6 +1381,8 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     public String createExtendedValueDailyValuesH()
     {
         // we need to ignore ch, all others are transfered
+        
+        // FIXME
         
         String ext = "";
         
@@ -1361,18 +1405,63 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         
     }
     
-    // we always append 
+    /**
+     * Add Special Entry All (we always append)
+     * 
+     * @param coll
+     */
     public void addSpecialEntryAll(ArrayList<MeterValuesEntrySpecial> coll)
     {
-        // FIXME
+        for(int i=0; i<coll.size(); i++)
+        {
+            MeterValuesEntrySpecial mves = coll.get(i); 
+            
+            if (this.special_entries.containsKey(mves.special_entry_id))
+            {
+                this.special_entries.get(mves.special_entry_id).special_entry_value = mves.special_entry_value;
+            }
+            else
+            {
+                if (mves.special_entry_id==MeterValuesEntrySpecial.SPECIAL_ENTRY_BG)
+                {
+                    this.bg_original = mves.special_entry_value;
+                }
+                else
+                    this.special_entries.put(mves.special_entry_id, mves);
+            }
+        }
+        
     }
     
     
     
+    /**
+     * Get Data Entries as MVE Special
+     * 
+     * @return
+     */
     public ArrayList<MeterValuesEntrySpecial> getDataEntriesAsMVESpecial()
     {
-        // FIXME
-        return null;
+        
+        ArrayList<MeterValuesEntrySpecial> list = new ArrayList<MeterValuesEntrySpecial>();
+        
+        for(Enumeration<Integer> en = this.special_entries.keys(); en.hasMoreElements(); )
+        {
+            int key = en.nextElement();
+            
+            MeterValuesEntrySpecial mves = this.special_entries.get(key);
+            mves.datetime_tag = this.getDateTime();
+            list.add(mves);
+        }
+        
+        if (this.hasBgEntry())
+        {
+            MeterValuesEntrySpecial mves = new MeterValuesEntrySpecial(MeterValuesEntrySpecial.SPECIAL_ENTRY_BG, this.getBGValue(DataAccessMeter.BG_MGDL));
+            mves.datetime_tag = this.getDateTime();
+            list.add(mves);
+        }
+        
+        return list;
     }
     
     

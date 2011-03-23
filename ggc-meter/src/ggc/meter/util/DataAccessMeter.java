@@ -1,5 +1,6 @@
 package ggc.meter.util;
 
+import ggc.core.data.ExtendedDailyValue;
 import ggc.meter.data.MeterDataHandler;
 import ggc.meter.data.MeterDataReader;
 import ggc.meter.data.cfg.MeterConfigurationDefinition;
@@ -107,6 +108,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         loadWebLister();
         createOldDataReader();
         this.loadConverters();
+        this.loadExtendedHandlers();
     }
     
     
@@ -528,6 +530,27 @@ public class DataAccessMeter extends DataAccessPlugInBase
     public String getPluginName()
     {
         return "GGC Meter Plugin";
+    }
+    
+    //ExtendedDailyValue edv_handler = null;
+    
+    public String EXTENDED_HANDLER_DAILY_VALUE = "dvh";
+    
+    public ExtendedDailyValue getExtendedDailyValueHandler()
+    {
+        return (ExtendedDailyValue)this.getExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE);
+    }
+    
+    
+    
+    /**
+     * Load Extended Handlers. Database tables can contain extended field, which is of type text and can
+     *    contain a lot of other data, stored in this field, this is hanlder for that field. Each table, 
+     *    would use different handler.
+     */
+    public void loadExtendedHandlers()
+    {
+        this.extended_handlers.put(EXTENDED_HANDLER_DAILY_VALUE, new ExtendedDailyValue(this));
     }
     
     

@@ -208,6 +208,9 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
         try
         {
             byte buffer[] = new byte[65];
+            
+            byte buffer_out[] = new byte[40];
+            
             int status;
 
             //foo.SetVendorID((short)0x1a79);
@@ -251,7 +254,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
             while (true)
             {
                 this.waitTime(500);
-                status = this.read(buffer);
+                status = this.read(buffer_out);
                 System.out.println("Status:" + status);
                 for (int i = 0; i < 64; i++)
                 {
