@@ -1,13 +1,12 @@
 package ggc.core.data;
 
-import ggc.core.util.DataAccess;
-
 import java.util.Hashtable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.atech.db.ext.ExtendedHandler;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -119,7 +118,7 @@ public class ExtendedDailyValue extends ExtendedHandler //implements Serializabl
      * 
      * @param da 
      */
-    public ExtendedDailyValue(DataAccess da)
+    public ExtendedDailyValue(ATDataAccessAbstract da)
     {
         super(da);
     }
