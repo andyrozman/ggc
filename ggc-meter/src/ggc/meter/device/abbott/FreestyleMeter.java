@@ -46,10 +46,11 @@ import com.atech.utils.data.TimeZoneUtil;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     OneTouchMeter  
- *  Description:  Super class for OT meters with basic ASCII protocol
+ *  Filename:     FreeStyleMeter.java
+ *  Description:  Class for FreeStyle Meter.
  * 
- *  Author: Andy {andy@atech-software.com}
+ *  Author: Andy {andy@atech-software.com} - Base file, with approximate device reading
+ *  Author: Ophir Setter {ophir.setter@gmail.com} - Testing and final changes for device reading
  */
 
 
@@ -159,7 +160,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         }
         catch(Exception ex)
         {
-            //log.error("")
+            log.error("Exception on create:" + ex, ex);
             //System.out.println("OneTouchMeter: Error connecting !\nException: " + ex);
             //ex.printStackTrace();
         }
@@ -212,23 +213,16 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     /** 
      * readDeviceDataFull
      */
-    public void readDeviceDataFull()
+    public void readDeviceDataFull() throws PlugInBaseException
     {
         
         try
         {
-            
-            
-            write("MEM".getBytes());
-            waitTime(100);
-            
-            String line;
-            
+            write("mem".getBytes());
+            String line;           
             
             readInfo();
 
-            
-            
             /*
             while((line=this.readLine())==null)
             {
@@ -244,11 +238,12 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
          
             while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
             {
+                line = line.trim();
+                
                 processBGData(line);
                 
-                if (line==null)
-                    break;
-                
+                //if (line==null)
+                //    break;
             }
             
             this.output_writer.setSpecialProgress(100);
@@ -269,6 +264,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         
         //this.output_writer.setStatus(100);
         System.out.println("Reading finsihed");
+        super.close();
         
     }
 
@@ -314,14 +310,15 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
             // first we read device identification data
             DeviceIdentification di = this.output_writer.getDeviceIdentification();
             
+            this.readLineDebug();
             di.device_serial_number = this.readLineDebug();
             this.output_writer.setSpecialProgress(2);
             di.device_hardware_version = this.readLineDebug();
             this.output_writer.setSpecialProgress(3);
             this.readLineDebug();
             this.output_writer.setSpecialProgress(4);
-            this.entries_max = Integer.parseInt(this.readLineDebug());
-            
+            String entries_max_string = this.readLineDebug().trim();
+            this.entries_max = Integer.parseInt(entries_max_string);
             
             this.output_writer.setDeviceIdentification(di);
             this.output_writer.writeDeviceIdentification();
@@ -338,7 +335,6 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     protected String readLineDebug() throws IOException
     {
         String rdl = this.readLine();
-        
         log.debug(rdl);
         
         return rdl;

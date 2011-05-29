@@ -32,7 +32,8 @@ import org.apache.commons.logging.LogFactory;
  *  Filename:     Freestyle
  *  Description:  Support for Abbott Freestyle Meter
  * 
- *  Author: Andy {andy@atech-software.com}
+ *  Author: Andy {andy@atech-software.com} - Base file, with approximate device reading
+ *  Author: Ophir Setter {ophir.setter@gmail.com} - Testing and final changes for device reading
  */
 
 
@@ -101,7 +102,7 @@ public class Freestyle extends FreestyleMeter
      */
     public String getDeviceClassName()
     {
-        return "ggc.meter.device.freestyle.Freestyle";
+        return "ggc.meter.device.abbott.Freestyle";
     }
 
     /**
