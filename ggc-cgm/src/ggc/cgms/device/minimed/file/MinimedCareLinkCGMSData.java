@@ -29,7 +29,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
         super(data, full_data, mcl_);
         m_da = (DataAccessCGMS)mcl_.m_da;
         mmclp = (MinimedCareLinkCGMS)mcl_;
-        processData();
+//        processData();
         
     }
 
@@ -211,7 +211,13 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
             */
     }
     
-        
+
+    public void writeData()
+    {
+        processData();
+    }
+    
+    
       
     public void processData()
     {
@@ -244,11 +250,11 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
             /*else if (this.getNumberOfParameters()==2)
             {
                 System.out.println("BAD 2");
-            }
+            }*/
             else 
             {
                 System.out.println("BAD More");
-            }*/
+            }
                 
             this.data_processed = true;
         }

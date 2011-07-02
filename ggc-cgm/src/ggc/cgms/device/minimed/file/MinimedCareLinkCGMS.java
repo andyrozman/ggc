@@ -30,12 +30,12 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
     
     
     
-    public MinimedCareLinkCGMS(DataAccessPlugInBase da, OutputWriter ow)
+    public MinimedCareLinkCGMS(DataAccessPlugInBase da, OutputWriter ow, int reading_type)
     {
-        super(da, ow);
+        super(da, ow, reading_type);
         createDeviceValuesWriter();
         m_dap = (DataAccessCGMS)da;
-        setMappingData();
+        //setMappingData();
         setDefinitions();
     }
 
@@ -212,9 +212,6 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
     public void readLineData(String line, int count)
     {
         
-        
-        
-        
         String[] ld = buildLineData(line);
 
         MinimedCareLinkCGMSData mcld = new MinimedCareLinkCGMSData(ld, line, this);
@@ -222,14 +219,7 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
         if (mcld.isDeviceData())
         {
             
-            
-            /*
-            if (mcld.isProfileData())
-            {
-                profiles.add(mcld);
-            }
-            else*/ 
-            if (mcld.isConfigData())
+            if ((mcld.isConfigData()) && (this.m_reading_type==MinimedCareLink.READ_DEVICE_CONFIG_DATA))
             {
                 if (mcld.getKey().startsWith("ChangeSensorGlucoseLimit"))
                 {
@@ -314,11 +304,11 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
                 
                 //profiles.add(mcld);
             }
-            else if (mcld.isProcessed())
+            else if ((mcld.isDeviceData()) && (this.m_reading_type ==MinimedCareLink.READ_DEVICE_DATA))
             {
-
+                mcld.writeData();
             }
-            else if (mcld.isDebuged())
+            /*else if (mcld.isDebuged())
             {
                 //System.out.println(mcld.toString());
                 System.out.println(line);
@@ -329,27 +319,20 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
                 System.out.println(line);
                 debug++;
                 // System.out.println("Device data not processed.");
-            }
+            }*/
 
             //System.out.println(line);
             //debug++;
             
             
-        }
+        } // device data
 
-        // if (count==5105)
-        // showCollection(ld);
-
-        // System.out.println(count + ": [size=" + ld.length + ",id=" +
-        // ld[0] + ",el33=" + ld[33] + "]");
-        
-        
 
     }
 
     private void createDeviceValuesWriter()
     {
-        this.dvw = new DeviceValuesWriter(true);
+        this.dvw = new DeviceValuesWriter(false);
         this.dvw.setOutputWriter(this.output_writer);
 
         // this.dvw.writeObject(_type, _datetime, _value);

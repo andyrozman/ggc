@@ -1,7 +1,6 @@
 package ggc.cgms.device.minimed;
 
 import ggc.cgms.manager.CGMSDevicesIds;
-import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -151,7 +150,7 @@ public class MiniMedRealTime extends MiniMedCGMS
      */
     public int getImplementationStatus() 
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL;
     }
     
     
@@ -182,11 +181,11 @@ public class MiniMedRealTime extends MiniMedCGMS
      * 
      * @return
      */
-    public int getDownloadSupportType()
+/*    public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
-    
+  */  
     
     /**
      * How Many Months Of Data Stored

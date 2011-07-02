@@ -281,7 +281,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
                 }
                 else
                 {
-                    if (m_da.isValueSet(de.communication_port))
+                    if ((m_da.isValueSet(de.communication_port)) && (!de.communication_port.equals(da.getI18nControlInstance().getMessage("NOT_SET")))) 
                         return String.format(da.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"), de.device_device + " [" + de.device_company + "]", de.communication_port);
                     else
                         return String.format(da.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITHOUT_PORT"), de.device_device + " [" + de.device_company + "]");

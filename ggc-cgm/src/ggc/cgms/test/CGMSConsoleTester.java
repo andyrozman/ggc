@@ -159,7 +159,7 @@ public class CGMSConsoleTester //extends JFrame
         System.out.println(new File(".").getAbsolutePath());
         
         
-        MinimedCareLinkCGMS mcl = new MinimedCareLinkCGMS(dap, new ConsoleOutputWriter());
+        MinimedCareLinkCGMS mcl = new MinimedCareLinkCGMS(dap, new ConsoleOutputWriter(), MinimedCareLinkCGMS.READ_DEVICE_DATA);
         //mcl.parseExportFile(new File(path_to_test_files + "CareLink-Export-1213803114904.csv"));
         mcl.parseExportFile(new File(path_to_test_files + "CareLink-Export-2008-05-18--06-01.csv"));
         

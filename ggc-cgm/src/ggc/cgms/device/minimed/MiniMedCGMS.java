@@ -1,7 +1,10 @@
 package ggc.cgms.device.minimed;
 
 import ggc.cgms.device.AbstractCGMS;
+import ggc.cgms.device.minimed.file.FRC_MinimedCarelink;
+import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -332,11 +335,44 @@ public abstract class MiniMedCGMS extends AbstractCGMS
 
     
     /**
+     * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
+     *     left to right side, without displaying progress.
+     * @return
+     */
+    public boolean hasIndeterminateProgressStatus()
+    {
+        return true;
+    }    
+    
+    
+    public boolean hasDefaultParameter()
+    {
+        return false;
+    }    
+    
+    
+    /**
      * Load File Contexts - Load file contexts that device supports
      */
     public void loadFileContexts()
     {
+//        System.out.println("loadFileContexts");
+        this.file_contexts = new GGCPlugInFileReaderContext[1];
+        this.file_contexts[0] = new FRC_MinimedCarelink(m_da, this.output_writer);
     }
+     
+    
+    
+    /**
+     * Get Download Support Type
+     * 
+     * @return
+     */
+    public int getDownloadSupportType()
+    {
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+    }
+    
     
     
 }
