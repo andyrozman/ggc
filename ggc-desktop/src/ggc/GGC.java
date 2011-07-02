@@ -122,7 +122,7 @@ public class GGC
 
         if (dev)
         {
-            s_mainWindow.setBounds(0, 0, 800, 600);
+            s_mainWindow.setBounds(0, 30, 800, 600);
             s_mainWindow.setVisible(true);
         }
         else

@@ -2,13 +2,15 @@
 HOW I CAN HELP WITH GNU Gluco Control
 =====================================
 
-As I said before... this is open source project, which means you can help anywhere you want/can.
+As I said before... this is open source project, which means you can help anywhere you 
+want/can.
 
 There are several chapters please read at least those that concern you.
 
 
 A.) Testing software and give new ideas or propose changes (intended for ALL)
-B.) Adding support for different diabetes hardware (Anybody who wishes to have their hardware supported)
+B.) Adding support for different diabetes hardware (Anybody who wishes to have their 
+    hardware supported)
 C.) Translation (if you want to help with translation to your native language)
 D.) Development
 
@@ -74,21 +76,27 @@ this application.
 
 
 
-B.) Adding support for different diabetes hardware (Anybody who wishes to have their hardware supported)
-==========================================================================================================
+B.) Adding support for different diabetes hardware (Anybody who wishes to have their 
+=====================================================================================
+hardware supported)
+====================
 
-Please first take a look at file 'Diabetes_Hardware.txt'. All entries there are planned hardware support. This 
-doesn't mean we don't need help. We will need at least some help with testing.
+Please first take a look at file 'Diabetes_Hardware.txt'. All entries there are planned 
+hardware support. This doesn't mean we don't need help. We will need at least some help 
+with testing.
 
-If your device is not on list, or doesn't have developer name set, then it means there are no immidiate plans. 
+If your device is not on list, or doesn't have developer name set, then it means there are 
+no immidiate plans. 
 
-For adding support we need protocol (language) that device speaks and computer understands. In best case scenario, 
-we would contact device company and get this data from them, but in most cases they are not really cooperating, so 
-we need to do it with trial and error approach.
+For adding support we need protocol (language) that device speaks and computer understands. 
+In best case scenario, we would contact device company and get this data from them, but in 
+most cases they are not really cooperating, so we need to do it with trial and error 
+approach.
 
-In this case you need to post a message on Forum board on sourceforge.net, called Hardware/Device support
-http://sourceforge.net/forum/forum.php?forum_id=813903, that you are willing to help us... What we will need 
-from you is little time. You need to be able to install software on your computer...
+In this case you need to post a message on Forum board on sourceforge.net, called 
+Hardware/Device support http://sourceforge.net/forum/forum.php?forum_id=813903, that you 
+are willing to help us... What we will need from you is little time. You need to be able 
+to install software on your computer...
 
 What you need to do/have:
 1.) Install original software for device
@@ -179,10 +187,17 @@ environment.
 
 1.) Download full SVN sources from sourceforge.net then download SVN for atech-tools project.
     Write this(beginning with svn...) in a terminal window:
-   [gast@frodo ~]$ svn co https://ggc.svn.sourceforge.net/svnroot/ggc/trunk ggc
+       svn co https://ggc.svn.sourceforge.net/svnroot/ggc/trunk ggc
    ,respectively:
-   [gast@frodo ~]$ svn co https://atech-tools.svn.sourceforge.net/svnroot/atech-tools/trunk atech-tools .
+       svn co https://atech-tools.svn.sourceforge.net/svnroot/atech-tools/trunk atech-tools 
    After downloading the sources you will have two folders ../folder/gcc and ../folder/atech-tools inside of your folder.
+   
+   NOTE: We are slowly working on integration of Lib USB 4j WO into GGC, for now you will need 
+   this library's project added in Eclipse (at later time this will be deployed as library in 
+   jar, but for time being, you need to download this project and add it to eclipse:
+       svn co https://libusb4jwo.svn.sourceforge.net/svnroot/libusb4jwo/trunk libusb4jwo 
+   
+   
 
 2.) Download Eclipse. Eclipse is our official development tool, but you can use any other you wish.
     I am advising to use Galileo (Eclipse 3.5). Link http://download.eclipse.org/eclipse/downloads/, 
