@@ -2,6 +2,14 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.6.1 [3.6.2011]
+    * integration with Meter Tool Framework v3
+    * started work on USB Protocol (for HID devices)
+    * changes in DeviceConfiguration, DeviceValuesTableModel, DataAccessPlugInBase
+    * fixes on Accu-Check Xml reader (preinit)
+    * started work on Graph Editor
+    
+
 0.5.2 [20.6.2010]
     * PreInit
 

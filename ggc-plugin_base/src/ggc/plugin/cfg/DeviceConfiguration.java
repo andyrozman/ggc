@@ -71,6 +71,9 @@ public class DeviceConfiguration
     {
         ic = m_da.getI18nControlInstance();
         dcd = m_da.getDeviceConfigurationDefinition();
+        
+//        System.out.println("DCD: " + dcd);
+        
         config_file = new File(dcd.getDevicesConfigurationFile());
         dev_prefix = dcd.getDevicePrefix();
         

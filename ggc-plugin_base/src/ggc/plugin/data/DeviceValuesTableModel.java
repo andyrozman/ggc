@@ -52,6 +52,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
     protected int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
     protected DataAccessPlugInBase m_da;
     protected String device_source;
+    protected boolean debug = false;
 
     /**
      * Constructor
@@ -63,6 +64,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
     public DeviceValuesTableModel(DataAccessPlugInBase da, DeviceDataHandler ddh, String source)
     {
         this.m_ddh = ddh;
+        this.m_ddh.setDeviceValuesTableModel(this);
         this.m_da = da;
         this.displayed_dl_data = new ArrayList<DeviceValuesEntryInterface>();
         this.dl_data = new ArrayList<DeviceValuesEntryInterface>();
@@ -184,15 +186,28 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
 
     
     /**
-     * Set Filter
+     * set Filter
      * 
      * @param filter
      */
     public void setFilter(int filter)
     {
+        this.setFilter(filter, false);
+    }
+    
+    
+    
+    /**
+     * Set Filter
+     * 
+     * @param filter
+     * @param force 
+     */
+    public void setFilter(int filter, boolean force)
+    {
         //System.out.println("Set FILTER !!!!!!!!!!!!!!!!!!!!!! " + filter);
         
-        if (this.current_filter==filter)
+        if ((this.current_filter==filter) && (!force))
             return;
         
         this.current_filter = filter;
@@ -317,6 +332,13 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         
         if (this.m_ddh.hasOldData())
         {
+            
+            //if (debug)
+            {
+                System.out.println("DVE: " + dve.getSpecialId());
+            }
+            
+            
             if (!this.m_ddh.getOldData().containsKey("" + dve.getSpecialId()))
             {
                 dve.setStatus(DeviceValuesEntryInterface.STATUS_NEW);

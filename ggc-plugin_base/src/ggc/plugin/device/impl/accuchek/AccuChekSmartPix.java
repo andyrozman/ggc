@@ -147,7 +147,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         //this.root_drive = this.special_config.getDefaultParameter();
         //this.root_drive = "/media/SMART_PIX/";
         
-        System.out.println("Init reader !!!");
+        //System.out.println("Init reader !!!");
         
         if (this.special_config.getParameter("SMARTPIX_VERSION").equals(AccuChekSmartPixSpecialConfig.SMARTPIX_V2))
             this.reader = new AccuChekSmartPixReaderV2(m_da, this.output_writer, this);
@@ -407,7 +407,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     private boolean openDevice()
     {
         //System.out.println("open():: m_da: " + m_da);
-        System.out.println("open():: getMainConnectionParameter: " + this.getMainConnectionParameter());
+        //System.out.println("open():: getMainConnectionParameter: " + this.getMainConnectionParameter());
         File f = new File(m_da.pathResolver(this.getMainConnectionParameter()));
         
         //System.out.println("open():: " + m_da.pathResolver(this.getMainConnectionParameter()));

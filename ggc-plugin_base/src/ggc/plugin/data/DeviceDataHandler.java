@@ -59,6 +59,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     DbDataReadingFinishedInterface m_reading_inst = null; 
     protected DeviceValuesTableModel m_model;
     protected DeviceInterface device_interface;
+    protected DeviceValuesTableModel m_dvtm;
     
     /**
      * Dialog: Config
@@ -446,6 +447,17 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
             this.dialog_config = (DeviceDisplayConfigDialog)dialog;
     }*/
     
+    
+    
+    /**
+     * set Device Values Table Model
+     * 
+     * @param dvtm
+     */
+    public void setDeviceValuesTableModel(DeviceValuesTableModel dvtm)
+    {
+        this.m_dvtm = dvtm;
+    }
     
     
     

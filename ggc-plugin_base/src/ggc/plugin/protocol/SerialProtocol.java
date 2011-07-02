@@ -950,7 +950,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     /**
      * Print All Available Serial Ports as vector of CommPortIdentifier
      */
-    public void printAllAvailableSerialPorts()
+    public static void printAllAvailableSerialPorts()
     {
         Vector<CommPortIdentifier> lst = SerialProtocol.getAllAvailablePorts();
         
@@ -980,10 +980,13 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         
         try
         {
+            log.debug("Listing all ports:");
+
             Enumeration enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements()) 
             {
                 CommPortIdentifier portID = (CommPortIdentifier)enume.nextElement();
+                
                 if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
                     retVal.add(portID);
             }
@@ -1017,6 +1020,8 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
             
 //            CommPortIdentifier.getPortIdentifier("xx");
             
+            log.debug("Listing all ports:");
+            
             Enumeration<?> enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements()) 
             {
@@ -1029,6 +1034,9 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         {
             log.error("There was problem obtaining list of serial ports. Ex: " + ex, ex);
         } 
+        
+        printAllAvailableSerialPorts();
+        
         return retVal;
 
     }
@@ -1129,6 +1137,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
             System.out.println("Exception: getAvailableSerialPorts: " + ex);
         }
 
+        //printAllAvailableSerialPorts();
         return retVal;
 
     }

@@ -57,17 +57,21 @@ public abstract class MinimedCareLink
     
     
     
+    public static final int READ_DEVICE_DATA = 1;
+    public static final int READ_DEVICE_CONFIG_DATA = 2;
+    
+    protected int m_reading_type = 0;
     
     /**
      * Constructor
      */
-    public MinimedCareLink(DataAccessPlugInBase da, OutputWriter ow)
+    public MinimedCareLink(DataAccessPlugInBase da, OutputWriter ow, int reading_type)
     {
         this.m_da = da;
         this.output_writer = ow;
+        this.m_reading_type = reading_type;
         
         setMappingData();
-        
     }
 
     

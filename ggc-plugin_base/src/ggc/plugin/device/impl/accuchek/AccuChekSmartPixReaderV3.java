@@ -147,7 +147,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
             if (!checkFinished(status, 20, "PIX_READING_ELEMENT"))
                 return;
             
-            System.out.println("Device Found !");
+            debug("Device Found !");
             
             
             status = readStatusUntilState("SCAN", "REQUEST", 120000);
@@ -157,10 +157,10 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
             
             
             
-            System.out.println("Report is beeing created !");
+            debug("Report is beeing created !");
             
             status = readStatusUntilState("NOSCAN", "REPORT", 120000); //10000
-            System.out.println("Report Created !");
+            debug("Report Created !");
 
             if (!checkFinished(status, 95, "PIX_FINISHED_REPORT_READY"))
                 return;
@@ -458,12 +458,13 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
     {
 //        System.out.println("preInitDevice: Reader [v3]");
         
-        
-        
-        this.sendCommandToDevice("Abort");
-        readStatusUntilState("NOSCAN", 5000);
-        
-        this.sendCommandToDevice("EraseReport");
+        if (this.parent.communication_established)
+        {
+            this.sendCommandToDevice("Abort");
+            readStatusUntilState("NOSCAN", 5000);
+            
+            this.sendCommandToDevice("EraseReport");
+        }
         
     }
     

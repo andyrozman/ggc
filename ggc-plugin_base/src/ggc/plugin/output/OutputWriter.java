@@ -205,12 +205,27 @@ public interface OutputWriter
     
     
     
+    /**
+     * Add Error Message
+     * 
+     * @param msg
+     */
     public void addErrorMessage(String msg);
     
     
+    /**
+     * Get Error Message Count
+     * 
+     * @return
+     */
     public int getErrorMessageCount();
     
     
+    /**
+     * Get Error Messages
+     * 
+     * @return
+     */
     public ArrayList<String> getErrorMessages();
     
     

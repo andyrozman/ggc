@@ -380,7 +380,6 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         }
 
         
-        @SuppressWarnings("unused")
         public void finishReading()
         {
 //            this.cvtm.finishReading();

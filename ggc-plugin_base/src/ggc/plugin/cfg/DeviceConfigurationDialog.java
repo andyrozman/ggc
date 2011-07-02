@@ -367,6 +367,9 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     {
         int start_y = 275; 
         
+        System.out.println("this.current_device: " + this.current_device);
+        
+        
         if ((this.current_device!=null) && ((this.current_device.hasDefaultParameter()) || (this.current_device.hasSpecialConfig())))
         {
             this.comm_settings.setCurrentDevice(this.current_device);
