@@ -10,6 +10,33 @@ import java.util.ArrayList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MinimedCareLinkPumpData  
+ *  Description:  Minimed CareLink PumpData
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
+
 public class MinimedCareLinkPumpData extends MinimedCareLinkData
 {
 
@@ -17,13 +44,24 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
     private boolean post_process = false;
     private MinimedCareLinkPump mmclp;
     private String index = "";
+    
+    /**
+     * Children
+     */
     public ArrayList<MinimedCareLinkPumpData> children = null;
     
+    /**
+     * Constructor 
+     * 
+     * @param data
+     * @param full_data
+     * @param mcl_
+     */
     public MinimedCareLinkPumpData(String[] data, String full_data, MinimedCareLink mcl_ )
     {
         super(data, full_data, mcl_);
         mmclp = (MinimedCareLinkPump)mcl_;
-        processData();
+        //processData();
         
     }
 
@@ -48,6 +86,11 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
     
     
     
+    /**
+     * Is Device Data
+     * 
+     * @return
+     */
     public boolean isDeviceData()
     {
         // FIXME
@@ -262,6 +305,11 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
     
     
     
+    /**
+     * Is Profile Data
+     * 
+     * @return
+     */
     public boolean isProfileData()
     {
         return (this.raw_type.equals("ChangeBasalProfilePatternPre") ||
@@ -273,6 +321,11 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
     }
     
     
+    /**
+     * Is Config Data
+     * 
+     * @return
+     */
     public boolean isConfigData()
     {
         return this.mmclp.defs_pump_config.containsKey(this.raw_type);
@@ -282,6 +335,11 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
     
     
     // FIXME
+    /**
+     * Is Debugged
+     * 
+     * @return
+     */
     public boolean isDebuged()
     {
         return this.raw_type.startsWith("Current");
@@ -341,14 +399,14 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
                     this.mcl.mm_date.getAtechDate(date, time), 
                     v);
             }
-            /*else if (this.getNumberOfParameters()==2)
+            else if (this.getNumberOfParameters()==2)
             {
                 System.out.println("BAD 2");
             }
             else 
             {
                 System.out.println("BAD More");
-            }*/
+            }
                 
             this.data_processed = true;
         }
@@ -357,6 +415,9 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
         
     }
     
+    /**
+     * Post Process
+     */
     public void postProcess()
     {
         if (this.post_process)
@@ -365,6 +426,11 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
     }
     
     
+    /**
+     * Get Key
+     * 
+     * @return
+     */
     public String getKey()
     {
         if (this.raw_type.equals("CurrentRemoteControlID"))
@@ -381,6 +447,11 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
     
     
     
+    /**
+     * Get Processed Value
+     * 
+     * @return
+     */
     public String getProcessedValue()
     {
         String s;
@@ -694,7 +765,7 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
             //this.processed_value = getDataBetween(this.raw_values, "IS_SETUP_COMPLETE=", "IS_BOLUS_WIZARD_ENABLED=");
             //this.processed_value = this.processed_value.substring(0, this.processed_value.length()-1);
             
-            System.out.println("Missing" );
+//xa            System.out.println("Missing" );
             //,"ORIGINAL_UNITS=mmol l, SIZE=1",861682954
             return null;
         }
@@ -702,7 +773,7 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
         {
 //            this.processed_value = getDataBetween(this.raw_values, "IS_SETUP_COMPLETE=", "IS_BOLUS_WIZARD_ENABLED=");
             //this.processed_value = this.processed_value.substring(0, this.processed_value.length()-1);
-            System.out.println("Missing" );
+//xa            System.out.println("Missing" );
             
             //System.out.println(this.processed_value);
 //          CurrentBGTargetRange,"PATTERN_DATUM=861682954, INDEX=0, AMOUNT_LOW=99,088, AMOUNT_HIGH=108,096, START_TIME=0",861682955,2232381,94,Paradigm 522                    

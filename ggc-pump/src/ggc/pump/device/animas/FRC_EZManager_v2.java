@@ -257,7 +257,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
                 // day, month, year, hour, minute
 //                ATechDate atd = getAtechDate(rs.getInt(0), rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
-                //@SuppressWarnings("unused")
+                @SuppressWarnings("unused")
                 ATechDate atd = getAtechDate(rs.getString("day"), rs.getString("month"), rs.getString("year"), rs.getString("hours"), rs.getString("minutes"));
 //                ATechDate atd = getAtechDate(rs.getInt("day"), rs.getInt("month"), rs.getInt("year"), rs.getInt("hours"), rs.getInt("minutes"));
                 int units1 = rs.getInt(5); //Integer.parseInt(reader.GetValue(5).ToString());

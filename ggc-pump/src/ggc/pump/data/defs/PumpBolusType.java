@@ -1,10 +1,6 @@
 package ggc.pump.data.defs;
 
-import ggc.pump.util.DataAccessPump;
-
 import java.util.Hashtable;
-
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control

@@ -1,6 +1,5 @@
 package ggc.pump.device.minimed;
 
-import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -174,11 +173,11 @@ public class Minimed508 extends MinimedPump
      * 
      * @return
      */
-    public int getDownloadSupportType()
+/*    public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
-    
+  */  
     
     /**
      * How Many Months Of Data Stored

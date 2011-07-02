@@ -201,7 +201,7 @@ public class PumpConsoleTester //extends JFrame
         System.out.println(new File(".").getAbsolutePath());
         
         
-        MinimedCareLinkPump mcl = new MinimedCareLinkPump(dap, new ConsoleOutputWriter());
+        MinimedCareLinkPump mcl = new MinimedCareLinkPump(dap, new ConsoleOutputWriter(), MinimedCareLinkPump.READ_DEVICE_DATA);
         mcl.parseExportFile(new File(path_to_test_files + "CareLink-Export-1213803114904.csv"));
         
         //MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp", DataAccessPump.getInstance());

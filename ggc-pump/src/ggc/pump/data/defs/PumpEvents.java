@@ -164,6 +164,9 @@ public class PumpEvents extends PumpDefsAbstract
     public static final int PUMP_EVENT_BOLUS_CANCELLED   = 80;
     
     
+    /**
+     * Pump Event: Bolus Wizard
+     */
     public static final int PUMP_EVENT_BOLUS_WIZARD      = 81;
     
     

@@ -18,24 +18,65 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MinimedCareLinkPump  
+ *  Description:  Minimed CareLink Pump
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
 
 public class MinimedCareLinkPump extends MinimedCareLink 
 {
     DataAccessPump m_dap;
+    /**
+     * Profile names
+     */
     public String[] profile_names = null;
     ArrayList<MinimedCareLinkPumpData> profiles;
     
-    public Hashtable<String,String> defs_pump = null;
-    public Hashtable<String,String> defs_profile = null;
+    @SuppressWarnings("unused")
+    private Hashtable<String,String> defs_pump = null;
+    private Hashtable<String,String> defs_profile = null;
+    
+    
+    /**
+     * Defs Pump Config
+     */
     public Hashtable<String,String> defs_pump_config = null;
     
-    public Hashtable<String, MinimedCareLinkPumpData> config = null;
+    private Hashtable<String, MinimedCareLinkPumpData> config = null;
+    boolean m_read_config = false;
     
     
-    
-    public MinimedCareLinkPump(DataAccessPlugInBase da, OutputWriter ow)
+    /**
+     * Constructor
+     * 
+     * @param da
+     * @param ow
+     */
+    public MinimedCareLinkPump(DataAccessPlugInBase da, OutputWriter ow, int reading_type)
     {
-        super(da, ow);
+        super(da, ow, reading_type);
+        //this.m_read_config = read_config;
         createDeviceValuesWriter();
         m_dap = (DataAccessPump)da;
         setMappingData();
@@ -128,30 +169,95 @@ public class MinimedCareLinkPump extends MinimedCareLink
     public void readLineData(String line, int count)
     {
         
-        
-        
-        
         String[] ld = buildLineData(line);
 
         MinimedCareLinkPumpData mcld = new MinimedCareLinkPumpData(ld, line, this);
 
         if (mcld.isDeviceData())
         {
+            if (m_reading_type == READ_DEVICE_DATA)
+            {
+                // pump data
+                
+                if (mcld.isProfileData())
+                {
+                    mcld.processData();
+                    profiles.add(mcld);
+                }
+                else
+                    mcld.processData();
+            }
+            else
+            {
+                // config
+                
+                if (mcld.isConfigData()) 
+                {
+
+                    
+                    if (mcld.getKey().startsWith("CurrentBGTargetRange"))
+                    {
+                        if (mcld.getKey().equals("CurrentBGTargetRangePattern"))
+                        {
+                            if (BGTargetRange == null)
+                            {
+                                BGTargetRange = mcld;
+                                BGTargetRange.children = new ArrayList<MinimedCareLinkPumpData>();
+                            }
+                            else
+                            {
+                                if (BGTargetRange.dt_long < mcld.dt_long)
+                                {
+                                    BGTargetRange = mcld;
+                                    BGTargetRange.children = new ArrayList<MinimedCareLinkPumpData>();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (BGTargetRange.dt_long==mcld.dt_long)
+                                BGTargetRange.children.add(mcld);
+                        }
+                        
+                        
+                        
+//                        CurrentBGTargetRangePattern,"ORIGINAL_UNITS=mmol l, SIZE=1",861682954,2232381,93,Paradigm 522
+//                        CurrentBGTargetRange,"PATTERN_DATUM=861682954, INDEX=0, AMOUNT_LOW=99,088, AMOUNT_HIGH=108,096, START_TIME=0",861682955,2232381,94,Paradigm 522                    
+                        
+                        
+                    }
+                    else
+                    {
+                        if (config.containsKey(mcld.getKey()))
+                        {
+                            if (config.get(mcld.getKey()).dt_long < mcld.dt_long)
+                            {
+                                config.remove(mcld.getKey());
+                                config.put(mcld.getKey(), mcld);
+                            }
+                        }
+                        else
+                        {
+                            config.put(mcld.getKey(), mcld);
+                        }
+                    }
+                } // config data
+                
+                
+            
+            }  // else
+        } // device_data
+            
+        
+        
+        
+/*            
             if (mcld.isProfileData())
             {
                 profiles.add(mcld);
             }
-            else if (mcld.isConfigData())
+            else if ((mcld.isConfigData()) && (m_read_config))
             {
-                /*
-                if (mcld.isDebuged())
-                {
-                    System.out.println(mcld.toString());
-                    System.out.println(line);
-                    
-                    System.out.println(mcld.raw_type + " = " + mcld.processed_value);
-                    
-                }*/
 
                 
                 if (mcld.getKey().startsWith("CurrentBGTargetRange"))
@@ -204,10 +310,6 @@ public class MinimedCareLinkPump extends MinimedCareLink
                 
                 
                 
-                /*
-                if (mcld.isTest())
-                    System.out.println(mcld.raw_type + " = " + mcld.processed_value);
-                */
                 // process data on the fly
                 
                 
@@ -215,20 +317,20 @@ public class MinimedCareLinkPump extends MinimedCareLink
             }
             else if (mcld.isProcessed())
             {
-
+                //mcld.
+                //System.out.println("Proc: " + line);
             }
             else if (mcld.isDebuged())
             {
                 //System.out.println(mcld.toString());
-                System.out.println(line);
+                System.out.println("Debug: " + line);
                 debug++;
             }
-            else
-            {
-                // System.out.println("Device data not processed.");
-            }
-
-        }
+*/
+        
+        //else
+        //    System.out.println("NoDeviceData: " + line);
+            
 
         // if (count==5105)
         // showCollection(ld);
@@ -242,7 +344,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
 
     private void createDeviceValuesWriter()
     {
-        this.dvw = new DeviceValuesWriter(true);
+        this.dvw = new DeviceValuesWriter(false);
         this.dvw.setOutputWriter(this.output_writer);
 
         // this.dvw.writeObject(_type, _datetime, _value);
@@ -331,25 +433,37 @@ public class MinimedCareLinkPump extends MinimedCareLink
     public void postProcessing()
     {
 
-        
-        
-        System.out.println(" ===  Config entries -- Start");
-        
-        for(Enumeration<String> en = this.config.keys(); en.hasMoreElements(); )
+        if (m_reading_type == READ_DEVICE_DATA)
         {
-            String key = en.nextElement();
-            MinimedCareLinkPumpData mcld = this.config.get(key);
+            //ArrayList<MinimedCareLinkPumpData> profiles
+            for(int i=0; i<profiles.size(); i++)
+            {
+                System.out.println(profiles.get(i));
+            }
             
-            System.out.println(mcld.raw_type + " = " + mcld.processed_value);
+            
         }
+        else
+        {
         
-        System.out.println(" ===  Config entries -- End");
-        
-        
-        System.out.println("Debug count left: " + debug);
-        System.out.println("Profile entries: " + this.profiles.size());
-        
-        System.out.println("BGTargetRange: " + BGTargetRange);
+            System.out.println(" ===  Config entries -- Start");
+            
+            for(Enumeration<String> en = this.config.keys(); en.hasMoreElements(); )
+            {
+                String key = en.nextElement();
+                MinimedCareLinkPumpData mcld = this.config.get(key);
+                
+                System.out.println(mcld.raw_type + " = " + mcld.processed_value);
+            }
+            
+            System.out.println(" ===  Config entries -- End");
+            
+            
+            System.out.println("Debug count left: " + debug);
+            System.out.println("Profile entries: " + this.profiles.size());
+            
+            System.out.println("BGTargetRange: " + BGTargetRange);
+        }
         
     }
     

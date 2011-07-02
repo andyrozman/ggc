@@ -1,7 +1,6 @@
 package ggc.pump.device.minimed;
 
-import java.util.Hashtable;
-
+import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
@@ -10,6 +9,9 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.device.AbstractPump;
+import ggc.pump.device.minimed.file.FRC_MinimedCarelink;
+
+import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -325,9 +327,8 @@ public abstract class MinimedPump extends AbstractPump
      */
     public int getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+        return DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
     }
-    
     
     /**
      * How Many Months Of Data Stored
@@ -337,6 +338,33 @@ public abstract class MinimedPump extends AbstractPump
     public int howManyMonthsOfDataStored()
     {
         return -1;
+    }
+    
+    /**
+     * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
+     *     left to right side, without displaying progress.
+     * @return
+     */
+    public boolean hasIndeterminateProgressStatus()
+    {
+        return true;
+    }    
+    
+    
+    public boolean hasDefaultParameter()
+    {
+        return false;
+    }    
+    
+    
+    /**
+     * Load File Contexts - Load file contexts that device supports
+     */
+    public void loadFileContexts()
+    {
+//        System.out.println("loadFileContexts");
+        this.file_contexts = new GGCPlugInFileReaderContext[1];
+        this.file_contexts[0] = new FRC_MinimedCarelink(m_da, this.output_writer);
     }
     
     
