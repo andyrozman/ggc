@@ -81,7 +81,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.4.19";
+    public static String CORE_VERSION = "0.5.0.1";
     
     /**
      * Current Db Version
@@ -1841,7 +1841,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     
     public void loadExtendedHandlers()
     {
-        this.extended_handlers.put(DataAccess.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValue(this));
+        this.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValue(this));
     }
     
     
