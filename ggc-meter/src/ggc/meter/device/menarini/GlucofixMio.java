@@ -290,7 +290,7 @@ public class GlucofixMio extends AbstractSerialMeter
             strtok.nextToken();
             strtok.nextToken();
             di.device_serial_number = strtok.nextToken(); 
-            di.device_software_version = m_da.replaceExpression(strtok.nextToken(), "\n", "");
+            di.device_software_version = DataAccessMeter.replaceExpression(strtok.nextToken(), "\n", "");
             
             this.output_writer.setSpecialProgress(4);
             this.entries_max = this.getMaxMemoryRecords(); 
@@ -436,7 +436,7 @@ public class GlucofixMio extends AbstractSerialMeter
             mve.addParameter("USER_MARKS", "Yes");  // User Marks (8)
         
         
-        vals[5] = m_da.replaceExpression(vals[5], "\n", ""); //vals[5].re.replace(Char(13), '');
+        vals[5] = DataAccessMeter.replaceExpression(vals[5], "\n", ""); //vals[5].re.replace(Char(13), '');
         vals[5] = vals[5].trim();
         
         mve.setDateTimeObject(getDateTime(vals[4], vals[5]));

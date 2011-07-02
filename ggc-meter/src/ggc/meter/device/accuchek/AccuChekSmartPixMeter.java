@@ -168,7 +168,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
         
         Node nd = getNode("IMPORT/ACSPIX");
-        System.out.println(nd);
+        //System.out.println(nd);
         
         StringBuffer sb = new StringBuffer();
         
@@ -181,7 +181,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         
         StringBuilder sb2 = new StringBuilder();
         
-        sb2.append("Version v" + e.attributeValue("Ver"));
+        sb2.append(ic.getMessage("VERSION") + " v" + e.attributeValue("Ver"));
         sb2.append(" [S/N=" + e.attributeValue("SN") + "]");
 
         
@@ -215,12 +215,12 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
         Element el = getElement("IMPORT/DEVICE");
         //System.out.println(nd);
-
+        
         StringBuffer sb = new StringBuffer();
-        sb.append("Meter Device: Accu-Chek " + el.attributeValue("Name"));
-        sb.append("\nS/N=" + el.attributeValue("SN") + ", BG Unit: ");
+        sb.append(ic.getMessage("DEVICE_DEVICE") + ": Accu-Chek " + el.attributeValue("Name"));
+        sb.append("\nS/N=" + el.attributeValue("SN") + ", " + ic.getMessage("BG_UNIT") + ": ");
         sb.append(el.attributeValue("BGUnit"));
-        sb.append(", Time on device: " + el.attributeValue("Tm") + " " + el.attributeValue("Dt"));
+        sb.append(", " + ic.getMessage("TIME_ON_DEVICE") + ": " + el.attributeValue("Tm") + " " + el.attributeValue("Dt"));
 
         di.device_identified = sb.toString();
         
@@ -381,7 +381,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
     
     private long getDateTime(String date, String time)
     {
-        String o = m_da.replaceExpression(date, "-", "");
+        String o = DataAccessMeter.replaceExpression(date, "-", "");
         
         if (time==null)
         {
@@ -389,7 +389,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         }
         else
         {
-            o += m_da.replaceExpression(time, ":", "");
+            o += DataAccessMeter.replaceExpression(time, ":", "");
         }
         
         return Long.parseLong(o);

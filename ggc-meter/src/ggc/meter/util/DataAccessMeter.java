@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.graphics.components.about.CreditsEntry;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesEntry;
@@ -56,17 +59,22 @@ public class DataAccessMeter extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.2.2";
+    public static final String PLUGIN_VERSION = "2.0.3";
     
     private static DataAccessMeter s_da = null; // This is handle to unique 
 
     private MeterManager m_meterManager = null;
 
-
+    private static Log log = LogFactory.getLog(DataAccessMeter.class);
+    
 
     JFrame m_main = null;        
         
         
+    /**
+     * Extended Handler: Daily Value
+     */
+    public static final String EXTENDED_HANDLER_DAILY_VALUE = "dvh";
         
         
 
@@ -85,8 +93,20 @@ public class DataAccessMeter extends DataAccessPlugInBase
     private DataAccessMeter(JFrame frame, LanguageManager lm)
     {
     	super(lm, new GGCMeterICRunner());
+    	
+    	try
+    	{
+    	
         this.m_main = frame;
         initSpecial();
+    	}
+    	catch(Exception ex)
+    	{
+    	    log.error("Error init DA Mater: Ex.: " + ex, ex);
+    	    //System.out.println("Error init DA Mater: Ex.: " + ex);
+    	    //ex.printStackTrace();
+    	    //log.error()
+    	}
     } 
 
     
@@ -189,11 +209,11 @@ public class DataAccessMeter extends DataAccessPlugInBase
         //about_plugin_name = ic.getMessage("METER_PLUGIN");
         
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
-        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.2.x", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
+        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.7.x", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
         lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", "2.4", "commons.apache.org/lang/", "Apache", "Helper methods for java.lang library"));
         lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", "1.0.4", "commons.apache.org/logging/", "Apache", "Logger and all around wrapper for logging utilities"));
         lst_libs.add(new LibraryInfoEntry("dom4j", "1.6.1", "http://www.dom4j.org/", "BSD", "Framework for Xml manipulation"));
-        lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.1.7", "www.rxtx.org", "LGPL", "Comm API"));
+        lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.2", "www.rxtx.org", "LGPL", "Comm API"));
         lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c", "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License", "Xml parser for processing xml document", "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
         plugin_libraries = lst_libs;
 
@@ -201,6 +221,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
         cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Full framework and support for Ascensia, Roche, LifeScan devices"));
         cg.addCreditsEntry(new CreditsEntry("Alexander Balaban", "abalaban1@yahoo.ca", "Support for OT UltraSmart"));
+        cg.addCreditsEntry(new CreditsEntry("Ophir Setter", "ophir.setter@gmail.com", "Support for Freestyle Meters"));
         lst_credits.add(cg);
         cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
         cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "", "Supplied hardware for Roche development"));
@@ -227,8 +248,9 @@ public class DataAccessMeter extends DataAccessPlugInBase
         
         fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
         fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer (except Contour USB and Didget)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche (except Aviva Combo)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Accu-Chek/Roche: All supported by SmartPix 3.x"));
         fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Profile, Easy, UltraSmart"));
+        fg.addFeaturesEntry(new FeaturesEntry("Abbott: Optium Xceeed, PrecisionXtra, Frestyle"));
         // FIXME
         lst_features.add(fg);
         
@@ -241,8 +263,6 @@ public class DataAccessMeter extends DataAccessPlugInBase
         
         fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
         fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra2 (in 2011)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche: Aviva Combo (end of 2010, start of 2011)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Abbott (in 2011)"));
         fg.addFeaturesEntry(new FeaturesEntry("???"));
         
         lst_features.add(fg);
@@ -531,11 +551,16 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         return "GGC Meter Plugin";
     }
+
+    
     
     //ExtendedDailyValue edv_handler = null;
     
-    public String EXTENDED_HANDLER_DAILY_VALUE = "dvh";
     
+    /**
+     * Get Extended Daily Value Handler
+     * @return
+     */
     public ExtendedDailyValue getExtendedDailyValueHandler()
     {
         return (ExtendedDailyValue)this.getExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE);
@@ -550,7 +575,11 @@ public class DataAccessMeter extends DataAccessPlugInBase
      */
     public void loadExtendedHandlers()
     {
-        this.extended_handlers.put(EXTENDED_HANDLER_DAILY_VALUE, new ExtendedDailyValue(this));
+//        System.out.println("Load Extended Handler: " + new ExtendedDailyValue(this));
+        
+        this.addExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE, new ExtendedDailyValue(this));
+        //this.extended_handlers = new Hashtable<>();
+        //this.extended_handlers.put(EXTENDED_HANDLER_DAILY_VALUE, new ExtendedDailyValue(this));
     }
     
     

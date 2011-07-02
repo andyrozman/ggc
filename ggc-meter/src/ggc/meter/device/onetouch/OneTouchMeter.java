@@ -515,14 +515,14 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                 {
                     if (res.contains("?"))
                     {
-                        res = m_da.replaceExpression(res, "?", " ").trim();
+                        res = DataAccessMeter.replaceExpression(res, "?", " ").trim();
                         mve.addParameter("RESULT", "Suspect Entry");
                     }
                     
                     if (res.contains("MM"))
                     {
                         // mmol value, this is not supported by ultra, but some other meters support this
-                        res = m_da.replaceExpression(res, "MM", " ").trim();
+                        res = DataAccessMeter.replaceExpression(res, "MM", " ").trim();
                         
                         try
                         {
@@ -585,9 +585,9 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
             if (year<100)
             {
                 if (year>70)
-                    dt += "19" + m_da.getLeadingZero(year, 2);
+                    dt += "19" + DataAccessMeter.getLeadingZero(year, 2);
                 else
-                    dt += "20" + m_da.getLeadingZero(year, 2);
+                    dt += "20" + DataAccessMeter.getLeadingZero(year, 2);
             }
             else
                 dt += year;
@@ -620,7 +620,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                 }
                 else
                 {
-                    dt += m_da.getLeadingZero(hr_s, 2);
+                    dt += DataAccessMeter.getLeadingZero(hr_s, 2);
                 }
                 
                 
@@ -635,7 +635,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                 else
                 {
                     hr_s += 12;
-                    dt += m_da.getLeadingZero(hr_s, 2);
+                    dt += DataAccessMeter.getLeadingZero(hr_s, 2);
                 }
                 
             }

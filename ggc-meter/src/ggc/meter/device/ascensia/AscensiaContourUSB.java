@@ -1,13 +1,12 @@
 package ggc.meter.device.ascensia;
 
-import java.util.Hashtable;
-
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-import gnu.io.SerialPortEventListener;
+
+import java.util.Hashtable;
 
 
 /**

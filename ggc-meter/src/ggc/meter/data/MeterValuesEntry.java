@@ -56,7 +56,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	I18nControlAbstract m_ic = da.getI18nControlInstance();
 	private ATechDate datetime;
 	private String bg_str;
-	private int bg_unit;
+	private int bg_unit = DataAccessMeter.BG_MGDL;
 	
     private static Log log = LogFactory.getLog(MeterValuesEntry.class);
 	
@@ -150,7 +150,24 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         this.loadSpecialEntries(dv.getExtended());
     }
 	
-	
+
+    /**
+     * Constructor
+     * 
+     * @param mves
+     */
+    public MeterValuesEntry(MeterValuesEntrySpecial mves)
+    {
+        this.datetime = new ATechDate(this.getDateTimeFormat(), mves.datetime_tag);
+        this.source = mves.source;
+        
+//        System.out.println("Source:" + this.source);
+        
+        this.addSpecialEntry(mves);
+    }
+    
+    
+    
     /**
      * Set DateTime Object (ATechDate)
      * 
@@ -283,6 +300,39 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
 	 */
 	public String getBGValue(int st)
 	{
+	    
+	    if (this.bg_original==null)
+	    {
+	        return null;
+	    }
+	    else
+	    {
+	        if (this.bg_unit == OutputUtil.BG_MMOL)
+	        {
+	            if (st == OutputUtil.BG_MMOL)
+	            {
+	                return this.bg_original;
+	            }
+	            else
+	            {
+	                return "" + (int)(this.util.getBGValueDifferent(OutputUtil.BG_MMOL, Float.parseFloat(this.bg_original)));
+	            }
+	        }
+	        else
+	        {
+	            if (st == OutputUtil.BG_MGDL)
+	            {
+	                return this.bg_original;
+	            }
+	            else
+	            {
+	                return DataAccessMeter.Decimal1Format.format((this.util.getBGValueDifferent(OutputUtil.BG_MGDL, Float.parseFloat(this.bg_original))));
+	            }
+	        }
+	    }
+	    
+	    
+	    /*
 	    if (this.bg_unit == OutputUtil.BG_MMOL)
 	    {
 	        if (st == OutputUtil.BG_MMOL)
@@ -307,7 +357,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
                 
                 if (this.bg_original==null)
                 {
-                    // FIXME
+
                     //System.out.println("special: " + this.getSpecialEntryDbEntry());
                 }
                 
@@ -315,7 +365,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
                 return DataAccessMeter.Decimal1Format.format((this.util.getBGValueDifferent(OutputUtil.BG_MGDL, Float.parseFloat(this.bg_original))));
             }
 	        
-	    }
+	    }*/
 	    
 	}
 
@@ -825,7 +875,18 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
      */
     public String getSpecialId()
     {
-        return "MVE_" + this.datetime.getATDateTimeAsLong();
+        if (this.getEntryType()==MeterValuesEntry.ENTRY_BG)
+        {
+            return "MVE_" + this.datetime.getATDateTimeAsLong() + "_BG";
+        }
+        else if (this.getEntryType()==MeterValuesEntry.ENTRY_SPECIAL)
+        {
+            return "MVE_" + this.datetime.getATDateTimeAsLong() + "_SP_" + this.special_entries.get(this.special_entry_first).special_entry_id;
+        }
+        else 
+        {
+            return "MVE_" + this.datetime.getATDateTimeAsLong() + "_CMB";
+        }
     }
 
     
@@ -1067,12 +1128,12 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         
         if (this.hasBgEntry())
         {
-            sb.append("BG=" + bg_original + ";");
+            sb.append("BG=" + this.getBGValue(DataAccessMeter.BG_MGDL) + ";");
         }
         
         if ((this.hasSpecialEntries()) && (this.special_entries.containsKey(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH)))
         {
-            sb.append("CH=" + this.special_entries.get(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH).special_entry_value.replace(',', '.') + ";");
+            sb.append("CH=" + this.special_entries.get(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH).getValueValue().replace(',', '.') + ";");
         }
         
         sb.append(this.createExtendedValueDailyValuesH());
@@ -1204,14 +1265,20 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         // FIXME
         // ExtendedDailyValue
         
+        //System.out.println("HtExt: " + ht_ext);
+        
         for (Enumeration<String> en = ht_ext.keys(); en.hasMoreElements(); )
         {
             String key = en.nextElement();
             
-            if (key.equals(ExtendedDailyValue.EXTENDED_URINE))
+            if (key.equals(da.getExtendedDailyValueHandler().getExtendedTypeDescription(ExtendedDailyValue.EXTENDED_URINE)))
             {
                 // urine is only one that is not uniquely processed
                 String val = ht_ext.get(key);
+                
+                this.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_COMBINED, val);
+                
+/*                
                 
                 if (val.toLowerCase().contains("mmol"))
                 {
@@ -1229,7 +1296,12 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
                     this.special_entries.put(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_DESCRIPTIVE, 
                         new MeterValuesEntrySpecial(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MGDL, val));
                 }
-                
+  */              
+            }
+            else if (key.equals(da.getExtendedDailyValueHandler().getExtendedTypeDescription(ExtendedDailyValue.EXTENDED_SOURCE)))
+            {
+                this.source = ht_ext.get(key);
+                //System.out.println("SSSS: " + this.source);
             }
             /*else
             {
@@ -1261,15 +1333,15 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
     {
         
         if (this.getEntryType()==MeterValuesEntry.ENTRY_NONE)
-            return "No data";
+            return DataAccessMeter.getInstance().getI18nControlInstance().getMessage("INVALID_DATA");
         else if (this.getEntryType()==MeterValuesEntry.ENTRY_BG)
         {
-            return "BG";
+            return DataAccessMeter.getInstance().getI18nControlInstance().getMessage("BG");
         }
         else if (this.getEntryType()==MeterValuesEntry.ENTRY_SPECIAL)
         {
             MeterValuesEntrySpecial mves = this.special_entries.elements().nextElement();
-            return mves.getTypeDescription(); 
+            return DataAccessMeter.getInstance().getI18nControlInstance().getMessage(mves.getTypeDescription()); 
         }
         else 
         {
@@ -1293,7 +1365,7 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         else if (this.getEntryType()==MeterValuesEntry.ENTRY_BG)
         {
             if (both_bg)
-                return this.bg_mgdL + " mg/dL (" + DataAccessMeter.Decimal1Format.format(this.bg_mmolL) + " mmol/L";            
+                return this.bg_mgdL + " mg/dL (" + DataAccessMeter.Decimal1Format.format(this.bg_mmolL) + " mmol/L)";            
             else
                 return this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit());
         }
@@ -1394,7 +1466,24 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
                 
                 if (key!=MeterValuesEntrySpecial.SPECIAL_ENTRY_CH)
                 {
-                    ext += this.special_entries.get(key).getSpecialEntryDbEntry() + ";";
+                    if (this.special_entries.containsKey(key))
+                    {
+                        ext += this.special_entries.get(key).getSpecialEntryDbEntry() + ";";
+                    }
+                    
+                    
+/*                    try
+                    {
+                        ext += this.special_entries.get(key).getSpecialEntryDbEntry() + ";";
+                    }
+                    catch(Exception ex)
+                    {
+                        //System.out.println
+                        
+                        
+                        System.exit(1);
+                        return null;
+                    }*/
                 }
             }
         }
@@ -1415,6 +1504,32 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         for(int i=0; i<coll.size(); i++)
         {
             MeterValuesEntrySpecial mves = coll.get(i); 
+            this.addSpecialEntry(mves);
+        }
+    }
+    
+    
+
+    /**
+     * Add Special Entry
+     * 
+     * @param mves
+     */
+    public void addSpecialEntry(MeterValuesEntrySpecial mves)
+    {
+        if (mves.special_entry_id==MeterValuesEntrySpecial.SPECIAL_ENTRY_BG)
+        {
+            this.setBgUnit(DataAccessMeter.BG_MGDL);
+            this.setBgValue(mves.special_entry_value);
+        }
+        else
+        {
+            if (this.special_entries == null)
+            {
+                this.special_entries = new Hashtable<Integer, MeterValuesEntrySpecial>();
+                this.special_entry_first = mves.special_entry_id;
+            }
+            
             
             if (this.special_entries.containsKey(mves.special_entry_id))
             {
@@ -1422,16 +1537,11 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
             }
             else
             {
-                if (mves.special_entry_id==MeterValuesEntrySpecial.SPECIAL_ENTRY_BG)
-                {
-                    this.bg_original = mves.special_entry_value;
-                }
-                else
-                    this.special_entries.put(mves.special_entry_id, mves);
+                this.special_entries.put(mves.special_entry_id, mves);
             }
         }
-        
     }
+    
     
     
     
@@ -1445,19 +1555,27 @@ public class MeterValuesEntry extends DeviceValuesEntry //extends OutputWriterDa
         
         ArrayList<MeterValuesEntrySpecial> list = new ArrayList<MeterValuesEntrySpecial>();
         
-        for(Enumeration<Integer> en = this.special_entries.keys(); en.hasMoreElements(); )
-        {
-            int key = en.nextElement();
-            
-            MeterValuesEntrySpecial mves = this.special_entries.get(key);
-            mves.datetime_tag = this.getDateTime();
-            list.add(mves);
-        }
+//        System.out.println("getDataEntriesAsMVESpecial::Source:" + this.source);
         
+        if (special_entries!=null)
+        {
+            for(Enumeration<Integer> en = this.special_entries.keys(); en.hasMoreElements(); )
+            {
+                int key = en.nextElement();
+                
+                MeterValuesEntrySpecial mves = this.special_entries.get(key);
+                mves.datetime_tag = this.getDateTime();
+                mves.source = this.source;
+                list.add(mves);
+            }
+        }
+
         if (this.hasBgEntry())
         {
+//            System.out.println("BG: " + this.getBGValue(DataAccessMeter.BG_MGDL));
             MeterValuesEntrySpecial mves = new MeterValuesEntrySpecial(MeterValuesEntrySpecial.SPECIAL_ENTRY_BG, this.getBGValue(DataAccessMeter.BG_MGDL));
             mves.datetime_tag = this.getDateTime();
+            mves.source = this.source;
             list.add(mves);
         }
         

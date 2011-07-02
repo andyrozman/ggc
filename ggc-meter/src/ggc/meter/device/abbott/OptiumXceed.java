@@ -550,7 +550,7 @@ public class OptiumXceed extends AbstractSerialMeter
     protected ATechDate getDateTime(String date, String time)
     {
         long dt = m_da.getLongValueFromString(date) * 10000L;
-        String tm = m_da.replaceExpression(time, ":", "");
+        String tm = DataAccessMeter.replaceExpression(time, ":", "");
         dt += m_da.getLongValueFromString(tm);
         
         return tzu.getCorrectedDateTime(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dt));

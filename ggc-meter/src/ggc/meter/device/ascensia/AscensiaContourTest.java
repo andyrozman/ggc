@@ -423,7 +423,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
 
     protected void processData(String input)
     {
-        input = m_da.replaceExpression(input, "||", "|_|"); 
+        input = DataAccessMeter.replaceExpression(input, "||", "|_|"); 
     
         if (input.contains("|^^^Glucose|"))
         {

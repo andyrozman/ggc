@@ -204,6 +204,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
     public void readDeviceDataFull() throws PlugInBaseException
     {
         
+
         
         try
         {
@@ -280,6 +281,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
         
         
         /*
+>>>>>>> .r1172
         waitTime(2000);
         
         try
@@ -287,22 +289,6 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
 
             this.device_running = true;
             System.out.println("USB Reading --- Begin");
-            this.setUsbDebugLevel(4);
-            
-            //this.claimInterface(5);
-            //this.setRequiredEndpoint(-127);
-            this.setRequiredEndpoint(1);
-            
-            byte buffer 
-            
-            buffer[0] = 0;
-            buffer[1] = 0;
-            buffer[2] = 0;
-            buffer[3] = 1;
-            buffer[4] = 4;
-
-            
-            
             
             write(6);  // ENQ
             
@@ -315,8 +301,6 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
                 write(6);
             }
 
-            //this.releaseInterface();
-            
             System.out.println("USB Reading --- End");
             
             
@@ -329,10 +313,9 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
         }
         finally
         {
-            this.releaseInterface();
             super.close();
         }
-        */
+        
         
         
         
@@ -394,6 +377,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
     
     
     
+    @SuppressWarnings("unused")
     private void sendToProcess(String text)
     {
         boolean stx = false;
@@ -496,6 +480,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
     }
     
 
+    @SuppressWarnings("unused")
     private boolean isDeviceStopped(String vals)
     {
         if (!this.device_running)
@@ -535,6 +520,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
     /**
      * We don't use serial event for reading data, because process takes too long, we use serial event just 
      * to determine if device is stopped (interrupted) 
+     * @param event 
      */
     //@Override
     public void serialEvent(SerialPortEvent event)
@@ -593,7 +579,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
 
     protected void processData(String input)
     {
-		input = m_da.replaceExpression(input, "||", "|_|"); 
+		input = DataAccessMeter.replaceExpression(input, "||", "|_|"); 
 	
 		if (input.contains("|^^^Glucose|"))
 		{

@@ -19,6 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
@@ -55,6 +58,9 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     
     DataAccessMeter da_local; // = DataAccessMeter.getInstance();
     //I18nControlAbstract ic_main = m_da.getI18nControlInstance();
+    private static Log log = LogFactory.getLog(MeterPlugInServer.class);
+    
+    
     
     /**
      *  Command: Read Meter Data  
@@ -234,10 +240,27 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     public void initPlugIn()
     {
         //I18nControl.getInstance().setLanguage(this.selected_lang);
+        
+//        System.out.println("InitPlugin Meter");
+        
         ic = m_da.getI18nControlInstance();
         
         if (da_local==null)
-            da_local = DataAccessMeter.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
+        {
+//            System.out.println("InitPlugin DaLocal");
+            try
+            {
+                da_local = DataAccessMeter.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
+            }
+            catch(Exception ex)
+            {
+                log.error("InitPlugin DaLocal Ex.: " + ex, ex);
+                //System.out.println("InitPlugin DaLocal Ex.: " + ex);
+                //ex.printStackTrace();
+            }
+        }
+        
+        //System.out.println("Da Local: " + da_local);
         
         this.initPlugInServer((DataAccess)m_da, da_local);
         
@@ -257,8 +280,9 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         da_local.setCurrentUserId(((DataAccess)m_da).current_user_id);
         da_local.createDb(m_da.getHibernateDb());
 */
-        
-        da_local.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, m_da.getExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow));
+  
+        // FIXME
+//        da_local.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, m_da.getExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow));
 
         
         //DataAccessMeter.getInstance().setBGMeasurmentType(m_da.get)
@@ -277,7 +301,13 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         if (ret_obj_id == MeterPlugInServer.RETURN_OBJECT_DEVICE_WITH_PARAMS)
         {
             DataAccessMeter da = DataAccessMeter.getInstance();
+            
+//            System.out.println("DataAccessMeter: " + da);
+            
             DeviceConfigEntry de = da.getDeviceConfiguration().getSelectedDeviceInstance();
+
+//            System.out.println("DataAccessMeter.getDeviceConfiguration: " + da.getDeviceConfiguration());
+            
             
             if (de==null)
                 return da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");

@@ -53,6 +53,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
     public MeterValuesTableModel(DeviceDataHandler ddh, String source)
     {
         super(DataAccessMeter.getInstance(), ddh, source);
+        this.debug = true;
     }
 
     /**
@@ -198,6 +199,8 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
     public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
     {
         
+        System.out.println("MVE: " + mve.getSpecialId());
+        
         if (this.m_ddh.hasOldData())
         {
             
@@ -210,7 +213,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel        //exten
             
             
             //System.out.println("Old data found !  Size: " + this.m_ddh.getOldData().size());
-            //System.out.println("MVE: " + mve.getSpecialId());
+            System.out.println("MVE: " + mve.getSpecialId());
             
             if (!this.m_ddh.getOldData().containsKey("" + mve.getSpecialId()))
             {

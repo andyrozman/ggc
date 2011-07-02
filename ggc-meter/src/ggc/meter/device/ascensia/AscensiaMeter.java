@@ -432,7 +432,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     protected void processData(String input)
     {
-		input = m_da.replaceExpression(input, "||", "|_|"); 
+		input = DataAccessMeter.replaceExpression(input, "||", "|_|"); 
 	
 		if (input.contains("|^^^Glucose|"))
 		{

@@ -8,6 +8,7 @@ import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesTableModel;
+import ggc.plugin.gui.DeviceDisplayDataDialog;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.ArrayList;
@@ -334,6 +335,8 @@ public class MeterDataHandler extends DeviceDataHandler
         
         
         setCustomStatus(3, 0);
+        
+        this.m_dvtm.setFilter(DeviceDisplayDataDialog.FILTER_NEW_CHANGED, true);
 
 //        System.out.println("  -- End");
         

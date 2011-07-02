@@ -4,10 +4,12 @@ import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.meter.data.MeterDataReader;
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.data.MeterValuesEntrySpecial;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.db.PluginDb;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -18,6 +20,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import com.atech.db.hibernate.HibernateDb;
 
@@ -81,8 +84,8 @@ public class GGCMeterDb extends PluginDb
             
             Criteria criteria = this.getSession().createCriteria(DayValueH.class);
             criteria.add(Expression.eq("person_id", (int)m_da.getCurrentUserId()));
-            criteria.add(Expression.gt("bg", 0));
-            criteria.add(Expression.like("extended", "%URINE%"));
+            criteria.add(Restrictions.or(Restrictions.or(Expression.gt("bg", 0),
+                        Expression.like("extended", "%URINE%")), Expression.gt("ch", 0.0f)));
             //criteria.createCriteria("person_id", (int)m_da.getCurrentUserId());
             criteria.setProjection(Projections.rowCount());
             in = (Integer) criteria.list().get(0);
@@ -126,7 +129,7 @@ public class GGCMeterDb extends PluginDb
 
             Query q = this.getSession().createQuery(
                 " SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + 
-                " WHERE ((dv.bg>0) OR (dv.extended LIKE '%URINE%')) AND person_id=" + m_da.getCurrentUserId() + 
+                " WHERE ((dv.bg>0) OR (dv.extended LIKE '%URINE%') OR (dv.ch>0)) AND person_id=" + m_da.getCurrentUserId() + 
                 " ORDER BY dv.dt_info ASC");
 
             //System.out.println("Found elements: " + q.list().size());
@@ -142,12 +145,25 @@ public class GGCMeterDb extends PluginDb
                 counter++;
                 //DayValueH gv = (DayValueH)it.next();
                 
-                MeterValuesEntry mve = new MeterValuesEntry((DayValueH)it.next());
+                MeterValuesEntry mves = new MeterValuesEntry((DayValueH)it.next());
                 
-                if (!ht.containsKey(mve.getSpecialId()))
+                ArrayList<MeterValuesEntrySpecial> lst = mves.getDataEntriesAsMVESpecial();
+                
+                for(int i=0; i<lst.size(); i++)
                 {
-                    ht.put("" + mve.getSpecialId(), mve);
+                    
+                    MeterValuesEntry mve = new MeterValuesEntry(lst.get(i));
+                    
+//                    System.out.println("MVEOLD: " + mve.getSpecialId());
+                    
+                    
+                    if (!ht.containsKey(mve.getSpecialId()))
+                    {
+                        ht.put("" + mve.getSpecialId(), mve);
+                    }
+                    
                 }
+                
                 mdr.writeStatus(counter);
             }
 

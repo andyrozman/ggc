@@ -140,16 +140,22 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel        //ex
     @SuppressWarnings("deprecation")
     public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
     {
+        //System.out.println("Old data: " + this.m_ddh.getOldData());
+        
         
         if (this.m_ddh.hasOldData())
         {
+            //System.out.println("OLD Data" );
             if (!this.m_ddh.getOldData().containsKey("" + mve.getSpecialId()))
             {
+                
                 mve.setStatus(DeviceValuesEntry.STATUS_NEW);
                 mve.setObjectStatus(MeterValuesEntry.OBJECT_STATUS_NEW);
             }
             else
             {
+//                System.out.println("MVE: " + mve.getSpecialId());
+//                System.out.println("Found" );
                 MeterValuesEntry mve2 = (MeterValuesEntry)mve; 
                 MeterValuesEntry mve_old = (MeterValuesEntry)this.m_ddh.getOldData().get(mve.getSpecialId());
                 
