@@ -375,7 +375,12 @@ public class MinimedCareLinkPumpData extends MinimedCareLinkData
             */
     }
     
-        
+
+    public long getAtechDateLong()
+    {
+        return this.mcl.mm_date.getAtechDateLong(date, time);
+    }
+    
       
     public void processData()
     {

@@ -185,7 +185,10 @@ public class MinimedCareLinkPump extends MinimedCareLink
                     profiles.add(mcld);
                 }
                 else
+                {
                     mcld.processData();
+                    //System.out.println(mcld.getUnprocessedData());
+                }
             }
             else
             {
@@ -344,7 +347,9 @@ public class MinimedCareLinkPump extends MinimedCareLink
 
     private void createDeviceValuesWriter()
     {
-        this.dvw = new DeviceValuesWriter(false);
+        //<<this.dvw = new DeviceValuesWriter(false);
+        
+        this.dvw = new DeviceValuesWriter(true);
         this.dvw.setOutputWriter(this.output_writer);
 
         // this.dvw.writeObject(_type, _datetime, _value);
@@ -436,10 +441,37 @@ public class MinimedCareLinkPump extends MinimedCareLink
         if (m_reading_type == READ_DEVICE_DATA)
         {
             //ArrayList<MinimedCareLinkPumpData> profiles
+            
+            Hashtable<String,MinimedCareLinkPumpProfile> profiles_proc = new Hashtable<String,MinimedCareLinkPumpProfile>(); 
+            
             for(int i=0; i<profiles.size(); i++)
             {
-                System.out.println(profiles.get(i));
+                //System.out.println(profiles.get(i)); //.getUnprocessedData());
+                MinimedCareLinkPumpData d = profiles.get(i);
+                String dt = d.date + "_" + d.time;
+                
+                if (profiles_proc.containsKey(dt))
+                {
+                    profiles_proc.get(dt).add(d);
+                }
+                else
+                {
+                    MinimedCareLinkPumpProfile pp = new MinimedCareLinkPumpProfile(dt, this);
+                    pp.add(d);
+                    
+                    profiles_proc.put(dt, pp);
+                }
+                
+                
+                //System.out.println(profiles.get(i).raw_type + " = " + profiles.get(i).raw_values); //.getUnprocessedData());
             }
+            
+            for(MinimedCareLinkPumpProfile mcp : profiles_proc.values() )
+            {
+             //   System.out.println(mcp);
+            }
+            
+            
             
             
         }

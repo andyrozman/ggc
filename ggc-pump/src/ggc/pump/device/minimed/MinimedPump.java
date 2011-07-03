@@ -327,7 +327,8 @@ public abstract class MinimedPump extends AbstractPump
      */
     public int getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+        //return DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+        return DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE; //.DOWNLOAD_FROM_DEVICE_FILE;
     }
     
     /**
