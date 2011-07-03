@@ -206,7 +206,12 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
         d.add(new JLabel(m_ic.getMessage("BG_UNIT") + ":"));
         d.add(cbUnit = new JComboBox(m_da.bg_units_config));
         
-        if (settings.getBG_unit()<=2)
+        if (settings.getBG_unit() < 1)
+        {
+            // XXX: a -1 is returned in case of error; that should be handled properly
+            cbUnit.setSelectedIndex(0);
+        }
+        else if (settings.getBG_unit() <= 2)
             cbUnit.setSelectedIndex(settings.getBG_unit()-1);
         else
             cbUnit.setSelectedIndex(0);
