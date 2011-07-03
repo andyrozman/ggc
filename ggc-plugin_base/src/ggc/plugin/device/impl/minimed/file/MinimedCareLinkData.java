@@ -133,6 +133,13 @@ public abstract class MinimedCareLinkData
         this.raw_seq_num = data[37];     // 37
         this.raw_device_type = data[38]; // 38
     }
+
+    
+    public MinimedCareLinkData(MinimedCareLink mcl_)
+    {
+        this.mcl = mcl_;
+    }
+
     
     
     /**
@@ -754,6 +761,12 @@ public abstract class MinimedCareLinkData
             s2 += m;
         
         return s2;
+    }
+    
+    
+    public String getUnprocessedData()
+    {
+        return full_data_line; 
     }
     
     
