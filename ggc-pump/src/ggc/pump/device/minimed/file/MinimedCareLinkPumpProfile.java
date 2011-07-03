@@ -8,9 +8,38 @@ import ggc.pump.util.DataAccessPump;
 
 import java.util.Hashtable;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ * 
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ * 
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ * 
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * 
+ *  Filename:     MinimedCareLinkPumpData  
+ *  Description:  Minimed CareLink PumpData
+ * 
+ *  Author: Andy {andy@atech-software.com}
+ */
+
+
 public class MinimedCareLinkPumpProfile extends MinimedCareLinkData //extends ArrayList<MinimedCareLinkPumpData>
 {
+    @SuppressWarnings("unused")
     private String date_time_full = null;
+    @SuppressWarnings("unused")
     private long dt_full = 0L;
     
     private String pattern_name = null;
@@ -18,6 +47,12 @@ public class MinimedCareLinkPumpProfile extends MinimedCareLinkData //extends Ar
     private Hashtable<String, ProfileSubPattern> entries_index = new Hashtable<String, ProfileSubPattern>();  
     
     
+    /**
+     * Constructor
+     * 
+     * @param date_time
+     * @param mcl
+     */
     public MinimedCareLinkPumpProfile(String date_time, MinimedCareLink mcl)
     {
         super(mcl);
@@ -29,6 +64,11 @@ public class MinimedCareLinkPumpProfile extends MinimedCareLinkData //extends Ar
 //        ChangeBasalProfile = "PATTERN_DATUM=879228396, PROFILE_INDEX=0, RATE=0, 2, START_TIME=0"
     
     
+    /**
+     * Add Entry
+     * 
+     * @param entry
+     */
     public void add(MinimedCareLinkPumpData entry)
     {
         if (entry.raw_type.equals("ChangeBasalProfilePattern"))
@@ -86,6 +126,10 @@ public class MinimedCareLinkPumpProfile extends MinimedCareLinkData //extends Ar
         
     }
     
+    /**
+     * Get Profile 
+     * @return
+     */
     public Profile getProfile()
     {
         Profile p = new Profile();

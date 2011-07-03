@@ -72,6 +72,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
      * 
      * @param da
      * @param ow
+     * @param reading_type 
      */
     public MinimedCareLinkPump(DataAccessPlugInBase da, OutputWriter ow, int reading_type)
     {
@@ -466,7 +467,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
                 //System.out.println(profiles.get(i).raw_type + " = " + profiles.get(i).raw_values); //.getUnprocessedData());
             }
             
-            for(MinimedCareLinkPumpProfile mcp : profiles_proc.values() )
+            for(@SuppressWarnings("unused") MinimedCareLinkPumpProfile mcp : profiles_proc.values() )
             {
              //   System.out.println(mcp);
             }

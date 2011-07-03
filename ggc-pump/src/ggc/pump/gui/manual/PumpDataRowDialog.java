@@ -207,9 +207,9 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         
         String dt = year + m_da.getLeadingZero(month, 2)
                 + m_da.getLeadingZero(day, 2) 
-                + m_da.getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2)  
-                + m_da.getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2)
-                + m_da.getLeadingZero(gc.get(GregorianCalendar.SECOND), 2)
+                + DataAccessPump.getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2)  
+                + DataAccessPump.getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2)
+                + DataAccessPump.getLeadingZero(gc.get(GregorianCalendar.SECOND), 2)
                 ;
 
         //System.out.println("sDate: " + sDate);

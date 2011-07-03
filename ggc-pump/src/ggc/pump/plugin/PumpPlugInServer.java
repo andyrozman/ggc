@@ -567,11 +567,11 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     
     private void refreshMenusAfterConfig()
     {
-        System.out.println("Dl Status: " + da_local.getDownloadStatus());
+        //System.out.println("Dl Status: " + da_local.getDownloadStatus());
         
-        menus[0].setEnabled(m_da.isBitwiseSet(da_local.getDownloadStatus(), DownloadSupportType.DOWNLOAD_FROM_DEVICE));
-        menus[1].setEnabled(m_da.isBitwiseSet(da_local.getDownloadStatus(), DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE));
-        menus[2].setEnabled(m_da.isBitwiseSet(da_local.getDownloadStatus(), DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE));
+        menus[0].setEnabled(DataAccessPump.isBitwiseSet(da_local.getDownloadStatus(), DownloadSupportType.DOWNLOAD_FROM_DEVICE));
+        menus[1].setEnabled(DataAccessPump.isBitwiseSet(da_local.getDownloadStatus(), DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE));
+        menus[2].setEnabled(DataAccessPump.isBitwiseSet(da_local.getDownloadStatus(), DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE));
 
         /*
         if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)

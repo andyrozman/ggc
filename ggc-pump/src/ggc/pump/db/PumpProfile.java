@@ -446,7 +446,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         DataAccess da = DataAccess.getInstance();
 
-        value_entry = DataAccess.getInstance().replaceExpression(value_entry, "||", "| |");
+        value_entry = DataAccessPump.replaceExpression(value_entry, "||", "| |");
         String[] arr = da.splitString(value_entry, "|");
         
         this.setId(da.getLongValueFromString(arr[0]));

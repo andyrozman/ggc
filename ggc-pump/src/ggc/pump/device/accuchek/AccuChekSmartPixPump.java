@@ -1209,7 +1209,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      */
     private ATechDate getDateTime(String date, String time)
     {
-        String o = m_da.replaceExpression(date, "-", "");
+        String o = DataAccessPump.replaceExpression(date, "-", "");
         
         if ((time==null) || (time.length()==0))
         {
@@ -1217,7 +1217,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         }
         else
         {
-            o += m_da.replaceExpression(time, ":", "");
+            o += DataAccessPump.replaceExpression(time, ":", "");
         }
         
         o += "00"; // seconds
@@ -1241,7 +1241,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     @SuppressWarnings("unused")
     private long getDate(String date)
     {
-        String o = m_da.replaceExpression(date, "-", "");
+        String o = DataAccessPump.replaceExpression(date, "-", "");
         ATechDate at = new ATechDate(ATechDate.FORMAT_DATE_ONLY, Long.parseLong(o));
         return at.getATDateTimeAsLong();
     }
