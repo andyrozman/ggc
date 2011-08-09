@@ -18,7 +18,7 @@ we plan to release our new update system, which would probably bring this number
 
 As I said we need few people willing to go through all functionalities, play with your
 devices and determine if GGC works ok. We don't have test plan written yet, but at this point 
-administrator will point you to functionalities that were added (or cahnged), and which need to be tested.<br><br> 
+administrator will point you to functionalities that were added (or changed), and which need to be tested.<br><br> 
 <b>If (and I hope we do)</b> we manage to establish team of testers (at least few of them), we (developers 
 and release admin) will write testing manual, with all test cases, which will be then expanded with each 
 new functionality...<br><br>
