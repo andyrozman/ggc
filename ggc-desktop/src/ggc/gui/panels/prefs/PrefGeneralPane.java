@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import com.atech.help.HelpCapable;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -50,6 +51,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
 {
     private static final long serialVersionUID = -5776476963040139761L;
     private JTextField fieldUserName;
+    @SuppressWarnings("rawtypes")
     private JComboBox langBox, cb_database, cb_lf_type, cb_lf_type_class;
     private JTextField tf_lf;
     private JButton b_browse;
@@ -68,44 +70,52 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
         // parent = this;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private void init()
     {
         this.setLayout(null);
-
+        ATSwingUtils.initLibrary();
+        
+        JLabel label = new JLabel();
+        label.setBounds(20, 5, 480, 25);
+        label.setText(m_ic.getMessage("ALL_SETTINGS_ON_PAGE_NEED_RESTART"));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
+        this.add(label);
+        
+        
         // general settings
         JPanel a = new JPanel(); // new GridLayout(2,3));
-        a.setBounds(10, 10, 490, 90);
+        a.setBounds(10, 30, 490, 90);  // 40 = 10
         a.setLayout(null);
         a.setBorder(new TitledBorder(m_ic.getMessage("GENERAL_SETTINGS")));
 
-        langBox = new JComboBox(m_da.getAvailableLanguages());
-        langBox.setSelectedIndex(m_da.getSelectedLanguageIndex());
-        langBox.setBounds(120, 50, 150, 25);
-
-        JLabel label = new JLabel();
+        
+        label = new JLabel();
         label.setBounds(20, 20, 100, 25);
         label.setText(m_ic.getMessage("YOUR_NAME") + ":");
         a.add(label);
 
         fieldUserName = new JTextField(m_da.getSettings().getUserName(), 10);
-        fieldUserName.setBounds(120, 20, 150, 25);
+        fieldUserName.setBounds(170, 20, 300, 25);
+        fieldUserName.getDocument().addDocumentListener(this);
         a.add(fieldUserName);
 
+        
         label = new JLabel();
         label.setBounds(20, 50, 100, 25);
         label.setText(m_ic.getMessage("YOUR_LANGUAGE") + ":");
         a.add(label);
-        a.add(langBox);
 
-        fieldUserName.getDocument().addDocumentListener(this);
-        // langBox.addItemListener(this);
+        langBox = new JComboBox(m_da.getAvailableLanguages());
+        langBox.setSelectedIndex(m_da.getSelectedLanguageIndex());
+        langBox.setBounds(170, 50, 300, 25);
+        a.add(langBox);
 
         this.add(a);
 
         // database settings
-
         JPanel p2 = new JPanel();
-        p2.setBounds(10, 110, 490, 160);
+        p2.setBounds(10, 130, 490, 160);
         p2.setLayout(null);
         p2.setBorder(new TitledBorder(m_ic.getMessage("DATABASE_SETTINGS")));
 
@@ -120,7 +130,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
         p2.add(label);
 
         this.cb_database = new JComboBox(this.m_da.getDbConfig().getAllDatabasesNamesPlusAsArray());
-        this.cb_database.setBounds(155, 120, 280, 25);
+        this.cb_database.setBounds(170, 120, 300, 25);
         this.cb_database.setSelectedIndex(this.m_da.getDbConfig().getSelectedDatabaseIndex());
         p2.add(this.cb_database);
 
@@ -128,35 +138,36 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
 
         JPanel p3 = new JPanel(/* new GridLayout(2, 1) */);
         p3.setBorder(new TitledBorder(m_ic.getMessage("LAF_SETTINGS")));
-        p3.setBounds(10, 280, 490, 135);
+        p3.setBounds(10, 300, 490, 115);
         p3.setLayout(null);
 
-        addLabel(p3, m_ic.getMessage("LAF_SETTINGS_DESC"), 20, 10, 400, 30);
+        //addLabel(p3, m_ic.getMessage("LAF_SETTINGS_DESC"), 20, 10, 400, 30);
 
-        addLabel(p3, m_ic.getMessage("SELECTED_LAF_TYPE_NAME") + ":", 20, 40, 150, 25);
-        addLabel(p3, m_ic.getMessage("SELECTED_LAF_TYPE_CLASS") + ":", 20, 70, 150, 25);
-        addLabel(p3, m_ic.getMessage("SELECTED_SKINLF_DEF") + ":", 20, 100, 150, 25);
+        addLabel(p3, m_ic.getMessage("SELECTED_LAF_TYPE_NAME") + ":", 20, 20, 150, 25);
+        addLabel(p3, m_ic.getMessage("SELECTED_LAF_TYPE_CLASS") + ":", 20, 50, 150, 25);
+        addLabel(p3, m_ic.getMessage("SELECTED_SKINLF_DEF") + ":", 20, 80, 150, 25);
 
         this.cb_lf_type = new JComboBox(m_dbc.getAvailableLFs());
-        this.cb_lf_type.setBounds(135, 40, 330, 23);
+        this.cb_lf_type.setBounds(170, 20, 300, 23);
         this.cb_lf_type.addItemListener(this);
         p3.add(this.cb_lf_type);
 
         this.cb_lf_type_class = new JComboBox(m_dbc.getAvailableLFsClass());
-        this.cb_lf_type_class.setBounds(135, 70, 330, 23);
+        this.cb_lf_type_class.setBounds(170, 50, 300, 23);
         this.cb_lf_type_class.addItemListener(this);
         p3.add(this.cb_lf_type_class);
 
         // this.cb_lf_type_class.setSelectedIndex(idx);
 
         this.tf_lf = new JTextField();
-        this.tf_lf.setBounds(170, 100, 150, 23);
+        this.tf_lf.setBounds(170, 80, 170, 23);
         this.tf_lf.setText(this.m_dbc.getSelectedLFSkin());
         this.tf_lf.setEditable(false);
         p3.add(this.tf_lf);
 
+        // 20
         this.b_browse = new JButton(m_ic.getMessage("BROWSE") + "...");
-        this.b_browse.setBounds(330, 100, 120, 23);
+        this.b_browse.setBounds(350, 80, 120, 23);
         this.b_browse.addActionListener(new ActionListener()
         {
             /*
@@ -166,8 +177,8 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
             {
                 File f = new File("./../data/skinlf_themes");
 
-                System.out.println(f);
-                System.out.println(f.getAbsolutePath());
+                //System.out.println(f);
+                //System.out.println(f.getAbsolutePath());
 
                 JFileChooser jfc = new JFileChooser();
                 jfc.setCurrentDirectory(f);
@@ -210,6 +221,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
      * 
      * @see ggc.gui.panels.prefs.AbstractPrefOptionsPanel#itemStateChanged(java.awt.event.ItemEvent)
      */
+    @SuppressWarnings("rawtypes")
     public void itemStateChanged(ItemEvent e)
     {
 
@@ -252,6 +264,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
     }
 
     
+    @SuppressWarnings("rawtypes")
     private void processJFileChooser(Container c)
     {
         Component[] comps = c.getComponents();

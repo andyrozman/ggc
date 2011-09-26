@@ -64,6 +64,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     private DataAccess m_da; // = DataAccess.getInstance();
     private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
 
+    @SuppressWarnings("rawtypes")
     private JList list = null;
     private JPanel prefPane;
     JButton help_button;
@@ -123,6 +124,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     }
 
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private void init()
     {
         Dimension dim = new Dimension(120, 25);
