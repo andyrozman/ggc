@@ -251,7 +251,7 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
     
     public String getHelpId()
     {
-        if (this.m_dialog.getType()==GGCTreeRoot.TREE_USDA_NUTRITION)
+        if (this.m_dialog.getNutritionType()==GGCTreeRoot.TREE_USDA_NUTRITION)
             return "GGC_Food_USDA_Group";
         else
             return "GGC_Food_User_Group_View";

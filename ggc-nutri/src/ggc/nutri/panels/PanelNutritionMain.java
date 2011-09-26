@@ -93,7 +93,7 @@ public class PanelNutritionMain extends GGCTreePanel implements HelpCapable
 
         Font fnt_18 = new Font("Times New Roman", Font.PLAIN, 14);
 
-        String nut_db = nutrition_db[this.m_dialog.getType()];
+        String nut_db = nutrition_db[this.m_dialog.getNutritionType()];
         
         label = new JLabel(ic.getMessage(nut_db));
         label.setBounds(0, 35, 520, 40);
@@ -191,7 +191,7 @@ public class PanelNutritionMain extends GGCTreePanel implements HelpCapable
 
     public String getHelpId()
     {
-        return this.help_ids[this.m_dialog.getType()];
+        return this.help_ids[this.m_dialog.getNutritionType()];
     }
     
     

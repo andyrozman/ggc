@@ -422,7 +422,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
     
     public String getHelpId()
     {
-        if (this.m_dialog.getType()==GGCTreeRoot.TREE_USDA_NUTRITION)
+        if (this.m_dialog.getNutritionType()==GGCTreeRoot.TREE_USDA_NUTRITION)
             return "GGC_Food_USDA_View";
         else
             return "GGC_Food_User_Food_View";

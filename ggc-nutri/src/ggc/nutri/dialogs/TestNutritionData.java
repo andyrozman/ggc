@@ -147,7 +147,7 @@ public class TestNutritionData
     {
         m_da = DataAccessNutri.getInstance();
         String inp = "396|Solata, glavnata|SOLATA,_GLAVNATA|7|0.0|||203=1,30;204=0,20;205=2,80;208=15;268=63|0";
-        String line = m_da.replaceExpression(inp, "||", "| |");
+        String line = DataAccessNutri.replaceExpression(inp, "||", "| |");
 
         System.out.println("Return: \n" + line);
 

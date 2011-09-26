@@ -61,6 +61,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
     private I18nControlAbstract ic = null;
 
     JTextField tf_selected;
+    @SuppressWarnings("rawtypes")
     JComboBox cb_type;
     JLabel label_item, label_item_type;
     Font font_normal, font_normal_b;
@@ -203,6 +204,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
     }
 
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private void init()
     {
 

@@ -58,6 +58,7 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
     /**
      * Fill Doucment Body
      */
+    @SuppressWarnings("unused")
     @Override
     public void fillDocumentBody(Document document) throws Exception
     {

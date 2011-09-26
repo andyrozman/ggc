@@ -241,18 +241,18 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
      * 
      * @return
      */
-    public int getType()
+    public int getNutritionType()
     {
         return this.m_tree_type;
     }
 
     private void setTitle()
     {
-        if (this.getType() == 1)
+        if (this.getNutritionType() == 1)
             this.setTitle(ic.getMessage("USDA_NUTRITION_DATABASE"));
-        else if (this.getType() == 2)
+        else if (this.getNutritionType() == 2)
             this.setTitle(ic.getMessage("USER_NUTRITION_DATABASE"));
-        else if (this.getType() == 3)
+        else if (this.getNutritionType() == 3)
             this.setTitle(ic.getMessage("MEALS_DATABASE"));
     }
 
@@ -277,30 +277,30 @@ public class NutritionTreeDialog extends JDialog implements TreeSelectionListene
 
         // System.out.println("getType" + this.getType());
 
-        if (this.getType() == 1)
+        if (this.getNutritionType() == 1)
         {
             panels = new GGCTreePanel[3];
             panels[0] = new PanelNutritionMain(this);
-            panels[1] = new PanelNutritionFoodGroup(this, this.getType());
+            panels[1] = new PanelNutritionFoodGroup(this, this.getNutritionType());
             panels[2] = new PanelNutritionFood(this);
         }
-        else if (this.getType() == 2)
+        else if (this.getNutritionType() == 2)
         {
             panels = new GGCTreePanel[5];
             panels[0] = new PanelNutritionMain(this);
-            panels[1] = new PanelNutritionFoodGroup(this, this.getType());
+            panels[1] = new PanelNutritionFoodGroup(this, this.getNutritionType());
             panels[2] = new PanelNutritionFood(this);
-            panels[3] = new PanelNutritionFoodGroupEdit(this, this.getType());
+            panels[3] = new PanelNutritionFoodGroupEdit(this, this.getNutritionType());
             panels[4] = new PanelNutritionFoodEdit(this);
         }
-        else if (this.getType() == 3)
+        else if (this.getNutritionType() == 3)
         {
 
             panels = new GGCTreePanel[5];
             panels[0] = new PanelNutritionMain(this);
-            panels[1] = new PanelNutritionFoodGroup(this, this.getType());
+            panels[1] = new PanelNutritionFoodGroup(this, this.getNutritionType());
             panels[2] = new PanelNutritionMeal(this);
-            panels[3] = new PanelNutritionFoodGroupEdit(this, this.getType());
+            panels[3] = new PanelNutritionFoodGroupEdit(this, this.getNutritionType());
             panels[4] = new PanelNutritionMealEdit(this);
         }
 

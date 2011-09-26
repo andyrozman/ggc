@@ -695,7 +695,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
     
     public String getHelpId()
     {
-        if (this.m_dialog.getType()==GGCTreeRoot.TREE_USER_NUTRITION)
+        if (this.m_dialog.getNutritionType()==GGCTreeRoot.TREE_USER_NUTRITION)
             return "GGC_Food_User_Group_Edit";
         else
             return "GGC_Food_Meal_Group_Edit";

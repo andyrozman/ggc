@@ -57,6 +57,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 
     private static final long serialVersionUID = -1193693566584753748L;
     JTextField tf_selected;
+    @SuppressWarnings("rawtypes")
     JComboBox cb_type;
     JLabel label_item, label_item_type, label_item_desc;
     Font font_normal, font_normal_b;

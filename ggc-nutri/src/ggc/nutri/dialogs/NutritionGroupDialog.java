@@ -204,7 +204,7 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
      * Get Type
      * @return
      */
-    public int getType()
+    public int getNutritionType()
     {
         return this.m_tree_type;
     }
@@ -212,9 +212,9 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
 
     private void setTitle()
     {
-    	if (this.getType()==2)
+    	if (this.getNutritionType()==2)
     	    this.setTitle(ic.getMessage("FOOD_GROUPS"));
-    	else if (this.getType()==3)
+    	else if (this.getNutritionType()==3)
     	    this.setTitle(ic.getMessage("MEAL_GROUPS"));
     }
 
@@ -297,9 +297,9 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
 
     public String getHelpId()
     {
-        if (this.getType()==NutritionGroupDialog.GROUP_FOODS)
+        if (this.getNutritionType()==NutritionGroupDialog.GROUP_FOODS)
             return "GGC_Food_User_Group_View";
-        else if (this.getType()==NutritionGroupDialog.GROUP_MEALS)
+        else if (this.getNutritionType()==NutritionGroupDialog.GROUP_MEALS)
             return "GGC_Food_Meal_Group_View"; 
         else
             return null;
