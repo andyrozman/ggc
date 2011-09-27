@@ -633,8 +633,15 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
      */
     public int read(int[] b) throws IOException
     {
-        int len = portInputStream.available();
-        b = new int[len];
+        int len;
+        if (b==null)
+        {
+            len = portInputStream.available();
+            b = new int[len];
+        }
+        else
+            len = b.length;
+        
         for(int i=0; i<len; i++)
         {
             b[i] = portInputStream.read();
