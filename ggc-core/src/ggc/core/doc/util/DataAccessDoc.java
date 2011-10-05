@@ -1,4 +1,4 @@
-package ggc.core.util;
+package ggc.core.doc.util;
 
 import ggc.core.data.Converter_mgdL_mmolL;
 import ggc.core.data.DailyValues;
@@ -16,6 +16,8 @@ import ggc.core.plugins.CGMSPlugIn;
 import ggc.core.plugins.MetersPlugIn;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.plugins.PumpsPlugIn;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -75,7 +77,7 @@ import com.atech.utils.logs.RedirectScreen;
  */
 
 
-public class DataAccess extends ATDataAccessLMAbstract 
+public class DataAccessDoc extends DataAccess 
 {
 
     /**
@@ -94,12 +96,12 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public long current_user_id = 1;
     
-    private static Log log = LogFactory.getLog(DataAccess.class);
+    private static Log log = LogFactory.getLog(DataAccessDoc.class);
 
     private Hashtable<String,EventSource> observables = null;
 
     
-    private static DataAccess s_da = null; // This is handle to unique singelton instance
+    private static DataAccessDoc s_da = null; // This is handle to unique singelton instance
 
     private GGCDb m_db = null;
 
@@ -241,10 +243,11 @@ public class DataAccess extends ATDataAccessLMAbstract
      * <br>
      * 
      */
-    protected DataAccess()
+    private DataAccessDoc()
     {
-        super(new LanguageManager(new GGCLanguageManagerRunner()), new GGCCoreICRunner());
-        initSpecial();
+        super();
+        //super(new LanguageManager(new GGCLanguageManagerRunner()), new GGCCoreICRunner());
+        //initSpecial();
     }
 
     
@@ -327,10 +330,10 @@ public class DataAccess extends ATDataAccessLMAbstract
      * @return Reference to OmniI18nControl object
      * 
      */
-    public static DataAccess getInstance()
+    public static DataAccessDoc getInstance()
     {
         if (s_da == null)
-            s_da = new DataAccess();
+            s_da = new DataAccessDoc();
         return s_da;
     }
 
@@ -340,7 +343,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      * @param main
      * @return
      */
-    public static DataAccess createInstance(Component main)
+    public static DataAccessDoc createInstance(Component main)
     {
         s_da = null;
 
@@ -352,7 +355,7 @@ public class DataAccess extends ATDataAccessLMAbstract
             
             
             //System.out.println("create new Instance");
-            s_da = new DataAccess();
+            s_da = new DataAccessDoc();
             //System.out.println("setParent");
             s_da.setParent(main);
             //System.out.println("setMainParent");
@@ -395,7 +398,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     public static void deleteInstance()
     {
         // m_i18n = null;
-        DataAccess.s_da = null;
+        DataAccessDoc.s_da = null;
     }
 
     /**
@@ -498,7 +501,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static String getFloatAsString(float f, String decimal_places)
     {
-        return DataAccess.getFloatAsString(f, Integer.parseInt(decimal_places));
+        return DataAccessDoc.getFloatAsString(f, Integer.parseInt(decimal_places));
     }
 
     /**
@@ -513,16 +516,16 @@ public class DataAccess extends ATDataAccessLMAbstract
         switch (decimal_places)
         {
         case 1:
-            return DataAccess.Decimal1Format.format(f);
+            return DataAccessDoc.Decimal1Format.format(f);
 
         case 2:
-            return DataAccess.Decimal2Format.format(f);
+            return DataAccessDoc.Decimal2Format.format(f);
 
         case 3:
-            return DataAccess.Decimal3Format.format(f);
+            return DataAccessDoc.Decimal3Format.format(f);
 
         default:
-            return DataAccess.Decimal0Format.format(f);
+            return DataAccessDoc.Decimal0Format.format(f);
         }
     }
 
@@ -751,16 +754,16 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         
         log.debug("init Plugins: Meter Tool");
-        addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
+        addPlugIn(DataAccessDoc.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
 
         log.debug("init Plugins: Pumps Tool");
-        addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this.m_main, this));
+        addPlugIn(DataAccessDoc.PLUGIN_PUMPS, new PumpsPlugIn(this.m_main, this));
 
         log.debug("init Plugins: CGMS Tool");
-        addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this.m_main, this.m_i18n));
+        addPlugIn(DataAccessDoc.PLUGIN_CGMS, new CGMSPlugIn(this.m_main, this.m_i18n));
 
         log.debug("init Plugins: Nutrition Tool");
-        addPlugIn(DataAccess.PLUGIN_NUTRITION, new NutriPlugIn(this.m_main, this.m_i18n));
+        addPlugIn(DataAccessDoc.PLUGIN_NUTRITION, new NutriPlugIn(this.m_main, this.m_i18n));
         
     }
     
@@ -1050,13 +1053,13 @@ public class DataAccess extends ATDataAccessLMAbstract
             return bg_value;
         else
         {
-            if (output_type == DataAccess.BG_MGDL)
+            if (output_type == DataAccessDoc.BG_MGDL)
             {
-                return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
+                return bg_value * DataAccessDoc.MGDL_TO_MMOL_FACTOR;
             }
             else
             {
-                return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
+                return bg_value * DataAccessDoc.MMOL_TO_MGDL_FACTOR;
             }
         }
 
@@ -1072,13 +1075,13 @@ public class DataAccess extends ATDataAccessLMAbstract
     public float getBGValueDifferent(int type, float bg_value)
     {
 
-        if (type == DataAccess.BG_MGDL)
+        if (type == DataAccessDoc.BG_MGDL)
         {
-            return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
+            return bg_value * DataAccessDoc.MGDL_TO_MMOL_FACTOR;
         }
         else
         {
-            return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
+            return bg_value * DataAccessDoc.MMOL_TO_MGDL_FACTOR;
         }
 
     }
@@ -1841,7 +1844,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     
     public void loadExtendedHandlers()
     {
-        this.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValue(this));
+        this.addExtendedHandler(DataAccessDoc.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValue(this));
     }
     
     
