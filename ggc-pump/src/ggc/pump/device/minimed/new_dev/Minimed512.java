@@ -1,10 +1,7 @@
 package ggc.pump.device.minimed.new_dev;
 
 import ggc.plugin.device.DownloadSupportType;
-import ggc.plugin.device.impl.minimed.MinimedDevice;
-import ggc.plugin.device.impl.minimed.MinimedDeviceUtil;
 import ggc.plugin.device.impl.minimed.MinimedDevicesIds;
-import ggc.plugin.device.impl.minimed.cmd.MinimedCommand;
 import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -37,10 +34,10 @@ import ggc.pump.util.DataAccessPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class Minimed512 extends MinimedDevice
+public class Minimed512 //extends MinimedDevice
 {
 
-    MinimedDeviceUtil utils = MinimedDeviceUtil.getInstance(); 
+    //MinimedDeviceUtil utils = MinimedDeviceUtil.getInstance(); 
     
     /**
      * Constructor 
@@ -59,7 +56,7 @@ public class Minimed512 extends MinimedDevice
      */
     public Minimed512(String drive_letter, OutputWriter writer)
     {
-        super(DataAccessPump.getInstance(), MinimedDevicesIds.PUMP_MINIMED_512, drive_letter, writer);
+        //super(DataAccessPump.getInstance(), MinimedDevicesIds.PUMP_MINIMED_512, drive_letter, writer);
         initDeviceSpecific();
     }
     
@@ -71,7 +68,7 @@ public class Minimed512 extends MinimedDevice
      */
     public Minimed512(AbstractDeviceCompany cmp)
     {
-        super(DataAccessPump.getInstance(), cmp);
+        //super(DataAccessPump.getInstance(), cmp);
     }
     
 
@@ -80,8 +77,8 @@ public class Minimed512 extends MinimedDevice
      */
     public void initDeviceSpecific()
     {
-        utils.comm_delay_io = 4;
-        utils.comm_baudrate = 56000;
+        //utils.comm_delay_io = 4;
+        //utils.comm_baudrate = 56000;
         
         
         
@@ -161,6 +158,7 @@ public class Minimed512 extends MinimedDevice
      */
     public void createCommands()
     {
+        /*
         util.addCommand(MinimedCommand.COMMAND_SET_RF_POWER_ON, new MinimedCommand(MinimedCommand.COMMAND_SET_RF_POWER_ON, "MM_SET_RF_POWER_ON", 2, util.getParamatersArray(2, 0, 0), 0, 17000));
         util.addCommand(MinimedCommand.COMMAND_SET_RF_POWER_OFF, new MinimedCommand(93, "MM_SET_RF_POWER_OFF", 2, util.getParamatersArray(2, 0, 0), 0));
         util.addCommand(MinimedCommand.COMMAND_READ_FIRMWARE_VERSION, new MinimedCommand(MinimedCommand.COMMAND_READ_FIRMWARE_VERSION, "MM_READ_FIRMWARE_VERSION"));
@@ -169,6 +167,7 @@ public class Minimed512 extends MinimedDevice
         util.addCommand(MinimedCommand.COMMAND_READ_PUMP_ERROR_STATUS, new MinimedCommand(117, "MM_READ_PUMP_ERROR_STATUS"));
         util.addCommand(MinimedCommand.COMMAND_READ_PUMP_STATE, new MinimedCommand(131, "MM_READ_PUMP_STATE"));
         util.addCommand(MinimedCommand.COMMAND_ACK, new MinimedCommand(MinimedCommand.COMMAND_ACK, "MM_ACKNOWLEDGE"));
+        */
     }
     
     
