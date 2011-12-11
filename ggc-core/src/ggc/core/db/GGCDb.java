@@ -7,9 +7,12 @@ import ggc.core.data.HbA1cValues;
 import ggc.core.data.MonthlyValues;
 import ggc.core.data.WeeklyValues;
 import ggc.core.db.datalayer.Settings;
+import ggc.core.db.datalayer.StockBaseType;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.SettingsH;
+import ggc.core.db.hibernate.StockTypeH;
+import ggc.core.db.hibernate.StocksH;
 import ggc.core.util.DataAccess;
 
 import java.text.SimpleDateFormat;
@@ -1277,6 +1280,105 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
         return ht;
     }
+    
+    
+    // *************************************************************
+    // ****                  S T O C K S                        ****
+    // *************************************************************
+
+    public ArrayList<StocksH> getStocks(int type, int history)
+    {
+    	
+        if (m_loadStatus == DB_CONFIG_LOADED)
+            return null;
+
+        log.info("getStocks() - Process");
+
+        ArrayList<StocksH> list = new ArrayList<StocksH>();  
+        String sql = "";
+        
+        try
+        {
+        	sql = "SELECT sv FROM ggc.core.db.hibernate.StocksH as sv ";
+        			
+        	if (type!=-1 || history!=-1)
+        	{
+        		sql += " WHERE ";
+        	}
+        		
+        	sql += " ORDER BY sv.dt_stock";
+        			
+        			
+
+            Query q = getSession().createQuery(sql);
+
+            Iterator<StocksH> it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+            	StocksH sv = (StocksH) it.next();
+                //hbVal.addDayValueRow(new DailyValuesRow(dv));
+            	list.add(sv);
+            }
+
+            //hbVal.processDayValues();
+
+            //logDebug("getHbA1c()", "Readings: " + hbVal.getDayCount() + " " + hbVal.getReadings());
+            
+            //System.out.println("Avg BG: " + hbVal.getAvgBGForMethod3());
+
+        }
+        catch (Exception ex)
+        {
+            logException("getHbA1c()", ex);
+        }
+
+        
+    	
+    	
+    	
+    	return list;
+    }
+    
+
+    public ArrayList<StockBaseType> getStockBaseTypes()
+    {
+    	
+    	
+        if (m_loadStatus == DB_CONFIG_LOADED)
+            return null;
+
+        log.info("getStockBaseTypes() - Process");
+
+        ArrayList<StockBaseType> list = new ArrayList<StockBaseType>();  
+        String sql = "";
+        
+        try
+        {
+        	sql = "SELECT sv FROM ggc.core.db.hibernate.StockTypeH as sv ";
+        	sql += " ORDER BY sv.id";
+        			
+            Query q = getSession().createQuery(sql);
+
+            Iterator<StockTypeH> it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+            	StockTypeH sv = it.next();
+            	list.add(new StockBaseType(sv));
+            }
+
+        }
+        catch (Exception ex)
+        {
+            log.error("getStockBaseTypes()::Exception: " + ex.getMessage(), ex);
+        }
+    	
+    	return list;
+    	
+    }
+    
+    
     
     
     
