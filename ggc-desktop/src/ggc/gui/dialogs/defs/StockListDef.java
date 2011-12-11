@@ -1,7 +1,8 @@
 package ggc.gui.dialogs.defs;
 
-import ggc.core.db.hibernate.DoctorH;
+import ggc.core.db.hibernate.StocksH;
 import ggc.core.util.DataAccess;
+import ggc.gui.dialogs.stock.StockSelectorDialog;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -41,8 +42,12 @@ import com.atech.graphics.dialogs.GUIListDefAbstract;
 
 public class StockListDef extends GUIListDefAbstract 
 {
+    DataAccess m_da = DataAccess.getInstance();
     
-    private ArrayList<DoctorH> active_list= null;
+    //private ArrayList<DoctorH> active_list= null;
+	
+	private ArrayList<StocksH> active_list = null;
+	
 
     /**
      * Constructor 
@@ -56,6 +61,12 @@ public class StockListDef extends GUIListDefAbstract
     @Override
     public void doTableAction(String action)
     {
+        if (action.equals("add"))
+        {
+            StockSelectorDialog ssd = new StockSelectorDialog(this.parent_dialog, m_da, 1);
+            ssd.showDialog();
+        }
+        
         System.out.println(this.getDefName() + " has not implemented action " + action);
     }
 
@@ -83,15 +94,16 @@ public class StockListDef extends GUIListDefAbstract
             public Object getValueAt(int row, int column)
             {
                 // TODO Auto-generated method stub
-                DoctorH dh = (DoctorH)active_list.get(row);
+            	StocksH se = (StocksH)active_list.get(row);
                 
                 switch(column)
                 {
                 case 0:
-                    return dh.getName();
+                    return se.getDt_stock(); //dh.getName();
                     
                 case 1:
-                    return ic.getMessage(dh.getDoctor_type().getName());
+                	return se.getDescription();
+                    //return ic.getMessage(dh.getDoctor_type().getName());
                 }
                 
                 return null;
@@ -143,7 +155,21 @@ public class StockListDef extends GUIListDefAbstract
         this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit", "STOCKS_TABLE_EDIT_DESC", "table_edit.png"));
         this.button_defs.add(new ButtonDef(this.ic.getMessage("VIEW"), "view", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
         
+        this.def_parameters = new String[2];
+        this.def_parameters[0] = "Test 1";
+        this.def_parameters[1] = "Test 2";
+        
+        loadData();
+        
     }
+    
+    
+    public void loadData()
+    {
+    	this.active_list = m_da.getDb().getStocks(-1, -1);
+    }
+    
+    
 
     @Override
     public String getDefName()
