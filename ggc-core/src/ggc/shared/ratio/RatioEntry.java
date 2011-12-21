@@ -1,5 +1,11 @@
 package ggc.shared.ratio;
 
+import ggc.core.util.DataAccess;
+
+import java.util.StringTokenizer;
+
+import com.atech.utils.data.ATechDate;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -27,14 +33,89 @@ package ggc.shared.ratio;
 
 public class RatioEntry
 {
+    DataAccess m_da = DataAccess.getInstance();
     int from;
     int to;
     
     float ch_insulin = 0.0f;
     float bg_insulin = 0.0f;
-    float ch_bg = 0.0f;
+    float ch_bg = 5.0f;
     
     float procent = 100.0f;
+    
+    public RatioEntry()
+    {
+    }
+    
+    public RatioEntry(String entry)
+    {
+        
+        StringTokenizer strtok = new StringTokenizer(entry, ";");
+        
+        int i=0;
+        
+        while(strtok.hasMoreTokens())
+        {
+            this.setColumnValue(i, strtok.nextToken());
+            i++;
+        }
+        
+    }
+    
+    public void setColumnValue(int column, String val)
+    {
+        
+        // EXTENDED_RATIO_1=From;To;Ch/Ins;Bg/Ins;Ch/BG;Procent
+        
+        
+//        dta.put("EXTENDED_RATIO_COUNT", "2");
+//        dta.put("EXTENDED_RATIO_1", "0000;1159;6.67f;1.33f;5f;100");
+        
+        switch(column)
+        {
+            case 0:
+                this.from = m_da.getIntValueFromString(val, 0);
+                break;
+            case 1:
+                this.to = m_da.getIntValueFromString(val, 0);
+                break;
+                
+            case 2:
+                this.ch_insulin = m_da.getFloatValueFromString(val, 0.0f);
+                break;
+                
+            case 3:
+                this.bg_insulin = m_da.getFloatValueFromString(val, 0.0f);
+                break;
+                
+            
+                //this.ch_bg = m_da.getFloatValueFromString(val, 0.0f);
+                //break;
+                
+            case 5:
+                this.procent = m_da.getIntValueFromString(val, 0);
+                break;
+            
+            case 4:
+            default:
+                break; //return "";
+        }
+        
+    }
+    
+    
+    public int getMinuteFrom()
+    {
+        ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, this.from);
+        return (atd.hour_of_day * 60) + atd.minute;
+    }
+    
+
+    public int getMinuteTo()
+    {
+        ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, this.to);
+        return (atd.hour_of_day * 60) + atd.minute;
+    }
     
     
     /**
@@ -47,16 +128,24 @@ public class RatioEntry
     {
         switch(column)
         {
+            case 0:
+                return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, this.from);
+                
             case 1:
-                return "" + this.from;
+                return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, this.to);
+                
             case 2:
-                return "" + this.to;
+                return DataAccess.getFloatAsString(this.ch_insulin, 2);
+                
             case 3:
-                return "" + this.ch_insulin;
+                return DataAccess.getFloatAsString(this.bg_insulin, 2);
+                
             case 4:
-                return "" + this.bg_insulin;
+                return DataAccess.getFloatAsString(this.ch_bg, 2);
+                
             case 5:
                 return "" + this.procent;
+                
             default:
                 return "";
         }
@@ -75,6 +164,11 @@ public class RatioEntry
         return 5;
     }
     
+    
+    public String getSaveData()
+    {
+        return null;
+    }
     
     
     

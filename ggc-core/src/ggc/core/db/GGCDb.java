@@ -1380,6 +1380,49 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     
     
     
+    @SuppressWarnings("unchecked")
+    public Hashtable<String,String> getExtendedRatioData()
+    {
+        
+        if (m_loadStatus == DB_CONFIG_LOADED)
+            return null;
+
+        log.info("getExtendedRatioData() - Process");
+
+        Hashtable<String,String> ht = new Hashtable<String,String>();  
+        String sql = "";
+        
+        try
+        {
+            sql = "SELECT st FROM ggc.core.db.hibernate.SettingsH as st WHERE st.key LIKE 'EXTENDED_RATIO%' AND st.person_id=" + m_da.current_user_id  ;
+            sql += " ORDER BY st.key";
+                    
+            Query q = getSession().createQuery(sql);
+
+            Iterator<SettingsH> it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+                SettingsH st = it.next();
+                ht.put(st.getKey(), st.getValue());
+            }
+
+        }
+        catch (Exception ex)
+        {
+            log.error("getExtendedRatioData()::Exception: " + ex.getMessage(), ex);
+        }
+        
+        return ht;
+    }
+    
+    
+    public void saveExtendedRatioData(Hashtable<String,String> dta)
+    {
+        
+    }
+    
+    
     
     
     

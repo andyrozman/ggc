@@ -12,6 +12,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -145,6 +146,9 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         setTitle(m_ic.getMessage("RATIO_EXTENDED"));
         label_title.setText(m_ic.getMessage("RATIO_EXTENDED"));
         
+        load();
+        
+        
         this.setVisible(true);
 
     }
@@ -163,6 +167,43 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
      */
     public void load()
     {
+        // load data
+        
+        // load express
+        
+        // RATIO_MODE=Base, Extended
+        // EXTENDED_RATIO_COUNT=2
+        
+        // EXTENDED_RATIO_1=From;To;Ch/Ins;Bg/Ins;Ch/BG;Procent
+        
+        Hashtable<String,String> dta = new Hashtable<String,String>();
+        
+        dta.put("EXTENDED_RATIO_COUNT", "2");
+        dta.put("EXTENDED_RATIO_1", "0000;1159;6.67f;1.33f;5f;100");
+        dta.put("EXTENDED_RATIO_2", "1200;2259;6.67f;1.33f;5f;100");
+        
+
+        if (dta.size()==0)
+            return;
+        
+        int count = 0;
+        
+        if (dta.containsKey("EXTENDED_RATIO_COUNT"))
+        {
+            count = m_da.getIntValueFromString(dta.get("EXTENDED_RATIO_COUNT"), 0);
+        }
+        
+
+        if (count==0)
+            return;
+        
+        for(int i=1; i<=count; i++)
+        {
+            list_ratios.add(new RatioEntry(dta.get("EXTENDED_RATIO_" + i)));
+        }
+        
+        
+        
         /*
         this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
 
@@ -187,12 +228,15 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         */
     }
 
-    /*
-    private void save()
+    
+    private boolean save()
     {
 
+        
+        return false;
+        
     }
-*/
+
 
     private void init()
     {
@@ -264,31 +308,6 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 
         ATSwingUtils.getButton("", 400, 20, 30, 30, 
             p2, ATSwingUtils.FONT_NORMAL, "table_sql_check.png", "check_data", this, m_da);
-        
-        
-        /*
-        JButton addButton = new JButton("  " + m_ic.getMessage("ADD"));
-        addButton.setPreferredSize(dim);
-        addButton.setIcon(m_da.getImageIcon_22x22("table_add.png", this));
-        addButton.setActionCommand("add_row");
-        addButton.addActionListener(this);
-        EntryBox.add(addButton);
-
-        JButton editButton = new JButton("  " + m_ic.getMessage("EDIT"));
-        editButton.setPreferredSize(dim);
-        editButton.setIcon(m_da.getImageIcon_22x22("table_edit.png", this));
-        editButton.setActionCommand("edit_row");
-        editButton.addActionListener(this);
-        EntryBox.add(editButton);
-
-        JButton delButton = new JButton("  " + m_ic.getMessage("DELETE"));
-        delButton.setPreferredSize(dim);
-        delButton.setIcon(m_da.getImageIcon_22x22("table_delete.png", this));
-        delButton.setActionCommand("delete_row");
-        delButton.addActionListener(this);
-        EntryBox.add(delButton);
-        */
-        
         
         
         
@@ -629,8 +648,16 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         }
         else if (action.equals("check_data"))
         {
-            System.out.println("RatioExtendedDialog::CheckData not implemented. " );
-
+            if (!checkData())
+            {
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("CHECK_RATIOEXTENDED_FAILED"), m_ic.getMessage("INFORMATION"),
+                    JOptionPane.INFORMATION_MESSAGE);
+                //System.out.println("Not all data is there. ");
+            }
+            else
+                System.out.println("Check OK ! ");
+//            System.out.println("RatioExtendedDialog::CheckData not implemented. " );
+//
 //            JOptionPane.showMessageDialog(this, m_ic.getMessage("CHECK_RATIOEXTENDED_FAILED"), m_ic.getMessage("INFORMATION"),
 //                JOptionPane.INFORMATION_MESSAGE);
             
@@ -642,6 +669,49 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
     }
 
 
+    private boolean checkData()
+    {
+        System.out.println("RatioExtendedDialog::CheckData not implemented. " );
+        
+        int[] timex = new int[24*60];
+        
+        for(int i=0; i<(24*60); i++)
+        {
+            timex[i] = 0;
+        }
+        
+        
+        for(int i=0; i<this.list_ratios.size(); i++)
+        {
+            RatioEntry re = this.list_ratios.get(i);
+            
+            System.out.println("#" + i + ": " + re.getMinuteFrom() + " " + re.getMinuteTo());
+            
+            for(int j=re.getMinuteFrom(); j<=re.getMinuteTo(); j++)
+            {
+                timex[j]+=1;
+            }
+        }
+        
+        boolean error = false;
+        
+        for(int i=0; i<(24*60); i++)
+        {
+            if (timex[i] != 1)
+            {
+                int h = (i/60);
+                System.out.println("Timex: " + timex[i] + ", Error on minute: " + (i/60) + ":" + (i-(h*60)) );
+                error = true;
+                //return false;
+            }
+        }
+        
+        
+        return (!error);
+    }
+
+    
+    
     
     
     
