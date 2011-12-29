@@ -151,9 +151,14 @@ public class StockListDef extends GUIListDefAbstract
         this.filter_options_combo1 = s;
         
         this.button_defs = new ArrayList<ButtonDef>();
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD"), "add", "STOCKS_TABLE_ADD_DESC", "table_add.png"));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit", "STOCKS_TABLE_EDIT_DESC", "table_edit.png"));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("VIEW"), "view", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD_TYPE"), "add_type", "STOCKS_TABLE_ADD_DESC", "table_add.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_TYPE"), "edit_type", "STOCKS_TABLE_EDIT_DESC", "table_edit.png"));
+//        this.button_defs.add(new ButtonDef(this.ic.getMessage("VIEW_TYPE"), "view", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
+
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD_AMOUNT"), "add_amount", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_AMOUNT"), "edit_amount", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
+        
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_LIST"), "edit_list", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
         
         this.def_parameters = new String[2];
         this.def_parameters[0] = "Test 1";

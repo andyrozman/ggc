@@ -48,6 +48,9 @@ public class StockTypeDialog extends JDialog implements ActionListener
    
 
 
+    /**
+     * @wbp.parser.constructor
+     */
     public StockTypeDialog(JDialog parent) 
     {
         super(parent, "", true);
@@ -162,7 +165,7 @@ public class StockTypeDialog extends JDialog implements ActionListener
     }
 
 
-    @Override
+    
     public void actionPerformed(ActionEvent ae)
     {
         if (ae.getActionCommand().equals("ok"))

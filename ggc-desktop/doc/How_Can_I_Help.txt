@@ -213,6 +213,8 @@ environment.
     Mark the Location you just added and press Enable button and Ok. Go to Help -> Check for Updates. Wait a few seconds so that the entry is added and 
     the file list is downloaded. Select Subclipse plugin.
     
+    NOTE: You can install subclipse 1.7 if you want, this depends on you and your svn client (if you use any)
+    
 3.) Create new workspace. 
     
     Open Windows->Preferences. Go to group Java->Code style->Formatter. Use Import option and add xml
@@ -291,13 +293,14 @@ environment.
          Missing javadoc comments: Warning
             Only consider members as visible as: Public
 
-	We are currently on 1.5 compatibility, so that application is usable on most of systems, which 
-	don't have 1.6 available... 
-        NOTE: Officialy java 1.5 is not supported by Sun anymore. Since we would like older systems
-              to be able to use GGC, we will stay with 1.5 for a while longer (at least till end of 2010),
-              Sun has options to allow you to get older version of java. In worst case contact us
-              at ggc@atech-software.com, and we will try to supply you with it. Sometimes setting 
-              target to 1.5 is not enough.
+	While there is already java 1.7 out, we are still staying at 1.5 compatibility, so that even older 
+	systems can use application (in case only java 1.5 is available).
+	
+	
+        NOTE: Officialy java 1.5 is not supported by Sun anymore. Oracle has options to allow you 
+              to get older version of java. In worst case contact us at ggc@atech-software.com, and 
+              we will try to supply you with it. Sometimes setting target to 1.5 is not enough, but 
+              in most cases you can use whatever jdk you have, with compatibility setting.
 	
 	Javadoc. We are trying to start writing documentation and Javadoc is first step towards that.
 	   Old code will be commented with time, mostly by the people who created the code. All new code needs

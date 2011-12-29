@@ -120,21 +120,14 @@ public class StockDialog extends JDialog implements ActionListener
     private JLabel lblNewLabel_1;
     private JLabel lblNewLabel_2;
     private JLabel lblAmount;
-    private JLabel lblDescription;
-    private JLabel lblUsagePerDay;
-    private JLabel lblMin;
     private JComboBox comboBox;
     private JLabel lblEntryType;
     private JButton btnOk;
     private JButton btnCancel;
-    private JTextField textField;
-    private JLabel lblMax;
-    private JTextField textField_1;
     private JFormattedTextField formattedTextField;
     private JLabel lblStockType;
     private JLabel lblStockSubType;
     private JButton btnSelectstocktype;
-    private JTextField txtDescription;
     private JButton btnHelp;
 
 
@@ -232,89 +225,61 @@ public class StockDialog extends JDialog implements ActionListener
         x = (bnd.width/2) + bnd.x - (width/2);
         y = (bnd.height/2) + bnd.y - (height/2);
         
-        this.setBounds(x, y, width, height);
+        this.setBounds(x, y, 400, 360);
 
         JPanel panel = new JPanel();
-        panel.setBounds(0, 0, 392, 446);
+        panel.setBounds(0, 0, 392, 329);
         panel.setLayout(null);
 
         getContentPane().setLayout(null);
         
         this.getContentPane().add(panel);
 
-        label_title.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+        label_title.setFont(new Font("SansSerif", Font.BOLD, 22));
         label_title.setHorizontalAlignment(JLabel.CENTER);
-        label_title.setBounds(0, 15, 400, 35);
+        label_title.setBounds(0, 15, 392, 35);
         label_title.setText("TITLE");
         panel.add(label_title);
         
         this.lblNewLabel = new JLabel("Stock subtype");
         this.lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblNewLabel.setBounds(39, 109, 91, 14);
+        this.lblNewLabel.setBounds(40, 109, 91, 14);
         panel.add(this.lblNewLabel);
         
         this.lblNewLabel_1 = new JLabel("Date Time");
         this.lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblNewLabel_1.setBounds(39, 148, 91, 14);
+        this.lblNewLabel_1.setBounds(40, 148, 91, 14);
         panel.add(this.lblNewLabel_1);
         
         this.lblNewLabel_2 = new JLabel("Stock Type");
         this.lblNewLabel_2.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblNewLabel_2.setBounds(39, 73, 93, 14);
+        this.lblNewLabel_2.setBounds(40, 73, 93, 14);
         panel.add(this.lblNewLabel_2);
         
         this.lblAmount = new JLabel("Amount:");
         this.lblAmount.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblAmount.setBounds(39, 197, 91, 14);
+        this.lblAmount.setBounds(40, 202, 91, 14);
         panel.add(this.lblAmount);
         
-        this.lblDescription = new JLabel("Description:");
-        this.lblDescription.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblDescription.setBounds(39, 239, 91, 14);
-        panel.add(this.lblDescription);
-        
-        this.lblUsagePerDay = new JLabel("Usage per day:");
-        this.lblUsagePerDay.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblUsagePerDay.setBounds(39, 281, 91, 14);
-        panel.add(this.lblUsagePerDay);
-        
-        this.lblMin = new JLabel("Min:");
-        this.lblMin.setBounds(156, 282, 35, 14);
-        panel.add(this.lblMin);
-        
         this.comboBox = new JComboBox();
-        this.comboBox.setBounds(156, 328, 93, 20);
+        this.comboBox.setBounds(156, 231, 106, 20);
         panel.add(this.comboBox);
         
         this.lblEntryType = new JLabel("Entry type:");
         this.lblEntryType.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblEntryType.setBounds(39, 330, 91, 14);
+        this.lblEntryType.setBounds(40, 233, 91, 14);
         panel.add(this.lblEntryType);
         
         this.btnOk = new JButton("OK");
-        this.btnOk.setBounds(76, 381, 89, 23);
+        this.btnOk.setBounds(74, 280, 89, 23);
         panel.add(this.btnOk);
         
         this.btnCancel = new JButton("Cancel");
-        this.btnCancel.setBounds(175, 381, 89, 23);
+        this.btnCancel.setBounds(173, 280, 89, 23);
         panel.add(this.btnCancel);
         
-        this.textField = new JTextField();
-        this.textField.setBounds(190, 279, 46, 20);
-        panel.add(this.textField);
-        this.textField.setColumns(10);
-        
-        this.lblMax = new JLabel("Max:");
-        this.lblMax.setBounds(260, 282, 35, 14);
-        panel.add(this.lblMax);
-        
-        this.textField_1 = new JTextField();
-        this.textField_1.setBounds(305, 279, 56, 20);
-        panel.add(this.textField_1);
-        this.textField_1.setColumns(10);
-        
         this.formattedTextField = new JFormattedTextField();
-        this.formattedTextField.setBounds(156, 195, 103, 20);
+        this.formattedTextField.setBounds(156, 200, 103, 20);
         panel.add(this.formattedTextField);
         
         this.lblStockType = new JLabel("Stock Type");
@@ -324,21 +289,15 @@ public class StockDialog extends JDialog implements ActionListener
         
         this.lblStockSubType = new JLabel("stock sub type");
         this.lblStockSubType.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        this.lblStockSubType.setBounds(156, 110, 140, 14);
+        this.lblStockSubType.setBounds(156, 109, 140, 14);
         panel.add(this.lblStockSubType);
         
         this.btnSelectstocktype = new JButton("selectStockType");
         this.btnSelectstocktype.setBounds(315, 73, 46, 53);
         panel.add(this.btnSelectstocktype);
         
-        this.txtDescription = new JTextField();
-        this.txtDescription.setText("description");
-        this.txtDescription.setBounds(156, 237, 205, 20);
-        panel.add(this.txtDescription);
-        this.txtDescription.setColumns(10);
-        
         this.btnHelp = new JButton("Help");
-        this.btnHelp.setBounds(274, 381, 89, 23);
+        this.btnHelp.setBounds(272, 280, 89, 23);
         panel.add(this.btnHelp);
 
         
