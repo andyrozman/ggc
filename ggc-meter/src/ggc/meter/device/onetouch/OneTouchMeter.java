@@ -16,7 +16,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 
-import java.io.IOException;
 import java.util.StringTokenizer;
 
 import com.atech.utils.data.ATechDate;
@@ -56,21 +55,14 @@ import com.atech.utils.data.TimeZoneUtil;
 public abstract class OneTouchMeter extends AbstractSerialMeter
 {
     
-    
-    
-    
-    
     protected boolean device_running = true;
-    //protected ArrayList<MeterValuesEntry> data = null;
-//    protected OutputWriter m_output_writer;
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
-    //public int meter_type = 20000;
-    private int entries_max = 0;
-    private int entries_current = 0;
-    private int reading_status = 0;
+    protected int entries_max = 0;
+    protected int entries_current = 0;
+    protected int reading_status = 0;
     
-    private int info_tokens;
-    private String date_order;
+    protected int info_tokens;
+    protected String date_order;
     
     
     
@@ -158,7 +150,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
             //ex.printStackTrace();
         }
         
-        if (this.getDeviceId()==MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA)
+        if ((this.getDeviceId()==MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA) ||
+            (this.getDeviceId()==MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA_2)) 
         {
             this.info_tokens = 3;
             this.date_order = "MDY";
@@ -205,6 +198,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     /** 
      * readDeviceDataFull
      */
+    @SuppressWarnings("unused")
     public void readDeviceDataFull()
     {
         
@@ -274,7 +268,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         
     }
 
-    private boolean isDeviceFinished()
+    protected boolean isDeviceFinished()
     {
     	return (this.entries_current==this.entries_max);
     }
@@ -313,7 +307,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     
     
     
-    private boolean isDeviceStopped(String vals)
+    protected boolean isDeviceStopped(String vals)
     {
     	if ((vals == null) ||
     	    ((this.reading_status==1) && (vals.length()==0)) ||
@@ -327,7 +321,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     
     
     
-    private void processEntry(String entry)
+    protected void processEntry(String entry)
     {
         if ((entry==null) || (entry.length()==0))
             return;
@@ -401,7 +395,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         this.output_writer.setSpecialProgress(2);
 
         
-        if (this.getDeviceId()!=MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA)
+        if ((this.getDeviceId()!=MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA) && (this.getDeviceId()!=MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA_2)) 
         {
             //'P nnn,"MeterSN","ENGL. ","M.D.Y. ","AM/PM","MG/DL","!min","!max" cksm' 
             //"M.D.Y. " or "D.M.Y. "
@@ -736,7 +730,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         }
     } 
     
-    
+    /*
     @SuppressWarnings("unused")
     private class OldOTProcessor extends OneTouchMeter //AbstractSerialMeter
     {
@@ -838,37 +832,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
             return null;
         }
 
-
-
-
-        /*
-        char *ReadLine(void) {
-            int nBytes, x=0;
-            char cComm, *line;
-            struct timeval last, now;
-            line = malloc(80);
-            gettimeofday(&last, NULL);
-
-            while ( 1 ) {
-                nBytes = read(fd_ComX, &cComm, 1);
-                    if ( (nBytes>0) && (cComm!=EOF) ) {
-                    *line = cComm;
-                    line++;
-                    x++;
-                    gettimeofday(&last, NULL);
-                    if (cComm == '\n') break;
-                }
-                gettimeofday(&now, NULL);
-                if ((last.tv_sec + 2) < now.tv_sec) break;
-            }
-            line = line - x;
-            return line;
-        } */
-        
-        
-        
     }
-    
+    */
  
     
     /**
