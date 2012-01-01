@@ -3,6 +3,7 @@ package ggc.meter.manager.company;
 import ggc.meter.device.onetouch.OneTouchProfile;
 import ggc.meter.device.onetouch.OneTouchSelect;
 import ggc.meter.device.onetouch.OneTouchUltra;
+import ggc.meter.device.onetouch.OneTouchUltra2;
 import ggc.meter.device.onetouch.OneTouchUltraEasy;
 import ggc.meter.device.onetouch.OneTouchUltraMini;
 import ggc.meter.device.onetouch.OneTouchUltraSmart;
@@ -60,7 +61,8 @@ public class LifeScan extends AbstractDeviceCompany
         this.addDevice(new OneTouchUltraSmart(this));
         this.addDevice(new OneTouchSelect(this));
         
-        //this.addDevice(new OneTouchUltra2(this));
+        
+        this.addDevice(new OneTouchUltra2(this));
     }
     
     

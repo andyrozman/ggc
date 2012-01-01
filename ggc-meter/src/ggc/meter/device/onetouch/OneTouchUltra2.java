@@ -226,6 +226,8 @@ public class OneTouchUltra2 extends OneTouchMeter
             
             while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
             {
+                
+                System.out.println(line);
                 processEntry(line);
                 
                 System.out.println(this.entries_current + "/" + this.entries_max  );
