@@ -148,7 +148,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
     
     private class MyContentHandler implements  ContentHandler, DeclHandler, LexicalHandler  //DefaultHandler,
     {
-        int i=0;
+        //int i=0;
         
         //private int reading_element = 0;
         
@@ -237,7 +237,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             //    this.reading_element = this.READING_NOTHING;
             
             
-            i++;
+//            i++;
             
         }
 
