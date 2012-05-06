@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-import com.atech.graphics.dialogs.ButtonDef;
-import com.atech.graphics.dialogs.GUIListDefAbstract;
+import com.atech.graphics.dialogs.guilist.ButtonDef;
+import com.atech.graphics.dialogs.guilist.GUIListDefAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control

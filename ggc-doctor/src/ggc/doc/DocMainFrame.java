@@ -56,7 +56,7 @@ import javax.swing.UIManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.atech.graphics.dialogs.GUIListDialog;
+import com.atech.graphics.dialogs.guilist.GUIListDialog;
 import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpContext;
 import com.atech.i18n.I18nControlAbstract;
@@ -1140,11 +1140,11 @@ public class DocMainFrame extends JFrame implements EventObserverInterface
             }
             else if (command.equals("view_course"))
             {
-                new GraphViewer(new GraphViewCourse(), m_da);
+                new GraphViewer(new GraphViewCourse(), m_da, DocMainFrame.this, true);
             }
             else if (command.equals("view_spread"))
             {
-                new GraphViewer(new GraphViewSpread(), m_da);
+                new GraphViewer(new GraphViewSpread(), m_da, DocMainFrame.this, true);
             }
             else if (command.equals("view_freq"))
             {
