@@ -61,7 +61,6 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
     private I18nControlAbstract ic = null;
 
     JTextField tf_selected;
-    @SuppressWarnings("rawtypes")
     JComboBox cb_type;
     JLabel label_item, label_item_type;
     Font font_normal, font_normal_b;
@@ -204,7 +203,6 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
     }
 
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     private void init()
     {
 
@@ -230,9 +228,6 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         panel1.setBounds(10, 10, 270, 140);
         panel.add(panel1, null);
 
-        // new javax.swing.border.TitledBorder("Some");
-
-        // javax.swing.border.
 
         JLabel label = new JLabel(ic.getMessage("NUTRITION_TYPE_FOR_SELECTOR"));
         label.setBounds(30, 20, 220, 25);

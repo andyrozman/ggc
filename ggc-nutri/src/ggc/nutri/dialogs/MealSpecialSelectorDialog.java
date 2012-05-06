@@ -62,7 +62,6 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
     private I18nControlAbstract ic = null;
 
     JTextField tf_selected;
-    @SuppressWarnings("rawtypes")
     JComboBox cb_type, cb_weight_type;
     JLabel label_item, label_item_type, label_amount;
     JLabel label_home_weight, label_home_weight_item;
@@ -224,7 +223,6 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     private void init()
     {
 
@@ -500,10 +498,9 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
             reFillItems(this.wt_types_1);
             setWeightType(this.cb_weight_type.getSelectedIndex(), true);
         }
-
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    
     private void reFillItems(Object[] items)
     {
         /*

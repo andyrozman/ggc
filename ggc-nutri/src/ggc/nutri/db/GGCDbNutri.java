@@ -87,7 +87,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 //    private String m_errorDesc = "";
 //    private String m_addId = "";
 
-    private DataAccessNutri m_da;
+    //private DataAccessNutri m_da;
 
     private int m_loadStatus = 0;
 
@@ -1253,7 +1253,7 @@ public class GGCDbNutri extends HibernateDb //extends GGCDb
 
         try
         {
-            String days = year + "" + m_da.getLeadingZero(month, 2);
+            String days = year + "" + DataAccessNutri.getLeadingZero(month, 2);
 
             Query q = getSession().createQuery(
                 "SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + days

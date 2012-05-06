@@ -35,8 +35,8 @@ import ggc.core.data.DayValuesData;
 import ggc.core.data.ExtendedDailyValue;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPTable;
 
 
 /**

@@ -9,12 +9,13 @@ import ggc.nutri.db.datalayer.DailyFoodEntry;
 
 import java.util.Iterator;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPTable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -73,7 +74,7 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
         p.add(new Paragraph("", f));
         p.add(new Paragraph(ic.getMessage("FOOD_MENU_EXT_II") + " [" + this.m_data.getFromAsLocalizedDate() + " - " + this.m_data.getToAsLocalizedDate() + "]", f));
         //p.add(new Paragraph("May 2006"));
-        p.add(new Paragraph(ic.getMessage("FOR") + " " + m_da.getSettings().getUserName(), new Font(Font.TIMES_ROMAN, 12, Font.ITALIC)));
+        p.add(new Paragraph(ic.getMessage("FOR") + " " + m_da.getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN, 12, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
         //p.add(new Paragraph("", f));

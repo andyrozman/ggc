@@ -8,11 +8,11 @@ import ggc.nutri.db.datalayer.DailyFoodEntry;
 
 import java.util.Iterator;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPTable;
 
 /**
  *  Application:   GGC - GNU Gluco Control

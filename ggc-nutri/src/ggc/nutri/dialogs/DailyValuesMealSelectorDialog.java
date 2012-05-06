@@ -46,7 +46,6 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
 
     private static final long serialVersionUID = 9105408177791270640L;
     JTextField tf_selected;
-    @SuppressWarnings("rawtypes")
     JComboBox cb_type;
     Font font_normal, font_normal_b;
     JButton button_select;
