@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Atech-Tools"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Core"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Lib USB 4j WO (libusb4jwo)"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-logging-1.0.4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-lang-2.4"/>
@@ -9,7 +10,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Xpp Xml Parser 3-1.1.4c"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate-3.1"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.10"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/IBMComm">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/mnt/f/java/libs/IBMComm"/>
@@ -18,6 +18,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mdbtools-0.1"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rxtx-2.2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jna-3.2.7"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Lib USB 4j WO (libusb4jwo)"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.14"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
