@@ -1,5 +1,6 @@
 package ggc.pump.gui.manual;
 
+import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
@@ -14,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
@@ -186,13 +188,12 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         this.setVisible(true);
     }
 
+    
     /**
      * Set Date
      */
     public void setDate()
     {
-        // System.out.println("Date: " + sDate);
-
         StringTokenizer strtok = new StringTokenizer(sDate, ".");
 
         String day = strtok.nextToken();
@@ -201,24 +202,22 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
         
         GregorianCalendar gc = new GregorianCalendar();
 
-        //int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
+        String dt = null;
+        String sg = "" + DataAccess.getLeadingZero(gc.get(Calendar.DAY_OF_MONTH),2) + "."  + DataAccess.getLeadingZero((gc.get(Calendar.MONTH)+1), 2) + "." + gc.get(Calendar.YEAR);
         
+        if (sg.equals(sDate))
+        {
+            dt = year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2) + DataAccess.getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2) + DataAccess.getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2) + "00";            
+        }
+        else
+        {
+            dt = year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2) + "000000";
+        }
         
-        
-        String dt = year + m_da.getLeadingZero(month, 2)
-                + m_da.getLeadingZero(day, 2) 
-                + DataAccessPump.getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2)  
-                + DataAccessPump.getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2)
-                + DataAccessPump.getLeadingZero(gc.get(GregorianCalendar.SECOND), 2)
-                ;
-
-        //System.out.println("sDate: " + sDate);
-
         this.dtc.setDateTime(Long.parseLong(dt));
 
     }
 
-    
     
     
     /**
@@ -253,7 +252,6 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*KeyL
 
     private void init()
     {
-        
         ATSwingUtils.initLibrary();
         
         m_da.addComponent(this);

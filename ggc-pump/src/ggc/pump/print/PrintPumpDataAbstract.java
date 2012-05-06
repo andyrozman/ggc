@@ -37,11 +37,12 @@ import java.util.GregorianCalendar;
 
 import com.atech.print.PrintAbstractIText;
 import com.atech.utils.data.ATechDate;
-import com.lowagie.text.Document;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -105,7 +106,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
         p.add(new Paragraph("", f));
         p.add(new Paragraph(ic.getMessage(getTitleText()) + " [" + this.getDateString(this.m_dvr.getStartGC()) + " - "
                 + this.getDateString(this.m_dvr.getEndGC()) + "]", f));
-        p.add(new Paragraph(ic.getMessage("FOR") + " " + DataAccess.getInstance().getSettings().getUserName(), new Font(Font.TIMES_ROMAN,
+        p.add(new Paragraph(ic.getMessage("FOR") + " " + DataAccess.getInstance().getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN,
                 10, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
