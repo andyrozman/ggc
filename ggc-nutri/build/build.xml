@@ -6,7 +6,9 @@
 
     <!-- Environment properties read from a file ...-->
     <property file="../../build/AtechTools.properties"/>
-    <property file="../../ggc-plugin_base/build/GGCPlugInBaseBuild.properties"/>
+    <property file="../../ggc-core/build/GGCBuild.properties"/>
+<!--    <property file="./GGCPlugInBaseBuild.properties"/> 
+    <property file="../../ggc-plugin_base/build/GGCPlugInBaseBuild.properties"/> -->
     <property file="../../ggc-plugin_base/build/GGCPlugInBaseVersion.properties"/>
     <property file="../../ggc-core/build/GGC_Core_Version.properties"/>
     <property file="./GGCNutriToolVersion.properties"/>
