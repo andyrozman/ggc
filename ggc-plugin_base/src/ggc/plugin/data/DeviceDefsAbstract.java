@@ -2,6 +2,7 @@ package ggc.plugin.data;
 
 import ggc.plugin.util.DataAccessPlugInBase;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
@@ -43,8 +44,8 @@ public abstract class DeviceDefsAbstract
     protected Hashtable<Integer,String> data_desc = new Hashtable<Integer,String>(); 
     protected Hashtable<String,String> data_mapping = new Hashtable<String,String>(); 
     protected Hashtable<Integer,String> data_value_template = new Hashtable<Integer,String>(); 
-    
-    
+    protected ArrayList<Integer> data_int = new ArrayList<Integer>();
+    protected String[] desc_array = null;
     
     
     
@@ -66,6 +67,7 @@ public abstract class DeviceDefsAbstract
     {
         this.data_mapping.put(ic.getMessage(desc), "" + type);
         this.data_desc.put(type, ic.getMessage(desc));
+        this.data_int.add(type);
     }
 
     
@@ -80,6 +82,7 @@ public abstract class DeviceDefsAbstract
         this.data_mapping.put(ic.getMessage(desc), "" + type);
         this.data_desc.put(type, ic.getMessage(desc));
         this.data_value_template.put(type, value_template);
+        this.data_int.add(type);
     }
     
     
@@ -145,6 +148,46 @@ public abstract class DeviceDefsAbstract
     public String getDescriptionByID(int id)
     {
         return this.getDescriptionForType(id);
+    }
+
+    
+    public void finalizeAdding()
+    {
+        String[] dd = new String[this.data_int.size()];
+        
+        for(int i=0; i<this.data_int.size(); i++)
+        {
+            dd[i] = getDescriptionForType(this.data_int.get(i));
+        }
+        
+        this.desc_array = dd;
+    }
+    
+    
+    public String[] getStaticDescriptionArray()
+    {
+        return this.desc_array;
+    }
+    
+    
+    public int getIndexFromStaticDescriptionArrayWithID(int id)
+    {
+        String dsc = getDescriptionForType(id);
+        
+        return getIndexFromStaticDescriptionArray(dsc);
+    }
+    
+    
+    
+    public int getIndexFromStaticDescriptionArray(String desc)
+    {
+        for(int i=0; i < this.desc_array.length; i++)
+        {
+            if (this.desc_array[i].equals(desc))
+                return i;
+        }
+        
+        return 0;
     }
     
     
