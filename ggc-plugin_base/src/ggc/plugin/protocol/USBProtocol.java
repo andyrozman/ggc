@@ -6,7 +6,6 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Stack;
 
@@ -639,8 +638,9 @@ public abstract class USBProtocol extends DeviceAbstract
      */
     public void write(byte[] b, int off, int len) throws PlugInBaseException, IOException
     {
-        byte[] b2 = Arrays.copyOfRange(b, off, off+len);
-        this.write(b2);
+        throw new PlugInBaseException("Not implemented");
+        //byte[] b2 = Arrays.copyOfRange(b, off, off+len);
+        //this.write(b2);
     }
     
     
