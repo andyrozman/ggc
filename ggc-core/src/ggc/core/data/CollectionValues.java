@@ -70,6 +70,7 @@ public class CollectionValues extends DailyValues
     boolean changed = false;
 
     DataAccess m_da = DataAccess.getInstance();
+    //Hashtable<String,ArrayList>
 
 
     /**
@@ -268,8 +269,8 @@ public class CollectionValues extends DailyValues
      */
     public String getDateAsLocalizedString()
     {
-        ATechDate at = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.date); //.getGregorianCalendar(), 4);
-        System.out.println("Date: (getDate): " + this.getDate() + " , atechdate=" + at.getDateString());
+        //ATechDate at = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.date); //.getGregorianCalendar(), 4);
+        //System.out.println("Date: (getDate): " + this.getDate() + " , atechdate=" + at.getDateString());
         //return at.toString();
         return m_da.getAsLocalizedDateString((new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.date)).getGregorianCalendar(), 4);
     }

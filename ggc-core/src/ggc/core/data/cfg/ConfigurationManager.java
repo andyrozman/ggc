@@ -71,7 +71,8 @@ public class ConfigurationManager
         "PUMP_INSULIN", "",
         "PRINT_PDF_VIEWER_PARAMETERS", "",
         "INS3_NAME", "Insulin 3",
-        "INS3_ABBR", "Ins3"
+        "INS3_ABBR", "Ins3",
+        "RATIO_MODE", "Base"   // Base, Extended
     };
 
     private String cfg_int[] = 
@@ -187,11 +188,25 @@ public class ConfigurationManager
 
 
         }
-
-
     }
 
-    private void addNewValue(String name, String def_value, int type, GGCDb db)
+
+    
+    public void addNewValue(String name, String def_value, int type, GGCDb db)
+    {
+        addNewValue(name, def_value, type, db, true);
+    }
+    
+    
+    /**
+     * Add New configuration value
+     * 
+     * @param name name of configuration parameter
+     * @param def_value value (presumably def. value if added from this class)
+     * @param type type of parameter (1=string, 2=int, 3=float, 4=boolean)
+     * @param db db instance
+     */
+    public void addNewValue(String name, String def_value, int type, GGCDb db, boolean add_to_cfg_values)
     {
         //System.out.println("addNewValue:: name=" + name);
 
@@ -201,14 +216,16 @@ public class ConfigurationManager
         s.setDescription(m_da.getI18nControlInstance().getMessage("CFG_"+name));
         s.setType(type);
         s.setValue(def_value);
-        s.setPerson_id(m_da.getCurrentPersonId());
+        s.setPerson_id((int)m_da.getCurrentUserId());
         //s.setElementAdded();
         
         db.add(s);
 
-        this.cfg_values.put(name, s);   
-
-        this.changed = true;
+        if (add_to_cfg_values)
+        {
+            this.cfg_values.put(name, s);   
+            this.changed = true;
+        }
     }
 
 
@@ -472,5 +489,28 @@ public class ConfigurationManager
         }
 
     }
+    
+    
+    
+    public Hashtable<String, String> loadExtendedRatioData()
+    {
+        
+        
+        
+        return null;
+    }
+    
+    
+    public void saveExtendedRatioData(Hashtable<String, String> dta)
+    {
+        
+        
+        
+        //return null;
+    }
+    
+    
+    
+    
 
 }

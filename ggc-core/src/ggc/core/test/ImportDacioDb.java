@@ -172,7 +172,7 @@ public class ImportDacioDb extends ImportTool
                 }
                 
                 // line = line.replaceAll("||", "| |");
-                line = m_da.replaceExpression(line, "||", "| |");
+                line = DataAccess.replaceExpression(line, "||", "| |");
 
                 //System.out.println(line);
 

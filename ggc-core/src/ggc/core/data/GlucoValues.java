@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,7 +42,7 @@ import com.atech.utils.data.ATechDate;
 public class GlucoValues //extends DailyValues
 {
 
-    private static final long serialVersionUID = 3904480643937213485L;
+    //private static final long serialVersionUID = 3904480643937213485L;
     Vector<DailyValues> dayValues = null;
     ArrayList<DailyValuesRow> dayValuesRows = null;
     //private DataAccess m_da = DataAccess.getInstance();
@@ -109,13 +110,15 @@ public class GlucoValues //extends DailyValues
     {
         sDate.set(GregorianCalendar.HOUR_OF_DAY, 0);
         sDate.set(GregorianCalendar.MINUTE, 0);
+        sDate.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
         from_date = sDate;
         
         eDate.set(GregorianCalendar.HOUR_OF_DAY, 23);
         eDate.set(GregorianCalendar.MINUTE, 59);
+        eDate.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
         to_date = eDate;
         
-        System.out.println("Range: " + from_date + " - " + to_date);
+        //System.out.println("Range: " + from_date + " - " + to_date);
         
         dayValuesRows = m_da.getDb().getDayValuesRange(sDate, eDate);
         

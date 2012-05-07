@@ -6,6 +6,11 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+0.5.0.3
+    * Extended Ratio Functionality finished
+    * PDF changes     
+
+
 0.4.19.2
     * Work on Extended Ratio functionality
     * added Extended handler for DailyValues class

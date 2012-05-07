@@ -133,7 +133,7 @@ public class DailyStatsTableModel extends AbstractTableModel
 	
         if (o != null && column == 0) 
         {
-            return m_da.getDateTimeAsTimeString(((Long)o).longValue());
+            return DataAccess.getDateTimeAsTimeString(((Long)o).longValue());
         } 
         
         return o;

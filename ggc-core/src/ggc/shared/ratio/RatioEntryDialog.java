@@ -84,6 +84,8 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
     RatioEntry ratio_entry = null;
     JSpinner procents = null;    
     RatioEntryPanel rep = null;
+    float tdd = 0;
+    boolean not_process = false;
     
     TimeComponent tc_from, tc_to;
     
@@ -115,17 +117,19 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
     {
         super(dialog, "", true);
         
+        System.out.println("RatioEntryDialog");
+
         //m_parent = dialog;
         m_da.addComponent(this);
+        this.tdd = tdd;
 
-        init();
+        initGUI();
         load();
         
         action = ACTION_ADD;
         setTitle();
         
         this.setVisible(true);
-
     }
 
     
@@ -140,22 +144,27 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
     {
         super(dialog, "", true);
         
+        System.out.println("RatioEntryDialog");
+        
+        
         //m_parent = dialog;
         m_da.addComponent(this);
+        this.tdd = tdd;
 
         this.ratio_entry = re;
-        init();
+        initGUI();
         load();
         
         action = ACTION_EDIT;
         setTitle();
         
         this.setVisible(true);
-
     }
     
     
-    
+    public RatioEntryDialog()
+    {
+    }
     
     
     /**
@@ -192,11 +201,17 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         
         
         // FIXME
-        /*
-        this.dtf_ch_ins.setValue(this.m_da.getSettings().getRatio_CH_Insulin());
-        this.dtf_ins_bg.setValue(this.m_da.getSettings().getRatio_BG_Insulin());
-        calculateRatio(RATIO_BG_CH);
-        */
+        //this.ratio_entry.bg_insulin = this.ratio_entry.bg_insulin;
+        
+        this.rep.setRatioEntry(this.ratio_entry);
+         
+        this.tc_from.setTime(this.ratio_entry.from);
+        this.tc_to.setTime(this.ratio_entry.to);
+        
+        not_process = true;
+        this.procents.setValue(this.ratio_entry.procent);
+        not_process = false;
+        
     }
 
     
@@ -218,7 +233,10 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         
         this.ratio_entry.from = this.tc_from.getTime();
         this.ratio_entry.to = this.tc_to.getTime();
-        this.ratio_entry.procent = ((Integer)this.procents.getValue()).floatValue();
+        
+        //Float f = (Float)this.procents.getValue();
+        
+        this.ratio_entry.procent = (Integer)this.procents.getValue();
         
         this.ratio_entry.bg_insulin = m_da.getJFormatedTextValueFloat(this.rep.dtf_ins_bg);
         this.ratio_entry.ch_insulin = m_da.getJFormatedTextValueFloat(this.rep.dtf_ch_ins);
@@ -249,32 +267,32 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
     }
     
 
-    private void init()
+    private void initGUI()
     {
         
         ATSwingUtils.initLibrary();
-        this.setBounds(0, 0, 350, 450);
+        this.setBounds(0, 0, 380, 400);
         
         m_da.centerJDialog(this);
 
         JPanel panel = new JPanel();
-        panel.setBounds(0, 0, 350, 500);
+        panel.setBounds(0, 0, 380, 430);
         panel.setLayout(null);
 
         this.getContentPane().add(panel);
 
         
-        label_title = ATSwingUtils.getTitleLabel("", 0, 25, 350, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
+        label_title = ATSwingUtils.getTitleLabel("", 0, 20, 380, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
         
 //        setTitle(m_ic.getMessage("RATIO_ENTRY"));
 //        label_title.setText(m_ic.getMessage("RATIO_ENTRY"));
 
         
-        ATSwingUtils.getLabel(m_ic.getMessage("TIME") + ":", 40, 75, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(m_ic.getMessage("TIME") + ":", 40, 85, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
         
         tc_from = new TimeComponent();
         //tc_from.setBounds(205, 75, 100, 25);
-        tc_from.setBounds(90, 75, 70, 25);
+        tc_from.setBounds(100, 85, 70, 25);
         tc_from.setActionCommand("time_from");
         tc_from.addActionListener(this);
         //tc_from.
@@ -282,47 +300,50 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
 
         
         //ATSwingUtils.getLabel(m_ic.getMessage("TIME_TILL"), 40, 115, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
-        ATSwingUtils.getLabel(" -> ", 180, 115, 150, 25, panel, ATSwingUtils.FONT_NORMAL);
+        ATSwingUtils.getLabel(" -> ", 210, 85, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        
+        
         tc_to = new TimeComponent();
-        tc_to.setBounds(205, 75, 100, 25);
+        tc_to.setBounds(235, 85, 100, 25);
         tc_to.setActionCommand("time_to");
         tc_to.addActionListener(this);
         panel.add(tc_to);
         
         
-        ATSwingUtils.getLabel(m_ic.getMessage("PROCENT_OF_BASE"), 40, 155, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(m_ic.getMessage("PROCENT_OF_BASE") + ":", 40, 135, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        
         SpinnerNumberModel listDaysModel = new SpinnerNumberModel(100, 0, 1000, 1);
         procents = new JSpinner(listDaysModel);
         procents.addChangeListener(this);
         procents.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
-        procents.setBounds(220, 155, 70, 25); // 85
+        procents.setBounds(260, 135, 70, 25); // 85
         panel.add(procents);
         
         
-        rep = new RatioEntryPanel(m_da, 10, 20);
-        rep.setBounds(30, 120, 350, 210);  // 55
+        rep = new RatioEntryPanel(m_da, 10, 15, 40);
+        rep.setBounds(30, 100, 350, 210);  // 55
+        //rep.set.space_between_lines = 10;
         rep.setEditable(false);
         panel.add(rep);
 
         
         ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 
-                               60, 375, 110, 25, panel, ATSwingUtils.FONT_NORMAL, 
+                               25, 320, 105, 25, panel, ATSwingUtils.FONT_NORMAL, 
                                "ok.png", 
                                "ok", this, m_da);
 
         ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 
-                               180, 375, 110, 25, panel, ATSwingUtils.FONT_NORMAL, 
+                               135, 320, 105, 25, panel, ATSwingUtils.FONT_NORMAL, 
                                "cancel.png", 
                                "cancel", this, m_da);
         
-        
-        help_button = m_da.createHelpButtonByBounds(180, 345, 110, 25, this);
+        help_button = m_da.createHelpButtonByBounds(245, 320, 105, 25, this);
 
         panel.add(help_button);
 
         m_da.enableHelp(this);
         
-        rep.calculateRatio(65, m_da.getIntValue(this.procents.getValue()) );
+        rep.calculateRatio(tdd, m_da.getIntValue(this.procents.getValue()) );
     }
 
 
@@ -444,8 +465,10 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
 
     public void stateChanged(ChangeEvent e)
     {
+        if (not_process)
+            return;
         //this.procents.getValue()
-        rep.calculateRatio(65, m_da.getIntValue(this.procents.getValue()) );
+        rep.calculateRatio(this.tdd, m_da.getIntValue(this.procents.getValue()) );
     }
     
     

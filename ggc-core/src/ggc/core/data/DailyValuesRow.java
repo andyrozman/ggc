@@ -538,7 +538,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public String getDateAsString()
     {
-        return m_da.getDateTimeAsDateString(datetime);
+        return DataAccess.getDateTimeAsDateString(datetime);
     }
 
     /**
@@ -548,7 +548,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public String getTimeAsString()
     {
-        return m_da.getDateTimeAsTimeString(datetime);
+        return DataAccess.getDateTimeAsTimeString(datetime);
     }
 
     /**
@@ -579,8 +579,20 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public Date getDateTimeAsDate()
     {
+        /*
         ATechDate at = new ATechDate(datetime);
-        return at.getGregorianCalendar().getTime();
+        
+        System.out.println("getDateTimeAsDate()::getGregorianCalendar: gc      " + at.getGregorianCalendar().get(Calendar.HOUR_OF_DAY) + ":" + at.getGregorianCalendar().get(Calendar.MINUTE));
+        
+        
+        Date d = at.getGregorianCalendar().getTime();
+       
+        System.out.println("getDateTimeAsDate()::getGregorianCalendar: date    " + d.getHours() + ":" + d.getMinutes());
+        
+        return at.getGregorianCalendar().getTime(); */
+        
+        return new ATechDate(datetime).getGregorianCalendar().getTime();
+        
     }
     
     
@@ -1313,7 +1325,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             m_dv.setIns1(ins1);
             m_dv.setIns2(ins2);
             m_dv.setExtended(this.getExtendedHandler().saveExtended(ht_extended));
-            m_dv.setPerson_id(m_da.getCurrentPersonId());
+            m_dv.setPerson_id((int)m_da.getCurrentUserId());
             m_dv.setMeals_ids(this.meals);
         }
         else
@@ -1325,7 +1337,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             m_dv.setIns1(ins1);
             m_dv.setIns2(ins2);
             m_dv.setExtended(this.getExtendedHandler().saveExtended(ht_extended));
-            m_dv.setPerson_id(m_da.getCurrentPersonId());
+            m_dv.setPerson_id((int)m_da.getCurrentUserId());
             m_dv.setMeals_ids(this.meals);
         }
 
@@ -1462,7 +1474,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public int getDateD()
     {
-        return Integer.parseInt(m_da.getDateTimeAsDateString(datetime));
+        return Integer.parseInt(DataAccess.getDateTimeAsDateString(datetime));
     }
 
 
@@ -1472,7 +1484,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public String getDateDString()
     {
-        return m_da.getDateTimeAsDateString(datetime);
+        return DataAccess.getDateTimeAsDateString(datetime);
     }
     
     
@@ -1492,6 +1504,13 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public long getDateTimeMs()
     {
+        /*
+        System.out.println("DWR: " + datetime);
+        ATechDate atd = new ATechDate(datetime);
+        
+        GregorianCalendar gc = atd.getGregorianCalendar();
+        System.out.println("getGregorianCalendar: gc      " + gc.get(Calendar.HOUR_OF_DAY) + ":" + gc.get(Calendar.MINUTE));
+        */
         return (new ATechDate(datetime)).getGregorianCalendar().getTimeInMillis();
         
     }

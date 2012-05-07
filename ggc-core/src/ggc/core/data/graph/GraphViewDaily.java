@@ -8,6 +8,7 @@ import ggc.core.util.DataAccess;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartFactory;
@@ -24,6 +25,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
+import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -61,7 +63,7 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
     @SuppressWarnings("unused")
     private GlucoValues gluco_values_prev;
     XYSeriesCollection dataset = new XYSeriesCollection();
-    //TimeSeriesCollection dataset = new TimeSeriesCollection();
+    //TimeSeriesCollection dataset = new TimeSeriesCollection(TimeZoneUtil.getInstance().getEmptyTimeZone());
     //DefaultCategoryDataset dataset = new DefaultCategoryDataset(); 
 
     NumberAxis BGAxis;
@@ -108,7 +110,8 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
      */
     public Rectangle getViewerDialogBounds()
     {
-        return new Rectangle(100,100,500,400);
+        //return new Rectangle(100,100,500,400);
+        return new Rectangle(0,0,500,400);
     }
 
     
@@ -203,7 +206,10 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
         TimeSeries ins2Series = new TimeSeries(da_local.getSettings().getIns2Name(), Hour.class);
 */
 
+//        TimeSeries BGSeries = new TimeSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), Hour.class);
         XYSeries BGSeries = new XYSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), true, true); //, Hour.class);
+        //BGSeries.
+       
         XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true); //, Hour.class);
         XYSeries ins1Series = new XYSeries(da_local.getSettings().getIns1Name(), true, true); //, Hour.class);
         XYSeries ins2Series = new XYSeries(da_local.getSettings().getIns2Name(), true, true); //, Hour.class);
@@ -218,72 +224,49 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
         for (int i = 0; i < this.gluco_values.getDailyValuesRowsCount(); i++)
         {
             DailyValuesRow row = this.gluco_values.getDailyValueRow(i);
-            //Hour time = new Hour(row.getDateTimeAsDate());
+            //Hour timeH = new Hour(row.getDateTimeAsDate());
+            
+            //TimeSeriesDataItem tsdi = new TimeSeriesDataItem();
+            
             //int time = row.getDateT();
             
             long time = row.getDateTimeMs();
             
-
-            System.out.println(row.getDateTimeAsDate());
+            //System.out.println("time: " + time);
+            //System.out.println("GVD: " + row.getDateTimeAsDate());
+            
+            //GregorianCalendar gc = new GregorianCalendar();
+            //gc.setTimeInMillis(time);
+            //gc.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
+            
+            //System.out.println("getGregorianCalendar: gc      " + gc.get(Calendar.HOUR_OF_DAY) + ":" + gc.get(Calendar.MINUTE));
+            
+            
+            //long tx = (gc.get(Calendar.HOUR_OF_DAY) * 100) + gc.get(Calendar.MINUTE);
+            
+            //System.out.println("tx: " + tx);
+            
             
             if (row.getBG(BGUnit) > 0)
             {
-                //BGSeries.getD
-                
+                //BGSeries.add(timeH, row.getBG(BGUnit));
                 BGSeries.add(time, row.getBG(BGUnit));
-/*                
-                
-                if (BGSeries..getDataItem(time) == null)
-                {
-                    BGSeries.add(time, row.getBG(BGUnit));
-                }
-                else
-                {
-                    BGSeries.addOrUpdate(time, MathUtils.getAverage(row.getBG(BGUnit), BGSeries.getDataItem(time).getY()));
-                } */
             }
+
             
             if (row.getCH() > 0)
             {
                 CHSeries.add(time, row.getCH());
-/*
-                if (CHSeries.getDataItem(time) == null)
-                {
-                    CHSeries.add(time, row.getCH());
-                }
-                else
-                {
-                    CHSeries.addOrUpdate(time, MathUtils.getAverage(row.getCH(), CHSeries.getDataItem(time).getYValue()));
-                }
-                */
             }
+
             if (row.getIns1() > 0)
             {
                 ins1Series.add(time, row.getIns1());
-/*                if (ins1Series.getDataItem(time) == null)
-                {
-                    ins1Series.add(time, row.getIns1());
-                }
-                else
-                {
-                    ins1Series.addOrUpdate(time, MathUtils.getAverage(row.getIns1(), ins1Series.getDataItem(time)
-                            .getYValue()));
-                } */
             }
             
             if (row.getIns2() > 0)
             {
                 ins2Series.add(time, row.getIns2());
-/*
-                if (ins2Series.getDataItem(time) == null)
-                {
-                    ins2Series.add(time, row.getIns2());
-                }
-                else
-                {
-                    ins2Series.addOrUpdate(time, MathUtils.getAverage(row.getIns2(), ins2Series.getDataItem(time)
-                            .getYValue()));
-                } */
             }
         }
 
@@ -304,7 +287,7 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
      */
     public String getTitle()
     {
-        return m_ic.getMessage("DAILYGRAPHFRAME");
+        return m_ic.getMessage("DAILYGRAPHFRAME") + " [" + gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH)+1) + "." + gc.get(Calendar.YEAR) + "]";
     }
     
     
@@ -315,12 +298,11 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
      */
     public void setPlot(JFreeChart chart)
     {
-
-        
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
         XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
         dateAxis = (DateAxis) plot.getDomainAxis();
+        //dateAxis.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone()); //.getTimeZone()
         BGAxis = (NumberAxis) plot.getRangeAxis();
         insBUAxis = new NumberAxis();
 
@@ -354,12 +336,14 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
         insBURenderer.setSeriesShapesVisible(1, true);
         insBURenderer.setSeriesShapesVisible(2, true);
 
-        dateAxis.setDateFormatOverride(new SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS")));
+        SimpleDateFormat sdf = new SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS"));
+        sdf.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
+        
+        dateAxis.setDateFormatOverride(sdf);
         dateAxis.setAutoRange(false);
-        dateAxis.setRange(this.gluco_values.getRangeFrom().getTime(), 
-            this.gluco_values.getRangeTo().getTime());
-        dateAxis.setDefaultAutoRange(new DateRange(this.gluco_values.getRangeFrom().getTime(), 
-            this.gluco_values.getRangeTo().getTime()));
+        dateAxis.setRange(this.gluco_values.getRangeFrom().getTime(), this.gluco_values.getRangeTo().getTime());
+        dateAxis.setDefaultAutoRange(new DateRange(this.gluco_values.getRangeFrom().getTime(), this.gluco_values.getRangeTo().getTime()));
+        dateAxis.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
         
         BGAxis.setAutoRangeIncludesZero(true);
 
@@ -376,10 +360,10 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
         chart = ChartFactory.createTimeSeriesChart(null, 
             this.m_ic.getMessage("AXIS_TIME_LABEL"), 
             String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"), this.graph_util.getUnitLabel()), 
-            dataset, 
+            dataset,  
             true, 
             true, 
-            false);
+            true);
         
         this.setPlot(chart);
     }
@@ -390,7 +374,7 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor //implements G
      */
     public void createChartPanel()
     {
-        this.chart_panel = new ChartPanel(getChart(), true, true, true, true, false);
+        this.chart_panel = new ChartPanel(getChart(), true, true, true, true, true);
     }
 
     

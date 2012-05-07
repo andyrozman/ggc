@@ -27,7 +27,6 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.graphics.graphs.GraphViewControlerInterface;
-import com.atech.graphics.graphs.GraphViewDataProcessorInterface;
 import com.atech.i18n.I18nControlAbstract;
 
 /**
@@ -130,20 +129,10 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
      */
     public Rectangle getViewerDialogBounds()
     {
-        return new Rectangle(100,100,750,500);
+        return new Rectangle(100,100,750,550);
     }
 
 
-    
-    /**
-     * Get Processor
-     * 
-     * @return GraphViewDataProcessorInterface instance (typed)
-     */
-    public GraphViewDataProcessorInterface getProcessor()
-    {
-        return this;
-    }
     
     
     /**
@@ -189,6 +178,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
     /**
      * Preprocess Data
      */
+    @SuppressWarnings("deprecation")
     public void preprocessData()
     {
         int count = this.gv.getDailyValuesRowsCount();
@@ -594,6 +584,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
     public GraphViewControlerInterface getControler()
     {
         return this.controler;
-    }    
+    }
+
     
 }

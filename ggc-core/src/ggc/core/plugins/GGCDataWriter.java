@@ -119,7 +119,7 @@ public class GGCDataWriter extends DbDataWriterAbstract
                     if (key.equals("ADD"))
                     {
                         DayValueH dv = lst.get(i);
-                        dv.setPerson_id(DataAccess.getInstance().getCurrentPersonId());
+                        dv.setPerson_id((int)DataAccess.getInstance().getCurrentUserId());
                         db.addHibernate(dv);
                         
                         PumpDataExtendedH pde = new PumpDataExtendedH();

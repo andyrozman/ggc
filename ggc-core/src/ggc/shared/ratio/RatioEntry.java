@@ -34,14 +34,14 @@ import com.atech.utils.data.ATechDate;
 public class RatioEntry
 {
     DataAccess m_da = DataAccess.getInstance();
-    int from;
-    int to;
+    public int from;
+    public int to;
     
-    float ch_insulin = 0.0f;
-    float bg_insulin = 0.0f;
-    float ch_bg = 5.0f;
+    public float ch_insulin = 0.0f;
+    public float bg_insulin = 0.0f;
+    public float ch_bg = 5.0f;
     
-    float procent = 100.0f;
+    int procent = 100;
     
     public RatioEntry()
     {
@@ -74,10 +74,11 @@ public class RatioEntry
         switch(column)
         {
             case 0:
-                this.from = m_da.getIntValueFromString(val, 0);
+                this.from = m_da.getIntValueFromString(val.replace(":", ""), 0);
                 break;
+            
             case 1:
-                this.to = m_da.getIntValueFromString(val, 0);
+                this.to = m_da.getIntValueFromString(val.replace(":", ""), 0);
                 break;
                 
             case 2:
@@ -88,15 +89,15 @@ public class RatioEntry
                 this.bg_insulin = m_da.getFloatValueFromString(val, 0.0f);
                 break;
                 
-            
-                //this.ch_bg = m_da.getFloatValueFromString(val, 0.0f);
-                //break;
+            case 4:
+                this.ch_bg = m_da.getFloatValueFromString(val, 0.0f);
+                break;
                 
             case 5:
                 this.procent = m_da.getIntValueFromString(val, 0);
                 break;
             
-            case 4:
+            
             default:
                 break; //return "";
         }
@@ -149,8 +150,6 @@ public class RatioEntry
             default:
                 return "";
         }
-        
-        
     }
     
     
@@ -161,13 +160,56 @@ public class RatioEntry
      */
     public int getColumns()
     {
-        return 5;
+        return 6;
     }
     
     
+    /**
+     * Get Column Name
+     * @param index 
+     * @return 
+     * 
+     * @see javax.swing.table.AbstractTableModel#getColumnName(int)
+     */
+    public String getColumnName(int index)
+    {
+        switch(index)
+        {
+            case 0:
+                return "TIME_FROM"; 
+                
+            case 1:
+                return "TIME_TILL";
+                
+            case 2:
+                return "CH_INSULIN_RATIO_SHORT"; 
+                
+            case 3:
+                return "BG_INSULIN_RATIO_SHORT"; 
+                
+            case 4:
+                return "BG_CH_RATIO_SHORT"; 
+                
+            case 5:
+                return "PROCENT_OF_BASE_SHORT";
+                
+            default:
+                return "";
+        }
+
+    }
+    
+    
+    
+    /**
+     * Get Save Data
+     * 
+     * @return
+     */
     public String getSaveData()
     {
-        return null;
+        //dta.put("EXTENDED_RATIO_1", "0000;1159;6.67f;1.33f;5f;100");
+        return getColumnValue(0) + ";" +getColumnValue(1) + ";" +getColumnValue(2) + ";" +getColumnValue(3) + ";" +getColumnValue(4) + ";" +getColumnValue(5);  
     }
     
     

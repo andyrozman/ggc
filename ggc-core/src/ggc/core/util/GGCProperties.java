@@ -1153,6 +1153,29 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setFloatValue("RATIO_BG_INSULIN", val);
     }
+ 
+    
+    /**
+     * Get Ratio Mode
+     * 
+     * @return
+     */
+    public String getRatioMode()
+    {
+        return this.m_cfg_mgr.getStringValue("RATIO_MODE");
+    }
+    
+
+    /**
+     * Set Ratio Mode
+     * 
+     * @param val 
+     */
+    public void setRatioMode(String val)
+    {
+        this.m_cfg_mgr.setStringValue("RATIO_MODE", val);
+    }
+    
     
 
     

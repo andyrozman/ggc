@@ -35,7 +35,7 @@ public class WeeklyValues implements Serializable
 {
     private static final long serialVersionUID = 7748966026356288165L;
     private Hashtable<String, DailyValues> m_dataTable = null;
-    private DataAccess m_da = DataAccess.getInstance();
+    //private DataAccess m_da = DataAccess.getInstance();
 
 
     /**
@@ -91,7 +91,7 @@ public class WeeklyValues implements Serializable
      */
     public DailyValues getDayValues(int year, int month, int day)
     {
-        String days = ""+year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2);
+        String days = ""+year + DataAccess.getLeadingZero(month, 2) + DataAccess.getLeadingZero(day, 2);
         if (!m_dataTable.containsKey(days))
         {
             return null;

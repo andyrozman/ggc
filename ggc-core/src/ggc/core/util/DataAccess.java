@@ -81,7 +81,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.5.0.1";
+    public static String CORE_VERSION = "0.5.0.2";
     
     /**
      * Current Db Version
@@ -220,7 +220,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     public static final String EXTENDED_HANDLER_DailyValuesRow = "DailyValuesRow";
     
     
-    private int current_person_id = 1;
+    //private int current_person_id = 1;
     //NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
     
     /**
@@ -1175,9 +1175,9 @@ public class DataAccess extends ATDataAccessLMAbstract
      * 
      * @return
      */
-    public int getCurrentPersonId()
+    public long getCurrentUserId()
     {
-        return this.current_person_id;
+        return this.current_user_id;
     }
 
     // ********************************************************

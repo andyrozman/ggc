@@ -45,7 +45,7 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public class GGCGraphUtil extends GraphUtil
 {
-    private static final long serialVersionUID = -1579716091265096686L;
+
     /**
      * Graph Setting: Background color
      */

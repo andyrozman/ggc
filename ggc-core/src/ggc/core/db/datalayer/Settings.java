@@ -90,6 +90,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
         this.setValue(ch.getValue());
         this.setType(ch.getType());
         this.setDescription(ch.getDescription());
+        this.setPerson_id(ch.getPerson_id());
     }
 
     /**
@@ -174,6 +175,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
         ch.setValue(this.getValue());
         ch.setType(this.getType());
         ch.setDescription(this.getDescription());
+        ch.setPerson_id(this.getPerson_id());
 
         Long id = (Long) sess.save(ch);
 
@@ -207,6 +209,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
         ch.setValue(this.getValue());
         ch.setType(this.getType());
         ch.setDescription(this.getDescription());
+        ch.setPerson_id(this.getPerson_id());
 
         sess.update(ch);
         tx.commit();
@@ -276,6 +279,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
         this.setValue(ch.getValue());
         this.setType(ch.getType());
         this.setDescription(ch.getDescription());
+        this.setPerson_id(ch.getPerson_id());
 
         return true;
     }

@@ -3,24 +3,24 @@
 	<title>  Pomoč</title>
  	<maps>
   		<homeID>top</homeID>
-  		<mapref location="si/Map.jhm"/>
+  		<mapref location="Map.jhm"/>
  	</maps>
  	<view>
   		<name>TOC</name>
   		<label>Kazalo</label>
   		<type>javax.help.TOCView</type>
-  		<data>si/GGCTOC.xml</data>
+  		<data>GGCTOC.xml</data>
  	</view>
  	<view>
   		<name>Index</name>
   		<label>Indeks</label>
   		<type>javax.help.IndexView</type>
-  		<data>si/GGCIndex.xml</data>
+  		<data>GGCIndex.xml</data>
  	</view>
  	<view>
   		<name>Search</name>
   		<label>Iskanje</label>
   		<type>javax.help.SearchView</type>
-  		<data engine="com.sun.java.help.search.DefaultSearchEngine">si/JavaHelpSearch</data>
+  		<data engine="com.sun.java.help.search.DefaultSearchEngine">JavaHelpSearch</data>
  	</view>
 </helpset>

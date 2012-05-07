@@ -145,7 +145,7 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
      */
     public DailyValues getDailyValuesObject(int year, int month, int day)
     {
-        String days = ""+year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2);
+        String days = ""+year + DataAccess.getLeadingZero(month, 2) + DataAccess.getLeadingZero(day, 2);
         if (!m_dataTable.containsKey(days))
         {
             return null;

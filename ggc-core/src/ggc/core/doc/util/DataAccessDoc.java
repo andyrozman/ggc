@@ -41,11 +41,9 @@ import pygmy.core.Server;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.help.HelpContext;
-import com.atech.i18n.mgr.LanguageManager;
 import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.misc.refresh.EventSource;
 import com.atech.plugin.PlugInClient;
-import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.data.Rounding;
 import com.atech.utils.logs.RedirectScreen;
 
@@ -83,7 +81,7 @@ public class DataAccessDoc extends DataAccess
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.5.0.1";
+    public static String CORE_VERSION = "0.5.0.2";
     
     /**
      * Current Db Version

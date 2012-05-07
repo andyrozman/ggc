@@ -3,9 +3,11 @@ package ggc.core.db;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
+import ggc.core.data.ExtendedRatioCollection;
 import ggc.core.data.HbA1cValues;
 import ggc.core.data.MonthlyValues;
 import ggc.core.data.WeeklyValues;
+import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.db.datalayer.Settings;
 import ggc.core.db.datalayer.StockBaseType;
 import ggc.core.db.hibernate.ColorSchemeH;
@@ -678,7 +680,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void loadConfigDataEntries()
     {
 
@@ -690,7 +691,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
             Hashtable<String, Settings> table = new Hashtable<String, Settings>();
 
-            Query q = sess.createQuery("select cfg from ggc.core.db.hibernate.SettingsH as cfg");
+            Query q = sess.createQuery("select cfg from ggc.core.db.hibernate.SettingsH as cfg where cfg.person_id=" + m_da.current_user_id);
 
             Iterator it = q.iterate();
 
@@ -711,6 +712,125 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
 
     }
 
+    
+    
+    @SuppressWarnings("unchecked")
+    public Hashtable<String, String> getExtendedRationEntries()
+    {
+
+        logInfo("loadConfigDataEntries()");
+
+        try
+        {
+            Session sess = getSession(1);
+
+            Hashtable<String, String> table = new Hashtable<String, String>();
+
+            Query q = sess.createQuery("SELECT cfg FROM ggc.core.db.hibernate.SettingsH as cfg WHERE cfg.key LIKE 'EXTENDED_RATIO%' AND cfg.person_id=" + m_da.current_user_id);
+
+            Iterator<SettingsH> it = q.iterate();
+
+            while (it.hasNext())
+            {
+                SettingsH eh = (SettingsH) it.next();
+                table.put(eh.getKey(), eh.getValue());
+            }
+
+            //m_da.getConfigurationManager().checkConfiguration(table, this);
+            
+            return table;
+        }
+        catch (Exception ex)
+        {
+            // log.error("Exception on loadConfigDataEntries: " +
+            // ex.getMessage(), ex);
+            logException("loadConfigDataEntries()", ex);
+            return null;
+        }
+
+    }
+    
+    
+    /*
+    @SuppressWarnings("unchecked")
+    public Hashtable<String,String> getExtendedRatioData()
+    {
+        
+        if (m_loadStatus == DB_CONFIG_LOADED)
+            return null;
+
+        log.info("getExtendedRatioData() - Process");
+
+        Hashtable<String,String> ht = new Hashtable<String,String>();  
+        String sql = "";
+        
+        try
+        {
+            sql = "SELECT st FROM ggc.core.db.hibernate.SettingsH as st WHERE st.key LIKE 'EXTENDED_RATIO%' AND st.person_id=" + m_da.current_user_id  ;
+            sql += " ORDER BY st.key";
+                    
+            Query q = getSession().createQuery(sql);
+
+            Iterator<SettingsH> it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+                SettingsH st = it.next();
+                ht.put(st.getKey(), st.getValue());
+            }
+
+        }
+        catch (Exception ex)
+        {
+            log.error("getExtendedRatioData()::Exception: " + ex.getMessage(), ex);
+        }
+        
+        return ht;
+    }*/
+    
+    
+    public boolean saveExtendedRatioEntries(ExtendedRatioCollection coll)
+    {
+        //Collections.sort(coll);
+
+        // delete current settings
+        
+        String sql = "DELETE FROM ggc.core.db.hibernate.SettingsH as st WHERE st.key LIKE 'EXTENDED_RATIO%' AND st.person_id=" + m_da.current_user_id  ;
+                
+        Query q = getSession().createQuery(sql);
+        q.executeUpdate();
+        
+        
+        // add new settings
+        
+        // --- sort
+        
+        if (coll.size()==0)
+            return true;
+        
+        
+        ConfigurationManager cfg_mgr = this.m_da.getConfigurationManager();
+        
+        cfg_mgr.addNewValue("EXTENDED_RATIO_COUNT", "" + coll.size(), 1, this, false);
+        
+        
+        for(int i=0; i< coll.size(); i++)
+        {
+            cfg_mgr.addNewValue("EXTENDED_RATIO_" + (i+1), coll.get(i).getSaveData(), 1, this, false);
+        }
+        
+        
+        
+        
+        
+        
+        
+        return true;
+    }
+    
+    
+    
+    
     /**
      * Save Config Data (without schemes)
      * We save just config, schemes save must be called separately
@@ -1380,47 +1500,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface HibernateD
     
     
     
-    @SuppressWarnings("unchecked")
-    public Hashtable<String,String> getExtendedRatioData()
-    {
-        
-        if (m_loadStatus == DB_CONFIG_LOADED)
-            return null;
-
-        log.info("getExtendedRatioData() - Process");
-
-        Hashtable<String,String> ht = new Hashtable<String,String>();  
-        String sql = "";
-        
-        try
-        {
-            sql = "SELECT st FROM ggc.core.db.hibernate.SettingsH as st WHERE st.key LIKE 'EXTENDED_RATIO%' AND st.person_id=" + m_da.current_user_id  ;
-            sql += " ORDER BY st.key";
-                    
-            Query q = getSession().createQuery(sql);
-
-            Iterator<SettingsH> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                SettingsH st = it.next();
-                ht.put(st.getKey(), st.getValue());
-            }
-
-        }
-        catch (Exception ex)
-        {
-            log.error("getExtendedRatioData()::Exception: " + ex.getMessage(), ex);
-        }
-        
-        return ht;
-    }
-    
-    
-    public void saveExtendedRatioData(Hashtable<String,String> dta)
-    {
-        
-    }
     
     
     

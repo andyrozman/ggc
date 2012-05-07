@@ -32,15 +32,15 @@ package ggc.core.print;
 import ggc.core.data.MonthlyValues;
 import ggc.core.util.DataAccess;
 
-import java.awt.Color;
-
-import com.lowagie.text.Document;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -132,7 +132,7 @@ public class PrintSimpleMonthlyReport extends PrintAbstract //   extends PdfPage
         p.add(new Paragraph("", f));
         p.add(new Paragraph(ic.getMessage("SIMPLE_MONTHLY_REPORT") + " - " + m_da.getMonthsArray()[m_mv.getMonth()-1] + " " + m_mv.getYear(), f));
         //p.add(new Paragraph("May 2006"));
-        p.add(new Paragraph(ic.getMessage("FOR") + " " + m_da.getSettings().getUserName(), new Font(Font.TIMES_ROMAN, 12, Font.ITALIC)));
+        p.add(new Paragraph(ic.getMessage("FOR") + " " + m_da.getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN, 12, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
@@ -496,7 +496,7 @@ public class PrintSimpleMonthlyReport extends PrintAbstract //   extends PdfPage
             }
             else
             {
-                datatable.getDefaultCell().setBackgroundColor(Color.white); //.setGrayFill(0.0f);
+                datatable.getDefaultCell().setBackgroundColor(BaseColor.WHITE); //.setGrayFill(0.0f);
                 //datatable.getDefaultCell().se
             }
 
@@ -542,7 +542,7 @@ public class PrintSimpleMonthlyReport extends PrintAbstract //   extends PdfPage
     @Override
     public String getFileNameRange()
     {
-        return "" + m_mv.getYear() + "_" + m_da.getLeadingZero(m_mv.getMonth(), 2); 
+        return "" + m_mv.getYear() + "_" + DataAccess.getLeadingZero(m_mv.getMonth(), 2); 
     }
 
 
