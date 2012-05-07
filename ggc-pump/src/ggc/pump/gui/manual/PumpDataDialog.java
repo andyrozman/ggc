@@ -364,7 +364,6 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         //resultsPane.getViewport().addMouseListener(ma);
         //resultsPane.getViewport().setBackground(table.getBackground()); 
         
-        @SuppressWarnings("unused")
         DeviceValuesDay pvd = new DeviceValuesDay(DataAccessPump.getInstance());
         
         m_da.getColumnsWidthManual();

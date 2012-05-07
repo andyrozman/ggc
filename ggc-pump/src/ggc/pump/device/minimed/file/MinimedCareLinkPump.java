@@ -467,7 +467,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
                 //System.out.println(profiles.get(i).raw_type + " = " + profiles.get(i).raw_values); //.getUnprocessedData());
             }
             
-            for(@SuppressWarnings("unused") MinimedCareLinkPumpProfile mcp : profiles_proc.values() )
+            for(MinimedCareLinkPumpProfile mcp : profiles_proc.values() )
             {
              //   System.out.println(mcp);
             }

@@ -58,7 +58,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 //extends PumpDataH implements DatabaseObjectHibernate   // extends PumpValuesEntryAbstract
 {
     
-    @SuppressWarnings("unused")
+    
     private static Log log = LogFactory.getLog(PumpValuesEntry.class);
     private static final long serialVersionUID = -2047203215269156938L;
 
