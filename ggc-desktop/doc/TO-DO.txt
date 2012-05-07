@@ -60,34 +60,21 @@ GGC CGMS Tool
 
 
 
-II. SORTED BY VERSION  (Updated 10.5.2010)
+II. SORTED BY VERSION  (Updated 2.5.2012)
 ===========================================
 
-Version 0.4.20 [1.6.2010]
---------------
+
+Version 0.5 [8.5.2012]
+------------
 
 * Core:   
     - Extended Ratio
     - Help (10 pages)
-    
-* Meter Tool: 
-    - v2 data import
-    - Abbott support finalize
-    
+
+
 * Pump Tool:
-    - SmartPix v3.01
-    - SmartPix Base
-    - Roche Spirit
     - Test Graphs
 
-* Plugin Base: 
-    - Meter through DeviceAbstract, test Serial
-    - Pump through DeviceAbstract, test Spirit
-    - CGMS through DeviceAbstract, test Dexcom
-   
-
-Version 0.5
-------------
 
 * Graphs: 
      x New framework
@@ -184,8 +171,6 @@ Level 3 (Medium 2 Priority):
 
 Level 4 (Medium 3 Priority):
 ----------------------------
-
-
 
 
 * Entering daily data: 
@@ -438,6 +423,23 @@ X   - Nutrition Display
 * Multi person Db
 * Java Help Framework
 * Icons where possible
+
+
+* Pump Tool:
+    - SmartPix v3.01
+    - SmartPix Base
+    - Roche Spirit
+
+* Meter Tool: 
+    - v2 data import
+    - Abbott support finalize
+
+
+* Plugin Base: 
+    - Meter through DeviceAbstract, test Serial
+    - Pump through DeviceAbstract, test Spirit
+    - CGMS through DeviceAbstract, test Dexcom
+
 
 
 I18N TOOL

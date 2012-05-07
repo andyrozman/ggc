@@ -13,6 +13,10 @@ Know Bugs:
 	- Backup/Restore - only one restore can be done, on next restore, we don-t get all files displayed
 	- Meter Tool: - Problem with reading old data
 	- Meter Tool - Configuration - Time fix Combo box to small
+    - Pen/Injection statistics not implemented correctly
+    - Pump Basal statistics not done
+    - Graphs problems 
+    - Color scheme
 
 NOT A BUG:
     - "New Entry" dialog should only contain one of mg/dl and mmol/l Fields, 

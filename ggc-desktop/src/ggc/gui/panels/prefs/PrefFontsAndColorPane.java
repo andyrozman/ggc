@@ -34,7 +34,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -130,6 +132,115 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     
     private void init()
     {
+        setLayout(null);
+
+        schemePanel = new JPanel();
+        schemePanel.setLayout(null);
+        schemePanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_SCHEME_SELECT")));
+        schemePanel.setBounds(0, 0, 515, 50);
+
+        JLabel label = new JLabel(m_ic.getMessage("SELECTED_COLOR_SCHEME") + ":");
+        label.setBounds(10, 13, 150, 30);
+        
+        schemePanel.add(label);
+        
+        cb_scheme = new JComboBox(av_schemes_names);
+        cb_scheme.setBounds(170, 15, 140, 25);
+        schemePanel.add(cb_scheme);
+
+        bt_new_scheme = new JButton(m_ic.getMessage("ADD"));
+        bt_new_scheme.setBounds(315, 15, 90, 25);
+        schemePanel.add(bt_new_scheme);
+
+        bt_edit_scheme = new JButton(m_ic.getMessage("EDIT_DEL_SHORT"));
+        bt_edit_scheme.setBounds(410, 15, 90, 25);
+        schemePanel.add(bt_edit_scheme);
+        
+        
+        this.add(schemePanel);
+        
+        
+        
+        bt_new_scheme.addActionListener(this);
+        bt_new_scheme.setActionCommand("add");
+
+        bt_edit_scheme.addActionListener(this);
+        bt_edit_scheme.setActionCommand("edit");
+
+        cb_scheme.setSelectedItem(this.selected_sheme.getName());
+        cb_scheme.addItemListener(this);
+
+
+        // Color panel
+        
+        colorPanel = new JPanel();
+        colorPanel.setLayout(null);
+        colorPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLORS")));
+        colorPanel.setBounds(0, 45, 515, 110);
+        this.add(colorPanel);
+
+        itemList = new JList(items);
+        itemList.setBorder(new LineBorder(Color.black, 1));
+        itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        itemList.addListSelectionListener(this);
+        
+        //itemList.s
+        
+        JScrollPane scp = new JScrollPane(itemList);
+        scp.setBounds(10,20, 200, 80);
+        colorPanel.add(scp);
+        
+        
+        //JPanel a = new JPanel(null);
+        //a.add(lblcolor = new JLabel(" "));
+
+        lblcolor = new JLabel(" ");
+        lblcolor.setBounds(215, 20, 290, 80);
+        lblcolor.setOpaque(true);
+        lblcolor.setBorder(BorderFactory.createLineBorder(Color.black));
+        lblcolor.addMouseListener(this);
+
+//        colorPanel.add(itemList, BorderLayout.WEST);
+        colorPanel.add(lblcolor); //a, BorderLayout.CENTER);
+
+        
+//        if (true)
+//            return;
+        
+        
+        
+        testingPanel = new JPanel();
+        testingPanel.setLayout(null);
+        testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
+        testingPanel.setBounds(0, 150, 515, 270);
+        
+        dgv = new DailyGraphView(selected_sheme, createDailyGraphValues());
+        dgv.setBounds(10, 20, 500, 235);
+        
+        //testingPanel.setPreferredSize(new Dimension(150, 170));
+        testingPanel.add(dgv);
+
+        this.add(testingPanel);
+        
+        //colorPanel.setBounds(0, 50, 515, 130);
+        
+        /*
+        box = Box.createVerticalBox();
+        box.add(schemePanel);
+        box.add(colorPanel);
+        box.add(testingPanel);
+
+        add(box);
+*/
+        itemList.setSelectedIndex(0);
+    }
+
+    
+    
+    
+    @SuppressWarnings("unused")
+    private void init_old_v1()
+    {
         setLayout(new BorderLayout());
 
         schemePanel = new JPanel(new GridLayout(1, 3));
@@ -149,10 +260,13 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         cb_scheme.setSelectedItem(this.selected_sheme.getName());
         cb_scheme.addItemListener(this);
 
+        // Color scheme
+        
         itemList = new JList(items);
         itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         itemList.addListSelectionListener(this);
 
+        
         colorPanel = new JPanel(new BorderLayout());
         colorPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLORS")));
 
@@ -183,24 +297,39 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         itemList.setSelectedIndex(0);
     }
     
+    
+    
     /**
      * updateGraphView() updates the graphs in the preferences section to reflect
      * changes in mmol/l or mg/dl and the other values(high/low BG etc).
+     * Changed by Andy, after changing this panel.
+     * 
      * @author henrik
      */
-    
    public void updateGraphView()
    {
+       //if (true)
+       //    return;
+
        
-        box.remove(testingPanel);
-        testingPanel = new JPanel(new BorderLayout());
-        testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
-        dgv = new DailyGraphView(selected_sheme, createDailyGraphValues());
-        testingPanel.setPreferredSize(new Dimension(150, 170));
-        testingPanel.add(dgv, BorderLayout.CENTER);
-        box.add(testingPanel);
-        box.validate();
-        box.repaint();
+        //box.remove(testingPanel);
+        //testingPanel = new JPanel(new BorderLayout());
+        //testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
+       testingPanel.removeAll(); 
+       
+       dgv = null;
+       dgv = new DailyGraphView(selected_sheme, createDailyGraphValues());
+       dgv.setBounds(8, 20, 500, 245);
+       //dgv.setBounds(0, 0, 510, 210);
+       
+       testingPanel.add(dgv);
+       
+       
+        //testingPanel.setPreferredSize(new Dimension(150, 170));
+        //testingPanel.add(dgv, BorderLayout.CENTER);
+        //box.add(testingPanel);
+        //box.validate();
+        //box.repaint();
         
    }
 
@@ -215,14 +344,14 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         DailyValues dv = new DailyValues();
         DataAccess da = DataAccess.getInstance();
 
-        dv.addRow(new DailyValuesRow(200604040600L, 100, 0, 20, 0f, "", ""));
+        dv.addRow(new DailyValuesRow(200604040400L, 100, 0, 20, 0f, "", ""));
         dv.addRow(new DailyValuesRow(200604040700L, 40, 0, 0, 2f, "", ""));
-        dv.addRow(new DailyValuesRow(200604040800L, 200, 3, 0, 0f, "", ""));
-        dv.addRow(new DailyValuesRow(200604040900L, (int) da.getSettings().getBG1_High(), 4, 0, 0f, "", ""));
-        dv.addRow(new DailyValuesRow(200604041000L, (int) da.getSettings().getBG1_Low(), 0, 0, 2f, "", ""));
-        dv.addRow(new DailyValuesRow(200604041100L, 90, 0, 0, 0f, "", ""));
-        dv.addRow(new DailyValuesRow(200604041200L, 120, 11, 0, 5f, "", ""));
-        dv.addRow(new DailyValuesRow(200604041300L, 150, 1, 10, 0f, "", ""));
+        dv.addRow(new DailyValuesRow(200604041000L, 200, 3, 0, 0f, "", ""));
+        dv.addRow(new DailyValuesRow(200604041200L, (int) da.getSettings().getBG1_High(), 4, 0, 0f, "", ""));
+        dv.addRow(new DailyValuesRow(200604041500L, (int) da.getSettings().getBG1_Low(), 0, 0, 2f, "", ""));
+        dv.addRow(new DailyValuesRow(200604041700L, 90, 0, 0, 0f, "", ""));
+        dv.addRow(new DailyValuesRow(200604042000L, 120, 11, 0, 5f, "", ""));
+        dv.addRow(new DailyValuesRow(200604042200L, 150, 1, 10, 0f, "", ""));
 
         return dv;
     }

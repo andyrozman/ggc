@@ -6,6 +6,7 @@ import ggc.core.data.DailyValuesRow;
 import ggc.core.data.ExtendedDailyValue;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
 import ggc.shared.bolushelper.BolusHelper;
 import ggc.shared.fooddesc.FoodDescriptionDialog;
 
@@ -20,6 +21,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.NumberFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
@@ -229,12 +231,19 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         GregorianCalendar gc = new GregorianCalendar();
 
-        // int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
-
-        String dt = year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2) + m_da.getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2) + m_da.getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2);
-
-        // System.out.println("sDate: " + sDate);
-
+        
+        String dt = null;
+        String sg = "" + DataAccess.getLeadingZero(gc.get(Calendar.DAY_OF_MONTH),2) + "."  + DataAccess.getLeadingZero((gc.get(Calendar.MONTH)+1), 2) + "." + gc.get(Calendar.YEAR);
+        
+        if (sg.equals(sDate))
+        {
+            dt = year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2) + DataAccess.getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2) + DataAccess.getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2);            
+        }
+        else
+        {
+            dt = year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2) + "0000";
+        }
+        
         this.dtc.setDateTime(Long.parseLong(dt));
 
     }
@@ -358,15 +367,17 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         table_ins_pos = new Hashtable<Integer,Integer>();    
         table_pos_ins = new Hashtable<Integer,Integer>();    
         
+        GGCProperties props = m_da.getSettings();
         
         
         int ins_type = 0;
         
-        if (m_da.getSettings().getIns1Type()>0)
+        if (props.getIns1Type()>0)
         {
-            ins_type = m_da.getSettings().getIns1Type();
+            ins_type = props.getIns1Type();
             
-            addLabel(m_ic.getMessage("INSULIN_1") + ":", next_y, panel);
+            addLabel(props.getIns1Name() + ":", next_y, panel);
+//            addLabel(m_ic.getMessage("INSULIN_1") + ":", next_y, panel);
 
             table_ins_pos.put(1, insulin_count);    
             table_pos_ins.put(insulin_count, 1);    
@@ -382,11 +393,12 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         
         
-        if (m_da.getSettings().getIns2Type()>0)
+        if (props.getIns2Type()>0)
         {
-            ins_type = m_da.getSettings().getIns2Type();
+            ins_type = props.getIns2Type();
             
-            addLabel(m_ic.getMessage("INSULIN_2") + ":", next_y, panel);
+            addLabel(props.getIns2Name() + ":", next_y, panel);
+            //addLabel(m_ic.getMessage("INSULIN_2") + ":", next_y, panel);
             //table.put(insulin_count, 2);
             table_ins_pos.put(2, insulin_count);    
             table_pos_ins.put(insulin_count, 2);    
@@ -401,11 +413,12 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
         
         
-        if (m_da.getSettings().getIns3Type()>0)
+        if (props.getIns3Type()>0)
         {
             ins_type = m_da.getSettings().getIns3Type();
             
-            addLabel(m_ic.getMessage("INSULIN_3") + ":", next_y, panel);
+            addLabel(props.getIns3Name() + ":", next_y, panel);
+//            addLabel(m_ic.getMessage("INSULIN_3") + ":", next_y, panel);
 //            table.put(insulin_count, 3);
             table_ins_pos.put(3, insulin_count);    
             table_pos_ins.put(insulin_count, 3);    

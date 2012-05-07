@@ -56,7 +56,7 @@ import javax.swing.UIManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.atech.graphics.dialogs.GUIListDialog;
+import com.atech.graphics.dialogs.guilist.GUIListDialog;
 import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpContext;
 import com.atech.i18n.I18nControlAbstract;
@@ -1133,11 +1133,11 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
             else if (command.equals("view_course"))
             {
-                new GraphViewer(new GraphViewCourse(), m_da);
+                new GraphViewer(new GraphViewCourse(), m_da, MainFrame.this, true);
             }
             else if (command.equals("view_spread"))
             {
-                new GraphViewer(new GraphViewSpread(), m_da);
+                new GraphViewer(new GraphViewSpread(), m_da, MainFrame.this, true);
             }
             else if (command.equals("view_freq"))
             {
@@ -1183,7 +1183,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
                     new RatioExtendedDialog(MainFrame.this);
                 }
                 else
-                    featureNotImplemented(command, "0.5");
+                    featureNotImplemented(command, "0.6");
                 
             }
             
@@ -1258,7 +1258,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
                     new AppointmentsDialog(MainFrame.this);
                 }
                 else
-                    featureNotImplemented(command, "0.5");
+                    featureNotImplemented(command, "0.6");
 
             }
             else // if ((command.equals("report_pdf_extended")) ||
@@ -1266,7 +1266,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
                 (command.equals("report_foodmenu_ext3")) ||
                 (command.equals("file_logout")))
             {
-                featureNotImplemented(command, "0.5");
+                featureNotImplemented(command, "0.6");
             }
             else if (command.equals("misc_synchronize")) //||
                      //(command.equals("doc_stocks"))) 
@@ -1280,14 +1280,9 @@ public class MainFrame extends JFrame implements EventObserverInterface
                     new GUIListDialog(MainFrame.this, new StockListDef(), m_da);
                 }
                 else
-                    featureNotImplemented(command, "0.5");
-                
-                
+                    featureNotImplemented(command, "0.6");
                 
             }
-            
-            
-            
             else if ((command.equals("test")))
             {
                 

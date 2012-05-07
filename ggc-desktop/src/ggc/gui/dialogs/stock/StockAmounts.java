@@ -1,4 +1,4 @@
-package ggc.gui.dialogs;
+package ggc.gui.dialogs.stock;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;

@@ -46,6 +46,7 @@ import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.Range;
 import org.jfree.data.time.DateRange;
 import org.jfree.data.time.Hour;
 import org.jfree.data.time.TimeSeries;
@@ -92,7 +93,7 @@ public class DailyGraphView extends JFAbstractGraphView
     private DailyValues data = new DailyValues();
     DateAxis dateAxis;
     NumberAxis insBUAxis;
-    private TimeSeriesCollection insBUDataset = new TimeSeriesCollection();
+    private TimeSeriesCollection insBUDataset = new TimeSeriesCollection(); //TimeZone.getTimeZone(""));
 
     /**
      * Calls <code>{@link DailyGraphView#DailyGraphView(DailyValues)}</code>
@@ -192,18 +193,31 @@ public class DailyGraphView extends JFAbstractGraphView
 
         dateAxis.setDateFormatOverride(new SimpleDateFormat(translator.getMessage("FORMAT_DATE_HOURS")));
         dateAxis.setAutoRange(false);
-        GregorianCalendar dayStart = (new ATechDate(data.getDate() * 10000)).getGregorianCalendar();
-        GregorianCalendar dayEnd = (new ATechDate(data.getDate() * 10000 + 2359)).getGregorianCalendar();
+        GregorianCalendar dayStart = new GregorianCalendar(2006, 3, 4, 0, 0, 0);      //        (new ATechDate(data.getDate() * 10000)).getGregorianCalendar();
+        GregorianCalendar dayEnd = new GregorianCalendar(2006, 3, 4, 23, 59, 59); //(new ATechDate(data.getDate() * 10000 + 2359)).getGregorianCalendar();
         //dayStart.setTime(dataAccessInst.getDateTimeAsDateObject(data.getDate() * 10000));
         //dayEnd.setTime(dataAccessInst.getDateTimeAsDateObject(data.getDate() * 10000 + 2359));
-        dayStart.set(Calendar.SECOND, 0);
-        dayEnd.set(Calendar.SECOND, 59);
+        //dayStart.set(Calendar.SECOND, 0);
+        //dayEnd.set(Calendar.SECOND, 59);
         dateAxis.setRange(new DateRange(dayStart.getTime(), dayEnd.getTime()));
+        //dateAxis.setDefaultAutoRange(new Range(dayStart.getTime(), dayEnd.getTime()));
 
         BGAxis.setAutoRangeIncludesZero(true);
 
         insBUAxis.setLabel(translator.getMessage("CH_LONG") + " / " + translator.getMessage("INSULIN"));
         insBUAxis.setAutoRangeIncludesZero(true);
+        
+        /*
+        System.out.println("TimeZones\n================================\n");
+        
+        String tz[] = TimeZone.getAvailableIDs();
+        
+        for(int i =0; i<tz.length; i++)
+        {
+            System.out.println(tz[i]);
+        }*/
+        
+        
     }
 
     /*
@@ -212,6 +226,7 @@ public class DailyGraphView extends JFAbstractGraphView
      * @see
      * ggc.gui.view.JFAbstractGraphView#drawValues(org.jfree.chart.JFreeChart)
      */
+    @SuppressWarnings("deprecation")
     @Override
     protected void drawValues(JFreeChart chart)
     {
@@ -243,16 +258,17 @@ public class DailyGraphView extends JFAbstractGraphView
 
             if (row.getBG(BGUnit) > 0)
             {
+                //System.out.println("BGUnit = " + time);
                 if (BGSeries.getDataItem(time) == null)
                 {
                     BGSeries.add(time, row.getBG(BGUnit));
                 }
                 else
                 {
-                    BGSeries.addOrUpdate(time, MathUtils.getAverage(row.getBG(BGUnit), BGSeries.getDataItem(time)
-                            .getValue()));
+                    BGSeries.addOrUpdate(time, MathUtils.getAverage(row.getBG(BGUnit), BGSeries.getDataItem(time).getValue()));
                 }
             }
+            
             if (row.getCH() > 0)
             {
                 if (CHSeries.getDataItem(time) == null)
@@ -261,10 +277,10 @@ public class DailyGraphView extends JFAbstractGraphView
                 }
                 else
                 {
-                    CHSeries
-                            .addOrUpdate(time, MathUtils.getAverage(row.getCH(), CHSeries.getDataItem(time).getValue()));
+                    CHSeries.addOrUpdate(time, MathUtils.getAverage(row.getCH(), CHSeries.getDataItem(time).getValue()));
                 }
             }
+            
             if (row.getIns1() > 0)
             {
                 if (ins1Series.getDataItem(time) == null)

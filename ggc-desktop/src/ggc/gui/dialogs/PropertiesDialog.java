@@ -415,7 +415,8 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         }
 
         m_da.getSettings().save();
-
+        m_da.getSettings().load();
+        
 	/*
 	if (m_da.getDbConfig().hasChanged())
 	{

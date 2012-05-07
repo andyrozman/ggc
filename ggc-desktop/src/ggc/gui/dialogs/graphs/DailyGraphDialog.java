@@ -63,6 +63,9 @@ import com.atech.i18n.I18nControlAbstract;
  *  Description:  Daily Graph Dialog (DEPRECATED - WILL BE REMOVED)
  * 
  *  Author: andyrozman {andy@atech-software.com}  
+ *  
+ *  
+ *  @deprecated This class shouldn't be used. We now use GraphViewer, together with Views (look into atech-tools package)
  */
 
 // DailyGraphDialog is already added with new framework
@@ -169,6 +172,19 @@ public class DailyGraphDialog extends JDialog
     {
         dGV.setDailyValues(dV);
         this.repaint();
+        
+        /*
+        System.out.println("TimeZones\n================================\n");
+        
+        String tz[] = TimeZone.getAvailableIDs();
+        
+        for(int i =0; i<tz.length; i++)
+        {
+            System.out.println(tz[i]);
+        }*/
+
+        
+        
         // redraw();
     }
 

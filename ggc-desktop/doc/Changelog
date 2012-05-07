@@ -6,6 +6,14 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+0.5.0.2 [2.5.2012] [Andy] 
+    * Added Graphs framework supported and Fixed this graphs
+    * Changed configuration panels: Main (restart for all), Graphs (colors smaller, graph bigger)
+    * Added Minimed File import to CGMS and Pump (not integrated yet)
+    * Minimed reading data prepared (but not imported yet) 
+
+...missing data here...
+
 0.4.10 [23.4.2010]
     * Statistics for Pump Mode
 

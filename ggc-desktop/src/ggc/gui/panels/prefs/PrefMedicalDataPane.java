@@ -59,7 +59,7 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
     private JTextField fieldHighBG2, fieldLowBG2, fieldTargetHighBG2, fieldTargetLowBG2;
 
     
-    private JComboBox cb_ins1_type, cb_ins2_type, cb_ins3_type;
+    private JComboBox cb_ins1_type, cb_ins2_type, cb_ins3_type, cb_ratio_type;
     
     I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
     
@@ -215,15 +215,33 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
             cbUnit.setSelectedIndex(settings.getBG_unit()-1);
         else
             cbUnit.setSelectedIndex(0);
-            
+
+        
+        
+        
+        // ratio type
+        
+        String[] rat_type = { ic.getMessage("RATIO_MODE_BASE"), ic.getMessage("RATIO_MODE_EXTENDED") };
+        
+        JPanel e = new JPanel(new GridLayout(0, 2));
+        e.setBorder(new TitledBorder(m_ic.getMessage("RATIO_TYPE_SETTING")));
+        e.add(new JLabel(m_ic.getMessage("RATIO_TYPE") + ":"));
+        e.add(cb_ratio_type = new JComboBox(rat_type));
+        
+        if ((settings.getRatioMode().equals("")) || (settings.getRatioMode().equals("Base")))
+            cb_ratio_type.setSelectedIndex(0);
+        else 
+            cb_ratio_type.setSelectedIndex(1);
+        
+        
         //d.add(cbUnit = new JComboBox(m_da.bg_units));
         //cbUnit.setSelectedIndex(settings.getBG_unit() - 1);
 
         Box i = Box.createVerticalBox();
         i.add(a);
-        i.add(d);
         i.add(c);
-//        i.add(b);
+        i.add(d);
+        i.add(e);
 
         add(i, BorderLayout.NORTH);
 
@@ -252,7 +270,6 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
         //settings.setIns3Abbr(this.tb_ins3_abbr.getText());
         settings.setPumpInsulin(this.tb_pump_insulin.getText());
         
-        
         // bg 1
         settings.setBG1_High(m_da.getFloatValue(fieldHighBG1.getText()));
         settings.setBG1_Low(m_da.getFloatValue(fieldLowBG1.getText()));
@@ -267,6 +284,13 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
 
         // unit
         settings.setBG_unit(cbUnit.getSelectedIndex()+ 1);
+        
+        // ratio mode
+        if (this.cb_ratio_type.getSelectedIndex()==0)
+            settings.setRatioMode("Base");
+        else
+            settings.setRatioMode("Extended");
+        
 
     }
 

@@ -26,7 +26,7 @@
  *  Author:   andyrozman {andy@atech-software.com}
  *
  */
-package ggc.gui.dialogs;
+package ggc.gui.dialogs.stock;
 
 import ggc.core.db.hibernate.DoctorH;
 import ggc.core.util.DataAccess;
@@ -118,7 +118,8 @@ public class StockListDialog extends JDialog implements ActionListener
 
     public StockListDialog()
     {
-        setBounds(175, 150, 450, 380);
+        setBounds(new Rectangle(0, 0, 700, 500));
+        setBounds(175, 150, 758, 512);
         initComponents();
         this.setVisible(true);
     }
@@ -156,7 +157,7 @@ public class StockListDialog extends JDialog implements ActionListener
     {
 
         
-        this.setLayout(null);
+        getContentPane().setLayout(null);
 
         font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
         font_normal_bold = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
@@ -166,7 +167,7 @@ public class StockListDialog extends JDialog implements ActionListener
         
         
         JPanel panel = new JPanel();
-        panel.setBounds(0, 0, 450, 350);
+        panel.setBounds(0, 0, 750, 478);
         panel.setLayout(null);
     
         this.getContentPane().add(panel);
@@ -231,7 +232,7 @@ public class StockListDialog extends JDialog implements ActionListener
             })  ;  
         
         JScrollPane scp = new JScrollPane(this.t_stocks);
-        scp.setBounds(40, 120, 290, 200);
+        scp.setBounds(40, 120, 653, 303);
         panel.add(scp);
             
         String[] names = {
@@ -299,6 +300,4 @@ public class StockListDialog extends JDialog implements ActionListener
             System.out.println("DoctorsDialog: Unknown command: " + action);
 
     }
-
-
 }

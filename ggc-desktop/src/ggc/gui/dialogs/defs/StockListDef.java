@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
-import com.atech.graphics.dialogs.ButtonDef;
-import com.atech.graphics.dialogs.GUIListDefAbstract;
+import com.atech.graphics.dialogs.guilist.ButtonDef;
+import com.atech.graphics.dialogs.guilist.DividerDef;
+import com.atech.graphics.dialogs.guilist.GUIListDefAbstract;
+import com.atech.graphics.dialogs.guilist.LabelDef;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -66,8 +68,28 @@ public class StockListDef extends GUIListDefAbstract
             StockSelectorDialog ssd = new StockSelectorDialog(this.parent_dialog, m_da, 1);
             ssd.showDialog();
         }
-        
-        System.out.println(this.getDefName() + " has not implemented action " + action);
+        else if (action.equals("add_type"))
+        {
+            
+        }
+        else if (action.equals("edit_type"))
+        {
+            
+        }
+        else if (action.equals("add_amount"))
+        {
+            
+        }
+        else if (action.equals("edit_amount"))
+        {
+            
+        }
+        else if (action.equals("edit_amount"))
+        {
+            
+        }
+        else
+            System.out.println(this.getDefName() + " has not implemented action " + action);
     }
 
     @Override
@@ -151,13 +173,15 @@ public class StockListDef extends GUIListDefAbstract
         this.filter_options_combo1 = s;
         
         this.button_defs = new ArrayList<ButtonDef>();
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD_TYPE"), "add_type", "STOCKS_TABLE_ADD_DESC", "table_add.png"));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_TYPE"), "edit_type", "STOCKS_TABLE_EDIT_DESC", "table_edit.png"));
+        this.button_defs.add(new LabelDef(this.ic.getMessage("STOCK_TYPES"), LabelDef.FONT_BOLD));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD"), "add_type", "STOCKS_TABLE_ADD_DESC", "table_add.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_type", "STOCKS_TABLE_EDIT_DESC", "table_edit.png"));
 //        this.button_defs.add(new ButtonDef(this.ic.getMessage("VIEW_TYPE"), "view", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
+        this.button_defs.add(new LabelDef(this.ic.getMessage("STOCK_AMOUNTS"), LabelDef.FONT_BOLD));
 
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD_AMOUNT"), "add_amount", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_AMOUNT"), "edit_amount", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
-        
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD"), "add_amount", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_amount", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
+        this.button_defs.add(new DividerDef());
         this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_LIST"), "edit_list", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
         
         this.def_parameters = new String[2];

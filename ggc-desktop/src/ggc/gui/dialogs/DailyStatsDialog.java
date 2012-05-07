@@ -219,7 +219,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
         // Panel for BU Stats
         JPanel BUPanel = new JPanel(new GridLayout(1, 6));
-        BUPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BREAD_UNITS") + ":"));
+        BUPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("CH_LONG") + ":"));
 
         BUPanel.add(new JLabel(m_ic.getMessage("SUM") + ":"));
         BUPanel.add(sumBE = new JLabel());
@@ -472,6 +472,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
     {
 
         String command = e.getActionCommand();
+        //System.out.println("actionPerformed: " + command);
 
         if (command.equals("add_row"))
         {
