@@ -105,6 +105,8 @@ public class PumpBolusType extends PumpDefsAbstract
         this.setDataDesc(PumpBolusType.PUMP_BOLUS_DUAL_NORMAL, ic.getMessage("BOLUS_DUAL_NORMAL"));
         this.setDataDesc(PumpBolusType.PUMP_BOLUS_DUAL_SQUARE, ic.getMessage("BOLUS_DUAL_SQUARE"), "AMOUNT_SQUARE=%s;DURATION=%s");
         this.setDataDesc(PumpBolusType.PUMP_BOLUS_NONE, ic.getMessage("BOLUS_NONE"));
+        
+        this.finalizeAdding();
     }
     
     

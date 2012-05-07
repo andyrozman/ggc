@@ -599,10 +599,14 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.label_1.setVisible(true);
         this.label_1.setText(ic.getMessage("BOLUS_TYPE") + ":");
 
+        
+        //System.out.println("DHHHD" + DataAccess.this.m_da.getBolusSubTypes().getStaticDescriptionArray());
+        
+        
         this.combo_1.setBounds(150, 20, 180, 25);
         this.combo_1.setVisible(true);
         this.combo_1.setActionCommand("bolus");
-        addAllItems(this.combo_1, this.m_da.getBolusSubTypes().getDescriptions());
+        addAllItems(this.combo_1, this.m_da.getBolusSubTypes().getStaticDescriptionArray());
         //this.combo_1.setSelectedIndex(1);
         
         this.button_1.setBounds(120, 20, 25, 25);
@@ -616,6 +620,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.text_1.setBounds(150, 55, 180, 25);
         this.text_1.setVisible(true);
 
+        this.sub_type = -1;
         this.setBolusSubType(PumpBolusType.PUMP_BOLUS_STANDARD);
         //this.setHeight(85);
 
@@ -633,7 +638,13 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         else
             this.sub_type = stype;
 
-        this.combo_1.setSelectedIndex(stype);
+        
+        // fix subtype
+        //getIndexFromStaticDescriptionArrayWithID(stype)
+        
+        
+        
+        this.combo_1.setSelectedIndex(this.m_da.getBolusSubTypes().getIndexFromStaticDescriptionArrayWithID(stype));
         
         this.num_tf_1_d2.setVisible(false);
         this.num_tf_2_d2.setVisible(false);
@@ -644,85 +655,87 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         switch (this.sub_type)
         {
-        case PumpBolusType.PUMP_BOLUS_STANDARD:
-        case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
-            {
-                this.label_2.setBounds(0, 90, 150, 25);
-                this.text_1.setBounds(150, 90, 180, 25);
-
-                //this.text_1.setVisible(true);
-                //this.label_2.setVisible(true);
+            case PumpBolusType.PUMP_BOLUS_STANDARD:
+            case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
+            case PumpBolusType.PUMP_BOLUS_DUAL_NORMAL:
+                {
+                    this.label_2.setBounds(0, 90, 150, 25);
+                    this.text_1.setBounds(150, 90, 180, 25);
+    
+                    //this.text_1.setVisible(true);
+                    //this.label_2.setVisible(true);
+                    
+                    this.num_tf_1_d2.setBounds(150, 55, 180, 25);
+                    this.num_tf_1_d2.setVisible(true);
+                    this.label_3.setBounds(0, 55, 150, 25);
+                    this.label_3.setText(ic.getMessage("AMOUNT") + ":");
+                    this.label_3.setVisible(true);
+    
+                    this.setHeight(115);
+                } break;
                 
-                this.num_tf_1_d2.setBounds(150, 55, 180, 25);
-                this.num_tf_1_d2.setVisible(true);
-                this.label_3.setBounds(0, 55, 150, 25);
-                this.label_3.setText(ic.getMessage("AMOUNT") + ":");
-                this.label_3.setVisible(true);
-
-                this.setHeight(115);
-            } break;
-            
-        case PumpBolusType.PUMP_BOLUS_SQUARE:
-            {
-                // TODO
-                this.label_2.setBounds(0, 90, 150, 25);
-                this.text_1.setBounds(110, 90, 220, 25);
-
-                //this.num_tf_1_d2.setBounds(150, 55, 180, 25);
-                //this.num_tf_1_d2.setVisible(true);
-                //this.label_3.setBounds(0, 55, 150, 25);
-                //this.label_3.setText(ic.getMessage("AMOUNT") + ":");
-                //this.label_3.setVisible(true);
-
-                this.bolus_sq.setBounds(0, 55, 200, 25);
-                this.bolus_sq.setType(SquareBolusComponent.SQUARE_SINGLE);
-                this.bolus_sq.setVisible(true);
-                
-                this.setHeight(115);
-            }
-            break;
-
-        case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
-            {
-                this.label_2.setBounds(0, 125, 150, 25);
-                this.text_1.setBounds(150, 125, 180, 25);
-
-                this.num_tf_1_d2.setBounds(150, 55, 180, 25);
-                this.num_tf_1_d2.setVisible(true);
-                this.label_3.setBounds(0, 55, 150, 25);
-                this.label_3.setText(ic.getMessage("IMMEDIATE_AMOUNT") + ":");
-                this.label_3.setVisible(true);
-
-                // 90
-                /*this.label_4.setText(ic.getMessage("AMOUNT_MW_2") + ":");
-                label_4.setBounds(0, 90, 150, 25);
-                this.label_4.setVisible(true);
-                this.num_tf_2_d2.setBounds(150, 90, 180, 25);
-                this.num_tf_2_d2.setVisible(true); */
-                //this.tc_1.setVisible(false);
-                
-                this.bolus_sq.setBounds(0, 90, 200, 25);
-                this.bolus_sq.setType(SquareBolusComponent.SQUARE_DUAL);
-                this.bolus_sq.setVisible(true);
-                
-                
-                this.setHeight(150);
-
-            }
-            break;
-
-        case PumpBolusType.PUMP_BOLUS_NONE:
-            {
-                /*                this.num_tf_1_d2.setVisible(false);
-                                this.num_tf_2_d2.setVisible(false);
-                                this.label_3.setVisible(false);
-                                this.label_4.setVisible(false); */
-
-                this.label_2.setBounds(0, 55, 150, 25);
-                this.text_1.setBounds(150, 55, 180, 25);
-                this.setHeight(85);
-            }
-            break;
+            case PumpBolusType.PUMP_BOLUS_SQUARE:
+            case PumpBolusType.PUMP_BOLUS_DUAL_SQUARE:
+                {
+                    // TODO
+                    this.label_2.setBounds(0, 90, 150, 25);
+                    this.text_1.setBounds(110, 90, 220, 25);
+    
+                    //this.num_tf_1_d2.setBounds(150, 55, 180, 25);
+                    //this.num_tf_1_d2.setVisible(true);
+                    //this.label_3.setBounds(0, 55, 150, 25);
+                    //this.label_3.setText(ic.getMessage("AMOUNT") + ":");
+                    //this.label_3.setVisible(true);
+    
+                    this.bolus_sq.setBounds(0, 55, 200, 25);
+                    this.bolus_sq.setType(SquareBolusComponent.SQUARE_SINGLE);
+                    this.bolus_sq.setVisible(true);
+                    
+                    this.setHeight(115);
+                }
+                break;
+    
+            case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
+                {
+                    this.label_2.setBounds(0, 125, 150, 25);
+                    this.text_1.setBounds(150, 125, 180, 25);
+    
+                    this.num_tf_1_d2.setBounds(150, 55, 180, 25);
+                    this.num_tf_1_d2.setVisible(true);
+                    this.label_3.setBounds(0, 55, 150, 25);
+                    this.label_3.setText(ic.getMessage("IMMEDIATE_AMOUNT") + ":");
+                    this.label_3.setVisible(true);
+    
+                    // 90
+                    /*this.label_4.setText(ic.getMessage("AMOUNT_MW_2") + ":");
+                    label_4.setBounds(0, 90, 150, 25);
+                    this.label_4.setVisible(true);
+                    this.num_tf_2_d2.setBounds(150, 90, 180, 25);
+                    this.num_tf_2_d2.setVisible(true); */
+                    //this.tc_1.setVisible(false);
+                    
+                    this.bolus_sq.setBounds(0, 90, 200, 25);
+                    this.bolus_sq.setType(SquareBolusComponent.SQUARE_DUAL);
+                    this.bolus_sq.setVisible(true);
+                    
+                    
+                    this.setHeight(150);
+    
+                }
+                break;
+    
+            case PumpBolusType.PUMP_BOLUS_NONE:
+                {
+                    /*                this.num_tf_1_d2.setVisible(false);
+                                    this.num_tf_2_d2.setVisible(false);
+                                    this.label_3.setVisible(false);
+                                    this.label_4.setVisible(false); */
+    
+                    this.label_2.setBounds(0, 55, 150, 25);
+                    this.text_1.setBounds(150, 55, 180, 25);
+                    this.setHeight(85);
+                }
+                break;
 
         }
 
@@ -1194,7 +1207,11 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         {
             // System.out.println("Bolus event: " +
             // this.combo_1.getSelectedIndex());
-            setBolusSubType(this.combo_1.getSelectedIndex());
+            
+            String s = (String)this.combo_1.getSelectedItem();
+            setBolusSubType(this.m_da.getBolusSubTypes().getTypeFromDescription(s));
+            
+            //setBolusSubType(this.combo_1.getSelectedIndex());
         }
         else if (cmd.equals("basal"))
         {
