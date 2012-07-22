@@ -1,5 +1,8 @@
 package ggc.pump.device.minimed;
 
+import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.impl.minimed.MinimedDevicesIds;
+import ggc.plugin.device.impl.minimed.cmd.MinimedCommand;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -32,16 +35,16 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class Minimed508 extends MinimedPump
+public class Minimed508 extends MinimedPumpDevice
 {
 
     /**
      * Constructor 
      */
-    public Minimed508()
+    /*public Minimed508()
     {
         super();
-    }
+    }*/
     
     
     /**
@@ -50,23 +53,18 @@ public class Minimed508 extends MinimedPump
      * @param drive_letter 
      * @param writer 
      */
-    public Minimed508(String drive_letter, OutputWriter writer)
+    /*public Minimed508(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
-    }
+    }*/
     
     
-    /**
-     * Constructor
-     * 
-     * @param params
-     * @param writer
-     * @param da 
-     */
-    public Minimed508(String params, OutputWriter writer, DataAccessPlugInBase da)
+    public Minimed508(DataAccessPlugInBase da, int device_type, String full_port, OutputWriter writer)
     {
-        super(params, writer, da);
+        super(da, device_type, full_port, writer);
     }
+
+    
     
     
     /**
@@ -114,6 +112,12 @@ public class Minimed508 extends MinimedPump
         return PumpDevicesIds.PUMP_MINIMED_508;
     }
 
+    
+    public int getMinimedDeviceId()
+    {
+        return MinimedDevicesIds.PUMP_MINIMED_508c;
+    }
+    
     
     /**
      * getInstructions - get instructions for device
@@ -173,11 +177,11 @@ public class Minimed508 extends MinimedPump
      * 
      * @return
      */
-/*    public int getDownloadSupportType()
+    public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
-  */  
+    
     
     /**
      * How Many Months Of Data Stored
@@ -235,6 +239,33 @@ public class Minimed508 extends MinimedPump
     public boolean arePumpSettingsSet()
     {
         return true;
+    }
+
+
+
+
+    @Override
+    public void initDeviceSpecific()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+
+
+    @Override
+    public void createCommands()
+    {
+    }
+
+
+
+
+    @Override
+    public Object convertDeviceReply(MinimedCommand mc)
+    {
+        return null;
     }
     
     

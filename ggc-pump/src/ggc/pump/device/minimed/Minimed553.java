@@ -35,7 +35,7 @@ import gnu.io.SerialPort;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class Minimed554_Veo extends Minimed553
+public class Minimed553 extends Minimed523
 {
 
     
@@ -47,7 +47,7 @@ public class Minimed554_Veo extends Minimed553
      * @param full_port - full port identification 
      * @param writer - output writer instance
      */
-    public Minimed554_Veo(DataAccessPlugInBase da, int device_type, String full_port, OutputWriter writer)
+    public Minimed553(DataAccessPlugInBase da, int device_type, String full_port, OutputWriter writer)
     {
         super(da, device_type, full_port, writer);
     }
@@ -61,10 +61,11 @@ public class Minimed554_Veo extends Minimed553
      * @param full_port - full port identification 
      * @param writer - output writer instance
      */
-    public Minimed554_Veo(DataAccessPlugInBase da, String full_port, OutputWriter writer)
+    public Minimed553(DataAccessPlugInBase da, String full_port, OutputWriter writer)
     {
-        this(da, PumpDevicesIds.PUMP_MINIMED_554, full_port, writer);
+        this(da, PumpDevicesIds.PUMP_MINIMED_553, full_port, writer);
     }
+    
     
     
     /**
@@ -72,19 +73,22 @@ public class Minimed554_Veo extends Minimed553
      * 
      * @param cmp
      */
-    public Minimed554_Veo(AbstractDeviceCompany cmp)
+    public Minimed553(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
     
-    
+
     
     public void initDeviceSpecific()
     {
         super.initDeviceSpecific();
+
         
+//        util.config.comm_delay_io = 4;
+//        util.config.comm_baudrate = 56000;
         
-        util.config.comm_delay_io = 4; //  250;
+        util.config.comm_delay_io = 250;
         util.config.comm_baudrate = 57600;
         
         util.config.comm_data_bits = SerialPort.DATABITS_8;
@@ -92,7 +96,7 @@ public class Minimed554_Veo extends Minimed553
         util.config.comm_parity = SerialPort.PARITY_NONE;
         util.config.comm_stop_bits = SerialPort.STOPBITS_1;
         
-        //new CommPort("");
+        
 //        m_baudRate = 10;
 //        m_ioDelayMS = 4;
 /*        
@@ -162,7 +166,8 @@ public class Minimed554_Veo extends Minimed553
   */      
     }
     
-
+    
+    
     
     
     
@@ -198,7 +203,7 @@ public class Minimed554_Veo extends Minimed553
      */
     public int getDeviceId()
     {
-        return PumpDevicesIds.PUMP_MINIMED_554;
+        return PumpDevicesIds.PUMP_MINIMED_553;
     }
 
     
@@ -323,22 +328,20 @@ public class Minimed554_Veo extends Minimed553
     {
         return false;
     }
-    
+
     
     public int getMinimedDeviceId()
     {
-        return MinimedDevicesIds.PUMP_MINIMED_554;
+        return MinimedDevicesIds.PUMP_MINIMED_553;
     }
     
     
-     
+    
     /*
-
     public void createCommands()
     {
         super.createCommands();
     }
-    
     
     
     public Object decodeDeviceReply(MinimedCommand mc)
@@ -357,6 +360,5 @@ public class Minimed554_Veo extends Minimed553
     }*/
     
     
-    
-    
+        
 }

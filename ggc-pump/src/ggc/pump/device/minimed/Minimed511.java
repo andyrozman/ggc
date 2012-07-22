@@ -1,18 +1,19 @@
 package ggc.pump.device.minimed;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.impl.minimed.MinimedDevicesIds;
 import ggc.plugin.device.impl.minimed.cmd.MinimedCommand;
 import ggc.plugin.device.impl.minimed.cmd.MinimedCommandHistoryData;
+import ggc.plugin.device.impl.minimed.cmd.MinimedReplyDecoder;
 import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.manager.PumpDevicesIds;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,23 +41,11 @@ import org.apache.commons.logging.LogFactory;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class Minimed512 extends Minimed511
+public class Minimed511 extends MinimedPumpDevice
 {
-    private static Log log = LogFactory.getLog(Minimed512.class);
+    private static Log log = LogFactory.getLog(Minimed511.class);
 
     //MinimedDeviceUtil utils = MinimedDeviceUtil.getInstance(); 
-    
-    /**
-     * Constructor 
-     */
-/*    public Minimed512()
-    {
-        super();
-    }
-  */  
-    
-    
-    
     
     /**
      * Constructor
@@ -66,7 +55,7 @@ public class Minimed512 extends Minimed511
      * @param full_port - full port identification 
      * @param writer - output writer instance
      */
-    public Minimed512(DataAccessPlugInBase da, int device_type, String full_port, OutputWriter writer)
+    public Minimed511(DataAccessPlugInBase da, int device_type, String full_port, OutputWriter writer)
     {
         super(da, device_type, full_port, writer);
     }
@@ -80,9 +69,9 @@ public class Minimed512 extends Minimed511
      * @param full_port - full port identification 
      * @param writer - output writer instance
      */
-    public Minimed512(DataAccessPlugInBase da, String full_port, OutputWriter writer)
+    public Minimed511(DataAccessPlugInBase da, String full_port, OutputWriter writer)
     {
-        this(da, PumpDevicesIds.PUMP_MINIMED_512, full_port, writer);
+        this(da, PumpDevicesIds.PUMP_MINIMED_511, full_port, writer);
     }
     
     
@@ -91,30 +80,23 @@ public class Minimed512 extends Minimed511
      * 
      * @param cmp
      */
-    public Minimed512(AbstractDeviceCompany cmp)
+    public Minimed511(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
     
 
-    /** 
-     * initDeviceSpecific - Device specific init
-     */
     public void initDeviceSpecific()
     {
-        super.initDeviceSpecific();
-        
-       // util = MinimedDeviceUtil.getInstance();
         util.config.comm_delay_io = 4;
-        util.config.comm_baudrate = 56000;
+        util.config.comm_baudrate = 56700;
         
+        util.config.comm_rx_buffer_size = 16384;
+        util.config.comm_tx_buffer_size = 2048;
         
-        util.config.strokes_per_basal_unit = 40;
+        util.config.strokes_per_basal_unit = 10;
         util.config.strokes_per_bolus_unit = 10;
         
-        
-        
-        log.debug("Initx");
         
 //        m_baudRate = 10;
 //        m_ioDelayMS = 4;
@@ -190,6 +172,10 @@ public class Minimed512 extends Minimed511
     
     
     
+    
+    
+    
+    
     /**
      * getName - Get Name of meter. 
      * 
@@ -221,9 +207,15 @@ public class Minimed512 extends Minimed511
      */
     public int getDeviceId()
     {
-        return PumpDevicesIds.PUMP_MINIMED_512;
+        return PumpDevicesIds.PUMP_MINIMED_511;
     }
 
+    
+    public int getMinimedDeviceId()
+    {
+        return MinimedDevicesIds.PUMP_MINIMED_511;
+    }
+    
     
     /**
      * getInstructions - get instructions for device
@@ -403,173 +395,198 @@ public class Minimed512 extends Minimed511
         
     }
 
-    
-    public int getMinimedDeviceId()
-    {
-        return MinimedDevicesIds.PUMP_MINIMED_512;
-    }
-    
-    
-    /** 
-     * createCommands - Create commands for reading
-     */
+
     public void createCommands()
     {
-        super.createCommands();
-        
         // CONTROL COMMAND
-        util.addCommand(MinimedCommand.READ_TEMPORARY_BASAL, new MinimedCommand( 152, "Read Temporary Basal"));
-        util.addCommand(MinimedCommand.SET_TEMPORARY_BASAL, new MinimedCommand(76, "Set Temp Basal Rate (bolus detection only)", 3));
-        util.getCommand(MinimedCommand.SET_TEMPORARY_BASAL).command_parameters = util.getParamatersArray(3, 0, 0, 0);
-        util.getCommand(MinimedCommand.SET_TEMPORARY_BASAL).allowed_retries = 0;
+        util.addCommand(MinimedCommand.COMMAND_ACK, new MinimedCommand(MinimedCommand.COMMAND_ACK, "MM_ACKNOWLEDGE"));
+        util.addCommand(MinimedCommand.COMMAND_KEYPAD_PUSH_ACK, new MinimedCommand(91, "MM_KEYPAD_PUSH_ACK", util.getParamatersArray(1, 2), 1));
+        util.addCommand(MinimedCommand.COMMAND_KEYPAD_PUSH_ESC, new MinimedCommand(91, "MM_KEYPAD_PUSH_ESC", util.getParamatersArray(1, 1), 1));
+        util.addCommand(MinimedCommand.READ_PUMP_ERROR_STATUS, new MinimedCommand(117, "MM_READ_PUMP_ERROR_STATUS"));
+        util.addCommand(MinimedCommand.READ_REMOTE_CONTROL_IDS, new MinimedCommand(118, "MM_CMD_READ_REMOTE_CONTROL_IDS"));
+        util.addCommand(MinimedCommand.READ_PUMP_STATE, new MinimedCommand(131, "MM_READ_PUMP_STATE"));
+        util.addCommand(MinimedCommand.SET_RF_POWER_ON, new MinimedCommand(MinimedCommand.SET_RF_POWER_ON, "MM_SET_RF_POWER_ON", 0));
+        util.getCommand(MinimedCommand.SET_RF_POWER_ON).command_parameters = util.getParamatersArray(2, 1, 10);
+        util.getCommand(MinimedCommand.SET_RF_POWER_ON).command_parameters_count = 2;
+        util.getCommand(MinimedCommand.SET_RF_POWER_ON).max_allowed_time = 17000;
+        util.addCommand(MinimedCommand.SET_RF_POWER_OFF, new MinimedCommand(93, "MM_SET_RF_POWER_OFF", util.getParamatersArray(2, 0, 0), 2));
+        util.addCommand(MinimedCommand.SET_SUSPEND, new MinimedCommand(MinimedCommand.CANCEL_SUSPEND, "MM_CANCEL_SUSPEND", util.getParamatersArray(1, 1), 1));
+        util.addCommand(MinimedCommand.CANCEL_SUSPEND, new MinimedCommand(MinimedCommand.CANCEL_SUSPEND, "MM_CANCEL_SUSPEND", util.getParamatersArray(1, 0), 1));
+        util.addCommand(MinimedCommand.DETECT_BOLUS, new MinimedCommand(75, "MM_DETECT_BOLUS", util.getParamatersArray(3, 0, 0, 0), 3));
+        util.addCommand(MinimedCommand.READ_FIRMWARE_VERSION, new MinimedCommand(MinimedCommand.READ_FIRMWARE_VERSION, "MM_READ_FIRMWARE_VERSION"));
+        util.addCommand(MinimedCommand.READ_PUMP_ID, new MinimedCommand(113, "MM_READ_PUMP_ID")); 
+        util.addCommand(MinimedCommand.READ_TEMPORARY_BASAL, new MinimedCommand(120, "MM_READ_TEMPORARY_BASAL"));
         
-        // SETTINGS
-        util.addCommand(MinimedCommand.READ_PUMP_MODEL, new MinimedCommand(141, "Read Pump Model"));
-        util.addCommand(MinimedCommand.READ_BG_TARGETS, new MinimedCommand(140, "Read BG Targets"));
-        util.addCommand(MinimedCommand.READ_BG_UNITS, new MinimedCommand(137, "Read BG Units"));
-        util.addCommand(MinimedCommand.READ_LANGUAGE, new MinimedCommand(134, "Read Language"));
-        
-        // PUMP SETTINGS
-        util.addCommand(MinimedCommand.SETTINGS, new MinimedCommand(145, "MM_COMMAND_READ_CURRENT_SETTINGS")); 
-        util.addCommand(MinimedCommand.READ_BG_ALARM_CLOCKS, new MinimedCommand( 142, "Read BG Alarm Clocks"));
-        util.addCommand(MinimedCommand.READ_BG_ALARM_ENABLE, new MinimedCommand( 151, "Read BG Alarm Enable"));
-        util.addCommand(MinimedCommand.READ_BG_REMINDER_ENABLE, new MinimedCommand( 144, "Read BG Reminder Enable"));
-        util.addCommand(MinimedCommand.READ_INSULIN_SENSITIVITES, new MinimedCommand( 139, "Read Insulin Sensitivities"));
-        
-        //m_cmdReadBGTargets = new MM511.Command( 140, "Read BG Targets");
+        // PUMP SETTINGS / STATUS
+        util.addCommand(MinimedCommand.READ_REAL_TIME_CLOCK, new MinimedCommand(112, "Read Real Time Clock"));
+        util.addCommand(MinimedCommand.SETTINGS, new MinimedCommand(127, "MM_COMMAND_READ_CURRENT_SETTINGS")); 
+        util.addCommand(MinimedCommand.READ_BATTERY_STATUS, new MinimedCommand(114, "Read Battery Status"));
+        util.addCommand(MinimedCommand.READ_REMAINING_INSULIN, new MinimedCommand(115, "Read Remaining Insulin"));
         
         // PUMP DATA COMMANDS
-        util.addCommand(MinimedCommand.HISTORY_DATA, new MinimedCommandHistoryData(36));
-        util.addCommand(MinimedCommand.READ_PROFILES_STD_DATA, new MinimedCommand( 146, "Read Standard Profiles Data", 192, 1, 8));
-        util.addCommand(MinimedCommand.READ_PROFILES_A_DATA, new MinimedCommand( 147, "Read Profiles A Data", 192, 1, 9));
-        util.addCommand(MinimedCommand.READ_PROFILES_B_DATA, new MinimedCommand( 148, "Read Profiles B Data", 192, 1, 10));
-        util.addCommand(MinimedCommand.READ_BOLUS_WIZARD_SETUP_STATUS, new MinimedCommand( 135, "Read Bolus Wizard Setup Status"));
-        util.addCommand(MinimedCommand.READ_CARBOHYDRATE_RATIOS, new MinimedCommand( 138, "Read Carbohydrate Ratios"));
-        util.addCommand(MinimedCommand.READ_CARBOHYDRATE_UNITS, new MinimedCommand( 136, "Read Carbohydrate Units"));
+        util.addCommand(MinimedCommand.HISTORY_DATA, new MinimedCommandHistoryData());
+        util.addCommand(MinimedCommand.READ_PROFILES_STD_DATA, new MinimedCommand(122, "Read Standard Profiles Data", 128, 1, 8));
+        util.addCommand(MinimedCommand.READ_PROFILES_A_DATA, new MinimedCommand(123, "Read Profiles A Data", 128, 1, 9));
+        util.addCommand(MinimedCommand.READ_PROFILES_B_DATA, new MinimedCommand(124, "Read Profiles B Data", 128, 1, 10));
+        
 
         // REMOVED COMMANDS
-        //util.addCommand(MinimedCommand.READ_RESERVOIR_WARNING, new MinimedCommand(143, "Read Reservoir Warning"));
-        //util.addCommand(MinimedCommand.READ_PARADIGMLINK_IDS, new MinimedCommand( 149, "Read ParadigmLink Ids"));
-        
-        
-        
-        // 145
-        
-        
-        
-        
+        /*
+        util.addCommand(MinimedCommand.ENABLE_DETAIL_TRACE, new MinimedCommand(160, "Enable Detail Trace", util.getParamatersArray(1, 1), 1));
+        util.addCommand(MinimedCommand.DISABLE_DETAIL_TRACE, new MinimedCommand(160, "Disable Detail Trace", util.getParamatersArray(1, 0), 1));
+        util.addCommand(MinimedCommand.READ_PUMP_TRACE, new MinimedCommand(163, "Read Pump Trace", 1024, 49, 0));
+        util.addCommand(MinimedCommand.READ_DETAIL_TRACE, new MinimedCommand(164, "Read Detail Trace", 1024, 11, 0));
+        util.addCommand(MinimedCommand.READ_NEW_ALARM_TRACE, new MinimedCommand(166, "Read New Alarm Trace", 1024, 11, 0));
+        util.addCommand(MinimedCommand.READ_OLD_ALARM_TRACE, new MinimedCommand(167, "Read Old Alarm Trace", 1024, 11, 0));
+        util.addCommand(MinimedCommand.READ_TODAYS_TOTAL_INSULIN, new MinimedCommand(121, "Read Today's Total Insulin"));
 
-      
+        */
+        
+        
     }
     
     
     
 
+    
     
     public Object convertDeviceReply(MinimedCommand mc)
     {
-        log.debug("convertDeviceReply [code=" + mc.command_code + ",desc=" + mc.command_description + "]");
         
         switch(mc.command_code)
         {
-
-            case MinimedCommand.READ_BG_ALARM_CLOCKS: 
-            case MinimedCommand.READ_BG_ALARM_ENABLE: 
-            
-            
-            //case MinimedCommand.READ_BOLUS_WIZARD_SETUP_STATUS:
-            //case MinimedCommand.READ_CARBOHYDRATE_RATIOS:
-            //case MinimedCommand.READ_CARBOHYDRATE_UNITS:
-            case MinimedCommand.READ_BG_TARGETS:
-                return this.getUnknownSettings(mc);
-/*        
-
-      
-
-        case 141: 
-            decodeModelNumber(command.m_rawData);
-            break;
-
-        default:
-            super.decodeReply(command);
-            break;
-  */      
-                
-            case 152:
-                return this.convertTempBasal(mc, mc.reply.raw_data);
-        
-            case 145: 
+            case 127: // '\177'
                 return convertCurrentSettings(mc);
-            
                 
-            case MinimedCommand.READ_CARBOHYDRATE_RATIOS:    
-            case MinimedCommand.READ_BOLUS_WIZARD_SETUP_STATUS:
-            case MinimedCommand.READ_INSULIN_SENSITIVITES:
-            case MinimedCommand.READ_CARBOHYDRATE_UNITS:
-            case MinimedCommand.READ_BG_REMINDER_ENABLE:
-            case MinimedCommand.READ_PUMP_MODEL:
-            case MinimedCommand.READ_BG_UNITS:
-            case MinimedCommand.READ_LANGUAGE:
-                return util.decoder.decode(mc);
+            case MinimedCommand.SET_TEMPORARY_BASAL:
+                return this.convertTempBasal(mc, mc.reply.raw_data);
                 
+            case MinimedCommand.READ_FIRMWARE_VERSION:
+            case MinimedCommand.READ_PUMP_ID:
+            case MinimedCommand.READ_PUMP_STATE:
             default:
-                return super.convertDeviceReply(mc);
+                return this.util.decoder.decode(mc);
         
         }
         
     }
-    
-    
-    
+
+
+
     public boolean convertCurrentSettings(MinimedCommand cmd)
     {
-        System.out.println("Settings");
+        //System.out.println("ERROR: Decode Current Settings (Minimed511)");
         log.debug("convertCurrentSettings");
-        
-        super.convertCurrentSettings(cmd);
         
         int rd[] = cmd.reply.raw_data;
         
-        util.config.addSetting("MM_SETTINGS_TEMP_BASAL_TYPE", rd[14] != 0 ? "MM_TEMP_BASAL_TYPE_PERCENT" : "MM_TEMP_BASAL_TYPE_UNITS");
 
-        if (rd[14]==1)
-        {
-            util.config.addSetting("MM_SETTINGS_TEMP_BASAL_PERCENT", "" + rd[15]);
-        }
+        util.config.addSetting("MM_SETTINGS_AUTO_OFF_DURATION_HRS", "" + rd[0]);
 
-        util.config.addSetting("MM_SETTINGS_PARADIGM_LINK_ENABLE", util.decoder.parseResultEnable(rd[16]));
-                
-        convertInsulinActionSetting(rd);                            
-                
-        return true;
+        int i = rd[1];
         
+        if(rd[0] == 4)
+        {
+            util.config.addSetting("MM_SETTINGS_ALARM_MODE", "MM_ALARM_MODE_SILENT");
+        } 
+        else
+        {
+            util.config.addSetting("MM_SETTINGS_ALARM_MODE", "MM_ALARM_MODE_NORMAL");
+            util.config.addSetting("MM_SETTINGS_ALARM_BEEP_VOLUME", "" + rd[0]);
+        }
+        
+
+        util.config.addSetting("MM_SETTINGS_EASY_AUDIO_BOLUS_ACTIVE", util.decoder.parseResultEnable(rd[2]));
+        
+        if (rd[2]==1)
+        {
+            util.config.addSetting("MM_SETTINGS_EASY_AUDIO_BOLUS_STEP_SIZE", "" + util.decoder.toBolusInsulin(rd[3]));
+        }
+        
+        
+        util.config.addSetting("MM_SETTINGS_VARIABLE_BOLUS_ENABLED", util.decoder.parseResultEnable(rd[4]));
+        util.config.addSetting("MM_SETTINGS_MAX_BOLUS", "" + convertMaxBolus(rd));
+        util.config.addSetting("MM_SETTINGS_MAX_BASAL_RATE", "" + this.util.decoder.toBasalInsulin(this.util.getHexUtils().makeUnsignedShort(rd[getSettingIndexMaxBasal()], rd[getSettingIndexMaxBasal() + 1])));
+        util.config.addSetting("MM_SETTINGS_TIME_FORMAT", (rd[getSettingIndexTimeDisplayFormat()] != 1 ? "12h" : "24h"));
+        util.config.addSetting("MM_SETTINGS_INSULIN_CONCENTRATION", "" + (rd[9] != 0 ? 50 : 100));
+        util.config.addSetting("MM_SETTINGS_BASAL_PATTERN_ENABLED", util.decoder.parseResultEnable(rd[10]));
+        
+        if (rd[10]==1)
+        {
+            String patt = "";
+            switch (rd[11])
+            {
+                case 0:
+                    patt = "MM_PATTERN_STD";
+                    break;
+                    
+                case 1:
+                    patt = "MM_PATTERN_A";
+                    break;
+                    
+                    
+                case 2:
+                    patt = "MM_PATTERN_B";
+                    break;
+                    
+                default:
+                    patt = "MM_PATTERN_UNKNOWN";
+                    break;
+            }
+                    
+                    
+            util.config.addSetting("MM_SETTINGS_BASAL_PATTERN", patt);
+
+        }
+        
+        util.config.addSetting("MM_SETTINGS_RF_ENABLED", util.decoder.parseResultEnable(rd[12]));
+        util.config.addSetting("MM_SETTINGS_BLOCK_ENABLED", util.decoder.parseResultEnable(rd[13]));
+        
+        return true;
+            
+            
     }
+   
     
-    
-    public void convertInsulinActionSetting(int ai[])
+    int getSettingIndexMaxBasal()
     {
-        util.config.addSetting("MM_SETTINGS_INSULIN_ACTION_TYPE", (ai[17] != 0 ? "MM_INSULIN_ACTION_TYPE_REGULAR" : "MM_INSULIN_ACTION_TYPE_FAST"));
+        return 6;
+    }
+
+    int getSettingIndexTimeDisplayFormat()
+    {
+        return 8;
     }
     
     
-
-
+    public double convertMaxBolus(int ai[])
+    {
+        return util.decoder.toBolusInsulin(ai[5]); 
+    }
+    
+    
     public int convertTempBasal(MinimedCommand command, int ai[])
     {
-        int i = this.util.getHexUtils().makeUnsignedShort(ai[2], ai[3]);
+        int i = this.util.getHexUtils().makeUnsignedShort(ai[0], ai[1]);
         util.config.addSetting("MM_TEMP_BASAL_RATE", "" + util.decoder.toBasalInsulin(i));
-        i = this.util.getHexUtils().makeUnsignedShort(ai[4], ai[5]);
+        i = this.util.getHexUtils().makeUnsignedShort(ai[2], ai[3]);
         util.config.addSetting("MM_TEMP_BASAL_DURATION", "" + i);
         log.info("decodeTempBasal: Temp Basal Rate = " + this.util.config.settings.get("MM_TEMP_BASAL_RATE"));
         log.info("decodeTempBasal: Temp Basal Remain Dur = " + this.util.config.settings.get("MM_TEMP_BASAL_DURATION"));
         return i;
     }
-    
-    
-    
-    
-    
-    
+
+    /**
+     * Get Unknown Settings
+     * 
+     * @param mc
+     * @return
+     */
+    public Object getUnknownSettings(MinimedCommand mc)
+    {
+        this.util.decoder.debugResult(mc);
+        return null;
+    }
     
     
     
