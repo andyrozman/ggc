@@ -34,8 +34,8 @@ import ggc.core.util.DataAccess;
 import ggc.core.util.MathUtils;
 
 import java.awt.BorderLayout;
+import java.awt.Rectangle;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartFactory;
@@ -46,13 +46,10 @@ import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.Range;
 import org.jfree.data.time.DateRange;
 import org.jfree.data.time.Hour;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-
-import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -326,4 +323,24 @@ public class DailyGraphView extends JFAbstractGraphView
         data = dV;
         redraw();
     }
+    
+    
+    public void setBounds(int x, int y, int width, int height)
+    {
+        super.setBounds(x, y, width, height);
+        this.chartPanel.setBounds(x, y, width, height);
+        redraw();
+    }
+    
+
+    public void setBounds(Rectangle rec)
+    {
+        super.setBounds(rec);
+        this.chartPanel.setBounds(rec);
+        redraw();
+    }
+
+    
+    
+    
 }

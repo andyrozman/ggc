@@ -210,12 +210,12 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         
         
         testingPanel = new JPanel();
-        testingPanel.setLayout(null);
+        testingPanel.setLayout(new BorderLayout());
         testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
-        testingPanel.setBounds(0, 150, 515, 270);
+        testingPanel.setBounds(0, 152, 515, 269);
         
         dgv = new DailyGraphView(selected_sheme, createDailyGraphValues());
-        dgv.setBounds(10, 20, 500, 235);
+        dgv.setBounds(10, 17, 500, 50);
         
         //testingPanel.setPreferredSize(new Dimension(150, 170));
         testingPanel.add(dgv);

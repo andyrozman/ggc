@@ -59,6 +59,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -303,6 +304,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         });
         table = new JTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         // MouseAdapter ma = new MouseAdapter();
 

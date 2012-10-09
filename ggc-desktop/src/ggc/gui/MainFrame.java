@@ -31,6 +31,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Observable;
 
@@ -1102,6 +1103,9 @@ public class MainFrame extends JFrame implements EventObserverInterface
             return (String) getValue(Action.NAME);
         }
 
+        
+        String next_version = "0.6";
+        
         public void actionPerformed(ActionEvent e)
         {
 
@@ -1142,7 +1146,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             else if (command.equals("view_freq"))
             {
                 //new FrequencyGraphDialog(m_da);
-                featureNotImplementedDescription(m_ic.getMessage("FREQGRAPHFRAME"), "0.5");
+                featureNotImplementedDescription(m_ic.getMessage("FREQGRAPHFRAME"), next_version);
             }
             else if (command.equals("view_hba1c"))
             {
@@ -1178,12 +1182,12 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
             else if (command.equals("ratio_extended"))
             {
-                if (MainFrame.developer_version)
+                //if (MainFrame.developer_version)
                 {
                     new RatioExtendedDialog(MainFrame.this);
                 }
-                else
-                    featureNotImplemented(command, "0.6");
+                //else
+                //    featureNotImplemented(command, "0.6");
                 
             }
             
@@ -1211,6 +1215,10 @@ public class MainFrame extends JFrame implements EventObserverInterface
             {
                 RestoreGGCSelectorDialog rsd = new RestoreGGCSelectorDialog(MainFrame.this, m_da);
                 rsd.showDialog();
+                
+                // update main panels
+                DataAccess.getInstance().loadDailySettings(new GregorianCalendar(), true);
+                m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
             }
             else if (command.equals("report_pdf_simple"))
             {
