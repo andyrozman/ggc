@@ -9,6 +9,7 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.USBProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
+import gnu.io.SerialPortEvent;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 

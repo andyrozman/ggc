@@ -168,7 +168,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
         
         Node nd = getNode("IMPORT/ACSPIX");
-        //System.out.println(nd);
+        System.out.println(nd);
         
         StringBuffer sb = new StringBuffer();
         
@@ -282,6 +282,10 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
             this.output_writer.writeData(mve);
             list.add(mve);
         }
+
+        
+        
+        
         
         
         // check for presence of ch
@@ -298,8 +302,6 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         
         return list;
        
-        
-        
         // dt_info > 201012100000 AND 
         // dt_info < 201012102359  
         //
