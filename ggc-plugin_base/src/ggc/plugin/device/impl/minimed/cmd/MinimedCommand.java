@@ -42,6 +42,10 @@ import org.apache.commons.logging.LogFactory;
 
 public class MinimedCommand implements Serializable
 {
+
+    private static final long serialVersionUID = -5765155190832642817L;
+
+
     private static Log log = LogFactory.getLog(MinimedCommand.class);
     
     
@@ -106,6 +110,9 @@ public class MinimedCommand implements Serializable
     public static final int HISTORY_DATA = 4403;
     
     
+    /**
+     * 
+     */
     public static final int SETTINGS = 4404;
     
     
@@ -122,6 +129,9 @@ public class MinimedCommand implements Serializable
     public static final int READ_PROFILES_A_DATA = 123;
     public static final int READ_PROFILES_B_DATA = 124;
     public static final int READ_BATTERY_STATUS = 114;
+    /**
+     * 
+     */
     public static final int READ_REMAINING_INSULIN = 115;
     
     public static final int READ_REMOTE_CONTROL_IDS = 118;
@@ -138,6 +148,9 @@ public class MinimedCommand implements Serializable
     
     
     // 512
+    /**
+     * 
+     */
     public static final int READ_PUMP_MODEL = 141;
     public static final int READ_BG_ALARM_CLOCKS = 142;
     public static final int READ_BG_ALARM_ENABLE = 151;
