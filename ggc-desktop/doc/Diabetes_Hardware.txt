@@ -1,9 +1,22 @@
 
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+THIS DOCUMENT IS DEPREACTED. PLEASE LOOK AT FILE GGC_Supported_Hradware.html
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
 DIABETES HARDWARE SUPPORT LIST
 ===============================
 
 Here is listed planned and implemented software. If you wish to help let us know, if you wish to have
-certian hardware contact us and we will se what can be done.
+certain hardware contact us and we will see what can be done.
 
 
 
@@ -32,10 +45,10 @@ B.) PUMPS
 
  Name of company  |               Plans                   | Supported devices                          | Developer 
 ----------------------------------------------------------------------------------------------------------------------
-Roche             | Done partitaly                        | Spirit, Combo (through SmartPix)           | Andy
+Roche             | Done                                  | Spirit, Combo (through SmartPix)           | Andy
 Minimed           | Planned -> 2Q 2009                    | Support with import of CareLink export     | Andy
 Animas            | Planned  ???                          | Through EZM db                             | Nate, ? 
-Dana              | 2009                                  | Dana Diabecare III/R (Win/Linux only)*     | Andy
+Dana              | Done                                  | Dana Diabecare III/R (Win/Linux only)*     | Andy
 
 
 * Dana uses BlueTooth technology. We had some problem with communication, so we resorted to alternate solution, 
@@ -49,7 +62,7 @@ C.) CGMS
  Name of company  |               Plans                    | Supported devices                         | Developer 
 ----------------------------------------------------------------------------------------------------------------------
 Minimed           | Planned, ?                             | Support with import of CareLink export    | Andy
-
+Dexcom            | L3
 
 
 
