@@ -66,7 +66,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.3.2";
+    public static final String PLUGIN_VERSION = "1.3.4";
 
     private static DataAccessPump s_da = null; // This is handle to unique 
 

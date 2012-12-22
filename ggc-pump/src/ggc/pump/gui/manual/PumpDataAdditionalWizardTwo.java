@@ -1,5 +1,6 @@
 package ggc.pump.gui.manual;
 
+import ggc.core.data.Converter_mgdL_mmolL;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
 import ggc.pump.data.PumpValuesEntryExt;
@@ -23,7 +24,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.dialogs.TransferDialog;
@@ -60,7 +64,7 @@ import com.atech.utils.ATSwingUtils;
 
 // fix this
 
-public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListener, HelpCapable, FocusListener, KeyListener
+public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListener, HelpCapable, /*FocusListener,*/ KeyListener, ChangeListener
 {
 
     private static final long serialVersionUID = 6600123145384610341L;
@@ -81,6 +85,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     JLabel label_1, label_2;
     JTextField text_1;
     JDecimalTextField num_1, num_2;
+    JSpinner spin_1, spin_2;
     JCheckBox cb_1;
     JButton button_1;
     int width;
@@ -188,13 +193,16 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         }
         else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_BG)
         {
-            this.num_1.setValue(new Float(this.data_object.getValue()));
-            this.focusProcess(num_1);
+            //this.num_1.setValue(new Float(this.data_object.getValue()));
+            //this.focusProcess(num_1);
             //po.setValue(this.num_1.getValue().toString());
+            this.spin_1.setValue(new Float(this.data_object.getValue()));
         }
         else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
         {
-            this.num_1.setValue(new Float(this.data_object.getValue()));
+            
+            this.spin_1.setValue(new Float(this.data_object.getValue()));
+            //this.num_1.setValue(new Float(this.data_object.getValue()));
 //            po.setValue(this.num_1.getValue().toString());
         }
         else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)
@@ -341,7 +349,6 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         case PumpAdditionalDataType.PUMP_ADD_DATA_CH:
             {
                 areaCH();
-                //areaUnsupported();
             }
             break;
 
@@ -390,7 +397,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         ATSwingUtils.getLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", startx + 20, 108, 100, 25, main_panel);
         ATSwingUtils.getLabel("mg/dL", startx + 130, 108, 100, 25, main_panel);
         ATSwingUtils.getLabel("mmol/L", startx + 130, 138, 100, 25, main_panel);
-        
+
+        /*
         this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
         this.num_2 = ATSwingUtils.getNumericTextField(2, 1, new Float(0.0f), startx + 180, 138, 55, 25, this.main_panel);
 
@@ -398,6 +406,18 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         this.num_1.addKeyListener(this);
         this.num_2.addFocusListener(this);
         this.num_2.addKeyListener(this);
+        */
+        
+        this.spin_1 = ATSwingUtils.getJSpinner(0.0f, 0.0f, 999.0f, 1.0f,
+            startx + 180, 108, 55, 25, this.main_panel); 
+        this.spin_1.addChangeListener(this);
+
+        
+        this.spin_2 = ATSwingUtils.getJSpinner(0.0f, 0.0f, 55.4f, 0.1f, 
+            startx + 180, 138, 55, 25, this.main_panel); 
+        this.spin_2.addChangeListener(this);
+
+        
     }
     
     
@@ -409,8 +429,12 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         
         ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", startx + 20, 108, 100, 25, main_panel);
         
-        this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
+//        this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
         
+        this.spin_1 = ATSwingUtils.getJSpinner(0.0f, 0.0f, 
+            250.0f, 1, 
+            startx + 180, 108, 55, 25, this.main_panel); 
+
     }
     
 
@@ -628,12 +652,14 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             }
             else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_BG)
             {
-                po.setValue(this.num_1.getValue().toString());
+                //po.setValue(this.num_1.getValue().toString());
+                po.setValue("" + m_da.getFloatValue(this.spin_1.getValue()));
             }
             else if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
             {
                 //System.out.println("val: " + this.num_1.getValue());
-                po.setValue(this.num_1.getValue().toString());
+                //po.setValue(this.num_1.getValue().toString());
+                po.setValue("" + m_da.getFloatValue(this.spin_1.getValue()));
             }
             else
                 System.out.println("Command for this type is not implemented !!!");
@@ -642,104 +668,9 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         }
 
         this.dispose();
-        // this.m_p
 
-        /*        
-                if (this.m_add_action)
-                {
-                    // add
-
-                    if (debug)
-                        System.out.println("dV: " + dV);
-
-                    // this.m_dailyValuesRow = new DailyValuesRow();
-
-                    this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
-
-                    // if (isFieldSet(BGField.getText()))
-
-                    float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
-
-                    if (f > 0.0)
-                    {
-                        //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
-                        // )+1, f);
-                        this.m_dailyValuesRow.setBG(1, f);
-                    }
-
-                    this.m_dailyValuesRow.setIns1(m_da
-                            .getJFormatedTextValueInt(this.ftf_ins1));
-                    this.m_dailyValuesRow.setIns2(m_da
-                            .getJFormatedTextValueInt(this.ftf_ins2));
-                    // checkDecimalFields(Ins1Field.getText()));
-                    //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
-                    // ()));
-                    //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
-                    // ;
-                    this.m_dailyValuesRow.setCH(m_da
-                            .getJFormatedTextValueFloat(this.ftf_ch));
-                    this.m_dailyValuesRow.setActivity(ActField.getText());
-                    this.m_dailyValuesRow.setUrine(UrineField.getText());
-                    this.m_dailyValuesRow.setComment(CommentField.getText());
-                    // this.m_dailyValuesRow.setMealIdsList(null);
-
-                    dV.setNewRow(this.m_dailyValuesRow);
-                    this.m_actionDone = true;
-                    this.dispose();
-                }
-                else
-                {
-
-                    // edit
-                    this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
-
-                    float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
-
-                    if (f > 0.0)
-                    {
-                        //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
-                        // )+1, f);
-                        this.m_dailyValuesRow.setBG(1, f);
-                    }
-
-                    // if (isFieldSet(BGField.getText()))
-                    //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1,
-                    // checkDecimalFields(BGField.getText()));
-                    this.m_dailyValuesRow.setIns1(m_da
-                            .getJFormatedTextValueInt(this.ftf_ins1));
-                    this.m_dailyValuesRow.setIns2(m_da
-                            .getJFormatedTextValueInt(this.ftf_ins2));
-
-                    //this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText
-                    // ()));
-                    //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
-                    // ()));
-                    this.m_dailyValuesRow.setCH(m_da
-                            .getJFormatedTextValueFloat(this.ftf_ch));
-                    //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
-                    // ;
-                    this.m_dailyValuesRow.setActivity(ActField.getText());
-                    this.m_dailyValuesRow.setUrine(UrineField.getText());
-                    this.m_dailyValuesRow.setComment(CommentField.getText());
-                    // this.m_dailyValuesRow.setMealIdsList(null);
-
-                    // mod.fireTableChanged(null);
-                    // clearFields();
-                    this.m_actionDone = true;
-                    this.dispose();
-                }
-        */
     }
 
-    /*
-    public boolean isFieldSet(String text)
-    {
-        m_da.is
-        if ((text == null) || (text.trim().length() == 0))
-            return false;
-        else
-            return true;
-    }*/
 
 
     // ****************************************************************
@@ -925,6 +856,94 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         
         
     }
+    
+    
+    
+    public void stateChanged(ChangeEvent e)
+    {
+        if (e.getSource() instanceof JSpinner)
+        {
+            changeProcess(e.getSource());
+        }
+    }
+    
+    
+    private void changeProcess(Object src)
+    {
+        System.out.println("change event - before");
+
+        if (this.m_type == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
+            return;
+        
+        if (in_action)
+            return;
+
+        in_action = true;
+
+//        m_da.getFloatValue(this.spinner_arr[5].getValue()), 
+
+        
+        //System.out.println("change event - in action");
+        
+        if (src.equals(this.spin_1))
+        {
+            //System.out.println("spinner 4: " + this.spinner_arr[4].getValue());
+            
+            // .ftf_bg1.getText().trim().length()
+            if (this.m_da.getFloatValue(this.spin_1.getValue()) == 0.0f)
+            {
+//                this.ftf_bg2.setValue(new Float(0.0f));
+                this.spin_2.setValue(0.0f);
+                in_action = false;
+                return;
+            }
+
+            //System.out.println("focus lost: bg1 (spinner[4]). mg/dL: " + this.spinner_arr[4].getValue());
+            float val = this.m_da.getFloatValue(this.spin_1.getValue()); 
+                    //m_da.getJFormatedTextValueInt(ftf_bg1);
+//            float v_2 = m_da.getBGValueDifferent(DataAccess.BG_MGDL, val);
+            float v_2 = m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mg_dL, Converter_mgdL_mmolL.UNIT_mmol_L, val);
+            //this.ftf_bg2.setValue(new Float(v_2));
+            
+            //System.out.println("focus lost: bg1 (spinner[4]). mmol/L: " + v_2);
+            
+            
+            this.spin_2.setValue(v_2);
+        }
+        else if (src.equals(this.spin_2)) // if (src.equals(this.ftf_bg2))
+        {
+            // System.out.println("text2: " + this.ftf_bg2.getText());
+
+            if (this.m_da.getFloatValue(this.spin_2.getValue()) == 0.0f) //(this.ftf_bg2.getText().trim().length() == 0)
+            {
+                this.spin_1.setValue(0);
+                //this.ftf_bg1.setValue(new Integer(0));
+                in_action = false;
+                return;
+            }
+
+            //System.out.println("focus lost: bg2 (spinner[5])");
+
+            // System.out.println("focus lost: bg2");
+            float val = this.m_da.getFloatValue(this.spin_2.getValue());
+                    //m_da.getJFormatedTextValueFloat(ftf_bg2);
+//            int v_2 = (int) m_da.getBGValueDifferent(DataAccess.BG_MMOL, val);
+            int v_2 = (int)m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mmol_L, Converter_mgdL_mmolL.UNIT_mg_dL, val);
+            //this.ftf_bg1.setValue(new Integer(v_2));
+            this.spin_1.setValue(v_2);
+        }
+        else
+            System.out.println("focus lost: unknown");
+
+        in_action = false;
+
+    }
+
+    
+    
+    
+    
+    
     
     
 }
