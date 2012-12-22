@@ -176,7 +176,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         colorPanel = new JPanel();
         colorPanel.setLayout(null);
         colorPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLORS")));
-        colorPanel.setBounds(0, 45, 515, 110);
+        colorPanel.setBounds(0, 50, 515, 105); // 45 110
         this.add(colorPanel);
 
         itemList = new JList(items);
@@ -187,7 +187,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         //itemList.s
         
         JScrollPane scp = new JScrollPane(itemList);
-        scp.setBounds(10,20, 200, 80);
+        scp.setBounds(10,20, 200, 75); // 80
         colorPanel.add(scp);
         
         
@@ -195,7 +195,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         //a.add(lblcolor = new JLabel(" "));
 
         lblcolor = new JLabel(" ");
-        lblcolor.setBounds(215, 20, 290, 80);
+        lblcolor.setBounds(215, 20, 290, 75); // 80
         lblcolor.setOpaque(true);
         lblcolor.setBorder(BorderFactory.createLineBorder(Color.black));
         lblcolor.addMouseListener(this);

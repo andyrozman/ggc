@@ -76,7 +76,7 @@ import com.atech.utils.ATSwingUtils;
 
 // This one will be deprecated, with DailyRowDialogPen 
 
-public class DailyRowDialog extends JDialog implements ActionListener, KeyListener, HelpCapable, FocusListener
+public class DailyRowDialog extends JDialog implements ActionListener, KeyListener, HelpCapable, ChangeListener //FocusListener, 
 {
 
     private static final long serialVersionUID = 6763016271693781911L;
@@ -87,8 +87,10 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     private boolean m_actionDone = false;
 
     JTextField ActField, CommentField, UrineField;
-    JComboBox cob_bg_type; // = new JComboBox();
-    JFormattedTextField ftf_bg1, ftf_ch, ftf_bg2;
+    //JComboBox cob_bg_type; // = new JComboBox();
+    //JFormattedTextField ftf_bg1, ftf_bg2;
+    // ftf_ch
+    
     JLabel label_title = new JLabel();
     JLabel label_food;
     JCheckBox cb_food_set;
@@ -254,8 +256,10 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         if (m_dailyValuesRow.getBG() > 0)
         {
-            this.ftf_bg1.setValue(new Integer((int) m_dailyValuesRow.getBGRaw()));
-            this.ftf_bg2.setValue(new Float(m_da.getBGValueDifferent(DataAccess.BG_MGDL, m_dailyValuesRow.getBGRaw())));
+            this.spinner_arr[4].setValue((int) m_dailyValuesRow.getBGRaw());
+            
+            //this.ftf_bg1.setValue(new Integer((int) m_dailyValuesRow.getBGRaw()));
+            //this.ftf_bg2.setValue(new Float(m_da.getBGValueDifferent(DataAccess.BG_MGDL, m_dailyValuesRow.getBGRaw())));
         }
 
         float val = 0.0f;
@@ -282,7 +286,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         
         
-        this.ftf_ch.setValue(new Float(this.m_dailyValuesRow.getCH()));
+        //this.ftf_ch.setValue(new Float(this.m_dailyValuesRow.getCH()));
+        this.spinner_arr[3].setValue(this.m_dailyValuesRow.getCH());
 
         ActField.setText(this.m_dailyValuesRow.getActivity());
         UrineField.setText(this.m_dailyValuesRow.getUrine());
@@ -322,6 +327,13 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         panel.setLayout(null);
 
         main_panel = panel;
+        spinner_arr = new JSpinner[6];
+        // 0 = Ins1
+        // 1 = Ins2
+        // 2 = Ins3
+        // 3 = CH
+        // 4 = BG.1
+        // 5 = BG.2
 
         this.getContentPane().add(panel);
 
@@ -348,11 +360,21 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         addLabel("mg/dL", 140, 138, panel);
         addLabel("mmol/L", 255, 138, panel);
         
+        /*
         this.ftf_bg1 = getTextField(2, 0, new Integer(0), 190, 138, 45, 25, panel);
-        //this.ftf_bg2 = getTextField(2, 1, new Float(0.0f), 190, 168, 55, 25, panel);
         this.ftf_bg2 = getTextField(2, 1, new Float(0.0f), 315, 138, 45, 25, panel);
         this.ftf_bg1.addFocusListener(this);
         this.ftf_bg2.addFocusListener(this);
+*/
+        
+        this.spinner_arr[4] = ATSwingUtils.getJSpinner(0.0f, 0.0f, 999.0f, 1.0f,
+            190, 138, 45, 25, panel); 
+        this.spinner_arr[4].addChangeListener(this);
+        
+        
+        this.spinner_arr[5] = ATSwingUtils.getJSpinner(0.0f, 0.0f, 55.4f, 0.1f, 
+            315, 138, 45, 25, panel); 
+        this.spinner_arr[5].addChangeListener(this);
         
 
         //int next_y = 168;
@@ -360,7 +382,6 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         insulin_count = 0;
 
         
-        spinner_arr = new JSpinner[3];
 //        table = new Hashtable<Integer,Integer>();
 
         
@@ -470,7 +491,13 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         addLabel(m_ic.getMessage("CH_LONG") + ":", next_y, panel);
         addLabel(m_ic.getMessage("FOOD") + ":", next_y + 30, panel);
         
-        this.ftf_ch = getTextField(2, 2, new Float(0.0f), 140, next_y, 55, 25, panel);
+        //this.ftf_ch = getTextField(2, 2, new Float(0.0f), 140, next_y, 55, 25, panel);
+        
+        
+        this.spinner_arr[3] = ATSwingUtils.getJSpinner(0.0f, 0.0f, 
+            250.0f, 1, 
+            140, next_y, 55, 25, panel); 
+        
         
         addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 90, next_y + 32, 130, panel);
         cb_food_set.setMultiClickThreshhold(500);
@@ -650,7 +677,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                 if (data!=null)
                 {
                     this.m_dailyValuesRow.setMealsIds((String)data[0]);
-                    this.ftf_ch.setValue(new Float((String)data[1]));
+                    //this.ftf_ch.setValue(new Float((String)data[1]));
+                    this.spinner_arr[3].setValue(this.m_dailyValuesRow.getCH());
+
 
                     updateMealsSet();
                 }
@@ -710,7 +739,14 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
         else if (action.equals("bolus_helper"))
         {
-            BolusHelper bh = new BolusHelper(this, m_da.getJFormatedTextValueFloat(ftf_bg2), m_da.getJFormatedTextValueFloat(this.ftf_ch), this.dtc.getDateTime(), 1, DataAccess.INSULIN_PEN_INJECTION);
+            BolusHelper bh = new BolusHelper(this, 
+                                            m_da.getFloatValue(this.spinner_arr[5].getValue()), 
+                                            //m_da.getJFormatedTextValueFloat(ftf_bg2), 
+                                            //m_da.getJFormatedTextValueFloat(this.ftf_ch),
+                                            m_da.getFloatValue(this.spinner_arr[3].getValue()), 
+                                            this.dtc.getDateTime(), 
+                                            1, 
+                                            DataAccess.INSULIN_PEN_INJECTION);
 
             if (bh.hasResult())
             {
@@ -733,13 +769,15 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     {
         if (!m_da.isValueSet(ch_str))
         {
-            this.ftf_ch.setValue(0.0f);
+            this.spinner_arr[3].setValue(0.0f);
+//            this.ftf_ch.setValue(0.0f);
             return;
         }
         
         //String s = ch_str;
         ch_str = ch_str.replace(DataAccess.false_decimal, DataAccess.real_decimal);
-        this.ftf_ch.setValue(m_da.getFloatValue(ch_str));
+//        this.ftf_ch.setValue(m_da.getFloatValue(ch_str));
+        this.spinner_arr[3].setValue(m_da.getFloatValue(ch_str));
     }
     
     
@@ -768,7 +806,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
 
-        float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
+        float f = m_da.getFloatValue(this.spinner_arr[4].getValue()); 
+
+//                m_da.getJFormatedTextValueFloat(ftf_bg1);
 
         if (f > 0.0)
         {
@@ -777,7 +817,12 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         setInsulinValues();
         
-        this.m_dailyValuesRow.setCH(m_da.getJFormatedTextValueFloat(this.ftf_ch));
+        this.m_dailyValuesRow.setCH(m_da.getFloatValue(this.spinner_arr[3].getValue()));
+            //m_da.getJFormatedTextValueFloat(this.ftf_ch));
+        
+        //this.spinner_arr[3].setValue(this.m_dailyValuesRow.getCH());
+
+        
         this.m_dailyValuesRow.setActivity(ActField.getText());
         this.m_dailyValuesRow.setUrine(UrineField.getText());
         this.m_dailyValuesRow.setComment(CommentField.getText());
@@ -935,10 +980,11 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     public void keyReleased(KeyEvent e)
     {
 
+        /*
         if ((e.getSource().equals(this.ftf_bg1)) || (e.getSource().equals(this.ftf_bg2)))
         {
-            focusProcess(e.getSource());
-        }
+            //focusProcess(e.getSource());
+        }*/
 
         if (e.getKeyCode() == KeyEvent.VK_ENTER)
         {
@@ -991,7 +1037,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     /**
      * focusLost
      */
-    public void focusLost(FocusEvent ev)
+/*    public void focusLost(FocusEvent ev)
     {
         focusProcess(ev.getSource());
     }
@@ -1041,8 +1087,84 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         in_action = false;
 
     }
+*/
+    public void stateChanged(ChangeEvent e)
+    {
+        if (e.getSource() instanceof JSpinner)
+        {
+            changeProcess(e.getSource());
+        }
+    }
     
     
+    private void changeProcess(Object src)
+    {
+        System.out.println("change event - before");
+
+        
+        if (in_action)
+            return;
+
+        in_action = true;
+
+//        m_da.getFloatValue(this.spinner_arr[5].getValue()), 
+
+        
+        //System.out.println("change event - in action");
+        
+        if (src.equals(this.spinner_arr[4]))
+        {
+            //System.out.println("spinner 4: " + this.spinner_arr[4].getValue());
+            
+            // .ftf_bg1.getText().trim().length()
+            if (this.m_da.getFloatValue(this.spinner_arr[4].getValue()) == 0.0f)
+            {
+//                this.ftf_bg2.setValue(new Float(0.0f));
+                this.spinner_arr[5].setValue(0.0f);
+                in_action = false;
+                return;
+            }
+
+            //System.out.println("focus lost: bg1 (spinner[4]). mg/dL: " + this.spinner_arr[4].getValue());
+            float val = this.m_da.getFloatValue(this.spinner_arr[4].getValue()); 
+                    //m_da.getJFormatedTextValueInt(ftf_bg1);
+//            float v_2 = m_da.getBGValueDifferent(DataAccess.BG_MGDL, val);
+            float v_2 = m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mg_dL, Converter_mgdL_mmolL.UNIT_mmol_L, val);
+            //this.ftf_bg2.setValue(new Float(v_2));
+            
+            //System.out.println("focus lost: bg1 (spinner[4]). mmol/L: " + v_2);
+            
+            
+            this.spinner_arr[5].setValue(v_2);
+        }
+        else if (src.equals(this.spinner_arr[5])) // if (src.equals(this.ftf_bg2))
+        {
+            // System.out.println("text2: " + this.ftf_bg2.getText());
+
+            if (this.m_da.getFloatValue(this.spinner_arr[5].getValue()) == 0.0f) //(this.ftf_bg2.getText().trim().length() == 0)
+            {
+                this.spinner_arr[4].setValue(0);
+                //this.ftf_bg1.setValue(new Integer(0));
+                in_action = false;
+                return;
+            }
+
+            //System.out.println("focus lost: bg2 (spinner[5])");
+
+            // System.out.println("focus lost: bg2");
+            float val = this.m_da.getFloatValue(this.spinner_arr[5].getValue());
+                    //m_da.getJFormatedTextValueFloat(ftf_bg2);
+//            int v_2 = (int) m_da.getBGValueDifferent(DataAccess.BG_MMOL, val);
+            int v_2 = (int)m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mmol_L, Converter_mgdL_mmolL.UNIT_mg_dL, val);
+            //this.ftf_bg1.setValue(new Integer(v_2));
+            this.spinner_arr[4].setValue(v_2);
+        }
+        else
+            System.out.println("focus lost: unknown");
+
+        in_action = false;
+
+    }
     
     
 }

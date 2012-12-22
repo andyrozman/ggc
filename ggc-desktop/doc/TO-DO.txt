@@ -64,11 +64,10 @@ II. SORTED BY VERSION  (Updated 2.5.2012)
 ===========================================
 
 
-Version 0.5 [8.5.2012]
+Version 0.6 [4.6.2013]
 ------------
 
 * Core:   
-    - Extended Ratio
     - Help (10 pages)
 
 
@@ -77,9 +76,14 @@ Version 0.5 [8.5.2012]
 
 
 * Graphs: 
-     x New framework
+     x New framework 2.0
      - Graphs
+     - GRAPH EDITOR (Graph Framework 3.0)
+     - GRAPH EDITOR VIEWER 
+     - Predefined graphs for GE (we need to create some usable graphs for end users, and convert all old)
+
 * Db Tools Integration:  - InitDb [1.0]  
+
 * Added functionality for Nutrition Db: 
     - Import data (selective)
     - Import Entry
@@ -90,16 +94,18 @@ Version 0.5 [8.5.2012]
     - Column Sorting in Food
     - Glycemic data change
     - Foods tree, we need to see about dynamic loading, since it takes a lot of memory to hold this information
+
 * Update (server) [1.0] 
     - Software updater Server
     - Db Updater Server
-* Support for multiple persons [1.0] 
-* External foods database
 
-* Pump Tool: <Basic pump supports> (manual input, integration, no graphs)
+* Support for multiple persons [1.0] 
+
+* External foods database
 
 * Java Help - Write help pages II. (finish EN) [1.0] 
             - Load from language jar  [1.0] 
+
 
 Bugs:
 * Nutrition Db in DataAccess fix (works ok, just outside confines of framework) - 5
@@ -110,7 +116,7 @@ Bugs:
 We plan to change version to 1.0, when all entries specified with [1.0] are finished.
 
 
-Version 0.6
+Version 0.7
 -------------
 * GGC Little
 * Server Error Resolution (exceptions thrown by application, that help can be found on internet).
@@ -129,11 +135,23 @@ Version 0.6
     - AED subtypes
     - AED stocks
 
-* CGM Tool: <Basic CGM support>
 * GGC Network - Support for multiple instances of GGC and their communication
 * Import of data from SiDiary Desktop application. SiDiary has its sister 
     applications running on many small devices (PocketPC, Palms, SmartPhones, 
     Java Phones), and it has import for a lot of Meters and also some pumps...
+
+
+1.0 Milestones
+==============
+
+* Db Tools Integration:  - InitDb [1.0]  
+* Update (server) [1.0] 
+* Java Help - Write help pages II. (finish EN) [1.0] 
+            - Load from language jar  [1.0] 
+* Support for multiple persons [1.0] 
+
+
+
 
 
 III. SORTED BY LEVELS OF PRIORITY  (not updated !!!)
@@ -177,7 +195,7 @@ Level 4 (Medium 3 Priority):
     o  Add CH entry through meals
     
 * Java Help:
-    o  Integration
+    x  Integration
     o  Write English help
 
 
@@ -227,6 +245,11 @@ DONE
 ===============================================================================
 ===============================================================================
 
+* Pump Tool: <Basic pump supports> (manual input, integration, no graphs)
+
+* CGM Tool: <Basic CGM support>
+
+
 Documentation:
     - How to update
     - How to USB
@@ -239,6 +262,8 @@ Documentation:
             - Use abstract class
             - File generation fix
 
+* Core:   
+    x Extended Ratio
 
 * Restore: 
    - partitial/update

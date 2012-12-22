@@ -1407,7 +1407,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
     @Override
     public String toString()
     {
-        return "MainFrame";
+        return "GGC::MainFrame";
     }
 
     

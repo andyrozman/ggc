@@ -1,4 +1,4 @@
-Know Bugs:
+Known Bugs:
 
     - [sf] changes made to "medical data" don't get applied to "Colors & Fonts" until dialog is re-opened
       A: changes are saved on exit of dialog... I guess we have to change that.
@@ -13,10 +13,12 @@ Know Bugs:
 	- Backup/Restore - only one restore can be done, on next restore, we don-t get all files displayed
 	- Meter Tool: - Problem with reading old data
 	- Meter Tool - Configuration - Time fix Combo box to small
-    - Pen/Injection statistics not implemented correctly
-    - Pump Basal statistics not done
-    - Graphs problems 
+    - [sf] Pen/Injection statistics not implemented correctly
+    - [sf] Pump Basal statistics not done
+    - Graphs problems (graph's are partitially fixed, but not fully). In future graphs will be done in Graph editor, which means
+         they won't be static. (0.6 or 0.7)
     - Color scheme
+    - 
 
 NOT A BUG:
     - "New Entry" dialog should only contain one of mg/dl and mmol/l Fields, 

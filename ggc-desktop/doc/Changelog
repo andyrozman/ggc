@@ -6,6 +6,13 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+0.5.0.3 [10.12.2012]
+    * In Daily Row Dialog we replaced text boxes with JSpinner on edit of BG and CH. Also we set limits on both. BG max 
+      value is 999 mg/dL (55.4 mmol/L) and CH cannot be negative
+    * Minor change in configuration (just visual change)
+
+
+
 0.5.0.2 [2.5.2012] [Andy] 
     * Added Graphs framework supported and Fixed this graphs
     * Changed configuration panels: Main (restart for all), Graphs (colors smaller, graph bigger)
