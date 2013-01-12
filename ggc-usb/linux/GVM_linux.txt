@@ -1,0 +1,18 @@
+
+GGC Virtual Machine
+====================
+
+OS:        Linux
+Java:      1.6
+Rxtx:      present (separate files for each architecture x32, x64, ia64) [2.1.7]
+Autorun:   available
+
+
+Author:    Andy (Aleksander) Rozman 
+           andy@atech-software.com
+
+		   
+Comments:  Since we have separate rxtx binaries files for each architecture we need to select right one
+           and put them into root of native libraries. This will change with next version, when files
+           will be picked from correct subdirectories. 
+

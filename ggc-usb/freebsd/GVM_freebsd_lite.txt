@@ -1,0 +1,41 @@
+
+GGC Virtual Machine
+====================
+
+OS:        FreeBSD
+Java:      N/A 
+Rxtx:      available for 7-RELEASE (see Comments) [2.1.7]
+Autorun:   not available
+
+
+Author:    Andy (Aleksander) Rozman 
+           andy@atech-software.com
+
+		   
+Comments:  FreeBSD needs for each release number and each architecture separate java version. Same goes for rxtx
+           native library, for this you will probably have to build files by your-self. 
+           I have tested binary on i386 machine and it worked, but I had problem on amd64 architecture.
+		   
+	   If you have USB Bridge device, you will have to enable it before starting GGC.
+	   Use following commands:
+                kldload uplcom
+                kldload ucom
+		   
+           Supplied files are for 7-RELEASE only. If you are unsure, please build your own.
+		   
+           FreeBSD also has port for rxtx (be carefull that it's version is 2.1.7-r2) in /ports/comms/rxtx.
+		   
+		   
+HOW TO COMPILE RXTX:		   
+
+Source files are in \lib directory, file rxtx-2.1-7r2.zip. Unpack file and enter into \src subdirectory (it's on 2nd 
+level). Once you are there, run following commands:
+   ./configure
+   gmake 
+   
+This should probably be enough. If compile fails see file INSTALL for exact instructions. After compile has run, there 
+will be directory called xxx-portbld-yyyy (xxx = architecture, yyyy = name of OS and version). Enter it and enter 
+sub-directory .libs. In it there will be few files, librxtxSerial-zzzz, you will need to rename it to librxtxSerial.so 
+(remove version onformation) and copy it to \lib\native\freebsd
+		   
+

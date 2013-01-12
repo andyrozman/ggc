@@ -1,0 +1,34 @@
+
+GGC Virtual Machine
+====================
+
+OS:        FreeBSD
+Java:      1.6 
+Rxtx:      not available (see Comments)
+Autorun:   not available
+
+
+Author:    Andy (Aleksander) Rozman 
+           andy@atech-software.com
+
+		   
+Comments:  FreeBSD needs for each release number and each architecture separate java version. Same goes for rxtx
+           native library. Because of this you will probably have to compile rxtx binary by yourself. 
+		   
+
+HOW TO COMPILE RXTX:		   
+
+Source files are in \lib directory, file rxtx-2.1-7r2.zip. Unpack file and enter into \src subdirectory (it's on 2nd 
+level). Once you are there, run following commands:
+   ./configure
+   gmake 
+   
+This should probably be enough. If compile fails see file INSTALL for exact instructions.
+
+
+ 
+
+Rxtx has little problems running on FreeBSD. I am still looking for solution. After recompile
+           rxtx doesn't work anymore, but problem will be solved with time. Attached is binary file, which 
+		   should work with 7-RELEASE (i386), problem is that not all devices, that can be accessed are recognized.
+

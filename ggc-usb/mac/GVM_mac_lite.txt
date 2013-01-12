@@ -1,0 +1,17 @@
+
+GGC Virtual Machine
+====================
+
+OS:        Mac 
+Java:      None (as Mac has Java integrated, required version is 1.5)
+Rxtx:      present (we tested this on PPC but it's possible it will work on Intel too) [2.1.7]
+Autorun:   not available
+
+
+Author:    Andy (Aleksander) Rozman 
+           andy@atech-software.com
+
+		   
+Comments:  Mac is something special among OSes. Java is integrated into OS itself, because of this it is impossible
+           to extract all files. If you have at least java 1.5 installed you should be able to run this application.
+
