@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faceted-project>
+  <runtime name="GlassFish 3.1.2"/>
+  <fixed facet="jst.ejb"/>
+  <fixed facet="java"/>
+  <installed facet="java" version="1.7"/>
+  <installed facet="jst.ejb" version="3.1"/>
+  <installed facet="sun.facet" version="9"/>
+  <installed facet="jpt.jpa" version="2.0"/>
+</faceted-project>
