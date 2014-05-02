@@ -9,9 +9,7 @@ import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-import gnu.io.SerialPort;
 
 import java.io.IOException;
 import java.util.GregorianCalendar;
@@ -514,14 +512,6 @@ cannot read device status, Operation not permitted (1)
     public static final int COMMAND_READ_SERIAL_NUMBER = 2;
     
     
-    
-    /**
-     * Get Command
-     * 
-     * @param command
-     * @return
-     */
-    //public abstract String getCommand(int command);
     
     
     private void cmdDisconnectAcknowledge() throws IOException

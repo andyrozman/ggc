@@ -686,6 +686,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
     	inf += ic.getMessage("\nSERIAL_NUMBER") + ": " + serial;
     
 //    	this.m_info = inf;
+    	System.out.println("Info: " + inf);
 
     }
 

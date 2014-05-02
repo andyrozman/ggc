@@ -232,8 +232,8 @@ public class OneTouchUltra2 extends OneTouchMeter
                 
                 System.out.println(this.entries_current + "/" + this.entries_max  );
                 
-                if (line==null)
-                    break;
+                //if (line==null)
+                //    break;
                 
             }
             

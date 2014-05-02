@@ -538,7 +538,8 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     
     	inf += ic.getMessage("\nSERIAL_NUMBER") + ": " + serial;
     
-//    	this.m_info = inf;
+    	//this.m_info = inf;
+    	System.out.println("Info: " + inf);
 
     }
 

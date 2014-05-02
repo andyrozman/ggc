@@ -532,7 +532,8 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     
         inf += ic.getMessage("\nSERIAL_NUMBER") + ": " + serial;
     
-//      this.m_info = inf;
+        //this.m_info = inf;
+        System.out.println("Info: " + inf);
 
     }
 
