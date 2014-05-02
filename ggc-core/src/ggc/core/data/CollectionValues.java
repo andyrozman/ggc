@@ -52,8 +52,8 @@ public class CollectionValues extends DailyValues
     float sumIns1 = 0;
     float sumIns2 = 0;
     float sumBE = 0;
-    float sum_basal = 0.0f;
-    float sum_bolus = 0.0f;
+    float sumBasal = 0.0f;
+    float sumBolus = 0.0f;
     
     int counterBG = 0;
     int counterBE = 0;

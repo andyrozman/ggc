@@ -4,6 +4,8 @@ import ggc.core.util.DataAccess;
 
 import javax.swing.table.AbstractTableModel;
 
+import com.atech.utils.ATDataAccessAbstract;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -63,43 +65,27 @@ public class DailyStatsTableModel extends AbstractTableModel
     };
 
 
-    /**
-     * Constructor
-     * 
-     * @param dayData
-     */
+   
     public DailyStatsTableModel(DailyValues dayData)
     {
         this.dayData = dayData;
         fireTableChanged(null);
     }
 
-    /**
-     * Get Daily Values
-     * 
-     * @return
-     */
+    
     public DailyValues getDailyValues()
     {
         return this.dayData;
     }
 
-    /**
-     * Set Daily Values
-     * 
-     * @param dayData
-     */
+    
     public void setDailyValues(DailyValues dayData)
     {
         this.dayData = dayData;
         fireTableChanged(null);
     }
 
-    /**
-     * Get Column Count
-     * 
-     * @see javax.swing.table.TableModel#getColumnCount()
-     */
+    
     public int getColumnCount()
     {
         if (dayData == null)
@@ -108,11 +94,7 @@ public class DailyStatsTableModel extends AbstractTableModel
         return dayData.getColumnCount();
     }
 
-    /**
-     * Get Row Count
-     * 
-     * @see javax.swing.table.TableModel#getRowCount()
-     */
+    
     public int getRowCount()
     {
         if (dayData == null)
@@ -121,11 +103,7 @@ public class DailyStatsTableModel extends AbstractTableModel
         return dayData.getRowCount();
     }
 
-    /**
-     * Get Value At
-     * 
-     * @see javax.swing.table.TableModel#getValueAt(int, int)
-     */
+    
     public Object getValueAt(int row, int column)
     {
         Object o = dayData.getValueAt(row, column);
@@ -133,45 +111,27 @@ public class DailyStatsTableModel extends AbstractTableModel
 	
         if (o != null && column == 0) 
         {
-            return DataAccess.getDateTimeAsTimeString(((Long)o).longValue());
+            return ATDataAccessAbstract.getDateTimeAsTimeString(((Long)o).longValue());
         } 
         
         return o;
     }
 
-    /**
-     * Get Column Name
-     * 
-     * @see javax.swing.table.AbstractTableModel#getColumnName(int)
-     */
+    
     @Override
     public String getColumnName(int column)
     {
-        /*
-        if (column == 2)
-            return m_da.getSettings().getIns1Abbr();
-        if (column == 3)
-            return m_da.getSettings().getIns2Abbr();
-*/
-        return dayData.getColumnName(column);
+         return dayData.getColumnName(column);
     }
 
-    /**
-     * Get Column Class
-     * 
-     * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
-     */
+    
     @Override
     public Class<?> getColumnClass(int c)
     {
         return this.objects[c].getClass();
     }
 
-    /**
-     * Is Cell Editable
-     * 
-     * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
-     */
+    
     @Override
     public boolean isCellEditable(int row, int col)
     {

@@ -103,7 +103,7 @@ public class CGMSPlugIn extends PlugInClient
             installed = true;
             
             this.m_server.init(this.parent, 
-                DataAccess.getInstance().getI18nControlInstance().getSelectedLangauge(), 
+                DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(), 
                 DataAccess.getInstance(), 
                 this, 
                 DataAccess.getInstance().getDb() );

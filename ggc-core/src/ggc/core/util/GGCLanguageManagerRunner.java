@@ -1,6 +1,7 @@
 package ggc.core.util;
 
 import com.atech.i18n.mgr.LanguageManagerRunner;
+import com.atech.i18n.mgr.LanguageManagerRunnerDual;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -28,7 +29,7 @@ import com.atech.i18n.mgr.LanguageManagerRunner;
  */
 
 
-public class GGCLanguageManagerRunner extends LanguageManagerRunner
+public class GGCLanguageManagerRunner extends LanguageManagerRunnerDual
 {
 
     /**
@@ -78,6 +79,15 @@ public class GGCLanguageManagerRunner extends LanguageManagerRunner
     public String getDefaultLanguage()
     {
         return "en";
+    }
+
+
+
+
+    @Override
+    public boolean findUntraslatedKeysInLanguage()
+    {
+        return true;
     }
 
     

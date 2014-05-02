@@ -1,10 +1,12 @@
 package ggc.core.data.cfg;
 
 import ggc.core.util.DataAccess;
+
 import java.awt.Component;
+
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
-import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -39,13 +41,7 @@ public class ConfigCellRenderer extends DefaultListCellRenderer
     private static final long serialVersionUID = -2728552153803274776L;
     DataAccess da = DataAccess.getInstance();
 
-    //final static ImageIcon longIcon = new ImageIcon("long.gif");
-    //final static ImageIcon shortIcon = new ImageIcon("short.gif");
-
-    /**
-     * This is the only method defined by ListCellRenderer.  We just
-     * reconfigure the JLabel each time we're called.
-     */
+    @SuppressWarnings("rawtypes")
     public Component getListCellRendererComponent(
                                                  JList list,
                                                  Object value,   // value to display
@@ -53,25 +49,11 @@ public class ConfigCellRenderer extends DefaultListCellRenderer
                                                  boolean iss,    // is the cell selected
                                                  boolean chf)    // the list and the cell have the focus
     {
-        /* The DefaultListCellRenderer class will take care of
-         * the JLabels text property, it's foreground and background
-         * colors, and so on.
-         */
         super.getListCellRendererComponent(list, value, index, iss, chf);
-
-        /* We additionally set the JLabels icon property here.
-         */
-        //String s = value.toString();
-
-        //DataAccess da = DataAccess.getInstance();
-
-        //int idx = da.getSelectedConfigTypePart(s);
-
         setIcon(da.config_icons[index]);
-
-        this.setHorizontalTextPosition(JLabel.CENTER);
-        this.setHorizontalAlignment(JLabel.CENTER);
-        this.setVerticalTextPosition(JLabel.BOTTOM);
+        this.setHorizontalTextPosition(SwingConstants.CENTER);
+        this.setHorizontalAlignment(SwingConstants.CENTER);
+        this.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         return this;
     }

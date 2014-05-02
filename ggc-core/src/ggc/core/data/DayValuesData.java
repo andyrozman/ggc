@@ -47,35 +47,13 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     private GregorianCalendar range_from_gc = null;
     private long range_to = 0L;
     private GregorianCalendar range_to_gc = null;
-    
-    /**
-     * Range: None
-     */
-    public static final int RANGE_NONE = 0;
-    
-    /**
-     * Range: Day
-     */
-    public static final int RANGE_DAY = 1;
-    
-    /**
-     * Range: Week
-     */
-    public static final int RANGE_WEEK = 2;
-    
-    /**
-     * Range: Month
-     */
-    public static final int RANGE_MONTH = 3;
-    
-    /**
-     * Range: 3 Months
-     */
-    public static final int RANGE_3_MONTHS = 4;
 
-    /**
-     * Range: Custom
-     */
+    // FIXME enum
+    public static final int RANGE_NONE = 0;
+    public static final int RANGE_DAY = 1;
+    public static final int RANGE_WEEK = 2;
+    public static final int RANGE_MONTH = 3;
+    public static final int RANGE_3_MONTHS = 4;
     public static final int RANGE_CUSTOM = 5;
     
     

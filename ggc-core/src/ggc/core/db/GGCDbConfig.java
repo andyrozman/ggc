@@ -74,7 +74,7 @@ public class GGCDbConfig extends HibernateConfiguration
                    "GGC_Nutrition.hbm.xml", 
                    "GGC_Other.hbm.xml",
                    "GGC_Pump.hbm.xml", 
-                   "GGC_CGM.hbm.xml" 
+                   "GGC_CGMS.hbm.xml" 
     };
 
     /**
@@ -168,6 +168,20 @@ public class GGCDbConfig extends HibernateConfiguration
     public int getNumberOfSessions()
     {
         return 2;
+    }
+
+    @Override
+    public boolean canShemaBeAutomaticallyChanged()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public String getShemaChangeType()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -52,81 +52,28 @@ public class ExtendedDailyValue extends ExtendedHandler //implements Serializabl
     //private boolean changed = false;
     //boolean debug = false;
 
-    
-    /**
-     * Extended Parameter: Activity
-     */
+
+    // FIXME enum
     public static final int EXTENDED_ACTIVITY = 0;
-
-    /**
-     * Extended Parameter: Urine
-     */
     public static final int EXTENDED_URINE = 1;
-
-    /**
-     * Extended Parameter: Food Description
-     */
     public static final int EXTENDED_FOOD_DESCRIPTION = 2;
-    
-    /**
-     * Extended Parameter: Food CH
-     */
     public static final int EXTENDED_FOOD_CH = 3;
-    
-    /**
-     * Extended Parameter: Decimal Part Ins1
-     */
     public static final int EXTENDED_DECIMAL_PART_INS1 = 4;
-    
-    /**
-     * Extended Parameter: Decimal Part Ins2
-     */
     public static final int EXTENDED_DECIMAL_PART_INS2 = 5;
-    
-
-    /**
-     * Extended Parameter: Insulin 3
-     */
     public static final int EXTENDED_INSULIN_3 = 6;
-    
-
-    
-    /**
-     * Extended Parameter: Source
-     */
     public static final int EXTENDED_SOURCE = 7;
     
     
     @SuppressWarnings("unused")
     private static final int EXTENDED_MAX = 7;
 
-    /*
-    private String extended_desc[] = { 
-                                    "URINE",
-                                    "ACTIVITY",
-                                    "FOOD_DESCRIPTION",
-                                    "FOOD_DESC_CH",
-                                    "DECIMAL_INS1",
-                                    "DECIMAL_INS2",
-                                    "INSULIN_3"
-    };*/
-                                    
     
 
-    /**
-     * Constructor
-     * 
-     * @param da 
-     */
     public ExtendedDailyValue(ATDataAccessAbstract da)
     {
         super(da);
     }
     
-
-
-    //loadExtended();
-
 
 
     @Override
@@ -151,14 +98,5 @@ public class ExtendedDailyValue extends ExtendedHandler //implements Serializabl
         return "DailyValuesRow";
     }
     
-    
-
-    
-
-
-    
-
-
-
 
 }

@@ -43,11 +43,6 @@ public class ConfigurationManager
     private boolean changed = false;
 
 
-    
-    
-    
-    
-
     private String cfg_string[] = 
     {
         "NAME", "Unknown user",
@@ -128,32 +123,17 @@ public class ConfigurationManager
     };
 
 
-
     Hashtable<String,Settings> cfg_values = new Hashtable<String,Settings>();
     DataAccess m_da = null;
 
-
-    /**
-     * Constructor
-     * 
-     * @param da
-     */
     public ConfigurationManager(DataAccess da)
     {
         this.m_da = da;
-        //checkConfiguration()
     }
 
 
-    /**
-     * Check Configuration
-     * 
-     * @param values
-     * @param db 
-     */
     public void checkConfiguration(Hashtable<String,Settings> values, GGCDb db)
     {
-
         this.cfg_values = values;
 
         for (int j=1; j<5; j++)
@@ -185,8 +165,6 @@ public class ConfigurationManager
                     addNewValue(arr[i], arr[i+1], j, db);
                 }
             }
-
-
         }
     }
 
@@ -202,26 +180,24 @@ public class ConfigurationManager
      * Add New configuration value
      * 
      * @param name name of configuration parameter
-     * @param def_value value (presumably def. value if added from this class)
-     * @param type type of parameter (1=string, 2=int, 3=float, 4=boolean)
+     * @param defaultValue value (presumably def. value if added from this class)
+     * @param parameterType type of parameter (1=string, 2=int, 3=float, 4=boolean)
      * @param db db instance
+     * @param addToConfigurationValues 
      */
-    public void addNewValue(String name, String def_value, int type, GGCDb db, boolean add_to_cfg_values)
+    public void addNewValue(String name, String defaultValue, int parameterType, GGCDb db, boolean addToConfigurationValues)
     {
-        //System.out.println("addNewValue:: name=" + name);
-
         Settings s = new Settings();
 
         s.setKey(name);
         s.setDescription(m_da.getI18nControlInstance().getMessage("CFG_"+name));
-        s.setType(type);
-        s.setValue(def_value);
+        s.setType(parameterType);
+        s.setValue(defaultValue);
         s.setPerson_id((int)m_da.getCurrentUserId());
-        //s.setElementAdded();
         
         db.add(s);
 
-        if (add_to_cfg_values)
+        if (addToConfigurationValues)
         {
             this.cfg_values.put(name, s);   
             this.changed = true;
@@ -229,15 +205,9 @@ public class ConfigurationManager
     }
 
 
-    /**
-     * Get Boolean Value
-     * 
-     * @param key key of variable
-     * @return value as boolean
-     */
     public boolean getBooleanValue(String key)
     {
-        if (checkIfExists(key))
+        if (checkIfValueExists(key))
         {
             Settings s = this.cfg_values.get(key);
 
@@ -249,23 +219,14 @@ public class ConfigurationManager
             {
                 s_logger.warn("Invalid value for key=" + key + " found. It should be boolean.");
             }
-
         }
-
         return false;
-
     }
 
 
-    /**
-     * Set Boolean Value
-     * 
-     * @param key key of variable
-     * @param value as boolean
-     */
     public void setBooleanValue(String key, boolean value)
     {
-        if (checkIfExists(key))
+        if (checkIfValueExists(key))
         {
             Settings s = this.cfg_values.get(key);
 
@@ -279,29 +240,19 @@ public class ConfigurationManager
                 s_logger.warn("Invalid value for key=" + key + " found. It should be boolean.");
             }
 
-            //System.out.println("setIntValue: " + value);
-
             if (prev_val!=value)
             {
                 s.setValue("" + value);
                 s.setElementEdited();
                 this.changed = true;
             }
-
         }
-
     }
 
 
-    /**
-     * Get Int Value
-     * 
-     * @param key key of variable
-     * @return value as int
-     */
     public int getIntValue(String key)
     {
-        if (checkIfExists(key))
+        if (checkIfValueExists(key))
         {
             Settings s = this.cfg_values.get(key);
 
@@ -317,19 +268,12 @@ public class ConfigurationManager
         }
 
         return -1;
-
     }
 
     
-    /**
-     * Set Int Value
-     * 
-     * @param key key of variable
-     * @param value as int
-     */
     public void setIntValue(String key, int value)
     {
-        if (checkIfExists(key))
+        if (checkIfValueExists(key))
         {
             Settings s = this.cfg_values.get(key);
 
@@ -343,30 +287,19 @@ public class ConfigurationManager
                 s_logger.warn("Invalid value for key=" + key + " found. It should be integer.");
             }
 
-            //System.out.println("setIntValue: " + value);
-
             if (prev_val!=value)
             {
                 s.setValue("" + value);
                 s.setElementEdited();
                 this.changed = true;
-                //System.out.println("setIntValue: Success");
             }
-
         }
-
     }
 
 
-    /**
-     * Get Float Value
-     * 
-     * @param key key of variable
-     * @return value as float
-     */
     public float getFloatValue(String key)
     {
-        if (checkIfExists(key))
+        if (checkIfValueExists(key))
         {
             Settings s = this.cfg_values.get(key);
 
@@ -374,19 +307,12 @@ public class ConfigurationManager
         }
 
         return 0.0f;
-
     }
 
 
-    /**
-     * Set Float Value
-     * 
-     * @param key key of variable
-     * @param value as float
-     */
     public void setFloatValue(String key, float value)
     {
-        if (checkIfExists(key))
+        if (checkIfValueExists(key))
         {
             Settings s = this.cfg_values.get(key);
 
@@ -410,34 +336,21 @@ public class ConfigurationManager
     }
 
 
-    /**
-     * Get String Value
-     * 
-     * @param key key of variable
-     * @return value as string
-     */
     public String getStringValue(String key)
     {
-        if (checkIfExists(key))
+        if (checkIfValueExists(key))
         {
             Settings s = this.cfg_values.get(key);
             return s.getValue();
         }
         else
             return "";
-
     }
 
     
-    /**
-     * Set String Value
-     * 
-     * @param key key of variable
-     * @param value as string
-     */
     public void setStringValue(String key, String value)
     {
-        if (checkIfExists(key))
+        if (checkIfValueExists(key))
         {
             Settings s = this.cfg_values.get(key);
 
@@ -451,7 +364,7 @@ public class ConfigurationManager
     }
 
 
-    private boolean checkIfExists(String key)
+    private boolean checkIfValueExists(String key)
     {
         if (this.cfg_values.containsKey(key))
             return true;
@@ -463,14 +376,8 @@ public class ConfigurationManager
     }
 
 
-    /**
-     * Save Config
-     */
     public void saveConfig()
     {
-
-        //System.out.println("Save Config - Start [changed=" + changed +"]");
-
         if (!changed)
             return;
 
@@ -494,22 +401,14 @@ public class ConfigurationManager
     
     public Hashtable<String, String> loadExtendedRatioData()
     {
-        
-        
-        
         return null;
     }
     
     
     public void saveExtendedRatioData(Hashtable<String, String> dta)
     {
-        
-        
-        
         //return null;
     }
-    
-    
     
     
 
