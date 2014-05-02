@@ -65,6 +65,10 @@ public class CGMSTempValues extends DeviceTempValues
     }
 
     
+    /**
+     * @param _object_type
+     * @param _base_type
+     */
     public CGMSTempValues(int _object_type, int _base_type)
     {
         super(_object_type, _base_type);
@@ -78,6 +82,9 @@ public class CGMSTempValues extends DeviceTempValues
 
     
     // we have base object, and value is in fact sub_type
+    /**
+     * 
+     */
     public static final int OBJECT_BASE_SET_SUBTYPE = 4;
     
     /**

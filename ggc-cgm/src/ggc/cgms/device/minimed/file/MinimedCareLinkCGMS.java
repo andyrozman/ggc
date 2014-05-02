@@ -51,14 +51,19 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
     //public String[] profile_names = null;
     //ArrayList<MinimedCareLinkCGMSData> profiles;
     
-    public Hashtable<String,String> defs_cgms = null;
+//.x    private Hashtable<String,String> defs_cgms = null;
     //public Hashtable<String,String> defs_profile = null;
-    public Hashtable<String,String> defs_cgms_config = null;
+    private Hashtable<String,String> defs_cgms_config = null;
     
-    public Hashtable<String, MinimedCareLinkCGMSData> config = null;
+    private Hashtable<String, MinimedCareLinkCGMSData> config = null;
     
     
     
+    /**
+     * @param da
+     * @param ow
+     * @param reading_type
+     */
     public MinimedCareLinkCGMS(DataAccessPlugInBase da, OutputWriter ow, int reading_type)
     {
         super(da, ow, reading_type);
@@ -127,37 +132,37 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
     {
         //this.defs_pump = new Hashtable<String,String>(); 
         //this.defs_profile = new Hashtable<String,String>();
-        this.defs_cgms_config = new Hashtable<String,String>();
+        this.setCGMSConfigDefinitions(new Hashtable<String,String>());
         this.config = new Hashtable<String, MinimedCareLinkCGMSData>();
 
         
-        this.defs_cgms_config.put("CurrentTimeDisplayFormat", "");
-        this.defs_cgms_config.put("CurrentParadigmLinkEnable", "");
-        this.defs_cgms_config.put("CurrentChildBlockEnable", "");
-        this.defs_cgms_config.put("CurrentKeypadLockedEnable", "");
-        this.defs_cgms_config.put("CurrentAlarmClockEnable", "");
-        this.defs_cgms_config.put("CurrentSensorCalReminderEnable", "");
-        this.defs_cgms_config.put("CurrentSensorEnable", "");
-        this.defs_cgms_config.put("CurrentDisplayLanguage", "");
-        this.defs_cgms_config.put("CurrentParadigmLinkID", "");
+        this.getCGMSConfigDefinitions().put("CurrentTimeDisplayFormat", "");
+        this.getCGMSConfigDefinitions().put("CurrentParadigmLinkEnable", "");
+        this.getCGMSConfigDefinitions().put("CurrentChildBlockEnable", "");
+        this.getCGMSConfigDefinitions().put("CurrentKeypadLockedEnable", "");
+        this.getCGMSConfigDefinitions().put("CurrentAlarmClockEnable", "");
+        this.getCGMSConfigDefinitions().put("CurrentSensorCalReminderEnable", "");
+        this.getCGMSConfigDefinitions().put("CurrentSensorEnable", "");
+        this.getCGMSConfigDefinitions().put("CurrentDisplayLanguage", "");
+        this.getCGMSConfigDefinitions().put("CurrentParadigmLinkID", "");
 
         
-        this.defs_cgms_config.put("CurrentSensorCalReminderTime", "");
-        this.defs_cgms_config.put("CurrentSensorAlarmSnoozeTime", "");
-        this.defs_cgms_config.put("CurrentSensorHighGlucoseSnoozeTime", "");
-        this.defs_cgms_config.put("CurrentSensorLowGlucoseSnoozeTime", "");
-        this.defs_cgms_config.put("CurrentSensorMissedDataTime", "");
-        this.defs_cgms_config.put("ChangeSensorGlucoseLimitPattern", "");
-        this.defs_cgms_config.put("ChangeSensorGlucoseLimitProfile", "");
-        this.defs_cgms_config.put("CurrentSensorPredictiveAlertPattern", "");
-        this.defs_cgms_config.put("CurrentSensorPredictiveAlertProfile", "");
-        this.defs_cgms_config.put("ChangeSensorSetupConfig2", "");
-        this.defs_cgms_config.put("x4", "");
-        this.defs_cgms_config.put("x5", "");
-        this.defs_cgms_config.put("x6", "");
-        this.defs_cgms_config.put("x7", "");
-        this.defs_cgms_config.put("x8", "");
-        this.defs_cgms_config.put("x9", "");
+        this.getCGMSConfigDefinitions().put("CurrentSensorCalReminderTime", "");
+        this.getCGMSConfigDefinitions().put("CurrentSensorAlarmSnoozeTime", "");
+        this.getCGMSConfigDefinitions().put("CurrentSensorHighGlucoseSnoozeTime", "");
+        this.getCGMSConfigDefinitions().put("CurrentSensorLowGlucoseSnoozeTime", "");
+        this.getCGMSConfigDefinitions().put("CurrentSensorMissedDataTime", "");
+        this.getCGMSConfigDefinitions().put("ChangeSensorGlucoseLimitPattern", "");
+        this.getCGMSConfigDefinitions().put("ChangeSensorGlucoseLimitProfile", "");
+        this.getCGMSConfigDefinitions().put("CurrentSensorPredictiveAlertPattern", "");
+        this.getCGMSConfigDefinitions().put("CurrentSensorPredictiveAlertProfile", "");
+        this.getCGMSConfigDefinitions().put("ChangeSensorSetupConfig2", "");
+        this.getCGMSConfigDefinitions().put("x4", "");
+        this.getCGMSConfigDefinitions().put("x5", "");
+        this.getCGMSConfigDefinitions().put("x6", "");
+        this.getCGMSConfigDefinitions().put("x7", "");
+        this.getCGMSConfigDefinitions().put("x8", "");
+        this.getCGMSConfigDefinitions().put("x9", "");
         
         
 /*        this.defs_cgms_config.put("x2", "");
@@ -231,8 +236,19 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
     //MinimedCareLinkCGMSData BGLimit = null;
     
     
+    /**
+     * 
+     */
     public static final int SPECIAL_DATA_GLUCOSE_LIMIT = 0;
+    
+    /**
+     * 
+     */
     public static final int SPECIAL_DATA_PREDICTIVE_ALARM = 1;
+    
+    /**
+     * 
+     */
     public static final int SPECIAL_DATA_MAX = 1;
     
     MinimedCareLinkCGMSData[] special_data = new MinimedCareLinkCGMSData[2]; 
@@ -530,6 +546,28 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
         
         //System.out.println("BGTargetRange: " + BGTargetRange);
         
+    }
+
+
+
+
+    /**
+     * @return
+     */
+    public Hashtable<String,String> getCGMSConfigDefinitions()
+    {
+        return defs_cgms_config;
+    }
+
+
+
+
+    /**
+     * @param defs_cgms_config
+     */
+    public void setCGMSConfigDefinitions(Hashtable<String,String> defs_cgms_config)
+    {
+        this.defs_cgms_config = defs_cgms_config;
     }
     
     

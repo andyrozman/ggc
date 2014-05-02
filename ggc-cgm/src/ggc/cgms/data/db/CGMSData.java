@@ -440,7 +440,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         DataAccess da = DataAccess.getInstance();
 
-        value_entry = DataAccess.getInstance().replaceExpression(value_entry, "||", "| |");
+        value_entry = DataAccess.replaceExpression(value_entry, "||", "| |");
         String[] arr = da.splitString(value_entry, "|");
         
         this.setId(da.getLongValueFromString(arr[0]));

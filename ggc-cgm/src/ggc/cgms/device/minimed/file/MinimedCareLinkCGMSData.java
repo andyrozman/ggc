@@ -47,13 +47,21 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
     private boolean post_process = false;
     private MinimedCareLinkCGMS mmclp;
     private String index = "";
+    /**
+     * 
+     */
     public ArrayList<MinimedCareLinkCGMSData> children = null;
-    public float ISIG = 0.0f;
-    public String additional_value = "";
+    private float ISIG = 0.0f;
+    private String additional_value = "";
     private DataAccessCGMS m_da;
     private boolean isig_set = false;
     Hashtable<String,String> items = null;
     
+    /**
+     * @param data
+     * @param full_data
+     * @param mcl_
+     */
     public MinimedCareLinkCGMSData(String[] data, String full_data, MinimedCareLink mcl_ )
     {
         super(data, full_data, mcl_);
@@ -84,6 +92,9 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
     
     
     
+    /**
+     * @return
+     */
     public boolean isDeviceData()
     {
         // FIXME
@@ -185,6 +196,9 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
         
     
     
+    /**
+     * @return
+     */
     public boolean isProfileData()
     {
         return (this.raw_type.equals("ChangeBasalProfilePatternPre") ||
@@ -196,15 +210,21 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
     }
     
     
+    /**
+     * @return
+     */
     public boolean isConfigData()
     {
-        return this.mmclp.defs_cgms_config.containsKey(this.raw_type);
+        return this.mmclp.getCGMSConfigDefinitions().containsKey(this.raw_type);
     }
     
    
     
     
     // FIXME
+    /**
+     * @return
+     */
     public boolean isDebuged()
     {
         return false;
@@ -242,6 +262,9 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
     }
     
 
+    /**
+     * 
+     */
     public void writeData()
     {
         processData();
@@ -293,6 +316,9 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
         
     }
     
+    /**
+     * 
+     */
     public void postProcess()
     {
         if (this.post_process)
@@ -301,6 +327,9 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
     }
     
     
+    /**
+     * @return
+     */
     public String getKey()
     {
         if (this.raw_type.equals("CurrentParadigmLinkID"))
@@ -317,6 +346,9 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
     
     
     
+    /**
+     * @return
+     */
     public String getProcessedValue()
     {
         String s;
@@ -981,12 +1013,18 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
     
     
     
+    /**
+     * @return
+     */
     public Hashtable<String,String> getItems()
     {
         return this.items;
     }
     
     
+    /**
+     * @return
+     */
     public boolean hasItems()
     {
         return (this.items!=null);

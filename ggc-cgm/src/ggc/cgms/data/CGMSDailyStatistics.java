@@ -136,7 +136,8 @@ public class CGMSDailyStatistics extends StatisticsCollection
 
                 //System.out.println("Time diff: " + s + ", val=" + val);
             }
-            
+         
+            System.out.println("Sum: " + sum);
         }
         
         

@@ -11,6 +11,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -95,6 +96,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
 
     public void readFile(String filename)
     {
+        BufferedReader br=null;
         try
         {
             
@@ -110,7 +112,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             
             cvtm = (CGMSValuesTableModel)m_da.getDeviceDataHandler().getDeviceValuesTableModel();
             
-            BufferedReader br = new BufferedReader(new FileReader(filename));
+            br = new BufferedReader(new FileReader(filename));
             
             String line = null;
             
@@ -123,6 +125,19 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
         catch (Exception ex)
         {
             ex.printStackTrace();
+        }
+        finally
+        {
+            if (br!=null)
+            {
+                try
+                {
+                    br.close();
+                }
+                catch (IOException e)
+                {
+                }
+            }
         }
         //System.out.println("i = " + i + " lisr: " + list.size());
         

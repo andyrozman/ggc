@@ -55,12 +55,21 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     
     
     
+    /**
+     * 
+     */
     public static final int CGMS_ALARM = 3;
     
     
+    /**
+     * 
+     */
     public static final int CGMS_EVENT = 4;
     
     
+    /**
+     * 
+     */
     public static final int CGMS_ERROR = 5;
 
     
@@ -91,6 +100,9 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     
     
     // NEW
+    /**
+     * 
+     */
     public int sub_type = 0;
     
     

@@ -63,40 +63,71 @@ public class CGMSEvents
     
     // SENSOR - basic functions
 
-    
+    /**
+     * 
+     */
     public static final int CGMS_EVENT_SENSOR_POWER_DOWN = 40;
 
-    
+    /**
+     * 
+     */
     public static final int CGMS_EVENT_SENSOR_POWER_UP = 41;
     
     
+    /**
+     * 
+     */
     public static final int CGMS_EVENT_SENSOR_LOST = 42;
     
     
+    /**
+     * 
+     */
     public static final int CGMS_EVENT_SENSOR_CALIBRATION_METER_BG_NOW = 50;
     
 
+    /**
+     * 
+     */
     public static final int CGMS_EVENT_SENSOR_CALIBRATION_WAITING = 51;
     
     
+    /**
+     * 
+     */
     public static final int CGMS_EVENT_SENSOR_CALIBRATION_FACTOR = 52;
     
     
     // sensor init/operation
 
+    /**
+     * 
+     */
     public static final int CGMS_EVENT_SENSOR_PRE_INIT = 60;
     
     
+    /**
+     * 
+     */
     public static final int CGMS_EVENT_SENSOR_INIT = 61;
 
 
+    /**
+     * 
+     */
     public static final int CGMS_EVENT_SENSOR_BURST = 62;
     
 
+    /**
+     * 
+     */
     public static final int CGMS_EVENT_SENSOR_WEAK_SIGNAL = 63;
     
     
     // Data 
+    /**
+     * 
+     */
     public static final int CGMS_EVENT_DATA_LOW_BG = 64; 
     
 }
