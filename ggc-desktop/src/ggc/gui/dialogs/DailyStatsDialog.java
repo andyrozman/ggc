@@ -48,6 +48,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
@@ -135,15 +136,9 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
     GGCDb m_db = null;
 
-    /**
-     * Constructor
-     * 
-     * @param da
-     */
     public DailyStatsDialog(DataAccess da)
     {
         super(da.getMainParent(), "DailyStatsDialog", false);
-        // setTitle(m_ic.getMessage("DAILYSTATSFRAME"));
 
         current_gc = new GregorianCalendar();
         
@@ -162,8 +157,8 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
     private void setTitle(GregorianCalendar gc)
     {
-        setTitle(m_ic.getMessage("DAILYSTATSFRAME") + "  [" + gc.get(GregorianCalendar.DAY_OF_MONTH) + "."
-                + (gc.get(GregorianCalendar.MONTH) + 1) + "." + gc.get(GregorianCalendar.YEAR) + "]");
+        setTitle(m_ic.getMessage("DAILYSTATSFRAME") + "  [" + gc.get(Calendar.DAY_OF_MONTH) + "."
+                + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR) + "]");
     }
 
     private DailyStatsTableModel getTableModel()

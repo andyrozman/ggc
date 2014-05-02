@@ -47,11 +47,14 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -83,7 +86,6 @@ import com.atech.i18n.I18nControlAbstract;
 public class DoctorDialog extends JDialog implements ActionListener
 {
 
-
     private static final long serialVersionUID = -8276157027834968535L;
     private DataAccess m_da = DataAccess.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
@@ -91,48 +93,22 @@ public class DoctorDialog extends JDialog implements ActionListener
 
     private boolean m_actionDone = false;
 
-    //private long last_change = 0;
-
-//    static AddRowFrame singleton = null;
-
-
-
     JTextField DateField, TimeField, BGField, Ins1Field, Ins2Field, BUField,
             ActField, CommentField, UrineField;
 
-    JComboBox cob_bg_type; //= new JComboBox();
-
+    JComboBox cob_bg_type; 
 
     JLabel label_title = new JLabel();
     JLabel label_food;
     JCheckBox cb_food_set;
-
     DateTimeComponent dtc;
-
     JButton AddButton;
-
     String sDate = null;
-
     DailyValues dV = null;
     DailyValuesRow m_dailyValuesRow = null;
-
-    //AbstractTableModel mod = null;
-
-    //GGCProperties props = GGCProperties.getInstance();
     JComponent components[] = new JComponent[9];
-/*
-    public AddRowFrame(AbstractTableModel m, DailyValues ndV, DailyStatsFrame dialog) 
-    {
-        super(dialog, "", true);
-        setTitle(m_ic.getMessage("ADD_NEW_ROW"));
-        dV = ndV;
-        mod = m;
-        init();
-    }
-    */
-
-    Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-    Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
+    Font f_normal;
+    Font f_bold;
     boolean in_process;
     boolean debug = false;
 
@@ -145,13 +121,6 @@ public class DoctorDialog extends JDialog implements ActionListener
 
     
 
-    /**
-     * Constructor 
-     * 
-     * @param ndV
-     * @param nDate
-     * @param dialog
-     */
     public DoctorDialog(DailyValues ndV, String nDate, JDialog dialog) 
     {
         super(dialog, "", true);
@@ -170,7 +139,7 @@ public class DoctorDialog extends JDialog implements ActionListener
     {
         this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
 
-        System.out.println(props.getBG_unit());
+        //System.out.println(props.getBG_unit());
 
         // which format
         this.cob_bg_type.setSelectedIndex(props.getBG_unit()-1);
@@ -227,6 +196,10 @@ public class DoctorDialog extends JDialog implements ActionListener
 
     private void init()
     {
+        ATSwingUtils.initLibrary();
+        this.f_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
+        this.f_bold =ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD); // FONT_NORMAL
+        
         int x = 0;
         int y = 0;
         int width = 400;
@@ -245,8 +218,8 @@ public class DoctorDialog extends JDialog implements ActionListener
 
         this.getContentPane().add(panel);
 
-        label_title.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
-        label_title.setHorizontalAlignment(JLabel.CENTER);
+        label_title.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label_title.setHorizontalAlignment(SwingConstants.CENTER);
         label_title.setBounds(0, 15, 400, 35);
         panel.add(label_title);
 
@@ -355,106 +328,7 @@ public class DoctorDialog extends JDialog implements ActionListener
     }
     
 
-    /*
-    private void init_old() 
-    {
-        this.setBounds(150, 150, 300, 150);
 
-        JPanel a = new JPanel(new GridLayout(0, 1));
-        a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
-        a.add(new JLabel(m_ic.getMessage("BG") + ":", SwingConstants.RIGHT));
-        a.add(new JLabel(m_da.getSettings().getIns1Abbr() + ":", SwingConstants.RIGHT));
-        a.add(new JLabel(m_ic.getMessage("ACT") + ":", SwingConstants.RIGHT));
-
-        JPanel b = new JPanel(new GridLayout(0, 1));
-        DateField = new JTextField(10);
-        if (sDate != null) 
-        {
-            DateField.setText(sDate);
-            DateField.setEditable(false);
-        }
-        b.add(DateField);
-
-
-        b.add(BGField = new JTextField());
-        components[1] = BGField;
-        BGField.addKeyListener(this);
-
-        b.add(Ins1Field = new JTextField());
-        components[3] = Ins1Field;
-        Ins1Field.addKeyListener(this);
-
-
-        b.add(ActField = new JTextField());
-        components[5] = ActField;
-        ActField.addKeyListener(this);
-
-
-        JPanel c = new JPanel(new GridLayout(0, 1));
-        c.add(new JLabel(m_ic.getMessage("TIME") + ":", SwingConstants.RIGHT));
-        c.add(new JLabel(m_ic.getMessage("BU") + ":", SwingConstants.RIGHT));
-        c.add(new JLabel(m_da.getSettings().getIns2Abbr() + ":", SwingConstants.RIGHT));
-        c.add(new JLabel(m_ic.getMessage("COMMENT") + ":", SwingConstants.RIGHT));
-
-        JPanel d = new JPanel(new GridLayout(0, 1));
-        d.add(TimeField = new JTextField(10));
-        components[0] = TimeField;
-        TimeField.addKeyListener(this);
-
-
-        d.add(BUField = new JTextField());
-        components[2] = BUField;
-        BUField.addKeyListener(this);
-
-
-        d.add(Ins2Field = new JTextField());
-        components[4] = Ins2Field;
-        Ins2Field.addKeyListener(this);
-
-
-        d.add(CommentField = new JTextField());
-        components[6] = CommentField;
-        CommentField.addKeyListener(this);
-
-
-        Box e = Box.createHorizontalBox();
-        e.add(a);
-        e.add(b);
-        e.add(c);
-        e.add(d);
-
-        Box g = Box.createHorizontalBox();
-        AddButton = new JButton(m_ic.getMessage("OK"));
-        components[7] = AddButton;
-        AddButton.addKeyListener(this);
-        AddButton.setActionCommand("ok");
-        AddButton.addActionListener(this);
-
-        g.add(Box.createHorizontalGlue());
-        getRootPane().setDefaultButton(AddButton);
-
-        g.add(AddButton);
-        JButton CloseButton = new JButton(m_ic.getMessage("CANCEL"));
-        components[8] = CloseButton;
-        CloseButton.addKeyListener(this);
-        CloseButton.setActionCommand("close");
-        CloseButton.addActionListener(this);
-
-
-        g.add(Box.createHorizontalStrut(10));
-        g.add(CloseButton);
-        g.add(Box.createHorizontalGlue());
-        this.getContentPane().add(g, BorderLayout.SOUTH);
-
-        getContentPane().add(e, BorderLayout.NORTH);
-        getContentPane().add(g, BorderLayout.SOUTH);
-	
-    }
-*/
-
-    /**
-     * Invoked when an action occurs.
-     */
     public void actionPerformed(ActionEvent e)
     {
         String action = e.getActionCommand();
@@ -466,19 +340,13 @@ public class DoctorDialog extends JDialog implements ActionListener
         else if (action.equals("ok"))
         {
         }
-
     }
 
-    /**
-     * Was Action Successful
-     * 
-     * @return true if action was succesful (dialog closed with OK)
-     */
+    
     public boolean actionSuccessful()
     {
         return m_actionDone;
     }
-
 
 
 }

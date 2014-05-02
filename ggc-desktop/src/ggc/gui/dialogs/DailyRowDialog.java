@@ -17,7 +17,6 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.NumberFormat;
@@ -28,10 +27,8 @@ import java.util.StringTokenizer;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,7 +38,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.atech.graphics.components.DateTimeComponent;
-import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
@@ -83,28 +79,20 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private DataAccess m_da = DataAccess.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
-
     private boolean m_actionDone = false;
 
     JTextField ActField, CommentField, UrineField;
-    //JComboBox cob_bg_type; // = new JComboBox();
-    //JFormattedTextField ftf_bg1, ftf_bg2;
-    // ftf_ch
-    
     JLabel label_title = new JLabel();
     JLabel label_food;
     JCheckBox cb_food_set;
     DateTimeComponent dtc;
 
     String sDate = null;
-
     DailyValues dV = null;
     DailyValuesRow m_dailyValuesRow = null;
-
     NumberFormat bg_displayFormat, bg_editFormat;
 
     JComponent components[] = new JComponent[9];
-
     Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
     Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
@@ -179,29 +167,20 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private void initParameters(DailyValues ndV, String nDate)
     {
-        // if (add)
         setTitle(m_ic.getMessage("ADD_ROW"));
         label_title.setText(m_ic.getMessage("ADD_ROW"));
-
-        // else
-        // setTitle(m_ic.getMessage("EDIT_NEW_ROW"));
-
-        //System.out.println(props.getBG_unit());
 
         sDate = nDate;
         dV = ndV;
         this.m_add_action = true;
-        // mod = m;
         init();
         setDate();
-        // load();
 
         if (this.m_dailyValuesRow == null)
         {
             this.m_dailyValuesRow = new DailyValuesRow();
         }
         this.updateMealsSet();
-
         this.setVisible(true);
     }
 
@@ -250,6 +229,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     }
 
+    
     private void load()
     {
         this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
@@ -297,14 +277,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         this.cb_food_set.setEnabled(true);
 
         CommentField.setText(this.m_dailyValuesRow.getComment());
-
     }
 
-    /*
-     * private void save() {
-     * 
-     * }
-     */
 
     private void init()
     {
@@ -608,15 +582,15 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     }
 
     
-    private JFormattedTextField getTextField(int columns, int decimal_places, Object value, int x, int y, int width, int height, Container cont)
-    {
-        JDecimalTextField tf = new JDecimalTextField(value, decimal_places);
-        tf.setBounds(x, y, width, height);
-        tf.addKeyListener(this);
-        cont.add(tf);
-
-        return tf;
-    }
+//    private JFormattedTextField getTextField(int columns, int decimal_places, Object value, int x, int y, int width, int height, Container cont)
+//    {
+//        JDecimalTextField tf = new JDecimalTextField(value, decimal_places);
+//        tf.setBounds(x, y, width, height);
+//        tf.addKeyListener(this);
+//        cont.add(tf);
+//
+//        return tf;
+//    }
 
 
     private void addLabel(String text, int posY, JPanel parent)
@@ -664,50 +638,11 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
         else if (action.equals("ok"))
         {
-            cmdOk();
+            commandOk();
         }
         else if (action.equals("edit_food"))
         {
-            PlugInClient pc = DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION);
-            
-            if (pc.isActiveWarning(true, this))
-            {
-                Object[] data = pc.executeCommandDialogReturn(this, NutriPlugIn.COMMAND_DB_FOOD_SELECTOR, this.m_dailyValuesRow.getMealsIds());
-                
-                if (data!=null)
-                {
-                    this.m_dailyValuesRow.setMealsIds((String)data[0]);
-                    //this.ftf_ch.setValue(new Float((String)data[1]));
-                    this.spinner_arr[3].setValue(this.m_dailyValuesRow.getCH());
-
-
-                    updateMealsSet();
-                }
-            }
-            
-            
-            
-            /*
-            Object[] data = m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).executeCommandDialogReturn(this, NutriPlugIn.COMMAND_DB_FOOD_SELECTOR, this.m_dailyValuesRow.getMealsIds());
-            
-            if (data!=null)
-            {
-                this.m_dailyValuesRow.setMealsIds((String)data[0]);
-                this.ftf_ch.setValue(new Float((String)data[1]));
-
-                updateMealsSet();
-            }*/
-            
-            /*
-            DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(m_da, this.m_dailyValuesRow.getMealsIds());
-
-            if (dvms.wasAction())
-            {
-                this.m_dailyValuesRow.setMealsIds(dvms.getStringForDb());
-                this.ftf_ch.setValue(new Float(dvms.getCHSum().replace(',', '.')));
-
-                updateMealsSet();
-            }*/
+            commandEditFood();
         }
         else if (action.equals("update_ch"))
         {
@@ -765,6 +700,26 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     }
 
+    private void commandEditFood()
+    {
+        PlugInClient pc = DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION);
+        
+        if (pc.isActiveWarning(true, this))
+        {
+            Object[] data = pc.executeCommandDialogReturn(this, NutriPlugIn.COMMAND_DB_FOOD_SELECTOR, this.m_dailyValuesRow.getMealsIds());
+            
+            if (data!=null)
+            {
+                this.m_dailyValuesRow.setMealsIds((String)data[0]);
+                //this.ftf_ch.setValue(new Float((String)data[1]));
+                this.spinner_arr[3].setValue(this.m_dailyValuesRow.getCH());
+
+
+                updateMealsSet();
+            }
+        }
+    }
+
     private void setCh(String ch_str)
     {
         if (!m_da.isValueSet(ch_str))
@@ -801,14 +756,12 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     
   
 
-    private void cmdOk()
+    private void commandOk()
     {
 
         this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
 
         float f = m_da.getFloatValue(this.spinner_arr[4].getValue()); 
-
-//                m_da.getJFormatedTextValueFloat(ftf_bg1);
 
         if (f > 0.0)
         {
@@ -818,16 +771,11 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         setInsulinValues();
         
         this.m_dailyValuesRow.setCH(m_da.getFloatValue(this.spinner_arr[3].getValue()));
-            //m_da.getJFormatedTextValueFloat(this.ftf_ch));
-        
-        //this.spinner_arr[3].setValue(this.m_dailyValuesRow.getCH());
-
         
         this.m_dailyValuesRow.setActivity(ActField.getText());
         this.m_dailyValuesRow.setUrine(UrineField.getText());
         this.m_dailyValuesRow.setComment(CommentField.getText());
         this.m_dailyValuesRow.createExtended();
-
         
         if (this.m_add_action)
         {
@@ -933,64 +881,26 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             {
                 this.m_dailyValuesRow.setIns3(vd);
             }
-            
         }
-    
-        
     }
     
     
-    
-    
-    /*
-    public boolean isFieldSet(String text)
-    {
-        if ((text == null) || (text.trim().length() == 0))
-            return false;
-        else
-            return true;
-    }*/
-
-    /**
-     * @return
-     */
     public boolean actionSuccessful()
     {
         return m_actionDone;
     }
 
-    /**
-     * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
-     */
-    public void keyTyped(KeyEvent e)
-    {
-    }
+    
+    public void keyTyped(KeyEvent e) { }
+    public void keyPressed(KeyEvent e) { }
 
-    /**
-     * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
-     */
-    public void keyPressed(KeyEvent e)
-    {
-    }
-
-    /**
-     * Invoked when a key has been released. See the class description for
-     * {@link KeyEvent} for a definition of a key released event.
-     */
+    
     public void keyReleased(KeyEvent e)
     {
-
-        /*
-        if ((e.getSource().equals(this.ftf_bg1)) || (e.getSource().equals(this.ftf_bg2)))
-        {
-            //focusProcess(e.getSource());
-        }*/
-
         if (e.getKeyCode() == KeyEvent.VK_ENTER)
         {
-            cmdOk();
+            commandOk();
         }
-
     }
 
    
@@ -999,25 +909,16 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     // ****** HelpCapable Implementation *****
     // ****************************************************************
     
-    /**
-     * getComponent - get component to which to attach help context
-     */
     public Component getComponent()
     {
         return this.getRootPane();
     }
 
-    /**
-     * getHelpButton - get Help button
-     */
     public JButton getHelpButton()
     {
         return this.help_button;
     }
 
-    /**
-     * getHelpId - get id for Help
-     */
     public String getHelpId()
     {
         return "GGC_BG_Daily_Add";
@@ -1025,10 +926,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     
     
-    /**
-     * focusGained
-     */
-    public void focusGained(FocusEvent arg0)
+    public void focusGained(FocusEvent event)
     {
     }
 

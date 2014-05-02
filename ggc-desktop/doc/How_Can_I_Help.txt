@@ -355,3 +355,9 @@ environment.
      TK Eclipse Plugin HTML Editor - http://sourceforge.net/projects/amateras/ (DL)
          HTML editor
 
+---
+
+Mylyn 
+Generic Web Template - http://download.eclipse.org/mylyn/incubator/3.8 
+
+

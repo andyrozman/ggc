@@ -108,7 +108,7 @@ public abstract class AbstractGraphView extends JComponent
         viewWidth = dim.width;
         viewHeight = dim.height;
         drawableWidth = viewWidth - rightSpace - leftSpace;
-        drawableHeight = viewHeight - lowerSpace - upperSpace;
+        drawableHeight = viewHeight - this.lowerSpace - upperSpace;
 
         //continuous drawing
         dayWidthC = drawableWidth / (dayCount > 0 ? dayCount : 1);
