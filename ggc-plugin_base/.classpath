@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Atech-Tools"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Core"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Lib USB 4j WO (libusb4jwo)"/>
 	<classpathentry kind="src" path="src"/>
@@ -19,5 +18,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rxtx-2.2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jna-3.2.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.14"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Atech-Tools"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

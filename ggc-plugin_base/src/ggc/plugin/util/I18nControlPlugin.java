@@ -1,6 +1,6 @@
 package ggc.plugin.util;
 
-import com.atech.i18n.I18nControlLangMgr;
+import com.atech.i18n.I18nControlLangMgrDual;
 import com.atech.i18n.I18nControlRunner;
 import com.atech.i18n.mgr.LanguageManager;
 
@@ -31,10 +31,10 @@ import com.atech.i18n.mgr.LanguageManager;
  */
 
 
-public class I18nControlPlugin extends I18nControlLangMgr
+public class I18nControlPlugin extends I18nControlLangMgrDual
 {
     
-    protected I18nControlLangMgr m_ic_core = null;
+    protected I18nControlLangMgrDual m_ic_core = null;
     
     
     /**
@@ -50,7 +50,36 @@ public class I18nControlPlugin extends I18nControlLangMgr
     }
     
     
-    
+    public synchronized String getMessageFromCatalog(String msg)
+    {
+        if (!checkIfValidMessageKey(msg))
+            return msg;
+        
+        String ret = this.getMessageFromCatalogSelectedLanaguge(msg);
+        
+        if (ret.equals(msg))
+        {
+            if (this.m_ic_core==null)
+                this.loadPluginI18n();
+            
+            ret = this.m_ic_core.getMessageFromCatalogSelectedLanaguge(msg);
+            
+            if (ret.equals(msg))
+            {
+                if (this.language_manager.findUntraslatedKeys())
+                    return ret;
+                
+                ret = this.getMessageFromCatalogDefaultLangauge(msg); 
+                
+                if (ret.equals(msg))
+                {
+                    ret = this.m_ic_core.getMessageFromCatalogDefaultLangauge(msg);
+                }
+            }
+        }
+        
+        return ret;
+    }
     
     public String getMessage(String key)
     {
@@ -80,7 +109,7 @@ public class I18nControlPlugin extends I18nControlLangMgr
     public void loadPluginI18n()
     {
         //System.out.println("Creating ic core");
-        this.m_ic_core = new I18nControlLangMgr(this.language_manager, new GGCPluginICRunner());
+        this.m_ic_core = new I18nControlLangMgrDual(this.language_manager, new GGCPluginICRunner());
         //System.out.println("Creating ic core: " + this.m_ic_core);
     }
     

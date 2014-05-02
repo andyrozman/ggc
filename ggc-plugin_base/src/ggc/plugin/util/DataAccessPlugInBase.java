@@ -22,6 +22,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
@@ -420,7 +421,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public String getAboutPluginCopyright()
     {
-        int till = new GregorianCalendar().get(GregorianCalendar.YEAR);
+        int till = new GregorianCalendar().get(Calendar.YEAR);
         
         if (this.about_plugin_copyright_from==till)
         {
