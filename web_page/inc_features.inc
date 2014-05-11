@@ -62,8 +62,9 @@ user-friendlier. <br><br>
     <li>Application update: Client side is working, we need to implement server side</li>
 	<li>Tools integration:</li>
 	<ul>
-		<li>Meter Tool integration (v1.0.7) - See projects page for details.</li>
-        <li>Pump Tool integration (v0.2.1) - See projects page for details.</li>
+		<li>Meter Tool integration (v2.0.3) - See projects page for details.</li>
+        <li>Pump Tool integration (v1.3.4) - See projects page for details.</li>
+        <li>CGMS Tool integration (v1.0.3) - See projects page for details.</li>
 	</ul>
 	
 </ul>
@@ -78,23 +79,25 @@ marked with [1.0] will be finished, then first release, with them, will be 1.0.<
 <ul>
 
 
-<li><i>Version (0.5) [June 2009]:</i></li>
+<li><i>Version 0.6 [4Q/2014]:</i></li>
 <ul>
-	<li>New Graph Framework</li>
-	<li>Extend Bolus Helper functionality</li>
+    <li>Stocks</li>
     <li>Update system - Server side [1.0]</li>
     <li>Write help pages for English (full help) [1.0] </li>
-    <li>Extend nutrition databases functionality</li>
-    <li>Add Remote Food database</li>
-    <li>Write help pages for English</li>
     <li>Db Tool [1.0]</li>
     <li>Support for multiple persons</li>
+    <li>USB devices integration (via HID interface)</li>
+    <li>Internal PDF Viewer</li>
+    <li>moving from Rxtx to java-simple-serial-connector (not 100%)</li> 
 </ul>
 
 
 
-<li><i>Version (0.6) [December 2009]:</i></li>
+<li><i>Version 0.7 or later:</i></li>
 <ul>
+    <li>Extend nutrition databases functionality</li>
+    <li>Add Remote Food database</li>
+	<li>Editor for Graph (v2)</li>
 	<li>Restore data (partitial/update)</li>
 	<li>Appointment and Doctors handling</li>
     <li>Activity manager</li>
@@ -103,7 +106,6 @@ marked with [1.0] will be finished, then first release, with them, will be 1.0.<
     <li>Import of data from SiDiary Desktop application. SiDiary has its sister applications running 
         on many small devices (PocketPC, Palms, SmartPhones, Java Phones), and it has import for a lot of 
         Meters and also some pumps...</li>
-	<li>Integration of CGMS Tool</li>
 </ul>
 
 

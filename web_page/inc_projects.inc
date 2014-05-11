@@ -29,7 +29,7 @@ supported.
 <h3 class="header">Meter Tool</h3>
 
 Meter Tool implementation is now finished. All that remains is adding support for more Meter Devices.<br>
-<b>Current version:</b> 1.0.7<br>
+<b>Current version:</b> 2.0.3<br>
 <br><br>
 <b><i>Tasks that are already done:</i></b>
 <ul>
@@ -53,8 +53,13 @@ Meter Tool implementation is now finished. All that remains is adding support fo
 <br>
 <b><i>Planned devices: </i></b>
 <ul>
-    <li>Abbott - Some of them
+    <li>Abbott - Some of them</li>
+    <li>Ascensia: Contour USB</li>
+    <li>Arkray: Glucocard X-mini plus</li>
+    <li>Calla Light</li>
+    <li>OT: Verio, Smart</li>
 </ul>
+
 
 
 
@@ -63,71 +68,78 @@ Meter Tool implementation is now finished. All that remains is adding support fo
 
 <h3 class="header">Pump Tool</h3>
 
-Pump Tool is now in development, 1st step is already done, but still most needs to be done. In brackets there 
-is version of GGC in which functionality will be available (it may become available sooner, but it's not likely).
-Ready in brackets mean that application already has functionality, but since it depends on some other 
-functionality it wasn't activated yet.<br>
-<b>Current version:</b> 0.2.1<br>
+Pump Tool development is mostly finished. Some of functionalities still need to be completed, but most of stuff
+works. We still need to add support for more devices.<br> 
+<b>Current version:</b> 1.3.4<br>
 <br><br>
 
 
 <b><i>Tasks that are already done:</i></b>
 <ul>
     <li>Manual adding of pump data (data that will in future be read from pump)</li>
-    <li>Adding of additional data (bg measurements, OH intake, Activity...)</li>
+    <li>Adding of additional data (BG measurements, OH intake, Activity...)</li>
+    <li>Base framework for pumps</li>
+    <li>Communication framework for pumps (interface that all pumps will use) [later]</li>
+    <li>List of pumps (most of them not all)</li>
+    <li>Configuration and graphical interface for integration into GGC</li>
+    <li>Output types:</li>
+    <ul>
+        <li>Console and file output
+        <li>GGC Db Output (for manual import)
+        <li>GGC Output (GUI integration)
+    </ul>
+    <li>Specific pump models implementations:</li>
+    <ul>
+        <li>Roche/Disetronic: Spirit, Combo
+        <li>Sooil: Dana III
+    </ul>
 </ul>
 
 
 <br><br>
 <b><i>Tasks that need to be done:</i></b>
 <ul>
-    <li>Base framework for pumps - 70% done [0.5]</li>
-    <li>Communication framework for pumps (interface that all pumps will use) [later]</li>
-    <li>List of pumps (most of them not all) [0.5 ready]</li>
-    <li>Configuration and graphical interface for integration into GGC [0.5 ready]</li>
-    <li>Output types:</li>
-    <ul>
-        <li>Console and file output [0.5 ready]
-        <li>GGC Db Output (for manual import) [0.5 ready]
-        <li>GGC Output (GUI integration) [0.5 ready]
-    </ul>
-    <li>Graphs (0.6)</li>
-    <li>Specific pump models implementations:</li>
-    <ul>
-        <li>Roche/Disetronic (2009)
-        <li>MiniMed (2009)
-        <li>Sooil Dana (?) [at this time this pump has no PC communication]
-        <li>Animas (unknown) [we have one developer working just on this]
-        <li>Smith's Cosmo (?)
-        <li>Omni Pod (?)
-    </ul>
+    <li>Graphs (0.6) (waiting on Graphs v2 with Editor)</li>
 </ul>
-
+<br>
+<b><i>Planned devices: </i></b>
+<ul>
+    <li>MiniMed (2015)
+    <li>Animas (unknown) [we have one developer working just on this]
+    <li>Smith's Cosmo (?)
+    <li>Omni Pod (?)
+</ul>
 
 <br>
 
 <h3 class="header">CGMS Tool</h3>
 
-CGMS tool is still in planning phase. So all things are still on TO-DO list. In brackets there is version of GGC
-in which functionality will be available (it may become available sooner, but it's not likely).
+CGMS tool is still in implementation phase. Base framework is finished, and some imports are already working,
+but we still need to do some implementation and also same analysis on the problem.<br>
+<b>Current version:</b> 1.0.3<br>
 <br><br>
-<b><i>Tasks that need to be done:</i></b>
+
+<b><i>Tasks that are already done:</i></b>
 <ul>
-    <li>Base framework for CGMS (0.5)</li>
+    <li>Base framework for CGMS</li>
     <li>Communication framework for CGMS (interface that all CGMS will use)</li>
-    <li>List of CGMS (0.6)</li>
-    <li>Configuration and graphical interface for integration into GGC (0.6)</li>
+    <li>Configuration and graphical interface for integration into GGC</li>
     <li>Output types:</li>
     <ul>
-        <li>Console and file output (0.6)
-        <li>GGC Db Output (for manual import) (0.6)
-        <li>GGC Output (GUI integration) (0.6)
+        <li>Console and file output
+        <li>GGC Db Output (for manual import)
+        <li>GGC Output (GUI integration)
     </ul>
-    <li>Graphs (0.6)</li>
+</ul>
+
+<b><i>Tasks that need to be done:</i></b>
+<ul>
+    <li>List of CGMS (0.6)</li>
+    <li>Graphs (0.6) (waiting on Graphs v2 with Editor)</li>
     <li>Specific CGMS models implementations:</li>
     <ul>
-        <li>MiniMed (2009)
-        <li>Dexcom (?)
+        <li>MiniMed (2015)
+        <li>Dexcom (?, we currently suppport only import through export file from DM3 app)
         <li>Abbott (?)
     </ul>
 </ul>
