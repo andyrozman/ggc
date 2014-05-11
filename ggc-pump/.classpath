@@ -15,5 +15,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/rxtx-2.2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText-5.1.2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.14"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hidapi-1.1"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

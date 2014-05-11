@@ -109,7 +109,7 @@ public class PumpPrintDialog extends PrintDialogRange
     public void startPrintingAction() throws Exception
     {
      
-        DeviceValuesRange dvr = DataAccessPump.getInstance().getDb().getRangePumpValues(this.dc_from.getDateObject(), this.dc_to.getDateObject());
+        DeviceValuesRange dvr = DataAccessPump.getInstance().getDb().getRangePumpValues(this.getFromDateObject(), this.getToDateObject());
         //System.out.println(this.dc_from.getDate() + " " + this.dc_to.getDate());
         
         PrintAbstractIText pa = null;
