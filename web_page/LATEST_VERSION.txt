@@ -1,5 +1,5 @@
-0.0.1
+0.5.0.4
 There is a new version available at http://ggc.sourceforge.net !
 
 Version Information:
-This is the first alpha release. Don't expect too much for now.
+This is fully working version of GGC. Support for several Meters (over 30), few Pumps, some CGMS (only through exports).
