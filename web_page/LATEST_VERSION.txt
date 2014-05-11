@@ -1,4 +1,4 @@
-0.5.0.4
+0.5.0.3
 There is a new version available at http://ggc.sourceforge.net !
 
 Version Information:
