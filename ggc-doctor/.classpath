@@ -4,7 +4,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Core"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Nutrition Tool"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC Pump Tool"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/GGC CGM Tool"/>
 	<classpathentry excluding="**/.svn/**" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SkinLF-6.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-logging-1.0.4"/>
@@ -14,5 +13,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaHelp-2.0.5"/>
 	<classpathentry kind="con" path="org.dyno.visual.swing.VS_LIBRARY/layoutext"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.14"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/GGC CGMS Tool"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
