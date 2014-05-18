@@ -88,7 +88,8 @@ marked with [1.0] will be finished, then first release, with them, will be 1.0.<
     <li>Support for multiple persons</li>
     <li>USB devices integration (via HID interface)</li>
     <li>Internal PDF Viewer</li>
-    <li>moving from Rxtx to java-simple-serial-connector (not 100%)</li> 
+    <li>moving from Rxtx to java-simple-serial-connector (not 100% decided)</li> 
+    <li>moving to development with Maven (internal change)</li>
 </ul>
 
 

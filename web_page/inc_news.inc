@@ -5,6 +5,44 @@
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
+<td width="150">2014-05-18</td>
+<td>GGC 0.5.0.3</td>
+</tr>
+<tr>
+<td colspan="2">
+It's been quite a while since our last release. I am really sorry but development team is 
+currently limited only to me and I had some personal problems, which moved new release (0.5)
+farther and farther away. Now that everything is setlled and I hope to have a little more time
+to work on GGC. <br><br>
+I wanted to introduce our new installer for GGC (IzPack) with this release, but I am still
+having some problems with so, this release is still in old way, buit I hope to make an interim 
+release with some changes and with new installer, but this won't happen before September.<br>
+As first I would like to thank all <b>Testers</b>, who helped us to real testing of this application
+(first one). We found some "problems" and all relevant were fixed.<br><br>
+<b>What is new in this release...</b><br>
+We moved to Rxtx 2.2, which was required since last version 
+had problem with 64-bit operating systems (Linux and Windows too). There were all testing fixes, 
+and we extended communications with some of devices.<br><br>
+<b>And the future...</b><br>
+While this release doesn't have so many features, we did get a step
+further to add support for MiniMed devices, which is currently most used Pump on the market. 
+We still have problem with decoding data. which is reason why it's not in this release, but I 
+hope it will be in next (end of year relase not in interim). We also started working on support
+for USB devices (so far we supported only Serial devices), which means that we will soon start
+adding support for new USB Meter devices. If you are willing to support this, we need all 
+help we can get: either programmers, testers, translators, documentation writers... If you 
+are owner of Animas pump, we have some code ready for testing and we could add support for 
+it soon.<br><br>
+For more detailed info what is planned, look at <b><i>Features</i></b> tab.
+</td>
+</tr>
+</table> 
+
+<br><br>
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
 <td width="150">2011-08-06 12:45</td>
 <td><b>Need help - Testers</td>
 </tr>

@@ -9,7 +9,7 @@ make software that we can use, if you give us your ideas and comments we can mak
 needs. If you are developer yourself you can also help in development process. So here are tasks you can do.
 
 <h3>Testing</h3>
-We need testers that will regullary test application and determine if there are any bugs that are lurking and 
+We need testers that will regulary test application and determine if there are any bugs that are lurking and 
 to find if some processes could be done better. There are several ways you can report your observations, there 
 are several trackers available, forums and lists.
 
