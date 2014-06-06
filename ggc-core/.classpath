@@ -1,19 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Atech-Tools"/>
-	<classpathentry excluding="**/.svn/**" kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PostgreSQL-JDBC-8.2"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaHelp-2.0.5"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-logging-1.0.4"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-collections-2.1.1"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate-3.1"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/H2-1.0.69"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/pygmy-0.2"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PostgreSQL-8.2"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/ggc-web"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/commons-lang-2.4"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jfreechart-1.0.14"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/iText-5.1.2"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.5.0_22_64bit"/>
-	<classpathentry kind="output" path="bin"/>
+  <classpathentry kind="src" path="src"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="var" path="M2_REPO/javax/transaction/jta/1.0.1B/jta-1.0.1B.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/help/javahelp/2.0.05/javahelp-2.0.05.jar"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-6-oracle"/>
+  <classpathentry kind="src" path="/atech-tools"/>
+  <classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate/3.1/hibernate-3.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/ehcache/ehcache/1.1/ehcache-1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/cglib/cglib/2.1_3/cglib-2.1_3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/asm/asm/1.5.3/asm-1.5.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/2.1.1/commons-collections-2.1.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/dom4j/dom4j/1.6/dom4j-1.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/antlr/antlr/2.7.6rc1/antlr-2.7.6rc1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/itextpdf/itextpdf/5.1.2/itextpdf-5.1.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.0/commons-lang-2.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/net/sf/squirrel-sql/thirdparty-non-maven/skinlf/6.7/skinlf-6.7.jar"/>
+  <classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.16/log4j-1.2.16.jar"/>
+  <classpathentry kind="var" path="M2_REPO/net/sf/jasperreports/jasperreports/3.7.1/jasperreports-3.7.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.8.0/commons-beanutils-1.8.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-digester/commons-digester/1.7/commons-digester-1.7.jar"/>
+  <classpathentry kind="var" path="M2_REPO/xml-apis/xml-apis/1.3.02/xml-apis-1.3.02.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/lowagie/itext/2.1.7/itext-2.1.7.jar"/>
+  <classpathentry kind="var" path="M2_REPO/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar"/>
+  <classpathentry kind="var" path="M2_REPO/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/bouncycastle/bctsp-jdk14/1.38/bctsp-jdk14-1.38.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/bouncycastle/bcprov-jdk14/1.38/bcprov-jdk14-1.38.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/bouncycastle/bcmail-jdk14/1.38/bcmail-jdk14-1.38.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jfree/jcommon/1.0.15/jcommon-1.0.15.jar"/>
+  <classpathentry kind="var" path="M2_REPO/jfree/jfreechart/1.0.13/jfreechart-1.0.13.jar"/>
+  <classpathentry kind="var" path="M2_REPO/eclipse/jdtcore/3.1.0/jdtcore-3.1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/net/sf/ggc/pygmy-httpd/pygmy-core/0.2/pygmy-core-0.2.jar" sourcepath="M2_REPO/net/sf/ggc/pygmy-httpd/pygmy-core/0.2/pygmy-core-0.2-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/andy/.m2/repository/net/sf/ggc/pygmy-httpd/pygmy-core/0.2/pygmy-core-0.2-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/net/sf/ggc/pygmy-httpd/pygmy-handlers/0.2/pygmy-handlers-0.2.jar" sourcepath="M2_REPO/net/sf/ggc/pygmy-httpd/pygmy-handlers/0.2/pygmy-handlers-0.2-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/home/andy/.m2/repository/net/sf/ggc/pygmy-httpd/pygmy-handlers/0.2/pygmy-handlers-0.2-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
 </classpath>
