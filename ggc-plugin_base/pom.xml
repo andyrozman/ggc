@@ -1,0 +1,89 @@
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.sf.ggc</groupId>
+		<artifactId>ggc-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+        <relativePath>../ggc-master-pom/pom.xml</relativePath>
+	</parent>
+
+
+	<name>GGC Plugin Base Project</name>
+
+	<groupId>net.sf.ggc</groupId>
+	<artifactId>ggc-plugin-base</artifactId>
+	<version>${ggc-plugin-base.version}</version>
+
+
+	<build>
+		<directory>target</directory>
+		<outputDirectory>target/classes</outputDirectory>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<testOutputDirectory>target/test-classes</testOutputDirectory>
+		<sourceDirectory>src</sourceDirectory>
+		<scriptSourceDirectory>src</scriptSourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>src</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+	</build>
+
+
+
+	<dependencies>
+		<dependency>
+			<groupId>net.sf.ggc</groupId>
+			<artifactId>ggc-core</artifactId>
+			<version>${ggc-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
+			<artifactId>rxtxcomm</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.atech-software</groupId>
+			<artifactId>atech-tools</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.java.dev.jna</groupId>
+			<artifactId>jna</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ibm.old.comapi</groupId>
+			<artifactId>ibm-compapi</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.ggc.libusb4j</groupId>
+			<artifactId>libusb4jwo</artifactId>
+		</dependency>
+
+	</dependencies>
+
+
+
+	<properties>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+
+	</properties>
+
+
+</project>
