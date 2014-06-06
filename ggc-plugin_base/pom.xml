@@ -42,11 +42,11 @@
 
 
 	<dependencies>
-		<dependency>
-			<groupId>net.sf.ggc</groupId>
-			<artifactId>ggc-core</artifactId>
-			<version>${ggc-core.version}</version>
-		</dependency>
+			<dependency>
+				<groupId>net.sf.ggc</groupId>
+				<artifactId>ggc-core</artifactId>
+ 				<!-- <version>${ggc-core.version}</version>  --> 
+			</dependency>
 
 		<dependency>
 			<groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
