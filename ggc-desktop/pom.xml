@@ -13,6 +13,7 @@
     
     <groupId>net.sf.ggc</groupId>
     <artifactId>ggc-desktop</artifactId>
+    <version>${ggc-desktop.version}</version>
 
     
     <build> 
