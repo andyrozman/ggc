@@ -12,7 +12,7 @@
 
 	<groupId>net.sf.ggc</groupId>
 	<artifactId>ggc-nutri-tool</artifactId>
-<!-- 	<version>${ggc-nutri-tool.version}</version>  -->
+ 	<version>${ggc-nutri-tool.version}</version> 
 
 
 	<build>

@@ -4,7 +4,7 @@
 		<groupId>net.sf.ggc</groupId>
 		<artifactId>ggc-parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
-        <relativePath>../ggc-master-pom/pom.xml</relativePath>
+		<relativePath>../ggc-master-pom/pom.xml</relativePath>
 	</parent>
 
 
@@ -12,7 +12,7 @@
 
 	<groupId>net.sf.ggc</groupId>
 	<artifactId>ggc-plugin-base</artifactId>
-	<version>${ggc-plugin-base.version}</version>
+ 	<version>${ggc-plugin-base.version}</version>
 
 
 	<build>
@@ -42,11 +42,10 @@
 
 
 	<dependencies>
-			<dependency>
-				<groupId>net.sf.ggc</groupId>
-				<artifactId>ggc-core</artifactId>
- 				<!-- <version>${ggc-core.version}</version>  --> 
-			</dependency>
+		<dependency>
+			<groupId>net.sf.ggc</groupId>
+			<artifactId>ggc-core</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>

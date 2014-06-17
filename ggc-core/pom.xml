@@ -13,7 +13,7 @@
     
     <groupId>net.sf.ggc</groupId>
     <artifactId>ggc-core</artifactId>
-    <version>${ggc-core.version}</version>
+    <version>${ggc-core.version}</version> 
     
     <build> 
         <directory>target</directory>
@@ -91,22 +91,24 @@
             <groupId>javax.help</groupId>
             <artifactId>javahelp</artifactId>
         </dependency>
-                    
+<!--                     
         <dependency>
             <groupId>net.sf.squirrel-sql.thirdparty-non-maven</groupId>
             <artifactId>skinlf</artifactId>
         </dependency>
-
+ -->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
 
+<!-- 
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
         </dependency>
-
+ -->
+ 
         <dependency>
             <groupId>jfree</groupId>
             <artifactId>jfreechart</artifactId>

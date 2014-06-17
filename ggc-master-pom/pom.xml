@@ -1,285 +1,346 @@
 <project>
-    <modelVersion>4.0.0</modelVersion>
-    <name>GGC Parent POM</name>
-    
-    <groupId>net.sf.ggc</groupId>
-    <artifactId>ggc-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
+	<modelVersion>4.0.0</modelVersion>
+	<name>GGC Parent POM</name>
 
-    
-    
-    <!--
-    <modules>
-<module>project-a</module>
-<module>project-b</module>
-</modules> -->
-    
-    
-<!--
-    <artifactId>atech-tools</artifactId>
-    <version>0.7-SNAPSHOT</version>
-    -->
-    
-    <!-- 
-    <repositories>
-        <repository>
-            <id>central</id>
-            <name>Maven Repository Switchboard</name>
-            <layout>default</layout>
-            <url>http://repo1.maven.org/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+	<groupId>net.sf.ggc</groupId>
+	<artifactId>ggc-parent</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>central</id>
-            <name>Maven Plugin Repository</name>
-            <url>http://repo1.maven.org/maven2</url>
-            <layout>default</layout>
 
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-            <updatePolicy>never</updatePolicy>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
-    
-    -->
-<!--
-    <repositories>
-        <repository>
-            <id>pygmy-repo</id>
-            <name>Pygmy Repository</name>
-            <layout>default</layout>
-            <url>https://oss.sonatype.org/service/local/repositories/netsfggc-042/content/</url>
--->
-<!--https://oss.sonatype.org/content/repositories/netsfggc-046/net/sf/ggc/pygmy-httpd/pygmy-handlers/0.2/pygmy-handlers-0.2.pom 
 
-https://oss.sonatype.org/service/local/repositories/netsfggc-042/content/
+	<!-- <modules> <module>project-a</module> <module>project-b</module> </modules> -->
 
--->
-<!--
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
--->
 
-	    <repository>
+	<!-- <artifactId>atech-tools</artifactId> <version>0.7-SNAPSHOT</version> -->
+
+	<!-- <repositories> <repository> <id>central</id> <name>Maven Repository 
+		Switchboard</name> <layout>default</layout> <url>http://repo1.maven.org/maven2</url> 
+		<snapshots> <enabled>false</enabled> </snapshots> </repository> </repositories> 
+		<pluginRepositories> <pluginRepository> <id>central</id> <name>Maven Plugin 
+		Repository</name> <url>http://repo1.maven.org/maven2</url> <layout>default</layout> 
+		<snapshots> <enabled>false</enabled> </snapshots> <releases> <updatePolicy>never</updatePolicy> 
+		</releases> </pluginRepository> </pluginRepositories> -->
+	<!-- <repositories> <repository> <id>pygmy-repo</id> <name>Pygmy Repository</name> 
+		<layout>default</layout> <url>https://oss.sonatype.org/service/local/repositories/netsfggc-042/content/</url> -->
+	<!--https://oss.sonatype.org/content/repositories/netsfggc-046/net/sf/ggc/pygmy-httpd/pygmy-handlers/0.2/pygmy-handlers-0.2.pom 
+		https://oss.sonatype.org/service/local/repositories/netsfggc-042/content/ -->
+	<!-- <snapshots> <enabled>false</enabled> </snapshots> </repository> -->
+
+	<repositories>
+
+		<repository>
 			<id>atechrepositorypublic</id>
-            <name>Atech Software Public Repository</name>
-            <url>http://www.atech-software.com:8080/nexus/content/groups/public/</url>
-        </repository>
+			<name>Atech Software Public Repository</name>
+			<url>http://www.atech-software.com:8080/nexus/content/groups/public/</url>
+		</repository>
 
-<!-- 
-	    <repository>
-			<id>mvnrepository</id>
-            <name>Mvn Central Repository</name>
-            <url>http://www.mvnrepository.com</url>
-        </repository>
-
-	    <repository>
-			<id>jbossrepository</id>
-            <name>jbossrepository</name>
-            <url>https://repository.jboss.org/nexus/</url>
-        </repository>
-
-	    <repository>
-			<id>sonatype</id>
-			<name>Sonatype OSS Snapshots Repository</name>
-			<url>http://oss.sonatype.org/content/groups/public</url>
-	    </repository>
-
-	    <repository>
-			<id>javanet</id>
-			<name>Download Java Net Repository</name>
-			<url>http://download.java.net/maven/2/</url>
-	    </repository>
-
-	    <repository>
-			<id>mavenrepository</id>
-			<name>Maven Repository Repository</name>
-			<layout>legacy</layout>
-			<url>http://maven-repository.com/artifacts/</url>
-	    </repository>
-
- -->
+		<!-- <repository> <id>mvnrepository</id> <name>Mvn Central Repository</name> 
+			<url>http://www.mvnrepository.com</url> </repository> <repository> <id>jbossrepository</id> 
+			<name>jbossrepository</name> <url>https://repository.jboss.org/nexus/</url> 
+			</repository> <repository> <id>sonatype</id> <name>Sonatype OSS Snapshots 
+			Repository</name> <url>http://oss.sonatype.org/content/groups/public</url> 
+			</repository> <repository> <id>javanet</id> <name>Download Java Net Repository</name> 
+			<url>http://download.java.net/maven/2/</url> </repository> <repository> <id>mavenrepository</id> 
+			<name>Maven Repository Repository</name> <layout>legacy</layout> <url>http://maven-repository.com/artifacts/</url> 
+			</repository> -->
 
 
 
-    </repositories>
+	</repositories>
 
 
 
-    <build> 
-        <directory>target</directory>
-        <outputDirectory>target/classes</outputDirectory>
-        <finalName>${project.artifactId}-${pom.version}</finalName>
-        <testOutputDirectory>target/test-classes</testOutputDirectory>
-        <sourceDirectory>src</sourceDirectory>
-        <scriptSourceDirectory>src</scriptSourceDirectory>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
-        <resources>
-            <resource>
-                <directory>src</directory>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-            <directory>src/test/resources</directory>
-            </testResource>
-        </testResources>
-    </build>
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Internal Releases</name>
+			<url>http://www.atech-software.com:8080/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Internal Snapshots</name>
+			<url>http://www.atech-software.com:8080/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 
-    <reporting>
-        <outputDirectory>target/site</outputDirectory>
-    </reporting>
-    
-    
-    
-    <dependencyManagement>
-    <dependencies>
-    
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>3.1</version>
-        </dependency> 
-
-        <dependency>
-            <groupId>net.sf.ggc.pygmy-httpd</groupId>
-            <artifactId>pygmy-core</artifactId>
-            <version>0.2</version>
-        </dependency> 
-        
-        <dependency>
-            <groupId>net.sf.ggc.pygmy-httpd</groupId>
-            <artifactId>pygmy-handlers</artifactId>
-            <version>0.2</version>
-        </dependency> 
-        
-        
-        
-                <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.10</version>
-            <scope>test</scope>
-        </dependency> 
-     <!--   <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>  -->
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>5.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.0</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>javax.help</groupId>
-            <artifactId>javahelp</artifactId>
-            <version>2.0.05</version>
-        </dependency>
-                    
-        <dependency>
-            <groupId>net.sf.squirrel-sql.thirdparty-non-maven</groupId>
-            <artifactId>skinlf</artifactId>
-            <version>6.7</version>
-        </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
-        </dependency>
-
-        <dependency>
-            <groupId>net.sf.jasperreports</groupId>
-            <artifactId>jasperreports</artifactId>
-            <version>3.7.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>jfree</groupId>
-            <artifactId>jfreechart</artifactId>
-            <version>1.0.13</version>
-        </dependency>
 
 
-	<!-- This should be replaced with nrserial, which is just extention of rxtx that also contains binary files in jar. -->
-	<dependency>
-	  <groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
-	  <artifactId>rxtxcomm</artifactId>
-	  <version>${rxtxcomm.version}</version>
-	</dependency>
+	<build>
+		<directory>target</directory>
+		<outputDirectory>target/classes</outputDirectory>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<testOutputDirectory>target/test-classes</testOutputDirectory>
+		<sourceDirectory>src</sourceDirectory>
+		<scriptSourceDirectory>src</scriptSourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>src</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.1</version>
+					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 
 
-        <dependency>
-            <groupId>com.atech-software</groupId>
-            <artifactId>atech-tools</artifactId>
-            <version>${atech-tools.version}</version>
-        </dependency> 
+	<reporting>
+		<outputDirectory>target/site</outputDirectory>
+	</reporting>
 
-	<dependency>
-	  <groupId>net.java.dev.jna</groupId>
-	  <artifactId>jna</artifactId>
-	  <version>${jna.version}</version>
-	</dependency>
+	<!-- <modules> <module>ggc-core</module> <module>ggc-plugin-base</module> 
+		</modules> -->
 
-	<!--This is some outdated library which we use only for BlueTooth, it needs to be removed or changed, but so far it's 
-            here and it's version is fixed. This NEEDS to be removed and changed to some other library in near future and 
-            tested with Dana Pump (only BT device we have so far) -->
-	<dependency>
-            <groupId>com.ibm.old.comapi</groupId>
-            <artifactId>ibm-compapi</artifactId>
-            <version>1.3</version>
-	</dependency> 
-	
-	<!-- This library is created in parallel to GGC and it should be used for USB communication. For USB devices that have HID
-             interfaces (most of them), we will use other library, but for legacy support we use this for now. -->
-	<dependency>
-            <groupId>net.sf.ggc.libusb4j</groupId>
-            <artifactId>libusb4jwo</artifactId>
-            <version>${libusb4jwo.version}</version>
-	</dependency> 
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>net.sf.ggc</groupId>
+				<artifactId>ggc-core</artifactId>
+				<version>${ggc-core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.ggc</groupId>
+				<artifactId>ggc-plugin-base</artifactId>
+				<version>${ggc-plugin-base.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.ggc</groupId>
+				<artifactId>ggc-meter-tool</artifactId>
+				<version>${ggc-meter-tool.version}</version>
+			</dependency>
 
 
-    </dependencies>
-  </dependencyManagement>  
-    
-    <properties>
-        <ggc-core.version>0.5.1-SNAPSHOT</ggc-core.version>
-        <ggc-plugin-base.version>0.6.2-SNAPSHOT</ggc-plugin-base.version>
-        <atech-tools.version>0.7.1-SNAPSHOT</atech-tools.version>
+			<dependency>
+				<groupId>net.sf.ggc</groupId>
+				<artifactId>ggc-pump-tool</artifactId>
+				<version>${ggc-pump-tool.version}</version>
+			</dependency>
 
-	    <jna.version>3.3.0</jna.version>
-        <rxtxcomm.version>2.2</rxtxcomm.version>
-	    <libusb4jwo.version>0.2</libusb4jwo.version>
-        
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    
-    </properties>
+			<dependency>
+				<groupId>net.sf.ggc</groupId>
+				<artifactId>ggc-cgms-tool</artifactId>
+				<version>${ggc-cgms-tool.version}</version>
+			</dependency>
 
-    
-    
+			<dependency>
+				<groupId>net.sf.ggc</groupId>
+				<artifactId>ggc-nutri-tool</artifactId>
+				<version>${ggc-nutri-tool.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.ggc</groupId>
+				<artifactId>ggc-desktop</artifactId>
+				<version>${ggc-desktop.version}</version>
+			</dependency>
+
+
+
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.ggc.pygmy-httpd</groupId>
+				<artifactId>pygmy-core</artifactId>
+				<version>${pygmy-core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.ggc.pygmy-httpd</groupId>
+				<artifactId>pygmy-handlers</artifactId>
+				<version>${pygmy-handlers.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${servlet-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.itextpdf</groupId>
+				<artifactId>itextpdf</artifactId>
+				<version>${itextpdf.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons-lang.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.help</groupId>
+				<artifactId>javahelp</artifactId>
+				<version>${javahelp.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.squirrel-sql.thirdparty-non-maven</groupId>
+				<artifactId>skinlf</artifactId>
+				<version>${skinlf.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.jasperreports</groupId>
+				<artifactId>jasperreports</artifactId>
+				<version>${jasperreports.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>jfree</groupId>
+				<artifactId>jfreechart</artifactId>
+				<version>${jfreechart.version}</version>
+			</dependency>
+
+
+			<!-- This should be replaced with nrserial, which is just extention of 
+				rxtx that also contains binary files in jar. -->
+			<dependency>
+				<groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
+				<artifactId>rxtxcomm</artifactId>
+				<version>${rxtxcomm.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>com.atech-software</groupId>
+				<artifactId>atech-tools</artifactId>
+				<version>${atech-tools.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.java.dev.jna</groupId>
+				<artifactId>jna</artifactId>
+				<version>${jna.version}</version>
+			</dependency>
+
+			<!--This is some outdated library which we use only for BlueTooth, it 
+				needs to be removed or changed, but so far it's here and it's version is 
+				fixed. This NEEDS to be removed and changed to some other library in near 
+				future and tested with Dana Pump (only BT device we have so far) -->
+			<dependency>
+				<groupId>com.ibm.old.comapi</groupId>
+				<artifactId>ibm-compapi</artifactId>
+				<version>${ibm-compapi.version}</version>
+			</dependency>
+
+			<!-- This library is created in parallel to GGC and it should be used 
+				for USB communication. For USB devices that have HID interfaces (most of 
+				them), we will use other library, but for legacy support we use this for 
+				now. -->
+			<dependency>
+				<groupId>net.sf.ggc.libusb4j</groupId>
+				<artifactId>libusb4jwo</artifactId>
+				<version>${libusb4jwo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.codeminders</groupId>
+				<artifactId>hidapi</artifactId>
+				<version>${hidapi.version}</version>
+			</dependency>
+
+
+
+		</dependencies>
+	</dependencyManagement>
+
+	<properties>
+
+		<!-- Modules versions -->
+		<ggc-core.version>0.5.1-SNAPSHOT</ggc-core.version>
+		<ggc-plugin-base.version>0.6.3-SNAPSHOT</ggc-plugin-base.version>
+		<ggc-meter-tool.version>2.0.4-SNAPSHOT</ggc-meter-tool.version>
+		<ggc-pump-tool.version>1.3.5-SNAPSHOT</ggc-pump-tool.version>
+		<ggc-cgms-tool.version>1.0.4-SNAPSHOT</ggc-cgms-tool.version>
+		<ggc-nutri-tool.version>1.3.4-SNAPSHOT</ggc-nutri-tool.version>
+
+		<ggc-desktop.version>0.5.1-SNAPSHOT</ggc-desktop.version>
+
+		<!-- NON MAVEN -->
+		<ggc-little.version>0.2.4-SNAPSHOT</ggc-little.version>
+		<!-- NON MAVEN -->
+		<ggc-lang.version>0.4.3-SNAPSHOT</ggc-lang.version>
+
+
+
+
+		<!-- Dependencies versions -->
+		<atech-tools.version>0.7.8-SNAPSHOT</atech-tools.version>
+		<jna.version>3.3.0</jna.version>
+		<rxtxcomm.version>2.2</rxtxcomm.version>
+		<libusb4jwo.version>0.2</libusb4jwo.version>
+		<ibm-compapi.version>1.3</ibm-compapi.version>
+		<skinlf.version>6.7</skinlf.version>
+		<log4j.version>1.2.16</log4j.version>
+		<jasperreports.version>3.7.1</jasperreports.version>
+		<jfreechart.version>1.0.13</jfreechart.version>
+		<hibernate.version>3.1</hibernate.version>
+		<pygmy-core.version>0.2</pygmy-core.version>
+		<pygmy-handlers.version>0.2</pygmy-handlers.version>
+		<junit.version>4.10</junit.version>
+		<servlet-api.version>2.5</servlet-api.version>
+		<itextpdf.version>5.1.2</itextpdf.version>
+		<commons-lang.version>2.0</commons-lang.version>
+		<javahelp.version>2.0.05</javahelp.version>
+
+		<!-- NEW THIS VERSION -->
+		<hidapi.version>1.1</hidapi.version>
+
+
+		<maven.compiler.source>1.5</maven.compiler.source>
+		<maven.compiler.target>1.5</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+	</properties>
+
+
+
+	<organization>
+		<name>GGC Development Team</name>
+	</organization>
 </project>

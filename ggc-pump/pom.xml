@@ -12,7 +12,7 @@
 
 	<groupId>net.sf.ggc</groupId>
 	<artifactId>ggc-pump-tool</artifactId>
-	<version>${ggc-pump-tool.version}</version>
+ 	<version>${ggc-pump-tool.version}</version> 
 
 
 	<build>

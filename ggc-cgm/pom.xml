@@ -4,7 +4,7 @@
 		<groupId>net.sf.ggc</groupId>
 		<artifactId>ggc-parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
-		<relativePath>../ggc-master-pom/pom.xml</relativePath>
+	 	<relativePath>../ggc-master-pom/pom.xml</relativePath>
 	</parent>
 
 
@@ -12,7 +12,7 @@
 
 	<groupId>net.sf.ggc</groupId>
 	<artifactId>ggc-cgms-tool</artifactId>
-	<version>${ggc-cgms-tool.version}</version>
+ 	<version>${ggc-cgms-tool.version}</version>
 
 
 	<build>
@@ -63,15 +63,7 @@
 			<artifactId>atech-tools</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>net.java.dev.jna</groupId>
-			<artifactId>jna</artifactId>
-		</dependency>
 
-		<dependency>
-			<groupId>com.ibm.old.comapi</groupId>
-			<artifactId>ibm-compapi</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>net.sf.ggc.libusb4j</groupId>
