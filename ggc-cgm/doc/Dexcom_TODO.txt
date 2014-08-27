@@ -1,0 +1,74 @@
+
+DEXCOM Todo
+============
+
+LAST CHANGE: 22.8. W
+
+
+MISC
+- Move Reader out of Receiver
+- Add interface for reading data and configuration
+- Split reading configs and data
+- DexcomException use non-deprecated
+- DexcomYYYCommand to interface
+
+CONFIGURATION
+
+
+- API readClockMode
+
+DATA
+
+- Parsing Binary: EGVData
+
+
+- Parsing Binary: framework
+- versioning of data : - partition data saving
+-                      - log warn on wrong version
+                       - versioning interface used with enum
+                       - ReceiverRecordType extension to store versioning interface
+                       - version check only when partition is read - create report in log
+
+
+-- Reader move
+-- Com port init ????
+
+
+
+
+UNSUPPORTED
+            Errors ??
+            case FirmwareParameterData:
+            case SensorData:
+            case ReceiverLogData:
+            case ReceiverErrorData:
+                break;
+
+----- DONE
+
+- readPartitionInfo
+- API readReceiverSerialNumbe -> ManufacturingData
+- readDatabasePages
+
+- DataPages:  - split into pages
+              - split into elements
+- Parsing Binary: ManufacturingData
+- Parsing Binary: PCSoftwareParameter (we shouldn't read this, but needs to be supported)
+- Parsing Binary: InsertionTime
+- Parsing Binary: MeterData
+- Parsing Binary: UserEventData
+- command is int
+- response is short
+- API readSystemTime
+- API getDisplayTime
+- API readDisplayTimeOffset
+- API api.readLanguage
+- API readGlucoseUnits
+- command is short
+-----
+
+Hi !
+
+In last few weeks I have been testing Dexcom G4 device (I have it till end of August) and I started to work on reading data from device... At this point it looks quite ok... But I came around one curiosity... Some of data is stored binary and some as Xml... Now with Xml I had no problem, but I am now starting with binary part...
+
+Only problem I see that they have versioning of this binary objects... I know that some people have already tried doing this in other languages (I am doing this in Java and it will become part of my GNU Gluco Control project I am working on) so I am wondering how did other people solve this problem? Do you even support this... I hope any of Dexcom hackers is here around...
