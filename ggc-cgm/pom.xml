@@ -53,11 +53,12 @@
 			<artifactId>ggc-plugin-base</artifactId>
 		</dependency>
 
+<!-- 
 		<dependency>
 			<groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
 			<artifactId>rxtxcomm</artifactId>
 		</dependency>
-
+ -->
 		<dependency>
 			<groupId>com.atech-software</groupId>
 			<artifactId>atech-tools</artifactId>
@@ -66,18 +67,27 @@
 		<!-- NEW put into parent pom -->
 
 		<dependency>
-			<groupId>jdom</groupId>
+			<groupId>org.jdom</groupId>
 			<artifactId>jdom</artifactId>
 			<version>1.1</version>
     	</dependency>
 
+
+
+		<dependency>
+			<groupId>com.neuronrobotics</groupId>
+			<artifactId>nrjavaserial</artifactId>
+			<version>3.9.3</version>
+		</dependency>
+
+<!-- 
         <dependency>
  			<groupId>org.scream3r</groupId>
     		<artifactId>jssc</artifactId>
     		<version>2.8.0</version>
 		</dependency>
 
-
+ -->
 
 	</dependencies>
 

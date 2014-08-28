@@ -4,42 +4,46 @@ import java.util.HashMap;
 
 public enum ReceiverRecordType
 {
-    ManufacturingData(0),
-    FirmwareParameterData(1),
-    PCSoftwareParameter(2),
-    SensorData(3),
-    EGVData(4),
-    CalSet(5),
-    Aberration(6),
-    
-    InsertionTime(7),
-    ReceiverLogData(8),
-    ReceiverErrorData(9),
-    MeterData(10),
-    UserEventData(11),
-    UserSettingData(12),
-    MaxValue(13),
-    
+    ManufacturingData(0), // 
+    FirmwareParameterData(1), // 
+    PCSoftwareParameter(2), //
+    SensorData(3), // 
+    EGVData(4), //
+    CalSet(5), //
+    Aberration(6), //
+
+    InsertionTime(7), //
+    ReceiverLogData(8), //
+    ReceiverErrorData(9), // 
+    MeterData(10), //
+    UserEventData(11), //
+    UserSettingData(12), // 
+    MaxValue(13), //
+
     None(-1);
-    
-    
 
     private int value;
-    private static HashMap<Integer,ReceiverRecordType> map = new HashMap<Integer,ReceiverRecordType>();
-    
+    private static HashMap<Integer, ReceiverRecordType> map = new HashMap<Integer, ReceiverRecordType>();
+    private static HashMap<ReceiverRecordType, ReceiverRecordType> downloadSupported = new HashMap<ReceiverRecordType, ReceiverRecordType>();
+
     static
     {
-        for(ReceiverRecordType el : values())
+        for (ReceiverRecordType el : values())
         {
             map.put(el.getValue(), el);
         }
+
+        downloadSupported.put(MeterData, MeterData);
+        downloadSupported.put(UserEventData, UserEventData);
+        downloadSupported.put(EGVData, EGVData);
+        downloadSupported.put(InsertionTime, InsertionTime);
     }
 
     ReceiverRecordType(int value)
     {
         this.value = value;
     }
-    
+
     public int getValue()
     {
         return value;
@@ -55,5 +59,9 @@ public enum ReceiverRecordType
         return map.get(value);
     }
 
-}
+    public static HashMap<ReceiverRecordType, ReceiverRecordType> getDownloadSupported()
+    {
+        return downloadSupported;
+    }
 
+}

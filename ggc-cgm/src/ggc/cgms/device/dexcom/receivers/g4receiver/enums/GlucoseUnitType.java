@@ -1,7 +1,3 @@
-//
-// Translated by CS2J (http://www.cs2j.com): 15.8.2014 0:18:14
-//
-
 package ggc.cgms.device.dexcom.receivers.g4receiver.enums;
 
 import java.util.HashMap;
@@ -9,9 +5,12 @@ import java.util.HashMap;
 public enum GlucoseUnitType
 {
 
-    mgPerDL(1), mmolPerL(2), None(0);
+    mgPerDL(1, "GLUCOSE_UNIT_MGDL"), //
+    mmolPerL(2, "GLUCOSE_UNIT_MMOLL" ), //
+    None(0, "NONE"); //
 
     private int value;
+    private String description;
     private static HashMap<Integer, GlucoseUnitType> map = new HashMap<Integer, GlucoseUnitType>();
 
     static
@@ -22,9 +21,10 @@ public enum GlucoseUnitType
         }
     }
 
-    GlucoseUnitType(int value)
+    GlucoseUnitType(int value, String description)
     {
         this.value = value;
+        this.description = description;
     }
 
     public int getValue()
@@ -41,5 +41,13 @@ public enum GlucoseUnitType
     {
         return map.get(value);
     }
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }

@@ -12,27 +12,14 @@ MISC
 - DexcomException use non-deprecated
 - DexcomYYYCommand to interface
 
-CONFIGURATION
 
-
-- API readClockMode
-
-DATA
-
-- Parsing Binary: EGVData
-
-
-- Parsing Binary: framework
 - versioning of data : - partition data saving
 -                      - log warn on wrong version
                        - versioning interface used with enum
                        - ReceiverRecordType extension to store versioning interface
                        - version check only when partition is read - create report in log
 
-
--- Reader move
--- Com port init ????
-
+- Support for R2
 
 
 
@@ -65,6 +52,17 @@ UNSUPPORTED
 - API api.readLanguage
 - API readGlucoseUnits
 - command is short
+-- Reader move
+-- Com port init ????
+CONFIGURATION
+
+
+- API readClockMode
+
+DATA
+
+- Parsing Binary: EGVData
+- Parsing Binary: framework
 -----
 
 Hi !

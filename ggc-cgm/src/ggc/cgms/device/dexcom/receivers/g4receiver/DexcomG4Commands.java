@@ -22,20 +22,14 @@ public enum DexcomG4Commands implements DexcomCommand
     InvalidParam(4), //
     ReceiverError(6), //
 
-    // new byte[] { 0x01, 0x06, 0x00, 0xb, 127, 117 }
-    //1 6 0 11 127 117
-
     // Commands
     ReadSystemTime(0x22, 4, ParserType.IntegerParser, CommandParameter.None), //
     //ReadSystemTimeOffset(0x23, 4, ParserType.IntegerParser, CommandParameter.None), //
-
     ReadDisplayTimeOffset(0x1d, 4, ParserType.IntegerParser, CommandParameter.None), // 
     ReadLanguage(0x1b, 2, ParserType.IntegerParser, CommandParameter.None), // 
     ReadGlucoseUnit(0x25, 1, ParserType.IntegerParser, CommandParameter.None), //
     ReadClockMode(0x29, 1, ParserType.IntegerParser, CommandParameter.None), //
-
     ReadFirmwareHeader(11, -1, ParserType.XmlParser, CommandParameter.None), //
-    // 15,   new byte[]{ 0x01, 0x06, 0x00, 15, (byte)0xfb, 53 }
     ReadDatabaseParitionInfo(15, -1, ParserType.XmlParser, CommandParameter.None), // 
     ReadDatabasePageRange(0x10, -1, ParserType.StringUTF8Parser, CommandParameter.Byte), // 
     ReadDatabasePages(0x11, -1, ParserType.None, CommandParameter.ByteIntByte), //
@@ -50,18 +44,16 @@ public enum DexcomG4Commands implements DexcomCommand
     // ReadBatteryLevel = 0x21,
     // ReadBatteryState = 0x30,
     // ReadBlindedMode = 0x27,
-    // ReadClockMode = 0x29,
 
     // ReadDeviceMode = 0x2b,
     // ReadDisplayTimeOffset = 0x1d,
 
     // 
-    // ReadFirmwareSettings = 0x36,
+
     // ReadFlashPage = 0x33,
     // ReadHardwareBoardId = 0x31,
     // ReadRTC = 0x1f,
 
-    // ReadSystemTime = 0x22,
     // ReadSystemTimeOffset = 0x23,
     // ReadTransmitterID = 0x19,
     // ResetReceiver = 0x20,
@@ -91,7 +83,6 @@ public enum DexcomG4Commands implements DexcomCommand
     private Integer commandId;
     short[] commandAsBytes;
 
-    // private int commandParameterSize = 0; // 0 = no parameter, 1= byte, 2=short, 4=int, 8=long
     private CommandParameter commandParameter = CommandParameter.None;
 
     private ParserType parserType = ParserType.None;

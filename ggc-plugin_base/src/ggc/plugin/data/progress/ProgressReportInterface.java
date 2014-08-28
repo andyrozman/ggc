@@ -1,10 +1,6 @@
-package ggc.cgms.device.dexcom.receivers;
+package ggc.plugin.data.progress;
 
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
-import ggc.plugin.data.progress.ProgressReportInterface;
-import ggc.plugin.data.progress.ProgressType;
-
-public interface DexcomDeviceProgressReport extends ProgressReportInterface
+public interface ProgressReportInterface
 {
 
     // progress is static + dynamic. Static would be determinton of Pages ranges (first 10% for example)
@@ -12,11 +8,16 @@ public interface DexcomDeviceProgressReport extends ProgressReportInterface
 
     //void setStaticProgressPercentage(int percentage);
 
-    void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws DexcomException;
+    void addToProgress(ProgressType progressType, int progressAdd);
+
+    //void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws DexcomException;
 
     //void setMaxElementsForStaticProgress(int maxElements);
 
     //void setMaxElementsForDynamicProgress(int maxElements);
+
+    void configureProgressReporter(ProgressType baseProgressType, int staticProgressPercentage, int staticMaxElements,
+            int dynamicMaxElements);
 
     void setDownloadCancel(boolean cancel);
 

@@ -4,11 +4,12 @@ import java.util.HashMap;
 
 public enum ClockModeType
 {
-    ClockMode24Hour(0), // 
-    ClockMode12Hour(1), //
+    ClockMode24Hour(0, "CLOCK_MODE_12H"), // 
+    ClockMode12Hour(1, "CLOCK_MODE_24H"), //
     ;
-
+    
     private int value;
+    private String description;
     private static HashMap<Integer, ClockModeType> map = new HashMap<Integer, ClockModeType>();
 
     static
@@ -19,10 +20,11 @@ public enum ClockModeType
         }
     }
 
-    ClockModeType(int value)
+    ClockModeType(int value, String description)
     {
         this.value = value;
-    }
+        this.description = description;
+   }
 
     public int getValue()
     {
@@ -38,5 +40,13 @@ public enum ClockModeType
     {
         return map.get(value);
     }
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 }

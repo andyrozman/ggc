@@ -7,4 +7,5 @@ public enum DataOutputParserType
     G4_InsertionTime, // 
     G4_MeterData, // 
     G4_UserEventData //
+
 }
