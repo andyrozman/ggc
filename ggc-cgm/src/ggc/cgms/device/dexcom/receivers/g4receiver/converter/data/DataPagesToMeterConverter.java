@@ -9,12 +9,9 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 public class DataPagesToMeterConverter extends BytesConverterAbstract
 {
-    private static final Log log = LogFactory.getLog(DataPagesToMeterConverter.class);
+    //private static final Log log = LogFactory.getLog(DataPagesToMeterConverter.class);
 
     public List<MeterDataRecord> convert(List<DatabasePage> pages) throws DexcomException
     {
@@ -37,7 +34,7 @@ public class DataPagesToMeterConverter extends BytesConverterAbstract
 
             records.add(mr);
 
-            log.debug(mr);
+            //log.debug(mr);
         }
 
         return records;

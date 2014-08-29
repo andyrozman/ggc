@@ -10,12 +10,9 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 public class DataPagesToInsertionTimeConverter extends BytesConverterAbstract
 {
-    private static final Log log = LogFactory.getLog(DataPagesToInsertionTimeConverter.class);
+    //private static final Log log = LogFactory.getLog(DataPagesToInsertionTimeConverter.class);
 
     public List<InsertionTimeRecord> convert(List<DatabasePage> pages) throws DexcomException
     {
@@ -38,7 +35,7 @@ public class DataPagesToInsertionTimeConverter extends BytesConverterAbstract
 
             records.add(itr);
 
-            log.debug(itr);
+            //log.debug(itr);
         }
 
         return records;

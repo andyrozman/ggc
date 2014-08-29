@@ -1,7 +1,6 @@
 package ggc.cgms.device.dexcom.receivers;
 
 import ggc.cgms.device.dexcom.receivers.data.ReceiverDownloadData;
-import ggc.cgms.device.dexcom.receivers.data.ReceiverDownloadDataConfig;
 import ggc.cgms.device.dexcom.receivers.data.output.ConsoleOutputParser;
 import ggc.cgms.device.dexcom.receivers.data.output.DataOutputParserInterface;
 import ggc.cgms.device.dexcom.receivers.data.output.DataOutputParserType;
@@ -9,6 +8,7 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.DexcomG4Api;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.EGVRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.UserEventDataRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
+import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePageRange;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.PartitionInfo;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomExceptionType;
@@ -17,7 +17,6 @@ import ggc.plugin.data.progress.ProgressData;
 import ggc.plugin.data.progress.ProgressType;
 import gnu.io.CommPortIdentifier;
 
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -25,9 +24,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.Element;
 
-//Still kludgy
-//Newer, similar to Dex's architecture, classes are in progress, but this works reliably, if not the
-//most efficient, elegant design around.
+
 
 public class DexcomDeviceReader implements DexcomDeviceProgressReport
 {
@@ -38,6 +35,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
     DexcomG4Api api = null;
     ProgressData progressData = new ProgressData();
     private DataOutputParserInterface dataOutputParser = new ConsoleOutputParser();
+    boolean downloadCanceled = false;
 
     public DexcomDeviceReader(String portName, DexcomDevice dexcomDevice) throws DexcomException
     {
@@ -86,17 +84,15 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
     {
         try
         {
-            this.progressData.configureProgressReporter(ProgressType.Dynamic, 0, 0, 8);
-
-            //currentProgressType = ProgressType.Dynamic;
+        	int progressDynamic = 10; // header 1, serial 3, system 1, display 2, lang 1, glu 1 clock 1
+        	progressDynamic += api.isDatabasePageRangeCached(ReceiverRecordType.ManufacturingData) ? 0 : 1;
+        	
+        	
+            this.progressData.configureProgressReporter(ProgressType.Dynamic, 0, 0, progressDynamic);
 
             ReceiverDownloadData data = new ReceiverDownloadData();
-
-            //this.setStaticProgressPercentage(0);
-            //this.setMaxElementsForDynamicProgress(8);
-
+            
             Element header = this.api.readFirmwareHeader();
-            this.addToProgressAndCheckIfCanceled(ProgressType.Dynamic, 1);
 
             data.addConfigurationEntry("API_VERSION", header.getAttributeValue("ApiVersion"), false);
             data.addConfigurationEntry("PRODUCT_ID", header.getAttributeValue("ProductId"), false);
@@ -105,7 +101,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
             data.addConfigurationEntry("FIRMWARE_VERSION", header.getAttributeValue("FirmwareVersion"), false);
             data.addConfigurationEntry("PORT_VERSION", header.getAttributeValue("PortVersion"), false);
             data.addConfigurationEntry("RF_VERSION", header.getAttributeValue("RFVersion"), false);
-
+           
             data.setSerialNumber(api.readReceiverSerialNumber());
 
             data.addConfigurationEntry("SYSTEM_TIME", DexcomUtils.getDateTimeString(api.readSystemTimeAsDate()), false);
@@ -115,9 +111,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
             data.addConfigurationEntry("GLUCOSE_UNIT", api.readGlucoseUnit().getDescription(), true);
             data.addConfigurationEntry("CLOCK_MODE", api.readClockMode().getDescription(), true);
 
-            // parse
-            this.dataOutputParser.parse(DataOutputParserType.Configuration, data);
-            this.addToProgressAndCheckIfCanceled(ProgressType.Dynamic, 1);
+            parseData(DataOutputParserType.Configuration, data);
 
         }
         catch (DexcomException ex)
@@ -132,6 +126,13 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
             throw ex;
         }
 
+    }
+    
+    
+    private void parseData(DataOutputParserType parserType, ReceiverDownloadData data) throws DexcomException
+    {
+    	this.dataOutputParser.parse(parserType, data);
+        this.addToProgressAndCheckIfCanceled(ProgressType.Dynamic, 1);
     }
 
     public void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws DexcomException
@@ -150,99 +151,96 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 
     public void downloadData() throws DexcomException
     {
-        // Element info = (Element) api.readDatabasePartitionInfo();
-        ReceiverDownloadData data = new ReceiverDownloadData();
+        try {
+			
+			ReceiverDownloadData data = new ReceiverDownloadData();
+			
+			int staticProgressMax = 3; // serial (2), partition (1)
+ 			for (ReceiverRecordType rrt : ReceiverRecordType.getDownloadSupported().keySet())
+			{
+				staticProgressMax += api.isDatabasePageRangeCached(rrt) ? 0 : 1;
+			}
 
-        this.configureProgressReporter(ProgressType.Dynamic_Static, 10, 10, 200);
+			this.configureProgressReporter(ProgressType.Dynamic_Static, 10, staticProgressMax, 200);
+			
+			
 
-        this.progressData.setCurrentProgressType(ProgressType.Static);
+			this.progressData.setCurrentProgressType(ProgressType.Static); 
+			int countDynamicElements = ReceiverRecordType.getDownloadSupported().size(); // parsing
+			
+			for (ReceiverRecordType rrt : ReceiverRecordType.getDownloadSupported().keySet())
+			{
+				DatabasePageRange range = api.readDatabasePageRange(rrt); 
+				countDynamicElements += range.getPagesCount();
+			}
 
-        for (ReceiverRecordType rrt : ReceiverRecordType.getDownloadSupported().keySet())
-        {
+			//log.debug(" === Progress should be 4");
+			
+			this.progressData.setProgressDynamicMax(countDynamicElements);
+			
+			
 
-        }
+			//log.debug(" === Progress should be 6");
+			
+			PartitionInfo info = this.api.readDatabasePartitionInfo();
+			log.debug("Partition Info: PageLength: " + info.getPageDataLength());
 
-        // FIXME
-        // read page ranges to create dynamic counter
+			// FIXME
+			// report
 
-        data.setSerialNumber(api.readReceiverSerialNumber());
+			log.debug("Partitions: " + info.getPartitions().size());
 
-        PartitionInfo info = this.api.readDatabasePartitionInfo();
-        log.debug("Partition Info: PageLength: " + info.getPageDataLength());
+			data.setSerialNumber(api.readReceiverSerialNumber());
+			
+			log.debug("Progress: " + progressData.calculateProgress());
 
-        // FIXME
-        // report
+			//log.debug(" === Progress should be 7");
+			
+			
+			
+			// set dynamic
+			this.progressData.setCurrentProgressType(ProgressType.Dynamic);
 
-        log.debug("Partitions: " + info.getPartitions().size());
+			data.addData(DataOutputParserType.G4_UserEventData, api.readAllRecordsForEvents());
+            parseData(DataOutputParserType.Configuration, data);
 
-        // log.debug(api.readDatabasePageRange(ReceiverRecordType.InsertionTime));
-        //this.addToDynamicProgress(1);
 
-        // set dynamic
-        this.progressData.setCurrentProgressType(ProgressType.Dynamic);
+			data.addData(DataOutputParserType.G4_EGVData, api.readAllRecordsForEGVData());
+            parseData(DataOutputParserType.Configuration, data);
 
-        data.addData(DataOutputParserType.G4_UserEventData, api.readAllRecordsForEvents());
-        // FIXME parse
 
-        data.addData(DataOutputParserType.G4_EGVData, api.readAllRecordsForEGVData());
-        // FIXME parse
+			data.addData(DataOutputParserType.G4_InsertionTime, api.readAllRecordsForInsertionTime());
+            parseData(DataOutputParserType.Configuration, data);
 
-        data.addData(DataOutputParserType.G4_InsertionTime, api.readAllRecordsForInsertionTime());
-        // FIXME parse
 
-        data.addData(DataOutputParserType.G4_MeterData, api.readAllRecordsForMeterData());
-        // FIXME parse
+			data.addData(DataOutputParserType.G4_MeterData, api.readAllRecordsForMeterData());
+            parseData(DataOutputParserType.Configuration, data);
+			
+			
+		} catch (DexcomException ex) {
+			if ((ex.getExceptionType() != null)
+                    && (ex.getExceptionType() == DexcomExceptionType.DownloadCanceledByUser))
+            {
+                return;
+            }
+
+            throw ex;
+		}
 
     }
 
-    public ReceiverDownloadData doDownloadReceiverDataAsObject() throws Exception
+    public ReceiverDownloadData testDownload() throws Exception
     {
 
         // DexcomReader api = this;
 
         ReceiverDownloadData data = new ReceiverDownloadData();
 
-        Date now = new Date();
+        
 
         // Element header = this.api.readFirmwareHeader();
         //
-        // //log.debug("Xml: " + header.toString());
-        //
-        // data.addConfigurationEntry("API_VERSION", header.getAttributeValue("ApiVersion"));
-        // data.addConfigurationEntry("PRODUCT_ID", header.getAttributeValue("ProductId")); // header.getProductId());
-        // data.addConfigurationEntry("PRODUCT_NAME", header.getAttributeValue("ProductName")); //
-        // header.getProductName());
-        // data.addConfigurationEntry("SOFTWARE_NUMBER", header.getAttributeValue("SoftwareNumber")); //
-        // header.getSoftwareNumber());
-        // data.addConfigurationEntry("FIRMWARE_VERSION", header.getAttributeValue("FirmwareVersion")); //
-        // header.getFirmwareVersion());
-        // data.addConfigurationEntry("PORT_VERSION", header.getAttributeValue("PortVersion")); //
-        // header.getPortVersion());
-        // data.addConfigurationEntry("RF_VERSION", header.getAttributeValue("RFVersion")); // header.getRFVersion());
 
-        // FIXME
-        // data.setSerialNumber(api.readReceiverSerialNumber());
-
-        // obj2.Element.AppendChild(ownerDocument.ImportNode(obj3.Element,
-        // true));
-        // data.addConfigurationEntry("SYSTEM_TIME", api.readSystemTime()); //
-        // obj3.getAttributeAsDateTime("SystemTime").ToString("YYYYMMDDHHmmSS"));
-        // data.addConfigurationEntry("DISPLAY_TIME",
-        // this.getDisplayTime().toString());
-        // //obj3.getAttributeAsDateTime("DisplayTime").ToString("YYYYMMDDHHmmSS"));
-        // data.addConfigurationEntry("DISPLAY_TIME_OFFSET",
-        // api.readDisplayTimeOffset());
-        // //obj3.getAttributeAsDateTimeOffset("DisplayTimeOffset").ToString("HHmmSS"));
-        // data.addConfigurationEntry("LANGUAGE", api.readLanguage().name());
-        // data.addConfigurationEntry("GLUCOSE_UNIT",
-        // api.readGlucoseUnits().name());
-        // data.addConfigurationEntry("CLOCK_MODE", api.readClockMode().name());
-
-        this.log.debug("Configuration: ");
-        for (ReceiverDownloadDataConfig cfg : data.getConfigs())
-        {
-            log.debug(cfg.getKey() + " = " + cfg.getValue());
-        }
 
         // ERRORS
         // if ((recordsFilter & ReceiverRecordTypeFlags.ProcessorErrors) ==
@@ -261,57 +259,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
         //
         // }
 
-        // {
-        //
-        // XPartitionInfo info = api.readDatabasePartitionInfo();
-        //
-
-        // Element info = (Element)api.readDatabasePartitionInfo();
-
-        // XmlParser parser =
-        // (XmlParser)ParserUtils.getParser(ParserType.XmlParser);
-
-        // log.debug("PartitionInfo: "+ info);
-        // log.debug("PartitionInfo Xml: \n" +
-        // ((XmlParser)ParserUtils.getParser(ParserType.XmlParser)).getXml(info));
-
-        // <PartitionInfo SchemaVersion="1" PageHeaderVersion="1"
-        // PageDataLength="500">
-        // <Partition Name="ManufacturingData" Id="0" RecordRevision="1"
-        // RecordLength="500" />
-        // <Partition Name="FirmwareParameterData" Id="1" RecordRevision="1"
-        // RecordLength="500" />
-        // <Partition Name="PCSoftwareParameter" Id="2" RecordRevision="1"
-        // RecordLength="500" />
-        // <Partition Name="SensorData" Id="3" RecordRevision="1"
-        // RecordLength="20" />
-        // <Partition Name="EGVData" Id="4" RecordRevision="2" RecordLength="13"
-        // />
-        // <Partition Name="CalSet" Id="5" RecordRevision="2" RecordLength="148"
-        // />
-        // <Partition Name="Aberration" Id="6" RecordRevision="1"
-        // RecordLength="15" />
-        // <Partition Name="InsertionTime" Id="7" RecordRevision="1"
-        // RecordLength="15" />
-        // <Partition Name="ReceiverLogData" Id="8" RecordRevision="1"
-        // RecordLength="20" />
-        // <Partition Name="ReceiverErrorData" Id="9" RecordRevision="1"
-        // RecordLength="500" />
-        // <Partition Name="MeterData" Id="10" RecordRevision="1"
-        // RecordLength="16" />
-        // <Partition Name="UserEventData" Id="11" RecordRevision="1"
-        // RecordLength="20" />
-        // <Partition Name="UserSettingData" Id="12" RecordRevision="3"
-        // RecordLength="48" />
-        // </PartitionInfo>
-
-        /*
-         * for(Object ch : info.getChildren()) { Element ell = (Element)ch;
-         * 
-         * log.debug(ell.getAttribute("Name").toString());
-         * 
-         * }
-         */
+ 
 
         PartitionInfo info = this.api.readDatabasePartitionInfo();
         log.debug("Partition Info: PageLength: " + info.getPageDataLength());
@@ -352,93 +300,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 
         // DexcomUtils.debugXmlTree(el);
 
-        if (true)
-        {
-            return data;
-        }
-
-        // int allPages = doCountDatabasePagesInReceiver(api);
-        // log.debug("All pages count: " + allPages);
-        // int num3 = 6;
-        // allPages += num3 + 1;
-        // //
-        //
-        // List<XPage> dataPages = new List<XPage>();
-        // log.Debug("Partirions count: " + info.getPartitions().getCount());
-        // for (Object __dummyForeachVar2 : info.getPartitions())
-        // {
-        // XPartition partition = (XPartition)__dummyForeachVar2;
-        // int num7 = 0; //new int();
-        // Func<KeyValuePair<ReceiverRecordType, XPageHeader>, boolean>
-        // predicate = null;
-        //
-        // byte id = partition.getId();
-        // ReceiverRecordType record_type = (ReceiverRecordType)id;
-        //
-        // log.Debug("Partition for ReceiverRecordType: " +
-        // record_type.ToString());
-        // DatabasePageRange range = api.readDatabasePageRange(record_type);
-        //
-        // if (range.LastPage == Integer.MAX_VALUE)
-        // {
-        // continue;
-        // }
-        //
-        // int first_page = range.FirstPage;
-        // int last_page = range.LastPage;
-        // log.Debug("Range: first=" + range.FirstPage + ", last=" +
-        // range.LastPage);
-        // //if (true)
-        // // continue;
-        // num7 = first_page;
-        // while (num7 <= last_page)
-        // {
-        // // if ((backgroundWorker != null) &&
-        // backgroundWorker.CancellationPending)
-        // // {
-        // // break;
-        // // }
-        //
-        // num3++;
-        // int num8 = Convert.ToInt32((double)(((((double)num3) /
-        // ((double)allPages)) * 100.0) * 10.0));
-        //
-        //
-        // int num9 = (last_page - num7) + 1;
-        // if (num9 > 4)
-        // {
-        // num9 = 4;
-        // }
-        //
-        // for (Object __dummyForeachVar1 :
-        // api.readDatabasePages(record_type,num7,(byte)num9))
-        // {
-        // DatabasePage page = (DatabasePage)__dummyForeachVar1;
-        // XPage page2 = new XPage();
-        // //obj8.AppendChild(page2);
-        // page2.getPageHeader().setPageNumber(page.PageHeader.PageNumber);
-        // page2.getPageHeader().setRecordType(page.PageHeader.RecordType.ToString());
-        // page2.getPageHeader().setRecordTypeId(((Enum)page.PageHeader.RecordType).ordinal());
-        // page2.getPageHeader().setRecordRevision(page.PageHeader.Revision);
-        // page2.getPageHeader().setFirstRecordIndex(page.PageHeader.FirstRecordIndex);
-        // page2.getPageHeader().setNumberOfRecords(page.PageHeader.NumberOfRecords);
-        // page2.getPageHeader().setCrc(page.PageHeader.Crc);
-        // page2.setPageData(page.PageData);
-        // dataPages.Add(page2);
-        // }
-        // num3 += ((int)num9) - 1;
-        // num7 += num9 - 1;
-        // num7++;
-        // }
-        // }
-        // ReceiverDatabaseRecordsParser records = new
-        // ReceiverDatabaseRecordsParser();
-        // records.ParsePages(dataPages);
-        // data.setData(records);
-        // }
-        // records.Parse(receiverData);
-
-        int intValue = 0;
+ 
         return data;
     }
 
@@ -449,17 +311,22 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 
     public static void main(String[] args)
     {
+    	DexcomDeviceReader dr = null;
+    	
         try
         {
 
             long now = System.currentTimeMillis();
 
-            DexcomDeviceReader dr = new DexcomDeviceReader("COM9", DexcomDevice.Dexcom_G4);
+            dr = new DexcomDeviceReader("COM9", DexcomDevice.Dexcom_G4);
             // Date d = dr.getDisplayTime();
             // System.out.println("Display Time: " + d);
             // System.out.println("SysTime: " + dr.getSystemTime());
+            
+            dr.downloadSettings();
+            //dr.downloadData();
 
-            dr.doDownloadReceiverDataAsObject();
+            //dr.doDownloadReceiverDataAsObject();
 
             // Date d = new
 
@@ -484,19 +351,24 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
             System.out.println("Error reading from " + ex);
             ex.printStackTrace();
         }
+        finally
+        {
+        	if (dr!=null)
+        		dr.dispose();
+        }
+    
+    
 
     }
 
     public void setDownloadCancel(boolean cancel)
     {
-        // TODO Auto-generated method stub
-
+        downloadCanceled = cancel;
     }
 
     public boolean isDownloadCanceled()
     {
-        // TODO Auto-generated method stub
-        return false;
+        return downloadCanceled;
     }
 
     public DataOutputParserInterface getDataOutputParser()

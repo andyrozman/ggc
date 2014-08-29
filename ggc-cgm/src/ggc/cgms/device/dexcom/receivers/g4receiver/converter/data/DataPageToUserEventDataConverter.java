@@ -10,13 +10,9 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 public class DataPageToUserEventDataConverter extends BytesConverterAbstract
 {
-    private static final Log log = LogFactory.getLog(DataPageToUserEventDataConverter.class);
-
+    
     public List<UserEventDataRecord> convert(List<DatabasePage> pages) throws DexcomException
     {
         ArrayList<DatabaseRecord> rawRecords = this.getRawRecords(pages, new UserEventDataRecord());
@@ -30,9 +26,6 @@ public class DataPageToUserEventDataConverter extends BytesConverterAbstract
 
             ued.setSystemSeconds(this.getIntFromArray(data, 0));
             ued.setDisplaySeconds(this.getIntFromArray(data, 4));
-
-            //log.debug("Event Type: " + data[8]);
-
             ued.setEventType(UserEvent.getEnum(data[8]));
             ued.setEventSubType((byte) data[9]);
             ued.setEventTime(this.getIntFromArray(data, 10));
@@ -43,7 +36,7 @@ public class DataPageToUserEventDataConverter extends BytesConverterAbstract
 
             records.add(ued);
 
-            log.debug(ued);
+            //log.debug(ued);
         }
 
         return records;

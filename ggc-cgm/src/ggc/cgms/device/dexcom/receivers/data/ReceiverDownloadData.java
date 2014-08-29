@@ -50,4 +50,10 @@ public class ReceiverDownloadData {
         this.data.put(dataType, list);
     }
 
+    
+    public List<?> getDataByType(DataOutputParserType type)
+    {
+    	return data.get(type);
+    }
+    
 }

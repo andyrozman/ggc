@@ -9,12 +9,9 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 public class DataPageToEGVDataConverter extends BytesConverterAbstract
 {
-    private static final Log log = LogFactory.getLog(DataPageToEGVDataConverter.class);
+    //private static final Log log = LogFactory.getLog(DataPageToEGVDataConverter.class);
 
     public List<EGVRecord> convert(List<DatabasePage> pages) throws DexcomException
     {
@@ -31,13 +28,13 @@ public class DataPageToEGVDataConverter extends BytesConverterAbstract
             egv.setDisplaySeconds(this.getIntFromArray(data, 4));
             egv.glucoseValueWithFlags = this.getShortFromArray(data, 8);
             egv.trendArrowAndNoise = (byte) data[10];
-            egv.setCrc(this.getShortFromArray(data, 11));
+            egv.setCrc(this.getIntShortFromArray(data, 11));
 
-            //this.checkCrc(data, itr.getCrc());
+            this.checkCrc(data, egv.getCrc());
 
             records.add(egv);
 
-            log.debug(egv);
+            //log.debug(egv);
         }
 
         return records;

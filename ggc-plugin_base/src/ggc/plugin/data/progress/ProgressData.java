@@ -1,8 +1,13 @@
 package ggc.plugin.data.progress;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+
 public class ProgressData
 {
-
+	private static final Log log = LogFactory.getLog(ProgressData.class);
+	
     private ProgressType currentProgressType;
     private int progressStatic;
     private int progressDynamic;
@@ -137,9 +142,22 @@ public class ProgressData
             double dy = this.progressDynamic / (this.progressDynamicMax * 1.0);
             dy *= 100.0;
 
-            double progr = (((st * this.progressStaticPercentage) / 100.0) + ((dy * 100.0) / (100 - this.progressStaticPercentage)));
+            
+            //log.debug(String.format("Static [Progress=%s,Elements=%s,Max=%s]", st, progressStatic, progressStaticMax));
+            //log.debug(String.format("Dynamic [Progress=%s,Elements=%s,Max=%s]", dy, progressDynamic, progressDynamicMax));
+            
+            
+            double stFull = st * (this.progressStaticPercentage/100.0);
+            double dyFull = dy * ((100.0 - this.progressStaticPercentage)/100.0);
+            
+            
+            
+            //double progr = (((st * this.progressStaticPercentage) / 100.0) + ((dy * 100.0) / (100 - this.progressStaticPercentage)));
 
-            this.currentProgress = (int) progr;
+            double progressFull = stFull + dyFull;
+            
+            this.currentProgress = (int) progressFull;
+            //log.debug(String.format("Static: %s, Dynamic: %s, Together: %s", stFull, dyFull, currentProgress));
 
         }
 
@@ -147,3 +165,4 @@ public class ProgressData
     }
 
 }
+

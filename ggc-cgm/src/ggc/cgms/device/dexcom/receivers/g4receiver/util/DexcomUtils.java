@@ -1,6 +1,14 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver.util;
 
 import ggc.cgms.device.dexcom.receivers.g4receiver.DexcomG4Api;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.BytesToDatabasePagesConverter;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ConverterType;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ElementToPartitionInfoConverter;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToEGVDataConverter;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToUserEventDataConverter;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPagesToInsertionTimeConverter;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPagesToMeterConverter;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPagesToXmlRecordConverter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.Partition;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.PartitionInfo;
@@ -9,6 +17,7 @@ import java.io.StringReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TimeZone;
 
 import org.apache.commons.logging.Log;
@@ -32,6 +41,20 @@ public class DexcomUtils
     private static Integer displayTimeOffset = null;
     static SimpleDateFormat dateTimeFormater = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
     private static ShortUtils shortUtils = new ShortUtils();
+    private static HashMap<ConverterType, Object> converters = new HashMap<ConverterType, Object>();
+
+    static
+    {
+        converters.put(ConverterType.ElementToPartitionInfoConverter, new ElementToPartitionInfoConverter());
+        converters.put(ConverterType.BytesToDatabasePagesConverter, new BytesToDatabasePagesConverter());
+        converters.put(ConverterType.DataPagesToInsertionTimeConverter, new DataPagesToInsertionTimeConverter());
+        converters.put(ConverterType.DataPagesToXmlRecordConverter, new DataPagesToXmlRecordConverter());
+        converters.put(ConverterType.DataPageToEGVDataConverter, new DataPageToEGVDataConverter());
+        converters.put(ConverterType.DataPageToUserEventDataConverter, new DataPageToUserEventDataConverter());
+        converters.put(ConverterType.DataPagesToMeterConverter, new DataPagesToMeterConverter());
+
+        
+    }
 
     public enum BitConversion
     {
@@ -148,7 +171,7 @@ public class DexcomUtils
         return b;
     }
 
-    // FIXME temove possibly see CrcUtil
+    // TODO remove possibly see CrcUtil
     // CRC methods
     public static int calculateCRC16(byte[] buff, int start, int end)
     {
@@ -207,22 +230,25 @@ public class DexcomUtils
 
     public static PartitionInfo getPartitionInfo() throws DexcomException
     {
-        if (partitionInfo == null)
-        {
-            partitionInfo = dexcomG4Api.readDatabasePartitionInfo();
-        }
-
-        return partitionInfo;
+    	return dexcomG4Api.readDatabasePartitionInfo();
+    	
+//        if (partitionInfo == null)
+//        {
+//            partitionInfo = dexcomG4Api.readDatabasePartitionInfo();
+//        }
+//
+//        return partitionInfo;
     }
 
     public static Partition getPartition(ReceiverRecordType recordType) throws DexcomException
     {
-        if (partitionInfo == null)
-        {
-            getPartitionInfo();
-        }
-
-        return partitionInfo.getPartitionByRecordType(recordType);
+    	return dexcomG4Api.getPartition(recordType);
+//        if (partitionInfo == null)
+//        {
+//            getPartitionInfo();
+//        }
+//
+//        return partitionInfo.getPartitionByRecordType(recordType);
     }
 
     public static Element createXmlTree(String xmlData) throws DexcomException
@@ -336,4 +362,14 @@ public class DexcomUtils
     {
         return shortUtils;
     }
+    
+    
+    
+
+    public static Object getConverter(ConverterType converterType)
+    {
+        return converters.get(converterType);
+    }
+
+    
 }

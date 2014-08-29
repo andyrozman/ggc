@@ -4,7 +4,7 @@ import ggc.cgms.device.dexcom.receivers.DexcomDeviceProgressReport;
 import ggc.cgms.device.dexcom.receivers.data.CommandPacket;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.BytesToDatabasePagesConverter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ConverterType;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ConverterUtils;
+
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ElementToPartitionInfoConverter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToEGVDataConverter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToUserEventDataConverter;
@@ -139,11 +139,15 @@ public class DexcomG4Api
     {
         if (!databasePagesRanges.containsKey(recordType))
         {
-
+        	databasePagesRanges.put(recordType, this.readDatabasePageRangeReal(recordType));
         }
 
-        return this.readDatabasePageRangeReal(recordType);
-
+        return databasePagesRanges.get(recordType);
+    }
+    
+    public boolean isDatabasePageRangeCached(ReceiverRecordType recordType)
+    {
+    	return databasePagesRanges.containsKey(recordType);
     }
 
     public DatabasePageRange readDatabasePageRangeReal(ReceiverRecordType recordType) throws DexcomException
@@ -156,9 +160,11 @@ public class DexcomG4Api
         dpr.setFirstPage(DexcomUtils.toInt(this.shortUtils.getShortSubArray(data, 0, 4), BitConversion.LITTLE_ENDIAN));
         dpr.setLastPage(DexcomUtils.toInt(this.shortUtils.getShortSubArray(data, 4, 4), BitConversion.LITTLE_ENDIAN));
 
-        log.debug(String.format("DatabasePageRange [RecordType=%s, FirstPage=%s, LastPage=%s, PageCount=%s",
+        log.debug(String.format("DatabasePageRange [RecordType=%s, FirstPage=%s, LastPage=%s, PageCount=%s]",
             recordType.name(), dpr.getFirstPage(), dpr.getLastPage(), dpr.getPagesCount()));
 
+        this.addToProgressAndCheckIfCanceled(1);
+        
         return dpr;
     }
 
@@ -168,12 +174,13 @@ public class DexcomG4Api
 
         // log.debug("InsertionTime pages: " + pages.size());
 
-        DataPagesToInsertionTimeConverter cnv = (DataPagesToInsertionTimeConverter) ConverterUtils
+        DataPagesToInsertionTimeConverter cnv = (DataPagesToInsertionTimeConverter) DexcomUtils
                 .getConverter(ConverterType.DataPagesToInsertionTimeConverter);
 
         List<InsertionTimeRecord> records = cnv.convert(pages);
 
         // log.debug("InsertionTime Records: " + records.size());
+        log.debug(String.format("InsertionTime Data [records=%s,pages=%s]",  records.size(), pages.size()));
 
         return records;
     }
@@ -182,14 +189,15 @@ public class DexcomG4Api
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.MeterData);
 
-        log.debug("Meter entries pages: " + pages.size());
+        //log.debug("Meter entries pages: " + pages.size());
 
-        DataPagesToMeterConverter cnv = (DataPagesToMeterConverter) ConverterUtils
+        DataPagesToMeterConverter cnv = (DataPagesToMeterConverter) DexcomUtils
                 .getConverter(ConverterType.DataPagesToMeterConverter);
 
         List<MeterDataRecord> records = cnv.convert(pages);
 
-        log.debug("MeterDataRecord Records: " + records.size());
+        //log.debug("MeterDataRecord Records: " + records.size());
+        log.debug(String.format("Meter Data [records=%s,pages=%s]",  records.size(), pages.size()));
 
         return records;
     }
@@ -198,14 +206,15 @@ public class DexcomG4Api
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.UserEventData);
 
-        log.debug("EventData pages: " + pages.size());
+        //log.debug("EventData pages: " + pages.size());
 
-        DataPageToUserEventDataConverter cnv = (DataPageToUserEventDataConverter) ConverterUtils
+        DataPageToUserEventDataConverter cnv = (DataPageToUserEventDataConverter) DexcomUtils
                 .getConverter(ConverterType.DataPageToUserEventDataConverter);
 
         List<UserEventDataRecord> records = cnv.convert(pages);
 
-        log.debug("EventData Records: " + records.size());
+        //log.debug("EventData Records: " + records.size());
+        log.debug(String.format("Event Data [records=%s,pages=%s]",  records.size(), pages.size()));
 
         return records;
     }
@@ -215,14 +224,14 @@ public class DexcomG4Api
 
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.EGVData);
 
-        log.debug("EGV Data pages: " + pages.size());
+        //log.debug("EGV Data pages: " + pages.size());
 
-        DataPageToEGVDataConverter cnv = (DataPageToEGVDataConverter) ConverterUtils
+        DataPageToEGVDataConverter cnv = (DataPageToEGVDataConverter) DexcomUtils
                 .getConverter(ConverterType.DataPageToEGVDataConverter);
 
         List<EGVRecord> records = cnv.convert(pages);
 
-        log.debug("EGV Data records: " + records.size());
+        log.debug(String.format("EGV Data [records=%s,pages=%s]",  records.size(), pages.size()));
 
         return records;
     }
@@ -233,7 +242,7 @@ public class DexcomG4Api
 
         log.debug("Manufacturing pages: " + pages.size());
 
-        DataPagesToXmlRecordConverter cnv = (DataPagesToXmlRecordConverter) ConverterUtils
+        DataPagesToXmlRecordConverter cnv = (DataPagesToXmlRecordConverter) DexcomUtils
                 .getConverter(ConverterType.DataPagesToXmlRecordConverter);
 
         List<XmlRecord> records = cnv.convert(pages, new ManufacturingDataRecord());
@@ -261,8 +270,8 @@ public class DexcomG4Api
         }
 
         //log.debug(paramMap);
-
-        this.addToProgressAndCheckIfCanceled(1);
+        log.debug(String.format("Manufacturing Data [parameters=%s, pages=%s]",  paramMap.size(), pages.size()));
+        //this.addToProgressAndCheckIfCanceled(1);
 
         return paramMap;
     }
@@ -284,7 +293,7 @@ public class DexcomG4Api
             {
                 // adjust j
                 j = dpr.getPagesCount() - i;
-                log.debug("J: " + j);
+                //log.debug("J: " + j);
             }
 
             pages.addAll(readDatabasePages(recordType, i, j));
@@ -312,7 +321,7 @@ public class DexcomG4Api
         short[] data = this.writeCommandAndReadRawResponse(DexcomG4Commands.ReadDatabasePages, null,
             new Object[] { (long) recordType.getValue(), (long) pageNumber, (long) numberOfPages });
 
-        BytesToDatabasePagesConverter cnv = (BytesToDatabasePagesConverter) ConverterUtils
+        BytesToDatabasePagesConverter cnv = (BytesToDatabasePagesConverter) DexcomUtils
                 .getConverter(ConverterType.BytesToDatabasePagesConverter);
 
         List<DatabasePage> pages = cnv.convert(data);
@@ -350,7 +359,7 @@ public class DexcomG4Api
     {
         if (this.partitionInfo == null)
         {
-            ElementToPartitionInfoConverter cnv = (ElementToPartitionInfoConverter) ConverterUtils
+            ElementToPartitionInfoConverter cnv = (ElementToPartitionInfoConverter) DexcomUtils
                     .getConverter(ConverterType.ElementToPartitionInfoConverter);
 
             this.partitionInfo = cnv.convert((Element) this
@@ -360,7 +369,7 @@ public class DexcomG4Api
         return this.partitionInfo;
     }
 
-    public Partition getPartition(ReceiverRecordType recordType) throws Exception
+    public Partition getPartition(ReceiverRecordType recordType) throws DexcomException
     {
         if (this.partitionInfo == null)
         {
