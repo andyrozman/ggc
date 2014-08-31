@@ -50,17 +50,17 @@ public class UserEventDataRecord extends GenericReceiverRecordAbstract
     //        return obj2.getElement();
     //    }
 
-    public byte getEventSubType() throws Exception
+    public byte getEventSubType() 
     {
         return this.eventSubType;
     }
 
-    public Date getEventTime() throws Exception
+    public Date getEventTime() 
     {
         return DexcomUtils.getDateFromSeconds(this.eventTime, DexcomDateParsing.DateWithDifference);
     }
 
-    public UserEvent getEventType() throws Exception
+    public UserEvent getEventType() 
     {
         return this.eventType;
     }

@@ -8,8 +8,8 @@ import ggc.pump.util.DataAccessPump;
 
 import javax.swing.JFrame;
 
-import com.atech.print.PrintAbstractIText;
-import com.atech.print.PrintDialogRange;
+import com.atech.print.engine.PrintAbstractIText;
+import com.atech.print.gui.PrintDialogRange;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -83,9 +83,9 @@ public class PumpPrintDialog extends PrintDialogRange
      * @return
      */
     @Override
-    public String getPdfViewer()
+    public String getExternalPdfViewer()
     {
-        return DataAccess.getInstance().getSettings().getPdfVieverPath().replace('\\', '/');
+        return DataAccess.getInstance().getSettings().getExternalPdfVieverPath().replace('\\', '/');
     }
 
     
@@ -97,7 +97,7 @@ public class PumpPrintDialog extends PrintDialogRange
     @Override
     public String[] getReportTypes()
     {
-        return new String[] { m_ic.getMessage("PUMP_DATA_BASE"), m_ic.getMessage("PUMP_DATA_EXT") };
+        return new String[] { this.i18nControl.getMessage("PUMP_DATA_BASE"), this.i18nControl.getMessage("PUMP_DATA_EXT") };
     }
 
     /**
@@ -114,28 +114,38 @@ public class PumpPrintDialog extends PrintDialogRange
         
         PrintAbstractIText pa = null;
         
-        if (this.cb_template.getSelectedIndex() == 0)
+        if (this.cbTemplate.getSelectedIndex() == 0)
         {
             pa = new PrintPumpDataBase(dvr);
         }
-        else if (this.cb_template.getSelectedIndex() == 1)
+        else if (this.cbTemplate.getSelectedIndex() == 1)
         {
             pa = new PrintPumpDataExt(dvr);
         }
         
-        
-        
         displayPDF(pa.getRelativeNameWithPath());
-        
         
     }
 
 
     @Override
-    public String getPdfViewerParameters()
+    public String getExternalPdfViewerParameters()
     {
-        // FIXME
-        return "";
+        return DataAccess.getInstance().getSettings().getExternalPdfVieverParameters();
+    }
+
+
+    @Override
+    public boolean isExternalPdfViewerActivated()
+    {
+        return DataAccess.getInstance().getSettings().getUseExternalPdfViewer();
+    }
+
+
+    @Override
+    public boolean disableLookAndFeelSettingForInternalPdfViewer()
+    {
+        return true;
     }
     
 }

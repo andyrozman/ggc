@@ -5,6 +5,7 @@ public class DatabasePage
 
     public DatabasePageHeader pageHeader = new DatabasePageHeader(); // 28
     public short[] pageData = new short[0]; // 500
+    public short[] pageHeaderRaw = new short[0];
 
     public DatabasePage()
     {

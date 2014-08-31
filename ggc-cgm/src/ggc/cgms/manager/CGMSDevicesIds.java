@@ -31,6 +31,10 @@ package ggc.cgms.manager;
 public class CGMSDevicesIds
 {
 
+    
+    
+    
+    
     /**
      * CGMS Company: Abbott
      */
@@ -67,6 +71,14 @@ public class CGMSDevicesIds
      * CGMS (Dexcom) - Dexcom 7 Plus
      */
     public static final int CGMS_DEXCOM_7_PLUS           = 20002;
+    
+    
+    /**
+     * CGMS (Dexcom) - Dexcom G4 / G4 Platinum
+     */
+    public static final int CGMS_DEXCOM_G4           = 20003;
+    
+    
     
     
     

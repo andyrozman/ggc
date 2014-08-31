@@ -264,7 +264,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
                 CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
                 String tmp_time = atts.getValue(0);
                 sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
-                sub.type = CGMSValuesSubEntry.CGMS_BG_READING;
+                sub.setType(CGMSValuesSubEntry.CGMS_BG_READING);
                 sub.value = Integer.parseInt(atts.getValue(2));
 
                 this.addEntry(sub);
@@ -272,7 +272,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
                 CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
                 String tmp_time = atts.getValue(0);
                 sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
-                sub.type = CGMSValuesSubEntry.METER_CALIBRATION_READING;
+                sub.setType(CGMSValuesSubEntry.METER_CALIBRATION_READING);
                 sub.value = Integer.parseInt(atts.getValue(2));
 
                 this.addEntry(sub);

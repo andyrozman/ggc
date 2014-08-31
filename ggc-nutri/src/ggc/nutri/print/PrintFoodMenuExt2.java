@@ -1,19 +1,10 @@
 package ggc.nutri.print;
 
-import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
 import ggc.core.data.ExtendedDailyValue;
-import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 
-import java.util.Iterator;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 
@@ -47,7 +38,6 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
 {
 
     
-    
     /**
      * Constructor
      * 
@@ -60,33 +50,9 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
 
     
     
-    
-    /** 
-     * Get Title
-     */
-    public Paragraph getTitle()
-    {
-        Paragraph p = new Paragraph();
-        
-        Font f = new Font(this.base_times , 16, Font.BOLD); 
-        
-        p.setAlignment(Element.ALIGN_CENTER);
-        p.add(new Paragraph("", f));
-        p.add(new Paragraph(ic.getMessage("FOOD_MENU_EXT_II") + " [" + this.m_data.getFromAsLocalizedDate() + " - " + this.m_data.getToAsLocalizedDate() + "]", f));
-        //p.add(new Paragraph("May 2006"));
-        p.add(new Paragraph(ic.getMessage("FOR") + " " + m_da.getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN, 12, Font.ITALIC)));
-        p.add(new Paragraph("", f));
-        p.add(new Paragraph("", f));
-        //p.add(new Paragraph("", f));
 
-        return p;
-    }
     
-
-    /**
-     * Fill Doucment Body
-     */
-    @Override
+    /*
     public void fillDocumentBody(Document document) throws Exception
     {
         // TODO Auto-generated method stub
@@ -186,11 +152,11 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
                     {
                         datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), f));
                         //value = mp.getNutrientValue(205);
-                        /*
-                        System.out.println("nutr val 205" + mp.getNutrientValue(205) + 
-                            "\namount: " + mp.amount + 
-                            "\nhw multiplier: " + mp.getHomeWeightMultiplier() 
-                            ); */
+                       
+//                        System.out.println("nutr val 205" + mp.getNutrientValue(205) + 
+//                            "\namount: " + mp.amount + 
+//                            "\nhw multiplier: " + mp.getHomeWeightMultiplier() 
+//                          ); 
                         value = mp.getMealCH();
                         
                     }
@@ -244,16 +210,11 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
         
         
     }
-
-
-
-
+*/
 
     
     /**
-     * Get text for title
-     * 
-     * @return title
+     * {@inheritDoc}
      */
     @Override    
     public String getTitleText()
@@ -261,11 +222,9 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
         return "FOOD_MENU_EXT_II";
     }
     
-//    FOOD_MENU_EXT_I=Extended Food Menu I (CH,Ins)
 
-    /** 
-     * Return columns widths for table
-     * @return
+    /**
+     * {@inheritDoc}
      */
     @Override
     public int[] getTableColumnWidths()
@@ -277,11 +236,8 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
     }
 
 
-
     /**
-     * Return count of table columns
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public int getTableColumnsCount()
@@ -290,136 +246,121 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
     }
 
 
-
     /**
-     * Write additional header to documents
-     *  
-     * @param table
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void writeAdditionalHeader(PdfPTable table) throws Exception
     {
-        table.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
-        table.addCell(new Phrase(ic.getMessage("INS"), this.text_bold));
-        table.addCell(new Phrase(ic.getMessage("BG"), this.text_bold));
+        table.addCell(this.createBoldTextPhrase("CH"));
+        table.addCell(this.createBoldTextPhrase("INS"));
+        table.addCell(this.createBoldTextPhrase("BG"));
     }
-
 
     
     /**
-     * Write data in column
-     * 
-     * @param table
-     * @param mp
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void writeColumnData(PdfPTable table, DailyFoodEntry mp) throws Exception
     {
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
         
-        table.addCell(new Phrase(mp.getName(), this.text_normal));
+        table.addCell(new Phrase(mp.getName(), this.textFontNormal));
         
         
         float value = 0.0f;
         
         if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
         {
-            table.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), this.text_normal));
-            //value = mp.getNutrientValue(205);
+            table.addCell(this.createNormalTextPhrase("AMOUNT_LBL"));
             value = mp.getMealCH();
             
         }
         else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
         {
-            table.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), this.text_normal));
-            //value = mp.getNutrientValue(205);
+            table.addCell(this.createNormalTextPhrase("WEIGHT_LBL2"));
             value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
         }
         else
         {
-            table.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + this.getFormatedValue(mp.getHomeWeightMultiplier() * 100, 0) + " g)", this.text_normal));
+            table.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + this.getFormatedValue(mp.getHomeWeightMultiplier() * 100, 0) + " g)", this.textFontNormal));
             value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
         }
         
-        table.addCell(new Phrase(mp.getAmountSingleDecimalString(), this.text_normal));
-        table.addCell(new Phrase(this.getFormatedValue(value, 2), this.text_normal));  // ch
+        table.addCell(new Phrase(mp.getAmountSingleDecimalString(), this.textFontNormal));
+        table.addCell(new Phrase(this.getFormatedValue(value, 2), this.textFontNormal));  // ch
         
-        table.addCell(new Phrase("", this.text_normal));  // ins
-        table.addCell(new Phrase("", this.text_normal));  // bg
+        table.addCell(this.createEmptyTextPhrase());  // ins
+        table.addCell(this.createEmptyTextPhrase());  // bg
     }
 
 
-
     /**
-     * Write empty column data. If there is no data, this is used, to fill empty places.
-     * 
-     * @param table
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void writeEmptyColumnData(PdfPTable table) throws Exception
     {
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
     }
 
 
-
     /**
-     * Write together data (all data of certain type summed)
-     * 
-     * @param table
-     * @param rw
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void writeTogetherData(PdfPTable table, DailyValuesRow rw) throws Exception
     {
-        table.addCell(new Phrase(ic.getMessage("TOGETHER"), this.text_italic));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(this.createItalicTextPhrase("TOGETHER"));
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
 
-        table.addCell(new Phrase(this.getFormatedValue(rw.getCH(), 2), this.text_italic));
-        table.addCell(new Phrase(rw.getIns1AsString(), this.text_italic));
-        table.addCell(new Phrase(rw.getBGAsString(), this.text_italic));
+        table.addCell(new Phrase(this.getFormatedValue(rw.getCH(), 2), this.textFontItalic));
+        table.addCell(new Phrase(rw.getIns1AsString(), this.textFontItalic));
+        table.addCell(new Phrase(rw.getBGAsString(), this.textFontItalic));
     }
 
 
     /**
-     * Write Food Description Data
-     * 
-     * @param table
-     * @param dvr
-     * @throws Exception
+     * {@inheritDoc}
      */
     public void writeFoodDescData(PdfPTable table, DailyValuesRow dvr) throws Exception
     {
-        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION), this.text_normal));
-        table.addCell(new Phrase(ic.getMessage("DESCRIPTION"), this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION), this.textFontNormal));
+        table.addCell(this.createNormalTextPhrase("DESCRIPTION"));
+        table.addCell(this.createEmptyTextPhrase());
 
-        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_CH), this.text_italic));
-        table.addCell(new Phrase(dvr.getIns1AsString(), this.text_italic));
-        table.addCell(new Phrase(dvr.getBGAsString(), this.text_italic));
+        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_CH), this.textFontItalic));
+        table.addCell(new Phrase(dvr.getIns1AsString(), this.textFontItalic));
+        table.addCell(new Phrase(dvr.getBGAsString(), this.textFontItalic));
     }
     
 
     /**
-     * Returns base filename for printing job, this is just part of end filename (starting part)
+     * {@inheritDoc}
      */
     @Override
     public String getFileNameBase()
     {
         return "FoodMenuExt2";
     }
-    
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getTextSize()
+    {
+        return 12;
+    }
     
 }

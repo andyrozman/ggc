@@ -53,11 +53,12 @@
 			<artifactId>ggc-plugin-base</artifactId>
 		</dependency>
 
+<!--  
 		<dependency>
 			<groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
 			<artifactId>rxtxcomm</artifactId>
 		</dependency>
-
+-->
 		<dependency>
 			<groupId>com.atech-software</groupId>
 			<artifactId>atech-tools</artifactId>
@@ -82,6 +83,13 @@
 				<groupId>com.codeminders</groupId>
 				<artifactId>hidapi</artifactId>
 			</dependency>
+
+		<dependency>
+			<groupId>com.neuronrobotics</groupId>
+			<artifactId>nrjavaserial</artifactId>
+			<version>3.9.3</version>
+		</dependency>
+
 
 	</dependencies>
 

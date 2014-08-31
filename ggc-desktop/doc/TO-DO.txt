@@ -109,7 +109,8 @@ Version 0.6 [4.6.2013]
 
 Bugs:
 * Nutrition Db in DataAccess fix (works ok, just outside confines of framework) - 5
-
+* DeviceValuesTableModel - problem with existing data if data changes (manual change and then
+  again import)
 
 
 

@@ -2,7 +2,7 @@ package ggc.cgms.device.minimed.file;
 
 import ggc.cgms.data.CGMSTempValues;
 import ggc.cgms.data.defs.CGMSAlarms;
-import ggc.cgms.data.defs.CGMSDataType;
+import ggc.cgms.data.defs.CGMSBaseDataType;
 import ggc.cgms.data.defs.CGMSErrors;
 import ggc.cgms.data.defs.CGMSEvents;
 import ggc.cgms.util.DataAccessCGMS;
@@ -339,52 +339,52 @@ public class MinimedCareLinkCGMS extends MinimedCareLink {
         // CGMSTempValues
 
         this.dvw.put("GlucoseSensorData", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_BG_READING.getValue()));
+            CGMSBaseDataType.SensorReading.getValue()));
 
         this.dvw.put("AlarmSensor",
-            new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY, CGMSDataType.CGMS_DATA_ALARM.getValue()));
+            new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY, CGMSBaseDataType.DeviceAlarm.getValue()));
 
         this.dvw.put("BGTherasense", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_METER_CALIBRATION.getValue()));
+            CGMSBaseDataType.MeterCalibration.getValue()));
 
         this.dvw.put("SensorWeakSignal", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_EVENT.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_WEAK_SIGNAL));
+            CGMSBaseDataType.DeviceEvent.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_WEAK_SIGNAL));
 
         this.dvw.put("SensorCal_meter_bg_now", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_EVENT.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_METER_BG_NOW));
+            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_METER_BG_NOW));
 
         this.dvw.put("SensorCal_waiting", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_EVENT.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_WAITING));
+            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_WAITING));
 
         this.dvw.put("SensorPacket_init", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_EVENT.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_INIT));
+            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_INIT));
 
         this.dvw.put("SensorPacket_pre_init", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_EVENT.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_INIT));
+            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_INIT));
 
         this.dvw.put("SensorPacket_burst", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_EVENT.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_BURST));
+            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_BURST));
 
         this.dvw.put("SensorCal_cal_error", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_ERROR.getValue(), CGMSErrors.CGMS_ERROR_SENSOR_CALIBRATION_ERROR));
+            CGMSBaseDataType.DeviceError.getValue(), CGMSErrors.CGMS_ERROR_SENSOR_CALIBRATION_ERROR));
 
         this.dvw.put("SensorStatus_off", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_EVENT.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_POWER_DOWN));
+            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_POWER_DOWN));
 
         this.dvw.put("SensorStatus_on", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_EVENT.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_POWER_UP));
+            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_POWER_UP));
 
         this.dvw.put("SensorCalFactor", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_EVENT.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_FACTOR));
+            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_FACTOR));
 
         this.dvw.put("SensorStatus_lost", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_EVENT.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_LOST));
+            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_LOST));
 
         this.dvw.put("GlucoseSensorDataLow", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSDataType.CGMS_DATA_EVENT.getValue(), CGMSEvents.CGMS_EVENT_DATA_LOW_BG));
+            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_DATA_LOW_BG));
 
         this.dvw.put("SensorError",
-            new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY, CGMSDataType.CGMS_DATA_ERROR.getValue()));
+            new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY, CGMSBaseDataType.DeviceError.getValue()));
 
         // SensorCal,"CAL_TYPE=meter_bg_now, ISIG=7.03"
 

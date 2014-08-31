@@ -49,6 +49,7 @@ public class BytesToDatabasePagesConverter
                 System.arraycopy(dataPage, 0, header, 0, 28);
 
                 dp.setPageHeader(databaseHeaderConverter.convert(header));
+                dp.pageHeaderRaw = header;
 
                 short[] pageContent = new short[500];
                 System.arraycopy(dataPage, 28, pageContent, 0, 500);

@@ -9,12 +9,14 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.data.EGVRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.UserEventDataRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePageRange;
+import ggc.cgms.device.dexcom.receivers.g4receiver.internal.Partition;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.PartitionInfo;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomExceptionType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.plugin.data.progress.ProgressData;
 import ggc.plugin.data.progress.ProgressType;
+import ggc.plugin.output.OutputWriter;
 import gnu.io.CommPortIdentifier;
 
 import java.util.Enumeration;
@@ -36,6 +38,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
     ProgressData progressData = new ProgressData();
     private DataOutputParserInterface dataOutputParser = new ConsoleOutputParser();
     boolean downloadCanceled = false;
+    OutputWriter outputWriter;
 
     public DexcomDeviceReader(String portName, DexcomDevice dexcomDevice) throws DexcomException
     {
@@ -78,6 +81,11 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
             throw new DexcomException(DexcomExceptionType.UnsupportedReceiver);
         }
 
+    }
+    
+    public void setOutputWriter(OutputWriter outputWriter)
+    {
+        this.outputWriter = outputWriter;
     }
 
     public void downloadSettings() throws DexcomException
@@ -140,7 +148,12 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 
         this.progressData.addToProgressAndCheckIfCanceled(progressType, progressAdd);
 
-        log.debug("Progress: " + this.progressData.calculateProgress());
+        //log.debug("Progress: " + this.progressData.calculateProgress());
+        
+        if (this.outputWriter!=null)
+        {
+            this.outputWriter.setSpecialProgress(this.progressData.getCurrentProgress());
+        }
 
         if (this.isDownloadCanceled())
         {
@@ -155,7 +168,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 			
 			ReceiverDownloadData data = new ReceiverDownloadData();
 			
-			int staticProgressMax = 3; // serial (2), partition (1)
+			int staticProgressMax = 4; // serial (2), partition (1), fw header (1)
  			for (ReceiverRecordType rrt : ReceiverRecordType.getDownloadSupported().keySet())
 			{
 				staticProgressMax += api.isDatabasePageRangeCached(rrt) ? 0 : 1;
@@ -164,9 +177,9 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 			this.configureProgressReporter(ProgressType.Dynamic_Static, 10, staticProgressMax, 200);
 			
 			
-
 			this.progressData.setCurrentProgressType(ProgressType.Static); 
 			int countDynamicElements = ReceiverRecordType.getDownloadSupported().size(); // parsing
+			countDynamicElements++; // EGV has two parsing passes
 			
 			for (ReceiverRecordType rrt : ReceiverRecordType.getDownloadSupported().keySet())
 			{
@@ -174,14 +187,9 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 				countDynamicElements += range.getPagesCount();
 			}
 
-			//log.debug(" === Progress should be 4");
-			
 			this.progressData.setProgressDynamicMax(countDynamicElements);
 			
-			
-
-			//log.debug(" === Progress should be 6");
-			
+						
 			PartitionInfo info = this.api.readDatabasePartitionInfo();
 			log.debug("Partition Info: PageLength: " + info.getPageDataLength());
 
@@ -192,29 +200,32 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 
 			data.setSerialNumber(api.readReceiverSerialNumber());
 			
-			log.debug("Progress: " + progressData.calculateProgress());
+			//log.debug("Progress: " + progressData.calculateProgress());
 
-			//log.debug(" === Progress should be 7");
-			
-			
+			Element header = this.api.readFirmwareHeader();
+
+            data.addConfigurationEntry("SOFTWARE_NUMBER", header.getAttributeValue("SoftwareNumber"), false);
+            data.addConfigurationEntry("FIRMWARE_VERSION", header.getAttributeValue("FirmwareVersion"), false);
+
 			
 			// set dynamic
 			this.progressData.setCurrentProgressType(ProgressType.Dynamic);
 
 			data.addData(DataOutputParserType.G4_UserEventData, api.readAllRecordsForEvents());
-            parseData(DataOutputParserType.Configuration, data);
+            parseData(DataOutputParserType.G4_UserEventData, data);
 
 
 			data.addData(DataOutputParserType.G4_EGVData, api.readAllRecordsForEGVData());
-            parseData(DataOutputParserType.Configuration, data);
+            parseData(DataOutputParserType.G4_EGVData_SensorReading, data);
+            parseData(DataOutputParserType.G4_EGVData_SensorTrend, data);
 
 
 			data.addData(DataOutputParserType.G4_InsertionTime, api.readAllRecordsForInsertionTime());
-            parseData(DataOutputParserType.Configuration, data);
+            parseData(DataOutputParserType.G4_InsertionTime, data);
 
 
 			data.addData(DataOutputParserType.G4_MeterData, api.readAllRecordsForMeterData());
-            parseData(DataOutputParserType.Configuration, data);
+            parseData(DataOutputParserType.G4_MeterData, data);
 			
 			
 		} catch (DexcomException ex) {
@@ -304,6 +315,21 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
         return data;
     }
 
+    public void saveAllPages() throws DexcomException
+    {
+        for(ReceiverRecordType recordType : ReceiverRecordType.values())
+        {
+            if ((recordType == ReceiverRecordType.MaxValue) || (recordType == ReceiverRecordType.None))
+            {
+                continue;
+            }
+            log.debug("Droping pages for " + recordType.name());
+            this.api.saveDatabasePages(recordType);
+        }
+    }
+    
+    
+    
     public void dispose()
     {
         this.api.disconnectDevice();
@@ -318,13 +344,14 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 
             long now = System.currentTimeMillis();
 
-            dr = new DexcomDeviceReader("COM9", DexcomDevice.Dexcom_G4);
+            dr = new DexcomDeviceReader("/dev/ttyACM0", DexcomDevice.Dexcom_G4);
             // Date d = dr.getDisplayTime();
             // System.out.println("Display Time: " + d);
             // System.out.println("SysTime: " + dr.getSystemTime());
             
-            dr.downloadSettings();
+            //dr.downloadSettings();
             //dr.downloadData();
+            dr.saveAllPages();
 
             //dr.doDownloadReceiverDataAsObject();
 
@@ -368,7 +395,14 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 
     public boolean isDownloadCanceled()
     {
-        return downloadCanceled;
+        if (this.outputWriter!=null)
+        {
+            return this.outputWriter.isReadingStopped();
+        }
+        else
+        {
+            return downloadCanceled;
+        }
     }
 
     public DataOutputParserInterface getDataOutputParser()

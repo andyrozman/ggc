@@ -18,7 +18,20 @@ Known Bugs:
     - Graphs problems (graph's are partitially fixed, but not fully). In future graphs will be done in Graph editor, which means
          they won't be static. (0.6 or 0.7)
     - Color scheme
-    - 
+    - Bugs:
+
+* Nutrition Db in DataAccess fix (works ok, just outside confines of framework) - 5
+
+DEVELOPMENT NOT DONE:
+* DeviceValuesTableModel - problem with existing data if data changes (manual change and then
+  again import)
+* CGMS Dispplay data (some data is uncorrectlly displayed and events are not displayed at all
+  since mapping needs to be made, this should be converted to enum, which contain event description
+  and id
+* CGMS use Enums
+* Pump Enums
+* Meter Enums
+    
 
 NOT A BUG:
     - "New Entry" dialog should only contain one of mg/dl and mmol/l Fields, 

@@ -1144,6 +1144,15 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public boolean checkNativeLibrary(String native_dll_file) 
     {
+        // FIXME
+        
+        if (native_dll_file.contains("rxtx"))
+        {
+            log.debug("We are using new version of Rxtx (packed in NrJavaSerial), which already contains .dll files.");
+            return true;
+        }
+        
+        
         try 
         {
             log.debug("checkNativeLibrary: " + native_dll_file);

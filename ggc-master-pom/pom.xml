@@ -238,12 +238,12 @@
 
 			<!-- This should be replaced with nrserial, which is just extention of 
 				rxtx that also contains binary files in jar. -->
-			<dependency>
+			<!-- <dependency>
 				<groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
 				<artifactId>rxtxcomm</artifactId>
 				<version>${rxtxcomm.version}</version>
 			</dependency>
-
+ -->
 
 			<dependency>
 				<groupId>com.atech-software</groupId>
@@ -284,6 +284,31 @@
 			</dependency>
 
 
+			<dependency>
+				<groupId>org.scream3r</groupId>
+				<artifactId>jssc</artifactId>
+				<version>${jssc.version}</version>
+			</dependency>
+
+			<dependency>
+			    <groupId>org.swinglabs</groupId>
+			    <artifactId>pdf-renderer</artifactId>
+			    <version>${pdf-renderer.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>com.google.guava</groupId>
+			    <artifactId>guava</artifactId>
+			    <version>${guava.version}</version>
+			</dependency>
+
+
+
+		<dependency>
+			<groupId>com.neuronrobotics</groupId>
+			<artifactId>nrjavaserial</artifactId>
+			<version>${nrjavaserial.version}</version>
+		</dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -329,6 +354,10 @@
 
 		<!-- NEW THIS VERSION -->
 		<hidapi.version>1.1</hidapi.version>
+		<jssc.version>2.8.0</jssc.version>
+		<pdf-renderer.version>1.0.5</pdf-renderer.version>
+		<guava.version>13.0.1</guava.version>
+		<nrjavaserial.version>3.9.3</nrjavaserial.version>
 
 
 		<maven.compiler.source>1.5</maven.compiler.source>

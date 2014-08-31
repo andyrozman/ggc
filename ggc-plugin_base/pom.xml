@@ -46,12 +46,12 @@
 			<groupId>net.sf.ggc</groupId>
 			<artifactId>ggc-core</artifactId>
 		</dependency>
-
+<!-- 
 		<dependency>
 			<groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
 			<artifactId>rxtxcomm</artifactId>
 		</dependency>
-
+ -->
 		<dependency>
 			<groupId>com.atech-software</groupId>
 			<artifactId>atech-tools</artifactId>
@@ -71,6 +71,15 @@
 			<groupId>net.sf.ggc.libusb4j</groupId>
 			<artifactId>libusb4jwo</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.neuronrobotics</groupId>
+			<artifactId>nrjavaserial</artifactId>
+			<!-- <version>3.9.3</version>  -->
+			<version>3.9.3</version>
+		</dependency>
+
+
 
 	</dependencies>
 

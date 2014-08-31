@@ -1,9 +1,9 @@
-package ggc.cgms.device.dexcom.receivers.g4receiver.enums;
+package ggc.cgms.data.defs;
 
 import java.util.HashMap;
 
 
-public enum TrendArrow
+public enum CGMSTrendArrow
 {
     
     DoubleUp(1),
@@ -20,17 +20,17 @@ public enum TrendArrow
     ;
     
     private int value;
-    private static HashMap<Integer,TrendArrow> map = new HashMap<Integer,TrendArrow>();
+    private static HashMap<Integer,CGMSTrendArrow> map = new HashMap<Integer,CGMSTrendArrow>();
     
     static
     {
-        for(TrendArrow el : values())
+        for(CGMSTrendArrow el : values())
         {
             map.put(el.getValue(), el);
         }
     }
 
-    TrendArrow(int value)
+    CGMSTrendArrow(int value)
     {
         this.value = value;
     }
@@ -45,7 +45,7 @@ public enum TrendArrow
         this.value = value;
     }
     
-    public static TrendArrow getEnum(int value)
+    public static CGMSTrendArrow getEnum(int value)
     {
         return map.get(value);
     }

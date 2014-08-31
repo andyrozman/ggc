@@ -119,7 +119,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
 
         // init values
         fieldEmpty.setText(settings.getPrintEmptyValue());
-        fieldPDFViewer.setText(settings.getPdfVieverPath());
+        fieldPDFViewer.setText(settings.getExternalPdfVieverPath());
 
         fieldLunchST.setText(m_da.getTimeString(settings.getPrintLunchStartTime()));
         fieldDinnerST.setText(m_da.getTimeString(settings.getPrintDinnerStartTime()));
@@ -250,7 +250,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
     public void saveProps()
     {
         settings.setPrintEmptyValue(fieldEmpty.getText());
-        settings.setPdfVieverPath(fieldPDFViewer.getText());
+        settings.setExternalPdfVieverPath(fieldPDFViewer.getText());
 
         settings.setPrintLunchStartTime(getTimeValue(fieldLunchST, 1100));
         settings.setPrintDinnerStartTime(getTimeValue(fieldDinnerST, 1800));

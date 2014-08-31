@@ -5,6 +5,7 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.converter.BytesToDatabasePage
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ConverterType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ElementToPartitionInfoConverter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToEGVDataConverter;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToFileConverter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToUserEventDataConverter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPagesToInsertionTimeConverter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPagesToMeterConverter;
@@ -52,7 +53,7 @@ public class DexcomUtils
         converters.put(ConverterType.DataPageToEGVDataConverter, new DataPageToEGVDataConverter());
         converters.put(ConverterType.DataPageToUserEventDataConverter, new DataPageToUserEventDataConverter());
         converters.put(ConverterType.DataPagesToMeterConverter, new DataPagesToMeterConverter());
-
+        converters.put(ConverterType.DataPageToFileConverter, new DataPageToFileConverter());
         
     }
 

@@ -1,44 +1,20 @@
 package ggc.nutri.print;
 
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: PrintSimpleonthlyReport.java
- * 
- * Purpose: Creating PDF for Extended Monthly Report (used for printing)
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
-
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
 import ggc.core.data.ExtendedDailyValue;
-import ggc.core.print.PrintAbstract;
+import ggc.core.util.DataAccess;
 import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 import ggc.nutri.util.DataAccessNutri;
 
 import java.util.Iterator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.atech.print.engine.PrintAbstractIText;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -73,8 +49,14 @@ import com.itextpdf.text.pdf.PdfPTable;
  */
 
 
-public abstract class PrintFoodMenuAbstract extends PrintAbstract
+public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 {
+    
+    private static final Log LOG = LogFactory.getLog(PrintFoodMenuAbstract.class);
+    
+    DayValuesData dayValuesData;
+    DataAccess dataAccessCore;
+    
     
     /**
      * Constructor
@@ -83,57 +65,48 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
      */
     public PrintFoodMenuAbstract(DayValuesData mv)
     {
-        super(mv, DataAccessNutri.getInstance().getParentI18nControlInstance(), true);
-
+        super(DataAccessNutri.getInstance().getParentI18nControlInstance(), false);
         
-        //this.mv =  mv;
-        //this.m_da_core = null;  
-        // System.out.println("getNutriControl");
-
-        // this.ic = m_da.getNutriI18nControl();
+        this.dayValuesData = mv;
+        dataAccessCore = DataAccess.getInstance();
+        
+        this.init();
     }
 
     /**
-     * Get Title
-     * 
-     * @see ggc.core.print.PrintAbstract#getTitle()
+     * {@inheritDoc}
      */
     public Paragraph getTitle()
     {
         Paragraph p = new Paragraph();
 
-        Font f = new Font(this.base_times, 16, Font.BOLD);
+        Font f = new Font(this.baseFontTimes, 16, Font.BOLD);
 
         p.setAlignment(Element.ALIGN_CENTER);
         p.add(new Paragraph("", f));
-        p.add(new Paragraph(ic.getMessage(getTitleText()) + " [" + this.m_data.getFromAsLocalizedDate() + " - "
-                + this.m_data.getToAsLocalizedDate() + "]", f));
-        // p.add(new Paragraph("May 2006"));
-        p.add(new Paragraph(ic.getMessage("FOR") + " " + m_da.getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN,
+        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " [" + this.dayValuesData.getFromAsLocalizedDate() + " - "
+                + this.dayValuesData.getToAsLocalizedDate() + "]", f));
+
+        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " " + this.dataAccessCore.getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN,
                 12, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
-        // p.add(new Paragraph("", f));
 
         return p;
     }
 
 
     /**
-     * Create document body.
-     * 
-     * @param document
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void fillDocumentBody(Document document) throws Exception
     {
-        Iterator<DailyValues> it = this.m_data.iterator();
+        Iterator<DailyValues> it = this.dayValuesData.iterator();
 
         int count = 0;
 
-        Font f = this.text_normal; // new Font(this.base_helvetica , 12,
-                                   // Font.NORMAL); // this.base_times
+        Font f = this.textFontNormal; 
 
         PdfPTable datatable = new PdfPTable(getTableColumnsCount());
         datatable.setWidths(getTableColumnWidths());
@@ -143,11 +116,11 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
         datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); // ALIGN_CENTER);
         datatable.getDefaultCell().setBorderWidth(1);
 
-        datatable.addCell(new Phrase(ic.getMessage("DATE"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("TIME"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("PRINT_FOOD_DESC"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("WEIGHT_TYPE"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("AMOUNT_SHORT"), this.text_bold));
+        datatable.addCell(this.createBoldTextPhrase("DATE"));
+        datatable.addCell(this.createBoldTextPhrase("TIME"));
+        datatable.addCell(this.createBoldTextPhrase("PRINT_FOOD_DESC"));
+        datatable.addCell(this.createBoldTextPhrase("WEIGHT_TYPE"));
+        datatable.addCell(this.createBoldTextPhrase("AMOUNT_SHORT"));
 
         writeAdditionalHeader(datatable);
 
@@ -158,9 +131,6 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
 
             datatable.addCell(new Phrase(dv.getDateAsLocalizedString(), f));
 
-//            System.out.println("Row count: " + dv.getRowCount());
-//            System.out.println(dv.getDateAsString());
-
             int active_day_entry = 0;
 
             for (int i = 0; i < dv.getRowCount(); i++)
@@ -168,7 +138,8 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
 
                 DailyValuesRow rw = (DailyValuesRow) dv.getRow(i);
 
-                if ( (!m_da.isValueSet(rw.getMealsIds())) && (!m_da.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION))))
+                if ( (!this.dataAccess.isValueSet(rw.getMealsIds())) && 
+                     (!this.dataAccess.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION))))
                     continue;
 
                 if (active_day_entry > 0)
@@ -181,7 +152,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
                 datatable.addCell(new Phrase(rw.getTimeAsString(), f));
 
                 
-                if (m_da.isValueSet(rw.getMealsIds()))
+                if (this.dataAccess.isValueSet(rw.getMealsIds()))
                 {
 
                     DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds(), true);
@@ -195,9 +166,8 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
                     }
                 }
                 
-                if (m_da.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION)))
+                if (this.dataAccess.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION)))
                 {
-                    //System.out.println("writeFoodDescData: " + rw);
                     writeFoodDescData(datatable, rw);
                 }
                 
@@ -214,7 +184,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
 
         document.add(datatable);
 
-        System.out.println("Elements all: " + this.m_data.size() + " in iterator: " + count);
+        LOG.debug("Elements all: " + this.dayValuesData.size() + " in iterator: " + count);
 
     }
 
@@ -229,22 +199,20 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstract
      */
     public String getFormatedValue(float value, int dec_places)
     {
-        return m_da.getDecimalHandler().getDecimalAsString(value, dec_places);  // ch
+        return this.dataAccess.getDecimalHandler().getDecimalAsString(value, dec_places);  // ch
         
     }
     
     
     
     /**
-     * Returns data part of filename for printing job, showing which data is being printed
-     * 
-     * @return 
+     * {@inheritDoc}
      */
     @Override
     public String getFileNameRange()
     {
-        return this.m_data.getRangeBeginObject().getDateFilenameString() + "-"
-                + this.m_data.getRangeEndObject().getDateFilenameString();
+        return this.dayValuesData.getRangeBeginObject().getDateFilenameString() + "-"
+                + this.dayValuesData.getRangeEndObject().getDateFilenameString();
     }
     
     

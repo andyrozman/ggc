@@ -37,6 +37,8 @@ public class CGMSEvents
 {
 
     
+    
+    
     // start / end
     /**
      * 
@@ -74,10 +76,22 @@ public class CGMSEvents
     public static final int CGMS_EVENT_SENSOR_POWER_UP = 41;
     
     
+    
+    
+    
+    
     /**
      * 
      */
     public static final int CGMS_EVENT_SENSOR_LOST = 42;
+    
+    
+    
+    public static final int CGMS_EVENT_SENSOR_START = 43;
+    
+    
+    
+    public static final int CGMS_EVENT_SENSOR_STOP = 44;
     
     
     /**

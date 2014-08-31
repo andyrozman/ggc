@@ -1,8 +1,8 @@
 package ggc.nutri.gui.print;
 
 import ggc.core.data.DayValuesData;
-import ggc.core.print.PrintAbstract;
 import ggc.core.util.DataAccess;
+import ggc.nutri.print.PrintFoodMenuAbstract;
 import ggc.nutri.print.PrintFoodMenuBase;
 import ggc.nutri.print.PrintFoodMenuExt1;
 import ggc.nutri.print.PrintFoodMenuExt2;
@@ -12,7 +12,7 @@ import ggc.nutri.util.DataAccessNutri;
 import javax.swing.JFrame;
 
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.print.PrintDialogRange;
+import com.atech.print.gui.PrintDialogRange;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -55,16 +55,7 @@ public class PrintFoodDialog extends PrintDialogRange
                                        };
 
 
-    /**
-     * Dialog Options: Year and Month Option
-     */
-    public static final int PRINT_DIALOG_YEAR_MONTH_OPTION = 1;
-
-    /**
-     * Dialog Options: Range with day option
-     */
-    public static final int PRINT_DIALOG_RANGE_DAY_OPTION = 2;
-
+    DataAccessNutri dataAccessNutri;
     
     /**
      * Constructor
@@ -74,62 +65,11 @@ public class PrintFoodDialog extends PrintDialogRange
      */
     public PrintFoodDialog(JFrame frame, int type)
     {
+        // , PrintDialogType dialogType
         super(frame, type, DataAccessNutri.getInstance(),  DataAccessNutri.getInstance().getParentI18nControlInstance(), true);
     }
     
 
-    /**
-     * Display PDF External (static method)
-     * 
-     * @param name
-     */
-/*    public static void displayPDFExternal(String name)
-    {
-        I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
-
-        File fl = new File(".." + File.separator + "data" + File.separator + "temp" + File.separator);
-
-        String pdf_viewer = DataAccess.getInstance().getSettings().getPdfVieverPath().replace('\\', '/');
-        String file_path = fl.getAbsolutePath().replace('\\', '/');
-
-        if (pdf_viewer.equals(""))
-        {
-            System.out.println(ic.getMessage("PRINTING_SETTINGS_NOT_SET"));
-            return;
-        }
-
-        File acr = new File(pdf_viewer);
-
-        if (!acr.exists())
-        {
-            System.out.println(ic.getMessage("PRINTING_SETTINGS_NOT_SET"));
-            return;
-        }
-
-        try
-        {
-            Runtime.getRuntime().exec(
-                acr.getAbsoluteFile() + " \"" + fl.getAbsolutePath() + File.separator + name + "\"");
-            System.out.println(pdf_viewer + " " + file_path + File.separator + name);
-        }
-        catch (RuntimeException ex)
-        {
-            // this.setErrorMessages(m_ic.getMessage("PDF_VIEVER_RUN_ERROR"),
-            // null);
-            System.out.println("RE running AcrobatReader: " + ex);
-            // throw ex;
-        }
-        catch (Exception ex)
-        {
-            // this.setErrorMessages(m_ic.getMessage("PDF_VIEVER_RUN_ERROR"),
-            // null);
-            System.out.println("Error running AcrobatReader: " + ex);
-            // throw ex;
-
-        }
-    }
-*/
-    
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
@@ -138,7 +78,7 @@ public class PrintFoodDialog extends PrintDialogRange
     
 
     /**
-     * getHelpId - get id for Help
+     * {@inheritDoc}
      */
     public String getHelpId()
     {
@@ -146,55 +86,70 @@ public class PrintFoodDialog extends PrintDialogRange
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] getReportTypes()
     {
         if (this.report_types_2==null)
         {
             report_types_2 = new String[3]; 
-            report_types_2[0] = m_ic.getMessage("FOOD_MENU_BASE");
-            report_types_2[1] = m_ic.getMessage("FOOD_MENU_EXT_I");
-            report_types_2[2] = m_ic.getMessage("FOOD_MENU_EXT_II");
+            report_types_2[0] = this.i18nControl.getMessage("FOOD_MENU_BASE");
+            report_types_2[1] = this.i18nControl.getMessage("FOOD_MENU_EXT_I");
+            report_types_2[2] = this.i18nControl.getMessage("FOOD_MENU_EXT_II");
         }
         
         return report_types_2;
     }
 
+    
+    public DataAccessNutri getDataAccessLocal()
+    {
+        if (dataAccessNutri==null)
+        {
+            dataAccessNutri = (DataAccessNutri)this.dataAccess;    
+        }
+        
+        return this.dataAccessNutri;
+    }
+    
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startPrintingAction() throws Exception
     {
-        DataAccessNutri da = (DataAccessNutri)m_da;
+        DataAccessNutri da = getDataAccessLocal();
         
         DayValuesData dvd = da.getNutriDb().getDayValuesData(this.getFromDate(), this.getToDate()); //.getMonthlyValues(yr, mnth);
         
-        PrintAbstract pa = null;
+        PrintFoodMenuAbstract pa = null;
         
-        if (this.cb_template.getSelectedIndex() == 0)
+        if (this.cbTemplate.getSelectedIndex() == 0)
         {
             pa = new PrintFoodMenuBase(dvd);
         }
-        else if (this.cb_template.getSelectedIndex() == 1)
+        else if (this.cbTemplate.getSelectedIndex() == 1)
         {
             pa = new PrintFoodMenuExt1(dvd);
         }
-        else if (this.cb_template.getSelectedIndex() == 2)
+        else if (this.cbTemplate.getSelectedIndex() == 2)
         {
             pa = new PrintFoodMenuExt2(dvd);
         }
-        else if (this.cb_template.getSelectedIndex() == 3)
+        else if (this.cbTemplate.getSelectedIndex() == 3)
         {
             pa = new PrintFoodMenuExt3(dvd);
         }
         
         displayPDF(pa.getRelativeNameWithPath());
-        
     }
 
     
     /**
-     * We have Secondary Type choice 
-     * 
-     * @return
+     * {@inheritDoc}
      */
     public boolean weHaveSecondaryType()
     {
@@ -202,23 +157,42 @@ public class PrintFoodDialog extends PrintDialogRange
     }
     
     
-    
     /**
-     * Get Pdf Viewer (path to software)
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
-    public String getPdfViewer()
+    public String getExternalPdfViewer()
     {
-        return DataAccess.getInstance().getSettings().getPdfVieverPath().replace('\\', '/');
+        return DataAccess.getInstance().getSettings().getExternalPdfVieverPath().replace('\\', '/');
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getPdfViewerParameters()
+    public String getExternalPdfViewerParameters()
     {
-        // FIXME
-        return "";
+        return DataAccess.getInstance().getSettings().getExternalPdfVieverParameters();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isExternalPdfViewerActivated()
+    {
+        return DataAccess.getInstance().getSettings().getUseExternalPdfViewer();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean disableLookAndFeelSettingForInternalPdfViewer()
+    {
+        return true;
     }    
     
     

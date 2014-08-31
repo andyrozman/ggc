@@ -6,6 +6,7 @@ import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.pump.data.PumpValuesEntry;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import com.atech.utils.data.ATechDate;
@@ -34,16 +35,13 @@ import com.itextpdf.text.pdf.PdfPTable;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     PrintFoodMenuBase  
- *  Description:  Print Base Food Menu
+ *  Filename:     PrintPumpDataBase  
+ *  Description:  Print Pump Data - Base
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
-
-
 public class PrintPumpDataBase extends PrintPumpDataAbstract
 {
-   
     
     /**
      * Constructor
@@ -54,48 +52,15 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
     {
         super(dvr);
     }
-
-    
-    
-    /*
-    public Paragraph getTitle()
-    {
-        Paragraph p = new Paragraph();
-        
-        Font f = new Font(this.base_times , 16, Font.BOLD); 
-        
-        p.setAlignment(Element.ALIGN_CENTER);
-        p.add(new Paragraph("", f));
-        p.add(new Paragraph(ic.getMessage("FOOD_MENU_BASE") + " [" + this.m_data.getFromAsLocalizedDate() + " - " + this.m_data.getToAsLocalizedDate() + "]", f));
-        //p.add(new Paragraph("May 2006"));
-        p.add(new Paragraph(ic.getMessage("FOR") + " " + m_da.getSettings().getUserName(), new Font(Font.TIMES_ROMAN, 12, Font.ITALIC)));
-        p.add(new Paragraph("", f));
-        p.add(new Paragraph("", f));
-        //p.add(new Paragraph("", f));
-
-        return p;
-    }
-    */
-    
-    
-
     
     
     /**
-     * Create document body.
-     * 
-     * @param document
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void fillDocumentBody(Document document) throws Exception
     {
-        //Iterator<DailyValues> it = this.m_data.iterator();
-
-        //int count = 0;
-
-        Font f = this.text_normal; // new Font(this.base_helvetica , 12,
-                                   // Font.NORMAL); // this.base_times
+        Font f = this.textFontNormal; 
 
         PdfPTable datatable = new PdfPTable(getTableColumnsCount());
         datatable.setWidths(getTableColumnWidths());
@@ -105,19 +70,19 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
         datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); // ALIGN_CENTER);
         datatable.getDefaultCell().setBorderWidth(1);
 
-        datatable.addCell(new Phrase(ic.getMessage("DATE"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("TIME"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("BASE_TYPE"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("SUB_TYPE"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("VALUE_SHORT"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("OTHER_DATA"), this.text_bold));
+        datatable.addCell(this.createBoldTextPhrase("DATE"));
+        datatable.addCell(this.createBoldTextPhrase("TIME"));
+        datatable.addCell(this.createBoldTextPhrase("BASE_TYPE"));
+        datatable.addCell(this.createBoldTextPhrase("SUB_TYPE"));
+        datatable.addCell(this.createBoldTextPhrase("VALUE_SHORT"));
+        datatable.addCell(this.createBoldTextPhrase("OTHER_DATA"));
         
         //writeAdditionalHeader(datatable);
 
-        GregorianCalendar gc_end = m_dvr.getEndGC();
-        gc_end.add(GregorianCalendar.DAY_OF_MONTH, 1);
+        GregorianCalendar gc_end = deviceValuesRange.getEndGC();
+        gc_end.add(Calendar.DAY_OF_MONTH, 1);
         
-        GregorianCalendar gc_current = m_dvr.getStartGC(); 
+        GregorianCalendar gc_current = deviceValuesRange.getStartGC(); 
         
         
         do 
@@ -125,10 +90,10 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
             
             ATechDate atd = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), gc_current);
 
-            if (m_dvr.isDayEntryAvailable(atd.getATDateTimeAsLong()))
+            if (deviceValuesRange.isDayEntryAvailable(atd.getATDateTimeAsLong()))
             {
                 
-                DeviceValuesDay dvd = m_dvr.getDayEntry(atd.getATDateTimeAsLong());
+                DeviceValuesDay dvd = deviceValuesRange.getDayEntry(atd.getATDateTimeAsLong());
                 
                 // FIXME fix this
                 datatable.addCell(new Phrase(atd.getDateString(), f));
@@ -159,7 +124,7 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
             }
             
 
-            gc_current.add(GregorianCalendar.DAY_OF_MONTH, 1);
+            gc_current.add(Calendar.DAY_OF_MONTH, 1);
             
         } while (gc_current.before(gc_end) );
 
@@ -170,12 +135,8 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
     }
     
     
-
-
-
-    /** 
-     * Return columns widths for table
-     * @return
+    /**
+     * {@inheritDoc}
      */
     @Override
     public int[] getTableColumnWidths()
@@ -188,8 +149,7 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
 
     
     /**
-     * Return count of table columns
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public int getTableColumnsCount()
@@ -199,9 +159,7 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
 
 
     /**
-     * Get text for title
-     * 
-     * @return title
+     * {@inheritDoc}
      */
     @Override
     public String getTitleText()
@@ -212,10 +170,7 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
 
 
     /**
-     * Write additional header to documents
-     *  
-     * @param table
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void writeAdditionalHeader(PdfPTable table) throws Exception
@@ -224,28 +179,9 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
     }
 
 
-    /**
-     * Write empty column data. If there is no data, this is used, to fill empty places.
-     * 
-     * @param table
-     * @throws Exception
-     */
-    //@Override
-    public void writeEmptyColumnData(PdfPTable table) throws Exception
-    {
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-    }
 
     /**
-     * Write data in column
-     * 
-     * @param table
-     * @param mp
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void writeColumnData(PdfPTable table, Object /*DailyFoodEntry*/ mp) throws Exception
@@ -286,42 +222,26 @@ public class PrintPumpDataBase extends PrintPumpDataAbstract
 
 
     /**
-     * Write together data (all data of certain type summed)
-     * 
-     * @param table
-     * @param rw
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void writeTogetherData(PdfPTable table, DailyValuesRow rw) throws Exception
     {
-        table.addCell(new Phrase(ic.getMessage("TOGETHER"), this.text_italic));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(this.createItalicTextPhrase("TOGETHER"));
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
 
-        table.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.text_italic));
+        table.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.textFontItalic));
     }
 
 
     /**
-     * Returns base filename for printing job, this is just part of end filename (starting part)
+     * {@inheritDoc}
      */
     @Override
     public String getFileNameBase()
     {
         return "PumpDataBase";
     }
-
-
-
-    
-    
-    
-    
-    
     
 }
-
-
-
-

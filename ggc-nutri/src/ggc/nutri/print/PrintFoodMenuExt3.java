@@ -1,16 +1,9 @@
 package ggc.nutri.print;
 
-import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
-import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 
-import java.util.Iterator;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 
@@ -55,11 +48,7 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
     }
 
 
-    /**
-     * Fill Doucment Body
-     */
-    @SuppressWarnings("unused")
-    @Override
+    /*
     public void fillDocumentBody(Document document) throws Exception
     {
         //System.out.println("Jedilnik");
@@ -90,48 +79,11 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
         datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), this.text_bold));
         datatable.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
         
-//        document.add(datatable);
         
         while (it.hasNext())
         {
             DailyValues dv = it.next();
             dv.sort();
-/* v2            
-            PdfPTable data_1 = new PdfPTable(2);
-            
-            int d1_widths[] = { 10, 90 //,
-                                   //40, 20, 10, 10 
-                                    }; // percentage
-            data_1.setWidths(d1_widths);
-            data_1.setWidthPercentage(100); // percentage
-            
-            
-            //datatable.setWidths(headerwidths);
-            //datatable.setWidthPercentage(100); // percentage
-            //datatable.getDefaultCell().setPadding(3);
-            //datatable.getDefaultCell().setBorderWidth(2);
-            
-            data_1.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-            data_1.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-            data_1.getDefaultCell().setBorderWidth(1);
-            
-*/            
-            
-/*            
-            data_1.addCell(new Phrase(ic.getMessage("DATE"), f));
-            data_1.addCell(new Phrase(ic.getMessage("TIME"), f));
-            data_1.addCell(new Phrase(ic.getMessage("PRINT_FOOD_DESC"), f));
-            data_1.addCell(new Phrase(ic.getMessage("PRINT_AMOUNT_TYPE"), f));
-            datatable.addCell(new Phrase(ic.getMessage("PRINT_AMOUNT"), f));
-            datatable.addCell(new Phrase(ic.getMessage("CH"), f));
-*/            
-
-            
-            
-// v2            data_1.addCell(new Phrase(dv.getDateAsString(), f));
-     
-// v2            datatable.addCell(new Phrase(dv.getDateAsString(), f));
-
             
             datatable.addCell(new Phrase(dv.getDateAsString(), f));
             
@@ -188,12 +140,10 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
                     if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
                     {
                         datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), f));
-                        //value = mp.getNutrientValue(205);
-                        /*
-                        System.out.println("nutr val 205" + mp.getNutrientValue(205) + 
-                            "\namount: " + mp.amount + 
-                            "\nhw multiplier: " + mp.getHomeWeightMultiplier() 
-                            ); */
+//                        System.out.println("nutr val 205" + mp.getNutrientValue(205) + 
+//                            "\namount: " + mp.amount + 
+//                            "\nhw multiplier: " + mp.getHomeWeightMultiplier() 
+//                           ); 
                         value = mp.getMealCH();
                         
                     }
@@ -237,17 +187,14 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
         
         document.add(datatable);
         
-        
         //System.out.println("Elements all: " + this.m_data.size() + " in iterator: " + count);
         
-    }
+    }*/
 
     
     
     /**
-     * Get text for title
-     * 
-     * @return title
+     * {@inheritDoc}
      */
     @Override    
     public String getTitleText()
@@ -257,9 +204,8 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
     
 //    FOOD_MENU_EXT_I=Extended Food Menu I (CH,Ins)
 
-    /** 
-     * Return columns widths for table
-     * @return
+    /**
+     * {@inheritDoc}
      */
     @Override
     public int[] getTableColumnWidths()
@@ -273,9 +219,7 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
 
 
     /**
-     * Return count of table columns
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public int getTableColumnsCount()
@@ -284,126 +228,101 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
     }
 
 
-
     /**
-     * Write additional header to documents
-     *  
-     * @param table
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void writeAdditionalHeader(PdfPTable table) throws Exception
     {
-        table.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
-        table.addCell(new Phrase(ic.getMessage("INS"), this.text_bold));
-        table.addCell(new Phrase(ic.getMessage("BG"), this.text_bold));
-        table.addCell(new Phrase(ic.getMessage("ENERGY"), this.text_bold));
+        table.addCell(this.createBoldTextPhrase("CH"));
+        table.addCell(this.createBoldTextPhrase("INS"));
+        table.addCell(this.createBoldTextPhrase("BG"));
+        table.addCell(this.createBoldTextPhrase("ENERGY"));
     }
 
 
-    
     /**
-     * Write data in column
-     * 
-     * @param table
-     * @param mp
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void writeColumnData(PdfPTable table, DailyFoodEntry mp) throws Exception
     {
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
         
-        table.addCell(new Phrase(mp.getName(), this.text_normal));
+        table.addCell(new Phrase(mp.getName(), this.textFontNormal));
         
         
         float value = 0.0f;
         
         if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
         {
-            table.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), this.text_normal));
-            //value = mp.getNutrientValue(205);
+            table.addCell(this.createNormalTextPhrase("AMOUNT_LBL"));
             value = mp.getMealCH();
-            
         }
         else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
         {
-            table.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), this.text_normal));
-            //value = mp.getNutrientValue(205);
+            table.addCell(this.createNormalTextPhrase("WEIGHT_LBL2"));
             value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
         }
         else
         {
-            table.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + this.getFormatedValue(mp.getHomeWeightMultiplier() * 100, 0) + " g)", this.text_normal));
+            table.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + this.getFormatedValue(mp.getHomeWeightMultiplier() * 100, 0) + " g)", this.textFontNormal));
             value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
         }
         
-        table.addCell(new Phrase(mp.getAmountSingleDecimalString(), this.text_normal));
-        table.addCell(new Phrase(this.getFormatedValue(value, 2), this.text_normal));  // ch
+        table.addCell(new Phrase(mp.getAmountSingleDecimalString(), this.textFontNormal));
+        table.addCell(new Phrase(this.getFormatedValue(value, 2), this.textFontNormal));  // ch
         
-        table.addCell(new Phrase("", this.text_normal)); // ins
-        table.addCell(new Phrase("", this.text_normal)); // bg
+        table.addCell(this.createEmptyTextPhrase()); // ins
+        table.addCell(this.createEmptyTextPhrase()); // bg
         
         // TODO: do this
-        table.addCell(new Phrase("", this.text_normal)); // energy  
+        table.addCell(this.createEmptyTextPhrase()); // energy  
 
     }
 
 
-
     /**
-     * Write empty column data. If there is no data, this is used, to fill empty places.
-     * 
-     * @param table
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void writeEmptyColumnData(PdfPTable table) throws Exception
     {
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
     }
 
 
-
     /**
-     * Write together data (all data of certain type summed)
-     * 
-     * @param table
-     * @param rw
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public void writeTogetherData(PdfPTable table, DailyValuesRow rw) throws Exception
     {
-        table.addCell(new Phrase(ic.getMessage("TOGETHER"), this.text_italic));
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(this.createItalicTextPhrase("TOGETHER"));
+        table.addCell(this.createEmptyTextPhrase());
+        table.addCell(this.createEmptyTextPhrase());
 
-        table.addCell(new Phrase(this.getFormatedValue(rw.getCH(), 2), this.text_italic));
-        table.addCell(new Phrase(rw.getIns1AsString(), this.text_italic));
-        table.addCell(new Phrase(rw.getBGAsString(), this.text_italic));
+        table.addCell(new Phrase(this.getFormatedValue(rw.getCH(), 2), this.textFontItalic));
+        table.addCell(new Phrase(rw.getIns1AsString(), this.textFontItalic));
+        table.addCell(new Phrase(rw.getBGAsString(), this.textFontItalic));
 
         // TODO energy
-        table.addCell(new Phrase("", this.text_normal));
+        table.addCell(this.createEmptyTextPhrase());
         
     
     }
 
 
     /**
-     * Write Food Description Data
-     * 
-     * @param table
-     * @param mp
-     * @throws Exception
+     * {@inheritDoc}
      */
     public void writeFoodDescData(PdfPTable table, DailyValuesRow mp) throws Exception
     {
@@ -411,19 +330,23 @@ public class PrintFoodMenuExt3 extends PrintFoodMenuAbstract
     }
     
     
-
     /**
-     * Returns base filename for printing job, this is just part of end filename (starting part)
+     * {@inheritDoc}
      */
     @Override
     public String getFileNameBase()
     {
         return "FoodMenuExt3";
     }
-    
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getTextSize()
+    {
+        return 12;
+    }
     
 }
-
-
-
-

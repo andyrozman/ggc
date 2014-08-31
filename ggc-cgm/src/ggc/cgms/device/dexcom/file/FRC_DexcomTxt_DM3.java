@@ -177,7 +177,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             // sub.datetime = DexcomCGMS.getDateFromString(tmp_time);
             // sub.time = DexcomCGMS.getTimeFromString(tmp_time);
             sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
-            sub.type = CGMSValuesSubEntry.CGMS_BG_READING;
+            sub.setType(CGMSValuesSubEntry.CGMS_BG_READING);
             strtok.nextToken();
             sub.value = Integer.parseInt(strtok.nextToken());
             addEntry(sub);
@@ -188,7 +188,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
                 sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
                 // sub.datetime = DexcomCGMS.getDateFromString(tmp_time);
                 // sub.time = DexcomCGMS.getTimeFromString(tmp_time);
-                sub.type = CGMSValuesSubEntry.METER_CALIBRATION_READING;
+                sub.setType(CGMSValuesSubEntry.METER_CALIBRATION_READING);
                 strtok.nextToken();
                 sub.value = Integer.parseInt(strtok.nextToken());
                 addEntry(sub);

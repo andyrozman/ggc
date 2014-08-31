@@ -365,6 +365,9 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
                     dve.setStatus(DeviceValuesEntryInterface.STATUS_CHANGED);
                     dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_EDIT);
                     //dve.entry_object = mve_old.getHibernateObject();
+                    
+                    System.out.println("!!! OLD ID: " + dve.getId());
+                    
                     dve.setId(dve_old.getId());
                 }
             }

@@ -3,9 +3,12 @@ package ggc.cgms.util;
 import ggc.cgms.data.CGMSDataHandler;
 import ggc.cgms.data.CGMSDataReader;
 import ggc.cgms.data.CGMSValuesEntry;
+import ggc.cgms.data.ExtendedCGMSValuesExtendedEntry;
 import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
 import ggc.cgms.data.db.GGC_CGMSDb;
 import ggc.cgms.manager.CGMSManager;
+import ggc.core.data.ExtendedDailyValue;
+import ggc.core.util.DataAccess;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -56,7 +59,10 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.0.2";
+    public static final String PLUGIN_VERSION = "1.1.1";  // 1.0.2
+
+
+    private static final String EXTENDED_HANDLER_CGMSValuesExtendedEntry = "CGMSValuesExtendedEntry";
 
 
     private static DataAccessCGMS s_da = null; // This is handle to unique 
@@ -66,7 +72,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     /**
      * Value Types
      */
-    public static String[] value_types = null;
+    //public static String[] value_types = null;
 
     
     /**
@@ -338,7 +344,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         // libraries
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
         
-        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.3.x", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
+        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.7.x", "www.atech-software.com", "LGPL", "Helper Library for Swing/Hibernate/...", "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
         lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", "2.4", "commons.apache.org/lang/", "Apache", "Helper methods for java.lang library"));
         lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", "1.0.4", "commons.apache.org/logging/", "Apache", "Logger and all around wrapper for logging utilities"));
         lst_libs.add(new LibraryInfoEntry("dom4j", "1.6.1", "http://www.dom4j.org/", "BSD", "Framework for Xml manipulation"));
@@ -378,7 +384,8 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         
         
         fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Dexcom (file import only)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Dexcom (file imports from DM3 App)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Dexcom G4"));
         
         //fg.addFeaturesEntry(new FeaturesEntry("Roche (partitialy, Basal Pattern History is not fully supported due to incomplete export of SmartPix device)"));
         //fg.addFeaturesEntry(new FeaturesEntry("Dana (only works on Windows and Linux)"));
@@ -402,7 +409,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
         fg.addFeaturesEntry(new FeaturesEntry("Minimed RealTime (??)"));
         fg.addFeaturesEntry(new FeaturesEntry("Freestyle Navigator (??)"));
-        //fg.addFeaturesEntry(new FeaturesEntry("Dana (in 2009/2010)"));
+        
         
         lst_features.add(fg);
         
@@ -478,16 +485,29 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         //this.column_widths_table[5] = 40;
         //this.column_widths_table[6] = 25;
         
-        DataAccessCGMS.value_types = new String[3];
+        /*
+        DataAccessCGMS.value_types = new String[6];
         DataAccessCGMS.value_types[0] = "";
         DataAccessCGMS.value_types[1] = this.i18n_plugin.getMessage("CGMS_READINGS");
         DataAccessCGMS.value_types[2] = this.i18n_plugin.getMessage("CALIBRATION_READINGS");
-
+        DataAccessCGMS.value_types[3] = this.i18n_plugin.getMessage("CGMS_DATA_EVENT");
+        DataAccessCGMS.value_types[4] = this.i18n_plugin.getMessage("CGMS_DATA_ALARM");
+        DataAccessCGMS.value_types[5] = this.i18n_plugin.getMessage("CGMS_DATA_ERROR");
+        DataAccessCGMS.value_types[6] = this.i18n_plugin.getMessage("CGMS_READING_TREND");
+          */      
         
-        DataAccessCGMS.value_type = new String[3];
+        
+        //DataAccessCGMS.value_types[6] = this.i18n_plugin.getMessage("CALIBRATION_READINGS");
+
+
+        DataAccessCGMS.value_type = new String[7];
         DataAccessCGMS.value_type[0] = "";
         DataAccessCGMS.value_type[1] = this.i18n_plugin.getMessage("CGMS_READING");
         DataAccessCGMS.value_type[2] = this.i18n_plugin.getMessage("CALIBRATION_READINGS");
+        DataAccessCGMS.value_type[4] = this.i18n_plugin.getMessage("CGMS_DATA_EVENT");
+        DataAccessCGMS.value_type[3] = this.i18n_plugin.getMessage("CGMS_DATA_ALARM");
+        DataAccessCGMS.value_type[5] = this.i18n_plugin.getMessage("CGMS_DATA_ERROR");
+        DataAccessCGMS.value_type[6] = this.i18n_plugin.getMessage("CGMS_READING_TREND");
         
     }
 
@@ -512,6 +532,12 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         this.m_ddh = new CGMSDataHandler(this);
     }
 
+    
+    public void loadExtendedHandlers()
+    {
+        this.addExtendedHandler(DataAccessCGMS.EXTENDED_HANDLER_CGMSValuesExtendedEntry, new ExtendedCGMSValuesExtendedEntry(this));
+    }
+    
     /**
      * Get Images for Devices
      * 

@@ -119,7 +119,8 @@ public class ConfigurationManager
 
     private String cfg_boolean[] = 
     {
-        "METER_DAYLIGHTSAVING_TIME_FIX", "false"
+        "METER_DAYLIGHTSAVING_TIME_FIX", "false",
+        "PRINT_USE_EXTERNAL_PDF_VIEWER", "false"
     };
 
 

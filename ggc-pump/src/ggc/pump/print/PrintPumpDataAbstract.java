@@ -1,45 +1,19 @@
 package ggc.pump.print;
 
-/*
- * GGC - GNU Gluco Control
- * 
- * A pure java app to help you manage your diabetes.
- * 
- * See AUTHORS for copyright information.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename: PrintSimpleonthlyReport.java
- * 
- * Purpose: Creating PDF for Extended Monthly Report (used for printing)
- * 
- * Author: andyrozman {andy@atech-software.com}
- */
-
 import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.pump.util.DataAccessPump;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import com.atech.print.PrintAbstractIText;
+import com.atech.print.engine.PrintAbstractIText;
 import com.atech.utils.data.ATechDate;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -73,7 +47,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 public abstract class PrintPumpDataAbstract extends PrintAbstractIText
 {
 
-    protected DeviceValuesRange m_dvr;
+    protected DeviceValuesRange deviceValuesRange;
     protected DataAccessPump da_local = null;
     
     /**
@@ -85,7 +59,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
     {
         super(DataAccessPump.getInstance().getI18nControlInstance(), false);
 
-        m_dvr = dvr;
+        deviceValuesRange = dvr;
         da_local = DataAccessPump.getInstance(); 
 
         init();
@@ -93,20 +67,19 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
 
     /**
      * Get Title
-     * 
-     * @see ggc.core.print.PrintAbstract#getTitle()
      */
+    @Override
     public Paragraph getTitle()
     {
         Paragraph p = new Paragraph();
 
-        Font f = new Font(this.base_times, 14, Font.BOLD);
+        Font f = new Font(this.baseFontTimes, 14, Font.BOLD);
 
         p.setAlignment(Element.ALIGN_CENTER);
         p.add(new Paragraph("", f));
-        p.add(new Paragraph(ic.getMessage(getTitleText()) + " [" + this.getDateString(this.m_dvr.getStartGC()) + " - "
-                + this.getDateString(this.m_dvr.getEndGC()) + "]", f));
-        p.add(new Paragraph(ic.getMessage("FOR") + " " + DataAccess.getInstance().getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN,
+        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " [" + this.getDateString(this.deviceValuesRange.getStartGC()) + " - "
+                + this.getDateString(this.deviceValuesRange.getEndGC()) + "]", f));
+        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " " + DataAccess.getInstance().getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN,
                 10, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
@@ -117,7 +90,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
 
     protected String getDateString(GregorianCalendar gc)
     {
-        return gc.get(GregorianCalendar.DAY_OF_MONTH) + "." + (gc.get(GregorianCalendar.MONTH) +1 ) + "." + gc.get(GregorianCalendar.YEAR); 
+        return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH) +1 ) + "." + gc.get(Calendar.YEAR); 
     }
     
     
@@ -139,114 +112,6 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
     @Override
     public abstract void fillDocumentBody(Document document) throws Exception;
     
-    /*
-    {
-        Iterator<DailyValues> it = this.m_data.iterator();
-
-        int count = 0;
-
-        Font f = this.text_normal; // new Font(this.base_helvetica , 12,
-                                   // Font.NORMAL); // this.base_times
-
-        PdfPTable datatable = new PdfPTable(getTableColumnsCount());
-        datatable.setWidths(getTableColumnWidths());
-        datatable.setWidthPercentage(100); // percentage
-
-        datatable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-        datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); // ALIGN_CENTER);
-        datatable.getDefaultCell().setBorderWidth(1);
-
-        datatable.addCell(new Phrase(ic.getMessage("DATE"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("TIME"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("PRINT_FOOD_DESC"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("WEIGHT_TYPE"), this.text_bold));
-        datatable.addCell(new Phrase(ic.getMessage("AMOUNT_SHORT"), this.text_bold));
-
-        writeAdditionalHeader(datatable);
-
-        while (it.hasNext())
-        {
-            DailyValues dv = it.next();
-            dv.sort();
-
-            datatable.addCell(new Phrase(dv.getDateAsLocalizedString(), f));
-
-//            System.out.println("Row count: " + dv.getRowCount());
-//            System.out.println(dv.getDateAsString());
-
-            int active_day_entry = 0;
-
-/*            if (dv.getRowCount() == 0)
-            {
-//                this.writeEmptyColumnData(datatable);
-            }
-            else */
-     /*       {
-
-                for (int i = 0; i < dv.getRowCount(); i++)
-                {
-
-                    DailyValuesRow rw = (DailyValuesRow) dv.getRow(i);
-
-                    if ((rw.getMealsIds() == null) || (rw.getMealsIds().length() == 0))
-                        continue;
-
-                    if (active_day_entry > 0)
-                    {
-                        datatable.addCell(new Phrase("", f));
-                    }
-
-                    active_day_entry++;
-
-                    datatable.addCell(new Phrase(rw.getTimeAsString(), f));
-
-                    
-/*                    
-                    DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds(), true);
-
-                    writeTogetherData(datatable, rw);
-
-
-                    for (int j = 0; j < mpts.getElementsCount(); j++)
-                    {
-
-                        DailyFoodEntry mp = mpts.getElement(j);
-
-                        this.writeColumnData(datatable, mp);
-
-
-                    }
-*/
-    /*
-                }
-
-                if (active_day_entry==0)
-                {
-                    this.writeEmptyColumnData(datatable);
-                }
-                
-                /*            
-                  after together code this part is obsolete
-                            if (active_day_entry==0)
-                            {
-                                datatable.addCell(new Phrase("", f));
-                                datatable.addCell(new Phrase("", f));
-                                datatable.addCell(new Phrase("", f));
-                                datatable.addCell(new Phrase("", f));
-                                datatable.addCell(new Phrase("", f));
-                            } 
-                  */
-/*
-                count++;
-            }
-        }
-
-        document.add(datatable);
-
-        System.out.println("Elements all: " + this.m_data.size() + " in iterator: " + count);
-
-    }
-*/
     
     /**
      * Returns data part of filename for printing job, showing which data is being printed
@@ -256,8 +121,8 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
     @Override
     public String getFileNameRange()
     {
-        ATechDate atd1 = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), m_dvr.getStartGC());
-        ATechDate atd2 = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), m_dvr.getEndGC());
+        ATechDate atd1 = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), deviceValuesRange.getStartGC());
+        ATechDate atd2 = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), deviceValuesRange.getEndGC());
         
         return atd1.getDateFilenameString() + "-" + atd2.getDateFilenameString();
     }
@@ -314,7 +179,13 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
      * @param table
      * @throws Exception
      */
-    public abstract void writeEmptyColumnData(PdfPTable table) throws Exception;
-    
+    public void writeEmptyColumnData(PdfPTable table) throws Exception
+    {
+        for(int i=0; i<this.getTableColumnsCount(); i++)
+        {
+            table.addCell(this.createEmptyTextPhrase());
+        }
+    }
+
     
 }

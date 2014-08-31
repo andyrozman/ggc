@@ -159,17 +159,15 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         setIns2Name(settings.getIns2Name());
         setInterpolation(settings.getInterpolation());
         setLanguage(settings.getLanguage());
-//        setMeterDaylightSavingsFix(settings.getMeterDaylightSavingsFix());
-//        setMeterPort(settings.getMeterPort());
-//        setMeterType(settings.getMeterType());
-        setPdfVieverPath(settings.getPdfVieverPath());
+        setExternalPdfVieverPath(settings.getExternalPdfVieverPath());
+        setExternalPdfVieverParameters(settings.getExternalPdfVieverParameters());
+        setUseExternalPdfViewer(settings.getUseExternalPdfViewer());
         setPrintDinnerStartTime(settings.getPrintDinnerStartTime());
         setPrintEmptyValue(settings.getPrintEmptyValue());
         setPrintLunchStartTime(settings.getPrintLunchStartTime());
         setPrintNightStartTime(settings.getPrintNightStartTime());
         setRendering(settings.getRendering());
         setTextAntiAliasing(settings.getTextAntiAliasing());
-        //setTimeZone(settings.getTimeZone());
         setUserName(settings.getUserName());
     }
 
@@ -978,7 +976,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
      * 
      * @return
      */
-    public String getPdfVieverPath()
+    public String getExternalPdfVieverPath()
     {
         return this.m_cfg_mgr.getStringValue("PRINT_PDF_VIEWER_PATH");
     }
@@ -989,7 +987,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
      * 
      * @param value 
      */
-    public void setPdfVieverPath(String value)
+    public void setExternalPdfVieverPath(String value)
     {
         this.m_cfg_mgr.setStringValue("PRINT_PDF_VIEWER_PATH", value);
     }
@@ -1000,7 +998,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
      * 
      * @return
      */
-    public String getPdfVieverParameters()
+    public String getExternalPdfVieverParameters()
     {
         return this.m_cfg_mgr.getStringValue("PRINT_PDF_VIEWER_PARAMETERS");
     }
@@ -1011,11 +1009,33 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
      * 
      * @param value 
      */
-    public void setPdfVieverParameters(String value)
+    public void setExternalPdfVieverParameters(String value)
     {
         this.m_cfg_mgr.setStringValue("PRINT_PDF_VIEWER_PARAMETERS", value);
     }
     
+    
+    
+    /**
+     * Get PDF Viewer Path
+     * 
+     * @return
+     */
+    public boolean getUseExternalPdfViewer()
+    {
+        return this.m_cfg_mgr.getBooleanValue("PRINT_USE_EXTERNAL_PDF_VIEWER");
+    }
+
+    
+    /**
+     * Set PDF Viewer Path
+     * 
+     * @param value 
+     */
+    public void setUseExternalPdfViewer(boolean value)
+    {
+        this.m_cfg_mgr.setBooleanValue("PRINT_USE_EXTERNAL_PDF_VIEWER", value);
+    }
     
 
     /**
@@ -1175,6 +1195,10 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setStringValue("RATIO_MODE", val);
     }
+    
+    
+    
+    
     
     
 

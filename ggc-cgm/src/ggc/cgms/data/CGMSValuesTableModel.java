@@ -77,53 +77,76 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
         //if (i>5)
         //    return;
         
-        CGMSValuesSubEntry se = (CGMSValuesSubEntry)mve;
-  
-        String key = se.date + "_" + se.type;
-        
-        if (old_key == null)
+        if (mve instanceof CGMSValuesSubEntry)
         {
-            old_key = key;
-            this.current_main = new CGMSValuesEntry();
-        }
         
-        if (!old_key.equals(key))
-        {
-            processDeviceValueEntry(this.current_main);
-            this.dl_data.add(this.current_main);
+            CGMSValuesSubEntry se = (CGMSValuesSubEntry)mve;
+      
+            String key = se.date + "_" + se.getType();
             
-            if (this.shouldBeDisplayed(this.current_main.getStatus()))
+            if (old_key == null)   
             {
-                this.displayed_dl_data.add(this.current_main);
+                old_key = key;
+                this.current_main = new CGMSValuesEntry();
+            }
+            
+            if (!old_key.equals(key))
+            {
+                processDeviceValueEntry(this.current_main);
+                this.dl_data.add(this.current_main);
+                
+                if (this.shouldBeDisplayed(this.current_main.getStatus()))
+                {
+                    this.displayed_dl_data.add(this.current_main);
+                    Collections.sort(displayed_dl_data);
+                }
+                this.fireTableDataChanged();
+    
+                this.current_main = new CGMSValuesEntry();
+                
+                i++;
+            }
+            
+            
+            if (current_main.isEmpty())
+            {
+                //CGMSValuesEntry cve = new CGMSValuesEntry();
+                this.current_main.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, se.datetime));
+                this.current_main.setDate(se.date);
+                
+                this.current_main.setEmpty(false);
+                this.current_main.setType(se.getType());
+                //this.htable.put(key, cve);
+                this.current_main.addSubEntry(se);
+                
+                old_key = key;
+                
+                this.htable.put(key, this.current_main);
+            }
+            else
+            {
+                this.current_main.addSubEntry(se);
+            }
+        }
+        else
+        {
+            
+            CGMSValuesExtendedEntry ext = (CGMSValuesExtendedEntry)mve;
+            
+            
+            processDeviceValueEntry(ext);
+            this.dl_data.add(ext);
+            
+            if (this.shouldBeDisplayed(ext.getStatus()))
+            {
+                this.displayed_dl_data.add(ext);
                 Collections.sort(displayed_dl_data);
             }
             this.fireTableDataChanged();
 
-            this.current_main = new CGMSValuesEntry();
-            
-            i++;
         }
         
-        
-        if (current_main.isEmpty())
-        {
-            //CGMSValuesEntry cve = new CGMSValuesEntry();
-            this.current_main.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, se.datetime));
-            this.current_main.setDate(se.date);
             
-            this.current_main.setEmpty(false);
-            this.current_main.setType(se.type);
-            //this.htable.put(key, cve);
-            this.current_main.addSubEntry(se);
-            
-            old_key = key;
-            
-            this.htable.put(key, this.current_main);
-        }
-        else
-        {
-            this.current_main.addSubEntry(se);
-        }
         
         
         

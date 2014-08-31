@@ -1,5 +1,7 @@
 package ggc.cgms.data;
 
+import ggc.cgms.data.defs.CGMSBaseDataType;
+import ggc.cgms.data.defs.CGMSTrendArrow;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.data.DeviceValuesEntry;
@@ -7,6 +9,8 @@ import ggc.plugin.output.OutputWriterType;
 
 import java.util.ArrayList;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 
 import com.atech.misc.statistics.StatisticsItem;
@@ -43,6 +47,9 @@ import com.atech.utils.data.ATechDate;
 public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsItem
 {
     
+    private static final Log log = LogFactory.getLog(CGMSValuesSubEntry.class);
+    
+    
     /**
      * Sub Entry Type: CGMS BG Reading 
      */
@@ -73,6 +80,9 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     public static final int CGMS_ERROR = 5;
 
     
+    
+    public static final int CGMS_TREND = 6;
+    
     /**
      * DateTime
      */
@@ -96,7 +106,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     /**
      * Type 
      */
-    public int type = 0;
+    private int type = 0;
     
     
     // NEW
@@ -115,6 +125,9 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
      * Time only 
      */
     public boolean time_only = false;
+
+
+    private CGMSBaseDataType typeObject;
     
     
     /**
@@ -136,7 +149,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         //115329=147
         this.time = Integer.parseInt(entry.substring(0, entry.indexOf("=")));
         this.value = Integer.parseInt(entry.substring(entry.indexOf("=")+1));
-        this.type = type;
+        this.setType(type);
         
         
         this.datetime = (time * 10) + type;
@@ -192,15 +205,39 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
                 return DataAccessCGMS.value_type[type];
                 
             case 2:
-                return DataAccessCGMS.getInstance().getDisplayedBGString("" + this.value);
+                return getDisplayValue();
             
             case 3:
                 return "";
+                
+            default:
+                return "N/A";
+        }
+    }
+
+
+    private Object getDisplayValue()
+    {
+        switch(this.typeObject)
+        {
+        case DeviceAlarm:
+        case DeviceEvent:
+            return "?? " + this.value;
+            
+        case MeterCalibration:
+        case SensorReading:
+            return DataAccessCGMS.getInstance().getDisplayedBGString("" + this.value);
+            
+        case SensorReadingTrend:
+            // ??
+            return CGMSTrendArrow.getEnum(this.value).name();
+            
+        
+        default:
+            return "??";
         
         }
         
-        
-        return "N/A";
     }
 
 
@@ -521,8 +558,25 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     {
         return true;
     }
+
+
+    public int getType()
+    {
+        return type;
+    }
+
+
+    public void setType(int type)
+    {
+        this.type = type;
+        this.typeObject = CGMSBaseDataType.getEnum(type);
+    }
     
-    
+    public void setType(CGMSBaseDataType type)
+    {
+        this.type = type.getValue();
+        this.typeObject = type;
+    }
     
     /**
      * Comparator method, for sorting objects

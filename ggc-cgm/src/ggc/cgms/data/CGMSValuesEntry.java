@@ -485,7 +485,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
                 return this.date_obj.getDateString();
 
             case 1:
-                return DataAccessCGMS.value_types[this.type]; //m_ic.getMessage("BASE_TYPE_SH");
+                return DataAccessCGMS.value_type[this.type]; //m_ic.getMessage("BASE_TYPE_SH");
 
             case 2:
                 return "" + this.list.size(); //this.getBaseTypeString();
@@ -569,7 +569,11 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.person_id = (int)this.da.getCurrentUserId();
 
         Transaction tx = sess.beginTransaction();
-        //System.out.println("id: " + old_id);
+        
+        System.out.println("old_id: " + old_id);
+        System.out.println("id: " + this.id);
+        
+        
         CGMSDataH pdh = (CGMSDataH)sess.get(CGMSDataH.class, new Long(this.id));
         
         pdh.setId(this.id);
@@ -710,7 +714,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public void setId(long id_in)
     {
-        this.old_id = id_in;
+        this.id = id_in;
     }
     
     
@@ -721,8 +725,32 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public long getId()
     {
+        return this.id;
+    }
+
+    
+    /**
+     * Set Old Id (this is used for changing old objects in framework v2)
+     * THIS IS JUST COPY, IT MIGHT NOT BE USED, OR PERHAPS NOW FUNCTIONALITY WILL BE BROKEN.
+     * NEED TO TEST. URGENTLY
+     * @param id_in
+     */
+    public void setOldId(long id_in)
+    {
+        this.old_id = id_in;
+    }
+    
+    
+    /**
+     * Get Old Id (this is used for changing old objects in framework v2)
+     * 
+     * @return id of old object
+     */
+    public long getOldId()
+    {
         return this.old_id;
     }
+
     
     
     String source;

@@ -9,5 +9,6 @@ public enum ConverterType
     DataPageToEGVDataConverter, //
     DataPageToUserEventDataConverter, //
     DataPagesToMeterConverter, //
+    DataPageToFileConverter, //
 
 }

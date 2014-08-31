@@ -1,5 +1,6 @@
 package ggc.cgms.manager.company; 
 
+import ggc.cgms.device.dexcom.DexcomG4;
 import ggc.cgms.device.dexcom.DexcomSeven;
 import ggc.cgms.device.dexcom.DexcomSevenPlus;
 import ggc.cgms.manager.CGMSDevicesIds;
@@ -47,11 +48,12 @@ public class Dexcom extends AbstractDeviceCompany
             "Dexcom",                           // company name (full)
             "Dexcom",                           // short company name
             "DEXCOM_DESC",                      // company description
-            DeviceImplementationStatus.IMPLEMENTATION_PLANNED,
+            DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL,
             DataAccessCGMS.getInstance());  // implementation status
         
         this.addDevice(new DexcomSeven(this));
         this.addDevice(new DexcomSevenPlus(this));
+        this.addDevice(new DexcomG4(this));
     }    
     
     
