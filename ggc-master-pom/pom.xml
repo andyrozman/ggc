@@ -283,26 +283,14 @@
 				<version>${hidapi.version}</version>
 			</dependency>
 
-
 			<dependency>
 				<groupId>org.scream3r</groupId>
 				<artifactId>jssc</artifactId>
 				<version>${jssc.version}</version>
 			</dependency>
 
-			<dependency>
-			    <groupId>org.swinglabs</groupId>
-			    <artifactId>pdf-renderer</artifactId>
-			    <version>${pdf-renderer.version}</version>
-			</dependency>
+
 			
-			<dependency>
-			    <groupId>com.google.guava</groupId>
-			    <artifactId>guava</artifactId>
-			    <version>${guava.version}</version>
-			</dependency>
-
-
 
 		<dependency>
 			<groupId>com.neuronrobotics</groupId>
@@ -355,10 +343,7 @@
 		<!-- NEW THIS VERSION -->
 		<hidapi.version>1.1</hidapi.version>
 		<jssc.version>2.8.0</jssc.version>
-		<pdf-renderer.version>1.0.5</pdf-renderer.version>
-		<guava.version>13.0.1</guava.version>
 		<nrjavaserial.version>3.9.3</nrjavaserial.version>
-
 
 		<maven.compiler.source>1.5</maven.compiler.source>
 		<maven.compiler.target>1.5</maven.compiler.target>
