@@ -158,12 +158,21 @@ public class DailyGraphView extends JFAbstractGraphView
             return;
         }
 
-        XYPlot plot = _chart.getXYPlot();
+        String hourDateFormatString = "FORMAT_DATE_HOURS";
+		String hourDateFormat = translator.getMessage(hourDateFormatString);
+
+		XYPlot plot = _chart.getXYPlot();
         XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
         XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
         dateAxis = (DateAxis) plot.getDomainAxis();
         BGAxis = (NumberAxis) plot.getRangeAxis();
         insBUAxis = new NumberAxis();
+
+		if (hourDateFormatString.equals(hourDateFormat))
+        {
+        	hourDateFormat="HH:mm";
+        }
+        
 
 
         _chart.setBackgroundPaint(backgroundColor);
@@ -188,7 +197,7 @@ public class DailyGraphView extends JFAbstractGraphView
         insBURenderer.setSeriesShapesVisible(1, true);
         insBURenderer.setSeriesShapesVisible(2, true);
 
-        dateAxis.setDateFormatOverride(new SimpleDateFormat(translator.getMessage("FORMAT_DATE_HOURS")));
+		dateAxis.setDateFormatOverride(new SimpleDateFormat(hourDateFormat));
         dateAxis.setAutoRange(false);
         GregorianCalendar dayStart = new GregorianCalendar(2006, 3, 4, 0, 0, 0);      //        (new ATechDate(data.getDate() * 10000)).getGregorianCalendar();
         GregorianCalendar dayEnd = new GregorianCalendar(2006, 3, 4, 23, 59, 59); //(new ATechDate(data.getDate() * 10000 + 2359)).getGregorianCalendar();
