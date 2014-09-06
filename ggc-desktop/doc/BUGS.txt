@@ -40,17 +40,13 @@ DEVELOPMENT NOT DONE:
 - Printer configuration
 
 NOT A BUG:
-    - "New Entry" dialog should only contain one of mg/dl and mmol/l Fields, 
-      depending on preferences.
-      * This is not a bug. It's feature 
-        * It was a bug before the other field was updated when one lost focus
     - If e.g. the USDA DB is opened, GGC won't react to a "Close" command from the task bar (at least in KDE)
       A: This must be internal problem with KDE. Dialogs are set to be modal, this works ok with windows
       A: This is confirmed as KDE problem. Problem is solved with KDE 5 at least I think it is. I couldn't reproduce 
          it there (on FreeBSD)
     - this is a general problem whenever a static layout is used, but german strings 
       tend to be a bit longer that their english counterparts, resulting in a lot of 
-      truncated strings
+      truncated strings (applies to all translations)
       A: We need to discover which labels have problems and make them bigger if 
       possible. If it can't be done abbrev. must be used. We don't actually use
       static layout... I use null layout, because most of java's layouts are 
