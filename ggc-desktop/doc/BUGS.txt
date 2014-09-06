@@ -6,7 +6,7 @@ Known Bugs:
       in the GlucoValues passed to CourseGraphView.setGlucoValues() containing only one day if there is only one value in the database, even  if
       a larger range was selected. (The problem lies in GlucoValues.getDayCount(), see FIXME-comment)
     - Setting a colour for one "color scheme" will change it for the rest, too.
-    - GI/GL not implemented
+
 	- Meal - Nutrient data should be saved (now its not saved, just generated when opened)
 	- Printing - Foodmenu extended III
 	- Backup/Restore - using one file (*.dbe) doesn't work
@@ -18,9 +18,12 @@ Known Bugs:
     - Graphs problems (graph's are partitially fixed, but not fully). In future graphs will be done in Graph editor, which means
          they won't be static. (0.6 or 0.7)
     - Color scheme
-    - Bugs:
+    - Plugins. When opening mounted drives root, we don't see drives mounted under /media/<user> on linux, just what is under 
+      media. This is java bug, but we need to get this working
+    - Translation tool integration
+       
 
-* Nutrition Db in DataAccess fix (works ok, just outside confines of framework) - 5
+
 
 DEVELOPMENT NOT DONE:
 * DeviceValuesTableModel - problem with existing data if data changes (manual change and then
@@ -31,7 +34,10 @@ DEVELOPMENT NOT DONE:
 * CGMS use Enums
 * Pump Enums
 * Meter Enums
-    
+* Nutrition Db in DataAccess fix (works ok, just outside confines of framework) - 5    
+    - GI/GL not implemented
+- Printing - refactoring and test for use with new internal pff viewer. 
+- Printer configuration
 
 NOT A BUG:
     - "New Entry" dialog should only contain one of mg/dl and mmol/l Fields, 
