@@ -32,7 +32,7 @@
 		<repository>
 			<id>atechrepositorypublic</id>
 			<name>Atech Software Public Repository</name>
-			<url>http://www.atech-software.com:8090/repository/public/</url>
+			<url>http://www.atech-software.com:8081/repository/public/</url>
 			<!-- <url>http://www.atech-software.com:8080/nexus/content/groups/public/</url>  -->
 		</repository>
 
