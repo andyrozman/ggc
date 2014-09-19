@@ -9,25 +9,16 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 
 public class EGVRecord extends GenericReceiverRecordAbstract // implements IGenericRecord
 {
-
     public static int IsDisplayOnlyEgvMask = 0x8000;
     public static int EgvValueMask = 0x3ff;
     public static int TrendArrowMask = 15;
     public static int NoiseMask = 0x70;
-
-    // Version 2 = 13
-    // public uint SystemSeconds; (4)
-    // public uint DisplaySeconds; (4)
-    // public ushort GlucoseValueWithFlags; (2)
-    // public byte TrendArrowAndNoise; (1)
-    // public ushort m_crc; (2)
 
     public short glucoseValueWithFlags;
     public byte trendArrowAndNoise;
 
     public EGVRecord()
     {
-        //checkRecordVersionAndSize();
     }
 
     public short getGlucoseValue()
@@ -52,7 +43,6 @@ public class EGVRecord extends GenericReceiverRecordAbstract // implements IGene
 
     public String getSpecialValue()
     {
-
         SpecialGlucoseValues sgv = SpecialGlucoseValues.getEnum(this.getGlucoseValue());
 
         if (sgv == null)

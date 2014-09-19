@@ -20,12 +20,12 @@ public class UserEventDataRecord extends GenericReceiverRecordAbstract
 {
 
     //  Version      Size: 20
-    // public uint SystemSeconds; 4
-    // public uint DisplaySeconds; 4
+    // public int SystemSeconds; 4
+    // public int DisplaySeconds; 4
     // public UserEvent EventType; 1
     // public byte EventSubType; 1
-    // public uint EventTime; 4
-    // public uint EventValue; 4
+    // public int EventTime; 4
+    // public int EventValue; 4
     // public ushort m_crc; 2
 
     public UserEvent eventType;

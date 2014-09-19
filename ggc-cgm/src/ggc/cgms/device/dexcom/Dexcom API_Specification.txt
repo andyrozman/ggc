@@ -1,0 +1,15 @@
+
+
+
+Dexcom G4 - Specification
+=========================
+
+EGVRecord
+---------
+
+// Version 2 = 13
+    // public int SystemSeconds; (4)
+    // public int DisplaySeconds; (4)
+    // public ushort GlucoseValueWithFlags; (2)
+    // public byte TrendArrowAndNoise; (1)
+    // public ushort m_crc; (2)

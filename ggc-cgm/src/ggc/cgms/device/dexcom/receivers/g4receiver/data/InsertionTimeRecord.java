@@ -13,9 +13,9 @@ public class InsertionTimeRecord extends GenericReceiverRecordAbstract
 {
 
     // RecordRevision="1" RecordLength="15"
-    // public uint SystemSeconds; (4)
-    // public uint DisplaySeconds; (4)
-    // public uint InsertionTimeinSeconds; (4)
+    // public int SystemSeconds; (4)
+    // public int DisplaySeconds; (4)
+    // public int InsertionTimeinSeconds; (4)
     // public SensorSessionState SessionState; (1=byte)
     // public ushort m_crc; (2)
 
