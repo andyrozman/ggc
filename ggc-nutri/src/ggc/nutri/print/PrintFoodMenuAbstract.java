@@ -14,6 +14,7 @@ import java.util.Iterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.atech.print.engine.ITextDocumentPrintSettings;
 import com.atech.print.engine.PrintAbstractIText;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -27,49 +28,49 @@ import com.itextpdf.text.pdf.PdfPTable;
  *  Application:   GGC - GNU Gluco Control
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  *  Filename:     PrintFoodMenuAbstract
  *  Description:  Abstract class for printing Food Menu's
- * 
- *  Author: andyrozman {andy@atech-software.com}  
+ *
+ *  Author: andyrozman {andy@atech-software.com}
  */
 
 
 public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 {
-    
+
     private static final Log LOG = LogFactory.getLog(PrintFoodMenuAbstract.class);
-    
+
     DayValuesData dayValuesData;
     DataAccess dataAccessCore;
-    
-    
+
+
     /**
      * Constructor
-     * 
+     *
      * @param mv
      */
     public PrintFoodMenuAbstract(DayValuesData mv)
     {
         super(DataAccessNutri.getInstance().getParentI18nControlInstance(), false);
-        
+
         this.dayValuesData = mv;
         dataAccessCore = DataAccess.getInstance();
-        
+
         this.init();
     }
 
@@ -106,7 +107,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
         int count = 0;
 
-        Font f = this.textFontNormal; 
+        Font f = this.textFontNormal;
 
         PdfPTable datatable = new PdfPTable(getTableColumnsCount());
         datatable.setWidths(getTableColumnWidths());
@@ -138,7 +139,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
                 DailyValuesRow rw = (DailyValuesRow) dv.getRow(i);
 
-                if ( (!this.dataAccess.isValueSet(rw.getMealsIds())) && 
+                if ( (!this.dataAccess.isValueSet(rw.getMealsIds())) &&
                      (!this.dataAccess.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION))))
                     continue;
 
@@ -151,26 +152,26 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
                 datatable.addCell(new Phrase(rw.getTimeAsString(), f));
 
-                
+
                 if (this.dataAccess.isValueSet(rw.getMealsIds()))
                 {
 
                     DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds(), true);
                     writeTogetherData(datatable, rw);
-    
-    
+
+
                     for (int j = 0; j < mpts.getElementsCount(); j++)
                     {
                         DailyFoodEntry mp = mpts.getElement(j);
                         this.writeColumnData(datatable, mp);
                     }
                 }
-                
+
                 if (this.dataAccess.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION)))
                 {
                     writeFoodDescData(datatable, rw);
                 }
-                
+
             } // for
 
             if (active_day_entry==0)
@@ -188,11 +189,11 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
     }
 
-    
+
 
     /**
      * Get Formated Value (String correctly formated from float value)
-     * 
+     *
      * @param value
      * @param dec_places
      * @return
@@ -200,11 +201,19 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
     public String getFormatedValue(float value, int dec_places)
     {
         return this.dataAccess.getDecimalHandler().getDecimalAsString(value, dec_places);  // ch
-        
+
     }
-    
-    
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ITextDocumentPrintSettings getCustomDocumentSettings()
+    {
+    	return new ITextDocumentPrintSettings(30, 30, 10, 30);
+    }
+
+
     /**
      * {@inheritDoc}
      */
@@ -214,11 +223,11 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
         return this.dayValuesData.getRangeBeginObject().getDateFilenameString() + "-"
                 + this.dayValuesData.getRangeEndObject().getDateFilenameString();
     }
-    
-    
+
+
     /**
      * Get text for title
-     * 
+     *
      * @return title
      */
     public abstract String getTitleText();
@@ -229,7 +238,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      */
     public abstract int getTableColumnsCount();
 
-    /** 
+    /**
      * Return columns widths for table
      * @return
      */
@@ -237,7 +246,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
     /**
      * Write additional header to documents
-     *  
+     *
      * @param table
      * @throws Exception
      */
@@ -245,7 +254,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
     /**
      * Write together data (all data of certain type summed)
-     * 
+     *
      * @param table
      * @param rw
      * @throws Exception
@@ -254,31 +263,31 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
     /**
      * Write data in column
-     * 
+     *
      * @param table
      * @param mp
      * @throws Exception
      */
     public abstract void writeColumnData(PdfPTable table, DailyFoodEntry mp) throws Exception;
 
-    
+
     /**
      * Write Food Description Data
-     * 
+     *
      * @param table
      * @param mp
      * @throws Exception
      */
     public abstract void writeFoodDescData(PdfPTable table, DailyValuesRow mp) throws Exception;
-    
-    
+
+
     /**
      * Write empty column data. If there is no data, this is used, to fill empty places.
-     * 
+     *
      * @param table
      * @throws Exception
      */
     public abstract void writeEmptyColumnData(PdfPTable table) throws Exception;
-    
-    
+
+
 }
