@@ -14,7 +14,6 @@ import com.atech.utils.data.ATechDate;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -52,9 +51,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
     protected DataAccessPump da_local = null;
 
     /**
-     * Constructor
-     *
-     * @param dvr
+     * {@inheritDoc}
      */
     public PrintPumpDataAbstract(DeviceValuesRange dvr)
     {
@@ -67,7 +64,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
     }
 
     /**
-     * Get Title
+     * {@inheritDoc}
      */
     @Override
     public Paragraph getTitle()
@@ -103,6 +100,9 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
         return 8;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ITextDocumentPrintSettings getCustomDocumentSettings()
     {
@@ -111,19 +111,14 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
 
 
     /**
-     * Create document body.
-     *
-     * @param document
-     * @throws Exception
+     * {@inheritDoc}
      */
     @Override
     public abstract void fillDocumentBody(Document document) throws Exception;
 
 
     /**
-     * Returns data part of filename for printing job, showing which data is being printed
-     *
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public String getFileNameRange()
