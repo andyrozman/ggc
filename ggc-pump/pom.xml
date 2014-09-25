@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.sf.ggc</groupId>
@@ -8,12 +8,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<relativePath>../ggc-master-pom/pom.xml</relativePath>
 	</parent>
 
-
 	<name>GGC Pump Tool Project</name>
 
 	<artifactId>ggc-pump-tool</artifactId>
- 	<version>${ggc-pump-tool.version}</version> 
-
+	<version>${ggc-pump-tool.version}</version>
 
 	<build>
 		<directory>target</directory>
@@ -39,10 +37,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		</testResources>
 	</build>
 
-
-
 	<dependencies>
-
 		<dependency>
 			<groupId>net.sf.ggc</groupId>
 			<artifactId>ggc-core</artifactId>
@@ -53,12 +48,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<artifactId>ggc-plugin-base</artifactId>
 		</dependency>
 
-<!--  
-		<dependency>
-			<groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
-			<artifactId>rxtxcomm</artifactId>
-		</dependency>
--->
+		<!-- <dependency> <groupId>org.bidib.jbidib.org.qbang.rxtx</groupId> <artifactId>rxtxcomm</artifactId> 
+			</dependency> -->
+
 		<dependency>
 			<groupId>com.atech-software</groupId>
 			<artifactId>atech-tools</artifactId>
@@ -79,37 +71,27 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<artifactId>libusb4jwo</artifactId>
 		</dependency>
 
-			<dependency>
-				<groupId>com.codeminders</groupId>
-				<artifactId>hidapi</artifactId>
-			</dependency>
+		<dependency>
+			<groupId>com.codeminders</groupId>
+			<artifactId>hidapi</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>com.neuronrobotics</groupId>
 			<artifactId>nrjavaserial</artifactId>
-			<version>3.9.3</version>
 		</dependency>
 
-
-<dependency>
-	<groupId>jaxen</groupId>
-	<artifactId>jaxen</artifactId>
-	<version>1.1.6</version>
-</dependency>
-
-
-
+		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<version>1.1.6</version>
+		</dependency>
 	</dependencies>
-
-
 
 	<properties>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-
 	</properties>
-
-
 </project>

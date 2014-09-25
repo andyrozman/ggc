@@ -1,4 +1,5 @@
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<name>GGC Parent POM</name>
 
@@ -7,68 +8,56 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-
-
 	<!-- <modules> <module>project-a</module> <module>project-b</module> </modules> -->
-
 
 	<!-- <artifactId>atech-tools</artifactId> <version>0.7-SNAPSHOT</version> -->
 
-	<!-- <repositories> <repository> <id>central</id> <name>Maven Repository
-		Switchboard</name> <layout>default</layout> <url>http://repo1.maven.org/maven2</url>
-		<snapshots> <enabled>false</enabled> </snapshots> </repository> </repositories>
-		<pluginRepositories> <pluginRepository> <id>central</id> <name>Maven Plugin
-		Repository</name> <url>http://repo1.maven.org/maven2</url> <layout>default</layout>
-		<snapshots> <enabled>false</enabled> </snapshots> <releases> <updatePolicy>never</updatePolicy>
+	<!-- <repositories> <repository> <id>central</id> <name>Maven Repository 
+		Switchboard</name> <layout>default</layout> <url>http://repo1.maven.org/maven2</url> 
+		<snapshots> <enabled>false</enabled> </snapshots> </repository> </repositories> 
+		<pluginRepositories> <pluginRepository> <id>central</id> <name>Maven Plugin 
+		Repository</name> <url>http://repo1.maven.org/maven2</url> <layout>default</layout> 
+		<snapshots> <enabled>false</enabled> </snapshots> <releases> <updatePolicy>never</updatePolicy> 
 		</releases> </pluginRepository> </pluginRepositories> -->
-	<!-- <repositories> <repository> <id>pygmy-repo</id> <name>Pygmy Repository</name>
+	<!-- <repositories> <repository> <id>pygmy-repo</id> <name>Pygmy Repository</name> 
 		<layout>default</layout> <url>https://oss.sonatype.org/service/local/repositories/netsfggc-042/content/</url> -->
-	<!--https://oss.sonatype.org/content/repositories/netsfggc-046/net/sf/ggc/pygmy-httpd/pygmy-handlers/0.2/pygmy-handlers-0.2.pom
+	<!--https://oss.sonatype.org/content/repositories/netsfggc-046/net/sf/ggc/pygmy-httpd/pygmy-handlers/0.2/pygmy-handlers-0.2.pom 
 		https://oss.sonatype.org/service/local/repositories/netsfggc-042/content/ -->
 	<!-- <snapshots> <enabled>false</enabled> </snapshots> </repository> -->
 
 	<repositories>
-
 		<repository>
 			<id>atechrepositorypublic</id>
 			<name>Atech Software Public Repository</name>
 			<url>http://www.atech-software.com:8081/repository/public/</url>
-			<!-- <url>http://www.atech-software.com:8080/nexus/content/groups/public/</url>  -->
+			<!-- <url>http://www.atech-software.com:8080/nexus/content/groups/public/</url> -->
 		</repository>
 
-		<!-- <repository> <id>mvnrepository</id> <name>Mvn Central Repository</name>
-			<url>http://www.mvnrepository.com</url> </repository> <repository> <id>jbossrepository</id>
-			<name>jbossrepository</name> <url>https://repository.jboss.org/nexus/</url>
-			</repository> <repository> <id>sonatype</id> <name>Sonatype OSS Snapshots
-			Repository</name> <url>http://oss.sonatype.org/content/groups/public</url>
-			</repository> <repository> <id>javanet</id> <name>Download Java Net Repository</name>
-			<url>http://download.java.net/maven/2/</url> </repository> <repository> <id>mavenrepository</id>
-			<name>Maven Repository Repository</name> <layout>legacy</layout> <url>http://maven-repository.com/artifacts/</url>
+		<!-- <repository> <id>mvnrepository</id> <name>Mvn Central Repository</name> 
+			<url>http://www.mvnrepository.com</url> </repository> <repository> <id>jbossrepository</id> 
+			<name>jbossrepository</name> <url>https://repository.jboss.org/nexus/</url> 
+			</repository> <repository> <id>sonatype</id> <name>Sonatype OSS Snapshots 
+			Repository</name> <url>http://oss.sonatype.org/content/groups/public</url> 
+			</repository> <repository> <id>javanet</id> <name>Download Java Net Repository</name> 
+			<url>http://download.java.net/maven/2/</url> </repository> <repository> <id>mavenrepository</id> 
+			<name>Maven Repository Repository</name> <layout>legacy</layout> <url>http://maven-repository.com/artifacts/</url> 
 			</repository> -->
-
-
-
 	</repositories>
-
-
 
 	<distributionManagement>
 		<repository>
 			<id>releases</id>
 			<name>Internal Releases</name>
-			<!--  <url>http://www.atech-software.com:8090/repository/internal/</url>  -->
-		 	<url>http://www.atech-software.com:8081/nexus/content/repositories/releases/</url>
+			<!-- <url>http://www.atech-software.com:8090/repository/internal/</url> -->
+			<url>http://www.atech-software.com:8081/nexus/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshots</id>
 			<name>Internal Snapshots</name>
-			<!-- <url>http://www.atech-software.com:8090/repository/snapshots/</url>  -->
-		 	<url>http://www.atech-software.com:8081/nexus/content/repositories/snapshots/</url>
+			<!-- <url>http://www.atech-software.com:8090/repository/snapshots/</url> -->
+			<url>http://www.atech-software.com:8081/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
-
-
-
 
 	<build>
 		<defaultGoal>compile</defaultGoal>
@@ -108,17 +97,15 @@
 		</pluginManagement>
 	</build>
 
-
 	<reporting>
 		<outputDirectory>target/site</outputDirectory>
 	</reporting>
 
-	<!-- <modules> <module>ggc-core</module> <module>ggc-plugin-base</module>
+	<!-- <modules> <module>ggc-core</module> <module>ggc-plugin-base</module> 
 		</modules> -->
 
 	<dependencyManagement>
 		<dependencies>
-
 			<dependency>
 				<groupId>net.sf.ggc</groupId>
 				<artifactId>ggc-core</artifactId>
@@ -136,7 +123,6 @@
 				<artifactId>ggc-meter-tool</artifactId>
 				<version>${ggc-meter-tool.version}</version>
 			</dependency>
-
 
 			<dependency>
 				<groupId>net.sf.ggc</groupId>
@@ -161,9 +147,6 @@
 				<artifactId>ggc-desktop</artifactId>
 				<version>${ggc-desktop.version}</version>
 			</dependency>
-
-
-
 
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -239,15 +222,10 @@
 				<version>${jfreechart.version}</version>
 			</dependency>
 
-
-			<!-- This should be replaced with nrserial, which is just extention of
+			<!-- This should be replaced with nrserial, which is just extention of 
 				rxtx that also contains binary files in jar. -->
-			<!-- <dependency>
-				<groupId>org.bidib.jbidib.org.qbang.rxtx</groupId>
-				<artifactId>rxtxcomm</artifactId>
-				<version>${rxtxcomm.version}</version>
-			</dependency>
- -->
+			<!-- <dependency> <groupId>org.bidib.jbidib.org.qbang.rxtx</groupId> <artifactId>rxtxcomm</artifactId> 
+				<version>${rxtxcomm.version}</version> </dependency> -->
 
 			<dependency>
 				<groupId>com.atech-software</groupId>
@@ -261,9 +239,9 @@
 				<version>${jna.version}</version>
 			</dependency>
 
-			<!--This is some outdated library which we use only for BlueTooth, it
-				needs to be removed or changed, but so far it's here and it's version is
-				fixed. This NEEDS to be removed and changed to some other library in near
+			<!--This is some outdated library which we use only for BlueTooth, it 
+				needs to be removed or changed, but so far it's here and it's version is 
+				fixed. This NEEDS to be removed and changed to some other library in near 
 				future and tested with Dana Pump (only BT device we have so far) -->
 			<dependency>
 				<groupId>com.ibm.old.comapi</groupId>
@@ -271,9 +249,9 @@
 				<version>${ibm-compapi.version}</version>
 			</dependency>
 
-			<!-- This library is created in parallel to GGC and it should be used
-				for USB communication. For USB devices that have HID interfaces (most of
-				them), we will use other library, but for legacy support we use this for
+			<!-- This library is created in parallel to GGC and it should be used 
+				for USB communication. For USB devices that have HID interfaces (most of 
+				them), we will use other library, but for legacy support we use this for 
 				now. -->
 			<dependency>
 				<groupId>net.sf.ggc.libusb4j</groupId>
@@ -293,15 +271,11 @@
 				<version>${jssc.version}</version>
 			</dependency>
 
-
-
-
-		<dependency>
-			<groupId>com.neuronrobotics</groupId>
-			<artifactId>nrjavaserial</artifactId>
-			<version>${nrjavaserial.version}</version>
-		</dependency>
-
+			<dependency>
+				<groupId>com.neuronrobotics</groupId>
+				<artifactId>nrjavaserial</artifactId>
+				<version>${nrjavaserial.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -321,9 +295,6 @@
 		<ggc-little.version>0.2.4-SNAPSHOT</ggc-little.version>
 		<!-- NON MAVEN -->
 		<ggc-lang.version>0.4.3-SNAPSHOT</ggc-lang.version>
-
-
-
 
 		<!-- Dependencies versions -->
 		<atech-tools.version>0.7.8-SNAPSHOT</atech-tools.version>
@@ -355,8 +326,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 	</properties>
-
-
 
 	<organization>
 		<name>GGC Development Team</name>

@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.sf.ggc</groupId>
@@ -8,12 +8,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<relativePath>../ggc-master-pom/pom.xml</relativePath>
 	</parent>
 
-
 	<name>GGC Nutrition Tool Project</name>
 
 	<artifactId>ggc-nutri-tool</artifactId>
- 	<version>${ggc-nutri-tool.version}</version> 
-
+	<version>${ggc-nutri-tool.version}</version>
 
 	<build>
 		<directory>target</directory>
@@ -39,10 +37,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		</testResources>
 	</build>
 
-
-
 	<dependencies>
-
 		<dependency>
 			<groupId>net.sf.ggc</groupId>
 			<artifactId>ggc-core</artifactId>
@@ -57,10 +52,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<groupId>com.atech-software</groupId>
 			<artifactId>atech-tools</artifactId>
 		</dependency>
-
 	</dependencies>
-
-
 
 	<properties>
 
@@ -68,6 +60,5 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 	</properties>
-
 
 </project>
