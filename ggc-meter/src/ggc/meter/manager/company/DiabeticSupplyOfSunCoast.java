@@ -1,4 +1,4 @@
-package ggc.meter.manager.company; 
+package ggc.meter.manager.company;
 
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.DataAccessMeter;
@@ -31,7 +31,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class DiabeticSupplyOfSunCoast extends AbstractDeviceCompany
 {
 
@@ -40,13 +39,13 @@ public class DiabeticSupplyOfSunCoast extends AbstractDeviceCompany
      */
     public DiabeticSupplyOfSunCoast()
     {
-        super(true,                             // empty devices
-            MeterDevicesIds.COMPANY_DIABETIC_SUPPLY_OF_SUNCOAST,    // company_id
-            "Diabetic Supply Of Sun Coast",     // company name (full)
-            "DSOSC",                            // short company name
-            "DSOSC_DESC",                       // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED,
-            DataAccessMeter.getInstance());  // implementation status
+        super(true, // empty devices
+                MeterDevicesIds.COMPANY_DIABETIC_SUPPLY_OF_SUNCOAST, // company_id
+                "Diabetic Supply Of Sun Coast", // company name (full)
+                "DSOSC", // short company name
+                "DSOSC_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                                                                                                       // status
     }
-    
+
 }

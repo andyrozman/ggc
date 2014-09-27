@@ -76,7 +76,6 @@ import org.jfree.data.time.TimeSeriesCollection;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 /**
  * This is a replacement for DailyGraphView using JFreeChart.
  * 
@@ -90,7 +89,7 @@ public class DailyGraphView extends JFAbstractGraphView
     private DailyValues data = new DailyValues();
     DateAxis dateAxis;
     NumberAxis insBUAxis;
-    private TimeSeriesCollection insBUDataset = new TimeSeriesCollection(); //TimeZone.getTimeZone(""));
+    private TimeSeriesCollection insBUDataset = new TimeSeriesCollection(); // TimeZone.getTimeZone(""));
 
     /**
      * Calls <code>{@link DailyGraphView#DailyGraphView(DailyValues)}</code>
@@ -133,8 +132,8 @@ public class DailyGraphView extends JFAbstractGraphView
         data = dv;
         setBackground(backgroundColor);
 
-        m_chart = ChartFactory.createTimeSeriesChart(null, translator.getMessage("AXIS_TIME_LABEL"), String.format(
-            translator.getMessage("AXIS_VALUE_LABEL"), unitLabel), BGDataset, true, true, false);
+        m_chart = ChartFactory.createTimeSeriesChart(null, translator.getMessage("AXIS_TIME_LABEL"),
+            String.format(translator.getMessage("AXIS_VALUE_LABEL"), unitLabel), BGDataset, true, true, false);
         chartPanel = new ChartPanel(m_chart, false, true, true, false, true);
         chartPanel.setDomainZoomable(false);
         chartPanel.setRangeZoomable(true);
@@ -145,7 +144,6 @@ public class DailyGraphView extends JFAbstractGraphView
 
     /*
      * (non-Javadoc)
-     * 
      * @see
      * ggc.gui.view.JFAbstractGraphView#drawFramework(org.jfree.chart.JFreeChart
      * )
@@ -153,27 +151,23 @@ public class DailyGraphView extends JFAbstractGraphView
     @Override
     protected void drawFramework(JFreeChart _chart)
     {
-        if ((data == null) || (_chart == null))
-        {
+        if (data == null || _chart == null)
             return;
-        }
 
         String hourDateFormatString = "FORMAT_DATE_HOURS";
-		String hourDateFormat = translator.getMessage(hourDateFormatString);
+        String hourDateFormat = translator.getMessage(hourDateFormatString);
 
-		XYPlot plot = _chart.getXYPlot();
+        XYPlot plot = _chart.getXYPlot();
         XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
         XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
         dateAxis = (DateAxis) plot.getDomainAxis();
         BGAxis = (NumberAxis) plot.getRangeAxis();
         insBUAxis = new NumberAxis();
 
-		if (hourDateFormatString.equals(hourDateFormat))
+        if (hourDateFormatString.equals(hourDateFormat))
         {
-        	hourDateFormat="HH:mm";
+            hourDateFormat = "HH:mm";
         }
-        
-
 
         _chart.setBackgroundPaint(backgroundColor);
         _chart.setRenderingHints(renderingHints);
@@ -197,38 +191,46 @@ public class DailyGraphView extends JFAbstractGraphView
         insBURenderer.setSeriesShapesVisible(1, true);
         insBURenderer.setSeriesShapesVisible(2, true);
 
-		dateAxis.setDateFormatOverride(new SimpleDateFormat(hourDateFormat));
+        dateAxis.setDateFormatOverride(new SimpleDateFormat(hourDateFormat));
         dateAxis.setAutoRange(false);
-        GregorianCalendar dayStart = new GregorianCalendar(2006, 3, 4, 0, 0, 0);      //        (new ATechDate(data.getDate() * 10000)).getGregorianCalendar();
-        GregorianCalendar dayEnd = new GregorianCalendar(2006, 3, 4, 23, 59, 59); //(new ATechDate(data.getDate() * 10000 + 2359)).getGregorianCalendar();
-        //dayStart.setTime(dataAccessInst.getDateTimeAsDateObject(data.getDate() * 10000));
-        //dayEnd.setTime(dataAccessInst.getDateTimeAsDateObject(data.getDate() * 10000 + 2359));
-        //dayStart.set(Calendar.SECOND, 0);
-        //dayEnd.set(Calendar.SECOND, 59);
+        GregorianCalendar dayStart = new GregorianCalendar(2006, 3, 4, 0, 0, 0); // (new
+                                                                                 // ATechDate(data.getDate()
+                                                                                 // *
+                                                                                 // 10000)).getGregorianCalendar();
+        GregorianCalendar dayEnd = new GregorianCalendar(2006, 3, 4, 23, 59, 59); // (new
+                                                                                  // ATechDate(data.getDate()
+                                                                                  // *
+                                                                                  // 10000
+                                                                                  // +
+                                                                                  // 2359)).getGregorianCalendar();
+        // dayStart.setTime(dataAccessInst.getDateTimeAsDateObject(data.getDate()
+        // * 10000));
+        // dayEnd.setTime(dataAccessInst.getDateTimeAsDateObject(data.getDate()
+        // * 10000 + 2359));
+        // dayStart.set(Calendar.SECOND, 0);
+        // dayEnd.set(Calendar.SECOND, 59);
         dateAxis.setRange(new DateRange(dayStart.getTime(), dayEnd.getTime()));
-        //dateAxis.setDefaultAutoRange(new Range(dayStart.getTime(), dayEnd.getTime()));
+        // dateAxis.setDefaultAutoRange(new Range(dayStart.getTime(),
+        // dayEnd.getTime()));
 
         BGAxis.setAutoRangeIncludesZero(true);
 
         insBUAxis.setLabel(translator.getMessage("CH_LONG") + " / " + translator.getMessage("INSULIN"));
         insBUAxis.setAutoRangeIncludesZero(true);
-        
+
         /*
-        System.out.println("TimeZones\n================================\n");
-        
-        String tz[] = TimeZone.getAvailableIDs();
-        
-        for(int i =0; i<tz.length; i++)
-        {
-            System.out.println(tz[i]);
-        }*/
-        
-        
+         * System.out.println("TimeZones\n================================\n");
+         * String tz[] = TimeZone.getAvailableIDs();
+         * for(int i =0; i<tz.length; i++)
+         * {
+         * System.out.println(tz[i]);
+         * }
+         */
+
     }
 
     /*
      * (non-Javadoc)
-     * 
      * @see
      * ggc.gui.view.JFAbstractGraphView#drawValues(org.jfree.chart.JFreeChart)
      */
@@ -239,18 +241,14 @@ public class DailyGraphView extends JFAbstractGraphView
         DailyValuesRow row;
         Hour time;
 
-        if ((BGDataset == null) || (insBUDataset == null))
-        {
+        if (BGDataset == null || insBUDataset == null)
             return;
-        }
 
         BGDataset.removeAllSeries();
         insBUDataset.removeAllSeries();
 
-        if ((data == null) || (chart == null))
-        {
+        if (data == null || chart == null)
             return;
-        }
 
         TimeSeries BGSeries = new TimeSeries(translator.getMessage("BLOOD_GLUCOSE"), Hour.class);
         TimeSeries CHSeries = new TimeSeries(translator.getMessage("CH_LONG"), Hour.class);
@@ -264,17 +262,18 @@ public class DailyGraphView extends JFAbstractGraphView
 
             if (row.getBG(BGUnit) > 0)
             {
-                //System.out.println("BGUnit = " + time);
+                // System.out.println("BGUnit = " + time);
                 if (BGSeries.getDataItem(time) == null)
                 {
                     BGSeries.add(time, row.getBG(BGUnit));
                 }
                 else
                 {
-                    BGSeries.addOrUpdate(time, MathUtils.getAverage(row.getBG(BGUnit), BGSeries.getDataItem(time).getValue()));
+                    BGSeries.addOrUpdate(time,
+                        MathUtils.getAverage(row.getBG(BGUnit), BGSeries.getDataItem(time).getValue()));
                 }
             }
-            
+
             if (row.getCH() > 0)
             {
                 if (CHSeries.getDataItem(time) == null)
@@ -286,7 +285,7 @@ public class DailyGraphView extends JFAbstractGraphView
                     CHSeries.addOrUpdate(time, MathUtils.getAverage(row.getCH(), CHSeries.getDataItem(time).getValue()));
                 }
             }
-            
+
             if (row.getIns1() > 0)
             {
                 if (ins1Series.getDataItem(time) == null)
@@ -295,8 +294,8 @@ public class DailyGraphView extends JFAbstractGraphView
                 }
                 else
                 {
-                    ins1Series.addOrUpdate(time, MathUtils.getAverage(row.getIns1(), ins1Series.getDataItem(time)
-                            .getValue()));
+                    ins1Series.addOrUpdate(time,
+                        MathUtils.getAverage(row.getIns1(), ins1Series.getDataItem(time).getValue()));
                 }
             }
             if (row.getIns2() > 0)
@@ -307,8 +306,8 @@ public class DailyGraphView extends JFAbstractGraphView
                 }
                 else
                 {
-                    ins2Series.addOrUpdate(time, MathUtils.getAverage(row.getIns2(), ins2Series.getDataItem(time)
-                            .getValue()));
+                    ins2Series.addOrUpdate(time,
+                        MathUtils.getAverage(row.getIns2(), ins2Series.getDataItem(time).getValue()));
                 }
             }
         }
@@ -332,16 +331,16 @@ public class DailyGraphView extends JFAbstractGraphView
         data = dV;
         redraw();
     }
-    
-    
+
+    @Override
     public void setBounds(int x, int y, int width, int height)
     {
         super.setBounds(x, y, width, height);
         this.chartPanel.setBounds(x, y, width, height);
         redraw();
     }
-    
 
+    @Override
     public void setBounds(Rectangle rec)
     {
         super.setBounds(rec);
@@ -349,7 +348,4 @@ public class DailyGraphView extends JFAbstractGraphView
         redraw();
     }
 
-    
-    
-    
 }

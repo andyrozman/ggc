@@ -43,8 +43,7 @@ public class AnimasIR2020 extends AnimasPump
     {
         super();
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -55,8 +54,7 @@ public class AnimasIR2020 extends AnimasPump
     {
         super(conn_parameter, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -69,7 +67,6 @@ public class AnimasIR2020 extends AnimasPump
         super(conn_parameter, writer, da);
     }
 
-    
     /**
      * Constructor
      * 
@@ -85,13 +82,12 @@ public class AnimasIR2020 extends AnimasPump
      * 
      * @return name of meter
      */
+    @Override
     public String getName()
     {
         return "IR 2020";
     }
 
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -101,7 +97,6 @@ public class AnimasIR2020 extends AnimasPump
     {
         return "an_ir2020.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -114,7 +109,6 @@ public class AnimasIR2020 extends AnimasPump
         return PumpDevicesIds.PUMP_ANIMAS_IR_2020;
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -125,30 +119,30 @@ public class AnimasIR2020 extends AnimasPump
     {
         return "INSTRUCTIONS_ANIMAS_IR2020";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
      * @return comment or null
      */
+    @Override
     public String getComment()
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    @Override
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -159,7 +153,6 @@ public class AnimasIR2020 extends AnimasPump
         return "ggc.pump.device.animas.AnimasIR2020";
     }
 
-
     /** 
      * Get Max Memory Records
      */
@@ -167,30 +160,29 @@ public class AnimasIR2020 extends AnimasPump
     {
         return 0;
     }
-    
-    
+
     /**
      * Get Download Support Type
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
      * @return
      */
+    @Override
     public int howManyMonthsOfDataStored()
     {
         return -1;
     }
-    
-    
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -199,13 +191,13 @@ public class AnimasIR2020 extends AnimasPump
      * 
      * @return
      */
+    @Override
     public String getTemporaryBasalTypeDefinition()
     {
-        //return "TYPE=Unit;STEP=0.1";
+        // return "TYPE=Unit;STEP=0.1";
         return null;
     }
-    
-    
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -215,8 +207,7 @@ public class AnimasIR2020 extends AnimasPump
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Get Basal Step (precission)
      * 
@@ -226,18 +217,16 @@ public class AnimasIR2020 extends AnimasPump
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
+    @Override
     public boolean arePumpSettingsSet()
     {
         return false;
     }
 
-    
 }
-

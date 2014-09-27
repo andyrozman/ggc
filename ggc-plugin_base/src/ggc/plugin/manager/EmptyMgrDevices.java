@@ -33,12 +33,8 @@ import javax.swing.ImageIcon;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
+public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
 {
-
-
-
 
     /**
      * Constructor
@@ -50,11 +46,9 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
         super(da);
     }
 
-
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -67,7 +61,6 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
         return "NO_DEVICES_AVAILABLE";
     }
 
-
     /**
      * getIcon - Get Icon of meter
      * Should be implemented by meter class.
@@ -79,7 +72,6 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
         return null;
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * Should be implemented by meter class.
@@ -90,8 +82,6 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
     {
         return "none";
     }
-    
-    
 
     /**
      * getMeterId - Get Meter Id, within Meter Company class 
@@ -104,9 +94,6 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
         return 0;
     }
 
-    
- 
-    
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -117,7 +104,7 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
     {
         return null;
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * Should be implemented by meter class.
@@ -128,8 +115,7 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
     {
         return null;
     }
-    
-    
+
     /**
      * getCompanyId - Get Company Id 
      * Should be implemented by meter class.
@@ -141,9 +127,6 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
     {
         return 0;
     }
-
-
-
 
     /**
      * @throws PlugInBaseException
@@ -163,6 +146,7 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
     /**
      * @see ggc.plugin.device.DeviceInterface#getDeviceSpecialComment()
      */
+    @Override
     public String getDeviceSpecialComment()
     {
         return null;
@@ -176,9 +160,6 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
         return null;
     }
 
-
-
-
     /**
      * @return
      * @throws PlugInBaseException
@@ -188,14 +169,13 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
         return false;
     }
 
-
     /**
      * @see ggc.plugin.device.DeviceInterface#readConfiguration()
      */
+    @Override
     public void readConfiguration() throws PlugInBaseException
     {
     }
-
 
     /**
      * @see ggc.plugin.device.DeviceInterface#readDeviceDataFull()
@@ -204,18 +184,13 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
     {
     }
 
-
-
-
     /**
      * @see ggc.plugin.device.DeviceInterface#readInfo()
      */
+    @Override
     public void readInfo() throws PlugInBaseException
     {
     }
-
-
-
 
     /**
      * @see ggc.plugin.device.DeviceInterface#getDeviceClassName()
@@ -225,8 +200,6 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
         return null;
     }
 
-
-
     /**
      * @see ggc.plugin.device.DeviceInterface#getConnectionPort()
      */
@@ -235,7 +208,6 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
         return null;
     }
 
-
     /**
      * @see ggc.plugin.device.DeviceInterface#dispose()
      */
@@ -243,7 +215,6 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
     {
     }
 
-    
     /**
      * Is Device Communicating
      * 
@@ -253,7 +224,6 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
     {
         return true;
     }
-    
 
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -261,12 +231,12 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
      * to read data)
      * @return
      */
+    @Override
     public boolean isReadableDevice()
     {
         return false;
     }
-    
-    
+
     /**
      * Get Download Support Type
      * 
@@ -277,15 +247,4 @@ public class EmptyMgrDevices extends DeviceAbstract //extends DummyDevice
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
 
-
-
-
-
-
-
-
-    
-    
-    
-    
 }

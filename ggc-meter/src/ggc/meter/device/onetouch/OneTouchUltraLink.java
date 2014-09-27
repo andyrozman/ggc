@@ -31,7 +31,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 // in works
 public class OneTouchUltraLink extends OneTouchMeter
 {
@@ -47,7 +46,6 @@ public class OneTouchUltraLink extends OneTouchMeter
         super(portName, writer);
     }
 
-
     /**
      * Constructor
      * 
@@ -59,8 +57,7 @@ public class OneTouchUltraLink extends OneTouchMeter
     {
         super(comm_parameters, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      */
@@ -68,7 +65,7 @@ public class OneTouchUltraLink extends OneTouchMeter
     {
         super();
     }
-    
+
     /**
      * Constructor for device manager
      * 
@@ -79,7 +76,6 @@ public class OneTouchUltraLink extends OneTouchMeter
         super(cmp);
     }
 
-    
     /**
      * getName - Get Name of meter. 
      * 
@@ -90,7 +86,6 @@ public class OneTouchUltraLink extends OneTouchMeter
         return "One Touch UltraLink";
     }
 
-    
     /**
      * getDeviceClassName - Get class name of device
      */
@@ -99,7 +94,6 @@ public class OneTouchUltraLink extends OneTouchMeter
         return "ggc.meter.device.onetouch.OneTouchUltraLink";
     }
 
-    
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
      * Should be implemented by device class.
@@ -111,7 +105,6 @@ public class OneTouchUltraLink extends OneTouchMeter
         return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRALINK;
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -122,7 +115,6 @@ public class OneTouchUltraLink extends OneTouchMeter
         // TODO fill in
         return null;
     }
-
 
     /**
      * Maximum of records that device can store
@@ -137,6 +129,7 @@ public class OneTouchUltraLink extends OneTouchMeter
      * 
      * @return short name of meter
      */
+    @Override
     public String getShortName()
     {
         return "UltraLink";

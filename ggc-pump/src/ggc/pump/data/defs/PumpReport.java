@@ -30,7 +30,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PumpReport
 {
     DataAccessPump da = DataAccessPump.getInstance();
@@ -39,15 +38,10 @@ public class PumpReport
     /**
      * Report Descriptions
      */
-    public String[] report_desc = { 
-                       ic.getMessage("SELECT_SUBTYPE"),
-                       ic.getMessage("REPORT_MISC"),             
-                       ic.getMessage("REPORT_BOLUS_TOTAL_DAY"),             
-                       ic.getMessage("REPORT_BASAL_TOTAL_DAY"),             
-                       ic.getMessage("REPORT_INSULIN_TOTAL_DAY"),             
-    };
-    
-    
+    public String[] report_desc = { ic.getMessage("SELECT_SUBTYPE"), ic.getMessage("REPORT_MISC"),
+                                   ic.getMessage("REPORT_BOLUS_TOTAL_DAY"), ic.getMessage("REPORT_BASAL_TOTAL_DAY"),
+                                   ic.getMessage("REPORT_INSULIN_TOTAL_DAY"), };
+
     /**
      * Pump Report: Misc
      */
@@ -57,18 +51,17 @@ public class PumpReport
      * Pump Report: Bolus Total Day
      */
     public static final int PUMP_REPORT_BOLUS_TOTAL_DAY = 2;
-    
+
     /**
      * Pump Report: Basal Total Day
      */
     public static final int PUMP_REPORT_BASAL_TOTAL_DAY = 3;
-    
+
     /**
      * Pump Report: Basal Total Day
      */
     public static final int PUMP_REPORT_INSULIN_TOTAL_DAY = 4;
-    
-    
+
     /**
      * Get Descriptions (array)
      * 
@@ -78,6 +71,5 @@ public class PumpReport
     {
         return this.report_desc;
     }
-    
 
 }

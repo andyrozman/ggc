@@ -31,14 +31,13 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 // in works
 public class OneTouchSelect extends OneTouchMeter2
 {
 
     // Not implemented
     // Pictures
-    
+
     /**
      * Constructor used by most classes
      * 
@@ -49,7 +48,6 @@ public class OneTouchSelect extends OneTouchMeter2
     {
         super(portName, writer);
     }
-
 
     /**
      * Constructor
@@ -62,8 +60,7 @@ public class OneTouchSelect extends OneTouchMeter2
     {
         super(comm_parameters, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      */
@@ -71,7 +68,7 @@ public class OneTouchSelect extends OneTouchMeter2
     {
         super();
     }
-    
+
     /**
      * Constructor for device manager
      * 
@@ -82,7 +79,6 @@ public class OneTouchSelect extends OneTouchMeter2
         super(cmp);
     }
 
-    
     /**
      * getName - Get Name of meter. 
      * 
@@ -93,7 +89,6 @@ public class OneTouchSelect extends OneTouchMeter2
         return "One Touch Select";
     }
 
-    
     /**
      * getDeviceClassName - Get class name of device
      */
@@ -102,7 +97,6 @@ public class OneTouchSelect extends OneTouchMeter2
         return "ggc.meter.device.onetouch.OneTouchSelect";
     }
 
-    
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
      * Should be implemented by device class.
@@ -114,7 +108,6 @@ public class OneTouchSelect extends OneTouchMeter2
         return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_SELECT;
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -126,7 +119,6 @@ public class OneTouchSelect extends OneTouchMeter2
         return null;
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * 
@@ -136,14 +128,13 @@ public class OneTouchSelect extends OneTouchMeter2
     {
         return "INSTRUCTIONS_LIFESCAN_OFF";
     }
-    
 
     /**
      * Maximum of records that device can store
      */
     public int getMaxMemoryRecords()
     {
-        // TODO: 
+        // TODO:
         return 150;
     }
 
@@ -152,11 +143,11 @@ public class OneTouchSelect extends OneTouchMeter2
      * 
      * @return short name of meter
      */
+    @Override
     public String getShortName()
     {
         return "Select";
     }
-
 
     /**
      * Get Command
@@ -167,21 +158,20 @@ public class OneTouchSelect extends OneTouchMeter2
     @Override
     public String getCommand(int command)
     {
-        switch(command)
+        switch (command)
         {
             case OneTouchMeter2.COMMAND_READ_SW_VERSION_AND_CREATE:
                 return "02" + "09" + "00" + "05" + "0D" + "03" + "03" + "EB" + "42";
 
-            case OneTouchMeter2.COMMAND_READ_SERIAL_NUMBER:    
+            case OneTouchMeter2.COMMAND_READ_SERIAL_NUMBER:
                 return "02" + "12" + "00" + "05" + // STX Len Link
-                "0B" + "02" + "00" + "00" + "00" + "00" + "00" + "00" + "00" + "00" + "00" +  // CM1-CM12
-                "03" + "19" + "E7"; // ETX CRC-L CRC-H
-                
-                
+                        "0B" + "02" + "00" + "00" + "00" + "00" + "00" + "00" + "00" + "00" + "00" + // CM1-CM12
+                        "03" + "19" + "E7"; // ETX CRC-L CRC-H
+
             default:
                 return "";
         }
-        
+
     }
 
 }

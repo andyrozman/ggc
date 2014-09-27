@@ -54,7 +54,7 @@ public class StatusBar extends JPanel implements EventObserverInterface
 
     private ImageIcon[] statusIcons = null;
     MainFrame m_frame;
-    
+
     /**
      * Constructor
      * 
@@ -67,9 +67,9 @@ public class StatusBar extends JPanel implements EventObserverInterface
 
         statusIcons[0] = new ImageIcon(getClass().getResource("/icons/led_red.gif"));
         statusIcons[1] = new ImageIcon(getClass().getResource("/icons/led_yellow.gif"));
-        statusIcons[2] = da.getImageIcon( "led_blue.gif", 14, 14, this);
- 
-           // new ImageIcon(getClass().getResource("/icons/led_blue.gif"));
+        statusIcons[2] = da.getImageIcon("led_blue.gif", 14, 14, this);
+
+        // new ImageIcon(getClass().getResource("/icons/led_blue.gif"));
         statusIcons[3] = new ImageIcon(getClass().getResource("/icons/led_green.gif"));
 
         lblMessage = new JLabel();
@@ -80,7 +80,7 @@ public class StatusBar extends JPanel implements EventObserverInterface
         pan.setPreferredSize(new Dimension(385, 18));
         pan.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
         SpringLayout layout = new SpringLayout();
-        pan.setLayout(layout); //new java.awt.FlowLayout());
+        pan.setLayout(layout); // new java.awt.FlowLayout());
 
         lblName = new JLabel();
         setDatabaseName(m_ic.getMessage("UNKNOWN"));
@@ -89,29 +89,21 @@ public class StatusBar extends JPanel implements EventObserverInterface
         lblLed = new JLabel(statusIcons[0]);
         pan.add(lblLed, BorderLayout.EAST);
 
-        layout.putConstraint(SpringLayout.WEST, lblName,
-                     5,
-                     SpringLayout.WEST, pan);
+        layout.putConstraint(SpringLayout.WEST, lblName, 5, SpringLayout.WEST, pan);
 
-        layout.putConstraint(SpringLayout.EAST, lblLed,
-                     -10,
-                     SpringLayout.EAST, pan);
+        layout.putConstraint(SpringLayout.EAST, lblLed, -10, SpringLayout.EAST, pan);
 
-        layout.putConstraint(SpringLayout.NORTH, lblLed,
-                     1,
-                     SpringLayout.NORTH, pan);
+        layout.putConstraint(SpringLayout.NORTH, lblLed, 1, SpringLayout.NORTH, pan);
 
         setLayout(new BorderLayout(2, 2));
         this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
         add(lblMessage, BorderLayout.WEST);
         add(pan, BorderLayout.EAST);
-        
+
         da.addObserver(DataAccess.OBSERVABLE_STATUS, this);
-        
+
     }
 
-
-    
     /**
      * Set Status message
      * @param msg
@@ -121,35 +113,31 @@ public class StatusBar extends JPanel implements EventObserverInterface
         lblMessage.setText(" " + msg);
     }
 
-
     /**
      * Db Status: Stopped
      */
     public static final int DB_STOPPED = 0;
-    
+
     /**
      * Db Status: Init done
      */
     public static final int DB_INIT_DONE = 1;
-    
+
     /**
      * Db Status: Base done
      */
     public static final int DB_BASE_DONE = 2;
-    
+
     /**
      * Db Status: Extended done
      */
     public static final int DB_EXTENDED_DONE = 3;
-    
+
     /**
      * Db Status: Loaded
      */
     public static final int DB_LOADED = 3;
 
-    
-    
-    
     // red status
     // 1 - init
     // yellow
@@ -163,8 +151,7 @@ public class StatusBar extends JPanel implements EventObserverInterface
 
     // 99 - loading complete
     // green
-    
-    
+
     /**
      * Set Db Status
      * 
@@ -173,7 +160,7 @@ public class StatusBar extends JPanel implements EventObserverInterface
     public void setDbStatus(int status)
     {
         this.lblLed.setIcon(statusIcons[status]);
-        //this.m_frame.setMenusByDbLoad(status);
+        // this.m_frame.setMenusByDbLoad(status);
     }
 
     /**
@@ -183,26 +170,25 @@ public class StatusBar extends JPanel implements EventObserverInterface
      */
     public void setDatabaseName(String dbName)
     {
-        lblName.setText(m_ic.getMessage("DATABASE") + " [" + dbName +"]:");
+        lblName.setText(m_ic.getMessage("DATABASE") + " [" + dbName + "]:");
     }
 
-    
     /**
      * update - Observer method
      */
     public void update(Observable obj, Object arg)
     {
-       //System.out.println("update status");
-        
+        // System.out.println("update status");
+
         if (arg instanceof Integer)
         {
-            Integer i = (Integer)arg;
+            Integer i = (Integer) arg;
             this.setDbStatus(i.intValue());
         }
         else
         {
-            String s = (String)arg;
-            
+            String s = (String) arg;
+
             if (s.startsWith("DB_NAME="))
             {
                 this.setDatabaseName(s.substring(8));
@@ -213,6 +199,5 @@ public class StatusBar extends JPanel implements EventObserverInterface
             }
         }
     }
-    
-    
+
 }

@@ -30,7 +30,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class DailyFoodEntryDisplay extends ATTableData
 {
 
@@ -65,7 +64,6 @@ public class DailyFoodEntryDisplay extends ATTableData
          * this.type_desc = MealPartsDisplay.type_description[part.getType() -
          * 1]; this.id = "" + part.getId(); this.description = part.getName();
          * this.amount = "" + part.getAmount();
-         * 
          * this.meal_part = part;
          */
         // String[] col = { "TYPE", "ID", "DESCRIPTION", "AMOUNT" };
@@ -97,6 +95,7 @@ public class DailyFoodEntryDisplay extends ATTableData
      * 
      * @see com.atech.graphics.components.ATTableData#init()
      */
+    @Override
     public void init()
     {
         String[] col = { "NAME", "WEIGHT_TYPE", "HOME_WEIGHT", "AMOUNT_LBL" };
@@ -104,7 +103,6 @@ public class DailyFoodEntryDisplay extends ATTableData
 
         init(col, col_size);
     }
-
 
     /**
      * Get Daily Food Entry
@@ -131,6 +129,7 @@ public class DailyFoodEntryDisplay extends ATTableData
      * 
      * @see com.atech.graphics.components.ATTableData#getColumnValue(int)
      */
+    @Override
     public String getColumnValue(int column)
     {
 
@@ -139,18 +138,18 @@ public class DailyFoodEntryDisplay extends ATTableData
 
         switch (column)
         {
-        case 1:
-            return DailyFoodEntryDisplay.weight_type_description[this.daily_food_entry.getWeightType() - 1];
+            case 1:
+                return DailyFoodEntryDisplay.weight_type_description[this.daily_food_entry.getWeightType() - 1];
 
-        case 2:
-            return this.daily_food_entry.getHomeWeightDescription();
+            case 2:
+                return this.daily_food_entry.getHomeWeightDescription();
 
-        case 3:
-            return this.daily_food_entry.getAmountString();
+            case 3:
+                return this.daily_food_entry.getAmountString();
 
-        case 0:
-        default:
-            return this.daily_food_entry.getName();
+            case 0:
+            default:
+                return this.daily_food_entry.getName();
 
         }
     }

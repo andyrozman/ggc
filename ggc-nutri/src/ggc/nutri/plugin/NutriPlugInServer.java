@@ -54,67 +54,59 @@ import com.atech.utils.ATSwingUtils;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class NutriPlugInServer extends PlugInServer implements ActionListener
 {
-    
+
     DataAccessNutri da_local; // = DataAccessMeter.getInstance();
 
-    
     /**
      * Command: Db USDA Tree
      */
     public static final int COMMAND_DB_USDA = 0;
-    
-    
+
     /**
      * Command: Db User Tree
      */
     public static final int COMMAND_DB_USER = 1;
-    
+
     /**
      * Command: Db Meal Tree
      */
     public static final int COMMAND_DB_MEAL = 2;
-    
+
     /**
      *  Command: Load Database  
      */
     public static final int COMMAND_LOAD_DATABASE = 3;
-    
+
     /**
      * Command: About
      */
     public static final int COMMAND_ABOUT = 4;
-    
+
     /**
      * Command: Food Selector
      */
     public static final int COMMAND_DB_FOOD_SELECTOR = 5;
-    
+
     /**
      * Command: Recalculate CH
      */
     public static final int COMMAND_RECALCULATE_CH = 6;
-    
-    
-    
+
     private I18nControlAbstract ic_local = null;
-    
-    
-/*    
-    private String commands[] = { 
-                                  "MN_NUTRI_READ_DESC", 
-                                  "MN_NUTRI_LIST_DESC", 
-                                  "MN_NUTRI_CONFIG_DESC",
-                                                               
-                                  "MN_LOAD_DATABASE_DESC", 
-                                  "MN_NUTRI_ABOUT" };
-  */  
-    
-    //I18nControl ic = I18nControl.getInstance();
-    
-    
+
+    /*
+     * private String commands[] = {
+     * "MN_NUTRI_READ_DESC",
+     * "MN_NUTRI_LIST_DESC",
+     * "MN_NUTRI_CONFIG_DESC",
+     * "MN_LOAD_DATABASE_DESC",
+     * "MN_NUTRI_ABOUT" };
+     */
+
+    // I18nControl ic = I18nControl.getInstance();
+
     /**
      * Constructor
      */
@@ -124,8 +116,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         DataAccessNutri.createInstance(DataAccess.getInstance().getLanguageManager());
         DataAccessNutri.getInstance().addComponent(DataAccess.getInstance().getMainParent());
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -136,17 +127,13 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     public NutriPlugInServer(Container cont, String selected_lang, ATDataAccessLMAbstract da)
     {
         super(cont, selected_lang, da);
-        
+
         DataAccessNutri.createInstance(da.getLanguageManager());
         DataAccessNutri.getInstance().addComponent(cont);
-        //DataAccessPump.getInstance().setPlugInServerInstance(this);
-        //DataAccessPump.getInstance().m
+        // DataAccessPump.getInstance().setPlugInServerInstance(this);
+        // DataAccessPump.getInstance().m
     }
-    
 
-    
-    
-    
     /**
      * Execute Command on Server Side
      * 
@@ -155,57 +142,55 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     @Override
     public void executeCommand(int command, Object obj_data)
     {
-        switch(command)
+        switch (command)
         {
-        
+
             case NutriPlugInServer.COMMAND_LOAD_DATABASE:
-            {
-                this.loadDb();
-            } break;
-        
-/*
-            case PumpPlugInServer.COMMAND_CONFIGURATION:
-            {
-                new DeviceConfigurationDialog((JFrame)this.parent, DataAccessPump.getInstance());
-                //new SimpleConfigurationDialog(this.m_da);
-                return;
-            }
-            
-            case PumpPlugInServer.COMMAND_PUMPS_LIST:
-            {
-                new BaseListDialog((JFrame)this.parent, DataAccessPump.getInstance());
-                return;
-            }
+                {
+                    this.loadDb();
+                }
+                break;
 
-            case PumpPlugInServer.COMMAND_ABOUT:
-            {
-                new AboutBaseDialog((JFrame)this.parent, DataAccessPump.getInstance());
-                return;
-            }
-
-            case PumpPlugInServer.COMMAND_PROFILES:
-            {
-                System.out.println("parent: " + this.parent);
-                new ProfileSelector(DataAccessPump.getInstance(), this.parent);
-                return;
-            }
-            
-            
-            case PumpPlugInServer.COMMAND_MANUAL_ENTRY:
-            case PumpPlugInServer.COMMAND_ADDITIONAL_DATA:
-            {
-                new PumpDataDialog(DataAccessPump.getInstance(), this.parent);
-                return;
-            } 
-            
-            default:
-            {
-                this.featureNotImplemented(commands[command]);
-                return;
-            }
-            */
+        /*
+         * case PumpPlugInServer.COMMAND_CONFIGURATION:
+         * {
+         * new DeviceConfigurationDialog((JFrame)this.parent,
+         * DataAccessPump.getInstance());
+         * //new SimpleConfigurationDialog(this.m_da);
+         * return;
+         * }
+         * case PumpPlugInServer.COMMAND_PUMPS_LIST:
+         * {
+         * new BaseListDialog((JFrame)this.parent,
+         * DataAccessPump.getInstance());
+         * return;
+         * }
+         * case PumpPlugInServer.COMMAND_ABOUT:
+         * {
+         * new AboutBaseDialog((JFrame)this.parent,
+         * DataAccessPump.getInstance());
+         * return;
+         * }
+         * case PumpPlugInServer.COMMAND_PROFILES:
+         * {
+         * System.out.println("parent: " + this.parent);
+         * new ProfileSelector(DataAccessPump.getInstance(), this.parent);
+         * return;
+         * }
+         * case PumpPlugInServer.COMMAND_MANUAL_ENTRY:
+         * case PumpPlugInServer.COMMAND_ADDITIONAL_DATA:
+         * {
+         * new PumpDataDialog(DataAccessPump.getInstance(), this.parent);
+         * return;
+         * }
+         * default:
+         * {
+         * this.featureNotImplemented(commands[command]);
+         * return;
+         * }
+         */
         }
-        
+
     }
 
     /**
@@ -247,45 +232,41 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     @Override
     public void initPlugIn()
     {
-        
+
         ic = m_da.getI18nControlInstance();
-        
-        if (da_local==null)
-            da_local = DataAccessNutri.createInstance(((ATDataAccessLMAbstract)m_da).getLanguageManager());
-        
-        //this.initPlugInServer((DataAccess)m_da, da_local);
-        
-        
-        
-//        ic = m_da.getI18nControlInstance();
-        //I18nControl.getInstance().setLanguage(this.selected_lang);
-        
-        
-        //DataAccessNutri da = DataAccessNutri.getInstance();
+
+        if (da_local == null)
+        {
+            da_local = DataAccessNutri.createInstance(((ATDataAccessLMAbstract) m_da).getLanguageManager());
+        }
+
+        // this.initPlugInServer((DataAccess)m_da, da_local);
+
+        // ic = m_da.getI18nControlInstance();
+        // I18nControl.getInstance().setLanguage(this.selected_lang);
+
+        // DataAccessNutri da = DataAccessNutri.getInstance();
         da_local.addComponent(this.parent);
         da_local.setHelpContext(this.m_da.getHelpContext());
         da_local.setPlugInServerInstance(this);
         da_local.setParentI18nControlInstance(ic);
-//        da.createDb(m_da.getHibernateDb());
-//        da.initAllObjects();
+        // da.createDb(m_da.getHibernateDb());
+        // da.initAllObjects();
         da_local.loadSpecialParameters();
 
-        
-        GGCDbNutri _db = new GGCDbNutri(((DataAccess)m_da).getDb());
+        GGCDbNutri _db = new GGCDbNutri(((DataAccess) m_da).getDb());
         da_local.setNutriDb(_db);
-        
+
         this.backup_restore_enabled = true;
         m_da.loadSpecialParameters();
-        //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
-        
-        
-        
+        // System.out.println("PumpServer: " +
+        // m_da.getSpecialParameters().get("BG"));
+
         this.ic_local = da_local.getI18nControlInstance();
-        
-        //da.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
+
+        // da.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
     }
-    
-    
+
     /**
      * Load Db
      */
@@ -293,8 +274,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     {
         DataAccessNutri.getInstance().getNutriDb().loadNutritionDbBase();
     }
-    
-    
+
     /**
      * Get Return Object
      * 
@@ -307,7 +287,6 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         return null;
     }
 
-    
     /**
      * Get Return Object
      * 
@@ -320,7 +299,6 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     {
         return null;
     }
-    
 
     /**
      * Get Backup Objects (if available)
@@ -330,16 +308,15 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     @Override
     public BackupRestoreCollection getBackupObjects()
     {
-        I18nControlAbstract ic_loc = DataAccessNutri.getInstance().getI18nControlInstance(); 
+        I18nControlAbstract ic_loc = DataAccessNutri.getInstance().getI18nControlInstance();
         BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", ic_loc);
         brc_nut.addNodeChild(new FoodGroup(ic_loc));
         brc_nut.addNodeChild(new FoodDescription(ic_loc));
         brc_nut.addNodeChild(new MealGroup(ic_loc));
         brc_nut.addNodeChild(new Meal(ic_loc));
-        
+
         return brc_nut;
     }
-
 
     /**
      * Get PlugIn Main Menu 
@@ -355,37 +332,27 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     {
         // food menu
         JMenu menu_food = ATSwingUtils.createMenu("MN_FOOD", null, this.ic_local);
-        ATSwingUtils.createMenuItem(menu_food, 
-                                    "MN_NUTRDB_USDB", 
-                                    "MN_NUTRDB_USDB_DESC", 
-                                    "food_nutrition_1", 
-                                    this, null, 
-                                    this.ic_local, DataAccessNutri.getInstance(), parent);
-        //.createAction(this.menu_food, "MN_NUTRDB_USDB", "MN_NUTRDB_USDB_DESC", "food_nutrition_1", null);
+        ATSwingUtils.createMenuItem(menu_food, "MN_NUTRDB_USDB", "MN_NUTRDB_USDB_DESC", "food_nutrition_1", this, null,
+            this.ic_local, DataAccessNutri.getInstance(), parent);
+        // .createAction(this.menu_food, "MN_NUTRDB_USDB",
+        // "MN_NUTRDB_USDB_DESC", "food_nutrition_1", null);
         menu_food.addSeparator();
 
-        ATSwingUtils.createMenuItem(menu_food, 
-            "MN_NUTRDB_USER", 
-            "MN_NUTRDB_USER_DESC", 
-            "food_nutrition_2", 
-            this, null, 
+        ATSwingUtils.createMenuItem(menu_food, "MN_NUTRDB_USER", "MN_NUTRDB_USER_DESC", "food_nutrition_2", this, null,
             this.ic_local, DataAccessNutri.getInstance(), parent);
-        
-//        this.createAction(this.menu_food, "MN_NUTRDB_USER", "MN_NUTRDB_USER_DESC", "food_nutrition_2", null);
+
+        // this.createAction(this.menu_food, "MN_NUTRDB_USER",
+        // "MN_NUTRDB_USER_DESC", "food_nutrition_2", null);
         menu_food.addSeparator();
-        
-        ATSwingUtils.createMenuItem(menu_food, 
-            "MN_MEALS", 
-            "MN_MEALS_DESC", 
-            "food_meals", 
-            this, null, 
-            this.ic_local, DataAccessNutri.getInstance(), parent);
-                
-//        this.createAction(this.menu_food, "MN_MEALS", "MN_MEALS_DESC", "food_meals", null);
-        
+
+        ATSwingUtils.createMenuItem(menu_food, "MN_MEALS", "MN_MEALS_DESC", "food_meals", this, null, this.ic_local,
+            DataAccessNutri.getInstance(), parent);
+
+        // this.createAction(this.menu_food, "MN_MEALS", "MN_MEALS_DESC",
+        // "food_meals", null);
+
         return menu_food;
     }
-
 
     /**
      * Get PlugIn Print Menus 
@@ -398,80 +365,67 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     public JMenu[] getPlugInPrintMenus()
     {
         JMenu menu_reports_foodmenu = ATSwingUtils.createMenu("MN_FOODMENU", "MN_FOODMENU_DESC", this.ic_local);
-        
-        ATSwingUtils.createMenuItem(menu_reports_foodmenu, 
-            "MN_FOODMENU_SIMPLE", 
-            "MN_FOODMENU_SIMPLE_DESC", 
-            "report_foodmenu_simple",
-            this, "print.png", 
-            this.ic_local, DataAccessNutri.getInstance(), parent);
-        
-        
-        ATSwingUtils.createMenuItem(menu_reports_foodmenu,
-            "MN_FOODMENU_EXT1", 
-            "MN_FOODMENU_EXT1_DESC", 
-            "report_foodmenu_ext1", 
-            this, "print.png", 
-            this.ic_local, DataAccessNutri.getInstance(), parent);
-        
-        
-        ATSwingUtils.createMenuItem(menu_reports_foodmenu,
-            "MN_FOODMENU_EXT2", 
-            "MN_FOODMENU_EXT2_DESC", 
-            "report_foodmenu_ext2", 
-            this, "print.png", 
-            this.ic_local, DataAccessNutri.getInstance(), parent);
-        
+
+        ATSwingUtils.createMenuItem(menu_reports_foodmenu, "MN_FOODMENU_SIMPLE", "MN_FOODMENU_SIMPLE_DESC",
+            "report_foodmenu_simple", this, "print.png", this.ic_local, DataAccessNutri.getInstance(), parent);
+
+        ATSwingUtils.createMenuItem(menu_reports_foodmenu, "MN_FOODMENU_EXT1", "MN_FOODMENU_EXT1_DESC",
+            "report_foodmenu_ext1", this, "print.png", this.ic_local, DataAccessNutri.getInstance(), parent);
+
+        ATSwingUtils.createMenuItem(menu_reports_foodmenu, "MN_FOODMENU_EXT2", "MN_FOODMENU_EXT2_DESC",
+            "report_foodmenu_ext2", this, "print.png", this.ic_local, DataAccessNutri.getInstance(), parent);
+
         JMenu[] mns = new JMenu[1];
         mns[0] = menu_reports_foodmenu;
-        
+
         return mns;
     }
-
 
     /** 
      * Action Performed
      */
+    @Override
     public void actionPerformed(ActionEvent ae)
     {
         String command = ae.getActionCommand();
-        
+
         if (command.equals("food_nutrition_1"))
         {
-            new NutritionTreeDialog((JFrame)parent, DataAccessNutri.getInstance(), GGCTreeRoot.TREE_USDA_NUTRITION);
+            new NutritionTreeDialog((JFrame) parent, DataAccessNutri.getInstance(), GGCTreeRoot.TREE_USDA_NUTRITION);
         }
         else if (command.equals("food_nutrition_2"))
         {
-            new NutritionTreeDialog((JFrame)parent, DataAccessNutri.getInstance(), GGCTreeRoot.TREE_USER_NUTRITION);
+            new NutritionTreeDialog((JFrame) parent, DataAccessNutri.getInstance(), GGCTreeRoot.TREE_USER_NUTRITION);
         }
         else if (command.equals("food_meals"))
         {
-            new NutritionTreeDialog((JFrame)parent, DataAccessNutri.getInstance(), GGCTreeRoot.TREE_MEALS);
+            new NutritionTreeDialog((JFrame) parent, DataAccessNutri.getInstance(), GGCTreeRoot.TREE_MEALS);
         }
         else if (command.equals("report_foodmenu_simple"))
         {
-            new PrintFoodDialog((JFrame)parent, 1); //, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+            new PrintFoodDialog((JFrame) parent, 1); // ,
+                                                     // PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
         }
         else if (command.equals("report_foodmenu_ext1"))
         {
-            new PrintFoodDialog((JFrame)parent, 2); //, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+            new PrintFoodDialog((JFrame) parent, 2); // ,
+                                                     // PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
         }
         else if (command.equals("report_foodmenu_ext2"))
         {
-            new PrintFoodDialog((JFrame)parent, 3); //, PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+            new PrintFoodDialog((JFrame) parent, 3); // ,
+                                                     // PrintFoodDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
         }
-        /*else if (command.equals("report_foodmenu_ext3"))
-        {
-            // disabled for now, until it's implement to fully function
-            new PrintingDialog(MainFrame.this, 4, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
-        } */
-        
-        
-    }
+        /*
+         * else if (command.equals("report_foodmenu_ext3"))
+         * {
+         * // disabled for now, until it's implement to fully function
+         * new PrintingDialog(MainFrame.this, 4,
+         * PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+         * }
+         */
 
-    
-    
-    
+    }
 
     /**
      * Execute Command Dialog Return - This one executes command that starts dialog, with
@@ -485,56 +439,56 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
      * 
      * @return Array of Objects or null
      */
+    @Override
     public Object[] executeCommandDialogReturn(JDialog dialog, int command, Object data)
     {
-        if ((command!=NutriPlugInServer.COMMAND_DB_FOOD_SELECTOR) &&
-                (command!=NutriPlugInServer.COMMAND_RECALCULATE_CH))
+        if (command != NutriPlugInServer.COMMAND_DB_FOOD_SELECTOR
+                && command != NutriPlugInServer.COMMAND_RECALCULATE_CH)
         {
-            System.out.println("ExecuteCommandDialogReturn[" + getName() + "] is not valid for this command: " + command);
+            System.out.println("ExecuteCommandDialogReturn[" + getName() + "] is not valid for this command: "
+                    + command);
             return null;
         }
         else
         {
-            if (command==NutriPlugInServer.COMMAND_DB_FOOD_SELECTOR)
+            if (command == NutriPlugInServer.COMMAND_DB_FOOD_SELECTOR)
             {
-                DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(this.m_da, dialog, (String)data);
+                DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(this.m_da, dialog, (String) data);
 
                 if (dvms.wasAction())
                 {
                     Object[] ret = new Object[2];
                     ret[0] = dvms.getStringForDb();
                     ret[1] = dvms.getCHSum().replace(',', '.');
-                    
+
                     return ret;
                 }
                 else
                     return null;
             }
-            else if (command==NutriPlugInServer.COMMAND_RECALCULATE_CH)
+            else if (command == NutriPlugInServer.COMMAND_RECALCULATE_CH)
             {
-                PanelMealSelector pms = new PanelMealSelector(dialog, null, (String)data);
-                
+                PanelMealSelector pms = new PanelMealSelector(dialog, null, (String) data);
+
                 Object[] ret = new Object[2];
                 ret[0] = pms.getCHSumString();
-                
+
                 return ret;
             }
             else
                 return null;
         }
     }
-    
-    
-    
+
     /**
      * Get Backup Restore Handler
      * 
      * @return
      */
+    @Override
     public BackupRestorePlugin getBackupRestoreHandler()
     {
         return new BackupRestoreNutriHandler();
     }
-    
-    
+
 }

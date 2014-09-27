@@ -12,44 +12,48 @@ public abstract class MMPCommand implements Cloneable
         m_rawData = new int[m_bytesPerRecord * m_maxRecords];
     }
 
+    @Override
     public Object clone()
     {
         /*
          * FIXME: Problem Checkin
-        MMPCommand command = null;
-        try
-        {
-            command = (MMPCommand) super.clone();
-            command.m_packet = MedicalDevice.Util.clone(m_packet);
-            command.m_commandParameters = MedicalDevice.Util.clone(m_commandParameters);
-            command.m_rawData = MedicalDevice.Util.clone(m_rawData);
-            if (m_beginDate != null)
-                command.m_beginDate = (Date) m_beginDate.clone();
-            if (m_endDate != null)
-                command.m_endDate = (Date) m_endDate.clone();
-        }
-        catch (CloneNotSupportedException clonenotsupportedexception)
-        {
-            Contract.unreachable("Class not cloneable");
-        }
-        return command;*/
-        
+         * MMPCommand command = null;
+         * try
+         * {
+         * command = (MMPCommand) super.clone();
+         * command.m_packet = MedicalDevice.Util.clone(m_packet);
+         * command.m_commandParameters =
+         * MedicalDevice.Util.clone(m_commandParameters);
+         * command.m_rawData = MedicalDevice.Util.clone(m_rawData);
+         * if (m_beginDate != null)
+         * command.m_beginDate = (Date) m_beginDate.clone();
+         * if (m_endDate != null)
+         * command.m_endDate = (Date) m_endDate.clone();
+         * }
+         * catch (CloneNotSupportedException clonenotsupportedexception)
+         * {
+         * Contract.unreachable("Class not cloneable");
+         * }
+         * return command;
+         */
+
         return null;
     }
 
+    @Override
     public String toString()
     {
-        /* FIXME: Problem Checkin
-        StringBuffer stringbuffer = new StringBuffer();
-        stringbuffer.append(MedicalDevice.Util.getHex(m_commandCode));
-        stringbuffer.append(" (" + m_description);
-        for (int i = 0; i < m_commandParameterCount; i++)
-            stringbuffer.append(" p" + i + "=" + m_commandParameters[i]);
+        /*
+         * FIXME: Problem Checkin
+         * StringBuffer stringbuffer = new StringBuffer();
+         * stringbuffer.append(MedicalDevice.Util.getHex(m_commandCode));
+         * stringbuffer.append(" (" + m_description);
+         * for (int i = 0; i < m_commandParameterCount; i++)
+         * stringbuffer.append(" p" + i + "=" + m_commandParameters[i]);
+         * stringbuffer.append(") ");
+         * return stringbuffer.toString();
+         */
 
-        stringbuffer.append(") ");
-        return stringbuffer.toString();
-        */
-        
         return null;
     }
 
@@ -120,11 +124,11 @@ public abstract class MMPCommand implements Cloneable
         setUseMultiXmitMode(false);
     }
 
-    public MMPCommand(int command_code, String description, int rec_length, int max_records, int address, int address_length,
-            int command_type)
+    public MMPCommand(int command_code, String description, int rec_length, int max_records, int address,
+            int address_length, int command_type)
     {
         // FIXME: Problem Checkin
-        //super(description);
+        // super(description);
         m_numBytesRead = 0;
         m_extraObject = null;
         m_effectTime = 0;
@@ -136,9 +140,13 @@ public abstract class MMPCommand implements Cloneable
         m_addressLength = address_length;
         m_dataOffset = 2;
         if (address_length == 1)
+        {
             m_cmdLength = 2 + address_length;
+        }
         else
+        {
             m_cmdLength = 2 + address_length + 1;
+        }
         m_packet = new int[0];
         m_commandType = command_type;
         m_commandParameterCount = 0;

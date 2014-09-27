@@ -32,10 +32,9 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class AccuChekPerforma extends AccuChekSmartPixMeter
 {
-    
+
     /**
      * Constructor
      * 
@@ -45,8 +44,7 @@ public class AccuChekPerforma extends AccuChekSmartPixMeter
     {
         super(cmp);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -57,8 +55,7 @@ public class AccuChekPerforma extends AccuChekSmartPixMeter
     {
         super(drive_letter, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -70,13 +67,10 @@ public class AccuChekPerforma extends AccuChekSmartPixMeter
     {
         super(comm_parameters, writer, da);
     }
-    
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -88,9 +82,6 @@ public class AccuChekPerforma extends AccuChekSmartPixMeter
         return "Performa";
     }
 
-
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -100,7 +91,6 @@ public class AccuChekPerforma extends AccuChekSmartPixMeter
     {
         return "ac_performa.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -113,9 +103,6 @@ public class AccuChekPerforma extends AccuChekSmartPixMeter
         return MeterDevicesIds.METER_ACCUCHEK_PERFORMA;
     }
 
-    
-
-    
     /**
      * getInstructions - get instructions for device
      * 
@@ -125,7 +112,7 @@ public class AccuChekPerforma extends AccuChekSmartPixMeter
     {
         return "INSTRUCTIONS_ACCUCHEK_PERFORMA";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -135,41 +122,39 @@ public class AccuChekPerforma extends AccuChekSmartPixMeter
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
 
-    
     /**
      * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory
      * 
      * @return number
      */
+    @Override
     public int getMaxMemoryRecords()
     {
         return 500;
     }
-    
-    
+
     /**
      * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
      * @return number of elements
      */
+    @Override
     public int getNrOfElementsFor1s()
     {
         return 10;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -179,6 +164,5 @@ public class AccuChekPerforma extends AccuChekSmartPixMeter
     {
         return "ggc.meter.device.accuchek.AccuChekPerforma";
     }
-    
-}
 
+}

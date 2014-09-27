@@ -29,12 +29,9 @@ import ggc.plugin.device.impl.minimed.cmd.MinimedCommand;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public interface MinimedComm_Interface
 {
 
-
-    
     /**
      * Initialize Interface - Initialize interface 
      * 
@@ -42,8 +39,7 @@ public interface MinimedComm_Interface
      * @throws PlugInBaseException 
      */
     public int initializeCommunicationInterface() throws PlugInBaseException;
-    
-    
+
     /**
      * Close Interface - Close interface
      * 
@@ -52,7 +48,6 @@ public interface MinimedComm_Interface
      */
     public int closeCommunicationInterface() throws PlugInBaseException;
 
-    
     /**
      * Init Device - Init device 
      * 
@@ -60,9 +55,7 @@ public interface MinimedComm_Interface
      * @throws PlugInBaseException 
      */
     public int initDevice() throws PlugInBaseException;
-    
 
-    
     /**
      * Close Device - Close device 
      * 
@@ -70,8 +63,7 @@ public interface MinimedComm_Interface
      * @throws PlugInBaseException 
      */
     public int closeDevice() throws PlugInBaseException;
-    
-    
+
     /**
      * Decode message
      * 
@@ -80,7 +72,6 @@ public interface MinimedComm_Interface
      */
     public int[] decrypt(int[] input);
 
-    
     /**
      * Encode message
      * 
@@ -88,23 +79,19 @@ public interface MinimedComm_Interface
      * @return
      */
     public int[] encrypt(int[] input);
-    
-    
+
     /**
      * Does interface support encoding/decoding
      * @return
      */
     public boolean hasEncryptionSupport();
-    
-    
+
     /**
      * Dump Interface Status - Dump status of interface
      * 
      */
-    //public void dumpInterfaceStatus();
+    // public void dumpInterfaceStatus();
 
-    
-    
     /**
      * Execute Command
      * 
@@ -112,8 +99,7 @@ public interface MinimedComm_Interface
      * @throws PlugInBaseException
      */
     public boolean executeCommandRetry(int command_id) throws PlugInBaseException;
-    
-    
+
     /**
      * Execute Command
      * 
@@ -121,11 +107,7 @@ public interface MinimedComm_Interface
      * @throws PlugInBaseException
      */
     public boolean executeCommandRetry(MinimedCommand command) throws PlugInBaseException;
-    
-    
-    
+
     public void sendCommandReadData(MinimedCommand command) throws PlugInBaseException;
-    
-    
-    
+
 }

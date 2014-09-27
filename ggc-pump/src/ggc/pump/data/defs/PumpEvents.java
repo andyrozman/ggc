@@ -1,6 +1,5 @@
 package ggc.pump.data.defs;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -27,11 +26,9 @@ package ggc.pump.data.defs;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PumpEvents extends PumpDefsAbstract
 {
 
-    
     // infussion sets
     /**
      * Pump Event: Prime Infusion Set
@@ -47,30 +44,27 @@ public class PumpEvents extends PumpDefsAbstract
      * Pump Event: Cartridge Changed
      */
     public static final int PUMP_EVENT_CARTRIDGE_REWIND = 3;
-    
-    
+
     /**
      * Pump Event: Reservoir Low
      */
     public static final int PUMP_EVENT_RESERVOIR_LOW = 4;
-    
+
     /**
      * Pump Event: Reservoir Low
      */
     public static final int PUMP_EVENT_RESERVOIR_LOW_DESC = 5;
-    
-    
+
     /**
      * Pump Event: Temporary Basal Rate, Unit setting (1=%, 0=U)
      */
     public static final int PUMP_EVENT_SET_TEMPORARY_BASAL_RATE_TYPE = 10;
-    
+
     /**
      * Pump Event: Basal Pattern Set
      */
     public static final int PUMP_EVENT_SET_BASAL_PATTERN = 15;
-    
-    
+
     // start / end
 
     /**
@@ -92,20 +86,17 @@ public class PumpEvents extends PumpDefsAbstract
      * Pump Event: Power Up
      */
     public static final int PUMP_EVENT_POWER_UP = 23;
-    
-        
+
     /**
      * Pump Event: Self Test
      */
     public static final int PUMP_EVENT_SELF_TEST = 30;
 
-    
     /**
      * Pump Event: Download data
      */
     public static final int PUMP_EVENT_DOWNLOAD = 31;
-    
-    
+
     // date/time
 
     /**
@@ -118,58 +109,51 @@ public class PumpEvents extends PumpDefsAbstract
      */
     public static final int PUMP_EVENT_DATETIME_CORRECTED = 41;
 
-    
-    
     /**
      * Pump Event: Set Max Basal
      */
     public static final int PUMP_EVENT_SET_MAX_BASAL = 50;
-    
+
     /**
      * Pump Event: Set Max Bolus
      */
     public static final int PUMP_EVENT_SET_MAX_BOLUS = 51;
-    
-    
+
     /**
      * Pump Event: Battery Removed
      */
     public static final int PUMP_EVENT_BATERRY_REMOVED = 55;
-    
+
     /**
      * Pump Event: Battery Replaced
      */
     public static final int PUMP_EVENT_BATERRY_REPLACED = 56;
-    
+
     /**
      * Pump Event: Battery Low
      */
     public static final int PUMP_EVENT_BATERRY_LOW = 57;
-    
+
     /**
      * Pump Event: Battery Low (Desc)
      */
     public static final int PUMP_EVENT_BATERRY_LOW_DESC = 58;
 
-    
     /**
      * Pump Event: BG From Meter
      */
     public static final int PUMP_EVENT_BG_FROM_METER = 70;
-    
-    
+
     /**
      * Pump Event: Bolus Cancelled
      */
-    public static final int PUMP_EVENT_BOLUS_CANCELLED   = 80;
-    
-    
+    public static final int PUMP_EVENT_BOLUS_CANCELLED = 80;
+
     /**
      * Pump Event: Bolus Wizard
      */
-    public static final int PUMP_EVENT_BOLUS_WIZARD      = 81;
-    
-    
+    public static final int PUMP_EVENT_BOLUS_WIZARD = 81;
+
     /**
      * Constructor
      */
@@ -177,24 +161,24 @@ public class PumpEvents extends PumpDefsAbstract
     {
         super();
         setDataDesc(PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET, "EVENT_PRIME_INFUSION_SET");
-        setDataDesc(PumpEvents.PUMP_EVENT_CARTRIDGE_CHANGED, "EVENT_CARTRIDGE_CHANGED");     
+        setDataDesc(PumpEvents.PUMP_EVENT_CARTRIDGE_CHANGED, "EVENT_CARTRIDGE_CHANGED");
         setDataDesc(PumpEvents.PUMP_EVENT_CARTRIDGE_REWIND, "EVENT_REWIND_INFUSION_SET");
         setDataDesc(PumpEvents.PUMP_EVENT_RESERVOIR_LOW, "EVENT_RESERVOIR_LOW");
         setDataDesc(PumpEvents.PUMP_EVENT_RESERVOIR_LOW_DESC, "EVENT_RESERVOIR_LOW_DESC");
         setDataDesc(PumpEvents.PUMP_EVENT_SET_TEMPORARY_BASAL_RATE_TYPE, "EVENT_SET_TEMPORARY_BASAL_RATE_TYPE");
         setDataDesc(PumpEvents.PUMP_EVENT_SET_BASAL_PATTERN, "EVENT_SET_BASAL_PATTERN");
-        
+
         setDataDesc(PumpEvents.PUMP_EVENT_BASAL_RUN, "EVENT_BASAL_RUN");
         setDataDesc(PumpEvents.PUMP_EVENT_BASAL_STOP, "EVENT_BASAL_STOP");
         setDataDesc(PumpEvents.PUMP_EVENT_POWER_DOWN, "EVENT_POWER_DOWN");
         setDataDesc(PumpEvents.PUMP_EVENT_POWER_UP, "EVENT_POWER_UP");
-        
+
         setDataDesc(PumpEvents.PUMP_EVENT_SELF_TEST, "EVENT_SELF_TEST");
         setDataDesc(PumpEvents.PUMP_EVENT_DOWNLOAD, "EVENT_DOWNLOAD");
-        
+
         setDataDesc(PumpEvents.PUMP_EVENT_DATETIME_SET, "EVENT_DATETIME_SET");
         setDataDesc(PumpEvents.PUMP_EVENT_DATETIME_CORRECTED, "EVENT_DATETIME_CORRECT");
-        
+
         setDataDesc(PumpEvents.PUMP_EVENT_SET_MAX_BASAL, "EVENT_SET_MAX_BASAL");
         setDataDesc(PumpEvents.PUMP_EVENT_SET_MAX_BOLUS, "EVENT_SET_MAX_BOLUS");
 
@@ -205,25 +189,23 @@ public class PumpEvents extends PumpDefsAbstract
 
         setDataDesc(PumpEvents.PUMP_EVENT_BG_FROM_METER, "EVENT_BG_FROM_METER");
         // EVENT_SET_MAX_BASAL, EVENT_SET_MAX_BOLUS
-        // EVENT_BATERRY_REMOVED, EVENT_BATERRY_REPLACED, EVENT_BATERRY_LOW, EVENT_BATERRY_LOW_DESC, EVENT_BG_FROM_METER
+        // EVENT_BATERRY_REMOVED, EVENT_BATERRY_REPLACED, EVENT_BATERRY_LOW,
+        // EVENT_BATERRY_LOW_DESC, EVENT_BG_FROM_METER
 
         setDataDesc(PumpEvents.PUMP_EVENT_BOLUS_CANCELLED, "ALARM_BOLUS_CANCELED");
-        
+
         String s = "BG=%s;CH=%s;CH_UNIT=%s;CH_INS_RATIO=%s;BG_INS_RATIO=%s;BG_TARGET_LOW=%s;";
         s += "BG_TARGET_HIGH=%s;BOLUS_TOTAL=%s;BOLUS_CORRECTION=%s;BOLUS_FOOD=%s;";
         s += "UNABSORBED_INSULIN=%s";
 
-        
         setDataDesc(PumpEvents.PUMP_EVENT_BOLUS_WIZARD, "EVENT_BOLUS_WIZARD", s);
-        
-        
-        // EVENT_RESERVOIR_LOW, EVENT_RESERVOIR_LOW_DESC, EVENT_SET_TEMPORARY_BASAL_RATE_TYPE, EVENT_SET_BASAL_PATTERN
-     // EVENT_SELF_TEST, EVENT_DOWNLOAD
-        
+
+        // EVENT_RESERVOIR_LOW, EVENT_RESERVOIR_LOW_DESC,
+        // EVENT_SET_TEMPORARY_BASAL_RATE_TYPE, EVENT_SET_BASAL_PATTERN
+        // EVENT_SELF_TEST, EVENT_DOWNLOAD
+
     }
-    
-    
-    
+
     /**
      * Shows if this type of event has value associated with it (most don't) 
      * @param type
@@ -237,14 +219,10 @@ public class PumpEvents extends PumpDefsAbstract
             case PUMP_EVENT_SET_MAX_BOLUS:
             case PUMP_EVENT_BATERRY_LOW_DESC:
                 return true;
-        
+
             default:
                 return false;
         }
     }
-    
-    
-    
-    
-    
+
 }

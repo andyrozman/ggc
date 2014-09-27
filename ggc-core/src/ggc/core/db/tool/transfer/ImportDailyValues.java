@@ -39,8 +39,10 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
+import com.atech.db.hibernate.transfer.ImportExportAbstract;
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.db.hibernate.transfer.RestoreFileInfo;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -67,18 +69,16 @@ import com.atech.db.hibernate.transfer.RestoreFileInfo;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class ImportDailyValues extends ImportTool implements Runnable
 {
 
     GGCDb m_db = null;
-    //public String file_name;
+    // public String file_name;
     private static Log log = LogFactory.getLog(ImportDailyValues.class);
 
     DataAccess m_da = DataAccess.getInstance();
-    boolean clean_db = false; 
+    boolean clean_db = false;
 
-    
     /**
      * Constructor
      * 
@@ -89,9 +89,8 @@ public class ImportDailyValues extends ImportTool implements Runnable
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportTool.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
     }
-    
 
     /**
      * Constructor
@@ -104,11 +103,9 @@ public class ImportDailyValues extends ImportTool implements Runnable
         super(DataAccess.getInstance().getDb().getHibernateConfiguration(), res);
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportTool.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
     }
-    
-    
-    
+
     /**
      * @param file_name
      */
@@ -133,7 +130,9 @@ public class ImportDailyValues extends ImportTool implements Runnable
         this.restore_file = new File(file_name);
 
         if (identify)
+        {
             importDailyValues();
+        }
 
         System.out.println();
 
@@ -157,7 +156,6 @@ public class ImportDailyValues extends ImportTool implements Runnable
         System.out.println();
     }
 
-    
     /**
      * Set Import Clean
      * 
@@ -167,18 +165,16 @@ public class ImportDailyValues extends ImportTool implements Runnable
     {
         this.clean_db = clean;
     }
-    
-    
+
     /**
      * Get Active Session
      */
+    @Override
     public int getActiveSession()
     {
         return 2;
     }
-    
-    
-    
+
     /**
      * Import Daily Values
      */
@@ -187,35 +183,40 @@ public class ImportDailyValues extends ImportTool implements Runnable
 
         String line = null;
         boolean append = false;
-        
+
         try
         {
-            
+
             if (clean_db)
+            {
                 this.clearExistingData("ggc.core.db.hibernate.DayValueH");
+            }
             else
+            {
                 append = true;
-            
+            }
+
             System.out.println("\nLoading DailyValues (5/dot)");
-            
+
             this.openFileForReading(this.restore_file);
 
-            //BufferedReader br = new BufferedReader(new FileReader(this.restore_file)); //new File(file_name)));
+            // BufferedReader br = new BufferedReader(new
+            // FileReader(this.restore_file)); //new File(file_name)));
 
-           // int i = 0;
-            
+            // int i = 0;
+
             int dot_mark = 5;
             int count = 0;
-            
-            
 
             while ((line = this.br_file.readLine()) != null)
             {
                 if (line.startsWith(";"))
+                {
                     continue;
+                }
 
                 // line = line.replaceAll("||", "| |");
-                line = m_da.replaceExpression(line, "||", "| |");
+                line = ATDataAccessAbstract.replaceExpression(line, "||", "| |");
 
                 StringTokenizer strtok = new StringTokenizer(line, "|");
 
@@ -230,15 +231,17 @@ public class ImportDailyValues extends ImportTool implements Runnable
                 if (!append)
                 {
                     long id = this.getLong(strtok.nextToken());
-    
+
                     if (id != 0)
+                    {
                         dvh.setId(id);
+                    }
                 }
                 else
                 {
                     strtok.nextToken();
                 }
-                
+
                 dvh.setDt_info(getLong(strtok.nextToken()));
                 dvh.setBg(getInt(strtok.nextToken()));
                 dvh.setIns1((int) getFloat(strtok.nextToken()));
@@ -250,42 +253,40 @@ public class ImportDailyValues extends ImportTool implements Runnable
                 int person_id = this.getInt(strtok.nextToken());
 
                 if (person_id == 0)
+                {
                     dvh.setPerson_id(1);
+                }
                 else
+                {
                     dvh.setPerson_id(person_id);
+                }
 
                 dvh.setComment(getString(strtok.nextToken()));
                 dvh.setChanged(getLong(strtok.nextToken()));
 
                 /*
                  * String act = getString(strtok.nextToken());
-                 * 
                  * if (act != null) { dvh.setExtended("ACTIVITY=" + act); }
-                 * 
                  * String bef = "MTI"; // String bef = null;
-                 * 
                  * if (strtok.hasMoreElements()) { String comm =
                  * getString(strtok.nextToken());
-                 * 
                  * // remove if (bef!=null) comm += ";" + bef;
-                 * 
                  * if (comm!=null) dvh.setComment(comm); } else { if (bef!=null)
                  * dvh.setComment(bef); }
                  */
 
                 this.hibernate_util.addHibernate(dvh);
 
-                
                 count++;
                 this.writeStatus(dot_mark, count);
-                
-                /*
-                i++;
 
-                if (i % 5 == 0)
-                    System.out.print(".");*/
+                /*
+                 * i++;
+                 * if (i % 5 == 0)
+                 * System.out.print(".");
+                 */
             }
-            
+
             this.closeFile();
 
         }
@@ -298,16 +299,14 @@ public class ImportDailyValues extends ImportTool implements Runnable
 
     }
 
-    
     /**
      * Thread Run
      */
     public void run()
     {
         this.importDailyValues();
-    }    
-    
-    
+    }
+
     /**
      * @param args
      */

@@ -11,7 +11,8 @@ import java.util.List;
 
 public class DataPageToEGVDataConverter extends BytesConverterAbstract
 {
-    //private static final Log log = LogFactory.getLog(DataPageToEGVDataConverter.class);
+    // private static final Log log =
+    // LogFactory.getLog(DataPageToEGVDataConverter.class);
 
     public List<EGVRecord> convert(List<DatabasePage> pages) throws DexcomException
     {
@@ -34,7 +35,7 @@ public class DataPageToEGVDataConverter extends BytesConverterAbstract
 
             records.add(egv);
 
-            //log.debug(egv);
+            // log.debug(egv);
         }
 
         return records;

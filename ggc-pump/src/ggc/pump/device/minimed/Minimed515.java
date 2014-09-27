@@ -1,8 +1,5 @@
 package ggc.pump.device.minimed;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.impl.minimed.MinimedDevicesIds;
 import ggc.plugin.device.impl.minimed.cmd.MinimedCommand;
@@ -12,6 +9,9 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.manager.PumpDevicesIds;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
@@ -43,7 +43,8 @@ public class Minimed515 extends Minimed512
 {
 
     private static Log log = LogFactory.getLog(Minimed515.class);
-    //protected MinimedDeviceUtil utils = MinimedDeviceUtil.getInstance();
+
+    // protected MinimedDeviceUtil utils = MinimedDeviceUtil.getInstance();
 
     /**
      * Constructor
@@ -94,6 +95,7 @@ public class Minimed515 extends Minimed512
         super(cmp);
     }
 
+    @Override
     public void initDeviceSpecific()
     {
         super.initDeviceSpecific();
@@ -108,16 +110,12 @@ public class Minimed515 extends Minimed512
          * setBaudRate(i); m_serialConfig.setDataBits(3);
          * m_serialConfig.setStopBits(0); m_serialConfig.setParity(0);
          * m_serialConfig.setHandshake(0);
-         * 
          * Contract.pre(i == 7 || i == 8 || i == 9 || i == 10,
          * "bad baudRate value of " + i + "; must be " + 7 + ", " + 8 + ", " + 9
          * + " or " + 10); m_serialConfig.setBitRate(i);
-         * 
-         * 
          * public static final int HS_NONE = 0; public static final int
          * HS_XONXOFF = 1; public static final int HS_CTSRTS = 2; public static
          * final int HS_CTSDTR = 2; public static final int HS_DSRDTR = 3;
-         * 
          * public static final int HS_HARD_IN = 16; public static final int
          * HS_HARD_OUT = 32; public static final int HS_SOFT_IN = 64; public
          * static final int HS_SOFT_OUT = 128; public static final int
@@ -145,12 +143,12 @@ public class Minimed515 extends Minimed512
          */
     }
 
-
     /**
      * getName - Get Name of meter.
      * 
      * @return name of meter
      */
+    @Override
     public String getName()
     {
         return "Minimed 512/712 515/715";
@@ -161,6 +159,7 @@ public class Minimed515 extends Minimed512
      * 
      * @return icon name
      */
+    @Override
     public String getIconName()
     {
         return "mm_515_715.jpg";
@@ -172,6 +171,7 @@ public class Minimed515 extends Minimed512
      * 
      * @return id of device within company
      */
+    @Override
     public int getDeviceId()
     {
         return PumpDevicesIds.PUMP_MINIMED_515;
@@ -183,6 +183,7 @@ public class Minimed515 extends Minimed512
      * 
      * @return instructions for reading data
      */
+    @Override
     public String getInstructions()
     {
         return "INSTRUCTIONS_MINIMED_512";
@@ -193,6 +194,7 @@ public class Minimed515 extends Minimed512
      * 
      * @return comment or null
      */
+    @Override
     public String getComment()
     {
         return null;
@@ -204,6 +206,7 @@ public class Minimed515 extends Minimed512
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
+    @Override
     public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
@@ -215,6 +218,7 @@ public class Minimed515 extends Minimed512
      * 
      * @return class name as string
      */
+    @Override
     public String getDeviceClassName()
     {
         return "ggc.pump.device.minimed.Minimed512";
@@ -223,6 +227,7 @@ public class Minimed515 extends Minimed512
     /**
      * Get Max Memory Records
      */
+    @Override
     public int getMaxMemoryRecords()
     {
         return 0;
@@ -233,6 +238,7 @@ public class Minimed515 extends Minimed512
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
@@ -243,6 +249,7 @@ public class Minimed515 extends Minimed512
      * 
      * @return
      */
+    @Override
     public int howManyMonthsOfDataStored()
     {
         return -1;
@@ -255,6 +262,7 @@ public class Minimed515 extends Minimed512
      * 
      * @return
      */
+    @Override
     public String getTemporaryBasalTypeDefinition()
     {
         // return "TYPE=Unit;STEP=0.1";
@@ -266,6 +274,7 @@ public class Minimed515 extends Minimed512
      * 
      * @return
      */
+    @Override
     public float getBolusStep()
     {
         return 0.1f;
@@ -276,6 +285,7 @@ public class Minimed515 extends Minimed512
      * 
      * @return
      */
+    @Override
     public float getBasalStep()
     {
         return 0.1f;
@@ -286,129 +296,140 @@ public class Minimed515 extends Minimed512
      * 
      * @return
      */
+    @Override
     public boolean arePumpSettingsSet()
     {
         return false;
     }
 
+    @Override
     public boolean areConnectionParametersValid()
     {
         // TODO Auto-generated method stub
         return false;
     }
 
+    @Override
     public boolean areConnectionParametersValid(String param)
     {
         // TODO Auto-generated method stub
         return false;
     }
 
+    @Override
     public String getConnectionParameters()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @Override
     public DeviceSpecialConfigPanelInterface getSpecialConfigPanel()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+    @Override
     public boolean hasNoConnectionParameters()
     {
         // TODO Auto-generated method stub
         return false;
     }
 
+    @Override
     public boolean hasSpecialConfig()
     {
         // TODO Auto-generated method stub
         return false;
     }
 
+    @Override
     public void initSpecialConfig()
     {
         // TODO Auto-generated method stub
 
     }
 
+    @Override
     public void setConnectionParameters(String param)
     {
         // TODO Auto-generated method stub
 
     }
 
+    @Override
     public int getMinimedDeviceId()
     {
         return MinimedDevicesIds.PUMP_MINIMED_515;
     }
-    
-    
+
+    @Override
     public void createCommands()
     {
         super.createCommands();
-    
+
         // CONTROL COMMAND
-        util.addCommand(MinimedCommand.READ_CURRENT_PUMP_STATUS, new MinimedCommand(206, "Read Current Pump Status"));  // detect bolus ?? 
-        //m_cmdDetectBolus.m_maxRetries = 0;
-        
+        util.addCommand(MinimedCommand.READ_CURRENT_PUMP_STATUS, new MinimedCommand(206, "Read Current Pump Status")); // detect
+                                                                                                                       // bolus
+                                                                                                                       // ??
+        // m_cmdDetectBolus.m_maxRetries = 0;
+
         // PUMP SETTINGS
-        util.addCommand(MinimedCommand.SETTINGS, new MinimedCommand(192, "MM_COMMAND_READ_CURRENT_SETTINGS")); 
+        util.addCommand(MinimedCommand.SETTINGS, new MinimedCommand(192, "MM_COMMAND_READ_CURRENT_SETTINGS"));
         util.addCommand(MinimedCommand.READ_BG_TARGETS, new MinimedCommand(159, "Read BG Target Ranges"));
-        //util.addCommand(MinimedCommand.READ_SAVE_SETTINGS_DATE,  new MinimedCommand( 193, "Read Saved Settings Date"));
-        util.addCommand(MinimedCommand.READ_MISSED_BOLUS_REMINDER_ENABLE, new MinimedCommand( 197, "Read Bolus Reminder On/Off"));
-        util.addCommand(MinimedCommand.READ_MISSED_BOLUS_REMINDERS, new MinimedCommand( 198, "Read Bolus Reminders"));
-        //util.addCommand(MinimedCommand.READ_FACTORY_PARAMETERS , new MinimedCommand(199, "Read Factory Parameters"));
+        // util.addCommand(MinimedCommand.READ_SAVE_SETTINGS_DATE, new
+        // MinimedCommand( 193, "Read Saved Settings Date"));
+        util.addCommand(MinimedCommand.READ_MISSED_BOLUS_REMINDER_ENABLE, new MinimedCommand(197,
+                "Read Bolus Reminder On/Off"));
+        util.addCommand(MinimedCommand.READ_MISSED_BOLUS_REMINDERS, new MinimedCommand(198, "Read Bolus Reminders"));
+        // util.addCommand(MinimedCommand.READ_FACTORY_PARAMETERS , new
+        // MinimedCommand(199, "Read Factory Parameters"));
 
         // PUMP DATA COMMANDS
-        //util.addCommand(MinimedCommand.READ_CURRENT_HISTORY_PAGE_NUMBER, new MinimedCommand( 157, "Read Current History Download Page Number"));
-        
+        // util.addCommand(MinimedCommand.READ_CURRENT_HISTORY_PAGE_NUMBER, new
+        // MinimedCommand( 157, "Read Current History Download Page Number"));
 
         // REMOVED COMMANDS
-        //util.addCommand(MinimedCommand.READ_CONTRAST, new MinimedCommand( 195, "Read Contrast"));
-        
+        // util.addCommand(MinimedCommand.READ_CONTRAST, new MinimedCommand(
+        // 195, "Read Contrast"));
+
     }
-    
-    
-    
-    
+
+    @Override
     public Object convertDeviceReply(MinimedCommand mc)
     {
-//        log.debug("convertDeviceReply [code=" + mc.command_code + ",desc=" + mc.command_description + "]");
+        // log.debug("convertDeviceReply [code=" + mc.command_code + ",desc=" +
+        // mc.command_description + "]");
 
         switch (mc.command_code)
         {
-            
-            //case 145:
+
+        // case 145:
 
         /*
-        case 157: 
-            m_cmdReadHistoryData.m_maxRecords = decodeCurrentHistoryPageNumber(command.m_rawData);
-            m_cmdReadHistoryData.allocateRawData();
-            calcTotalBytesToRead();
-            break;
+         * case 157:
+         * m_cmdReadHistoryData.m_maxRecords =
+         * decodeCurrentHistoryPageNumber(command.m_rawData);
+         * m_cmdReadHistoryData.allocateRawData();
+         * calcTotalBytesToRead();
+         * break;
+         * case 206:
+         * decodePumpStatus(command.m_rawData);
+         * break;
+         */
 
-        case 206: 
-            decodePumpStatus(command.m_rawData);
-            break;
-        */
-        
             case MinimedCommand.READ_MISSED_BOLUS_REMINDER_ENABLE:
             case MinimedCommand.READ_MISSED_BOLUS_REMINDERS:
-                
-                
-                //return this.getUnknownSettings(mc);
-            
+
+                // return this.getUnknownSettings(mc);
+
             case 159:
                 return this.util.decoder.decode(mc);
-        
-            case 192: 
+
+            case 192:
                 return convertCurrentSettings(mc);
-            
-        
-        
-        
+
             default:
                 return super.convertDeviceReply(mc);
 
@@ -416,70 +437,79 @@ public class Minimed515 extends Minimed512
 
     }
 
-
-    
-    
+    @Override
     public boolean convertCurrentSettings(MinimedCommand cmd)
+    {
+        super.convertCurrentSettings(cmd);
+
+        log.debug("convertCurrentSettings");
+
+        util.config.addSetting("MM_SETTINGS_RESERVOIR_WARNING_TYPE",
+            cmd.reply.raw_data[18] != 0 ? "MM_RESERVOIR_WARNING_TYPE_TIME" : "MM_RESERVOIR_WARNING_TYPE_UNITS");
+        util.config.addSetting("MM_SETTINGS_RESERVOIR_WARNING_POINT", "" + cmd.reply.raw_data[19]);
+        util.config.addSetting("MM_SETTINGS_KEYPAD_LOCKED", util.decoder.parseResultEnable(cmd.reply.raw_data[20]));
+
+        return true;
+    }
+
+    @Override
+    public void convertInsulinActionSetting(int ai[])
+    {
+        int i = ai[17];
+        String s = "";
+
+        if (i == 0 || i == 1)
         {
-            super.convertCurrentSettings(cmd);
-
-            log.debug("convertCurrentSettings");
-            
-            
-            util.config.addSetting("MM_SETTINGS_RESERVOIR_WARNING_TYPE", cmd.reply.raw_data[18] != 0 ? "MM_RESERVOIR_WARNING_TYPE_TIME" : "MM_RESERVOIR_WARNING_TYPE_UNITS");
-            util.config.addSetting("MM_SETTINGS_RESERVOIR_WARNING_POINT", "" + cmd.reply.raw_data[19]);
-            util.config.addSetting("MM_SETTINGS_KEYPAD_LOCKED", util.decoder.parseResultEnable(cmd.reply.raw_data[20]));
-
-            return true;
+            s = ai[17] != 0 ? "MM_INSULIN_ACTION_TYPE_REGULAR" : "MM_INSULIN_ACTION_TYPE_FAST";
         }
-
-        public void convertInsulinActionSetting(int ai[]) 
+        else
         {
-            int i = ai[17];
-            String s = "";
-            
-            if ((i==0) || (i==1))
+            if (i == 15)
             {
-                s = (ai[17] != 0 ? "MM_INSULIN_ACTION_TYPE_REGULAR" : "MM_INSULIN_ACTION_TYPE_FAST");
+                s = "MM_INSULIN_ACTION_TYPE_UNSET";
             }
             else
             {
-                if (i==15)
-                    s = "MM_INSULIN_ACTION_TYPE_UNSET";
-                else
-                    s = "MM_INSULIN_ACTION_CURVE__" + i + "__";
+                s = "MM_INSULIN_ACTION_CURVE__" + i + "__";
             }
-            
-            util.config.addSetting("MM_SETTINGS_INSULIN_ACTION_TYPE", s);
         }
-    
-    
-    
-/*        
-        private void decodePumpStatus(int ai[])
-                throws BadDeviceValueException
-            {
-                Contract.pre(ai != null);
-                Contract.pre(ai.length == 64);
-                m_pumpStatusBolusing = MedicalDevice.Util.parseEnable(ai[1], "bolusing flag");
-                m_pumpStatusSuspended = MedicalDevice.Util.parseEnable(ai[2], "suspended flag");
-                log.info( (new StringBuilder()).append("decodePumpStatus: bolusing=").append(m_pumpStatusBolusing).append(", suspended=").append(m_pumpStatusSuspended).toString());
-            }
 
-            private int decodeCurrentHistoryPageNumber(int ai[])
-                throws BadDeviceValueException
-            {
-                Contract.pre(ai != null);
-                Contract.pre(ai.length == 64);
-                m_currentHistoryPageNumber = (int)MedicalDevice.Util.makeLong(ai[0], ai[1], ai[2], ai[3]);
-                int i = (m_currentHistoryPageNumber - (int)m_lastHistoryPageNumber) + 1;
-                if(i <= 0 || i > 36)
-                    i = 36;
-                log.info( (new StringBuilder()).append("decodeCurrentHistoryPageNumber: current page number (pump) = ").append(m_currentHistoryPageNumber).append(", last page number (system) = ").append(m_lastHistoryPageNumber).append(", pages to read = ").append(i).toString());
-                return i;
-            }
-  */      
-        
-    
+        util.config.addSetting("MM_SETTINGS_INSULIN_ACTION_TYPE", s);
+    }
+
+    /*
+     * private void decodePumpStatus(int ai[])
+     * throws BadDeviceValueException
+     * {
+     * Contract.pre(ai != null);
+     * Contract.pre(ai.length == 64);
+     * m_pumpStatusBolusing = MedicalDevice.Util.parseEnable(ai[1],
+     * "bolusing flag");
+     * m_pumpStatusSuspended = MedicalDevice.Util.parseEnable(ai[2],
+     * "suspended flag");
+     * log.info( (new
+     * StringBuilder()).append("decodePumpStatus: bolusing=").append
+     * (m_pumpStatusBolusing
+     * ).append(", suspended=").append(m_pumpStatusSuspended).toString());
+     * }
+     * private int decodeCurrentHistoryPageNumber(int ai[])
+     * throws BadDeviceValueException
+     * {
+     * Contract.pre(ai != null);
+     * Contract.pre(ai.length == 64);
+     * m_currentHistoryPageNumber = (int)MedicalDevice.Util.makeLong(ai[0],
+     * ai[1], ai[2], ai[3]);
+     * int i = (m_currentHistoryPageNumber - (int)m_lastHistoryPageNumber) + 1;
+     * if(i <= 0 || i > 36)
+     * i = 36;
+     * log.info( (new StringBuilder()).append(
+     * "decodeCurrentHistoryPageNumber: current page number (pump) = "
+     * ).append(m_currentHistoryPageNumber
+     * ).append(", last page number (system) = "
+     * ).append(m_lastHistoryPageNumber)
+     * .append(", pages to read = ").append(i).toString());
+     * return i;
+     * }
+     */
 
 }

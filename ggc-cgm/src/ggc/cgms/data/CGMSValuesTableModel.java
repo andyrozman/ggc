@@ -12,7 +12,6 @@ import java.util.Hashtable;
 
 import com.atech.utils.data.ATechDate;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       CGMS Tool (support for CGMS devices)
@@ -39,12 +38,10 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class CGMSValuesTableModel extends DeviceValuesTableModel 
+public class CGMSValuesTableModel extends DeviceValuesTableModel
 {
 
     private static final long serialVersionUID = 2881771615052748327L;
-
 
     /**
      * Constructor
@@ -59,68 +56,66 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
 
     }
 
-  
-  
     Hashtable<String, CGMSValuesEntry> htable = null;
     String old_key = null;
     CGMSValuesEntry current_main = null;
-    
+
     int i = 0;
-    
+
     /**
      * Add Entry
      * 
      * @param mve DeviceValuesEntry instance
      */
+    @Override
     public void addEntry(DeviceValuesEntryInterface mve)
     {
-        //if (i>5)
-        //    return;
-        
+        // if (i>5)
+        // return;
+
         if (mve instanceof CGMSValuesSubEntry)
         {
-        
-            CGMSValuesSubEntry se = (CGMSValuesSubEntry)mve;
-      
+
+            CGMSValuesSubEntry se = (CGMSValuesSubEntry) mve;
+
             String key = se.date + "_" + se.getType();
-            
-            if (old_key == null)   
+
+            if (old_key == null)
             {
                 old_key = key;
                 this.current_main = new CGMSValuesEntry();
             }
-            
+
             if (!old_key.equals(key))
             {
                 processDeviceValueEntry(this.current_main);
                 this.dl_data.add(this.current_main);
-                
+
                 if (this.shouldBeDisplayed(this.current_main.getStatus()))
                 {
                     this.displayed_dl_data.add(this.current_main);
                     Collections.sort(displayed_dl_data);
                 }
                 this.fireTableDataChanged();
-    
+
                 this.current_main = new CGMSValuesEntry();
-                
+
                 i++;
             }
-            
-            
+
             if (current_main.isEmpty())
             {
-                //CGMSValuesEntry cve = new CGMSValuesEntry();
+                // CGMSValuesEntry cve = new CGMSValuesEntry();
                 this.current_main.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, se.datetime));
                 this.current_main.setDate(se.date);
-                
+
                 this.current_main.setEmpty(false);
                 this.current_main.setType(se.getType());
-                //this.htable.put(key, cve);
+                // this.htable.put(key, cve);
                 this.current_main.addSubEntry(se);
-                
+
                 old_key = key;
-                
+
                 this.htable.put(key, this.current_main);
             }
             else
@@ -130,13 +125,12 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
         }
         else
         {
-            
-            CGMSValuesExtendedEntry ext = (CGMSValuesExtendedEntry)mve;
-            
-            
+
+            CGMSValuesExtendedEntry ext = (CGMSValuesExtendedEntry) mve;
+
             processDeviceValueEntry(ext);
             this.dl_data.add(ext);
-            
+
             if (this.shouldBeDisplayed(ext.getStatus()))
             {
                 this.displayed_dl_data.add(ext);
@@ -145,46 +139,40 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
             this.fireTableDataChanged();
 
         }
-        
-            
-        
-        
-        
-        /*
-        if (this.htable.containsKey(key))
-        {
-            this.htable.get(key).addSubEntry(se);
-        }
-        else
-        {
-            CGMSValuesEntry cve = new CGMSValuesEntry();
-            cve.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, se.datetime));
-            cve.addSubEntry(se);
-            this.htable.put(key, cve);
-        }*/
-        
-        //if se.
-        
-        //getDate(se.datetime);
-        
-        //System.out.println("HTable: " + htable.size());
-        
-        
-        /*
-        
-        System.out.println(".");
-        processDeviceValueEntry(mve);
-        this.dl_data.add(mve);
-        
-        if (this.shouldBeDisplayed(mve.getStatus()))
-        {
-            this.displayed_dl_data.add(mve);
-            Collections.sort(displayed_dl_data);
-        }
-        this.fireTableDataChanged();
-        */
-    }
 
+        /*
+         * if (this.htable.containsKey(key))
+         * {
+         * this.htable.get(key).addSubEntry(se);
+         * }
+         * else
+         * {
+         * CGMSValuesEntry cve = new CGMSValuesEntry();
+         * cve.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S,
+         * se.datetime));
+         * cve.addSubEntry(se);
+         * this.htable.put(key, cve);
+         * }
+         */
+
+        // if se.
+
+        // getDate(se.datetime);
+
+        // System.out.println("HTable: " + htable.size());
+
+        /*
+         * System.out.println(".");
+         * processDeviceValueEntry(mve);
+         * this.dl_data.add(mve);
+         * if (this.shouldBeDisplayed(mve.getStatus()))
+         * {
+         * this.displayed_dl_data.add(mve);
+         * Collections.sort(displayed_dl_data);
+         * }
+         * this.fireTableDataChanged();
+         */
+    }
 
     /**
      * Finish Reading
@@ -193,7 +181,7 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     {
         processDeviceValueEntry(this.current_main);
         this.dl_data.add(this.current_main);
-        
+
         if (this.shouldBeDisplayed(this.current_main.getStatus()))
         {
             this.displayed_dl_data.add(this.current_main);
@@ -201,23 +189,21 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
         }
         this.fireTableDataChanged();
     }
-    
-    
-
 
     /**
      * Process Device Value Entry
      * 
      * @param mve DeviceValuesEntry instance
      */
-/*    @Override
-    public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
-    {
-        mve.setStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
-        // TODO Auto-generated method stub
-    }
-*/
-    
+    /*
+     * @Override
+     * public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
+     * {
+     * mve.setStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
+     * // TODO Auto-generated method stub
+     * }
+     */
+
     /** 
      * Get Checkable Column
      */
@@ -226,7 +212,6 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     {
         return 3;
     }
-
 
     /**
      * Add To Array 
@@ -249,5 +234,5 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     {
         return new ArrayList<GGCHibernateObject>();
     }
-   
+
 }

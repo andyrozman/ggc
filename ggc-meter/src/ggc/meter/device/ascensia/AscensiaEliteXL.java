@@ -33,17 +33,15 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class AscensiaEliteXL extends AscensiaMeter
 {
-    
+
     /**
      * Constructor
      */
     public AscensiaEliteXL()
     {
     }
-    
 
     /**
      * Constructor
@@ -54,8 +52,7 @@ public class AscensiaEliteXL extends AscensiaMeter
     {
         super(cmp);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -64,10 +61,9 @@ public class AscensiaEliteXL extends AscensiaMeter
      */
     public AscensiaEliteXL(String portName, AbstractOutputWriter writer)
     {
-    	super(portName, writer);
+        super(portName, writer);
     }
 
-    
     /**
      * Constructor
      * 
@@ -79,12 +75,10 @@ public class AscensiaEliteXL extends AscensiaMeter
     {
         super(comm_parameters, writer, da);
     }
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -96,7 +90,6 @@ public class AscensiaEliteXL extends AscensiaMeter
         return "EliteXL";
     }
 
-
     /**
      * getIconName - Get Icon of meter
      * 
@@ -106,7 +99,6 @@ public class AscensiaEliteXL extends AscensiaMeter
     {
         return "ascensia_elite_xl.png";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -118,8 +110,7 @@ public class AscensiaEliteXL extends AscensiaMeter
     {
         return MeterDevicesIds.METER_ASCENSIA_ELITE_XL;
     }
-    
-    
+
     /**
      * getInstructions - get instructions for device
      * 
@@ -129,7 +120,7 @@ public class AscensiaEliteXL extends AscensiaMeter
     {
         return "INSTRUCTIONS_ASCENSIA_ELITE_XL";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -139,20 +130,18 @@ public class AscensiaEliteXL extends AscensiaMeter
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
-    
-    
+
     /** 
      * Get Device ClassName
      */
@@ -161,7 +150,6 @@ public class AscensiaEliteXL extends AscensiaMeter
         return "ggc.meter.device.ascensia.AscensiaEliteXL";
     }
 
-    
     /**
      * Maximum of records that device can store
      */
@@ -169,8 +157,5 @@ public class AscensiaEliteXL extends AscensiaMeter
     {
         return 120;
     }
-
-    
-    
 
 }

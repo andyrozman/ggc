@@ -30,27 +30,24 @@ import java.util.ArrayList;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class BaseListRoot 
+public class BaseListRoot
 {
 
     protected ArrayList<BaseListEntry> children = null;
     DataAccessPlugInBase m_da;
-    
 
     /**
      * Constructor
      * 
      * @param da
      */
-    public BaseListRoot(DataAccessPlugInBase da) 
+    public BaseListRoot(DataAccessPlugInBase da)
     {
         m_da = da;
         this.children = m_da.getWebListerItems();
-        //System.out.println("Children: " + this.children);
+        // System.out.println("Children: " + this.children);
     }
-    
-    
+
     /**
      * To String
      * 
@@ -59,8 +56,8 @@ public class BaseListRoot
     @Override
     public String toString()
     {
-        return String.format(m_da.getI18nControlInstance().getMessage("DEVICE_LIST_WEB"), m_da.getI18nControlInstance().getMessage("DEVICE_NAME_BIG"));
+        return String.format(m_da.getI18nControlInstance().getMessage("DEVICE_LIST_WEB"), m_da.getI18nControlInstance()
+                .getMessage("DEVICE_NAME_BIG"));
     }
-
 
 }

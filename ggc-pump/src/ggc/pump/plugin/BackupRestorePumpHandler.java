@@ -47,39 +47,30 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
 {
 
     I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
-    
-    private String[] object_desc = {
-        ic.getMessage("PUMP_DATA"),
-        ic.getMessage("PUMP_DATA_EXTENDED"),
-        ic.getMessage("PUMP_PROFILE")
-    };
-    
-    
-    private String[] object_name = {
-        "ggc.core.db.hibernate.pump.PumpDataH",
-        "ggc.core.db.hibernate.pump.PumpDataExtendedH",
-        "ggc.core.db.hibernate.pump.PumpProfileH"
-    };
-    
-    
-    
-    
+
+    private String[] object_desc = { ic.getMessage("PUMP_DATA"), ic.getMessage("PUMP_DATA_EXTENDED"),
+                                    ic.getMessage("PUMP_PROFILE") };
+
+    private String[] object_name = { "ggc.core.db.hibernate.pump.PumpDataH",
+                                    "ggc.core.db.hibernate.pump.PumpDataExtendedH",
+                                    "ggc.core.db.hibernate.pump.PumpProfileH" };
+
     /**
      * Constructor
      */
     public BackupRestorePumpHandler()
     {
-        //ic = I18nControl.getInstance();
+        // ic = I18nControl.getInstance();
     }
-    
 
     /**
      * Do Backup
      */
+    @Override
     public void doBackup(BackupRestoreRunner brr)
     {
 
-        for(int i=0; i<this.object_desc.length; i++)
+        for (int i = 0; i < this.object_desc.length; i++)
         {
             if (brr.isBackupObjectSelected(this.object_desc[i]))
             {
@@ -90,20 +81,22 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
                 brr.setStatus(100);
             }
             else
+            {
                 System.out.println("NOT Selected: " + this.object_desc[i]);
+            }
 
         }
-        
+
     }
-    
-    
+
     /**
      * Do Restore
      */
+    @Override
     public void doRestore(BackupRestoreRunner brr)
     {
 
-        for(int i=0; i<this.object_desc.length; i++)
+        for (int i = 0; i < this.object_desc.length; i++)
         {
             if (brr.isRestoreObjectSelected(this.object_name[i]))
             {
@@ -113,10 +106,9 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
                 brr.setStatus(100);
             }
         }
-        
+
     }
-    
-    
+
     /** 
      * Get Backup Restore Object
      */
@@ -124,22 +116,15 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
     public BackupRestoreObject getBackupRestoreObject(String class_name)
     {
         if (class_name.equals("ggc.core.db.hibernate.pump.PumpDataH"))
-        {
             return new PumpData();
-        }
         else if (class_name.equals("ggc.core.db.hibernate.pump.PumpDataExtendedH"))
-        {
             return new PumpDataExtended();
-        }
         if (class_name.equals("ggc.core.db.hibernate.pump.PumpProfileH"))
-        {
             return new PumpProfile();
-        }
         else
             return null;
     }
-    
-    
+
     /** 
      * Get Backup Restore Object
      */
@@ -148,24 +133,23 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
     {
         if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pump.PumpDataH"))
         {
-            PumpDataH eh = (PumpDataH)obj;
+            PumpDataH eh = (PumpDataH) obj;
             return new PumpData(eh);
         }
         else if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pump.PumpDataExtendedH"))
         {
-            PumpDataExtendedH eh = (PumpDataExtendedH)obj;
+            PumpDataExtendedH eh = (PumpDataExtendedH) obj;
             return new PumpDataExtended(eh);
         }
         else if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pump.PumpProfileH"))
         {
-            PumpProfileH eh = (PumpProfileH)obj;
+            PumpProfileH eh = (PumpProfileH) obj;
             return new PumpProfile(eh);
         }
         else
             return null;
-            
-    }
 
+    }
 
     /** 
      * Does Contain Backup Restore Object
@@ -173,15 +157,13 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
     @Override
     public boolean doesContainBackupRestoreObject(String bro_name)
     {
-        for(int i=0; i<this.object_name.length; i++)
+        for (String element : this.object_name)
         {
-            if (this.object_name[i].equals(bro_name))
+            if (element.equals(bro_name))
                 return true;
         }
-        
+
         return false;
     }
-    
-    
 
 }

@@ -18,6 +18,7 @@ import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
+import com.atech.db.hibernate.transfer.ImportExportAbstract;
 import com.atech.plugin.PlugInClient;
 
 /**
@@ -46,12 +47,11 @@ import com.atech.plugin.PlugInClient;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class GGCExporter extends ExportTool implements Runnable
 {
 
     DataAccess da = DataAccess.getInstance();
-    
+
     /**
      * Constructor
      * 
@@ -64,7 +64,7 @@ public class GGCExporter extends ExportTool implements Runnable
         checkPrerequisitesForAutoBackup();
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ExportTool.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
 
         // exportAll();
     }
@@ -78,46 +78,54 @@ public class GGCExporter extends ExportTool implements Runnable
     {
         super(cfg);
 
-        this.setTypeOfStatus(ExportNutritionDb.STATUS_DOT);
+        this.setTypeOfStatus(ImportExportAbstract.STATUS_DOT);
 
         checkPrerequisites();
         exportAll();
     }
 
-    
     private void checkPrerequisites()
     {
         File f = new File("../data");
 
         if (!f.exists())
+        {
             f.mkdir();
+        }
 
         f = new File("../data/export");
 
         if (!f.exists())
+        {
             f.mkdir();
+        }
 
         this.setRootPath("../data/export/");
         this.setFileLastPart("_" + getCurrentDateForFile());
     }
 
-    
     private void checkPrerequisitesForAutoBackup()
     {
         File f = new File("../data");
 
         if (!f.exists())
+        {
             f.mkdir();
+        }
 
         f = new File("../data/export");
 
         if (!f.exists())
+        {
             f.mkdir();
+        }
 
         f = new File("../data/export/tmp");
 
         if (!f.exists())
+        {
             f.mkdir();
+        }
 
         this.setRootPath("../data/export/tmp/");
         this.setFileLastPart("");
@@ -127,92 +135,77 @@ public class GGCExporter extends ExportTool implements Runnable
     {
         System.out.println("export: all");
 
-        if (this.backup_object!=null)
+        if (this.backup_object != null)
         {
             exportData(this.getBackupRestoreObject(this.backup_object));
             this.backup_object = null;
         }
-        //export(_DailyValues();
+        // export(_DailyValues();
     }
 
     /*
      * private void sleep(long ms) { try { Thread.sleep(ms); } catch(Exception
      * ex) {
-     * 
      * } }
      */
 
-    
     /**
      * Get Active Session
      */
+    @Override
     public int getActiveSession()
     {
         return 2;
     }
-    
 
     private BackupRestoreObject getBackupRestoreObject(String class_name)
     {
         // core
         if (class_name.equals("ggc.core.db.hibernate.DayValueH"))
-        {
             return new DailyValue();
-            //return null;
-        }
+        // return null;
         else if (class_name.equals("ggc.core.db.hibernate.ColorSchemeH"))
-        {
             return new SettingsColorScheme();
-        }
-        
-        
-        for(Enumeration<String> en= da.getPlugins().keys(); en.hasMoreElements(); )
+
+        for (Enumeration<String> en = da.getPlugins().keys(); en.hasMoreElements();)
         {
             String key = en.nextElement();
             PlugInClient pic = da.getPlugIn(key);
-            
+
             if (pic.getBackupRestoreHandler().doesContainBackupRestoreObject(class_name))
-            {
                 return pic.getBackupRestoreHandler().getBackupRestoreObject(class_name);
-            }
         }
-        
+
         return null;
-            
+
     }
-    
-    
+
     private BackupRestoreObject getBackupRestoreObject(Object obj, BackupRestoreObject bro)
     {
         if (bro.getBackupClassName().equals("ggc.core.db.hibernate.DayValueH"))
         {
-            DayValueH eh = (DayValueH)obj;
+            DayValueH eh = (DayValueH) obj;
             return new DailyValue(eh);
         }
         else if (bro.getBackupClassName().equals("ggc.core.db.hibernate.ColorSchemeH"))
         {
-            ColorSchemeH eh = (ColorSchemeH)obj;
+            ColorSchemeH eh = (ColorSchemeH) obj;
             return new SettingsColorScheme(eh);
         }
 
-        
-        for(Enumeration<String> en= da.getPlugins().keys(); en.hasMoreElements(); )
+        for (Enumeration<String> en = da.getPlugins().keys(); en.hasMoreElements();)
         {
             String key = en.nextElement();
             PlugInClient pic = da.getPlugIn(key);
-            
+
             if (pic.getBackupRestoreHandler().doesContainBackupRestoreObject(bro.getBackupClassName()))
-            {
                 return pic.getBackupRestoreHandler().getBackupRestoreObject(obj, bro);
-            }
         }
-        
+
         return null;
-            
+
     }
-    
-    
-    
+
     /**
      * Export Data (object name)
      * 
@@ -222,8 +215,7 @@ public class GGCExporter extends ExportTool implements Runnable
     {
         exportData(this.getBackupRestoreObject(name));
     }
-    
-    
+
     /**
      * Export Data (object)
      * 
@@ -231,10 +223,10 @@ public class GGCExporter extends ExportTool implements Runnable
      */
     public void exportData(BackupRestoreObject bro)
     {
-        //System.out.println("export: first");
-        
-        //System.out.println("BRO: " + bro);
-    
+        // System.out.println("export: first");
+
+        // System.out.println("BRO: " + bro);
+
         openFile(this.getRootPath() + bro.getBackupFile() + this.getFileLastPart() + ".dbe");
 
         writeHeader(bro, DataAccess.getInstance().current_db_version);
@@ -252,18 +244,21 @@ public class GGCExporter extends ExportTool implements Runnable
 
         while (it.hasNext())
         {
-            //System.out.println("export: next");
+            // System.out.println("export: next");
             BackupRestoreObject bt = getBackupRestoreObject(it.next(), bro);
-            
-            //DayValueH eh = (DayValueH) it.next();
+
+            // DayValueH eh = (DayValueH) it.next();
 
             this.writeToFile(bt);
-            
+
             /*
-            this.writeToFile(eh.getId() + "|" + eh.getDt_info() + "|" + eh.getBg() + "|" + eh.getIns1() + "|"
-                    + eh.getIns2() + "|" + eh.getCh() + "|" + eh.getMeals_ids() + "|" + eh.getExtended() + "|"
-                    + eh.getPerson_id() + "|" + eh.getComment() + "|" + eh.getChanged() + "\n");
-            */
+             * this.writeToFile(eh.getId() + "|" + eh.getDt_info() + "|" +
+             * eh.getBg() + "|" + eh.getIns1() + "|"
+             * + eh.getIns2() + "|" + eh.getCh() + "|" + eh.getMeals_ids() + "|"
+             * + eh.getExtended() + "|"
+             * + eh.getPerson_id() + "|" + eh.getComment() + "|" +
+             * eh.getChanged() + "\n");
+             */
             // sleep(25);
             count++;
             this.writeStatus(dot_mark, count);
@@ -274,7 +269,7 @@ public class GGCExporter extends ExportTool implements Runnable
 
     boolean running = true;
     String backup_object = null;
-    
+
     /**
      * Set Backup Object
      * 
@@ -284,8 +279,7 @@ public class GGCExporter extends ExportTool implements Runnable
     {
         this.backup_object = name;
     }
-    
-    
+
     /**
      * Run for Thread
      */
@@ -298,7 +292,8 @@ public class GGCExporter extends ExportTool implements Runnable
             {
                 Thread.sleep(2000);
             }
-            catch(Exception ex) {}
+            catch (Exception ex)
+            {}
         }
     }
 
@@ -309,7 +304,7 @@ public class GGCExporter extends ExportTool implements Runnable
     {
         this.running = false;
     }
-    
+
     /**
      * @param args
      */

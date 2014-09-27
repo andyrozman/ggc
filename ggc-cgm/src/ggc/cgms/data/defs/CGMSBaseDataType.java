@@ -1,8 +1,5 @@
 package ggc.cgms.data.defs;
 
-import ggc.cgms.data.defs.extended.CGMSExtendedDataType;
-import ggc.cgms.util.DataAccessCGMS;
-
 import java.util.HashMap;
 
 /**
@@ -32,66 +29,67 @@ import java.util.HashMap;
  */
 
 // IMPORTANT NOTICE:
-// This class is not implemented yet, all existing methods should be rechecked (they were copied from similar
+// This class is not implemented yet, all existing methods should be rechecked
+// (they were copied from similar
 // class, with different type of data.
 
 // TODO this class/enum is in refactoring process
 
-public enum CGMSBaseDataType {
+public enum CGMSBaseDataType
+{
 
-//    CGMS_BG_READING(1),
-//
-//    CGMS_METER_CALIBRATION(2),
-//
-//    CGMS_DATA_EVENT(3),
-//
-//    CGMS_DATA_ALARM(4),
-//
-//    CGMS_DATA_ERROR(5),
-//
-//    CGMS_TREND(6),
-    
-    None(0, "NONE"),
-    SensorReading(1, "CGMS_READING"),
-    MeterCalibration(2, "CALIBRATION_READINGS"),
-    DeviceAlarm(3, "CGMS_DATA_ALARM"),
-    DeviceEvent(4, "CGMS_DATA_EVENT"),
-    DeviceError(5, "CGMS_DATA_ERROR"),
-    SensorReadingTrend(6, "CGMS_READING_TREND"),
+    // CGMS_BG_READING(1),
+    //
+    // CGMS_METER_CALIBRATION(2),
+    //
+    // CGMS_DATA_EVENT(3),
+    //
+    // CGMS_DATA_ALARM(4),
+    //
+    // CGMS_DATA_ERROR(5),
+    //
+    // CGMS_TREND(6),
+
+    None(0, "NONE"), SensorReading(1, "CGMS_READING"), MeterCalibration(2, "CALIBRATION_READINGS"), DeviceAlarm(3,
+            "CGMS_DATA_ALARM"), DeviceEvent(4, "CGMS_DATA_EVENT"), DeviceError(5, "CGMS_DATA_ERROR"), SensorReadingTrend(
+            6, "CGMS_READING_TREND"),
 
     ;
 
-//    DataAccessCGMS.value_type[1] = this.i18n_plugin.getMessage("CGMS_READING");
-//    DataAccessCGMS.value_type[2] = this.i18n_plugin.getMessage("CALIBRATION_READINGS");
-//    DataAccessCGMS.value_type[4] = this.i18n_plugin.getMessage("CGMS_DATA_EVENT");
-//    DataAccessCGMS.value_type[3] = this.i18n_plugin.getMessage("CGMS_DATA_ALARM");
-//    DataAccessCGMS.value_type[5] = this.i18n_plugin.getMessage("CGMS_DATA_ERROR");
-//    DataAccessCGMS.value_type[6] = this.i18n_plugin.getMessage("CGMS_READING_TREND");
+    // DataAccessCGMS.value_type[1] =
+    // this.i18n_plugin.getMessage("CGMS_READING");
+    // DataAccessCGMS.value_type[2] =
+    // this.i18n_plugin.getMessage("CALIBRATION_READINGS");
+    // DataAccessCGMS.value_type[4] =
+    // this.i18n_plugin.getMessage("CGMS_DATA_EVENT");
+    // DataAccessCGMS.value_type[3] =
+    // this.i18n_plugin.getMessage("CGMS_DATA_ALARM");
+    // DataAccessCGMS.value_type[5] =
+    // this.i18n_plugin.getMessage("CGMS_DATA_ERROR");
+    // DataAccessCGMS.value_type[6] =
+    // this.i18n_plugin.getMessage("CGMS_READING_TREND");
 
-    
-    
     private int dataType;
 
-    
     private String description;
-    private static HashMap<Integer,CGMSBaseDataType> map = new HashMap<Integer,CGMSBaseDataType>();
-    
+    private static HashMap<Integer, CGMSBaseDataType> map = new HashMap<Integer, CGMSBaseDataType>();
+
     static
     {
-        for(CGMSBaseDataType el : values())
+        for (CGMSBaseDataType el : values())
         {
             map.put(el.getValue(), el);
         }
     }
-    
 
-    private CGMSBaseDataType(int type, String description) {
+    private CGMSBaseDataType(int type, String description)
+    {
         this.dataType = type;
         this.description = description;
     }
 
-
-    public int getValue() {
+    public int getValue()
+    {
         return dataType;
     }
 
@@ -111,6 +109,6 @@ public enum CGMSBaseDataType {
     public void setDescription(String description)
     {
         this.description = description;
-    } 
+    }
 
 }

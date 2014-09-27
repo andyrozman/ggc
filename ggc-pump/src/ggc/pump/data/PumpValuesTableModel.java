@@ -35,17 +35,13 @@ import java.util.ArrayList;
 
 // FIX: Remove unused methods...
 
-
-public class PumpValuesTableModel extends DeviceValuesTableModel 
+public class PumpValuesTableModel extends DeviceValuesTableModel
 {
 
     private static final long serialVersionUID = -3199123443953228082L;
 
-    //private I18nControl m_ic = I18nControl.getInstance();
+    // private I18nControl m_ic = I18nControl.getInstance();
     // x private DataAccessMeter m_da = DataAccessMeter.getInstance();
-
-
- 
 
     /**
      * Constructor
@@ -56,25 +52,20 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
     public PumpValuesTableModel(DeviceDataHandler ddh, String source)
     {
         super(DataAccessPump.getInstance(), ddh, source);
-        
+
     }
 
-    
     /**
      * Get Checkable Column (one column if checkable, all others are non-editable)
      * 
      * @return
      */
+    @Override
     public int getCheckableColumn()
     {
         return 6;
     }
-    
-    
-    
-    
 
-    
     /**
      * Process Pump Values Entry
      * 
@@ -82,67 +73,50 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
      */
     public void processPumpValuesEntry(PumpValuesEntry mve)
     {
-        // FIXME need to fix this... 
+        // FIXME need to fix this...
         /*
-        //System.out.println("processMeterValuesEntry");
-        if (old_data!=null)
-        {
-            //System.out.println("oldData != null");
-            long dt = mve.getDt_info(); //.getDateTime();
-            
-            //System.out.println("Dt='" + dt + "'");
-            
-            //System.out.println("Found: " + old_data.containsKey("" + dt));
-            
-            
-            if (!old_data.containsKey("" + dt))
-            {
-            //    System.out.println("not Contains");
-                mve.status = PumpValuesEntry.STATUS_NEW;
-                mve.object_status = PumpValuesEntry.OBJECT_STATUS_NEW;
-            }
-            else
-            {
-                
-             //   System.out.println("Found !!!");
-                
-                DayValueH gvh = old_data.get("" + dt);
-                  
-//                int vl = Integer.parseInt(mve.getBGValue(OutputUtil.BG_MGDL));
-                int vl = 1;
-                //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
-                if (gvh.getBg()==vl)
-                {
-                    mve.status = PumpValuesEntry.STATUS_OLD;
-                    mve.object_status = PumpValuesEntry.OBJECT_STATUS_OLD;
-                }
-                else
-                {
-                    mve.status = PumpValuesEntry.STATUS_CHANGED;
-                    mve.object_status = PumpValuesEntry.OBJECT_STATUS_EDIT;
-                    mve.entry_object = gvh;
-                    
-                    //System.out.println("Changed: " + gvh.getId());
-                    
-                }
-                    
-                //gvh.getBg()
-            }
-        }
-        else
-        {
-            System.out.println("oldData == null");
-
-            mve.status = PumpValuesEntry.STATUS_NEW;
-        }*/
+         * //System.out.println("processMeterValuesEntry");
+         * if (old_data!=null)
+         * {
+         * //System.out.println("oldData != null");
+         * long dt = mve.getDt_info(); //.getDateTime();
+         * //System.out.println("Dt='" + dt + "'");
+         * //System.out.println("Found: " + old_data.containsKey("" + dt));
+         * if (!old_data.containsKey("" + dt))
+         * {
+         * // System.out.println("not Contains");
+         * mve.status = PumpValuesEntry.STATUS_NEW;
+         * mve.object_status = PumpValuesEntry.OBJECT_STATUS_NEW;
+         * }
+         * else
+         * {
+         * // System.out.println("Found !!!");
+         * DayValueH gvh = old_data.get("" + dt);
+         * // int vl = Integer.parseInt(mve.getBGValue(OutputUtil.BG_MGDL));
+         * int vl = 1;
+         * //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
+         * if (gvh.getBg()==vl)
+         * {
+         * mve.status = PumpValuesEntry.STATUS_OLD;
+         * mve.object_status = PumpValuesEntry.OBJECT_STATUS_OLD;
+         * }
+         * else
+         * {
+         * mve.status = PumpValuesEntry.STATUS_CHANGED;
+         * mve.object_status = PumpValuesEntry.OBJECT_STATUS_EDIT;
+         * mve.entry_object = gvh;
+         * //System.out.println("Changed: " + gvh.getId());
+         * }
+         * //gvh.getBg()
+         * }
+         * }
+         * else
+         * {
+         * System.out.println("oldData == null");
+         * mve.status = PumpValuesEntry.STATUS_NEW;
+         * }
+         */
     }
-    
-  
-    
-    
-
-
-
 
     /**
      * Add To Array 
@@ -171,76 +145,56 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
      * 
      * @param mve DeviceValuesEntry instance
      */
-/*    @Override
-    public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
-    {
-        System.out.println("processDeviceValuesEntry: Pump");
-        
-        //dvei.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_NEW
-        
-        mve.setObjectStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
-        
-        
-        
-        
-        /*
-        //System.out.println("processMeterValuesEntry");
-        if (old_data!=null)
-        {
-            //System.out.println("oldData != null");
-            long dt = mve.getDt_info(); //.getDateTime();
-            
-            //System.out.println("Dt='" + dt + "'");
-            
-            //System.out.println("Found: " + old_data.containsKey("" + dt));
-            
-            
-            if (!old_data.containsKey("" + dt))
-            {
-            //    System.out.println("not Contains");
-                mve.status = PumpValuesEntry.STATUS_NEW;
-                mve.object_status = PumpValuesEntry.OBJECT_STATUS_NEW;
-            }
-            else
-            {
-                
-             //   System.out.println("Found !!!");
-                
-                DayValueH gvh = old_data.get("" + dt);
-                  
-//                int vl = Integer.parseInt(mve.getBGValue(OutputUtil.BG_MGDL));
-                int vl = 1;
-                //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
-                if (gvh.getBg()==vl)
-                {
-                    mve.status = PumpValuesEntry.STATUS_OLD;
-                    mve.object_status = PumpValuesEntry.OBJECT_STATUS_OLD;
-                }
-                else
-                {
-                    mve.status = PumpValuesEntry.STATUS_CHANGED;
-                    mve.object_status = PumpValuesEntry.OBJECT_STATUS_EDIT;
-                    mve.entry_object = gvh;
-                    
-                    //System.out.println("Changed: " + gvh.getId());
-                    
-                }
-                    
-                //gvh.getBg()
-            }
-        }
-        else
-        {
-            System.out.println("oldData == null");
+    /*
+     * @Override
+     * public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
+     * {
+     * System.out.println("processDeviceValuesEntry: Pump");
+     * //dvei.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_NEW
+     * mve.setObjectStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
+     * /*
+     * //System.out.println("processMeterValuesEntry");
+     * if (old_data!=null)
+     * {
+     * //System.out.println("oldData != null");
+     * long dt = mve.getDt_info(); //.getDateTime();
+     * //System.out.println("Dt='" + dt + "'");
+     * //System.out.println("Found: " + old_data.containsKey("" + dt));
+     * if (!old_data.containsKey("" + dt))
+     * {
+     * // System.out.println("not Contains");
+     * mve.status = PumpValuesEntry.STATUS_NEW;
+     * mve.object_status = PumpValuesEntry.OBJECT_STATUS_NEW;
+     * }
+     * else
+     * {
+     * // System.out.println("Found !!!");
+     * DayValueH gvh = old_data.get("" + dt);
+     * // int vl = Integer.parseInt(mve.getBGValue(OutputUtil.BG_MGDL));
+     * int vl = 1;
+     * //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
+     * if (gvh.getBg()==vl)
+     * {
+     * mve.status = PumpValuesEntry.STATUS_OLD;
+     * mve.object_status = PumpValuesEntry.OBJECT_STATUS_OLD;
+     * }
+     * else
+     * {
+     * mve.status = PumpValuesEntry.STATUS_CHANGED;
+     * mve.object_status = PumpValuesEntry.OBJECT_STATUS_EDIT;
+     * mve.entry_object = gvh;
+     * //System.out.println("Changed: " + gvh.getId());
+     * }
+     * //gvh.getBg()
+     * }
+     * }
+     * else
+     * {
+     * System.out.println("oldData == null");
+     * mve.status = PumpValuesEntry.STATUS_NEW;
+     * }
+     */
 
-            mve.status = PumpValuesEntry.STATUS_NEW;
-        }*/
-        
-        
-  //  }
-    
+    // }
 
-    
-    
-    
 }

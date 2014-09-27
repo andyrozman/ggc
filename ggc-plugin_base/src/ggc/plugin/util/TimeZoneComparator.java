@@ -30,8 +30,7 @@ import java.util.Comparator;
 
 public class TimeZoneComparator implements Comparator<String>
 {
- 
-    
+
     /**
      * Compare two TimeZones.
      * 
@@ -45,18 +44,14 @@ public class TimeZoneComparator implements Comparator<String>
         // System.out.println(pFirst + " " + pSecond);
 
         if (areSameType(pFirst, pSecond))
-        {
-            return ((pFirst.compareTo(pSecond)) * typeChanger(pFirst, pSecond));
-        }
+            return pFirst.compareTo(pSecond) * typeChanger(pFirst, pSecond);
         else
         {
-            if ((pFirst.startsWith("(GMT-"))) // && (second.contains("(GMT)")))
-            {
+            if (pFirst.startsWith("(GMT-"))
                 return -1;
-            }
-            else if ((pFirst.startsWith("(GMT)"))) // &&
-                                                   // (second.contains("(GMT)"
-                                                   // )))
+            else if (pFirst.startsWith("(GMT)")) // &&
+                                                 // (second.contains("(GMT)"
+                                                 // )))
             {
                 if (pSecond.startsWith("(GMT-"))
                     return 1;
@@ -64,16 +59,14 @@ public class TimeZoneComparator implements Comparator<String>
                     return -1;
             }
             else
-            {
                 return 1;
-            }
 
         }
     } // end compare
 
     private int typeChanger(String first, String second)
     {
-        if ((first.startsWith("(GMT-")) && (second.startsWith("(GMT-")))
+        if (first.startsWith("(GMT-") && second.startsWith("(GMT-"))
             return -1;
         else
             return 1;
@@ -81,12 +74,9 @@ public class TimeZoneComparator implements Comparator<String>
 
     private boolean areSameType(String first, String second)
     {
-        if (((first.startsWith("(GMT+")) && (second.startsWith("(GMT+")))
-                || ((first.startsWith("(GMT)")) && (second.startsWith("(GMT)")))
-                || ((first.startsWith("(GMT-")) && (second.startsWith("(GMT-"))))
-        {
+        if (first.startsWith("(GMT+") && second.startsWith("(GMT+") || first.startsWith("(GMT)")
+                && second.startsWith("(GMT)") || first.startsWith("(GMT-") && second.startsWith("(GMT-"))
             return true;
-        }
         else
             return false;
 

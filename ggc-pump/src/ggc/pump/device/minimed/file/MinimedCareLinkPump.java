@@ -44,7 +44,7 @@ import java.util.Hashtable;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class MinimedCareLinkPump extends MinimedCareLink 
+public class MinimedCareLinkPump extends MinimedCareLink
 {
     DataAccessPump m_dap;
     /**
@@ -52,21 +52,19 @@ public class MinimedCareLinkPump extends MinimedCareLink
      */
     public String[] profile_names = null;
     ArrayList<MinimedCareLinkPumpData> profiles;
-    
+
     @SuppressWarnings("unused")
-    private Hashtable<String,String> defs_pump = null;
-    private Hashtable<String,String> defs_profile = null;
-    
-    
+    private Hashtable<String, String> defs_pump = null;
+    private Hashtable<String, String> defs_profile = null;
+
     /**
      * Defs Pump Config
      */
-    public Hashtable<String,String> defs_pump_config = null;
-    
+    public Hashtable<String, String> defs_pump_config = null;
+
     private Hashtable<String, MinimedCareLinkPumpData> config = null;
     boolean m_read_config = false;
-    
-    
+
     /**
      * Constructor
      * 
@@ -77,41 +75,39 @@ public class MinimedCareLinkPump extends MinimedCareLink
     public MinimedCareLinkPump(DataAccessPlugInBase da, OutputWriter ow, int reading_type)
     {
         super(da, ow, reading_type);
-        //this.m_read_config = read_config;
+        // this.m_read_config = read_config;
         createDeviceValuesWriter();
-        m_dap = (DataAccessPump)da;
+        m_dap = (DataAccessPump) da;
         setMappingData();
         setDefinitions();
     }
 
-    
-    
-    
+    @Override
     public void setMappingData()
     {
         // new PumpAlarms();
         this.alarm_mappings.put("4", PumpAlarms.PUMP_ALARM_NO_DELIVERY);
-        
+
         profile_names = new String[3];
         profile_names[0] = "Standard";
         profile_names[1] = "Pattern A";
         profile_names[2] = "Pattern B";
 
-        profiles = new ArrayList<MinimedCareLinkPumpData>(); 
+        profiles = new ArrayList<MinimedCareLinkPumpData>();
     }
 
     private void setDefinitions()
     {
-        this.defs_pump = new Hashtable<String,String>(); 
-        this.defs_profile = new Hashtable<String,String>();
-        this.defs_pump_config = new Hashtable<String,String>();
+        this.defs_pump = new Hashtable<String, String>();
+        this.defs_profile = new Hashtable<String, String>();
+        this.defs_pump_config = new Hashtable<String, String>();
         this.config = new Hashtable<String, MinimedCareLinkPumpData>();
 
-        this.defs_profile.put("ChangeBasalProfile", "");        // change basal
-        this.defs_profile.put("ChangeBasalProfilePattern", "");  // 
+        this.defs_profile.put("ChangeBasalProfile", ""); // change basal
+        this.defs_profile.put("ChangeBasalProfilePattern", ""); //
         this.defs_profile.put("ChangeBasalProfilePre", "");
         this.defs_profile.put("ChangeBasalProfilePatternPre", "");
-        
+
         this.defs_pump_config.put("CurrentAlarmNotifyMode", "");
         this.defs_pump_config.put("CurrentBolusReminderEnable", "");
         this.defs_pump_config.put("CurrentDisplayLanguage", "");
@@ -124,7 +120,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
         this.defs_pump_config.put("CurrentRFEnable", "");
         this.defs_pump_config.put("CurrentKeypadLockedEnable", "");
         this.defs_pump_config.put("CurrentVariableBolusEnable", "");
-        
+
         this.defs_pump_config.put("CurrentMaxBasal", "");
         this.defs_pump_config.put("CurrentInsulinActionCurve", "");
         this.defs_pump_config.put("CurrentMaxBolus", "");
@@ -134,7 +130,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
         this.defs_pump_config.put("CurrentTimeDisplayFormat", "");
         this.defs_pump_config.put("CurrentTempBasalType", "");
         this.defs_pump_config.put("CurrentPumpModelNumber", "");
-        
+
         this.defs_pump_config.put("CurrentAutoOffDuration", "");
         this.defs_pump_config.put("CurrentVariableBasalProfilePatternEnable", "");
         this.defs_pump_config.put("CurrentAudioBolusStep", "");
@@ -144,32 +140,31 @@ public class MinimedCareLinkPump extends MinimedCareLink
         this.defs_pump_config.put("x7", "");
         this.defs_pump_config.put("x8", "");
         this.defs_pump_config.put("x9", "");
-        
-/*
-        this.defs_pump_config.put("x1", "");
-        this.defs_pump_config.put("x2", "");
-        this.defs_pump_config.put("x3", "");
-        this.defs_pump_config.put("x4", "");
-        this.defs_pump_config.put("x5", "");
-        this.defs_pump_config.put("x6", "");
-        this.defs_pump_config.put("x7", "");
-        this.defs_pump_config.put("x8", "");
-        this.defs_pump_config.put("x9", "");
-  */      
-        
-        
-        //this.defs_pump_config.put("x", "");
+
+        /*
+         * this.defs_pump_config.put("x1", "");
+         * this.defs_pump_config.put("x2", "");
+         * this.defs_pump_config.put("x3", "");
+         * this.defs_pump_config.put("x4", "");
+         * this.defs_pump_config.put("x5", "");
+         * this.defs_pump_config.put("x6", "");
+         * this.defs_pump_config.put("x7", "");
+         * this.defs_pump_config.put("x8", "");
+         * this.defs_pump_config.put("x9", "");
+         */
+
+        // this.defs_pump_config.put("x", "");
         // FIXME
-        
+
     }
-    
-    
+
     long debug = 0L;
     MinimedCareLinkPumpData BGTargetRange = null;
-    
+
+    @Override
     public void readLineData(String line, int count)
     {
-        
+
         String[] ld = buildLineData(line);
 
         MinimedCareLinkPumpData mcld = new MinimedCareLinkPumpData(ld, line, this);
@@ -179,7 +174,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
             if (m_reading_type == READ_DEVICE_DATA)
             {
                 // pump data
-                
+
                 if (mcld.isProfileData())
                 {
                     mcld.processData();
@@ -188,17 +183,16 @@ public class MinimedCareLinkPump extends MinimedCareLink
                 else
                 {
                     mcld.processData();
-                    //System.out.println(mcld.getUnprocessedData());
+                    // System.out.println(mcld.getUnprocessedData());
                 }
             }
             else
             {
                 // config
-                
-                if (mcld.isConfigData()) 
+
+                if (mcld.isConfigData())
                 {
 
-                    
                     if (mcld.getKey().startsWith("CurrentBGTargetRange"))
                     {
                         if (mcld.getKey().equals("CurrentBGTargetRangePattern"))
@@ -219,16 +213,17 @@ public class MinimedCareLinkPump extends MinimedCareLink
                         }
                         else
                         {
-                            if (BGTargetRange.dt_long==mcld.dt_long)
+                            if (BGTargetRange.dt_long == mcld.dt_long)
+                            {
                                 BGTargetRange.children.add(mcld);
+                            }
                         }
-                        
-                        
-                        
-//                        CurrentBGTargetRangePattern,"ORIGINAL_UNITS=mmol l, SIZE=1",861682954,2232381,93,Paradigm 522
-//                        CurrentBGTargetRange,"PATTERN_DATUM=861682954, INDEX=0, AMOUNT_LOW=99,088, AMOUNT_HIGH=108,096, START_TIME=0",861682955,2232381,94,Paradigm 522                    
-                        
-                        
+
+                        // CurrentBGTargetRangePattern,"ORIGINAL_UNITS=mmol l, SIZE=1",861682954,2232381,93,Paradigm
+                        // 522
+                        // CurrentBGTargetRange,"PATTERN_DATUM=861682954, INDEX=0, AMOUNT_LOW=99,088, AMOUNT_HIGH=108,096, START_TIME=0",861682955,2232381,94,Paradigm
+                        // 522
+
                     }
                     else
                     {
@@ -246,110 +241,93 @@ public class MinimedCareLinkPump extends MinimedCareLink
                         }
                     }
                 } // config data
-                
-                
-            
-            }  // else
-        } // device_data
-            
-        
-        
-        
-/*            
-            if (mcld.isProfileData())
-            {
-                profiles.add(mcld);
-            }
-            else if ((mcld.isConfigData()) && (m_read_config))
-            {
 
-                
-                if (mcld.getKey().startsWith("CurrentBGTargetRange"))
-                {
-                    if (mcld.getKey().equals("CurrentBGTargetRangePattern"))
-                    {
-                        if (BGTargetRange == null)
-                        {
-                            BGTargetRange = mcld;
-                            BGTargetRange.children = new ArrayList<MinimedCareLinkPumpData>();
-                        }
-                        else
-                        {
-                            if (BGTargetRange.dt_long < mcld.dt_long)
-                            {
-                                BGTargetRange = mcld;
-                                BGTargetRange.children = new ArrayList<MinimedCareLinkPumpData>();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (BGTargetRange.dt_long==mcld.dt_long)
-                            BGTargetRange.children.add(mcld);
-                    }
-                    
-                    
-                    
-//                    CurrentBGTargetRangePattern,"ORIGINAL_UNITS=mmol l, SIZE=1",861682954,2232381,93,Paradigm 522
-//                    CurrentBGTargetRange,"PATTERN_DATUM=861682954, INDEX=0, AMOUNT_LOW=99,088, AMOUNT_HIGH=108,096, START_TIME=0",861682955,2232381,94,Paradigm 522                    
-                    
-                    
-                }
-                else
-                {
-                    if (config.containsKey(mcld.getKey()))
-                    {
-                        if (config.get(mcld.getKey()).dt_long < mcld.dt_long)
-                        {
-                            config.remove(mcld.getKey());
-                            config.put(mcld.getKey(), mcld);
-                        }
-                    }
-                    else
-                    {
-                        config.put(mcld.getKey(), mcld);
-                    }
-                }
-                
-                
-                
-                
-                // process data on the fly
-                
-                
-                //profiles.add(mcld);
-            }
-            else if (mcld.isProcessed())
-            {
-                //mcld.
-                //System.out.println("Proc: " + line);
-            }
-            else if (mcld.isDebuged())
-            {
-                //System.out.println(mcld.toString());
-                System.out.println("Debug: " + line);
-                debug++;
-            }
-*/
-        
-        //else
-        //    System.out.println("NoDeviceData: " + line);
-            
+            } // else
+        } // device_data
+
+        /*
+         * if (mcld.isProfileData())
+         * {
+         * profiles.add(mcld);
+         * }
+         * else if ((mcld.isConfigData()) && (m_read_config))
+         * {
+         * if (mcld.getKey().startsWith("CurrentBGTargetRange"))
+         * {
+         * if (mcld.getKey().equals("CurrentBGTargetRangePattern"))
+         * {
+         * if (BGTargetRange == null)
+         * {
+         * BGTargetRange = mcld;
+         * BGTargetRange.children = new ArrayList<MinimedCareLinkPumpData>();
+         * }
+         * else
+         * {
+         * if (BGTargetRange.dt_long < mcld.dt_long)
+         * {
+         * BGTargetRange = mcld;
+         * BGTargetRange.children = new ArrayList<MinimedCareLinkPumpData>();
+         * }
+         * }
+         * }
+         * else
+         * {
+         * if (BGTargetRange.dt_long==mcld.dt_long)
+         * BGTargetRange.children.add(mcld);
+         * }
+         * //
+         * CurrentBGTargetRangePattern,"ORIGINAL_UNITS=mmol l, SIZE=1",861682954
+         * ,2232381,93,Paradigm 522
+         * // CurrentBGTargetRange,
+         * "PATTERN_DATUM=861682954, INDEX=0, AMOUNT_LOW=99,088, AMOUNT_HIGH=108,096, START_TIME=0"
+         * ,861682955,2232381,94,Paradigm 522
+         * }
+         * else
+         * {
+         * if (config.containsKey(mcld.getKey()))
+         * {
+         * if (config.get(mcld.getKey()).dt_long < mcld.dt_long)
+         * {
+         * config.remove(mcld.getKey());
+         * config.put(mcld.getKey(), mcld);
+         * }
+         * }
+         * else
+         * {
+         * config.put(mcld.getKey(), mcld);
+         * }
+         * }
+         * // process data on the fly
+         * //profiles.add(mcld);
+         * }
+         * else if (mcld.isProcessed())
+         * {
+         * //mcld.
+         * //System.out.println("Proc: " + line);
+         * }
+         * else if (mcld.isDebuged())
+         * {
+         * //System.out.println(mcld.toString());
+         * System.out.println("Debug: " + line);
+         * debug++;
+         * }
+         */
+
+        // else
+        // System.out.println("NoDeviceData: " + line);
 
         // if (count==5105)
         // showCollection(ld);
 
         // System.out.println(count + ": [size=" + ld.length + ",id=" +
         // ld[0] + ",el33=" + ld[33] + "]");
-        
-        
 
     }
 
     private void createDeviceValuesWriter()
     {
-        //<<this.dvw = new DeviceValuesWriter(false);
-        
+        // <<this.dvw = new DeviceValuesWriter(false);
+
         this.dvw = new DeviceValuesWriter(true);
         this.dvw.setOutputWriter(this.output_writer);
 
@@ -358,99 +336,80 @@ public class MinimedCareLinkPump extends MinimedCareLink
 
         // FIXME
 
-        this.dvw.put("Prime", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-                PumpBaseType.PUMP_DATA_EVENT,
+        this.dvw.put("Prime", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_EVENT,
                 PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET));
-        
-        this.dvw.put("Rewind", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-                PumpBaseType.PUMP_DATA_EVENT,
+
+        this.dvw.put("Rewind", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_EVENT,
                 PumpEvents.PUMP_EVENT_CARTRIDGE_REWIND));
-        
-        this.dvw.put("AlarmPump", new PumpTempValues(PumpTempValues.OBJECT_BASE_SET_SUBTYPE, 
-            PumpBaseType.PUMP_DATA_ALARM));
 
-        this.dvw.put("BolusNormal", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_BOLUS,
-            PumpBolusType.PUMP_BOLUS_STANDARD));
+        this.dvw.put("AlarmPump", new PumpTempValues(PumpTempValues.OBJECT_BASE_SET_SUBTYPE,
+                PumpBaseType.PUMP_DATA_ALARM));
 
-        this.dvw.put("BolusSquare", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_BOLUS,
-            PumpBolusType.PUMP_BOLUS_SQUARE));
-        
-        this.dvw.put("BolusMultiwave", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_BOLUS,
-            PumpBolusType.PUMP_BOLUS_MULTIWAVE));
-        
-        this.dvw.put("BolusWizardBolusEstimate", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_EVENT,
-            PumpEvents.PUMP_EVENT_BOLUS_WIZARD));
-        
-        this.dvw.put("BGReceived", new PumpTempValues(PumpTempValues.OBJECT_EXT, 
-            PumpAdditionalDataType.PUMP_ADD_DATA_BG));
-        
+        this.dvw.put("BolusNormal", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_BOLUS,
+                PumpBolusType.PUMP_BOLUS_STANDARD));
+
+        this.dvw.put("BolusSquare", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_BOLUS,
+                PumpBolusType.PUMP_BOLUS_SQUARE));
+
+        this.dvw.put("BolusMultiwave", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_BOLUS,
+                PumpBolusType.PUMP_BOLUS_MULTIWAVE));
+
+        this.dvw.put("BolusWizardBolusEstimate", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+                PumpBaseType.PUMP_DATA_EVENT, PumpEvents.PUMP_EVENT_BOLUS_WIZARD));
+
+        this.dvw.put("BGReceived", new PumpTempValues(PumpTempValues.OBJECT_EXT,
+                PumpAdditionalDataType.PUMP_ADD_DATA_BG));
+
         // ChangeTempBasalPercent
-        this.dvw.put("ChangeTempBasalPercent", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_BASAL,
-            PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE));
-        
-        this.dvw.put("TBROver", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_BASAL,
-            PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_ENDED));
-        
-        this.dvw.put("ChangeActiveBasalProfilePattern", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_BASAL,
-            PumpBasalSubType.PUMP_BASAL_PROFILE));
+        this.dvw.put("ChangeTempBasalPercent", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+                PumpBaseType.PUMP_DATA_BASAL, PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE));
 
-        this.dvw.put("ChangeSuspendEnable", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_EVENT,
-            PumpEvents.PUMP_EVENT_BASAL_STOP));
-            
-        this.dvw.put("ChangeSuspendEnableNot", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_EVENT,
-            PumpEvents.PUMP_EVENT_BASAL_RUN));
-        
-        this.dvw.put("ResultDailyTotal", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_REPORT,
-            PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY));
+        this.dvw.put("TBROver", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_BASAL,
+                PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_ENDED));
 
-        this.dvw.put("SelfTest", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_EVENT,
-            PumpEvents.PUMP_EVENT_SELF_TEST));
-        
-        this.dvw.put("ChangeTime", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_EVENT,
-            PumpEvents.PUMP_EVENT_SELF_TEST));
-        
-        
-        
-        this.dvw.put("JournalEntryPumpLowBattery", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_ALARM,
-            PumpAlarms.PUMP_ALARM_BATTERY_LOW));
-        
-        this.dvw.put("JournalEntryPumpLowReservoir", new PumpTempValues(PumpTempValues.OBJECT_BASE, 
-            PumpBaseType.PUMP_DATA_ALARM,
-            PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW));
-        
-        
+        this.dvw.put("ChangeActiveBasalProfilePattern", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+                PumpBaseType.PUMP_DATA_BASAL, PumpBasalSubType.PUMP_BASAL_PROFILE));
+
+        this.dvw.put("ChangeSuspendEnable", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+                PumpBaseType.PUMP_DATA_EVENT, PumpEvents.PUMP_EVENT_BASAL_STOP));
+
+        this.dvw.put("ChangeSuspendEnableNot", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+                PumpBaseType.PUMP_DATA_EVENT, PumpEvents.PUMP_EVENT_BASAL_RUN));
+
+        this.dvw.put("ResultDailyTotal", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_REPORT,
+                PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY));
+
+        this.dvw.put("SelfTest", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_EVENT,
+                PumpEvents.PUMP_EVENT_SELF_TEST));
+
+        this.dvw.put("ChangeTime", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_EVENT,
+                PumpEvents.PUMP_EVENT_SELF_TEST));
+
+        this.dvw.put("JournalEntryPumpLowBattery", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+                PumpBaseType.PUMP_DATA_ALARM, PumpAlarms.PUMP_ALARM_BATTERY_LOW));
+
+        this.dvw.put("JournalEntryPumpLowReservoir", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+                PumpBaseType.PUMP_DATA_ALARM, PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW));
+
     }
 
-    
-    
+    @Override
     public void postProcessing()
     {
 
         if (m_reading_type == READ_DEVICE_DATA)
         {
-            //ArrayList<MinimedCareLinkPumpData> profiles
-            
-            Hashtable<String,MinimedCareLinkPumpProfile> profiles_proc = new Hashtable<String,MinimedCareLinkPumpProfile>(); 
-            
-            for(int i=0; i<profiles.size(); i++)
+            // ArrayList<MinimedCareLinkPumpData> profiles
+
+            Hashtable<String, MinimedCareLinkPumpProfile> profiles_proc = new Hashtable<String, MinimedCareLinkPumpProfile>();
+
+            for (int i = 0; i < profiles.size(); i++)
             {
-                //System.out.println(profiles.get(i)); //.getUnprocessedData());
+                // System.out.println(profiles.get(i));
+                // //.getUnprocessedData());
                 MinimedCareLinkPumpData d = profiles.get(i);
                 String dt = d.date + "_" + d.time;
-                
+
                 if (profiles_proc.containsKey(dt))
                 {
                     profiles_proc.get(dt).add(d);
@@ -459,47 +418,41 @@ public class MinimedCareLinkPump extends MinimedCareLink
                 {
                     MinimedCareLinkPumpProfile pp = new MinimedCareLinkPumpProfile(dt, this);
                     pp.add(d);
-                    
+
                     profiles_proc.put(dt, pp);
                 }
-                
-                
-                //System.out.println(profiles.get(i).raw_type + " = " + profiles.get(i).raw_values); //.getUnprocessedData());
+
+                // System.out.println(profiles.get(i).raw_type + " = " +
+                // profiles.get(i).raw_values); //.getUnprocessedData());
             }
-            
-            for(MinimedCareLinkPumpProfile mcp : profiles_proc.values() )
+
+            for (MinimedCareLinkPumpProfile mcp : profiles_proc.values())
             {
-             //   System.out.println(mcp);
+                // System.out.println(mcp);
             }
-            
-            
-            
-            
+
         }
         else
         {
-        
+
             System.out.println(" ===  Config entries -- Start");
-            
-            for(Enumeration<String> en = this.config.keys(); en.hasMoreElements(); )
+
+            for (Enumeration<String> en = this.config.keys(); en.hasMoreElements();)
             {
                 String key = en.nextElement();
                 MinimedCareLinkPumpData mcld = this.config.get(key);
-                
+
                 System.out.println(mcld.raw_type + " = " + mcld.processed_value);
             }
-            
+
             System.out.println(" ===  Config entries -- End");
-            
-            
+
             System.out.println("Debug count left: " + debug);
             System.out.println("Profile entries: " + this.profiles.size());
-            
+
             System.out.println("BGTargetRange: " + BGTargetRange);
         }
-        
-    }
-    
-    
-}
 
+    }
+
+}

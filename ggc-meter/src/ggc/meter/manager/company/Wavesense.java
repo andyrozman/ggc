@@ -1,4 +1,4 @@
-package ggc.meter.manager.company; 
+package ggc.meter.manager.company;
 
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.DataAccessMeter;
@@ -31,80 +31,70 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Wavesense extends AbstractDeviceCompany
 {
 
-    
     /**
      * Constructor
      */
     public Wavesense()
     {
-        super(true,                                 // empty devices
-            MeterDevicesIds.COMPANY_WAVESENSE,      // company_id
-            "Wave Sense",                           // company name (full)
-            "Wave Sense",                           // short company name
-            "WAVESENSE_DESC",                       // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED,
-            DataAccessMeter.getInstance());  // implementation status
+        super(true, // empty devices
+                MeterDevicesIds.COMPANY_WAVESENSE, // company_id
+                "Wave Sense", // company name (full)
+                "Wave Sense", // short company name
+                "WAVESENSE_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                                                                                                       // status
     }
 
-
-
-    
-    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
+    // ********************************************************
+    // *** Meter Company Identification Methods ***
+    // ********************************************************
 
     /**
      * getName - Get Name of meter. 
      * 
      * @return name of meter
      */
+    @Override
     public String getName()
     {
         return "Wave Sense";
     }
 
-    
     /**
      * getCompanyId - Get Company Id 
      * 
      * @return id of company
      */
+    @Override
     public int getCompanyId()
     {
         return 12;
     }
-    
-    
+
     /**
      * getInstructions - get instructions for device
      * 
      * @return instructions for reading data 
      */
+    @Override
     public String getDescription()
     {
-       return "WAVESENSE_DESC"; 
+        return "WAVESENSE_DESC";
     }
-    
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
+    @Override
     public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
     }
-    
-    
-    
+
 }

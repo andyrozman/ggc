@@ -54,7 +54,7 @@ public class DexcomUtils
         converters.put(ConverterType.DataPageToUserEventDataConverter, new DataPageToUserEventDataConverter());
         converters.put(ConverterType.DataPagesToMeterConverter, new DataPagesToMeterConverter());
         converters.put(ConverterType.DataPageToFileConverter, new DataPageToFileConverter());
-        
+
     }
 
     public enum BitConversion
@@ -68,12 +68,12 @@ public class DexcomUtils
     {
         switch (flag)
         {
-        case BIG_ENDIAN: // BitConverter.FLAG_JAVA:
-            return ((b[0] & 0xff) << 24) | ((b[1] & 0xff) << 16) | ((b[2] & 0xff) << 8) | (b[3] & 0xff);
-        case LITTLE_ENDIAN:
-            return ((b[3] & 0xff) << 24) | ((b[2] & 0xff) << 16) | ((b[1] & 0xff) << 8) | (b[0] & 0xff);
-        default:
-            throw new IllegalArgumentException("BitConverter: toInt");
+            case BIG_ENDIAN: // BitConverter.FLAG_JAVA:
+                return (b[0] & 0xff) << 24 | (b[1] & 0xff) << 16 | (b[2] & 0xff) << 8 | b[3] & 0xff;
+            case LITTLE_ENDIAN:
+                return (b[3] & 0xff) << 24 | (b[2] & 0xff) << 16 | (b[1] & 0xff) << 8 | b[0] & 0xff;
+            default:
+                throw new IllegalArgumentException("BitConverter: toInt");
         }
     }
 
@@ -81,12 +81,12 @@ public class DexcomUtils
     {
         switch (flag)
         {
-        case BIG_ENDIAN: // BitConverter.FLAG_JAVA:
-            return ((b[0] & 0xff) << 24) | ((b[1] & 0xff) << 16) | ((b[2] & 0xff) << 8) | (b[3] & 0xff);
-        case LITTLE_ENDIAN:
-            return ((b[3] & 0xff) << 24) | ((b[2] & 0xff) << 16) | ((b[1] & 0xff) << 8) | (b[0] & 0xff);
-        default:
-            throw new IllegalArgumentException("BitConverter: toInt");
+            case BIG_ENDIAN: // BitConverter.FLAG_JAVA:
+                return (b[0] & 0xff) << 24 | (b[1] & 0xff) << 16 | (b[2] & 0xff) << 8 | b[3] & 0xff;
+            case LITTLE_ENDIAN:
+                return (b[3] & 0xff) << 24 | (b[2] & 0xff) << 16 | (b[1] & 0xff) << 8 | b[0] & 0xff;
+            default:
+                throw new IllegalArgumentException("BitConverter: toInt");
         }
     }
 
@@ -94,12 +94,12 @@ public class DexcomUtils
     {
         switch (flag)
         {
-        case BIG_ENDIAN: // BitConverter.FLAG_JAVA:
-            return (short) (((b[0] & 0xff) << 8) | (b[1] & 0xff));
-        case LITTLE_ENDIAN:
-            return (short) (((b[1] & 0xff) << 8) | (b[0] & 0xff));
-        default:
-            throw new IllegalArgumentException("BitConverter: toInt");
+            case BIG_ENDIAN: // BitConverter.FLAG_JAVA:
+                return (short) ((b[0] & 0xff) << 8 | b[1] & 0xff);
+            case LITTLE_ENDIAN:
+                return (short) ((b[1] & 0xff) << 8 | b[0] & 0xff);
+            default:
+                throw new IllegalArgumentException("BitConverter: toInt");
         }
     }
 
@@ -107,12 +107,12 @@ public class DexcomUtils
     {
         switch (flag)
         {
-        case BIG_ENDIAN: // BitConverter.FLAG_JAVA:
-            return (short) (((b[0] & 0xff) << 8) | (b[1] & 0xff));
-        case LITTLE_ENDIAN:
-            return (short) (((b[1] & 0xff) << 8) | (b[0] & 0xff));
-        default:
-            throw new IllegalArgumentException("BitConverter: toInt");
+            case BIG_ENDIAN: // BitConverter.FLAG_JAVA:
+                return (short) ((b[0] & 0xff) << 8 | b[1] & 0xff);
+            case LITTLE_ENDIAN:
+                return (short) ((b[1] & 0xff) << 8 | b[0] & 0xff);
+            default:
+                throw new IllegalArgumentException("BitConverter: toInt");
         }
     }
 
@@ -120,12 +120,12 @@ public class DexcomUtils
     {
         switch (flag)
         {
-        case BIG_ENDIAN: // BitConverter.FLAG_JAVA:
-            return ((b[0] & 0xff) << 8) | (b[1] & 0xff);
-        case LITTLE_ENDIAN:
-            return ((b[1] & 0xff) << 8) | (b[0] & 0xff);
-        default:
-            throw new IllegalArgumentException("BitConverter: toInt");
+            case BIG_ENDIAN: // BitConverter.FLAG_JAVA:
+                return (b[0] & 0xff) << 8 | b[1] & 0xff;
+            case LITTLE_ENDIAN:
+                return (b[1] & 0xff) << 8 | b[0] & 0xff;
+            default:
+                throw new IllegalArgumentException("BitConverter: toInt");
         }
     }
 
@@ -154,20 +154,20 @@ public class DexcomUtils
         byte[] b = new byte[4];
         switch (flag)
         {
-        case 0:
-            b[0] = (byte) ((i >> 24) & 0xff);
-            b[1] = (byte) ((i >> 16) & 0xff);
-            b[2] = (byte) ((i >> 8) & 0xff);
-            b[3] = (byte) (i & 0xff);
-            break;
-        case 1:
-            b[3] = (byte) ((i >> 24) & 0xff);
-            b[2] = (byte) ((i >> 16) & 0xff);
-            b[1] = (byte) ((i >> 8) & 0xff);
-            b[0] = (byte) (i & 0xff);
-            break;
-        default:
-            break;
+            case 0:
+                b[0] = (byte) (i >> 24 & 0xff);
+                b[1] = (byte) (i >> 16 & 0xff);
+                b[2] = (byte) (i >> 8 & 0xff);
+                b[3] = (byte) (i & 0xff);
+                break;
+            case 1:
+                b[3] = (byte) (i >> 24 & 0xff);
+                b[2] = (byte) (i >> 16 & 0xff);
+                b[1] = (byte) (i >> 8 & 0xff);
+                b[0] = (byte) (i & 0xff);
+                break;
+            default:
+                break;
         }
         return b;
     }
@@ -179,11 +179,11 @@ public class DexcomUtils
         int crc = 0;
         for (int i = start; i < end; i++)
         {
-            crc = ((crc >>> 8) | (crc << 8)) & 0xffff;
-            crc ^= (buff[i] & 0xff);
-            crc ^= ((crc & 0xff) >> 4);
-            crc ^= (crc << 12) & 0xffff;
-            crc ^= ((crc & 0xFF) << 5) & 0xffff;
+            crc = (crc >>> 8 | crc << 8) & 0xffff;
+            crc ^= buff[i] & 0xff;
+            crc ^= (crc & 0xff) >> 4;
+            crc ^= crc << 12 & 0xffff;
+            crc ^= (crc & 0xFF) << 5 & 0xffff;
         }
         crc &= 0xffff;
         return crc;
@@ -194,11 +194,11 @@ public class DexcomUtils
         int crc = 0;
         for (int i = start; i < end; i++)
         {
-            crc = ((crc >>> 8) | (crc << 8)) & 0xffff;
-            crc ^= (buff[i] & 0xff);
-            crc ^= ((crc & 0xff) >> 4);
-            crc ^= (crc << 12) & 0xffff;
-            crc ^= ((crc & 0xFF) << 5) & 0xffff;
+            crc = (crc >>> 8 | crc << 8) & 0xffff;
+            crc ^= buff[i] & 0xff;
+            crc ^= (crc & 0xff) >> 4;
+            crc ^= crc << 12 & 0xffff;
+            crc ^= (crc & 0xFF) << 5 & 0xffff;
         }
         crc &= 0xffff;
         return crc;
@@ -209,11 +209,11 @@ public class DexcomUtils
         long crc = 0;
         for (int i = start; i < end; i++)
         {
-            crc = ((crc >>> 8) | (crc << 8)) & 0xffff;
-            crc ^= (buff[i] & 0xff);
-            crc ^= ((crc & 0xff) >> 4);
-            crc ^= (crc << 12) & 0xffff;
-            crc ^= ((crc & 0xFF) << 5) & 0xffff;
+            crc = (crc >>> 8 | crc << 8) & 0xffff;
+            crc ^= buff[i] & 0xff;
+            crc ^= (crc & 0xff) >> 4;
+            crc ^= crc << 12 & 0xffff;
+            crc ^= (crc & 0xFF) << 5 & 0xffff;
         }
         crc &= 0xffff;
         return (int) crc;
@@ -231,25 +231,25 @@ public class DexcomUtils
 
     public static PartitionInfo getPartitionInfo() throws DexcomException
     {
-    	return dexcomG4Api.readDatabasePartitionInfo();
-    	
-//        if (partitionInfo == null)
-//        {
-//            partitionInfo = dexcomG4Api.readDatabasePartitionInfo();
-//        }
-//
-//        return partitionInfo;
+        return dexcomG4Api.readDatabasePartitionInfo();
+
+        // if (partitionInfo == null)
+        // {
+        // partitionInfo = dexcomG4Api.readDatabasePartitionInfo();
+        // }
+        //
+        // return partitionInfo;
     }
 
     public static Partition getPartition(ReceiverRecordType recordType) throws DexcomException
     {
-    	return dexcomG4Api.getPartition(recordType);
-//        if (partitionInfo == null)
-//        {
-//            getPartitionInfo();
-//        }
-//
-//        return partitionInfo.getPartitionByRecordType(recordType);
+        return dexcomG4Api.getPartition(recordType);
+        // if (partitionInfo == null)
+        // {
+        // getPartitionInfo();
+        // }
+        //
+        // return partitionInfo.getPartitionByRecordType(recordType);
     }
 
     public static Element createXmlTree(String xmlData) throws DexcomException
@@ -315,8 +315,8 @@ public class DexcomUtils
     {
         int dt = timeSeconds;
 
-        if ((parsing == DexcomDateParsing.DateWithDifference) || // 
-                (parsing == DexcomDateParsing.DateWithDifferenceWithTimeZoneFix))
+        if (parsing == DexcomDateParsing.DateWithDifference || //
+                parsing == DexcomDateParsing.DateWithDifferenceWithTimeZoneFix)
         {
             dt += readDisplayTimeOffset();
         }
@@ -336,10 +336,10 @@ public class DexcomUtils
         }
 
         // Epoch is PST, but but having epoch have user timezone added, then
-        // don't have to add to the // display time 
+        // don't have to add to the // display time
 
         long milliseconds = epoch.getTime();
-        long timeAdd = milliseconds + (1000L * dt);
+        long timeAdd = milliseconds + 1000L * dt;
 
         if (parsing == DexcomDateParsing.DateWithDifferenceWithTimeZoneFix)
         {
@@ -363,14 +363,10 @@ public class DexcomUtils
     {
         return shortUtils;
     }
-    
-    
-    
 
     public static Object getConverter(ConverterType converterType)
     {
         return converters.get(converterType);
     }
 
-    
 }

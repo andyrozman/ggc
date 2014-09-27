@@ -30,7 +30,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class HomeWeightDataDisplay extends ATTableData
 {
 
@@ -77,7 +76,9 @@ public class HomeWeightDataDisplay extends ATTableData
             String ww = val.substring(index + 1);
 
             if (ww.startsWith("."))
+            {
                 ww = "0" + ww;
+            }
 
             this.weight = Float.parseFloat(ww);
         }
@@ -102,7 +103,7 @@ public class HomeWeightDataDisplay extends ATTableData
         nic = ic;
 
         this.id = "" + def.getId();
-        this.setHomeWeightDefinition(def.getResolvedName()); //.getName());
+        this.setHomeWeightDefinition(def.getResolvedName()); // .getName());
         // this.setAmount(amount);
 
         this.amount = amount;
@@ -114,6 +115,7 @@ public class HomeWeightDataDisplay extends ATTableData
      * 
      * @see com.atech.graphics.components.ATTableData#init()
      */
+    @Override
     public void init()
     {
         String[] cols = { /* "ID", */"WEIGHT_TYPE", "AMOUNT_LBL", "WEIGHT" };
@@ -127,19 +129,20 @@ public class HomeWeightDataDisplay extends ATTableData
      * 
      * @see com.atech.graphics.components.ATTableData#getColumnValue(int)
      */
+    @Override
     public String getColumnValue(int column)
     {
         switch (column)
         {
-        case 1:
-            return "" + this.amount;
+            case 1:
+                return "" + this.amount;
 
-        case 2:
-            return "" + this.weight;
+            case 2:
+                return "" + this.weight;
 
-        case 0:
-        default:
-            return this.weight_type;
+            case 0:
+            default:
+                return this.weight_type;
 
         }
     }
@@ -188,7 +191,6 @@ public class HomeWeightDataDisplay extends ATTableData
          * this.decimal_places); float f = 0.0f; try { f =
          * Float.parseFloat(this.value.replace(',', '.')); } catch(Exception ex)
          * { System.out.println("Float parse ex: " + ex); }
-         * 
          * return f;
          */
     }
@@ -233,13 +235,9 @@ public class HomeWeightDataDisplay extends ATTableData
     {
 
         if (this.amount != 1.0f)
-        {
             return this.id + "=" + this.amount + "*" + weight;
-        }
         else
-        {
             return this.id + "=" + this.weight;
-        }
     }
 
 }

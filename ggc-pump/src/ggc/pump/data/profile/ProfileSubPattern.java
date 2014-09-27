@@ -1,9 +1,9 @@
 package ggc.pump.data.profile;
 
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.util.DataAccessPump;
 
 import com.atech.utils.data.ATechDate;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -31,49 +31,44 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-// this is now used instead ProfileSubEntry, but we need to keep all variables, methods and constructors
-public class ProfileSubPattern extends ProfileSubEntry //implements Comparable<ProfileSubPattern>
+// this is now used instead ProfileSubEntry, but we need to keep all variables,
+// methods and constructors
+public class ProfileSubPattern extends ProfileSubEntry // implements
+                                                       // Comparable<ProfileSubPattern>
 {
 
-    
-    
     /**
      * The time_start.
      */
-    //public int time_start;
-    
+    // public int time_start;
+
     /**
      * The time_end.
      */
-    //public int time_end;
+    // public int time_end;
 
-    
     /**
      * The time_start.
      */
     public long dt_start;
-    
+
     /**
      * The time_end.
      */
     public long dt_end;
-    
-    
+
     /**
      * The amount.
      */
-    //public float amount;
-    
-    
-    
+    // public float amount;
+
     /**
      * Instantiates a new profile sub entry.
      */
     public ProfileSubPattern()
     {
     }
-    
+
     /**
      * Instantiates a new profile sub entry.
      * 
@@ -82,19 +77,20 @@ public class ProfileSubPattern extends ProfileSubEntry //implements Comparable<P
     public ProfileSubPattern(String input)
     {
         String[] ss = input.split("[-=]");
-        
+
         DataAccessPump da = DataAccessPump.getInstance();
-        
+
         time_start = da.getIntValueFromString(ss[0]);
         time_end = da.getIntValueFromString(ss[1]);
-        
+
         if (time_end == 0)
+        {
             time_end = 2359;
-        
+        }
+
         amount = da.getFloatValueFromString(ss[2]);
     }
-    
-    
+
     /**
      * Sets the values.
      * 
@@ -106,24 +102,27 @@ public class ProfileSubPattern extends ProfileSubEntry //implements Comparable<P
         this.time_end = pse.time_end;
         this.amount = pse.amount;
     }
-    
+
     /**
      * Gets the packed.
      * 
      * @return the packed
      */
+    @Override
     public String getPacked()
     {
-        return time_start + "-" + time_end + "=" + DataAccessPump.Decimal2Format.format(amount);
+        return time_start + "-" + time_end + "=" + DataAccessPlugInBase.Decimal2Format.format(amount);
     }
-    
-    
+
     /** 
      * toString
      */
+    @Override
     public String toString()
     {
-        return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_start) + " - " + ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_end) + " = " + DataAccessPump.Decimal2Format.format(amount);
+        return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_start) + " - "
+                + ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_end) + " = "
+                + DataAccessPlugInBase.Decimal2Format.format(amount);
     }
 
     /**
@@ -134,37 +133,40 @@ public class ProfileSubPattern extends ProfileSubEntry //implements Comparable<P
      * 
      * @return the int
      */
-  /*  public int compare(ProfileSubPattern pse1, ProfileSubPattern pse2)
-    {
-        if (pse1.time_start == pse2.time_start)
-        {
-            System.out.println("Same Patt: ");
-            return (pse1.time_end - pse2.time_end);
-        }
-        else
-        {
-            System.out.println("Diff: " + (pse1.time_start - pse2.time_start));
-            return (pse1.time_start - pse2.time_start);
-        }
-    }
-*/
+    /*
+     * public int compare(ProfileSubPattern pse1, ProfileSubPattern pse2)
+     * {
+     * if (pse1.time_start == pse2.time_start)
+     * {
+     * System.out.println("Same Patt: ");
+     * return (pse1.time_end - pse2.time_end);
+     * }
+     * else
+     * {
+     * System.out.println("Diff: " + (pse1.time_start - pse2.time_start));
+     * return (pse1.time_start - pse2.time_start);
+     * }
+     * }
+     */
     /** 
      * compareTo
      * 
      * @param psp
      * @return 
      */
-  /*  public int compareTo(ProfileSubPattern psp)
-    {
-        return compare(this, psp);
-    }*/
+    /*
+     * public int compareTo(ProfileSubPattern psp)
+     * {
+     * return compare(this, psp);
+     * }
+     */
 
     @Override
     public int getType()
     {
         return ProfileSubEntry.PROFILE_SUB_PATTERN;
     }
-    
+
     /**
      * Check Time Presence
      * 
@@ -173,88 +175,79 @@ public class ProfileSubPattern extends ProfileSubEntry //implements Comparable<P
     public void checkTimePresence(int[][] time_table)
     {
         /*
-        int hour, min;
-        //boolean ret = true;
-        
-        System.out.println("Start time: " + this.time_start + ", end_time: " + this.time_end);
-        
-        for(int i=this.time_start; i<this.time_end; i++)
-        {
-            hour = (i/60);
-            min = i-(hour*100);
-            
-            if ((min>59) || (min<0))
-            {
-                System.out.println("Packed: " + i + ", Hour: " + hour + ", Minute: " + min);
-                i = ((hour-1)*100) + 99;
-                System.out.println(" I=" + i);
-                
-                
-                continue;
-            }
-     
-            System.out.println("Packed: " + i + ", Hour: " + hour + ", Minute: " + min);
-            time_table[hour][min]++;
-        }
-        
-        System.exit(0);
-        */
-        
-        int start_h = (int)Math.floor(this.time_start/100);
-        int start_m = this.time_start -(start_h*100);
-        
-        int end_h = (int)Math.floor(this.time_end/100);
-        int end_m = this.time_end - (end_h*100);
+         * int hour, min;
+         * //boolean ret = true;
+         * System.out.println("Start time: " + this.time_start + ", end_time: "
+         * + this.time_end);
+         * for(int i=this.time_start; i<this.time_end; i++)
+         * {
+         * hour = (i/60);
+         * min = i-(hour*100);
+         * if ((min>59) || (min<0))
+         * {
+         * System.out.println("Packed: " + i + ", Hour: " + hour + ", Minute: "
+         * + min);
+         * i = ((hour-1)*100) + 99;
+         * System.out.println(" I=" + i);
+         * continue;
+         * }
+         * System.out.println("Packed: " + i + ", Hour: " + hour + ", Minute: "
+         * + min);
+         * time_table[hour][min]++;
+         * }
+         * System.exit(0);
+         */
 
-        
-//        int x = (int)Math.floor((this.time_end/100));
-//        System.out.println("Time end: " + time_end + ", x: " + x);
-        
-//        boolean set = false;
-        
-//        System.out.println("Strat: " + start_h + ", " + start_m);
-//        System.out.println("End: " + end_h + ", " + end_m);
-        
-        boolean begin=false, end=false;
-        for(int i=start_h; i<(end_h+1); i++)
+        int start_h = (int) Math.floor(this.time_start / 100);
+        int start_m = this.time_start - start_h * 100;
+
+        int end_h = (int) Math.floor(this.time_end / 100);
+        int end_m = this.time_end - end_h * 100;
+
+        // int x = (int)Math.floor((this.time_end/100));
+        // System.out.println("Time end: " + time_end + ", x: " + x);
+
+        // boolean set = false;
+
+        // System.out.println("Strat: " + start_h + ", " + start_m);
+        // System.out.println("End: " + end_h + ", " + end_m);
+
+        boolean begin = false, end = false;
+        for (int i = start_h; i < end_h + 1; i++)
         {
-            for(int j=0; j<60; j++)
+            for (int j = 0; j < 60; j++)
             {
-                
-                if (((start_h==i) && (j>=start_m)) ||
-                    (i>start_h))
+
+                if (start_h == i && j >= start_m || i > start_h)
                 {
                     begin = true;
-                    //time_table[i][j]++;
-                    //set = true;
+                    // time_table[i][j]++;
+                    // set = true;
                 }
-                /*else if ((start_h>i))
-                {
-                    set = true;
-                }*/
-                    
-                if ((i<end_h) ||
-                   ((end_h==i) && (j<=end_m)))
+                /*
+                 * else if ((start_h>i))
+                 * {
+                 * set = true;
+                 * }
+                 */
+
+                if (i < end_h || end_h == i && j <= end_m)
                 {
                     end = true;
-                    //set = false;
+                    // set = false;
                 }
-                
-                
-                
-                if ((begin) && (end))
+
+                if (begin && end)
                 {
                     time_table[i][j]++;
                     begin = false;
                     end = false;
                 }
-                
+
             }
-        
+
         }
-        
+
     }
-    
-    
-    
+
 }

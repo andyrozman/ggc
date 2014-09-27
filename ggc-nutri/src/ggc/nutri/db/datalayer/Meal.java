@@ -40,7 +40,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
@@ -123,12 +122,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     private void loadParts()
     {
         /*
-        StringTokenizer strtok = new StringTokenizer(this.getParts(), ";");
-
-        while (strtok.hasMoreTokens())
-        {
-
-        }*/
+         * StringTokenizer strtok = new StringTokenizer(this.getParts(), ";");
+         * while (strtok.hasMoreTokens())
+         * {
+         * }
+         */
     }
 
     private void loadValues()
@@ -234,13 +232,10 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         /*
          * Transaction tx = sess.beginTransaction();
-         * 
          * MealFoodDescriptionH ch =
          * (MealFoodDescriptionH)sess.get(MealFoodDescriptionH.class, new
          * Long(this.getId()));
-         * 
          * sess.delete(ch); tx.commit();
-         * 
          * return true;
          */
         return false;
@@ -257,7 +252,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        //System.out.println("Not implemented: FoodDescription::DbHasChildren");
+        // System.out.println("Not implemented: FoodDescription::DbHasChildren");
         return true;
     }
 
@@ -391,7 +386,6 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return false;
     }
 
-    
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -405,8 +399,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
      * Table Version
      */
     public int TABLE_VERSION = 1;
-    
-    
+
     /**
      * getTableVersion - returns version of table
      * 
@@ -416,8 +409,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         return this.TABLE_VERSION;
     }
-    
-    
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -430,7 +422,6 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return null;
     }
 
-    
     /**
      * dbExport - returns export String, for current version 
      *
@@ -441,8 +432,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         return dbExport(this.TABLE_VERSION);
     }
-    
-    
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -454,7 +444,6 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         // TODO
         return null;
     }
-    
 
     /**
      * dbExportHeader - header for export file
@@ -465,8 +454,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         return this.dbExportHeader(this.TABLE_VERSION);
     }
-    
-    
+
     /**
      * dbImport - processes input entry to right fields
      * 
@@ -478,7 +466,6 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         dbImport(table_version, value_entry, null);
     }
-    
 
     /**
      * dbImport - processes input entry to right fields
@@ -492,9 +479,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         // TODO
     }
-    
-    
-    
+
     /**
      * getBackupFile - name of backup file (base part)
      * 
@@ -505,7 +490,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         // TODO
         return "DayValueH";
     }
-    
+
     /**
      * getBackupClassName - name of class which will be updated/restored
      * 
@@ -516,7 +501,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         // TODO
         return "";
     }
-    
+
     /**
      * Has To Be Clean - if table needs to be cleaned before import
      * 
@@ -542,5 +527,5 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         return false;
     }
-    
+
 }

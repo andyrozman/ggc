@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
+import com.atech.utils.ATDataAccessAbstract;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -38,30 +40,26 @@ import java.util.StringTokenizer;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public abstract class MinimedCareLink
 {
-    //DataAccessPump m_da = DataAccessPump.getInstance();
+    // DataAccessPump m_da = DataAccessPump.getInstance();
     public DataAccessPlugInBase m_da = null;
-    
+
     public DeviceValuesWriter dvw = null;
     public OutputWriter output_writer = null;
     public MinimedCareLinkDate mm_date = null;
-    
-    public MinimedCareLinkData temp_data = null;
-    int count_unk = 0; 
 
-    
-    public Hashtable<String,Integer> alarm_mappings = new Hashtable<String,Integer>(); 
-    public Hashtable<String,Integer> error_mappings = new Hashtable<String,Integer>(); 
-    
-    
-    
+    public MinimedCareLinkData temp_data = null;
+    int count_unk = 0;
+
+    public Hashtable<String, Integer> alarm_mappings = new Hashtable<String, Integer>();
+    public Hashtable<String, Integer> error_mappings = new Hashtable<String, Integer>();
+
     public static final int READ_DEVICE_DATA = 1;
     public static final int READ_DEVICE_CONFIG_DATA = 2;
-    
+
     protected int m_reading_type = 0;
-    
+
     /**
      * Constructor
      */
@@ -70,14 +68,12 @@ public abstract class MinimedCareLink
         this.m_da = da;
         this.output_writer = ow;
         this.m_reading_type = reading_type;
-        
+
         setMappingData();
     }
 
-    
     public abstract void setMappingData();
-    
-    
+
     public void determineDate(File file)
     {
         ArrayList<String> list;
@@ -88,49 +84,64 @@ public abstract class MinimedCareLink
         {
             br = new BufferedReader(new FileReader(file));
             String line;
-            int count=0;
+            int count = 0;
             boolean inside = false;
             int cnl = 0;
-            
-            while((line = br.readLine())!=null)
+
+            while ((line = br.readLine()) != null)
             {
                 count++;
-//                Index,Date,Time,Timestamp,New Device Time,BG Reading (mmol/L),Linked BG Meter ID,Temp Basal Amount (U/h),Temp Basal Type,Temp Basal Duration (hh:mm:ss),Bolus Type,Bolus Volume Selected (U),Bolus Volume Delivered (U),Programmed Bolus Duration (hh:mm:ss),Prime Type,Prime Volume Delivered (U),Suspend,Rewind,BWZ Estimate (U),BWZ Target High BG (mmol/L),BWZ Target Low BG (mmol/L),BWZ Carb Ratio (grams),BWZ Insulin Sensitivity (mmol/L),BWZ Carb Input (grams),BWZ BG Input (mmol/L),BWZ Correction Estimate (U),BWZ Food Estimate (U),BWZ Active Insulin (U),Alarm,Sensor Calibration BG (mmol/L),Sensor Glucose (mmol/L),ISIG Value,Daily Insulin Total (U),Raw-Type,Raw-Values,Raw-ID,Raw-Upload ID,Raw-Seq Num,Raw-Device Type
+                // Index,Date,Time,Timestamp,New Device Time,BG Reading
+                // (mmol/L),Linked BG Meter ID,Temp Basal Amount (U/h),Temp
+                // Basal Type,Temp Basal Duration (hh:mm:ss),Bolus Type,Bolus
+                // Volume Selected (U),Bolus Volume Delivered (U),Programmed
+                // Bolus Duration (hh:mm:ss),Prime Type,Prime Volume Delivered
+                // (U),Suspend,Rewind,BWZ Estimate (U),BWZ Target High BG
+                // (mmol/L),BWZ Target Low BG (mmol/L),BWZ Carb Ratio
+                // (grams),BWZ Insulin Sensitivity (mmol/L),BWZ Carb Input
+                // (grams),BWZ BG Input (mmol/L),BWZ Correction Estimate (U),BWZ
+                // Food Estimate (U),BWZ Active Insulin (U),Alarm,Sensor
+                // Calibration BG (mmol/L),Sensor Glucose (mmol/L),ISIG
+                // Value,Daily Insulin Total
+                // (U),Raw-Type,Raw-Values,Raw-ID,Raw-Upload ID,Raw-Seq
+                // Num,Raw-Device Type
 
                 if (!inside)
                 {
                     if (line.startsWith("DEVICE DATA"))
+                    {
                         cnl++;
+                    }
                     else
                     {
-                        if (cnl>0)
+                        if (cnl > 0)
                         {
                             cnl++;
-                            
-                            if (cnl==3)
+
+                            if (cnl == 3)
+                            {
                                 inside = true;
+                            }
                         }
                     }
-                    
-                    
+
                 }
                 else
                 {
-                    //System.out.println(""  + line);
-                    
-                    //if (count>30)
-                    //    break;
-                    
-                    
-                    
-                    
-                    if (line.length()>0)
+                    // System.out.println("" + line);
+
+                    // if (count>30)
+                    // break;
+
+                    if (line.length() > 0)
                     {
                         String[] ss = buildLineData(line);
-                          
-                        if (prev_date.length()==0)
+
+                        if (prev_date.length() == 0)
+                        {
                             prev_date = ss[1];
-                        
+                        }
+
                         if (!prev_date.equals(ss[1]))
                         {
                             if (this.mm_date.compareTwoDates(prev_date, ss[1]))
@@ -142,32 +153,30 @@ public abstract class MinimedCareLink
                     }
                 }
             }
-            
+
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.out.println("determineDate exception: " + ex);
             ex.printStackTrace();
-            
+
         }
         finally
         {
-            if (br!=null)
+            if (br != null)
             {
                 try
                 {
                     br.close();
                 }
                 catch (Exception e)
-                {
-                }
+                {}
                 br = null;
             }
         }
-        
+
     }
-    
-    
+
     /**
      * Parse Export File
      * 
@@ -175,119 +184,132 @@ public abstract class MinimedCareLink
      */
     public void parseExportFile(File file)
     {
-        
+
         determineDate(file);
-        
-        //if (true)
-        //    return;
-        
+
+        // if (true)
+        // return;
+
         try
         {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
-            int count=0;
+            int count = 0;
             boolean inside = false;
             int cnl = 0;
-            
-            while((line = br.readLine())!=null)
+
+            while ((line = br.readLine()) != null)
             {
                 count++;
-//                Index,Date,Time,Timestamp,New Device Time,BG Reading (mmol/L),Linked BG Meter ID,Temp Basal Amount (U/h),Temp Basal Type,Temp Basal Duration (hh:mm:ss),Bolus Type,Bolus Volume Selected (U),Bolus Volume Delivered (U),Programmed Bolus Duration (hh:mm:ss),Prime Type,Prime Volume Delivered (U),Suspend,Rewind,BWZ Estimate (U),BWZ Target High BG (mmol/L),BWZ Target Low BG (mmol/L),BWZ Carb Ratio (grams),BWZ Insulin Sensitivity (mmol/L),BWZ Carb Input (grams),BWZ BG Input (mmol/L),BWZ Correction Estimate (U),BWZ Food Estimate (U),BWZ Active Insulin (U),Alarm,Sensor Calibration BG (mmol/L),Sensor Glucose (mmol/L),ISIG Value,Daily Insulin Total (U),Raw-Type,Raw-Values,Raw-ID,Raw-Upload ID,Raw-Seq Num,Raw-Device Type
+                // Index,Date,Time,Timestamp,New Device Time,BG Reading
+                // (mmol/L),Linked BG Meter ID,Temp Basal Amount (U/h),Temp
+                // Basal Type,Temp Basal Duration (hh:mm:ss),Bolus Type,Bolus
+                // Volume Selected (U),Bolus Volume Delivered (U),Programmed
+                // Bolus Duration (hh:mm:ss),Prime Type,Prime Volume Delivered
+                // (U),Suspend,Rewind,BWZ Estimate (U),BWZ Target High BG
+                // (mmol/L),BWZ Target Low BG (mmol/L),BWZ Carb Ratio
+                // (grams),BWZ Insulin Sensitivity (mmol/L),BWZ Carb Input
+                // (grams),BWZ BG Input (mmol/L),BWZ Correction Estimate (U),BWZ
+                // Food Estimate (U),BWZ Active Insulin (U),Alarm,Sensor
+                // Calibration BG (mmol/L),Sensor Glucose (mmol/L),ISIG
+                // Value,Daily Insulin Total
+                // (U),Raw-Type,Raw-Values,Raw-ID,Raw-Upload ID,Raw-Seq
+                // Num,Raw-Device Type
 
                 if (!inside)
                 {
                     if (line.startsWith("DEVICE DATA"))
+                    {
                         cnl++;
+                    }
                     else
                     {
-                        if (cnl>0)
+                        if (cnl > 0)
                         {
                             cnl++;
-                            
-                            if (cnl==3)
+
+                            if (cnl == 3)
+                            {
                                 inside = true;
+                            }
                         }
                     }
-                    
-                    
+
                 }
                 else
                 {
-                    //System.out.println(""  + line);
-                    
-                    //if (count>30)
-                    //    break;
-                    if (line.length()>0)
+                    // System.out.println("" + line);
+
+                    // if (count>30)
+                    // break;
+                    if (line.length() > 0)
+                    {
                         readLineData(line, count);
+                    }
                 }
-/*                
-                System.out.println(""  + line);
-                
-                if (count>12)
-                {
-                    if (line.length()>0)
-                        readLineData(line, count);
-                } */
+                /*
+                 * System.out.println("" + line);
+                 * if (count>12)
+                 * {
+                 * if (line.length()>0)
+                 * readLineData(line, count);
+                 * }
+                 */
             }
-            
+
             System.out.println("How many entries unknown: " + count_unk);
-        
+
             postProcessing();
-            
+
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.out.println("parseExportFile exception: " + ex);
             ex.printStackTrace();
         }
-        
-        
-        
+
     }
-//    ||||||||||||||||
-//    ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-    
-    
+
+    // ||||||||||||||||
+    // ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
     public abstract void postProcessing();
-    
-    
+
     public abstract void readLineData(String line, int count);
-    
-    
-    
-    
+
     void showCollection(String[] da)
     {
         StringBuffer sb = new StringBuffer();
-        
-        for(int i=0; i<da.length; i++)
+
+        for (String element : da)
         {
-            sb.append(da[i]);
+            sb.append(element);
             sb.append("|");
         }
-        
+
         System.out.println(sb.toString());
     }
-    
-    
+
     boolean multi_row = false;
     String multi_row_data = "";
-    
+
     public String[] buildLineData(String line)
     {
-        line = m_da.replaceExpression(line, ",,", ", ,");
-        
+        line = ATDataAccessAbstract.replaceExpression(line, ",,", ", ,");
+
         StringTokenizer strtok = new StringTokenizer(line, ",");
         ArrayList<String> elems = new ArrayList<String>();
 
         String[] ret = {};
-        
-        while(strtok.hasMoreTokens())
+
+        while (strtok.hasMoreTokens())
         {
             String item = strtok.nextToken().trim();
-            
-            if (item.length()==0)
+
+            if (item.length() == 0)
+            {
                 elems.add("");
+            }
             else
             {
                 if (multi_row)
@@ -300,33 +322,31 @@ public abstract class MinimedCareLink
                         multi_row = false;
                     }
                     else
+                    {
                         multi_row_data += ", ";
-                        
+                    }
+
                 }
                 else
                 {
-                
-                if (item.startsWith("\""))
-                {
-                    multi_row_data += item + ", ";
-                    multi_row = true;
+
+                    if (item.startsWith("\""))
+                    {
+                        multi_row_data += item + ", ";
+                        multi_row = true;
+                    }
+                    else
+                    {
+                        elems.add(item);
+                    }
+
                 }
-                else
-                    elems.add(item);
-                
-                }
-                
+
             }
         }
-        
-        
+
         return elems.toArray(ret);
-        
+
     }
-    
-    
-    
-    
-    
 
 }

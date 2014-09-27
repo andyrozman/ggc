@@ -1,4 +1,4 @@
-package ggc.pump.manager.company; 
+package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.insulet.InsuletOmniPod;
@@ -30,30 +30,30 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Insulet extends AbstractPumpDeviceCompany
 {
-    
+
     /**
      * Constructor
      */
     public Insulet()
     {
-        super(PumpDevicesIds.COMPANY_INSULET,       // company_id
-            "Insulet",                              // company name (full)
-            "Insulet",                              // short company name
-            "INSULET_DESC",                         // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE);  // implementation status
-        
+        super(PumpDevicesIds.COMPANY_INSULET, // company_id
+                "Insulet", // company name (full)
+                "Insulet", // short company name
+                "INSULET_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE); // implementation
+                                                                          // status
+
         this.addDevice(new InsuletOmniPod(this));
     }
-    
-    
+
     /**
      * Init Profile Names (for Profile Editor)
      */
+    @Override
     public void initProfileNames()
     {
     }
-    
+
 }

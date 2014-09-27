@@ -1,6 +1,5 @@
 package ggc.plugin.graph.data;
 
-
 import java.util.GregorianCalendar;
 
 public interface PlugInGraphDb
@@ -18,6 +17,5 @@ public interface PlugInGraphDb
      * @return
      */
     public GraphValuesCollection getGraphData(GregorianCalendar gc_from, GregorianCalendar gc_to, int filter);
-    
-    
+
 }

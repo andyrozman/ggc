@@ -34,7 +34,7 @@ import com.itextpdf.text.pdf.PdfPTable;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class PrintSimpleMonthlyReport extends PrintExtendedMonthlyReport  
+public class PrintSimpleMonthlyReport extends PrintExtendedMonthlyReport
 {
 
     /**
@@ -46,13 +46,12 @@ public class PrintSimpleMonthlyReport extends PrintExtendedMonthlyReport
     {
         super(mv);
     }
-    
-    
+
+    @Override
     public String getTitleText()
     {
         return "EXTENDED_MONTHLY_REPORT";
     }
-    
 
     /**
      * {@inheritDoc}
@@ -60,19 +59,14 @@ public class PrintSimpleMonthlyReport extends PrintExtendedMonthlyReport
     @Override
     public void fillDocumentBody(Document document) throws Exception
     {
-        
-        //Font f = text_bold;
-        
+
+        // Font f = text_bold;
+
         int NumColumns = 13;
         float groupWidth[] = { 30, 40, 30 };
 
         PdfPTable datatable = new PdfPTable(NumColumns);
-        int headerwidths[] = { 8, 
-                           6, 8, 6,  
-                           6, 8, 6, 
-                           6, 8, 6, 
-                           6, 8, 6 
-                   }; // percentage
+        int headerwidths[] = { 8, 6, 8, 6, 6, 8, 6, 6, 8, 6, 6, 8, 6 }; // percentage
         datatable.setWidths(headerwidths);
         datatable.setWidthPercentage(100); // percentage
         datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -80,10 +74,9 @@ public class PrintSimpleMonthlyReport extends PrintExtendedMonthlyReport
         PdfPCell pd = new PdfPCell();
         pd.setPhrase(this.createBoldTextPhrase("DATE"));
         pd.setHorizontalAlignment(Element.ALIGN_CENTER);
-    
+
         pd.setBorderWidth(1);
         datatable.addCell(pd);
-
 
         // Breakfast
         datatable.addCell(createMealHeader(groupWidth, "BREAKFAST"));
@@ -97,43 +90,39 @@ public class PrintSimpleMonthlyReport extends PrintExtendedMonthlyReport
         // Night
         datatable.addCell(createMealHeader(groupWidth, "NIGHT"));
 
-
         datatable.getDefaultCell().setBorderWidth(1);
 
-
-        for (int i = 1; i <= this.monthlyValues.getDaysInMonth(); i++) 
+        for (int i = 1; i <= this.monthlyValues.getDaysInMonth(); i++)
         {
             String[][] dta = this.monthlyValues.getDayValuesSimple(i);
 
-            if (i%2==1) 
+            if (i % 2 == 1)
             {
                 datatable.getDefaultCell().setGrayFill(0.9f);
             }
             else
             {
-                datatable.getDefaultCell().setBackgroundColor(BaseColor.WHITE); //.setGrayFill(0.0f);
+                datatable.getDefaultCell().setBackgroundColor(BaseColor.WHITE); // .setGrayFill(0.0f);
             }
 
-            datatable.addCell(i+"." + this.monthlyValues.getMonth());
+            datatable.addCell(i + "." + this.monthlyValues.getMonth());
 
-
-            for (int x=0; x < 4; x++) 
+            for (int x = 0; x < 4; x++)
             {
                 datatable.addCell(dta[x][0]);
                 datatable.addCell(dta[x][1]);
                 datatable.addCell(dta[x][2]);
             }
 
-            if (i%2==1) 
+            if (i % 2 == 1)
             {
                 datatable.getDefaultCell().setGrayFill(0.0f);
             }
         }
 
         document.add(datatable);
-        
-    }
 
+    }
 
     private PdfPCell createMealHeader(float[] groupWidth, String mealName) throws DocumentException
     {
@@ -153,14 +142,12 @@ public class PrintSimpleMonthlyReport extends PrintExtendedMonthlyReport
         meal_b.addCell(createBoldTextPhrase("BG"));
         meal_b.addCell(createBoldTextPhrase("INS_SHORT"));
         meal_b.addCell(createBoldTextPhrase("CH"));
-        
-        
+
         PdfPCell m = new PdfPCell(meal_b);
         m.setColspan(3);
 
         return m;
     }
-
 
     /**
      * {@inheritDoc}

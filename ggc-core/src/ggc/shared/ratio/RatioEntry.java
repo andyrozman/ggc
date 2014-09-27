@@ -36,89 +36,84 @@ public class RatioEntry
     DataAccess m_da = DataAccess.getInstance();
     public int from;
     public int to;
-    
+
     public float ch_insulin = 0.0f;
     public float bg_insulin = 0.0f;
     public float ch_bg = 5.0f;
-    
+
     int procent = 100;
-    
+
     public RatioEntry()
     {
     }
-    
+
     public RatioEntry(String entry)
     {
-        
+
         StringTokenizer strtok = new StringTokenizer(entry, ";");
-        
-        int i=0;
-        
-        while(strtok.hasMoreTokens())
+
+        int i = 0;
+
+        while (strtok.hasMoreTokens())
         {
             this.setColumnValue(i, strtok.nextToken());
             i++;
         }
-        
+
     }
-    
+
     public void setColumnValue(int column, String val)
     {
-        
+
         // EXTENDED_RATIO_1=From;To;Ch/Ins;Bg/Ins;Ch/BG;Procent
-        
-        
-//        dta.put("EXTENDED_RATIO_COUNT", "2");
-//        dta.put("EXTENDED_RATIO_1", "0000;1159;6.67f;1.33f;5f;100");
-        
-        switch(column)
+
+        // dta.put("EXTENDED_RATIO_COUNT", "2");
+        // dta.put("EXTENDED_RATIO_1", "0000;1159;6.67f;1.33f;5f;100");
+
+        switch (column)
         {
             case 0:
                 this.from = m_da.getIntValueFromString(val.replace(":", ""), 0);
                 break;
-            
+
             case 1:
                 this.to = m_da.getIntValueFromString(val.replace(":", ""), 0);
                 break;
-                
+
             case 2:
                 this.ch_insulin = m_da.getFloatValueFromString(val, 0.0f);
                 break;
-                
+
             case 3:
                 this.bg_insulin = m_da.getFloatValueFromString(val, 0.0f);
                 break;
-                
+
             case 4:
                 this.ch_bg = m_da.getFloatValueFromString(val, 0.0f);
                 break;
-                
+
             case 5:
                 this.procent = m_da.getIntValueFromString(val, 0);
                 break;
-            
-            
+
             default:
-                break; //return "";
+                break; // return "";
         }
-        
+
     }
-    
-    
+
     public int getMinuteFrom()
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, this.from);
-        return (atd.hour_of_day * 60) + atd.minute;
+        return atd.hour_of_day * 60 + atd.minute;
     }
-    
 
     public int getMinuteTo()
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, this.to);
-        return (atd.hour_of_day * 60) + atd.minute;
+        return atd.hour_of_day * 60 + atd.minute;
     }
-    
-    
+
     /**
      * Get Column Value
      * 
@@ -127,32 +122,31 @@ public class RatioEntry
      */
     public String getColumnValue(int column)
     {
-        switch(column)
+        switch (column)
         {
             case 0:
                 return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, this.from);
-                
+
             case 1:
                 return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, this.to);
-                
+
             case 2:
                 return DataAccess.getFloatAsString(this.ch_insulin, 2);
-                
+
             case 3:
                 return DataAccess.getFloatAsString(this.bg_insulin, 2);
-                
+
             case 4:
                 return DataAccess.getFloatAsString(this.ch_bg, 2);
-                
+
             case 5:
                 return "" + this.procent;
-                
+
             default:
                 return "";
         }
     }
-    
-    
+
     /**
      * Get Columns
      * 
@@ -162,8 +156,7 @@ public class RatioEntry
     {
         return 6;
     }
-    
-    
+
     /**
      * Get Column Name
      * @param index 
@@ -173,34 +166,32 @@ public class RatioEntry
      */
     public String getColumnName(int index)
     {
-        switch(index)
+        switch (index)
         {
             case 0:
-                return "TIME_FROM"; 
-                
+                return "TIME_FROM";
+
             case 1:
                 return "TIME_TILL";
-                
+
             case 2:
-                return "CH_INSULIN_RATIO_SHORT"; 
-                
+                return "CH_INSULIN_RATIO_SHORT";
+
             case 3:
-                return "BG_INSULIN_RATIO_SHORT"; 
-                
+                return "BG_INSULIN_RATIO_SHORT";
+
             case 4:
-                return "BG_CH_RATIO_SHORT"; 
-                
+                return "BG_CH_RATIO_SHORT";
+
             case 5:
                 return "PROCENT_OF_BASE_SHORT";
-                
+
             default:
                 return "";
         }
 
     }
-    
-    
-    
+
     /**
      * Get Save Data
      * 
@@ -208,11 +199,9 @@ public class RatioEntry
      */
     public String getSaveData()
     {
-        //dta.put("EXTENDED_RATIO_1", "0000;1159;6.67f;1.33f;5f;100");
-        return getColumnValue(0) + ";" +getColumnValue(1) + ";" +getColumnValue(2) + ";" +getColumnValue(3) + ";" +getColumnValue(4) + ";" +getColumnValue(5);  
+        // dta.put("EXTENDED_RATIO_1", "0000;1159;6.67f;1.33f;5f;100");
+        return getColumnValue(0) + ";" + getColumnValue(1) + ";" + getColumnValue(2) + ";" + getColumnValue(3) + ";"
+                + getColumnValue(4) + ";" + getColumnValue(5);
     }
-    
-    
-    
-    
+
 }

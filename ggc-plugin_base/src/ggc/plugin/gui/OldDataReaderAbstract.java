@@ -35,24 +35,22 @@ import org.apache.commons.logging.LogFactory;
  *  Author: Andy {andy@atech-software.com}
  */
 
+// Try to assess possibility of super-classing
 
-//Try to assess possibility of super-classing
-
-
-public abstract class OldDataReaderAbstract 
+public abstract class OldDataReaderAbstract
 {
 
     private static Log log = LogFactory.getLog(OldDataReaderAbstract.class);
-    
+
     protected DeviceReaderRunner m_drr;
-    
+
     boolean running = true;
     DataAccessPlugInBase m_da;
-    
+
     protected int all_entries = 0;
-//    protected HibernateDb m_db = null;
+    // protected HibernateDb m_db = null;
     protected int cur_entry = 0;
-    
+
     /**
      * Constructor
      * 
@@ -60,12 +58,11 @@ public abstract class OldDataReaderAbstract
      */
     public OldDataReaderAbstract(DataAccessPlugInBase da)
     {
-        //this.m_drr = drr;
+        // this.m_drr = drr;
         this.m_da = da;
-//        this.m_db = da.getHibernateDb();
+        // this.m_db = da.getHibernateDb();
     }
-    
-    
+
     /**
      * Set DeviceReaderRunner instance
      * 
@@ -76,22 +73,18 @@ public abstract class OldDataReaderAbstract
         this.m_drr = drr;
         getMaxEntries();
     }
-    
-    
-    
+
     /**
      * Get Max Entries
      */
     public abstract void getMaxEntries();
 
-    
     /**
      * Read Old entries (data is returned in form of Hashtable<String,Object>. What is stored there will depend
      * from plugin to plugin)
      * @return 
      */
     public abstract Hashtable<String, DeviceValuesEntryInterface> readOldEntries();
-    
 
     /**
      * Write status of reading
@@ -102,19 +95,19 @@ public abstract class OldDataReaderAbstract
      */
     public void writeStatus(int current_entry)
     {
-        //System.out.println("Progress: " + current_entry + "/" + this.all_entries + " = ");
-        
-        
-        float ee = ((float)current_entry)/(1.0f*this.all_entries);
+        // System.out.println("Progress: " + current_entry + "/" +
+        // this.all_entries + " = ");
+
+        float ee = current_entry / (1.0f * this.all_entries);
         ee *= 100;
-        
-        int ee_i = (int)ee;
-        
+
+        int ee_i = (int) ee;
+
         this.m_drr.setOldDataReadingProgress(ee_i);
-        log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: " + ee_i );
-        //System.out.println("Progress: " + current_entry + "/" + this.all_entries + " = " + ee_i);
+        log.debug("Old Data reading progress [" + m_da.getApplicationName() + "]: " + ee_i);
+        // System.out.println("Progress: " + current_entry + "/" +
+        // this.all_entries + " = " + ee_i);
     }
-    
 
     /**
      * Get Element Procent (this determines procent of reading by comparing data to full set)
@@ -123,32 +116,31 @@ public abstract class OldDataReaderAbstract
      */
     public int getElementProcent(int current_entry)
     {
-        float ee = ((float)current_entry)/(1.0f*this.all_entries);
+        float ee = current_entry / (1.0f * this.all_entries);
         ee *= 100.0f;
-        
-        int ee_i = (int)ee;
-        //System.out.println("Element Progress: " + current_entry + "/" + this.all_entries + " = " + ee_i);
+
+        int ee_i = (int) ee;
+        // System.out.println("Element Progress: " + current_entry + "/" +
+        // this.all_entries + " = " + ee_i);
         cur_entry = current_entry;
         return ee_i;
     }
-    
-    
+
     /**
      * Finish reading
      */
     public void finishReading()
     {
-        if (cur_entry!=this.all_entries)
+        if (cur_entry != this.all_entries)
         {
             log.warn("It seems that not all data was read (" + this.cur_entry + "/" + this.all_entries + ")");
             this.m_drr.setOldDataReadingProgress(100);
         }
-        else if (all_entries==0)
+        else if (all_entries == 0)
         {
             log.debug("Database was empty. Nothing was read.");
             this.m_drr.setOldDataReadingProgress(100);
         }
     }
-    
-    
+
 }

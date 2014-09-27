@@ -3,7 +3,6 @@ package ggc.cgms.device;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.PlugInBaseException;
 
-
 /*
  *  GGC - GNU Gluco Control
  *
@@ -33,7 +32,6 @@ import ggc.plugin.device.PlugInBaseException;
  *  Author:   andyrozman {andyrozman@sourceforge.net}
  */
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       CGMS Tool (support for CGMS devices)
@@ -61,15 +59,12 @@ import ggc.plugin.device.PlugInBaseException;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public interface CGMSInterface extends DeviceInterface
 {
 
-
-    //************************************************
-    //***          Working with device             ***
-    //************************************************
-
+    // ************************************************
+    // *** Working with device ***
+    // ************************************************
 
     /**
      * Used for opening connection with device.
@@ -78,13 +73,10 @@ public interface CGMSInterface extends DeviceInterface
      */
     boolean open() throws PlugInBaseException;
 
-
     /**
      * Will be called, when the import is ended and freeing resources.
      * @throws PlugInBaseException 
      */
     void close() throws PlugInBaseException;
-
-    
 
 }

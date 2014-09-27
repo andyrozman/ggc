@@ -42,7 +42,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
@@ -53,7 +52,6 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     I18nControlAbstract ic = null; // DataAccessNutri.getInstance().
     boolean meal_empty = false;
 
-    
     /**
      * Meal Group: Meals
      */
@@ -67,20 +65,19 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     /**
      * Children: Group
      */
-    public ArrayList<MealGroup> children_group = null; //new ArrayList<MealGroup>();
+    public ArrayList<MealGroup> children_group = null; // new
+                                                       // ArrayList<MealGroup>();
 
     /**
      * Children: Meals
      */
-    public ArrayList<Meal> children_meal = null; //new ArrayList<Meal>();
-    
+    public ArrayList<Meal> children_meal = null; // new ArrayList<Meal>();
+
     /**
      * Children: All
      */
-    public ArrayList<Object> children = null; //new ArrayList<Object>();
+    public ArrayList<Object> children = null; // new ArrayList<Object>();
 
-
-    
     /**
      * Constructor
      * 
@@ -150,7 +147,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     public boolean hasChildren()
     {
         checkLoadStatus();
-        return (getChildCount() != 0);
+        return getChildCount() != 0;
     }
 
     /**
@@ -160,15 +157,15 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public void addChild(MealGroup fg)
     {
-        //checkLoadStatus();
-        
-        if (this.children==null)
+        // checkLoadStatus();
+
+        if (this.children == null)
         {
             this.children_group = new ArrayList<MealGroup>();
             this.children_meal = new ArrayList<Meal>();
             this.children = new ArrayList<Object>();
         }
-        
+
         children_group.add(fg);
         children.add(fg);
     }
@@ -180,18 +177,22 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public void addChild(Meal fd)
     {
-        if (this.children_meal==null)
+        if (this.children_meal == null)
         {
-            if (this.children_group==null)
+            if (this.children_group == null)
+            {
                 this.children_group = new ArrayList<MealGroup>();
-            
-            if (this.children==null)
+            }
+
+            if (this.children == null)
+            {
                 this.children = new ArrayList<Object>();
+            }
 
             this.children_meal = new ArrayList<Meal>();
         }
 
-        //checkLoadStatus();
+        // checkLoadStatus();
         this.children_meal.add(fd);
         children.add(fd);
     }
@@ -203,7 +204,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public void removeChild(MealGroup fg)
     {
-        //checkLoadStatus();
+        // checkLoadStatus();
         children_group.remove(fg);
         children.remove(fg);
     }
@@ -215,7 +216,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public void removeChild(Meal fd)
     {
-        //checkLoadStatus();
+        // checkLoadStatus();
         children.remove(fd);
         children_meal.remove(fd);
     }
@@ -263,7 +264,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     public boolean hasGroupChildren()
     {
         checkLoadStatus();
-        return (getGroupChildrenCount() != 0);
+        return getGroupChildrenCount() != 0;
     }
 
     /**
@@ -491,37 +492,34 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     public void loadChildren()
     {
         GGCDbCache cache = DataAccessNutri.getInstance().getDbCache();
-        
+
         this.children_group = cache.getChildrenMealGroup(3, this.getId());
         this.children_meal = cache.getChildrenMeals(3, this.getId());
 
-        
-        if (children==null)
+        if (children == null)
         {
             this.children = new ArrayList<Object>();
         }
-        
+
         this.children.addAll(this.children_group);
         this.children.addAll(this.children_meal);
-        
+
         this.object_load_status = GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED;
-        //if (cache.getChildrenFoodGroup(type, parent_id))
-        
+        // if (cache.getChildrenFoodGroup(type, parent_id))
+
     }
-    
-    
+
     /**
      * Check Load Status
      */
     public void checkLoadStatus()
     {
         if (this.object_load_status != GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED)
-        {   
+        {
             loadChildren();
         }
     }
-    
-    
+
     /**
      * Get Load Status
      * 
@@ -531,8 +529,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return this.object_load_status;
     }
-    
-    
+
     // ---
     // --- BackupRestoreObject
     // ---
@@ -581,7 +578,6 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         this.selected = newValue;
     }
 
-    
     /**
      * Is Collection
      * 
@@ -592,7 +588,6 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return false;
     }
 
-    
     /**
      * Get Object Unique Id - get id of object
      * @return unique object id
@@ -602,13 +597,11 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return "" + this.getId();
     }
 
-    
     /**
      * Table Version
      */
     public int TABLE_VERSION = 1;
-    
-    
+
     /**
      * getTableVersion - returns version of table
      * 
@@ -618,8 +611,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return this.TABLE_VERSION;
     }
-    
-    
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -632,7 +624,6 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return null;
     }
 
-    
     /**
      * dbExport - returns export String, for current version 
      *
@@ -643,8 +634,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return dbExport(this.TABLE_VERSION);
     }
-    
-    
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -656,7 +646,6 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         // TODO
         return null;
     }
-    
 
     /**
      * dbExportHeader - header for export file
@@ -667,8 +656,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return this.dbExportHeader(this.TABLE_VERSION);
     }
-    
-    
+
     /**
      * dbImport - processes input entry to right fields
      * 
@@ -680,7 +668,6 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         dbImport(table_version, value_entry, null);
     }
-    
 
     /**
      * dbImport - processes input entry to right fields
@@ -694,9 +681,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         // TODO
     }
-    
-    
-    
+
     /**
      * getBackupFile - name of backup file (base part)
      * 
@@ -707,7 +692,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         // TODO
         return "DayValueH";
     }
-    
+
     /**
      * getBackupClassName - name of class which will be updated/restored
      * 
@@ -744,5 +729,5 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return false;
     }
-    
+
 }

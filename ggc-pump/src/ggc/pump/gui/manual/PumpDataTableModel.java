@@ -36,53 +36,37 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PumpDataTableModel extends AbstractTableModel implements MultiLineTooltipModel
 {
-    
+
     private static final long serialVersionUID = 412835707138372687L;
 
     DeviceValuesDay dayData;
-    
+
     private DataAccessPump m_da = DataAccessPump.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
     /*
-    Object objects[] = 
-    { 
-        new Long(0L), 
-        new String(""),
-        new Float(0.0d),
-        new Float(0.0d),
-        new Float(0.0d),
-        new String(""),
-        new String(""),
-        new String("")
-    };*/
+     * Object objects[] =
+     * {
+     * new Long(0L),
+     * new String(""),
+     * new Float(0.0d),
+     * new Float(0.0d),
+     * new Float(0.0d),
+     * new String(""),
+     * new String(""),
+     * new String("")
+     * };
+     */
 
-    Object objects[] = 
-    { 
-        new String(""), 
-        new String(""),
-        new String(""),
-        new String(""),
-        new String(""),
-        new String(""),
-        new String(""),
-        new String("")
-    };
+    Object objects[] = { new String(""), new String(""), new String(""), new String(""), new String(""),
+                        new String(""), new String(""), new String("") };
 
+    private String[] column_names = { m_ic.getMessage("TIME"), m_ic.getMessage("BASE_TYPE"),
+                                     m_ic.getMessage("SUB_TYPE"), m_ic.getMessage("VALUE"),
+                                     m_ic.getMessage("ADDITIONAL"), m_ic.getMessage("FOOD") };
 
-    private String[] column_names = { 
-                                     m_ic.getMessage("TIME"),
-                                     m_ic.getMessage("BASE_TYPE"),
-                                     m_ic.getMessage("SUB_TYPE"),
-                                     m_ic.getMessage("VALUE"),
-                                     m_ic.getMessage("ADDITIONAL"),
-                                     m_ic.getMessage("FOOD") };
-    
-    
-    
     /**
      * Constructor
      * 
@@ -111,12 +95,11 @@ public class PumpDataTableModel extends AbstractTableModel implements MultiLineT
     public void setDailyValues(DeviceValuesDay dayData)
     {
         this.dayData = dayData;
-        //this.dayData.sort(new PumpValuesEntry());
-        
-        
-        //System.out.println("DayData: " + dayData.getRowCount()); //.getRowCount());
-        
-        
+        // this.dayData.sort(new PumpValuesEntry());
+
+        // System.out.println("DayData: " + dayData.getRowCount());
+        // //.getRowCount());
+
         fireTableChanged(null);
     }
 
@@ -125,8 +108,8 @@ public class PumpDataTableModel extends AbstractTableModel implements MultiLineT
      */
     public int getColumnCount()
     {
-        //if (dayData == null)
-        //    return 0;
+        // if (dayData == null)
+        // return 0;
 
         return this.column_names.length;
     }
@@ -149,15 +132,15 @@ public class PumpDataTableModel extends AbstractTableModel implements MultiLineT
     {
         Object o = dayData.getValueAt(row, column);
 
-	/*
-        if (o != null && column == 0) 
-        {
-            return m_da.getDateTimeAsTimeString(((Long)o).longValue());
-            //System.out.println("DailyStatsTableModel: " + o);
-            //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            //return sdf.format(o);
-        } 
-      */  
+        /*
+         * if (o != null && column == 0)
+         * {
+         * return m_da.getDateTimeAsTimeString(((Long)o).longValue());
+         * //System.out.println("DailyStatsTableModel: " + o);
+         * //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+         * //return sdf.format(o);
+         * }
+         */
         return o;
     }
 
@@ -168,12 +151,13 @@ public class PumpDataTableModel extends AbstractTableModel implements MultiLineT
     public String getColumnName(int column)
     {
         return this.column_names[column];
-        /*if (column == 2)
-            return m_da.getSettings().getIns1Abbr();
-        if (column == 3)
-            return m_da.getSettings().getIns2Abbr();
-*/
-        //..return dayData.getColumnName(column);
+        /*
+         * if (column == 2)
+         * return m_da.getSettings().getIns1Abbr();
+         * if (column == 3)
+         * return m_da.getSettings().getIns2Abbr();
+         */
+        // ..return dayData.getColumnName(column);
     }
 
     /**
@@ -185,70 +169,65 @@ public class PumpDataTableModel extends AbstractTableModel implements MultiLineT
         return this.objects[c].getClass();
 
         /*
-        Object o = getValueAt(0, c);
-        if (o != null)
-            return o.getClass();
-        else
-            return null;
-            */
-        //return getValueAt(0,c).getClass();
+         * Object o = getValueAt(0, c);
+         * if (o != null)
+         * return o.getClass();
+         * else
+         * return null;
+         */
+        // return getValueAt(0,c).getClass();
     }
 
-/*    
-    protected JTableHeader createDefaultTableHeader() {
-        return new JTableHeader(columnModel) {
-            public String getToolTipText(MouseEvent e) {
-                String tip = null;
-                java.awt.Point p = e.getPoint();
-                int index = columnModel.getColumnIndexAtX(p.x);
-                int realIndex = 
-                        columnModel.getColumn(index).getModelIndex();
-                return columnToolTips[realIndex];
-            }
-        };
-    }
-  */  
-    
     /*
-    public String getToolTipText(MouseEvent e) 
-    {
-        String tip = null;
-        java.awt.Point p = e.getPoint();
-        int rowIndex = rowAtPoint(p);
-        int colIndex = columnAtPoint(p);
-        int realColumnIndex = convertColumnIndexToModel(colIndex);
+     * protected JTableHeader createDefaultTableHeader() {
+     * return new JTableHeader(columnModel) {
+     * public String getToolTipText(MouseEvent e) {
+     * String tip = null;
+     * java.awt.Point p = e.getPoint();
+     * int index = columnModel.getColumnIndexAtX(p.x);
+     * int realIndex =
+     * columnModel.getColumn(index).getModelIndex();
+     * return columnToolTips[realIndex];
+     * }
+     * };
+     * }
+     */
 
-        if (realColumnIndex == 2) { //Sport column
-            tip = "This person's favorite sport to "
-                   + "participate in is: "
-                   + getValueAt(rowIndex, colIndex);
+    /*
+     * public String getToolTipText(MouseEvent e)
+     * {
+     * String tip = null;
+     * java.awt.Point p = e.getPoint();
+     * int rowIndex = rowAtPoint(p);
+     * int colIndex = columnAtPoint(p);
+     * int realColumnIndex = convertColumnIndexToModel(colIndex);
+     * if (realColumnIndex == 2) { //Sport column
+     * tip = "This person's favorite sport to "
+     * + "participate in is: "
+     * + getValueAt(rowIndex, colIndex);
+     * }
+     * else if (realColumnIndex == 4) { //Veggie column
+     * TableModel model = getModel();
+     * String firstName = (String)model.getValueAt(rowIndex,0);
+     * String lastName = (String)model.getValueAt(rowIndex,1);
+     * Boolean veggie = (Boolean)model.getValueAt(rowIndex,4);
+     * if (Boolean.TRUE.equals(veggie)) {
+     * tip = firstName + " " + lastName
+     * + " is a vegetarian";
+     * } else {
+     * tip = firstName + " " + lastName
+     * + " is not a vegetarian";
+     * }
+     * } else { //another column
+     * //You can omit this part if you know you don't
+     * //have any renderers that supply their own tool
+     * //tips.
+     * tip = super.getToolTipText(e);
+     * }
+     * return tip;
+     * }
+     */
 
-        } 
-        else if (realColumnIndex == 4) { //Veggie column
-            TableModel model = getModel();
-            String firstName = (String)model.getValueAt(rowIndex,0);
-            String lastName = (String)model.getValueAt(rowIndex,1);
-            Boolean veggie = (Boolean)model.getValueAt(rowIndex,4);
-            if (Boolean.TRUE.equals(veggie)) {
-                tip = firstName + " " + lastName
-                      + " is a vegetarian";
-            } else {
-                tip = firstName + " " + lastName
-                      + " is not a vegetarian";
-            }
-
-        } else { //another column
-            //You can omit this part if you know you don't 
-            //have any renderers that supply their own tool 
-            //tips.
-            tip = super.getToolTipText(e);
-        }
-        return tip;
-    }
-    */
-    
-    
-    
     /**
      * Is Cell Editable
      */
@@ -258,23 +237,17 @@ public class PumpDataTableModel extends AbstractTableModel implements MultiLineT
         return false;
     }
 
-    
     /** 
      * get ToolTip Value
      */
     public String getToolTipValue(int row, int column)
     {
         DeviceValuesEntry o = dayData.getRowAt(row);
-        
+
         if (o instanceof MultiLineTooltip)
-        {
-            return ((MultiLineTooltip)o).getMultiLineToolTip(column);
-        }
+            return ((MultiLineTooltip) o).getMultiLineToolTip(column);
         else
-        {
-            return (String)o.getColumnValue(column);
-        }
+            return (String) o.getColumnValue(column);
     }
-    
 
 }

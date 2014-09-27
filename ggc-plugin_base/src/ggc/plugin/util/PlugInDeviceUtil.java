@@ -32,7 +32,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PlugInDeviceUtil
 {
 
@@ -41,9 +40,7 @@ public class PlugInDeviceUtil
     float device_columns_width[] = { 0.2f, 0.3f, 0.25f, 0.25f };
     String device_columns[] = null;
     I18nControlAbstract m_ic_core = null;
-    
-    
-    
+
     /**
      * Constructor
      * 
@@ -55,8 +52,7 @@ public class PlugInDeviceUtil
         this.m_ic = da.getI18nControlInstance();
         this.m_ic_core = da.getParentI18nControlInstance();
     }
-    
-    
+
     /** 
      * Get Column Value
      * 
@@ -66,30 +62,32 @@ public class PlugInDeviceUtil
      */
     public String getColumnValue(int num, DeviceInterface di)
     {
-        //System.out.println("Num: " + num);
-        switch(num)
+        // System.out.println("Num: " + num);
+        switch (num)
         {
             case 1:
                 return di.getDeviceCompany().getShortName();
 
             case 2:
                 return di.getName();
-                
+
             case 3:
-                return this.m_ic.getMessage(ConnectionProtocols.connectionProtocolDescription[di.getConnectionProtocol()]);
-                //return this.m_ic_core.getMessage(ConnectionProtocols.connectionProtocolDescription[di.getConnectionProtocol()]);
+                return this.m_ic.getMessage(ConnectionProtocols.connectionProtocolDescription[di
+                        .getConnectionProtocol()]);
+                // return
+                // this.m_ic_core.getMessage(ConnectionProtocols.connectionProtocolDescription[di.getConnectionProtocol()]);
 
             case 4:
-                
+
                 String dd = "";
-                
-                //System.out.println("DST: " + di.getDownloadSupportType());
-                
+
+                // System.out.println("DST: " + di.getDownloadSupportType());
+
                 if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
                 {
                     dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_DEVICE"), "/");
                 }
-                
+
                 if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
                 {
                     dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_FILE"), "/");
@@ -99,9 +97,8 @@ public class PlugInDeviceUtil
                 {
                     dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_CONFIG"), "/");
                 }
-                
-                
-                if (dd.length()==0)
+
+                if (dd.length() == 0)
                 {
 
                     if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_SUPPORT_NO) == DownloadSupportType.DOWNLOAD_SUPPORT_NO)
@@ -113,29 +110,30 @@ public class PlugInDeviceUtil
                         dd = this.m_ic.getMessage("DOWNLOAD_NOT_SUPPORTED_BY_DEVICE");
                     }
                     else
-                        dd= "";
+                    {
+                        dd = "";
+                    }
                 }
-                
-                
+
                 return dd;
                 /*
-                if (this.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_YES)
-                    return DataAccessPump.getInstance().getYesNoOption(true);
-                else
-                    return DataAccessPump.getInstance().getYesNoOption(false);
-                */
-                
-            //case 5:
-                //return "Bo/Ba/Tbr";
-            //    return this.m_da.getYesNoOption(false);
-                
-                
-            default:                 
+                 * if
+                 * (this.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_YES
+                 * )
+                 * return DataAccessPump.getInstance().getYesNoOption(true);
+                 * else
+                 * return DataAccessPump.getInstance().getYesNoOption(false);
+                 */
+
+                // case 5:
+                // return "Bo/Ba/Tbr";
+                // return this.m_da.getYesNoOption(false);
+
+            default:
                 return "N/A: " + num;
         }
     }
-    
-    
+
     /**
      * Append To String
      * 
@@ -146,19 +144,18 @@ public class PlugInDeviceUtil
      */
     public String appendToString(String input, String add, String delim)
     {
-        if (input.length()>0)
+        if (input.length() > 0)
         {
             input += delim + add;
         }
         else
+        {
             input = add;
-        
+        }
+
         return input;
     }
 
-    
-    
-    
     /** 
      * Get Column Count
      * 
@@ -169,7 +166,6 @@ public class PlugInDeviceUtil
         return this.device_columns_width.length;
     }
 
-    
     /** 
      * Get Column Name
      * 
@@ -178,7 +174,7 @@ public class PlugInDeviceUtil
      */
     public String getColumnName(int num)
     {
-        if (device_columns==null)
+        if (device_columns == null)
         {
             this.device_columns = new String[4];
             device_columns[0] = this.m_ic_core.getMessage("DEVICE_COMPANY");
@@ -186,11 +182,10 @@ public class PlugInDeviceUtil
             device_columns[2] = this.m_ic_core.getMessage("DEVICE_PROTOCOL");
             device_columns[3] = this.m_ic_core.getMessage("DEVICE_DOWNLOAD");
         }
-        
-        return device_columns[num-1];
+
+        return device_columns[num - 1];
     }
-    
-    
+
     /** 
      * Get Column Width
      * 
@@ -200,12 +195,9 @@ public class PlugInDeviceUtil
      */
     public int getColumnWidth(int num, int width)
     {
-        return (int)(this.device_columns_width[num-1] * width);
+        return (int) (this.device_columns_width[num - 1] * width);
     }
-    
-    
-    
-    //public abstract static DataAccessPlugInBase getPlugInDataAccess();
-    
-    
+
+    // public abstract static DataAccessPlugInBase getPlugInDataAccess();
+
 }

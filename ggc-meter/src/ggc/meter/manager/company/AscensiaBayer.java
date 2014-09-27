@@ -1,4 +1,4 @@
-package ggc.meter.manager.company; 
+package ggc.meter.manager.company;
 
 import ggc.meter.device.ascensia.AscensiaBreeze;
 import ggc.meter.device.ascensia.AscensiaBreeze2;
@@ -38,7 +38,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class AscensiaBayer extends AbstractDeviceCompany
 {
 
@@ -47,14 +46,14 @@ public class AscensiaBayer extends AbstractDeviceCompany
      */
     public AscensiaBayer()
     {
-        super(false,                                // empty devices
-            MeterDevicesIds.COMPANY_ASCENSIA,       // company_id
-            "Ascensia/Bayer",                       // company name (full)
-            "Ascensia",                             // short company name
-            "ASCENSIA_DESC",                        // company description
-            DeviceImplementationStatus.IMPLEMENTATION_DONE,
-            DataAccessMeter.getInstance());  // implementation status
-        
+        super(false, // empty devices
+                MeterDevicesIds.COMPANY_ASCENSIA, // company_id
+                "Ascensia/Bayer", // company name (full)
+                "Ascensia", // short company name
+                "ASCENSIA_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_DONE, DataAccessMeter.getInstance()); // implementation
+                                                                                                // status
+
         this.addDevice(new AscensiaEliteXL(this));
         this.addDevice(new AscensiaDEX(this));
         this.addDevice(new AscensiaBreeze(this));
@@ -62,6 +61,6 @@ public class AscensiaBayer extends AbstractDeviceCompany
         this.addDevice(new AscensiaContour(this));
         this.addDevice(new AscensiaContourLink(this));
         this.addDevice(new AscensiaContourTest(this));
-    }    
-    
+    }
+
 }

@@ -1,12 +1,13 @@
 package ggc.core.db.hibernate.cgms;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class CGMSDataExtendedH implements Serializable 
+public class CGMSDataExtendedH implements Serializable
 {
 
     private static final long serialVersionUID = -8690831306276025195L;
@@ -43,7 +44,8 @@ public class CGMSDataExtendedH implements Serializable
      * @param person_id 
      * @param comment 
      * @param changed */
-    public CGMSDataExtendedH(long dt_info, int type, String value, String extended, int person_id, String comment, long changed) 
+    public CGMSDataExtendedH(long dt_info, int type, String value, String extended, int person_id, String comment,
+            long changed)
     {
         this.dt_info = dt_info;
         this.type = type;
@@ -55,14 +57,14 @@ public class CGMSDataExtendedH implements Serializable
     }
 
     /** default constructor */
-    public CGMSDataExtendedH() 
+    public CGMSDataExtendedH()
     {
     }
 
     /** minimal constructor 
      * @param dt_info 
      * @param person_id */
-    public CGMSDataExtendedH(long dt_info, int person_id) 
+    public CGMSDataExtendedH(long dt_info, int person_id)
     {
         this.dt_info = dt_info;
         this.person_id = person_id;
@@ -112,7 +114,7 @@ public class CGMSDataExtendedH implements Serializable
      * 
      * @return type value
      */
-    public int getType() 
+    public int getType()
     {
         return this.type;
     }
@@ -122,7 +124,7 @@ public class CGMSDataExtendedH implements Serializable
      *  
      * @param type parameter
      */
-    public void setType(int type) 
+    public void setType(int type)
     {
         this.type = type;
     }
@@ -132,7 +134,7 @@ public class CGMSDataExtendedH implements Serializable
      * 
      * @return value value
      */
-    public String getValue() 
+    public String getValue()
     {
         return this.value;
     }
@@ -142,7 +144,7 @@ public class CGMSDataExtendedH implements Serializable
      *  
      * @param value parameter
      */
-    public void setValue(String value) 
+    public void setValue(String value)
     {
         this.value = value;
     }
@@ -232,13 +234,13 @@ public class CGMSDataExtendedH implements Serializable
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof CGMSDataExtendedH) ) return false;
+        if (!(other instanceof CGMSDataExtendedH))
+            return false;
         CGMSDataExtendedH castOther = (CGMSDataExtendedH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -246,18 +248,19 @@ public class CGMSDataExtendedH implements Serializable
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

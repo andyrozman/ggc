@@ -4,20 +4,14 @@ import java.util.HashMap;
 
 public enum NoiseMode
 {
-    Clean(1),
-    Heavy(4),
-    Light(2),
-    Max(6),
-    Medium(3),
-    None(0),
-    NotComputed(5);
-    
+    Clean(1), Heavy(4), Light(2), Max(6), Medium(3), None(0), NotComputed(5);
+
     private int value;
-    private static HashMap<Integer,NoiseMode> map = new HashMap<Integer,NoiseMode>();
-    
+    private static HashMap<Integer, NoiseMode> map = new HashMap<Integer, NoiseMode>();
+
     static
     {
-        for(NoiseMode el : values())
+        for (NoiseMode el : values())
         {
             map.put(el.getValue(), el);
         }
@@ -27,7 +21,7 @@ public enum NoiseMode
     {
         this.value = value;
     }
-    
+
     public int getValue()
     {
         return value;
@@ -44,4 +38,3 @@ public enum NoiseMode
     }
 
 }
-

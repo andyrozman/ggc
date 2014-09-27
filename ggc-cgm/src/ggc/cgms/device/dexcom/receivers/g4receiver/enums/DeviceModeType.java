@@ -8,17 +8,15 @@ import java.util.HashMap;
 
 public enum DeviceModeType
 {
-    
-    Manufactuiring(1),
-    Normal(0);
-    
-    
+
+    Manufactuiring(1), Normal(0);
+
     private int value;
-    private static HashMap<Integer,DeviceModeType> map = new HashMap<Integer,DeviceModeType>();
-    
+    private static HashMap<Integer, DeviceModeType> map = new HashMap<Integer, DeviceModeType>();
+
     static
     {
-        for(DeviceModeType el : values())
+        for (DeviceModeType el : values())
         {
             map.put(el.getValue(), el);
         }
@@ -28,7 +26,7 @@ public enum DeviceModeType
     {
         this.value = value;
     }
-    
+
     public int getValue()
     {
         return value;
@@ -45,4 +43,3 @@ public enum DeviceModeType
     }
 
 }
-

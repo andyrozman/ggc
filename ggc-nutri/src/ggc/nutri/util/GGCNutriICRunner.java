@@ -41,5 +41,5 @@ public class GGCNutriICRunner extends I18nControlRunner
     {
         return "GGC_Nutrition";
     }
-    
+
 }

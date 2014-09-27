@@ -24,8 +24,8 @@ import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -106,9 +106,13 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         ic = m_da.getI18nControlInstance();
 
         if (type == FoodPartMainSelectorDialog.SELECTOR_NUTRITION)
+        {
             this.setTitle(ic.getMessage("NUTRITION_SELECTOR"));
+        }
         else
+        {
             this.setTitle(ic.getMessage("HOME_WEIGHT_SELECTOR"));
+        }
 
         // this.input_id = meal_id;
         this.selector_type = type;
@@ -120,7 +124,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         this.setVisible(true);
     }
 
-    
     /**
      * Constructor
      * 
@@ -136,9 +139,13 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         ic = m_da.getI18nControlInstance();
 
         if (type == FoodPartMainSelectorDialog.SELECTOR_NUTRITION)
+        {
             this.setTitle(ic.getMessage("NUTRITION_SELECTOR"));
+        }
         else
+        {
             this.setTitle(ic.getMessage("HOME_WEIGHT_SELECTOR"));
+        }
 
         // this.input_id = meal_id;
         this.selector_type = type;
@@ -149,8 +156,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 
         this.setVisible(true);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -175,7 +181,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         this.setVisible(true);
     }
 
-    
     /**
      * Constructor
      * 
@@ -199,8 +204,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 
         this.setVisible(true);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -228,8 +232,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         this.setVisible(true);
     }
 
-
-    
     /**
      * Constructor
      * 
@@ -267,8 +269,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 
         this.amountField.setValue(new Double(this.nutrition_data.getAmount()));
     }
-    
-    
+
     private void loadHomeWeighs()
     {
         this.button_select.setEnabled(false);
@@ -312,8 +313,8 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
          * ic.getMessage("MEAL");
          */
 
-        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
+        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -325,26 +326,19 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
          * JPanel panel1 = new JPanel(); panel1.setBorder(new
          * TitledBorder(ic.getMessage("SELECTOR"))); panel1.setLayout(null);
          * panel1.setBounds(10, 10, 270, 140); panel.add(panel1, null);
-         * 
          * //new javax.swing.border.TitledBorder("Some");
-         * 
          * //javax.swing.border.
-         * 
          * JLabel label = new
          * JLabel(ic.getMessage("NUTRITION_TYPE_FOR_SELECTOR"));
          * label.setBounds(30, 20, 220, 25); label.setFont(font_normal_b);
          * panel1.add(label, null);
-         * 
          * cb_type = new JComboBox(type); cb_type.setBounds(30, 50, 210, 25);
          * panel1.add(cb_type);
-         * 
-         * 
          * button_select = new JButton(ic.getMessage("SELECT_ITEM"));
          * button_select.setActionCommand("select_item");
          * button_select.setBounds(30, 95, 210, 25);
          * button_select.addActionListener(this); panel1.add(button_select,
          * null);
-         * 
          * //if (meal_part!=null) // button.setEnabled(false);
          */
 
@@ -366,7 +360,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
          * label = new JLabel(ic.getMessage("NUTRITION_TYPE")+ ":");
          * label.setBounds(20, 25, 220, 25); label.setFont(font_normal_b);
          * panel2.add(label, null);
-         * 
          * label_item_type = new JLabel(ic.getMessage("NONE"));
          * label_item_type.setBounds(20, 45, 220, 25);
          * label_item_type.setFont(font_normal); panel2.add(label_item_type,
@@ -401,8 +394,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
          * NumberFormat.getNumberInstance();
          * amountEditFormat.setMinimumFractionDigits(1);
          * amountEditFormat.setMaximumFractionDigits(2);
-         * 
-         * 
          * amountField = new JFormattedTextField( new DefaultFormatterFactory(
          * new NumberFormatter(amountDisplayFormat), new
          * NumberFormatter(amountDisplayFormat), new
@@ -445,44 +436,32 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
              */
         }
 
-        
+        ATSwingUtils.getButton("   " + ic.getMessage("OK"), 20, button_y, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
+            "ok.png", "ok", this, m_da);
 
-        
-        
-        ATSwingUtils.getButton("   " + ic.getMessage("OK"), 20, button_y, 110, 25, panel, 
-            ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, 
-            m_da);
-        
-        ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 135, button_y, 110, 25, panel, 
-            ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, 
-            m_da);
-        
+        ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 135, button_y, 110, 25, panel,
+            ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
 
         help_button = m_da.createHelpIconByBounds(250, button_y, 25, 25, panel, ATSwingUtils.FONT_NORMAL);
         panel.add(help_button);
-        
-       /* 
-        
-        JButton button = new JButton(ic.getMessage("OK"));
-        button.setActionCommand("ok");
-        button.setBounds(65, button_y, 80, 25);
-        button.addActionListener(this);
-        panel.add(button, null);
 
-        button = new JButton(ic.getMessage("CANCEL"));
-        button.setActionCommand("cancel");
-        button.setBounds(160, button_y, 80, 25);
-        button.addActionListener(this);
-        panel.add(button);
-*/
-        
-        
-        
-        
+        /*
+         * JButton button = new JButton(ic.getMessage("OK"));
+         * button.setActionCommand("ok");
+         * button.setBounds(65, button_y, 80, 25);
+         * button.addActionListener(this);
+         * panel.add(button, null);
+         * button = new JButton(ic.getMessage("CANCEL"));
+         * button.setActionCommand("cancel");
+         * button.setBounds(160, button_y, 80, 25);
+         * button.addActionListener(this);
+         * panel.add(button);
+         */
+
         this.add(panel, null);
 
         m_da.enableHelp(this);
-        
+
         loadTypeSpecific();
     }
 
@@ -510,7 +489,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
      */
     public boolean wasAction()
     {
-        return ((this.action_object != null) || (this.action_done));
+        return this.action_object != null || this.action_done;
     }
 
     /**
@@ -541,39 +520,39 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     public float getAmountValue()
     {
         return m_da.getJFormatedTextValueFloat(this.amountField);
-        
-        /*
-        try
-        {
-            this.amountField.commitEdit();
-        }
-        catch (Exception ex)
-        {
-            System.out.println("Exception on commit value:" + ex);
-        }
-        Object o = this.amountField.getValue();
 
-        if (o instanceof Long)
-        {
-            // System.out.println("Amount(long): " +
-            // this.amountField.getValue());
-            Long l = (Long) o;
-            return l.floatValue();
-        }
-        else if (o instanceof Integer)
-        {
-            // System.out.println("Amount(long): " +
-            // this.amountField.getValue());
-            Integer l = (Integer) o;
-            return l.floatValue();
-        }
-        else
-        {
-            // System.out.println("Amount(double): " +
-            // this.amountField.getValue());
-            Double d = (Double) o;
-            return d.floatValue();
-        } */
+        /*
+         * try
+         * {
+         * this.amountField.commitEdit();
+         * }
+         * catch (Exception ex)
+         * {
+         * System.out.println("Exception on commit value:" + ex);
+         * }
+         * Object o = this.amountField.getValue();
+         * if (o instanceof Long)
+         * {
+         * // System.out.println("Amount(long): " +
+         * // this.amountField.getValue());
+         * Long l = (Long) o;
+         * return l.floatValue();
+         * }
+         * else if (o instanceof Integer)
+         * {
+         * // System.out.println("Amount(long): " +
+         * // this.amountField.getValue());
+         * Integer l = (Integer) o;
+         * return l.floatValue();
+         * }
+         * else
+         * {
+         * // System.out.println("Amount(double): " +
+         * // this.amountField.getValue());
+         * Double d = (Double) o;
+         * return d.floatValue();
+         * }
+         */
     }
 
     /**
@@ -656,12 +635,16 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     /**
      * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
      */
-    public void keyTyped(KeyEvent e) { }
+    public void keyTyped(KeyEvent e)
+    {
+    }
 
     /**
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
-    public void keyPressed(KeyEvent e) { }
+    public void keyPressed(KeyEvent e)
+    {
+    }
 
     /**
      * Invoked when a key has been released. See the class description for
@@ -675,18 +658,15 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         }
     }
 
-
     public Component getComponent()
     {
         return this;
     }
 
-
     public JButton getHelpButton()
     {
         return this.help_button;
     }
-
 
     public String getHelpId()
     {

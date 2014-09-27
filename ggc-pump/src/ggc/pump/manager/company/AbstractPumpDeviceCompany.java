@@ -3,20 +3,18 @@ package ggc.pump.manager.company;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.pump.util.DataAccessPump;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class AbstractPumpDeviceCompany.
  */
 public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
 {
-    
+
     /**
      * The profile_names
      */
     protected String[] profile_names;
-    
-    
+
     /**
      * Instantiates a new abstract pump device company
      * 
@@ -25,12 +23,10 @@ public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
      */
     public AbstractPumpDeviceCompany(boolean value)
     {
-        super(value,
-            DataAccessPump.getInstance());
+        super(value, DataAccessPump.getInstance());
         this.initProfileNames();
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -40,21 +36,19 @@ public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
      * @param company_desc
      * @param implementation_status
      */
-    public AbstractPumpDeviceCompany(int company_id_, String company_name, String short_company_name, String company_desc, int implementation_status)
+    public AbstractPumpDeviceCompany(int company_id_, String company_name, String short_company_name,
+            String company_desc, int implementation_status)
     {
-        super(false, company_id_, company_name, short_company_name, company_desc, implementation_status, DataAccessPump.getInstance());
+        super(false, company_id_, company_name, short_company_name, company_desc, implementation_status, DataAccessPump
+                .getInstance());
         this.initProfileNames();
     }
-    
-    
+
     /**
      * Init Profile Names (for Profile Editor)
      */
     public abstract void initProfileNames();
-    
-    
-    
-    
+
     /**
      * Gets the profile names
      * 
@@ -64,9 +58,5 @@ public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
     {
         return this.profile_names;
     }
-    
-    
-    
+
 }
-
-

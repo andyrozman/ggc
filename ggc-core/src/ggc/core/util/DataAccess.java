@@ -74,37 +74,34 @@ import com.atech.utils.logs.RedirectScreen;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-public class DataAccess extends ATDataAccessLMAbstract 
+public class DataAccess extends ATDataAccessLMAbstract
 {
 
     /**
      * Core Version
      */
     public static String CORE_VERSION = "0.5.0.3";
-    
+
     /**
      * Current Db Version
      */
     public String current_db_version = "7";
 
-    
     /**
      * At later time this will be determined by user management part
      */
     public long current_user_id = 1;
-    
+
     private static Log log = LogFactory.getLog(DataAccess.class);
 
-    private Hashtable<String,EventSource> observables = null;
+    private Hashtable<String, EventSource> observables = null;
 
-    
-    private static DataAccess s_da = null; // This is handle to unique singelton instance
+    private static DataAccess s_da = null; // This is handle to unique singelton
+                                           // instance
 
     private GGCDb m_db = null;
 
     private Component m_main = null;
-
 
     // daily and weekly data
     private GregorianCalendar m_date = null, m_dateStart = null;
@@ -117,7 +114,6 @@ public class DataAccess extends ATDataAccessLMAbstract
     private DbToolApplicationGGC m_configFile = null;
     private ConfigurationManager m_cfgMgr = null;
 
-    
     /**
      * Decimal with zero decimals
      */
@@ -141,33 +137,30 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
      */
-//    public int m_BG_unit = BG_MGDL;
+    // public int m_BG_unit = BG_MGDL;
 
     private String[] availableLanguages = { "English", "Deutsch", "Slovenski", "Fran\u00e7ais", "Language Tool" };
-  
+
     /**
      * Available Language Extensions (posfixes)
      */
     public String[] avLangPostfix = { "en", "de", "si", "fr", "lt" };
 
-    
-    //public Locale[] realLocales = { Locale.ENGLISH, Locale.GERMANY, Locale.
-    
-    
+    // public Locale[] realLocales = { Locale.ENGLISH, Locale.GERMANY, Locale.
+
     /**
      * BG Units
      */
     public String[] bg_units = { "", "mg/dl", "mmol/l" };
 
-    
     /**
      * BG Units for configuration
      */
     public String[] bg_units_config = { "mg/dl", "mmol/l" };
-    
-//    public Hashtable<String, String> timeZones;
 
-    //public ArrayList<Container> parents_list;
+    // public Hashtable<String, String> timeZones;
+
+    // public ArrayList<Container> parents_list;
 
     /**
      * Config Icons 
@@ -189,44 +182,38 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static final String PLUGIN_CGMS = "CGMSPlugIn";
 
-
     /**
      * Plug In - Nutrition Tool
      */
     public static final String PLUGIN_NUTRITION = "NutritionPlugIn";
-    
-    
+
     /**
      * GGC Mode: Pen/Injection
      */
     public static final int GGC_MODE_PEN_INJECTION = 0;
-    
-    
+
     /**
      * GGC Mode: Pump
      */
     public static final int GGC_MODE_PUMP = 1;
 
-    
     /**
      * Converter: BG     
      */
     public static final String CONVERTER_BG = "BG";
-    
 
     /**
      * Extended Handler: Daily Values Row
      */
     public static final String EXTENDED_HANDLER_DailyValuesRow = "DailyValuesRow";
-    
-    
-    //private int current_person_id = 1;
-    //NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
-    
+
+    // private int current_person_id = 1;
+    // NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
+
     /**
      * Developer Version
      */
-//    public boolean developer_version = false;
+    // public boolean developer_version = false;
 
     // ********************************************************
     // ****** Constructors and Access methods *****
@@ -247,7 +234,6 @@ public class DataAccess extends ATDataAccessLMAbstract
         initSpecial();
     }
 
-    
     /**
      * Init Special
      */
@@ -256,66 +242,60 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         doTest();
         this.initObservable();
-        
-        //System.out.println("init Special");
-        //this.tree_roots = new Hashtable<String, GGCTreeRoot>();
 
-        
-        
+        // System.out.println("init Special");
+        // this.tree_roots = new Hashtable<String, GGCTreeRoot>();
+
         // Help Context Init
-        //HelpContext hc = new HelpContext("../data/help/en/GGC.hs");
+        // HelpContext hc = new HelpContext("../data/help/en/GGC.hs");
         HelpContext hc = new HelpContext("../data/" + this.lang_mgr.getHelpSet());
         this.setHelpContext(hc);
         this.help_enabled = true;
-        
-        //System.out.println("config File");
+
+        // System.out.println("config File");
         this.m_configFile = new DbToolApplicationGGC();
         this.m_configFile.loadConfig();
 
-        //System.out.println("configuratioon manager");
+        // System.out.println("configuratioon manager");
         m_cfgMgr = new ConfigurationManager(this);
 
-        
-        //System.out.println("m_settings");
+        // System.out.println("m_settings");
         this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
-        
-        //System.out.println("m_set: " + this.m_settings);
-        
+
+        // System.out.println("m_set: " + this.m_settings);
+
         loadOptions();
 
-        if (!(new File("../data/debug.txt").exists()))
+        if (!new File("../data/debug.txt").exists())
         {
             new RedirectScreen();
         }
 
-        this.loadGraphConfigProperties();        
+        this.loadGraphConfigProperties();
         this.startWebServer();
         this.loadSpecialParameters();
         this.loadConverters();
-        
-        /*
-        System.out.println(Locale.getAvailableLocales());
-        
-        Locale[] lcls = Locale.getAvailableLocales();
-        
-        for(int i=0; i<lcls.length; i++)
-        {
-            System.out.println(lcls[i].getDisplayName() + "," + lcls[i].getISO3Country() + "," + lcls[i].getISO3Language());
-        }
-        */
-        
-    }    
 
-    
+        /*
+         * System.out.println(Locale.getAvailableLocales());
+         * Locale[] lcls = Locale.getAvailableLocales();
+         * for(int i=0; i<lcls.length; i++)
+         * {
+         * System.out.println(lcls[i].getDisplayName() + "," +
+         * lcls[i].getISO3Country() + "," + lcls[i].getISO3Language());
+         * }
+         */
+
+    }
+
     /**
      * Run After Db Load
      */
     public void runAfterDbLoad()
     {
-        loadSpecialParameters();        
+        loadSpecialParameters();
     }
-    
-    
+
     // Method: getInstance
     // Author: Andy
     /**
@@ -330,7 +310,9 @@ public class DataAccess extends ATDataAccessLMAbstract
     public static DataAccess getInstance()
     {
         if (s_da == null)
+        {
             s_da = new DataAccess();
+        }
         return s_da;
     }
 
@@ -346,17 +328,16 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         if (s_da == null)
         {
-            //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  " + main);
+            // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  "
+            // + main);
             // GGCDb db = new GGCDb();
 
-            
-            
-            //System.out.println("create new Instance");
+            // System.out.println("create new Instance");
             s_da = new DataAccess();
-            //System.out.println("setParent");
+            // System.out.println("setParent");
             s_da.setParent(main);
-            //System.out.println("setMainParent");
-            s_da.setMainParent((JFrame)main);
+            // System.out.println("setMainParent");
+            s_da.setMainParent((JFrame) main);
             // System.out.println("addComponet");
             // s_da.addComponent(main);
         }
@@ -370,19 +351,19 @@ public class DataAccess extends ATDataAccessLMAbstract
      * @param main
      * @return
      */
-/*    public static DataAccess createInstance(GGCLittle main)
-    {
-        if (s_da == null)
-        {
-            // GGCDb db = new GGCDb();
-            s_da = new DataAccess();
-            s_da.setParent(main);
-            s_da.setMainParent(main);
-        }
-
-        return s_da;
-    }
-*/
+    /*
+     * public static DataAccess createInstance(GGCLittle main)
+     * {
+     * if (s_da == null)
+     * {
+     * // GGCDb db = new GGCDb();
+     * s_da = new DataAccess();
+     * s_da.setParent(main);
+     * s_da.setMainParent(main);
+     * }
+     * return s_da;
+     * }
+     */
     /*
      * static public DataAccess getInstance() { return m_da; }
      */
@@ -401,7 +382,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Start Db
      */
-    public void startDb() //StatusBar bar)
+    public void startDb() // StatusBar bar)
     {
         GGCDbLoader loader = new GGCDbLoader(this);
         loader.start();
@@ -412,12 +393,13 @@ public class DataAccess extends ATDataAccessLMAbstract
      * 
      * @param bar2
      */
-/*    public void startDb(StatusBarL bar2)
-    {
-        GGCDbLoader loader = new GGCDbLoader(this, bar2);
-        loader.start();
-     }
-*/
+    /*
+     * public void startDb(StatusBarL bar2)
+     * {
+     * GGCDbLoader loader = new GGCDbLoader(this, bar2);
+     * loader.start();
+     * }
+     */
     /**
      * Get Db
      * @return
@@ -437,8 +419,6 @@ public class DataAccess extends ATDataAccessLMAbstract
         this.m_db = db;
     }
 
-
-    
     /**
      * Is Pen/Injection Mode
      * 
@@ -446,10 +426,9 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public boolean isPenInjectionMode()
     {
-        return (getSoftwareMode()==GGC_MODE_PEN_INJECTION);
+        return getSoftwareMode() == GGC_MODE_PEN_INJECTION;
     }
-    
-    
+
     /**
      * Is Pump Mode
      * 
@@ -457,10 +436,9 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public boolean isPumpMode()
     {
-        return (getSoftwareMode()==GGC_MODE_PUMP);
+        return getSoftwareMode() == GGC_MODE_PUMP;
     }
-    
-    
+
     /**
      * Get Software Mode
      * 
@@ -468,10 +446,11 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public int getSoftwareMode()
     {
-        //System.out.println("Sw Mode: " + this.m_cfgMgr.getIntValue("SW_MODE"));
+        // System.out.println("Sw Mode: " +
+        // this.m_cfgMgr.getIntValue("SW_MODE"));
         return this.m_cfgMgr.getIntValue("SW_MODE");
     }
-    
+
     /**
      * Get Software Mode Description
      * 
@@ -479,12 +458,12 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public String getSoftwareModeDescription()
     {
-        //System.out.println("Sw Mode Desc: " + this.m_cfgMgr.getStringValue("SW_MODE_DESC"));
+        // System.out.println("Sw Mode Desc: " +
+        // this.m_cfgMgr.getStringValue("SW_MODE_DESC"));
 
         return this.m_cfgMgr.getStringValue("SW_MODE_DESC");
     }
-    
-    
+
     // ********************************************************
     // ****** Static Methods *****
     // ********************************************************
@@ -512,17 +491,17 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         switch (decimal_places)
         {
-        case 1:
-            return DataAccess.Decimal1Format.format(f);
+            case 1:
+                return DataAccess.Decimal1Format.format(f);
 
-        case 2:
-            return DataAccess.Decimal2Format.format(f);
+            case 2:
+                return DataAccess.Decimal2Format.format(f);
 
-        case 3:
-            return DataAccess.Decimal3Format.format(f);
+            case 3:
+                return DataAccess.Decimal3Format.format(f);
 
-        default:
-            return DataAccess.Decimal0Format.format(f);
+            default:
+                return DataAccess.Decimal0Format.format(f);
         }
     }
 
@@ -577,84 +556,80 @@ public class DataAccess extends ATDataAccessLMAbstract
         BackupRestoreCollection brc_full = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
         brc_full.addNodeChild(new DailyValue(this.m_i18n));
 
-
         BackupRestoreCollection brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
         brc1.addNodeChild(new Settings(this.m_i18n));
         brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
         brc_full.addNodeChild(brc1);
-        
-        
-        //for(int i=0; i<)
-        
-        for(Enumeration<String> en = this.plugins.keys(); en.hasMoreElements(); )
+
+        // for(int i=0; i<)
+
+        for (Enumeration<String> en = this.plugins.keys(); en.hasMoreElements();)
         {
             PlugInClient pic = this.plugins.get(en.nextElement());
-            
-            BackupRestoreCollection brc = pic.getBackupObjects();
-            
-            if (brc!=null)
-                brc_full.addNodeChild(brc);
-        }
-        
-        
-        /*
-        BackupRestoreCollection brc_nut = new BackupRestoreCollection("NUTRITION_OBJECTS", this.m_i18n);
-        brc_nut.addNodeChild(new FoodGroup(this.m_i18n));
-        brc_nut.addNodeChild(new FoodDescription(this.m_i18n));
-        brc_nut.addNodeChild(new MealGroup(this.m_i18n));
-        brc_nut.addNodeChild(new Meal(this.m_i18n));
-        brc.addNodeChild(brc_nut);
 
-        brc_nut = new BackupRestoreCollection("PUMP_TOOL", this.m_i18n);
-        brc_nut.addNodeChild(new PumpData(this.m_i18n));
-        brc_nut.addNodeChild(new PumpDataExtended(this.m_i18n));
-        brc_nut.addNodeChild(new PumpProfile(this.m_i18n));
-        brc.addNodeChild(brc_nut);
-        */
-        
+            BackupRestoreCollection brc = pic.getBackupObjects();
+
+            if (brc != null)
+            {
+                brc_full.addNodeChild(brc);
+            }
+        }
+
+        /*
+         * BackupRestoreCollection brc_nut = new
+         * BackupRestoreCollection("NUTRITION_OBJECTS", this.m_i18n);
+         * brc_nut.addNodeChild(new FoodGroup(this.m_i18n));
+         * brc_nut.addNodeChild(new FoodDescription(this.m_i18n));
+         * brc_nut.addNodeChild(new MealGroup(this.m_i18n));
+         * brc_nut.addNodeChild(new Meal(this.m_i18n));
+         * brc.addNodeChild(brc_nut);
+         * brc_nut = new BackupRestoreCollection("PUMP_TOOL", this.m_i18n);
+         * brc_nut.addNodeChild(new PumpData(this.m_i18n));
+         * brc_nut.addNodeChild(new PumpDataExtended(this.m_i18n));
+         * brc_nut.addNodeChild(new PumpProfile(this.m_i18n));
+         * brc.addNodeChild(brc_nut);
+         */
+
         this.backup_restore_collection = brc_full;
     }
 
-    
     /** 
      * Get BackupRestoreCollection
      */
+    @Override
     public BackupRestoreCollection getBackupRestoreCollection()
     {
         BackupRestoreCollection brc_full = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
         brc_full.addNodeChild(new DailyValue(this.m_i18n));
 
-
         BackupRestoreCollection brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
         brc1.addNodeChild(new Settings(this.m_i18n));
         brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
         brc_full.addNodeChild(brc1);
-        
-        
-        //for(int i=0; i<)
-        
-        for(Enumeration<String> en = this.plugins.keys(); en.hasMoreElements(); )
+
+        // for(int i=0; i<)
+
+        for (Enumeration<String> en = this.plugins.keys(); en.hasMoreElements();)
         {
             PlugInClient pic = this.plugins.get(en.nextElement());
-            
+
             if (pic.isBackupRestoreEnabled())
+            {
                 brc_full.addNodeChild(pic.getBackupObjects());
-            
-/*            BackupRestoreCollection brc = pic.getBackupObjects();
-            
-            if (brc!=null)
-                brc_full.addNodeChild(brc); */
+            }
+
+            /*
+             * BackupRestoreCollection brc = pic.getBackupObjects();
+             * if (brc!=null)
+             * brc_full.addNodeChild(brc);
+             */
         }
-        
 
         return brc_full;
-        
-        
-//        return null;
+
+        // return null;
     }
-    
-    
-    
+
     /**
      * Load Graph Config Properties
      */
@@ -663,8 +638,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         this.graph_config = this.m_settings;
     }
-    
-    
+
     // ********************************************************
     // ****** Icons *****
     // ********************************************************
@@ -697,8 +671,6 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return this.m_configFile;
     }
-
-    
 
     // ********************************************************
     // ****** Settings *****
@@ -743,13 +715,12 @@ public class DataAccess extends ATDataAccessLMAbstract
         return this.m_cfgMgr;
     }
 
-    
     /**
      * Init PlugIns
      */
     public void initPlugIns()
     {
-        
+
         log.debug("init Plugins: Meter Tool");
         addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
 
@@ -761,43 +732,38 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         log.debug("init Plugins: Nutrition Tool");
         addPlugIn(DataAccess.PLUGIN_NUTRITION, new NutriPlugIn(this.m_main, this.m_i18n));
-        
+
     }
-    
-    
-    
+
     /**
      * Get Hibernate Db
      */
+    @Override
     public HibernateDb getHibernateDb()
     {
         return this.m_db;
     }
-    
-    
+
     // ********************************************************
-    // ******         Observer/Observable                 *****
+    // ****** Observer/Observable *****
     // ********************************************************
-    
+
     /**
      * Observable: Panels
      */
     public static final int OBSERVABLE_PANELS = 1;
 
-    
     /**
      * Observable: Status
      */
     public static final int OBSERVABLE_STATUS = 2;
-    
-    
-    
+
     /**
      * Init Observable
      */
     public void initObservable()
     {
-        observables = new Hashtable<String,EventSource>();
+        observables = new Hashtable<String, EventSource>();
 
         observables.put("" + OBSERVABLE_PANELS, new EventSource());
         observables.put("" + OBSERVABLE_STATUS, new EventSource());
@@ -809,17 +775,15 @@ public class DataAccess extends ATDataAccessLMAbstract
     public void startToObserve()
     {
         /*
-        // starts the event thread
-        Thread thread = new Thread(observables.get("1"));
-        thread.start();
+         * // starts the event thread
+         * Thread thread = new Thread(observables.get("1"));
+         * thread.start();
+         * thread = new Thread(observables.get("2"));
+         * thread.start();
+         */
 
-        thread = new Thread(observables.get("2"));
-        thread.start();
-        */
-        
     }
-    
-    
+
     /**
      * Add Observer 
      * 
@@ -830,7 +794,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         observables.get("" + observable_id).addObserver(inst);
     }
-    
+
     /**
      * Set Change On Event Source
      * 
@@ -839,9 +803,9 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public void setChangeOnEventSource(int type, int value)
     {
-        observables.get("" + type).sendChangeNotification(value); 
+        observables.get("" + type).sendChangeNotification(value);
     }
-    
+
     /**
      * Set Change On Event Source
      * 
@@ -850,12 +814,9 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public void setChangeOnEventSource(int type, String value)
     {
-        observables.get("" + type).sendChangeNotification(value); 
+        observables.get("" + type).sendChangeNotification(value);
     }
-    
-    
-    
-    
+
     // ********************************************************
     // ****** Language *****
     // ********************************************************
@@ -894,7 +855,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         {
             if (this.avLangPostfix[i].equals(postfix))
                 return i;
-            
+
         }
 
         return 0;
@@ -943,8 +904,8 @@ public class DataAccess extends ATDataAccessLMAbstract
         return this.m_settings.getBG_unit();
     }
 
-    //String[] bg_types = { "", "mg/dL", "mmol/L"};
-    
+    // String[] bg_types = { "", "mg/dL", "mmol/L"};
+
     /**
      * Get Measurment Type
      * 
@@ -954,8 +915,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return this.bg_units[getBGMeasurmentType()];
     }
-    
-    
+
     /**
      * Set Measurment Type
      * 
@@ -963,8 +923,8 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public void setBGMeasurmentType(int type)
     {
-        
-        //this.m_BG_unit = type;
+
+        // this.m_BG_unit = type;
     }
 
     private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
@@ -984,15 +944,16 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         switch (this.getBGMeasurmentType())
         {
-        case BG_MMOL:
-            return this.converters.get("BG").getValueDifferent(Converter_mgdL_mmolL.UNIT_mg_dL, dbValue);
-            // this POS should return a float rounded to 3 decimal places,
-            // if I understand the docu correctly
-//            return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR, new MathContext(3, RoundingMode.HALF_UP))
-//                    .floatValue());
-        case BG_MGDL:
-        default:
-            return dbValue;
+            case BG_MMOL:
+                return this.converters.get("BG").getValueDifferent(Converter_mgdL_mmolL.UNIT_mg_dL, dbValue);
+                // this POS should return a float rounded to 3 decimal places,
+                // if I understand the docu correctly
+                // return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR, new
+                // MathContext(3, RoundingMode.HALF_UP))
+                // .floatValue());
+            case BG_MGDL:
+            default:
+                return dbValue;
         }
     }
 
@@ -1006,11 +967,11 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         switch (this.getBGMeasurmentType())
         {
-        case BG_MMOL:
-            return (bg_value * MGDL_TO_MMOL_FACTOR);
-        case BG_MGDL:
-        default:
-            return bg_value;
+            case BG_MMOL:
+                return bg_value * MGDL_TO_MMOL_FACTOR;
+            case BG_MGDL:
+            default:
+                return bg_value;
         }
 
     }
@@ -1026,11 +987,11 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         switch (type)
         {
-        case BG_MMOL:
-            return (bg_value * MGDL_TO_MMOL_FACTOR);
-        case BG_MGDL:
-        default:
-            return bg_value;
+            case BG_MMOL:
+                return bg_value * MGDL_TO_MMOL_FACTOR;
+            case BG_MGDL:
+            default:
+                return bg_value;
         }
 
     }
@@ -1051,13 +1012,9 @@ public class DataAccess extends ATDataAccessLMAbstract
         else
         {
             if (output_type == DataAccess.BG_MGDL)
-            {
                 return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
-            }
             else
-            {
                 return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
-            }
         }
 
     }
@@ -1073,22 +1030,16 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
 
         if (type == DataAccess.BG_MGDL)
-        {
             return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
-        }
         else
-        {
             return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
-        }
 
     }
-
 
     // ********************************************************
     // ****** Parent handling (for UIs) *****
     // ********************************************************
-    
-    
+
     /**
      * Set Parent
      * 
@@ -1105,10 +1056,12 @@ public class DataAccess extends ATDataAccessLMAbstract
      * 
      * @param main
      */
-/*    public void setParent(GGCLittle main)
-    {
-        m_main_little = main;
-    }*/
+    /*
+     * public void setParent(GGCLittle main)
+     * {
+     * m_main_little = main;
+     * }
+     */
 
     /**
      * Get Parent
@@ -1124,48 +1077,44 @@ public class DataAccess extends ATDataAccessLMAbstract
      * 
      * @return 
      */
-/*    public GGCLittle getParentLittle()
-    {
-        return m_main_little;
-    }
-*/
+    /*
+     * public GGCLittle getParentLittle()
+     * {
+     * return m_main_little;
+     * }
+     */
 
     /**
      * Utils
      */
-/*
-    @Override
-    public Image getImage(String filename, Component cmp)
-    {
-        Image img;
+    /*
+     * @Override
+     * public Image getImage(String filename, Component cmp)
+     * {
+     * Image img;
+     * InputStream is = this.getClass().getResourceAsStream(filename);
+     * // System.out.println("getImage: " + filename);
+     * if (is == null)
+     * System.out.println("Error reading image: " + filename);
+     * ByteArrayOutputStream baos = new ByteArrayOutputStream();
+     * try
+     * {
+     * int c;
+     * while ((c = is.read()) >= 0)
+     * baos.write(c);
+     * // JDialog.getT
+     * // JFrame.getToolkit();
+     * img = cmp.getToolkit().createImage(baos.toByteArray());
+     * }
+     * catch (IOException ex)
+     * {
+     * ex.printStackTrace();
+     * return null;
+     * }
+     * return img;
+     * }
+     */
 
-        InputStream is = this.getClass().getResourceAsStream(filename);
-
-        // System.out.println("getImage: " + filename);
-
-        if (is == null)
-            System.out.println("Error reading image: " + filename);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try
-        {
-            int c;
-            while ((c = is.read()) >= 0)
-                baos.write(c);
-
-            // JDialog.getT
-            // JFrame.getToolkit();
-            img = cmp.getToolkit().createImage(baos.toByteArray());
-        }
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-            return null;
-        }
-        return img;
-    }
-*/
-    
     // ********************************************************
     // ****** Person Id / Login *****
     // ********************************************************
@@ -1175,6 +1124,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      * 
      * @return
      */
+    @Override
     public long getCurrentUserId()
     {
         return this.current_user_id;
@@ -1184,58 +1134,42 @@ public class DataAccess extends ATDataAccessLMAbstract
     // ****** I18n Utils *****
     // ********************************************************
 
-
     /**
      * Get Nutrition I18n Control
      * 
      * @return
      */
-/*    public NutriI18nControl getNutriI18nControl()
-    {
-        return this.m_nutri_i18n;
-    }
-*/
+    /*
+     * public NutriI18nControl getNutriI18nControl()
+     * {
+     * return this.m_nutri_i18n;
+     * }
+     */
     // ********************************************************
     // ****** Look and Feel *****
     // ********************************************************
 
     /*
      * public void loadAvailableLFs() {
-     * 
      * availableLF_full = new Hashtable<String,String>();
      * UIManager.LookAndFeelInfo[] info = UIManager.getInstalledLookAndFeels();
-     * 
      * availableLF = new Object[info.length+1];
-     * 
      * //ring selectedLF = null; //String subSelectedLF = null;
-     * 
      * int i; for (i=0; i<info.length; i++) { String name = info[i].getName();
      * String className = info[i].getClassName();
-     * 
      * availableLF_full.put(name, className); availableLF[i] = name;
-     * 
      * //System.out.println(humanReadableName); }
-     * 
      * availableLF_full.put("SkinLF",
      * "com.l2fprod.gui.plaf.skin.SkinLookAndFeel"); availableLF[i] = "SkinLF";
-     * 
      * }
-     * 
      * public Object[] getAvailableLFs() { return availableLF; }
-     * 
-     * 
      * public static String[] getLFData() { String out[] = new String[2];
-     * 
      * try { Properties props = new Properties();
-     * 
      * FileInputStream in = new FileInputStream(pathPrefix +
      * "/data/PIS_Config.properties"); props.load(in);
-     * 
      * out[0] = (String)props.get("LF_CLASS"); out[1] =
      * (String)props.get("SKINLF_SELECTED");
-     * 
      * return out;
-     * 
      * } catch(Exception ex) {
      * System.out.println("DataAccess::getLFData::Exception> " + ex); return
      * null; } }
@@ -1281,6 +1215,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      * 
      * @return
      */
+    @Override
     public String getNewComponentId()
     {
         component_id_last++;
@@ -1305,7 +1240,6 @@ public class DataAccess extends ATDataAccessLMAbstract
     // ****** Dates and Times Handling *****
     // ********************************************************
 
- 
     /**
      * Get Start Year
      */
@@ -1315,8 +1249,6 @@ public class DataAccess extends ATDataAccessLMAbstract
         return 1800;
     }
 
-    
-    
     /**
      * Load Daily Settings
      * 
@@ -1325,13 +1257,13 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public synchronized void loadDailySettings(GregorianCalendar day, boolean force)
     {
-        if ((m_db == null) || (m_db.getLoadStatus() < 2))
+        if (m_db == null || m_db.getLoadStatus() < 2)
             return;
 
-        if ((isSameDay(day)) && (!force))
+        if (isSameDay(day) && !force)
             return;
 
-        //System.out.println("Reload daily settings (force:" + force + ")");
+        // System.out.println("Reload daily settings (force:" + force + ")");
         log.debug("Reload daily settings (force:" + force + ")");
 
         m_date = day;
@@ -1344,7 +1276,6 @@ public class DataAccess extends ATDataAccessLMAbstract
         m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
     }
 
-
     /**
      * Load Daily Settings (Little)
      * 
@@ -1353,13 +1284,14 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public synchronized void loadDailySettingsLittle(GregorianCalendar day, boolean force)
     {
-        if ((m_db == null) || (m_db.getLoadStatus() < 2))
+        if (m_db == null || m_db.getLoadStatus() < 2)
             return;
 
-        if ((isSameDay(day)) && (!force))
+        if (isSameDay(day) && !force)
             return;
 
-        //System.out.println("(Re)Load daily settings Little - (force:" + force + ")");
+        // System.out.println("(Re)Load daily settings Little - (force:" + force
+        // + ")");
         log.debug("(Re)Load daily settings Little - (force:" + force + ")");
 
         m_date = day;
@@ -1420,18 +1352,16 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         // we load dialy if not loaded
         if (this.m_date == null)
-            loadDailySettings(end, false);
-
-        if ((isSameDay(start, this.m_dateStart)) && (isSameDay(m_date, end)))
         {
+            loadDailySettings(end, false);
+        }
+
+        if (isSameDay(start, this.m_dateStart) && isSameDay(m_date, end))
             // System.out.println("Same day");
             return m_dRangeValues;
-        }
         else
-        {
             // System.out.println("other range");
             return m_db.getDayStatsRange(start, end);
-        }
     }
 
     /**
@@ -1452,7 +1382,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public boolean isDatabaseInitialized()
     {
-        if ((m_db == null) || (m_db.getLoadStatus() < 2))
+        if (m_db == null || m_db.getLoadStatus() < 2)
             return false;
         else
             return true;
@@ -1468,28 +1398,21 @@ public class DataAccess extends ATDataAccessLMAbstract
     public boolean isSameDay(GregorianCalendar gc1, GregorianCalendar gc2)
     {
 
-        if ((gc1 == null) || (gc2 == null))
-        {
+        if (gc1 == null || gc2 == null)
             return false;
-        }
         else
         {
 
-            if ((gc1.get(Calendar.DAY_OF_MONTH) == gc2.get(Calendar.DAY_OF_MONTH))
-                    && (gc1.get(Calendar.MONTH) == gc2.get(Calendar.MONTH))
-                    && (gc1.get(Calendar.YEAR) == gc2.get(Calendar.YEAR)))
-            {
+            if (gc1.get(Calendar.DAY_OF_MONTH) == gc2.get(Calendar.DAY_OF_MONTH)
+                    && gc1.get(Calendar.MONTH) == gc2.get(Calendar.MONTH)
+                    && gc1.get(Calendar.YEAR) == gc2.get(Calendar.YEAR))
                 return true;
-            }
             else
-            {
                 return false;
-            }
 
         }
     }
 
-    
     /**
      * Start Internal Web Server
      */
@@ -1497,51 +1420,45 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         try
         {
-            
-/*            Properties p = new Properties();
-            
-            p.put("http.port", "444");
-            p.put("handler", "chain");
-    
-            p.put("chain.chain", "root plug_pump plug_cgm"); 
-            p.put("chain.class", "pygmy.handlers.DefaultChainHandler");
-    
-            p.put("root.class", "pygmy.handlers.ResourceHandler");
-            p.put("root.url-prefix", "/meters/");
-            p.put("root.resourceMount", "/html/meters");
-    
-            p.put("plug_pump.class", "pygmy.handlers.ResourceHandler");
-            p.put("plug_pump.url-prefix", "/pumps/");
-            p.put("plug_pump.resourceMount", "/html/pumps");
-    
-            p.put("plug_cgm.class", "pygmy.handlers.ResourceHandler");
-            p.put("plug_cgm.url-prefix", "/cgms/");
-            p.put("plug_cgm.resourceMount", "/html/cgms");
-    
-            p.put("mime.html", "text/html");
-            p.put("mime.zip", "application/x-zip-compressed");
-            p.put("mime.gif", "image/gif");
-            p.put("mime.jpeg", "image/jpeg");
-            p.put("mime.jpg", "image/jpeg"); */
-            
-            //System.out.println("Start internal web server");
-            
+
+            /*
+             * Properties p = new Properties();
+             * p.put("http.port", "444");
+             * p.put("handler", "chain");
+             * p.put("chain.chain", "root plug_pump plug_cgm");
+             * p.put("chain.class", "pygmy.handlers.DefaultChainHandler");
+             * p.put("root.class", "pygmy.handlers.ResourceHandler");
+             * p.put("root.url-prefix", "/meters/");
+             * p.put("root.resourceMount", "/html/meters");
+             * p.put("plug_pump.class", "pygmy.handlers.ResourceHandler");
+             * p.put("plug_pump.url-prefix", "/pumps/");
+             * p.put("plug_pump.resourceMount", "/html/pumps");
+             * p.put("plug_cgm.class", "pygmy.handlers.ResourceHandler");
+             * p.put("plug_cgm.url-prefix", "/cgms/");
+             * p.put("plug_cgm.resourceMount", "/html/cgms");
+             * p.put("mime.html", "text/html");
+             * p.put("mime.zip", "application/x-zip-compressed");
+             * p.put("mime.gif", "image/gif");
+             * p.put("mime.jpeg", "image/jpeg");
+             * p.put("mime.jpg", "image/jpeg");
+             */
+
+            // System.out.println("Start internal web server");
+
             log.info("Start internal Web Server");
-            
+
             String[] cnf = { "-config", "../data/tools/WebLister.properties" };
-            
+
             Server web_server = new Server(cnf);
             web_server.start();
-            
+
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.out.println("Error starting WebServer on 444. Ex: " + ex);
         }
-        
+
     }
-    
-    
 
     /**
      * Console message Not Implemented
@@ -1552,22 +1469,18 @@ public class DataAccess extends ATDataAccessLMAbstract
         System.out.println("Not Implemented: " + source);
     }
 
-
-    
     /**
      * Load Special Parameters
      * 
      * @see com.atech.utils.ATDataAccessAbstract#loadSpecialParameters()
      */
+    @Override
     public void loadSpecialParameters()
     {
-        this.special_parameters = new Hashtable<String,String>();
+        this.special_parameters = new Hashtable<String, String>();
         this.special_parameters.put("BG", "" + this.m_settings.getBG_unit());
-        //this.m_BG_unit = this.m_settings.getBG_unit();
+        // this.m_BG_unit = this.m_settings.getBG_unit();
     }
-
-
-    
 
     /**
      * This method is intended to load additional Language info. Either special langauge configuration
@@ -1578,37 +1491,35 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         // TODO Auto-generated method stub
     }
-    
 
-    
     /**
      * Get Selected Lang Index (will be deprecated) ??!!
      */
+    @Override
     public int getSelectedLangIndex()
     {
         return 0;
     }
 
-    
     /**
      * Set Selected Lang Index (will be deprecated) ??!!
      */
+    @Override
     public void setSelectedLangIndex(int index)
     {
-        
+
     }
-    
 
     /**
      * Insulin - Pen/Injection 
      */
     public static final int INSULIN_PEN_INJECTION = 0;
-    
+
     /**
      * Insulin - Pump 
      */
     public static final int INSULIN_PUMP = 1;
-    
+
     /**
      * @param mode
      * @param value
@@ -1620,7 +1531,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         // 1, 0.5, 0.1, 0.05, 0.01, 0.005, 0.001
         return value;
     }
-    
+
     /**
      * @param mode
      * @param value
@@ -1629,10 +1540,9 @@ public class DataAccess extends ATDataAccessLMAbstract
     public String getCorrectDecimalValueForInsulinString(int mode, float value)
     {
         // 1, 0.5, 0.1
-        //return value;
+        // return value;
         return null;
     }
-
 
     /** 
      * Load PlugIns
@@ -1641,19 +1551,17 @@ public class DataAccess extends ATDataAccessLMAbstract
     public void loadPlugIns()
     {
     }
-    
 
     /**
      * Insulin Dose: Basal
      */
     public static final int INSULIN_DOSE_BASAL = 1;
-    
+
     /**
      * Insulin Dose: Bolus
      */
     public static final int INSULIN_DOSE_BOLUS = 2;
-    
-    
+
     /**
      * Get Insulin Precision
      * 
@@ -1663,31 +1571,22 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public float getInsulinPrecision(int mode, int type)
     {
-        if (mode==INSULIN_PEN_INJECTION)
+        if (mode == INSULIN_PEN_INJECTION)
         {
-            if (type==INSULIN_DOSE_BASAL)
-            {
+            if (type == INSULIN_DOSE_BASAL)
                 return this.m_cfgMgr.getFloatValue("PEN_BASAL_PRECISSION");
-            }
             else
-            {
                 return this.m_cfgMgr.getFloatValue("PEN_BOLUS_PRECISSION");
-            }
         }
         else
         {
-            if (type==INSULIN_DOSE_BASAL)
-            {
+            if (type == INSULIN_DOSE_BASAL)
                 return this.m_cfgMgr.getFloatValue("PUMP_BASAL_PRECISSION");
-            }
             else
-            {
                 return this.m_cfgMgr.getFloatValue("PUMP_BOLUS_PRECISSION");
-            }
         }
-        
+
     }
-    
 
     /**
      * Get Insulin Precision String
@@ -1698,33 +1597,23 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public String getInsulinPrecisionString(int mode, int type)
     {
-        if (mode==INSULIN_PEN_INJECTION)
+        if (mode == INSULIN_PEN_INJECTION)
         {
-            if (type==INSULIN_DOSE_BASAL)
-            {
+            if (type == INSULIN_DOSE_BASAL)
                 return this.m_cfgMgr.getStringValue("PEN_BASAL_PRECISSION");
-            }
             else
-            {
                 return this.m_cfgMgr.getStringValue("PEN_BOLUS_PRECISSION");
-            }
         }
         else
         {
-            if (type==INSULIN_DOSE_BASAL)
-            {
+            if (type == INSULIN_DOSE_BASAL)
                 return this.m_cfgMgr.getStringValue("PUMP_BASAL_PRECISSION");
-            }
             else
-            {
                 return this.m_cfgMgr.getStringValue("PUMP_BOLUS_PRECISSION");
-            }
         }
-        
+
     }
-    
-    
-    
+
     /**
      * Reformat Insulin Amount To CorrectValue
      * 
@@ -1736,13 +1625,12 @@ public class DataAccess extends ATDataAccessLMAbstract
     public double reformatInsulinAmountToCorrectValue(int mode, int type, float input_val)
     {
         String prec = getInsulinPrecisionString(mode, type);
-        
-        //System.out.println("Precision: " + prec);
-        
+
+        // System.out.println("Precision: " + prec);
+
         return Rounding.specialRounding(input_val, prec);
     }
-    
-    
+
     /**
      * Reformat Insulin Amount To CorrectValue String
      * 
@@ -1756,8 +1644,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         String prec = getInsulinPrecisionString(mode, type);
         return Rounding.specialRoundingString(input_val, prec);
     }
-    
-    
+
     /**
      * Get Max Values
      * 
@@ -1767,91 +1654,69 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public float getMaxValues(int mode, int type)
     {
-        if (mode==INSULIN_PEN_INJECTION)
+        if (mode == INSULIN_PEN_INJECTION)
         {
-            if (type==INSULIN_DOSE_BASAL)
-            {
+            if (type == INSULIN_DOSE_BASAL)
                 return this.m_cfgMgr.getFloatValue("PEN_MAX_BASAL");
-            }
             else
-            {
                 return this.m_cfgMgr.getFloatValue("PEN_MAX_BOLUS");
-            }
         }
         else
         {
-            if (type==INSULIN_DOSE_BASAL)
-            {
+            if (type == INSULIN_DOSE_BASAL)
                 return this.m_cfgMgr.getFloatValue("PUMP_MAX_BASAL");
-            }
             else
-            {
                 return this.m_cfgMgr.getFloatValue("PUMP_MAX_BOLUS");
-            }
         }
-        
+
     }
-    
+
     /**
      * For misc tests
      */
     public void doTest()
     {
-        
-        /*
-        //ColorUIResource cui = (ColorUIResource) UIManager.getLookAndFeel()
-        //.getDefaults().get("textText");        
-        
-        
-        UIDefaults dd = UIManager.getLookAndFeel().getDefaults();
-        
-        System.out.println(dd);
-        
-        for(Enumeration en = dd.keys(); en.hasMoreElements(); )
-        {
-            String key = (String)en.nextElement();
-            
-            if (key.contains("Table"))
-                System.out.println(key);
-        }
-        
-        //ComponentUI cui = dd.getUI(new JTable());
-        
-        Color c = dd.getColor("TableHeader.background");
-        c = Color.blue;
-        
-        
-   
-        
-        */
-    }
-    
 
-    
+        /*
+         * //ColorUIResource cui = (ColorUIResource) UIManager.getLookAndFeel()
+         * //.getDefaults().get("textText");
+         * UIDefaults dd = UIManager.getLookAndFeel().getDefaults();
+         * System.out.println(dd);
+         * for(Enumeration en = dd.keys(); en.hasMoreElements(); )
+         * {
+         * String key = (String)en.nextElement();
+         * if (key.contains("Table"))
+         * System.out.println(key);
+         * }
+         * //ComponentUI cui = dd.getUI(new JTable());
+         * Color c = dd.getColor("TableHeader.background");
+         * c = Color.blue;
+         */
+    }
+
     /**
      * Get Max Decimals that will be used by DecimalHandler
      * 
      * @return
      */
+    @Override
     public int getMaxDecimalsUsedByDecimalHandler()
     {
         return 3;
     }
 
-    
+    @Override
     public void loadExtendedHandlers()
     {
         this.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValue(this));
     }
-    
-    
+
     @Override
     public void loadConverters()
     {
         this.converters.put("BG", new Converter_mgdL_mmolL());
     }
-    
-    
+
     /**
      * Get BG Converter
      * 
@@ -1859,9 +1724,8 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public Converter_mgdL_mmolL getBGConverter()
     {
-        return (Converter_mgdL_mmolL)this.getConverter("BG");
-        
+        return (Converter_mgdL_mmolL) this.getConverter("BG");
+
     }
-    
 
 }

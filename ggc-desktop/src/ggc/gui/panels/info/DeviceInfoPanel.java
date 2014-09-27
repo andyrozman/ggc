@@ -8,6 +8,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 
 import org.sun.swing.layout.SpringUtilities;
 
@@ -38,7 +39,6 @@ import com.atech.plugin.PlugInClient;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class DeviceInfoPanel extends AbstractInfoPanel
 {
 
@@ -46,7 +46,8 @@ public class DeviceInfoPanel extends AbstractInfoPanel
     private JLabel lblMeter;
     private JLabel lblPump;
     private JLabel lblCgms;
-    //private DataAccess m_da = DataAccess.getInstance();
+
+    // private DataAccess m_da = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -62,82 +63,78 @@ public class DeviceInfoPanel extends AbstractInfoPanel
     {
         setLayout(new BorderLayout());
 
-        JPanel lblPanel = new JPanel(new SpringLayout()); //new GridLayout(6, 2));
+        JPanel lblPanel = new JPanel(new SpringLayout()); // new GridLayout(6,
+                                                          // 2));
         lblPanel.setBackground(Color.white);
-        
-//        lblPanel.add(new JLabel(" ", JLabel.TRAILING));
-//        lblPanel.add(new JLabel());
-        
-        lblPanel.add(new JLabel(m_ic.getMessage("DEVICE_METER") + ":", JLabel.LEADING));
+
+        // lblPanel.add(new JLabel(" ", JLabel.TRAILING));
+        // lblPanel.add(new JLabel());
+
+        lblPanel.add(new JLabel(m_ic.getMessage("DEVICE_METER") + ":", SwingConstants.LEADING));
         lblPanel.add(this.lblMeter = new JLabel("N/A"));
 
-        lblPanel.add(new JLabel("" , JLabel.TRAILING));
+        lblPanel.add(new JLabel("", SwingConstants.TRAILING));
         lblPanel.add(new JLabel());
-        
-        lblPanel.add(new JLabel(m_ic.getMessage("DEVICE_PUMP")+ ":", JLabel.LEADING));
+
+        lblPanel.add(new JLabel(m_ic.getMessage("DEVICE_PUMP") + ":", SwingConstants.LEADING));
         lblPanel.add(this.lblPump = new JLabel("N/A"));
 
-        lblPanel.add(new JLabel("", JLabel.TRAILING));
+        lblPanel.add(new JLabel("", SwingConstants.TRAILING));
         lblPanel.add(new JLabel());
-        
-        lblPanel.add(new JLabel(m_ic.getMessage("DEVICE_CGMS")+ ":", JLabel.LEADING));
+
+        lblPanel.add(new JLabel(m_ic.getMessage("DEVICE_CGMS") + ":", SwingConstants.LEADING));
         lblPanel.add(this.lblCgms = new JLabel("N/A"));
 
-        
-        SpringUtilities.makeCompactGrid(lblPanel,
-            5, 2, //rows, cols
-            10, 8,        //initX, initY
-            40, 6);       //xPad, yPad
-        
-        
+        SpringUtilities.makeCompactGrid(lblPanel, 5, 2, // rows, cols
+            10, 8, // initX, initY
+            40, 6); // xPad, yPad
+
         add(lblPanel, BorderLayout.NORTH);
     }
 
-    
-    
     private String getDeviceInfo(PlugInClient cl)
     {
-        String st = (String)cl.getReturnObject(1);
-        
-        if (st==null)
+        String st = (String) cl.getReturnObject(1);
+
+        if (st == null)
         {
             if (!cl.isPlugInInstalled())
                 return m_ic.getMessage("PLUGIN_NA");
             else
                 return m_ic.getMessage("PLUGIN_NO_FUNCTIONALITY");
-            //else
-            //    return m_ic.getMessage("PLUGIN_NOT_INSTALLED");
+            // else
+            // return m_ic.getMessage("PLUGIN_NOT_INSTALLED");
         }
         else
             return st;
-        
+
     }
-  
+
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "DeviceInfo";
     }
 
-    
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
-        if (m_da.getPlugIn(DataAccess.PLUGIN_METERS)==null)
+        if (m_da.getPlugIn(DataAccess.PLUGIN_METERS) == null)
             return;
-        
+
         lblMeter.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_METERS)));
         lblPump.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS)));
         lblCgms.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_CGMS)));
     }
-    
-    
+
     /**
      * Get Panel Id
      * 
@@ -148,7 +145,5 @@ public class DeviceInfoPanel extends AbstractInfoPanel
     {
         return InfoPanelsIds.INFO_PANEL_PLUGIN_DEVICES;
     }
-    
-    
-    
+
 }

@@ -3,6 +3,7 @@ package ggc.core.data;
 import ggc.core.util.DataAccess;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
@@ -38,19 +39,17 @@ import com.atech.utils.data.TimeZoneUtil;
  *          Andy {andy@atech-software.com}  
  */
 
-
-public class GlucoValues //extends DailyValues
+public class GlucoValues // extends DailyValues
 {
 
-    //private static final long serialVersionUID = 3904480643937213485L;
+    // private static final long serialVersionUID = 3904480643937213485L;
     Vector<DailyValues> dayValues = null;
     ArrayList<DailyValuesRow> dayValuesRows = null;
-    //private DataAccess m_da = DataAccess.getInstance();
+    // private DataAccess m_da = DataAccess.getInstance();
     GregorianCalendar from_date;
     GregorianCalendar to_date;
     DataAccess m_da = DataAccess.getInstance();
-    
-    
+
     /**
      * Constructor
      */
@@ -86,8 +85,8 @@ public class GlucoValues //extends DailyValues
 
         for (Enumeration<String> en = table.keys(); en.hasMoreElements();)
         {
-            String key = (String) en.nextElement();
-            addDayValues((DailyValues) table.get(key));
+            String key = en.nextElement();
+            addDayValues(table.get(key));
         }
 
         /*
@@ -98,7 +97,6 @@ public class GlucoValues //extends DailyValues
          */
     }
 
-    
     /**
      * Constructor
      * 
@@ -108,28 +106,23 @@ public class GlucoValues //extends DailyValues
      */
     public GlucoValues(GregorianCalendar sDate, GregorianCalendar eDate, boolean graph)
     {
-        sDate.set(GregorianCalendar.HOUR_OF_DAY, 0);
-        sDate.set(GregorianCalendar.MINUTE, 0);
+        sDate.set(Calendar.HOUR_OF_DAY, 0);
+        sDate.set(Calendar.MINUTE, 0);
         sDate.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
         from_date = sDate;
-        
-        eDate.set(GregorianCalendar.HOUR_OF_DAY, 23);
-        eDate.set(GregorianCalendar.MINUTE, 59);
+
+        eDate.set(Calendar.HOUR_OF_DAY, 23);
+        eDate.set(Calendar.MINUTE, 59);
         eDate.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
         to_date = eDate;
-        
-        //System.out.println("Range: " + from_date + " - " + to_date);
-        
+
+        // System.out.println("Range: " + from_date + " - " + to_date);
+
         dayValuesRows = m_da.getDb().getDayValuesRange(sDate, eDate);
-        
+
         fillDailyValues();
     }
 
-    
-    
-    
-    
-    
     /**
      * Get Range From
      * 
@@ -139,7 +132,7 @@ public class GlucoValues //extends DailyValues
     {
         return from_date;
     }
-    
+
     /**
      * Get Range To
      * 
@@ -149,7 +142,7 @@ public class GlucoValues //extends DailyValues
     {
         return to_date;
     }
-    
+
     private void addDayValues(DailyValues dv)
     {
         // System.out.println("DailyValues: " + dv);
@@ -164,15 +157,14 @@ public class GlucoValues //extends DailyValues
     private void fillDailyValues()
     {
         dayValues = new Vector<DailyValues>();
-        
-        //dayValuesRows
-        for (int i=0; i<this.dayValuesRows.size(); i++)
+
+        // dayValuesRows
+        for (int i = 0; i < this.dayValuesRows.size(); i++)
         {
             addRow(this.dayValuesRows.get(i), false);
         }
-        
+
     }
-    
 
     /**
      * Add Row
@@ -183,9 +175,7 @@ public class GlucoValues //extends DailyValues
     {
         addRow(dRow, true);
     }
-    
-    
-    
+
     /**
      * Add Row
      * 
@@ -196,8 +186,10 @@ public class GlucoValues //extends DailyValues
     {
         //
         if (external)
+        {
             dayValuesRows.add(dRow);
-        
+        }
+
         String s1 = dRow.getDateAsString();
 
         for (int i = 0; i < dayValues.size(); i++)
@@ -222,7 +214,7 @@ public class GlucoValues //extends DailyValues
 
             dV.addRow(dRow);
             dV.setDate(dRow.getDateTime());
-            //dV.setIsNew(true);
+            // dV.setIsNew(true);
             dayValues.add(dV);
 
             // X GlucoValueEvent event = new GlucoValueEvent(this,
@@ -236,22 +228,26 @@ public class GlucoValues //extends DailyValues
      * 
      * @see ggc.core.data.DailyValues#setNewRow(ggc.core.data.DailyValuesRow)
      */
-    /*public void setNewRow(DailyValuesRow dRow)
-    {
-        if (!m_da.getDb().dateTimeExists(dRow.getDateTime()))
-        {
-            addRow(dRow);
-        }
-    }*/
+    /*
+     * public void setNewRow(DailyValuesRow dRow)
+     * {
+     * if (!m_da.getDb().dateTimeExists(dRow.getDateTime()))
+     * {
+     * addRow(dRow);
+     * }
+     * }
+     */
 
     /**
      * Save Values
      */
-/*    public void saveValues()
-    {
-        for (int i = 0; i < dayValues.size(); i++)
-            dayValues.elementAt(i).saveDay();
-    } */
+    /*
+     * public void saveValues()
+     * {
+     * for (int i = 0; i < dayValues.size(); i++)
+     * dayValues.elementAt(i).saveDay();
+     * }
+     */
 
     /**
      * Get Daily Values Row Count
@@ -271,11 +267,9 @@ public class GlucoValues //extends DailyValues
      */
     public DailyValuesRow getDailyValueRow(int index)
     {
-        return this.dayValuesRows.get(index); 
+        return this.dayValuesRows.get(index);
     }
-    
-    
-    
+
     /**
      * Get Row Count
      * @return 
@@ -286,7 +280,9 @@ public class GlucoValues //extends DailyValues
     {
         int c = 0;
         for (int i = 0; i < dayValues.size(); i++)
-            c += (dayValues.elementAt(i)).getRowCount();
+        {
+            c += dayValues.elementAt(i).getRowCount();
+        }
         return c;
     }
 
@@ -306,7 +302,7 @@ public class GlucoValues //extends DailyValues
                 int old = c;
                 DailyValues dV = dayValues.elementAt(i);
                 c += dV.getRowCount();
-                if ((old <= row) && (row < c))
+                if (old <= row && row < c)
                 {
                     dV.deleteRow(row - old);
 
@@ -336,8 +332,10 @@ public class GlucoValues //extends DailyValues
             int old = c;
             DailyValues dV = dayValues.elementAt(i);
             c += dV.getRowCount();
-            if ((old <= row) && (row < c))
+            if (old <= row && row < c)
+            {
                 o = dV.getValueAt(row - old, column);
+            }
         }
         return o;
     }
@@ -350,6 +348,7 @@ public class GlucoValues //extends DailyValues
      * 
      * @deprecated Use getDailyValuesItem() instead
      */
+    @Deprecated
     public DailyValues getDailyValuesForDay(int day)
     {
         return dayValues.elementAt(day);
@@ -360,25 +359,24 @@ public class GlucoValues //extends DailyValues
      * 
      * @see ggc.core.data.DailyValues#setValueAt(java.lang.Object, int, int)
      */
-/*    public void setValueAt(Object aValue, int row, int column)
-    {
-        int c = 0;
-        for (int i = 0; i < dayValues.size(); i++)
-        {
-            int old = c;
-            DailyValues dV = dayValues.elementAt(i);
-            c += dV.getRowCount();
-            if ((old <= row) && (row < c))
-                dV.setValueAt(aValue, row - old, column);
-        }
+    /*
+     * public void setValueAt(Object aValue, int row, int column)
+     * {
+     * int c = 0;
+     * for (int i = 0; i < dayValues.size(); i++)
+     * {
+     * int old = c;
+     * DailyValues dV = dayValues.elementAt(i);
+     * c += dV.getRowCount();
+     * if ((old <= row) && (row < c))
+     * dV.setValueAt(aValue, row - old, column);
+     * }
+     * // X GlucoValueEvent event = new GlucoValueEvent(this, row, row, column,
+     * // GlucoValueEvent.UPDATE);
+     * // X fireGlucoValueChanged(event);
+     * }
+     */
 
-        // X GlucoValueEvent event = new GlucoValueEvent(this, row, row, column,
-        // GlucoValueEvent.UPDATE);
-        // X fireGlucoValueChanged(event);
-    }
-*/
-
-    
     /**
      * Get Daily Values Item (one Day)
      * 
@@ -389,8 +387,7 @@ public class GlucoValues //extends DailyValues
     {
         return dayValues.elementAt(index);
     }
-    
-    
+
     /**
      * Get Daily Values Items Count
      * 
@@ -400,13 +397,14 @@ public class GlucoValues //extends DailyValues
     {
         return dayValues.size();
     }
-    
+
     /**
      * @return The amount of days physically present in this
      *         <code>{@link GlucoValues}</code>.
      *         
      * @deprecated use getDailyValuesItemCount() instead
      */
+    @Deprecated
     public int getDayCount()
     {
         return dayValues.size();
@@ -424,31 +422,35 @@ public class GlucoValues //extends DailyValues
         {
             currentDay = dayValue.getDate();
             if (currentDay > lastDay)
+            {
                 lastDay = currentDay;
+            }
             if (currentDay < firstDay)
+            {
                 firstDay = currentDay;
+            }
         }
 
         if (firstDay == Long.MAX_VALUE)
             return 0L;
         if (firstDay == lastDay)
-        {
             return 1L;
-        }
 
-        //firstDay = m_da.getDateTimeAsDateObject(firstDay * 10000).getTime();
-        //lastDay = m_da.getDateTimeAsDateObject(lastDay * 10000).getTime();
+        // firstDay = m_da.getDateTimeAsDateObject(firstDay * 10000).getTime();
+        // lastDay = m_da.getDateTimeAsDateObject(lastDay * 10000).getTime();
 
         // FIXME This is experimental, untested
-        firstDay = (ATechDate.getGregorianCalendar(ATechDate.FORMAT_DATE_ONLY, firstDay).getTimeInMillis()); //getTime()).getTime();
-        lastDay = (ATechDate.getGregorianCalendar(ATechDate.FORMAT_DATE_ONLY, lastDay).getTimeInMillis());
-        
+        firstDay = ATechDate.getGregorianCalendar(ATechDate.FORMAT_DATE_ONLY, firstDay).getTimeInMillis(); // getTime()).getTime();
+        lastDay = ATechDate.getGregorianCalendar(ATechDate.FORMAT_DATE_ONLY, lastDay).getTimeInMillis();
+
         long timeDiff = lastDay - firstDay;
-        dayCount = (timeDiff / (1000 * 60 * 60 * 24));
+        dayCount = timeDiff / (1000 * 60 * 60 * 24);
 
         // round up if neccessary
-        if ((dayCount * (1000 * 60 * 60 * 24)) != timeDiff)
+        if (dayCount * (1000 * 60 * 60 * 24) != timeDiff)
+        {
             dayCount++;
+        }
 
         // add 1 as the first day needs to be counted, too
         dayCount++;
@@ -467,27 +469,20 @@ public class GlucoValues //extends DailyValues
         // if the caller requests a key we can't supply, return null (not an
         // exception)
         if (dayValues.size() <= i)
-        {
             return null;
-        }
         else
-        {
-            return (dayValues.elementAt(i)).getDayAndMonthAsString();
-        }
+            return dayValues.elementAt(i).getDayAndMonthAsString();
     }
 
     /*
      * public void addGlucoValueEventListener(GlucoValueEventListener listener)
      * { listenerList.add(GlucoValueEventListener.class, listener); }
-     * 
      * public void removeGlucoValueEventListener(GlucoValueEventListener
      * listener) { listenerList.remove(GlucoValueEventListener.class, listener);
      * }
-     * 
      * protected void fireGlucoValueChanged(GlucoValueEvent event) { //
      * Guaranteed to return a non-null array Object[] listeners =
      * listenerList.getListenerList();
-     * 
      * // Process the listeners last to first, notifying // those that are
      * interested in this event for (int i = listeners.length - 2; i >= 0; i -=
      * 2) { if (listeners[i] instanceof GlucoValueEventListener) { // Lazily

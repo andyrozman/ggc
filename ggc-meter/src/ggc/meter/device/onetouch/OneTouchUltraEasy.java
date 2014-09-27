@@ -31,8 +31,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-
 // in works
 public class OneTouchUltraEasy extends OneTouchMeter2
 {
@@ -48,7 +46,6 @@ public class OneTouchUltraEasy extends OneTouchMeter2
         super(portName, writer);
     }
 
-    
     /**
      * Constructor
      * 
@@ -60,7 +57,6 @@ public class OneTouchUltraEasy extends OneTouchMeter2
     {
         super(comm_parameters, writer, da);
     }
-    
 
     /**
      * Constructor
@@ -69,9 +65,7 @@ public class OneTouchUltraEasy extends OneTouchMeter2
     {
         super();
     }
-    
-    
-    
+
     /**
      * Constructor
      * 
@@ -79,11 +73,9 @@ public class OneTouchUltraEasy extends OneTouchMeter2
      */
     public OneTouchUltraEasy(boolean n)
     {
-    	super(n);
+        super(n);
     }
-    
-    
-    
+
     /**
      * Constructor for device manager
      * 
@@ -94,7 +86,6 @@ public class OneTouchUltraEasy extends OneTouchMeter2
         super(cmp);
     }
 
-    
     /**
      * getName - Get Name of meter. 
      * 
@@ -105,7 +96,6 @@ public class OneTouchUltraEasy extends OneTouchMeter2
         return "One Touch Ultra Easy";
     }
 
-    
     /**
      * getDeviceClassName - Get class name of device
      */
@@ -114,7 +104,6 @@ public class OneTouchUltraEasy extends OneTouchMeter2
         return "ggc.meter.device.onetouch.OneTouchUltraEasy";
     }
 
-    
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
      * Should be implemented by device class.
@@ -126,7 +115,6 @@ public class OneTouchUltraEasy extends OneTouchMeter2
         return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA_EASY;
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -137,7 +125,6 @@ public class OneTouchUltraEasy extends OneTouchMeter2
         return "ls_ot_ultra_mini.jpg";
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * 
@@ -147,7 +134,6 @@ public class OneTouchUltraEasy extends OneTouchMeter2
     {
         return "INSTRUCTIONS_LIFESCAN_OFF";
     }
-    
 
     /**
      * Maximum of records that device can store
@@ -162,6 +148,7 @@ public class OneTouchUltraEasy extends OneTouchMeter2
      * 
      * @return short name of meter
      */
+    @Override
     public String getShortName()
     {
         return "Ultra Easy";
@@ -176,23 +163,20 @@ public class OneTouchUltraEasy extends OneTouchMeter2
     @Override
     public String getCommand(int command)
     {
-        switch(command)
+        switch (command)
         {
             case OneTouchMeter2.COMMAND_READ_SW_VERSION_AND_CREATE:
                 return "02" + "09" + "00" + "05" + "0D" + "02" + "03" + "DA" + "71";
 
-            case OneTouchMeter2.COMMAND_READ_SERIAL_NUMBER:    
+            case OneTouchMeter2.COMMAND_READ_SERIAL_NUMBER:
                 return "02" + "12" + "00" + "05" + // STX Len Link
-                "0B" + "02" + "00" + "00" + "00" + "00" + "84" + "6A" + "E8" + "73" + "00" +  // CM1-CM12
-                "03" + "9B" + "EA"; // ETX CRC-L CRC-H
-                
+                        "0B" + "02" + "00" + "00" + "00" + "00" + "84" + "6A" + "E8" + "73" + "00" + // CM1-CM12
+                        "03" + "9B" + "EA"; // ETX CRC-L CRC-H
+
             default:
                 return "";
         }
-        
+
     }
-    
-    
-    
-    
+
 }

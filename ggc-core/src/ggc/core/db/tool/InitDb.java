@@ -69,7 +69,6 @@ import java.util.StringTokenizer;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class InitDb
 {
 
@@ -81,10 +80,8 @@ public class InitDb
     Hashtable<String, NutritionHomeWeightTypeH> home_weight_type_list = null;
     DataAccess m_da = DataAccess.getInstance();
 
-    
-    Hashtable<Long,FoodDescriptionH> lst_food_desc = new Hashtable<Long,FoodDescriptionH>(); 
-    
-    
+    Hashtable<Long, FoodDescriptionH> lst_food_desc = new Hashtable<Long, FoodDescriptionH>();
+
     /**
      * Password for Init
      */
@@ -117,7 +114,9 @@ public class InitDb
         insertDoctorTypes();
 
         if (load_nutrition)
+        {
             loadNutritionDatabase();
+        }
 
         // loadMeters();
         m_db.closeDb();
@@ -125,7 +124,7 @@ public class InitDb
 
         long dif = System.currentTimeMillis() - time_start;
 
-        System.out.println("We needed " + (dif / 1000) + " seconds to create and fill database.");
+        System.out.println("We needed " + dif / 1000 + " seconds to create and fill database.");
 
     }
 
@@ -158,16 +157,15 @@ public class InitDb
         System.out.println(" Missing settings...");
 
         /*
-         SettingsH seti = new
-         SettingsH(m_da.getI18nControlInstance().getMessage("UNNAMED_USER"),
-         "Insulin 1", "Ins1", "Insulin 2", "Ins2", 0, "No port available", 2,
-         60.0f, 200.0f, 80.0f, 120.0f, 3.0f, 20.0f, 4.4f, 14.0f, 2,
-         "blueMetalthemepack.zip", 0, 0, 0, 0, 0, 0, 0, "", 1100, 1800, 2100,
-         "0", "Default Scheme" ); 
-         seti.setId(1);
-         
-         m_db.addHibernate(seti); */
-        
+         * SettingsH seti = new
+         * SettingsH(m_da.getI18nControlInstance().getMessage("UNNAMED_USER"),
+         * "Insulin 1", "Ins1", "Insulin 2", "Ins2", 0, "No port available", 2,
+         * 60.0f, 200.0f, 80.0f, 120.0f, 3.0f, 20.0f, 4.4f, 14.0f, 2,
+         * "blueMetalthemepack.zip", 0, 0, 0, 0, 0, 0, 0, "", 1100, 1800, 2100,
+         * "0", "Default Scheme" );
+         * seti.setId(1);
+         * m_db.addHibernate(seti);
+         */
 
         ColorSchemeH colors = new ColorSchemeH("Default Scheme", 0, -65485, -6750208, -163654, -81409, -1184275,
                 -16724788, -6710785, -16776961, -6711040, -16724941);
@@ -178,15 +176,14 @@ public class InitDb
         System.out.println();
     }
 
-
     private boolean checkIfNutritionDbFilesExist()
     {
 
         String files[] = { "FD_GROUP.txt", "FOOD_DES.txt", "NUT_DATA.txt", "NUTR_DEF.txt", "WEIGHT.txt" };
 
-        for (int i = 0; i < files.length; i++)
+        for (String file : files)
         {
-            File f = new File(path + files[i]);
+            File f = new File(path + file);
             if (!f.exists())
                 return false;
         }
@@ -279,7 +276,9 @@ public class InitDb
                 line = m_da.parseExpressionFull(line, "^^", "^0.0^");
 
                 if (line.charAt(line.length() - 1) == '^')
+                {
                     line = line + "0.0";
+                }
 
                 StringTokenizer strtok = new StringTokenizer(line, "^");
                 FoodDescriptionH fd = new FoodDescriptionH();
@@ -297,13 +296,15 @@ public class InitDb
                 fd.setRefuse(getFloat(strtok.nextToken())); // Refuse
 
                 m_db.addHibernate(fd);
-                
+
                 this.lst_food_desc.put(fd.getId(), fd);
-                
+
                 // m_db.addHibernate(fd.getHibernateObject());
 
                 if (i % 100 == 0)
+                {
                     System.out.print(".");
+                }
 
                 i++;
 
@@ -342,7 +343,9 @@ public class InitDb
                 line = m_da.parseExpressionFull(line, "^^", "^0.0^");
 
                 if (line.charAt(line.length() - 1) == '^')
+                {
                     line = line + "0.0";
+                }
 
                 // 204 = Fat(Lipid)
                 // 205 = Carbohydrate by difference
@@ -363,12 +366,14 @@ public class InitDb
 
                     id = id_2;
                     fd = this.getFoodDescription(id);
-                    //fd.setId(id);
-                    //m_db.get(fd);
+                    // fd.setId(id);
+                    // m_db.get(fd);
                     data.delete(0, data.length());
 
                     if (i % 100 == 0)
+                    {
                         System.out.print(".");
+                    }
 
                     i++;
                 }
@@ -407,7 +412,6 @@ public class InitDb
 
     }
 
-
     /**
      * Get Food Description
      * 
@@ -418,9 +422,7 @@ public class InitDb
     {
         return this.lst_food_desc.get(_id);
     }
-            
-            
-            
+
     private void insertNutritionDefintions()
     {
 
@@ -439,7 +441,9 @@ public class InitDb
                 line = m_da.parseExpressionFull(line, "^^", "^0.0^");
 
                 if (line.charAt(line.length() - 1) == '^')
+                {
                     line = line + "0.0";
+                }
 
                 StringTokenizer strtok = new StringTokenizer(line, "^");
 
@@ -454,7 +458,9 @@ public class InitDb
                 m_db.addHibernate(fnd);
 
                 if (i % 10 == 0)
+                {
                     System.out.print(".");
+                }
 
                 i++;
             }
@@ -489,7 +495,9 @@ public class InitDb
                 line = m_da.parseExpressionFull(line, "^^", "^0.0^");
 
                 if (line.charAt(line.length() - 1) == '^')
+                {
                     line = line + "0.0";
+                }
 
                 StringTokenizer strtok = new StringTokenizer(line, "^");
 
@@ -507,7 +515,9 @@ public class InitDb
                 full_name = full_name.toUpperCase().trim().replaceAll(" ", "_");
 
                 if (list.containsKey(name))
+                {
                     continue;
+                }
 
                 NutritionHomeWeightTypeH fhwt = new NutritionHomeWeightTypeH();
                 fhwt.setName(full_name);
@@ -516,7 +526,9 @@ public class InitDb
                 list.put(name, fhwt);
 
                 if (i % 200 == 0)
+                {
                     System.out.print(".");
+                }
 
                 i++;
             }
@@ -555,7 +567,9 @@ public class InitDb
                 line = m_da.parseExpressionFull(line, "^^", "^0.0^");
 
                 if (line.charAt(line.length() - 1) == '^')
+                {
                     line = line + "0.0";
+                }
 
                 StringTokenizer strtok = new StringTokenizer(line, "^");
                 long id_2 = getLong(strtok.nextToken());
@@ -570,12 +584,14 @@ public class InitDb
 
                     id = id_2;
                     fd = this.getFoodDescription(id);
-                    //fd.setId(id);
-                    //m_db.get(fd);
+                    // fd.setId(id);
+                    // m_db.get(fd);
                     data.delete(0, data.length());
 
                     if (i % 100 == 0)
+                    {
                         System.out.print(".");
+                    }
 
                     i++;
                 }
@@ -591,7 +607,7 @@ public class InitDb
                 String weight = strtok.nextToken();
 
                 long id_hw = this.home_weight_type_list.get(desc).getId();
-                //System.out.println(this.home_weight_type_list.get(desc).getName
+                // System.out.println(this.home_weight_type_list.get(desc).getName
                 // ());
 
                 data.append(id_hw);
@@ -618,7 +634,6 @@ public class InitDb
         }
 
     }
-
 
     private void insertDoctorTypes()
     {
@@ -668,17 +683,20 @@ public class InitDb
             j++;
 
             if (j % 4 == 0)
+            {
                 System.out.print(".");
+            }
         }
 
     }
-
 
     private int getInt(String input)
     {
 
         if (input.startsWith("~"))
+        {
             input = input.substring(1, input.length() - 1);
+        }
 
         if (input.length() == 0)
             return 0;
@@ -688,23 +706,23 @@ public class InitDb
     }
 
     /*
-    private short getShort(String input)
-    {
-
-        if (input.startsWith("~"))
-            input = input.substring(1, input.length() - 1);
-
-        if (input.length() == 0)
-            return 0;
-        else
-            return Short.parseShort(input);
-
-    }*/
+     * private short getShort(String input)
+     * {
+     * if (input.startsWith("~"))
+     * input = input.substring(1, input.length() - 1);
+     * if (input.length() == 0)
+     * return 0;
+     * else
+     * return Short.parseShort(input);
+     * }
+     */
 
     private long getLong(String input)
     {
         if (input.startsWith("~"))
+        {
             input = input.substring(1, input.length() - 1);
+        }
 
         if (input.length() == 0)
             return 0;
@@ -715,7 +733,9 @@ public class InitDb
     private float getFloat(String input)
     {
         if (input.startsWith("~"))
+        {
             input = input.substring(1, input.length() - 1);
+        }
 
         if (input.length() == 0)
             return 0;
@@ -723,7 +743,6 @@ public class InitDb
             return Float.parseFloat(input);
     }
 
-    
     /**
      * Get String
      * 
@@ -733,21 +752,22 @@ public class InitDb
     public String getString(String input)
     {
         if (input.startsWith("~"))
+        {
             input = input.substring(1, input.length() - 1);
+        }
 
         return input;
     }
 
     /*
-    public String makeI18nKeyword(String input)
-    {
-        String i = input.toUpperCase();
-        i = i.replaceAll(" ", "");
-        i = i.replaceAll(",", "_");
-
-        return i;
-
-    }*/
+     * public String makeI18nKeyword(String input)
+     * {
+     * String i = input.toUpperCase();
+     * i = i.replaceAll(" ", "");
+     * i = i.replaceAll(",", "_");
+     * return i;
+     * }
+     */
 
     /**
      * Usage
@@ -770,10 +790,9 @@ public class InitDb
      */
     public static String readPassWord()
     {
-        //System.out.println("Fix this: ");
+        // System.out.println("Fix this: ");
         String pass;
 
-   
         Scanner in = new Scanner(System.in);
 
         // Reads a single line from the console

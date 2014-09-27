@@ -9,13 +9,14 @@ import java.util.HashMap;
 public enum DexcomG4Commands implements DexcomCommand
 {
 
-    //    ReadSystemTime(0x22, new short[] { 0x01, 0x06, 0x00, 0x22, 0x34, (byte) 0xc0 }, 4, ParserType.DateParser,
-    //            CommandParameter.None), //
+    // ReadSystemTime(0x22, new short[] { 0x01, 0x06, 0x00, 0x22, 0x34, (byte)
+    // 0xc0 }, 4, ParserType.DateParser,
+    // CommandParameter.None), //
     // new int[] { 0x01, 0x06, 0x00, 0x1d, (byte) 0x88, 0x07 }
 
     ShutDownReceiver(0x2e, new short[] { 0x01, 0x06, 0x00, 0x2e, (byte) 0xb8, 0x01 }, 0, ParserType.None,
             CommandParameter.None), //
-    Ack(1), // 
+    Ack(1), //
     Nak(2), //
     Null(0), //
     InvalidCommand(3), //
@@ -24,14 +25,15 @@ public enum DexcomG4Commands implements DexcomCommand
 
     // Commands
     ReadSystemTime(0x22, 4, ParserType.IntegerParser, CommandParameter.None), //
-    //ReadSystemTimeOffset(0x23, 4, ParserType.IntegerParser, CommandParameter.None), //
-    ReadDisplayTimeOffset(0x1d, 4, ParserType.IntegerParser, CommandParameter.None), // 
-    ReadLanguage(0x1b, 2, ParserType.IntegerParser, CommandParameter.None), // 
+    // ReadSystemTimeOffset(0x23, 4, ParserType.IntegerParser,
+    // CommandParameter.None), //
+    ReadDisplayTimeOffset(0x1d, 4, ParserType.IntegerParser, CommandParameter.None), //
+    ReadLanguage(0x1b, 2, ParserType.IntegerParser, CommandParameter.None), //
     ReadGlucoseUnit(0x25, 1, ParserType.IntegerParser, CommandParameter.None), //
     ReadClockMode(0x29, 1, ParserType.IntegerParser, CommandParameter.None), //
     ReadFirmwareHeader(11, -1, ParserType.XmlParser, CommandParameter.None), //
-    ReadDatabaseParitionInfo(15, -1, ParserType.XmlParser, CommandParameter.None), // 
-    ReadDatabasePageRange(0x10, -1, ParserType.StringUTF8Parser, CommandParameter.Byte), // 
+    ReadDatabaseParitionInfo(15, -1, ParserType.XmlParser, CommandParameter.None), //
+    ReadDatabasePageRange(0x10, -1, ParserType.StringUTF8Parser, CommandParameter.Byte), //
     ReadDatabasePages(0x11, -1, ParserType.None, CommandParameter.ByteIntByte), //
 
     ;
@@ -48,7 +50,7 @@ public enum DexcomG4Commands implements DexcomCommand
     // ReadDeviceMode = 0x2b,
     // ReadDisplayTimeOffset = 0x1d,
 
-    // 
+    //
 
     // ReadFlashPage = 0x33,
     // ReadHardwareBoardId = 0x31,
@@ -86,7 +88,9 @@ public enum DexcomG4Commands implements DexcomCommand
     private CommandParameter commandParameter = CommandParameter.None;
 
     private ParserType parserType = ParserType.None;
-    private int expectedResponseLength = 0; // 0 = no result, 1-x = 1-x bytes, -1 number specified only in package
+    private int expectedResponseLength = 0; // 0 = no result, 1-x = 1-x bytes,
+                                            // -1 number specified only in
+                                            // package
 
     private static HashMap<Integer, DexcomG4Commands> map = new HashMap<Integer, DexcomG4Commands>();
 

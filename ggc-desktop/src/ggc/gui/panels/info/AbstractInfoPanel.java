@@ -34,7 +34,6 @@ import com.atech.i18n.I18nControlAbstract;
  *          andyrozman {andy@atech-software.com}  
  */
 
-
 public abstract class AbstractInfoPanel extends JPanel
 {
     private static final long serialVersionUID = -1104646965456304940L;
@@ -42,13 +41,6 @@ public abstract class AbstractInfoPanel extends JPanel
     protected I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     protected boolean first_refresh = true;
 
-    
-    
-    
-    
-    
-    
-    
     /**
      * Constructor
      * 
@@ -61,7 +53,6 @@ public abstract class AbstractInfoPanel extends JPanel
         setOpaque(false);
     }
 
-    
     /**
      * Constructor
      * 
@@ -72,12 +63,12 @@ public abstract class AbstractInfoPanel extends JPanel
     {
         super();
         if (border)
+        {
             setBorder(BorderFactory.createTitledBorder(this.m_ic.getMessage(title) + ":"));
+        }
         setOpaque(false);
     }
-    
-    
-    
+
     /**
      * Set Title
      * 
@@ -85,7 +76,7 @@ public abstract class AbstractInfoPanel extends JPanel
      */
     public void setTitle(String title)
     {
-        TitledBorder tb = (TitledBorder)this.getBorder();
+        TitledBorder tb = (TitledBorder) this.getBorder();
         tb.setTitle(title);
     }
 
@@ -105,24 +96,20 @@ public abstract class AbstractInfoPanel extends JPanel
         this.first_refresh = true;
     }
 
-    
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
     public abstract String getTabName();
-    
-    
-    
+
     /**
      * Get Panel Id
      * 
      * @return id of panel
      */
     public abstract int getPanelId();
-    
-    
+
     /** 
      * Is Tab Checked
      * 
@@ -131,10 +118,9 @@ public abstract class AbstractInfoPanel extends JPanel
      */
     public boolean isPanelTaged(int check_mask)
     {
-        return ((check_mask & this.getPanelId()) == this.getPanelId());
+        return (check_mask & this.getPanelId()) == this.getPanelId();
     }
-    
-    
+
     /**
      * RefreshInfo - Refresh info by name 
      *  
@@ -147,8 +133,7 @@ public abstract class AbstractInfoPanel extends JPanel
             doRefresh();
         }
     }
-    
-    
+
     /**
      * RefreshInfo - Refresh info by mask 
      *  
@@ -161,13 +146,10 @@ public abstract class AbstractInfoPanel extends JPanel
             doRefresh();
         }
     }
-    
-    
-    
+
     /**
      * Do Refresh - This method can do Refresh
      */
     public abstract void doRefresh();
-    
-    
+
 }

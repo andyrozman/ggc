@@ -53,10 +53,10 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * Author: Andy {andy@atech-software.com}
  */
 
-public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileReaderContext {
+public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileReaderContext
+{
 
     private static Log log = LogFactory.getLog(FRC_DexcomXml_DM3.class);
-
 
     /**
      * Constructor
@@ -64,43 +64,45 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
      * @param da
      * @param ow
      */
-    public FRC_DexcomXml_DM3(DataAccessPlugInBase da, OutputWriter ow) {
+    public FRC_DexcomXml_DM3(DataAccessPlugInBase da, OutputWriter ow)
+    {
         super(da, ow);
     }
 
-
-    public String getFileDescription() {
+    public String getFileDescription()
+    {
         return "DM3 Dexcom Software Export";
     }
 
-
-    public String getFullFileDescription() {
+    public String getFullFileDescription()
+    {
         return "DM3 Dexcom Software Export (XML)";
     }
-
 
     /**
      * Get File Download Panel
      *
      * @return
      */
-    public JPanel getFileDownloadPanel() {
+    public JPanel getFileDownloadPanel()
+    {
         return null;
     }
 
-
-    public String getFileExtension() {
+    public String getFileExtension()
+    {
         return ".xml";
     }
 
-
-    public boolean hasSpecialSelectorDialog() {
+    public boolean hasSpecialSelectorDialog()
+    {
         return false;
     }
 
-
-    public void readFile(String filename) {
-        try {
+    public void readFile(String filename)
+    {
+        try
+        {
             DeviceIdentification di = this.output_writer.getDeviceIdentification();
             di.is_file_import = true;
             di.fi_file_name = new File(filename).getName();
@@ -122,14 +124,17 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             myCH.finishReading();
 
             // System.out.println("Readings: " + d.size());
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             log.error("Exception on readFile. Ex: " + ex, ex);
         }
 
     }
 
-
-    public String toString() {
+    @Override
+    public String toString()
+    {
         return this.getFullFileDescription();
     }
 
@@ -147,18 +152,17 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
         private ArrayList<CGMSValuesSubEntry> list_subs = new ArrayList<CGMSValuesSubEntry>();
         CGMSValuesTableModel cvtm = null;
 
-
         // DataAccessPlugInBase m_da;
 
-        public MyContentHandler(DataAccessPlugInBase da) {
-            cvtm = (CGMSValuesTableModel)da.getDeviceDataHandler().getDeviceValuesTableModel();
+        public MyContentHandler(DataAccessPlugInBase da)
+        {
+            cvtm = (CGMSValuesTableModel) da.getDeviceDataHandler().getDeviceValuesTableModel();
         }
 
-
-        public void finishReading() {
+        public void finishReading()
+        {
             this.cvtm.finishReading();
         }
-
 
         /*
          * public ArrayList<CGMSValuesSubEntry> getData()
@@ -167,100 +171,102 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
          * }
          */
 
-        public void addEntry(CGMSValuesSubEntry entry) {
+        public void addEntry(CGMSValuesSubEntry entry)
+        {
             this.list_subs.add(entry);
             this.cvtm.addEntry(entry);
         }
 
-
-        public void startPrefixMapping(String prefix, String uri) throws SAXException {
+        public void startPrefixMapping(String prefix, String uri) throws SAXException
+        {
         }
-
 
         public void attributeDecl(String eName, String aName, String type, String mode, String value)
-                throws SAXException {
+                throws SAXException
+        {
         }
 
-
-        public void elementDecl(String name, String model) throws SAXException {
+        public void elementDecl(String name, String model) throws SAXException
+        {
         }
 
-
-        public void externalEntityDecl(String name, String publicId, String systemId) throws SAXException {
+        public void externalEntityDecl(String name, String publicId, String systemId) throws SAXException
+        {
         }
 
-
-        public void internalEntityDecl(String name, String value) throws SAXException {
+        public void internalEntityDecl(String name, String value) throws SAXException
+        {
         }
 
-
-        public void comment(char[] ch, int start, int length) throws SAXException {
+        public void comment(char[] ch, int start, int length) throws SAXException
+        {
         }
 
-
-        public void endCDATA() throws SAXException {
+        public void endCDATA() throws SAXException
+        {
         }
 
-
-        public void endDTD() throws SAXException {
+        public void endDTD() throws SAXException
+        {
         }
 
-
-        public void endEntity(String name) throws SAXException {
+        public void endEntity(String name) throws SAXException
+        {
         }
 
-
-        public void startCDATA() throws SAXException {
+        public void startCDATA() throws SAXException
+        {
         }
 
-
-        public void startDTD(String name, String publicId, String systemId) throws SAXException {
+        public void startDTD(String name, String publicId, String systemId) throws SAXException
+        {
         }
 
-
-        public void startEntity(String name) throws SAXException {
+        public void startEntity(String name) throws SAXException
+        {
         }
 
-
-        public void characters(char[] ch, int start, int length) throws SAXException {
+        public void characters(char[] ch, int start, int length) throws SAXException
+        {
         }
 
-
-        public void endDocument() throws SAXException {
+        public void endDocument() throws SAXException
+        {
         }
 
-
-        public void endElement(String uri, String localName, String qName) throws SAXException {
+        public void endElement(String uri, String localName, String qName) throws SAXException
+        {
         }
 
-
-        public void endPrefixMapping(String prefix) throws SAXException {
+        public void endPrefixMapping(String prefix) throws SAXException
+        {
         }
 
-
-        public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
+        public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException
+        {
         }
 
-
-        public void processingInstruction(String target, String data) throws SAXException {
+        public void processingInstruction(String target, String data) throws SAXException
+        {
         }
 
-
-        public void setDocumentLocator(Locator locator) {
+        public void setDocumentLocator(Locator locator)
+        {
         }
 
-
-        public void skippedEntity(String name) throws SAXException {
+        public void skippedEntity(String name) throws SAXException
+        {
         }
 
-
-        public void startDocument() throws SAXException {
+        public void startDocument() throws SAXException
+        {
         }
 
+        public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException
+        {
 
-        public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-
-            if (localName.equals("Sensor")) {
+            if (localName.equals("Sensor"))
+            {
                 CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
                 String tmp_time = atts.getValue(0);
                 sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
@@ -268,7 +274,9 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
                 sub.value = Integer.parseInt(atts.getValue(2));
 
                 this.addEntry(sub);
-            } else if (localName.equals("Meter")) {
+            }
+            else if (localName.equals("Meter"))
+            {
                 CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
                 String tmp_time = atts.getValue(0);
                 sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
@@ -286,22 +294,24 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
 
     }
 
+    public FileFilter getFileFilter()
+    {
 
-    public FileFilter getFileFilter() {
-
-        return new FileFilter() {
+        return new FileFilter()
+        {
 
             @Override
-            public boolean accept(File f) {
+            public boolean accept(File f)
+            {
                 if (f.isDirectory())
                     return true;
 
-                return (f.getName().toLowerCase().endsWith(getFileExtension()));
+                return f.getName().toLowerCase().endsWith(getFileExtension());
             }
 
-
             @Override
-            public String getDescription() {
+            public String getDescription()
+            {
                 return getFileDescription() + " (*" + getFileExtension() + ")";
             }
 
@@ -309,12 +319,12 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
 
     }
 
-
-    public void goToNextDialog(JDialog currentDialog) {
+    public void goToNextDialog(JDialog currentDialog)
+    {
     }
 
-
-    public void setOutputWriter(OutputWriter ow) {
+    public void setOutputWriter(OutputWriter ow)
+    {
         this.output_writer = ow;
     }
 

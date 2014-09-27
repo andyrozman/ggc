@@ -30,34 +30,30 @@ import java.io.FileWriter;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class FileOutputWriter extends AbstractOutputWriter
 {
-	
-	BufferedWriter bw;
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param fileName
-	 */
-	public FileOutputWriter(String fileName)
-	{
-	    super();
-		
-		try
-		{
-			bw = new BufferedWriter(new FileWriter(new File(fileName)));
-		}
-		catch(Exception ex)
-		{
-			System.out.println("Error opening file:" + ex);
-		}
-	}
 
+    BufferedWriter bw;
 
-	
-	
+    /**
+     * Constructor
+     * 
+     * @param fileName
+     */
+    public FileOutputWriter(String fileName)
+    {
+        super();
+
+        try
+        {
+            bw = new BufferedWriter(new FileWriter(new File(fileName)));
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Error opening file:" + ex);
+        }
+    }
+
     /**
      * Write Data to OutputWriter
      * 
@@ -68,22 +64,21 @@ public class FileOutputWriter extends AbstractOutputWriter
         data.setOutputType(OutputWriterType.FILE);
         writeToFile(data.getDataAsString());
     }
-	
-	
+
     /**
      * Write Header
      */
-	public void writeHeader()
-	{
-		// header
-		String dta = "=======================================================\n";
-		dta += "==             Meter Tool Data Dump                  ==\n";
-		dta += "=======================================================\n";
-		
-		writeToFile(dta);
-	}
+    @Override
+    public void writeHeader()
+    {
+        // header
+        String dta = "=======================================================\n";
+        dta += "==             Meter Tool Data Dump                  ==\n";
+        dta += "=======================================================\n";
 
-	
+        writeToFile(dta);
+    }
+
     /**
      * Write Device Identification
      */
@@ -92,35 +87,34 @@ public class FileOutputWriter extends AbstractOutputWriter
         writeToFile(this.getDeviceIdentification().getInformation("; "));
     }
 
-	
-	private void writeToFile(String values)
-	{
-		try
-		{
-			bw.write(values);
-			bw.flush();
-		}
-		catch(Exception ex)
-		{
-			System.out.println("Write to file failed: " + ex);
-		}
-	}
-	
+    private void writeToFile(String values)
+    {
+        try
+        {
+            bw.write(values);
+            bw.flush();
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Write to file failed: " + ex);
+        }
+    }
 
     /**
      * End Output
      */
-	public void endOutput()
-	{
-		try
-		{
-			bw.flush();
-			bw.close();
-		}
-		catch(Exception ex)
-		{
-			System.out.println("Closing file failed: " + ex);
-		}
-	}
-	
-}	
+    @Override
+    public void endOutput()
+    {
+        try
+        {
+            bw.flush();
+            bw.close();
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Closing file failed: " + ex);
+        }
+    }
+
+}

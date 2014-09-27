@@ -41,5 +41,5 @@ public class GGCPumpICRunner extends I18nControlRunner
     {
         return "GGCPumpTool";
     }
-    
+
 }

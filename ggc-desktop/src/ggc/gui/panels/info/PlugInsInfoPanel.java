@@ -8,6 +8,7 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 
 import org.sun.swing.layout.SpringUtilities;
 
@@ -36,7 +37,6 @@ import org.sun.swing.layout.SpringUtilities;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class PlugInsInfoPanel extends AbstractInfoPanel
 {
 
@@ -45,7 +45,8 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
     private JLabel lblPump;
     private JLabel lblCgms;
     private JLabel lblNutri;
-    //private DataAccess m_da = DataAccess.getInstance();
+
+    // private DataAccess m_da = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -61,52 +62,47 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
     {
         setLayout(new BorderLayout());
 
-        JPanel lblPanel = new JPanel(new SpringLayout()); //new GridLayout(6, 2));
+        JPanel lblPanel = new JPanel(new SpringLayout()); // new GridLayout(6,
+                                                          // 2));
         lblPanel.setBackground(Color.white);
-        
-//        lblPanel.add(new JLabel(" ", JLabel.TRAILING));
-//        lblPanel.add(new JLabel());
 
-        lblPanel.add(new JLabel(m_ic.getMessage("NUTRITION_PLUGIN")+ ":", JLabel.LEADING));
+        // lblPanel.add(new JLabel(" ", JLabel.TRAILING));
+        // lblPanel.add(new JLabel());
+
+        lblPanel.add(new JLabel(m_ic.getMessage("NUTRITION_PLUGIN") + ":", SwingConstants.LEADING));
         lblPanel.add(this.lblNutri = new JLabel("N/A"));
-        
-        lblPanel.add(new JLabel("", JLabel.TRAILING));
+
+        lblPanel.add(new JLabel("", SwingConstants.TRAILING));
         lblPanel.add(new JLabel());
-        
-        lblPanel.add(new JLabel(m_ic.getMessage("METERS_PLUGIN") + ":", JLabel.LEADING));
+
+        lblPanel.add(new JLabel(m_ic.getMessage("METERS_PLUGIN") + ":", SwingConstants.LEADING));
         lblPanel.add(this.lblMeter = new JLabel("N/A"));
 
-        lblPanel.add(new JLabel("" , JLabel.TRAILING));
+        lblPanel.add(new JLabel("", SwingConstants.TRAILING));
         lblPanel.add(new JLabel());
-        
-        lblPanel.add(new JLabel(m_ic.getMessage("PUMPS_PLUGIN")+ ":", JLabel.LEADING));
+
+        lblPanel.add(new JLabel(m_ic.getMessage("PUMPS_PLUGIN") + ":", SwingConstants.LEADING));
         lblPanel.add(this.lblPump = new JLabel("N/A"));
 
-        lblPanel.add(new JLabel("", JLabel.TRAILING));
+        lblPanel.add(new JLabel("", SwingConstants.TRAILING));
         lblPanel.add(new JLabel());
-        
-        lblPanel.add(new JLabel(m_ic.getMessage("CGMS_PLUGIN")+ ":", JLabel.LEADING));
+
+        lblPanel.add(new JLabel(m_ic.getMessage("CGMS_PLUGIN") + ":", SwingConstants.LEADING));
         lblPanel.add(this.lblCgms = new JLabel("N/A"));
 
-        
-        
-        
-/*        
-        add(new JLabel(m_ic.getMessage("METERS_PLUGIN")+":"));
-        add(lblMeter);
-        add(new JLabel(m_ic.getMessage("PUMPS_PLUGIN")+":"));
-        add(lblPumps);
-        add(new JLabel(m_ic.getMessage("CGMS_PLUGIN")+":"));
-        add(lblCGMS);
-*/        
-        
-        
-        SpringUtilities.makeCompactGrid(lblPanel,
-            7, 2, //rows, cols
-            10, 3,        //initX, initY  // 8
-            40, 3);       //xPad, yPad    // 6
-        
-        
+        /*
+         * add(new JLabel(m_ic.getMessage("METERS_PLUGIN")+":"));
+         * add(lblMeter);
+         * add(new JLabel(m_ic.getMessage("PUMPS_PLUGIN")+":"));
+         * add(lblPumps);
+         * add(new JLabel(m_ic.getMessage("CGMS_PLUGIN")+":"));
+         * add(lblCGMS);
+         */
+
+        SpringUtilities.makeCompactGrid(lblPanel, 7, 2, // rows, cols
+            10, 3, // initX, initY // 8
+            40, 3); // xPad, yPad // 6
+
         add(lblPanel, BorderLayout.NORTH);
     }
 
@@ -116,40 +112,40 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
     @Override
     public void refreshInfo()
     {
-        if (m_da.getPlugIn(DataAccess.PLUGIN_METERS)==null)
+        if (m_da.getPlugIn(DataAccess.PLUGIN_METERS) == null)
             return;
-        
+
         lblMeter.setText(m_da.getPlugIn(DataAccess.PLUGIN_METERS).getShortStatus());
         lblPump.setText(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).getShortStatus());
         lblCgms.setText(m_da.getPlugIn(DataAccess.PLUGIN_CGMS).getShortStatus());
         lblNutri.setText(m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).getShortStatus());
-        
-//        lblMeter.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_METERS)));
-//        lblPump.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS)));
-//        lblCgms.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_CGMS)));
-        //m_da.getPlugIn(key)
+
+        // lblMeter.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_METERS)));
+        // lblPump.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS)));
+        // lblCgms.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_CGMS)));
+        // m_da.getPlugIn(key)
     }
-    
-    
+
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "PlugInsInfo";
     }
-    
+
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
         refreshInfo();
     }
-    
-    
+
     /**
      * Get Panel Id
      * 
@@ -160,6 +156,5 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
     {
         return InfoPanelsIds.INFO_PANEL_PLUGINS;
     }
-    
-    
+
 }

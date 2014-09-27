@@ -33,7 +33,6 @@ import javax.swing.JLabel;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class ScheduleInfoPanelL extends AbstractInfoPanel
 {
     private static final long serialVersionUID = -4785287187015409811L;
@@ -52,8 +51,8 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
     private void init()
     {
         add(new JLabel());
-        add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT")+":"));
-        add(new JLabel(m_ic.getMessage("APP_WILL_BE_FOUND_HERE")+ "..." + m_ic.getMessage("NOT_YET")));
+        add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT") + ":"));
+        add(new JLabel(m_ic.getMessage("APP_WILL_BE_FOUND_HERE") + "..." + m_ic.getMessage("NOT_YET")));
         add(new JLabel());
     }
 
@@ -64,26 +63,26 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
     public void refreshInfo()
     {
     }
-    
+
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "ScheduleInfo";
     }
 
-    
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
     }
 
-    
     /**
      * Get Panel Id
      * 
@@ -94,6 +93,5 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
     {
         return InfoPanelsIds.INFO_PANEL_NONE;
     }
-    
-    
+
 }

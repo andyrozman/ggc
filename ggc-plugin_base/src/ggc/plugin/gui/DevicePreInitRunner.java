@@ -35,20 +35,18 @@ import org.apache.commons.logging.LogFactory;
  *  Author: Andy {andy@atech-software.com}
  */
 
+// Try to assess possibility of super-classing
 
-//Try to assess possibility of super-classing
-
-
-public class DevicePreInitRunner extends Thread  // extends JDialog implements ActionListener
+public class DevicePreInitRunner extends Thread // extends JDialog implements
+                                                // ActionListener
 {
 
     private static Log log = LogFactory.getLog(DevicePreInitRunner.class);
-    
+
     DataAccessPlugInBase m_da;
     DeviceAbstract device_instance;
-    DeviceInstructionsDialog device_instruction_dialog;    
+    DeviceInstructionsDialog device_instruction_dialog;
 
-    
     /**
      * Constructor
      * 
@@ -61,25 +59,24 @@ public class DevicePreInitRunner extends Thread  // extends JDialog implements A
         this.m_da = da;
         this.device_instance = dev_inst;
         this.device_instruction_dialog = did;
-    }    
-    
-    
-    
+    }
+
     /** 
      * Thread running method
      */
+    @Override
     public void run()
     {
 
-        //m_da.sleepMS(1000);
-        
+        // m_da.sleepMS(1000);
+
         try
         {
             log.debug("preInit Device - Start");
             this.device_instance.preInitDevice();
             log.debug("preInit Device - End");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             log.error("Error on PreInit. Ex: " + ex, ex);
         }
@@ -87,9 +84,8 @@ public class DevicePreInitRunner extends Thread  // extends JDialog implements A
         {
             this.device_instruction_dialog.preInitDone(true);
         }
-            
+
     }
-    
 
     /**
      * Write log entry
@@ -102,7 +98,6 @@ public class DevicePreInitRunner extends Thread  // extends JDialog implements A
         getOutputWriter().writeLog(entry_type, message);
     }
 
-
     /**
      * Write log entry
      * 
@@ -114,8 +109,7 @@ public class DevicePreInitRunner extends Thread  // extends JDialog implements A
     {
         getOutputWriter().writeLog(entry_type, message, ex);
     }
-    
-    
+
     /** 
      * Get Output Writer
      * 
@@ -126,7 +120,6 @@ public class DevicePreInitRunner extends Thread  // extends JDialog implements A
         return this.device_instance.getOutputWriter();
     }
 
-
     /** 
      * Get Output Util
      * 
@@ -136,6 +129,5 @@ public class DevicePreInitRunner extends Thread  // extends JDialog implements A
     {
         return getOutputWriter().getOutputUtil();
     }
-    
-    
+
 }

@@ -34,14 +34,13 @@ import org.apache.commons.logging.LogFactory;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class MealPart
 {
 
     private static Log log = LogFactory.getLog(MealPart.class);
 
     DataAccessNutri m_da = DataAccessNutri.getInstance();
-    //private boolean debug = false;
+    // private boolean debug = false;
     private int meal_type = 0;
     // private long meal_type_id = 0L;
 
@@ -78,7 +77,6 @@ public class MealPart
 
     }
 
-    
     /**
      * This constructor is used for Printing Meal data (it unpacks weight data)
      * 
@@ -106,8 +104,7 @@ public class MealPart
         this.amount = Float.parseFloat(amount_in);
 
     }
-    
-    
+
     /**
      * Constructor
      */
@@ -127,7 +124,7 @@ public class MealPart
     {
         this.meal_type = type;
 
-        if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) || (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
+        if (this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION || this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION)
         {
             this.meal_obj_food = (FoodDescription) obj;
             // this.meal_type_id = this.meal_obj_food.getId();
@@ -144,16 +141,17 @@ public class MealPart
 
     private void loadMealPart(int type, String id)
     {
-        if ((type == GGCTreeRoot.TREE_USDA_NUTRITION) || (type == GGCTreeRoot.TREE_USER_NUTRITION))
+        if (type == GGCTreeRoot.TREE_USDA_NUTRITION || type == GGCTreeRoot.TREE_USER_NUTRITION)
         {
-            //this.meal_obj_food = m_da.tree_roots.get("" + type).m_foods_ht.get(id);
+            // this.meal_obj_food = m_da.tree_roots.get("" +
+            // type).m_foods_ht.get(id);
             this.meal_obj_food = m_da.getDbCache().tree_roots.get("" + type).findFood(type, Long.parseLong(id));
             System.out.println("MealPart [Food]: " + this.meal_obj_food + ",type=" + type + ",id=" + id);
         }
         else
         {
             this.meal_obj_meal = m_da.getDbCache().tree_roots.get("" + type).findMeal(3, Long.parseLong(id));
-//            this.meal_obj_meal = m_da.tree_roots.get("3").m_meals_ht.get(id);
+            // this.meal_obj_meal = m_da.tree_roots.get("3").m_meals_ht.get(id);
             System.out.println("MealPart [Meal]: " + this.meal_obj_food + ",id=" + id);
         }
 
@@ -166,14 +164,10 @@ public class MealPart
      */
     public long getId()
     {
-        if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) || (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
-        {
+        if (this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION || this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION)
             return this.meal_obj_food.getId();
-        }
         else
-        {
             return this.meal_obj_meal.getId();
-        }
     }
 
     /**
@@ -183,14 +177,10 @@ public class MealPart
      */
     public String getName()
     {
-        if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) || (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
-        {
+        if (this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION || this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION)
             return this.meal_obj_food.getName();
-        }
         else
-        {
             return this.meal_obj_meal.getName();
-        }
     }
 
     /**
@@ -248,9 +238,6 @@ public class MealPart
      * GGCTreeRoot.TREE_USDA_NUTRITION) || (this.meal_type ==
      * GGCTreeRoot.TREE_USER_NUTRITION)) { return new DailyFoodEntry() return
      * this.meal_obj_food.getId(); } else { return this.meal_obj_meal.getId(); }
-     * 
-     * 
-     * 
      * return null; }
      */
 
@@ -258,7 +245,7 @@ public class MealPart
     {
         String nutr;
 
-        if ((this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION) || (this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION))
+        if (this.meal_type == GGCTreeRoot.TREE_USDA_NUTRITION || this.meal_type == GGCTreeRoot.TREE_USER_NUTRITION)
         {
             nutr = this.meal_obj_food.getNutritions();
         }
@@ -287,7 +274,9 @@ public class MealPart
     public ArrayList<MealNutrition> getNutrients()
     {
         if (this.nutritions == null)
+        {
             loadNutritions();
+        }
 
         return this.nutritions;
     }

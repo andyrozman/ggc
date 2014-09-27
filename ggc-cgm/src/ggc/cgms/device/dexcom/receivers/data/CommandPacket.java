@@ -18,7 +18,7 @@ public class CommandPacket
     private DexcomG4Commands dexcomG4Command;
     ReceiverApiType recieverType;
     private ParserType parserType;
-    //private ByteUtils byteUtils = new ByteUtils();
+    // private ByteUtils byteUtils = new ByteUtils();
 
     int commandId;
     short[] command;
@@ -27,7 +27,7 @@ public class CommandPacket
     int responseCommandId;
     private int expectedResponseLength;
 
-    //Long commandParameter = null;
+    // Long commandParameter = null;
     Object[] commandParameters = null;
 
     private DexcomException exception;
@@ -74,8 +74,9 @@ public class CommandPacket
                 this.command[i] = cmd[i];
             }
 
-            //log.debug("Predefined command: " + 
-            //byteUtils.getDebugByteArray(byteUtils.getByteSubArray(this.command, 0, cmd.length)));
+            // log.debug("Predefined command: " +
+            // byteUtils.getDebugByteArray(byteUtils.getByteSubArray(this.command,
+            // 0, cmd.length)));
         }
         else
         {
@@ -94,15 +95,19 @@ public class CommandPacket
         int packetLength = 6 + this.dexcomCommand.getCommandParameter().getLengthInPacket();
 
         cmd[0] = 1; // Command start
-        storeValueAsBytes((long) packetLength, cmd, 1, CommandParameter.Short); // Number of bytes in Command
+        storeValueAsBytes((long) packetLength, cmd, 1, CommandParameter.Short); // Number
+                                                                                // of
+                                                                                // bytes
+                                                                                // in
+                                                                                // Command
         cmd[3] = (byte) this.dexcomCommand.getCommandId(); // Command Id
 
         if (this.dexcomCommand.getCommandParameter() != CommandParameter.None)
         {
-            if ((this.dexcomCommand.getCommandParameter() == CommandParameter.Byte) || //
-                    (this.dexcomCommand.getCommandParameter() == CommandParameter.Int) || //
-                    (this.dexcomCommand.getCommandParameter() == CommandParameter.Short) || //
-                    (this.dexcomCommand.getCommandParameter() == CommandParameter.Long))
+            if (this.dexcomCommand.getCommandParameter() == CommandParameter.Byte || //
+                    this.dexcomCommand.getCommandParameter() == CommandParameter.Int || //
+                    this.dexcomCommand.getCommandParameter() == CommandParameter.Short || //
+                    this.dexcomCommand.getCommandParameter() == CommandParameter.Long)
             {
                 long l = (Long) this.commandParameters[0];
                 storeValueAsBytes(l, cmd, 4, this.dexcomCommand.getCommandParameter()); // Parameter
@@ -117,15 +122,15 @@ public class CommandPacket
                 storeValueAsBytes(p, cmd, 9, CommandParameter.Byte);
             }
             else
-            {
                 throw new DexcomException(DexcomExceptionType.UnsupportedTypeOfParametersForCommand);
-            }
         } // for Command
 
         storeValueAsBytes((long) DexcomUtils.calculateCRC16(cmd, 0, packetLength - 2), cmd, packetLength - 2,
             CommandParameter.Short); // CRC
 
-        //log.debug("Created Command: " + byteUtils.getDebugByteArray(byteUtils.getByteSubArray(cmd, 0, packetLength)));
+        // log.debug("Created Command: " +
+        // byteUtils.getDebugByteArray(byteUtils.getByteSubArray(cmd, 0,
+        // packetLength)));
 
         this.command = cmd;
     }
@@ -137,35 +142,35 @@ public class CommandPacket
         switch (commandParameter)
         {
 
-        case None:
-            break;
+            case None:
+                break;
 
-        case Byte:
-            {
-                packet[index] = parameter.byteValue();
-            }
-            break;
+            case Byte:
+                {
+                    packet[index] = parameter.byteValue();
+                }
+                break;
 
-        case Short:
-            {
-                writeParameterToPacket(parameter.shortValue(), packet, index);
-            }
-            break;
+            case Short:
+                {
+                    writeParameterToPacket(parameter.shortValue(), packet, index);
+                }
+                break;
 
-        case Int:
-            {
-                writeParameterToPacket(parameter.intValue(), packet, index);
-            }
-            break;
+            case Int:
+                {
+                    writeParameterToPacket(parameter.intValue(), packet, index);
+                }
+                break;
 
-        case Long:
-            {
-                writeParameterToPacket(parameter.longValue(), packet, index);
-            }
-            break;
+            case Long:
+                {
+                    writeParameterToPacket(parameter.longValue(), packet, index);
+                }
+                break;
 
-        default:
-            throw new DexcomException(DexcomExceptionType.UnsupportedTypeOfParametersForCommand);
+            default:
+                throw new DexcomException(DexcomExceptionType.UnsupportedTypeOfParametersForCommand);
 
         }
 
@@ -173,59 +178,60 @@ public class CommandPacket
 
     private void writeParameterToPacket(short parameter, short[] packet, int index)
     {
-        //packet[index] = (byte)(parameter & 0xff);
-        //packet[index + 1] = (byte)((parameter >> 8) & 0xff);
+        // packet[index] = (byte)(parameter & 0xff);
+        // packet[index + 1] = (byte)((parameter >> 8) & 0xff);
 
-        packet[index] = (short) ((parameter & 0xff));
-        packet[index + 1] = (short) ((parameter >> 8) & 0xff); // (byte)((parameter >> 8) & 0xff);
+        packet[index] = (short) (parameter & 0xff);
+        packet[index + 1] = (short) (parameter >> 8 & 0xff); // (byte)((parameter
+                                                             // >> 8) & 0xff);
 
-        //packet[index + 1] = (byte)(parameter & 0xff);
-        //packet[index] = (byte)((parameter >> 8) & 0xff);
+        // packet[index + 1] = (byte)(parameter & 0xff);
+        // packet[index] = (byte)((parameter >> 8) & 0xff);
 
     }
 
-    //    private short getByteValuedd(long value)
-    //    {
-    //        // problem should 1 6 0 15 251 53
-    //        //         is   1 6 0 15 -5 53
+    // private short getByteValuedd(long value)
+    // {
+    // // problem should 1 6 0 15 251 53
+    // // is 1 6 0 15 -5 53
     //
-    //        int val = (int) value;
+    // int val = (int) value;
     //
-    //        byte b = (byte) val;
+    // byte b = (byte) val;
     //
-    //        //log.debug("Byte: " + value + ", byte=" + b);
+    // //log.debug("Byte: " + value + ", byte=" + b);
     //
-    //        //log.debug(new Integer(value).)
+    // //log.debug(new Integer(value).)
     //
-    //        if (b < 0)
-    //        {
-    //            return (b + 256);
-    //        }
-    //        else
-    //        {
-    //            return b;
-    //        }
+    // if (b < 0)
+    // {
+    // return (b + 256);
+    // }
+    // else
+    // {
+    // return b;
+    // }
     //
-    //    }
+    // }
 
     private void writeParameterToPacket(int parameter, short[] packet, int index)
     {
         packet[index] = (short) (parameter & 0xff);
-        packet[index + 1] = (short) ((parameter >> 8) & 0xff);
-        packet[index + 2] = (short) ((parameter >> 0x10) & (0xffL));
-        packet[index + 3] = (short) ((parameter >> 0x18) & (0xffL));
+        packet[index + 1] = (short) (parameter >> 8 & 0xff);
+        packet[index + 2] = (short) (parameter >> 0x10 & 0xffL);
+        packet[index + 3] = (short) (parameter >> 0x18 & 0xffL);
     }
 
     private void writeParameterToPacket(long parameter, short[] packet, int index)
     {
         packet[index] = (short) (parameter & 0xff);
-        packet[index + 1] = (short) ((parameter >> 8) & 0xff);
-        packet[index + 2] = (short) ((parameter >> 0x10) & (0xffL));
-        packet[index + 3] = (short) ((parameter >> 0x18) & (0xffL));
-        packet[index + 4] = (short) ((parameter >> 0x20) & (0xffL));
-        packet[index + 5] = (short) ((parameter >> 40) & (0xffL));
-        packet[index + 6] = (short) ((parameter >> 0x30) & (0xffL));
-        packet[index + 7] = (short) ((parameter >> 0x38) & (0xffL));
+        packet[index + 1] = (short) (parameter >> 8 & 0xff);
+        packet[index + 2] = (short) (parameter >> 0x10 & 0xffL);
+        packet[index + 3] = (short) (parameter >> 0x18 & 0xffL);
+        packet[index + 4] = (short) (parameter >> 0x20 & 0xffL);
+        packet[index + 5] = (short) (parameter >> 40 & 0xffL);
+        packet[index + 6] = (short) (parameter >> 0x30 & 0xffL);
+        packet[index + 7] = (short) (parameter >> 0x38 & 0xffL);
     }
 
     public int getCommandId()

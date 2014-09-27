@@ -3,7 +3,8 @@ package ggc.cgms.device.dexcom.receivers.g4receiver.data.parsers;
 import ggc.cgms.device.dexcom.receivers.data.CommandPacket;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 
-public interface DexcomCommandParserInterface {
+public interface DexcomCommandParserInterface
+{
 
     // Object parse(byte[] responseMessage);
 

@@ -75,7 +75,6 @@ import org.jfree.data.time.TimeSeriesCollection;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class CourseGraphView extends JFAbstractGraphView
 {
     private static final long serialVersionUID = -7960828650875426272L;
@@ -128,8 +127,8 @@ public class CourseGraphView extends JFAbstractGraphView
         this.plotData = data;
         setBackground(backgroundColor);
 
-        m_chart = ChartFactory.createTimeSeriesChart(null, translator.getMessage("AXIS_TIME_LABEL"), String.format(
-            translator.getMessage("AXIS_VALUE_LABEL"), unitLabel), BGDataset, true, true, false);
+        m_chart = ChartFactory.createTimeSeriesChart(null, translator.getMessage("AXIS_TIME_LABEL"),
+            String.format(translator.getMessage("AXIS_VALUE_LABEL"), unitLabel), BGDataset, true, true, false);
         chartPanel = new ChartPanel(m_chart, false, true, true, false, true);
         chartPanel.setDomainZoomable(true);
         chartPanel.setRangeZoomable(true);
@@ -164,7 +163,6 @@ public class CourseGraphView extends JFAbstractGraphView
 
     /*
      * (non-Javadoc)
-     * 
      * @see
      * ggc.gui.graphs.JFAbstractGraphView#drawFramework(org.jfree.chart.JFreeChart
      * )
@@ -173,9 +171,7 @@ public class CourseGraphView extends JFAbstractGraphView
     protected void drawFramework(JFreeChart chart)
     {
         if (chart == null)
-        {
             return;
-        }
 
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
@@ -233,8 +229,8 @@ public class CourseGraphView extends JFAbstractGraphView
                 .darker());
         averageRenderer.setSeriesPaint(3, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins())
                 .darker());
-        averageRenderer.setSeriesPaint(4, dataAccessInst.getColor(settings.getSelectedColorScheme()
-                .getColor_ins_perbu()));
+        averageRenderer.setSeriesPaint(4,
+            dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins_perbu()));
 
         sumRenderer.setSeriesPaint(0, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ch()));
         sumRenderer.setSeriesPaint(1, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins1()));
@@ -254,7 +250,6 @@ public class CourseGraphView extends JFAbstractGraphView
 
     /*
      * (non-Javadoc)
-     * 
      * @see
      * ggc.gui.graphs.JFAbstractGraphView#drawValues(org.jfree.chart.JFreeChart)
      */
@@ -265,9 +260,7 @@ public class CourseGraphView extends JFAbstractGraphView
         Day time;
 
         if (BGDataset == null)
-        {
             return;
-        }
 
         BGDataset.removeAllSeries();
         averageDataset.removeAllSeries();
@@ -275,9 +268,7 @@ public class CourseGraphView extends JFAbstractGraphView
         readingsDataset.removeAllSeries();
 
         if (data == null)
-        {
             return;
-        }
 
         TimeSeries BGAvgSeries = new TimeSeries(translator.getMessage("AVG_BG_PER_DAY"), Day.class);
         TimeSeries BGReadingsSeries = new TimeSeries(translator.getMessage("READINGS"), Day.class);
@@ -312,8 +303,8 @@ public class CourseGraphView extends JFAbstractGraphView
                     }
                     else
                     {
-                        BGAvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getBG(BGUnit), BGAvgSeries.getDataItem(
-                            time).getValue()));
+                        BGAvgSeries.addOrUpdate(time,
+                            MathUtils.getAverage(row.getBG(BGUnit), BGAvgSeries.getDataItem(time).getValue()));
                     }
                 }
                 if (row.getBG(BGUnit) > 0)
@@ -324,8 +315,8 @@ public class CourseGraphView extends JFAbstractGraphView
                     }
                     else
                     {
-                        BGReadingsSeries.addOrUpdate(time, MathUtils.add(1, BGReadingsSeries.getDataItem(time)
-                                .getValue()));
+                        BGReadingsSeries.addOrUpdate(time,
+                            MathUtils.add(1, BGReadingsSeries.getDataItem(time).getValue()));
                     }
                 }
 
@@ -337,8 +328,8 @@ public class CourseGraphView extends JFAbstractGraphView
                     }
                     else
                     {
-                        CHAvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getCH(), CHAvgSeries.getDataItem(time)
-                                .getValue()));
+                        CHAvgSeries.addOrUpdate(time,
+                            MathUtils.getAverage(row.getCH(), CHAvgSeries.getDataItem(time).getValue()));
                     }
                 }
                 if (row.getCH() > 0)
@@ -349,8 +340,8 @@ public class CourseGraphView extends JFAbstractGraphView
                     }
                     else
                     {
-                        CHSumSeries.addOrUpdate(time, MathUtils.add(row.getCH(), CHSumSeries.getDataItem(time)
-                                .getValue()));
+                        CHSumSeries.addOrUpdate(time,
+                            MathUtils.add(row.getCH(), CHSumSeries.getDataItem(time).getValue()));
                     }
                 }
 
@@ -363,8 +354,8 @@ public class CourseGraphView extends JFAbstractGraphView
                     }
                     else
                     {
-                        ins1AvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getIns1(), ins1AvgSeries.getDataItem(
-                            time).getValue()));
+                        ins1AvgSeries.addOrUpdate(time,
+                            MathUtils.getAverage(row.getIns1(), ins1AvgSeries.getDataItem(time).getValue()));
                     }
 
                     // ins 1 sum
@@ -374,19 +365,17 @@ public class CourseGraphView extends JFAbstractGraphView
                     }
                     else
                     {
-                        float sum = ((Number)ins1SumSeries.getDataItem(time).getValue()).floatValue();
+                        float sum = ins1SumSeries.getDataItem(time).getValue().floatValue();
                         sum += row.getIns1();
-                            
-                        ins1SumSeries.addOrUpdate(time, sum); 
+
+                        ins1SumSeries.addOrUpdate(time, sum);
                     }
-                    
-                    
+
                 }
-                
 
                 if (row.getIns2() > 0)
                 {
-                    
+
                     // ins 2 avg
                     if (ins2AvgSeries.getDataItem(time) == null)
                     {
@@ -394,10 +383,10 @@ public class CourseGraphView extends JFAbstractGraphView
                     }
                     else
                     {
-                        ins2AvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getIns2(), ins2AvgSeries.getDataItem(
-                            time).getValue()));
+                        ins2AvgSeries.addOrUpdate(time,
+                            MathUtils.getAverage(row.getIns2(), ins2AvgSeries.getDataItem(time).getValue()));
                     }
-                    
+
                     // ins 2 sum
                     if (ins2SumSeries.getDataItem(time) == null)
                     {
@@ -405,13 +394,13 @@ public class CourseGraphView extends JFAbstractGraphView
                     }
                     else
                     {
-                        ins2SumSeries.addOrUpdate(time, MathUtils.add(row.getIns2(), ins2SumSeries.getDataItem(time)
-                                .getValue()));
+                        ins2SumSeries.addOrUpdate(time,
+                            MathUtils.add(row.getIns2(), ins2SumSeries.getDataItem(time).getValue()));
                     }
-                    
+
                 }
 
-                if ((row.getIns1() > 0) || (row.getIns2() > 0))
+                if (row.getIns1() > 0 || row.getIns2() > 0)
                 {
                     // ins avg
                     if (insAvgSeries.getDataItem(time) == null)
@@ -431,31 +420,30 @@ public class CourseGraphView extends JFAbstractGraphView
                     }
                     else
                     {
-                        insSumSeries.addOrUpdate(time, MathUtils.add(row.getIns1() + row.getIns2(), insSumSeries
-                                .getDataItem(time).getValue()));
+                        insSumSeries.addOrUpdate(time,
+                            MathUtils.add(row.getIns1() + row.getIns2(), insSumSeries.getDataItem(time).getValue()));
                     }
                 }
 
-                // TODO check 
-                if ((CHSumSeries.getDataItem(time) != null)
-                        && (CHSumSeries.getDataItem(time).getValue().doubleValue() > 0))
+                // TODO check
+                if (CHSumSeries.getDataItem(time) != null && CHSumSeries.getDataItem(time).getValue().doubleValue() > 0)
                 {
 
-                    double a=0.0f,b=0.0f;
-                    
-                    if (insSumSeries.getDataItem(time)!=null)
+                    double a = 0.0f, b = 0.0f;
+
+                    if (insSumSeries.getDataItem(time) != null)
                     {
                         a = insSumSeries.getDataItem(time).getValue().doubleValue();
                     }
-                        
-                    if (CHSumSeries.getDataItem(time)!=null)
+
+                    if (CHSumSeries.getDataItem(time) != null)
                     {
                         b = CHSumSeries.getDataItem(time).getValue().doubleValue();
                     }
-                    
-                    if ((a!=0.0d) && (b!=0.0d))
+
+                    if (a != 0.0d && b != 0.0d)
                     {
-                        double ins_ch = a/b;
+                        double ins_ch = a / b;
                         insPerCHSeries.addOrUpdate(time, ins_ch);
                     }
                 }
@@ -474,35 +462,57 @@ public class CourseGraphView extends JFAbstractGraphView
         }
 
         if (!plotData.isPlotBGDayAvg())
+        {
             BGAvgSeries = new TimeSeries(translator.getMessage("AVG_BG_PER_DAY"), Day.class);
-        
+        }
+
         if (!plotData.isPlotBGReadings())
+        {
             BGReadingsSeries = new TimeSeries(translator.getMessage("READINGS"), Day.class);
+        }
         if (!plotData.isPlotCHDayAvg())
+        {
             CHAvgSeries = new TimeSeries(translator.getMessage("AVG_MEAL_SIZE"), Day.class);
+        }
         if (!plotData.isPlotCHSum())
+        {
             CHSumSeries = new TimeSeries(translator.getMessage("SUM_BU"), Day.class);
+        }
         if (!plotData.isPlotIns1DayAvg())
+        {
             ins1AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns1Name(), Day.class);
-        
+        }
+
         if (!plotData.isPlotIns1Sum())
         {
             System.out.println("ins1sum");
             ins1SumSeries = new TimeSeries(translator.getMessage("SUM") + " " + settings.getIns1Name(), Day.class);
         }
-        
+
         if (!plotData.isPlotIns2DayAvg())
+        {
             ins2AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns2Name(), Day.class);
+        }
         if (!plotData.isPlotIns2Sum())
+        {
             ins2SumSeries = new TimeSeries(translator.getMessage("SUM") + " " + settings.getIns2Name(), Day.class);
+        }
         if (!plotData.isPlotInsTotalDayAvg())
+        {
             insAvgSeries = new TimeSeries(translator.getMessage("AVG_INS"), Day.class);
+        }
         if (!plotData.isPlotInsTotalSum())
+        {
             insSumSeries = new TimeSeries(translator.getMessage("SUM_INSULIN"), Day.class);
+        }
         if (!plotData.isPlotInsPerCH())
+        {
             insPerCHSeries = new TimeSeries(translator.getMessage("INS_SLASH_BU"), Day.class);
+        }
         if (!plotData.isPlotMeals())
+        {
             mealsSeries = new TimeSeries(translator.getMessage("MEALS"), Day.class);
+        }
 
         BGDataset.addSeries(BGAvgSeries);
         sumDataset.addSeries(CHSumSeries);

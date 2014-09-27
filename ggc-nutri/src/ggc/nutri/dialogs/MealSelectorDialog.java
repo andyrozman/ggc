@@ -25,6 +25,7 @@ import javax.swing.border.TitledBorder;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -52,7 +53,6 @@ import com.atech.utils.ATSwingUtils;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class MealSelectorDialog extends JDialog implements ActionListener, KeyListener, HelpCapable
 {
 
@@ -73,7 +73,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
     String[] type;
     MealPart meal_part;
     JButton help_button;
-    
+
     /**
      * Constructor
      * 
@@ -93,7 +93,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         this.setBounds(160, 100, 300, 460);
         init();
 
-        //System.out.println("MealSelectorDialog");
+        // System.out.println("MealSelectorDialog");
 
         this.setVisible(true);
     }
@@ -117,12 +117,11 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         this.setBounds(160, 100, 300, 460);
         init();
 
-        //System.out.println("MealSelectorDialog");
+        // System.out.println("MealSelectorDialog");
 
         this.setVisible(true);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -147,7 +146,6 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         this.setVisible(true);
     }
 
-
     /**
      * Constructor
      * 
@@ -171,15 +169,14 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
 
         this.setVisible(true);
     }
-    
-    
+
     private void loadMeal()
     {
         this.cb_type.setSelectedIndex(this.meal_part.getType() - 1);
         this.cb_type.setEnabled(false);
         this.button_select.setEnabled(false);
 
-        this.action_object_type = (this.meal_part.getType() - 1);
+        this.action_object_type = this.meal_part.getType() - 1;
 
         if (this.cb_type.getSelectedIndex() < 2)
         {
@@ -202,7 +199,6 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
 
     }
 
-    
     private void init()
     {
 
@@ -213,8 +209,8 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         type[1] = ic.getMessage("USER_NUTRITION");
         type[2] = ic.getMessage("MEAL");
 
-        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
+        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -227,7 +223,6 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         panel1.setLayout(null);
         panel1.setBounds(10, 10, 270, 140);
         panel.add(panel1, null);
-
 
         JLabel label = new JLabel(ic.getMessage("NUTRITION_TYPE_FOR_SELECTOR"));
         label.setBounds(30, 20, 220, 25);
@@ -298,8 +293,6 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
          * amountDisplayFormat.setMinimumFractionDigits(1); amountEditFormat =
          * NumberFormat.getNumberInstance();
          * amountEditFormat.setMinimumFractionDigits(1);
-         * 
-         * 
          * amountField = new JFormattedTextField( new DefaultFormatterFactory(
          * new NumberFormatter(amountDisplayFormat), new
          * NumberFormatter(amountDisplayFormat), new
@@ -310,19 +303,15 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
          * ); panel3.add(amountField);
          */
 
-        
-        ATSwingUtils.getButton("   " + ic.getMessage("OK"), 20, 387, 110, 25, panel, 
-            ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, 
-            m_da);
-        
-        ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 135, 387, 110, 25, panel, 
-            ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, 
-            m_da);
-        
+        ATSwingUtils.getButton("   " + ic.getMessage("OK"), 20, 387, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
+            "ok.png", "ok", this, m_da);
+
+        ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 135, 387, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
+            "cancel.png", "cancel", this, m_da);
 
         help_button = m_da.createHelpIconByBounds(250, 387, 25, 25, panel, ATSwingUtils.FONT_NORMAL);
         panel.add(help_button);
-        
+
         m_da.enableHelp(this);
 
         this.add(panel, null);
@@ -334,7 +323,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
      */
     public boolean wasAction()
     {
-        return (this.action_object != null);
+        return this.action_object != null;
     }
 
     /**
@@ -364,30 +353,28 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
      */
     public float getAmountValue()
     {
-        //Object o = this.amountField.getValue();
+        // Object o = this.amountField.getValue();
 
         return m_da.getJFormatedTextValueFloat(this.amountField);
-        
+
         /*
-        if (o instanceof Long)
-        {
-            // System.out.println("Amount(long): " +
-            // this.amountField.getValue());
-            Long l = (Long) o;
-            return l.floatValue();
-        }
-        else
-        {
-
-            // System.out.println("Amount(double): " +
-            // this.amountField.getValue());
-
-            Double d = (Double) this.amountField.getValue();
-            return d.floatValue();
-        }*/
+         * if (o instanceof Long)
+         * {
+         * // System.out.println("Amount(long): " +
+         * // this.amountField.getValue());
+         * Long l = (Long) o;
+         * return l.floatValue();
+         * }
+         * else
+         * {
+         * // System.out.println("Amount(double): " +
+         * // this.amountField.getValue());
+         * Double d = (Double) this.amountField.getValue();
+         * return d.floatValue();
+         * }
+         */
     }
 
-    
     /**
      * Action Performed
      * 
@@ -420,16 +407,16 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
 
                     if (m.getId() == this.input_id)
                     {
-                        JOptionPane.showMessageDialog(this, ic.getMessage("CANT_SELECT_CIRCULAR_MEAL"), ic
-                                .getMessage("WARNING"), JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(this, ic.getMessage("CANT_SELECT_CIRCULAR_MEAL"),
+                            ic.getMessage("WARNING"), JOptionPane.WARNING_MESSAGE);
                         return;
                     }
                 }
 
                 this.label_item_type.setText("" + this.cb_type.getSelectedItem());
 
-                this.action_object_type = (this.cb_type.getSelectedIndex() + 1);
-                this.action_object = (ntd.getSelectedObject());
+                this.action_object_type = this.cb_type.getSelectedIndex() + 1;
+                this.action_object = ntd.getSelectedObject();
 
                 if (this.cb_type.getSelectedIndex() < 2)
                 {
@@ -446,12 +433,12 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
 
     }
 
-    
     /** 
      * keyPressed
      */
-    public void keyPressed(KeyEvent ev) {}
-
+    public void keyPressed(KeyEvent ev)
+    {
+    }
 
     /**
      * Invoked when a key has been released. See the class description for
@@ -466,8 +453,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         }
 
     }
-    
-    
+
     /** 
      * keyTyped
      */
@@ -489,6 +475,5 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
     {
         return "GGC_Food_Meal_Select_FoodParts";
     }
-    
-    
+
 }

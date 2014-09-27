@@ -34,24 +34,20 @@ import com.atech.utils.ATDataAccessAbstract;
  *  @author Andy {andy@atech-software.com}  
  */
 
-public class ExtendedDailyValue extends ExtendedHandler //implements Serializable, Comparable<DailyValuesRow>
+public class ExtendedDailyValue extends ExtendedHandler // implements
+                                                        // Serializable,
+                                                        // Comparable<DailyValuesRow>
 {
 
     @SuppressWarnings("unused")
-    private static Log log = LogFactory.getLog(ExtendedDailyValue.class); 
+    private static Log log = LogFactory.getLog(ExtendedDailyValue.class);
 
-    
-    
-    
-    
-    
-    //private String extended;
-    
-    //private String[] extended_arr;
+    // private String extended;
 
-    //private boolean changed = false;
-    //boolean debug = false;
+    // private String[] extended_arr;
 
+    // private boolean changed = false;
+    // boolean debug = false;
 
     // FIXME enum
     public static final int EXTENDED_ACTIVITY = 0;
@@ -62,41 +58,34 @@ public class ExtendedDailyValue extends ExtendedHandler //implements Serializabl
     public static final int EXTENDED_DECIMAL_PART_INS2 = 5;
     public static final int EXTENDED_INSULIN_3 = 6;
     public static final int EXTENDED_SOURCE = 7;
-    
-    
+
     @SuppressWarnings("unused")
     private static final int EXTENDED_MAX = 7;
-
-    
 
     public ExtendedDailyValue(ATDataAccessAbstract da)
     {
         super(da);
     }
-    
-
 
     @Override
     public void initExtended()
     {
-        ext_mapped_types = new Hashtable<Integer,String>();
+        ext_mapped_types = new Hashtable<Integer, String>();
 
-        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_URINE,"URINE");
-        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_ACTIVITY ,"ACTIVITY");
-        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION ,"FOOD_DESCRIPTION");
-        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_FOOD_CH ,"FOOD_DESC_CH");
-        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1 ,"DECIMAL_INS1");
-        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2 ,"DECIMAL_INS2");
-        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_INSULIN_3 ,"INSULIN_3");
-        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_SOURCE ,"SOURCE");
+        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_URINE, "URINE");
+        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_ACTIVITY, "ACTIVITY");
+        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION, "FOOD_DESCRIPTION");
+        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_FOOD_CH, "FOOD_DESC_CH");
+        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1, "DECIMAL_INS1");
+        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2, "DECIMAL_INS2");
+        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_INSULIN_3, "INSULIN_3");
+        ext_mapped_types.put(ExtendedDailyValue.EXTENDED_SOURCE, "SOURCE");
     }
 
-
-    
+    @Override
     public String getExtendedObject()
     {
         return "DailyValuesRow";
     }
-    
 
 }

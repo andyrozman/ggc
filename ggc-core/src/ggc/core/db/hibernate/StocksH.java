@@ -1,6 +1,7 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -8,7 +9,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** 
  * @author Hibernate CodeGenerator 
  * */
-public class StocksH implements Serializable 
+public class StocksH implements Serializable
 {
 
     private static final long serialVersionUID = -5410889916190454790L;
@@ -53,7 +54,9 @@ public class StocksH implements Serializable
      * @param extended 
      * @param person_id 
      * @param comment */
-    public StocksH(long stock_subtype_id, long dt_stock, float amount, String description, float usage_per_day_min, float usage_per_day_max, String extended, int person_id, String comment) {
+    public StocksH(long stock_subtype_id, long dt_stock, float amount, String description, float usage_per_day_min,
+            float usage_per_day_max, String extended, int person_id, String comment)
+    {
         this.stock_subtype_id = stock_subtype_id;
         this.dt_stock = dt_stock;
         this.amount = amount;
@@ -66,12 +69,14 @@ public class StocksH implements Serializable
     }
 
     /** default constructor */
-    public StocksH() {
+    public StocksH()
+    {
     }
 
     /** minimal constructor 
      * @param person_id */
-    public StocksH(int person_id) {
+    public StocksH(int person_id)
+    {
         this.person_id = person_id;
     }
 
@@ -100,7 +105,7 @@ public class StocksH implements Serializable
      * 
      * @return
      */
-    public long getStock_subtype_id() 
+    public long getStock_subtype_id()
     {
         return this.stock_subtype_id;
     }
@@ -110,7 +115,7 @@ public class StocksH implements Serializable
      * 
      * @param stock_subtype_id
      */
-    public void setStock_subtype_id(long stock_subtype_id) 
+    public void setStock_subtype_id(long stock_subtype_id)
     {
         this.stock_subtype_id = stock_subtype_id;
     }
@@ -120,7 +125,7 @@ public class StocksH implements Serializable
      * 
      * @return
      */
-    public long getDt_stock() 
+    public long getDt_stock()
     {
         return this.dt_stock;
     }
@@ -130,7 +135,7 @@ public class StocksH implements Serializable
      * 
      * @param dt_stock
      */
-    public void setDt_stock(long dt_stock) 
+    public void setDt_stock(long dt_stock)
     {
         this.dt_stock = dt_stock;
     }
@@ -140,7 +145,7 @@ public class StocksH implements Serializable
      * 
      * @return
      */
-    public float getAmount() 
+    public float getAmount()
     {
         return this.amount;
     }
@@ -150,7 +155,8 @@ public class StocksH implements Serializable
      * 
      * @param amount
      */
-    public void setAmount(float amount) {
+    public void setAmount(float amount)
+    {
         this.amount = amount;
     }
 
@@ -159,7 +165,7 @@ public class StocksH implements Serializable
      * 
      * @return description parameter
      */
-    public String getDescription() 
+    public String getDescription()
     {
         return this.description;
     }
@@ -169,7 +175,7 @@ public class StocksH implements Serializable
      * 
      * @param description parameter
      */
-    public void setDescription(String description) 
+    public void setDescription(String description)
     {
         this.description = description;
     }
@@ -179,7 +185,7 @@ public class StocksH implements Serializable
      * 
      * @return
      */
-    public float getUsage_per_day_min() 
+    public float getUsage_per_day_min()
     {
         return this.usage_per_day_min;
     }
@@ -189,7 +195,7 @@ public class StocksH implements Serializable
      * 
      * @param usage_per_day_min 
      */
-    public void setUsage_per_day_min(float usage_per_day_min) 
+    public void setUsage_per_day_min(float usage_per_day_min)
     {
         this.usage_per_day_min = usage_per_day_min;
     }
@@ -199,7 +205,7 @@ public class StocksH implements Serializable
      * 
      * @return
      */
-    public float getUsage_per_day_max() 
+    public float getUsage_per_day_max()
     {
         return this.usage_per_day_max;
     }
@@ -209,7 +215,7 @@ public class StocksH implements Serializable
      * 
      * @param usage_per_day_max 
      */
-    public void setUsage_per_day_max(float usage_per_day_max) 
+    public void setUsage_per_day_max(float usage_per_day_max)
     {
         this.usage_per_day_max = usage_per_day_max;
     }
@@ -274,19 +280,18 @@ public class StocksH implements Serializable
         this.comment = comment;
     }
 
-    
     /** 
      * Custom equals implementation
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof StocksH) ) return false;
+        if (!(other instanceof StocksH))
+            return false;
         StocksH castOther = (StocksH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -294,18 +299,19 @@ public class StocksH implements Serializable
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

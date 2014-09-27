@@ -2,25 +2,23 @@ package ggc.cgms.data.defs.extended;
 
 import java.util.HashMap;
 
-public enum CGMSExtendedDataType {
+public enum CGMSExtendedDataType
+{
 
-    
     None(0, "NONE"), //
-    Carbs(1, "CGMS_EXT_CARBS"), // 
+    Carbs(1, "CGMS_EXT_CARBS"), //
     Insulin(2, "CGMS_EXT_INSULIN"), //
     Health(3, "CGMS_EXT_HEALTH"), //
     Exercise(4, "CGMS_EXT_EXERCISE"), //
     ;
-    
-    
-    
+
     private int value;
     private String description;
-    private static HashMap<Integer,CGMSExtendedDataType> map = new HashMap<Integer,CGMSExtendedDataType>();
-    
+    private static HashMap<Integer, CGMSExtendedDataType> map = new HashMap<Integer, CGMSExtendedDataType>();
+
     static
     {
-        for(CGMSExtendedDataType el : values())
+        for (CGMSExtendedDataType el : values())
         {
             map.put(el.getValue(), el);
         }

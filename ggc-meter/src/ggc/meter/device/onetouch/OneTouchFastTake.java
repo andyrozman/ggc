@@ -31,13 +31,12 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 // in works
 public class OneTouchFastTake extends OneTouchMeter
 {
 
     // Not implemented
-    
+
     /**
      * Constructor used by most classes
      * 
@@ -49,7 +48,6 @@ public class OneTouchFastTake extends OneTouchMeter
         super(portName, writer);
     }
 
-
     /**
      * Constructor
      */
@@ -58,7 +56,6 @@ public class OneTouchFastTake extends OneTouchMeter
         super();
     }
 
-    
     /**
      * Constructor for device manager
      * 
@@ -69,7 +66,6 @@ public class OneTouchFastTake extends OneTouchMeter
         super(cmp);
     }
 
-    
     /**
      * Constructor
      * 
@@ -81,8 +77,7 @@ public class OneTouchFastTake extends OneTouchMeter
     {
         super(comm_parameters, writer, da);
     }
-    
-    
+
     /**
      * getName - Get Name of meter. 
      * 
@@ -93,7 +88,6 @@ public class OneTouchFastTake extends OneTouchMeter
         return "One Touch FastTake";
     }
 
-    
     /**
      * getDeviceClassName - Get class name of device
      */
@@ -102,7 +96,6 @@ public class OneTouchFastTake extends OneTouchMeter
         return "ggc.meter.device.onetouch.OneTouchFastTake";
     }
 
-    
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
      * Should be implemented by device class.
@@ -114,7 +107,6 @@ public class OneTouchFastTake extends OneTouchMeter
         return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_FASTTAKE;
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -125,24 +117,23 @@ public class OneTouchFastTake extends OneTouchMeter
         return "ls_ot_fasttake.jpg";
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * 
      * @return instructions for reading data 
      */
+    @Override
     public String getInstructions()
     {
         return "INSTRUCTIONS_LIFESCAN_OFF";
     }
 
-    
     /**
      * Maximum of records that device can store
      */
     public int getMaxMemoryRecords()
     {
-        // TODO: 
+        // TODO:
         return 150;
     }
 
@@ -151,6 +142,7 @@ public class OneTouchFastTake extends OneTouchMeter
      * 
      * @return short name of meter
      */
+    @Override
     public String getShortName()
     {
         return "FastTake";

@@ -1,4 +1,4 @@
-package ggc.meter.manager.company; 
+package ggc.meter.manager.company;
 
 import ggc.meter.device.onetouch.OneTouchProfile;
 import ggc.meter.device.onetouch.OneTouchSelect;
@@ -46,24 +46,22 @@ public class LifeScan extends AbstractDeviceCompany
      */
     public LifeScan()
     {
-        super(false,                            // empty devices
-            MeterDevicesIds.COMPANY_LIFESCAN,   // company_id
-            "LifeScan/One Touch/J&J",           // company name (full)
-            "LifeScan",                         // short company name
-            "LIFESCAN_DESC",                    // company description
-            DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL,
-            DataAccessMeter.getInstance());  // implementation status
-        
+        super(false, // empty devices
+                MeterDevicesIds.COMPANY_LIFESCAN, // company_id
+                "LifeScan/One Touch/J&J", // company name (full)
+                "LifeScan", // short company name
+                "LIFESCAN_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL, DataAccessMeter.getInstance()); // implementation
+                                                                                                     // status
+
         this.addDevice(new OneTouchUltra(this));
         this.addDevice(new OneTouchProfile(this));
         this.addDevice(new OneTouchUltraEasy(this));
         this.addDevice(new OneTouchUltraMini(this));
         this.addDevice(new OneTouchUltraSmart(this));
         this.addDevice(new OneTouchSelect(this));
-        
-        
+
         this.addDevice(new OneTouchUltra2(this));
     }
-    
-    
+
 }

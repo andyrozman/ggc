@@ -1,5 +1,4 @@
 
-
 /*
  *  GGC - GNU Gluco Control
  *
@@ -32,10 +31,7 @@
  *  Created on 16.08.2002
  */
 
-
 package ggc.core.util;
-
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -62,7 +58,6 @@ package ggc.core.util;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class UIUtilities
 {
 
@@ -73,37 +68,33 @@ public class UIUtilities
     {
         super();
     }
-/*
-    public static JButton addToolBarButton(JToolBar toolBar, Action action)
-    {
-        final JButton button = toolBar.add(action);
-
-        button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        button.setFocusPainted(false);
-
-        button.setPreferredSize(new Dimension(24, 24));
-
-        button.addMouseListener(new MouseAdapter()
-        {
-            @Override
-            public void mouseEntered(MouseEvent e)
-            {
-                if (button.isEnabled()) 
-                {
-                    button.setBorder(BorderFactory.createLineBorder(new Color(8, 36, 106), 1));
-                    button.setBackground(new Color(180, 190, 213));
-                }
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e)
-            {
-                button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-                button.setBackground(new Color(213, 210, 205));
-            }
-
-        });
-        return button;
-    }
-*/
+    /*
+     * public static JButton addToolBarButton(JToolBar toolBar, Action action)
+     * {
+     * final JButton button = toolBar.add(action);
+     * button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+     * button.setFocusPainted(false);
+     * button.setPreferredSize(new Dimension(24, 24));
+     * button.addMouseListener(new MouseAdapter()
+     * {
+     * @Override
+     * public void mouseEntered(MouseEvent e)
+     * {
+     * if (button.isEnabled())
+     * {
+     * button.setBorder(BorderFactory.createLineBorder(new Color(8, 36, 106),
+     * 1));
+     * button.setBackground(new Color(180, 190, 213));
+     * }
+     * }
+     * @Override
+     * public void mouseExited(MouseEvent e)
+     * {
+     * button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
+     * button.setBackground(new Color(213, 210, 205));
+     * }
+     * });
+     * return button;
+     * }
+     */
 }

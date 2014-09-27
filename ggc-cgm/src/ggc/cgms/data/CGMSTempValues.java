@@ -5,7 +5,6 @@ import ggc.plugin.output.OutputWriterData;
 
 import com.atech.utils.data.ATechDate;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       CGMS Tool (support for CGMS devices)
@@ -32,15 +31,11 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-
-public class CGMSTempValues extends DeviceTempValues 
+public class CGMSTempValues extends DeviceTempValues
 {
-    
-    
+
     // FIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    
-    
+
     /**
      * @param _object_type
      * @param _base_type
@@ -48,11 +43,10 @@ public class CGMSTempValues extends DeviceTempValues
      */
     public CGMSTempValues(int _object_type, int _base_type, int _sub_type)
     {
-        
+
         super(_object_type, _base_type, _sub_type, null);
     }
-    
-    
+
     /**
      * @param _object_type
      * @param _base_type
@@ -64,7 +58,6 @@ public class CGMSTempValues extends DeviceTempValues
         super(_object_type, _base_type, _sub_type, _value_template);
     }
 
-    
     /**
      * @param _object_type
      * @param _base_type
@@ -74,34 +67,28 @@ public class CGMSTempValues extends DeviceTempValues
         super(_object_type, _base_type);
     }
 
-
     /**
      * Pump Object: Base
      */
     public static final int OBJECT_BASE = 1;
 
-    
     // we have base object, and value is in fact sub_type
     /**
      * 
      */
     public static final int OBJECT_BASE_SET_SUBTYPE = 4;
-    
+
     /**
      * Pump Object: Extended
      */
     public static final int OBJECT_SUB_ENTRY = 2;
-    
-    
-    
-    
+
     /*
-    public void writeObject(OutputWriter ow, String _value)
-    {
-    }*/
+     * public void writeObject(OutputWriter ow, String _value)
+     * {
+     * }
+     */
 
-
-    
     /** 
      * getData
      */
@@ -110,70 +97,67 @@ public class CGMSTempValues extends DeviceTempValues
     {
         String val = _value;
         int stype = _sub_type;
-        
-        if (stype==-1)
+
+        if (stype == -1)
+        {
             stype = this.sub_type;
-        
-        if (val==null)
+        }
+
+        if (val == null)
+        {
             val = "";
-        
-        
+        }
+
         if (this.object_type == CGMSTempValues.OBJECT_BASE)
         {
             CGMSValuesEntry pve = new CGMSValuesEntry();
-/*
-            pve.se.setBaseType(this.base_type);
-            pve.setSubType(stype);
-            pve.setDateTimeObject(dt);
-            
-            if (this.value_template==null)
-            {
-                pve.setValue(val);
-            }
-            else
-            {
-                pve.setValue(this.value_template + "=" + val);
-            }
-  */          
+            /*
+             * pve.se.setBaseType(this.base_type);
+             * pve.setSubType(stype);
+             * pve.setDateTimeObject(dt);
+             * if (this.value_template==null)
+             * {
+             * pve.setValue(val);
+             * }
+             * else
+             * {
+             * pve.setValue(this.value_template + "=" + val);
+             * }
+             */
             return pve;
         }
-       /* else if (this.object_type == CGMSTempValues.OBJECT_BASE_SET_SUBTYPE)
-        {
-            PumpValuesEntry pve = new PumpValuesEntry();
-            pve.setBaseType(this.base_type);
-            pve.setSubType(Integer.parseInt(val));
-            pve.setDateTimeObject(dt);
-            
-            return pve;
-        }*/
+        /*
+         * else if (this.object_type == CGMSTempValues.OBJECT_BASE_SET_SUBTYPE)
+         * {
+         * PumpValuesEntry pve = new PumpValuesEntry();
+         * pve.setBaseType(this.base_type);
+         * pve.setSubType(Integer.parseInt(val));
+         * pve.setDateTimeObject(dt);
+         * return pve;
+         * }
+         */
         else if (this.object_type == CGMSTempValues.OBJECT_SUB_ENTRY)
         {
-            
-            // SUB_TYPE= ; VALUE=; ISIG=
-            
-            
-            /*
-            CGMSValuesSubEntry pvex = new CGMSValuesSubEntry();
-            pvex.setType(this.base_type);
-            pvex.setDateTimeObject(dt);
 
-            if (this.value_template==null)
-            {
-                pvex.setValue(val);
-            }
-            else
-            {
-                pvex.setValue(this.value_template + "=" + val);
-            }
-        
-            return pvex;*/
+            // SUB_TYPE= ; VALUE=; ISIG=
+
+            /*
+             * CGMSValuesSubEntry pvex = new CGMSValuesSubEntry();
+             * pvex.setType(this.base_type);
+             * pvex.setDateTimeObject(dt);
+             * if (this.value_template==null)
+             * {
+             * pvex.setValue(val);
+             * }
+             * else
+             * {
+             * pvex.setValue(this.value_template + "=" + val);
+             * }
+             * return pvex;
+             */
         }
-        
+
         return null;
     }
 
-
-   
-    
-	
-}	
+}

@@ -34,6 +34,7 @@ import javax.swing.table.TableColumn;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -60,7 +61,6 @@ import com.atech.i18n.I18nControlAbstract;
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-
 
 public class DeviceDisplayConfigDialog extends JDialog implements ActionListener, OutputWriter, HelpCapable
 {
@@ -89,7 +89,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     JTextArea logText = null;
     JButton help_button;
     DeviceDataHandler m_ddh;
-    JFrame m_parent = null; 
+    JFrame m_parent = null;
 
     /**
      * Constructor
@@ -101,7 +101,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     public DeviceDisplayConfigDialog(JFrame parent, DataAccessPlugInBase da, DeviceDataHandler ddh)
     {
         super(parent, "", true);
-        
+
         this.m_da = da;
         this.m_ic = da.getI18nControlInstance();
         this.m_parent = parent;
@@ -111,7 +111,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
         dialogPreInit();
     }
-    
 
     /**
      * Constructor (for testing GUI)
@@ -123,37 +122,38 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     public DeviceDisplayConfigDialog(DataAccessPlugInBase da, DeviceDataHandler ddh, boolean is_debug)
     {
         super();
-        
+
         this.m_da = da;
         this.m_ic = da.getI18nControlInstance();
-        
+
         this.m_ddh = ddh;
-        //this.mrr = new DeviceReaderRunner(m_da, this.m_ddh.getConfiguredDevice(), this);
+        // this.mrr = new DeviceReaderRunner(m_da,
+        // this.m_ddh.getConfiguredDevice(), this);
 
         dialogPreInit();
     }
-    
 
     private void dialogPreInit()
     {
-        if (m_ddh!=null)
-            setTitle(String.format(m_ic.getMessage("READ_DEVICE_CONFIG_TITLE"), 
-                this.m_ddh.getConfiguredDevice().device_device, 
-                this.m_ddh.getConfiguredDevice().communication_port));
-            
+        if (m_ddh != null)
+        {
+            setTitle(String.format(m_ic.getMessage("READ_DEVICE_CONFIG_TITLE"),
+                this.m_ddh.getConfiguredDevice().device_device, this.m_ddh.getConfiguredDevice().communication_port));
+        }
 
         m_da.addComponent(this);
-        
+
         init();
 
-        if (this.mrr!=null)
+        if (this.mrr != null)
+        {
             this.mrr.start();
+        }
 
         this.setVisible(true);
 
     }
-    
-    
+
     /**
      * If we have special status progress defined, by device, we need to set progress, by ourselves, this is 
      * done with this method.
@@ -163,38 +163,37 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         this.progress.setValue(value);
     }
-    
-    
 
     private void addLogText(String s)
     {
         logText.append(s + "\n");
     }
 
-
     protected void init()
     {
         model = new DeviceValuesConfigTableModel(m_da, m_da.getSourceDevice());
         model.clearData();
-        
+
         JPanel panel = new JPanel();
         panel.setLayout(null);
         panel.setSize(600, 450);
 
         JLabel label;
- 
+
         int wide_add = 0;
 
         if (m_da.isDataDownloadSceenWide())
-            wide_add = 100; 
-        
-        Font normal = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL);
-        Font normal_b = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL_BOLD);
-        
-        setBounds(0, 0, 480+wide_add, 460);
+        {
+            wide_add = 100;
+        }
+
+        Font normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        Font normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+
+        setBounds(0, 0, 480 + wide_add, 460);
 
         m_da.centerJDialog(this);
-        
+
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         getContentPane().add(panel, BorderLayout.CENTER);
 
@@ -205,58 +204,58 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         JScrollPane sp = new JScrollPane(logText, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-        addLogText( m_ic.getMessage("LOG_IS_CURRENTLY_NOT_IMPLEMENTED"));
+        addLogText(m_ic.getMessage("LOG_IS_CURRENTLY_NOT_IMPLEMENTED"));
 
         this.table = new DeviceValuesConfigTable(m_da, model);
 
         tabPane = new JTabbedPane();
         tabPane.add(m_ic.getMessage("DATA"), this.createTablePanel(this.table));
         tabPane.add(m_ic.getMessage("LOG"), sp);
-        tabPane.setBounds(30, 15, 410+wide_add, 250); // 410
+        tabPane.setBounds(30, 15, 410 + wide_add, 250); // 410
         panel.add(tabPane);
 
         // Info
-        /*label = new JLabel(String.format(m_ic.getMessage("DEVICE_INFO"), m_ic.getMessage("DEVICE_NAME_BIG")) + ":");
-        label.setBounds(30, 310, 310, 25);
-        label.setFont(normal_b);
-        panel.add(label);
-*/
-        
         /*
-        // reading old data
-        label = new JLabel(m_ic.getMessage("READING_OLD_DATA") + ":");
-        label.setBounds(30, 425, 250, 25);  // 420
-        label.setFont(normal_b);
-        panel.add(label);
-        
-        this.progress_old = new JProgressBar();
-        this.progress_old.setBounds(30, 450, 410+wide_add, 20);  // 450
-        this.progress_old.setStringPainted(true);
-        // this.progress.setIndeterminate(true);
-        panel.add(this.progress_old);
-        */
-        
-        
+         * label = new JLabel(String.format(m_ic.getMessage("DEVICE_INFO"),
+         * m_ic.getMessage("DEVICE_NAME_BIG")) + ":");
+         * label.setBounds(30, 310, 310, 25);
+         * label.setFont(normal_b);
+         * panel.add(label);
+         */
+
+        /*
+         * // reading old data
+         * label = new JLabel(m_ic.getMessage("READING_OLD_DATA") + ":");
+         * label.setBounds(30, 425, 250, 25); // 420
+         * label.setFont(normal_b);
+         * panel.add(label);
+         * this.progress_old = new JProgressBar();
+         * this.progress_old.setBounds(30, 450, 410+wide_add, 20); // 450
+         * this.progress_old.setStringPainted(true);
+         * // this.progress.setIndeterminate(true);
+         * panel.add(this.progress_old);
+         */
+
         // device status
         label = new JLabel(m_ic.getMessage("ACTION") + ":");
-        label.setBounds(30, 290, 100, 25);  // 420
+        label.setBounds(30, 290, 100, 25); // 420
         label.setFont(normal_b);
         panel.add(label);
 
         lbl_status = new JLabel(m_ic.getMessage("READY"));
-        lbl_status.setBounds(110, 290, 330, 25);  // 420
-        //lbl_status.setBorder(new LineBorder(Color.red));
+        lbl_status.setBounds(110, 290, 330, 25); // 420
+        // lbl_status.setBorder(new LineBorder(Color.red));
         lbl_status.setFont(normal);
         panel.add(lbl_status);
 
         this.progress = new JProgressBar();
-        this.progress.setBounds(30, 330, 410+wide_add, 20);  // 450
+        this.progress.setBounds(30, 330, 410 + wide_add, 20); // 450
         this.progress.setStringPainted(true);
         // this.progress.setIndeterminate(true);
         panel.add(this.progress);
 
         bt_break = new JButton(m_ic.getMessage("BREAK_COMMUNICATION"));
-        bt_break.setBounds(150+wide_add, 380, 170, 25);
+        bt_break.setBounds(150 + wide_add, 380, 170, 25);
         // bt_break.setEnabled(this.m_mim.isStatusOK());
         bt_break.setActionCommand("break_communication");
         bt_break.addActionListener(this);
@@ -266,28 +265,24 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         panel.add(help_button);
 
         bt_close = new JButton(m_ic.getMessage("CLOSE"));
-        bt_close.setBounds(330+wide_add, 380, 110, 25);
+        bt_close.setBounds(330 + wide_add, 380, 110, 25);
         bt_close.setEnabled(false);
         bt_close.setActionCommand("close");
         bt_close.addActionListener(this);
         panel.add(bt_close);
-/*
-        bt_import = new JButton(m_ic.getMessage("EXPORT_DATA"));
-        bt_import.setBounds(270+wide_add, 300, 170, 25);  // 270
-        bt_import.setActionCommand("export_data");
-        bt_import.addActionListener(this);
-        bt_import.setEnabled(false);
-
-        // button.setEnabled(meterDevice.isStatusOK());
-
-        panel.add(bt_import);
-*/
+        /*
+         * bt_import = new JButton(m_ic.getMessage("EXPORT_DATA"));
+         * bt_import.setBounds(270+wide_add, 300, 170, 25); // 270
+         * bt_import.setActionCommand("export_data");
+         * bt_import.addActionListener(this);
+         * bt_import.setEnabled(false);
+         * // button.setEnabled(meterDevice.isStatusOK());
+         * panel.add(bt_import);
+         */
         m_da.enableHelp(this);
-        
+
     }
 
-    
-    
     private JPanel createTablePanel(DeviceValuesConfigTable table_in)
     {
 
@@ -301,8 +296,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
         toolBar.setFloatable(false);
 
-        
-        //int[] cw = { 110, 80, 70, 80, 30 };
+        // int[] cw = { 110, 80, 70, 80, 30 };
 
         TableColumn column = null;
         for (int i = 0; i < 2; i++)
@@ -319,7 +313,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     }
 
-    
     @SuppressWarnings("unused")
     private JButton createButton(String command_text, String tooltip, String image_d)
     {
@@ -330,7 +323,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         b.setToolTipText(tooltip);
         return b;
     }
-
 
     /**
      * Invoked when an action occurs.
@@ -351,21 +343,21 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         }
         else if (action.equals("export_data"))
         {
-            //Hashtable<String,ArrayList<?>> ht = this.model.getCheckedEntries();
-            
+            // Hashtable<String,ArrayList<?>> ht =
+            // this.model.getCheckedEntries();
+
             DeviceExportDialog med = new DeviceExportDialog(m_da, this, this.m_ddh);
-            
+
             if (med.wasAction())
             {
                 this.bt_import.setEnabled(false);
             }
-            
+
         }
-        
-        
-        
         else
+        {
             System.out.println("MeterDisplayDataDialog::Unknown command: " + action);
+        }
 
     }
 
@@ -374,7 +366,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
      */
     public void endOutput()
     {
-        //System.out.println("endOutput()");
+        // System.out.println("endOutput()");
     }
 
     DeviceIdentification device_ident;
@@ -386,10 +378,9 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         return device_ident;
     }
-    
+
     String sub_status = null;
-    
-    
+
     /**
      * Set Sub Status
      * 
@@ -400,8 +391,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         this.sub_status = sub_status;
         refreshStatus();
     }
-    
-    
+
     /**
      * Get Sub Status
      * 
@@ -411,8 +401,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         return this.sub_status;
     }
-    
-    
 
     OutputUtil output_util = OutputUtil.getInstance(this);
 
@@ -438,7 +426,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
      */
     public void setBGOutputType(int bg_type)
     {
-        //System.out.println("setBGOutput()");
+        // System.out.println("setBGOutput()");
         this.output_util.setBGMeasurmentType(bg_type);
     }
 
@@ -451,7 +439,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     }
 
     int count = 0;
-
 
     /**
      * writeDeviceIdentification
@@ -499,9 +486,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     int reading_status = AbstractOutputWriter.STATUS_READY;
 
-    
-    
-    
     /**
      * This is status of device and also of GUI that is reading device (if we
      * have one) This is to set that status to see where we are. Allowed
@@ -510,9 +494,9 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
      */
     public void setStatus(int status)
     {
-        if ((this.reading_status == AbstractOutputWriter.STATUS_STOPPED_DEVICE) || 
-            (this.reading_status == AbstractOutputWriter.STATUS_STOPPED_USER) || 
-            (this.reading_status == AbstractOutputWriter.STATUS_READER_ERROR))
+        if (this.reading_status == AbstractOutputWriter.STATUS_STOPPED_DEVICE
+                || this.reading_status == AbstractOutputWriter.STATUS_STOPPED_USER
+                || this.reading_status == AbstractOutputWriter.STATUS_READER_ERROR)
             return;
 
         this.reading_status = status;
@@ -536,11 +520,9 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         setGUIStatus(current_status);
     }
-    
-    
+
     private int current_status = 0;
-    
-    
+
     /**
      * Set GUI Status
      * 
@@ -548,10 +530,10 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
      */
     public void setGUIStatus(int status)
     {
-        
+
         current_status = status;
-        
-        if ((this.sub_status==null) || (this.sub_status.length()==0))
+
+        if (this.sub_status == null || this.sub_status.length() == 0)
         {
             this.lbl_status.setText(this.m_da.getReadingStatuses()[status]);
         }
@@ -563,58 +545,57 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         switch (status)
         {
 
-        
             case AbstractOutputWriter.STATUS_DOWNLOADING: // downloading
                 {
                     this.bt_break.setEnabled(true);
                     this.bt_close.setEnabled(false);
-                    //this.bt_import.setEnabled(false);
-                } break;
-                
+                    // this.bt_import.setEnabled(false);
+                }
+                break;
+
             case AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED: // finished
                 {
                     this.bt_break.setEnabled(false);
                     this.bt_close.setEnabled(true);
-                    //this.bt_import.setEnabled(true);
-                    //filter_combo.setEnabled(true);
-                    //sel_all.setEnabled(true);
-                    //unsel_all.setEnabled(true);
+                    // this.bt_import.setEnabled(true);
+                    // filter_combo.setEnabled(true);
+                    // sel_all.setEnabled(true);
+                    // unsel_all.setEnabled(true);
                 }
                 break;
 
             case AbstractOutputWriter.STATUS_READER_ERROR: // error
-            {
-                this.bt_break.setEnabled(false);
-                this.bt_close.setEnabled(true);
-                //this.bt_import.setEnabled(false);
-                //filter_combo.setEnabled(false);
-                //sel_all.setEnabled(false);
-                //unsel_all.setEnabled(false);
-            }
-            break;
-                
-                
-            case AbstractOutputWriter.STATUS_STOPPED_DEVICE: // stopped - device 
+                {
+                    this.bt_break.setEnabled(false);
+                    this.bt_close.setEnabled(true);
+                    // this.bt_import.setEnabled(false);
+                    // filter_combo.setEnabled(false);
+                    // sel_all.setEnabled(false);
+                    // unsel_all.setEnabled(false);
+                }
+                break;
+
+            case AbstractOutputWriter.STATUS_STOPPED_DEVICE: // stopped - device
             case AbstractOutputWriter.STATUS_STOPPED_USER: // stoped - user
                 {
                     this.bt_break.setEnabled(false);
                     this.bt_close.setEnabled(true);
-                    //this.bt_import.setEnabled(false);
+                    // this.bt_import.setEnabled(false);
                 }
                 break;
-    
-            case AbstractOutputWriter.STATUS_READY:  // ready
-            //case 0:  // none
+
+            case AbstractOutputWriter.STATUS_READY: // ready
+                // case 0: // none
             default:
                 {
                     this.bt_break.setEnabled(false);
                     this.bt_close.setEnabled(false);
-                    //this.bt_import.setEnabled(false);
-                } break;
+                    // this.bt_import.setEnabled(false);
+                }
+                break;
         }
 
     }
-
 
     /**
      * Set Device Comment
@@ -623,23 +604,20 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
      */
     public void setDeviceComment(String text)
     {
-        //this.lbl_comment.setText(m_ic.getMessage(text));
+        // this.lbl_comment.setText(m_ic.getMessage(text));
     }
-    
-    
+
     /*
-    public static void main(String[] args)
-    {
-        JFrame f = new JFrame();
-        f.setSize(800,600);
-        
-        DataAccessMeter.getInstance().addComponent(f);
-        
-        // MeterReadDialog mrd =
-        new MeterDisplayDataDialog(); // new AscensiaContour("COM12", new
-                                      // ConsoleOutputWriter()));
-    }
-*/
+     * public static void main(String[] args)
+     * {
+     * JFrame f = new JFrame();
+     * f.setSize(800,600);
+     * DataAccessMeter.getInstance().addComponent(f);
+     * // MeterReadDialog mrd =
+     * new MeterDisplayDataDialog(); // new AscensiaContour("COM12", new
+     * // ConsoleOutputWriter()));
+     * }
+     */
 
     /**
      * Write Data to OutputWriter
@@ -649,10 +627,9 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     public void writeData(OutputWriterData data)
     {
         count++;
-        this.model.addEntry((DeviceValuesEntryInterface)data);
+        this.model.addEntry((DeviceValuesEntryInterface) data);
     }
 
-    
     /**
      * Write log entry
      * 
@@ -663,7 +640,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         this.addLogText(message);
     }
-
 
     /**
      * Write log entry
@@ -677,11 +653,10 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         this.addLogText(message);
     }
 
-    
     // ****************************************************************
-    // ******              HelpCapable Implementation             *****
+    // ****** HelpCapable Implementation *****
     // ****************************************************************
-    
+
     /** 
      * getComponent - get component to which to attach help context
      */
@@ -703,11 +678,10 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
      */
     public String getHelpId()
     {
-        //return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Config_Reading_View";
+        // return m_da.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // "Config_Reading_View";
         return "DeviceTool_Reading_Config_View";
     }
-    
-    
 
     /**
      * Set old data reading progress
@@ -719,7 +693,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         this.progress_old.setValue(value);
     }
 
-
     /**
      * Can old data reading be initiated (if module in current running mode supports this, this is
      * intended mostly for usage outside GGC)
@@ -729,10 +702,9 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     public void canOldDataReadingBeInitiated(boolean value)
     {
     }
-    
 
     String device_source;
-    
+
     /**
      * Set Device Source
      * 
@@ -742,8 +714,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         this.device_source = dev;
     }
-    
-    
+
     /**
      * Set Device Source
      * 
@@ -753,7 +724,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         return this.device_source;
     }
-    
 
     /**
      * setIndeterminateProgress - if we cannot trace progress, we set this and JProgressBar will go
@@ -763,13 +733,11 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
     }
 
-
     public void addErrorMessage(String msg)
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     public int getErrorMessageCount()
     {
@@ -777,13 +745,10 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         return 0;
     }
 
-
     public ArrayList<String> getErrorMessages()
     {
         // TODO Auto-generated method stub
         return null;
     }
-    
-    
-    
+
 }

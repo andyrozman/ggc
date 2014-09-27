@@ -28,14 +28,12 @@ import ggc.plugin.data.DeviceDefsAbstract;
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-public abstract class CGMSDefsAbstract extends DeviceDefsAbstract 
+public abstract class CGMSDefsAbstract extends DeviceDefsAbstract
 {
 
-    //protected DataAccessPump da = DataAccessPump.getInstance();
-    //protected I18nControlAbstract ic = da.getI18nControlInstance();
+    // protected DataAccessPump da = DataAccessPump.getInstance();
+    // protected I18nControlAbstract ic = da.getI18nControlInstance();
 
-    
-    
     /**
      * Constructor
      */
@@ -44,8 +42,5 @@ public abstract class CGMSDefsAbstract extends DeviceDefsAbstract
         this.da = DataAccessCGMS.getInstance();
         this.ic = da.getI18nControlInstance();
     }
-    
-    
-    
-    
+
 }

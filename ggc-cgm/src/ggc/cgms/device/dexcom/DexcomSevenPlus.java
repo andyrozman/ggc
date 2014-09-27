@@ -43,8 +43,7 @@ public class DexcomSevenPlus extends DexcomCGMS
     {
         super();
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -55,8 +54,7 @@ public class DexcomSevenPlus extends DexcomCGMS
     {
         super(drive_letter, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -68,8 +66,7 @@ public class DexcomSevenPlus extends DexcomCGMS
     {
         super(params, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -79,25 +76,22 @@ public class DexcomSevenPlus extends DexcomCGMS
     {
         super(cmp);
     }
-    
-    
-    //************************************************
-    //***      Device Identification Methods       ***
-    //************************************************
 
+    // ************************************************
+    // *** Device Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of device 
      * 
      * @return name of device
      */
+    @Override
     public String getName()
     {
         return "Dexcom 7 Plus";
     }
 
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -107,7 +101,6 @@ public class DexcomSevenPlus extends DexcomCGMS
     {
         return "dx_dexcom7.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -120,30 +113,29 @@ public class DexcomSevenPlus extends DexcomCGMS
         return CGMSDevicesIds.CGMS_DEXCOM_7_PLUS;
     }
 
-    
     /**
      * getComment - Get Comment for device 
      * 
      * @return comment or null
      */
+    @Override
     public String getComment()
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    @Override
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -154,7 +146,6 @@ public class DexcomSevenPlus extends DexcomCGMS
         return "ggc.cgms.device.dexcom.DexcomSevenPlus";
     }
 
-
     /** 
      * Get Max Memory Records
      * 
@@ -164,29 +155,27 @@ public class DexcomSevenPlus extends DexcomCGMS
     {
         return 0;
     }
-    
-    
+
     /**
      * Get Download Support Type
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
     }
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
      * @return
      */
+    @Override
     public int howManyMonthsOfDataStored()
     {
         return -1;
     }
-    
-    
-   
+
 }

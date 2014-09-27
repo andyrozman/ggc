@@ -28,7 +28,6 @@ import ggc.plugin.data.DeviceValuesEntryInterface;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class DeviceValuesEntryUtil
 {
 
@@ -43,9 +42,7 @@ public class DeviceValuesEntryUtil
      */
     public static int compare(DeviceValuesEntryInterface d1, DeviceValuesEntryInterface d2)
     {
-        return (int)(d1.getDateTime()-d2.getDateTime());
+        return (int) (d1.getDateTime() - d2.getDateTime());
     }
 
-    
-    
 }

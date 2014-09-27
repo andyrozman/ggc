@@ -32,7 +32,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PumpBaseType
 {
 
@@ -42,24 +41,13 @@ public class PumpBaseType
     /**
      * Base Type Descriptions
      */
-    public String[] basetype_desc = { 
-                                     ic.getMessage("NONE"),
-                                     ic.getMessage("BASAL_DOSE"),
-                                     ic.getMessage("BOLUS_DOSE"),
-                                     ic.getMessage("EVENT"),
-                                     ic.getMessage("ALARM"),
-                                     ic.getMessage("ERROR"),
-                                     ic.getMessage("REPORT"),
-                                     ic.getMessage("PEN_INJECTION_BASAL"),
-                                     ic.getMessage("PEN_INJECTION_BOLUS"),
-                                     ic.getMessage("ADDITIONAL_DATA"),
-    };
-    
-    
-    
-    Hashtable<String,String> basetype_mapping = new Hashtable<String,String>(); 
-    
-    
+    public String[] basetype_desc = { ic.getMessage("NONE"), ic.getMessage("BASAL_DOSE"), ic.getMessage("BOLUS_DOSE"),
+                                     ic.getMessage("EVENT"), ic.getMessage("ALARM"), ic.getMessage("ERROR"),
+                                     ic.getMessage("REPORT"), ic.getMessage("PEN_INJECTION_BASAL"),
+                                     ic.getMessage("PEN_INJECTION_BOLUS"), ic.getMessage("ADDITIONAL_DATA"), };
+
+    Hashtable<String, String> basetype_mapping = new Hashtable<String, String>();
+
     /**
      * Pump Data: None
      */
@@ -109,7 +97,6 @@ public class PumpBaseType
      * Pump Data: Additional Data
      */
     public static final int PUMP_DATA_ADDITIONAL_DATA = 9;
-    
 
     /**
      * Constructor
@@ -126,8 +113,7 @@ public class PumpBaseType
         this.basetype_mapping.put(ic.getMessage("PEN_INJECTION_BOLUS"), "8");
         this.basetype_mapping.put(ic.getMessage("ADDITIONAL_DATA"), "9");
     }
-    
-    
+
     /**
      * Get Type from Description
      * 
@@ -137,13 +123,15 @@ public class PumpBaseType
     public int getTypeFromDescription(String str)
     {
         String s = "0";
-        
+
         if (this.basetype_mapping.containsKey(str))
+        {
             s = this.basetype_mapping.get(str);
-        
+        }
+
         return Integer.parseInt(s);
     }
-    
+
     /**
      * Get Descriptions (array)
      * 
@@ -153,7 +141,5 @@ public class PumpBaseType
     {
         return this.basetype_desc;
     }
-    
-    
-    
+
 }

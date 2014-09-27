@@ -1,7 +1,5 @@
 package ggc.pump.device.dana;
 
-import java.util.Hashtable;
-
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
@@ -9,6 +7,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.device.AbstractPump;
+
+import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,14 +36,11 @@ import ggc.pump.device.AbstractPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 // FIXME
 
 public abstract class DanaPump extends AbstractPump
 {
 
-    
-    
     /**
      * Constructor 
      */
@@ -51,8 +48,7 @@ public abstract class DanaPump extends AbstractPump
     {
         super();
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -61,10 +57,9 @@ public abstract class DanaPump extends AbstractPump
      */
     public DanaPump(String params, OutputWriter writer)
     {
-        super(); //params, writer);
+        super(); // params, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -76,8 +71,7 @@ public abstract class DanaPump extends AbstractPump
     {
         super(params, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -88,16 +82,10 @@ public abstract class DanaPump extends AbstractPump
         super(cmp);
     }
 
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
-
-
-    
-    
     /**
      * getComment - Get Comment for device 
      * 
@@ -107,25 +95,17 @@ public abstract class DanaPump extends AbstractPump
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
-    
-    
-    
-    
-    
-    
-
 
     /**
      * Open
@@ -134,7 +114,6 @@ public abstract class DanaPump extends AbstractPump
     {
         return true;
     }
-    
 
     /**
      * Close
@@ -143,16 +122,15 @@ public abstract class DanaPump extends AbstractPump
     {
     }
 
-    
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
      * 
      * @throws PlugInBaseException
      */
+    @Override
     public void readConfiguration() throws PlugInBaseException
     {
     }
-
 
     /**
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
@@ -165,17 +143,16 @@ public abstract class DanaPump extends AbstractPump
     {
     }
 
-
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy 
      * (from some date to another)
      * 
      * @throws PlugInBaseException 
      */
+    @Override
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
-
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -183,20 +160,20 @@ public abstract class DanaPump extends AbstractPump
      *  
      * @throws PlugInBaseException
      */
+    @Override
     public void readInfo() throws PlugInBaseException
     {
     }
 
-    
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      * @return 
      */
+    @Override
     public DeviceIdentification getDeviceInfo()
     {
         return null;
     }
-  
 
     /**
      * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific 
@@ -208,7 +185,6 @@ public abstract class DanaPump extends AbstractPump
         return null;
     }
 
-
     /**
      * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
      *     event codes
@@ -218,7 +194,6 @@ public abstract class DanaPump extends AbstractPump
     {
         return null;
     }
-
 
     /**
      * Get Error Mappings - Map pump specific errors to Pump Tool specific 
@@ -230,7 +205,6 @@ public abstract class DanaPump extends AbstractPump
         return null;
     }
 
-
     /**
      * Get Event Mappings - Map pump specific events to Pump Tool specific 
      *     event codes
@@ -241,7 +215,6 @@ public abstract class DanaPump extends AbstractPump
         return null;
     }
 
-    
     /**
      * Get Report Mappings - Map pump specific reports to Pump Tool specific 
      *     event codes
@@ -252,7 +225,6 @@ public abstract class DanaPump extends AbstractPump
         return null;
     }
 
-
     /**
      * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
      *      create, AlarmMappings and EventMappings and any other pump constants.
@@ -261,7 +233,6 @@ public abstract class DanaPump extends AbstractPump
     {
     }
 
-
     /** 
      * Dispose
      */
@@ -269,7 +240,6 @@ public abstract class DanaPump extends AbstractPump
     {
     }
 
-    
     /**
      * getConnectionPort - connection port data
      * 
@@ -279,7 +249,6 @@ public abstract class DanaPump extends AbstractPump
     {
         return null;
     }
-
 
     /**
      * getConnectionProtocol - returns id of connection protocol
@@ -291,19 +260,17 @@ public abstract class DanaPump extends AbstractPump
         return 0;
     }
 
-
-
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
      *    normal progress status, but with some special devices we calculate progress through other means.
      *    
      * @return true is progress status is special
      */
+    @Override
     public boolean hasSpecialProgressStatus()
     {
         return false;
     }
-
 
     /**
      * Is Device Communicating
@@ -315,7 +282,6 @@ public abstract class DanaPump extends AbstractPump
         return false;
     }
 
-
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
      * sort of specific device data - in most cases we call them generics, and they don't have ability
@@ -323,10 +289,10 @@ public abstract class DanaPump extends AbstractPump
      * 
      * @return
      */
+    @Override
     public boolean isReadableDevice()
     {
         return false;
     }
 
-    
 }

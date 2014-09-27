@@ -41,32 +41,31 @@ public class Minimed508 extends MinimedPumpDevice
     /**
      * Constructor 
      */
-    /*public Minimed508()
-    {
-        super();
-    }*/
-    
-    
+    /*
+     * public Minimed508()
+     * {
+     * super();
+     * }
+     */
+
     /**
      * Constructor 
      * 
      * @param drive_letter 
      * @param writer 
      */
-    /*public Minimed508(String drive_letter, OutputWriter writer)
-    {
-        super(drive_letter, writer);
-    }*/
-    
-    
+    /*
+     * public Minimed508(String drive_letter, OutputWriter writer)
+     * {
+     * super(drive_letter, writer);
+     * }
+     */
+
     public Minimed508(DataAccessPlugInBase da, int device_type, String full_port, OutputWriter writer)
     {
         super(da, device_type, full_port, writer);
     }
 
-    
-    
-    
     /**
      * Constructor
      * 
@@ -76,7 +75,6 @@ public class Minimed508 extends MinimedPumpDevice
     {
         super(cmp);
     }
-    
 
     /**
      * getName - Get Name of meter. 
@@ -88,8 +86,6 @@ public class Minimed508 extends MinimedPumpDevice
         return "Minimed 508/507c";
     }
 
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -99,7 +95,6 @@ public class Minimed508 extends MinimedPumpDevice
     {
         return "mm_508.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -112,13 +107,12 @@ public class Minimed508 extends MinimedPumpDevice
         return PumpDevicesIds.PUMP_MINIMED_508;
     }
 
-    
+    @Override
     public int getMinimedDeviceId()
     {
         return MinimedDevicesIds.PUMP_MINIMED_508c;
     }
-    
-    
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -129,30 +123,29 @@ public class Minimed508 extends MinimedPumpDevice
     {
         return "INSTRUCTIONS_MINIMED_508";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
      * @return comment or null
      */
+    @Override
     public String getComment()
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -163,38 +156,37 @@ public class Minimed508 extends MinimedPumpDevice
         return "ggc.pump.device.minimed.Minimed508";
     }
 
-
     /** 
      * Get Max Memory Records
      */
+    @Override
     public int getMaxMemoryRecords()
     {
         return 0;
     }
- 
+
     /**
      * Get Download Support Type
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
      * @return
      */
+    @Override
     public int howManyMonthsOfDataStored()
     {
         return -1;
     }
-    
-    
-    
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -203,72 +195,61 @@ public class Minimed508 extends MinimedPumpDevice
      * 
      * @return
      */
+    @Override
     public String getTemporaryBasalTypeDefinition()
     {
         return "TYPE=Unit;STEP=0.1";
     }
-    
-    
+
     /**
      * Get Bolus Step (precission)
      * 
      * @return
      */
+    @Override
     public float getBolusStep()
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Get Basal Step (precission)
      * 
      * @return
      */
+    @Override
     public float getBasalStep()
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
+    @Override
     public boolean arePumpSettingsSet()
     {
         return true;
     }
 
-
-
-
     @Override
     public void initDeviceSpecific()
     {
         // TODO Auto-generated method stub
-        
+
     }
-
-
-
 
     @Override
     public void createCommands()
     {
     }
 
-
-
-
     @Override
     public Object convertDeviceReply(MinimedCommand mc)
     {
         return null;
     }
-    
-    
-    
-}
 
+}

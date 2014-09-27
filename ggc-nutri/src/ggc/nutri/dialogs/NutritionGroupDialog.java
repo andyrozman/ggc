@@ -1,5 +1,5 @@
 package ggc.nutri.dialogs;
- 
+
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.data.NutritionGroupModel;
 import ggc.nutri.util.DataAccessNutri;
@@ -49,7 +49,6 @@ import com.atech.utils.ATSwingUtils;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class NutritionGroupDialog extends JDialog implements TreeSelectionListener, ActionListener, HelpCapable
 {
 
@@ -66,45 +65,16 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
      * Tree Type
      */
     public int m_tree_type = 1;
-    
+
     /**
      * Group: Foods
      */
     public static int GROUP_FOODS = 2;
-    
+
     /**
      * Group: Meals
      */
     public static int GROUP_MEALS = 3;
-    
-    
-    
-    /**
-     * Constructor
-     * 
-     * @param parent 
-     * @param type
-     */
-    public NutritionGroupDialog(JDialog parent, int type) 
-    {
-
-        super(parent, "", true);
-        //super((JDialog)null, "", true);
-
-        m_da = DataAccessNutri.getInstance();
-        ic = m_da.getI18nControlInstance();
-        this.m_tree_type = type;
-
-        //this.setResizable(false);
-        this.setBounds(160, 100, 300, 350);
-        setTitle();
-
-        init();
- 
-        this.setVisible(true);
-        
-    }
-
 
     /**
      * Constructor
@@ -112,94 +82,109 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
      * @param parent 
      * @param type
      */
-    public NutritionGroupDialog(JFrame parent, int type) 
+    public NutritionGroupDialog(JDialog parent, int type)
     {
 
         super(parent, "", true);
-        //super((JDialog)null, "", true);
+        // super((JDialog)null, "", true);
 
         m_da = DataAccessNutri.getInstance();
         ic = m_da.getI18nControlInstance();
         this.m_tree_type = type;
 
-        //this.setResizable(false);
+        // this.setResizable(false);
         this.setBounds(160, 100, 300, 350);
         setTitle();
 
         init();
- 
+
         this.setVisible(true);
-        
+
     }
-    
-    
+
+    /**
+     * Constructor
+     * 
+     * @param parent 
+     * @param type
+     */
+    public NutritionGroupDialog(JFrame parent, int type)
+    {
+
+        super(parent, "", true);
+        // super((JDialog)null, "", true);
+
+        m_da = DataAccessNutri.getInstance();
+        ic = m_da.getI18nControlInstance();
+        this.m_tree_type = type;
+
+        // this.setResizable(false);
+        this.setBounds(160, 100, 300, 350);
+        setTitle();
+
+        init();
+
+        this.setVisible(true);
+
+    }
+
     private void init()
     {
         ATSwingUtils.initLibrary();
-        
+
         this.setLayout(null);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
         panel.setBounds(0, 0, 300, 150);
-        
+
         JLabel label = new JLabel(ic.getMessage("SELECTED_GROUP"));
         label.setBounds(30, 70, 120, 25);
         panel.add(label, null);
-        
-        
+
         tf_selected = new JTextField();
         tf_selected.setBounds(30, 100, 230, 25);
         tf_selected.setEditable(false);
         panel.add(tf_selected);
 
+        ATSwingUtils.getButton("   " + ic.getMessage("OK"), 150, 10, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
+            "ok.png", "select", this, m_da);
 
-        ATSwingUtils.getButton("   " + ic.getMessage("OK"), 150, 10, 110, 25, panel, 
-            ATSwingUtils.FONT_NORMAL, "ok.png", "select", this, 
-            m_da);
-        
-        ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 150, 40, 110, 25, panel, 
-            ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, 
-            m_da);
-        
+        ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 150, 40, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
+            "cancel.png", "cancel", this, m_da);
 
         help_button = m_da.createHelpButtonByBounds(150, 70, 110, 25, panel, ATSwingUtils.FONT_NORMAL);
         panel.add(help_button);
-        
-        
-       /* 
-        JButton button = new JButton(ic.getMessage("OK"));
-        button.setActionCommand("select");
-        button.setBounds(180, 30, 80, 25);
-        button.addActionListener(this);
-        panel.add(button);
-        
-        button = new JButton(ic.getMessage("CANCEL"));
-        button.setActionCommand("close");
-        button.setBounds(180, 60, 80, 25);
-        button.addActionListener(this);
-        panel.add(button);
-        */		
-        //Create a tree that allows one selection at a time.
+
+        /*
+         * JButton button = new JButton(ic.getMessage("OK"));
+         * button.setActionCommand("select");
+         * button.setBounds(180, 30, 80, 25);
+         * button.addActionListener(this);
+         * panel.add(button);
+         * button = new JButton(ic.getMessage("CANCEL"));
+         * button.setActionCommand("close");
+         * button.setBounds(180, 60, 80, 25);
+         * button.addActionListener(this);
+         * panel.add(button);
+         */
+        // Create a tree that allows one selection at a time.
         tree = new JTree();
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         this.setTreeModel(tree);
-        //tree.setModel(new NutritionTreeModel(m_da.m_nutrition_treeroot));
+        // tree.setModel(new NutritionTreeModel(m_da.m_nutrition_treeroot));
         tree.addTreeSelectionListener(this);
 
         JScrollPane treeView = new JScrollPane(tree);
         treeView.setBounds(30, 150, 230, 140);
 
         m_da.enableHelp(this);
-        
+
         this.add(panel, null);
         this.add(treeView, null);
-	
+
     }
-    
-    
-    
-    
+
     /**
      * Get Type
      * @return
@@ -208,35 +193,35 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
     {
         return this.m_tree_type;
     }
-    
 
     private void setTitle()
     {
-    	if (this.getNutritionType()==2)
-    	    this.setTitle(ic.getMessage("FOOD_GROUPS"));
-    	else if (this.getNutritionType()==3)
-    	    this.setTitle(ic.getMessage("MEAL_GROUPS"));
+        if (this.getNutritionType() == 2)
+        {
+            this.setTitle(ic.getMessage("FOOD_GROUPS"));
+        }
+        else if (this.getNutritionType() == 3)
+        {
+            this.setTitle(ic.getMessage("MEAL_GROUPS"));
+        }
     }
 
     private void setTreeModel(JTree tree)
     {
         tree.setModel(new NutritionGroupModel(m_da.getDbCache().tree_roots.get("" + this.m_tree_type), this.m_tree_type));
     }
-    
-    
 
     Object selected_last_path = null;
 
     /** 
      * Required by TreeSelectionListener interface. 
      */
-    public void valueChanged(TreeSelectionEvent e) 
+    public void valueChanged(TreeSelectionEvent e)
     {
-    	this.selected_last_path = tree.getLastSelectedPathComponent();
-    	this.tf_selected.setText(this.selected_last_path.toString());
+        this.selected_last_path = tree.getLastSelectedPathComponent();
+        this.tf_selected.setText(this.selected_last_path.toString());
     }
 
-    
     /**
      * Was Action
      * 
@@ -244,9 +229,9 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
      */
     public boolean wasAction()
     {
-        return (this.action_object!=null);
+        return this.action_object != null;
     }
-    
+
     /**
      * Get Selected Object
      * 
@@ -256,7 +241,6 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
     {
         return this.action_object;
     }
-    
 
     /**
      * Action Performed
@@ -265,44 +249,45 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
      */
     public void actionPerformed(ActionEvent e)
     {
-    	String cmd = e.getActionCommand();
-    	
-    	if (cmd.equals("select"))
-    	{
-    	    if ((this.selected_last_path == null) || (this.selected_last_path instanceof GGCTreeRoot))
-    		this.action_object = null;
-    	    else
-    		this.action_object = this.selected_last_path;
-    	    
-    	    this.dispose();
-    	}
-    	else if (cmd.equals("close"))
-    	{
-    	    this.dispose();
-    	}
-    }
+        String cmd = e.getActionCommand();
 
+        if (cmd.equals("select"))
+        {
+            if (this.selected_last_path == null || this.selected_last_path instanceof GGCTreeRoot)
+            {
+                this.action_object = null;
+            }
+            else
+            {
+                this.action_object = this.selected_last_path;
+            }
+
+            this.dispose();
+        }
+        else if (cmd.equals("close"))
+        {
+            this.dispose();
+        }
+    }
 
     public Component getComponent()
     {
         return this;
     }
 
-
     public JButton getHelpButton()
     {
         return this.help_button;
     }
 
-
     public String getHelpId()
     {
-        if (this.getNutritionType()==NutritionGroupDialog.GROUP_FOODS)
+        if (this.getNutritionType() == NutritionGroupDialog.GROUP_FOODS)
             return "GGC_Food_User_Group_View";
-        else if (this.getNutritionType()==NutritionGroupDialog.GROUP_MEALS)
-            return "GGC_Food_Meal_Group_View"; 
+        else if (this.getNutritionType() == NutritionGroupDialog.GROUP_MEALS)
+            return "GGC_Food_Meal_Group_View";
         else
             return null;
     }
-    
+
 }

@@ -1,6 +1,5 @@
 package ggc.gui.little.panels;
 
-
 import ggc.core.util.DataAccess;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.panels.info.AbstractInfoPanel;
@@ -38,7 +37,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class MainLittlePanel extends JPanel
 {
     private static final long serialVersionUID = 8210688971878569493L;
@@ -47,12 +45,12 @@ public class MainLittlePanel extends JPanel
 
     GGCLittle m_little = null;
 
-    private GeneralInfoPanelL   general = null;
-    
+    private GeneralInfoPanelL general = null;
+
     /**
      * Daily Stats Panel
      */
-    public DailyStatsPanelL    dailyStats = null;
+    public DailyStatsPanelL dailyStats = null;
 
     // tabs
     private DailyStatsControlsL control = null;
@@ -60,13 +58,10 @@ public class MainLittlePanel extends JPanel
     private PlugInPanelL plug_in = null;
     @SuppressWarnings("unused")
     private StocksInfoPanelL stocks = null;
-    private ScheduleInfoPanelL  schedule = null;
-    
-    
-    
+    private ScheduleInfoPanelL schedule = null;
+
     private JTabbedPane tabbedPane = null;
     private I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
-
 
     /**
      * Constructor
@@ -77,13 +72,13 @@ public class MainLittlePanel extends JPanel
     {
         m_little = little;
         setLayout(new GridLayout(2, 1));
-        //setBackground(Color.white);
+        // setBackground(Color.white);
 
-    	JPanel pane = new JPanel();
-    	pane.setLayout(new GridLayout(1, 2));
+        JPanel pane = new JPanel();
+        pane.setLayout(new GridLayout(1, 2));
 
-    	pane.add(general = new GeneralInfoPanelL());
-        
+        pane.add(general = new GeneralInfoPanelL());
+
         JPanel control_app_panel = new JPanel();
         control_app_panel.setLayout(new GridLayout(1, 1));
         control_app_panel.add(this.tabbedPane = new JTabbedPane());
@@ -92,23 +87,20 @@ public class MainLittlePanel extends JPanel
         this.tabbedPane.addTab(ic.getMessage("TAB_PLUGIN"), plug_in = new PlugInPanelL());
         this.tabbedPane.addTab(ic.getMessage("TAB_SCHEDULE"), schedule = new ScheduleInfoPanelL());
         this.tabbedPane.addTab(ic.getMessage("TAB_STOCKS"), stocks = new StocksInfoPanelL());
-        
 
-        
-        //public PlugInPanelL plug_in = null;
-//        public StocksInfoPanelL stocks = null;
-//        public ScheduleInfoPanelL  schedule = null;
-        
-        //	control = new DailyStatsControlsL(this));
-        
-        
-        
+        // public PlugInPanelL plug_in = null;
+        // public StocksInfoPanelL stocks = null;
+        // public ScheduleInfoPanelL schedule = null;
+
+        // control = new DailyStatsControlsL(this));
+
         /*
-        control_app_panel.setLayout(new GridLayout(2, 1));
-        control_app_panel.add(control = new DailyStatsControlsL(this));
-        control_app_panel.add(schedule = new ScheduleInfoPanelL()); //new DailyStatsControlsPanel(little));
-        */
-    	pane.add(control_app_panel);
+         * control_app_panel.setLayout(new GridLayout(2, 1));
+         * control_app_panel.add(control = new DailyStatsControlsL(this));
+         * control_app_panel.add(schedule = new ScheduleInfoPanelL()); //new
+         * DailyStatsControlsPanel(little));
+         */
+        pane.add(control_app_panel);
 
         add(pane);
         add(dailyStats = new DailyStatsPanelL());
@@ -120,11 +112,12 @@ public class MainLittlePanel extends JPanel
 
     }
 
-    
     private void addPanels()
     {
         for (int i = 0; i < vInfoPanels.size(); i++)
+        {
             add(vInfoPanels.get(i));
+        }
     }
 
     /**
@@ -133,7 +126,9 @@ public class MainLittlePanel extends JPanel
     public void refreshPanels()
     {
         for (int i = 0; i < vInfoPanels.size(); i++)
-            ((AbstractInfoPanel)vInfoPanels.get(i)).refreshInfo();
+        {
+            ((AbstractInfoPanel) vInfoPanels.get(i)).refreshInfo();
+        }
     }
 
     /**

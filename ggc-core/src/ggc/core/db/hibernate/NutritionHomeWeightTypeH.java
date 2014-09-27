@@ -1,12 +1,14 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class NutritionHomeWeightTypeH implements Serializable {
+public class NutritionHomeWeightTypeH implements Serializable
+{
 
     /**
      * 
@@ -25,13 +27,15 @@ public class NutritionHomeWeightTypeH implements Serializable {
     /** full constructor 
      * @param name 
      * @param static_entry */
-    public NutritionHomeWeightTypeH(String name, int static_entry) {
+    public NutritionHomeWeightTypeH(String name, int static_entry)
+    {
         this.name = name;
         this.static_entry = static_entry;
     }
 
     /** default constructor */
-    public NutritionHomeWeightTypeH() {
+    public NutritionHomeWeightTypeH()
+    {
     }
 
     /**
@@ -59,7 +63,7 @@ public class NutritionHomeWeightTypeH implements Serializable {
      * 
      * @return name
      */
-    public String getName() 
+    public String getName()
     {
         return this.name;
     }
@@ -69,18 +73,17 @@ public class NutritionHomeWeightTypeH implements Serializable {
      * 
      * @param name as string
      */
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
-
 
     /**
      * Get Is Static Entry
      * 
      * @return static_entry
      */
-    public int getStatic_entry() 
+    public int getStatic_entry()
     {
         return this.static_entry;
     }
@@ -90,7 +93,7 @@ public class NutritionHomeWeightTypeH implements Serializable {
      * 
      * @param static_entry as string
      */
-    public void setStatic_entry(int static_entry) 
+    public void setStatic_entry(int static_entry)
     {
         this.static_entry = static_entry;
     }
@@ -100,13 +103,13 @@ public class NutritionHomeWeightTypeH implements Serializable {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof NutritionHomeWeightTypeH) ) return false;
+        if (!(other instanceof NutritionHomeWeightTypeH))
+            return false;
         NutritionHomeWeightTypeH castOther = (NutritionHomeWeightTypeH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -114,18 +117,19 @@ public class NutritionHomeWeightTypeH implements Serializable {
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

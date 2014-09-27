@@ -32,10 +32,9 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class AccuChekNano extends AccuChekSmartPixMeter
 {
-    
+
     /**
      * Constructor
      * 
@@ -45,8 +44,7 @@ public class AccuChekNano extends AccuChekSmartPixMeter
     {
         super(cmp);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -58,7 +56,6 @@ public class AccuChekNano extends AccuChekSmartPixMeter
         super(drive_letter, writer);
     }
 
-    
     /**
      * Constructor
      * 
@@ -70,12 +67,10 @@ public class AccuChekNano extends AccuChekSmartPixMeter
     {
         super(comm_parameters, writer, da);
     }
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -87,7 +82,6 @@ public class AccuChekNano extends AccuChekSmartPixMeter
         return "Aviva Nano";
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -97,7 +91,6 @@ public class AccuChekNano extends AccuChekSmartPixMeter
     {
         return "ac_nano.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -110,9 +103,6 @@ public class AccuChekNano extends AccuChekSmartPixMeter
         return MeterDevicesIds.METER_ACCUCHEK_NANO;
     }
 
-    
-
-    
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -123,7 +113,7 @@ public class AccuChekNano extends AccuChekSmartPixMeter
     {
         return "INSTRUCTIONS_ACCUCHEK_NANO";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -133,20 +123,18 @@ public class AccuChekNano extends AccuChekSmartPixMeter
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
-    
-    
+
     /**
      * getDeviceClassName() - get name of this class
      */
@@ -154,25 +142,24 @@ public class AccuChekNano extends AccuChekSmartPixMeter
     {
         return "ggc.meter.device.accuchek.AccuChekNano";
     }
-    
-    
+
     /**
      * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
      * @return number of elements
      */
+    @Override
     public int getNrOfElementsFor1s()
     {
         return 20;
     }
 
-    
     /**
      * Maximum of records that device can store
      */
+    @Override
     public int getMaxMemoryRecords()
     {
         return 500;
     }
-    
-    
+
 }

@@ -7,7 +7,6 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.manager.PumpDevicesIds;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -34,11 +33,8 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-
 public class DanaDiabecare_IIS extends DanaDiabecare_II
 {
-
 
     /**
      * Constructor 
@@ -47,8 +43,7 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
     {
         super();
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -58,10 +53,9 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
     public DanaDiabecare_IIS(String params, OutputWriter writer)
     {
         super();
-        //super(params, writer);
+        // super(params, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -73,8 +67,7 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
     {
         super(params, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -84,127 +77,123 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
     {
         super(cmp);
     }
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-    
-    
+
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
+
     /**
      * getName - Get Name of meter. 
      * 
      * @return name of meter
      */
+    @Override
     public String getName()
     {
         return "Diabcare II S/SG";
     }
-    
-    
-    
+
     /**
      * getIconName - Get Icon of meter
      * 
      * @return icon name
      */
+    @Override
     public String getIconName()
     {
         return "so_danaIISG.jpg";
     }
-    
-    
+
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
      * Should be implemented by device class.
      * 
      * @return id of device within company
      */
+    @Override
     public int getDeviceId()
     {
         return PumpDevicesIds.PUMP_DANA_DIABECARE_IIS;
     }
-    
-    
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
      * 
      * @return instructions for reading data 
      */
+    @Override
     public String getInstructions()
     {
         return "INSTRUCTIONS_DANA_IIS";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
      * @return comment or null
      */
+    @Override
     public String getComment()
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    @Override
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
      * @return class name as string
      */
+    @Override
     public String getDeviceClassName()
     {
         return "ggc.pump.device.dana.DanaDiabcare_IIS";
     }
-    
-    
-    
-    
+
     /** 
      * Get Max Memory Records
      */
+    @Override
     public int getMaxMemoryRecords()
     {
         // TODO Auto-generated method stub
         return 0;
     }
-    
-    
+
     /**
      * Get Download Support Type
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE;
     }
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
      * @return
      */
+    @Override
     public int howManyMonthsOfDataStored()
     {
         return -1;
     }
-    
-    
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -213,46 +202,44 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
      * 
      * @return
      */
+    @Override
     public String getTemporaryBasalTypeDefinition()
     {
-        //return "TYPE=Unit;STEP=0.1";
+        // return "TYPE=Unit;STEP=0.1";
         return null;
     }
-    
-    
+
     /**
      * Get Bolus Step (precission)
      * 
      * @return
      */
+    @Override
     public float getBolusStep()
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Get Basal Step (precission)
      * 
      * @return
      */
+    @Override
     public float getBasalStep()
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
+    @Override
     public boolean arePumpSettingsSet()
     {
         return false;
     }
-    
-    
-    
-}
 
+}

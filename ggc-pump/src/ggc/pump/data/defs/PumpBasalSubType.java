@@ -1,8 +1,8 @@
 package ggc.pump.data.defs;
 
-import java.util.Hashtable;
-
 import ggc.pump.util.DataAccessPump;
+
+import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -32,7 +32,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PumpBasalSubType
 {
 
@@ -42,19 +41,15 @@ public class PumpBasalSubType
     /**
      * Basal Descriptions
      */
-    public String[] basal_desc = { ic.getMessage("SELECT_BASAL_TYPE"),
-                       ic.getMessage("BASAL_VALUE"),             
-                       ic.getMessage("BASAL_PROFILE"),             
-                       ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"),             
-                       ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"),             
-                       ic.getMessage("BASAL_PUMP_STATUS"),
-                       ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_ENDED"),
-                       ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_CANCELED")
-    };
-    
-    
-    Hashtable<String,String> basal_mapping = new Hashtable<String,String>(); 
-    
+    public String[] basal_desc = { ic.getMessage("SELECT_BASAL_TYPE"), ic.getMessage("BASAL_VALUE"),
+                                  ic.getMessage("BASAL_PROFILE"), ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"),
+                                  ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"),
+                                  ic.getMessage("BASAL_PUMP_STATUS"),
+                                  ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_ENDED"),
+                                  ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_CANCELED") };
+
+    Hashtable<String, String> basal_mapping = new Hashtable<String, String>();
+
     /**
      * Pump Basal: Value
      */
@@ -80,36 +75,30 @@ public class PumpBasalSubType
      */
     public static final int PUMP_BASAL_PUMP_STATUS = 5;
 
-    
     /**
      * Pump Basal: Temporary Basal Rate Ended
      */
     public static final int PUMP_BASAL_TEMPORARY_BASAL_RATE_ENDED = 6;
-    
 
     /**
      * Pump Basal: Temporary Basal Rate Ended
      */
     public static final int PUMP_BASAL_TEMPORARY_BASAL_RATE_CANCELED = 7;
-    
-    
-    
+
     /**
      * Constructor
      */
     public PumpBasalSubType()
     {
-        this.basal_mapping.put(ic.getMessage("BASAL_VALUE"), "1");             
-        this.basal_mapping.put(ic.getMessage("BASAL_PROFILE"), "2");             
-        this.basal_mapping.put(ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"), "3");             
-        this.basal_mapping.put(ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"), "4");             
+        this.basal_mapping.put(ic.getMessage("BASAL_VALUE"), "1");
+        this.basal_mapping.put(ic.getMessage("BASAL_PROFILE"), "2");
+        this.basal_mapping.put(ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"), "3");
+        this.basal_mapping.put(ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"), "4");
         this.basal_mapping.put(ic.getMessage("BASAL_ON_OFF"), "5");
         this.basal_mapping.put(ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_ENDED"), "6");
         this.basal_mapping.put(ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_CANCELED"), "7");
     }
-    
-    
-    
+
     /**
      * Get Type from Description
      * 
@@ -119,13 +108,15 @@ public class PumpBasalSubType
     public int getTypeFromDescription(String str)
     {
         String s = "0";
-        
+
         if (this.basal_mapping.containsKey(str))
+        {
             s = this.basal_mapping.get(str);
-        
+        }
+
         return Integer.parseInt(s);
     }
-    
+
     /**
      * Get Descriptions (array)
      * 
@@ -135,6 +126,5 @@ public class PumpBasalSubType
     {
         return this.basal_desc;
     }
-    
-    
+
 }

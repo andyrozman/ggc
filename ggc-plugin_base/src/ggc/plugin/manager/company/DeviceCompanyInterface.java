@@ -1,4 +1,4 @@
-package ggc.plugin.manager.company; 
+package ggc.plugin.manager.company;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -26,15 +26,12 @@ package ggc.plugin.manager.company;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public interface DeviceCompanyInterface
 {
 
-    
-    //********************************************************
-    //***      Device Company Identification Methods       ***
-    //********************************************************
-
+    // ********************************************************
+    // *** Device Company Identification Methods ***
+    // ********************************************************
 
     /**
      * getName - Get Name of device. 
@@ -44,7 +41,6 @@ public interface DeviceCompanyInterface
      */
     String getName();
 
-
     /**
      * getCompanyId - Get Company Id 
      * Should be implemented by company class.
@@ -52,8 +48,7 @@ public interface DeviceCompanyInterface
      * @return id of company
      */
     int getCompanyId();
-    
-    
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by company class.
@@ -61,8 +56,7 @@ public interface DeviceCompanyInterface
      * @return instructions for reading data 
      */
     String getDescription();
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation status 
      * Should be implemented by company class.
@@ -70,7 +64,6 @@ public interface DeviceCompanyInterface
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    int getImplementationStatus(); 
-    
-    
+    int getImplementationStatus();
+
 }

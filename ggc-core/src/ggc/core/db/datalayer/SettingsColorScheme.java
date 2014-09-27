@@ -12,7 +12,7 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
-
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,7 +40,6 @@ import com.atech.i18n.I18nControlAbstract;
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
-
 
 public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectHibernate, BackupRestoreObject
 {
@@ -93,8 +92,8 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         this.setColor_ins2(ch.getColor_ins2());
         this.setColor_ins_perbu(ch.getColor_ins_perbu());
         this.setColor_ch(ch.getColor_ch());
-        
-        //this.setSelected()
+
+        // this.setSelected()
     }
 
     /**
@@ -121,11 +120,10 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
             return this.getShortDescription();
     }
 
-    
     // ---
     // --- DatabaseObjectHibernate
     // ---
-    
+
     /**
      * DbAdd - Add this object to database
      * 
@@ -153,15 +151,15 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         ch.setColor_ins2(this.getColor_ins2());
         ch.setColor_ins_perbu(this.getColor_ins_perbu());
         ch.setColor_ch(this.getColor_ch());
-        
+
         Long id = (Long) sess.save(ch);
 
         tx.commit();
-        
+
         ch.setId(id.longValue());
-        
+
         return "" + id.longValue();
-        
+
     }
 
     /**
@@ -191,7 +189,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         ch.setColor_ins2(this.getColor_ins2());
         ch.setColor_ins_perbu(this.getColor_ins_perbu());
         ch.setColor_ch(this.getColor_ch());
-        
+
         sess.update(ch);
         tx.commit();
 
@@ -258,7 +256,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         this.setColor_ins2(ch.getColor_ins2());
         this.setColor_ins_perbu(ch.getColor_ins_perbu());
         this.setColor_ch(ch.getColor_ch());
-        
+
         return true;
     }
 
@@ -310,7 +308,6 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return ic.getMessage("COLOR_SCHEMES");
     }
 
-    
     /**
      * Get Class Name
      * 
@@ -321,11 +318,10 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return "ggc.core.db.hibernate.ColorSchemeH";
     }
 
-
     // ---
     // --- BackupRestoreObject
     // ---
-    
+
     /**
      * Get Children
      * 
@@ -459,8 +455,8 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
      */
     public String dbExportHeader(int table_version)
     {
-        return "; Columns: id|name|custom_type|color_bg|color_bg_avg|color_bg_low|color_bg_high|color_bg_target|color_ins|color_ins1|color_ins2|color_ins_perbu|color_ch\n" + 
-               "; Table version: " + getTableVersion() + "\n";
+        return "; Columns: id|name|custom_type|color_bg|color_bg_avg|color_bg_low|color_bg_high|color_bg_target|color_ins|color_ins1|color_ins2|color_ins_perbu|color_ch\n"
+                + "; Table version: " + getTableVersion() + "\n";
     }
 
     /**
@@ -473,7 +469,6 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return this.dbExportHeader(this.TABLE_VERSION);
     }
 
-    
     /**
      * dbImport - processes input entry to right fields
      * 
@@ -489,8 +484,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         dbImport(table_version, value_entry, null);
     }
-    
-    
+
     /**
      * dbImport - processes input entry to right fields
      * 
@@ -508,17 +502,19 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
 
         DataAccess da = DataAccess.getInstance();
 
-        value_entry = DataAccess.getInstance().replaceExpression(value_entry, "||", "| |");
-        String[] arr = da.splitString(value_entry, "|"); 
-       
-        //System.out.println(value_entry);
-        //System.out.println("arr: " + arr);
-        
-        //if (special==null)
-            this.setId(da.getLongValueFromString(arr[0]));
-        //else
-        //    this.setId(0);
-        
+        ;
+        DataAccess.getInstance();
+        value_entry = ATDataAccessAbstract.replaceExpression(value_entry, "||", "| |");
+        String[] arr = da.splitString(value_entry, "|");
+
+        // System.out.println(value_entry);
+        // System.out.println("arr: " + arr);
+
+        // if (special==null)
+        this.setId(da.getLongValueFromString(arr[0]));
+        // else
+        // this.setId(0);
+
         this.setName(arr[1]);
         this.setCustom_type(da.getIntValueFromString(arr[2]));
         this.setColor_bg(da.getIntValueFromString(arr[3]));
@@ -531,7 +527,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         this.setColor_ins2(da.getIntValueFromString(arr[10]));
         this.setColor_ins_perbu(da.getIntValueFromString(arr[11]));
         this.setColor_ch(da.getIntValueFromString(arr[12]));
-        
+
     }
 
     /**

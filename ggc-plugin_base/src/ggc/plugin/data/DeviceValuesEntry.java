@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.data.ATechDate;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -36,91 +35,86 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
+// IMPORTANT NOTICE:
+// This class is not implemented yet, all existing methods should be rechecked
+// (they were copied from similar
+// class, with different type of data. Trying to find a way to use super class
+// instead of this.
 
-//IMPORTANT NOTICE: 
-//This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
-//class, with different type of data. Trying to find a way to use super class instead of this.
-
-public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, OutputWriterData, StatisticsItem  //extends OutputWriterData implements Comparator<DeviceValuesEntry>, Comparable<DeviceValuesEntry>, StatisticsItem
+public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, OutputWriterData, StatisticsItem // extends
+                                                                                                                // OutputWriterData
+                                                                                                                // implements
+                                                                                                                // Comparator<DeviceValuesEntry>,
+                                                                                                                // Comparable<DeviceValuesEntry>,
+                                                                                                                // StatisticsItem
 {
-	protected boolean checked = false;
-	protected int status = 1; 
+    protected boolean checked = false;
+    protected int status = 1;
     protected int output_type = 0;
     protected boolean is_bg = false;
     private int multiline_tooltip_type = 1;
-	
-	
-	
-	/**
+
+    /**
      * Status: Unknown
-	 */
-	public static final int STATUS_UNKNOWN = 0;
-	
+     */
+    public static final int STATUS_UNKNOWN = 0;
+
     /**
      * Status: New
      */
     public static final int STATUS_NEW = 1;
-    
+
     /**
      * Status: Changed
      */
     public static final int STATUS_CHANGED = 2;
-    
+
     /**
      * Status: Old
      */
     public static final int STATUS_OLD = 3;
-	
-	
+
     /**
      *  Object Status: New
      */
     public static final int OBJECT_STATUS_NEW = 1;
-    
+
     /**
      *  Object Status: Edit
      */
     public static final int OBJECT_STATUS_EDIT = 2;
-    
+
     /**
      *  Object Status: Old (existing)
      */
-    public static final int OBJECT_STATUS_OLD =3;
-    
-    
+    public static final int OBJECT_STATUS_OLD = 3;
+
     /**
      * Object status
      */
     public int object_status = 0;
-    
+
     /*
-	private static String entry_statuses[] = 
-	{
-	     "UNKNOWN",
-	     "NEW",
-	     "CHANGED",
-	     "OLD"
-	};*/
-	
+     * private static String entry_statuses[] =
+     * {
+     * "UNKNOWN",
+     * "NEW",
+     * "CHANGED",
+     * "OLD"
+     * };
+     */
+
     /**
      * Entry Status Icons 
      */
-    public static String entry_status_icons[] = 
+    public static String entry_status_icons[] = { "led_gray.gif", "led_green.gif", "led_yellow.gif", "led_red.gif" };
+
+    /**
+     * Constructor
+     */
+    public DeviceValuesEntry()
     {
-         "led_gray.gif",
-         "led_green.gif",
-         "led_yellow.gif",
-         "led_red.gif"
-    };
-	
-	
-	/**
-	 * Constructor
-	 */
-	public DeviceValuesEntry()
-	{
-	}
-	
+    }
 
     /**
      * Prepare Entry [Framework v1]
@@ -129,34 +123,27 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
     }
 
-    
     /**
      * Prepare Entry [Framework v2]
      */
     public void prepareEntry_v2()
     {
     }
-    
-    
+
     /**
      * Get Db Objects
      * 
      * @return ArrayList of elements extending GGCHibernateObject
      */
     public abstract ArrayList<? extends GGCHibernateObject> getDbObjects();
-	
-	
-	
-	
-	
-	/**
-	 * Get Column Value
-	 * 
-	 * @param index
-	 * @return
-	 */
-	public abstract Object getColumnValue(int index);
-	
+
+    /**
+     * Get Column Value
+     * 
+     * @param index
+     * @return
+     */
+    public abstract Object getColumnValue(int index);
 
     /**
      * Get DateTime (long)
@@ -164,23 +151,20 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
      * @return
      */
     public abstract long getDateTime();
-    
-    
+
     /**
      * Set DateTime Object (ATechDate)
      * 
      * @param dt ATechDate instance
      */
     public abstract void setDateTimeObject(ATechDate dt);
-    
-    
+
     /**
      * Get DateTime Object (ATechDate)
      * 
      * @return ATechDate instance
      */
     public abstract ATechDate getDateTimeObject();
-    
 
     /**
      * Get DateTime format
@@ -188,19 +172,17 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
      * @return format of date time (precission)
      */
     public abstract int getDateTimeFormat();
-	
-	
-	/**
-	 * Get Checked 
-	 * 
-	 * @return true if element is checked
-	 */
-	public boolean getChecked()
-	{
-	    return this.checked;
-	}
 
-	
+    /**
+     * Get Checked 
+     * 
+     * @return true if element is checked
+     */
+    public boolean getChecked()
+    {
+        return this.checked;
+    }
+
     /**
      * Set Checked
      * 
@@ -210,19 +192,17 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         this.checked = check;
     }
-	
-	
-	/**
-	 * Get Status
-	 * 
-	 * @return status
-	 */
-	public int getStatus()
-	{
-	    return this.status;
-	}
-	
-	
+
+    /**
+     * Get Status
+     * 
+     * @return status
+     */
+    public int getStatus()
+    {
+        return this.status;
+    }
+
     /**
      * Set Status
      * 
@@ -232,31 +212,28 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         this.status = status_in;
     }
-    
-	
-	/**
-	 * Set Output Type
-	 * 
-	 * @see ggc.plugin.output.OutputWriterData#setOutputType(int)
-	 */
-	
+
+    /**
+     * Set Output Type
+     * 
+     * @see ggc.plugin.output.OutputWriterData#setOutputType(int)
+     */
+
     public void setOutputType(int type)
     {
-	    this.output_type = type;
+        this.output_type = type;
     }
-	
-	
+
     /**
      * Is Data BG
      * 
      * @see ggc.plugin.output.OutputWriterData#isDataBG()
      */
-    
+
     public boolean isDataBG()
     {
-        return this.is_bg; 
+        return this.is_bg;
     }
-
 
     /**
      * Comparator method, for sorting objects
@@ -277,8 +254,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         return DeviceValuesEntryUtil.compare(this, d2);
     }
-    
-	
+
     /**
      * Set Object status
      * 
@@ -288,8 +264,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         this.object_status = status;
     }
-    
-    
+
     /**
      * Get Object Status
      * 
@@ -299,8 +274,6 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         return this.object_status;
     }
-    
-    
 
     /**
      * Has MultiLine Tooltip
@@ -311,8 +284,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         return false;
     }
-    
-    
+
     /**
      * Set MultiLine Tooltip Type
      * 
@@ -323,7 +295,6 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
         this.multiline_tooltip_type = _multiline_tooltip_type;
     }
 
-    
     /**
      * Get MultiLine Tooltip Type
      * @return 
@@ -332,8 +303,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         return this.multiline_tooltip_type;
     }
-    
-    
+
     /**
      * Checks if is indexed.
      * 
@@ -344,7 +314,6 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
         return false;
     }
 
-    
     /**
      * Gets the multi line tool tip.
      * 
@@ -355,7 +324,6 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
         return "";
     }
 
-    
     /**
      * Gets the multi line tool tip.
      * 
@@ -367,7 +335,5 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         return "";
     }
-    
-    
-    
-}	
+
+}

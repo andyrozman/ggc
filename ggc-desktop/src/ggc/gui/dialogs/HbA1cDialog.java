@@ -18,11 +18,11 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import com.atech.graphics.graphs.GraphViewerPanel;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,7 +49,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 {
 
@@ -67,13 +66,11 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
     GraphViewHbA1c gv; // = new GraphViewHbA1c();
     private HbA1cValues hbValues;
 
-    
     public HbA1cDialog()
     {
         init();
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -84,16 +81,16 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         super(da.getMainParent(), "HbA1c", true);
         this.m_da = da;
         this.m_ic = da.getI18nControlInstance();
-        
+
         gv = new GraphViewHbA1c();
         this.hbValues = gv.getDataObject();
-        
+
         init();
         updateLabels();
 
         this.m_da.enableHelp(this);
         this.setTitle(m_ic.getMessage("CALCULATED_HBA1C"));
-        
+
         m_da.addComponent(this);
 
         this.setVisible(true);
@@ -115,16 +112,17 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         setSize(700, 460);
 
         // left panel;
-/*        hbView = new HbA1cView(this.hbValues);
-        hbView.setMinimumSize(new Dimension(450, 460));
-        hbView.setPreferredSize(hbView.getMinimumSize());
-        getContentPane().add(hbView, BorderLayout.CENTER); */
-        
+        /*
+         * hbView = new HbA1cView(this.hbValues);
+         * hbView.setMinimumSize(new Dimension(450, 460));
+         * hbView.setPreferredSize(hbView.getMinimumSize());
+         * getContentPane().add(hbView, BorderLayout.CENTER);
+         */
+
         GraphViewerPanel gvp = new GraphViewerPanel(gv);
         gvp.setMinimumSize(new Dimension(450, 440)); // 450, 460
         gvp.setPreferredSize(gvp.getMinimumSize());
         getContentPane().add(gvp, BorderLayout.CENTER);
-        
 
         // right panel
         JPanel rightPanel = new JPanel(new BorderLayout());
@@ -145,20 +143,20 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         JLabel label = new JLabel(m_ic.getMessage("CALCULATED_HBA1C"));
         label.setFont(new Font("SansSerif", Font.BOLD, 20));
         label.setBounds(0, 20, 250, 35);
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         infoPanel.add(label); // , what)
 
         // current hba1c
         label = new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C") + ":");
         label.setBounds(0, 90, 250, 25);
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         infoPanel.add(label);
 
         lblHbA1c = new JLabel();
         lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 16));
         // lblHbA1c.setBounds(100, 130, 50, 30);
         lblHbA1c.setBounds(0, 110, 250, 30);
-        lblHbA1c.setHorizontalAlignment(JLabel.CENTER);
+        lblHbA1c.setHorizontalAlignment(SwingConstants.CENTER);
         infoPanel.add(lblHbA1c);
 
         // valuation
@@ -211,7 +209,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 
         rightPanel.add(infoPanel, BorderLayout.CENTER);
         rightPanel.add(bottomRightPanel, BorderLayout.SOUTH);
-        
+
     }
 
     private void closeDialog()
@@ -233,7 +231,9 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
             this.closeDialog();
         }
         else
+        {
             System.out.println("HbA1cDialog:Unknown command: " + action);
+        }
     }
 
     // ****************************************************************

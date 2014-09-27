@@ -92,49 +92,43 @@ import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
  *          Andy {andy@atech-software.com}  
  */
 
-
 public class MainFrame extends JFrame implements EventObserverInterface
 {
 
     private static final long serialVersionUID = -8971779470148201332L;
     private static Log log = LogFactory.getLog(MainFrame.class);
 
-    
     /**
      * Skin Look and Feel
      */
     public static SkinLookAndFeel s_skinlf;
-
 
     /**
      * Developer version 
      */
     public static boolean developer_version = false;
 
-    
     /**
      * Menu Bar
      */
     private JMenuBar menuBar = new JMenuBar();
 
-    
     /**
      * Tool Bars
      */
-    private Hashtable<String,JToolBar> toolbars = null;
-    
-    
-    //private JToolBar toolBar = new JToolBar();
-    //private JToolBar toolbar_pen = new JToolBar();
-    //private JToolBar toolbar_pump = new JToolBar();
+    private Hashtable<String, JToolBar> toolbars = null;
+
+    // private JToolBar toolBar = new JToolBar();
+    // private JToolBar toolbar_pen = new JToolBar();
+    // private JToolBar toolbar_pump = new JToolBar();
 
     private DataAccess m_da = null;
     private static final String skinLFdir = "../data/skinlf_themes/";
     private I18nControlAbstract m_ic = null;
-    
-    
 
-//    private JMenu menu_file, menu_bgs, /*menu_food,*/ menu_doctor, menu_printing, menu_tools, menu_help, /*menu_meters, menu_pumps,*/ menu_data_graphs /*, menu_cgms  , menu_misc */;
+    // private JMenu menu_file, menu_bgs, /*menu_food,*/ menu_doctor,
+    // menu_printing, menu_tools, menu_help, /*menu_meters, menu_pumps,*/
+    // menu_data_graphs /*, menu_cgms , menu_misc */;
 
     private Hashtable<String, JMenu> menus = null;
     private Hashtable<String, GGCAction> actions = null;
@@ -142,18 +136,15 @@ public class MainFrame extends JFrame implements EventObserverInterface
     private Hashtable<String, GGCAction> toolbar_pump_items = null;
     private int current_toolbar = -1;
 
-
     /**
      * Status panels
      */
     public StatusBar statusPanel;
-    
+
     /**
      * Information panels
      */
     public InfoPanel informationPanel;
-
-    
 
     /**
      * Static definitions (Look and Feel)
@@ -163,7 +154,6 @@ public class MainFrame extends JFrame implements EventObserverInterface
         MainFrame.setLookAndFeel();
     }
 
-    
     /**
      * Set Look & Feel
      */
@@ -217,12 +207,13 @@ public class MainFrame extends JFrame implements EventObserverInterface
         // System.out.println("MainFrame before creation");
         m_da = DataAccess.createInstance(this);
 
-         //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  m_da: " + m_da);
+        // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  m_da: "
+        // + m_da);
 
         m_ic = m_da.getI18nControlInstance();
 
         m_da.addComponent(this);
-        
+
         m_da.setDeveloperMode(developer_version);
 
         statusPanel = new StatusBar(this);
@@ -230,63 +221,58 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.actions = new Hashtable<String, GGCAction>();
         MainFrame.developer_version = developer_version;
 
-        
         String title_full = "  GGC - GNU Gluco Control (" + GGC.full_version + ")";
 
         if (developer_version)
+        {
             title_full += " - Developer edition";
-        
+        }
+
         setTitle(title_full);
 
         this.setIconImage(m_da.getImageIcon_22x22("diabetesbluecircle.png", this).getImage());
-        
-        
+
         setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new CloseListener());
 
         helpInit();
 
-//        initPlugIns();
+        // initPlugIns();
 
         // menu_file, menu_bgs, menu_food, menu_doctor, menu_reports,
         // menu_tools, menu_help;
 
-        //setTitle("");
-        
+        // setTitle("");
+
         this.setSoftwareMode();
-        
+
         createMenus();
 
         createToolBars();
-        
-       
+
         m_da.addObserver(DataAccess.OBSERVABLE_STATUS, this);
-        
+
         /*
          * addToolBarButtonWithName("view_daily");
          * addToolBarButtonWithName("view_course");
          * addToolBarButtonWithName("view_spread");
          * addToolBarButtonWithName("view_freq"); addToolBarSpacer();
          * addToolBarSpacer();
-         * 
          * addToolBarButtonWithName("view_hba1c"); addToolBarSpacer();
          * addToolBarSpacer(); //addToolBarButtonWithName("view_freq");
-         * 
-         * 
-         * 
          * addToolBarButtonWithName("tools_pref"); addToolBarSpacer();
          * addToolBarSpacer(); addToolBarButtonWithName("hlp_help");
          */
         // this.menu_help.add(GGCHelp.helpItem);
-        
-        //getContentPane().remove(this.toolbars.get("TOOLBAR_PEN"));
-        //getContentPane().remove(this.toolbars.get("TOOLBAR_PUMP")); 
+
+        // getContentPane().remove(this.toolbars.get("TOOLBAR_PEN"));
+        // getContentPane().remove(this.toolbars.get("TOOLBAR_PUMP"));
 
         getContentPane().add(this.toolbars.get("TOOLBAR_PEN"), BorderLayout.NORTH);
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
-        m_da.startDb(); //statusPanel);
+        m_da.startDb(); // statusPanel);
 
         statusPanel.setStatusMessage(m_ic.getMessage("INIT"));
 
@@ -296,61 +282,54 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         // setDbActions(false);
         setMenusByDbLoad(StatusBar.DB_STOPPED);
-        
-        
-//        initPlugIns();
-        
+
+        // initPlugIns();
+
         m_da.startToObserve();
         this.setVisible(true);
 
     }
 
-    
     private void setSoftwareMode()
     {
-        //System.out.println("SW: " + m_da.getSoftwareMode());
-        
-        if (m_da.getSoftwareMode()==-1)
+        // System.out.println("SW: " + m_da.getSoftwareMode());
+
+        if (m_da.getSoftwareMode() == -1)
             return;
-        
-        
+
         String title_full = "  GGC - GNU Gluco Control (" + GGC.full_version + ")";
 
         if (developer_version)
+        {
             title_full += " - Developer edition";
-        
+        }
+
         title_full += getSoftwareMode();
         setTitle(title_full);
 
         if (m_da.isPumpMode())
         {
-            if (this.current_toolbar!=MainFrame.TOOLBAR_PUMP)
+            if (this.current_toolbar != MainFrame.TOOLBAR_PUMP)
             {
-                this.current_toolbar=MainFrame.TOOLBAR_PUMP;
+                this.current_toolbar = MainFrame.TOOLBAR_PUMP;
                 getContentPane().remove(this.toolbars.get("TOOLBAR_PEN"));
-                getContentPane().remove(this.toolbars.get("TOOLBAR_PUMP")); 
+                getContentPane().remove(this.toolbars.get("TOOLBAR_PUMP"));
                 getContentPane().add(this.toolbars.get("TOOLBAR_PUMP"), BorderLayout.NORTH);
             }
         }
         else
         {
-            if (this.current_toolbar!=MainFrame.TOOLBAR_PEN_INJECTION)
+            if (this.current_toolbar != MainFrame.TOOLBAR_PEN_INJECTION)
             {
-                this.current_toolbar=MainFrame.TOOLBAR_PEN_INJECTION;
+                this.current_toolbar = MainFrame.TOOLBAR_PEN_INJECTION;
                 getContentPane().remove(this.toolbars.get("TOOLBAR_PEN"));
-                getContentPane().remove(this.toolbars.get("TOOLBAR_PUMP")); 
+                getContentPane().remove(this.toolbars.get("TOOLBAR_PUMP"));
                 getContentPane().add(this.toolbars.get("TOOLBAR_PEN"), BorderLayout.NORTH);
             }
         }
-        
 
-        
-        
-        
     }
-    
-    
-    
+
     /**
      * Get Software Mode
      * 
@@ -360,29 +339,25 @@ public class MainFrame extends JFrame implements EventObserverInterface
     {
         return " [" + m_ic.getMessage(m_da.getSoftwareModeDescription()) + "]";
     }
-    
-    
-/*
-    private void initPlugIns()
-    {
-        // TODO: deprecated
-        m_da.addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this, m_ic));
-        // m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
 
-        m_da.addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this, m_ic));
-        // m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
+    /*
+     * private void initPlugIns()
+     * {
+     * // TODO: deprecated
+     * m_da.addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this, m_ic));
+     * // m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
+     * m_da.addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this, m_ic));
+     * // m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
+     * m_da.addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this, m_ic));
+     * // m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
+     * }
+     */
 
-        m_da.addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this, m_ic));
-        // m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
-    }
-*/
-    
-    
     private void createMenus()
     {
         JMenu menux, menuxsub;
-        this.menus = new Hashtable<String,JMenu>();
-        
+        this.menus = new Hashtable<String, JMenu>();
+
         // file menu
         menux = this.createMenu("MN_FILE", null);
         this.createAction(menux, "MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png");
@@ -391,8 +366,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.createAction(menux, "MN_QUIT", "MN_QUIT_DESC", "file_quit", null);
 
         this.menus.put("MENU_FILE", menux);
-        
-        
+
         // bgs menu
         menux = this.createMenu("MN_DATA", null);
         this.createAction(menux, "MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png"); // "daily.gif");
@@ -406,14 +380,13 @@ public class MainFrame extends JFrame implements EventObserverInterface
         menux.addSeparator();
         this.createAction(menux, "MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png"); // null);
         menux.addSeparator();
-        
+
         menuxsub = this.createMenu(menux, "MN_DATA_RATIO", null);
         this.createAction(menuxsub, "MN_RATIO_BASE", "MN_RATIO_BASE_DESC", "ratio_base", null); // null);
         this.createAction(menuxsub, "MN_RATIO_EXTENDED", "MN_RATIO_EXTENDED_DESC", "ratio_extended", null); // null);
 
         this.menus.put("MENU_PEN", menux);
-        
-        
+
         // doctors menu
         menux = this.createMenu("MN_DOCTOR", null);
         this.createAction(menux, "MN_DOCS", "MN_DOCS_DESC", "doc_docs", null);
@@ -423,17 +396,15 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.createAction(menux, "MN_STOCKS", "MN_STOCKS_DESC", "doc_stocks", null);
 
         this.menus.put("MENU_DOCTOR", menux);
-        
-        
+
         // reports menu
         menux = this.createMenu("MN_PRINTING", null);
 
         menuxsub = this.createMenu(menux, "MN_REPORTS", "MN_REPORTS_DESC");
         this.createAction(menuxsub, "MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", "print.png");
         this.createAction(menuxsub, "MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended", "print.png");
-        
+
         this.menus.put("MENU_PRINT", menux);
-        
 
         // tools menu
         menux = this.createMenu("MN_TOOLS", null);
@@ -443,13 +414,12 @@ public class MainFrame extends JFrame implements EventObserverInterface
         menuxsub = this.createMenu(menux, "MN_DB_MAINT", "MN_DB_MAINT_DESC");
         this.createAction(menuxsub, "MN_DB_BACKUP", "MN_DB_BACKUP_DESC", "tools_db_backup", "export1.png");
         this.createAction(menuxsub, "MN_DB_RESTORE", "MN_DB_RESTORE_DESC", "tools_db_restore", "import1.png");
-        
+
         menux.addSeparator();
         this.createAction(menux, "MN_MISC_SYNCHRONIZE", "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
 
         this.menus.put("MENU_TOOLS", menux);
-        
-        
+
         // help menu
         menux = this.createMenu("MN_HELP", null);
         menux.add(m_da.getHelpContext().getHelpItem());
@@ -464,52 +434,56 @@ public class MainFrame extends JFrame implements EventObserverInterface
             this.createAction(menux, "MN_TEST", "MN_TEST_DESC", "test", null);
         }
 
-        
         this.menus.put("MENU_HELP", menux);
-        
+
     }
-    
-    
+
     private void createToolBars()
     {
-        this.toolbars = new Hashtable<String,JToolBar>();
+        this.toolbars = new Hashtable<String, JToolBar>();
         createToolBar_PenInjection();
         createToolBar_Pump();
     }
-    
-    
 
     private void createToolBar_PenInjection()
     {
         JToolBar toolbar = new JToolBar();
-        //toolbar = new JToolBar();
+        // toolbar = new JToolBar();
         toolbar.setFloatable(false);
         toolbar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
 
         this.toolbars.put("TOOLBAR_PEN", toolbar);
-        
+
         this.toolbar_pen_items = new Hashtable<String, GGCAction>();
 
         Dimension d = new Dimension(25, 25);
 
         toolbar.addSeparator(d);
-        this.createToolbarAction("MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png", MainFrame.TOOLBAR_PEN_INJECTION);
+        this.createToolbarAction("MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png",
+            MainFrame.TOOLBAR_PEN_INJECTION);
         toolbar.addSeparator(d);
 
-        this.createToolbarAction("MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png", MainFrame.TOOLBAR_PEN_INJECTION);
-        this.createToolbarAction("MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png", MainFrame.TOOLBAR_PEN_INJECTION);
-        this.createToolbarAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png", MainFrame.TOOLBAR_PEN_INJECTION);
-        this.createToolbarAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png", MainFrame.TOOLBAR_PEN_INJECTION);
-        this.createToolbarAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png", MainFrame.TOOLBAR_PEN_INJECTION);
+        this.createToolbarAction("MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png",
+            MainFrame.TOOLBAR_PEN_INJECTION);
+        this.createToolbarAction("MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png",
+            MainFrame.TOOLBAR_PEN_INJECTION);
+        this.createToolbarAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png",
+            MainFrame.TOOLBAR_PEN_INJECTION);
+        this.createToolbarAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png",
+            MainFrame.TOOLBAR_PEN_INJECTION);
+        this.createToolbarAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png",
+            MainFrame.TOOLBAR_PEN_INJECTION);
         toolbar.addSeparator(d);
 
         this.createToolbarAction("MN_MEALS", "MN_MEALS_DESC", "food_meals", "food.png", MainFrame.TOOLBAR_PEN_INJECTION);
         toolbar.addSeparator(d);
 
-        this.createToolbarAction("MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", "print.png", MainFrame.TOOLBAR_PEN_INJECTION);
+        this.createToolbarAction("MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", "print.png",
+            MainFrame.TOOLBAR_PEN_INJECTION);
         toolbar.addSeparator(d);
 
-        this.createToolbarAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", "preferences.png", MainFrame.TOOLBAR_PEN_INJECTION);
+        this.createToolbarAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", "preferences.png",
+            MainFrame.TOOLBAR_PEN_INJECTION);
         toolbar.addSeparator(d);
         toolbar.addSeparator(d);
         toolbar.addSeparator(d);
@@ -517,21 +491,19 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.createToolbarAction("MN_HELP", "MN_HELP_DESC", "hlp_help", "help.png", MainFrame.TOOLBAR_PEN_INJECTION);
 
         this.toolbars.put("TOOLBAR_PEN", toolbar);
-        
+
     }
 
-    
     private void createToolBar_Pump()
     {
         JToolBar toolbar = new JToolBar();
-        
-        //toolbar_pump = new JToolBar();
+
+        // toolbar_pump = new JToolBar();
         toolbar.setFloatable(false);
         toolbar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
 
         this.toolbars.put("TOOLBAR_PUMP", toolbar);
-        
-        
+
         this.toolbar_pump_items = new Hashtable<String, GGCAction>();
 
         Dimension d = new Dimension(25, 25);
@@ -540,27 +512,33 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.createToolbarAction("MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png", MainFrame.TOOLBAR_PUMP);
         toolbar.addSeparator(d);
 
-        
-        this.createToolbarAction("MN_PUMPS_MANUAL_ENTRY", "MN_PUMPS_MANUAL_ENTRY_DESC", "pumps_manual_entry", "calendar.png", MainFrame.TOOLBAR_PUMP);
+        this.createToolbarAction("MN_PUMPS_MANUAL_ENTRY", "MN_PUMPS_MANUAL_ENTRY_DESC", "pumps_manual_entry",
+            "calendar.png", MainFrame.TOOLBAR_PUMP);
         this.createToolbarAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png", MainFrame.TOOLBAR_PUMP);
         toolbar.addSeparator(d);
-        
-        
+
         /*
-        this.createToolbarAction("MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png");
-        this.createToolbarAction("MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png");
-        this.createToolbarAction("MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png");
-        this.createToolbarAction("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png");
-        this.createToolbarAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png");
-        toolBar.addSeparator(d);
-*/
+         * this.createToolbarAction("MN_DAILY", "MN_DAILY_DESC", "view_daily",
+         * "calendar.png");
+         * this.createToolbarAction("MN_COURSE", "MN_COURSE_DESC",
+         * "view_course", "line-chart.png");
+         * this.createToolbarAction("MN_SPREAD", "MN_SPREAD_DESC",
+         * "view_spread", "dot-chart.png");
+         * this.createToolbarAction("MN_FREQUENCY", "MN_FREQUENCY_DESC",
+         * "view_freq", "column-chart.png");
+         * this.createToolbarAction("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c",
+         * "pie-chart.png");
+         * toolBar.addSeparator(d);
+         */
         this.createToolbarAction("MN_MEALS", "MN_MEALS_DESC", "food_meals", "food.png", MainFrame.TOOLBAR_PUMP);
         toolbar.addSeparator(d);
 
-        this.createToolbarAction("MN_PUMP_PRINT_EXT", "MN_PUMP_PRINT_EXT_DESC", "report_print_pump_ext", "print.png", MainFrame.TOOLBAR_PUMP);
+        this.createToolbarAction("MN_PUMP_PRINT_EXT", "MN_PUMP_PRINT_EXT_DESC", "report_print_pump_ext", "print.png",
+            MainFrame.TOOLBAR_PUMP);
         toolbar.addSeparator(d);
 
-        this.createToolbarAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", "preferences.png", MainFrame.TOOLBAR_PUMP);
+        this.createToolbarAction("MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref", "preferences.png",
+            MainFrame.TOOLBAR_PUMP);
         toolbar.addSeparator(d);
         toolbar.addSeparator(d);
         toolbar.addSeparator(d);
@@ -568,36 +546,36 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.createToolbarAction("MN_HELP", "MN_HELP_DESC", "hlp_help", "help.png", MainFrame.TOOLBAR_PUMP);
 
         this.toolbars.put("TOOLBAR_PUMP", toolbar);
-        
+
     }
-    
-    
-    
+
     private void helpInit()
     {
-//        HelpContext hc = new HelpContext("../data/help/GGC.hs");
-//        m_da.setHelpContext(hc);
+        // HelpContext hc = new HelpContext("../data/help/GGC.hs");
+        // m_da.setHelpContext(hc);
         boolean help_debug = true;
-        
+
         if (help_debug)
+        {
             System.out.println("Help Init");
-        
+        }
+
         System.out.println("Help. Selected language: " + m_da.getLanguageManager().getSelectedLanguage());
-        
-        //String selected_language = m_da.getLanguageManager().getSelectedLanguage();
-        //String default_help = m_da.getLanguageManager().getDefaultHelp();
-        
+
+        // String selected_language =
+        // m_da.getLanguageManager().getSelectedLanguage();
+        // String default_help = m_da.getLanguageManager().getDefaultHelp();
+
         HelpContext hc = m_da.getHelpContext();
-        
-        
+
         JMenuItem helpItem = new JMenuItem(m_ic.getMessage("HELP") + "...");
         helpItem.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
         hc.setHelpItem(helpItem);
 
-        //String mainHelpSetName = "../data/help/en/GGC.hs"; // added en
-        
-        String mainHelpSetName = "../data/" + m_da.getLanguageManager().getHelpSet(); 
-        
+        // String mainHelpSetName = "../data/help/en/GGC.hs"; // added en
+
+        String mainHelpSetName = "../data/" + m_da.getLanguageManager().getHelpSet();
+
         mainHelpSetName = mainHelpSetName.replace("/", File.separator);
 
         hc.setMainHelpSetName(mainHelpSetName);
@@ -607,7 +585,9 @@ public class MainFrame extends JFrame implements EventObserverInterface
         {
 
             if (help_debug)
+            {
                 System.out.println("Help init broker");
+            }
 
             HelpSet main_help_set = null;
             // HelpContext.mainHelpSet = null;
@@ -615,20 +595,20 @@ public class MainFrame extends JFrame implements EventObserverInterface
             // X ClassLoader cl = MainFrame.class.getClassLoader();
             // String help_url = "jar:file:pis_lang-0.1.jar!/help/PIS.hs";
 
-            //String help_url = "jar:file:ggc_help-0.1.jar!/help/en/GGC.hs";
-            
+            // String help_url = "jar:file:ggc_help-0.1.jar!/help/en/GGC.hs";
+
             String help_url = "jar:file:ggc_help-0.1.jar!/" + m_da.getLanguageManager().getHelpSet();
 
             System.out.println("URL: " + help_url);
-            
+
             try
             {
                 URL hsURL = new URL(help_url);
 
-                //if (hsURL == null)
-                //    System.out.println("HelpSet " + help_url + " not found.");
-                //else
-                    main_help_set = new HelpSet(null, hsURL);
+                // if (hsURL == null)
+                // System.out.println("HelpSet " + help_url + " not found.");
+                // else
+                main_help_set = new HelpSet(null, hsURL);
             }
             catch (HelpSetException ee)
             {
@@ -731,7 +711,6 @@ public class MainFrame extends JFrame implements EventObserverInterface
         return item;
     }
 
-    
     /**
      * ToolBar: Pen/Injection
      */
@@ -741,7 +720,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
      * ToolBar: Pump
      */
     public static final int TOOLBAR_PUMP = 2;
-    
+
     private void createToolbarAction(String name, String tip, String action_command, String icon_small, int toolbar_id)
     {
         GGCAction action = new GGCAction(name, tip, action_command);
@@ -751,11 +730,14 @@ public class MainFrame extends JFrame implements EventObserverInterface
             action.putValue(Action.SMALL_ICON, m_da.getImageIcon(icon_small, 24, 24, this));
         }
 
-        
         if (toolbar_id == MainFrame.TOOLBAR_PEN_INJECTION)
+        {
             this.toolbar_pen_items.put(action_command, action);
+        }
         else
+        {
             this.toolbar_pump_items.put(action_command, action);
+        }
 
         addToolBarButton(action, toolbar_id);
 
@@ -774,7 +756,9 @@ public class MainFrame extends JFrame implements EventObserverInterface
         }
 
         if (menu != null)
+        {
             menu.add(action);
+        }
 
         this.actions.put(action_command, action);
 
@@ -841,40 +825,35 @@ public class MainFrame extends JFrame implements EventObserverInterface
         }
         else if (status == StatusBar.DB_LOADED)
         {
-/*            // food menu
-            this.menu_food.setEnabled(true);
-            this.actions.get("food_nutrition_1").setEnabled(true);
-            this.actions.get("food_nutrition_2").setEnabled(true);
-            this.actions.get("food_meals").setEnabled(true);
-            */
+            /*
+             * // food menu
+             * this.menu_food.setEnabled(true);
+             * this.actions.get("food_nutrition_1").setEnabled(true);
+             * this.actions.get("food_nutrition_2").setEnabled(true);
+             * this.actions.get("food_meals").setEnabled(true);
+             */
         }
 
         /*
-         * 
          * // file menu this.createAction(this.menu_file, "MN_LOGIN",
          * "MN_LOGIN_DESC", "file_login", null);
          * this.createAction(this.menu_file, "MN_LOGOUT", "MN_LOGOUT_DESC",
          * "file_logout", null);
-         * 
-         * 
          * // tools menu this.createAction(this.menu_tools, "MN_DB_MAINT",
          * "MN_DB_MAINT_DESC", "tools_db_maint", null);
          * this.createAction(this.menu_tools, "MN_MISC_SYNCHRONIZE",
          * "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
-         * 
          * // meters this.createAction(menu_meters, "MN_METERS_READ",
          * "MN_METERS_READ_DESC", "meters_read", null);
          * this.createAction(menu_meters, "MN_METERS_LIST",
          * "MN_METERS_LIST_DESC", "meters_list", null);
          * this.createAction(menu_meters, "MN_METERS_CONFIG",
          * "MN_METERS_CONFIG_DESC", "meters_config", null);
-         * 
          * // pumps this.createAction(menu_pumps, "MN_PUMPS_READ",
          * "MN_PUMPS_READ_DESC", "pumps_read", null);
          * this.createAction(menu_pumps, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC",
          * "pumps_list", null); this.createAction(menu_pumps, "MN_PUMPS_CONFIG",
          * "MN_PUMPS_CONFIG_DESC", "pumps_config", null);
-         * 
          * // doctors menu this.createAction(this.menu_doctor, "MN_DOCS",
          * "MN_DOCS_DESC", "doc_docs", null);
          * this.createAction(this.menu_doctor, "MN_APPOINT", "MN_APPOINT_DESC",
@@ -885,7 +864,6 @@ public class MainFrame extends JFrame implements EventObserverInterface
         setToolbarByDbLoad(status);
     }
 
-    
     /**
      * Set Toolbar by Db Load
      * 
@@ -893,7 +871,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
      */
     public void setToolbarByDbLoad(int status)
     {
-        
+
         // this.toolbar_items.get("hlp_help").setEnabled(true)
         setToolBarItemEnabled("file_login", false);
 
@@ -907,7 +885,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             setToolBarItemEnabled("view_freq", false);
             setToolBarItemEnabled("view_hba1c", false);
 
-            //setToolBarItemEnabled("food_meals", false);
+            // setToolBarItemEnabled("food_meals", false);
 
             setToolBarItemEnabled("report_pdf_simple", false);
 
@@ -929,12 +907,11 @@ public class MainFrame extends JFrame implements EventObserverInterface
         }
         else if (status == StatusBar.DB_LOADED)
         {
-         //   this.toolbar_items.get("food_meals").setEnabled(true);
+            // this.toolbar_items.get("food_meals").setEnabled(true);
         }
 
     }
 
-    
     private void setToolBarItemEnabled(String item_name, boolean enabled)
     {
         if (this.toolbar_pump_items.containsKey(item_name))
@@ -946,20 +923,15 @@ public class MainFrame extends JFrame implements EventObserverInterface
         {
             this.toolbar_pen_items.get(item_name).setEnabled(enabled);
         }
-        
+
     }
-    
-    
-    
+
     /*
      * public void setDbActions(boolean opened) {
-     * 
      * this.menu_bgs.setEnabled(opened); this.menu_food.setEnabled(opened);
      * this.menu_doctor.setEnabled(opened);
      * this.menu_printing.setEnabled(opened);
-     * 
      * this.menu_meters.setEnabled(true); this.menu_pumps.setEnabled(true);
-     * 
      * this.actions.get("view_daily").setEnabled(opened);
      * this.actions.get("view_course").setEnabled(opened);
      * this.actions.get("view_spread").setEnabled(opened);
@@ -967,8 +939,6 @@ public class MainFrame extends JFrame implements EventObserverInterface
      * this.actions.get("view_hba1c").setEnabled(opened); //x
      * this.actions.get("read_meter").setEnabled(opened);
      * this.actions.get("tools_pref").setEnabled(opened);
-     * 
-     * 
      * / FIXXXXXXXXXXXX viewDailyAction.setEnabled(opened);
      * viewSpreadGraphAction.setEnabled(opened);
      * viewCourseGraphAction.setEnabled(opened);
@@ -988,7 +958,9 @@ public class MainFrame extends JFrame implements EventObserverInterface
         if (m_da != null)
         {
             if (m_da.getDb() != null)
+            {
                 m_da.getDb().closeDb();
+            }
 
             DataAccess.deleteInstance();
         }
@@ -1000,13 +972,10 @@ public class MainFrame extends JFrame implements EventObserverInterface
     /*
      * private JMenuItem addMenuItem(JMenu menu, Action action) { JMenuItem item
      * = menu.add(action);
-     * 
      * //System.out.println(action.getValue(Action.ACCELERATOR_KEY));
-     * 
      * KeyStroke keystroke = (KeyStroke)
      * action.getValue(Action.ACCELERATOR_KEY); if (keystroke != null)
      * item.setAccelerator(keystroke);
-     * 
      * return item; }
      */
 
@@ -1016,12 +985,16 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     private JButton addToolBarButton(Action action, int toolbar_id)
     {
-        final JButton button;        
+        final JButton button;
 
         if (toolbar_id == MainFrame.TOOLBAR_PEN_INJECTION)
+        {
             button = this.toolbars.get("TOOLBAR_PEN").add(action);
+        }
         else
+        {
             button = this.toolbars.get("TOOLBAR_PUMP").add(action);
+        }
 
         button.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
         button.setFocusPainted(false);
@@ -1061,7 +1034,9 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
 
             if (command != null)
+            {
                 putValue(ACTION_COMMAND_KEY, command);
+            }
 
             command = name;
         }
@@ -1092,10 +1067,14 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
 
             if (tooltip != null)
+            {
                 putValue(SHORT_DESCRIPTION, m_ic.getMessage(tooltip));
+            }
 
             if (command != null)
+            {
                 putValue(ACTION_COMMAND_KEY, command);
+            }
         }
 
         public String getName()
@@ -1103,9 +1082,8 @@ public class MainFrame extends JFrame implements EventObserverInterface
             return (String) getValue(Action.NAME);
         }
 
-        
         String next_version = "0.6";
-        
+
         public void actionPerformed(ActionEvent e)
         {
 
@@ -1115,7 +1093,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             {
                 m_da.getPlugIn(DataAccess.PLUGIN_METERS).actionPerformed(e);
             }
-            else if ((command.startsWith("pumps_")) || (command.startsWith("report_print_pump")))
+            else if (command.startsWith("pumps_") || command.startsWith("report_print_pump"))
             {
                 m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).actionPerformed(e);
             }
@@ -1145,7 +1123,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
             else if (command.equals("view_freq"))
             {
-                //new FrequencyGraphDialog(m_da);
+                // new FrequencyGraphDialog(m_da);
                 featureNotImplementedDescription(m_ic.getMessage("FREQGRAPHFRAME"), next_version);
             }
             else if (command.equals("view_hba1c"))
@@ -1168,7 +1146,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
             else if (command.equals("hlp_check_update"))
             {
-                UpdateDialog ud = new UpdateDialog((JFrame) MainFrame.this, m_da);
+                UpdateDialog ud = new UpdateDialog(MainFrame.this, m_da);
                 ud.enableHelp("GGC_Tools_Update");
                 ud.showDialog();
             }
@@ -1182,31 +1160,36 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
             else if (command.equals("ratio_extended"))
             {
-                //if (MainFrame.developer_version)
+                // if (MainFrame.developer_version)
                 {
                     new RatioExtendedDialog(MainFrame.this);
                 }
-                //else
-                //    featureNotImplemented(command, "0.6");
-                
+                // else
+                // featureNotImplemented(command, "0.6");
+
             }
-            
+
             /*
              * else if (command.equals("hlp_check")) { new
              * VersionChecker().checkForUpdate(); }
              */
-/*            else if (command.equals("food_nutrition_1"))
-            {
-                new NutritionTreeDialog(MainFrame.this, m_da, GGCTreeRoot.TREE_USDA_NUTRITION);
-            }
-            else if (command.equals("food_nutrition_2"))
-            {
-                new NutritionTreeDialog(MainFrame.this, m_da, GGCTreeRoot.TREE_USER_NUTRITION);
-            }
-            else if (command.equals("food_meals"))
-            {
-                new NutritionTreeDialog(MainFrame.this, m_da, GGCTreeRoot.TREE_MEALS);
-            } */
+            /*
+             * else if (command.equals("food_nutrition_1"))
+             * {
+             * new NutritionTreeDialog(MainFrame.this, m_da,
+             * GGCTreeRoot.TREE_USDA_NUTRITION);
+             * }
+             * else if (command.equals("food_nutrition_2"))
+             * {
+             * new NutritionTreeDialog(MainFrame.this, m_da,
+             * GGCTreeRoot.TREE_USER_NUTRITION);
+             * }
+             * else if (command.equals("food_meals"))
+             * {
+             * new NutritionTreeDialog(MainFrame.this, m_da,
+             * GGCTreeRoot.TREE_MEALS);
+             * }
+             */
             else if (command.equals("tools_db_backup"))
             {
                 new BackupDialog(MainFrame.this, m_da);
@@ -1215,7 +1198,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             {
                 RestoreGGCSelectorDialog rsd = new RestoreGGCSelectorDialog(MainFrame.this, m_da);
                 rsd.showDialog();
-                
+
                 // update main panels
                 DataAccess.getInstance().loadDailySettings(new GregorianCalendar(), true);
                 m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
@@ -1228,27 +1211,37 @@ public class MainFrame extends JFrame implements EventObserverInterface
             {
                 new PrintingDialog(MainFrame.this, 2, PrintingDialog.PRINT_DIALOG_YEAR_MONTH_OPTION);
             }
-/*            else if (command.equals("report_foodmenu_simple"))
-            {
-                new PrintingDialog(MainFrame.this, 1, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
-            }
-            else if (command.equals("report_foodmenu_ext1"))
-            {
-                new PrintingDialog(MainFrame.this, 2, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
-            }
-            else if (command.equals("report_foodmenu_ext2"))
-            {
-                new PrintingDialog(MainFrame.this, 3, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
-            } */
-            /*else if (command.equals("report_foodmenu_ext3"))
-            {
-                // disabled for now, until it's implement to fully function
-                new PrintingDialog(MainFrame.this, 4, PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
-            } */
-            /*else if (command.equals("view_ratio"))
-            {
-                new RatioDialog(getMyParent());
-            }*/
+            /*
+             * else if (command.equals("report_foodmenu_simple"))
+             * {
+             * new PrintingDialog(MainFrame.this, 1,
+             * PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+             * }
+             * else if (command.equals("report_foodmenu_ext1"))
+             * {
+             * new PrintingDialog(MainFrame.this, 2,
+             * PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+             * }
+             * else if (command.equals("report_foodmenu_ext2"))
+             * {
+             * new PrintingDialog(MainFrame.this, 3,
+             * PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+             * }
+             */
+            /*
+             * else if (command.equals("report_foodmenu_ext3"))
+             * {
+             * // disabled for now, until it's implement to fully function
+             * new PrintingDialog(MainFrame.this, 4,
+             * PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
+             * }
+             */
+            /*
+             * else if (command.equals("view_ratio"))
+             * {
+             * new RatioDialog(getMyParent());
+             * }
+             */
             else if (command.equals("doc_docs"))
             {
                 if (MainFrame.developer_version)
@@ -1256,7 +1249,9 @@ public class MainFrame extends JFrame implements EventObserverInterface
                     new DoctorsDialog(MainFrame.this);
                 }
                 else
+                {
                     featureNotImplemented(command, "0.6");
+                }
 
             }
             else if (command.equals("doc_appoint"))
@@ -1266,18 +1261,18 @@ public class MainFrame extends JFrame implements EventObserverInterface
                     new AppointmentsDialog(MainFrame.this);
                 }
                 else
+                {
                     featureNotImplemented(command, "0.6");
+                }
 
             }
             else // if ((command.equals("report_pdf_extended")) ||
-            if ((command.equals("file_login")) ||
-                (command.equals("report_foodmenu_ext3")) ||
-                (command.equals("file_logout")))
+            if (command.equals("file_login") || command.equals("report_foodmenu_ext3") || command.equals("file_logout"))
             {
                 featureNotImplemented(command, "0.6");
             }
-            else if (command.equals("misc_synchronize")) //||
-                     //(command.equals("doc_stocks"))) 
+            else if (command.equals("misc_synchronize")) // ||
+            // (command.equals("doc_stocks")))
             {
                 featureNotImplemented(command, "0.6");
             }
@@ -1288,53 +1283,51 @@ public class MainFrame extends JFrame implements EventObserverInterface
                     new GUIListDialog(MainFrame.this, new StockListDef(), m_da);
                 }
                 else
+                {
                     featureNotImplemented(command, "0.6");
-                
-            }
-            else if ((command.equals("test")))
-            {
-                
-                //new DailyRowMealsDialog(null, new JDialog());
-                
-                
-                // spread graph
-                //new GraphViewer(new GraphViewSpread(), m_da);
-                
-                
-                /*
-                // graph course
-                new GraphViewer(new GraphViewCourse(), m_da);
-                */
-                
-                // ratio calculator
- //               @SuppressWarnings("unused")
- //               RatioCalculatorDialog rcd = new RatioCalculatorDialog(MainFrame.this);
+                }
 
-                //BasalRateEstimator bre = new BasalRateEstimator();             
-                
-                
-             /*   
-                // daily view
-                GregorianCalendar gc = new GregorianCalendar();
-                gc.set(GregorianCalendar.DAY_OF_MONTH, 18);
-                gc.set(GregorianCalendar.MONTH, 10);
-                gc.set(GregorianCalendar.YEAR, 2008);
-                
-                new GraphViewer(new GraphViewDaily(gc), m_da);
-               */ 
-                
-                
-                //new HbA1cDialog(m_da);
+            }
+            else if (command.equals("test"))
+            {
+
+                // new DailyRowMealsDialog(null, new JDialog());
+
+                // spread graph
+                // new GraphViewer(new GraphViewSpread(), m_da);
+
+                /*
+                 * // graph course
+                 * new GraphViewer(new GraphViewCourse(), m_da);
+                 */
+
+                // ratio calculator
+                // @SuppressWarnings("unused")
+                // RatioCalculatorDialog rcd = new
+                // RatioCalculatorDialog(MainFrame.this);
+
+                // BasalRateEstimator bre = new BasalRateEstimator();
+
+                /*
+                 * // daily view
+                 * GregorianCalendar gc = new GregorianCalendar();
+                 * gc.set(GregorianCalendar.DAY_OF_MONTH, 18);
+                 * gc.set(GregorianCalendar.MONTH, 10);
+                 * gc.set(GregorianCalendar.YEAR, 2008);
+                 * new GraphViewer(new GraphViewDaily(gc), m_da);
+                 */
+
+                // new HbA1cDialog(m_da);
                 // ImportDacioDb idb = new
                 // ImportDacioDb("../data/temp/zivila.csv", true); //args[
                 // idb.convertFoods();
-/*
-                DayValuesData dvd = m_da.getDb().getDayValuesData(20081001, 20091007); // .getMonthlyValues(yr,
-                                                                                       // mnth);
-                PrintFoodMenuExt2 psm = new PrintFoodMenuExt2(dvd);
-
-                PrintingDialog.displayPDFExternal(psm.getName());
-*/
+                /*
+                 * DayValuesData dvd = m_da.getDb().getDayValuesData(20081001,
+                 * 20091007); // .getMonthlyValues(yr,
+                 * // mnth);
+                 * PrintFoodMenuExt2 psm = new PrintFoodMenuExt2(dvd);
+                 * PrintingDialog.displayPDFExternal(psm.getName());
+                 */
                 // BolusHelper bh = new BolusHelper(MainFrame.this);
                 // featureNotImplemented(command, "0.6");
             }
@@ -1343,22 +1336,24 @@ public class MainFrame extends JFrame implements EventObserverInterface
                 // ggc.gui.ReadMeterDialog rm = new
                 // ggc.gui.ReadMeterDialog(MainFrame.this);
 
-                //System.out.println("In login");
+                // System.out.println("In login");
                 /*
-                                try
-                                {
-                                    throw new Exception("Test Exception");
-                                }
-                                catch (Exception ex)
-                                {
-                                    System.out.println("we falled into exception");
-                                    m_da.createErrorDialog("MainFrame", "", ex,
-                                            "Exception in mainframe.");
-                                }
-                */
+                 * try
+                 * {
+                 * throw new Exception("Test Exception");
+                 * }
+                 * catch (Exception ex)
+                 * {
+                 * System.out.println("we falled into exception");
+                 * m_da.createErrorDialog("MainFrame", "", ex,
+                 * "Exception in mainframe.");
+                 * }
+                 */
             }
             else
+            {
                 System.out.println("Unknown Command: " + command);
+            }
 
         }
     }
@@ -1371,11 +1366,11 @@ public class MainFrame extends JFrame implements EventObserverInterface
         text += String.format(m_ic.getMessage("IMPLEMENTED_VERSION"), version);
         text += "!";
 
-        JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"),
+            JOptionPane.INFORMATION_MESSAGE);
 
     }
 
-    
     private void featureNotImplementedDescription(String desc, String version)
     {
         String text = m_ic.getMessage("FEATURE");
@@ -1384,11 +1379,11 @@ public class MainFrame extends JFrame implements EventObserverInterface
         text += String.format(m_ic.getMessage("IMPLEMENTED_VERSION"), version);
         text += "!";
 
-        JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"),
+            JOptionPane.INFORMATION_MESSAGE);
 
     }
-    
-    
+
     private class CloseListener extends WindowAdapter
     {
         @Override
@@ -1398,7 +1393,6 @@ public class MainFrame extends JFrame implements EventObserverInterface
         }
     }
 
-    
     /**
      * To String
      * 
@@ -1410,120 +1404,112 @@ public class MainFrame extends JFrame implements EventObserverInterface
         return "GGC::MainFrame";
     }
 
-    
     boolean title_set = false;
-    
+
     /**
      * Update
      */
     public void update(Observable obj, Object arg)
     {
-        //System.out.println("update");
+        // System.out.println("update");
         if (arg instanceof Integer)
         {
-            Integer i = (Integer)arg;
+            Integer i = (Integer) arg;
 
             if (!title_set)
             {
-                if (i>=RefreshInfo.PANEL_GROUP_GENERAL_INFO)
+                if (i >= RefreshInfo.PANEL_GROUP_GENERAL_INFO)
                 {
                     title_set = true;
                     this.setSoftwareMode();
                 }
             }
-            
-            //Integer i = (Integer)arg;
+
+            // Integer i = (Integer)arg;
             setMenusByDbLoad(i.intValue());
-            
-            if (m_da.getDbLoadingStatus() >= GGCDbLoader.DB_DATA_BASE);
-                this.setSoftwareMode();
-            //this.setTitle();
-            
+
+            if (m_da.getDbLoadingStatus() >= GGCDbLoader.DB_DATA_BASE)
+            {
+                ;
+            }
+            this.setSoftwareMode();
+            // this.setTitle();
+
             if (i == RefreshInfo.DB_LOADED)
+            {
                 refreshMenus();
+            }
         }
     }
-
 
     private void refreshMenus()
     {
         refreshMenus(true);
     }
-    
-    
-    
+
     private void refreshMenus(boolean refresh_init)
     {
-        //System.out.println("Refresh Menus: ");
+        // System.out.println("Refresh Menus: ");
         this.menuBar.removeAll();
-        
-        
+
         this.menuBar.add(this.menus.get("MENU_FILE"));
         this.menuBar.add(this.menus.get("MENU_PEN"));
 
         JMenu menu = getPlugInMenu(DataAccess.PLUGIN_NUTRITION);
-        
-        if (menu!=null)
+
+        if (menu != null)
+        {
             this.menuBar.add(menu);
-            
-        
+        }
+
         // doctors menu
         this.menuBar.add(this.menus.get("MENU_DOCTOR"));
 
-        
         if (refresh_init)
         {
-        
+
             // reports menu
-            
-            for(Enumeration<String> en= m_da.getPlugins().keys(); en.hasMoreElements(); )
+
+            for (Enumeration<String> en = m_da.getPlugins().keys(); en.hasMoreElements();)
             {
                 String key = en.nextElement();
-                
+
                 PlugInClient pic = m_da.getPlugIn(key);
-                
-                if (pic.getPlugInPrintMenus()!=null)
+
+                if (pic.getPlugInPrintMenus() != null)
                 {
                     JMenu[] menus = pic.getPlugInPrintMenus();
-                    
-                    for(int i=0; i<menus.length; i++)
+
+                    for (JMenu menu2 : menus)
                     {
-                        this.menus.get("MENU_PRINT").add(menus[i]);
+                        this.menus.get("MENU_PRINT").add(menu2);
                     }
                 }
             }
         }
-        
-        this.menuBar.add(this.menus.get("MENU_PRINT")); 
 
-        
-        String[] keys = { DataAccess.PLUGIN_METERS, 
-                          DataAccess.PLUGIN_PUMPS,
-                          DataAccess.PLUGIN_CGMS,
-                         };
-        
-        
-        for(int j=0; j<keys.length; j++)
+        this.menuBar.add(this.menus.get("MENU_PRINT"));
+
+        String[] keys = { DataAccess.PLUGIN_METERS, DataAccess.PLUGIN_PUMPS, DataAccess.PLUGIN_CGMS, };
+
+        for (String key : keys)
         {
-            String key = keys[j];
-            
             if (m_da.isPluginAvailable(key))
             {
                 PlugInClient pic = m_da.getPlugIn(key);
-                
-                if (pic.getPlugInMainMenu()!=null)
+
+                if (pic.getPlugInMainMenu() != null)
                 {
                     this.menuBar.add(pic.getPlugInMainMenu());
                 }
             }
         }
-        
-        
+
         this.menuBar.add(this.menus.get("MENU_TOOLS"));
         this.menuBar.add(this.menus.get("MENU_HELP"));
-        
+
         this.setJMenuBar(this.menuBar);
-        
+
     }
 
     /**
@@ -1533,8 +1519,6 @@ public class MainFrame extends JFrame implements EventObserverInterface
     {
         this.refreshMenus(false);
     }
-
-    
 
     private JMenu getPlugInMenu(String name)
     {
@@ -1546,7 +1530,5 @@ public class MainFrame extends JFrame implements EventObserverInterface
         else
             return null;
     }
-    
-    
-    
+
 }

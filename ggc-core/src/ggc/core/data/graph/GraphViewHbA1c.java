@@ -43,14 +43,16 @@ import com.atech.graphics.graphs.GraphViewControlerInterface;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements GraphViewInterface, GraphViewDataProcessorInterface 
+public class GraphViewHbA1c extends AbstractGraphViewAndProcessor // implements
+                                                                  // GraphViewInterface,
+                                                                  // GraphViewDataProcessorInterface
 {
 
-    private HbA1cValues hbValues; 
+    private HbA1cValues hbValues;
     private DefaultPieDataset dataset = new DefaultPieDataset();
-    //I18nControlAbstract  m_ic = null;
-    
+
+    // I18nControlAbstract m_ic = null;
+
     /**
      * Constructor
      */
@@ -58,7 +60,6 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
     {
         super(DataAccess.getInstance());
     }
-    
 
     /**
      * Get Data Object (HbA1cValues)
@@ -69,13 +70,13 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
         loadData();
         return hbValues;
     }
-    
-    
+
     /**
      * Get Controler Interface instance
      * 
      * @return GraphViewControlerInterface instance or null
      */
+    @Override
     public GraphViewControlerInterface getControler()
     {
         return null;
@@ -96,33 +97,34 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
      * 
      * @return title as string 
      */
+    @Override
     public String getTitle()
     {
         return null;
     }
 
-    
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      * 
      * @return Rectangle object
      */
+    @Override
     public Rectangle getViewerDialogBounds()
     {
         return null;
     }
 
-    
     /**
      * Load Data
      */
     public void loadData()
     {
-        if (hbValues==null)
-            hbValues = ((DataAccess)m_da).getDb().getHbA1c(new GregorianCalendar(), false);        
+        if (hbValues == null)
+        {
+            hbValues = ((DataAccess) m_da).getDb().getHbA1c(new GregorianCalendar(), false);
+        }
     }
- 
-    
+
     /**
      * Get Data Set
      * 
@@ -140,25 +142,38 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
     {
         dataset.clear();
 
-        //System.out.println("Read HbA1c data:\n" + hbValues.getPercentOfDaysInClass(0) + "\n" + hbValues.getPercentOfDaysInClass(1) + "\n"
-        //        + hbValues.getPercentOfDaysInClass(2) + "\n" + hbValues.getPercentOfDaysInClass(3) + "\n"
-        //        + hbValues.getPercentOfDaysInClass(4));
-        
-        //System.out.println("m_ic: " + m_ic);
-        if(hbValues.getPercentOfDaysInClass(0) > 0) //just draw the sections of the plot which have values.
-        dataset.insertValue(0, m_ic.getMessage("DAYS_WITH_READINGS_0_1"), hbValues.getPercentOfDaysInClass(0));
-        
-        if(hbValues.getPercentOfDaysInClass(1) > 0)
-        dataset.insertValue(1, m_ic.getMessage("DAYS_WITH_READINGS_2_3"), hbValues.getPercentOfDaysInClass(1));
-        
-        if(hbValues.getPercentOfDaysInClass(2) > 0)
-        dataset.insertValue(2, m_ic.getMessage("DAYS_WITH_READINGS_4_5"), hbValues.getPercentOfDaysInClass(2));
-        
-        if(hbValues.getPercentOfDaysInClass(3) > 0)
-        dataset.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"), hbValues.getPercentOfDaysInClass(3));
-        
-        if(hbValues.getPercentOfDaysInClass(4) > 0)
-        dataset.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"), hbValues.getPercentOfDaysInClass(4));
+        // System.out.println("Read HbA1c data:\n" +
+        // hbValues.getPercentOfDaysInClass(0) + "\n" +
+        // hbValues.getPercentOfDaysInClass(1) + "\n"
+        // + hbValues.getPercentOfDaysInClass(2) + "\n" +
+        // hbValues.getPercentOfDaysInClass(3) + "\n"
+        // + hbValues.getPercentOfDaysInClass(4));
+
+        // System.out.println("m_ic: " + m_ic);
+        if (hbValues.getPercentOfDaysInClass(0) > 0)
+        {
+            dataset.insertValue(0, m_ic.getMessage("DAYS_WITH_READINGS_0_1"), hbValues.getPercentOfDaysInClass(0));
+        }
+
+        if (hbValues.getPercentOfDaysInClass(1) > 0)
+        {
+            dataset.insertValue(1, m_ic.getMessage("DAYS_WITH_READINGS_2_3"), hbValues.getPercentOfDaysInClass(1));
+        }
+
+        if (hbValues.getPercentOfDaysInClass(2) > 0)
+        {
+            dataset.insertValue(2, m_ic.getMessage("DAYS_WITH_READINGS_4_5"), hbValues.getPercentOfDaysInClass(2));
+        }
+
+        if (hbValues.getPercentOfDaysInClass(3) > 0)
+        {
+            dataset.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"), hbValues.getPercentOfDaysInClass(3));
+        }
+
+        if (hbValues.getPercentOfDaysInClass(4) > 0)
+        {
+            dataset.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"), hbValues.getPercentOfDaysInClass(4));
+        }
     }
 
     /**
@@ -170,11 +185,11 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
     {
         PiePlot plot = (PiePlot) chart.getPlot();
 
-        //chart.setRenderingHints(renderingHints);
+        // chart.setRenderingHints(renderingHints);
 
-        plot.setBackgroundPaint(Color.WHITE); //backgroundColor);
+        plot.setBackgroundPaint(Color.WHITE); // backgroundColor);
         plot.setCircular(true);
-        //plot.setBackgroundAlpha(0.5f);
+        // plot.setBackgroundAlpha(0.5f);
         plot.setForegroundAlpha(0.7f);
         plot.setInteriorGap(0);
         plot.setStartAngle(45);
@@ -185,25 +200,26 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor //implements G
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_4_5"), Color.YELLOW);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_6_7"), Color.GREEN);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"), Color.MAGENTA);
-        
+
     }
 
     /**
      * Create Chart
      */
+    @Override
     public void createChart()
     {
-        chart = ChartFactory.createPieChart3D(null, (DefaultPieDataset)dataset, true, true, false);
+        chart = ChartFactory.createPieChart3D(null, dataset, true, true, false);
         setPlot(chart);
     }
-
 
     /**
      * Create Chart Panel
      */
+    @Override
     public void createChartPanel()
     {
         chart_panel = new ChartPanel(this.chart, false, true, true, false, true);
     }
-    
+
 }

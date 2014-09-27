@@ -39,14 +39,11 @@ import java.util.Hashtable;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 // FIXME
 
 public abstract class MiniMedCGMS extends AbstractCGMS
 {
 
-    
-    
     /**
      * Constructor 
      */
@@ -54,8 +51,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         super();
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -66,8 +62,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         super(params, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -79,8 +74,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         super(params, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -90,17 +84,11 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         super(cmp);
     }
-    
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
-
-    
-    
     /**
      * getComment - Get Comment for device 
      * 
@@ -110,21 +98,17 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
-    
-    
-    
 
     /**
      * Open
@@ -136,7 +120,6 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         return true;
     }
-    
 
     /**
      * Close
@@ -146,17 +129,16 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     public void close() throws PlugInBaseException
     {
     }
-  
 
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
      * 
      * @throws PlugInBaseException
      */
+    @Override
     public void readConfiguration() throws PlugInBaseException
     {
     }
-
 
     /**
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
@@ -169,17 +151,16 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
     }
 
-
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy 
      * (from some date to another)
      * 
      * @throws PlugInBaseException 
      */
+    @Override
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
-
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -187,20 +168,20 @@ public abstract class MiniMedCGMS extends AbstractCGMS
      *  
      * @throws PlugInBaseException
      */
+    @Override
     public void readInfo() throws PlugInBaseException
     {
     }
 
-    
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      * @return 
      */
+    @Override
     public DeviceIdentification getDeviceInfo()
     {
         return null;
     }
-  
 
     /**
      * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific 
@@ -212,7 +193,6 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return null;
     }
 
-
     /**
      * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
      *     event codes
@@ -222,7 +202,6 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         return null;
     }
-
 
     /**
      * Get Error Mappings - Map pump specific errors to Pump Tool specific 
@@ -234,7 +213,6 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return null;
     }
 
-
     /**
      * Get Event Mappings - Map pump specific events to Pump Tool specific 
      *     event codes
@@ -245,7 +223,6 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return null;
     }
 
-    
     /**
      * Get Report Mappings - Map pump specific reports to Pump Tool specific 
      *     event codes
@@ -256,7 +233,6 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return null;
     }
 
-
     /**
      * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
      *      create, AlarmMappings and EventMappings and any other pump constants.
@@ -265,7 +241,6 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
     }
 
-
     /** 
      * Dispose
      */
@@ -273,7 +248,6 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
     }
 
-    
     /**
      * getConnectionPort - connection port data
      * 
@@ -283,7 +257,6 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         return null;
     }
-
 
     /**
      * getConnectionProtocol - returns id of connection protocol
@@ -295,19 +268,17 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return 0;
     }
 
-
-
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
      *    normal progress status, but with some special devices we calculate progress through other means.
      *    
      * @return true is progress status is special
      */
+    @Override
     public boolean hasSpecialProgressStatus()
     {
         return false;
     }
-
 
     /**
      * Is Device Communicating
@@ -319,7 +290,6 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return false;
     }
 
-
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
      * sort of specific device data - in most cases we call them generics, and they don't have ability
@@ -327,54 +297,49 @@ public abstract class MiniMedCGMS extends AbstractCGMS
      * 
      * @return
      */
+    @Override
     public boolean isReadableDevice()
     {
         return false;
     }
 
-
-    
     /**
      * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
      *     left to right side, without displaying progress.
      * @return
      */
+    @Override
     public boolean hasIndeterminateProgressStatus()
     {
         return true;
-    }    
-    
-    
+    }
+
+    @Override
     public boolean hasDefaultParameter()
     {
         return false;
-    }    
-    
-    
+    }
+
     /**
      * Load File Contexts - Load file contexts that device supports
      */
+    @Override
     public void loadFileContexts()
     {
-//        System.out.println("loadFileContexts");
+        // System.out.println("loadFileContexts");
         this.file_contexts = new GGCPlugInFileReaderContext[1];
         this.file_contexts[0] = new FRC_MinimedCarelink(m_da, this.output_writer);
     }
-     
-    
-    
+
     /**
      * Get Download Support Type
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
     }
-    
-    
-    
+
 }
-
-

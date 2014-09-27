@@ -1,12 +1,13 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class DoctorH implements Serializable 
+public class DoctorH implements Serializable
 {
 
     private static final long serialVersionUID = -203432582979938654L;
@@ -36,7 +37,9 @@ public class DoctorH implements Serializable
      * @param comment 
      * @param doctor_type 
      */
-    public DoctorH(String name, String address, String phone_gsm, String phone, String working_time, String extended, int visible, int person_id, String comment, ggc.core.db.hibernate.DoctorTypeH doctor_type) {
+    public DoctorH(String name, String address, String phone_gsm, String phone, String working_time, String extended,
+            int visible, int person_id, String comment, ggc.core.db.hibernate.DoctorTypeH doctor_type)
+    {
         this.name = name;
         this.address = address;
         this.phone_gsm = phone_gsm;
@@ -50,7 +53,8 @@ public class DoctorH implements Serializable
     }
 
     /** default constructor */
-    public DoctorH() {
+    public DoctorH()
+    {
     }
 
     /** 
@@ -58,7 +62,8 @@ public class DoctorH implements Serializable
      *  
      * @param person_id 
      */
-    public DoctorH(int person_id) {
+    public DoctorH(int person_id)
+    {
         this.person_id = person_id;
     }
 
@@ -87,7 +92,7 @@ public class DoctorH implements Serializable
      * 
      * @return name
      */
-    public String getName() 
+    public String getName()
     {
         return this.name;
     }
@@ -97,18 +102,17 @@ public class DoctorH implements Serializable
      * 
      * @param name as string
      */
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
-
 
     /**
      * Get Address
      * 
      * @return
      */
-    public String getAddress() 
+    public String getAddress()
     {
         return this.address;
     }
@@ -118,7 +122,7 @@ public class DoctorH implements Serializable
      * 
      * @param address 
      */
-    public void setAddress(String address) 
+    public void setAddress(String address)
     {
         this.address = address;
     }
@@ -128,7 +132,7 @@ public class DoctorH implements Serializable
      * 
      * @return
      */
-    public String getPhone_gsm() 
+    public String getPhone_gsm()
     {
         return this.phone_gsm;
     }
@@ -138,7 +142,7 @@ public class DoctorH implements Serializable
      * 
      * @param phone_gsm 
      */
-    public void setPhone_gsm(String phone_gsm) 
+    public void setPhone_gsm(String phone_gsm)
     {
         this.phone_gsm = phone_gsm;
     }
@@ -148,7 +152,7 @@ public class DoctorH implements Serializable
      * 
      * @return
      */
-    public String getPhone() 
+    public String getPhone()
     {
         return this.phone;
     }
@@ -158,7 +162,7 @@ public class DoctorH implements Serializable
      * 
      * @param phone
      */
-    public void setPhone(String phone) 
+    public void setPhone(String phone)
     {
         this.phone = phone;
     }
@@ -168,7 +172,7 @@ public class DoctorH implements Serializable
      * 
      * @return
      */
-    public String getWorking_time() 
+    public String getWorking_time()
     {
         return this.working_time;
     }
@@ -178,7 +182,7 @@ public class DoctorH implements Serializable
      * 
      * @param working_time 
      */
-    public void setWorking_time(String working_time) 
+    public void setWorking_time(String working_time)
     {
         this.working_time = working_time;
     }
@@ -208,7 +212,7 @@ public class DoctorH implements Serializable
      * 
      * @return
      */
-    public int getVisible() 
+    public int getVisible()
     {
         return this.visible;
     }
@@ -218,7 +222,7 @@ public class DoctorH implements Serializable
      * 
      * @param visible 
      */
-    public void setVisible(int visible) 
+    public void setVisible(int visible)
     {
         this.visible = visible;
     }
@@ -268,7 +272,7 @@ public class DoctorH implements Serializable
      * 
      * @return
      */
-    public ggc.core.db.hibernate.DoctorTypeH getDoctor_type() 
+    public ggc.core.db.hibernate.DoctorTypeH getDoctor_type()
     {
         return this.doctor_type;
     }
@@ -278,7 +282,7 @@ public class DoctorH implements Serializable
      * 
      * @param doctor_type 
      */
-    public void setDoctor_type(ggc.core.db.hibernate.DoctorTypeH doctor_type) 
+    public void setDoctor_type(ggc.core.db.hibernate.DoctorTypeH doctor_type)
     {
         this.doctor_type = doctor_type;
     }
@@ -288,13 +292,13 @@ public class DoctorH implements Serializable
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof DoctorH) ) return false;
+        if (!(other instanceof DoctorH))
+            return false;
         DoctorH castOther = (DoctorH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -302,18 +306,19 @@ public class DoctorH implements Serializable
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

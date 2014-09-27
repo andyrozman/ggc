@@ -28,17 +28,15 @@ package ggc.plugin.output;
 
 public class DummyOutputWriter extends AbstractOutputWriter
 {
-	
-	
-	/**
-	 * Constructor
-	 */
-	public DummyOutputWriter()
-	{
-	    super();
-	}
-	
-	
+
+    /**
+     * Constructor
+     */
+    public DummyOutputWriter()
+    {
+        super();
+    }
+
     /**
      * Write Data to OutputWriter
      * 
@@ -47,29 +45,28 @@ public class DummyOutputWriter extends AbstractOutputWriter
     public void writeData(OutputWriterData data)
     {
     }
-	
-	
+
     /**
      * Write Header
      */
-	public void writeHeader()
-	{
-	}
+    @Override
+    public void writeHeader()
+    {
+    }
 
-	
     /**
      * Write Device Identification
      */
     public void writeDeviceIdentification()
     {
     }
-	
-	
+
     /**
      * End Output
      */
-	public void endOutput()
-	{
-	}
-	
+    @Override
+    public void endOutput()
+    {
+    }
+
 }

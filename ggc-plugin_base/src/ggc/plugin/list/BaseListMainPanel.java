@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,8 +39,7 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapable //JPanel
+public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapable // JPanel
 {
     private static final long serialVersionUID = -740039184514067065L;
     I18nControlAbstract m_ic = null;
@@ -50,8 +50,6 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
     JButton button, help_button;
 
     BaseListDialog m_dialog = null;
-
-    
 
     /**
      * Constructor
@@ -67,14 +65,13 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
         m_da = dia.m_da;
         m_ic = m_da.getI18nControlInstance();
 
-        font_big = m_da.getFont(DataAccessPlugInBase.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL);
+        font_big = m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD);
+        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
 
         createPanel();
 
     }
-
 
     /**
      * Create Panel
@@ -88,49 +85,46 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
         Font fnt_18 = new Font("Times New Roman", Font.PLAIN, 14);
 
         label = new JLabel(String.format(m_ic.getMessage("DEVICE_LIST_WEB"), m_ic.getMessage("DEVICE_NAME_BIG")));
-        label.setBounds(0, 35, 500, 40);  // 520
-        label.setFont(font_big); 
+        label.setBounds(0, 35, 500, 40); // 520
+        label.setFont(font_big);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label, null);
 
-
         label = new JLabel(m_da.getWebListerDescription());
         label.setBounds(40, 120, 400, 250);
-        label.setVerticalAlignment(JLabel.TOP);
-        label.setFont(fnt_18); 
+        label.setVerticalAlignment(SwingConstants.TOP);
+        label.setFont(fnt_18);
         this.add(label, null);
 
         label = new JLabel(m_ic.getMessage("LEGEND_DESC"));
         label.setBounds(40, 330, 400, 250);
-        label.setVerticalAlignment(JLabel.TOP);
-        label.setFont(fnt_18); 
+        label.setVerticalAlignment(SwingConstants.TOP);
+        label.setFont(fnt_18);
         this.add(label, null);
-        
-        help_button = m_da.createHelpButtonByBounds(430, 10, 30, 30, this, DataAccessPlugInBase.FONT_NORMAL);
+
+        help_button = m_da.createHelpButtonByBounds(430, 10, 30, 30, this, ATDataAccessAbstract.FONT_NORMAL);
         help_button.setText("");
         this.add(help_button, null);
-        
+
         m_da.enableHelp(this);
-        
+
         return;
     }
-
 
     /**
      * Set Data
      * 
      * @see ggc.plugin.list.BaseListAbstractPanel#setData(java.lang.Object)
      */
+    @Override
     public void setData(Object obj)
     {
     }
 
-    
-    
     // ****************************************************************
-    // ******              HelpCapable Implementation             *****
+    // ****** HelpCapable Implementation *****
     // ****************************************************************
-    
+
     /** 
      * getComponent - get component to which to attach help context
      */
@@ -152,17 +146,15 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
      */
     public String getHelpId()
     {
-        //System.out.println("m_da: " + m_da);
-        //System.out.println("DevConfDef: " + m_da.getDeviceConfigurationDefinition());
-        //System.out.println("Help Prefix: " + m_da.getDeviceConfigurationDefinition().getHelpPrefix());
-        //return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "List";
-        
+        // System.out.println("m_da: " + m_da);
+        // System.out.println("DevConfDef: " +
+        // m_da.getDeviceConfigurationDefinition());
+        // System.out.println("Help Prefix: " +
+        // m_da.getDeviceConfigurationDefinition().getHelpPrefix());
+        // return m_da.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // "List";
+
         return "DeviceTool_List";
     }
-    
-    
 
 }
-    
-    
-

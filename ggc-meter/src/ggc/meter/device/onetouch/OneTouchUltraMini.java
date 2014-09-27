@@ -31,7 +31,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class OneTouchUltraMini extends OneTouchUltraEasy
 {
 
@@ -46,7 +45,6 @@ public class OneTouchUltraMini extends OneTouchUltraEasy
         super(portName, writer);
     }
 
-    
     /**
      * Constructor
      * 
@@ -58,7 +56,6 @@ public class OneTouchUltraMini extends OneTouchUltraEasy
     {
         super(comm_parameters, writer, da);
     }
-    
 
     /**
      * Constructor
@@ -67,7 +64,7 @@ public class OneTouchUltraMini extends OneTouchUltraEasy
     {
         super();
     }
-    
+
     /**
      * Constructor for device manager
      * 
@@ -78,49 +75,47 @@ public class OneTouchUltraMini extends OneTouchUltraEasy
         super(cmp);
     }
 
-    
     /**
      * getName - Get Name of meter. 
      * 
      * @return name of meter
      */
+    @Override
     public String getName()
     {
         return "One Touch Ultra Mini";
     }
 
-    
     /**
      * getDeviceClassName - Get class name of device
      */
+    @Override
     public String getDeviceClassName()
     {
         return "ggc.meter.device.onetouch.OneTouchUltraMini";
     }
 
-    
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
      * Should be implemented by device class.
      * 
      * @return id of device within company
      */
+    @Override
     public int getDeviceId()
     {
         return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA_MINI;
     }
-
 
     /**
      * getShortName - Get short name of meter. 
      * 
      * @return short name of meter
      */
+    @Override
     public String getShortName()
     {
         return "Ultra Mini";
     }
 
-    
-    
 }

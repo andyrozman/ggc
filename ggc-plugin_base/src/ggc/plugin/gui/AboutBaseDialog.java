@@ -42,14 +42,12 @@ import com.atech.graphics.components.about.LicenceInfo;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class AboutBaseDialog extends AboutDialog 
+public class AboutBaseDialog extends AboutDialog
 {
 
     private static final long serialVersionUID = 586495485605943204L;
     DataAccessPlugInBase m_da;
 
-	
     /**
      * Constructor 
      * 
@@ -61,7 +59,7 @@ public class AboutBaseDialog extends AboutDialog
         super(parent, true, da.getI18nControlInstance());
 
         this.m_da = da;
-        
+
         // licence
         this.setLicenceType(LicenceInfo.LICENCE_GPL_v2_0);
 
@@ -73,7 +71,7 @@ public class AboutBaseDialog extends AboutDialog
 
         // libraries
         this.setLibraries(m_da.getPlugInLibraries());
-        
+
         // features
         this.setFeatures(m_da.getPlugInFeatures());
 
@@ -91,12 +89,12 @@ public class AboutBaseDialog extends AboutDialog
     }
 
     /*
-    public void initCustom()
-    {
-	System.out.println("init Custom");
-	this.about_image = "/icons/t_asc_dex.gif";
-    } */
-
+     * public void initCustom()
+     * {
+     * System.out.println("init Custom");
+     * this.about_image = "/icons/t_asc_dex.gif";
+     * }
+     */
 
     private void createCustomTab()
     {
@@ -108,38 +106,37 @@ public class AboutBaseDialog extends AboutDialog
         p1.setLayout(new BorderLayout());
 
         int[] sz = m_da.getAboutImageSize();
-        
-        JLabel l = new JLabel(new ImageIcon(m_da.getImage(m_da.getAboutImageName(), this).getScaledInstance(sz[0], sz[1] /*500,125*/,java.awt.Image.SCALE_SMOOTH)));
+
+        JLabel l = new JLabel(new ImageIcon(m_da.getImage(m_da.getAboutImageName(), this).getScaledInstance(sz[0],
+            sz[1] /* 500,125 */, java.awt.Image.SCALE_SMOOTH)));
         p1.add(l, BorderLayout.CENTER);
 
         JLabel l2 = new JLabel();
-        l2.setPreferredSize(new Dimension(100,10));
+        l2.setPreferredSize(new Dimension(100, 10));
 
         p1.add(l2, BorderLayout.SOUTH);
         acp.add(p1);
 
         JEditorPane jEditorPaneAbout = new javax.swing.JEditorPane();
         jEditorPaneAbout.setBackground(new java.awt.Color(204, 204, 204));
-        //jEditorPaneAbout.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        // jEditorPaneAbout.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jEditorPaneAbout.setEditable(false);
         jEditorPaneAbout.setMinimumSize(new java.awt.Dimension(104, 90));
         jEditorPaneAbout.setOpaque(false);
         jEditorPaneAbout.setPreferredSize(new java.awt.Dimension(104, 90));
 
         jEditorPaneAbout.setContentType("text/html");
-        jEditorPaneAbout.setText("<HTML><body><font face=\"SansSerif\" size=\"3\"><center><b>" + 
-                                 String.format(m_ic.getMessage("DEVICE_PLUGIN"), m_ic.getMessage("DEVICE_NAME_BIG")) + "  v" + m_da.getPlugInVersion() +
-                                 "</b><br>&nbsp;&nbsp;(c) " + m_da.getAboutPluginCopyright() + "  " +
-                                 m_ic.getMessage("GGC_DEVELOPMENT_TEAM")+ "<br>" +
-                                 m_ic.getMessage("SEE_CREDITS") + 
-                                 "<br><A HREF=\"http://ggc.sourceforge.net/\">http://ggc.sourceforge.net/</A><br>" + 
-                                 m_ic.getMessage("LICENCE") + " GPL v2.0<br></font></body></html>");
+        jEditorPaneAbout.setText("<HTML><body><font face=\"SansSerif\" size=\"3\"><center><b>"
+                + String.format(m_ic.getMessage("DEVICE_PLUGIN"), m_ic.getMessage("DEVICE_NAME_BIG")) + "  v"
+                + m_da.getPlugInVersion() + "</b><br>&nbsp;&nbsp;(c) " + m_da.getAboutPluginCopyright() + "  "
+                + m_ic.getMessage("GGC_DEVELOPMENT_TEAM") + "<br>" + m_ic.getMessage("SEE_CREDITS")
+                + "<br><A HREF=\"http://ggc.sourceforge.net/\">http://ggc.sourceforge.net/</A><br>"
+                + m_ic.getMessage("LICENCE") + " GPL v2.0<br></font></body></html>");
 
-        acp.add(jEditorPaneAbout); //, BoxLayout.PAGE_AXIS);
+        acp.add(jEditorPaneAbout); // , BoxLayout.PAGE_AXIS);
 
         this.addCustomPanel(AboutDialog.PLACEMENT_BEFORE_STATIC_TABS, acp);
 
     }
-
 
 }

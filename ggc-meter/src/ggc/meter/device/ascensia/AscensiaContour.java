@@ -7,7 +7,6 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPortEventListener;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Meter Tool (support for Meter devices)
@@ -34,11 +33,9 @@ import gnu.io.SerialPortEventListener;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class AscensiaContour extends AscensiaMeter implements SerialPortEventListener
 {
 
-	
     /**
      * Constructor 
      */
@@ -46,7 +43,6 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     {
     }
 
-    
     /**
      * Constructor 
      * 
@@ -56,8 +52,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     {
         super(cmp);
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -66,10 +61,9 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
      */
     public AscensiaContour(String portName, OutputWriter writer)
     {
-    	super(portName, writer);
+        super(portName, writer);
     }
 
-    
     /**
      * Constructor
      * 
@@ -81,12 +75,10 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     {
         super(comm_parameters, writer, da);
     }
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -98,7 +90,6 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
         return "Contour";
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -108,7 +99,6 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     {
         return "ascensia_contour.png";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -120,8 +110,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     {
         return MeterDevicesIds.METER_ASCENSIA_CONTOUR;
     }
-    
-    
+
     /**
      * getInstructions - get instructions for device
      * 
@@ -131,7 +120,7 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     {
         return "INSTRUCTIONS_ASCENSIA_CONTOUR";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -141,19 +130,17 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
-
 
     /** 
      * Get Device ClassName
@@ -163,7 +150,6 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
         return "ggc.meter.device.ascensia.AscensiaContour";
     }
 
-    
     /**
      * Maximum of records that device can store
      */
@@ -171,6 +157,5 @@ public class AscensiaContour extends AscensiaMeter implements SerialPortEventLis
     {
         return 480;
     }
-    
 
 }

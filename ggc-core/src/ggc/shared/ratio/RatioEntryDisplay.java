@@ -28,13 +28,11 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class RatioEntryDisplay extends ATTableData
 {
 
     private RatioEntry ratio_entry = null;
-    
-    
+
     /**
      * Constructor
      * 
@@ -68,15 +66,12 @@ public class RatioEntryDisplay extends ATTableData
         this.ratio_entry = re;
     }
 
-
-    
-    
-
     /**
      * Init
      * 
      * @see com.atech.graphics.components.ATTableData#init()
      */
+    @Override
     public void init()
     {
         String[] col = { "FROM", "TO", "CH_INS_RATIO", "BG_INS_RATIO", "%" };
@@ -85,36 +80,34 @@ public class RatioEntryDisplay extends ATTableData
         init(col, col_size);
     }
 
-
     /**
      * Get Column Value
      * 
      * @see com.atech.graphics.components.ATTableData#getColumnValue(int)
      */
+    @Override
     public String getColumnValue(int column)
     {
         if (this.ratio_entry == null)
             return "";
-        
+
         switch (column)
         {
-        case 1:
-            return "" + this.ratio_entry.to;
-        case 2:
-            return "" + this.ratio_entry.ch_insulin;
-        case 3:
-            return "" + this.ratio_entry.bg_insulin;
-            
-        case 4:
-            return "" + this.ratio_entry.procent;
+            case 1:
+                return "" + this.ratio_entry.to;
+            case 2:
+                return "" + this.ratio_entry.ch_insulin;
+            case 3:
+                return "" + this.ratio_entry.bg_insulin;
 
-        case 0:
-        default:
-            return "" + this.ratio_entry.from;
+            case 4:
+                return "" + this.ratio_entry.procent;
+
+            case 0:
+            default:
+                return "" + this.ratio_entry.from;
 
         }
     }
-
-
 
 }

@@ -9,7 +9,6 @@ import java.awt.Toolkit;
 
 import com.atech.db.hibernate.check.DbCheckReport;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -36,7 +35,6 @@ import com.atech.db.hibernate.check.DbCheckReport;
  *          Andy {andy@atech-software.com}  
  */
 
-
 public class GGC
 {
     // fields
@@ -47,18 +45,17 @@ public class GGC
     /**
      * Version of application
      */
-    //public static String s_version = "0.4.6.4"; //3.16";
-    
-    
+    // public static String s_version = "0.4.6.4"; //3.16";
+
     /**
      * Full Version
      */
     public static String full_version = "v" + DataAccess.CORE_VERSION;
-    
+
     /**
      * Version Date 
      */
-    //public static String version_date = "15th March 2009";
+    // public static String version_date = "15th March 2009";
 
     /**
      * Checks if Db is correct version
@@ -69,12 +66,11 @@ public class GGC
     {
         GGCDbConfig conf = new GGCDbConfig(true);
 
-        DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(), DataAccess.getInstance().getI18nControlInstance());
+        DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(), DataAccess.getInstance()
+                .getI18nControlInstance());
 
         if (dcr.canApplicationStart())
-        {
             return true;
-        }
         else
         {
             dcr.showError();
@@ -90,22 +86,20 @@ public class GGC
     public static void main(String[] args)
     {
 
-        
-
         boolean dev = false;
 
         if (args.length > 0)
+        {
             dev = true;
+        }
 
-        
         if (!dev)
         {
             if (!GGC.isDbOk())
-                return;            
+                return;
 
             DataAccess.deleteInstance();
         }
-        
 
         s_theApp = new GGC();
         s_theApp.init(dev);
@@ -129,11 +123,11 @@ public class GGC
         {
             Toolkit theKit = s_mainWindow.getToolkit();
             Dimension wndSize = theKit.getScreenSize();
-    
+
             int x, y;
             x = wndSize.width / 2 - 400;
             y = wndSize.height / 2 - 300;
-    
+
             s_mainWindow.setBounds(x, y, 800, 600);
             s_mainWindow.setVisible(true);
         }

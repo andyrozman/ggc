@@ -6,6 +6,7 @@ import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCLanguageManagerRunner;
+import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.output.ConsoleOutputWriter;
 
 import java.io.File;
@@ -46,13 +47,13 @@ public class CGMSConsoleTester // extends JFrame
     TimerThread thread;
     String path_to_test_files = "../../test/";
 
-
     /**
      * Constructor
      * 
      * @param portName
      */
-    public CGMSConsoleTester(String portName) {
+    public CGMSConsoleTester(String portName)
+    {
 
         TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 
@@ -63,7 +64,8 @@ public class CGMSConsoleTester // extends JFrame
         // thread = new TimerThread();
         // thread.start();
 
-        try {
+        try
+        {
             // startDexcom();
 
             // startFileSelector();
@@ -75,11 +77,8 @@ public class CGMSConsoleTester // extends JFrame
             /*
              * //GGCFileOutputWriter gfo = new GGCFileOutputWriter();
              * ConsoleOutputWriter cow = new ConsoleOutputWriter();
-             * 
              * // thread.addJob(gfo.getOutputUtil());
-             * 
              * displaySerialPorts();
-             * 
              * /*
              * m_meter = new AscensiaContour(portName, gfo);
              * m_meter.setPort(portName);
@@ -89,16 +88,18 @@ public class CGMSConsoleTester // extends JFrame
             // m_meter = new OneTouchUltra(portName, cow);
             // m_meter.loadInitialData();
 
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             System.out.println("Tester -> Exception on creation of meter. " + ex);
             ex.printStackTrace();
         }
 
     }
 
-
     @SuppressWarnings("unused")
-    private void startDexcom() {
+    private void startDexcom()
+    {
         DataAccessCGMS dap = DataAccessCGMS.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
         // dap.initAllObjects();
         dap.loadSpecialParameters();
@@ -111,14 +112,14 @@ public class CGMSConsoleTester // extends JFrame
 
     }
 
-
     /**
      * Start Minimed
      *
      * @param file
      * @throws Exception
      */
-    public void startMinimed(String file) throws Exception {
+    public void startMinimed(String file) throws Exception
+    {
         // MinimedCareLink mcl = new MinimedCareLink();
         // mcl.parseExportFile(new File(file));
         // MinimedSMP msp = new MinimedSMP("f:\\Rozman_A_Plus_20090423.mmp");
@@ -139,34 +140,38 @@ public class CGMSConsoleTester // extends JFrame
         // this.backup_restore_enabled = true;
 
         da.loadSpecialParameters();
-        // System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
+        // System.out.println("PumpServer: " +
+        // m_da.getSpecialParameters().get("BG"));
 
         dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
 
         System.out.println(new File(".").getAbsolutePath());
 
         MinimedCareLinkCGMS mcl = new MinimedCareLinkCGMS(dap, new ConsoleOutputWriter(),
-            MinimedCareLinkCGMS.READ_DEVICE_DATA);
-        // mcl.parseExportFile(new File(path_to_test_files + "CareLink-Export-1213803114904.csv"));
+                MinimedCareLink.READ_DEVICE_DATA);
+        // mcl.parseExportFile(new File(path_to_test_files +
+        // "CareLink-Export-1213803114904.csv"));
         mcl.parseExportFile(new File(path_to_test_files + "CareLink-Export-2008-05-18--06-01.csv"));
 
-        // MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp", DataAccessPump.getInstance());
+        // MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp",
+        // DataAccessPump.getInstance());
         // msp.readData();
 
     }
 
-
     /**
      * Start File Selector
      */
-    public void startFileSelector() {
+    public void startFileSelector()
+    {
         DataAccessCGMS dap = DataAccessCGMS.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
         // dap.initAllObjects();
         dap.loadSpecialParameters();
 
         // JDialog d = new JDialog();
         // MultipleFileSelectorPanel p = new MultipleFileSelectorPanel(dap, d);
-        // ImportFileSelectorPanel p = new ImportFileSelectorPanel(dap, d, null, new FRC_DexcomTxt_DM3(dap));
+        // ImportFileSelectorPanel p = new ImportFileSelectorPanel(dap, d, null,
+        // new FRC_DexcomTxt_DM3(dap));
 
         // d.getContentPane().add(p);
 
@@ -174,37 +179,42 @@ public class CGMSConsoleTester // extends JFrame
         // d.setVisible(true);
     }
 
-
     /**
      * Main method
      * 
      * @param args
      */
-    public static void main(String args[]) {
-        try {
+    public static void main(String args[])
+    {
+        try
+        {
 
             if (args.length == 0)
+            {
                 new CGMSConsoleTester("");
+            }
             else
+            {
                 new CGMSConsoleTester(args[0]);
+            }
 
             /*
              * AscensiaMeter am = new AscensiaMeter();
              * am.setPort("COM1");
              * am.open();
-             * 
              * try
              * {
              * Thread.sleep(2000);
              * am.test();
-             * 
              * }
              * catch(Exception ex)
              * {
              * }
              */
 
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             System.out.println("Error:" + ex);
             ex.printStackTrace();
         }

@@ -41,14 +41,11 @@ import com.itextpdf.text.pdf.PdfPTable;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-
 // WARNING: THIS IS WORK IN PROGRESS, PLEASE DON'T EDIT. Andy
 
 public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
 {
-   
-    
+
     /**
      * Constructor
      *  
@@ -58,17 +55,16 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     {
         super(dvr);
     }
-    
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void fillDocumentBody(Document document) throws Exception
     {
-        //int count = 0;
+        // int count = 0;
 
-        Font f = this.textFontNormal; 
+        Font f = this.textFontNormal;
 
         PdfPTable datatable = new PdfPTable(getTableColumnsCount());
         datatable.setWidths(getTableColumnWidths());
@@ -84,64 +80,64 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
         datatable.addCell(this.createBoldTextPhrase("SUB_TYPE"));
         datatable.addCell(this.createBoldTextPhrase("VALUE_SHORT"));
         datatable.addCell(this.createBoldTextPhrase("OTHER_DATA_FOOD"));
-        
-        //writeAdditionalHeader(datatable);
+
+        // writeAdditionalHeader(datatable);
 
         GregorianCalendar gc_end = this.deviceValuesRange.getEndGC();
         gc_end.add(Calendar.DAY_OF_MONTH, 1);
-        
-        GregorianCalendar gc_current = deviceValuesRange.getStartGC(); 
-        
-        
-        do 
+
+        GregorianCalendar gc_current = deviceValuesRange.getStartGC();
+
+        do
         {
-            
+
             ATechDate atd = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), gc_current);
 
             if (deviceValuesRange.isDayEntryAvailable(atd.getATDateTimeAsLong()))
             {
-                
+
                 DeviceValuesDay dvd = deviceValuesRange.getDayEntry(atd.getATDateTimeAsLong());
-                
+
                 // FIXME fix this
                 datatable.addCell(new Phrase(atd.getDateString(), f));
-                
-                
-                for(int i=0; i<dvd.getList().size(); i++)
+
+                for (int i = 0; i < dvd.getList().size(); i++)
                 {
 
-                    PumpValuesEntry pve = (PumpValuesEntry)dvd.getList().get(i);
+                    PumpValuesEntry pve = (PumpValuesEntry) dvd.getList().get(i);
 
                     ATechDate atdx = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), pve.getDateTime());
-      
-                    if (i!=0)
+
+                    if (i != 0)
+                    {
                         datatable.addCell(new Phrase("", f));
-                    
+                    }
+
                     datatable.addCell(new Phrase(atdx.getTimeString(), f));
                     datatable.addCell(new Phrase(pve.getBaseTypeString(), f));
                     datatable.addCell(new Phrase(pve.getSubTypeString(), f));
                     datatable.addCell(new Phrase(pve.getValuePrint(), f));
-                    datatable.addCell(new Phrase(pve.getAdditionalDataPrint(PumpValuesEntry.PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD), f));
+                    datatable.addCell(new Phrase(pve
+                            .getAdditionalDataPrint(PumpValuesEntry.PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD), f));
                 }
-                
+
             }
             else
             {
                 datatable.addCell(new Phrase(atd.getDateString(), f));
                 this.writeEmptyColumnData(datatable);
             }
-            
 
             gc_current.add(Calendar.DAY_OF_MONTH, 1);
-            
-        } while (gc_current.before(gc_end) );
+
+        } while (gc_current.before(gc_end));
 
         document.add(datatable);
 
-        //System.out.println("Elements all: " + this.m_data.size() + " in iterator: " + count);
+        // System.out.println("Elements all: " + this.m_data.size() +
+        // " in iterator: " + count);
 
     }
-    
 
     /**
      * {@inheritDoc}
@@ -149,13 +145,10 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     @Override
     public int[] getTableColumnWidths()
     {
-        int headerwidths[] = { 9, 7,
-                               10, 10, 12, 52 
-                                }; // percentage
+        int headerwidths[] = { 9, 7, 10, 10, 12, 52 }; // percentage
         return headerwidths;
     }
 
-    
     /**
      * {@inheritDoc}
      */
@@ -164,7 +157,6 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     {
         return 6;
     }
-
 
     /**
      * {@inheritDoc}
@@ -175,16 +167,14 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
         return "PUMP_DATA_EXT";
     }
 
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void writeAdditionalHeader(PdfPTable table) throws Exception
     {
-        //table.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
+        // table.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
     }
-
 
     /**
      * {@inheritDoc}
@@ -199,46 +189,44 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
         table.addCell(this.createEmptyTextPhrase());
     }
 
-    
     /**
      * {@inheritDoc}
      */
     @Override
-    public void writeColumnData(PdfPTable table, Object /*DailyFoodEntry*/ mp) throws Exception
+    public void writeColumnData(PdfPTable table, Object /* DailyFoodEntry */mp) throws Exception
     {
         /*
-        table.addCell(new Phrase("", this.text_normal));
-        table.addCell(new Phrase("", this.text_normal));
-        
-        table.addCell(new Phrase(mp.getName(), this.text_normal));
-        
-        
-        float value = 0.0f;
-        
-        if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
-        {
-            table.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), this.text_normal));
-            //value = mp.getNutrientValue(205);
-            value = mp.getMealCH();
-            
-        }
-        else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
-        {
-            table.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), this.text_normal));
-            //value = mp.getNutrientValue(205);
-            value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
-        }
-        else
-        {
-            table.addCell(new Phrase(mp.getHomeWeightDescription() + " (" + DataAccess.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100) + " g)", this.text_normal));
-            value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
-        }
-        
-        table.addCell(new Phrase(mp.getAmountSingleDecimalString(), this.text_normal));
-        table.addCell(new Phrase(DataAccess.Decimal2Format.format(value), this.text_normal));  // ch
-*/
+         * table.addCell(new Phrase("", this.text_normal));
+         * table.addCell(new Phrase("", this.text_normal));
+         * table.addCell(new Phrase(mp.getName(), this.text_normal));
+         * float value = 0.0f;
+         * if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
+         * {
+         * table.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"),
+         * this.text_normal));
+         * //value = mp.getNutrientValue(205);
+         * value = mp.getMealCH();
+         * }
+         * else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
+         * {
+         * table.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"),
+         * this.text_normal));
+         * //value = mp.getNutrientValue(205);
+         * value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
+         * }
+         * else
+         * {
+         * table.addCell(new Phrase(mp.getHomeWeightDescription() + " (" +
+         * DataAccess.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100)
+         * + " g)", this.text_normal));
+         * value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
+         * }
+         * table.addCell(new Phrase(mp.getAmountSingleDecimalString(),
+         * this.text_normal));
+         * table.addCell(new Phrase(DataAccess.Decimal2Format.format(value),
+         * this.text_normal)); // ch
+         */
     }
-
 
     /**
      * {@inheritDoc}
@@ -253,7 +241,6 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
         table.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.textFontItalic));
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -262,5 +249,5 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     {
         return "PumpDataExt";
     }
-    
+
 }

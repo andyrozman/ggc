@@ -1,4 +1,4 @@
-package ggc.cgms.manager.company; 
+package ggc.cgms.manager.company;
 
 import ggc.cgms.device.freestyle.FreestyleNavigator;
 import ggc.cgms.manager.CGMSDevicesIds;
@@ -32,26 +32,23 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Abbott extends AbstractDeviceCompany
 {
 
-    
     /**
      * Constructor
      */
     public Abbott()
     {
-        super(false,                            // empty devices
-            CGMSDevicesIds.COMPANY_ABBOTT,      // company_id
-            "Abbott",                           // company name (full)
-            "Abbott",                           // short company name
-            "ABBOTT_DESC",                      // company description
-            DeviceImplementationStatus.IMPLEMENTATION_PLANNED,
-            DataAccessCGMS.getInstance());  // implementation status
-        
+        super(false, // empty devices
+                CGMSDevicesIds.COMPANY_ABBOTT, // company_id
+                "Abbott", // company name (full)
+                "Abbott", // short company name
+                "ABBOTT_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_PLANNED, DataAccessCGMS.getInstance()); // implementation
+                                                                                                  // status
+
         this.addDevice(new FreestyleNavigator(this));
     }
-    
-    
+
 }

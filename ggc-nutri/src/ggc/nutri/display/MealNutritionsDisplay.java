@@ -42,7 +42,8 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
     private String name;
     private String weight_unit;
     private String decimal_places;
-    //private float calculated_value;
+
+    // private float calculated_value;
 
     /**
      * Constructor
@@ -53,7 +54,6 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
     {
         super(ic);
     }
-
 
     /**
      * Constructor
@@ -70,7 +70,6 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
 
     }
 
-    
     /**
      * Set Nutrition Definition
      * 
@@ -90,6 +89,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
      * 
      * @see com.atech.graphics.components.ATTableData#init()
      */
+    @Override
     public void init()
     {
         String[] cols = { "NUTRITION", "AMOUNT_LBL", "UNITS" };
@@ -98,7 +98,6 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
         init(cols, cols_size);
     }
 
-    
     /**
      * Get Id
      * @return
@@ -107,8 +106,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
     {
         return this.id;
     }
-    
-    
+
     /**
      * Get Value
      * 
@@ -117,34 +115,34 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
     public String getValue()
     {
         float fl = Float.parseFloat(this.value);
-        return DataAccessNutri.getInstance().getDecimalHandler().getDecimalAsString(fl, Integer.parseInt(this.decimal_places));
+        return DataAccessNutri.getInstance().getDecimalHandler()
+                .getDecimalAsString(fl, Integer.parseInt(this.decimal_places));
     }
 
-    
     /**
      * Get Column Value
      * 
      * @see com.atech.graphics.components.ATTableData#getColumnValue(int)
      */
+    @Override
     public String getColumnValue(int column)
     {
 
         switch (column)
         {
-        case 1:
-            return this.getValue();
-        case 2:
-            return this.weight_unit;
+            case 1:
+                return this.getValue();
+            case 2:
+                return this.weight_unit;
 
-        case 0:
-        default:
-            return this.name;
+            case 0:
+            default:
+                return this.name;
 
         }
 
     }
 
-    
     /**
      * Compare
      * 
@@ -155,7 +153,6 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
         return mnd1.name.compareTo(mnd2.name);
     }
 
-    
     /**
      * Get Save Data
      * 
@@ -166,12 +163,12 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
         return this.id + "=" + this.getValue();
     }
 
-
     /**
      * To String
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString()
     {
         return getSaveData();

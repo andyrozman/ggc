@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
+import com.atech.db.hibernate.transfer.ImportExportAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,7 +39,6 @@ import com.atech.db.hibernate.transfer.ExportTool;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class ExportDailyValues extends ExportTool implements Runnable
 {
 
@@ -54,7 +54,7 @@ public class ExportDailyValues extends ExportTool implements Runnable
         checkPrerequisitesForAutoBackup();
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ExportTool.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
 
         // exportAll();
     }
@@ -68,7 +68,7 @@ public class ExportDailyValues extends ExportTool implements Runnable
     {
         super(cfg);
 
-        this.setTypeOfStatus(ExportNutritionDb.STATUS_DOT);
+        this.setTypeOfStatus(ImportExportAbstract.STATUS_DOT);
 
         checkPrerequisites();
         exportAll();
@@ -79,12 +79,16 @@ public class ExportDailyValues extends ExportTool implements Runnable
         File f = new File("../data");
 
         if (!f.exists())
+        {
             f.mkdir();
+        }
 
         f = new File("../data/export");
 
         if (!f.exists())
+        {
             f.mkdir();
+        }
 
         this.setRootPath("../data/export/");
         this.setFileLastPart("_" + getCurrentDateForFile());
@@ -95,17 +99,23 @@ public class ExportDailyValues extends ExportTool implements Runnable
         File f = new File("../data");
 
         if (!f.exists())
+        {
             f.mkdir();
+        }
 
         f = new File("../data/export");
 
         if (!f.exists())
+        {
             f.mkdir();
+        }
 
         f = new File("../data/export/tmp");
 
         if (!f.exists())
+        {
             f.mkdir();
+        }
 
         this.setRootPath("../data/export/tmp/");
         this.setFileLastPart("");
@@ -119,31 +129,28 @@ public class ExportDailyValues extends ExportTool implements Runnable
     /*
      * private void sleep(long ms) { try { Thread.sleep(ms); } catch(Exception
      * ex) {
-     * 
      * } }
      */
 
-    
     /**
      * Get Active Session
      * 
      * @see com.atech.db.hibernate.transfer.ImportExportAbstract#getActiveSession()
      */
+    @Override
     public int getActiveSession()
     {
         return 2;
     }
-    
-    
-    
+
     @SuppressWarnings("unchecked")
     private void export_DailyValues()
     {
         openFile(this.getRootPath() + "DayValueH" + this.getFileLastPart() + ".dbe");
         // "../data/export/DayValueH_" + getCurrentDateForFile() + ".txt");
         writeHeader("ggc.core.db.hibernate.DayValueH",
-            "id; dt_info; bg; ins1; ins2; ch; meals_ids; extended; person_id; comment; changed", DataAccess
-                    .getInstance().current_db_version);
+            "id; dt_info; bg; ins1; ins2; ch; meals_ids; extended; person_id; comment; changed",
+            DataAccess.getInstance().current_db_version);
 
         Session sess = getSession();
 
@@ -182,12 +189,12 @@ public class ExportDailyValues extends ExportTool implements Runnable
         exportAll();
     }
 
-/*
-    public static void main(String[] args)
-    {
-        GGCDb db = new GGCDb();
-        db.initDb();
-        new ExportDailyValues(db.getHibernateConfiguration());
-    }
-*/
+    /*
+     * public static void main(String[] args)
+     * {
+     * GGCDb db = new GGCDb();
+     * db.initDb();
+     * new ExportDailyValues(db.getHibernateConfiguration());
+     * }
+     */
 }

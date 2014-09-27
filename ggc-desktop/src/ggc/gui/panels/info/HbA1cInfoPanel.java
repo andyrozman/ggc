@@ -38,7 +38,6 @@ import javax.swing.JPanel;
  *  Author: schultd
  */
 
-
 public class HbA1cInfoPanel extends AbstractInfoPanel
 {
 
@@ -48,7 +47,8 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
     private JLabel lblAvgBG;
     private JLabel lblReadings;
     private JLabel lblReadingsPerDay;
-    //private DataAccess m_da = DataAccess.getInstance();
+
+    // private DataAccess m_da = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -81,39 +81,44 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
         add(lblPanel, BorderLayout.NORTH);
     }
 
-    
-    
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "HbA1cInfo";
     }
-    
-    
+
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
         HbA1cValues hbVal = null;
 
         GGCDb db = m_da.getDb();
 
-        if ((db != null) && (db.isDbStarted()))
+        if (db != null && db.isDbStarted())
+        {
             hbVal = m_da.getHbA1c(new GregorianCalendar());
+        }
 
         DecimalFormat df = new DecimalFormat("#0.00");
 
         if (hbVal != null)
         {
             if (hbVal.getReadings() == 0)
+            {
                 lblHbA1c.setText(m_ic.getMessage("NO_READINGS"));
+            }
             else
+            {
                 lblHbA1c.setText(df.format(hbVal.getHbA1c_Method3()) + " %");
+            }
 
             // lblHbA1c.setText(df.format(hbVal.getHbA1c_Method1()) + " %");
 
@@ -131,8 +136,7 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
             lblReadingsPerDay.setText("");
         }
     }
-    
-    
+
     /**
      * Get Panel Id
      * 
@@ -143,6 +147,5 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
     {
         return InfoPanelsIds.INFO_PANEL_HBA1C;
     }
-    
-    
+
 }

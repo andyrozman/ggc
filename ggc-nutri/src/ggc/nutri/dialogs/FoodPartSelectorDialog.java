@@ -1,5 +1,5 @@
 package ggc.nutri.dialogs;
- 
+
 import ggc.nutri.db.datalayer.NutritionDefinition;
 import ggc.nutri.db.datalayer.NutritionHomeWeightType;
 import ggc.nutri.util.DataAccessNutri;
@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,18 +42,17 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
 
     private static final long serialVersionUID = 7262008735572008874L;
     private DataAccessNutri m_da = null;
-    
+
     /**
      * Selector: Nutrition
      */
     public static final int SELECTOR_NUTRITION = 1;
-    
+
     /**
      * Selector: Home Weight
      */
     public static final int SELECTOR_HOME_WEIGHT = 2;
-    
-    
+
     /**
      * Constructor
      * 
@@ -63,7 +61,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
      * @param type
      * @param except
      */
-    public FoodPartSelectorDialog(JDialog parent, DataAccessNutri da, int type, String except) 
+    public FoodPartSelectorDialog(JDialog parent, DataAccessNutri da, int type, String except)
     {
         super(parent, da, type, except, true);
         this.showDialog();
@@ -77,20 +75,20 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
      * @param type
      * @param except
      */
-    public FoodPartSelectorDialog(JFrame parent, DataAccessNutri da, int type, String except) 
+    public FoodPartSelectorDialog(JFrame parent, DataAccessNutri da, int type, String except)
     {
         super(parent, da, type, except, true);
         this.showDialog();
     }
-  
-    
+
     /**
      * Init Selector Values For Type
      */
+    @Override
     public void initSelectorValuesForType()
     {
-    	if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_NUTRITION)
-    	{
+        if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_NUTRITION)
+        {
             setSelectorObject(new NutritionDefinition());
             setSelectorName(ic.getMessage("SELECTOR_NUTRITION_DEFINITION"));
             setHelpStringId("GGC_Food_User_Select_Nutrition");
@@ -98,49 +96,44 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
             setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
             this.getDescriptions().put("DESC_1", ic.getMessage("NUTRITION_NAME"));
             setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
-   	        this.setHelpEnabled(true);
-    	}
-    	else if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_HOME_WEIGHT)
-    	{
+            this.setHelpEnabled(true);
+        }
+        else if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_HOME_WEIGHT)
+        {
             setSelectorObject(new NutritionHomeWeightType());
             setSelectorName(ic.getMessage("SELECTOR_HOME_WEIGHT"));
             setHelpStringId("GGC_Food_User_Select_HomeWeight");
             setNewItemString(ic.getMessage("NEW_HOME_WEIGHT"));
-    	    setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
-    	    this.getDescriptions().put("DESC_1", ic.getMessage("HOME_WEIGHT_NAME"));
-    	    setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
+            setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
+            this.getDescriptions().put("DESC_1", ic.getMessage("HOME_WEIGHT_NAME"));
+            setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
             this.setHelpEnabled(true);
-    	}
-	
+        }
+
     }
-
-     
-    
-
 
     /**
      * Get Full Data
      * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#getFullData()
      */
+    @Override
     public void getFullData()
     {
-    	this.m_da = DataAccessNutri.getInstance();
-    	
-    	if (this.getSelectorType()==FoodPartSelectorDialog.SELECTOR_NUTRITION)
-    	{
-    	    this.full = this.m_da.getNutriDb().getNutritionDefinitions();
-    	}
-    	else if (this.getSelectorType()==FoodPartSelectorDialog.SELECTOR_HOME_WEIGHT)
-    	{
-    	    this.full = this.m_da.getNutriDb().getNutritionHomeWeights();
-    	}
-    	else
-    	    System.out.println("getFullData(): type not handled (" + this.getSelectorType() + ")");
-    }
-    
-    
-    
+        this.m_da = DataAccessNutri.getInstance();
 
+        if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_NUTRITION)
+        {
+            this.full = this.m_da.getNutriDb().getNutritionDefinitions();
+        }
+        else if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_HOME_WEIGHT)
+        {
+            this.full = this.m_da.getNutriDb().getNutritionHomeWeights();
+        }
+        else
+        {
+            System.out.println("getFullData(): type not handled (" + this.getSelectorType() + ")");
+        }
+    }
 
     /**
      * Check and Execute Action: Edit
@@ -151,7 +144,6 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
         System.out.println("checkAndExecuteActionEdit()");
     }
 
-
     /**
      * Check and Execute Action: New
      */
@@ -161,24 +153,22 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
         System.out.println("checkAndExecuteActionNew()");
     }
 
-
     /**
      * Check and Execute Action: Select
      */
     @Override
     public void checkAndExecuteActionSelect()
     {
-        if (table!=null)
+        if (table != null)
         {
-            if (table.getSelectedRow()==-1)
+            if (table.getSelectedRow() == -1)
                 return;
 
             this.selected_object = list.get(table.getSelectedRow());
             this.dispose();
         }
-	
-    }
 
+    }
 
     /**
      * Item State Changed
@@ -190,6 +180,4 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     {
     }
 
-    
-    
 }

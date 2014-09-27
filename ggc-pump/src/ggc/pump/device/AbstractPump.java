@@ -34,27 +34,29 @@ import ggc.pump.util.DataAccessPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public abstract class AbstractPump extends DeviceAbstract implements PumpInterface //, SelectableInterface
+public abstract class AbstractPump extends DeviceAbstract implements PumpInterface // ,
+                                                                                   // SelectableInterface
 {
 
-    //AbstractDeviceCompany pump_company;
+    // AbstractDeviceCompany pump_company;
 
     protected int m_status = 0;
-    //protected I18nControlAbstract ic = null; //DataAccessPump.getInstance().getI18nControlInstance();
+    // protected I18nControlAbstract ic = null;
+    // //DataAccessPump.getInstance().getI18nControlInstance();
 
-    //protected String m_info = "";
-    //protected int m_time_difference = 0;
-    //protected ArrayList<PumpValuesEntry> data = null;
-    
-    //protected OutputWriter m_output_writer = null;
-    
+    // protected String m_info = "";
+    // protected int m_time_difference = 0;
+    // protected ArrayList<PumpValuesEntry> data = null;
+
+    // protected OutputWriter m_output_writer = null;
+
     protected String[] profile_names = null;
     protected String device_name;
-    //protected OutputWriter output_writer;
+    // protected OutputWriter output_writer;
     protected String parameter;
-    //protected DataAccessPump m_da;
-    
+
+    // protected DataAccessPump m_da;
+
     /**
      * Constructor
      */
@@ -63,7 +65,6 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         super(DataAccessPump.getInstance());
     }
 
-    
     /**
      * Constructor
      * 
@@ -75,8 +76,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         super(DataAccessPump.getInstance(), ow);
         this.parameter = param;
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -88,8 +88,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         super(comm_parameters, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -100,7 +99,6 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         super(DataAccessPump.getInstance(), ow);
     }
 
-
     /**
      * Constructor
      * 
@@ -109,13 +107,11 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     public AbstractPump(AbstractDeviceCompany cmp)
     {
         super(cmp, DataAccessPump.getInstance());
-        //super(DataAccessPump.getInstance());
-        //this.setDeviceCompany(cmp);
+        // super(DataAccessPump.getInstance());
+        // this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }
-    
-    
-    
+
     /**
      * Set Pump Type
      * 
@@ -125,24 +121,22 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     public void setPumpType(String group, String device)
     {
         this.device_name = device;
-        
+
         DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
-        
-        if (this.output_writer!=null)
+
+        if (this.output_writer != null)
+        {
             this.output_writer.setDeviceIdentification(di);
-        //this.output_writer.
-        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
-        
+            // this.output_writer.
+            // this.device_instance =
+            // MeterManager.getInstance().getMeterDevice(group, device);
+        }
+
         this.device_source_name = group + " " + device;
-        
+
     }
-    
-    
-    
-
-
 
     /**
      * Get Name
@@ -152,19 +146,10 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         return "Generic device";
     }
 
+    // ************************************************
+    // *** Available Functionality ***
+    // ************************************************
 
-
-
-
-
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
-
-    
-
-    
     /**
      * Get Profile Names
      * 
@@ -175,7 +160,6 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         return this.profile_names;
     }
 
-    
     /**
      * Get Download Support Type (if device supports downloading data from it)
      * 
@@ -185,7 +169,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
-    
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -197,7 +181,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         return "TYPE=Unit;STEP=0.1";
     }
-    
+
     /**
      * Get Bolus Precission
      * 
@@ -207,7 +191,6 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         return 0.1f;
     }
-    
 
     /**
      * Get Basal Precission
@@ -219,7 +202,6 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         return 0.1f;
     }
 
-    
     /**
      * Are Pump Settings Set
      * 
@@ -229,8 +211,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         return false;
     }
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
@@ -240,8 +221,5 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         return 6;
     }
-    
-    
-    
-    
+
 }

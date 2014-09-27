@@ -27,78 +27,57 @@ package ggc.cgms.manager;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class CGMSDevicesIds
 {
 
-    
-    
-    
-    
     /**
      * CGMS Company: Abbott
      */
-    public static final int COMPANY_ABBOTT              = 1;
-    
+    public static final int COMPANY_ABBOTT = 1;
 
     /**
      * Pump Company: Dexcom
      */
-    public static final int COMPANY_DEXCOM              = 2;
-    
+    public static final int COMPANY_DEXCOM = 2;
 
     /**
      * Pump Company: Minimed
      */
-    public static final int COMPANY_MINIMED             = 3;
-    
-    
-    
+    public static final int COMPANY_MINIMED = 3;
+
     /**
      * CGMS (Abbott) - Freestyle Navigator
      */
-    public static final int CGMS_FREESTYLE_NAVIGATOR     = 10001;
+    public static final int CGMS_FREESTYLE_NAVIGATOR = 10001;
 
-    
-    
     /**
      * CGMS (Dexcom) - Dexcom 7
      */
-    public static final int CGMS_DEXCOM_7                = 20001;
-    
-    
+    public static final int CGMS_DEXCOM_7 = 20001;
+
     /**
      * CGMS (Dexcom) - Dexcom 7 Plus
      */
-    public static final int CGMS_DEXCOM_7_PLUS           = 20002;
-    
-    
+    public static final int CGMS_DEXCOM_7_PLUS = 20002;
+
     /**
      * CGMS (Dexcom) - Dexcom G4 / G4 Platinum
      */
-    public static final int CGMS_DEXCOM_G4           = 20003;
-    
-    
-    
-    
-    
+    public static final int CGMS_DEXCOM_G4 = 20003;
+
     /**
      * CGMS (Minimed) - Guardian
      */
-    public static final int CGMS_MINIMED_GOLD            = 30001;
+    public static final int CGMS_MINIMED_GOLD = 30001;
 
-    
     /**
      * CGMS (Minimed) - Guardian RealTime
      */
-    public static final int CGMS_GUARDIAN_REALTIME       = 30002;
-    
-    
+    public static final int CGMS_GUARDIAN_REALTIME = 30002;
+
     /**
      * CGMS (Minimed) - Minimed RealTime
      */
-    public static final int CGMS_MINIMED_REALTIME        = 30003;
-    
-    
-    
+    public static final int CGMS_MINIMED_REALTIME = 30003;
+
 }

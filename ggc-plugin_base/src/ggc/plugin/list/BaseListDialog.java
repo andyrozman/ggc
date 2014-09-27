@@ -1,5 +1,5 @@
 package ggc.plugin.list;
- 
+
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Dimension;
@@ -43,8 +43,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class BaseListDialog extends JDialog implements TreeSelectionListener //, ActionListener
+public class BaseListDialog extends JDialog implements TreeSelectionListener // ,
+                                                                             // ActionListener
 {
 
     private static final long serialVersionUID = -331463474036415168L;
@@ -53,17 +53,16 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener //,
 
     protected DataAccessPlugInBase m_da = null;
     private I18nControlAbstract ic = null;
-    protected BaseListAbstractPanel  panels[] = null;
+    protected BaseListAbstractPanel panels[] = null;
     BaseListRoot m_root = null;
-    
-    
+
     /**
      * Constructor
      * 
      * @param parent
      * @param da
      */
-    public BaseListDialog(JFrame parent, DataAccessPlugInBase da) 
+    public BaseListDialog(JFrame parent, DataAccessPlugInBase da)
     {
 
         super(parent, "", true);
@@ -74,46 +73,48 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener //,
         this.setTitle();
 
         m_da.addComponent(this);
-        
+
         m_root = new BaseListRoot(m_da);
 
-        //this.setResizable(false);
+        // this.setResizable(false);
         this.setBounds(80, 50, 710, 523);
         setTitle();
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1,0));
-        
+        panel.setLayout(new GridLayout(1, 0));
+
         m_da.centerJDialog(this, parent);
-        
-        //this.pop.s
-        //add(pop);
 
+        // this.pop.s
+        // add(pop);
 
-        //Create a tree that allows one selection at a time.
+        // Create a tree that allows one selection at a time.
         tree = new JTree();
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         this.setTreeModel(tree);
-        //tree.setModel(new NutritionTreeModel(m_da.m_nutrition_treeroot));
+        // tree.setModel(new NutritionTreeModel(m_da.m_nutrition_treeroot));
         tree.addTreeSelectionListener(this);
         tree.setCellRenderer(new BaseListRenderer());
-        //tree.addMouseListener(this);
-
+        // tree.addMouseListener(this);
 
         JScrollPane treeView = new JScrollPane(tree);
 
         mainPane = new JPanel();
         mainPane.setLayout(null);
 
-        //Add the scroll panes to a split pane.
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT/*.VERTICAL_SPLIT*/);
+        // Add the scroll panes to a split pane.
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT/*
+                                                                          * .
+                                                                          * VERTICAL_SPLIT
+                                                                          */);
         splitPane.setTopComponent(treeView);
         splitPane.setBottomComponent(mainPane);
 
         Dimension minimumSize = new Dimension(100, 50);
         mainPane.setMinimumSize(minimumSize);
         treeView.setMinimumSize(minimumSize);
-        splitPane.setDividerLocation(200); // ignored in some releases of Swing. bug 4101306
+        splitPane.setDividerLocation(200); // ignored in some releases of Swing.
+                                           // bug 4101306
         splitPane.setPreferredSize(new Dimension(500, 300));
 
         panel.add(splitPane);
@@ -121,18 +122,15 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener //,
         createPanels();
         this.add(panel);
         makePanelVisible(0);
-        
-        
+
         this.setResizable(false);
         this.setVisible(true);
-        
-    }
 
-    
+    }
 
     private void setTitle()
     {
-	    this.setTitle(String.format(ic.getMessage("DEVICE_LIST_WEB"), ic.getMessage("DEVICE_NAME_BIG")));
+        this.setTitle(String.format(ic.getMessage("DEVICE_LIST_WEB"), ic.getMessage("DEVICE_NAME_BIG")));
     }
 
     /**
@@ -142,24 +140,23 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener //,
      */
     public void setTreeModel(JTree tree)
     {
-	    tree.setModel(new BaseListModel(this.m_root));
+        tree.setModel(new BaseListModel(this.m_root));
     }
-    
-    
+
     /**
      * Create Panels
      */
     public void createPanels()
     {
-    	panels = new BaseListAbstractPanel[2];
+        panels = new BaseListAbstractPanel[2];
 
         panels[0] = new BaseListMainPanel(this);
         panels[1] = new BaseListBrowserPanel(this);
-        panels[1].setSize(500,495); // 500
+        panels[1].setSize(500, 495); // 500
 
-        for(int i = 0; i < panels.length ; i++)
+        for (BaseListAbstractPanel panel : panels)
         {
-            mainPane.add(panels[i]);
+            mainPane.add(panel);
         }
 
         makePanelVisible(0);
@@ -170,12 +167,11 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener //,
      * Panel: Main
      */
     public static final int PANEL_MAIN = 0;
-    
+
     /**
      * Panel: Browser
      */
     public static final int PANEL_BROWSER = 1;
-
 
     /** 
      * Makes selected panel visible
@@ -184,57 +180,56 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener //,
      */
     public void makePanelVisible(int num)
     {
-//x        selectedPanel = num;
+        // x selectedPanel = num;
 
-        for(int i = 0; i < panels.length; i++)
-            if(i == num)
+        for (int i = 0; i < panels.length; i++)
+            if (i == num)
+            {
                 panels[i].setVisible(true);
+            }
             else
+            {
                 panels[i].setVisible(false);
+            }
     }
-
 
     Object selected_last_path = null;
 
     /** Required by TreeSelectionListener interface. */
-    public void valueChanged(TreeSelectionEvent e) 
+    public void valueChanged(TreeSelectionEvent e)
     {
 
-    	this.selected_last_path = tree.getLastSelectedPathComponent();
+        this.selected_last_path = tree.getLastSelectedPathComponent();
 
-    	//this.displayPanel(1);
-    	
-    	if (this.selected_last_path instanceof BaseListRoot)
-    	{
-    		makePanelVisible(BaseListDialog.PANEL_MAIN);
-    	}
-    	else if (this.selected_last_path instanceof BaseListEntry)
-    	{
-            //else if (this.selected_last_path instanceof String)
-    	    makePanelVisible(BaseListDialog.PANEL_BROWSER);
-    	    this.panels[BaseListDialog.PANEL_BROWSER].setData(this.selected_last_path);
-    	}
+        // this.displayPanel(1);
+
+        if (this.selected_last_path instanceof BaseListRoot)
+        {
+            makePanelVisible(BaseListDialog.PANEL_MAIN);
+        }
+        else if (this.selected_last_path instanceof BaseListEntry)
+        {
+            // else if (this.selected_last_path instanceof String)
+            makePanelVisible(BaseListDialog.PANEL_BROWSER);
+            this.panels[BaseListDialog.PANEL_BROWSER].setData(this.selected_last_path);
+        }
     }
 
-    
-    
     /**
      * Dispose
      * 
      * @see java.awt.Window#dispose()
      */
+    @Override
     public void dispose()
     {
         this.m_da.removeComponent(this);
         super.dispose();
     }
-    
-    
+
     boolean made = false;
     int menu_prev_type = 0;
-    
 
-    
     /**
      * Get Tree Item Type
      * 
@@ -242,9 +237,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener //,
      */
     public int getTreeItemType()
     {
-    	return 0;
+        return 0;
     }
-    
-    
-    
+
 }

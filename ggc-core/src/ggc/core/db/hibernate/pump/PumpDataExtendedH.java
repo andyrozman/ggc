@@ -46,7 +46,9 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
      * @param person_id 
      * @param comment 
      * @param changed */
-    public PumpDataExtendedH(long dt_info, int type, String value, String extended, int person_id, String comment, long changed) {
+    public PumpDataExtendedH(long dt_info, int type, String value, String extended, int person_id, String comment,
+            long changed)
+    {
         this.dt_info = dt_info;
         this.type = type;
         this.value = value;
@@ -57,13 +59,15 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     }
 
     /** default constructor */
-    public PumpDataExtendedH() {
+    public PumpDataExtendedH()
+    {
     }
 
     /** minimal constructor 
      * @param dt_info 
      * @param person_id */
-    public PumpDataExtendedH(long dt_info, int person_id) {
+    public PumpDataExtendedH(long dt_info, int person_id)
+    {
         this.dt_info = dt_info;
         this.person_id = person_id;
     }
@@ -112,7 +116,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
      * 
      * @return type value
      */
-    public int getType() 
+    public int getType()
     {
         return this.type;
     }
@@ -122,7 +126,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
      *  
      * @param type parameter
      */
-    public void setType(int type) 
+    public void setType(int type)
     {
         this.type = type;
     }
@@ -132,7 +136,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
      * 
      * @return value value
      */
-    public String getValue() 
+    public String getValue()
     {
         return this.value;
     }
@@ -142,7 +146,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
      *  
      * @param value parameter
      */
-    public void setValue(String value) 
+    public void setValue(String value)
     {
         this.value = value;
     }
@@ -232,13 +236,13 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof PumpDataExtendedH) ) return false;
+        if (!(other instanceof PumpDataExtendedH))
+            return false;
         PumpDataExtendedH castOther = (PumpDataExtendedH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -246,18 +250,19 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

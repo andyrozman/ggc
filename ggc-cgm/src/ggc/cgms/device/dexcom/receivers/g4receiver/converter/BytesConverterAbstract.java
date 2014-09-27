@@ -37,9 +37,7 @@ public class BytesConverterAbstract
         int newCrc = DexcomUtils.calculateCRC16(data, 0, data.length - 2);
 
         if (newCrc != crc2)
-        {
             throw new DexcomException(DexcomExceptionType.FailedCRCCheck, new Object[] { "DatabasePage", crc2, newCrc });
-        }
     }
 
     public void checkCrc(short[] data, int crc2) throws DexcomException
@@ -47,9 +45,7 @@ public class BytesConverterAbstract
         int newCrc = DexcomUtils.calculateCRC16(data, 0, data.length - 2);
 
         if (newCrc != crc2)
-        {
             throw new DexcomException(DexcomExceptionType.FailedCRCCheck, new Object[] { "DatabasePage", crc2, newCrc });
-        }
     }
 
     public ArrayList<DatabaseRecord> getRawRecords(List<DatabasePage> pages, IGenericReceiverRecord template)
@@ -67,9 +63,10 @@ public class BytesConverterAbstract
                 System.arraycopy(page.pageData, i * template.getCurrentRecordSize(), element, 0,
                     template.getCurrentRecordSize());
 
-                //                System.arraycopy(page.pageData,
-                //                    (page.getPageHeader().getFirstRecordIndex() + i) * template.getCurrentRecordSize(), element, 0,
-                //                    template.getCurrentRecordSize());
+                // System.arraycopy(page.pageData,
+                // (page.getPageHeader().getFirstRecordIndex() + i) *
+                // template.getCurrentRecordSize(), element, 0,
+                // template.getCurrentRecordSize());
 
                 rec.setData(element);
 

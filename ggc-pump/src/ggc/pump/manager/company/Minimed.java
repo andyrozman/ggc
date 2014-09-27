@@ -1,9 +1,6 @@
-package ggc.pump.manager.company; 
+package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
-import ggc.pump.device.minimed.Minimed508;
-import ggc.pump.device.minimed.Minimed512;
-import ggc.pump.device.minimed.Minimed554_Veo;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -32,7 +29,6 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Minimed extends AbstractPumpDeviceCompany
 {
 
@@ -41,22 +37,24 @@ public class Minimed extends AbstractPumpDeviceCompany
      */
     public Minimed()
     {
-        super(PumpDevicesIds.COMPANY_MINIMED,       // company_id
-            "Minimed",                              // company name (full)
-            "Minimed",                              // short company name
-            "MINIMED_DESC",                         // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE);  // implementation status
+        super(PumpDevicesIds.COMPANY_MINIMED, // company_id
+                "Minimed", // company name (full)
+                "Minimed", // short company name
+                "MINIMED_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE); // implementation
+                                                                          // status
         /*
-        this.addDevice(new Minimed508(this));
-        this.addDevice(new Minimed512(this));
-//        this.addDevice(new Minimed522(this));
-        this.addDevice(new Minimed554_Veo(this));*/
+         * this.addDevice(new Minimed508(this));
+         * this.addDevice(new Minimed512(this));
+         * // this.addDevice(new Minimed522(this));
+         * this.addDevice(new Minimed554_Veo(this));
+         */
     }
-
 
     /**
      * Init Profile Names (for Profile Editor)
      */
+    @Override
     public void initProfileNames()
     {
         profile_names = new String[3];
@@ -64,6 +62,5 @@ public class Minimed extends AbstractPumpDeviceCompany
         profile_names[1] = "Pattern A";
         profile_names[2] = "Pattern B";
     }
-    
-    
+
 }

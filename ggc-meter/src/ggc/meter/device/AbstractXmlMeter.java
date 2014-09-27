@@ -34,10 +34,9 @@ import ggc.plugin.protocol.XmlProtocol;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInterface //, SelectableInterface
+public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInterface // ,
+                                                                                     // SelectableInterface
 {
-
 
     protected String device_name = "Undefined";
     String connection_port = "";
@@ -54,7 +53,6 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
         ic = m_da.getI18nControlInstance();
     }
 
-
     /**
      * Constructor
      * @param cmp
@@ -65,18 +63,14 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
-    
-    
+
     /** 
      * close
      */
     public void close() throws PlugInBaseException
     {
     }
-	
-	
-    
-    
+
     /**
      * Set Meter type
      * 
@@ -86,27 +80,26 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     public void setMeterType(String group, String device)
     {
         this.device_name = device;
-        
+
         DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
-        
-        if (this.output_writer!=null)
+
+        if (this.output_writer != null)
+        {
             this.output_writer.setDeviceIdentification(di);
-        //this.output_writer.
-    	//this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
-        
+            // this.output_writer.
+            // this.device_instance =
+            // MeterManager.getInstance().getMeterDevice(group, device);
+        }
+
         this.device_source_name = group + " " + device;
     }
-    
-    
-    
+
     public void dispose()
     {
     }
-    
-    
-    
+
     /**
      * getConnectionPort - connection port data
      * 
@@ -116,8 +109,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     {
         return this.connection_port;
     }
-    
-    
+
     /**
      * setConnectionPort - connection port data
      * 
@@ -127,28 +119,19 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     {
         this.connection_port = con_port;
     }
-    
-    
-    
 
-    
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
-
-
-
+    // ************************************************
+    // *** Available Functionality ***
+    // ************************************************
 
     /** 
      * getShortDescription
      */
+    @Override
     public String getShortDescription()
     {
         return this.getName();
     }
-
-
 
     /**
      * Is Device Communicating
@@ -160,10 +143,6 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
         return this.communication_established;
     }
 
-    
-
-    
-
     /**
      * Get Download Support Type
      * 
@@ -173,10 +152,7 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     {
         return DownloadSupportType.DOWNLOAD_FROM_DEVICE;
     }
-    
-    
-    
-    
+
     /**
      * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
      *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
@@ -187,6 +163,5 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     {
         return MeterInterface.METER_INTERFACE_SIMPLE;
     }
-    
-    
+
 }

@@ -9,7 +9,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class PumpDataH implements Serializable, GGCHibernateObject 
+public class PumpDataH implements Serializable, GGCHibernateObject
 {
 
     private static final long serialVersionUID = -3935397524396978150L;
@@ -50,7 +50,9 @@ public class PumpDataH implements Serializable, GGCHibernateObject
      * @param person_id 
      * @param comment 
      * @param changed */
-    public PumpDataH(long dt_info, int base_type, int sub_type, String value, String extended, int person_id, String comment, long changed) {
+    public PumpDataH(long dt_info, int base_type, int sub_type, String value, String extended, int person_id,
+            String comment, long changed)
+    {
         this.dt_info = dt_info;
         this.base_type = base_type;
         this.sub_type = sub_type;
@@ -62,13 +64,15 @@ public class PumpDataH implements Serializable, GGCHibernateObject
     }
 
     /** default constructor */
-    public PumpDataH() {
+    public PumpDataH()
+    {
     }
 
     /** minimal constructor 
      * @param dt_info 
      * @param person_id */
-    public PumpDataH(long dt_info, int person_id) {
+    public PumpDataH(long dt_info, int person_id)
+    {
         this.dt_info = dt_info;
         this.person_id = person_id;
     }
@@ -157,7 +161,7 @@ public class PumpDataH implements Serializable, GGCHibernateObject
      * 
      * @return value value
      */
-    public String getValue() 
+    public String getValue()
     {
         return this.value;
     }
@@ -167,7 +171,7 @@ public class PumpDataH implements Serializable, GGCHibernateObject
      *  
      * @param value parameter
      */
-    public void setValue(String value) 
+    public void setValue(String value)
     {
         this.value = value;
     }
@@ -257,13 +261,13 @@ public class PumpDataH implements Serializable, GGCHibernateObject
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof PumpDataH) ) return false;
+        if (!(other instanceof PumpDataH))
+            return false;
         PumpDataH castOther = (PumpDataH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -271,18 +275,19 @@ public class PumpDataH implements Serializable, GGCHibernateObject
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

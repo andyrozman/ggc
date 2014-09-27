@@ -33,30 +33,25 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public abstract class DeviceDefsAbstract
 {
 
     protected DataAccessPlugInBase da = null;
-    protected I18nControlAbstract ic = null; 
+    protected I18nControlAbstract ic = null;
 
-    
-    protected Hashtable<Integer,String> data_desc = new Hashtable<Integer,String>(); 
-    protected Hashtable<String,String> data_mapping = new Hashtable<String,String>(); 
-    protected Hashtable<Integer,String> data_value_template = new Hashtable<Integer,String>(); 
+    protected Hashtable<Integer, String> data_desc = new Hashtable<Integer, String>();
+    protected Hashtable<String, String> data_mapping = new Hashtable<String, String>();
+    protected Hashtable<Integer, String> data_value_template = new Hashtable<Integer, String>();
     protected ArrayList<Integer> data_int = new ArrayList<Integer>();
     protected String[] desc_array = null;
-    
-    
-    
+
     /**
      * Constructor
      */
     public DeviceDefsAbstract()
     {
     }
-    
-    
+
     /**
      * Set Data Description
      * 
@@ -70,7 +65,6 @@ public abstract class DeviceDefsAbstract
         this.data_int.add(type);
     }
 
-    
     /**
      * Set Data Description
      * 
@@ -84,8 +78,6 @@ public abstract class DeviceDefsAbstract
         this.data_value_template.put(type, value_template);
         this.data_int.add(type);
     }
-    
-    
 
     /**
      * Get Type from Description
@@ -96,23 +88,24 @@ public abstract class DeviceDefsAbstract
     public int getTypeFromDescription(String str)
     {
         String s = "0";
-        
+
         if (this.data_mapping.containsKey(str))
+        {
             s = this.data_mapping.get(str);
-        
+        }
+
         return Integer.parseInt(s);
     }
-    
+
     /**
      * Get Descriptions (array)
      * 
      * @return array of strings with description
      */
-    public Hashtable<Integer,String> getDescriptions()
+    public Hashtable<Integer, String> getDescriptions()
     {
         return this.data_desc;
     }
-
 
     /**
      * Get Description For Type
@@ -125,7 +118,6 @@ public abstract class DeviceDefsAbstract
         return this.data_desc.get(type);
     }
 
-    
     /**
      * Get Description For Type
      * 
@@ -136,9 +128,7 @@ public abstract class DeviceDefsAbstract
     {
         return this.data_value_template.get(type);
     }
-    
-    
-    
+
     /**
      * Get Description by ID
      * 
@@ -150,46 +140,39 @@ public abstract class DeviceDefsAbstract
         return this.getDescriptionForType(id);
     }
 
-    
     public void finalizeAdding()
     {
         String[] dd = new String[this.data_int.size()];
-        
-        for(int i=0; i<this.data_int.size(); i++)
+
+        for (int i = 0; i < this.data_int.size(); i++)
         {
             dd[i] = getDescriptionForType(this.data_int.get(i));
         }
-        
+
         this.desc_array = dd;
     }
-    
-    
+
     public String[] getStaticDescriptionArray()
     {
         return this.desc_array;
     }
-    
-    
+
     public int getIndexFromStaticDescriptionArrayWithID(int id)
     {
         String dsc = getDescriptionForType(id);
-        
+
         return getIndexFromStaticDescriptionArray(dsc);
     }
-    
-    
-    
+
     public int getIndexFromStaticDescriptionArray(String desc)
     {
-        for(int i=0; i < this.desc_array.length; i++)
+        for (int i = 0; i < this.desc_array.length; i++)
         {
             if (this.desc_array[i].equals(desc))
                 return i;
         }
-        
+
         return 0;
     }
-    
-    
-    
+
 }

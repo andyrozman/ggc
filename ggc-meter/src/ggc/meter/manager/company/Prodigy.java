@@ -1,4 +1,4 @@
-package ggc.meter.manager.company; 
+package ggc.meter.manager.company;
 
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.DataAccessMeter;
@@ -39,13 +39,13 @@ public class Prodigy extends AbstractDeviceCompany
      */
     public Prodigy()
     {
-        super(true,                             // empty devices
-            MeterDevicesIds.COMPANY_ABBOTT,     // company_id
-            "Prodigy",                           // company name (full)
-            "Prodigy",                           // short company name
-            "PRODIGY_DESC",                      // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED,
-            DataAccessMeter.getInstance());  // implementation status
+        super(true, // empty devices
+                MeterDevicesIds.COMPANY_ABBOTT, // company_id
+                "Prodigy", // company name (full)
+                "Prodigy", // short company name
+                "PRODIGY_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                                                                                                       // status
     }
-    
+
 }

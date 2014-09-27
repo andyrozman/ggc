@@ -38,7 +38,6 @@ import com.atech.plugin.PlugInServer;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class MetersPlugIn extends PlugInClient
 {
 
@@ -48,17 +47,17 @@ public class MetersPlugIn extends PlugInClient
      * Command: Read Meter Data
      */
     public static final int COMMAND_READ_METER_DATA = 0;
-    
+
     /**
      * Command: Meter List
      */
     public static final int COMMAND_METERS_LIST = 1;
-    
+
     /**
      * Command: Meter Configuration
      */
     public static final int COMMAND_CONFIGURATION = 2;
-    
+
     /**
      * Command: Meter About
      */
@@ -68,8 +67,7 @@ public class MetersPlugIn extends PlugInClient
      * Return Object: Selected Device with parameters
      */
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
-    
-    
+
     /**
      * Constructor
      * 
@@ -78,10 +76,9 @@ public class MetersPlugIn extends PlugInClient
      */
     public MetersPlugIn(Component parent, I18nControlAbstract ic)
     {
-        super((JFrame)parent, ic);
+        super((JFrame) parent, ic);
     }
 
-    
     /**
      * Constructor
      */
@@ -90,10 +87,10 @@ public class MetersPlugIn extends PlugInClient
         super();
     }
 
-    
     /**
      * Init Plugin
      */
+    @Override
     public void initPlugin()
     {
         this.commands = new String[4];
@@ -101,7 +98,7 @@ public class MetersPlugIn extends PlugInClient
         this.commands[1] = "MN_METERS_LIST_DESC";
         this.commands[2] = "MN_METERS_CONFIG_DESC";
         this.commands[3] = "MN_METERS_ABOUT_DESC";
-        
+
         this.commands_implemented = new boolean[4];
         this.commands_implemented[0] = false;
         this.commands_implemented[1] = true;
@@ -109,10 +106,10 @@ public class MetersPlugIn extends PlugInClient
         this.commands_implemented[3] = true;
     }
 
-    
     /**
      * Check If Installed
      */
+    @Override
     public void checkIfInstalled()
     {
         try
@@ -121,51 +118,49 @@ public class MetersPlugIn extends PlugInClient
 
             this.m_server = (PlugInServer) c.newInstance();
             installed = true;
-            
-            this.m_server.init(this.parent, 
-                DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(), 
-                DataAccess.getInstance(), 
-                this, 
-                DataAccess.getInstance().getDb() );
-            
+
+            this.m_server.init(this.parent, DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(),
+                DataAccess.getInstance(), this, DataAccess.getInstance().getDb());
+
             this.installed = true;
-            
+
         }
         catch (Exception ex)
         {
             this.installed = false;
-            //ex.printStackTrace();
+            // ex.printStackTrace();
         }
 
-        //System.out.println("Installed [" + this.getNameBase() + ": " + this.installed);
-        
+        // System.out.println("Installed [" + this.getNameBase() + ": " +
+        // this.installed);
+
     }
 
-    
     /**
      * Get Name Base (untranslated)
      * 
      * @return name of plugin
      */
+    @Override
     public String getNameBase()
     {
         return "METERS_PLUGIN";
     }
 
-    
     /**
      * Read Meter Data
      */
     public void readMeterData()
     {
-        //this.featureNotImplemented(commands[MetersPlugIn.COMMAND_READ_METER_DATA]);
+        // this.featureNotImplemented(commands[MetersPlugIn.COMMAND_READ_METER_DATA]);
         int command = MetersPlugIn.COMMAND_READ_METER_DATA;
-        
-        if (m_server==null)
+
+        if (m_server == null)
         {
             if (this.isCommandImplemented(command))
             {
-                //this.showMessage(String.format(ic.getMessage("PLUGIN_NOT_INSTALLED"), this.getName()));
+                // this.showMessage(String.format(ic.getMessage("PLUGIN_NOT_INSTALLED"),
+                // this.getName()));
                 this.showMessage(ic.getMessage("PLUGIN_NOT_INSTALLED"));
             }
             else
@@ -177,18 +172,21 @@ public class MetersPlugIn extends PlugInClient
         {
             m_server.executeCommand(command);
             // TODO
-/*            GGCDataReader greader = new GGCDataReader(DataAccess.getInstance().getDb(), GGCDataReader.DATA_METER);
-            greader.start();
-            
-            m_server.executeCommand(command, greader); */
+            /*
+             * GGCDataReader greader = new
+             * GGCDataReader(DataAccess.getInstance().getDb(),
+             * GGCDataReader.DATA_METER);
+             * greader.start();
+             * m_server.executeCommand(command, greader);
+             */
         }
-        
-    }
 
+    }
 
     /**
      * Action Performed
      */
+    @Override
     public void actionPerformed(ActionEvent e)
     {
         String command = e.getActionCommand();
@@ -213,39 +211,36 @@ public class MetersPlugIn extends PlugInClient
         }
         else
         {
-            System.out.println("Wrong command for this plug-in [Meters]: "
-                    + command);
+            System.out.println("Wrong command for this plug-in [Meters]: " + command);
         }
 
     }
 
-    
     private void refreshPanels(int mask)
     {
         DataAccess.getInstance().setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, mask);
-        //MainFrame mf = (MainFrame)parent;
-        //mf.informationPanel.refreshGroup(mask);
+        // MainFrame mf = (MainFrame)parent;
+        // mf.informationPanel.refreshGroup(mask);
         //
     }
-    
-    
-    
+
     /**
      * Get When Will Be Implemented
      * 
      * @return
      */
+    @Override
     public String getWhenWillBeImplemented()
     {
         return "0.3";
     }
 
-    
     /**
      * Get Short Status
      * 
      * @return
      */
+    @Override
     public String getShortStatus()
     {
         if (this.m_server != null)
@@ -254,33 +249,29 @@ public class MetersPlugIn extends PlugInClient
             return ic.getMessage("STATUS_NOT_INSTALLED");
     }
 
-    
     /**
      * Set Return Data (for getting data from plugin - async)
      * 
      * @param return_data
      * @param stat_rep_int
      */
+    @Override
     public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
     {
         GGCDataWriter gdw = new GGCDataWriter(GGCDataWriter.DATA_METER, return_data, stat_rep_int);
         gdw.start();
     }
 
-    
     /**
      * This is action that needs to be done, after read data.
      */
     public static final int RETURN_ACTION_READ_DATA = 1;
-    
-    
+
     /**
      * This is action that needs to be done, after config
      */
     public static final int RETURN_ACTION_CONFIG = 2;
-   
-    
-    
+
     /**
      * This is method which can be used by server side to do certain action. Mainly this will be used
      * to run refreshes and such actions. This needs to be implemented by Client side, if you wish to use
@@ -288,9 +279,10 @@ public class MetersPlugIn extends PlugInClient
      * 
      * @param action_type
      */
+    @Override
     public void executeReturnAction(int action_type)
     {
-        
+
         if (action_type == MetersPlugIn.RETURN_ACTION_READ_DATA)
         {
             refreshPanels(RefreshInfo.PANEL_GROUP_ALL_DATA);
@@ -299,10 +291,7 @@ public class MetersPlugIn extends PlugInClient
         {
             refreshPanels(RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES);
         }
-        
-        
+
     }
-    
-    
-    
+
 }

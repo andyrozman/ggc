@@ -28,46 +28,40 @@ import javax.swing.JPanel;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public interface DeviceSpecialConfigPanelInterface
 {
-    
+
     /**
      * Init Panel
      */
     public void initPanel();
-    
-    
+
     /**
      * Get Panel
      * 
      * @return
      */
     public JPanel getPanel();
-    
-    
+
     /**
      * Get Height
      * 
      * @return
      */
     public int getHeight();
-    
-    
+
     /**
      * Init Parameters
      */
     public void initParameters();
 
-    
     /**
      * Has Default Parameter
      * 
      * @return
      */
     public boolean hasDefaultParameter();
-    
-    
+
     /**
      * Are Connection Parameters Valid
      * 
@@ -75,15 +69,13 @@ public interface DeviceSpecialConfigPanelInterface
      */
     public boolean areConnectionParametersValid();
 
-    
     /**
      * Load Connection Parameters
      * 
      * @param param
      */
     public void loadConnectionParameters(String param);
-    
-    
+
     /**
      * Save Connection Parameters
      * 
@@ -91,26 +83,22 @@ public interface DeviceSpecialConfigPanelInterface
      */
     public String saveConnectionParameters();
 
-    
     /**
      * Load Parameters To GUI
      */
     public void loadParametersToGUI();
-    
-    
+
     /**
      * Read Parameters From GUI
      */
     public void readParametersFromGUI();
-    
-    
+
     /**
      * Get Default Parameter
      * 
      * @return
      */
     public String getDefaultParameter();
-    
 
     /**
      * Set Default Parameter
@@ -118,8 +106,7 @@ public interface DeviceSpecialConfigPanelInterface
      * @param par
      */
     public void setDefaultParameter(String par);
-    
-    
+
     /**
      * Get Parameter
      * 
@@ -127,6 +114,5 @@ public interface DeviceSpecialConfigPanelInterface
      * @return
      */
     public String getParameter(String key);
-    
-    
+
 }

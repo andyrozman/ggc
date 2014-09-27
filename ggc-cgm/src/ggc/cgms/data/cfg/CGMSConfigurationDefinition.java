@@ -8,7 +8,6 @@ import java.util.Vector;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       CGMS Tool (support for CGMS devices)
@@ -37,7 +36,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 public class CGMSConfigurationDefinition implements DeviceConfigurationDefinition
 {
-    
+
     /**
      * Keyword used through configuration and configuration file describing device (for meter plugin, this
      * would be word METER).
@@ -48,7 +47,7 @@ public class CGMSConfigurationDefinition implements DeviceConfigurationDefinitio
     {
         return "CGMS";
     }
-    
+
     /**
      * Only certain devices support manual time fix for application (meters do, other's don't).
      * 
@@ -88,8 +87,7 @@ public class CGMSConfigurationDefinition implements DeviceConfigurationDefinitio
     {
         return CGMSManager.getInstance().getSupportedDevices();
     }
-    
-    
+
     /**
      * Returns prefix for help context
      * 
@@ -99,6 +97,5 @@ public class CGMSConfigurationDefinition implements DeviceConfigurationDefinitio
     {
         return "CGMSTool_";
     }
-    
 
 }

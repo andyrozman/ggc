@@ -1,4 +1,4 @@
-package ggc.pump.manager.company; 
+package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.dana.DanaDiabecare_II;
@@ -35,36 +35,35 @@ import ggc.pump.manager.PumpDevicesIds;
 public class Sooil extends AbstractPumpDeviceCompany
 {
 
-    
     /**
      * Constructor
      */
     public Sooil()
     {
-        super(PumpDevicesIds.COMPANY_SOOIL,     // company_id
-            "Sooil (Dana)",                     // company name (full)
-            "Dana",                             // short company name
-            "SOOIL_DESC",                       // company description
-            DeviceImplementationStatus.IMPLEMENTATION_DONE);  // implementation status
-        
+        super(PumpDevicesIds.COMPANY_SOOIL, // company_id
+                "Sooil (Dana)", // company name (full)
+                "Dana", // short company name
+                "SOOIL_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_DONE); // implementation
+                                                                 // status
+
         this.addDevice(new DanaDiabecare_II(this));
         this.addDevice(new DanaDiabecare_IIS(this));
         this.addDevice(new DanaDiabecare_III_R(this));
     }
 
-    
     /**
      * Init Profile Names (for Profile Editor)
      */
+    @Override
     public void initProfileNames()
     {
         profile_names = new String[16];
-        
-        for(int i=0; i<16; i++)
+
+        for (int i = 0; i < 16; i++)
         {
-            profile_names[i] = "" + (i+1);
+            profile_names[i] = "" + (i + 1);
         }
     }
-    
-    
+
 }

@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -91,8 +92,8 @@ public class SchemeEDDialog extends JDialog implements ActionListener, ItemListe
         this.selected_scheme = selected;
 
         Rectangle rec = dialog.getBounds();
-        int x = rec.x + (rec.width / 2);
-        int y = rec.y + (rec.height / 2);
+        int x = rec.x + rec.width / 2;
+        int y = rec.y + rec.height / 2;
 
         setBounds(x - 175, y - 150, 350, 300);
         this.setLayout(null);
@@ -111,52 +112,52 @@ public class SchemeEDDialog extends JDialog implements ActionListener, ItemListe
         this.getContentPane().add(panel);
 
         JLabel label = new JLabel(m_ic.getMessage("EDIT_DELETE_SCHEME"));
-        label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBounds(0, 20, 350, 35);
         panel.add(label);
 
         label = new JLabel(m_ic.getMessage("SELECTED_SCHEME") + ":");
-        label.setFont(m_da.getFont(DataAccess.FONT_NORMAL_BOLD));
+        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
         label.setBounds(40, 90, 120, 25);
         panel.add(label);
 
         label = new JLabel(this.selected_scheme);
-        label.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
         label.setBounds(160, 90, 200, 25);
         panel.add(label);
 
         label = new JLabel(m_ic.getMessage("ACTION") + ":");
-        label.setFont(m_da.getFont(DataAccess.FONT_NORMAL_BOLD));
+        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
         label.setBounds(40, 120, 280, 25);
         panel.add(label);
 
         cb_template = new JComboBox(this.actions);
-        cb_template.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        cb_template.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
         cb_template.addItemListener(this);
         cb_template.setBounds(160, 120, 90, 25);
         panel.add(cb_template);
 
         label = new JLabel(m_ic.getMessage("NEW_NAME") + ":");
-        label.setFont(m_da.getFont(DataAccess.FONT_NORMAL_BOLD));
+        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
         label.setBounds(40, 170, 80, 25);
         panel.add(label);
 
         tf_name = new JTextField();
         tf_name.setBounds(140, 170, 160, 25);
-        tf_name.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        tf_name.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
         tf_name.setEnabled(false);
         panel.add(tf_name);
 
         JButton button = new JButton(m_ic.getMessage("OK"));
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
         button.setActionCommand("ok");
         button.addActionListener(this);
         button.setBounds(90, 220, 80, 25);
         panel.add(button);
 
         button = new JButton(m_ic.getMessage("CANCEL"));
-        button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+        button.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
         button.setActionCommand("cancel");
         button.addActionListener(this);
         button.setBounds(180, 220, 80, 25);
@@ -168,9 +169,9 @@ public class SchemeEDDialog extends JDialog implements ActionListener, ItemListe
     {
         // System.out.println("doesSchemeNameExists");
 
-        for (int i = 0; i < this.schemes_names.length; i++)
+        for (String schemes_name : this.schemes_names)
         {
-            if (this.schemes_names[i].equals(this.tf_name.getText()))
+            if (schemes_name.equals(this.tf_name.getText()))
                 return true;
         }
 
@@ -188,9 +189,13 @@ public class SchemeEDDialog extends JDialog implements ActionListener, ItemListe
     public void itemStateChanged(ItemEvent e)
     {
         if (this.cb_template.getSelectedIndex() == SchemeEDDialog.ACTION_EDIT)
+        {
             this.tf_name.setEnabled(true);
+        }
         else
+        {
             this.tf_name.setEnabled(false);
+        }
     }
 
     /**
@@ -211,8 +216,8 @@ public class SchemeEDDialog extends JDialog implements ActionListener, ItemListe
 
             if (index == SchemeEDDialog.ACTION_NONE)
             {
-                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ACTION_OR_CANCEL"), m_ic
-                        .getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ACTION_OR_CANCEL"),
+                    m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
                 m_actionDone = false;
                 return;
             }
@@ -232,8 +237,8 @@ public class SchemeEDDialog extends JDialog implements ActionListener, ItemListe
 
                 if (doesSchemeNameExist())
                 {
-                    JOptionPane.showMessageDialog(this, m_ic.getMessage("SCHEME_NAME_ALREADY_USED"), m_ic
-                            .getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, m_ic.getMessage("SCHEME_NAME_ALREADY_USED"),
+                        m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -247,7 +252,9 @@ public class SchemeEDDialog extends JDialog implements ActionListener, ItemListe
 
         }
         else
+        {
             System.out.println("SchemeDialog: Unknown command: " + action);
+        }
 
     }
 
@@ -272,9 +279,13 @@ public class SchemeEDDialog extends JDialog implements ActionListener, ItemListe
         String[] res = new String[3];
 
         if (m_actionDone)
+        {
             res[0] = "" + this.m_selected_action;
+        }
         else
+        {
             res[0] = "0";
+        }
 
         res[1] = this.tf_name.getText();
         // res[2] = this.cb_template.getSelectedItem().toString();

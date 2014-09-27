@@ -41,22 +41,20 @@ import com.atech.print.gui.PrintDialogRange;
 
 // fix this
 
-public class PrintFoodDialog extends PrintDialogRange 
+public class PrintFoodDialog extends PrintDialogRange
 {
 
     private static final long serialVersionUID = -7482208504803865975L;
 
     private I18nControlAbstract ic = DataAccessNutri.getInstance().getParentI18nControlInstance();
-    
-    private String[] report_types_2 = { ic.getMessage("FOOD_MENU_BASE"),
-                                       ic.getMessage("FOOD_MENU_EXT_I"),
-                                       ic.getMessage("FOOD_MENU_EXT_II"),
-//                                       m_ic.getMessage("FOOD_MENU_EXT_III")
-                                       };
 
+    private String[] report_types_2 = { ic.getMessage("FOOD_MENU_BASE"), ic.getMessage("FOOD_MENU_EXT_I"),
+                                       ic.getMessage("FOOD_MENU_EXT_II"),
+    // m_ic.getMessage("FOOD_MENU_EXT_III")
+    };
 
     DataAccessNutri dataAccessNutri;
-    
+
     /**
      * Constructor
      * 
@@ -66,25 +64,22 @@ public class PrintFoodDialog extends PrintDialogRange
     public PrintFoodDialog(JFrame frame, int type)
     {
         // , PrintDialogType dialogType
-        super(frame, type, DataAccessNutri.getInstance(),  DataAccessNutri.getInstance().getParentI18nControlInstance(), true);
+        super(frame, type, DataAccessNutri.getInstance(), DataAccessNutri.getInstance().getParentI18nControlInstance(),
+                true);
     }
-    
-
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
 
-    
-
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getHelpId()
     {
         return "GGC_Food_Print";
     }
-
 
     /**
      * {@inheritDoc}
@@ -92,29 +87,27 @@ public class PrintFoodDialog extends PrintDialogRange
     @Override
     public String[] getReportTypes()
     {
-        if (this.report_types_2==null)
+        if (this.report_types_2 == null)
         {
-            report_types_2 = new String[3]; 
+            report_types_2 = new String[3];
             report_types_2[0] = this.i18nControl.getMessage("FOOD_MENU_BASE");
             report_types_2[1] = this.i18nControl.getMessage("FOOD_MENU_EXT_I");
             report_types_2[2] = this.i18nControl.getMessage("FOOD_MENU_EXT_II");
         }
-        
+
         return report_types_2;
     }
 
-    
     public DataAccessNutri getDataAccessLocal()
     {
-        if (dataAccessNutri==null)
+        if (dataAccessNutri == null)
         {
-            dataAccessNutri = (DataAccessNutri)this.dataAccess;    
+            dataAccessNutri = (DataAccessNutri) this.dataAccess;
         }
-        
+
         return this.dataAccessNutri;
     }
-    
-    
+
     /**
      * {@inheritDoc}
      */
@@ -122,11 +115,12 @@ public class PrintFoodDialog extends PrintDialogRange
     public void startPrintingAction() throws Exception
     {
         DataAccessNutri da = getDataAccessLocal();
-        
-        DayValuesData dvd = da.getNutriDb().getDayValuesData(this.getFromDate(), this.getToDate()); //.getMonthlyValues(yr, mnth);
-        
+
+        DayValuesData dvd = da.getNutriDb().getDayValuesData(this.getFromDate(), this.getToDate()); // .getMonthlyValues(yr,
+                                                                                                    // mnth);
+
         PrintFoodMenuAbstract pa = null;
-        
+
         if (this.cbTemplate.getSelectedIndex() == 0)
         {
             pa = new PrintFoodMenuBase(dvd);
@@ -143,20 +137,19 @@ public class PrintFoodDialog extends PrintDialogRange
         {
             pa = new PrintFoodMenuExt3(dvd);
         }
-        
+
         displayPDF(pa.getRelativeNameWithPath());
     }
 
-    
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean weHaveSecondaryType()
     {
         return false;
     }
-    
-    
+
     /**
      * {@inheritDoc}
      */
@@ -165,7 +158,7 @@ public class PrintFoodDialog extends PrintDialogRange
     {
         return DataAccess.getInstance().getSettings().getExternalPdfVieverPath().replace('\\', '/');
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -174,7 +167,6 @@ public class PrintFoodDialog extends PrintDialogRange
     {
         return DataAccess.getInstance().getSettings().getExternalPdfVieverParameters();
     }
-
 
     /**
      * {@inheritDoc}
@@ -185,7 +177,6 @@ public class PrintFoodDialog extends PrintDialogRange
         return DataAccess.getInstance().getSettings().getUseExternalPdfViewer();
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -193,7 +184,6 @@ public class PrintFoodDialog extends PrintDialogRange
     public boolean disableLookAndFeelSettingForInternalPdfViewer()
     {
         return true;
-    }    
-    
-    
+    }
+
 }

@@ -44,8 +44,7 @@ public class DexcomSeven extends DexcomCGMS
     {
         super();
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -56,8 +55,7 @@ public class DexcomSeven extends DexcomCGMS
     {
         super(drive_letter, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -69,8 +67,7 @@ public class DexcomSeven extends DexcomCGMS
     {
         super(params, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -80,25 +77,22 @@ public class DexcomSeven extends DexcomCGMS
     {
         super(cmp);
     }
-    
-    
-    //************************************************
-    //***      Device Identification Methods       ***
-    //************************************************
 
+    // ************************************************
+    // *** Device Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of device 
      * 
      * @return name of device
      */
+    @Override
     public String getName()
     {
         return "Dexcom 7";
     }
 
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -108,7 +102,6 @@ public class DexcomSeven extends DexcomCGMS
     {
         return "dx_dexcom7.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -121,30 +114,29 @@ public class DexcomSeven extends DexcomCGMS
         return CGMSDevicesIds.CGMS_DEXCOM_7;
     }
 
-    
     /**
      * getComment - Get Comment for device 
      * 
      * @return comment or null
      */
+    @Override
     public String getComment()
     {
         return "";
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    @Override
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -155,7 +147,6 @@ public class DexcomSeven extends DexcomCGMS
         return "ggc.cgms.device.dexcom.DexcomSeven";
     }
 
-
     /** 
      * Get Max Memory Records
      * 
@@ -165,48 +156,45 @@ public class DexcomSeven extends DexcomCGMS
     {
         return 0;
     }
-    
-    
+
     /**
      * Get Download Support Type
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
     }
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
      * @return
      */
+    @Override
     public int howManyMonthsOfDataStored()
     {
         return -1;
     }
-    
-    
-    
+
+    @Override
     public void readDeviceDataFull() throws PlugInBaseException
     {
-        //FRC_DexcomXml_DM3 dt1 = new FRC_DexcomXml_DM3(this.m_da);
-        //dt1.readFile("../test/DexDM3SampleExport.xml");
+        // FRC_DexcomXml_DM3 dt1 = new FRC_DexcomXml_DM3(this.m_da);
+        // dt1.readFile("../test/DexDM3SampleExport.xml");
     }
- 
-    
-    
+
     /**
      * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
      *     left to right side, without displaying progress.
      * @return
      */
+    @Override
     public boolean hasIndeterminateProgressStatus()
     {
         return true;
-    }    
-    
-    
+    }
+
 }

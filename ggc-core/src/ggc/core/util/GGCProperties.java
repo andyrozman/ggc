@@ -66,8 +66,8 @@ import com.atech.graphics.graphs.GraphConfigProperties;
  *  Author:  andyrozman {andy@atech-software.com}  
  */
 
-
-public class GGCProperties implements GraphConfigProperties // extends GGCPropertiesHelper
+public class GGCProperties implements GraphConfigProperties // extends
+                                                            // GGCPropertiesHelper
 {
     // private boolean changed_db = false;
     private boolean changed_config = false;
@@ -171,26 +171,9 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         setUserName(settings.getUserName());
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
     // ---
     // --- General Data
     // ---
-
 
     /**
      * Get Language
@@ -201,7 +184,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_config.getSelectedLanguage();
     }
-    
+
     /**
      * Set Language
      * 
@@ -218,7 +201,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
             this.changed_config = true;
         }
     }
-    
+
     /**
      * Get User's Name
      * 
@@ -228,7 +211,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getStringValue("NAME");
     }
-    
+
     /**
      * Set User's Name
      * 
@@ -238,13 +221,11 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setStringValue("NAME", value);
     }
-    
-    
+
     // ---
     // --- Medical Data (Insulins and BG)
     // ---
 
-    
     /**
      * Get BG: Target High
      * 
@@ -258,7 +239,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
             return this.getBG2_TargetHigh();
     }
 
-    
     /**
      * Get BG: Target Low
      * 
@@ -271,8 +251,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         else
             return this.getBG2_TargetLow();
     }
-    
-    
+
     /**
      * Get BG: High
      * 
@@ -286,7 +265,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
             return this.getBG2_High();
     }
 
-    
     /**
      * Get BG: Low
      * 
@@ -300,7 +278,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
             return this.getBG2_Low();
     }
 
-    
     /**
      * Get BG Unit
      * 
@@ -311,7 +288,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getIntValue("BG_UNIT");
     }
 
-    
     /**
      * Set BG Unit
      * 
@@ -321,8 +297,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setIntValue("BG_UNIT", bgunit);
     }
-    
-    
+
     /**
      * Get BG Unit String
      * 
@@ -341,7 +316,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
 
     }
 
-    
     /**
      * Get BG 1 (mg/dL): High
      * 
@@ -352,7 +326,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getFloatValue("BG1_HIGH");
     }
 
-    
     /**
      * Set BG 1 (mg/dL): High
      * 
@@ -363,7 +336,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setFloatValue("BG1_HIGH", value);
     }
 
-    
     /**
      * Get BG 1 (mg/dL): Low
      * 
@@ -374,7 +346,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getFloatValue("BG1_LOW");
     }
 
-    
     /**
      * Set BG 1 (mg/dL): Low
      * 
@@ -385,7 +356,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setFloatValue("BG1_LOW", value);
     }
 
-    
     /**
      * Get BG 1 (mg/dL): Target High
      * 
@@ -396,7 +366,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getFloatValue("BG1_TARGET_HIGH");
     }
 
-    
     /**
      * Set BG 1 (mg/dL): Target High
      * 
@@ -407,7 +376,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setFloatValue("BG1_TARGET_HIGH", value);
     }
 
-    
     /**
      * Get BG 1 (mg/dL): Target Low
      * 
@@ -418,7 +386,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getFloatValue("BG1_TARGET_LOW");
     }
 
-    
     /**
      * Set BG 1 (mg/dL): Target Low
      * 
@@ -429,7 +396,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setFloatValue("BG1_TARGET_LOW", value);
     }
 
-    
     /**
      * Get BG 2 (mmol/L): High
      * 
@@ -440,7 +406,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getFloatValue("BG2_HIGH");
     }
 
-    
     /**
      * Set BG 2 (mmol/L): High
      * 
@@ -451,7 +416,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setFloatValue("BG2_HIGH", value);
     }
 
-    
     /**
      * Get BG 2 (mmol/L): Low
      * 
@@ -461,7 +425,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getFloatValue("BG2_LOW");
     }
-
 
     /**
      * Set BG 2 (mmol/L): Low
@@ -473,7 +436,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setFloatValue("BG2_LOW", value);
     }
 
-    
     /**
      * Get BG 2 (mmol/L): Taget High
      * 
@@ -484,7 +446,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getFloatValue("BG2_TARGET_HIGH");
     }
 
-    
     /**
      * Set BG 2 (mmol/L): Target High
      * 
@@ -494,8 +455,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setFloatValue("BG2_TARGET_HIGH", value);
     }
-    
-    
+
     /**
      * Get BG 2 (mmol/L): Target Low
      * 
@@ -506,7 +466,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getFloatValue("BG2_TARGET_LOW");
     }
 
-    
     /**
      * Set BG 2 (mmol/L): Target Low
      * 
@@ -516,8 +475,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setFloatValue("BG2_TARGET_LOW", value);
     }
-    
-    
+
     /**
      * Get Insulin 1 Abbreviation
      * 
@@ -528,7 +486,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getStringValue("INS1_ABBR");
     }
 
-    
     /**
      * Set Insulin 1 Abbreviation
      * 
@@ -539,7 +496,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setStringValue("INS1_ABBR", value);
     }
 
-    
     /**
      * Get Insulin 1 Name
      * 
@@ -550,7 +506,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getStringValue("INS1_NAME");
     }
 
-    
     /**
      * Set Insulin 1 Name
      * 
@@ -560,8 +515,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setStringValue("INS1_NAME", value);
     }
-    
-    
+
     /**
      * Get Insulin 1 Type
      * 
@@ -571,7 +525,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getIntValue("INS1_TYPE");
     }
-    
 
     /**
      * Set Insulin 1 Type
@@ -582,8 +535,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setIntValue("INS1_TYPE", ins);
     }
-    
-    
+
     /**
      * Get Insulin 2 Abbreviation
      * 
@@ -594,7 +546,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getStringValue("INS2_ABBR");
     }
 
-    
     /**
      * Set Insulin 2 Abbreviation
      * 
@@ -604,8 +555,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setStringValue("INS2_ABBR", value);
     }
-    
-    
+
     /**
      * Get Insulin 2 Name
      * 
@@ -615,7 +565,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getStringValue("INS2_NAME");
     }
-    
 
     /**
      * Set Insulin 2 Name
@@ -627,7 +576,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setStringValue("INS2_NAME", value);
     }
 
-
     /**
      * Get Insulin 2 Type
      * 
@@ -638,7 +586,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getIntValue("INS2_TYPE");
     }
 
-    
     /**
      * Set Insulin 2 Type
      * 
@@ -648,7 +595,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setIntValue("INS2_TYPE", ins);
     }
-    
 
     /**
      * Get Insulin 3 Abbreviation
@@ -660,7 +606,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getStringValue("INS3_ABBR");
     }
 
-    
     /**
      * Set Insulin 3 Abbreviation
      * 
@@ -670,8 +615,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setStringValue("INS3_ABBR", value);
     }
-    
-    
+
     /**
      * Get Insulin 3 Name
      * 
@@ -682,7 +626,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getStringValue("INS3_NAME");
     }
 
-
     /**
      * Set Insulin 3 Name
      * 
@@ -692,8 +635,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setStringValue("INS3_NAME", value);
     }
-    
-    
+
     /**
      * Get Insulin 3 Type
      * 
@@ -703,8 +645,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getIntValue("INS3_TYPE");
     }
-    
-    
+
     /**
      * Set Insulin 3 Type
      * 
@@ -715,8 +656,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setIntValue("INS3_TYPE", ins);
     }
 
-    
-    
     /**
      * Get Pump Insulin Name
      * 
@@ -726,7 +665,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getStringValue("PUMP_INSULIN");
     }
-    
 
     /**
      * Set Pump Insulin Name
@@ -737,14 +675,11 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setStringValue("PUMP_INSULIN", value);
     }
-    
-    
-    
+
     // ---
     // --- Graphs
     // ---
-    
-    
+
     /** 
      * Get AntiAliasing
      */
@@ -752,8 +687,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getIntValue("RENDER_ANTIALIASING");
     }
-    
-    
+
     /** 
      * Set AntiAliasing
      * 
@@ -763,7 +697,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setIntValue("RENDER_ANTIALIASING", value);
     }
-    
 
     /** 
      * Get Color Rendering
@@ -773,7 +706,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getIntValue("RENDER_COLOR_RENDERING");
     }
 
-    
     /** 
      * Set Color Rendering
      * 
@@ -784,7 +716,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setIntValue("RENDER_COLOR_RENDERING", value);
     }
 
-    
     /** 
      * Get Dithering
      */
@@ -793,7 +724,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getIntValue("RENDER_DITHERING");
     }
 
-    
     /** 
      * Set Dithering
      * 
@@ -804,7 +734,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setIntValue("RENDER_DITHERING", value);
     }
 
-    
     /** 
      * Get Fractional Meetrics
      */
@@ -813,7 +742,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getIntValue("RENDER_FRACTIONAL_METRICS");
     }
 
-    
     /** 
      * Set Fractional Meetrics
      * 
@@ -823,8 +751,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setIntValue("RENDER_FRACTIONAL_METRICS", value);
     }
-    
-    
+
     /** 
      * Get Interpolation
      */
@@ -833,7 +760,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getIntValue("RENDER_INTERPOLATION");
     }
 
-    
     /** 
      * Set Interpolation
      * 
@@ -844,7 +770,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setIntValue("RENDER_INTERPOLATION", value);
     }
 
-
     /** 
      * Get Rendering
      */
@@ -853,7 +778,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getIntValue("RENDER_RENDERING");
     }
 
-    
     /** 
      * Set Rendering
      * 
@@ -864,7 +788,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setIntValue("RENDER_RENDERING", value);
     }
 
-    
     /** 
      * Get Text Antialiasing
      */
@@ -872,8 +795,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getIntValue("RENDER_TEXT_ANTIALIASING");
     }
-    
-    
+
     /** 
      * Set Text Antialiasing
      * 
@@ -884,7 +806,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setIntValue("RENDER_TEXT_ANTIALIASING", value);
     }
 
-    
     /**
      * Get Selected Color Scheme
      * 
@@ -915,8 +836,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setStringValue("SELECTED_COLOR_SCHEME", value);
     }
 
-    
-
     /**
      * Set Color Scheme Object
      * 
@@ -926,7 +845,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         ColorSchemeH cs = this.m_color_schemes.get(name);
 
-        if ((cs != null) && !cs.equals(m_colors))
+        if (cs != null && !cs.equals(m_colors))
         {
             this.setSelectedColorSchemeInCfg(name);
             this.m_colors = cs;
@@ -953,23 +872,9 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_color_schemes;
     }
 
-
-
-
-    
-    
-    
-    
-
-    
-
-    
-
-    
     // ---
     // --- Printing
     // ---
-
 
     /**
      * Get PDF Viewer Path
@@ -981,7 +886,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getStringValue("PRINT_PDF_VIEWER_PATH");
     }
 
-    
     /**
      * Set PDF Viewer Path
      * 
@@ -992,7 +896,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setStringValue("PRINT_PDF_VIEWER_PATH", value);
     }
 
-    
     /**
      * Get PDF Viewer Path
      * 
@@ -1003,7 +906,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getStringValue("PRINT_PDF_VIEWER_PARAMETERS");
     }
 
-    
     /**
      * Set PDF Viewer Path
      * 
@@ -1013,9 +915,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setStringValue("PRINT_PDF_VIEWER_PARAMETERS", value);
     }
-    
-    
-    
+
     /**
      * Get PDF Viewer Path
      * 
@@ -1026,7 +926,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getBooleanValue("PRINT_USE_EXTERNAL_PDF_VIEWER");
     }
 
-    
     /**
      * Set PDF Viewer Path
      * 
@@ -1036,7 +935,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setBooleanValue("PRINT_USE_EXTERNAL_PDF_VIEWER", value);
     }
-    
 
     /**
      * Get Print Empty Value
@@ -1047,7 +945,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getStringValue("PRINT_EMPTY_VALUE");
     }
-    
 
     /**
      * Set Print Empty Value
@@ -1059,7 +956,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setStringValue("PRINT_EMPTY_VALUE", value);
     }
 
-    
     /**
      * Get Print Start Time: Lunch
      * 
@@ -1069,8 +965,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getIntValue("PRINT_LUNCH_START_TIME");
     }
-    
-    
+
     /**
      * Set Print Start Time: Lunch
      * 
@@ -1080,8 +975,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setIntValue("PRINT_LUNCH_START_TIME", value);
     }
-    
-    
+
     /**
      * Get Print Start Time: Dinner
      * 
@@ -1091,7 +985,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getIntValue("PRINT_DINNER_START_TIME");
     }
-
 
     /**
      * Set Print Start Time: Dinner
@@ -1103,7 +996,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         this.m_cfg_mgr.setIntValue("PRINT_DINNER_START_TIME", value);
     }
 
-    
     /**
      * Get Print Start Time: Night
      * 
@@ -1114,7 +1006,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getIntValue("PRINT_NIGHT_START_TIME");
     }
 
-    
     /**
      * Set Print Start Time: Night
      * 
@@ -1124,12 +1015,10 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setIntValue("PRINT_NIGHT_START_TIME", value);
     }
-    
 
     // ---
     // --- Ratios
     // ---
-
 
     /**
      * Get Ratio CH/Insulin
@@ -1141,7 +1030,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         return this.m_cfg_mgr.getFloatValue("RATIO_CH_INSULIN");
     }
 
-    
     /**
      * Set Ratio CH/Insulin
      * 
@@ -1151,8 +1039,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setFloatValue("RATIO_CH_INSULIN", val);
     }
-    
-    
+
     /**
      * Get Ratio BG/Insulin
      * 
@@ -1162,7 +1049,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getFloatValue("RATIO_BG_INSULIN");
     }
-    
 
     /**
      * Set Ratio BG/Insulin
@@ -1173,8 +1059,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setFloatValue("RATIO_BG_INSULIN", val);
     }
- 
-    
+
     /**
      * Get Ratio Mode
      * 
@@ -1184,7 +1069,6 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         return this.m_cfg_mgr.getStringValue("RATIO_MODE");
     }
-    
 
     /**
      * Set Ratio Mode
@@ -1195,19 +1079,11 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
     {
         this.m_cfg_mgr.setStringValue("RATIO_MODE", val);
     }
-    
-    
-    
-    
-    
-    
 
-    
     // ---
     // --- Load/Save methods
     // ---
-    
-    
+
     /**
      * Load 
      */
@@ -1242,7 +1118,7 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
 
         this.m_cfg_mgr.saveConfig();
 
-        if ((changed_config) || (this.m_config.hasChanged()))
+        if (changed_config || this.m_config.hasChanged())
         {
             // System.out.println("save Config REAL");
             this.m_config.saveConfig();
@@ -1251,6 +1127,5 @@ public class GGCProperties implements GraphConfigProperties // extends GGCProper
         m_da.setBGMeasurmentType(this.getBG_unit());
 
     }
-    
 
 }

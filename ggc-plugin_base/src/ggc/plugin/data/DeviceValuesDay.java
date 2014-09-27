@@ -36,27 +36,26 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class DeviceValuesDay 
+public class DeviceValuesDay
 {
-	
-	private ArrayList<DeviceValuesEntry> list = null;
-	private Hashtable<String,DeviceValuesEntry> table = null;
-	DataAccessPlugInBase m_da;
-	GregorianCalendar gc_today;
-	boolean m_use_index = false; // we can index files for easy access, but this might not work
-	                             // for each instance of this object
 
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param da
-	 */
-	public DeviceValuesDay(DataAccessPlugInBase da)
-	{
-	    this(da, null, true);
-	}
-	
+    private ArrayList<DeviceValuesEntry> list = null;
+    private Hashtable<String, DeviceValuesEntry> table = null;
+    DataAccessPlugInBase m_da;
+    GregorianCalendar gc_today;
+    boolean m_use_index = false; // we can index files for easy access, but this
+                                 // might not work
+                                 // for each instance of this object
+
+    /**
+     * Constructor
+     * 
+     * @param da
+     */
+    public DeviceValuesDay(DataAccessPlugInBase da)
+    {
+        this(da, null, true);
+    }
 
     /**
      * Constructor
@@ -68,7 +67,6 @@ public class DeviceValuesDay
     {
         this(da, gc, true);
     }
-	
 
     /**
      * Constructor
@@ -81,111 +79,105 @@ public class DeviceValuesDay
     {
         this.m_da = da;
         list = new ArrayList<DeviceValuesEntry>();
-        table = new Hashtable<String,DeviceValuesEntry>();
+        table = new Hashtable<String, DeviceValuesEntry>();
         this.gc_today = gc;
         this.m_use_index = use_index;
     }
-    
-    
-    
+
     /**
      * Add List
      * 
      * @param lst
      */
-    public void addList(ArrayList<?  extends DeviceValuesEntry> lst)
+    public void addList(ArrayList<? extends DeviceValuesEntry> lst)
     {
         this.list.addAll(lst);
         this.sort();
     }
-    
-	
-	/**
-	 * Add Entry
-	 * 
-	 * @param pve DeviceValuesEntry instance (or derivate)
-	 */
-	public void addEntry(DeviceValuesEntry pve)
-	{
-	    this.list.add(pve);
-	    this.sort();
-	 
-	    if (this.m_use_index)
-	    {
-    	    ATechDate atd = new ATechDate(pve.getDateTimeFormat(), pve.getDateTime());
-    	    
-    	    if (!this.table.containsKey(atd.getTimeString()))
-    	    {
-    	        this.table.put(atd.getTimeString(), pve);
-    	    }
-	    }
-	    
-	}
-	
-	/**
-	 * Remove Entry
-	 * 
-	 * @param index
-	 */
-	public void removeEntry(int index)
-	{
-	    DeviceValuesEntryInterface dvei = this.list.get(index);
+
+    /**
+     * Add Entry
+     * 
+     * @param pve DeviceValuesEntry instance (or derivate)
+     */
+    public void addEntry(DeviceValuesEntry pve)
+    {
+        this.list.add(pve);
+        this.sort();
+
+        if (this.m_use_index)
+        {
+            ATechDate atd = new ATechDate(pve.getDateTimeFormat(), pve.getDateTime());
+
+            if (!this.table.containsKey(atd.getTimeString()))
+            {
+                this.table.put(atd.getTimeString(), pve);
+            }
+        }
+
+    }
+
+    /**
+     * Remove Entry
+     * 
+     * @param index
+     */
+    public void removeEntry(int index)
+    {
+        DeviceValuesEntryInterface dvei = this.list.get(index);
         this.list.remove(index);
 
         if (this.m_use_index)
         {
             ATechDate atd = new ATechDate(dvei.getDateTimeFormat(), dvei.getDateTime());
-            
+
             if (!this.table.containsKey(atd.getTimeString()))
             {
                 this.table.remove(dvei);
             }
         }
-	    
-	}
-	
-	
-	/**
-	 * Is Entry Available
-	 * 
-	 * @param datetime
-	 * @return
-	 */
-	public boolean isEntryAvailable(long datetime)
-	{
-	    if (!this.m_use_index)
-	        return false;
 
-	    ATechDate atd = new ATechDate(m_da.getDataEntryObject().getDateTimeFormat(), datetime);
-	    return this.table.containsKey(atd.getTimeString());
-	}
-	
-	/**
-	 * Get Entry
-	 * 
-	 * @param dt
-	 * @return
-	 */
-	public DeviceValuesEntry getEntry(long dt)
-	{
+    }
+
+    /**
+     * Is Entry Available
+     * 
+     * @param datetime
+     * @return
+     */
+    public boolean isEntryAvailable(long datetime)
+    {
+        if (!this.m_use_index)
+            return false;
+
+        ATechDate atd = new ATechDate(m_da.getDataEntryObject().getDateTimeFormat(), datetime);
+        return this.table.containsKey(atd.getTimeString());
+    }
+
+    /**
+     * Get Entry
+     * 
+     * @param dt
+     * @return
+     */
+    public DeviceValuesEntry getEntry(long dt)
+    {
         if (!this.m_use_index)
             return null;
 
         ATechDate atd = new ATechDate(m_da.getDataEntryObject().getDateTimeFormat(), dt);
         return this.table.get(atd.getTimeString());
-	}
-	
-	
-	/**
-	 * Set Date Time GC
-	 * @param gc
-	 */
-	public void setDateTimeGC(GregorianCalendar gc)
-	{
-	    this.gc_today = gc;
-	}
+    }
 
-	
+    /**
+     * Set Date Time GC
+     * @param gc
+     */
+    public void setDateTimeGC(GregorianCalendar gc)
+    {
+        this.gc_today = gc;
+    }
+
     /**
      * Set Date Time GC
      * 
@@ -195,9 +187,7 @@ public class DeviceValuesDay
     {
         return this.gc_today;
     }
-	
-	
-	
+
     /**
      * Get Column Width
      * 
@@ -208,45 +198,41 @@ public class DeviceValuesDay
     public int getColumnWidth(int column, int width)
     {
         float mult;
-        switch(column)
+        switch (column)
         {
             case 0:
-                mult=0.1f;
-                
-                
-                    
+                mult = 0.1f;
+
             default:
-                mult=0.2f;
+                mult = 0.2f;
         }
 
-        return (int)(mult*width);
+        return (int) (mult * width);
     }
-	
-	
-	
-	/**
-	 * Get Column Count
-	 * 
-	 * @return
-	 */
-	public int getColumnCount()
-	{
-	    return this.m_da.getColumnsManual().length;
-	}
-	
-	/**
-	 * Get Row Count
-	 * 
-	 * @return
-	 */
-	public int getRowCount()
-	{
-	    if (this.list==null)
-	        return 0;
-	    else
-	        return this.list.size();
-	}
-	
+
+    /**
+     * Get Column Count
+     * 
+     * @return
+     */
+    public int getColumnCount()
+    {
+        return this.m_da.getColumnsManual().length;
+    }
+
+    /**
+     * Get Row Count
+     * 
+     * @return
+     */
+    public int getRowCount()
+    {
+        if (this.list == null)
+            return 0;
+        else
+            return this.list.size();
+    }
+
     /**
      * Get Row At
      * 
@@ -257,41 +243,38 @@ public class DeviceValuesDay
     {
         return this.list.get(index);
     }
-	
-	
-	/**
-	 * Get Column Name
-	 * 
-	 * @param column
-	 * @return
-	 */
-	public String getColumnName(int column)
-	{
-	    return this.m_da.getColumnsManual()[column];
-	}
-	
-	/**
-	 * Get Value At
-	 * 
-	 * @param row
-	 * @param column
-	 * @return
-	 */
-	public Object getValueAt(int row, int column)
-	{
-	    return this.list.get(row).getColumnValue(column);
-	}
 
-	
-	/**
-	 * Sort of elements
-	 */
-	public void sort()
-	{
-	    Collections.sort(list); //, new DeviceValuesEntry()); 
-	}
-	
-	
+    /**
+     * Get Column Name
+     * 
+     * @param column
+     * @return
+     */
+    public String getColumnName(int column)
+    {
+        return this.m_da.getColumnsManual()[column];
+    }
+
+    /**
+     * Get Value At
+     * 
+     * @param row
+     * @param column
+     * @return
+     */
+    public Object getValueAt(int row, int column)
+    {
+        return this.list.get(row).getColumnValue(column);
+    }
+
+    /**
+     * Sort of elements
+     */
+    public void sort()
+    {
+        Collections.sort(list); // , new DeviceValuesEntry());
+    }
+
     /**
      * Sort of elements
      * 
@@ -299,9 +282,9 @@ public class DeviceValuesDay
      */
     public void sort(Comparator<DeviceValuesEntry> dve)
     {
-        Collections.sort(list, dve); //, new DeviceValuesEntry()); 
-    } 
-	
+        Collections.sort(list, dve); // , new DeviceValuesEntry());
+    }
+
     /**
      * Get List
      * 
@@ -311,5 +294,5 @@ public class DeviceValuesDay
     {
         return this.list;
     }
-	
-}	
+
+}

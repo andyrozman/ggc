@@ -8,7 +8,7 @@ public enum CommandParameter
     Short(2), //
     Int(4), //
     Long(8), //
-    ByteIntByte(6), // 
+    ByteIntByte(6), //
     ;
 
     private int lengthInPacket = 0;

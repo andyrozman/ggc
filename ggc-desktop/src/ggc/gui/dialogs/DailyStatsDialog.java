@@ -108,7 +108,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
     private static Log log = LogFactory.getLog(DailyStatsDialog.class);
 
-    //private I18nControl m_ic = I18nControl.getInstance();
+    // private I18nControl m_ic = I18nControl.getInstance();
     private DataAccess m_da = null; // DataAccess.getInstance();
     private I18nControlAbstract m_ic = null;
 
@@ -118,7 +118,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
     JTable table;
 
-    //private boolean save_needed = false;
+    // private boolean save_needed = false;
 
     CalendarPane calPane;
 
@@ -141,9 +141,9 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         super(da.getMainParent(), "DailyStatsDialog", false);
 
         current_gc = new GregorianCalendar();
-        
+
         da.addComponent(this);
-        
+
         this.m_da = da;
         this.m_db = m_da.getDb();
         this.m_ic = da.getI18nControlInstance();
@@ -175,11 +175,11 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
     protected void close()
     {
         DataAccess.getInstance().loadDailySettings(new GregorianCalendar(), true);
-        //MainFrame mf = DataAccess.getInstance().getParent();
-        
+        // MainFrame mf = DataAccess.getInstance().getParent();
+
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
-        
-        //mf.informationPanel.refreshPanels();
+
+        // mf.informationPanel.refreshPanels();
         m_da.removeComponent(this);
         this.dispose();
     }
@@ -194,7 +194,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
         InsPanel.add(new JLabel(m_ic.getMessage("BOLUS_INSULIN_SHORT") + ":"));
         InsPanel.add(sumIns1 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("AVERAGE") +  ":"));
+        InsPanel.add(new JLabel(m_ic.getMessage("AVERAGE") + ":"));
         InsPanel.add(avgIns1 = new JLabel());
         InsPanel.add(new JLabel(m_ic.getMessage("DOSES") + ":"));
         InsPanel.add(doseIns1 = new JLabel());
@@ -257,10 +257,10 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
             {
                 // System.out.println("dateHasChanged");
 
-                //GregorianCalendar gc = e.getNewCalendar();
+                // GregorianCalendar gc = e.getNewCalendar();
 
                 current_gc = e.getNewCalendar();
-                
+
                 dayData = m_da.getDb().getDayStats(current_gc);
 
                 model.setDailyValues(dayData);
@@ -308,32 +308,31 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
             @Override
             public void mouseClicked(MouseEvent e)
             {
-                if ((SwingUtilities.isLeftMouseButton(e)) && (e.getClickCount() == 2))
+                if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2)
                 {
                     editRow();
-                    
-/*                    
-                    
-                    // System.out.println("mouse 2x clicked");
 
-                    DailyValuesRow dvr = dayData.getRow(table.getSelectedRow());
-
-                    //if (!MainFrame.developer_version)
-                    {
-                        DailyRowDialog aRF = new DailyRowDialog(dvr, getThisParent());
-
-                        if (aRF.actionSuccessful())
-                        {
-                            m_db.saveDayStats(dayData);
-                            dayData.sort();
-                            getTableModel().fireTableChanged(null);
-                        }
-                    }
-/*                    else
-                    {
-                        // new pen dialog
-                        new DailyRowDialogPen(dvr, getThisParent());
-                    } */
+                    /*
+                     * // System.out.println("mouse 2x clicked");
+                     * DailyValuesRow dvr =
+                     * dayData.getRow(table.getSelectedRow());
+                     * //if (!MainFrame.developer_version)
+                     * {
+                     * DailyRowDialog aRF = new DailyRowDialog(dvr,
+                     * getThisParent());
+                     * if (aRF.actionSuccessful())
+                     * {
+                     * m_db.saveDayStats(dayData);
+                     * dayData.sort();
+                     * getTableModel().fireTableChanged(null);
+                     * }
+                     * }
+                     * /* else
+                     * {
+                     * // new pen dialog
+                     * new DailyRowDialogPen(dvr, getThisParent());
+                     * }
+                     */
                 }
             }
 
@@ -410,7 +409,6 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         setVisible(true);
     }
 
-    
     private void updateLabels()
     {
         if (dayData == null)
@@ -421,28 +419,26 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         sumIns1.setText(df.format(dayData.getSumBolus()));
         sumIns2.setText(df.format(dayData.getSumBasal()));
         sumIns.setText(df.format(dayData.getSumBasalBolus()));
-        
+
         avgIns1.setText(df.format(dayData.getAvgBolus()));
         avgIns2.setText(df.format(dayData.getAvgBasal()));
         avgIns.setText(df.format(dayData.getAvgBasalBolus()));
-        
+
         doseIns1.setText(dayData.getBolusCount() + "");
         doseIns2.setText(dayData.getBasalCount() + "");
         doseIns.setText(dayData.getBasalBolusCount() + "");
-        
+
         /*
-        sumIns1.setText(df.format(dayData.get.getSumIns1()));
-        sumIns2.setText(df.format(dayData.getSumIns2()));
-        sumIns.setText(df.format(dayData.getSumIns()));
-
-        avgIns1.setText(df.format(dayData.getAvgIns1()));
-        avgIns2.setText(df.format(dayData.getAvgIns2()));
-        avgIns.setText(df.format(dayData.getAvgIns()));
-
-        doseIns1.setText(dayData.getIns1Count() + "");
-        doseIns2.setText(dayData.getIns2Count() + "");
-        doseIns.setText(dayData.getInsCount() + "");
-*/
+         * sumIns1.setText(df.format(dayData.get.getSumIns1()));
+         * sumIns2.setText(df.format(dayData.getSumIns2()));
+         * sumIns.setText(df.format(dayData.getSumIns()));
+         * avgIns1.setText(df.format(dayData.getAvgIns1()));
+         * avgIns2.setText(df.format(dayData.getAvgIns2()));
+         * avgIns.setText(df.format(dayData.getAvgIns()));
+         * doseIns1.setText(dayData.getIns1Count() + "");
+         * doseIns2.setText(dayData.getIns2Count() + "");
+         * doseIns.setText(dayData.getInsCount() + "");
+         */
         sumBE.setText(df.format(dayData.getSumCH()));
         avgBE.setText(df.format(dayData.getAvgCH()));
         meals.setText(dayData.getCHCount() + "");
@@ -469,13 +465,13 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
     {
 
         String command = e.getActionCommand();
-        //System.out.println("actionPerformed: " + command);
+        // System.out.println("actionPerformed: " + command);
 
         if (command.equals("add_row"))
         {
             SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
 
-            //if (!MainFrame.developer_version)
+            // if (!MainFrame.developer_version)
             {
 
                 DailyRowDialog aRF = new DailyRowDialog(dayData, sf.format(calPane.getSelectedDate()), this);
@@ -487,12 +483,14 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
                     this.model.fireTableChanged(null);
                 }
             }
-/*            else
-            {
-                // testing only
-                new DailyRowDialogPen(dayData, sf.format(calPane.getSelectedDate()), this);
-
-            }*/
+            /*
+             * else
+             * {
+             * // testing only
+             * new DailyRowDialogPen(dayData,
+             * sf.format(calPane.getSelectedDate()), this);
+             * }
+             */
         }
         else if (command.equals("edit_row"))
         {
@@ -507,16 +505,13 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
                 return;
             }
 
-            int option_selected = JOptionPane.showOptionDialog(this, m_ic.getMessage("ARE_YOU_SURE_DELETE_ROW"), m_ic
-                    .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+            int option_selected = JOptionPane.showOptionDialog(this, m_ic.getMessage("ARE_YOU_SURE_DELETE_ROW"),
+                m_ic.getMessage("QUESTION"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 m_da.options_yes_no, JOptionPane.YES_OPTION);
 
             if (option_selected == JOptionPane.NO_OPTION)
-            {
                 // System.out.println("Option NO was here!");
                 return;
-            }
-            // System.out.println("Option YES was here!");
 
             try
             {
@@ -536,18 +531,19 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         }
         else if (command.equals("show_daily_graph"))
         {
-            //DailyGraphDialog dgd = new DailyGraphDialog(this, this.dayData);
-            //dgd.setDailyValues(this.dayData);
-            
+            // DailyGraphDialog dgd = new DailyGraphDialog(this, this.dayData);
+            // dgd.setDailyValues(this.dayData);
+
             new GraphViewer(new GraphViewDaily(this.current_gc), m_da, this, true);
-            
+
         }
         else
+        {
             System.out.println("DailyStatsDialog:Unknown Action: " + command);
+        }
 
     }
 
-    
     private void editRow()
     {
 
@@ -558,31 +554,29 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
             return;
         }
 
-//        System.out.println("edit");
-        
+        // System.out.println("edit");
+
         DailyValuesRow dvr = dayData.getRow(table.getSelectedRow());
-        
-//        System.out.println("DialyRowDialog starting");
+
+        // System.out.println("DialyRowDialog starting");
 
         DailyRowDialog aRF = new DailyRowDialog(dvr, this);
 
-//        System.out.println("DialyRowDialog exit");
-        
-        
+        // System.out.println("DialyRowDialog exit");
+
         if (aRF.actionSuccessful())
         {
-//            System.out.println("DialyRowDialog action done");
-            
+            // System.out.println("DialyRowDialog action done");
+
             m_db.saveDayStats(dayData);
             dayData.sort();
             this.model.fireTableChanged(null);
         }
-//        else
-//            System.out.println("DialyRowDialog NO Action! ");
-        
+        // else
+        // System.out.println("DialyRowDialog NO Action! ");
+
     }
-    
-    
+
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************

@@ -27,5 +27,5 @@ package ggc.core.sync.sidiary.data;
 
 public class MonthlyData
 {
-    
+
 }

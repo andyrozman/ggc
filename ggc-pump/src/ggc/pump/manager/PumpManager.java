@@ -1,4 +1,4 @@
-package ggc.pump.manager; 
+package ggc.pump.manager;
 
 import ggc.plugin.manager.DeviceManager;
 import ggc.pump.manager.company.Animas;
@@ -34,17 +34,13 @@ import ggc.pump.manager.company.Sooil;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PumpManager extends DeviceManager
 {
 
-    
-    
     /**
      * Singleton instance
      */
     public static PumpManager s_manager = null;
-    
 
     /**
      * Constructor
@@ -54,7 +50,6 @@ public class PumpManager extends DeviceManager
         super();
     }
 
-    
     /**
      * Get PumpManager instance
      * 
@@ -62,13 +57,14 @@ public class PumpManager extends DeviceManager
      */
     public static PumpManager getInstance()
     {
-    	if (PumpManager.s_manager==null)
-    		PumpManager.s_manager = new PumpManager();
-    	
-    	return PumpManager.s_manager;
+        if (PumpManager.s_manager == null)
+        {
+            PumpManager.s_manager = new PumpManager();
+        }
+
+        return PumpManager.s_manager;
     }
 
-    
     /**
      * Load devices companies
      */
@@ -82,8 +78,7 @@ public class PumpManager extends DeviceManager
         addDeviceCompany(new Roche());
         addDeviceCompany(new Sooil());
     }
-    
-    
+
     /**
      * Load Supported Devices
      */
@@ -97,6 +92,5 @@ public class PumpManager extends DeviceManager
         this.supported_devices.addAll(new Roche().getDevices());
         this.supported_devices.addAll(new Sooil().getDevices());
     }
-
 
 }

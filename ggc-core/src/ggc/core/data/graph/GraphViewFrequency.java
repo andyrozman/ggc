@@ -41,16 +41,16 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-public class GraphViewFrequency extends AbstractGraphViewAndProcessor //implements GraphViewInterface, GraphViewDataProcessorInterface 
+public class GraphViewFrequency extends AbstractGraphViewAndProcessor // implements
+                                                                      // GraphViewInterface,
+                                                                      // GraphViewDataProcessorInterface
 {
 
     DataAccess da_local = null;
-    private HbA1cValues hbValues; 
+    private HbA1cValues hbValues;
     private DefaultPieDataset dataset = new DefaultPieDataset();
-    I18nControlAbstract  m_ic = null;
-    
-    
+    I18nControlAbstract m_ic = null;
+
     /**
      * Constructor
      */
@@ -59,8 +59,6 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor //implemen
         super(DataAccess.getInstance());
         da_local = DataAccess.getInstance();
     }
-    
-
 
     /**
      * Get Help Id
@@ -77,34 +75,32 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor //implemen
      * 
      * @return title as string 
      */
+    @Override
     public String getTitle()
     {
         return null;
     }
 
-    
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      * 
      * @return Rectangle object
      */
+    @Override
     public Rectangle getViewerDialogBounds()
     {
         return null;
     }
 
-    
-    
     /**
      * Load Data
      */
     public void loadData()
     {
-        //if (hbValues==null)
-        //    hbValues = m_da.getDb().getHbA1c(new GregorianCalendar(), false);        
+        // if (hbValues==null)
+        // hbValues = m_da.getDb().getHbA1c(new GregorianCalendar(), false);
     }
 
-    
     /**
      * Get Data Set
      * 
@@ -122,15 +118,15 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor //implemen
     {
         dataset.clear();
 
-        System.out.println("Read HbA1c data:\n" + hbValues.getPercentOfDaysInClass(0) + "\n" + hbValues.getPercentOfDaysInClass(1) + "\n"
-                + hbValues.getPercentOfDaysInClass(2) + "\n" + hbValues.getPercentOfDaysInClass(3) + "\n"
-                + hbValues.getPercentOfDaysInClass(4));
+        System.out.println("Read HbA1c data:\n" + hbValues.getPercentOfDaysInClass(0) + "\n"
+                + hbValues.getPercentOfDaysInClass(1) + "\n" + hbValues.getPercentOfDaysInClass(2) + "\n"
+                + hbValues.getPercentOfDaysInClass(3) + "\n" + hbValues.getPercentOfDaysInClass(4));
         dataset.insertValue(0, m_ic.getMessage("DAYS_WITH_READINGS_0_1"), hbValues.getPercentOfDaysInClass(0));
         dataset.insertValue(1, m_ic.getMessage("DAYS_WITH_READINGS_2_3"), hbValues.getPercentOfDaysInClass(1));
         dataset.insertValue(2, m_ic.getMessage("DAYS_WITH_READINGS_4_5"), hbValues.getPercentOfDaysInClass(2));
         dataset.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"), hbValues.getPercentOfDaysInClass(3));
         dataset.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"), hbValues.getPercentOfDaysInClass(4));
-        
+
     }
 
     /**
@@ -142,37 +138,37 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor //implemen
     {
         PiePlot plot = (PiePlot) chart.getPlot();
 
-        //chart.setRenderingHints(renderingHints);
+        // chart.setRenderingHints(renderingHints);
 
-        plot.setBackgroundPaint(Color.white); //backgroundColor);
+        plot.setBackgroundPaint(Color.white); // backgroundColor);
         plot.setCircular(true);
-        //plot.setBackgroundAlpha(0.5f);
+        // plot.setBackgroundAlpha(0.5f);
         plot.setForegroundAlpha(0.5f);
-        //plot.s
+        // plot.s
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_0_1"), Color.RED);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_2_3"), Color.BLUE);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_4_5"), Color.YELLOW);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_6_7"), Color.GREEN);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"), Color.MAGENTA);
-        
+
     }
 
     /**
      * Create Chart
      */
+    @Override
     public void createChart()
     {
-        chart = ChartFactory.createPieChart3D(null, (DefaultPieDataset)dataset, true, true, false);
+        chart = ChartFactory.createPieChart3D(null, dataset, true, true, false);
     }
-
 
     /**
      * Create Chart Panel
      */
+    @Override
     public void createChartPanel()
     {
         this.chart_panel = new ChartPanel(chart, false, true, true, false, true);
     }
 
-    
 }

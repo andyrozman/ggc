@@ -1,6 +1,5 @@
 package ggc.plugin.protocol;
 
-
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.sql.Connection;
@@ -10,7 +9,6 @@ import java.sql.Statement;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,59 +40,44 @@ import org.apache.commons.logging.LogFactory;
 // STUB ONLY. Not implemented
 // Will be used by Animas (Pump) in future
 
-public abstract class DatabaseProtocol 
+public abstract class DatabaseProtocol
 {
 
-    protected DataAccessPlugInBase m_da = null; 
-    //protected String jdbc_url = null;
-    //protected String db_class_name = null;
+    protected DataAccessPlugInBase m_da = null;
+    // protected String jdbc_url = null;
+    // protected String db_class_name = null;
     Connection m_connection = null;
-    
+
     protected String username = null;
     protected String password = null;
     protected String filename = null;
     protected String additional = null;
-    
+
     private static Log log = LogFactory.getLog(DatabaseProtocol.class);
-    
+
     private int selected_db_type = -1;
-    
-    
-    
+
     /**
      * Db: Classes
      */
-    public String[] db_classes = 
-    {
-         "mdbtools.jdbc.Driver",
-         "sun.jdbc.odbc.JdbcOdbcDriver"
-    };
-    
-    
+    public String[] db_classes = { "mdbtools.jdbc.Driver", "sun.jdbc.odbc.JdbcOdbcDriver" };
+
     /**
      * Db: Urls
      */
-    public String[] db_urls = 
-    {
-         "jdbc:mdbtools:%FILENAME%",
-         "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=%FILENAME%"
-    };
-    
-    
+    public String[] db_urls = { "jdbc:mdbtools:%FILENAME%",
+                               "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=%FILENAME%" };
+
     /**
      * Database: Ms Access - MDBTools
      */
     public static final int DATABASE_MS_ACCESS_MDBTOOL = 0;
-    
+
     /**
      * Database: Ms Access - Odbc Bridge
      */
     public static final int DATABASE_MS_ACCESS_ODBC_BRIDGE = 1;
-    
-    
-    
 
-    
     /**
      * Constructor
      */
@@ -112,7 +95,6 @@ public abstract class DatabaseProtocol
         this.m_da = da;
     }
 
-
     /**
      * Get Connection Protocol
      * 
@@ -123,17 +105,18 @@ public abstract class DatabaseProtocol
         return ConnectionProtocols.PROTOCOL_DATABASE;
     }
 
-
     /**
      * Set JDBC Connection 
      * @param db_class_name class name for database
      * @param _jdbc_url full jdbc url, if user and password used, they must be part of url
      */
-/*    public void setJDBCConnection(String db_class_name, String _jdbc_url)
-    {
-        this.db_class_name = db_class_name;
-        this.jdbc_url = _jdbc_url;
-    }*/
+    /*
+     * public void setJDBCConnection(String db_class_name, String _jdbc_url)
+     * {
+     * this.db_class_name = db_class_name;
+     * this.jdbc_url = _jdbc_url;
+     * }
+     */
 
     /**
      * Set JDBC Connection 
@@ -142,16 +125,17 @@ public abstract class DatabaseProtocol
      * @param user username
      * @param pass password
      */
-    /*public void setJDBCConnection(String db_class_name, String _jdbc_url, String user, String pass)
-    {
-        this.db_class_name = db_class_name;
-        this.jdbc_url = _jdbc_url;
-        this.username = user;
-        this.password = pass;
-    }*/
-    
+    /*
+     * public void setJDBCConnection(String db_class_name, String _jdbc_url,
+     * String user, String pass)
+     * {
+     * this.db_class_name = db_class_name;
+     * this.jdbc_url = _jdbc_url;
+     * this.username = user;
+     * this.password = pass;
+     * }
+     */
 
-    
     /**
      * Set JDBC Connection 
      * 
@@ -161,13 +145,12 @@ public abstract class DatabaseProtocol
     public void setJDBCConnection(int db_type, String filename)
     {
         this.selected_db_type = db_type;
-        //this.db_class_name = this.db_classes[db_type];
-        //this.jdbc_url = this.db_urls[db_type];
+        // this.db_class_name = this.db_classes[db_type];
+        // this.jdbc_url = this.db_urls[db_type];
         this.filename = filename;
-        
+
     }
-    
-    
+
     /**
      * Set JDBC Connection 
      * 
@@ -180,17 +163,14 @@ public abstract class DatabaseProtocol
     public void setJDBCConnection(int db_type, String filename, String user, String pass, String additional_)
     {
         this.selected_db_type = db_type;
-        //this.db_class_name = this.db_classes[db_type];
-        //this.jdbc_url = this.db_urls[db_type];
+        // this.db_class_name = this.db_classes[db_type];
+        // this.jdbc_url = this.db_urls[db_type];
         this.username = user;
         this.password = pass;
         this.filename = filename;
         this.additional = additional_;
     }
-    
-    
-    
-    
+
     /**
      * Get JDBC Connection Url
      * 
@@ -199,46 +179,56 @@ public abstract class DatabaseProtocol
     public String getJDBCConnectionUrl()
     {
         String tmp = this.db_urls[this.selected_db_type];
-        
-        if (this.username!=null)
+
+        if (this.username != null)
+        {
             tmp = tmp.replace("%USERNAME%", this.username);
-        
-        if (this.password!=null)
+        }
+
+        if (this.password != null)
+        {
             tmp = tmp.replace("%PASSWORD%", this.password);
-        
-        if (this.filename!=null)
+        }
+
+        if (this.filename != null)
+        {
             tmp = tmp.replace("%FILENAME%", this.filename);
-       
-        if (this.additional!=null)
+        }
+
+        if (this.additional != null)
+        {
             tmp += this.additional;
-        
+        }
+
         System.out.println("Jdbc url: " + tmp);
-        
+
         return tmp;
     }
-    
-    
+
     private void createConnection()
     {
         try
         {
             Class.forName(this.db_classes[this.selected_db_type]);
-        
-            if ((username==null) && (this.password==null))
+
+            if (username == null && this.password == null)
+            {
                 this.m_connection = DriverManager.getConnection(this.getJDBCConnectionUrl());
+            }
             else
-                this.m_connection = DriverManager.getConnection(this.getJDBCConnectionUrl(), this.username, this.password);
+            {
+                this.m_connection = DriverManager.getConnection(this.getJDBCConnectionUrl(), this.username,
+                    this.password);
+            }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.out.println("Error creating connection. Ex: " + ex);
             ex.printStackTrace();
         }
-        
-        
+
     }
-    
-    
+
     /**
      * Get Connection - returns opened connection, if none exists, new is created.
      * 
@@ -248,19 +238,19 @@ public abstract class DatabaseProtocol
     {
         try
         {
-            if ((m_connection==null) || 
-                (m_connection.isClosed()))
+            if (m_connection == null || m_connection.isClosed())
+            {
                 createConnection();
+            }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.out.println("Error on getConnection. Ex: " + ex);
         }
-        
+
         return this.m_connection;
     }
-    
-    
+
     /**
      * Execute Query, return ResultSet.
      * 
@@ -275,13 +265,13 @@ public abstract class DatabaseProtocol
             Statement st = getConnection().createStatement();
             return st.executeQuery(sql);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             log.error("Error getting ResultSet for SQL:\nSql:" + sql + "\nException: " + ex, ex);
             return null;
         }
     }
-    
+
     /**
      * Execute Update, returns row count, for statments returning something or 0 for thoose 
      *      that return nothing.
@@ -295,7 +285,5 @@ public abstract class DatabaseProtocol
         Statement st = getConnection().createStatement();
         return st.executeUpdate(sql);
     }
-    
-    
-    
+
 }

@@ -1,4 +1,4 @@
-package ggc.meter.manager.company; 
+package ggc.meter.manager.company;
 
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.DataAccessMeter;
@@ -31,7 +31,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class HipoGuard extends AbstractDeviceCompany
 {
 
@@ -40,13 +39,13 @@ public class HipoGuard extends AbstractDeviceCompany
      */
     public HipoGuard()
     {
-        super(true,                              // empty devices
-            MeterDevicesIds.COMPANY_HIPOGUARD,   // company_id
-            "HipoGuard",                           // company name (full)
-            "HipoGuard",                           // short company name
-            "HIPOGUARD_DESC",                      // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED,
-            DataAccessMeter.getInstance());  // implementation status
+        super(true, // empty devices
+                MeterDevicesIds.COMPANY_HIPOGUARD, // company_id
+                "HipoGuard", // company name (full)
+                "HipoGuard", // short company name
+                "HIPOGUARD_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                                                                                                       // status
     }
 
 }

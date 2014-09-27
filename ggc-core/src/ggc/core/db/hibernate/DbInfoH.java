@@ -1,12 +1,14 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class DbInfoH implements Serializable {
+public class DbInfoH implements Serializable
+{
 
     /**
      * 
@@ -33,7 +35,8 @@ public class DbInfoH implements Serializable {
      * @param value 
      * @param type 
      * @param description */
-    public DbInfoH(String key, String value, int type, String description) {
+    public DbInfoH(String key, String value, int type, String description)
+    {
         this.key = key;
         this.value = value;
         this.type = type;
@@ -41,12 +44,14 @@ public class DbInfoH implements Serializable {
     }
 
     /** default constructor */
-    public DbInfoH() {
+    public DbInfoH()
+    {
     }
 
     /** minimal constructor 
      * @param key */
-    public DbInfoH(String key) {
+    public DbInfoH(String key)
+    {
         this.key = key;
     }
 
@@ -70,13 +75,12 @@ public class DbInfoH implements Serializable {
         this.id = id;
     }
 
-    
     /**
      * Get Key 
      * 
      * @return key value
      */
-    public String getKey() 
+    public String getKey()
     {
         return this.key;
     }
@@ -86,7 +90,7 @@ public class DbInfoH implements Serializable {
      *  
      * @param key parameter
      */
-    public void setKey(String key) 
+    public void setKey(String key)
     {
         this.key = key;
     }
@@ -96,7 +100,7 @@ public class DbInfoH implements Serializable {
      * 
      * @return value value
      */
-    public String getValue() 
+    public String getValue()
     {
         return this.value;
     }
@@ -106,7 +110,7 @@ public class DbInfoH implements Serializable {
      *  
      * @param value parameter
      */
-    public void setValue(String value) 
+    public void setValue(String value)
     {
         this.value = value;
     }
@@ -116,7 +120,7 @@ public class DbInfoH implements Serializable {
      * 
      * @return type value
      */
-    public int getType() 
+    public int getType()
     {
         return this.type;
     }
@@ -126,7 +130,7 @@ public class DbInfoH implements Serializable {
      *  
      * @param type parameter
      */
-    public void setType(int type) 
+    public void setType(int type)
     {
         this.type = type;
     }
@@ -136,7 +140,7 @@ public class DbInfoH implements Serializable {
      * 
      * @return description parameter
      */
-    public String getDescription() 
+    public String getDescription()
     {
         return this.description;
     }
@@ -146,7 +150,7 @@ public class DbInfoH implements Serializable {
      * 
      * @param description parameter
      */
-    public void setDescription(String description) 
+    public void setDescription(String description)
     {
         this.description = description;
     }
@@ -156,13 +160,13 @@ public class DbInfoH implements Serializable {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof DbInfoH) ) return false;
+        if (!(other instanceof DbInfoH))
+            return false;
         DbInfoH castOther = (DbInfoH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -170,18 +174,19 @@ public class DbInfoH implements Serializable {
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

@@ -1,6 +1,5 @@
 package ggc.plugin.protocol;
 
-
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -41,19 +40,14 @@ import org.dom4j.io.SAXReader;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-
 public class XmlProtocolFile
 {
 
-    protected DataAccessPlugInBase m_da = null; 
+    protected DataAccessPlugInBase m_da = null;
     protected OutputWriter output_writer = null;
-    //protected I18nControlAbstract ic = null;
 
+    // protected I18nControlAbstract ic = null;
 
-    
-    
-    
     /**
      * Constructor
      * 
@@ -66,10 +60,7 @@ public class XmlProtocolFile
         this.output_writer = ow;
     }
 
-
-    
     protected Document document;
-
 
     /**
      * Open Xml File
@@ -78,15 +69,14 @@ public class XmlProtocolFile
      * @return
      * @throws DocumentException
      */
-    public Document openXmlFile(File file) throws DocumentException 
+    public Document openXmlFile(File file) throws DocumentException
     {
         SAXReader reader = new SAXReader();
-        
+
         document = reader.read(file);
         return document;
     }
-    
-    
+
     /**
      * Get Node
      * 
@@ -97,8 +87,7 @@ public class XmlProtocolFile
     {
         return document.selectSingleNode(tag_path);
     }
-    
-    
+
     /**
      * Get Element
      * 
@@ -107,10 +96,9 @@ public class XmlProtocolFile
      */
     public Element getElement(String tag_path)
     {
-        return (Element)getNode(tag_path);
+        return (Element) getNode(tag_path);
     }
-    
-    
+
     /**
      * Return List of nodes from path
      * 
@@ -123,6 +111,5 @@ public class XmlProtocolFile
         List<Node> nodes = document.selectNodes(tag_path);
         return nodes;
     }
-    
-    
+
 }

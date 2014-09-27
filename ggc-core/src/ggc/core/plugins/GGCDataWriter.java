@@ -44,26 +44,24 @@ import com.atech.graphics.components.StatusReporterInterface;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-public class GGCDataWriter extends DbDataWriterAbstract 
+public class GGCDataWriter extends DbDataWriterAbstract
 {
 
     /**
      * Data: None
      */
     public static final int DATA_NONE = 0;
-    
+
     /**
      * Data: Meter
      */
     public static final int DATA_METER = 1;
 
-    
     protected int current_status = 0;
     protected StatusReporterInterface stat_rep_int = null;
     protected Hashtable<String, ArrayList<DayValueH>> meter_data;
     protected GGCDb db = null;
-    
+
     /**
      * Constructor
      * 
@@ -76,84 +74,83 @@ public class GGCDataWriter extends DbDataWriterAbstract
     {
         super(type, stat_rep_int);
         this.selected_data_type = type;
-        
-        this.meter_data = (Hashtable<String, ArrayList<DayValueH>>)data;
-        //this.data = (ArrayList<MeterValuesEntry>)data;
+
+        this.meter_data = (Hashtable<String, ArrayList<DayValueH>>) data;
+        // this.data = (ArrayList<MeterValuesEntry>)data;
         this.stat_rep_int = stat_rep_int;
-        
+
         this.db = DataAccess.getInstance().getDb();
-        
+
     }
-    
+
     boolean running = true;
-    
-    
+
     /** 
      * Run - method for running thread
      */
+    @Override
     public void run()
     {
         try
         {
             Thread.sleep(1000);
         }
-        catch(Exception ex)
-        {
-        }
-        
+        catch (Exception ex)
+        {}
+
         while (running)
         {
             int full_count = 0;
             int current = 0;
-            
+
             full_count += this.meter_data.get("ADD").size();
             full_count += this.meter_data.get("EDIT").size();
-            
-            for(Enumeration<String> en=this.meter_data.keys(); en.hasMoreElements(); )
+
+            for (Enumeration<String> en = this.meter_data.keys(); en.hasMoreElements();)
             {
                 String key = en.nextElement();
                 ArrayList<DayValueH> lst = this.meter_data.get(key);
-                
-                for(int i=0; i<lst.size(); i++)
+
+                for (int i = 0; i < lst.size(); i++)
                 {
                     if (key.equals("ADD"))
                     {
                         DayValueH dv = lst.get(i);
-                        dv.setPerson_id((int)DataAccess.getInstance().getCurrentUserId());
+                        dv.setPerson_id((int) DataAccess.getInstance().getCurrentUserId());
                         db.addHibernate(dv);
-                        
+
                         PumpDataExtendedH pde = new PumpDataExtendedH();
-                        pde.setDt_info((dv.getDt_info() * 100));
-                        pde.setType(3); // carefull if this is changed in Pump Tool it will need to be changed
+                        pde.setDt_info(dv.getDt_info() * 100);
+                        pde.setType(3); // carefull if this is changed in Pump
+                                        // Tool it will need to be changed
                         pde.setValue("" + dv.getBg());
                         pde.setPerson_id(dv.getPerson_id());
                         pde.setComment(dv.getComment());
                         pde.setExtended(dv.getExtended());
                         pde.setChanged(dv.getChanged());
                         db.addHibernate(pde);
-                        
+
                     }
                     else
                     {
                         db.editHibernate(lst.get(i));
                     }
-                    
+
                     current++;
-                    
-                    float f = (current/(full_count * 1.0f));
-                    
-                    int pr = (int)(100.0f * f);
-                    
+
+                    float f = current / (full_count * 1.0f);
+
+                    int pr = (int) (100.0f * f);
+
                     this.stat_rep_int.setStatus(pr);
-                    
+
                 } // for i
             } // for enum
 
-            
             this.stat_rep_int.setStatus(100);
             this.running = false;
-            
+
         } // while running
     }
-  
+
 }

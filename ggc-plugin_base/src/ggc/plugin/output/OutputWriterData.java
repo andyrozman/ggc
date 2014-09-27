@@ -26,9 +26,9 @@ package ggc.plugin.output;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public interface OutputWriterData 
+public interface OutputWriterData
 {
-    
+
     /**
      * Get Data As String
      * 
@@ -42,12 +42,12 @@ public interface OutputWriterData
      * @return true if data is BG
      */
     public abstract boolean isDataBG();
-    
+
     /**
      * Set Output Type
      * 
      * @param type output type as defined in OutputWriterType
      */
     public abstract void setOutputType(int type);
-    
+
 }

@@ -33,11 +33,9 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class DisetronicDTron extends AccuChekSmartPixPump
 {
-    
-    
+
     /**
      * Constructor
      * 
@@ -48,8 +46,7 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     {
         super(drive_letter, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -61,8 +58,7 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     {
         super(conn_parameter, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -72,12 +68,10 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     {
         super(cmp);
     }
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -89,8 +83,6 @@ public class DisetronicDTron extends AccuChekSmartPixPump
         return "D-Tron (Disetronic)";
     }
 
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -100,7 +92,6 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     {
         return "ac_dtron.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -108,13 +99,12 @@ public class DisetronicDTron extends AccuChekSmartPixPump
      * 
      * @return id of device within company
      */
+    @Override
     public int getDeviceId()
     {
         return PumpDevicesIds.PUMP_DISETRONIC_D_TRON;
     }
 
-    
-    
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -125,7 +115,7 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     {
         return "INSTRUCTIONS_ACCUCHEK_SPIRIT";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -135,41 +125,39 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
     }
-    
-    
+
     /**
      * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory (not verified for this pump)
      * 
      * @return number
      */
+    @Override
     public int getMaxMemoryRecords()
     {
         return 2000;
     }
-    
-    
+
     /**
      * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time) (not verified for this pump)
      * @return number of elements
      */
+    @Override
     public int getNrOfElementsFor1s()
     {
         return 85;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -180,24 +168,23 @@ public class DisetronicDTron extends AccuChekSmartPixPump
         return "ggc.meter.device.accuchek.DisetronicDTron";
     }
 
-
     /**
      * Open
      */
+    @Override
     public boolean open() throws PlugInBaseException
     {
         return true;
     }
-    
 
     /**
      * Close
      */
+    @Override
     public void close() throws PlugInBaseException
     {
     }
-   
-    
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -208,11 +195,10 @@ public class DisetronicDTron extends AccuChekSmartPixPump
      */
     public String getTemporaryBasalTypeDefinition()
     {
-        //return "TYPE=Unit;STEP=0.1";
+        // return "TYPE=Unit;STEP=0.1";
         return null;
     }
-    
-    
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -222,8 +208,7 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Get Basal Step (precission)
      * 
@@ -233,17 +218,16 @@ public class DisetronicDTron extends AccuChekSmartPixPump
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
+    @Override
     public boolean arePumpSettingsSet()
     {
         return false;
     }
-    
-    
+
 }

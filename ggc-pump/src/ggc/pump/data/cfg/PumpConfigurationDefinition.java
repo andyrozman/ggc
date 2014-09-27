@@ -34,10 +34,9 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PumpConfigurationDefinition implements DeviceConfigurationDefinition
 {
-    
+
     /**
      * Keyword used through configuration and configuration file describing device (for pump plugin, this
      * would be word PUMP).
@@ -48,8 +47,7 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
     {
         return "PUMP";
     }
-    
-    
+
     /**
      * Only certain devices support manual time fix for application (meters do, other's don't).
      * 
@@ -60,7 +58,6 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
         return false;
     }
 
-    
     /**
      * Get path to Configuration file as string
      * 
@@ -71,7 +68,6 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
         return "../data/tools/PumpConfiguration.properties";
     }
 
-    
     /**
      * Returns Dummy object (needed for some actions)
      * 
@@ -82,7 +78,6 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
         return new DummyPump();
     }
 
-    
     /**
      * Returns list of all supported devices for plugin. Needed for device selection
      * 
@@ -92,8 +87,7 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
     {
         return PumpManager.getInstance().getSupportedDevices();
     }
-    
-    
+
     /**
      * Returns prefix for help context
      * 
@@ -103,7 +97,5 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
     {
         return "PumpTool_";
     }
-    
-    
 
 }

@@ -1,6 +1,7 @@
 package ggc.pump.device.minimed.file;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocolFile;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -40,10 +41,9 @@ import javax.swing.filechooser.FileFilter;
 public class FRC_MinimedCarelinkConfig extends XmlProtocolFile implements GGCPlugInFileReaderContext
 {
 
-    //ArrayList<CGMSValuesSubEntry> list = new ArrayList<CGMSValuesSubEntry>();
-    //CGMSValuesTableModel cvtm = null;
-    
-    
+    // ArrayList<CGMSValuesSubEntry> list = new ArrayList<CGMSValuesSubEntry>();
+    // CGMSValuesTableModel cvtm = null;
+
     /**
      * Constructor
      * 
@@ -79,8 +79,7 @@ public class FRC_MinimedCarelinkConfig extends XmlProtocolFile implements GGCPlu
     {
         return "Carelink Export File (CSV)";
     }
-    
-    
+
     public boolean hasSpecialSelectorDialog()
     {
         return false;
@@ -90,27 +89,25 @@ public class FRC_MinimedCarelinkConfig extends XmlProtocolFile implements GGCPlu
     {
         try
         {
-            MinimedCareLinkPump mcl = new MinimedCareLinkPump(m_da, this.output_writer, MinimedCareLinkPump.READ_DEVICE_CONFIG_DATA);
+            MinimedCareLinkPump mcl = new MinimedCareLinkPump(m_da, this.output_writer,
+                    MinimedCareLink.READ_DEVICE_CONFIG_DATA);
             mcl.parseExportFile(new File(filename));
         }
         catch (Exception ex)
         {
             ex.printStackTrace();
         }
-        //System.out.println("i = " + i + " lisr: " + list.size());
-        
+        // System.out.println("i = " + i + " lisr: " + list.size());
+
     }
-    
-    
+
     int i = 0;
     String tmp_time;
-    
-    
 
     public FileFilter getFileFilter()
     {
-        
-        return new FileFilter() 
+
+        return new FileFilter()
         {
 
             @Override
@@ -118,8 +115,8 @@ public class FRC_MinimedCarelinkConfig extends XmlProtocolFile implements GGCPlu
             {
                 if (f.isDirectory())
                     return true;
-                
-                return (f.getName().toLowerCase().endsWith(getFileExtension()));
+
+                return f.getName().toLowerCase().endsWith(getFileExtension());
             }
 
             @Override
@@ -127,19 +124,16 @@ public class FRC_MinimedCarelinkConfig extends XmlProtocolFile implements GGCPlu
             {
                 return getFileDescription() + " (" + getFileExtension() + ")";
             }
-            
+
         };
-        
-        
+
     }
 
     public void goToNextDialog(JDialog currentDialog)
     {
     }
-    
-    
-    
-    
+
+    @Override
     public String toString()
     {
         return this.getFullFileDescription();
@@ -149,9 +143,5 @@ public class FRC_MinimedCarelinkConfig extends XmlProtocolFile implements GGCPlu
     {
         this.output_writer = ow;
     }
-
-    
-    
-    
 
 }

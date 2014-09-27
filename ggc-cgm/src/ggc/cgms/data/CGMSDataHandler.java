@@ -6,7 +6,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.Hashtable;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Meter Tool (support for Meter devices)
@@ -36,8 +35,6 @@ import java.util.Hashtable;
 public class CGMSDataHandler extends DeviceDataHandler
 {
 
-
-    
     /**
      * Constructor
      * 
@@ -47,42 +44,41 @@ public class CGMSDataHandler extends DeviceDataHandler
     {
         super(da);
     }
-    
-    
-    
-    
+
     /**
      * Execute export Db
      * 
      * @see ggc.plugin.data.DeviceDataHandler#executeExportDb()
      */
-   /* public void executeExportDb()
-    {
-        //System.out.println("Checked entries: " + this.getDeviceValuesTableModel().getCheckedEntries());
-        this.m_server.setReturnData(this.getDeviceValuesTableModel().getCheckedEntries(), this);
-    }*/
-    
-    
+    /*
+     * public void executeExportDb()
+     * {
+     * //System.out.println("Checked entries: " +
+     * this.getDeviceValuesTableModel().getCheckedEntries());
+     * this.m_server.setReturnData(this.getDeviceValuesTableModel().
+     * getCheckedEntries(), this);
+     * }
+     */
+
     /**
      * Execute Export Other (not supported for now)
      * 
      * @see ggc.plugin.data.DeviceDataHandler#executeExportOther()
      */
+    @Override
     public void executeExportOther()
     {
     }
-    
-    
+
     /**
      * Create Device Values Table Model
      */
+    @Override
     public void createDeviceValuesTableModel()
     {
-        this.m_model = new CGMSValuesTableModel(this, m_da.getSourceDevice()); //m_da.getSourceDevice());
-        //System.out.println("Model");
+        this.m_model = new CGMSValuesTableModel(this, m_da.getSourceDevice()); // m_da.getSourceDevice());
+        // System.out.println("Model");
     }
-
-
 
     /**
      * Set Device Data
@@ -93,33 +89,26 @@ public class CGMSDataHandler extends DeviceDataHandler
     @Override
     public void setDeviceData(Hashtable<String, ?> data)
     {
-        if ((data==null) || (data.size()==0))
+        if (data == null || data.size() == 0)
         {
-            //System.out.println("NO Old data: " + old_data);
-            old_data = new Hashtable<String,DayValueH>();
+            // System.out.println("NO Old data: " + old_data);
+            old_data = new Hashtable<String, DayValueH>();
         }
         else
         {
-            old_data = (Hashtable<String,DayValueH>)data;
-            //System.out.println("Old data: " + old_data);
+            old_data = data;
+            // System.out.println("Old data: " + old_data);
         }
     }
-
-
-
 
     /** 
      * Set Reading Finished
      */
     public void setReadingFinished()
     {
-        
+
         // TODO Auto-generated method stub
-        
+
     }
 
-    
-    
-    
-    
-}	
+}

@@ -9,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.utils.data.ATechDate;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -36,9 +35,9 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>  
+public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
 {
-    
+
     private static final long serialVersionUID = -1649768167774901903L;
     OutputWriter output_writer = null;
     private static Log log = LogFactory.getLog(DeviceValuesWriter.class);
@@ -47,7 +46,6 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
      */
     public boolean is_silent_mode = false;
 
-    
     /**
      * Constructor
      */
@@ -55,7 +53,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     {
         this(false);
     }
-    
+
     /**
      * Constructor
      * @param is_silent 
@@ -64,8 +62,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     {
         this.is_silent_mode = is_silent;
     }
-    
-    
+
     /**
      * Constructor
      *
@@ -75,8 +72,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     {
         this.output_writer = ow;
     }
-    
-    
+
     /**
      * Set output writer
      * 
@@ -86,8 +82,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     {
         this.output_writer = ow;
     }
-    
-	
+
     /**
      * Write Object 
      * @param _type 
@@ -101,9 +96,11 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
         {
             _value = _value.replace(',', '.');
             DeviceTempValues dtv = this.get(_type);
-            
+
             if (!this.is_silent_mode)
+            {
                 output_writer.writeData(dtv.getData(_datetime, _value));
+            }
             return true;
         }
         else
@@ -113,8 +110,6 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
         }
     }
 
-
-    
     /**
      * Write Object 
      * 
@@ -128,12 +123,16 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     {
         if (this.containsKey(_type))
         {
-            if (_value!=null)
+            if (_value != null)
+            {
                 _value = _value.replace(',', '.');
+            }
             DeviceTempValues dtv = this.get(_type);
 
             if (!this.is_silent_mode)
+            {
                 output_writer.writeData(dtv.getData(_datetime, code_type, _value));
+            }
             return true;
         }
         else
@@ -142,7 +141,5 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
             return false;
         }
     }
-    
-    
-    
-}	
+
+}

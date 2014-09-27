@@ -27,14 +27,12 @@ import java.awt.GridLayout;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class OtherInfoPanel extends AbstractInfoPanel
 {
     private static final long serialVersionUID = -1695058871914412588L;
-    private AbstractInfoPanel panel_1; 
+    private AbstractInfoPanel panel_1;
     private AbstractInfoPanel panel_2;
-    
-    
+
     /**
      * Constructor
      * @param p1 
@@ -44,13 +42,12 @@ public class OtherInfoPanel extends AbstractInfoPanel
     {
         super("OTHER_INFO", false);
         setLayout(new GridLayout(2, 0));
-        
+
         this.panel_1 = p1;
         this.panel_2 = p2;
         add(p1);
         add(p2);
     }
-
 
     /**
      * Refresh Information 
@@ -61,52 +58,50 @@ public class OtherInfoPanel extends AbstractInfoPanel
         this.panel_1.refreshInfo();
         this.panel_2.refreshInfo();
     }
-    
-    
+
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "OtherInfo";
     }
 
-    
     /**
      * RefreshInfo - Refresh info by name
      *  
      * @param name
      */
+    @Override
     public void refreshInfo(String name)
     {
         this.panel_1.refreshInfo(name);
         this.panel_2.refreshInfo(name);
     }
-    
-    
+
     /**
      * RefreshInfo - Refresh info by mask 
      *  
      * @param mask
      */
+    @Override
     public void refreshInfo(int mask)
     {
         this.panel_1.refreshInfo(mask);
         this.panel_2.refreshInfo(mask);
     }
-    
-    
-    
+
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
     }
-    
-    
+
     /**
      * Get Panel Id
      * 
@@ -117,8 +112,5 @@ public class OtherInfoPanel extends AbstractInfoPanel
     {
         return InfoPanelsIds.INFO_PANEL_NONE;
     }
-   
-    
-    
-    
+
 }

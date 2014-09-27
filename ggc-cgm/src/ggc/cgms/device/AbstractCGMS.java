@@ -34,29 +34,30 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, SelectableInterface
+public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
+                                                          // SelectableInterface
 {
 
-    //AbstractDeviceCompany cgms_company;
+    // AbstractDeviceCompany cgms_company;
 
-    //protected int m_status = 0;
-    //protected I18nControlAbstract ic = null; //DataAccessPump.getInstance().getI18nControlInstance();
+    // protected int m_status = 0;
+    // protected I18nControlAbstract ic = null;
+    // //DataAccessPump.getInstance().getI18nControlInstance();
 
-    //protected String m_info = "";
-    //protected int m_time_difference = 0;
-    //protected ArrayList<CGMSValuesEntry> data = null;
-    
-    //protected OutputWriter m_output_writer = null;
-    
-    //protected String[] profile_names = null;
+    // protected String m_info = "";
+    // protected int m_time_difference = 0;
+    // protected ArrayList<CGMSValuesEntry> data = null;
+
+    // protected OutputWriter m_output_writer = null;
+
+    // protected String[] profile_names = null;
     protected String device_name;
-    //protected OutputWriter output_writer;
+    // protected OutputWriter output_writer;
     protected String parameter;
-    //protected DataAccessCGMS m_da;
-    //protected GGCPlugInFileReaderContext[] file_contexts = null;
-    
-    
+
+    // protected DataAccessCGMS m_da;
+    // protected GGCPlugInFileReaderContext[] file_contexts = null;
+
     /**
      * Constructor
      */
@@ -65,7 +66,6 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
         super(DataAccessCGMS.getInstance());
     }
 
-    
     /**
      * Constructor
      * 
@@ -77,8 +77,7 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
         super(DataAccessCGMS.getInstance(), ow);
         this.parameter = param;
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -89,7 +88,6 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
         super(DataAccessCGMS.getInstance(), ow);
     }
 
-
     /**
      * Constructor
      * 
@@ -97,14 +95,12 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
      */
     public AbstractCGMS(AbstractDeviceCompany cmp)
     {
-        //super(DataAccessCGMS.getInstance());
+        // super(DataAccessCGMS.getInstance());
         super(cmp, DataAccessCGMS.getInstance());
-        //this.setDeviceCompany(cmp);
+        // this.setDeviceCompany(cmp);
         this.setCGMSType(cmp.getName(), getName());
     }
-    
-    
-    
+
     /**
      * Constructor
      * 
@@ -116,8 +112,7 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
     {
         super(params, writer, da);
     }
-    
-    
+
     /**
      * Set Pump Type
      * 
@@ -127,23 +122,22 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
     public void setCGMSType(String group, String device)
     {
         this.device_name = device;
-        
+
         DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
-        
-        if (this.output_writer!=null)
-            this.output_writer.setDeviceIdentification(di);
-        //this.output_writer.
-        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
-        
-        this.device_source_name = group + " " + device;
-        
-    }
-    
-    
-    
 
+        if (this.output_writer != null)
+        {
+            this.output_writer.setDeviceIdentification(di);
+            // this.output_writer.
+            // this.device_instance =
+            // MeterManager.getInstance().getMeterDevice(group, device);
+        }
+
+        this.device_source_name = group + " " + device;
+
+    }
 
     /**
      * Get Name
@@ -153,10 +147,6 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
         return "Generic device";
     }
 
-
-
-
-    
     /**
      * Get Download Support Type (if device supports downloading data from it)
      * 
@@ -166,8 +156,7 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
@@ -177,26 +166,22 @@ public abstract class AbstractCGMS extends DeviceAbstract //CGMSInterface, Selec
     {
         return 6;
     }
-    
-    
- 
 
-    
     /**
      * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
      *     left to right side, without displaying progress.
      * @return
      */
+    @Override
     public boolean hasIndeterminateProgressStatus()
     {
         return false;
     }
-    
 
+    @Override
     public boolean hasDefaultParameter()
     {
         return false;
     }
-    
-    
+
 }

@@ -45,7 +45,8 @@ import java.util.Hashtable;
  * Author: Andy {andy@atech-software.com}
  */
 
-public class MinimedCareLinkCGMS extends MinimedCareLink {
+public class MinimedCareLinkCGMS extends MinimedCareLink
+{
 
     DataAccessCGMS m_dap;
     // public String[] profile_names = null;
@@ -57,22 +58,23 @@ public class MinimedCareLinkCGMS extends MinimedCareLink {
 
     private Hashtable<String, MinimedCareLinkCGMSData> config = null;
 
-
     /**
      * @param da
      * @param ow
      * @param reading_type
      */
-    public MinimedCareLinkCGMS(DataAccessPlugInBase da, OutputWriter ow, int reading_type) {
+    public MinimedCareLinkCGMS(DataAccessPlugInBase da, OutputWriter ow, int reading_type)
+    {
         super(da, ow, reading_type);
         createDeviceValuesWriter();
-        m_dap = (DataAccessCGMS)da;
+        m_dap = (DataAccessCGMS) da;
         // setMappingData();
         setDefinitions();
     }
 
-
-    public void setMappingData() {
+    @Override
+    public void setMappingData()
+    {
         // FIXME
         // new PumpAlarms();
 
@@ -108,21 +110,30 @@ public class MinimedCareLinkCGMS extends MinimedCareLink {
          */
 
         /*
-         * this.alarm_mappings.put("x1", CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
-         * this.alarm_mappings.put("x2", CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
-         * this.alarm_mappings.put("x3", CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
-         * this.alarm_mappings.put("x4", CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
-         * this.alarm_mappings.put("x5", CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
-         * this.alarm_mappings.put("x6", CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
-         * this.alarm_mappings.put("x7", CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
-         * this.alarm_mappings.put("x8", CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
-         * this.alarm_mappings.put("x9", CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
+         * this.alarm_mappings.put("x1",
+         * CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
+         * this.alarm_mappings.put("x2",
+         * CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
+         * this.alarm_mappings.put("x3",
+         * CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
+         * this.alarm_mappings.put("x4",
+         * CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
+         * this.alarm_mappings.put("x5",
+         * CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
+         * this.alarm_mappings.put("x6",
+         * CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
+         * this.alarm_mappings.put("x7",
+         * CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
+         * this.alarm_mappings.put("x8",
+         * CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
+         * this.alarm_mappings.put("x9",
+         * CGMSAlarms.CGMS_ALARM_HIGH_GLUCOSE_PREDICTED);
          */
 
     }
 
-
-    private void setDefinitions() {
+    private void setDefinitions()
+    {
         // this.defs_pump = new Hashtable<String,String>();
         // this.defs_profile = new Hashtable<String,String>();
         this.setCGMSConfigDefinitions(new Hashtable<String, String>());
@@ -179,7 +190,6 @@ public class MinimedCareLinkCGMS extends MinimedCareLink {
          * this.defs_pump_config.put("CurrentRFEnable", "");
          * this.defs_pump_config.put("CurrentKeypadLockedEnable", "");
          * this.defs_pump_config.put("CurrentVariableBolusEnable", "");
-         * 
          * this.defs_pump_config.put("CurrentMaxBasal", "");
          * this.defs_pump_config.put("CurrentInsulinActionCurve", "");
          * this.defs_pump_config.put("CurrentMaxBolus", "");
@@ -189,9 +199,9 @@ public class MinimedCareLinkCGMS extends MinimedCareLink {
          * this.defs_pump_config.put("CurrentTimeDisplayFormat", "");
          * this.defs_pump_config.put("CurrentTempBasalType", "");
          * this.defs_pump_config.put("CurrentPumpModelNumber", "");
-         * 
          * this.defs_pump_config.put("CurrentAutoOffDuration", "");
-         * this.defs_pump_config.put("CurrentVariableBasalProfilePatternEnable", "");
+         * this.defs_pump_config.put("CurrentVariableBasalProfilePatternEnable",
+         * "");
          * this.defs_pump_config.put("CurrentAudioBolusStep", "");
          * this.defs_pump_config.put("CurrentBolusWizardSetupStatus", "");
          * this.defs_pump_config.put("CurrentBGTargetRangePattern", "");
@@ -237,71 +247,105 @@ public class MinimedCareLinkCGMS extends MinimedCareLink {
 
     MinimedCareLinkCGMSData[] special_data = new MinimedCareLinkCGMSData[2];
 
-
-    public void readLineData(String line, int count) {
+    @Override
+    public void readLineData(String line, int count)
+    {
 
         String[] ld = buildLineData(line);
 
         MinimedCareLinkCGMSData mcld = new MinimedCareLinkCGMSData(ld, line, this);
 
-        if (mcld.isDeviceData()) {
+        if (mcld.isDeviceData())
+        {
 
-            if ((mcld.isConfigData()) && (this.m_reading_type == MinimedCareLink.READ_DEVICE_CONFIG_DATA)) {
-                if (mcld.getKey().startsWith("ChangeSensorGlucoseLimit")) {
-                    if (mcld.getKey().equals("ChangeSensorGlucoseLimitPattern")) {
-                        if (special_data[SPECIAL_DATA_GLUCOSE_LIMIT] == null) {
+            if (mcld.isConfigData() && this.m_reading_type == MinimedCareLink.READ_DEVICE_CONFIG_DATA)
+            {
+                if (mcld.getKey().startsWith("ChangeSensorGlucoseLimit"))
+                {
+                    if (mcld.getKey().equals("ChangeSensorGlucoseLimitPattern"))
+                    {
+                        if (special_data[SPECIAL_DATA_GLUCOSE_LIMIT] == null)
+                        {
                             special_data[SPECIAL_DATA_GLUCOSE_LIMIT] = mcld;
                             special_data[SPECIAL_DATA_GLUCOSE_LIMIT].children = new ArrayList<MinimedCareLinkCGMSData>();
-                        } else {
-                            if (special_data[SPECIAL_DATA_GLUCOSE_LIMIT].dt_long < mcld.dt_long) {
+                        }
+                        else
+                        {
+                            if (special_data[SPECIAL_DATA_GLUCOSE_LIMIT].dt_long < mcld.dt_long)
+                            {
                                 special_data[SPECIAL_DATA_GLUCOSE_LIMIT] = mcld;
                                 special_data[SPECIAL_DATA_GLUCOSE_LIMIT].children = new ArrayList<MinimedCareLinkCGMSData>();
                             }
                         }
-                    } else {
+                    }
+                    else
+                    {
                         if (special_data[SPECIAL_DATA_GLUCOSE_LIMIT].dt_long == mcld.dt_long)
+                        {
                             special_data[SPECIAL_DATA_GLUCOSE_LIMIT].children.add(mcld);
+                        }
                     }
 
-                    // CurrentBGTargetRangePattern,"ORIGINAL_UNITS=mmol l, SIZE=1",861682954,2232381,93,Paradigm 522
+                    // CurrentBGTargetRangePattern,"ORIGINAL_UNITS=mmol l, SIZE=1",861682954,2232381,93,Paradigm
+                    // 522
                     // CurrentBGTargetRange,"PATTERN_DATUM=861682954, INDEX=0, AMOUNT_LOW=99,088, AMOUNT_HIGH=108,096, START_TIME=0",861682955,2232381,94,Paradigm
                     // 522
 
-                } else if (mcld.getKey().startsWith("CurrentSensorPredictiveAlert")) {
-                    if (mcld.getKey().equals("CurrentSensorPredictiveAlertPattern")) {
-                        if (special_data[SPECIAL_DATA_PREDICTIVE_ALARM] == null) {
+                }
+                else if (mcld.getKey().startsWith("CurrentSensorPredictiveAlert"))
+                {
+                    if (mcld.getKey().equals("CurrentSensorPredictiveAlertPattern"))
+                    {
+                        if (special_data[SPECIAL_DATA_PREDICTIVE_ALARM] == null)
+                        {
                             special_data[SPECIAL_DATA_PREDICTIVE_ALARM] = mcld;
                             special_data[SPECIAL_DATA_PREDICTIVE_ALARM].children = new ArrayList<MinimedCareLinkCGMSData>();
-                        } else {
-                            if (special_data[SPECIAL_DATA_PREDICTIVE_ALARM].dt_long < mcld.dt_long) {
+                        }
+                        else
+                        {
+                            if (special_data[SPECIAL_DATA_PREDICTIVE_ALARM].dt_long < mcld.dt_long)
+                            {
                                 special_data[SPECIAL_DATA_PREDICTIVE_ALARM] = mcld;
                                 special_data[SPECIAL_DATA_PREDICTIVE_ALARM].children = new ArrayList<MinimedCareLinkCGMSData>();
                             }
                         }
-                    } else {
+                    }
+                    else
+                    {
                         if (special_data[SPECIAL_DATA_PREDICTIVE_ALARM].dt_long == mcld.dt_long)
+                        {
                             special_data[SPECIAL_DATA_PREDICTIVE_ALARM].children.add(mcld);
+                        }
                     }
                     // CurrentSensorPredictiveAlertPattern
-                } else {
-                    if (config.containsKey(mcld.getKey())) {
-                        if (config.get(mcld.getKey()).dt_long < mcld.dt_long) {
+                }
+                else
+                {
+                    if (config.containsKey(mcld.getKey()))
+                    {
+                        if (config.get(mcld.getKey()).dt_long < mcld.dt_long)
+                        {
                             config.remove(mcld.getKey());
                             config.put(mcld.getKey(), mcld);
                         }
-                    } else {
+                    }
+                    else
+                    {
                         config.put(mcld.getKey(), mcld);
                     }
                 }
 
                 /*
                  * if (mcld.isTest())
-                 * System.out.println(mcld.raw_type + " = " + mcld.processed_value);
+                 * System.out.println(mcld.raw_type + " = " +
+                 * mcld.processed_value);
                  */
                 // process data on the fly
 
                 // profiles.add(mcld);
-            } else if ((mcld.isDeviceData()) && (this.m_reading_type == MinimedCareLink.READ_DEVICE_DATA)) {
+            }
+            else if (mcld.isDeviceData() && this.m_reading_type == MinimedCareLink.READ_DEVICE_DATA)
+            {
                 mcld.writeData();
             }
             /*
@@ -326,8 +370,8 @@ public class MinimedCareLinkCGMS extends MinimedCareLink {
 
     }
 
-
-    private void createDeviceValuesWriter() {
+    private void createDeviceValuesWriter()
+    {
         this.dvw = new DeviceValuesWriter(false);
         this.dvw.setOutputWriter(this.output_writer);
 
@@ -339,49 +383,49 @@ public class MinimedCareLinkCGMS extends MinimedCareLink {
         // CGMSTempValues
 
         this.dvw.put("GlucoseSensorData", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.SensorReading.getValue()));
+                CGMSBaseDataType.SensorReading.getValue()));
 
         this.dvw.put("AlarmSensor",
             new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY, CGMSBaseDataType.DeviceAlarm.getValue()));
 
         this.dvw.put("BGTherasense", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.MeterCalibration.getValue()));
+                CGMSBaseDataType.MeterCalibration.getValue()));
 
         this.dvw.put("SensorWeakSignal", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceEvent.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_WEAK_SIGNAL));
+                CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_WEAK_SIGNAL));
 
         this.dvw.put("SensorCal_meter_bg_now", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_METER_BG_NOW));
+                CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_METER_BG_NOW));
 
         this.dvw.put("SensorCal_waiting", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_WAITING));
+                CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_WAITING));
 
         this.dvw.put("SensorPacket_init", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_INIT));
+                CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_INIT));
 
         this.dvw.put("SensorPacket_pre_init", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_INIT));
+                CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_INIT));
 
         this.dvw.put("SensorPacket_burst", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_BURST));
+                CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_BURST));
 
         this.dvw.put("SensorCal_cal_error", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceError.getValue(), CGMSErrors.CGMS_ERROR_SENSOR_CALIBRATION_ERROR));
+                CGMSBaseDataType.DeviceError.getValue(), CGMSErrors.CGMS_ERROR_SENSOR_CALIBRATION_ERROR));
 
         this.dvw.put("SensorStatus_off", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_POWER_DOWN));
+                CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_POWER_DOWN));
 
         this.dvw.put("SensorStatus_on", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_POWER_UP));
+                CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_POWER_UP));
 
         this.dvw.put("SensorCalFactor", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_FACTOR));
+                CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_CALIBRATION_FACTOR));
 
         this.dvw.put("SensorStatus_lost", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_LOST));
+                CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_SENSOR_LOST));
 
         this.dvw.put("GlucoseSensorDataLow", new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY,
-            CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_DATA_LOW_BG));
+                CGMSBaseDataType.DeviceEvent.getValue(), CGMSEvents.CGMS_EVENT_DATA_LOW_BG));
 
         this.dvw.put("SensorError",
             new CGMSTempValues(CGMSTempValues.OBJECT_SUB_ENTRY, CGMSBaseDataType.DeviceError.getValue()));
@@ -394,88 +438,92 @@ public class MinimedCareLinkCGMS extends MinimedCareLink {
          * this.dvw.put("Rewind", new PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_EVENT,
          * PumpEvents.PUMP_EVENT_CARTRIDGE_REWIND));
-         * 
-         * this.dvw.put("AlarmPump", new PumpTempValues(PumpTempValues.OBJECT_BASE_SET_SUBTYPE,
+         * this.dvw.put("AlarmPump", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE_SET_SUBTYPE,
          * PumpBaseType.PUMP_DATA_ALARM));
-         * 
-         * this.dvw.put("BolusNormal", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("BolusNormal", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_BOLUS,
          * PumpBolusType.PUMP_BOLUS_STANDARD));
-         * 
-         * this.dvw.put("BolusSquare", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("BolusSquare", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_BOLUS,
          * PumpBolusType.PUMP_BOLUS_SQUARE));
-         * 
-         * this.dvw.put("BolusMultiwave", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("BolusMultiwave", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_BOLUS,
          * PumpBolusType.PUMP_BOLUS_MULTIWAVE));
-         * 
-         * this.dvw.put("BolusWizardBolusEstimate", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("BolusWizardBolusEstimate", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_EVENT,
          * PumpEvents.PUMP_EVENT_BOLUS_WIZARD));
-         * 
-         * this.dvw.put("BGReceived", new PumpTempValues(PumpTempValues.OBJECT_EXT,
+         * this.dvw.put("BGReceived", new
+         * PumpTempValues(PumpTempValues.OBJECT_EXT,
          * PumpAdditionalDataType.PUMP_ADD_DATA_BG));
-         * 
          * // ChangeTempBasalPercent
-         * this.dvw.put("ChangeTempBasalPercent", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("ChangeTempBasalPercent", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_BASAL,
          * PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE));
-         * 
-         * this.dvw.put("TBROver", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("TBROver", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_BASAL,
          * PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_ENDED));
-         * 
-         * this.dvw.put("ChangeActiveBasalProfilePattern", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("ChangeActiveBasalProfilePattern", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_BASAL,
          * PumpBasalSubType.PUMP_BASAL_PROFILE));
-         * 
-         * this.dvw.put("ChangeSuspendEnable", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("ChangeSuspendEnable", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_EVENT,
          * PumpEvents.PUMP_EVENT_BASAL_STOP));
-         * 
-         * this.dvw.put("ChangeSuspendEnableNot", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("ChangeSuspendEnableNot", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_EVENT,
          * PumpEvents.PUMP_EVENT_BASAL_RUN));
-         * 
-         * this.dvw.put("ResultDailyTotal", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("ResultDailyTotal", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_REPORT,
          * PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY));
-         * 
-         * this.dvw.put("SelfTest", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("SelfTest", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_EVENT,
          * PumpEvents.PUMP_EVENT_SELF_TEST));
-         * 
-         * this.dvw.put("ChangeTime", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("ChangeTime", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_EVENT,
          * PumpEvents.PUMP_EVENT_SELF_TEST));
-         * 
-         * 
-         * 
-         * this.dvw.put("JournalEntryPumpLowBattery", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("JournalEntryPumpLowBattery", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_ALARM,
          * PumpAlarms.PUMP_ALARM_BATTERY_LOW));
-         * 
-         * this.dvw.put("JournalEntryPumpLowReservoir", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+         * this.dvw.put("JournalEntryPumpLowReservoir", new
+         * PumpTempValues(PumpTempValues.OBJECT_BASE,
          * PumpBaseType.PUMP_DATA_ALARM,
          * PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW));
          */
 
     }
 
-
-    public void postProcessing() {
+    @Override
+    public void postProcessing()
+    {
 
         System.out.println(" ===  Config entries -- Start");
 
-        for (Enumeration<String> en = this.config.keys(); en.hasMoreElements();) {
+        for (Enumeration<String> en = this.config.keys(); en.hasMoreElements();)
+        {
             String key = en.nextElement();
             MinimedCareLinkCGMSData mcld = this.config.get(key);
 
-            if (mcld.hasItems()) {
+            if (mcld.hasItems())
+            {
                 System.out.println(mcld.getKey() + " = " + mcld.getItems());
-            } else
+            }
+            else
+            {
                 System.out.println(mcld.getKey() + " = " + mcld.processed_value);
+            }
         }
 
         System.out.println(" ===  Config entries -- End");
@@ -487,19 +535,19 @@ public class MinimedCareLinkCGMS extends MinimedCareLink {
 
     }
 
-
     /**
      * @return
      */
-    public Hashtable<String, String> getCGMSConfigDefinitions() {
+    public Hashtable<String, String> getCGMSConfigDefinitions()
+    {
         return defs_cgms_config;
     }
-
 
     /**
      * @param defs_cgms_config
      */
-    public void setCGMSConfigDefinitions(Hashtable<String, String> defs_cgms_config) {
+    public void setCGMSConfigDefinitions(Hashtable<String, String> defs_cgms_config)
+    {
         this.defs_cgms_config = defs_cgms_config;
     }
 

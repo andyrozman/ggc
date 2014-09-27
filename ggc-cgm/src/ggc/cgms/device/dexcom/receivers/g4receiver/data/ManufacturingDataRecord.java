@@ -8,7 +8,7 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
 
 public class ManufacturingDataRecord extends XmlRecord
 {
-    // Version: 1  Size: 500
+    // Version: 1 Size: 500
     // public int SystemSeconds;
     // public int DisplaySeconds;
     // [MarshalAs(UnmanagedType.ByValTStr, SizeConst=490)]

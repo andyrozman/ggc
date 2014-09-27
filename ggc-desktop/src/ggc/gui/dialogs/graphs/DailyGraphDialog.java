@@ -70,6 +70,7 @@ import com.atech.i18n.I18nControlAbstract;
 
 // DailyGraphDialog is already added with new framework
 
+@Deprecated
 public class DailyGraphDialog extends JDialog
 {
     /**
@@ -90,15 +91,11 @@ public class DailyGraphDialog extends JDialog
         /*
          * super(dialog, "DailyGraphFrame", true);
          * setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
-         * 
          * dGV = new DailyGraphView();
-         * 
          * Rectangle rec = dialog.getBounds(); int x = rec.x + (rec.width/2);
          * int y = rec.y + (rec.height/2);
-         * 
          * setBounds(x-200, y-150, 400, 300); //dWindowListener(new
          * CloseListener());
-         * 
          * //setBounds(300, 300, 300, 300);
          * setDefaultCloseOperation(DISPOSE_ON_CLOSE); getContentPane().add(dGV,
          * BorderLayout.CENTER); setVisible(true);
@@ -124,7 +121,9 @@ public class DailyGraphDialog extends JDialog
         getContentPane().add(dGV, BorderLayout.CENTER);
 
         if (dV != null)
+        {
             setDailyValues(dV);
+        }
 
         setSize(dGV.getPreferredSize());
         setVisible(true);
@@ -155,7 +154,9 @@ public class DailyGraphDialog extends JDialog
         dGV = new DailyGraphView();
 
         if (dV != null)
+        {
             setDailyValues(dV);
+        }
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         getContentPane().add(dGV, BorderLayout.CENTER);
@@ -172,19 +173,16 @@ public class DailyGraphDialog extends JDialog
     {
         dGV.setDailyValues(dV);
         this.repaint();
-        
-        /*
-        System.out.println("TimeZones\n================================\n");
-        
-        String tz[] = TimeZone.getAvailableIDs();
-        
-        for(int i =0; i<tz.length; i++)
-        {
-            System.out.println(tz[i]);
-        }*/
 
-        
-        
+        /*
+         * System.out.println("TimeZones\n================================\n");
+         * String tz[] = TimeZone.getAvailableIDs();
+         * for(int i =0; i<tz.length; i++)
+         * {
+         * System.out.println(tz[i]);
+         * }
+         */
+
         // redraw();
     }
 

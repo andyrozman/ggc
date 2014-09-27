@@ -72,8 +72,6 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
     JCheckBox insPerCHBox = new JCheckBox();
     JCheckBox mealsBox = new JCheckBox();
 
-    
-    
     /**
      * Mask: BG
      */
@@ -143,7 +141,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
      * Mask: Ins/CH
      */
     public static final int INS_PER_CH_MASK = 32768;
-    
+
     /**
      * Mask: Meals
      */
@@ -225,7 +223,8 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
 
     private void addBoxes()
     {
-        // columns contain related checkboxes, the last row contains unrelated ones
+        // columns contain related checkboxes, the last row contains unrelated
+        // ones
 
         add(BGBox);
         add(CHBox);
@@ -266,9 +265,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
     public void selectBoxes(int initialSelection, boolean enable)
     {
         if (initialSelection == 0)
-        {
             return;
-        }
 
         if ((initialSelection & BG_MASK) == BG_MASK)
         {
@@ -356,10 +353,6 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         setChoice(choiceMask, true);
     }
 
-    
-    
-    
-    
     /**
      * Disables the specified checkboxes.
      * 
@@ -371,10 +364,6 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         setChoice(choiceMask, false);
     }
 
-    
-    
-    
-    
     /**
      * Disables or enables the specified checkboxes, depending on the value of
      * <code>enable</code>.
@@ -388,9 +377,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
     public void setChoice(int choiceMask, boolean enable)
     {
         if (choiceMask == 0)
-        {
             return;
-        }
 
         if ((choiceMask & BG_MASK) == BG_MASK)
         {
@@ -477,11 +464,6 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         return data;
     }
 
-    
-    
-    
-    
-    
     /**
      * State Changed
      * 
@@ -489,7 +471,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
      */
     public void stateChanged(ChangeEvent e)
     {
-        
+
         if (e.getSource() == BGBox)
         {
             data.setPlotBG(BGBox.isSelected());
@@ -558,10 +540,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         {
             data.setPlotMeals(mealsBox.isSelected());
         }
-        
-        
+
     }
-    
-    
-    
+
 }

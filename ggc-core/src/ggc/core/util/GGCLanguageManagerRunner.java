@@ -1,6 +1,5 @@
 package ggc.core.util;
 
-import com.atech.i18n.mgr.LanguageManagerRunner;
 import com.atech.i18n.mgr.LanguageManagerRunnerDual;
 
 /**
@@ -28,21 +27,17 @@ import com.atech.i18n.mgr.LanguageManagerRunnerDual;
  *  Author:  andyrozman {andy@atech-software.com}  
  */
 
-
 public class GGCLanguageManagerRunner extends LanguageManagerRunnerDual
 {
 
     /**
      * Constructor
-   
+    
      */
     public GGCLanguageManagerRunner()
     {
         super();
     }
-
-    
-
 
     /**
      * Get Langauge Config File
@@ -52,7 +47,6 @@ public class GGCLanguageManagerRunner extends LanguageManagerRunnerDual
     {
         return "../data/lang/GGC_Languages.properties";
     }
-
 
     @Override
     public String getLanguageSelectionConfigFile()
@@ -72,17 +66,11 @@ public class GGCLanguageManagerRunner extends LanguageManagerRunnerDual
         return true;
     }
 
-
-
-
     @Override
     public String getDefaultLanguage()
     {
         return "en";
     }
-
-
-
 
     @Override
     public boolean findUntranslatedKeysInLanguage()
@@ -90,8 +78,4 @@ public class GGCLanguageManagerRunner extends LanguageManagerRunnerDual
         return true;
     }
 
-    
-    
-    
-    
 }

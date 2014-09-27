@@ -28,10 +28,9 @@ import javax.swing.JPanel;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public abstract class BaseListAbstractPanel extends JPanel
 {
-    
+
     private static final long serialVersionUID = -419549921018198285L;
 
     /**
@@ -40,5 +39,5 @@ public abstract class BaseListAbstractPanel extends JPanel
      * @param obj
      */
     public abstract void setData(Object obj);
-    
+
 }

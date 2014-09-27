@@ -59,24 +59,14 @@ import javax.swing.tree.DefaultTreeCellRenderer;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class BaseListRenderer extends DefaultTreeCellRenderer
 {
 
     private static final long serialVersionUID = -5179522965356580379L;
 
-    private static Color[] list_status_color = { 
-                                                Color.black,
-                                                Color.green,
-                                                Color.cyan,
-                                                Color.magenta,
-                                                Color.blue,
-                                                Color.orange,
-                                                Color.red
-    }; 
-    
-   
-    
+    private static Color[] list_status_color = { Color.black, Color.green, Color.cyan, Color.magenta, Color.blue,
+                                                Color.orange, Color.red };
+
     /**
      * Constructor
      */
@@ -89,15 +79,16 @@ public class BaseListRenderer extends DefaultTreeCellRenderer
      * 
      * @see javax.swing.tree.DefaultTreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
      */
+    @Override
     public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
             boolean leaf, int row, boolean _hasFocus)
     {
 
         super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, _hasFocus);
-        
+
         if (leaf)
         {
-            BaseListEntry ble = (BaseListEntry)value;
+            BaseListEntry ble = (BaseListEntry) value;
             this.setForeground(list_status_color[ble.status]);
         }
 

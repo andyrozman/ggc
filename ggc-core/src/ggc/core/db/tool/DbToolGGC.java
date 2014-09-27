@@ -27,8 +27,7 @@ import com.atech.db.hibernate.tool.DbTool;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-public class DbToolGGC 
+public class DbToolGGC
 {
     /**
      * Constructor
@@ -36,7 +35,7 @@ public class DbToolGGC
     public DbToolGGC()
     {
         DbToolApplicationGGC appl = new DbToolApplicationGGC();
-        /*DbTool tool =*/ new DbTool(appl);
+        /* DbTool tool = */new DbTool(appl);
     }
 
     /**

@@ -75,17 +75,17 @@ public abstract class JFAbstractGraphView extends JPanel
 
         switch (BGUnit)
         {
-        case DataAccess.BG_MMOL:
-            maxBG = 11.1f;
-            minBG = 2.775f;
-            unitLabel = "mmol/l";
-            break;
-        case DataAccess.BG_MGDL:
-        default:
-            maxBG = 200;
-            minBG = 50;
-            unitLabel = "mg/dl";
-            break;
+            case DataAccess.BG_MMOL:
+                maxBG = 11.1f;
+                minBG = 2.775f;
+                unitLabel = "mmol/l";
+                break;
+            case DataAccess.BG_MGDL:
+            default:
+                maxBG = 200;
+                minBG = 50;
+                unitLabel = "mg/dl";
+                break;
         }
         BGDiff = maxBG - minBG;
 
@@ -119,86 +119,86 @@ public abstract class JFAbstractGraphView extends JPanel
         HashMap<Key, Object> hintsMap = new HashMap<Key, Object>();
         switch (settings.getAntiAliasing())
         {
-        case 1:
-            hintsMap.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-            break;
-        case 2:
-            hintsMap.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            break;
-        default:
-            hintsMap.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_DEFAULT);
+            case 1:
+                hintsMap.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+                break;
+            case 2:
+                hintsMap.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                break;
+            default:
+                hintsMap.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_DEFAULT);
         }
 
         switch (settings.getColorRendering())
         {
-        case 1:
-            hintsMap.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-            break;
-        case 2:
-            hintsMap.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED);
-            break;
-        default:
-            hintsMap.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_DEFAULT);
+            case 1:
+                hintsMap.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+                break;
+            case 2:
+                hintsMap.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED);
+                break;
+            default:
+                hintsMap.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_DEFAULT);
         }
 
         switch (settings.getDithering())
         {
-        case 1:
-            hintsMap.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
-            break;
-        case 2:
-            hintsMap.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
-            break;
-        default:
-            hintsMap.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DEFAULT);
+            case 1:
+                hintsMap.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
+                break;
+            case 2:
+                hintsMap.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+                break;
+            default:
+                hintsMap.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DEFAULT);
         }
 
         switch (settings.getFractionalMetrics())
         {
-        case 1:
-            hintsMap.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
-            break;
-        case 2:
-            hintsMap.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-            break;
-        default:
-            hintsMap.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT);
+            case 1:
+                hintsMap.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
+                break;
+            case 2:
+                hintsMap.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+                break;
+            default:
+                hintsMap.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT);
         }
 
         switch (settings.getInterpolation())
         {
-        case 1:
-            hintsMap.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-            break;
-        case 2:
-            hintsMap.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            break;
-        default:
-            hintsMap.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+            case 1:
+                hintsMap.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+                break;
+            case 2:
+                hintsMap.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                break;
+            default:
+                hintsMap.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         }
 
         switch (settings.getRendering())
         {
-        case 1:
-            hintsMap.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-            break;
-        case 2:
-            hintsMap.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT);
-            break;
-        default:
-            hintsMap.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT);
+            case 1:
+                hintsMap.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                break;
+            case 2:
+                hintsMap.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT);
+                break;
+            default:
+                hintsMap.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT);
         }
 
         switch (settings.getTextAntiAliasing())
         {
-        case 1:
-            hintsMap.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
-            break;
-        case 2:
-            hintsMap.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            break;
-        default:
-            hintsMap.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT);
+            case 1:
+                hintsMap.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+                break;
+            case 2:
+                hintsMap.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                break;
+            default:
+                hintsMap.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT);
         }
 
         renderingHints = new RenderingHints(hintsMap);
@@ -209,10 +209,8 @@ public abstract class JFAbstractGraphView extends JPanel
      */
     public void redraw()
     {
-        if ((m_chart == null) || (chartPanel == null))
-        {
+        if (m_chart == null || chartPanel == null)
             return;
-        }
 
         drawFramework(m_chart);
         drawValues(m_chart);
@@ -279,28 +277,26 @@ public abstract class JFAbstractGraphView extends JPanel
     void applyMarkers(XYPlot plot)
     {
         if (plot == null)
-        {
             return;
-        }
 
         IntervalMarker lowBGMarker;
         IntervalMarker targetBGMarker;
 
         switch (BGUnit)
         {
-        case DataAccess.BG_MMOL:
-            lowBGMarker = new IntervalMarker(0, settings.getBG2_TargetLow(), dataAccessInst.getColor(colorScheme
-                    .getColor_bg_low()));
-            targetBGMarker = new IntervalMarker(settings.getBG2_TargetLow(), settings.getBG2_TargetHigh(),
-                    dataAccessInst.getColor(colorScheme.getColor_bg_target()));
-            break;
-        case DataAccess.BG_MGDL:
-        default:
-            lowBGMarker = new IntervalMarker(0, settings.getBG1_TargetLow(), dataAccessInst.getColor(colorScheme
-                    .getColor_bg_low()));
-            targetBGMarker = new IntervalMarker(settings.getBG1_TargetLow(), settings.getBG1_TargetHigh(),
-                    dataAccessInst.getColor(colorScheme.getColor_bg_target()));
-            break;
+            case DataAccess.BG_MMOL:
+                lowBGMarker = new IntervalMarker(0, settings.getBG2_TargetLow(), dataAccessInst.getColor(colorScheme
+                        .getColor_bg_low()));
+                targetBGMarker = new IntervalMarker(settings.getBG2_TargetLow(), settings.getBG2_TargetHigh(),
+                        dataAccessInst.getColor(colorScheme.getColor_bg_target()));
+                break;
+            case DataAccess.BG_MGDL:
+            default:
+                lowBGMarker = new IntervalMarker(0, settings.getBG1_TargetLow(), dataAccessInst.getColor(colorScheme
+                        .getColor_bg_low()));
+                targetBGMarker = new IntervalMarker(settings.getBG1_TargetLow(), settings.getBG1_TargetHigh(),
+                        dataAccessInst.getColor(colorScheme.getColor_bg_target()));
+                break;
         }
 
         plot.clearRangeMarkers();

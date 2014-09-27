@@ -36,7 +36,6 @@ import org.apache.commons.logging.LogFactory;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class GGCDbLoader extends Thread
 {
 
@@ -57,47 +56,44 @@ public class GGCDbLoader extends Thread
     private static Log log = LogFactory.getLog(GGCDbLoader.class);
 
     DataAccess m_da = null;
-    //StatusBar m_bar = null;
-    //StatusBarL m_barL = null;
-    //private boolean real_run = false;
+    // StatusBar m_bar = null;
+    // StatusBarL m_barL = null;
+    // private boolean real_run = false;
     private boolean run_once = false;
 
-    
-    //public boolean part_start = true;
+    // public boolean part_start = true;
     /**
      * Part start. When this is enables, we don't load Food, Doctor's data
      */
     public boolean part_start = false;
-    
-    //public boolean debug = false;
-    
-    
+
+    // public boolean debug = false;
+
     /**
      * Db Status: Not started
      */
     public static final int DB_NOT_STARTED = 0;
-    
+
     /**
      * Db Status: Init done
      */
     public static final int DB_INIT_DONE = 1;
-    
+
     /**
      * Db Status: Base data loaded
      */
     public static final int DB_DATA_BASE = 2;
-    
+
     /**
      * Db Status: Data from plugins loaded
      */
     public static final int DB_DATA_PLUGINS = 3;
-    
+
     /**
      * Db Status: Db Initialization done - Load completed
      */
     public static final int DB_INIT_FINISHED = 4;
-    
-    
+
     /**
      * Constructor
      * 
@@ -106,25 +102,24 @@ public class GGCDbLoader extends Thread
     public GGCDbLoader(DataAccess da)
     {
         m_da = da;
-        //System.out.println("GGCDbLoader in development mode");
-//        part_start = true;
+        // System.out.println("GGCDbLoader in development mode");
+        // part_start = true;
     }
-    
-    
-    
+
     /**
      * Constructor
      * 
      * @param da
      * @param bar
      */
-/*    public GGCDbLoader(DataAccess da) //, StatusBar bar)
-    {
-        m_da = da;
-        //m_bar = bar;
-//        System.out.println("GGCDbLoader inited");
-    }
-*/
+    /*
+     * public GGCDbLoader(DataAccess da) //, StatusBar bar)
+     * {
+     * m_da = da;
+     * //m_bar = bar;
+     * // System.out.println("GGCDbLoader inited");
+     * }
+     */
 
     /**
      * Constructor
@@ -132,12 +127,13 @@ public class GGCDbLoader extends Thread
      * @param da
      * @param bar2
      */
-/*    public GGCDbLoader(DataAccess da, StatusBarL bar2)
-    {
-        m_da = da;
-        m_barL = bar2;
-    }
-*/
+    /*
+     * public GGCDbLoader(DataAccess da, StatusBarL bar2)
+     * {
+     * m_da = da;
+     * m_barL = bar2;
+     * }
+     */
 
     /**
      * Run (Thread)
@@ -148,156 +144,157 @@ public class GGCDbLoader extends Thread
     public void run()
     {
 
-        if (run_once) 
+        if (run_once)
             return;
 
         run_once = true;
 
-        
         if (new File("../data/debug_no_food.txt").exists())
-            part_start = true;
-        		
-        
-        // 1 - init
-        
-        long start_time = System.currentTimeMillis();
-        
-        GGCDb db = new GGCDb(m_da);
-
-        //if (!part_start)
         {
-            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, "DB_NAME=" + db.getHibernateConfiguration().getConnectionName() );
-/*            if (m_bar!=null)
-                m_bar.setDatabaseName(db.getHibernateConfiguration().getConnectionName());
-            else
-                m_barL.setDatabaseName(db.getHibernateConfiguration().getConnectionName()); */
+            part_start = true;
         }
 
+        // 1 - init
+
+        long start_time = System.currentTimeMillis();
+
+        GGCDb db = new GGCDb(m_da);
+
+        // if (!part_start)
+        {
+            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, "DB_NAME="
+                    + db.getHibernateConfiguration().getConnectionName());
+            /*
+             * if (m_bar!=null)
+             * m_bar.setDatabaseName(db.getHibernateConfiguration().
+             * getConnectionName());
+             * else
+             * m_barL.setDatabaseName(db.getHibernateConfiguration().
+             * getConnectionName());
+             */
+        }
 
         db.initDb();
 
-        setDbStatus(RefreshInfo.DB_INIT_DONE); 
+        setDbStatus(RefreshInfo.DB_INIT_DONE);
         m_da.setDbLoadingStatus(GGCDbLoader.DB_INIT_DONE);
 
-        
         // 2 - load configuration
-        
+
         db.loadConfigData();
         db.loadStaticData();
         m_da.setDb(db);
         m_da.setDbLoadingStatus(GGCDbLoader.DB_DATA_BASE);
-        
+
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_GENERAL_INFO);
 
-        
         // 3 - init plugins
         m_da.initPlugIns();
 
-        
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_PLUGINS_ALL);
-        
+
         // 4 - load daily data for display, appointments
-        
-        if (m_da.getParent()!=null)
+
+        if (m_da.getParent() != null)
+        {
             m_da.loadDailySettings(new GregorianCalendar(), true);
+        }
         else
+        {
             m_da.loadDailySettingsLittle(new GregorianCalendar(), true);
+        }
 
-
-        //m_da.loadSettingsFromDb();
+        // m_da.loadSettingsFromDb();
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, m_da.getI18nControlInstance().getMessage("READY"));
 
-//        mf.informationPanel.refreshPanels();
-//        mf.statusPanel.setStatusMessage(m_da.getI18nControlInstance().getMessage("READY"));
-        
+        // mf.informationPanel.refreshPanels();
+        // mf.statusPanel.setStatusMessage(m_da.getI18nControlInstance().getMessage("READY"));
+
         /*
-        if (m_da.getParent()!=null)
-        {
-            // GGC
-            MainFrame mf = m_da.getParent();
-            //mf.setDbActions(true);
-            m_da.loadSettingsFromDb();
-            mf.informationPanel.refreshPanels();
-            mf.statusPanel.setStatusMessage(m_da.getI18nControlInstance().getMessage("READY"));
-        }
-        else
-        {
-            /// GGC Little
-            !! mf = m_da.getParentLittle();
-            //mf.setDbActions(true);
-            m_da.loadSettingsFromDb();
-            mf.getInformationPanel().dailyStats.getTableModel().setDailyValues(m_da.getDayStats(new GregorianCalendar()));
-            mf.getInformationPanel().refreshPanels();
-            mf.getStatusPanel().setStatusMessage(m_da.getI18nControlInstance().getMessage("READY"));
-        }
-*/
-        setDbStatus(RefreshInfo.DB_BASE_DONE); 
-        
-        
+         * if (m_da.getParent()!=null)
+         * {
+         * // GGC
+         * MainFrame mf = m_da.getParent();
+         * //mf.setDbActions(true);
+         * m_da.loadSettingsFromDb();
+         * mf.informationPanel.refreshPanels();
+         * mf.statusPanel.setStatusMessage(m_da.getI18nControlInstance().getMessage
+         * ("READY"));
+         * }
+         * else
+         * {
+         * /// GGC Little
+         * !! mf = m_da.getParentLittle();
+         * //mf.setDbActions(true);
+         * m_da.loadSettingsFromDb();
+         * mf.getInformationPanel().dailyStats.getTableModel().setDailyValues(m_da
+         * .getDayStats(new GregorianCalendar()));
+         * mf.getInformationPanel().refreshPanels();
+         * mf.getStatusPanel().setStatusMessage(m_da.getI18nControlInstance().
+         * getMessage("READY"));
+         * }
+         */
+        setDbStatus(RefreshInfo.DB_BASE_DONE);
+
         // 5 - Load plugin data
-        
+
         if (m_da.isPluginAvailable(DataAccess.PLUGIN_NUTRITION))
+        {
             m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).executeCommand(NutriPlugIn.COMMAND_LOAD_DATABASE);
+        }
         m_da.setDbLoadingStatus(GGCDbLoader.DB_DATA_PLUGINS);
         setDbStatus(RefreshInfo.DB_LOADED);
-        
-        //refreshMenus();
-        
-   
-//        if (!part_start)
-        {
-     /*   
-            // 4 - load doctors data
-            // TODO: in version 0.4
-           
-            // 5 - load nutrition(1) root data
-            db.loadNutritionDbBase();
-            db.loadNutritionDb1();
-            
-            // 6 - load nutrition(2) root data
-            db.loadNutritionDb2();
-            
-            
-            // 7 - load meals root data
-            db.loadMealsDb();
 
-            setDbStatus(RefreshInfo.DB_LOADED);
-*/
-        }
-/*        else
+        // refreshMenus();
+
+        // if (!part_start)
         {
-            db.loadNutritionDbBase();
-            setDbStatus(StatusBar.DB_LOADED);
-        }*/
-        
-        
-        
-/*        
-        if (part_start)
-        {
-            db.loadNutritionDb1();
-            db.loadNutritionDb2();
-            db.loadMealsDb();
-            
+            /*
+             * // 4 - load doctors data
+             * // TODO: in version 0.4
+             * // 5 - load nutrition(1) root data
+             * db.loadNutritionDbBase();
+             * db.loadNutritionDb1();
+             * // 6 - load nutrition(2) root data
+             * db.loadNutritionDb2();
+             * // 7 - load meals root data
+             * db.loadMealsDb();
+             * setDbStatus(RefreshInfo.DB_LOADED);
+             */
         }
-        else
-        {
-            db.loadConfigData();
-    
-            db.loadStaticData();
-            db.loadNutritionDb1();
-//            db.loadImplementedMeterData();
-        }
-*/
-        
+        /*
+         * else
+         * {
+         * db.loadNutritionDbBase();
+         * setDbStatus(StatusBar.DB_LOADED);
+         * }
+         */
+
+        /*
+         * if (part_start)
+         * {
+         * db.loadNutritionDb1();
+         * db.loadNutritionDb2();
+         * db.loadMealsDb();
+         * }
+         * else
+         * {
+         * db.loadConfigData();
+         * db.loadStaticData();
+         * db.loadNutritionDb1();
+         * // db.loadImplementedMeterData();
+         * }
+         */
+
         m_da.setDbLoadingStatus(GGCDbLoader.DB_INIT_FINISHED);
         m_da.runAfterDbLoad();
-        
-    	long dif = System.currentTimeMillis() - start_time;
 
-    	//System.out.println("We needed "  + (dif/1000) + " seconds to startup.");
-    	log.debug("We needed "  + (dif/1000) + " seconds to startup.");
+        long dif = System.currentTimeMillis() - start_time;
+
+        // System.out.println("We needed " + (dif/1000) +
+        // " seconds to startup.");
+        log.debug("We needed " + dif / 1000 + " seconds to startup.");
     }
 
     /**
@@ -307,14 +304,11 @@ public class GGCDbLoader extends Thread
      */
     public void setDbStatus(int status)
     {
-        //if (part_start)
-        //    return;
-//        m_da.setDbLoadingStatus(status);
-	
+        // if (part_start)
+        // return;
+        // m_da.setDbLoadingStatus(status);
+
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, status);
     }
 
-
 }
-
-

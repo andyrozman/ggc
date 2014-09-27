@@ -32,13 +32,13 @@ import javax.swing.JLabel;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class PlugInPumpPanelL extends AbstractInfoPanel
 {
-    
+
     private static final long serialVersionUID = 2496714983251707250L;
-    //private I18nControl ic = I18nControl.getInstance();
-    
+
+    // private I18nControl ic = I18nControl.getInstance();
+
     /**
      * Constructor
      */
@@ -52,10 +52,10 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
 
     private void init()
     {
-    	String text = "<html><body>"; 
-    	text += String.format(m_ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
-    	text += "</body></html>";
-	
+        String text = "<html><body>";
+        text += String.format(m_ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
+        text += "</body></html>";
+
         add(new JLabel(text));
     }
 
@@ -66,27 +66,26 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
     public void refreshInfo()
     {
     }
-    
-    
+
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "PlugInPumpInfo";
     }
 
-    
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
     }
 
-    
     /**
      * Get Panel Id
      * 
@@ -98,5 +97,4 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
         return InfoPanelsIds.INFO_PANEL_NONE;
     }
 
-    
 }

@@ -31,7 +31,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 // in works
 public class OneTouchII extends OneTouchMeter
 {
@@ -47,7 +46,6 @@ public class OneTouchII extends OneTouchMeter
         super(portName, writer);
     }
 
-
     /**
      * Constructor
      * 
@@ -59,8 +57,7 @@ public class OneTouchII extends OneTouchMeter
     {
         super(comm_parameters, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      */
@@ -68,7 +65,7 @@ public class OneTouchII extends OneTouchMeter
     {
         super();
     }
-    
+
     /**
      * Constructor for device manager
      * 
@@ -79,7 +76,6 @@ public class OneTouchII extends OneTouchMeter
         super(cmp);
     }
 
-    
     /**
      * getName - Get Name of meter. 
      * 
@@ -90,7 +86,6 @@ public class OneTouchII extends OneTouchMeter
         return "One Touch II";
     }
 
-    
     /**
      * getDeviceClassName - Get class name of device
      */
@@ -99,7 +94,6 @@ public class OneTouchII extends OneTouchMeter
         return "ggc.meter.device.onetouch.OneTouchII";
     }
 
-    
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
      * Should be implemented by device class.
@@ -111,7 +105,6 @@ public class OneTouchII extends OneTouchMeter
         return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_II;
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -122,24 +115,23 @@ public class OneTouchII extends OneTouchMeter
         return "ls_ot_2.jpg";
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * 
      * @return instructions for reading data 
      */
+    @Override
     public String getInstructions()
     {
         return "INSTRUCTIONS_LIFESCAN_ON";
     }
-    
 
     /**
      * Maximum of records that device can store
      */
     public int getMaxMemoryRecords()
     {
-        // TODO: 
+        // TODO:
         return 150;
     }
 
@@ -148,6 +140,7 @@ public class OneTouchII extends OneTouchMeter
      * 
      * @return short name of meter
      */
+    @Override
     public String getShortName()
     {
         return "II";

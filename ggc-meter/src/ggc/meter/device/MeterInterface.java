@@ -34,7 +34,6 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public interface MeterInterface extends SelectableInterface, DeviceInterface
 {
 
@@ -46,7 +45,6 @@ public interface MeterInterface extends SelectableInterface, DeviceInterface
      */
     boolean open() throws PlugInBaseException;
 
-
     /**
      * Used for closing connection with device
      * 
@@ -54,8 +52,6 @@ public interface MeterInterface extends SelectableInterface, DeviceInterface
      */
     void close() throws PlugInBaseException;
 
-
-    
     /**
      * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory
      * 
@@ -63,33 +59,26 @@ public interface MeterInterface extends SelectableInterface, DeviceInterface
      */
     public int getMaxMemoryRecords();
 
-    
-    
+    // ************************************************
+    // *** Available Functionality for Meter ***
+    // ************************************************
 
-
-    //************************************************
-    //***        Available Functionality for Meter          ***
-    //************************************************
-
-    
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      * @return 
      */
     public DeviceIdentification getDeviceInfo();
-    
-    
+
     /**
      * Meter Interface - Simple (for normal meter devices, which store only BG data)
      */
-    public static final int METER_INTERFACE_SIMPLE =1;
+    public static final int METER_INTERFACE_SIMPLE = 1;
 
     /**
      * Meter Interface - Extended (for meter devices, which store more then just BG data)
      */
-    public static final int METER_INTERFACE_EXTENDED =2;
-    
-    
+    public static final int METER_INTERFACE_EXTENDED = 2;
+
     /**
      * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
      *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
@@ -97,7 +86,5 @@ public interface MeterInterface extends SelectableInterface, DeviceInterface
      * @return
      */
     public int getInterfaceTypeForMeter();
-    
-    
-    
+
 }

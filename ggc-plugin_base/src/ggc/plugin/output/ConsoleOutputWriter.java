@@ -26,59 +26,55 @@ package ggc.plugin.output;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class ConsoleOutputWriter extends AbstractOutputWriter
 {
 
-	
-	/**
-	 * Constructor
-	 */
-	public ConsoleOutputWriter()
-	{
-	    super();
-	}
+    /**
+     * Constructor
+     */
+    public ConsoleOutputWriter()
+    {
+        super();
+    }
 
-	
     /**
      * Write Data to OutputWriter
      * 
      * @param data OutputWriterData instance
      */
-	public void writeData(OutputWriterData data)
-	{
-	    data.setOutputType(OutputWriterType.CONSOLE);
-		System.out.println(data.getDataAsString());
-	}
-	
-	
+    public void writeData(OutputWriterData data)
+    {
+        data.setOutputType(OutputWriterType.CONSOLE);
+        System.out.println(data.getDataAsString());
+    }
+
     /**
      * Write Header
      */
-	public void writeHeader()
-	{
-		// header
-		System.out.println("=======================================================");
-		System.out.println("==             Meter Tool Data Dump                  ==");
-		System.out.println("=======================================================");
-	}
+    @Override
+    public void writeHeader()
+    {
+        // header
+        System.out.println("=======================================================");
+        System.out.println("==             Meter Tool Data Dump                  ==");
+        System.out.println("=======================================================");
+    }
 
-	
     /**
      * Write Device Identification
      */
-	public void writeDeviceIdentification()
-	{
-	    System.out.println(this.getDeviceIdentification().getInformation("* "));
-	}
-	
+    public void writeDeviceIdentification()
+    {
+        System.out.println(this.getDeviceIdentification().getInformation("* "));
+    }
 
     /**
      * End Output
      */
-	public void endOutput()
-	{
-		System.out.println("=======================================================");
-	}
-	
+    @Override
+    public void endOutput()
+    {
+        System.out.println("=======================================================");
+    }
+
 }

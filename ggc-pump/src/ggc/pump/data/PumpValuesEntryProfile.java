@@ -9,8 +9,8 @@ import ggc.pump.data.profile.ProfileSubEntry;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.GregorianCalendar;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -45,73 +45,67 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEntryInterface , DatabaseObjectHibernate 
+public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEntryInterface, DatabaseObjectHibernate
 {
 
     private static final long serialVersionUID = 7772340503037499446L;
     DataAccessPump da = DataAccessPump.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
 
-    ArrayList<ProfileSubEntry> sub_entries = new ArrayList<ProfileSubEntry>();  
-    
-    
+    ArrayList<ProfileSubEntry> sub_entries = new ArrayList<ProfileSubEntry>();
+
     private int status = 0;
     private int object_status = 0;
     private boolean checked = false;
     private int output_type = 0;
-    
+
     private String value_multiline = "";
-    
-    //public boolean checked = false;
-    //public int status = 1; //MeterValuesEntry.
-    
-	// pump 
-//	long datetime;
-//..	int base_type;
-//	int sub_type;
-//	String value;
-//	String profile;
-	
-	// old
-/*	public String bg_str;
-	public int bg_unit;
-	public boolean checked = false;
-	//public
-	public Hashtable<String,String> params;
-	public int status = 1; //MeterValuesEntry.
-	public static I18nControl ic = I18nControl.getInstance(); 
-	
-	public String bg_original = null;
-	public OutputUtil util = new OutputUtil();
-*/	
-	
-    
-	
-    //PumpAdditionalDataType m_pump_add = null;
 
-    
-    
-	/**
-	 * Constructor
-	 * 
-	 * @param pump_add
-	 */
-	/*public PumpValuesEntryExt(PumpAdditionalDataType pump_add)
-	{
-	    this.m_pump_add = pump_add;
-	}*/
+    // public boolean checked = false;
+    // public int status = 1; //MeterValuesEntry.
 
-	
+    // pump
+    // long datetime;
+    // .. int base_type;
+    // int sub_type;
+    // String value;
+    // String profile;
+
+    // old
+    /*
+     * public String bg_str;
+     * public int bg_unit;
+     * public boolean checked = false;
+     * //public
+     * public Hashtable<String,String> params;
+     * public int status = 1; //MeterValuesEntry.
+     * public static I18nControl ic = I18nControl.getInstance();
+     * public String bg_original = null;
+     * public OutputUtil util = new OutputUtil();
+     */
+
+    // PumpAdditionalDataType m_pump_add = null;
+
+    /**
+     * Constructor
+     * 
+     * @param pump_add
+     */
+    /*
+     * public PumpValuesEntryExt(PumpAdditionalDataType pump_add)
+     * {
+     * this.m_pump_add = pump_add;
+     * }
+     */
+
     /**
      * Constructor
      */
     public PumpValuesEntryProfile()
     {
-        //m_pump_add = new PumpAdditionalDataType();
+        // m_pump_add = new PumpAdditionalDataType();
     }
 
-    
     /**
      * Constructor
      * 
@@ -130,7 +124,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         this.setComment(pd.getComment());
         this.setChanged(pd.getChanged());
     }
-    
 
     /**
      * Has Changed - This is method which is tied only to changes of value or datetime
@@ -141,22 +134,18 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return this.changed;
     }
-    
-	
-/*	
-	public void setDateTime(long dt)
-	{
-	    this.datetime = dt;
-	}
-	
-	
-	
-	public long getDateTime()
-	{
-		return this.datetime;
-	}
-	*/
-	
+
+    /*
+     * public void setDateTime(long dt)
+     * {
+     * this.datetime = dt;
+     * }
+     * public long getDateTime()
+     * {
+     * return this.datetime;
+     * }
+     */
+
     /**
      * Get DateTime Object (ATechDate)
      * 
@@ -166,187 +155,169 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActive_from());
     }
-	
-	
-    
-    
-    
-	
-    
-	
-	
-	
-	
-/*	
-	public void addParameter(String key, String value)
-	{
-		if ((value.equals("_")) || (value.trim().length()==0))
-			return;
-		
-		if (params==null)
-		{
-			params = new Hashtable<String,String>();
-		}
-		
-		this.params.put(key, value);
-		
-	}
-*/
-	
-	
-	/*
-	public boolean getCheched()
-	{
-	    return this.checked;
-	}
 
-	public int getStatus()
-	{
-	    return this.status;
-	}
-	*/
-	
-	
-	/*
-	public String getParametersAsString()
-	{
-		if (this.params==null)
-			return "";
-		
-		StringBuffer sb = new StringBuffer();
-		
-		for(java.util.Enumeration<String> en = this.params.keys(); en.hasMoreElements(); )
-		{
-			String key = en.nextElement();
-			
-			sb.append(key + "=" + this.params.get(key) + ";");
-		}
-		
-		return sb.substring(0, sb.length()-1);
-		
-	}*/
-	
-	
-	/**
-	 * Prepare Entry
-	 */
-	public void prepareEntry()
-	{
-	    /*
-	    if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
-	        return;
-	    else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
-	    {
-//	        this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-	        this.entry_object.setChanged(System.currentTimeMillis());
-//	        this.entry_object.setComment(createComment());
-	    }
-	    else
-	    {
-	        this.entry_object = new DayValueH();
-	        this.entry_object.setIns1(0);
-            this.entry_object.setIns2(0);
-            this.entry_object.setCh(0.0f);
-//            this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-//	        this.entry_object.setDt_info(this.datetime);
-            this.entry_object.setChanged(System.currentTimeMillis());
-//            this.entry_object.setComment(createComment());
-	    }
-	    */
-	}
-	
-	
-	/**
-	 * Add Profile Sub Entry
-	 * 
-	 * @param pse
-	 */
-	public void addProfileSubEntry(ProfileSubEntry pse)
-	{
-	    this.sub_entries.add(pse);
-	}
-	
-	/**
-	 * Process: Normal
-	 */
-	public static final int PROCESS_NORMAL = 1;
+    /*
+     * public void addParameter(String key, String value)
+     * {
+     * if ((value.equals("_")) || (value.trim().length()==0))
+     * return;
+     * if (params==null)
+     * {
+     * params = new Hashtable<String,String>();
+     * }
+     * this.params.put(key, value);
+     * }
+     */
+
+    /*
+     * public boolean getCheched()
+     * {
+     * return this.checked;
+     * }
+     * public int getStatus()
+     * {
+     * return this.status;
+     * }
+     */
+
+    /*
+     * public String getParametersAsString()
+     * {
+     * if (this.params==null)
+     * return "";
+     * StringBuffer sb = new StringBuffer();
+     * for(java.util.Enumeration<String> en = this.params.keys();
+     * en.hasMoreElements(); )
+     * {
+     * String key = en.nextElement();
+     * sb.append(key + "=" + this.params.get(key) + ";");
+     * }
+     * return sb.substring(0, sb.length()-1);
+     * }
+     */
+
+    /**
+     * Prepare Entry
+     */
+    public void prepareEntry()
+    {
+        /*
+         * if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
+         * return;
+         * else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
+         * {
+         * //
+         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil
+         * .BG_MGDL)));
+         * this.entry_object.setChanged(System.currentTimeMillis());
+         * // this.entry_object.setComment(createComment());
+         * }
+         * else
+         * {
+         * this.entry_object = new DayValueH();
+         * this.entry_object.setIns1(0);
+         * this.entry_object.setIns2(0);
+         * this.entry_object.setCh(0.0f);
+         * //
+         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil
+         * .BG_MGDL)));
+         * // this.entry_object.setDt_info(this.datetime);
+         * this.entry_object.setChanged(System.currentTimeMillis());
+         * // this.entry_object.setComment(createComment());
+         * }
+         */
+    }
+
+    /**
+     * Add Profile Sub Entry
+     * 
+     * @param pse
+     */
+    public void addProfileSubEntry(ProfileSubEntry pse)
+    {
+        this.sub_entries.add(pse);
+    }
+
+    /**
+     * Process: Normal
+     */
+    public static final int PROCESS_NORMAL = 1;
 
     /**
      * Process: Pump
      */
-	public static final int PROCESS_PUMP = 2;
-	
-	/**
-	 * Process Profile Sub Entry
-	 * 
-	 * @param type
-	 */
-	public void processProfileSubEntries(int type)
-	{
-	    Collections.sort(this.sub_entries);
-	    
-	    StringBuffer sb_multi = new StringBuffer("<html>");
-	    
-	    
-	    if (type==PROCESS_PUMP)
-	    {
-	        for(int i=1; i<this.sub_entries.size(); i++)
-	        {
-	            long dt_end = this.sub_entries.get(i).time_start;
-	            
-	            ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, dt_end);
-	            atd.add(GregorianCalendar.MINUTE, -1);
-	            
-	            this.sub_entries.get(i-1).time_end = (int)atd.getATDateTimeAsLong();
-	        }
-	    }
+    public static final int PROCESS_PUMP = 2;
 
-	    StringBuffer sb = new StringBuffer();
+    /**
+     * Process Profile Sub Entry
+     * 
+     * @param type
+     */
+    public void processProfileSubEntries(int type)
+    {
+        Collections.sort(this.sub_entries);
 
-	    for(int i=0; i<this.sub_entries.size(); i++)
+        StringBuffer sb_multi = new StringBuffer("<html>");
+
+        if (type == PROCESS_PUMP)
         {
-	        sb.append(this.sub_entries.get(i).getPacked());
-	        sb.append(";");
-	        
-	        sb_multi.append(this.sub_entries.get(i).toString());
-            sb_multi.append(";");
+            for (int i = 1; i < this.sub_entries.size(); i++)
+            {
+                long dt_end = this.sub_entries.get(i).time_start;
 
-            if ((i>0) && (i%5==0))
-                sb_multi.append("<br>");
-	        
+                ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, dt_end);
+                atd.add(Calendar.MINUTE, -1);
+
+                this.sub_entries.get(i - 1).time_end = (int) atd.getATDateTimeAsLong();
+            }
         }
 
-	    String s = sb.toString();
-	    s = s.substring(0, s.length()-1);
-	    
-	    String s_multi = sb_multi.substring(0, sb_multi.length()-1);
-	    s_multi += "</html>";
-	    
-	    this.value_multiline = s_multi;
-	    
-	    this.setBasal_diffs(s);
-	    
-	}
-	
-	
-	/**
-	 * End Entry (create basal diffs entry)
-	 */
-	public void endEntry()
-	{
-	    this.processProfileSubEntries(1);
-	}
-	
-	
-	/** 
-	 * To String
-	 */
-	public String toString()
-	{
-	    //OutputUtil o= null;
-	    return "PumpValueEntryProfile [id=" + this.getId() + "] " + this.getBasal_diffs();
-	}
+        StringBuffer sb = new StringBuffer();
 
+        for (int i = 0; i < this.sub_entries.size(); i++)
+        {
+            sb.append(this.sub_entries.get(i).getPacked());
+            sb.append(";");
+
+            sb_multi.append(this.sub_entries.get(i).toString());
+            sb_multi.append(";");
+
+            if (i > 0 && i % 5 == 0)
+            {
+                sb_multi.append("<br>");
+            }
+
+        }
+
+        String s = sb.toString();
+        s = s.substring(0, s.length() - 1);
+
+        String s_multi = sb_multi.substring(0, sb_multi.length() - 1);
+        s_multi += "</html>";
+
+        this.value_multiline = s_multi;
+
+        this.setBasal_diffs(s);
+
+    }
+
+    /**
+     * End Entry (create basal diffs entry)
+     */
+    public void endEntry()
+    {
+        this.processProfileSubEntries(1);
+    }
+
+    /** 
+     * To String
+     */
+    @Override
+    public String toString()
+    {
+        // OutputUtil o= null;
+        return "PumpValueEntryProfile [id=" + this.getId() + "] " + this.getBasal_diffs();
+    }
 
     /** 
      * DbAdd
@@ -367,15 +338,14 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         pd.setPerson_id(this.getPerson_id());
         pd.setComment(this.getComment());
         pd.setChanged(System.currentTimeMillis());
-        
-        Long id = (Long)sess.save(pd);
+
+        Long id = (Long) sess.save(pd);
         tx.commit();
 
         pd.setId(id.longValue());
-        
-        return ""+id.longValue();
-    }
 
+        return "" + id.longValue();
+    }
 
     /** 
      * DbDelete
@@ -384,7 +354,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         Transaction tx = sess.beginTransaction();
 
-        PumpProfileH pd = (PumpProfileH)sess.get(PumpProfileH.class, new Long(this.getId()));
+        PumpProfileH pd = (PumpProfileH) sess.get(PumpProfileH.class, new Long(this.getId()));
         sess.delete(pd);
         tx.commit();
 
@@ -399,9 +369,9 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         if (!this.hasChanged())
             return false;
 
-        PumpProfileH pd = (PumpProfileH)sess.get(PumpProfileH.class, new Long(this.getId()));
+        PumpProfileH pd = (PumpProfileH) sess.get(PumpProfileH.class, new Long(this.getId()));
 
-//        pd.setId(this.getId());
+        // pd.setId(this.getId());
         pd.setName(this.getName());
         pd.setBasal_base(this.getBasal_base());
         pd.setBasal_diffs(this.getBasal_diffs());
@@ -412,11 +382,8 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         pd.setComment(this.getComment());
         pd.setChanged(System.currentTimeMillis());
 
-        
-        
         return true;
     }
-
 
     /** 
      * Db Get
@@ -424,7 +391,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     public boolean DbGet(Session sess) throws Exception
     {
 
-        PumpProfileH pd = (PumpProfileH)sess.get(PumpProfileH.class, new Long(this.getId()));
+        PumpProfileH pd = (PumpProfileH) sess.get(PumpProfileH.class, new Long(this.getId()));
 
         this.setId(pd.getId());
         this.setName(pd.getName());
@@ -436,10 +403,9 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         this.setPerson_id(pd.getPerson_id());
         this.setComment(pd.getComment());
         this.setChanged(pd.getChanged());
-        
+
         return true;
     }
-
 
     /**
      * Db Has Children
@@ -449,7 +415,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return false;
     }
 
-
     /** 
      * Get Action
      */
@@ -458,7 +423,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return 0;
     }
 
-
     /** 
      * Get Object Name
      */
@@ -466,7 +430,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return "PumpProfileH";
     }
-
 
     /**
      * Is Debug Mode
@@ -483,14 +446,11 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      */
     public String getObjectUniqueId()
     {
-        //System.out.println("getObjectUID: " + this.getId());
+        // System.out.println("getObjectUID: " + this.getId());
         return "" + this.getId();
     }
-    
+
     boolean changed = false;
-
-
-
 
     /**
      * Get Column Value
@@ -504,7 +464,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return null;
     }
 
-
     /**
      * Get Db Objects
      * 
@@ -515,7 +474,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         // TODO Auto-generated method stub
         return null;
     }
-
 
     /**
      * Get Table Column Value (in case that we need special display values for download data table, this method 
@@ -535,17 +493,18 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
                 return ic.getMessage("PROFILE_TYPE_SH");
 
             case 2:
-                return this.getName(); //da.getAdditionalTypes().getTypeDescription(this.getType());
+                return this.getName(); // da.getAdditionalTypes().getTypeDescription(this.getType());
 
             case 3:
-                return ""; //ATechDate.getDateTimeString(this.getDateTimeFormat(), this.getActive_till()); 
+                return ""; // ATechDate.getDateTimeString(this.getDateTimeFormat(),
+                           // this.getActive_till());
 
             case 4:
                 return this.getValue();
-                
+
             case 5:
                 return this.getStatus();
-            
+
             case 6:
                 return new Boolean(getChecked());
 
@@ -554,44 +513,46 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         }
     }
 
-
     /** 
      * Get Data As String (for export)
      */
     public String getDataAsString()
     {
-        switch(output_type)
+        switch (output_type)
         {
             case OutputWriterType.DUMMY:
                 return "";
-                
+
             case OutputWriterType.CONSOLE:
             case OutputWriterType.FILE:
-                return "Profile=" + this.getName() + ", From=" + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActive_from()) + ", Till=" + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActive_till());
-                
+                return "Profile=" + this.getName() + ", From="
+                        + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActive_from())
+                        + ", Till="
+                        + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActive_till());
+
             case OutputWriterType.GGC_FILE_EXPORT:
-            {
-                /*
-                PumpData pd = new PumpData(this);
-                try
                 {
-                    return pd.dbExport();
+                    /*
+                     * PumpData pd = new PumpData(this);
+                     * try
+                     * {
+                     * return pd.dbExport();
+                     * }
+                     * catch(Exception ex)
+                     * {
+                     * log.error(
+                     * "Problem with PumpValuesEntry export !  Exception: " +
+                     * ex, ex);
+                     * return "Value could not be decoded for export!";
+                     * }
+                     */
                 }
-                catch(Exception ex)
-                {
-                    log.error("Problem with PumpValuesEntry export !  Exception: " + ex, ex);
-                    return "Value could not be decoded for export!";
-                }*/
-            }
-                
-        
+
             default:
                 return "Value is undefined";
-        
+
         }
     }
-    
-
 
     /**
      * Get Special Id
@@ -603,7 +564,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return "PP_" + this.getActive_from() + "_" + this.getName();
     }
 
-    
     /**
      * Get DeviceValuesEntry Name
      * 
@@ -614,7 +574,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return "PumpValuesEntryProfile";
     }
 
-
     /**
      * Get Value of object
      * 
@@ -622,11 +581,10 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      */
     public String getValue()
     {
-        //this.processProfileSubEntries(1);
+        // this.processProfileSubEntries(1);
         return this.getBasal_diffs();
     }
- 
-    
+
     /**
      * Get DateTime (long)
      * 
@@ -636,8 +594,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return this.getActive_from();
     }
-    
-    
+
     /**
      * Set DateTime Object (ATechDate)
      * 
@@ -646,9 +603,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     public void setDateTimeObject(ATechDate dt)
     {
     }
-    
-    
-    
 
     /**
      * Get DateTime format
@@ -659,8 +613,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return ATechDate.FORMAT_DATE_AND_TIME_S;
     }
-    
-    
+
     /**
      * Get Checked 
      * 
@@ -671,7 +624,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return this.checked;
     }
 
-    
     /**
      * Set Checked
      * 
@@ -681,8 +633,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         this.checked = check;
     }
-    
-    
+
     /**
      * Get Status
      * 
@@ -692,8 +643,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return this.status;
     }
-    
-    
+
     /**
      * Set Status
      * 
@@ -703,20 +653,18 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         this.status = status_in;
     }
-    
-    
+
     /**
      * Set Output Type
      * 
      * @see ggc.plugin.output.OutputWriterData#setOutputType(int)
      */
-    
+
     public void setOutputType(int type)
     {
         this.output_type = type;
     }
-    
-    
+
     /**
      * Get Output Type
      * 
@@ -726,19 +674,17 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return this.output_type;
     }
-    
-    
+
     /**
      * Is Data BG
      * 
      * @see ggc.plugin.output.OutputWriterData#isDataBG()
      */
-    
+
     public boolean isDataBG()
     {
-        return false; 
+        return false;
     }
-
 
     /**
      * Comparator method, for sorting objects
@@ -759,8 +705,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return DeviceValuesEntryUtil.compare(this, d2);
     }
-    
-    
+
     /**
      * Set Object status
      * 
@@ -770,8 +715,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         this.object_status = status;
     }
-    
-    
+
     /**
      * Get Object Status
      * 
@@ -782,9 +726,8 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return this.object_status;
     }
 
-    
     long old_id;
-    
+
     /**
      * Set Old Id (this is used for changing old objects in framework v2)
      * 
@@ -794,8 +737,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         this.old_id = id_in;
     }
-    
-    
+
     /**
      * Get Old Id (this is used for changing old objects in framework v2)
      * 
@@ -805,10 +747,9 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return this.old_id;
     }
-    
-    
+
     String source;
-    
+
     /**
      * Set Source
      * 
@@ -817,9 +758,9 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     public void setSource(String src)
     {
         this.source = src;
-        
+
     }
-    
+
     /**
      * Get Source 
      * 
@@ -830,7 +771,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return this.source;
     }
 
-
     /** 
      * Has MultiLine ToolTip
      */
@@ -838,7 +778,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return true;
     }
-
 
     /** 
      * Get MultiLine ToolTip
@@ -848,20 +787,18 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return null;
     }
 
-
     /** 
      * Get MultiLine ToolTip
      */
     public String getMultiLineToolTip(int index)
     {
-//        System.out.println("getMultiLIneToolTip");
-        
-        if (index==4)
+        // System.out.println("getMultiLIneToolTip");
+
+        if (index == 4)
             return this.value_multiline;
         else
             return "" + this.getTableColumnValue(index);
     }
-
 
     /** 
      * Is Indexed (multiline tooltip)
@@ -870,10 +807,9 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return true;
     }
-    
-    
+
     int multiline_tooltip_type = 1;
-    
+
     /**
      * Set MultiLine Tooltip Type
      * 
@@ -884,7 +820,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         this.multiline_tooltip_type = _multiline_tooltip_type;
     }
 
-    
     /**
      * Get MultiLine Tooltip Type
      * @return 
@@ -893,12 +828,9 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return this.multiline_tooltip_type;
     }
-    
-    
+
     public void prepareEntry_v2()
     {
     }
-    
-    
-     
-}	
+
+}

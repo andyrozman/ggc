@@ -4,7 +4,6 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.MinimedDevice;
 import ggc.plugin.device.impl.minimed.cmd.MinimedCommand;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -31,7 +30,6 @@ import ggc.plugin.device.impl.minimed.cmd.MinimedCommand;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class MinimedComm_USBLink implements MinimedComm_Interface
 {
 
@@ -40,7 +38,7 @@ public class MinimedComm_USBLink implements MinimedComm_Interface
      */
     public MinimedComm_USBLink(MinimedDevice mmd)
     {
-        //super(port, serial_number);
+        // super(port, serial_number);
     }
 
     public int[] decrypt(int[] input)
@@ -52,11 +50,6 @@ public class MinimedComm_USBLink implements MinimedComm_Interface
     {
         return null;
     }
-
-
-    
-
-
 
     public int closeCommunicationInterface() throws PlugInBaseException
     {
@@ -76,9 +69,6 @@ public class MinimedComm_USBLink implements MinimedComm_Interface
         return 0;
     }
 
-
-    
-
     public boolean hasEncryptionSupport()
     {
         return false;
@@ -87,7 +77,7 @@ public class MinimedComm_USBLink implements MinimedComm_Interface
     public void dumpInterfaceStatus()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     public int initDevice() throws PlugInBaseException
@@ -109,11 +99,7 @@ public class MinimedComm_USBLink implements MinimedComm_Interface
     public void sendCommandReadData(MinimedCommand command) throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
- 
-    
-    
-    
 }

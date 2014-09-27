@@ -20,7 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -46,16 +45,16 @@ import javax.swing.JTable;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class DailyStatsControlsL extends AbstractInfoPanel implements ActionListener
 {
-    
+
     private static final long serialVersionUID = -3682024667811580299L;
     GGCLittle m_little = null;
     JButton[] buttons = new JButton[4];
     MainLittlePanel m_mlp;
     GregorianCalendar m_gc = null;
-    //private I18nControlAbstract m_ic = DataAm_da.getI18nControlInstance();
+
+    // private I18nControlAbstract m_ic = DataAm_da.getI18nControlInstance();
 
     /**
      * Constructor
@@ -70,12 +69,13 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         init();
     }
 
-
     private void init()
     {
 
-        this.setLayout(new GridLayout(2,2));
-        setBorder(BorderFactory.createTitledBorder(DataAccess.getInstance().getI18nControlInstance().getMessage("DAILY_CONTROL")+":"));
+        this.setLayout(new GridLayout(2, 2));
+        setBorder(BorderFactory.createTitledBorder(DataAccess.getInstance().getI18nControlInstance()
+                .getMessage("DAILY_CONTROL")
+                + ":"));
 
         Dimension dim = new Dimension(120, 20);
 
@@ -114,7 +114,6 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         setVisible(true);
     }
 
-
     /**
      * Refresh Information 
      */
@@ -123,9 +122,9 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     {
         boolean start = m_da.getDb().isDbStarted();
 
-        for (int i=0; i<this.buttons.length; i++)
+        for (JButton button : this.buttons)
         {
-            buttons[i].setEnabled(start);
+            button.setEnabled(start);
         }
     }
 
@@ -138,7 +137,6 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     {
         return this.m_mlp.dailyStats.getTable();
     }
-
 
     /**
      * Get Day Data
@@ -155,7 +153,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
      */
     public void reloadTable()
     {
-        //m_da.getDayStats(new GregorianCalendar());
+        // m_da.getDayStats(new GregorianCalendar());
         m_da.loadDailySettingsLittle(m_gc, true);
         this.m_mlp.dailyStats.getTableModel().setDailyValues(m_da.getDayStats(m_gc));
     }
@@ -168,7 +166,6 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     {
         return this.m_mlp.m_little;
     }
-
 
     /**
      * Action Performed
@@ -186,7 +183,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
 
             DailyRowDialog aRF = new DailyRowDialog(dv, m_da.getCurrentDateString(), getFrame());
 
-            if (aRF.actionSuccessful()) 
+            if (aRF.actionSuccessful())
             {
                 m_da.getDb().saveDayStats(dv);
                 reloadTable();
@@ -196,9 +193,10 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         {
             int srow = getTable().getSelectedRow();
 
-            if (srow==-1) 
+            if (srow == -1)
             {
-                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"),
+                    JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -206,7 +204,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
 
             DailyRowDialog aRF = new DailyRowDialog(dv.getRow(srow), getFrame());
 
-            if (aRF.actionSuccessful()) 
+            if (aRF.actionSuccessful())
             {
                 m_da.getDb().saveDayStats(dv);
                 reloadTable();
@@ -217,13 +215,14 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         {
             int srow = getTable().getSelectedRow();
 
-            if (srow==-1) 
+            if (srow == -1)
             {
-                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"),
+                    JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            try 
+            try
             {
                 DailyValues dv = getDayData();
 
@@ -232,63 +231,62 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
                 m_da.getDb().saveDayStats(dv);
                 reloadTable();
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 System.out.println("DailyStatsDialog:Action:Delete Row: " + ex);
             }
-        } 
+        }
         else if (command.equals("show_daily_graph"))
         {
             DailyGraphDialog dgd = new DailyGraphDialog(m_mlp.m_little);
             dgd.setDailyValues(getDayData());
         }
         else
+        {
             System.out.println("DailyStatsDialog:Unknown Action: " + command);
+        }
     }
 
-/*
-	String command = e.getActionCommand();
-
-	if (command.equals("add_row"))
-	{
-	    //SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
-	    //AddRowFrame aRF = AddRowFrame.getInstance(model, dayData, sf.format(System.currentTimeMillis()));
-	    //aRF.show();
-	}
-	else if (command.equals("delete_row"))
-	{
-	    //dayData.deleteRow(m_little.m_infoPanel.dailyStats.table.getSelectedRow());
-	    //model.fireTableChanged(null);
-	}
-	else if (command.equals("show_daily_graph"))
-	{
-
-	}
-
-    }
-
-*/
-    
+    /*
+     * String command = e.getActionCommand();
+     * if (command.equals("add_row"))
+     * {
+     * //SimpleDateFormat sf = new SimpleDateFormat("dd.MM.yyyy");
+     * //AddRowFrame aRF = AddRowFrame.getInstance(model, dayData,
+     * sf.format(System.currentTimeMillis()));
+     * //aRF.show();
+     * }
+     * else if (command.equals("delete_row"))
+     * {
+     * //dayData.deleteRow(m_little.m_infoPanel.dailyStats.table.getSelectedRow()
+     * );
+     * //model.fireTableChanged(null);
+     * }
+     * else if (command.equals("show_daily_graph"))
+     * {
+     * }
+     * }
+     */
 
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "DeviceInfo";
     }
 
-    
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
     }
-   
-    
+
     /**
      * Get Panel Id
      * 
@@ -299,7 +297,5 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     {
         return InfoPanelsIds.INFO_PANEL_NONE;
     }
-    
-    
-    
+
 }

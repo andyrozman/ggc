@@ -43,8 +43,7 @@ public class DeltecCosmo1700 extends DeltecPump
     {
         super();
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -55,8 +54,7 @@ public class DeltecCosmo1700 extends DeltecPump
     {
         super(drive_letter, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -68,7 +66,6 @@ public class DeltecCosmo1700 extends DeltecPump
     {
         super(params, writer, da);
     }
-    
 
     /**
      * Constructor
@@ -79,20 +76,18 @@ public class DeltecCosmo1700 extends DeltecPump
     {
         super(cmp);
     }
-    
-    
+
     /**
      * getName - Get Name of meter. 
      * 
      * @return name of meter
      */
+    @Override
     public String getName()
     {
         return "Cosmo 1700";
     }
 
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -102,7 +97,6 @@ public class DeltecCosmo1700 extends DeltecPump
     {
         return "de_cosmo1700.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -115,7 +109,6 @@ public class DeltecCosmo1700 extends DeltecPump
         return PumpDevicesIds.PUMP_DELTEC_COSMO_1700;
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -126,30 +119,30 @@ public class DeltecCosmo1700 extends DeltecPump
     {
         return "INSTRUCTIONS_DELTEC_COSMO_1700";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
      * @return comment or null
      */
+    @Override
     public String getComment()
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    @Override
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -160,7 +153,6 @@ public class DeltecCosmo1700 extends DeltecPump
         return "ggc.pump.device.deltec.DeltecCosmo1700";
     }
 
-
     /** 
      * Get Max Memory Records
      */
@@ -168,30 +160,29 @@ public class DeltecCosmo1700 extends DeltecPump
     {
         return 0;
     }
-    
-    
+
     /**
      * Get Download Support Type
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
      * @return
      */
+    @Override
     public int howManyMonthsOfDataStored()
     {
         return -1;
     }
-    
-    
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -200,13 +191,13 @@ public class DeltecCosmo1700 extends DeltecPump
      * 
      * @return
      */
+    @Override
     public String getTemporaryBasalTypeDefinition()
     {
-        //return "TYPE=Unit;STEP=0.1";
+        // return "TYPE=Unit;STEP=0.1";
         return null;
     }
-    
-    
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -216,8 +207,7 @@ public class DeltecCosmo1700 extends DeltecPump
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Get Basal Step (precission)
      * 
@@ -227,17 +217,16 @@ public class DeltecCosmo1700 extends DeltecPump
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
+    @Override
     public boolean arePumpSettingsSet()
     {
         return false;
     }
-    
-    
+
 }

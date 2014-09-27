@@ -8,7 +8,7 @@ public class EmptyParser implements DexcomCommandParserInterface
 
     public Object parse(CommandPacket cmdPacket) throws DexcomException
     {
-        
+
         return "No result received";
     }
 

@@ -37,7 +37,7 @@ import com.atech.i18n.I18nControlAbstract;
 public class MealParts // implements SelectableInterface
 {
 
-    //private boolean debug = false;
+    // private boolean debug = false;
     DataAccessNutri m_da = DataAccessNutri.getInstance();
     I18nControlAbstract ic = m_da.getI18nControlInstance();
     GlycemicNutrients glyc_nutr = null;
@@ -52,7 +52,6 @@ public class MealParts // implements SelectableInterface
         entries = new ArrayList<MealPart>();
     }
 
-    
     /**
      * Constructor
      * 
@@ -61,14 +60,13 @@ public class MealParts // implements SelectableInterface
     public MealParts(String meals_ids)
     {
         StringTokenizer strtok = new StringTokenizer(meals_ids, ";");
-        
+
         while (strtok.hasMoreTokens())
         {
             addMealPart(new MealPart(strtok.nextToken()));
         }
     }
-    
-    
+
     /**
      * Add Meal Part
      * 
@@ -93,7 +91,7 @@ public class MealParts // implements SelectableInterface
     public ArrayList<MealNutrition> getCalculatedNutrients()
     {
 
-        //System.out.println("calcultedNutrients ");
+        // System.out.println("calcultedNutrients ");
 
         Hashtable<String, MealNutrition> ht = new Hashtable<String, MealNutrition>();
 
@@ -101,7 +99,7 @@ public class MealParts // implements SelectableInterface
         {
             ArrayList<MealNutrition> lst = this.entries.get(i).getNutrients();
 
-            //System.out.println("Lst: " + lst);
+            // System.out.println("Lst: " + lst);
 
             for (int j = 0; j < lst.size(); j++)
             {
@@ -113,7 +111,7 @@ public class MealParts // implements SelectableInterface
 
                     float cm = mn.getCalculatedAmount();
 
-                    //System.out.println("Calculated amount: " + cm);
+                    // System.out.println("Calculated amount: " + cm);
                     mn.addAmountToSum(cm);
 
                     ht.put("" + mn.getId(), mn);
@@ -135,7 +133,6 @@ public class MealParts // implements SelectableInterface
         return out_lst;
     }
 
-    
     /**
      * Get Elements Count
      * 
@@ -145,8 +142,7 @@ public class MealParts // implements SelectableInterface
     {
         return this.entries.size();
     }
-    
-    
+
     /**
      * Get Element
      * 
@@ -157,8 +153,7 @@ public class MealParts // implements SelectableInterface
     {
         return this.entries.get(index);
     }
-    
-    
+
     /**
      * To String
      * 
@@ -167,7 +162,7 @@ public class MealParts // implements SelectableInterface
     @Override
     public String toString()
     {
-        return "MealParts [count=" + this.entries + "]"; 
+        return "MealParts [count=" + this.entries + "]";
     }
 
 }

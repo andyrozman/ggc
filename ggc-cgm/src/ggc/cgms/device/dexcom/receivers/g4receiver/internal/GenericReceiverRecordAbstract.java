@@ -7,7 +7,8 @@ import java.util.Date;
 
 public abstract class GenericReceiverRecordAbstract implements IGenericReceiverRecord
 {
-    //private static final Log log = LogFactory.getLog(GenericReceiverRecordAbstract.class);
+    // private static final Log log =
+    // LogFactory.getLog(GenericReceiverRecordAbstract.class);
 
     protected int systemSeconds;
     protected int displaySeconds;
@@ -17,30 +18,31 @@ public abstract class GenericReceiverRecordAbstract implements IGenericReceiverR
 
     public void checkRecordVersionAndSize()
     {
-        //        // FIXME
-        //        int currentVersion = 0; // read from partition info
+        // // FIXME
+        // int currentVersion = 0; // read from partition info
         //
-        //        if (this.getImplementedRecordVersion() != getCurrentRecordVersion())
-        //        {
-        //            if (this.getImplementedRecordSize() != this.getCurrentRecordSize())
-        //            {
-        //                // FIXME
-        //                log.warn(String.format("Versions and sizes of object %s differ, possible data problem "
-        //                        + "(versions/record size: implemented: %s/%s, device: %s/%s", //
-        //                    this.getRecordType().name(), //
-        //                    this.getImplementedRecordVersion(), this.getImplementedRecordSize(), //
-        //                    this.getCurrentRecordVersion(), this.getCurrentRecordSize()));
-        //            }
-        //            else
-        //            {
-        //                log.warn(String.format("Versions of object %s differ, possible data problem "
-        //                        + "(versions: implemented: %s, device: %s", //
-        //                    this.getRecordType().name(), //
-        //                    this.getImplementedRecordVersion(), //
-        //                    this.getCurrentRecordVersion()));
-        //            }
+        // if (this.getImplementedRecordVersion() != getCurrentRecordVersion())
+        // {
+        // if (this.getImplementedRecordSize() != this.getCurrentRecordSize())
+        // {
+        // // FIXME
+        // log.warn(String.format("Versions and sizes of object %s differ, possible data problem "
+        // + "(versions/record size: implemented: %s/%s, device: %s/%s", //
+        // this.getRecordType().name(), //
+        // this.getImplementedRecordVersion(), this.getImplementedRecordSize(),
+        // //
+        // this.getCurrentRecordVersion(), this.getCurrentRecordSize()));
+        // }
+        // else
+        // {
+        // log.warn(String.format("Versions of object %s differ, possible data problem "
+        // + "(versions: implemented: %s, device: %s", //
+        // this.getRecordType().name(), //
+        // this.getImplementedRecordVersion(), //
+        // this.getCurrentRecordVersion()));
+        // }
         //
-        //        }
+        // }
 
     }
 

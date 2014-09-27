@@ -29,7 +29,6 @@ import javax.swing.JPanel;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class PlugInPanelL extends JPanel
 {
     private static final long serialVersionUID = -6635563498789159187L;
@@ -39,11 +38,11 @@ public class PlugInPanelL extends JPanel
      */
     public PlugInPanelL()
     {
-        super(); //I18nControl.getInstance().getMessage("SCHEDULE"));
+        super(); // I18nControl.getInstance().getMessage("SCHEDULE"));
         setLayout(new GridLayout(2, 1));
         init();
-        //new GridLayout()
-        //refreshInfo();
+        // new GridLayout()
+        // refreshInfo();
     }
 
     private void init()

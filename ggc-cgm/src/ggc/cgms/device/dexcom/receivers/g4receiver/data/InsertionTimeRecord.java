@@ -27,7 +27,7 @@ public class InsertionTimeRecord extends GenericReceiverRecordAbstract
     public InsertionTimeRecord() throws DexcomException
     {
         // FIXME
-        //checkRecordVersionAndSize();
+        // checkRecordVersionAndSize();
     }
 
     public Date getInsertionTime()
@@ -47,7 +47,7 @@ public class InsertionTimeRecord extends GenericReceiverRecordAbstract
 
     public boolean getIsInserted()
     {
-        return (!this.getInsertionTime().equals(EmptySensorInsertionTime));
+        return !this.getInsertionTime().equals(EmptySensorInsertionTime);
     }
 
     public SensorSessionState getSensorSessionState()

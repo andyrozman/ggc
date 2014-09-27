@@ -1,10 +1,9 @@
-package ggc.cgms.manager; 
+package ggc.cgms.manager;
 
 import ggc.cgms.manager.company.Abbott;
 import ggc.cgms.manager.company.Dexcom;
 import ggc.cgms.manager.company.Minimed;
 import ggc.plugin.manager.DeviceManager;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -32,16 +31,13 @@ import ggc.plugin.manager.DeviceManager;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class CGMSManager extends DeviceManager
 {
-    
-    
+
     /**
      * Singelton instance
      */
     public static CGMSManager s_manager = null;
-    
 
     /**
      * Constructor
@@ -51,33 +47,33 @@ public class CGMSManager extends DeviceManager
         super();
     }
 
-    
     /**
      * Return singelton instance
      * @return
      */
     public static CGMSManager getInstance()
     {
-    	if (CGMSManager.s_manager==null)
-    	    CGMSManager.s_manager = new CGMSManager();
-    	
-    	return CGMSManager.s_manager;
-    }
+        if (CGMSManager.s_manager == null)
+        {
+            CGMSManager.s_manager = new CGMSManager();
+        }
 
+        return CGMSManager.s_manager;
+    }
 
     /** 
      * Load Supported Devices
      */
+    @Override
     public void loadSupportedDevices()
     {
         addDeviceCompany(new Abbott());
         addDeviceCompany(new Dexcom());
         addDeviceCompany(new Minimed());
-        
-        //System.out.println("!!! CGMS Companies: " + this.companies.size());
+
+        // System.out.println("!!! CGMS Companies: " + this.companies.size());
     }
-    
-    
+
     /** 
      * Load Device Companies
      */
@@ -88,8 +84,8 @@ public class CGMSManager extends DeviceManager
         this.supported_devices.addAll(new Dexcom().getDevices());
         this.supported_devices.addAll(new Minimed().getDevices());
 
-        //System.out.println("!!! CGMS Devices: " + this.supported_devices.size());
+        // System.out.println("!!! CGMS Devices: " +
+        // this.supported_devices.size());
     }
-    
 
 }

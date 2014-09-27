@@ -29,7 +29,6 @@ import javax.swing.JLabel;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class ScheduleInfoPanel extends AbstractInfoPanel
 {
 
@@ -48,8 +47,8 @@ public class ScheduleInfoPanel extends AbstractInfoPanel
 
     private void init()
     {
-        add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT")+":"));
-        add(new JLabel(m_ic.getMessage("APP_WILL_BE_FOUND_HERE")+ "..." + m_ic.getMessage("NOT_YET")));
+        add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT") + ":"));
+        add(new JLabel(m_ic.getMessage("APP_WILL_BE_FOUND_HERE") + "..." + m_ic.getMessage("NOT_YET")));
     }
 
     /**
@@ -59,27 +58,26 @@ public class ScheduleInfoPanel extends AbstractInfoPanel
     public void refreshInfo()
     {
     }
-    
-    
+
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "ScheduleInfo";
     }
-    
-    
+
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
     }
-    
-    
+
     /**
      * Get Panel Id
      * 
@@ -90,6 +88,5 @@ public class ScheduleInfoPanel extends AbstractInfoPanel
     {
         return InfoPanelsIds.INFO_PANEL_SCHEDULE;
     }
-    
-    
+
 }

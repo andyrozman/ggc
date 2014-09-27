@@ -1,4 +1,4 @@
-package ggc.meter.manager.company; 
+package ggc.meter.manager.company;
 
 import ggc.meter.device.accuchek.AccuChekActive;
 import ggc.meter.device.accuchek.AccuChekAdvantage;
@@ -43,7 +43,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Roche extends AbstractDeviceCompany
 {
 
@@ -52,15 +51,15 @@ public class Roche extends AbstractDeviceCompany
      */
     public Roche()
     {
-        super(false,                            // empty devices
-            MeterDevicesIds.COMPANY_ROCHE,      // company_id
-            "Accu-Chek/Roche",                  // company name (full)
-            "Roche",                            // short company name
-            "ROCHE_DESC",                       // company description
-            DeviceImplementationStatus.IMPLEMENTATION_DONE,
-            DataAccessMeter.getInstance());  // implementation status
-        
-        //this.addDevice(new AccuChekSmartPix());
+        super(false, // empty devices
+                MeterDevicesIds.COMPANY_ROCHE, // company_id
+                "Accu-Chek/Roche", // company name (full)
+                "Roche", // short company name
+                "ROCHE_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_DONE, DataAccessMeter.getInstance()); // implementation
+                                                                                                // status
+
+        // this.addDevice(new AccuChekSmartPix());
         this.addDevice(new AccuChekActive(this));
         this.addDevice(new AccuChekAdvantage(this));
         this.addDevice(new AccuChekAviva(this));
@@ -74,6 +73,5 @@ public class Roche extends AbstractDeviceCompany
         this.addDevice(new AccuChekNano(this));
         this.addDevice(new AccuChekAvivaCombo(this));
     }
-    
-    
+
 }

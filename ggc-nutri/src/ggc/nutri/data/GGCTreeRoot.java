@@ -27,12 +27,11 @@
 
 package ggc.nutri.data;
 
+import ggc.nutri.db.GGCDbNutri;
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.db.datalayer.MealGroup;
-import ggc.nutri.db.GGCDbNutri;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -59,7 +58,6 @@ import ggc.nutri.db.GGCDbNutri;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public abstract class GGCTreeRoot
 {
 
@@ -76,14 +74,10 @@ public abstract class GGCTreeRoot
      */
     public static int TREE_MEALS = 3;
 
-
     protected GGCDbNutri m_db = null;
 
-    
     protected int m_type = TREE_USDA_NUTRITION;
-    
-    
-    
+
     /**
      * Constructor
      * 
@@ -96,7 +90,6 @@ public abstract class GGCTreeRoot
         this.m_db = db;
     }
 
-    
     /**
      * Debug - printout
      * 
@@ -106,8 +99,7 @@ public abstract class GGCTreeRoot
     {
         System.out.println(text);
     }
-    
-    
+
     /**
      * Get Child
      * 
@@ -115,16 +107,14 @@ public abstract class GGCTreeRoot
      * @return
      */
     public abstract Object getChild(int index);
-    
-    
+
     /**
      * Get Child Count
      * 
      * @return
      */
     public abstract int getChildCount();
-    
-    
+
     /**
      * Index Of
      * 
@@ -132,8 +122,7 @@ public abstract class GGCTreeRoot
      * @return
      */
     public abstract int indexOf(Object child);
-    
-    
+
     /**
      * Find Food Group
      * 
@@ -143,7 +132,6 @@ public abstract class GGCTreeRoot
      */
     public abstract FoodGroup findFoodGroup(int type, long group_id);
 
-    
     /**
      * Add Food To Tree
      * 
@@ -151,8 +139,7 @@ public abstract class GGCTreeRoot
      * @param fd
      */
     public abstract void addFood2Tree(int type, FoodDescription fd);
-    
-    
+
     /**
      * Remove Food From Tree
      * 
@@ -162,7 +149,6 @@ public abstract class GGCTreeRoot
      */
     public abstract void removeFoodFromTree(int type, FoodDescription _food, long prev_group_id);
 
-    
     /**
      * Find Meal Group
      * 
@@ -172,7 +158,6 @@ public abstract class GGCTreeRoot
      */
     public abstract MealGroup findMealGroup(int type, long group_id);
 
-    
     /**
      * Remove Food Group From Tree
      * 
@@ -182,7 +167,6 @@ public abstract class GGCTreeRoot
      */
     public abstract void removeFoodGroupFromTree(int type, FoodGroup fg, long prev_parent_id);
 
-    
     /**
      * Remove Meal Group From Tree
      * 
@@ -192,7 +176,6 @@ public abstract class GGCTreeRoot
      */
     public abstract void removeMealGroupFromTree(int type, MealGroup mg, long prev_parent_id);
 
-    
     /**
      * Add Food Group To Tree
      * 
@@ -201,7 +184,6 @@ public abstract class GGCTreeRoot
      */
     public abstract void addFoodGroup2Tree(int type, FoodGroup fg);
 
-    
     /**
      * Add Meal Group To Tree
      * 
@@ -210,7 +192,6 @@ public abstract class GGCTreeRoot
      */
     public abstract void addMealGroup2Tree(int type, MealGroup mg);
 
-    
     /**
      * Add Meal To Tree
      * 
@@ -219,7 +200,6 @@ public abstract class GGCTreeRoot
      */
     public abstract void addMeal2Tree(int type, Meal _meal);
 
-    
     /**
      * Remove Meal From Tree
      * 
@@ -228,8 +208,7 @@ public abstract class GGCTreeRoot
      * @param prev_group_id previous group id
      */
     public abstract void removeMealFromTree(int type, Meal _meal, long prev_group_id);
-    
-    
+
     /**
      * Find Food
      * 
@@ -238,8 +217,7 @@ public abstract class GGCTreeRoot
      * @return
      */
     public abstract FoodDescription findFood(int type, long food_id);
-    
-    
+
     /**
      * Find Meal
      * 
@@ -248,5 +226,5 @@ public abstract class GGCTreeRoot
      * @return
      */
     public abstract Meal findMeal(int type, long meal_id);
-    
+
 }

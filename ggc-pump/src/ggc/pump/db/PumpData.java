@@ -14,6 +14,7 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -51,7 +52,6 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     private static final long serialVersionUID = -2783864807987398195L;
     private boolean selected = false;
     I18nControlAbstract ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
-    
 
     /**
      * Constructor
@@ -59,8 +59,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     public PumpData()
     {
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -92,12 +91,11 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         this.setSub_type(pve.getSubType());
         this.setValue(pve.getValue());
         this.setExtended("");
-        this.setPerson_id((int)DataAccessPump.getInstance().getCurrentUserId());
+        this.setPerson_id((int) DataAccessPump.getInstance().getCurrentUserId());
         this.setComment(pve.getComment());
         this.setChanged(System.currentTimeMillis());
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -107,14 +105,11 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         this.ic = _ic;
     }
-    
-    
-    //---
-    //---  BackupRestoreObject
-    //---
 
-    
-    
+    // ---
+    // --- BackupRestoreObject
+    // ---
+
     /**
      * Get Target Name
      * 
@@ -143,18 +138,17 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return "ggc.core.db.hibernate.pump.PumpDataH";
     }
-    
 
     /**
      * To String
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString()
     {
         return this.getTargetName();
     }
-    
 
     /** 
      * getChildren
@@ -179,7 +173,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         this.selected = newValue;
     }
-    
+
     /**
      * Is Object Collection
      * 
@@ -189,8 +183,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return false;
     }
-    
-    
+
     /**
      * Has Children
      */
@@ -198,8 +191,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return false;
     }
-    
-    
+
     /**
      * DbAdd - Add this object to database
      * 
@@ -222,15 +214,14 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         ch.setPerson_id(this.getPerson_id());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
-        
+
         Long id = (Long) sess.save(ch);
         tx.commit();
         ch.setId(id.longValue());
-        
+
         return "" + id.longValue();
     }
 
-    
     /**
      * DbDelete - Delete this object in database
      * 
@@ -250,7 +241,6 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return true;
     }
 
-    
     /**
      * DbEdit - Edit this object in database
      * 
@@ -273,14 +263,13 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         ch.setPerson_id(this.getPerson_id());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
-        
+
         sess.update(ch);
         tx.commit();
 
         return true;
     }
 
-    
     /**
      * DbGet - Loads this object. Id must be set.
      * 
@@ -301,11 +290,10 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         this.setPerson_id(ch.getPerson_id());
         this.setComment(ch.getComment());
         this.setChanged(ch.getChanged());
-        
+
         return true;
     }
 
-    
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
      * 
@@ -330,8 +318,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
      * Table Version
      */
     public int TABLE_VERSION = 1;
-    
-    
+
     /**
      * Get Table Version - returns version of table
      * 
@@ -341,8 +328,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return this.TABLE_VERSION;
     }
-    
-    
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -377,7 +363,6 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return sb.toString();
     }
 
-    
     /**
      * dbExport - returns export String, for current version 
      *
@@ -388,8 +373,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return dbExport(this.TABLE_VERSION);
     }
-    
-    
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -398,10 +382,9 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
      */
     public String dbExportHeader(int table_version)
     {
-        return "; Columns: id|dt_info|base_type|sub_type|value|extended|person_id|comment|changed\n" + 
-               "; Table version: " + getTableVersion() + "\n";
+        return "; Columns: id|dt_info|base_type|sub_type|value|extended|person_id|comment|changed\n"
+                + "; Table version: " + getTableVersion() + "\n";
     }
-    
 
     /**
      * dbExportHeader - header for export file
@@ -412,8 +395,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return this.dbExportHeader(this.TABLE_VERSION);
     }
-    
-    
+
     /**
      * dbImport - processes input entry to right fields
      * 
@@ -425,7 +407,6 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         dbImport(table_version, value_entry, null);
     }
-    
 
     /**
      * dbImport - processes input entry to right fields
@@ -439,9 +420,9 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         DataAccess da = DataAccess.getInstance();
 
-        value_entry = DataAccessPump.replaceExpression(value_entry, "||", "| |");
+        value_entry = ATDataAccessAbstract.replaceExpression(value_entry, "||", "| |");
         String[] arr = da.splitString(value_entry, "|");
-        
+
         this.setId(da.getLongValueFromString(arr[0]));
         this.setDt_info(da.getLongValueFromString(arr[1]));
         this.setBase_type(da.getIntValueFromString(arr[2]));
@@ -451,11 +432,9 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         this.setPerson_id(da.getIntValueFromString(arr[6]));
         this.setComment(arr[7]);
         this.setChanged(da.getLongValueFromString(arr[8]));
-        
+
     }
-    
-    
-    
+
     /**
      * getBackupFile - name of backup file (base part)
      * 
@@ -465,7 +444,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return "PumpDataH";
     }
-    
+
     /**
      * getBackupClassName - name of class which will be updated/restored
      * 
@@ -475,8 +454,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return "ggc.core.db.hibernate.pump.PumpDataH";
     }
-    
-    
+
     /** 
      * getObjectName
      */
@@ -492,9 +470,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return false;
     }
-    
-    
-    
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -503,7 +479,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return "";
     }
-    
+
     /**
      * Has To Be Clean - if table needs to be cleaned before import
      * 
@@ -513,6 +489,5 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return false;
     }
-   
-    
+
 }

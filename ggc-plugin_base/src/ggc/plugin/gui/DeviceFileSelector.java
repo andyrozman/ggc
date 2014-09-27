@@ -39,6 +39,5 @@ public class DeviceFileSelector extends JDialog
     public DeviceFileSelector()
     {
     }
-    
-    
+
 }

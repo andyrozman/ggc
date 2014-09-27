@@ -25,7 +25,6 @@
  *  Author:   andyrozman
  */
 
-
 package ggc.nutri.data;
 
 import ggc.nutri.db.datalayer.FoodGroup;
@@ -63,33 +62,29 @@ import javax.swing.tree.TreePath;
  *  Author: Andy {andy@atech-software.com}  
  */
 
-
-public class NutritionGroupModel implements TreeModel 
+public class NutritionGroupModel implements TreeModel
 {
 
     private boolean m_debug = false;
     private Vector<TreeModelListener> treeModelListeners = new Vector<TreeModelListener>();
     private GGCTreeRoot rootObj = null;
 
-
     /**
      * Group Type
      */
     public int group_type = GGCTreeRoot.TREE_USER_NUTRITION;
-    
-    
+
     /**
      * Constructor 
      * 
      * @param rt
      * @param type
      */
-    public NutritionGroupModel(GGCTreeRoot rt, int type) 
+    public NutritionGroupModel(GGCTreeRoot rt, int type)
     {
         rootObj = rt;
         this.group_type = type;
     }
-
 
     /**
      * Debug
@@ -99,43 +94,41 @@ public class NutritionGroupModel implements TreeModel
     private void debug(String deb)
     {
         if (m_debug)
+        {
             System.out.println(deb);
+        }
     }
 
-
-
-    //////////////// Fire events //////////////////////////////////////////////
+    // ////////////// Fire events //////////////////////////////////////////////
 
     /**
      * The only event raised by this model is TreeStructureChanged with the
      * root as path, i.e. the whole tree has changed.
      */
-    protected void fireTreeStructureChanged(GGCTreeRoot oldRoot) 
+    protected void fireTreeStructureChanged(GGCTreeRoot oldRoot)
     {
         int len = treeModelListeners.size();
-        TreeModelEvent e = new TreeModelEvent(this, 
-                                              new Object[] {oldRoot});
-        for (int i = 0; i < len; i++) 
+        TreeModelEvent e = new TreeModelEvent(this, new Object[] { oldRoot });
+        for (int i = 0; i < len; i++)
         {
-            (treeModelListeners.elementAt(i)).treeStructureChanged(e);
+            treeModelListeners.elementAt(i).treeStructureChanged(e);
         }
     }
 
-    //////////////// TreeModel interface implementation ///////////////////////
-    
+    // ////////////// TreeModel interface implementation ///////////////////////
+
     /**
      * Adds a listener for the TreeModelEvent posted after the tree changes.
      */
-    public void addTreeModelListener(TreeModelListener l) 
+    public void addTreeModelListener(TreeModelListener l)
     {
         treeModelListeners.addElement(l);
     }
-    
 
     /**
      * Removes a listener previously added with addTreeModelListener().
      */
-    public void removeTreeModelListener(TreeModelListener l) 
+    public void removeTreeModelListener(TreeModelListener l)
     {
         treeModelListeners.removeElement(l);
     }
@@ -144,118 +137,111 @@ public class NutritionGroupModel implements TreeModel
      * Messaged when the user has altered the value for the item
      * identified by path to newValue.  Not used by this model.
      */
-    public void valueForPathChanged(TreePath path, Object newValue) 
+    public void valueForPathChanged(TreePath path, Object newValue)
     {
         System.out.println("*** valueForPathChanged : " + path + " --> " + newValue);
     }
-    
-    
-    //////////////// TreeModel interface implementation ///////////////////////
 
-
+    // ////////////// TreeModel interface implementation ///////////////////////
 
     /**
      * Returns the child of parent at index index in the parent's child array.
      */
-    public Object getChild(Object parent, int index) 
+    public Object getChild(Object parent, int index)
     {
 
         debug("getChild: " + index);
 
         if (parent instanceof GGCTreeRoot)
-        {
             return rootObj.getChild(index);
-/*            if (rootObj.getType()== GGCTreeRoot.TREE_MEALS )
-        	return rootObj.m_meal_groups_tree.get(index);
-            else
-        	return rootObj.m_groups_tree.get(index); */
+        /*
+         * if (rootObj.getType()== GGCTreeRoot.TREE_MEALS )
+         * return rootObj.m_meal_groups_tree.get(index);
+         * else
+         * return rootObj.m_groups_tree.get(index);
+         */
+        else if (parent instanceof FoodGroup)
+        {
+            FoodGroup fg = (FoodGroup) parent;
+            return fg.getGroupChild(index);
         }
-    	else if (parent instanceof FoodGroup)
-    	{
-    	    FoodGroup fg = (FoodGroup)parent;
-    	    return fg.getGroupChild(index);
-    	}
-    	else if (parent instanceof MealGroup)
-    	{
-    	    MealGroup fg = (MealGroup)parent;
-    	    return fg.getGroupChild(index);
-    	}
-    	else
-    	    return null;
-    
+        else if (parent instanceof MealGroup)
+        {
+            MealGroup fg = (MealGroup) parent;
+            return fg.getGroupChild(index);
+        }
+        else
+            return null;
+
     }
 
     /**
      * Returns the number of children of parent.
      */
-    public int getChildCount(Object parent) 
+    public int getChildCount(Object parent)
     {
 
         debug("Parent (getChildCount()): " + parent);
 
         if (parent instanceof GGCTreeRoot)
-        {
             return rootObj.getChildCount();
-            /*
-            if (rootObj.getType()== GGCTreeRoot.TREE_MEALS)
-        	return rootObj.m_meal_groups_tree.size();
-            else
-        	return rootObj.m_groups_tree.size();*/
-
-        }
-    	else if (parent instanceof FoodGroup)
-    	{
-    	    FoodGroup fg = (FoodGroup)parent;
+        /*
+         * if (rootObj.getType()== GGCTreeRoot.TREE_MEALS)
+         * return rootObj.m_meal_groups_tree.size();
+         * else
+         * return rootObj.m_groups_tree.size();
+         */
+        else if (parent instanceof FoodGroup)
+        {
+            FoodGroup fg = (FoodGroup) parent;
             debug("getChildCount: " + fg.getChildCount());
-    	    return fg.getGroupChildrenCount();
-    	}
-    	else if (parent instanceof MealGroup)
-    	{
-    	    MealGroup fg = (MealGroup)parent;
-    	    return fg.getGroupChildrenCount();
-    	}
-    	else
-    	    return 0;
-    
+            return fg.getGroupChildrenCount();
         }
+        else if (parent instanceof MealGroup)
+        {
+            MealGroup fg = (MealGroup) parent;
+            return fg.getGroupChildrenCount();
+        }
+        else
+            return 0;
+
+    }
 
     /**
      * Returns the index of child in parent.
      */
-    public int getIndexOfChild(Object parent, Object child) 
+    public int getIndexOfChild(Object parent, Object child)
     {
 
         debug("getIndexofChild: ");
 
         if (parent instanceof GGCTreeRoot)
-        {
             return rootObj.indexOf(child);
-            /*
-            if (rootObj.getType()== GGCTreeRoot.TREE_MEALS)
-                return rootObj.m_meal_groups_tree.indexOf(child);
-            else
-                return rootObj.m_groups_tree.indexOf(child);
-            */
+        /*
+         * if (rootObj.getType()== GGCTreeRoot.TREE_MEALS)
+         * return rootObj.m_meal_groups_tree.indexOf(child);
+         * else
+         * return rootObj.m_groups_tree.indexOf(child);
+         */
+        else if (parent instanceof FoodGroup)
+        {
+            FoodGroup fg = (FoodGroup) parent;
+            return fg.findGroupChild(child);
         }
-    	else if (parent instanceof FoodGroup)
-    	{
-    	    FoodGroup fg = (FoodGroup)parent;
-    	    return fg.findGroupChild(child);
-    	}
-    	else if (parent instanceof MealGroup)
-    	{
-    	    MealGroup fg = (MealGroup)parent;
-    	    return fg.findGroupChild(child);
-    	}
-    
-    	return -1;
+        else if (parent instanceof MealGroup)
+        {
+            MealGroup fg = (MealGroup) parent;
+            return fg.findGroupChild(child);
+        }
+
+        return -1;
 
     }
 
     /**
      * Returns the root of the tree.
      */
-    public Object getRoot() 
+    public Object getRoot()
     {
         return rootObj;
     }
@@ -263,9 +249,9 @@ public class NutritionGroupModel implements TreeModel
     /**
      * Returns true if node is a leaf.
      */
-    public boolean isLeaf(Object node) 
+    public boolean isLeaf(Object node)
     {
-        return (getChildCount(node)==0);
+        return getChildCount(node) == 0;
     }
 
 }

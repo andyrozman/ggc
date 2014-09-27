@@ -5,6 +5,7 @@ import ggc.pump.data.bre.BREDataCollection;
 import ggc.pump.util.DataAccessPump;
 
 import java.awt.Rectangle;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartPanel;
@@ -39,18 +40,18 @@ import com.atech.utils.data.ATechDate;
  *  Author: rumbi   
  */
 
-
-public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //implements GraphViewInterface, GraphViewDataProcessorInterface 
+public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor // implements
+                                                                              // GraphViewInterface,
+                                                                              // GraphViewDataProcessorInterface
 {
 
     protected DataAccessPump da_local = DataAccessPump.getInstance();
     protected GGCGraphUtil graph_util = GGCGraphUtil.getInstance(da_local);
-    
+
     protected BREDataCollection data_coll;
 
     GregorianCalendar gcx = new GregorianCalendar();
-    
-    
+
     /**
      * Constructor
      */
@@ -58,7 +59,6 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
     {
         super(DataAccessPump.getInstance());
     }
-    
 
     /**
      * Get Help Id
@@ -67,25 +67,20 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
      */
     public String getHelpId()
     {
-        return null; 
+        return null;
     }
 
-    
-
-    
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      * 
      * @return Rectangle object
      */
+    @Override
     public Rectangle getViewerDialogBounds()
     {
-        return new Rectangle(100,100,500,400);
+        return new Rectangle(100, 100, 500, 400);
     }
 
-
-
-    
     /**
      * Get Time Ms 
      * 
@@ -95,21 +90,20 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
     public long getTimeMs(int time)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time);
-        
+
         System.out.println("Ms: " + atd.hour_of_day + ":" + atd.minute);
-        
+
         if (atd.minute == 99)
         {
             atd.minute = 59;
         }
-        
-        gcx.set(GregorianCalendar.HOUR_OF_DAY, atd.hour_of_day);
-        gcx.set(GregorianCalendar.MINUTE, atd.minute);
-        
+
+        gcx.set(Calendar.HOUR_OF_DAY, atd.hour_of_day);
+        gcx.set(Calendar.MINUTE, atd.minute);
+
         return gcx.getTimeInMillis();
     }
 
-    
     /**
      * Set Data
      * 
@@ -120,30 +114,28 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
         this.data_coll = data_coll;
         this.loadData();
         this.preprocessData();
-        
+
         this.setPlot(chart);
     }
- 
-    
+
     /**
      * Create Chart Panel
      */
+    @Override
     public void createChartPanel()
     {
         this.chart_panel = new ChartPanel(getChart(), true, true, true, true, false);
     }
-    
 
     /**
      * Get Title (used by GraphViewer)
      * 
      * @return title as string 
      */
+    @Override
     public String getTitle()
     {
         return null;
     }
-    
-    
-    
+
 }

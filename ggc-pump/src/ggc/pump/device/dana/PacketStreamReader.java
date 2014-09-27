@@ -55,7 +55,7 @@ public class PacketStreamReader
      */
     public static void encodeInt2(byte[] buffer, int offset, int val)
     {
-        buffer[offset] = (byte) ((val >> 8) & 0xff);
+        buffer[offset] = (byte) (val >> 8 & 0xff);
         buffer[offset + 1] = (byte) (val & 0xff);
     }
 
@@ -110,8 +110,8 @@ public class PacketStreamReader
     public int getInt()
     {
         int num = 0;
-        num += (this.buffer[this.cursor++] << 8) & 0xff00;
-        return (num + (this.buffer[this.cursor++] & 0xff));
+        num += this.buffer[this.cursor++] << 8 & 0xff00;
+        return num + (this.buffer[this.cursor++] & 0xff);
     }
 
     /**
@@ -186,7 +186,7 @@ public class PacketStreamReader
      */
     public void setInt(int data)
     {
-        this.buffer[this.cursor++] = (byte) ((data >> 8) & 0xff);
+        this.buffer[this.cursor++] = (byte) (data >> 8 & 0xff);
         this.buffer[this.cursor++] = (byte) (data & 0xff);
     }
 
@@ -200,4 +200,3 @@ public class PacketStreamReader
         this.cursor += size;
     }
 }
-

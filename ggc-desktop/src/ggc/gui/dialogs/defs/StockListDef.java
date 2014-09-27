@@ -41,15 +41,13 @@ import com.atech.graphics.dialogs.guilist.LabelDef;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-public class StockListDef extends GUIListDefAbstract 
+public class StockListDef extends GUIListDefAbstract
 {
     DataAccess m_da = DataAccess.getInstance();
-    
-    //private ArrayList<DoctorH> active_list= null;
-	
-	private ArrayList<StocksH> active_list = null;
-	
+
+    // private ArrayList<DoctorH> active_list= null;
+
+    private ArrayList<StocksH> active_list = null;
 
     /**
      * Constructor 
@@ -58,7 +56,6 @@ public class StockListDef extends GUIListDefAbstract
     {
         init();
     }
-    
 
     @Override
     public void doTableAction(String action)
@@ -70,74 +67,76 @@ public class StockListDef extends GUIListDefAbstract
         }
         else if (action.equals("add_type"))
         {
-            
+
         }
         else if (action.equals("edit_type"))
         {
-            
+
         }
         else if (action.equals("add_amount"))
         {
-            
+
         }
         else if (action.equals("edit_amount"))
         {
-            
+
         }
         else if (action.equals("edit_amount"))
         {
-            
+
         }
         else
+        {
             System.out.println(this.getDefName() + " has not implemented action " + action);
+        }
     }
 
     @Override
     public JTable getJTable()
     {
-        if (this.table==null)
+        if (this.table == null)
         {
-        this.table = new JTable(new AbstractTableModel()
-        {
-
-            private static final long serialVersionUID = -9188128586566579737L;
-
-            public int getColumnCount()
+            this.table = new JTable(new AbstractTableModel()
             {
-                // TODO Auto-generated method stub
-                return 2;
-            }
 
-            public int getRowCount()
-            {
-                return active_list.size();
-            }
+                private static final long serialVersionUID = -9188128586566579737L;
 
-            public Object getValueAt(int row, int column)
-            {
-                // TODO Auto-generated method stub
-            	StocksH se = (StocksH)active_list.get(row);
-                
-                switch(column)
+                public int getColumnCount()
                 {
-                case 0:
-                    return se.getDt_stock(); //dh.getName();
-                    
-                case 1:
-                	return se.getDescription();
-                    //return ic.getMessage(dh.getDoctor_type().getName());
+                    // TODO Auto-generated method stub
+                    return 2;
                 }
-                
-                return null;
-            }
-            
-        });
-        
-        
+
+                public int getRowCount()
+                {
+                    return active_list.size();
+                }
+
+                public Object getValueAt(int row, int column)
+                {
+                    // TODO Auto-generated method stub
+                    StocksH se = active_list.get(row);
+
+                    switch (column)
+                    {
+                        case 0:
+                            return se.getDt_stock(); // dh.getName();
+
+                        case 1:
+                            return se.getDescription();
+                            // return
+                            // ic.getMessage(dh.getDoctor_type().getName());
+                    }
+
+                    return null;
+                }
+
+            });
+
         }
-        
+
         return this.table;
-        
+
     }
 
     @Override
@@ -146,59 +145,55 @@ public class StockListDef extends GUIListDefAbstract
         return "STOCKS_LIST";
     }
 
-   
-
     @Override
     public void init()
     {
         this.ic = DataAccess.getInstance().getI18nControlInstance();
         this.translation_root = "STOCKS";
-        //this.filter_enabled = true;
-        
+        // this.filter_enabled = true;
+
         this.filter_type = GUIListDefAbstract.FILTER_COMBO_AND_TEXT;
-        //this.filter_text = ic.getMessage("FILTER") + ":";
-        
-        String s1[] = { ic.getMessage("STATUS_USED") + ":",
-                        ic.getMessage("DESCRIPTION") + ":"};
+        // this.filter_text = ic.getMessage("FILTER") + ":";
+
+        String s1[] = { ic.getMessage("STATUS_USED") + ":", ic.getMessage("DESCRIPTION") + ":" };
         this.filter_texts = s1;
-        
-        String s[] = { ic.getMessage("FILTER_ACTIVE"),
-                       ic.getMessage("FILTER_ACTIVE_1_MONTH_USED"),
-                       ic.getMessage("FILTER_ACTIVE_2_MONTH_USED"),
-                       ic.getMessage("FILTER_ACTIVE_3-6_MONTH_USED"),
-                       ic.getMessage("FILTER_ACTIVE_6M_MONTH_USED"),
-                       ic.getMessage("FILTER_ALL")
-                       };
-        
+
+        String s[] = { ic.getMessage("FILTER_ACTIVE"), ic.getMessage("FILTER_ACTIVE_1_MONTH_USED"),
+                      ic.getMessage("FILTER_ACTIVE_2_MONTH_USED"), ic.getMessage("FILTER_ACTIVE_3-6_MONTH_USED"),
+                      ic.getMessage("FILTER_ACTIVE_6M_MONTH_USED"), ic.getMessage("FILTER_ALL") };
+
         this.filter_options_combo1 = s;
-        
+
         this.button_defs = new ArrayList<ButtonDef>();
         this.button_defs.add(new LabelDef(this.ic.getMessage("STOCK_TYPES"), LabelDef.FONT_BOLD));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD"), "add_type", "STOCKS_TABLE_ADD_DESC", "table_add.png"));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_type", "STOCKS_TABLE_EDIT_DESC", "table_edit.png"));
-//        this.button_defs.add(new ButtonDef(this.ic.getMessage("VIEW_TYPE"), "view", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD"), "add_type", "STOCKS_TABLE_ADD_DESC",
+                "table_add.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_type", "STOCKS_TABLE_EDIT_DESC",
+                "table_edit.png"));
+        // this.button_defs.add(new ButtonDef(this.ic.getMessage("VIEW_TYPE"),
+        // "view", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
         this.button_defs.add(new LabelDef(this.ic.getMessage("STOCK_AMOUNTS"), LabelDef.FONT_BOLD));
 
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD"), "add_amount", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_amount", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD"), "add_amount", "STOCKS_TABLE_VIEW_DESC",
+                "table_view.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_amount", "STOCKS_TABLE_VIEW_DESC",
+                "table_view.png"));
         this.button_defs.add(new DividerDef());
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_LIST"), "edit_list", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
-        
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_LIST"), "edit_list", "STOCKS_TABLE_VIEW_DESC",
+                "table_view.png"));
+
         this.def_parameters = new String[2];
         this.def_parameters[0] = "Test 1";
         this.def_parameters[1] = "Test 2";
-        
+
         loadData();
-        
+
     }
-    
-    
+
     public void loadData()
     {
-    	this.active_list = m_da.getDb().getStocks(-1, -1);
+        this.active_list = m_da.getDb().getStocks(-1, -1);
     }
-    
-    
 
     @Override
     public String getDefName()
@@ -218,34 +213,25 @@ public class StockListDef extends GUIListDefAbstract
         return new Dimension(600, 500);
     }
 
-
     @Override
     public void setFilterCombo(String val)
     {
         // TODO Auto-generated method stub
         System.out.println("Combo changed to: " + val);
-        
-    }
 
+    }
 
     @Override
     public void setFilterText(String val)
     {
         // TODO Auto-generated method stub
         System.out.println("Text Box changed to: " + val);
-        
-    }
 
+    }
 
     @Override
     public void setFilterCombo_2(String val)
     {
     }
-
-    
-    
-
-    
-
 
 }

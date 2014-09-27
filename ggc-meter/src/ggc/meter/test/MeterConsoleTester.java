@@ -48,17 +48,16 @@ import com.atech.utils.data.TimeZoneUtil;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class MeterConsoleTester 
+public class MeterConsoleTester
 {
 
     String path_to_test_files = "../../test/";
-    
+
     private static Log logDevice = LogFactory.getLog("deviceLogger");
     private static Log logDeviceCat = LogFactory.getLog("deviceLogger");
-    
+
     TimerThread thread;
-    
+
     /**
      * Constructor
      * 
@@ -66,60 +65,53 @@ public class MeterConsoleTester
      */
     public MeterConsoleTester(String portName)
     {
-    	
-    	TimeZoneUtil  tzu = TimeZoneUtil.getInstance();
-    	
-    	
-		tzu.setTimeZone("Europe/Prague");
-		tzu.setWinterTimeChange(0);
-		//tzu.setSummerTimeChange(+1);
-		tzu.setSummerTimeChange(0);
-    	
-        
-		//thread = new TimerThread();
-	    //thread.start();
-	    
-    	try
-    	{
-    	    //startAscensia(portName);
-    	    //this.startOneTouchUltra(portName);
-    	    
-    	    // this.startOneTouchEasy(portName);
-    	    //startOptiumXceed(portName);
-    	    //this.startMenarini(portName);
-    	    
-    	    //testLogger();
-    	    
-    	    
-    	    //startAccuChekAviva();
-    	    startAscensiaUsb();
-    	    
-    	    /*
-    		//GGCFileOutputWriter gfo = new GGCFileOutputWriter();
-    	    ConsoleOutputWriter cow = new ConsoleOutputWriter();
-    		
-//    		thread.addJob(gfo.getOutputUtil());
-    		
-    		displaySerialPorts();
-    		
-/*    		
-    		m_meter = new AscensiaContour(portName, gfo);
-    	    m_meter.setPort(portName);
-    	    m_meter.loadInitialData();
-  */
-    		
-    //		m_meter = new OneTouchUltra(portName, cow);
-    	//	m_meter.loadInitialData();
-    		
-    	}
-    	catch(Exception ex)
-    	{
-    	    System.out.println("Tester -> Exception on creation of meter. " + ex);
-    	    ex.printStackTrace();
-    	} 
+
+        TimeZoneUtil tzu = TimeZoneUtil.getInstance();
+
+        tzu.setTimeZone("Europe/Prague");
+        tzu.setWinterTimeChange(0);
+        // tzu.setSummerTimeChange(+1);
+        tzu.setSummerTimeChange(0);
+
+        // thread = new TimerThread();
+        // thread.start();
+
+        try
+        {
+            // startAscensia(portName);
+            // this.startOneTouchUltra(portName);
+
+            // this.startOneTouchEasy(portName);
+            // startOptiumXceed(portName);
+            // this.startMenarini(portName);
+
+            // testLogger();
+
+            // startAccuChekAviva();
+            startAscensiaUsb();
+
+            /*
+             * //GGCFileOutputWriter gfo = new GGCFileOutputWriter();
+             * ConsoleOutputWriter cow = new ConsoleOutputWriter();
+             * // thread.addJob(gfo.getOutputUtil());
+             * displaySerialPorts();
+             * /*
+             * m_meter = new AscensiaContour(portName, gfo);
+             * m_meter.setPort(portName);
+             * m_meter.loadInitialData();
+             */
+
+            // m_meter = new OneTouchUltra(portName, cow);
+            // m_meter.loadInitialData();
+
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Tester -> Exception on creation of meter. " + ex);
+            ex.printStackTrace();
+        }
 
     }
-
 
     /**
      * Ascensia Testing
@@ -129,30 +121,25 @@ public class MeterConsoleTester
      */
     public void startAscensia(String portName) throws Exception
     {
-        //GGCFileOutputWriter ow = new GGCFileOutputWriter();
+        // GGCFileOutputWriter ow = new GGCFileOutputWriter();
         ConsoleOutputWriter ow = new ConsoleOutputWriter();
-        
-        //thread.addJob(cow.getOutputUtil());
-        //thread.addJob(ow.getOutputUtil());
-        
+
+        // thread.addJob(cow.getOutputUtil());
+        // thread.addJob(ow.getOutputUtil());
+
         displaySerialPorts();
-        
-          
+
         AscensiaContour asc_meter = new AscensiaContour(portName, ow);
         asc_meter.setPort(portName);
-        
-       
-        
-        asc_meter.readDeviceDataFull(); 
-        
+
+        asc_meter.readDeviceDataFull();
+
         System.out.println("We are back in tester !!!!");
-        
+
         System.exit(0);
-        
+
     }
 
-    
-    
     /**
      * Ascensia Testing
      * 
@@ -161,36 +148,32 @@ public class MeterConsoleTester
      */
     public void startAscensiaUsb() throws Exception
     {
-        //GGCFileOutputWriter ow = new GGCFileOutputWriter();
+        // GGCFileOutputWriter ow = new GGCFileOutputWriter();
         ConsoleOutputWriter ow = new ConsoleOutputWriter();
-        
-        //thread.addJob(cow.getOutputUtil());
-        //thread.addJob(ow.getOutputUtil());
-        
-        //displaySerialPorts();
-        
-        DataAccessMeter dap = DataAccessMeter.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
-        //dap.setHelpContext(da.getHelpContext());
-        //dap.setPlugInServerInstance(this);
-        //dap.createDb(da.getHibernateDb());
+
+        // thread.addJob(cow.getOutputUtil());
+        // thread.addJob(ow.getOutputUtil());
+
+        // displaySerialPorts();
+
+        DataAccessMeter dap = DataAccessMeter.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
+        // dap.setHelpContext(da.getHelpContext());
+        // dap.setPlugInServerInstance(this);
+        // dap.createDb(da.getHibernateDb());
         dap.initAllObjects();
         dap.loadSpecialParameters();
-          
+
         AscensiaContourUSB asc_meter = new AscensiaContourUSB("", ow);
-        //asc_meter.setPort(portName);
-        
-       
-        
-        asc_meter.readDeviceDataFull(); 
-        
+        // asc_meter.setPort(portName);
+
+        asc_meter.readDeviceDataFull();
+
         System.out.println("We are back in tester !!!!");
-        
+
         System.exit(0);
-        
+
     }
-        
-    
-    
+
     /**
      * Roche Testing
      */
@@ -198,38 +181,35 @@ public class MeterConsoleTester
     {
         try
         {
-            
-            DataAccessMeter dap = DataAccessMeter.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
-            //dap.setHelpContext(da.getHelpContext());
-            //dap.setPlugInServerInstance(this);
-            //dap.createDb(da.getHibernateDb());
+
+            DataAccessMeter dap = DataAccessMeter.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
+            // dap.setHelpContext(da.getHelpContext());
+            // dap.setPlugInServerInstance(this);
+            // dap.createDb(da.getHibernateDb());
             dap.initAllObjects();
             dap.loadSpecialParameters();
-            //this.backup_restore_enabled = true;
-            
-            //da.loadSpecialParameters();
-            
-            
-            //ConsoleOutputWriter ow = new ConsoleOutputWriter();
-            
-            //AccuChekAviva acv = new AccuChekAviva("g:", ow);
-            //acv.readDeviceDataFull();
-            
+            // this.backup_restore_enabled = true;
+
+            // da.loadSpecialParameters();
+
+            // ConsoleOutputWriter ow = new ConsoleOutputWriter();
+
+            // AccuChekAviva acv = new AccuChekAviva("g:", ow);
+            // acv.readDeviceDataFull();
+
             AccuChekAvivaCombo acv = new AccuChekAvivaCombo("", new ConsoleOutputWriter());
             acv.processXml(new File(path_to_test_files + "G0079225_1112_2010.XML"));
-            
+
             // G0079225_1112_2010.XML
-            
+
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.out.println("Exception: " + ex);
             ex.printStackTrace();
         }
     }
-    
-    
-    
+
     /**
      * OT Ultra testing
      * 
@@ -238,24 +218,20 @@ public class MeterConsoleTester
      */
     public void startOneTouchUltra(String portName) throws Exception
     {
-        
+
         ConsoleOutputWriter cow = new ConsoleOutputWriter();
-        
-//a        thread.addJob(cow.getOutputUtil());
-        
-        
-        
+
+        // a thread.addJob(cow.getOutputUtil());
+
         displaySerialPorts();
-        
+
         OneTouchUltra otu = new OneTouchUltra(portName, cow);
-        
-        
-        
-        //m_meter = new OneTouchUltra(portName, cow);
-        otu.readDeviceDataFull(); 
+
+        // m_meter = new OneTouchUltra(portName, cow);
+        otu.readDeviceDataFull();
 
     }
-    
+
     /**
      * OT Easy Testing
      * @param portName
@@ -263,15 +239,14 @@ public class MeterConsoleTester
      */
     public void startOneTouchEasy(String portName) throws Exception
     {
-        
+
         ConsoleOutputWriter cow = new ConsoleOutputWriter();
-        
+
         displaySerialPorts();
-        
+
         OneTouchUltraEasy otu = new OneTouchUltraEasy(portName, cow);
         otu.readDeviceDataFull();
     }
-    
 
     /**
      * OT Easy Testing
@@ -280,17 +255,15 @@ public class MeterConsoleTester
      */
     public void startOptiumXceed(String portName) throws Exception
     {
-        
+
         ConsoleOutputWriter cow = new ConsoleOutputWriter();
-        
+
         displaySerialPorts();
-        
+
         OptiumXceed otu = new OptiumXceed(portName, cow);
         otu.readDeviceDataFull();
     }
-    
 
-    
     /**
      * OT Ultra testing
      * 
@@ -299,27 +272,22 @@ public class MeterConsoleTester
      */
     public void startMenarini(String portName) throws Exception
     {
-        
+
         ConsoleOutputWriter cow = new ConsoleOutputWriter();
-        
-//a        thread.addJob(cow.getOutputUtil());
-        
-        
-        
+
+        // a thread.addJob(cow.getOutputUtil());
+
         displaySerialPorts();
-        
+
         GlucofixMio otu = new GlucofixMio("COM16", cow);
-        
+
         otu.readDeviceDataFull();
-        
-        //m_meter = new OneTouchUltra(portName, cow);
-        //otu.readDeviceDataFull(); 
+
+        // m_meter = new OneTouchUltra(portName, cow);
+        // otu.readDeviceDataFull();
 
     }
-    
-    
-    
-    
+
     /**
      * Display Serial Ports
      */
@@ -327,24 +295,21 @@ public class MeterConsoleTester
     {
         try
         {
-        	Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
-        	
-    		System.out.println(" --- List Serial Ports -----");
-        	
-        	for(int i=0; i<vct.size(); i++)
-        	{
-        		System.out.println(vct.get(i));
-        	}
+            Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
+
+            System.out.println(" --- List Serial Ports -----");
+
+            for (int i = 0; i < vct.size(); i++)
+            {
+                System.out.println(vct.get(i));
+            }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.out.println("Exception getting serial ports. Ex: " + ex);
             ex.printStackTrace();
         }
     }
-    
-
-
 
     /**
      * Main method
@@ -353,39 +318,41 @@ public class MeterConsoleTester
      */
     public static void main(String args[])
     {
-	try
-	{
-	    
-	    if (args.length == 0)
-	        new MeterConsoleTester("COM9"); //"/dev/ttyUSB0"); //COM5");
-	    else
-	        new MeterConsoleTester(args[0]);
+        try
+        {
 
-	    /*
-	    AscensiaMeter am = new AscensiaMeter();
-	    am.setPort("COM1");
-	    am.open();
+            if (args.length == 0)
+            {
+                new MeterConsoleTester("COM9"); // "/dev/ttyUSB0"); //COM5");
+            }
+            else
+            {
+                new MeterConsoleTester(args[0]);
+            }
 
-	    try
-	    {
-		Thread.sleep(2000);
-		am.test();
+            /*
+             * AscensiaMeter am = new AscensiaMeter();
+             * am.setPort("COM1");
+             * am.open();
+             * try
+             * {
+             * Thread.sleep(2000);
+             * am.test();
+             * }
+             * catch(Exception ex)
+             * {
+             * }
+             */
 
-	    }
-	    catch(Exception ex)
-	    {
-	    }*/
-	    
-	    System.exit(0);
+            System.exit(0);
 
-	}
-	catch(Exception ex)
-	{
-	    System.out.println("Error:" + ex);
-	    ex.printStackTrace();
-	}
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Error:" + ex);
+            ex.printStackTrace();
+        }
     }
-
 
     /**
      * test Logger
@@ -397,15 +364,10 @@ public class MeterConsoleTester
         logDevice.info("info message");
         logDevice.warn("warn message");
         logDevice.fatal("fatal message");
-        
-        
-        
+
         logDeviceCat.debug("debug message");
         logDeviceCat.error("error message");
-        
+
     }
-    
-    
-    
 
 }

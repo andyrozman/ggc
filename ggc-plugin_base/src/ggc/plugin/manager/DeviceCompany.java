@@ -26,8 +26,7 @@
  *  Author:   andyrozman
  */
 
-
-package ggc.plugin.manager; 
+package ggc.plugin.manager;
 
 import ggc.plugin.device.DeviceInterface;
 
@@ -59,16 +58,14 @@ import java.util.Hashtable;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public abstract class DeviceCompany
 {
 
     protected String id = "";
     protected String name = "";
     protected int index = 0;
-    
-    Hashtable<String,DeviceInterface> devices = new Hashtable<String,DeviceInterface>();
 
+    Hashtable<String, DeviceInterface> devices = new Hashtable<String, DeviceInterface>();
 
     /**
      * Constructor 
@@ -79,11 +76,10 @@ public abstract class DeviceCompany
      */
     public DeviceCompany(int index, String id, String name)
     {
-    	this.index = index;
-    	this.id = id;
-    	this.name = name;
+        this.index = index;
+        this.id = id;
+        this.name = name;
     }
-
 
     /**
      * Add Device
@@ -92,7 +88,7 @@ public abstract class DeviceCompany
      */
     public void addDevice(DeviceInterface md)
     {
-    	this.devices.put(""+md.getDeviceId(), md);
+        this.devices.put("" + md.getDeviceId(), md);
     }
 
     /**
@@ -100,17 +96,16 @@ public abstract class DeviceCompany
      * @return
      */
     public abstract String getCompanyTypeDescription();
-    
-    
+
     /**
      * To String
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString()
     {
-    	return getCompanyTypeDescription() + " Company [index=" + index + ",id=" + id + ",name=" + name + "]";
+        return getCompanyTypeDescription() + " Company [index=" + index + ",id=" + id + ",name=" + name + "]";
     }
-    
-    
+
 }

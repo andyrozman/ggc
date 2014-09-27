@@ -31,7 +31,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class HomeWeightSpecial implements SelectableInterface
 {
     DataAccessNutri m_da = DataAccessNutri.getInstance();
@@ -73,15 +72,14 @@ public class HomeWeightSpecial implements SelectableInterface
      */
     public HomeWeightSpecial(String hw_string)
     {
-        //System.out.println("Hw: " + hw_string);
+        // System.out.println("Hw: " + hw_string);
         String t1[] = m_da.splitString(hw_string, "=");
 
         this.id = m_da.getLongValueFromString(t1[0]);
 
-        NutritionHomeWeightType nhwt = m_da.getDbCache().homeweight_defs.get(""+ id);
+        NutritionHomeWeightType nhwt = m_da.getDbCache().homeweight_defs.get("" + id);
         this.name = nhwt.getResolvedName();
-        
-        
+
         if (t1[1].contains("*"))
         {
             String t2[] = m_da.splitString(t1[1], "*");
@@ -131,7 +129,7 @@ public class HomeWeightSpecial implements SelectableInterface
 
         float we = m_da.getFloatValueFromString(this.weight, 1.0f);
 
-        this.calculated_weight = (am * we);
+        this.calculated_weight = am * we;
 
     }
 
@@ -143,7 +141,9 @@ public class HomeWeightSpecial implements SelectableInterface
     public float getCalculatedWeight()
     {
         if (this.calculated_weight == 0.0f)
+        {
             calculateWeight();
+        }
 
         return this.calculated_weight;
     }
@@ -232,17 +232,17 @@ public class HomeWeightSpecial implements SelectableInterface
     {
         switch (num)
         {
-        case 4:
-            return ic.getMessage("WGHT_PER_AMOUNT");
+            case 4:
+                return ic.getMessage("WGHT_PER_AMOUNT");
 
-        case 3:
-            return ic.getMessage("AMOUNT_LBL");
+            case 3:
+                return ic.getMessage("AMOUNT_LBL");
 
-        case 2:
-            return ic.getMessage("NAME");
+            case 2:
+                return ic.getMessage("NAME");
 
-        default:
-            return ic.getMessage("ID");
+            default:
+                return ic.getMessage("ID");
 
         }
     }
@@ -254,17 +254,17 @@ public class HomeWeightSpecial implements SelectableInterface
     {
         switch (num)
         {
-        case 4:
-            return this.weight;
+            case 4:
+                return this.weight;
 
-        case 3:
-            return this.amount;
+            case 3:
+                return this.amount;
 
-        case 2:
-            return this.name;
+            case 2:
+                return this.name;
 
-        default:
-            return "" + this.id;
+            default:
+                return "" + this.id;
 
         }
 
@@ -277,17 +277,17 @@ public class HomeWeightSpecial implements SelectableInterface
     {
         switch (num)
         {
-        case 4:
-            return this.weight;
+            case 4:
+                return this.weight;
 
-        case 3:
-            return this.amount;
+            case 3:
+                return this.amount;
 
-        case 2:
-            return this.name;
+            case 2:
+                return this.name;
 
-        default:
-            return new Long(this.id);
+            default:
+                return new Long(this.id);
 
         }
     }
@@ -300,21 +300,19 @@ public class HomeWeightSpecial implements SelectableInterface
 
         switch (num)
         {
-        case 4:
-            return (int) (width * 20);
-        case 3:
-            return (int) (width * 15);
-        case 2:
-            return (int) (width * 50);
-        default:
-            return (int) (width * 15);
+            case 4:
+                return width * 20;
+            case 3:
+                return width * 15;
+            case 2:
+                return width * 50;
+            default:
+                return width * 15;
 
         } /*
-           * 
            * switch(num) { case 4: return(int)(width40); case 3:
            * return(int)(width10); case 2: return(int)(width40); default:
            * return(int)(width10);
-           * 
            * }
            */
 
@@ -349,7 +347,7 @@ public class HomeWeightSpecial implements SelectableInterface
      */
     public boolean isFound(String text)
     {
-        if ((this.text_idx.indexOf(text.toUpperCase()) != -1) || (text.length() == 0))
+        if (this.text_idx.indexOf(text.toUpperCase()) != -1 || text.length() == 0)
             return true;
         else
             return false;

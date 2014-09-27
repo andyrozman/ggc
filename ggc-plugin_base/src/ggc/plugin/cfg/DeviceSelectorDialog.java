@@ -4,7 +4,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.swing.JDialog;
 
@@ -12,13 +11,11 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 import com.atech.utils.ATDataAccessAbstract;
 
-
 /**
  * Selector component for Meters (Simple Configuration)...
  * @author arozman
  *
  */
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -46,13 +43,11 @@ import com.atech.utils.ATDataAccessAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class DeviceSelectorDialog extends SelectorAbstractDialog
 {
 
     private static final long serialVersionUID = -391406165609998040L;
-    DeviceConfigurationDefinition dcd = null; 
-
+    DeviceConfigurationDefinition dcd = null;
 
     /**
      * Constructor
@@ -60,13 +55,12 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
      * @param parent
      * @param da
      */
-    public DeviceSelectorDialog(JDialog parent, ATDataAccessAbstract da) 
+    public DeviceSelectorDialog(JDialog parent, ATDataAccessAbstract da)
     {
         super(parent, da, 0, null, true);
         this.showDialog();
     }
 
-  
     /**
      * Get Device Configuration Definition
      * 
@@ -75,59 +69,60 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     public DeviceConfigurationDefinition getDeviceConfigurationDefinition()
     {
         if (this.dcd == null)
-            this.dcd = ((DataAccessPlugInBase)m_da).getDeviceConfigurationDefinition();
-        
-        //System.out.println("CGMS DeviceConfigurationDefinition:");
-        //System.out.println("dcd: " + this.dcd);
-        //System.out.println("supported devices: " + this.dcd.getSupportedDevices());
-        
+        {
+            this.dcd = ((DataAccessPlugInBase) m_da).getDeviceConfigurationDefinition();
+        }
+
+        // System.out.println("CGMS DeviceConfigurationDefinition:");
+        // System.out.println("dcd: " + this.dcd);
+        // System.out.println("supported devices: " +
+        // this.dcd.getSupportedDevices());
+
         return this.dcd;
     }
-    
-    
+
     /**
      * Init Selector Values For Type
      * 
      * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#initSelectorValuesForType()
      */
+    @Override
     public void initSelectorValuesForType()
     {
-        setSelectorObject((SelectableInterface)this.getDeviceConfigurationDefinition().getDummyObject());
+        setSelectorObject((SelectableInterface) this.getDeviceConfigurationDefinition().getDummyObject());
         setSelectorName(String.format(ic.getMessage("SELECTOR_DEVICE"), ic.getMessage("DEVICE_NAME_BIG")));
-	    setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
-	    this.setColumnSortingEnabled(false);
-	    this.setHelpStringId("DeviceTool_Configuration_DeviceSelector");
+        setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
+        this.setColumnSortingEnabled(false);
+        this.setHelpStringId("DeviceTool_Configuration_DeviceSelector");
         this.setHelpEnabled(true);
     }
-
 
     /**
      * Get Full Data
      * 
      * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#getFullData()
      */
+    @Override
     public void getFullData()
     {
         this.full = new ArrayList<SelectableInterface>();
-        this.full.addAll((Collection<? extends SelectableInterface>) this.getDeviceConfigurationDefinition().getSupportedDevices());
-        
-        
-        //System.out.println("Counter: " + this.full.size());
-        
+        this.full.addAll(this.getDeviceConfigurationDefinition().getSupportedDevices());
+
+        // System.out.println("Counter: " + this.full.size());
+
     }
-    
-    
+
     /**
      * Set Help Context
      */
     public void setHelpContext()
     {
-        // TODO: 
-//	m_da.getHelpContext().getMainHelpBroker().enableHelpOnButton(this.getHelpButton(), this.getHelpId(), null);
-//	m_da.getHelpContext().getMainHelpBroker().enableHelpKey(this.getRootPane(), this.getHelpId(), null);
+        // TODO:
+        // m_da.getHelpContext().getMainHelpBroker().enableHelpOnButton(this.getHelpButton(),
+        // this.getHelpId(), null);
+        // m_da.getHelpContext().getMainHelpBroker().enableHelpKey(this.getRootPane(),
+        // this.getHelpId(), null);
     }
-    
-
 
     /**
      * Check And Execute Action : Edit
@@ -137,7 +132,6 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     public void checkAndExecuteActionEdit(SelectableInterface si)
     {
     }
-
 
     /**
      * Check And Execute Action : New
@@ -149,7 +143,6 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     {
     }
 
-
     /** 
      * Check And Execute Action : Select
      * 
@@ -158,21 +151,20 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     @Override
     public void checkAndExecuteActionSelect()
     {
-        if (table!=null)
+        if (table != null)
         {
-//            System.out.println("in select action");
-            if (table.getSelectedRow()==-1)
+            // System.out.println("in select action");
+            if (table.getSelectedRow() == -1)
                 return;
 
             this.selected_object = list.get(table.getSelectedRow());
-//            System.out.println("in select action: selected:" + this.selected_object);
-            
+            // System.out.println("in select action: selected:" +
+            // this.selected_object);
+
             this.dispose();
         }
-	
+
     }
-
-
 
     /**
      * Item State Changed
@@ -183,6 +175,5 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     public void itemStateChanged(ItemEvent e)
     {
     }
-    
-    
+
 }

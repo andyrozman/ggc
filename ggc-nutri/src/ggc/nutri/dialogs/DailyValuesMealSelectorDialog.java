@@ -66,7 +66,7 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
      */
     public DailyValuesMealSelectorDialog(ATDataAccessAbstract da, String meals_id)
     {
-        super((JDialog)da.getCurrentComponent());
+        super((JDialog) da.getCurrentComponent());
 
         m_da = DataAccessNutri.getInstance();
         ic = m_da.getI18nControlInstance();
@@ -94,12 +94,7 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
 
         this.setVisible(true);
     }
-    
-     
-    
-    
-    
-    
+
     private void init()
     {
         this.setTitle(ic.getMessage("MEALS_FOODS_SELECTOR_DAILY"));
@@ -130,95 +125,60 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
             // System.out.println("Cancel");
             this.dispose();
         }
-        /*else if (cmd.equals("add_food"))
-        {
-            MealSpecialSelectorDialog mssd = new MealSpecialSelectorDialog(m_da, 0L);
-            DailyFoodEntryDisplay dfed = new DailyFoodEntryDisplay(ic, mssd.getDailyFoodEntry());
-            
-            this.panel_meal_selector.addFoodPart(dfed);
-        }
-            else if (cmd.equals("edit_food"))
-            {
-                
-                if (this.panel_meal_selector.getFoodTable().getSelectedRowCount()==0)
-                {
-                    JOptionPane.showConfirmDialog(this, ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
-                    return;
-                }
-
-                NutritionDataDisplay ndd = this.list_nutritions.get(this.table_1.getSelectedRow());
-
-                FoodPartMainSelectorDialog fpmsd = new FoodPartMainSelectorDialog(m_da, ndd);            
-                
-                if (fpmsd.wasAction())
-                {
-            	System.out.println("Returned value: " + fpmsd.getAmountValue());
-            	
-            	ndd.setAmount(fpmsd.getAmountValue());
-            	this.createModel(this.list_nutritions, this.table_1, this.ndd);
-                }
-                
-            }
-            else if (action.equals("remove_nutrition"))
-            {
-                if (this.table_1.getSelectedRowCount()==0)
-                {
-                    JOptionPane.showConfirmDialog(this, ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
-                    return;
-                }
-
-                int ii = JOptionPane.showConfirmDialog(this, ic.getMessage("ARE_YOU_SURE_DELETE"), ic.getMessage("ERROR"), JOptionPane.YES_NO_OPTION);
-
-                if (ii==JOptionPane.YES_OPTION)
-                {
-                    NutritionDataDisplay ndd = this.list_nutritions.get(this.table_1.getSelectedRow());
-            	
-                    this.list_nutritions.remove(ndd);
-            	this.createModel(this.list_nutritions, this.table_1, this.ndd);
-                }
-                
-            }*/
-
-        /*else if (cmd.equals("select_item"))
-        {
-            //System.out.println("Select item");
-            
-            NutritionTreeDialog ntd = new NutritionTreeDialog(m_da, this.cb_type.getSelectedIndex()+1, true);
-            
-            if (ntd.wasAction())
-            {
-        	
-        	if (this.cb_type.getSelectedIndex()==2)
-        	{
-        	    Meal m = (Meal)ntd.getSelectedObject();
-
-        	    if (m.getId() == this.input_id)
-        	    {
-        		JOptionPane.showMessageDialog(this, ic.getMessage("CANT_SELECT_CIRCULAR_MEAL"), ic.getMessage("WARNING"),JOptionPane.WARNING_MESSAGE);
-        		return;
-        	    }
-        	}
-        	
-        	
-        	this.label_item_type.setText("" + this.cb_type.getSelectedItem());
-        	
-        	this.action_object_type = (this.cb_type.getSelectedIndex() + 1);
-        	this.action_object = (ntd.getSelectedObject());
-        	
-        	if (this.cb_type.getSelectedIndex() < 2)
-        	{
-        	    FoodDescription fd = (FoodDescription)this.action_object;
-        	    this.label_item.setText(fd.getName());
-        	}
-        	else
-        	{
-        	    Meal m = (Meal)this.action_object;
-        	    this.label_item.setText(m.getName());
-        	}
-            }
-        }*/
+        /*
+         * else if (cmd.equals("add_food"))
+         * {
+         * MealSpecialSelectorDialog mssd = new MealSpecialSelectorDialog(m_da,
+         * 0L);
+         * DailyFoodEntryDisplay dfed = new DailyFoodEntryDisplay(ic,
+         * mssd.getDailyFoodEntry());
+         * this.panel_meal_selector.addFoodPart(dfed);
+         * }
+         * else if (cmd.equals("edit_food"))
+         * {
+         * if (this.panel_meal_selector.getFoodTable().getSelectedRowCount()==0)
+         * {
+         * JOptionPane.showConfirmDialog(this,
+         * ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"),
+         * JOptionPane.CLOSED_OPTION);
+         * return;
+         * }
+         * NutritionDataDisplay ndd =
+         * this.list_nutritions.get(this.table_1.getSelectedRow());
+         * FoodPartMainSelectorDialog fpmsd = new
+         * FoodPartMainSelectorDialog(m_da, ndd);
+         * if (fpmsd.wasAction())
+         * {
+         * System.out.println("Returned value: " + fpmsd.getAmountValue());
+         * ndd.setAmount(fpmsd.getAmountValue());
+         * this.createModel(this.list_nutritions, this.table_1, this.ndd);
+         * }
+         * }
+         * else if (action.equals("remove_nutrition"))
+         * {
+         * if (this.table_1.getSelectedRowCount()==0)
+         * {
+         * JOptionPane.showConfirmDialog(this,
+         * ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"),
+         * JOptionPane.CLOSED_OPTION);
+         * return;
+         * }
+         * int ii = JOptionPane.showConfirmDialog(this,
+         * ic.getMessage("ARE_YOU_SURE_DELETE"), ic.getMessage("ERROR"),
+         * JOptionPane.YES_NO_OPTION);
+         * if (ii==JOptionPane.YES_OPTION)
+         * {
+         * NutritionDataDisplay ndd =
+         * this.list_nutritions.get(this.table_1.getSelectedRow());
+         * this.list_nutritions.remove(ndd);
+         * this.createModel(this.list_nutritions, this.table_1, this.ndd);
+         * }
+         * }
+         */
         else
+        {
             System.out.println("DailyValuesMealSelectorDialog::unknown command = " + cmd);
+        }
 
     }
 
@@ -227,6 +187,7 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
      * 
      * @see com.atech.graphics.dialogs.TransferDialog#wasAction()
      */
+    @Override
     public boolean wasAction()
     {
         return this.action_done;
@@ -257,6 +218,7 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
      * 
      * @see com.atech.graphics.dialogs.TransferDialog#getResultValues()
      */
+    @Override
     public Object[] getResultValues()
     {
         Object[] objs = new Object[2];
@@ -271,6 +233,7 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
      * 
      * @see com.atech.graphics.dialogs.TransferDialog#getResultValuesString()
      */
+    @Override
     public String[] getResultValuesString()
     {
         String[] objs = new String[2];
@@ -280,7 +243,6 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
         return objs;
     }
 
-    
     /**
      * Set Input Paramters
      * 
@@ -290,10 +252,9 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
     public void setInputParameters(Object[] ip)
     {
         // TODO Auto-generated method stub
-        
+
     }
 
-    
     /**
      * Show Dialog
      * 
@@ -303,9 +264,8 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
     public void showDialog(boolean visible)
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     /**
      * Get Input Parameters Count
@@ -319,9 +279,10 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
     }
 
     /*
-    public static void main(String[] args)
-    {
-        new DailyValuesMealSelectorDialog(DataAccessNutri.getInstance(), null);
-    }*/
+     * public static void main(String[] args)
+     * {
+     * new DailyValuesMealSelectorDialog(DataAccessNutri.getInstance(), null);
+     * }
+     */
 
 }

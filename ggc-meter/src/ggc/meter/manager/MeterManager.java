@@ -1,4 +1,4 @@
-package ggc.meter.manager; 
+package ggc.meter.manager;
 
 import ggc.meter.manager.company.Abbott;
 import ggc.meter.manager.company.AscensiaBayer;
@@ -40,18 +40,13 @@ import ggc.plugin.manager.DeviceManager;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class MeterManager extends DeviceManager
 {
-    
-    
-    
-    
+
     /**
      * Singleton instance
      */
     public static MeterManager s_manager = null;
-    
 
     /**
      * Constructor
@@ -61,7 +56,6 @@ public class MeterManager extends DeviceManager
         super();
     }
 
-    
     /**
      * Get MeterManager instance
      * 
@@ -69,16 +63,18 @@ public class MeterManager extends DeviceManager
      */
     public static MeterManager getInstance()
     {
-    	if (MeterManager.s_manager==null)
-    		MeterManager.s_manager = new MeterManager();
-    	
-    	return MeterManager.s_manager;
-    }
+        if (MeterManager.s_manager == null)
+        {
+            MeterManager.s_manager = new MeterManager();
+        }
 
+        return MeterManager.s_manager;
+    }
 
     /**
      * Load devices companies
      */
+    @Override
     public void loadDeviceCompanies()
     {
         addDeviceCompany(new AscensiaBayer());
@@ -94,12 +90,11 @@ public class MeterManager extends DeviceManager
         addDeviceCompany(new USDiagnostic());
         addDeviceCompany(new Wavesense());
     }
-    
-    
-    
+
     /**
      * Load Supported Devices
      */
+    @Override
     public void loadSupportedDevices()
     {
         this.supported_devices.addAll(new AscensiaBayer().getDevices());
@@ -108,6 +103,5 @@ public class MeterManager extends DeviceManager
         this.supported_devices.addAll(new Abbott().getDevices());
         this.supported_devices.addAll(new Menarini().getDevices());
     }
-    
 
 }

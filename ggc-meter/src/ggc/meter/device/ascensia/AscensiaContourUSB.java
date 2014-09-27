@@ -8,7 +8,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.Hashtable;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Meter Tool (support for Meter devices)
@@ -35,11 +34,9 @@ import java.util.Hashtable;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class AscensiaContourUSB extends AscensiaMeterUsb 
+public class AscensiaContourUSB extends AscensiaMeterUsb
 {
-    
-	
+
     /**
      * Constructor 
      */
@@ -47,7 +44,6 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
     {
     }
 
-    
     /**
      * Constructor 
      * 
@@ -57,8 +53,7 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
     {
         super(cmp);
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -67,10 +62,9 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
      */
     public AscensiaContourUSB(String portName, OutputWriter writer)
     {
-    	super(portName, writer);
+        super(portName, writer);
     }
 
-    
     /**
      * Constructor
      * 
@@ -82,12 +76,10 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
     {
         super(comm_parameters, writer, da);
     }
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -99,7 +91,6 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
         return "ContourUSB";
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -109,7 +100,6 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
     {
         return "ascensia_contour.png";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -121,8 +111,7 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
     {
         return MeterDevicesIds.METER_ASCENSIA_CONTOUR;
     }
-    
-    
+
     /**
      * getInstructions - get instructions for device
      * 
@@ -132,7 +121,7 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
     {
         return "INSTRUCTIONS_ASCENSIA_CONTOUR";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -142,19 +131,17 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
-
 
     /** 
      * Get Device ClassName
@@ -164,7 +151,6 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
         return "ggc.meter.device.ascensia.AscensiaContour";
     }
 
-    
     /**
      * Maximum of records that device can store
      */
@@ -173,14 +159,11 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
         return 480;
     }
 
-
     public int getConnectionProtocol()
     {
         // TODO Auto-generated method stub
         return 0;
     }
-
-
 
     @Override
     public void initializeUsbSettings()
@@ -188,6 +171,5 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
         this.supported_devices = new Hashtable<String, String>();
         this.supported_devices.put("1A79:6002", "1A79:6002");
     }
-    
 
 }

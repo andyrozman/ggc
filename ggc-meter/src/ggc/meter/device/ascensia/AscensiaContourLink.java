@@ -33,11 +33,9 @@ import gnu.io.SerialPortEventListener;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class AscensiaContourLink extends AscensiaMeter implements SerialPortEventListener
 {
 
-	
     /**
      * Constructor
      */
@@ -45,7 +43,6 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
     }
 
-    
     /**
      * Constructor
      * 
@@ -55,8 +52,7 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
         super(cmp);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -65,10 +61,9 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
      */
     public AscensiaContourLink(String portName, OutputWriter writer)
     {
-    	super(portName, writer);
+        super(portName, writer);
     }
 
-    
     /**
      * Constructor
      * 
@@ -80,12 +75,10 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
         super(comm_parameters, writer, da);
     }
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -97,7 +90,6 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
         return "ContourLink";
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -107,7 +99,6 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
         return "ascensia_contour.png";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -120,7 +111,6 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
         return MeterDevicesIds.METER_ASCENSIA_CONTOUR_LINK;
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * 
@@ -130,7 +120,7 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
         return "INSTRUCTIONS_ASCENSIA_CONTOUR";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -140,19 +130,17 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
-
 
     /** 
      * Get Device ClassName
@@ -162,7 +150,6 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
         return "ggc.meter.device.ascensia.AscensiaContourLink";
     }
 
-    
     /**
      * Maximum of records that device can store
      */
@@ -170,6 +157,5 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
         return 480;
     }
-    
 
 }

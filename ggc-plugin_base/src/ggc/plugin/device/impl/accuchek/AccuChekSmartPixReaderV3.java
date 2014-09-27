@@ -13,7 +13,6 @@ import java.io.OutputStreamWriter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -40,16 +39,13 @@ import org.apache.commons.logging.LogFactory;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
 {
 
     private static Log log = LogFactory.getLog(AccuChekSmartPixReaderV3.class);
-    //String drive_path = "/media/SMART_PIX/";
+    // String drive_path = "/media/SMART_PIX/";
     int max_retry = 5;
-    
-    
-    
+
     /**
      * Constructor 
      * 
@@ -62,104 +58,101 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         super(da, ow, par);
         this.drive_path = par.getRootDrive();
     }
-    
-    
+
     /**
      * 
      */
-/*    public AccuChekSmartPixReaderV3()
-    {
-        super();
-        //System.out.println("Constructor [Smart Pix Reader v3] !");
-    }
-  */  
-    
+    /*
+     * public AccuChekSmartPixReaderV3()
+     * {
+     * super();
+     * //System.out.println("Constructor [Smart Pix Reader v3] !");
+     * }
+     */
+
+    @Override
     public void readDevice()
     {
-        
-        //System.out.println("Read Device [Smart Pix Reader v3] !");
-        
+
+        // System.out.println("Read Device [Smart Pix Reader v3] !");
+
         try
         {
 
             boolean status = false;
             boolean finished = false;
             int count = 0;
-            
-            while(count < max_retry)
+
+            while (count < max_retry)
             {
                 this.sendCommandToDevice("Abort");
-                
+
                 status = readStatusUntilState("NOSCAN", 5000);
-                
+
                 if (status)
                 {
-//                    System.out.println("We are in correct status !");
+                    // System.out.println("We are in correct status !");
                     count = max_retry;
                     finished = true;
                 }
                 else
+                {
                     count++;
-                
+                }
+
             }
             sleep(2000);
-            
+
             debug("Before 10");
-            
+
             if (!checkFinished(finished, 10, "PIX_ABORT_AUTOSCAN"))
                 return;
-            
-            
+
             finished = false;
             count = 0;
-            while(count < max_retry)
+            while (count < max_retry)
             {
                 this.sendCommandToDevice("ReadDevice");
                 sleep(2000);
                 this.readStatus();
-                
+
                 status = readStatusUntilState("SCAN", 5000);
-                
+
                 if (status)
                 {
-//                    System.out.println("We are getting ready to read !");
+                    // System.out.println("We are getting ready to read !");
                     count = max_retry;
                     finished = true;
                 }
                 else
+                {
                     count++;
-                
+                }
+
             }
 
             debug("Before 15");
-            
+
             if (!checkFinished(finished, 15, null))
                 return;
-            
-            
-            
-            
+
             status = readStatusUntilState("SCAN", "FOUND", 20000);
-            
+
             debug("Before 20");
-            
-            
+
             if (!checkFinished(status, 20, "PIX_READING_ELEMENT"))
                 return;
-            
+
             debug("Device Found !");
-            
-            
+
             status = readStatusUntilState("SCAN", "REQUEST", 120000);
-            
+
             if (!checkFinished(status, 85, "PIX_FINISHED_READING"))
                 return;
-            
-            
-            
+
             debug("Report is beeing created !");
-            
-            status = readStatusUntilState("NOSCAN", "REPORT", 120000); //10000
+
+            status = readStatusUntilState("NOSCAN", "REPORT", 120000); // 10000
             debug("Report Created !");
 
             if (!checkFinished(status, 95, "PIX_FINISHED_REPORT_READY"))
@@ -168,36 +161,29 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
             {
                 this.parent.readXmlFileFromDevice();
             }
-            
-            
-            
-            //this.setStatus(95, "PIX_FINISHED_REPORT_READY");
-            
-            ///boolean status = readStatusUntilState("", 5000000);
-            
-            
-            
-            
+
+            // this.setStatus(95, "PIX_FINISHED_REPORT_READY");
+
+            // /boolean status = readStatusUntilState("", 5000000);
+
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             log.error("Error on ReadDevice(). Exception: " + ex, ex);
         }
-            
+
     }
 
-    
     private boolean checkFinished(boolean check_var, int status, String status_msg)
     {
-        
+
         if (this.parent.isDeviceStopped())
         {
             this.setStatus(100, "PIX_ERROR_INIT_DEVICE");
             this.parent.setDeviceStopped();
             return false;
         }
-        
-        
+
         if (!check_var)
         {
             this.setStatus(100, "PIX_ERROR_INIT_DEVICE");
@@ -208,15 +194,9 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
             this.setStatus(status, status_msg);
             return true;
         }
-        
-        
+
     }
-    
-    
-    
-    
-    
-    
+
     /**
      * Read Device
      * 
@@ -226,28 +206,25 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
     {
         try
         {
-            
+
             if (!new File(m_da.pathResolver(drive_path)).exists())
                 return;
-            
-            
-//            System.out.println("Send " + command);
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(new File(m_da.pathResolver(drive_path + "/" + System.currentTimeMillis() + ".txt"))),"ISO-8859-1"));
-            
+
+            // System.out.println("Send " + command);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
+                    m_da.pathResolver(drive_path + "/" + System.currentTimeMillis() + ".txt"))), "ISO-8859-1"));
+
             out.write("SL42-B RemoteControl File\n" + "Command=" + command);
             out.flush();
             out.close();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.out.println("Exception: " + ex);
         }
-        
-        
+
     }
-    
-    
+
     /**
      * Sleep
      * 
@@ -259,145 +236,141 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         {
             Thread.sleep(ms);
         }
-        catch(Exception ex){}
-        
-        
+        catch (Exception ex)
+        {}
+
     }
-    
-    
-    
-    
-    
-    
+
     private boolean readStatusUntilState(String state, long timeout_ms)
     {
-        ///Misc/STATUS.TXT
+        // /Misc/STATUS.TXT
         long end_time = System.currentTimeMillis() + timeout_ms;
-        
-        while(System.currentTimeMillis() < end_time)
+
+        while (System.currentTimeMillis() < end_time)
         {
             String st = readStatus();
-            
+
             writeStatus(st);
-            
+
             if (st.equals(state))
                 return true;
             else
+            {
                 sleep(250);
-            
+            }
+
             if (this.parent.isDeviceStopped())
             {
                 this.parent.setDeviceStopped();
                 return false;
             }
         }
-        
+
         return false;
     }
-    
 
-    
     private boolean readStatusUntilState(String state1, String state2, long timeout_ms)
     {
-        ///Misc/STATUS.TXT
+        // /Misc/STATUS.TXT
         long end_time = System.currentTimeMillis() + timeout_ms;
-        int i=0;
-        
+        int i = 0;
+
         boolean reading_data = false;
-        
-        if ((state1.equals("SCAN")) && (state2.equals("REQUEST")))
+
+        if (state1.equals("SCAN") && state2.equals("REQUEST"))
         {
             reading_data = true;
             System.out.println("Reading data");
         }
-        
-        
-        while(System.currentTimeMillis() < end_time)
+
+        while (System.currentTimeMillis() < end_time)
         {
             String st[] = readStatuses();
-            
+
             writeStatus(st);
-            
-            if (st.length==2)
+
+            if (st.length == 2)
             {
-                if ((st[1].equals(state1)))
+                if (st[1].equals(state1))
                     return true;
                 else
+                {
                     sleep(250);
+                }
             }
-            else if (st.length>2)
+            else if (st.length > 2)
             {
-                //if ((st.length==2) && (st[1].equals(state1)) && (st[2].contains(state2)))
-                if ((st[1].equals(state1)) && (st[2].contains(state2)))
+                // if ((st.length==2) && (st[1].equals(state1)) &&
+                // (st[2].contains(state2)))
+                if (st[1].equals(state1) && st[2].contains(state2))
                     return true;
                 else
+                {
                     sleep(250);
+                }
             }
-            else 
+            else
+            {
                 sleep(250);
-            
+            }
+
             if (this.parent.isDeviceStopped())
             {
                 this.parent.setDeviceStopped();
                 return false;
             }
-            
+
             i++;
-            
-            if ((i%4==0) && (reading_data))
+
+            if (i % 4 == 0 && reading_data)
             {
                 incrementProgress();
             }
-            
-            
+
         }
-        
+
         return false;
     }
-    
-    
+
     int count_el = 0;
 
-    
     private void incrementProgress()
     {
         count_el += this.parent.getNrOfElementsFor1s();
-        
-        float procs_x = (count_el*(1.0f))/this.parent.getMaxMemoryRecords();
-        
-        int pro_calc = (int)((0.2f + (0.0055f * (procs_x * 100.0f)))*100.0f);
-        //int pro_calc = (int)((0.2f + (0.007f * (procs_x * 100.0f)))*100.0f);
-        
-        this.parent.writeStatus("PIX_READING_ELEMENT"); //, pro_calc + " %"));
+
+        float procs_x = count_el * 1.0f / this.parent.getMaxMemoryRecords();
+
+        int pro_calc = (int) ((0.2f + 0.0055f * (procs_x * 100.0f)) * 100.0f);
+        // int pro_calc = (int)((0.2f + (0.007f * (procs_x * 100.0f)))*100.0f);
+
+        this.parent.writeStatus("PIX_READING_ELEMENT"); // , pro_calc + " %"));
         this.output_writer.setSpecialProgress(pro_calc);
     }
-    
-    
+
     private String readStatus()
     {
-        String line, last_line=null;
-        
-        BufferedReader br=null;
+        String line, last_line = null;
+
+        BufferedReader br = null;
         try
         {
             if (!new File(m_da.pathResolver(this.drive_path + "/MISC/STATUS.TXT")).exists())
                 return "";
-            
-            
+
             br = new BufferedReader(new FileReader(m_da.pathResolver(this.drive_path + "/MISC/STATUS.TXT")));
-            
-            while((line=br.readLine())!=null)
+
+            while ((line = br.readLine()) != null)
             {
                 last_line = line;
             }
 
             String[] arr = last_line.split(" ");
-            
-            
-//            System.out.println("Status: " + arr[1] + "  [" + last_line + "]"); //last_line);
+
+            // System.out.println("Status: " + arr[1] + "  [" + last_line +
+            // "]"); //last_line);
             return arr[1];
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             log.error("Error on reading status. Ex.: " + ex, ex);
         }
@@ -405,102 +378,93 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         {
             try
             {
-            br.close();
+                br.close();
             }
-            catch(Exception ex){}
+            catch (Exception ex)
+            {}
         }
-        
+
         return null;
     }
-     
 
-    
     private String[] readStatuses()
     {
-        String line, last_line=null;
-        
-        BufferedReader br=null;
+        String line, last_line = null;
+
+        BufferedReader br = null;
         try
         {
             br = new BufferedReader(new FileReader(m_da.pathResolver(this.drive_path + "/MISC/STATUS.TXT")));
-            
-            while((line=br.readLine())!=null)
+
+            while ((line = br.readLine()) != null)
             {
                 last_line = line;
             }
 
             String[] arr = last_line.split(" ");
-            
-            
-//            System.out.println("Statuses: " + arr[1] + "  [" + last_line + "]"); //last_line);
+
+            // System.out.println("Statuses: " + arr[1] + "  [" + last_line +
+            // "]"); //last_line);
             return arr;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             log.error("Error on reading statuses. Ex.: " + ex, ex);
-            //System.out.println("Exception: " + ex);
+            // System.out.println("Exception: " + ex);
         }
         finally
         {
             try
             {
-            br.close();
+                br.close();
             }
-            catch(Exception ex){}
+            catch (Exception ex)
+            {}
         }
-        
+
         return null;
     }
-    
-    
-    
+
+    @Override
     public void preInitDevice()
     {
-//        System.out.println("preInitDevice: Reader [v3]");
-        
+        // System.out.println("preInitDevice: Reader [v3]");
+
         if (this.parent.communication_established)
         {
             this.sendCommandToDevice("Abort");
             readStatusUntilState("NOSCAN", 5000);
-            
+
             this.sendCommandToDevice("EraseReport");
         }
-        
+
     }
-    
-    
+
     @Override
     public boolean hasPreInit()
     {
         return true;
     }
-    
-    
+
     private void writeStatus(String[] status)
     {
-/*        
-        for(int i=0; i<status.length; i++)
-        {
-            System.out.print("["+i+"] " + status[i] + " ");
-        }
-        
-        System.out.print("\n");
-  */      
+        /*
+         * for(int i=0; i<status.length; i++)
+         * {
+         * System.out.print("["+i+"] " + status[i] + " ");
+         * }
+         * System.out.print("\n");
+         */
     }
-    
 
     private void writeStatus(String status)
     {
-//        System.out.print("[0] " + status + " \n");
+        // System.out.print("[0] " + status + " \n");
     }
-    
-    
+
     private void debug(String status)
     {
-//        System.out.print(status);
+        // System.out.print(status);
     }
-    
-    
-    
-    
+
 }

@@ -1,7 +1,5 @@
 package ggc.cgms.device;
 
-
-
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.device.PlugInBaseException;
 
@@ -33,17 +31,14 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class DummyCGMS extends AbstractCGMS //GenericCGMS //implements MeterInterface
+public class DummyCGMS extends AbstractCGMS // GenericCGMS //implements
+                                            // MeterInterface
 {
 
     DataAccessCGMS m_da = DataAccessCGMS.getInstance();
     I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
-    //public int m_meter_index = 0;
-    
-
-    
+    // public int m_meter_index = 0;
 
     /**
      * Used for opening connection with device.
@@ -54,7 +49,6 @@ public class DummyCGMS extends AbstractCGMS //GenericCGMS //implements MeterInte
         return true;
     }
 
-
     /**
      * Will be called, when the import is ended and freeing resources.
      */
@@ -63,22 +57,18 @@ public class DummyCGMS extends AbstractCGMS //GenericCGMS //implements MeterInte
         return;
     }
 
-
-
-
-
     /**
      * getName - Get Name of device. 
      * Should be implemented by device class.
      * 
      * @return 
      */
+    @Override
     public String getName()
     {
         return "Dummy Meter";
     }
 
-    
     /**
      * getDeviceId - Get Device Id, this are plugin specific and global (for example only one device 
      * of type meter, can have same id.  
@@ -89,13 +79,11 @@ public class DummyCGMS extends AbstractCGMS //GenericCGMS //implements MeterInte
         return 0;
     }
 
-
     public void dispose()
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     public String getComment()
     {
@@ -103,13 +91,11 @@ public class DummyCGMS extends AbstractCGMS //GenericCGMS //implements MeterInte
         return null;
     }
 
-
     public String getConnectionPort()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
 
     public int getConnectionProtocol()
     {
@@ -117,15 +103,11 @@ public class DummyCGMS extends AbstractCGMS //GenericCGMS //implements MeterInte
         return 0;
     }
 
-
     public String getDeviceClassName()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
-
-
 
     public String getIconName()
     {
@@ -133,13 +115,11 @@ public class DummyCGMS extends AbstractCGMS //GenericCGMS //implements MeterInte
         return null;
     }
 
-
     public int getImplementationStatus()
     {
         // TODO Auto-generated method stub
         return 0;
     }
-
 
     public String getInstructions()
     {
@@ -147,13 +127,12 @@ public class DummyCGMS extends AbstractCGMS //GenericCGMS //implements MeterInte
         return null;
     }
 
-
+    @Override
     public boolean hasSpecialProgressStatus()
     {
         // TODO Auto-generated method stub
         return false;
     }
-
 
     public boolean isDeviceCommunicating()
     {
@@ -161,50 +140,46 @@ public class DummyCGMS extends AbstractCGMS //GenericCGMS //implements MeterInte
         return false;
     }
 
-
+    @Override
     public boolean isReadableDevice()
     {
         // TODO Auto-generated method stub
         return false;
     }
 
-
+    @Override
     public void readConfiguration() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     public void readDeviceDataFull() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
-
+    @Override
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
-
+    @Override
     public void readInfo() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
-    
-    
     /**
      * Load File Contexts - Load file contexts that device supports
      */
+    @Override
     public void loadFileContexts()
     {
     }
-    
-
 
 }

@@ -44,14 +44,14 @@ import com.atech.utils.data.ATechDate;
  *  @author Andy {andy@atech-software.com}  
  */
 
-// WARNING: This is one of old classes, which we still use, and it needs serious rewrite. Andy
+// WARNING: This is one of old classes, which we still use, and it needs serious
+// rewrite. Andy
 // FIXME
 public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>, ExtendedCapable
 {
 
     private static final long serialVersionUID = 3047797993365876861L;
-    private static Log log = LogFactory.getLog(DailyValuesRow.class); 
-
+    private static Log log = LogFactory.getLog(DailyValuesRow.class);
 
     private long datetime;
     private int bg;
@@ -60,8 +60,8 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     private float ch;
     private String comment;
     private String extended;
-    
-    //private String[] extended_arr;
+
+    // private String[] extended_arr;
     private String meals;
 
     private boolean changed = false;
@@ -69,30 +69,25 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     DataAccess m_da = DataAccess.getInstance();
     GGCProperties props = m_da.getSettings();
     boolean debug = false;
-    Hashtable<String,String> ht_extended = new Hashtable<String,String>();
-    
-    
-    
+    Hashtable<String, String> ht_extended = new Hashtable<String, String>();
 
     public DailyValuesRow()
     {
-    	this.datetime = 0L;
-    	this.bg = 0;
-    	this.ins1 = 0;
-    	this.ins2 = 0;
-    	this.ch = 0.0f;
-    	this.extended = null;
-    	this.comment = "";
+        this.datetime = 0L;
+        this.bg = 0;
+        this.ins1 = 0;
+        this.ins2 = 0;
+        this.ch = 0.0f;
+        this.extended = null;
+        this.comment = "";
 
         this.ht_extended = this.getExtendedHandler().loadExtended(extended);
     }
 
-
-
     public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String extended, String comment)
     {
         this.datetime = datetime;
-        this.bg = bg; 
+        this.bg = bg;
         this.ins1 = ins1;
         this.ins2 = ins2;
         this.ch = ch;
@@ -102,69 +97,63 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         this.ht_extended = this.getExtendedHandler().loadExtended(extended);
     }
 
-
-    public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String activity, String urine, String comment)
+    public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String activity, String urine,
+            String comment)
     {
-        //loadExtended();
+        // loadExtended();
         this.datetime = datetime;
-        this.bg = bg; 
+        this.bg = bg;
         this.ins1 = ins1;
         this.ins2 = ins2;
         this.ch = ch;
         this.setExtendedValue(ExtendedDailyValue.EXTENDED_ACTIVITY, activity, false);
         this.setExtendedValue(ExtendedDailyValue.EXTENDED_URINE, urine, false);
-        //this.activity = activity;
-        //this.urine = urine;
+        // this.activity = activity;
+        // this.urine = urine;
         this.comment = comment;
     }
 
-
-
     public DailyValuesRow(DayValueH dv)
     {
-    	this.datetime = dv.getDt_info();
-    	this.bg = dv.getBg();
-    	this.ins1 = dv.getIns1();
-    	this.ins2 = dv.getIns2();
-    	this.ch = dv.getCh();
+        this.datetime = dv.getDt_info();
+        this.bg = dv.getBg();
+        this.ins1 = dv.getIns1();
+        this.ins2 = dv.getIns2();
+        this.ch = dv.getCh();
         this.meals = dv.getMeals_ids();
         this.extended = dv.getExtended();
-    	this.comment = dv.getComment();
-    
-    	m_dv = dv;
+        this.comment = dv.getComment();
+
+        m_dv = dv;
         this.ht_extended = this.getExtendedHandler().loadExtended(extended);
     }
 
-
-    public DailyValuesRow(long datetime, String BG, String Ins1, String Ins2, String CH, String act, String urine, String Comment, ArrayList<String> lst_meals)
+    public DailyValuesRow(long datetime, String BG, String Ins1, String Ins2, String CH, String act, String urine,
+            String Comment, ArrayList<String> lst_meals)
     {
-    	this.datetime = datetime;
+        this.datetime = datetime;
         this.bg = m_da.getIntValueFromString(BG, 0);
         this.ins1 = m_da.getIntValueFromString(Ins1, 0);
         this.ins2 = m_da.getIntValueFromString(Ins2, 0);
         this.ch = m_da.getIntValueFromString(CH, 0);
-        
+
         this.setExtendedValue(ExtendedDailyValue.EXTENDED_ACTIVITY, act, false);
         this.setExtendedValue(ExtendedDailyValue.EXTENDED_URINE, urine, false);
 
-        //this.meals = dv.getMeals_ids();
-        //this.extended = dv.getExtended();
+        // this.meals = dv.getMeals_ids();
+        // this.extended = dv.getExtended();
         this.comment = Comment;
-    	
-    }
 
-    
-    
+    }
 
     public boolean areMealsSet()
     {
-        if ((m_da.isValueSet(this.meals)) || (this.isExtendedValueSet(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION)))
+        if (m_da.isValueSet(this.meals) || this.isExtendedValueSet(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION))
             return true;
         else
             return false;
     }
 
-    
     /**
      * Are Meals Set
      * 
@@ -179,19 +168,16 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         else
             return 0;
     }
-    
-    
+
     public String getMealsIds()
     {
         return this.meals;
     }
-    
 
     public void setMealsIds(String val)
     {
         this.meals = val;
     }
-    
 
     /**
      * Get DateTime Long
@@ -204,22 +190,21 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         StringTokenizer strtok = new StringTokenizer(date, ".");
         String dt[] = new String[5];
-        dt[2] = strtok.nextToken();  // day
-        dt[1] = strtok.nextToken();  // month
-        dt[0] = strtok.nextToken();  // year
+        dt[2] = strtok.nextToken(); // day
+        dt[1] = strtok.nextToken(); // month
+        dt[0] = strtok.nextToken(); // year
 
         strtok = new StringTokenizer(time, ":");
-        dt[3] = strtok.nextToken();  // hour
-        dt[4] = strtok.nextToken();  // minute
+        dt[3] = strtok.nextToken(); // hour
+        dt[4] = strtok.nextToken(); // minute
 
-        String dt_out = dt[0] + m_da.getLeadingZero(dt[1], 2) + m_da.getLeadingZero(dt[2], 2) + m_da.getLeadingZero(dt[3], 2) + m_da.getLeadingZero(dt[4], 2);
+        String dt_out = dt[0] + m_da.getLeadingZero(dt[1], 2) + m_da.getLeadingZero(dt[2], 2)
+                + m_da.getLeadingZero(dt[3], 2) + m_da.getLeadingZero(dt[4], 2);
 
         return Long.parseLong(dt_out);
 
     }
 
-
-    
     /**
      * To String
      * 
@@ -228,10 +213,13 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     @Override
     public String toString()
     {
-//        return "DT="+datetime.getTime() + ";BG=" + BG + ";Ins1=" + Ins1 + ";Ins2=" + Ins2 + ";BE=" + BE + ";Act=" + Act + ";Comment=" + Comment + ";";
-        return "DailyValuesRow [dt=" + getDateTime() + ";bg=" + bg + ";ins1=" + ins1 + ";ins2=" + ins2 + ";CH=" + ch + ";activity=" + getExtendedValue(ExtendedDailyValue.EXTENDED_ACTIVITY) + ";urine=" + getExtendedValue(ExtendedDailyValue.EXTENDED_URINE) + ";comment=" + comment + "]";
+        // return "DT="+datetime.getTime() + ";BG=" + BG + ";Ins1=" + Ins1 +
+        // ";Ins2=" + Ins2 + ";BE=" + BE + ";Act=" + Act + ";Comment=" + Comment
+        // + ";";
+        return "DailyValuesRow [dt=" + getDateTime() + ";bg=" + bg + ";ins1=" + ins1 + ";ins2=" + ins2 + ";CH=" + ch
+                + ";activity=" + getExtendedValue(ExtendedDailyValue.EXTENDED_ACTIVITY) + ";urine="
+                + getExtendedValue(ExtendedDailyValue.EXTENDED_URINE) + ";comment=" + comment + "]";
     }
-
 
     /**
      * Get DateTime
@@ -240,10 +228,9 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public long getDateTime()
     {
-	//System.out.println(datetime);
+        // System.out.println(datetime);
         return datetime;
     }
-
 
     /**
      * Set DateTime
@@ -252,13 +239,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public void setDateTime(long dt)
     {
-    	if (this.datetime!=dt)
-    	{
-    	    this.datetime = dt;
-    	    this.changed=true;
-    	}
+        if (this.datetime != dt)
+        {
+            this.datetime = dt;
+            this.changed = true;
+        }
     }
-
 
     /**
      * Get Date
@@ -267,10 +253,8 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public long getDate()
     {
-        return (datetime/10000);
+        return datetime / 10000;
     }
-
-
 
     /**
      * Get Date As String
@@ -299,7 +283,8 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public String getDateTimeAsTime()
     {
-        return "" + ATechDate.convertATDate(datetime, ATechDate.FORMAT_DATE_AND_TIME_MIN, ATechDate.FORMAT_TIME_ONLY_MIN);
+        return ""
+                + ATechDate.convertATDate(datetime, ATechDate.FORMAT_DATE_AND_TIME_MIN, ATechDate.FORMAT_TIME_ONLY_MIN);
     }
 
     /**
@@ -312,7 +297,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return new ATechDate(datetime);
     }
 
-    
     /**
      * Get DateTime As Date
      * 
@@ -321,23 +305,20 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     public Date getDateTimeAsDate()
     {
         /*
-        ATechDate at = new ATechDate(datetime);
-        
-        System.out.println("getDateTimeAsDate()::getGregorianCalendar: gc      " + at.getGregorianCalendar().get(Calendar.HOUR_OF_DAY) + ":" + at.getGregorianCalendar().get(Calendar.MINUTE));
-        
-        
-        Date d = at.getGregorianCalendar().getTime();
-       
-        System.out.println("getDateTimeAsDate()::getGregorianCalendar: date    " + d.getHours() + ":" + d.getMinutes());
-        
-        return at.getGregorianCalendar().getTime(); */
-        
+         * ATechDate at = new ATechDate(datetime);
+         * System.out.println("getDateTimeAsDate()::getGregorianCalendar: gc      "
+         * + at.getGregorianCalendar().get(Calendar.HOUR_OF_DAY) + ":" +
+         * at.getGregorianCalendar().get(Calendar.MINUTE));
+         * Date d = at.getGregorianCalendar().getTime();
+         * System.out.println("getDateTimeAsDate()::getGregorianCalendar: date    "
+         * + d.getHours() + ":" + d.getMinutes());
+         * return at.getGregorianCalendar().getTime();
+         */
+
         return new ATechDate(datetime).getGregorianCalendar().getTime();
-        
+
     }
-    
-    
-    
+
     /**
      * Set DateTime
      * 
@@ -347,8 +328,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     public void setDateTime(String date, String time)
     {
         datetime = getDateTimeLong(date, time);
-    } 
-
+    }
 
     /**
      * Get BG
@@ -363,27 +343,30 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             System.out.println("getBg [internal_value=" + this.bg + "]");
         }
 
-        if (props.getBG_unit()==2)
+        if (props.getBG_unit() == 2)
         {
             float v = m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
 
             if (debug)
+            {
                 System.out.println("getBg [type=2,return=" + v + "]");
+            }
 
             return v;
 
-            //return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+            // return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
         }
         else
         {
             if (debug)
+            {
                 System.out.println("getBg [type=1,return=" + this.bg + "]");
+            }
 
             return bg;
         }
 
     }
-
 
     /**
      * Get BG As String
@@ -398,26 +381,28 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             System.out.println("getBgAsString [internal_value=" + this.bg + "]");
         }
 
-        if (props.getBG_unit()==2)
+        if (props.getBG_unit() == 2)
         {
             float v = m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
 
             if (debug)
+            {
                 System.out.println("getBgAsString [type=2,return=" + v + "]");
+            }
 
             return DataAccess.getFloatAsString(v, 1);
         }
         else
         {
             if (debug)
+            {
                 System.out.println("getBgAsString [type=1,return=" + this.bg + "]");
+            }
 
             return "" + bg;
         }
 
     }
-
-
 
     /**
      * Get BG Raw
@@ -429,7 +414,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return bg;
     }
 
-
     /**
      * Get BG
      * 
@@ -440,18 +424,16 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
 
         if (debug)
-            System.out.println("Internal value: " + this.bg);
-
-        if (type==DataAccess.BG_MGDL)
-            return bg;
-        else
         {
-            return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+            System.out.println("Internal value: " + this.bg);
         }
 
+        if (type == DataAccess.BG_MGDL)
+            return bg;
+        else
+            return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+
     }
-
-
 
     /**
      * BG: mmol/L 
@@ -474,29 +456,27 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         // FIX THIS
 
         if (debug)
+        {
             System.out.println("SET BG: type=" + type + ",value=" + val);
+        }
 
-
-        if (type==BG_MMOLL)
+        if (type == BG_MMOLL)
         {
             if (debug)
             {
                 System.out.println("SET BG :: MMOL");
-                System.out.println("     " + (int)m_da.getBGValueDifferent(type, val));
+                System.out.println("     " + (int) m_da.getBGValueDifferent(type, val));
             }
 
-            this.setBG((int)m_da.getBGValueDifferent(type, val));
+            this.setBG((int) m_da.getBGValueDifferent(type, val));
         }
         else
         {
-            this.setBG((int)val);
+            this.setBG((int) val);
         }
 
     }
 
-    
-
-    
     /**
      * Set BG
      * 
@@ -510,7 +490,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             setBG(0);
             return;
         }
-        
+
         float f;
         try
         {
@@ -522,11 +502,9 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             System.err.println("ERROR: unparsable folat string: " + val);
         }
 
-        setBG(type,f);
+        setBG(type, f);
 
     }
-
-
 
     /**
      * Set BG
@@ -535,16 +513,17 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public void setBG(int val)
     {
-        if (bg!=val) 
+        if (bg != val)
         {
             bg = val;
             changed = true;
         }
 
         if (debug)
+        {
             System.out.println("Bg Raw: " + bg);
+        }
     }
-
 
     /**
      * Get Ins 1
@@ -573,7 +552,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return getDecimalValue(this.ins1, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1));
     }
 
-
     /**
      * Get Ins 2 As Decimal String
      * @return
@@ -582,14 +560,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return getDecimalValue(this.ins2, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2));
     }
-    
-    
-    
+
     private String getDecimalValue(int val, String decimal)
     {
         int dec = 0;
-        
-        if ((decimal==null) || (decimal.length()==0) || (decimal.equals("0")))
+
+        if (decimal == null || decimal.length() == 0 || decimal.equals("0"))
         {
             dec = 0;
         }
@@ -597,29 +573,24 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         {
             dec = Integer.parseInt(decimal);
         }
-        
-        if (dec==0)
-        {
+
+        if (dec == 0)
             return "" + val;
-        }
         else
-            return DataAccess.getFloatAsString((val + (0.1f * dec)), 1);
-        
+            return DataAccess.getFloatAsString(val + 0.1f * dec, 1);
+
     }
-    
-    
+
     private float getDecimalValueAsFloat(int value, String decimal_part)
     {
         float val = 0.0f;
-        
+
         val += value;
-        val += (0.1f * m_da.getFloatValueFromString(decimal_part, 0.0f));
-        
+        val += 0.1f * m_da.getFloatValueFromString(decimal_part, 0.0f);
+
         return val;
     }
 
-    
-    
     /**
      * Set Ins 1
      * 
@@ -628,10 +599,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     public void setIns1(String val)
     {
         if (!ATDataAccessAbstract.isEmptyOrUnset(val))
+        {
             setIns1(m_da.getIntValue(val));
+        }
     }
 
-    
     /**
      * Set Ins 1
      * 
@@ -639,13 +611,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public void setIns1(int val)
     {
-        if (ins1!=val) 
+        if (ins1 != val)
         {
             ins1 = val;
             changed = true;
         }
     }
-
 
     /**
      * Get Ins 2
@@ -665,7 +636,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return getFloatAsIntString(ins2);
     }
 
-
     /**
      * Set Ins 2
      * 
@@ -673,7 +643,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public void setIns2(String val)
     {
-        if (! ATDataAccessAbstract.isEmptyOrUnset(val))
+        if (!ATDataAccessAbstract.isEmptyOrUnset(val))
         {
             setIns2(m_da.getIntValue(val));
         }
@@ -683,7 +653,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
-    
     /**
      * Set Ins 2
      * 
@@ -691,13 +660,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public void setIns2(int val)
     {
-        if (ins2!=val) 
+        if (ins2 != val)
         {
             ins2 = val;
             changed = true;
         }
     }
-
 
     /**
      * Get CH
@@ -709,7 +677,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return ch;
     }
 
-
     /**
      * Get CH As String
      * 
@@ -719,7 +686,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return this.getFloatAsString(ch);
     }
-
 
     /**
      * Set CH
@@ -738,13 +704,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public void setCH(float val)
     {
-        if (ch!=val) 
+        if (ch != val)
         {
             ch = val;
             changed = true;
         }
     }
-
 
     /**
      * Get Activity
@@ -756,7 +721,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return this.getExtendedValue(ExtendedDailyValue.EXTENDED_ACTIVITY);
     }
 
-    
     /**
      * Get Insulin 3
      * 
@@ -766,7 +730,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return m_da.getFloatValueFromString(this.getExtendedValue(ExtendedDailyValue.EXTENDED_INSULIN_3), 0.0f);
     }
-    
 
     /**
      * Set Insulin 3
@@ -777,7 +740,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         this.setExtendedValue(ExtendedDailyValue.EXTENDED_INSULIN_3, "" + val, true);
     }
-    
 
     /**
      * Set Insulin 3
@@ -788,127 +750,143 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         this.setExtendedValue(ExtendedDailyValue.EXTENDED_INSULIN_3, val, true);
     }
-    
 
     public float getBasalInsulin()
     {
         GGCProperties gp = DataAccess.getInstance().getSettings();
         float sum = 0.0f;
-        
-        if (gp.getIns1Type()==DataAccess.INSULIN_DOSE_BASAL)
-            sum += getDecimalValueAsFloat(this.ins1, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1));
-        
-        if (gp.getIns2Type()==DataAccess.INSULIN_DOSE_BASAL)
-            sum += getDecimalValueAsFloat(this.ins2, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2));
 
-        if (gp.getIns3Type()==DataAccess.INSULIN_DOSE_BASAL)
+        if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BASAL)
+        {
+            sum += getDecimalValueAsFloat(this.ins1,
+                this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1));
+        }
+
+        if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BASAL)
+        {
+            sum += getDecimalValueAsFloat(this.ins2,
+                this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2));
+        }
+
+        if (gp.getIns3Type() == DataAccess.INSULIN_DOSE_BASAL)
+        {
             sum += this.getIns3();
-        
+        }
+
         return sum;
     }
-    
 
     public float getBolusInsulin()
     {
         GGCProperties gp = DataAccess.getInstance().getSettings();
         float sum = 0.0f;
-        
-        if (gp.getIns1Type()==DataAccess.INSULIN_DOSE_BOLUS)
-            sum += getDecimalValueAsFloat(this.ins1, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1));
-        
-        if (gp.getIns2Type()==DataAccess.INSULIN_DOSE_BOLUS)
-            sum += getDecimalValueAsFloat(this.ins2, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2));
 
-        if (gp.getIns3Type()==DataAccess.INSULIN_DOSE_BOLUS)
+        if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BOLUS)
+        {
+            sum += getDecimalValueAsFloat(this.ins1,
+                this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1));
+        }
+
+        if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BOLUS)
+        {
+            sum += getDecimalValueAsFloat(this.ins2,
+                this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2));
+        }
+
+        if (gp.getIns3Type() == DataAccess.INSULIN_DOSE_BOLUS)
+        {
             sum += this.getIns3();
-        
+        }
+
         return sum;
     }
 
-    
     public int getBasalInsulinCount()
     {
         GGCProperties gp = DataAccess.getInstance().getSettings();
         int count = 0;
-        
-        if (gp.getIns1Type()==DataAccess.INSULIN_DOSE_BASAL)
-            if (getDecimalValueAsFloat(this.ins1, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1))>0)
+
+        if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BASAL)
+            if (getDecimalValueAsFloat(this.ins1, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1)) > 0)
+            {
                 count++;
-        
-        if (gp.getIns2Type()==DataAccess.INSULIN_DOSE_BASAL)
-            if (getDecimalValueAsFloat(this.ins2, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2))>0)
+            }
+
+        if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BASAL)
+            if (getDecimalValueAsFloat(this.ins2, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2)) > 0)
+            {
                 count++;
-        
-        if (gp.getIns3Type()==DataAccess.INSULIN_DOSE_BASAL)
-            if (this.getIns3()>0)
+            }
+
+        if (gp.getIns3Type() == DataAccess.INSULIN_DOSE_BASAL)
+            if (this.getIns3() > 0)
+            {
                 count++;
-        
+            }
+
         return count;
     }
-    
 
     public int getBolusInsulinCount()
     {
         GGCProperties gp = DataAccess.getInstance().getSettings();
-        int count= 0;
-        
-        if (gp.getIns1Type()==DataAccess.INSULIN_DOSE_BOLUS)
-            if (getDecimalValueAsFloat(this.ins1, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1))>0)
-                count++; 
-        
-        if (gp.getIns2Type()==DataAccess.INSULIN_DOSE_BOLUS)
-            if (getDecimalValueAsFloat(this.ins2, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2))>0)
-                count++; 
+        int count = 0;
 
-        if (gp.getIns3Type()==DataAccess.INSULIN_DOSE_BOLUS)
-            if (this.getIns3()>0)
-                count++; 
-        
+        if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BOLUS)
+            if (getDecimalValueAsFloat(this.ins1, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1)) > 0)
+            {
+                count++;
+            }
+
+        if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BOLUS)
+            if (getDecimalValueAsFloat(this.ins2, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2)) > 0)
+            {
+                count++;
+            }
+
+        if (gp.getIns3Type() == DataAccess.INSULIN_DOSE_BOLUS)
+            if (this.getIns3() > 0)
+            {
+                count++;
+            }
+
         return count;
     }
-    
-    
+
     public void setActivity(String val)
     {
         setExtendedValue(ExtendedDailyValue.EXTENDED_ACTIVITY, val, true);
     }
-
 
     public String getFoodDescription()
     {
         return this.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION);
     }
 
-    
     public void setFoodDescription(String val)
     {
         setExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION, val, true);
     }
 
-    
     public String getFoodDescriptionCH()
     {
         return this.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_CH);
     }
-    
-    
+
     public void setFoodDescriptionCH(String val)
     {
         setExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_CH, val, true);
     }
-    
-    
+
     public String getUrine()
     {
         return this.getExtendedValue(ExtendedDailyValue.EXTENDED_URINE);
     }
-    
-    
+
     public void setUrine(String val)
     {
         setExtendedValue(ExtendedDailyValue.EXTENDED_URINE, val, true);
     }
-
 
     public void setExtended(String ext)
     {
@@ -918,45 +896,39 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             this.changed = true;
         }
     }
-    
-    
 
     public String getComment()
     {
         return comment;
     }
 
-    
     public void setComment(String val)
     {
-    	if (comment==null)
-    	{
-    	    comment = val;
-                changed = true;
-    	}
-    	else if (!comment.equals(val)) 
+        if (comment == null)
+        {
+            comment = val;
+            changed = true;
+        }
+        else if (!comment.equals(val))
         {
             comment = val;
             changed = true;
         }
     }
 
-
     public boolean hasChanged()
     {
         return changed;
     }
 
-    
     public boolean isNew()
     {
-        return (m_dv==null);
+        return m_dv == null;
     }
-
 
     public DayValueH getHibernateObject()
     {
-        if (m_dv==null)
+        if (m_dv == null)
         {
             m_dv = new DayValueH();
             m_dv.setBg(bg);
@@ -966,7 +938,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             m_dv.setIns1(ins1);
             m_dv.setIns2(ins2);
             m_dv.setExtended(this.getExtendedHandler().saveExtended(ht_extended));
-            m_dv.setPerson_id((int)m_da.getCurrentUserId());
+            m_dv.setPerson_id((int) m_da.getCurrentUserId());
             m_dv.setMeals_ids(this.meals);
         }
         else
@@ -978,7 +950,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             m_dv.setIns1(ins1);
             m_dv.setIns2(ins2);
             m_dv.setExtended(this.getExtendedHandler().saveExtended(ht_extended));
-            m_dv.setPerson_id((int)m_da.getCurrentUserId());
+            m_dv.setPerson_id((int) m_da.getCurrentUserId());
             m_dv.setMeals_ids(this.meals);
         }
 
@@ -988,16 +960,13 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     public boolean hasHibernateObject()
     {
-        return (m_dv!=null);
+        return m_dv != null;
     }
-
 
     public String getFloatAsIntString(float fl)
     {
         if (fl == 0.0)
-        {
             return "";
-        }
         else
         {
             int i = this.getFloatAsInt(fl);
@@ -1008,29 +977,19 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     public String getFloatAsString(float fl)
     {
         if (fl == 0.0)
-        {
             return "";
-        }
         else
-        {
             return DataAccess.Decimal1Format.format(fl);
-        }
     }
-
 
     public String getFloat2AsString(float fl)
     {
         if (fl == 0.0)
-        {
             return "";
-        }
         else
-        {
             return DataAccess.Decimal2Format.format(fl);
-        }
     }
-    
-    
+
     /**
      * Get Float As Int
      * 
@@ -1043,9 +1002,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return f_i.intValue();
     }
 
-
-
-    //stupid but TableModel needs Objects...
+    // stupid but TableModel needs Objects...
     /**
      * Get Value At
      * 
@@ -1054,15 +1011,15 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public Object getValueAt(int column)
     {
-        //return "X";
+        // return "X";
 
-        switch (column) 
+        switch (column)
         {
             case 0:
-                return new Long(datetime); //m_da.getDateTimeAsTimeString(datetime);
+                return new Long(datetime); // m_da.getDateTimeAsTimeString(datetime);
             case 1:
-        	if (this.getBG()==0.0f)
-                //if (getBGAsString().equals("0"))
+                if (this.getBG() == 0.0f)
+                    // if (getBGAsString().equals("0"))
                     return "";
                 return this.getBGAsString();
             case 2:
@@ -1081,10 +1038,9 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
                 {
                     log.warn("Shouldn't have reached by here: " + column);
                     return "";
-                } 
+                }
         }
     }
-
 
     /**
      * Get DateD
@@ -1095,7 +1051,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return Integer.parseInt(ATDataAccessAbstract.getDateTimeAsDateString(datetime));
     }
 
-
     /**
      * Get DateDString
      * @return
@@ -1104,18 +1059,16 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return ATDataAccessAbstract.getDateTimeAsDateString(datetime);
     }
-    
-    
+
     /**
      * Get DateT
      * @return
      */
     public int getDateT()
     {
-        return (new ATechDate(datetime)).getTime();
+        return new ATechDate(datetime).getTime();
     }
 
-    
     /**
      * Get DateTime Ms
      * @return
@@ -1123,37 +1076,33 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     public long getDateTimeMs()
     {
         /*
-        System.out.println("DWR: " + datetime);
-        ATechDate atd = new ATechDate(datetime);
-        
-        GregorianCalendar gc = atd.getGregorianCalendar();
-        System.out.println("getGregorianCalendar: gc      " + gc.get(Calendar.HOUR_OF_DAY) + ":" + gc.get(Calendar.MINUTE));
-        */
-        return (new ATechDate(datetime)).getGregorianCalendar().getTimeInMillis();
-        
+         * System.out.println("DWR: " + datetime);
+         * ATechDate atd = new ATechDate(datetime);
+         * GregorianCalendar gc = atd.getGregorianCalendar();
+         * System.out.println("getGregorianCalendar: gc      " +
+         * gc.get(Calendar.HOUR_OF_DAY) + ":" + gc.get(Calendar.MINUTE));
+         */
+        return new ATechDate(datetime).getGregorianCalendar().getTimeInMillis();
+
     }
-    
-    
-    ///
-    /// Comparable<DailyValuesRow>
-    ///
+
+    // /
+    // / Comparable<DailyValuesRow>
+    // /
 
     /** 
      * compareTo
      */
     public int compareTo(DailyValuesRow dvr)
     {
-        return (int)(this.getDateTime()-dvr.getDateTime());
+        return (int) (this.getDateTime() - dvr.getDateTime());
     }
-
-
 
     public ExtendedHandler getExtendedHandler()
     {
         return m_da.getExtendedHandler("DailyValuesRow");
     }
 
-    
     /**
      * Get Extended Value
      * 
@@ -1164,7 +1113,6 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return this.getExtendedHandler().getExtendedValue(type, this.ht_extended);
     }
-    
 
     /**
      * Set Extended Value
@@ -1176,11 +1124,13 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     public void setExtendedValue(int type, String value, boolean set_checked)
     {
         boolean set = this.getExtendedHandler().setExtendedValue(type, value, this.ht_extended);
-        
-        if ((set_checked) && (set))
+
+        if (set_checked && set)
+        {
             this.changed = true;
+        }
     }
-    
+
     /**
      * Is Extended Value Set 
      * 
@@ -1191,8 +1141,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return this.getExtendedHandler().isExtendedValueSet(type, this.ht_extended);
     }
-    
-    
+
     /**
      * Create Extended
      */
@@ -1200,6 +1149,5 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         this.extended = this.getExtendedHandler().saveExtended(this.ht_extended);
     }
-    
-    
+
 }

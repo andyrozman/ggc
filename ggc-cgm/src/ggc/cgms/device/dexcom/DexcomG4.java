@@ -1,7 +1,5 @@
 package ggc.cgms.device.dexcom;
 
-import java.io.File;
-
 import ggc.cgms.device.AbstractSerialCGMS;
 import ggc.cgms.device.dexcom.receivers.DexcomDevice;
 import ggc.cgms.device.dexcom.receivers.DexcomDeviceReader;
@@ -54,8 +52,7 @@ public class DexcomG4 extends AbstractSerialCGMS
     {
         super();
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -66,8 +63,7 @@ public class DexcomG4 extends AbstractSerialCGMS
     {
         super(communicationParameters, writer, DataAccessCGMS.getInstance());
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -79,8 +75,7 @@ public class DexcomG4 extends AbstractSerialCGMS
     {
         super(communicationParameters, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -90,12 +85,10 @@ public class DexcomG4 extends AbstractSerialCGMS
     {
         super(cmp);
     }
-    
-    
-    //************************************************
-    //***      Device Identification Methods       ***
-    //************************************************
 
+    // ************************************************
+    // *** Device Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of device 
@@ -107,8 +100,6 @@ public class DexcomG4 extends AbstractSerialCGMS
         return "Dexcom G4";
     }
 
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -119,7 +110,6 @@ public class DexcomG4 extends AbstractSerialCGMS
         // FIXME
         return "dx_dexcom7.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -132,7 +122,6 @@ public class DexcomG4 extends AbstractSerialCGMS
         return CGMSDevicesIds.CGMS_DEXCOM_G4;
     }
 
-    
     /**
      * getComment - Get Comment for device 
      * 
@@ -142,20 +131,18 @@ public class DexcomG4 extends AbstractSerialCGMS
     {
         return "";
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -166,7 +153,6 @@ public class DexcomG4 extends AbstractSerialCGMS
         return "ggc.cgms.device.dexcom.DexcomG4";
     }
 
-
     /** 
      * Get Max Memory Records
      * 
@@ -176,20 +162,19 @@ public class DexcomG4 extends AbstractSerialCGMS
     {
         return 0;
     }
-    
-    
+
     /**
      * Get Download Support Type
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE | DownloadSupportType.DOWNLOAD_FROM_DEVICE;
-                //DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+        // DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
     }
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
@@ -199,26 +184,26 @@ public class DexcomG4 extends AbstractSerialCGMS
     {
         return -1;
     }
-    
-    
+
     /**
      * {@inheritDoc}
      */
-    public void readConfiguration() throws PlugInBaseException 
+    @Override
+    public void readConfiguration() throws PlugInBaseException
     {
-        
+
         DexcomDeviceReader ddr = null;
-        
+
         try
         {
             prepareBaseDeviceIdentification();
-            
+
             ddr = new DexcomDeviceReader(this.connection_parameters, DexcomDevice.Dexcom_G4);
-            
+
             GGCOutputParser gop = new GGCOutputParser(this.output_writer, DexcomDevice.Dexcom_G4);
             ddr.setOutputWriter(output_writer);
             ddr.setDataOutputParser(gop);
-            
+
             ddr.downloadSettings();
         }
         catch (DexcomException ex)
@@ -227,29 +212,26 @@ public class DexcomG4 extends AbstractSerialCGMS
         }
         finally
         {
-            if (ddr!=null)
+            if (ddr != null)
+            {
                 ddr.dispose();
+            }
         }
-        
-        
-        
-        
+
     }
-    
-    
+
     private void prepareBaseDeviceIdentification()
     {
         DeviceIdentification di = this.output_writer.getDeviceIdentification();
-        //di.is_file_import = true;
-        //di.fi_file_name = new File(filename).getName();
+        // di.is_file_import = true;
+        // di.fi_file_name = new File(filename).getName();
         di.company = this.m_da.getSelectedDeviceInstance().getDeviceCompany().getName();
         di.device_selected = this.m_da.getSelectedDeviceInstance().getName();
-        //di.device_serial_number = "";
-        
+        // di.device_serial_number = "";
+
         this.output_writer.setDeviceIdentification(di);
     }
-    
-    
+
     /**
      * {@inheritDoc}
      */
@@ -259,13 +241,13 @@ public class DexcomG4 extends AbstractSerialCGMS
         try
         {
             prepareBaseDeviceIdentification();
-            
+
             ddr = new DexcomDeviceReader(this.connection_parameters, DexcomDevice.Dexcom_G4);
-            
+
             GGCOutputParser gop = new GGCOutputParser(this.output_writer, DexcomDevice.Dexcom_G4);
             ddr.setOutputWriter(output_writer);
             ddr.setDataOutputParser(gop);
-            
+
             ddr.downloadData();
         }
         catch (DexcomException ex)
@@ -274,49 +256,48 @@ public class DexcomG4 extends AbstractSerialCGMS
         }
         finally
         {
-            if (ddr!=null)
+            if (ddr != null)
+            {
                 ddr.dispose();
-            
+            }
+
             this.output_writer.endOutput();
         }
 
-        
     }
- 
-    
-    
+
     /**
      * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
      *     left to right side, without displaying progress.
      * @return
      */
+    @Override
     public boolean hasIndeterminateProgressStatus()
     {
         return false;
-    }    
-    
-    
+    }
+
     /**
      * getConnectionProtocol - returns id of connection protocol
      *
      * @return id of connection protocol
      */
-    public int getConnectionProtocol() {
+    @Override
+    public int getConnectionProtocol()
+    {
         return ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE;
     }
-
 
     public String getInstructions()
     {
         // FIXME
         return "DEXCOM_INSTRUCTIONS_DL_SERIAL_USB";
     }
-    
+
+    @Override
     public boolean isDeviceCommunicating()
     {
         return true;
     }
 
-    
-    
 }

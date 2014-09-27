@@ -1,4 +1,4 @@
-package ggc.cgms.manager.company; 
+package ggc.cgms.manager.company;
 
 import ggc.cgms.device.minimed.GuardianRealTime;
 import ggc.cgms.device.minimed.MiniMedCGMSGold;
@@ -34,27 +34,25 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Minimed extends AbstractDeviceCompany
 {
 
-    
     /**
      * Constructor
      */
     public Minimed()
     {
-        super(false,                            // empty devices
-            CGMSDevicesIds.COMPANY_MINIMED,     // company_id
-            "MiniMed",                          // company name (full)
-            "MiniMed",                          // short company name
-            "MINIMED_DESC",                     // company description
-            DeviceImplementationStatus.IMPLEMENTATION_PLANNED,
-            DataAccessCGMS.getInstance());  // implementation status
-        
+        super(false, // empty devices
+                CGMSDevicesIds.COMPANY_MINIMED, // company_id
+                "MiniMed", // company name (full)
+                "MiniMed", // short company name
+                "MINIMED_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_PLANNED, DataAccessCGMS.getInstance()); // implementation
+                                                                                                  // status
+
         this.addDevice(new MiniMedCGMSGold(this));
         this.addDevice(new GuardianRealTime(this));
         this.addDevice(new MiniMedRealTime(this));
     }
-    
+
 }

@@ -37,7 +37,7 @@ public class GlycemicNutrients
     DataAccessNutri m_da = DataAccessNutri.getInstance();
     I18nControlAbstract ic = m_da.getI18nControlInstance();
     Hashtable<String, ArrayList<MealNutrition>> gly_nutrients;
-    
+
     // old
     String text_idx;
     long id;
@@ -139,7 +139,7 @@ public class GlycemicNutrients
             gi_gl_max = "4005";
         }
 
-        if ((nutres.get(gi_gl_min).getAmount() == 0))
+        if (nutres.get(gi_gl_min).getAmount() == 0)
         {
             nutres.get(gi_gl_min).setAmount(mn.getAmount());
         }
@@ -151,7 +151,7 @@ public class GlycemicNutrients
             }
         }
 
-        if ((nutres.get(gi_gl_max).getAmount() == 0))
+        if (nutres.get(gi_gl_max).getAmount() == 0)
         {
             nutres.get(gi_gl_max).setAmount(mn.getAmount());
         }
@@ -173,11 +173,15 @@ public class GlycemicNutrients
         String par;
 
         if (GI)
+        {
             par = "4003";
+        }
         else
+        {
             par = "4005";
+        }
 
-        if ((nutres.get(par).getAmount() == 0))
+        if (nutres.get(par).getAmount() == 0)
         {
             nutres.get(par).setAmount(mn.getAmount());
         }
@@ -199,11 +203,15 @@ public class GlycemicNutrients
         String par;
 
         if (GI)
+        {
             par = "4002";
+        }
         else
+        {
             par = "4004";
+        }
 
-        if ((nutres.get(par).getAmount() == 0))
+        if (nutres.get(par).getAmount() == 0)
         {
             nutres.get(par).setAmount(mn.getAmount());
         }

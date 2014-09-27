@@ -47,7 +47,6 @@ public class OneTouchUltra extends OneTouchMeter
         super(portName, writer);
     }
 
-    
     /**
      * Constructor
      * 
@@ -59,8 +58,6 @@ public class OneTouchUltra extends OneTouchMeter
     {
         super(comm_parameters, writer, da);
     }
-    
-    
 
     /**
      * Constructor
@@ -69,7 +66,7 @@ public class OneTouchUltra extends OneTouchMeter
     {
         super();
     }
-    
+
     /**
      * Constructor for device manager
      * 
@@ -80,7 +77,6 @@ public class OneTouchUltra extends OneTouchMeter
         super(cmp);
     }
 
-    
     /**
      * getName - Get Name of meter. 
      * 
@@ -91,7 +87,6 @@ public class OneTouchUltra extends OneTouchMeter
         return "One Touch Ultra";
     }
 
-    
     /**
      * getDeviceClassName - Get class name of device
      */
@@ -100,7 +95,6 @@ public class OneTouchUltra extends OneTouchMeter
         return "ggc.meter.device.onetouch.OneTouchUltra";
     }
 
-    
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
      * Should be implemented by device class.
@@ -112,7 +106,6 @@ public class OneTouchUltra extends OneTouchMeter
         return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA;
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -123,17 +116,16 @@ public class OneTouchUltra extends OneTouchMeter
         return "ls_ot_ultra.jpg";
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * 
      * @return instructions for reading data 
      */
+    @Override
     public String getInstructions()
     {
         return "INSTRUCTIONS_LIFESCAN_OFF";
     }
-    
 
     /**
      * Maximum of records that device can store
@@ -148,6 +140,7 @@ public class OneTouchUltra extends OneTouchMeter
      * 
      * @return short name of meter
      */
+    @Override
     public String getShortName()
     {
         return "Ultra";

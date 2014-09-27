@@ -1,12 +1,14 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class AppointmentH implements Serializable {
+public class AppointmentH implements Serializable
+{
 
     private static final long serialVersionUID = 5137365456725058472L;
 
@@ -38,7 +40,9 @@ public class AppointmentH implements Serializable {
      * @param person_id 
      * @param comment 
      * @param doctor */
-    public AppointmentH(long dt_apoint, String apoint_text, String extended, int person_id, String comment, ggc.core.db.hibernate.DoctorH doctor) {
+    public AppointmentH(long dt_apoint, String apoint_text, String extended, int person_id, String comment,
+            ggc.core.db.hibernate.DoctorH doctor)
+    {
         this.dt_apoint = dt_apoint;
         this.apoint_text = apoint_text;
         this.extended = extended;
@@ -48,13 +52,15 @@ public class AppointmentH implements Serializable {
     }
 
     /** default constructor */
-    public AppointmentH() {
+    public AppointmentH()
+    {
     }
 
     /** minimal constructor 
      * @param dt_apoint 
      * @param person_id */
-    public AppointmentH(long dt_apoint, int person_id) {
+    public AppointmentH(long dt_apoint, int person_id)
+    {
         this.dt_apoint = dt_apoint;
         this.person_id = person_id;
     }
@@ -98,13 +104,12 @@ public class AppointmentH implements Serializable {
         this.dt_apoint = dt_info;
     }
 
-
     /**
      * Get Appointment Text
      * 
      * @return apoint_text values
      */
-    public String getApoint_text() 
+    public String getApoint_text()
     {
         return this.apoint_text;
     }
@@ -114,7 +119,7 @@ public class AppointmentH implements Serializable {
      * 
      * @param apoint_text values
      */
-    public void setApoint_text(String apoint_text) 
+    public void setApoint_text(String apoint_text)
     {
         this.apoint_text = apoint_text;
     }
@@ -184,7 +189,7 @@ public class AppointmentH implements Serializable {
      * 
      * @return doctor value (DoctorH instance)
      */
-    public ggc.core.db.hibernate.DoctorH getDoctor() 
+    public ggc.core.db.hibernate.DoctorH getDoctor()
     {
         return this.doctor;
     }
@@ -194,7 +199,7 @@ public class AppointmentH implements Serializable {
      * 
      * @param doctor value (DoctorH instance)
      */
-    public void setDoctor(ggc.core.db.hibernate.DoctorH doctor) 
+    public void setDoctor(ggc.core.db.hibernate.DoctorH doctor)
     {
         this.doctor = doctor;
     }
@@ -204,33 +209,33 @@ public class AppointmentH implements Serializable {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof AppointmentH) ) return false;
+        if (!(other instanceof AppointmentH))
+            return false;
         AppointmentH castOther = (AppointmentH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
-    
     /**
      * To String
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

@@ -1,6 +1,5 @@
 package ggc.plugin.data;
 
-
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.BorderLayout;
@@ -16,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -25,7 +25,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import com.atech.graphics.components.MultiLineTooltipModel;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,20 +52,19 @@ import com.atech.graphics.components.MultiLineTooltipModel;
  *  Author: Andy {andy@atech-software.com}
  */
 
+// IMPORTANT NOTICE:
+// This class is not implemented yet, all existing methods should be rechecked
+// (they were copied from similar
+// class, with different type of data. Trying to find a way to use super class
+// instead of this.
 
-//IMPORTANT NOTICE: 
-//This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
-//class, with different type of data. Trying to find a way to use super class instead of this.
-
-
-public class DeviceValuesTable extends JTable //implements TableModelListener
+public class DeviceValuesTable extends JTable // implements TableModelListener
 {
 
     private static final long serialVersionUID = -278868328278678493L;
     protected DeviceValuesTableModel model = null;
-	protected DataAccessPlugInBase m_da;
+    protected DataAccessPlugInBase m_da;
 
-	
     /**
      * Constructor
      *  
@@ -77,13 +75,13 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
         super();
         m_da = da;
         this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-        
+
         this.setDefaultRenderer(Boolean.class, new CheckCellRenderer_DVT());
         this.setDefaultRenderer(Integer.class, new StatusCellRenderer_DVT());
 
         this.setColumnSelectionAllowed(false);
         this.setRowSelectionAllowed(false);
-        
+
     }
 
     /**
@@ -96,11 +94,11 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     {
         super(_model);
         m_da = da;
-        //this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+        // this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         this.model = _model;
 
         setColumnsWidth(this);
-        
+
         this.setDefaultRenderer(Boolean.class, new CheckCellRenderer_DVT());
         this.setDefaultRenderer(Integer.class, new StatusCellRenderer_DVT());
     }
@@ -110,22 +108,20 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
      * 
      * @see javax.swing.JTable#createDefaultTableHeader()
      */
-/*    @Override
-    protected JTableHeader createDefaultTableHeader()
-    {
-        JTableHeader header = super.createDefaultTableHeader();
-
-        //header.setPreferredSize(new Dimension(100, 20));
-        header.setFont(header.getFont().deriveFont(12.0f).deriveFont(Font.BOLD));
-        //header.setBackground(Color.blue.brighter());
-        //header.setBackground(Color.red);
-
-        //header.setForeground(Color.white.darker());
-        //header.setOpaque(true);
-        
-        return header;
-    }
-*/
+    /*
+     * @Override
+     * protected JTableHeader createDefaultTableHeader()
+     * {
+     * JTableHeader header = super.createDefaultTableHeader();
+     * //header.setPreferredSize(new Dimension(100, 20));
+     * header.setFont(header.getFont().deriveFont(12.0f).deriveFont(Font.BOLD));
+     * //header.setBackground(Color.blue.brighter());
+     * //header.setBackground(Color.red);
+     * //header.setForeground(Color.white.darker());
+     * //header.setOpaque(true);
+     * return header;
+     * }
+     */
     /**
      * Set Model
      * @param model
@@ -134,36 +130,38 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     {
         super.setModel(model);
         this.model = model;
-        //createGlucoTable(model);
+        // createGlucoTable(model);
 
         model.addTableModelListener(new TableModelListener()
         {
             public void tableChanged(TableModelEvent e)
             {
-                
-             /*   int row = e.getFirstRow();
-                int column = e.getColumn();
-                TableModel model = (TableModel)e.getSource();
-                String columnName = model.getColumnName(column);
-                Object data = model.getValueAt(row, column);                
-               */ 
-                /* FIX
-                if (model.getRowCount() == 0 && deleteRowAction.isEnabled())
-                    deleteRowAction.setEnabled(false);
-                if (model.getRowCount() > 0 && !deleteRowAction.isEnabled())
-                    deleteRowAction.setEnabled(true);
-                    */
+
+                /*
+                 * int row = e.getFirstRow();
+                 * int column = e.getColumn();
+                 * TableModel model = (TableModel)e.getSource();
+                 * String columnName = model.getColumnName(column);
+                 * Object data = model.getValueAt(row, column);
+                 */
+                /*
+                 * FIX
+                 * if (model.getRowCount() == 0 && deleteRowAction.isEnabled())
+                 * deleteRowAction.setEnabled(false);
+                 * if (model.getRowCount() > 0 && !deleteRowAction.isEnabled())
+                 * deleteRowAction.setEnabled(true);
+                 */
             }
         });
     }
 
-    
     /** 
      * Get ToolTip Text
      */
-    public String getToolTipText(MouseEvent e) 
+    @Override
+    public String getToolTipText(MouseEvent e)
     {
-        //Object source = e.getSource();
+        // Object source = e.getSource();
         String tip = null;
         java.awt.Point p = e.getPoint();
         int rowIndex = rowAtPoint(p);
@@ -172,27 +170,30 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
 
         if (model instanceof MultiLineTooltipModel)
         {
-            tip = ((MultiLineTooltipModel)model).getToolTipValue(rowIndex, colIndex);
+            tip = ((MultiLineTooltipModel) model).getToolTipValue(rowIndex, colIndex);
         }
         else
         {
             Object o = getValueAt(rowIndex, realColumnIndex);
-            
+
             if (o instanceof String)
             {
-                tip = (String)getValueAt(rowIndex, realColumnIndex);
+                tip = (String) getValueAt(rowIndex, realColumnIndex);
             }
             else
+            {
                 tip = o.toString();
+            }
         }
 
-        if ((tip!=null) && (tip.length()==0))
+        if (tip != null && tip.length() == 0)
+        {
             tip = null;
-        
+        }
+
         return tip;
     }
-    
-    
+
     /**
      * Set Columns Width
      * 
@@ -201,16 +202,14 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     public void setColumnsWidth(DeviceValuesTable dvt)
     {
         TableColumn column = null;
-        for (int i = 0; i < model.getColumnCount(); i++) 
+        for (int i = 0; i < model.getColumnCount(); i++)
         {
             column = dvt.getColumnModel().getColumn(i);
             column.setPreferredWidth(model.getColumnWidth(i, 222));
-        }        
-        
+        }
+
     }
-    
-    
-    
+
     /**
      * Create Values Table
      * 
@@ -220,15 +219,16 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     public JComponent createValuesTable(DataAccessPlugInBase da)
     {
         DeviceValuesTable table = new DeviceValuesTable(da, model);
-        JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         JToolBar toolBar = new JToolBar();
         toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
         toolBar.setFloatable(false);
-        //UIUtilities.addToolBarButton(toolBar, addRowAction);
-        //UIUtilities.addToolBarButton(toolBar, deleteRowAction);
-        //toolBar.add(addRowAction);
-        //toolBar.add(deleteRowAction);
+        // UIUtilities.addToolBarButton(toolBar, addRowAction);
+        // UIUtilities.addToolBarButton(toolBar, deleteRowAction);
+        // toolBar.add(addRowAction);
+        // toolBar.add(deleteRowAction);
 
         setColumnsWidth(table);
 
@@ -240,38 +240,31 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
     }
 
     /*
-    public static JComponent createMeterValuesTable(final MeterValuesTable table)
-    {
-        //MeterValuesTable table = new MeterValuesTable(model);
-        JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+     * public static JComponent createMeterValuesTable(final MeterValuesTable
+     * table)
+     * {
+     * //MeterValuesTable table = new MeterValuesTable(model);
+     * JScrollPane scroller = new JScrollPane(table,
+     * ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+     * ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+     * final AddRowAction addRowAction = new AddRowAction(table);
+     * final DeleteRowAction deleteRowAction = new DeleteRowAction(table);
+     * JToolBar toolBar = new JToolBar();
+     * toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
+     * toolBar.setFloatable(false);
+     * toolBar.add(addRowAction);
+     * toolBar.add(deleteRowAction);
+     * //UIUtilities.addToolBarButton(toolBar, addRowAction);
+     * //UIUtilities.addToolBarButton(toolBar, deleteRowAction);
+     * //toolBar.add(addRowAction);
+     * //toolBar.add(deleteRowAction);
+     * JPanel container = new JPanel(new BorderLayout());
+     * container.add(toolBar, "North");
+     * container.add(scroller, "Center");
+     * return container;
+     * }
+     */
 
-        final AddRowAction addRowAction = new AddRowAction(table);
-        final DeleteRowAction deleteRowAction = new DeleteRowAction(table);
-
-        JToolBar toolBar = new JToolBar();
-        toolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
-        toolBar.setFloatable(false);
-        toolBar.add(addRowAction);
-        toolBar.add(deleteRowAction);
-        //UIUtilities.addToolBarButton(toolBar, addRowAction);
-        //UIUtilities.addToolBarButton(toolBar, deleteRowAction);
-        //toolBar.add(addRowAction);
-        //toolBar.add(deleteRowAction);
-
-        
-
-        JPanel container = new JPanel(new BorderLayout());
-        container.add(toolBar, "North");
-        container.add(scroller, "Center");
-
-        return container;
-    }
-    */
-    
-    
-
-    
-    
     class CheckCellRenderer_DVT extends JCheckBox implements TableCellRenderer
     {
         private static final long serialVersionUID = 85335249214288876L;
@@ -283,8 +276,8 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
             m_noFocusBorder = new EmptyBorder(1, 2, 1, 2);
             setOpaque(true);
             setBorder(m_noFocusBorder);
-            this.setHorizontalAlignment(JCheckBox.CENTER);
-            //this.set
+            this.setHorizontalAlignment(SwingConstants.CENTER);
+            // this.set
         }
 
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -328,9 +321,10 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
             {
                 Integer i = (Integer) value;
                 status = i.intValue();
-                
+
                 setText(m_da.getEntryStatuses()[status]);
-                //setIcon(m_da.getImageIcon(DeviceValuesEntry.entry_status_icons[status], 8, 8, this));
+                // setIcon(m_da.getImageIcon(DeviceValuesEntry.entry_status_icons[status],
+                // 8, 8, this));
                 setIcon(DataAccessPlugInBase.entry_status_iconimage[status]);
             }
 
@@ -343,8 +337,5 @@ public class DeviceValuesTable extends JTable //implements TableModelListener
             return this;
         }
     }
-    
-    
-    
-    
+
 }

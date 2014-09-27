@@ -72,7 +72,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class CourseGraphDialog extends JDialog implements ActionListener, HelpCapable // JFrame
 {
 
@@ -185,7 +184,9 @@ public class CourseGraphDialog extends JDialog implements ActionListener, HelpCa
             closeDialog();
         }
         else
+        {
             System.out.println("CourseGraphFrame: Unknown command: " + action);
+        }
     }
 
     // ****************************************************************

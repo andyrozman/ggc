@@ -25,7 +25,7 @@ import javax.swing.JFrame;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
-
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -52,7 +52,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class TestNutritionData
 {
     private DataAccessNutri m_da = null;
@@ -64,10 +63,11 @@ public class TestNutritionData
     public TestNutritionData()
     {
         m_da = DataAccessNutri.getInstance();
-        /*db = new GGCDb(m_da);
-        db.initDb();
-        m_da.setDb(db);
-*/
+        /*
+         * db = new GGCDb(m_da);
+         * db.initDb();
+         * m_da.setDb(db);
+         */
         createTree();
     }
 
@@ -78,40 +78,33 @@ public class TestNutritionData
      */
     public TestNutritionData(int type)
     {
-/*
-        m_da = DataAccessNutri.getInstance();
-
-        db = new GGCDb(m_da);
-        db.initDb();
-        m_da.setDb(db);
-
-        // m_da.setI18nControlInstance(I18nControl.getInstance());
-
-        db.loadNutritionDbBase();
-
-        if (type == 1)
-        {
-            System.out.println("Load Nutrition #1");
-            db.loadNutritionDb1();
-        }
-        else if (type == 2)
-        {
-            System.out.println("Load Nutrition #2");
-            db.loadNutritionDb2();
-        }
-        else
-        {
-
-            System.out.println("Load Nutrition #1 (Meals)");
-            db.loadNutritionDb1();
-
-            System.out.println("Load Nutrition #2 (Meals)");
-            db.loadNutritionDb2();
-
-            System.out.println("Load Meals");
-            db.loadMealsDb();
-        }
-*/
+        /*
+         * m_da = DataAccessNutri.getInstance();
+         * db = new GGCDb(m_da);
+         * db.initDb();
+         * m_da.setDb(db);
+         * // m_da.setI18nControlInstance(I18nControl.getInstance());
+         * db.loadNutritionDbBase();
+         * if (type == 1)
+         * {
+         * System.out.println("Load Nutrition #1");
+         * db.loadNutritionDb1();
+         * }
+         * else if (type == 2)
+         * {
+         * System.out.println("Load Nutrition #2");
+         * db.loadNutritionDb2();
+         * }
+         * else
+         * {
+         * System.out.println("Load Nutrition #1 (Meals)");
+         * db.loadNutritionDb1();
+         * System.out.println("Load Nutrition #2 (Meals)");
+         * db.loadNutritionDb2();
+         * System.out.println("Load Meals");
+         * db.loadMealsDb();
+         * }
+         */
         // no db available
         // createFakeData_Meals();
         // createFakeData_User();
@@ -147,7 +140,7 @@ public class TestNutritionData
     {
         m_da = DataAccessNutri.getInstance();
         String inp = "396|Solata, glavnata|SOLATA,_GLAVNATA|7|0.0|||203=1,30;204=0,20;205=2,80;208=15;268=63|0";
-        String line = DataAccessNutri.replaceExpression(inp, "||", "| |");
+        String line = ATDataAccessAbstract.replaceExpression(inp, "||", "| |");
 
         System.out.println("Return: \n" + line);
 
@@ -184,13 +177,11 @@ public class TestNutritionData
          * CheckBoxNode accessibilityOptions[] = { new CheckBoxNode(
          * "Move system caret with focus/selection changes", false), new
          * CheckBoxNode("Always expand alt text for images", true) };
-         * 
          * CheckBoxNode browsingOptions[] = { new
          * CheckBoxNode("Notify when downloads complete", true), new
          * CheckBoxNode("Disable script debugging", true), new
          * CheckBoxNode("Use AutoComplete", true), new
          * CheckBoxNode("Browse in a new process", false) };
-         * 
          * Vector accessVector = new NamedVector("Accessibility",
          * accessibilityOptions); Vector browseVector = new
          * NamedVector("Browsing", browsingOptions); Object rootNodes[] = {
@@ -202,8 +193,6 @@ public class TestNutritionData
         /*
          * CheckNodeTree cbt = new CheckNodeTree(brc,
          * CheckNode.DIG_IN_SELECTION);
-         * 
-         * 
          * JScrollPane scrollPane = new JScrollPane(cbt);
          * frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
          * frame.setSize(400, 400); frame.setVisible(true);
@@ -215,52 +204,43 @@ public class TestNutritionData
     private void createFakeData_Meals()
     {
         /*
-        ArrayList<MealGroup> lst = new ArrayList<MealGroup>();
-
-        lst.add(getMealGroup(1, 0));
-        lst.add(getMealGroup(2, 1));
-        lst.add(getMealGroup(3, 1));
-        lst.add(getMealGroup(4, 3));
-        lst.add(getMealGroup(5, 0));
-
-        // Hashtable<String,ArrayList<FoodDescription>> ht = new
-        // Hashtable<String,ArrayList<FoodDescription>>();
-
-        ArrayList<Meal> lst1 = new ArrayList<Meal>();
-        lst1.add(this.getMealDescription(1, 1));
-        lst1.add(this.getMealDescription(2, 3));
-
-        GGCTreeRoot gtr = new GGCTreeRoot(GGCTreeRoot.TREE_MEALS, true);
-        gtr.manualCreate2(lst, lst1);
-
-        m_da.tree_roots.put("" + GGCTreeRoot.TREE_MEALS, gtr);
-*/
+         * ArrayList<MealGroup> lst = new ArrayList<MealGroup>();
+         * lst.add(getMealGroup(1, 0));
+         * lst.add(getMealGroup(2, 1));
+         * lst.add(getMealGroup(3, 1));
+         * lst.add(getMealGroup(4, 3));
+         * lst.add(getMealGroup(5, 0));
+         * // Hashtable<String,ArrayList<FoodDescription>> ht = new
+         * // Hashtable<String,ArrayList<FoodDescription>>();
+         * ArrayList<Meal> lst1 = new ArrayList<Meal>();
+         * lst1.add(this.getMealDescription(1, 1));
+         * lst1.add(this.getMealDescription(2, 3));
+         * GGCTreeRoot gtr = new GGCTreeRoot(GGCTreeRoot.TREE_MEALS, true);
+         * gtr.manualCreate2(lst, lst1);
+         * m_da.tree_roots.put("" + GGCTreeRoot.TREE_MEALS, gtr);
+         */
     }
 
     @SuppressWarnings("unused")
     private void createFakeData_User()
     {
         /*
-        ArrayList<FoodGroup> lst = new ArrayList<FoodGroup>();
-
-        lst.add(getUserGroup(1, 0));
-        lst.add(getUserGroup(2, 1));
-        lst.add(getUserGroup(3, 1));
-        lst.add(getUserGroup(4, 3));
-        lst.add(getUserGroup(5, 0));
-
-        // Hashtable<String,ArrayList<FoodDescription>> ht = new
-        // Hashtable<String,ArrayList<FoodDescription>>();
-
-        ArrayList<FoodDescription> lst1 = new ArrayList<FoodDescription>();
-        lst1.add(this.getUserFoodDescription(1, 1));
-        lst1.add(this.getUserFoodDescription(2, 3));
-
-        GGCTreeRoot gtr = new GGCTreeRoot(GGCTreeRoot.TREE_USER_NUTRITION, true);
-        gtr.manualCreate(lst, lst1);
-
-        m_da.tree_roots.put("2", gtr);
-*/
+         * ArrayList<FoodGroup> lst = new ArrayList<FoodGroup>();
+         * lst.add(getUserGroup(1, 0));
+         * lst.add(getUserGroup(2, 1));
+         * lst.add(getUserGroup(3, 1));
+         * lst.add(getUserGroup(4, 3));
+         * lst.add(getUserGroup(5, 0));
+         * // Hashtable<String,ArrayList<FoodDescription>> ht = new
+         * // Hashtable<String,ArrayList<FoodDescription>>();
+         * ArrayList<FoodDescription> lst1 = new ArrayList<FoodDescription>();
+         * lst1.add(this.getUserFoodDescription(1, 1));
+         * lst1.add(this.getUserFoodDescription(2, 3));
+         * GGCTreeRoot gtr = new GGCTreeRoot(GGCTreeRoot.TREE_USER_NUTRITION,
+         * true);
+         * gtr.manualCreate(lst, lst1);
+         * m_da.tree_roots.put("2", gtr);
+         */
     }
 
     @SuppressWarnings("unused")
@@ -270,8 +250,8 @@ public class TestNutritionData
         // public FoodUserGroupH(String name, String name_i18n, String
         // description, long parent_id) {
 
-        FoodUserGroupH f = new FoodUserGroupH("Group " + id, "GROUP_" + id, "Group " + id, parent_id, System
-                .currentTimeMillis());
+        FoodUserGroupH f = new FoodUserGroupH("Group " + id, "GROUP_" + id, "Group " + id, parent_id,
+                System.currentTimeMillis());
         f.setId(id);
 
         db.addHibernate(f);
@@ -303,8 +283,8 @@ public class TestNutritionData
         // public MealGroupH(String name, String name_i18n, String description,
         // long parent_id) {
 
-        MealGroupH f = new MealGroupH("Group " + id, "GROUP_" + id, "Group " + id, parent_id, System
-                .currentTimeMillis());
+        MealGroupH f = new MealGroupH("Group " + id, "GROUP_" + id, "Group " + id, parent_id,
+                System.currentTimeMillis());
         f.setId(id);
 
         db.addHibernate(f);
@@ -333,10 +313,10 @@ public class TestNutritionData
     private void getKeywords(GGCDb _db)
     {
 
-        ArrayList<FoodDescription> lst = new ArrayList<FoodDescription>(); //_db.getUSDAFoodDescriptions();
+        ArrayList<FoodDescription> lst = new ArrayList<FoodDescription>(); // _db.getUSDAFoodDescriptions();
         // ArrayList<SelectableInterface> lst = sb.getNutritionHomeWeights();
 
-        Hashtable<String,String> ht = new Hashtable<String,String>();
+        Hashtable<String, String> ht = new Hashtable<String, String>();
 
         for (int i = 0; i < lst.size(); i++)
         {
@@ -348,10 +328,12 @@ public class TestNutritionData
 
             while (st.hasMoreTokens())
             {
-                String s = process((String) st.nextToken());
+                String s = process(st.nextToken());
 
                 if (s == null)
+                {
                     continue;
+                }
 
                 StringTokenizer st1 = new StringTokenizer(s, " ");
 
@@ -376,7 +358,7 @@ public class TestNutritionData
 
         for (Enumeration<String> en = ht.keys(); en.hasMoreElements();)
         {
-            String s = (String) en.nextElement();
+            String s = en.nextElement();
 
             lst1.add(s);
             // s = s.replace(",", "");
@@ -420,9 +402,7 @@ public class TestNutritionData
         input = input.replace("\"", "");
 
         if (isNumber(input))
-        {
             return null;
-        }
 
         return input;
     }
@@ -457,7 +437,6 @@ public class TestNutritionData
 
         /*
          * System.out.println("in main"); File f = new File("./tya/ad/dss");
-         * 
          * if (!f.exists()) { f.mkdir(); }
          */
 

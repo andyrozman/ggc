@@ -36,10 +36,9 @@ import com.atech.utils.ATDataAccessLMAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public abstract class DevicePlugInServer extends PlugInServer
 {
-    
+
     protected I18nControlAbstract ic_local = null;
 
     /**
@@ -49,8 +48,7 @@ public abstract class DevicePlugInServer extends PlugInServer
     {
         super();
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -62,7 +60,7 @@ public abstract class DevicePlugInServer extends PlugInServer
     {
         super(cont, selected_lang, da);
     }
-    
+
     /**
      * Constructor
      * 
@@ -75,8 +73,6 @@ public abstract class DevicePlugInServer extends PlugInServer
         super(cont, da);
     }
 
-    
-    
     /**
      * Init PlugIn Server
      * 
@@ -86,14 +82,13 @@ public abstract class DevicePlugInServer extends PlugInServer
     public void initPlugInServer(DataAccess da_ggc_core, DataAccessPlugInBase da_plugin)
     {
         da_plugin.loadManager();
-        
+
         ic_local = da_plugin.getI18nControlInstance();
         da_plugin.setParentI18nControlInstance(ic);
-        
-        
-        //System.out.println(da_local.getI18nControlInstance().toString());
+
+        // System.out.println(da_local.getI18nControlInstance().toString());
         da_plugin.setMainParent(da_ggc_core.getMainParent());
-        
+
         da_plugin.addComponent(this.parent);
         da_plugin.setHelpContext(this.m_da.getHelpContext());
         da_plugin.setPlugInServerInstance(this);
@@ -101,22 +96,17 @@ public abstract class DevicePlugInServer extends PlugInServer
         da_plugin.initAllObjects();
         da_plugin.loadSpecialParameters();
         da_plugin.setCurrentUserId(da_ggc_core.current_user_id);
-        da_plugin.setConfigurationManager(((DataAccess)m_da).getConfigurationManager());
+        da_plugin.setConfigurationManager(((DataAccess) m_da).getConfigurationManager());
         this.backup_restore_enabled = true;
-        
+
         da_ggc_core.loadSpecialParameters();
-        //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
-        
+        // System.out.println("PumpServer: " +
+        // m_da.getSpecialParameters().get("BG"));
+
         da_plugin.setBGMeasurmentType(m_da.getIntValueFromString(da_ggc_core.getSpecialParameters().get("BG")));
         da_plugin.setGraphConfigProperties(da_ggc_core.getGraphConfigProperties());
         da_plugin.setDeveloperMode(da_ggc_core.getDeveloperMode());
-        
-        
+
     }
-    
-    
-    
-    
+
 }
-
-

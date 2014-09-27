@@ -41,25 +41,26 @@ import com.atech.utils.ATSwingUtils;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class AccuChekSmartPixSpecialConfig extends DeviceSpecialConfigPanelAbstract implements ActionListener, ItemListener
+public class AccuChekSmartPixSpecialConfig extends DeviceSpecialConfigPanelAbstract implements ActionListener,
+        ItemListener
 {
 
-    String[] data_versions = null; //{ this.m_ic.getMessage("SMARTPIX_VERSION_2"), this.m_ic.getMessage("SMARTPIX_VERSION_3") }; 
+    String[] data_versions = null; // {
+                                   // this.m_ic.getMessage("SMARTPIX_VERSION_2"),
+                                   // this.m_ic.getMessage("SMARTPIX_VERSION_3")
+                                   // };
     JComboBox cb_versions = null;
-    
 
     /**
      * SmartPix Version 2.x
      */
-    public static final String SMARTPIX_V2 = "2.x";    
+    public static final String SMARTPIX_V2 = "2.x";
 
     /**
      * SmartPix Version 3.x
      */
-    public static final String SMARTPIX_V3 = "3.x";    
-    
-    
+    public static final String SMARTPIX_V3 = "3.x";
+
     /**
      * Constructor
      * 
@@ -71,49 +72,50 @@ public class AccuChekSmartPixSpecialConfig extends DeviceSpecialConfigPanelAbstr
         super(da, di);
     }
 
-
+    @Override
     public void initPanel()
     {
-        //System.out.println("Init panel");
-        
+        // System.out.println("Init panel");
+
         this.config_panel = new JPanel();
         this.config_panel.setLayout(null);
-        
+
         ATSwingUtils.initLibrary();
-    
-        String[] dta = { this.m_ic.getMessage("SMARTPIX_VERSION_2"), this.m_ic.getMessage("SMARTPIX_VERSION_3") }; 
+
+        String[] dta = { this.m_ic.getMessage("SMARTPIX_VERSION_2"), this.m_ic.getMessage("SMARTPIX_VERSION_3") };
         data_versions = dta;
-        
-        ATSwingUtils.getLabel(this.m_ic.getMessage("DEVICE_VERSION") + ":" , 20, 5, 150, 25, this.config_panel, ATSwingUtils.FONT_NORMAL_BOLD);
-        
+
+        ATSwingUtils.getLabel(this.m_ic.getMessage("DEVICE_VERSION") + ":", 20, 5, 150, 25, this.config_panel,
+            ATSwingUtils.FONT_NORMAL_BOLD);
+
         cb_versions = ATSwingUtils.getComboBox(dta, 165, 5, 190, 25, this.config_panel, ATSwingUtils.FONT_NORMAL);
         cb_versions.addItemListener(this);
-        
-        int size[] = { 17, 17 };
-        
-        ATSwingUtils.getButton("", 365, 5, 25, 25, this.config_panel, ATSwingUtils.FONT_NORMAL, "about.png", "get_info", this, m_da, size); //, this, m_da, size);
-    }
 
+        int size[] = { 17, 17 };
+
+        ATSwingUtils.getButton("", 365, 5, 25, 25, this.config_panel, ATSwingUtils.FONT_NORMAL, "about.png",
+            "get_info", this, m_da, size); // , this, m_da, size);
+    }
 
     public int getHeight()
     {
         return 35;
     }
 
-    
     public void readParametersFromGUI()
     {
-/*        this.parameters.remove("SMARTPIX_VERSION");
-
-        System.out.println("readParametersFromGUI : " + this.cb_versions.getSelectedIndex() + ", item=" + this.cb_versions.getSelectedItem());
-        
-        if (this.cb_versions.getSelectedIndex()==0)
-            this.parameters.put("SMARTPIX_VERSION", "2.x");
-        else
-            this.parameters.put("SMARTPIX_VERSION", "3.x"); */
+        /*
+         * this.parameters.remove("SMARTPIX_VERSION");
+         * System.out.println("readParametersFromGUI : " +
+         * this.cb_versions.getSelectedIndex() + ", item=" +
+         * this.cb_versions.getSelectedItem());
+         * if (this.cb_versions.getSelectedIndex()==0)
+         * this.parameters.put("SMARTPIX_VERSION", "2.x");
+         * else
+         * this.parameters.put("SMARTPIX_VERSION", "3.x");
+         */
     }
 
-    
     public void initParameters()
     {
         if (this.parameters.containsKey("SMARTPIX_VERSION"))
@@ -122,46 +124,53 @@ public class AccuChekSmartPixSpecialConfig extends DeviceSpecialConfigPanelAbstr
             this.parameters.put("SMARTPIX_VERSION", "3.x");
         }
         else
+        {
             this.parameters.put("SMARTPIX_VERSION", "3.x");
+        }
     }
 
-    
     public void loadParametersToGUI()
     {
         String p1 = this.parameters.get("SMARTPIX_VERSION");
-        
-        if (this.cb_versions==null)
+
+        if (this.cb_versions == null)
         {
             this.initPanel();
         }
-        
-        
-        if (p1.equals("2.x"))
-            this.cb_versions.setSelectedIndex(0);
-        else
-            this.cb_versions.setSelectedIndex(1);
-    }
 
+        if (p1.equals("2.x"))
+        {
+            this.cb_versions.setSelectedIndex(0);
+        }
+        else
+        {
+            this.cb_versions.setSelectedIndex(1);
+        }
+    }
 
     public void actionPerformed(ActionEvent ae)
     {
         if (ae.getActionCommand().contains("get_info"))
         {
-            JOptionPane.showMessageDialog(m_da.getCurrentComponentParent(), m_ic.getMessage("SMARTPIX_VERSION_INFO"), m_ic.getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(m_da.getCurrentComponentParent(), m_ic.getMessage("SMARTPIX_VERSION_INFO"),
+                m_ic.getMessage("INFORMATION"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
-
     public void itemStateChanged(ItemEvent e)
     {
-        JComboBox cb  = (JComboBox)e.getSource();
-        
+        JComboBox cb = (JComboBox) e.getSource();
+
         this.parameters.remove("SMARTPIX_VERSION");
 
-        if (cb.getSelectedIndex()==0)
+        if (cb.getSelectedIndex() == 0)
+        {
             this.parameters.put("SMARTPIX_VERSION", "2.x");
+        }
         else
+        {
             this.parameters.put("SMARTPIX_VERSION", "3.x");
+        }
     }
-    
+
 }

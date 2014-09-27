@@ -40,7 +40,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class NutritionDefinition extends NutritionDefinitionH implements DatabaseObjectHibernate, SelectableInterface,
         Comparator<NutritionDefinition>
 {
@@ -240,7 +239,6 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return debug;
     }
 
-    
     /**
      * getAction - returns action that should be done on object 0 = no action 1
      * = add action 2 = edit action 3 = delete action This is used mainly for
@@ -254,7 +252,6 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return 0;
     }
 
-    
     /**
      * getColumnCount - return number of displayable columns
      * 
@@ -263,7 +260,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     public int getColumnCount()
     {
         return 4;
-    
+
     }
 
     /**
@@ -280,23 +277,22 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
          */
         switch (num)
         {
-        case 4:
-            return ic.getMessage("TAG");
+            case 4:
+                return ic.getMessage("TAG");
 
-        case 3:
-            return ic.getMessage("WEIGHT_UNIT");
+            case 3:
+                return ic.getMessage("WEIGHT_UNIT");
 
-        case 2:
-            return ic.getMessage("NAME");
+            case 2:
+                return ic.getMessage("NAME");
 
-        default:
-            return ic.getMessage("ID");
+            default:
+                return ic.getMessage("ID");
 
         }
 
     }
 
-    
     /**
      * getColumnValue - return value of specified column
      * 
@@ -312,23 +308,22 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
          */
         switch (num)
         {
-        case 4:
-            return this.getTag();
+            case 4:
+                return this.getTag();
 
-        case 3:
-            return this.getWeight_unit();
+            case 3:
+                return this.getWeight_unit();
 
-        case 2:
-            return this.getResolvedName();
+            case 2:
+                return this.getResolvedName();
 
-        default:
-            return "" + this.getId();
+            default:
+                return "" + this.getId();
 
         }
 
     }
 
-    
     /**
      * getColumnValueObject - return value of specified column
      * 
@@ -339,17 +334,17 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     {
         switch (num)
         {
-        case 4:
-            return this.getTag();
+            case 4:
+                return this.getTag();
 
-        case 3:
-            return this.getWeight_unit();
+            case 3:
+                return this.getWeight_unit();
 
-        case 2:
-            return this.getResolvedName();
+            case 2:
+                return this.getResolvedName();
 
-        default:
-            return this.getId();
+            default:
+                return this.getId();
 
         }
     }
@@ -376,7 +371,6 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     }
 
-    
     /**
      * getColumnWidth - return width of specified column
      * 
@@ -388,19 +382,18 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     {
         switch (num)
         {
-        case 4:
-            return (int) (width * 20);
-        case 3:
-            return (int) (width * 20);
-        case 2:
-            return (int) (width * 40);
-        default:
-            return (int) (width * 20);
+            case 4:
+                return width * 20;
+            case 3:
+                return width * 20;
+            case 2:
+                return width * 40;
+            default:
+                return width * 20;
 
         }
     }
 
-    
     /**
      * Get Item Id
      * 
@@ -432,7 +425,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
      */
     public boolean isFound(String text)
     {
-        if ((this.text_idx.indexOf(text.toUpperCase()) != -1) || (text.length() == 0))
+        if (this.text_idx.indexOf(text.toUpperCase()) != -1 || text.length() == 0)
             return true;
         else
             return false;
@@ -562,7 +555,6 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return (int) (id1 - id2);
     }
 
-    
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -571,6 +563,5 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     {
         return "" + this.getId();
     }
-    
-    
+
 }

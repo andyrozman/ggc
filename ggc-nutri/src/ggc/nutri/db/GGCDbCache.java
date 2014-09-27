@@ -1,5 +1,5 @@
 /*
-*  GGC - GNU Gluco Control
+ *  GGC - GNU Gluco Control
  *
  *  A pure java app to help you manage your diabetes.
  *
@@ -68,8 +68,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-public class GGCDbCache  
+public class GGCDbCache
 {
 
     @SuppressWarnings("unused")
@@ -79,33 +78,29 @@ public class GGCDbCache
      * Object Load Status - None
      */
     public static final int OBJECT_LOADED_STATUS_NONE = 0;
-    
+
     /**
      * Object Load Status - Loaded
      */
     public static final int OBJECT_LOADED_STATUS_OBJECT_LOADED = 1;
-    
+
     /**
      * Object Load Status - Children Loaded
      */
     public static final int OBJECT_LOADED_STATUS_CHILDREN_LOADED = 2;
 
     GGCDbNutri m_db = null;
-    
 
     /**
      * Tree Roots
      */
     public Hashtable<String, GGCTreeRoot> tree_roots = null;
-    
-    
-    
-    
+
     /**
      * Data: Nutrition Definitions (Hashtable)
      */
     public Hashtable<String, NutritionDefinition> nutrition_defs = null;
-    
+
     /**
      * Data: Home Weight Definitions (Hashtable)
      */
@@ -120,32 +115,26 @@ public class GGCDbCache
      * Data: Home Weight Definitions (ArrayList)
      */
     public ArrayList<SelectableInterface> homeweight_defs_list = null;
-    
-    
+
     /**
      * Food Groups as Hashtable
      */
     public Hashtable<String, Hashtable<String, FoodGroup>> food_groups = null;
-    
 
     /**
      * Foods as Hashtable
      */
     public Hashtable<String, Hashtable<String, FoodDescription>> foods = null;
-    
-    
+
     /**
      * Food Groups as Hashtable
      */
     public Hashtable<String, Hashtable<String, MealGroup>> meal_groups = null;
-    
 
     /**
      * Foods as Hashtable
      */
     public Hashtable<String, Hashtable<String, Meal>> meals = null;
-    
-
 
     /**
      * Constructor
@@ -156,39 +145,33 @@ public class GGCDbCache
     {
         this.m_db = db;
 
-        
         food_groups = new Hashtable<String, Hashtable<String, FoodGroup>>();
-        food_groups.put("1", new Hashtable<String,FoodGroup>());
-        food_groups.put("2", new Hashtable<String,FoodGroup>());
-        
+        food_groups.put("1", new Hashtable<String, FoodGroup>());
+        food_groups.put("2", new Hashtable<String, FoodGroup>());
+
         foods = new Hashtable<String, Hashtable<String, FoodDescription>>();
-        foods.put("1", new Hashtable<String,FoodDescription>());
-        foods.put("2", new Hashtable<String,FoodDescription>());
-        
+        foods.put("1", new Hashtable<String, FoodDescription>());
+        foods.put("2", new Hashtable<String, FoodDescription>());
 
         meal_groups = new Hashtable<String, Hashtable<String, MealGroup>>();
         meal_groups.put("3", new Hashtable<String, MealGroup>());
-        
+
         meals = new Hashtable<String, Hashtable<String, Meal>>();
         meals.put("3", new Hashtable<String, Meal>());
-        
-        this.tree_roots = new Hashtable<String, GGCTreeRoot>();
-        
-        //food_groups_usda = new Hashtable<String, FoodGroup>();
-        //foods_usda = new Hashtable<String, FoodDescription>();
 
-//        food_groups_user = new Hashtable<String, FoodGroup>();
-//        foods_user = new Hashtable<String, FoodDescription>();
-        
-//        meal_groups = new Hashtable<String, MealGroup>();
-//        meals = new Hashtable<String, Meal>();
-        
+        this.tree_roots = new Hashtable<String, GGCTreeRoot>();
+
+        // food_groups_usda = new Hashtable<String, FoodGroup>();
+        // foods_usda = new Hashtable<String, FoodDescription>();
+
+        // food_groups_user = new Hashtable<String, FoodGroup>();
+        // foods_user = new Hashtable<String, FoodDescription>();
+
+        // meal_groups = new Hashtable<String, MealGroup>();
+        // meals = new Hashtable<String, Meal>();
+
     }
 
-    
-
-
-    
     /**
      * Add Meal Group
      * 
@@ -196,22 +179,22 @@ public class GGCDbCache
      */
     public void addMealGroup(MealGroup mg)
     {
-        //debug("addMealGroup :: Not Implemented Yet !");
-        
+        // debug("addMealGroup :: Not Implemented Yet !");
+
         this.addMealGroup2Tree(3, mg);
-        
-        
+
         /*
-        if (mg.getParent_id() == 0)
-        {
-            this.m_meal_groups_ht.put("" + mg.getId(), mg);
-            this.m_meal_groups_tree.add(mg);
-        }
-        else
-        {
-            this.m_meal_groups_ht.put("" + mg.getId(), mg);
-            this.m_meal_groups_ht.get("" + mg.getParent_id()).addChild(mg);
-        }*/
+         * if (mg.getParent_id() == 0)
+         * {
+         * this.m_meal_groups_ht.put("" + mg.getId(), mg);
+         * this.m_meal_groups_tree.add(mg);
+         * }
+         * else
+         * {
+         * this.m_meal_groups_ht.put("" + mg.getId(), mg);
+         * this.m_meal_groups_ht.get("" + mg.getParent_id()).addChild(mg);
+         * }
+         */
     }
 
     /**
@@ -221,60 +204,54 @@ public class GGCDbCache
      */
     public void addFoodGroup(FoodGroup fg)
     {
-        //debug("addFoodGroup :: Not Implemented Yet !");
-        
+        // debug("addFoodGroup :: Not Implemented Yet !");
+
         this.addFoodGroup2Tree(fg.getGroupType(), fg);
-        
-/*        if (fg.getParentId() == 0)
-        {
-            this.m_groups_ht.put("" + fg.getId(), fg);
-            this.m_groups_tree.add(fg);
-        }
-        else
-        {
-            this.m_groups_ht.put("" + fg.getId(), fg);
-            this.m_groups_ht.get("" + fg.getParentId()).addChild(fg);
-        } */
+
+        /*
+         * if (fg.getParentId() == 0)
+         * {
+         * this.m_groups_ht.put("" + fg.getId(), fg);
+         * this.m_groups_tree.add(fg);
+         * }
+         * else
+         * {
+         * this.m_groups_ht.put("" + fg.getId(), fg);
+         * this.m_groups_ht.get("" + fg.getParentId()).addChild(fg);
+         * }
+         */
     }
 
     /*
-    private void fillGroups()
-    {
-        if ((m_type == GGCTreeRoot.TREE_USDA_NUTRITION) || (m_type == GGCTreeRoot.TREE_USER_NUTRITION))
-        {
+     * private void fillGroups()
+     * {
+     * if ((m_type == GGCTreeRoot.TREE_USDA_NUTRITION) || (m_type ==
+     * GGCTreeRoot.TREE_USER_NUTRITION))
+     * {
+     * this.m_foods_ht = new Hashtable<String, FoodDescription>();
+     * Iterator<FoodDescription> it2 = this.import1_foods.iterator();
+     * while (it2.hasNext())
+     * {
+     * FoodDescription fd = it2.next();
+     * this.m_foods_ht.put("" + fd.getId(), fd);
+     * this.m_groups_ht.get("" + fd.getGroup_id()).addChild(fd);
+     * }
+     * }
+     * else if (m_type == GGCTreeRoot.TREE_MEALS)
+     * {
+     * this.m_meals_ht = new Hashtable<String, Meal>();
+     * Iterator<Meal> it2 = this.import2_foods.iterator();
+     * while (it2.hasNext())
+     * {
+     * Meal fd = it2.next();
+     * this.m_meals_ht.put("" + fd.getId(), fd);
+     * this.m_meal_groups_ht.get("" + fd.getGroup_id()).addChild(fd);
+     * }
+     * }
+     * }
+     */
 
-            this.m_foods_ht = new Hashtable<String, FoodDescription>();
-
-            Iterator<FoodDescription> it2 = this.import1_foods.iterator();
-
-            while (it2.hasNext())
-            {
-                FoodDescription fd = it2.next();
-                this.m_foods_ht.put("" + fd.getId(), fd);
-                this.m_groups_ht.get("" + fd.getGroup_id()).addChild(fd);
-            }
-
-        }
-        else if (m_type == GGCTreeRoot.TREE_MEALS)
-        {
-            this.m_meals_ht = new Hashtable<String, Meal>();
-
-            Iterator<Meal> it2 = this.import2_foods.iterator();
-
-            while (it2.hasNext())
-            {
-                Meal fd = it2.next();
-                this.m_meals_ht.put("" + fd.getId(), fd);
-                this.m_meal_groups_ht.get("" + fd.getGroup_id()).addChild(fd);
-            }
-
-        }
-    }*/
-
-
-    //public GGCTreeRoot 
-
-
+    // public GGCTreeRoot
 
     /**
      * Add Food To Tree
@@ -284,12 +261,11 @@ public class GGCDbCache
      */
     public void addFood2Tree(int type, FoodDescription fd)
     {
-//        debug("addFood2Tree :: Not Implemented Yet !");
-        
+        // debug("addFood2Tree :: Not Implemented Yet !");
+
         this.food_groups.get("" + type).get("" + fd.getGroup_id()).addChild(fd);
         this.foods.get("" + type).put("" + fd.getId(), fd);
     }
-
 
     /**
      * Add Food Group To Tree
@@ -299,11 +275,10 @@ public class GGCDbCache
      */
     public void addFoodGroup2Tree(int type, FoodGroup fg)
     {
-//        debug("addFoodGroup2Tree :: Not Implemented Yet !");
+        // debug("addFoodGroup2Tree :: Not Implemented Yet !");
         this.food_groups.get("" + type).get("" + fg.getParentId()).addChild(fg);
         this.food_groups.get("" + type).put("" + fg.getId(), fg);
     }
-
 
     /**
      * Add Meal To Tree
@@ -313,11 +288,10 @@ public class GGCDbCache
      */
     public void addMeal2Tree(int type, Meal _meal)
     {
-//        debug("addMeal2Tree :: Not Implemented Yet !");
+        // debug("addMeal2Tree :: Not Implemented Yet !");
         this.meal_groups.get("" + type).get("" + _meal.getGroup_id()).addChild(_meal);
         this.meals.get("" + type).put("" + _meal.getId(), _meal);
     }
-
 
     /**
      * Add Meal Group To Tree
@@ -327,12 +301,11 @@ public class GGCDbCache
      */
     public void addMealGroup2Tree(int type, MealGroup mg)
     {
-//        debug("addMealGroup2Tree :: Not Implemented Yet !");
+        // debug("addMealGroup2Tree :: Not Implemented Yet !");
         this.meal_groups.get("" + type).get("" + mg.getParent_id()).addChild(mg);
         this.meal_groups.get("" + type).put("" + mg.getId(), mg);
-        
-    }
 
+    }
 
     /**
      * Remove Food From Tree
@@ -343,13 +316,13 @@ public class GGCDbCache
      */
     public void removeFoodFromTree(int type, FoodDescription _food, long prev_group_id)
     {
-        //debug("removeFoodFromTree :: Not Implemented Yet !");
-        
-        this.food_groups.get("" + type).get("" + prev_group_id).removeChild(_food);
-        this.foods.get("" + type).remove(_food); //.get("" + _meal.getId()).removeChild(fg);
-        
-    }
+        // debug("removeFoodFromTree :: Not Implemented Yet !");
 
+        this.food_groups.get("" + type).get("" + prev_group_id).removeChild(_food);
+        this.foods.get("" + type).remove(_food); // .get("" +
+                                                 // _meal.getId()).removeChild(fg);
+
+    }
 
     /**
      * Remove Food Group From Tree
@@ -360,10 +333,9 @@ public class GGCDbCache
      */
     public void removeFoodGroupFromTree(int type, FoodGroup fg, long prev_parent_id)
     {
-//        debug("removeFoodGroupFromTree :: Not Implemented Yet !");
+        // debug("removeFoodGroupFromTree :: Not Implemented Yet !");
         this.food_groups.get("" + type).get("" + prev_parent_id).removeChild(fg);
     }
-
 
     /**
      * Remove Meal From Tree
@@ -374,11 +346,11 @@ public class GGCDbCache
      */
     public void removeMealFromTree(int type, Meal _meal, long prev_group_id)
     {
-//        debug("removeMealFromTree :: Not Implemented Yet !");
+        // debug("removeMealFromTree :: Not Implemented Yet !");
         this.meal_groups.get("" + type).get("" + prev_group_id).removeChild(_meal);
-        this.meals.get("" + type).remove(_meal); //.get("" + _meal.getId()).removeChild(fg);
+        this.meals.get("" + type).remove(_meal); // .get("" +
+                                                 // _meal.getId()).removeChild(fg);
     }
-
 
     /**
      * Remove Meal Group From Tree
@@ -389,12 +361,10 @@ public class GGCDbCache
      */
     public void removeMealGroupFromTree(int type, MealGroup mg, long prev_parent_id)
     {
-        //debug("removeMealGroupFromTree :: Not Implemented Yet !");
+        // debug("removeMealGroupFromTree :: Not Implemented Yet !");
         this.meal_groups.get("" + type).get("" + prev_parent_id).removeChild(mg);
     }
-    
-    
-    
+
     /**
      * Find Food Group
      * 
@@ -405,9 +375,7 @@ public class GGCDbCache
     public FoodGroup findFoodGroup(int type, long group_id)
     {
         if (this.food_groups.get("" + type).containsKey("" + group_id))
-        {
             return this.food_groups.get("" + type).get("" + group_id);
-        }
         else
         {
             FoodGroup mg = m_db.getFoodGroupById(type, group_id);
@@ -415,7 +383,6 @@ public class GGCDbCache
             return mg;
         }
     }
-
 
     /**
      * Find Food
@@ -427,19 +394,16 @@ public class GGCDbCache
     public FoodDescription findFood(int type, long food_id)
     {
         if (this.foods.get("" + type).containsKey("" + food_id))
-        {
             return this.foods.get("" + type).get("" + food_id);
-        }
         else
         {
             FoodDescription fd = m_db.getFoodDescriptionById(type, food_id);
-            
+
             this.foods.get("" + type).put("" + food_id, fd);
             return fd;
         }
-        
-    }
 
+    }
 
     /**
      * Find Meal
@@ -450,22 +414,18 @@ public class GGCDbCache
      */
     public Meal findMeal(int type, long meal_id)
     {
-//        debug("findMeal :: Not Implemented Yet !");
-        
+        // debug("findMeal :: Not Implemented Yet !");
+
         if (this.meals.get("" + type).containsKey("" + meal_id))
-        {
             return this.meals.get("" + type).get("" + meal_id);
-        }
         else
         {
             Meal ml = m_db.getMealById(type, meal_id);
             this.meals.get("" + type).put("" + meal_id, ml);
             return ml;
         }
-        
-    }
 
-    
+    }
 
     /**
      * Find Meal Group
@@ -477,20 +437,16 @@ public class GGCDbCache
     public MealGroup findMealGroup(int type, long group_id)
     {
         if (this.meal_groups.get("" + type).containsKey("" + group_id))
-        {
             return this.meal_groups.get("" + type).get("" + group_id);
-        }
         else
         {
             MealGroup mg = m_db.getMealGroupById(group_id);
             this.meal_groups.get("" + type).put("" + mg.getId(), mg);
             return mg;
         }
-        
+
     }
-    
-    
-    
+
     /**
      * Get Children Food Group
      * 
@@ -502,32 +458,29 @@ public class GGCDbCache
     {
 
         boolean not_loaded = false;
-        
+
         if (this.food_groups.get("" + type).containsKey("" + parent_id))
         {
             FoodGroup grp = this.food_groups.get("" + type).get("" + parent_id);
-            
-            if (grp.getLoadStatus()==GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED)
-            {
+
+            if (grp.getLoadStatus() == GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED)
                 return grp.children_group;
-            }
             else
             {
                 not_loaded = true;
             }
-            
+
         }
         else
         {
             not_loaded = true;
         }
-        
-        
+
         if (not_loaded)
         {
             ArrayList<FoodGroup> lst = m_db.getFoodGroups(type, parent_id);
-            
-            for(int i=0; i<lst.size(); i++)
+
+            for (int i = 0; i < lst.size(); i++)
             {
                 FoodGroup mg = lst.get(i);
                 if (!this.food_groups.get("" + type).containsKey("" + mg.getId()))
@@ -535,16 +488,13 @@ public class GGCDbCache
                     this.food_groups.get("" + type).put("" + mg.getId(), mg);
                 }
             }
-            
+
             return lst;
         }
         else
             return null;
-        
-        
-        
+
     }
-    
 
     /**
      * Get Children Foods
@@ -555,51 +505,46 @@ public class GGCDbCache
      */
     public ArrayList<FoodDescription> getChildrenFoods(int type, long parent_id)
     {
-        
+
         boolean not_loaded = false;
-        
+
         if (this.food_groups.get("" + type).containsKey("" + parent_id))
         {
             FoodGroup grp = this.food_groups.get("" + type).get("" + parent_id);
-            
-            if (grp.getLoadStatus()==GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED)
-            {
+
+            if (grp.getLoadStatus() == GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED)
                 return grp.children_food;
-            }
             else
             {
                 not_loaded = true;
             }
-            
+
         }
         else
         {
             not_loaded = true;
         }
-        
 
         if (not_loaded)
         {
             ArrayList<FoodDescription> lst = m_db.getFoodsByParent(type, parent_id);
-            
-            for(int i=0; i<lst.size(); i++)
+
+            for (int i = 0; i < lst.size(); i++)
             {
                 FoodDescription mg = lst.get(i);
-                
+
                 if (!this.foods.get("" + type).containsKey("" + mg.getId()))
                 {
                     this.foods.get("" + type).put("" + mg.getId(), mg);
                 }
             }
-            
+
             return lst;
         }
         else
             return null;
-            
-        
+
     }
-    
 
     /**
      * Get Children Meal Group
@@ -611,32 +556,29 @@ public class GGCDbCache
     public ArrayList<MealGroup> getChildrenMealGroup(int type, long parent_id)
     {
         boolean not_loaded = false;
-        
+
         if (this.meal_groups.get("" + type).containsKey("" + parent_id))
         {
             MealGroup grp = this.meal_groups.get("" + type).get("" + parent_id);
-            
-            if (grp.getLoadStatus()==GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED)
-            {
+
+            if (grp.getLoadStatus() == GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED)
                 return grp.children_group;
-            }
             else
             {
                 not_loaded = true;
             }
-            
+
         }
         else
         {
             not_loaded = true;
         }
-        
-        
+
         if (not_loaded)
         {
             ArrayList<MealGroup> lst = m_db.getMealGroups(parent_id);
-            
-            for(int i=0; i<lst.size(); i++)
+
+            for (int i = 0; i < lst.size(); i++)
             {
                 MealGroup mg = lst.get(i);
                 if (!this.meal_groups.get("" + type).containsKey("" + mg.getId()))
@@ -644,13 +586,13 @@ public class GGCDbCache
                     this.meal_groups.get("" + type).put("" + mg.getId(), mg);
                 }
             }
-            
+
             return lst;
         }
         else
             return null;
     }
-    
+
     /**
      * Get Children Meals
      * 
@@ -661,32 +603,29 @@ public class GGCDbCache
     public ArrayList<Meal> getChildrenMeals(int type, long parent_id)
     {
         boolean not_loaded = false;
-        
+
         if (this.meal_groups.get("" + type).containsKey("" + parent_id))
         {
             MealGroup grp = this.meal_groups.get("" + type).get("" + parent_id);
-            
-            if (grp.getLoadStatus()==GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED)
-            {
+
+            if (grp.getLoadStatus() == GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED)
                 return grp.children_meal;
-            }
             else
             {
                 not_loaded = true;
             }
-            
+
         }
         else
         {
             not_loaded = true;
         }
-        
 
         if (not_loaded)
         {
             ArrayList<Meal> lst = m_db.getMealsByParent(parent_id);
-            
-            for(int i=0; i<lst.size(); i++)
+
+            for (int i = 0; i < lst.size(); i++)
             {
                 Meal mg = lst.get(i);
                 if (!this.meals.get("" + type).containsKey("" + mg.getId()))
@@ -694,12 +633,12 @@ public class GGCDbCache
                     this.meals.get("" + type).put("" + mg.getId(), mg);
                 }
             }
-            
+
             return lst;
         }
         else
             return null;
-            
+
     }
-    
+
 }

@@ -39,35 +39,36 @@ import com.atech.plugin.BackupRestorePlugin;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class BackupRestoreNutriHandler extends BackupRestorePlugin
 {
 
     I18nControlAbstract ic = DataAccessNutri.getInstance().getI18nControlInstance();
-    //Hashtable<String, Backup>ht_restore_objects
-    
+
+    // Hashtable<String, Backup>ht_restore_objects
+
     /**
      * Constructor
      */
     public BackupRestoreNutriHandler()
     {
     }
-    
 
     /**
      * Do Backup
      */
+    @Override
     public void doBackup(BackupRestoreRunner brr)
     {
         if (isAnyNutritionBackupObjectSelected(brr))
         {
             ExportNutritionDb end = new ExportNutritionDb(brr);
 
-            //System.out.println(brr.isBackupObjectSelected(ic.getMessage("USER_FOOD_GROUPS")));
-            //System.out.println(brr.isBackupObjectSelected(ic.getMessage("FOODS")) + ic.getMessage("FOODS"));
-            //System.out.println(brr.isBackupObjectSelected(ic.getMessage("MEAL_GROUPS")));
-            //System.out.println(brr.isBackupObjectSelected(ic.getMessage("MEALS")));
-            
+            // System.out.println(brr.isBackupObjectSelected(ic.getMessage("USER_FOOD_GROUPS")));
+            // System.out.println(brr.isBackupObjectSelected(ic.getMessage("FOODS"))
+            // + ic.getMessage("FOODS"));
+            // System.out.println(brr.isBackupObjectSelected(ic.getMessage("MEAL_GROUPS")));
+            // System.out.println(brr.isBackupObjectSelected(ic.getMessage("MEALS")));
+
             if (brr.isBackupObjectSelected(ic.getMessage("USER_FOOD_GROUPS")))
             {
                 brr.setStatus(0);
@@ -105,36 +106,34 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
                 // System.out.println("Meals YES");
             }
         }
-        
+
     }
-    
-    
+
     private boolean isAnyNutritionBackupObjectSelected(BackupRestoreRunner brr)
     {
-        if ((brr.isBackupObjectSelected(ic.getMessage("USER_FOOD_GROUPS"))) ||
-            (brr.isBackupObjectSelected(ic.getMessage("FOODS"))) ||
-            (brr.isBackupObjectSelected(ic.getMessage("MEAL_GROUPS"))) ||
-            (brr.isBackupObjectSelected(ic.getMessage("MEALS"))))
+        if (brr.isBackupObjectSelected(ic.getMessage("USER_FOOD_GROUPS"))
+                || brr.isBackupObjectSelected(ic.getMessage("FOODS"))
+                || brr.isBackupObjectSelected(ic.getMessage("MEAL_GROUPS"))
+                || brr.isBackupObjectSelected(ic.getMessage("MEALS")))
             return true;
         else
             return false;
     }
-    
-    
-    
+
     /**
      * Do Restore
      */
+    @Override
     public void doRestore(BackupRestoreRunner brr)
     {
-            
+
         if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.FoodUserGroupH"))
         {
             brr.setStatus(0);
             brr.setTask(ic.getMessage("USER_FOOD_GROUPS"));
             ImportNutrition edv = new ImportNutrition(brr, brr.getRestoreObject("ggc.core.db.hibernate.FoodUserGroupH"));
             edv.run();
-            //end.export_UserFoodGroups();
+            // end.export_UserFoodGroups();
             brr.setStatus(100);
             // this.done_backup_elements++;
         }
@@ -143,9 +142,10 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
         {
             brr.setStatus(0);
             brr.setTask(ic.getMessage("FOODS"));
-            ImportNutrition edv = new ImportNutrition(brr, brr.getRestoreObject("ggc.core.db.hibernate.FoodUserDescriptionH"));
+            ImportNutrition edv = new ImportNutrition(brr,
+                    brr.getRestoreObject("ggc.core.db.hibernate.FoodUserDescriptionH"));
             edv.run();
-//                end.export_UserFoods();
+            // end.export_UserFoods();
             brr.setStatus(100);
             // this.done_backup_elements++;
         }
@@ -156,7 +156,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
             brr.setTask(ic.getMessage("MEAL_GROUPS"));
             ImportNutrition edv = new ImportNutrition(brr, brr.getRestoreObject("ggc.core.db.hibernate.MealGroupH"));
             edv.run();
-//                end.export_MealGroups();
+            // end.export_MealGroups();
             brr.setStatus(100);
             // this.done_backup_elements++;
         }
@@ -167,18 +167,14 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
             brr.setTask(ic.getMessage("MEALS"));
             ImportNutrition edv = new ImportNutrition(brr, brr.getRestoreObject("ggc.core.db.hibernate.MealH"));
             edv.run();
-//                end.export_Meals();
+            // end.export_Meals();
             brr.setStatus(100);
             // this.done_backup_elements++;
         }
-            
-        
-        
-//        System.out.println("BackupRestoreNutriHandler::doRestore()");
+
+        // System.out.println("BackupRestoreNutriHandler::doRestore()");
     }
-    
- 
-    
+
     /** 
      * Get Backup Restore Object
      */
@@ -186,15 +182,12 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
     public BackupRestoreObject getBackupRestoreObject(String class_name)
     {
         if (class_name.equals("ggc.core.db.hibernate.DayValueH"))
-        {
             return new DailyValue();
-        }
-        
+
         return null;
-           
+
     }
-    
-    
+
     /** 
      * Get Backup Restore Object
      */
@@ -203,14 +196,13 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
     {
         if (bro.getBackupClassName().equals("ggc.core.db.hibernate.DayValueH"))
         {
-            DayValueH eh = (DayValueH)obj;
+            DayValueH eh = (DayValueH) obj;
             return new DailyValue(eh);
         }
 
         return null;
-            
-    }
 
+    }
 
     /** 
      * Does Contain Backup Restore Object
@@ -220,21 +212,17 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
     {
         return false;
     }
-    
-    
-    
-    
- /*   
-    public RestoreFileInfo getRestoreObject(String key)
-    {
-        if (this.ht_restore_objects==null)
-            return null;
-        
-        if (this.ht_restore_objects.containsKey(key))
-            return this.ht_restore_objects.get(key);
-        else
-            return null;
-    }*/
-    
+
+    /*
+     * public RestoreFileInfo getRestoreObject(String key)
+     * {
+     * if (this.ht_restore_objects==null)
+     * return null;
+     * if (this.ht_restore_objects.containsKey(key))
+     * return this.ht_restore_objects.get(key);
+     * else
+     * return null;
+     * }
+     */
 
 }

@@ -81,7 +81,6 @@ public class FrequencyGraphView extends AbstractGraphView
         this.gV = gV;
         dayCount = gV.getDailyValuesItemsCount();
 
-
         values = new int[500];
         minvalue = 500;
         maxvalue = 0;
@@ -90,29 +89,35 @@ public class FrequencyGraphView extends AbstractGraphView
         long sum = 0;
         int c = 0;
 
-        for (int i = 0; i < dayCount; i++) 
-	{
+        for (int i = 0; i < dayCount; i++)
+        {
             DailyValues dV = gV.getDailyValuesItem(i);
-            for (int j = 0; j < dV.getRowCount(); j++) 
-	    {
-                int tmp = (int)dV.getRow(j).getBG();
-                if (tmp > 0) 
-		{
+            for (int j = 0; j < dV.getRowCount(); j++)
+            {
+                int tmp = (int) dV.getRow(j).getBG();
+                if (tmp > 0)
+                {
                     if (tmp < minvalue)
+                    {
                         minvalue = tmp;
+                    }
                     if (tmp > maxvalue)
+                    {
                         maxvalue = tmp;
+                    }
                     if (++values[tmp] > maxcount)
+                    {
                         maxcount = values[tmp];
+                    }
                     sum += tmp;
                     c++;
                 }
             }
         }
-        
+
         if (c > 0)
         {
-            avgBG = (int)(sum / c);
+            avgBG = (int) (sum / c);
         }
         else
         {
@@ -137,7 +142,7 @@ public class FrequencyGraphView extends AbstractGraphView
     @Override
     public void paint(Graphics g)
     {
-        Graphics2D g2D = (Graphics2D)g;
+        Graphics2D g2D = (Graphics2D) g;
 
         g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oAA);
         g2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, oCR);
@@ -163,59 +168,65 @@ public class FrequencyGraphView extends AbstractGraphView
         g2D.drawLine(leftSpace, upperSpace, leftSpace, viewHeight - lowerSpace);
 
         int markPos = 0;
-//x        int diffBG = maxBG - minBG;
-        int diffH = (int)drawableHeight;
-//x        int diffW = (int)drawableWidth;
+        // x int diffBG = maxBG - minBG;
+        int diffH = (int) drawableHeight;
+        // x int diffW = (int)drawableWidth;
 
         if (maxcount == 0)
+        {
             maxcount = 1;
-        int z = (int)Math.floor(maxcount / 10);
+        }
+        int z = (int) Math.floor(maxcount / 10);
         if (z == 0)
+        {
             z = 1;
-//x        int steps = (maxcount / z);
+            // x int steps = (maxcount / z);
+        }
 
-        for (int i = 0; i <= maxcount; i += z) 
-	{
-            markPos = upperSpace + i * (diffH) / maxcount;
+        for (int i = 0; i <= maxcount; i += z)
+        {
+            markPos = upperSpace + i * diffH / maxcount;
             g2D.drawString(maxcount - i + "", 5, markPos + 5);
             g2D.drawLine(leftSpace - 5, markPos, leftSpace, markPos);
         }
 
-	g2D.drawLine(leftSpace, viewHeight - lowerSpace, viewWidth - rightSpace, viewHeight - lowerSpace);
+        g2D.drawLine(leftSpace, viewHeight - lowerSpace, viewWidth - rightSpace, viewHeight - lowerSpace);
 
-        for (int i = 0; i <= maxvalue; i += 30) 
-	{
+        for (int i = 0; i <= maxvalue; i += 30)
+        {
             markPos = leftSpace + i;
             g2D.drawLine(markPos, viewHeight - lowerSpace, markPos, viewHeight - lowerSpace + 5);
             g2D.drawString(i + "", markPos - 10, viewHeight - lowerSpace + 20);
         }
 
-//x        int lower = (int)m_da.getSettings().getBG_Low();
-//        int upper = (int)m_da.getSettings().getBG_High();
+        // x int lower = (int)m_da.getSettings().getBG_Low();
+        // int upper = (int)m_da.getSettings().getBG_High();
 
-        // XXX: these need something similar to BGtoCoord, but that's too much effort
+        // XXX: these need something similar to BGtoCoord, but that's too much
+        // effort
         g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_low()));
-        g2D.fillRect(leftSpace + 1, upperSpace, (int) minGoodBG, (int)drawableHeight);
+        g2D.fillRect(leftSpace + 1, upperSpace, (int) minGoodBG, (int) drawableHeight);
 
         g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_target()));
-        g2D.fillRect((int)(leftSpace + minGoodBG), upperSpace, (int)(maxGoodBG - minGoodBG), (int)drawableHeight);
+        g2D.fillRect((int) (leftSpace + minGoodBG), upperSpace, (int) (maxGoodBG - minGoodBG), (int) drawableHeight);
 
         g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_high()));
-        g2D.fillRect((int)(leftSpace + maxGoodBG), upperSpace, (int)(drawableWidth - maxGoodBG), (int)drawableHeight);
+        g2D.fillRect((int) (leftSpace + maxGoodBG), upperSpace, (int) (drawableWidth - maxGoodBG), (int) drawableHeight);
 
     }
 
     @Override
     protected void drawValues(Graphics2D g2D)
     {
-        if (values != null) 
-	{
+        if (values != null)
+        {
             float unitHeight = drawableHeight / maxcount;
 
             g2D.setPaint(Color.black);
-            for (int i = minvalue; i <= maxvalue; i++) 
-	    {
-                g2D.drawLine(leftSpace + i + 1, viewHeight - lowerSpace, leftSpace + i + 1, (int)(viewHeight - lowerSpace - values[i] * unitHeight));
+            for (int i = minvalue; i <= maxvalue; i++)
+            {
+                g2D.drawLine(leftSpace + i + 1, viewHeight - lowerSpace, leftSpace + i + 1, (int) (viewHeight
+                        - lowerSpace - values[i] * unitHeight));
             }
 
             g2D.setPaint(m_da.getColor(m_da.getSettings().getSelectedColorScheme().getColor_bg_avg()));

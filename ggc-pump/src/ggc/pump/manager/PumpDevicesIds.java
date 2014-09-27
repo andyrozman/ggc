@@ -27,136 +27,114 @@ package ggc.pump.manager;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PumpDevicesIds
 {
 
     /**
      * Pump Company: Minimed
      */
-    public static final int COMPANY_MINIMED              = 1;
-    
+    public static final int COMPANY_MINIMED = 1;
 
     /**
      * Pump Company: Roche (Accu-Chek)
      */
-    public static final int COMPANY_ROCHE               = 2;
+    public static final int COMPANY_ROCHE = 2;
 
     /**
      * Pump Company: Disetronic
      */
-    public static final int COMPANY_DISETRONIC            = 3;
-    
+    public static final int COMPANY_DISETRONIC = 3;
 
     /**
      * Pump Company: Animas
      */
-    public static final int COMPANY_ANIMAS                = 4;
-    
+    public static final int COMPANY_ANIMAS = 4;
+
     /**
      * Pump Company: Deltec
      */
-    public static final int COMPANY_DELTEC                = 5;
+    public static final int COMPANY_DELTEC = 5;
 
     /**
      * Pump Company: Insulet
      */
-    public static final int COMPANY_INSULET               = 6;
-    
-    
+    public static final int COMPANY_INSULET = 6;
+
     /**
      * Pump Company: Sooil
      */
-    public static final int COMPANY_SOOIL                 = 7;
-    
-    
-    
-    
-    
-    
-    /**
-     * Pump Minimed 508
-     */
-    public static final int PUMP_MINIMED_508      = 10001;
+    public static final int COMPANY_SOOIL = 7;
 
-    
     /**
      * Pump Minimed 508
      */
-    public static final int PUMP_MINIMED_508c     = 10002;
-    
+    public static final int PUMP_MINIMED_508 = 10001;
+
+    /**
+     * Pump Minimed 508
+     */
+    public static final int PUMP_MINIMED_508c = 10002;
 
     /**
      * Pump Minimed 511
      */
-    public static final int PUMP_MINIMED_511      = 10003;
-    
-    
+    public static final int PUMP_MINIMED_511 = 10003;
+
     /**
      * Pump Minimed 512/712
      */
-    public static final int PUMP_MINIMED_512      = 10004;
+    public static final int PUMP_MINIMED_512 = 10004;
 
-    
     /**
      * Pump Minimed 515/715
      */
-    public static final int PUMP_MINIMED_515      = 10005;
+    public static final int PUMP_MINIMED_515 = 10005;
 
-    
     /**
      * Pump Minimed 522/722
      */
-    public static final int PUMP_MINIMED_522      = 10006;
+    public static final int PUMP_MINIMED_522 = 10006;
 
-    
     /**
      * Pump Minimed 523/723
      */
-    public static final int PUMP_MINIMED_523      = 10007;
-    
+    public static final int PUMP_MINIMED_523 = 10007;
 
     /**
      * Pump Minimed 553/753
      */
-    public static final int PUMP_MINIMED_553      = 10008;
-    
-    
-    
+    public static final int PUMP_MINIMED_553 = 10008;
+
     /**
      * Pump Minimed 554/754 (Veo)
      */
-    public static final int PUMP_MINIMED_554      = 10009;
-    
-    
-    
+    public static final int PUMP_MINIMED_554 = 10009;
+
     /**
      * Roche SmartPix Device
      */
-    public static final int ROCHE_SMARTPIX_DEVICE        = 20001;
-    
+    public static final int ROCHE_SMARTPIX_DEVICE = 20001;
+
     /**
      * Pump: AccuChek DTron
      */
-    public static final int PUMP_ACCUCHEK_D_TRON         = 20002;
-    
-    /**
-     * Pump: AccuChek Spirit
-     */
-    public static final int PUMP_ACCUCHEK_SPIRIT         = 20003;
-    
-    /**
-     * Pump: AccuChek Spirit
-     */
-    public static final int PUMP_ACCUCHEK_COMBO          = 20004;
+    public static final int PUMP_ACCUCHEK_D_TRON = 20002;
 
-    
+    /**
+     * Pump: AccuChek Spirit
+     */
+    public static final int PUMP_ACCUCHEK_SPIRIT = 20003;
+
+    /**
+     * Pump: AccuChek Spirit
+     */
+    public static final int PUMP_ACCUCHEK_COMBO = 20004;
+
     /**
      * Pump: Disetronic DTron
      */
-    public static final int PUMP_DISETRONIC_D_TRON       = 30001;
-    
-    
+    public static final int PUMP_DISETRONIC_D_TRON = 30001;
+
     /**
      * Pump Animas IR 1200
      */
@@ -166,55 +144,45 @@ public class PumpDevicesIds
      * Pump Animas IR 1250
      */
     public static final int PUMP_ANIMAS_IR_1250 = 40002;
-    
+
     /**
      * Pump Animas IR 2020
      */
     public static final int PUMP_ANIMAS_IR_2020 = 40003;
-    
+
     /**
      * Pump Animas Ping
      */
-    public static final int PUMP_ANIMAS_PING    = 40004;
-    
-    
-    
-    /**
-     * Deltec - Cosmo 1700
-     */
-    public static final int PUMP_DELTEC_COSMO_1700  = 50001;
+    public static final int PUMP_ANIMAS_PING = 40004;
 
-    
     /**
      * Deltec - Cosmo 1700
      */
-    public static final int PUMP_DELTEC_COSMO_1800  = 50002;
-    
-    
+    public static final int PUMP_DELTEC_COSMO_1700 = 50001;
+
+    /**
+     * Deltec - Cosmo 1700
+     */
+    public static final int PUMP_DELTEC_COSMO_1800 = 50002;
+
     /**
      * Pump Insulet: OmniPod
      */
-    public static final int PUMP_INSULET_OMNIPOD  = 60001;
-    
-    
+    public static final int PUMP_INSULET_OMNIPOD = 60001;
+
     /**
      * Dana Diabecare II
      */
-    public static final int PUMP_DANA_DIABECARE_II  = 70001;
+    public static final int PUMP_DANA_DIABECARE_II = 70001;
 
     /**
      * Dana Diabecare II S
      */
     public static final int PUMP_DANA_DIABECARE_IIS = 70002;
-    
+
     /**
      * Dana Diabecare III R
      */
     public static final int PUMP_DANA_DIABECARE_III_R = 70003;
-    
-    
-    
-    
-    
-    
+
 }

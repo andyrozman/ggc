@@ -71,7 +71,6 @@ public class PrefNutritionConfPane extends AbstractPrefOptionsPanel
     private JLabel lab_db = null;
     private JLabel lab_file = null;
 
-
     /**
      * Constructor
      * 
@@ -88,133 +87,118 @@ public class PrefNutritionConfPane extends AbstractPrefOptionsPanel
     private void getDbData()
     {
         /*
-    	if (MainFrame.dbH.isConnected())
-    	{
-    	    lab_db.setText("PROBLEM");
-    	}
-    	else
-    	{
-    	    lab_db.setText(m_ic.getMessage("DB_IS_NOT_CONNECTED"));
-    	}
-        */
+         * if (MainFrame.dbH.isConnected())
+         * {
+         * lab_db.setText("PROBLEM");
+         * }
+         * else
+         * {
+         * lab_db.setText(m_ic.getMessage("DB_IS_NOT_CONNECTED"));
+         * }
+         */
 
     }
 
-
     private void getLocalData()
     {
-    	File fl = new File("../data/nutrition/");
-    	boolean found = false;
-    
-    	if (!fl.exists())
-    	{
-    	    found = false;
-    	}
-    	else
-    	{
-    	    String fls[] = fl.list();
-    
-    	    for (int i=0; i<fls.length; i++)
-    	    {
-        		if (fls[i].startsWith("SR"))
-        		{
-        		    lab_file.setText(fls[i].substring(0, fls[i].indexOf("_")));
-        
-        		    found = true;
-        		    break;
-        		}
-    	    }
-    
-    
-    
-    	}
+        File fl = new File("../data/nutrition/");
+        boolean found = false;
 
-    	// NOT IN I18n Db
-    	if (!found)
-    	    lab_file.setText(m_ic.getMessage("NO_LOCAL_DATA_AVAILABLE"));
+        if (!fl.exists())
+        {
+            found = false;
+        }
+        else
+        {
+            String fls[] = fl.list();
+
+            for (String fl2 : fls)
+            {
+                if (fl2.startsWith("SR"))
+                {
+                    lab_file.setText(fl2.substring(0, fl2.indexOf("_")));
+
+                    found = true;
+                    break;
+                }
+            }
+
+        }
+
+        // NOT IN I18n Db
+        if (!found)
+        {
+            lab_file.setText(m_ic.getMessage("NO_LOCAL_DATA_AVAILABLE"));
+        }
 
     }
 
     private void init()
     {
         setLayout(null);
-	setBounds(0,0,300,300);
+        setBounds(0, 0, 300, 300);
 
         JPanel a = new JPanel();
-	a.setBounds(0,0,440,430);
-	a.setLayout(null);
+        a.setBounds(0, 0, 440, 430);
+        a.setLayout(null);
         a.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("NUTRITION")));
 
-	JPanel p1 = new JPanel();
-	p1.setLayout(null);
-	p1.setBounds(10, 20, 420, 160);
+        JPanel p1 = new JPanel();
+        p1.setLayout(null);
+        p1.setBounds(10, 20, 420, 160);
         p1.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("ABOUT_NUT_DATA")));
 
-	JLabel l1 = new JLabel(m_ic.getMessage("NUT_DATA_DESC"));
-	l1.setBounds(20, 10, 390, 150);
-	p1.add(l1);
+        JLabel l1 = new JLabel(m_ic.getMessage("NUT_DATA_DESC"));
+        l1.setBounds(20, 10, 390, 150);
+        p1.add(l1);
 
+        a.add(p1);
 
-	a.add(p1);
+        JPanel p2 = new JPanel();
+        p2.setBounds(10, 180, 420, 100);
+        p2.setLayout(null);
+        p2.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("NUTRITION_DATA_INFO")));
 
+        JLabel lab = new JLabel();
+        lab.setText(m_ic.getMessage("NUTRITION_DATA_DB"));
+        lab.setBounds(40, 30, 150, 25);
+        lab.setHorizontalAlignment(SwingConstants.LEFT);
+        p2.add(lab);
 
-	JPanel p2 = new JPanel();
-	p2.setBounds(10,180, 420, 100);
-	p2.setLayout(null); 
-	p2.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("NUTRITION_DATA_INFO")));
+        lab_db = new JLabel("x");
+        lab_db.setBounds(220, 30, 150, 25);
+        p2.add(lab_db);
 
+        lab = new JLabel();
+        lab.setText(m_ic.getMessage("NUTRITION_DATA_FILE"));
+        lab.setBounds(40, 55, 150, 25);
+        lab.setHorizontalAlignment(SwingConstants.LEFT);
+        p2.add(lab);
 
-	JLabel lab = new JLabel();
-	lab.setText(m_ic.getMessage("NUTRITION_DATA_DB"));
-	lab.setBounds(40, 30, 150, 25);
-	lab.setHorizontalAlignment(SwingConstants.LEFT);
-	p2.add(lab);
+        lab_file = new JLabel("x");
+        lab_file.setBounds(220, 55, 150, 25);
+        p2.add(lab_file);
 
-	lab_db = new JLabel("x");
-	lab_db.setBounds(220, 30, 150, 25);
-	p2.add(lab_db);
-
-
-
-	lab = new JLabel();
-	lab.setText(m_ic.getMessage("NUTRITION_DATA_FILE"));
-	lab.setBounds(40, 55, 150, 25);
-	lab.setHorizontalAlignment(SwingConstants.LEFT);
-	p2.add(lab);
-
-	lab_file = new JLabel("x");
-	lab_file.setBounds(220, 55, 150, 25);
-	p2.add(lab_file);
-
-
-
-	a.add(p2);
-/*
-	JPanel p3 = new JPanel();
-	p3.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("NUTRITION_ACTION")));
-	p3.setLayout(new GridLayout(3,2));
-
-	JButton b889 = new JButton("Deer");
-	p3.add(b889);
-
-	JLabel ll = new JLabel("djhfjs dfhjdshf shfkjhsd fsdjk");
-	p3.add(ll);
-
-	JButton b33889 = new JButton("Deeds ffr");
-	p3.add(b33889);
-
-	JLabel ll2 = new JLabel("djhfjs dfhjdshf shfkjhsd fsdjk");
-	p3.add(ll2);
-
-
-	a.add(p3);
-*/
-
+        a.add(p2);
+        /*
+         * JPanel p3 = new JPanel();
+         * p3.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage(
+         * "NUTRITION_ACTION")));
+         * p3.setLayout(new GridLayout(3,2));
+         * JButton b889 = new JButton("Deer");
+         * p3.add(b889);
+         * JLabel ll = new JLabel("djhfjs dfhjdshf shfkjhsd fsdjk");
+         * p3.add(ll);
+         * JButton b33889 = new JButton("Deeds ffr");
+         * p3.add(b33889);
+         * JLabel ll2 = new JLabel("djhfjs dfhjdshf shfkjhsd fsdjk");
+         * p3.add(ll2);
+         * a.add(p3);
+         */
 
         add(a, BorderLayout.NORTH);
     }
-    
-    
+
     /**
      * Save Properties
      * 

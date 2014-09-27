@@ -33,83 +33,63 @@ import gnu.io.SerialPortEvent;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class MinimedComm_ComStation extends SerialProtocol implements MinimedComm_Interface    //extends SerialProtocol implements MinimedComm_Interface
+public class MinimedComm_ComStation extends SerialProtocol implements MinimedComm_Interface // extends
+                                                                                            // SerialProtocol
+                                                                                            // implements
+                                                                                            // MinimedComm_Interface
 {
 
-    
     /**
      * Constructor
      */
     public MinimedComm_ComStation(MinimedDevice mmd)
     {
         super(mmd.getDataAccess());
-        //super(port, serial_number);
+        // super(port, serial_number);
     }
-    
-    
-    
+
     @Override
     public void serialEvent(SerialPortEvent event)
     {
     }
 
-    
     // Here are old methods from minimed stored
-    
-    
-
-
 
     public int closeCommunicationInterface() throws PlugInBaseException
     {
         return 0;
     }
 
-
-
     public int closeDevice() throws PlugInBaseException
     {
         return 0;
     }
-
-
 
     public int initializeCommunicationInterface() throws PlugInBaseException
     {
         return 0;
     }
 
-
-
     public int[] decrypt(int[] input)
     {
         return input;
     }
-
-
 
     public int[] encrypt(int[] input)
     {
         return input;
     }
 
-
-
     public boolean hasEncryptionSupport()
     {
         return false;
     }
 
-
-
     public void dumpInterfaceStatus()
     {
         // TODO Auto-generated method stub
-        
+
     }
-
-
 
     public int initDevice() throws PlugInBaseException
     {
@@ -117,27 +97,20 @@ public class MinimedComm_ComStation extends SerialProtocol implements MinimedCom
         return 0;
     }
 
-
-
     public boolean executeCommandRetry(int commandId) throws PlugInBaseException
     {
         return false;
     }
-
-
 
     public boolean executeCommandRetry(MinimedCommand command) throws PlugInBaseException
     {
         return false;
     }
 
-
-
+    @Override
     public void dispose()
     {
     }
-
-
 
     public String getComment()
     {
@@ -145,15 +118,11 @@ public class MinimedComm_ComStation extends SerialProtocol implements MinimedCom
         return null;
     }
 
-
-
     public String getConnectionPort()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
-
 
     public String getDeviceClassName()
     {
@@ -161,22 +130,17 @@ public class MinimedComm_ComStation extends SerialProtocol implements MinimedCom
         return null;
     }
 
-
-
     public int getDeviceId()
     {
         return 0;
     }
 
-
-
+    @Override
     public String getDeviceSpecialComment()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
-
 
     public int getDownloadSupportType()
     {
@@ -184,15 +148,12 @@ public class MinimedComm_ComStation extends SerialProtocol implements MinimedCom
         return 0;
     }
 
-
-
+    @Override
     public GGCPlugInFileReaderContext[] getFileDownloadTypes()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
-
 
     public String getIconName()
     {
@@ -200,15 +161,11 @@ public class MinimedComm_ComStation extends SerialProtocol implements MinimedCom
         return null;
     }
 
-
-
     public int getImplementationStatus()
     {
         // TODO Auto-generated method stub
         return 0;
     }
-
-
 
     public String getInstructions()
     {
@@ -216,31 +173,25 @@ public class MinimedComm_ComStation extends SerialProtocol implements MinimedCom
         return null;
     }
 
-
-
     public String getName()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
-
-
+    @Override
     public boolean hasIndeterminateProgressStatus()
     {
         // TODO Auto-generated method stub
         return false;
     }
 
-
-
+    @Override
     public boolean hasSpecialProgressStatus()
     {
         // TODO Auto-generated method stub
         return false;
     }
-
-
 
     public boolean isDeviceCommunicating()
     {
@@ -248,73 +199,58 @@ public class MinimedComm_ComStation extends SerialProtocol implements MinimedCom
         return false;
     }
 
-
-
+    @Override
     public boolean isFileDownloadSupported()
     {
         // TODO Auto-generated method stub
         return false;
     }
 
-
-
+    @Override
     public boolean isReadableDevice()
     {
         // TODO Auto-generated method stub
         return false;
     }
 
-
-
+    @Override
     public void readConfiguration() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
-
-
 
     public void readDeviceDataFull() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
-
-
+    @Override
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
-
-
+    @Override
     public void readInfo() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
-
-
+    @Override
     public long getItemId()
     {
         // TODO Auto-generated method stub
         return 0;
     }
 
-
-
     public void sendCommandReadData(MinimedCommand command) throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
-
-
-    
-    
-    
 }

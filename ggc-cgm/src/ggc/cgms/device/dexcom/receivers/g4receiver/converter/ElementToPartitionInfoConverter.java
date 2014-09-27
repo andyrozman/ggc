@@ -42,9 +42,7 @@ public class ElementToPartitionInfoConverter
     {
 
         if (xmlElement == null)
-        {
             throw new DexcomException("No data found for converting PartitionInfo.");
-        }
 
         try
         {

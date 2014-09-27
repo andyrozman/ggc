@@ -26,68 +26,63 @@ package ggc.plugin.list;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class BaseListEntry  
+public class BaseListEntry
 {
-    
+
     /**
      * Status: None
      */
-    public static final int STATUS_NONE = 0;            // black
-    
+    public static final int STATUS_NONE = 0; // black
+
     /**
      * Status: Done
      */
-    public static final int STATUS_DONE = 1;            // green
-    
+    public static final int STATUS_DONE = 1; // green
+
     /**
      * Status: Testing
      */
-    public static final int STATUS_TESTING = 2;         // light green
-    
+    public static final int STATUS_TESTING = 2; // light green
+
     /**
      * 
      */
-    public static final int STATUS_PART_IMPLEMENTED = 3;    // light blue
-    
+    public static final int STATUS_PART_IMPLEMENTED = 3; // light blue
+
     /**
      * 
      */
-    public static final int STATUS_IMPLEMENTING = 4;    // blue
+    public static final int STATUS_IMPLEMENTING = 4; // blue
     /**
      * 
      */
-    public static final int STATUS_PLANNED = 5;         // orange
+    public static final int STATUS_PLANNED = 5; // orange
     /**
      * 
      */
-    public static final int STATUS_NOTPLANNED = 6;      // red
-    
-    
+    public static final int STATUS_NOTPLANNED = 6; // red
+
     /**
      * Name
      */
     public String name;
-    
+
     /**
      * Page 
      */
     public String page;
-    
+
     /**
      * Status 
      */
     public int status;
-    
 
-    
     /**
      * Constructor
      */
     public BaseListEntry()
     {
     }
-    
 
     /**
      * Constructor
@@ -102,16 +97,16 @@ public class BaseListEntry
         this.page = page;
         this.status = status;
     }
-    
-    
+
     /**
      * To String 
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString()
     {
         return this.name;
     }
-    
+
 }

@@ -35,14 +35,12 @@ import org.apache.commons.logging.LogFactory;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class FreestyleLite extends FreestyleMeter
 {
 
     @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog(FreestyleLite.class);
-    
-    
+
     /**
      * Constructor
      */
@@ -50,7 +48,7 @@ public class FreestyleLite extends FreestyleMeter
     {
         super();
     }
-    
+
     /**
      * Constructor for device manager
      * 
@@ -60,9 +58,7 @@ public class FreestyleLite extends FreestyleMeter
     {
         super(cmp);
     }
-    
-    
-    
+
     /**
      * Constructor
      * 
@@ -73,8 +69,7 @@ public class FreestyleLite extends FreestyleMeter
     {
         super(portName, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -86,7 +81,6 @@ public class FreestyleLite extends FreestyleMeter
     {
         super(comm_parameters, writer, da);
     }
-    
 
     /**
      * Maximum of records that device can store
@@ -134,40 +128,38 @@ public class FreestyleLite extends FreestyleMeter
         return "Abbott Freestyle Lite";
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * 
      * @return instructions for reading data 
      */
+    @Override
     public String getInstructions()
     {
         return "INSTRUCTIONS_ABBOTT_FREESTYLE_LITE";
     }
-    
 
     /**
      * getComment - Get Comment for device 
      * 
      * @return comment or null
      */
+    @Override
     public String getComment()
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    @Override
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
-    
-    
-}
 
+}

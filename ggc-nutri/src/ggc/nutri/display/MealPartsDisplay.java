@@ -31,205 +31,190 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class MealPartsDisplay extends ATTableData
+{
+
+    private String type_desc;
+    private String id;
+    private String description;
+    private String amount;
+
+    /**
+     * Type Description
+     */
+    public static String[] type_description = null;
+
+    MealPart meal_part = null;
+    DailyFoodEntry daily_food_entry = null;
+
+    /**
+     * Constructor
+     * 
+     * @param ic
+     */
+    public MealPartsDisplay(I18nControlAbstract ic)
     {
+        super(ic);
+        initStatic();
+    }
 
-	private String type_desc;
-	private String id;
-	private String description;
-	private String amount;
-	
-	/**
-	 * Type Description
-	 */
-	public static String[] type_description = null;
-	
-	MealPart meal_part = null;
-	DailyFoodEntry daily_food_entry = null;
+    /**
+     * Constructor
+     * 
+     * @param ic
+     * @param full
+     */
+    public MealPartsDisplay(I18nControlAbstract ic, String full)
+    {
+        super(ic);
+        int index = full.indexOf("=");
+        this.id = full.substring(0, index);
+        // this.value = full.substring(index+1);
+        initStatic();
+    }
 
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param ic
-	 */
-	public MealPartsDisplay(I18nControlAbstract ic)
-	{
-	    super(ic);
-	    initStatic();
-	}
+    /**
+     * Constructor
+     * 
+     * @param ic
+     * @param part
+     */
+    public MealPartsDisplay(I18nControlAbstract ic, MealPart part)
+    {
+        super(ic);
+        initStatic();
 
+        this.type_desc = MealPartsDisplay.type_description[part.getType() - 1];
+        this.id = "" + part.getId();
+        this.description = part.getName();
+        this.amount = "" + part.getAmount();
 
-	/**
-	 * Constructor
-	 * 
-	 * @param ic
-	 * @param full
-	 */
-	public MealPartsDisplay(I18nControlAbstract ic, String full)
-	{
-	    super(ic);
-	    int index = full.indexOf("=");
-	    this.id = full.substring(0, index);
-//	    this.value = full.substring(index+1);
-	    initStatic();
-	}
+        this.meal_part = part;
+    }
 
+    /**
+     * Constructor
+     * 
+     * @param ic
+     * @param part
+     */
+    public MealPartsDisplay(I18nControlAbstract ic, DailyFoodEntry part)
+    {
+        super(ic);
+        initStatic();
 
-	/**
-	 * Constructor
-	 * 
-	 * @param ic
-	 * @param part
-	 */
-	public MealPartsDisplay(I18nControlAbstract ic, MealPart part)
-	{
-	    super(ic);
-	    initStatic();
+        this.type_desc = MealPartsDisplay.type_description[part.getFoodType() - 1];
+        this.id = "" + part.getItemId();
+        this.description = part.getName();
+        this.amount = "" + part.getAmountString();
 
-	    this.type_desc = MealPartsDisplay.type_description[part.getType()-1];
-	    this.id = "" + part.getId();
-	    this.description = part.getName();
-	    this.amount = "" + part.getAmount();
-	    
-	    this.meal_part = part;
-	}
-	
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param ic
-	 * @param part
-	 */
-	public MealPartsDisplay(I18nControlAbstract ic, DailyFoodEntry part)
-	{
-	    super(ic);
-	    initStatic();
+        // this.meal_part = part;
+        daily_food_entry = part;
+        // String[] col = { "TYPE", "ID", "DESCRIPTION", "AMOUNT" };
 
-	    this.type_desc = MealPartsDisplay.type_description[part.getFoodType()-1];
-	    this.id = "" + part.getItemId();
-	    this.description = part.getName();
-	    this.amount = "" + part.getAmountString();
-	    
-	    //this.meal_part = part;
-	    daily_food_entry = part;
-//	    String[] col = { "TYPE", "ID", "DESCRIPTION", "AMOUNT" };
+    }
 
-	    
-	}
-	
-	
-	
-	/**
-	 * Get Meal Part
-	 * 
-	 * @return
-	 */
-	public MealPart getMealPart()
-	{
-	    return this.meal_part;
-	}
-	
-	/**
-	 * Get Daily Food Entry
-	 * 
-	 * @return
-	 */
-	public DailyFoodEntry getDailyFoodEntry()
-	{
-	    return this.daily_food_entry;
-	}
-	
-	
-	private void initStatic()
-	{
-	    if (MealPartsDisplay.type_description==null)
-	    {
-    		MealPartsDisplay.type_description = new String[3];
-    		MealPartsDisplay.type_description[0] = ic.getMessage("USDA_NUTRITION");
-    		MealPartsDisplay.type_description[1] = ic.getMessage("USER_NUTRITION");
-    		MealPartsDisplay.type_description[2] = ic.getMessage("MEAL");
-	    }
-	    
-	}
-	
+    /**
+     * Get Meal Part
+     * 
+     * @return
+     */
+    public MealPart getMealPart()
+    {
+        return this.meal_part;
+    }
 
-	/**
-	 * Init
-	 * 
-	 * @see com.atech.graphics.components.ATTableData#init()
-	 */
-	public void init()
-	{
-	    String[] col = { "MEAL_TYPE", "DESCRIPTION", "AMOUNT_LBL" };
-	    float[] col_size = { 0.25f, 0.65f, 0.1f  };
+    /**
+     * Get Daily Food Entry
+     * 
+     * @return
+     */
+    public DailyFoodEntry getDailyFoodEntry()
+    {
+        return this.daily_food_entry;
+    }
 
-	    init(col, col_size);
-	}
+    private void initStatic()
+    {
+        if (MealPartsDisplay.type_description == null)
+        {
+            MealPartsDisplay.type_description = new String[3];
+            MealPartsDisplay.type_description[0] = ic.getMessage("USDA_NUTRITION");
+            MealPartsDisplay.type_description[1] = ic.getMessage("USER_NUTRITION");
+            MealPartsDisplay.type_description[2] = ic.getMessage("MEAL");
+        }
 
-	/**
-	 * Get Id
-	 * 
-	 * @return
-	 */
-	public String getId()
-	{
-	    return this.id;
-	}
+    }
 
-	/**
-	 * Set Amount
-	 * 
-	 * @param amount
-	 */
-	public void setAmount(float amount)
-	{
-	    this.amount = "" + amount;
-	    this.meal_part.setAmount(amount);
-	}
-	
-	
-	
-	
+    /**
+     * Init
+     * 
+     * @see com.atech.graphics.components.ATTableData#init()
+     */
+    @Override
+    public void init()
+    {
+        String[] col = { "MEAL_TYPE", "DESCRIPTION", "AMOUNT_LBL" };
+        float[] col_size = { 0.25f, 0.65f, 0.1f };
 
-	/**
-	 * Get Column Value
-	 * 
-	 * @see com.atech.graphics.components.ATTableData#getColumnValue(int)
-	 */
-	public String getColumnValue(int column)
-	{
-	    switch(column)
-	    {
-		case 1:
-		    return this.description;
-		case 2:
-		    return this.amount;
+        init(col, col_size);
+    }
 
-		case 0:
-		default:
-		    return "" + this.type_desc;
+    /**
+     * Get Id
+     * 
+     * @return
+     */
+    public String getId()
+    {
+        return this.id;
+    }
 
-		
-		/*
-		case 1:
-		    return this.id;
-		case 2:
-		    return this.description;
-		case 3:
-		    return this.amount;
+    /**
+     * Set Amount
+     * 
+     * @param amount
+     */
+    public void setAmount(float amount)
+    {
+        this.amount = "" + amount;
+        this.meal_part.setAmount(amount);
+    }
 
-		case 0:
-		default:
-		    return "" + this.type_desc;
-		    */
+    /**
+     * Get Column Value
+     * 
+     * @see com.atech.graphics.components.ATTableData#getColumnValue(int)
+     */
+    @Override
+    public String getColumnValue(int column)
+    {
+        switch (column)
+        {
+            case 1:
+                return this.description;
+            case 2:
+                return this.amount;
 
-	    }
-	}
-	
-	
+            case 0:
+            default:
+                return "" + this.type_desc;
+
+                /*
+                 * case 1:
+                 * return this.id;
+                 * case 2:
+                 * return this.description;
+                 * case 3:
+                 * return this.amount;
+                 * case 0:
+                 * default:
+                 * return "" + this.type_desc;
+                 */
+
+        }
+    }
+
     /**
      * Get Save Data
      * 
@@ -239,7 +224,5 @@ public class MealPartsDisplay extends ATTableData
     {
         return this.meal_part.getType() + ":" + this.meal_part.getId() + "=" + this.amount;
     }
-	
-	
-	
+
 }

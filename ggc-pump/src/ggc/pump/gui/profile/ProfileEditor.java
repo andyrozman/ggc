@@ -64,16 +64,16 @@ import com.atech.utils.ATSwingUtils;
 
 public class ProfileEditor extends JDialog implements ActionListener, ChangeListener, HelpCapable
 {
-    
+
     // graph
     // check if all entries in range
     // help
-    
+
     private static final long serialVersionUID = 3285623806907044947L;
     DataAccessPump m_da = DataAccessPump.getInstance();
     I18nControlAbstract m_ic = null;
-    JList lst_basals; //lst_bgs, lst_basals_old, lst_basals_new, lst_ratios;
-    
+    JList lst_basals; // lst_bgs, lst_basals_old, lst_basals_new, lst_ratios;
+
     GraphViewBasalRateEstimator gv;
     Hashtable<String, BREGraphsAbstract> m_graphs;
 
@@ -81,14 +81,13 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     JCheckBox cb_enabled_till;
     DateTimeComponent dtc_from, dtc_till;
     JTextField tf_name, tf_com;
-    JButton help_button;    
+    JButton help_button;
     JDialog parent = null;
     PumpProfileH m_profile;
     boolean m_action_done = false;
     JSpinner sp_base;
     GraphViewProfileEditor graphview_pe;
-    
-    
+
     /**
      * Constructor
      * 
@@ -99,15 +98,14 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         super(parent, "", true);
         ATSwingUtils.initLibrary();
         m_ic = m_da.getI18nControlInstance();
-        
+
         list_data = new ArrayList<ProfileSubEntry>();
         m_profile = new PumpProfileH();
         init();
-        
+
         this.setSize(780, 565);
     }
 
-    
     /**
      * Constructor
      * 
@@ -120,20 +118,19 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         ATSwingUtils.initLibrary();
         m_ic = m_da.getI18nControlInstance();
         m_profile = prof;
-        
+
         list_data = new ArrayList<ProfileSubEntry>();
         init();
         load();
-        
+
         this.setSize(780, 565);
     }
-    
-    
+
     private void load()
     {
         this.tf_name.setText(this.m_profile.getName());
         this.dtc_from.setDateTime(getDateCorrected(this.m_profile.getActive_from()));
-        
+
         if (this.m_profile.getActive_till() <= 0)
         {
             this.cb_enabled_till.setSelected(false);
@@ -144,19 +141,19 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
             this.cb_enabled_till.setSelected(true);
             this.dtc_till.setDateTime(getDateCorrected(this.m_profile.getActive_till()));
         }
-        
+
         this.sp_base.setValue(this.m_profile.getBasal_base());
         this.loadSubEntries(this.m_profile.getBasal_diffs());
-        
-        if ((this.m_profile.getComment()!=null) && (!this.m_profile.getComment().equals("null"))) 
+
+        if (this.m_profile.getComment() != null && !this.m_profile.getComment().equals("null"))
+        {
             this.tf_com.setText(this.m_profile.getComment());
-        
+        }
+
         graphview_pe.refreshData();
-        
+
     }
-    
-    
-    
+
     private long getDateCorrected(long dt)
     {
         if (dt <= 0)
@@ -164,73 +161,81 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         else
         {
             String s = "" + dt;
-            
-            if (s.length()==12)
+
+            if (s.length() == 12)
+            {
                 dt *= 100;
-            
+            }
+
             return dt;
         }
-        
+
     }
-    
-    
-    
+
     private void loadSubEntries(String subs)
     {
         // 0-400=0.2;400-600=1.7
         StringTokenizer strtok = new StringTokenizer(subs, ";");
-        
+
         while (strtok.hasMoreTokens())
         {
             list_data.add(new ProfileSubPattern(strtok.nextToken()));
         }
 
-        
         Collections.sort(list_data);
-        
+
         this.refreshList(1, list_data);
     }
-    
+
     private void save()
     {
-        this.m_profile.setName(this.tf_name.getText()); 
+        this.m_profile.setName(this.tf_name.getText());
         this.m_profile.setActive_from(this.dtc_from.getDateTime());
-        
+
         if (this.cb_enabled_till.isSelected())
+        {
             this.m_profile.setActive_till(this.dtc_till.getDateTime());
+        }
         else
+        {
             this.m_profile.setActive_till(-1L);
-            
-        this.m_profile.setBasal_base(m_da.getFloatValue(this.sp_base.getValue())); 
+        }
+
+        this.m_profile.setBasal_base(m_da.getFloatValue(this.sp_base.getValue()));
         this.m_profile.setBasal_diffs(getSubEntries());
-        this.m_profile.setComment(this.tf_com.getText()); 
-        
+        this.m_profile.setComment(this.tf_com.getText());
+
         PumpProfile pp = new PumpProfile(this.m_profile);
-        
-        if (pp.getId()>0)
+
+        if (pp.getId() > 0)
+        {
             m_da.getDb().edit(pp);
+        }
         else
+        {
             m_da.getDb().add(pp);
-        
+        }
+
         this.m_profile.setId(pp.getId());
     }
-    
+
     private String getSubEntries()
     {
         StringBuffer sb = new StringBuffer();
-        
-        for(int i=0; i<this.list_data.size(); i++)
+
+        for (int i = 0; i < this.list_data.size(); i++)
         {
-            if (i!=0)
+            if (i != 0)
+            {
                 sb.append(";");
-                
+            }
+
             sb.append(this.list_data.get(i).getPacked());
         }
-        
+
         return sb.toString();
     }
-    
-    
+
     /**
      * Get Profile Entries (as ArrayList)
      * @return
@@ -239,168 +244,152 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     {
         return this.list_data;
     }
-    
 
     private void init()
     {
-        //this.setLayout(null);
+        // this.setLayout(null);
         this.setTitle(m_ic.getMessage("PROFILE_EDITOR"));
-        //JLabel label;
-        
+        // JLabel label;
+
         JPanel panel = new JPanel();
         panel.setLayout(null);
         this.add(panel);
-        
-        ATSwingUtils.getTitleLabel(m_ic.getMessage("PROFILE_EDITOR"), 0, 20, 780, 35, panel, ATSwingUtils.FONT_BIG_BOLD); 
-        
 
-        ATSwingUtils.getLabel(m_ic.getMessage("NAME") + ":", 80, 75, 120, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
-        
+        ATSwingUtils
+                .getTitleLabel(m_ic.getMessage("PROFILE_EDITOR"), 0, 20, 780, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
+
+        ATSwingUtils.getLabel(m_ic.getMessage("NAME") + ":", 80, 75, 120, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+
         tf_name = ATSwingUtils.getTextField("", 190, 75, 120, 25, panel);
         tf_name.setEditable(false);
-        
-        ATSwingUtils.getButton("   " +m_ic.getMessage("SELECT"), 
-            330, 75, 120, 25, panel, 
-            ATSwingUtils.FONT_NORMAL, "cancel.png", "select_profile", this, m_da);
-        
-        
-        ATSwingUtils.getLabel(m_ic.getMessage("DATE_FROM") + ":", 80, 110, 250, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
 
-        dtc_from = new DateTimeComponent(m_da, DateTimeComponent.ALIGN_HORIZONTAL, 30, DateTimeComponent.TIME_MAXIMAL_SECOND);
+        ATSwingUtils.getButton("   " + m_ic.getMessage("SELECT"), 330, 75, 120, 25, panel, ATSwingUtils.FONT_NORMAL,
+            "cancel.png", "select_profile", this, m_da);
+
+        ATSwingUtils.getLabel(m_ic.getMessage("DATE_FROM") + ":", 80, 110, 250, 25, panel,
+            ATSwingUtils.FONT_NORMAL_BOLD);
+
+        dtc_from = new DateTimeComponent(m_da, DateTimeComponent.ALIGN_HORIZONTAL, 30,
+                DateTimeComponent.TIME_MAXIMAL_SECOND);
         dtc_from.setBounds(190, 110, 120, 25);
         dtc_from.setDateTimeType(DateTimeComponent.TIME_MAXIMAL_SECOND);
         dtc_from.setDateTimeAsCurrent();
-        //dtc_from.setD
+        // dtc_from.setD
         panel.add(dtc_from);
-        
-        cb_enabled_till = ATSwingUtils.getCheckBox(" " + m_ic.getMessage("DATE_TILL") + ":", 80, 150, 80, 20, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+
+        cb_enabled_till = ATSwingUtils.getCheckBox(" " + m_ic.getMessage("DATE_TILL") + ":", 80, 150, 80, 20, panel,
+            ATSwingUtils.FONT_NORMAL_BOLD);
         cb_enabled_till.addChangeListener(this);
-        
-        dtc_till = new DateTimeComponent(m_da, DateTimeComponent.ALIGN_HORIZONTAL, 30, DateTimeComponent.TIME_MAXIMAL_SECOND);
+
+        dtc_till = new DateTimeComponent(m_da, DateTimeComponent.ALIGN_HORIZONTAL, 30,
+                DateTimeComponent.TIME_MAXIMAL_SECOND);
         dtc_till.setBounds(190, 145, 120, 25);
         dtc_till.setDateTimeType(DateTimeComponent.TIME_MAXIMAL_SECOND);
         dtc_till.setDateTimeAsCurrent();
         dtc_till.setEnabled(false);
         panel.add(dtc_till);
 
-        
-        ATSwingUtils.getLabel(m_ic.getMessage("COMMENT") + ":", 80, 180, 120, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD); 
+        ATSwingUtils.getLabel(m_ic.getMessage("COMMENT") + ":", 80, 180, 120, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
 
         tf_com = ATSwingUtils.getTextField("", 190, 180, 240, 25, panel);
         tf_com.setEditable(true);
-        
-        
-        ATSwingUtils.getLabel(m_ic.getMessage("BASE_BASAL") + ":", 560, 210, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
-        
+
+        ATSwingUtils.getLabel(m_ic.getMessage("BASE_BASAL") + ":", 560, 210, 200, 25, panel,
+            ATSwingUtils.FONT_NORMAL_BOLD);
+
         sp_base = new JSpinner(new SpinnerNumberModel(0, 0, 25.0f, 0.1f));
         sp_base.setBounds(680, 210, 60, 25);
         panel.add(sp_base);
-        
-        
+
         this.lst_basals = new JList();
         JScrollPane scr = new JScrollPane(this.lst_basals);
         scr.setBounds(560, 250, 180, 210);
         panel.add(scr);
-        
-        /*
-        JPanel panel_graph = new JPanel();
-        panel_graph.setBounds(30, 220, 500, 280);
-        panel_graph.setBackground(new Color(65, 105, 225));
-        panel.add(panel_graph);
-        
-        */
 
-        graphview_pe = new GraphViewProfileEditor(this); 
-        
-        
+        /*
+         * JPanel panel_graph = new JPanel();
+         * panel_graph.setBounds(30, 220, 500, 280);
+         * panel_graph.setBackground(new Color(65, 105, 225));
+         * panel.add(panel_graph);
+         */
+
+        graphview_pe = new GraphViewProfileEditor(this);
+
         JPanel panel_graph = graphview_pe.getChartPanel();
         panel_graph.setBounds(20, 220, 510, 310);
-        //panel_graph.setBackground(new Color(65, 105, 225));
+        // panel_graph.setBackground(new Color(65, 105, 225));
         panel.add(panel_graph);
-        
+
         JButton b = null;
-        
-        b = ATSwingUtils.getButton("", 
-            575, 470, 30, 30, panel, 
-            ATSwingUtils.FONT_NORMAL, "document_add.png", "item_add", this, m_da);
+
+        b = ATSwingUtils.getButton("", 575, 470, 30, 30, panel, ATSwingUtils.FONT_NORMAL, "document_add.png",
+            "item_add", this, m_da);
         b.setToolTipText(m_ic.getMessage("ADD_BASAL_SUB_ENTRY"));
-        
-        b = ATSwingUtils.getButton("", 
-            615, 470, 30, 30, panel, 
-            ATSwingUtils.FONT_NORMAL, "document_edit.png", "item_edit", this, m_da);
+
+        b = ATSwingUtils.getButton("", 615, 470, 30, 30, panel, ATSwingUtils.FONT_NORMAL, "document_edit.png",
+            "item_edit", this, m_da);
         b.setToolTipText(m_ic.getMessage("EDIT_BASAL_SUB_ENTRY"));
-        
-        b = ATSwingUtils.getButton("", 
-            655, 470, 30, 30, panel, 
-            ATSwingUtils.FONT_NORMAL, "document_delete.png", "item_delete", this, m_da);
+
+        b = ATSwingUtils.getButton("", 655, 470, 30, 30, panel, ATSwingUtils.FONT_NORMAL, "document_delete.png",
+            "item_delete", this, m_da);
         b.setToolTipText(m_ic.getMessage("DELETE_BASAL_SUB_ENTRY"));
 
-        
-        b = ATSwingUtils.getButton("", 
-            695, 470, 30, 30, panel, 
-            ATSwingUtils.FONT_NORMAL, "document_exchange.png", "import_profile", this, m_da);
+        b = ATSwingUtils.getButton("", 695, 470, 30, 30, panel, ATSwingUtils.FONT_NORMAL, "document_exchange.png",
+            "import_profile", this, m_da);
         b.setToolTipText(m_ic.getMessage("IMPORT_BASAL_SUB_ENTRIES"));
 
-        
         /*
-        JButton bt_item_1 = new JButton(m_da.getImageIcon_22x22("document_add.png", this));
-        bt_item_1.setActionCommand("item_add");
-        bt_item_1.addActionListener(this);
-        bt_item_1.setBounds(585, 470, 30, 30);
-        panel.add(bt_item_1); 
-        
-        JButton bt_item_2 = new JButton(m_da.getImageIcon_22x22("document_edit.png", this));
-        bt_item_2.setActionCommand("item_edit");
-        bt_item_2.addActionListener(this);
-        bt_item_2.setBounds(635, 470, 30, 30);
-        panel.add(bt_item_2);
-        
-        JButton bt_item_3 = new JButton(m_da.getImageIcon_22x22("document_delete.png", this));
-        bt_item_3.setActionCommand("item_delete");
-        bt_item_3.addActionListener(this);
-        bt_item_3.setBounds(685, 470, 30, 30);
-        panel.add(bt_item_3);
-*/
+         * JButton bt_item_1 = new
+         * JButton(m_da.getImageIcon_22x22("document_add.png", this));
+         * bt_item_1.setActionCommand("item_add");
+         * bt_item_1.addActionListener(this);
+         * bt_item_1.setBounds(585, 470, 30, 30);
+         * panel.add(bt_item_1);
+         * JButton bt_item_2 = new
+         * JButton(m_da.getImageIcon_22x22("document_edit.png", this));
+         * bt_item_2.setActionCommand("item_edit");
+         * bt_item_2.addActionListener(this);
+         * bt_item_2.setBounds(635, 470, 30, 30);
+         * panel.add(bt_item_2);
+         * JButton bt_item_3 = new
+         * JButton(m_da.getImageIcon_22x22("document_delete.png", this));
+         * bt_item_3.setActionCommand("item_delete");
+         * bt_item_3.addActionListener(this);
+         * bt_item_3.setBounds(685, 470, 30, 30);
+         * panel.add(bt_item_3);
+         */
         /*
-        JButton bt_item_3 = new JButton(m_da.getImageIcon_22x22("document_delete.png", this));
-        bt_item_3.setActionCommand("item_delete");
-        bt_item_3.addActionListener(this);
-        bt_item_3.setBounds(685, 470, 30, 30);
-        panel.add(bt_item_3);
-        
-        
-        document_exchange.png
-        
-        ATSwingUtils.getButton("   " + m_ic.getMessage("IMPORT"), 
-            570, 445, 160, 22, panel, 
-            ATSwingUtils.FONT_NORMAL, null, "import_profile", this, m_da);
-        */
-        
-        ATSwingUtils.getButton("   " + m_ic.getMessage("OK"), 
-            610, 75, 120, 25, panel, 
-            ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, m_da);
+         * JButton bt_item_3 = new
+         * JButton(m_da.getImageIcon_22x22("document_delete.png", this));
+         * bt_item_3.setActionCommand("item_delete");
+         * bt_item_3.addActionListener(this);
+         * bt_item_3.setBounds(685, 470, 30, 30);
+         * panel.add(bt_item_3);
+         * document_exchange.png
+         * ATSwingUtils.getButton("   " + m_ic.getMessage("IMPORT"),
+         * 570, 445, 160, 22, panel,
+         * ATSwingUtils.FONT_NORMAL, null, "import_profile", this, m_da);
+         */
 
-        ATSwingUtils.getButton("   " +m_ic.getMessage("CANCEL"), 
-            610, 110, 120, 25, panel, 
-            ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
+        ATSwingUtils.getButton("   " + m_ic.getMessage("OK"), 610, 75, 120, 25, panel, ATSwingUtils.FONT_NORMAL,
+            "ok.png", "ok", this, m_da);
+
+        ATSwingUtils.getButton("   " + m_ic.getMessage("CANCEL"), 610, 110, 120, 25, panel, ATSwingUtils.FONT_NORMAL,
+            "cancel.png", "cancel", this, m_da);
 
         this.help_button = this.m_da.createHelpButtonByBounds(610, 145, 120, 25, this);
         panel.add(this.help_button);
-        
+
         m_da.enableHelp(this);
-        
+
     }
 
-    
-    
-    
-    
     private void refreshList(int type, ArrayList<?> lst)
     {
-        
+
         DefaultListModel listModel = new DefaultListModel();
-        
-        for(int i=0; i<lst.size(); i++)
+
+        for (int i = 0; i < lst.size(); i++)
         {
             Object o = lst.get(i);
             listModel.addElement(o.toString());
@@ -409,8 +398,6 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         this.lst_basals.setModel(listModel);
         this.graphview_pe.refreshData();
     }
-    
-    
 
     /**
      * Action Performed
@@ -418,7 +405,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     public void actionPerformed(ActionEvent e)
     {
         String action = e.getActionCommand();
-        
+
         if (action.equals("item_add"))
         {
             ProfileEntryDialog ped = new ProfileEntryDialog(this);
@@ -430,13 +417,14 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
                 Collections.sort(this.list_data);
                 refreshList(1, this.list_data);
             }
-            
+
         }
         else if (action.equals("item_edit"))
         {
             if (this.lst_basals.isSelectionEmpty())
             {
-                JOptionPane.showConfirmDialog(this, m_ic.getMessage("SELECT_ITEM_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
+                JOptionPane.showConfirmDialog(this, m_ic.getMessage("SELECT_ITEM_FIRST"), m_ic.getMessage("ERROR"),
+                    JOptionPane.CLOSED_OPTION);
                 return;
             }
 
@@ -456,13 +444,15 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         {
             if (this.lst_basals.isSelectionEmpty())
             {
-                JOptionPane.showConfirmDialog(this, m_ic.getMessage("SELECT_ITEM_FIRST"), m_ic.getMessage("ERROR"), JOptionPane.CLOSED_OPTION);
+                JOptionPane.showConfirmDialog(this, m_ic.getMessage("SELECT_ITEM_FIRST"), m_ic.getMessage("ERROR"),
+                    JOptionPane.CLOSED_OPTION);
                 return;
             }
 
-            int ii = JOptionPane.showConfirmDialog(this, m_ic.getMessage("ARE_YOU_SURE_DELETE"), m_ic.getMessage("QUESTION"), JOptionPane.YES_NO_OPTION);
+            int ii = JOptionPane.showConfirmDialog(this, m_ic.getMessage("ARE_YOU_SURE_DELETE"),
+                m_ic.getMessage("QUESTION"), JOptionPane.YES_NO_OPTION);
 
-            if (ii==JOptionPane.YES_OPTION)
+            if (ii == JOptionPane.YES_OPTION)
             {
                 this.list_data.remove(this.lst_basals.getSelectedIndex());
                 Collections.sort(this.list_data);
@@ -497,30 +487,28 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         {
             // this.parent -> this
             ProfileSelector ps = new ProfileSelector(DataAccessPump.getInstance(), this, true);
-            
+
             if (ps.wasAction())
             {
-                PumpProfile p = (PumpProfile)ps.getSelectedObject();
+                PumpProfile p = (PumpProfile) ps.getSelectedObject();
                 loadSubEntries(p.getBasal_diffs());
             }
         }
         else
+        {
             System.out.println(e.getActionCommand() + " is currently not supported.");
+        }
     }
-
 
     /**
      * State Changed - of check box
      */
     public void stateChanged(ChangeEvent e)
     {
-        JCheckBox cb = (JCheckBox)e.getSource();
+        JCheckBox cb = (JCheckBox) e.getSource();
         dtc_till.setEnabled(cb.isSelected());
     }
-    
 
-    
-    
     /**
      * Was Action Successful
      * 
@@ -531,7 +519,6 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         return m_action_done;
     }
 
-    
     /**
      * Get Result - returns result of this dialog
      * 
@@ -541,10 +528,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     {
         return this.m_profile;
     }
-    
-    
-    
-    
+
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
@@ -578,9 +562,5 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     {
         return "PumpTool_Profile_Editor";
     }
-    
-    
-    
-    
-}
 
+}

@@ -34,7 +34,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PumpAdditionalDataType
 {
 
@@ -44,71 +43,62 @@ public class PumpAdditionalDataType
     /**
      * Additional data description
      */
-    public String[] addata_desc = { ic.getMessage("SELECT_ADDITIONAL_DATA"),
-                       ic.getMessage("ADD_DATA_ACTIVITY"),             
-                       ic.getMessage("ADD_DATA_COMMENT"),             
-                       ic.getMessage("ADD_DATA_BG"),             
-                       ic.getMessage("ADD_DATA_URINE"),             
-                       ic.getMessage("ADD_DATA_CH"),             
-                       ic.getMessage("ADD_DATA_FOOD_DB"),             
-                       ic.getMessage("ADD_DATA_FOOD_DESC"),             
-    };
-    
-    
-    Hashtable<String,String> addata_mapping = new Hashtable<String,String>(); 
-    
-    
+    public String[] addata_desc = { ic.getMessage("SELECT_ADDITIONAL_DATA"), ic.getMessage("ADD_DATA_ACTIVITY"),
+                                   ic.getMessage("ADD_DATA_COMMENT"), ic.getMessage("ADD_DATA_BG"),
+                                   ic.getMessage("ADD_DATA_URINE"), ic.getMessage("ADD_DATA_CH"),
+                                   ic.getMessage("ADD_DATA_FOOD_DB"), ic.getMessage("ADD_DATA_FOOD_DESC"), };
+
+    Hashtable<String, String> addata_mapping = new Hashtable<String, String>();
+
     /**
      * Pump Additional Data Type: Activity
      */
-    public static final int PUMP_ADD_DATA_ACTIVITY    = 1;
-    
+    public static final int PUMP_ADD_DATA_ACTIVITY = 1;
+
     /**
      * Pump Additional Data Type: Comment
      */
-    public static final int PUMP_ADD_DATA_COMMENT    = 2;
-    
+    public static final int PUMP_ADD_DATA_COMMENT = 2;
+
     /**
      * Pump Additional Data Type: BG
      */
-    public static final int PUMP_ADD_DATA_BG    = 3;
-    
+    public static final int PUMP_ADD_DATA_BG = 3;
+
     /**
      * Pump Additional Data Type: Urine
      */
-    public static final int PUMP_ADD_DATA_URINE    = 4;
-    
+    public static final int PUMP_ADD_DATA_URINE = 4;
+
     /**
      * Pump Additional Data Type: CH (Carbohydrates)
      */
-    public static final int PUMP_ADD_DATA_CH    = 5;
-    
-    /**
-     * Pump Additional Data Type: Food Db
-     */
-    public static final int PUMP_ADD_DATA_FOOD_DB  = 6;
-   
+    public static final int PUMP_ADD_DATA_CH = 5;
 
     /**
      * Pump Additional Data Type: Food Db
      */
-    public static final int PUMP_ADD_DATA_FOOD_DESC  = 7;
-    
+    public static final int PUMP_ADD_DATA_FOOD_DB = 6;
+
+    /**
+     * Pump Additional Data Type: Food Db
+     */
+    public static final int PUMP_ADD_DATA_FOOD_DESC = 7;
+
     /**
      * Constructor
      */
     public PumpAdditionalDataType()
     {
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_ACTIVITY"), "1");             
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_COMMENT"), "2");             
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_BG"), "3");             
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_URINE"), "4");             
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_CH"), "5");             
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_FOOD_DB"), "6");             
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_FOOD_DESC"), "7");             
+        this.addata_mapping.put(ic.getMessage("ADD_DATA_ACTIVITY"), "1");
+        this.addata_mapping.put(ic.getMessage("ADD_DATA_COMMENT"), "2");
+        this.addata_mapping.put(ic.getMessage("ADD_DATA_BG"), "3");
+        this.addata_mapping.put(ic.getMessage("ADD_DATA_URINE"), "4");
+        this.addata_mapping.put(ic.getMessage("ADD_DATA_CH"), "5");
+        this.addata_mapping.put(ic.getMessage("ADD_DATA_FOOD_DB"), "6");
+        this.addata_mapping.put(ic.getMessage("ADD_DATA_FOOD_DESC"), "7");
     }
 
-    
     /**
      * Get Type from Description
      * 
@@ -118,14 +108,16 @@ public class PumpAdditionalDataType
     public int getTypeFromDescription(String str)
     {
         String s = "0";
-        
+
         if (this.addata_mapping.containsKey(str))
+        {
             s = this.addata_mapping.get(str);
-        
+        }
+
         return Integer.parseInt(s);
-        
+
     }
-    
+
     /**
      * Get Type Description
      * 
@@ -136,7 +128,7 @@ public class PumpAdditionalDataType
     {
         return this.addata_desc[idx];
     }
-    
+
     /**
      * Get Descriptions (array)
      * 
@@ -147,7 +139,6 @@ public class PumpAdditionalDataType
         return this.addata_desc;
     }
 
-    
     /**
      * Create Items (for Combo Box)
      * 
@@ -157,18 +148,17 @@ public class PumpAdditionalDataType
     public Object[] createItems(Hashtable<String, PumpValuesEntryExt> old_data)
     {
         ArrayList<String> items = new ArrayList<String>();
-        
-        for(int i=1; i<this.addata_desc.length; i++)
+
+        for (int i = 1; i < this.addata_desc.length; i++)
         {
             if (!old_data.containsKey(this.addata_desc[i]))
             {
                 items.add(this.addata_desc[i]);
             }
         }
-        
+
         return items.toArray();
-        
+
     }
-    
-    
+
 }

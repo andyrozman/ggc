@@ -39,67 +39,61 @@ import com.atech.utils.ATDataAccessLMAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class PumpsPlugIn extends PlugInClient
 {
-    
+
     /**
      * Command: Read Pump Data
      */
     public static final int COMMAND_READ_PUMP_DATA = 0;
-    
+
     /**
      * Command: Pump List
      */
     public static final int COMMAND_PUMPS_LIST = 1;
-    
+
     /**
      * Command: Pump Configuration
      */
     public static final int COMMAND_CONFIGURATION = 2;
-    
+
     /**
      * Command: Pump Profiles
      */
     public static final int COMMAND_PROFILES = 3;
-    
+
     /**
      * Command: Pump Manual Entry
      */
     public static final int COMMAND_MANUAL_ENTRY = 4;
-    
+
     /**
      * Command: Pump Additional Data
      */
     public static final int COMMAND_ADDITIONAL_DATA = 5;
-    
+
     /**
      * Command: Pump About
      */
     public static final int COMMAND_ABOUT = 6;
-    
-    
+
     /**
      * Return Object: Selected Device with parameters
      */
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
 
-    
     /**
      * This is action that needs to be done, after read data.
      */
     public static final int RETURN_ACTION_READ_DATA = 1;
-    
-    
+
     /**
      * This is action that needs to be done, after config
      */
     public static final int RETURN_ACTION_CONFIG = 2;
-    
-    
+
     DataAccess m_da = DataAccess.getInstance();
-    
-    
+
     /**
      * Constructor
      * 
@@ -108,10 +102,9 @@ public class PumpsPlugIn extends PlugInClient
      */
     public PumpsPlugIn(Component parent, I18nControlAbstract ic)
     {
-        super((JFrame)parent, ic);
+        super((JFrame) parent, ic);
     }
 
-    
     /**
      * Constructor
      * 
@@ -120,10 +113,9 @@ public class PumpsPlugIn extends PlugInClient
      */
     public PumpsPlugIn(Component parent, ATDataAccessLMAbstract da)
     {
-        super((JFrame)parent, da);
+        super((JFrame) parent, da);
     }
-    
-    
+
     /**
      * Constructor
      */
@@ -135,6 +127,7 @@ public class PumpsPlugIn extends PlugInClient
     /**
      * Check If Installed
      */
+    @Override
     public void checkIfInstalled()
     {
         try
@@ -142,14 +135,10 @@ public class PumpsPlugIn extends PlugInClient
             Class<?> c = Class.forName("ggc.pump.plugin.PumpPlugInServer");
 
             this.m_server = (PlugInServer) c.newInstance();
-            
-            
-            this.m_server.init(this.parent, 
-                DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(), 
-                DataAccess.getInstance(), 
-                this, 
-                DataAccess.getInstance().getDb() );
-            
+
+            this.m_server.init(this.parent, DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(),
+                DataAccess.getInstance(), this, DataAccess.getInstance().getDb());
+
             installed = true;
         }
         catch (Exception ex)
@@ -159,32 +148,31 @@ public class PumpsPlugIn extends PlugInClient
         }
     }
 
-    
     /**
      * Get Name Base (untranslated)
      * 
      * @return name of plugin
      */
+    @Override
     public String getNameBase()
     {
         return "PUMPS_PLUGIN";
     }
 
-    
     /**
      * Read Pumps Data
      */
     public void readPumpsData()
     {
-        //this.featureNotImplemented(commands[0]);
+        // this.featureNotImplemented(commands[0]);
         this.executeCommand(PumpsPlugIn.COMMAND_READ_PUMP_DATA);
-//        executeCommand(commands[0]);
+        // executeCommand(commands[0]);
     }
 
-    
     /**
      * Init Plugin
      */
+    @Override
     public void initPlugin()
     {
         this.commands = new String[7];
@@ -204,7 +192,7 @@ public class PumpsPlugIn extends PlugInClient
         this.commands_implemented[4] = true;
         this.commands_implemented[5] = true;
         this.commands_implemented[6] = true;
-        
+
         this.commands_will_be_done = new String[7];
         this.commands_will_be_done[0] = "0.5";
         this.commands_will_be_done[1] = null;
@@ -213,84 +201,80 @@ public class PumpsPlugIn extends PlugInClient
         this.commands_will_be_done[4] = null;
         this.commands_will_be_done[5] = null;
         this.commands_will_be_done[6] = null;
-        
-    }
 
+    }
 
     /**
      * actionPerformed
      */
+    @Override
     public void actionPerformed(ActionEvent e)
     {
         this.m_server.actionPerformed(e);
-        
-  //      String command = e.getActionCommand();
-/*
-        if (command.equals("pumps_read"))
-        {
-            this.readPumpsData();
-//            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
-        }
-        else if (command.equals("pumps_list"))
-        {
-            this.executeCommand(PumpsPlugIn.COMMAND_PUMPS_LIST);
-        }
-        else if (command.equals("pumps_profile"))
-        {
-            this.executeCommand(PumpsPlugIn.COMMAND_PROFILES);
-        }
-        else if (command.equals("pumps_manual_entry"))
-        {
-            //if (!DataAccess.getInstance().developer_version)
-            //    displayExperimental();
-            
-            this.executeCommand(PumpsPlugIn.COMMAND_MANUAL_ENTRY);
-//            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
-        }
-        else if (command.equals("pumps_additional_data"))
-        {
-            //if (!DataAccess.getInstance().developer_version)
-            //    displayExperimental();
 
-            this.executeCommand(PumpsPlugIn.COMMAND_ADDITIONAL_DATA);
-//            refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
-        }
-        else if (command.equals("pumps_config"))
-        {
-            this.executeCommand(PumpsPlugIn.COMMAND_CONFIGURATION);
-            refreshPanels(RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES);
-        }
-        else if (command.equals("pumps_about"))
-        {
-            this.executeCommand(PumpsPlugIn.COMMAND_ABOUT);
-        }
-        else
-        {
-            System.out.println("Wrong command for this plug-in [Pumps]: " + command);
-        }
-*/
+        // String command = e.getActionCommand();
+        /*
+         * if (command.equals("pumps_read"))
+         * {
+         * this.readPumpsData();
+         * // refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
+         * }
+         * else if (command.equals("pumps_list"))
+         * {
+         * this.executeCommand(PumpsPlugIn.COMMAND_PUMPS_LIST);
+         * }
+         * else if (command.equals("pumps_profile"))
+         * {
+         * this.executeCommand(PumpsPlugIn.COMMAND_PROFILES);
+         * }
+         * else if (command.equals("pumps_manual_entry"))
+         * {
+         * //if (!DataAccess.getInstance().developer_version)
+         * // displayExperimental();
+         * this.executeCommand(PumpsPlugIn.COMMAND_MANUAL_ENTRY);
+         * // refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
+         * }
+         * else if (command.equals("pumps_additional_data"))
+         * {
+         * //if (!DataAccess.getInstance().developer_version)
+         * // displayExperimental();
+         * this.executeCommand(PumpsPlugIn.COMMAND_ADDITIONAL_DATA);
+         * // refreshPanels(InfoPanel.PANEL_GROUP_ALL_DATA);
+         * }
+         * else if (command.equals("pumps_config"))
+         * {
+         * this.executeCommand(PumpsPlugIn.COMMAND_CONFIGURATION);
+         * refreshPanels(RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES);
+         * }
+         * else if (command.equals("pumps_about"))
+         * {
+         * this.executeCommand(PumpsPlugIn.COMMAND_ABOUT);
+         * }
+         * else
+         * {
+         * System.out.println("Wrong command for this plug-in [Pumps]: " +
+         * command);
+         * }
+         */
     }
 
-    
-    
-    
-    
     /**
      * Get When Will Be Implemented
      * 
      * @return
      */
+    @Override
     public String getWhenWillBeImplemented()
     {
         return "0.5";
     }
 
-    
     /**
      * Get Short Status
      * 
      * @return
      */
+    @Override
     public String getShortStatus()
     {
         if (this.m_server != null)
@@ -299,23 +283,22 @@ public class PumpsPlugIn extends PlugInClient
             return ic.getMessage("STATUS_NOT_INSTALLED");
     }
 
-    
     private void refreshPanels(int mask)
     {
         DataAccess.getInstance().setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, mask);
     }
-    
+
     /**
      * Set Return Data (for getting data from plugin - async)
      * 
      * @param return_data
      * @param stat_rep_int
      */
+    @Override
     public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
     {
     }
 
-    
     /**
      * This is method which can be used by server side to do certain action. Mainly this will be used
      * to run refreshes and such actions. This needs to be implemented by Client side, if you wish to use
@@ -323,9 +306,10 @@ public class PumpsPlugIn extends PlugInClient
      * 
      * @param action_type
      */
+    @Override
     public void executeReturnAction(int action_type)
     {
-        
+
         if (action_type == PumpsPlugIn.RETURN_ACTION_READ_DATA)
         {
             refreshPanels(RefreshInfo.PANEL_GROUP_ALL_DATA);
@@ -334,8 +318,7 @@ public class PumpsPlugIn extends PlugInClient
         {
             refreshPanels(RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES);
         }
-        
+
     }
-    
-    
+
 }

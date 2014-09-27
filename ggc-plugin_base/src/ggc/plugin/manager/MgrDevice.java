@@ -26,9 +26,7 @@
  *  Author:   andyrozman
  */
 
-
-package ggc.plugin.manager; 
-
+package ggc.plugin.manager;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -56,10 +54,8 @@ package ggc.plugin.manager;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class MgrDevice
 {
-
 
     private String id;
     private String group;
@@ -68,7 +64,6 @@ public class MgrDevice
     private String class_name;
     @SuppressWarnings("unused")
     private String unpacked_status;
-    
 
     /**
      * Constructor 
@@ -82,15 +77,14 @@ public class MgrDevice
      */
     public MgrDevice(String id, String group, String name, String picture, String class_name, String status)
     {
-    	this.id = id;
-    	this.group = group;
-    	this.name = name;
-    	this.picture = picture;
-    	this.class_name = class_name;
-    	this.unpacked_status = status;
+        this.id = id;
+        this.group = group;
+        this.name = name;
+        this.picture = picture;
+        this.class_name = class_name;
+        this.unpacked_status = status;
     }
-    
-    
+
     /**
      * Get Full Name
      * 
@@ -98,10 +92,8 @@ public class MgrDevice
      */
     public String getFullName()
     {
-    	return group + "_" + id;
+        return group + "_" + id;
     }
-
-
 
     /**
      * Gets the image name
@@ -113,7 +105,6 @@ public class MgrDevice
         return this.picture;
     }
 
-
     /**
      * Gets the name
      * 
@@ -124,7 +115,6 @@ public class MgrDevice
         return this.name;
     }
 
-
     /**
      * Get Device Class Name
      * 
@@ -134,6 +124,5 @@ public class MgrDevice
     {
         return this.class_name;
     }
-
 
 }

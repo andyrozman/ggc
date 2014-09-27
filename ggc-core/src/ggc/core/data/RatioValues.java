@@ -32,7 +32,6 @@ import java.util.Vector;
  *  Author: Andy {andy@atech-software.com}  
  */
 
-
 public class RatioValues
 {
 
@@ -64,14 +63,13 @@ public class RatioValues
         // dayValues.add(DataAccess.getInstance().getDayStatsRange(sDate,
         // eDate));
 
-        WeeklyValues wv = DataAccess.getInstance().getDayStatsRange(sDate,
-                eDate);
+        WeeklyValues wv = DataAccess.getInstance().getDayStatsRange(sDate, eDate);
         Hashtable<String, DailyValues> table = wv.getAllValues();
 
         for (Enumeration<String> en = table.keys(); en.hasMoreElements();)
         {
-            String key = (String) en.nextElement();
-            addDayValues((DailyValues) table.get(key));
+            String key = en.nextElement();
+            addDayValues(table.get(key));
         }
 
     }
@@ -83,23 +81,24 @@ public class RatioValues
             this.data_table.put(dv.getDateAsString(), dv);
         }
     }
-/* x
-    private void addDayValuesRow(DailyValuesRow dvr)
-    {
-        if (this.data_table.containsKey(dvr.getDateAsString()))
-        {
-            this.data_table.get(dvr.getDateAsString()).addRow(dvr);
-        }
-        else
-        {
-            DailyValues dv = new DailyValues();
-            dv.addRow(dvr);
 
-            this.data_table.put(dvr.getDateAsString(), dv);
-        }
-    }
-*/
-    
+    /*
+     * x
+     * private void addDayValuesRow(DailyValuesRow dvr)
+     * {
+     * if (this.data_table.containsKey(dvr.getDateAsString()))
+     * {
+     * this.data_table.get(dvr.getDateAsString()).addRow(dvr);
+     * }
+     * else
+     * {
+     * DailyValues dv = new DailyValues();
+     * dv.addRow(dvr);
+     * this.data_table.put(dvr.getDateAsString(), dv);
+     * }
+     * }
+     */
+
     /**
      * Get Average Insulin Usage
      * @return
@@ -107,7 +106,9 @@ public class RatioValues
     public float getAverageInsulinUsage()
     {
         if (average_insulin_usage == 0.0f)
+        {
             this.calculateAvergeInsulinUsage();
+        }
 
         return this.average_insulin_usage;
     }
@@ -116,8 +117,7 @@ public class RatioValues
     {
         float sum = 0.0f;
 
-        for (Enumeration<String> en = this.data_table.keys(); en
-                .hasMoreElements();)
+        for (Enumeration<String> en = this.data_table.keys(); en.hasMoreElements();)
         {
             sum += this.data_table.get(en.nextElement()).getSumIns();
         }
@@ -139,12 +139,12 @@ public class RatioValues
      * Insulin/Carb Ratio Rule: 500
      */
     public static final int INS_CARB_RATIO_RULE_500 = 500;
-    
+
     /**
      * Insulin/Carb Ratio Rule: 450
      */
     public static final int INS_CARB_RATIO_RULE_450 = 450;
-    
+
     /**
      * Insulin/Carb Ratio Rule: 300
      */
@@ -163,14 +163,12 @@ public class RatioValues
      * Sensitivity Factor Rule (mmol/L): 100
      */
     public static final int SENSITIVITY_FACTOR_RULE_100 = 100;
-    
+
     /**
      * Sensitivity Factor Rule (mmol/L): 83
      */
     public static final int SENSITIVITY_FACTOR_RULE_83 = 83;
 
-    
-    
     /**
      * Get Insulin Carb Ratio
      * 
@@ -179,7 +177,7 @@ public class RatioValues
      */
     public float getInsulinCarb_Ratio(int rule)
     {
-        return (rule * (1.0f)) / this.getAverageInsulinUsage();
+        return rule * 1.0f / this.getAverageInsulinUsage();
     }
 
     /**
@@ -205,7 +203,7 @@ public class RatioValues
      */
     public float getSensitivityFactorMgDL(int rule)
     {
-        //int rule_all = rule;
+        // int rule_all = rule;
 
         if (rule == 100)
         {
@@ -216,7 +214,7 @@ public class RatioValues
             rule = 1500;
         }
 
-        return rule * (1.0f) / this.getAverageInsulinUsage();
+        return rule * 1.0f / this.getAverageInsulinUsage();
     }
 
     /**

@@ -28,9 +28,7 @@ import ggc.plugin.data.DeviceValuesEntryInterface;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public interface PumpValuesEntryInterface extends DeviceValuesEntryInterface
 {
-    
-    
-}	
+
+}

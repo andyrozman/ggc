@@ -14,12 +14,12 @@ import java.util.Date;
 public class MeterDataRecord extends GenericReceiverRecordAbstract
 {
 
-    // Version: 1   Length: 16
-    //    public int SystemSeconds; 4
-    //    public int DisplaySeconds; 4
-    //    public ushort MeterValue; 2
-    //    public int MeterTime; 4
-    //    public ushort m_crc;  // 2
+    // Version: 1 Length: 16
+    // public int SystemSeconds; 4
+    // public int DisplaySeconds; 4
+    // public ushort MeterValue; 2
+    // public int MeterTime; 4
+    // public ushort m_crc; // 2
 
     public short meterValue;
     public int meterTime;

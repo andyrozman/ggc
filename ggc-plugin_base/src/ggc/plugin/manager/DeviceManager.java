@@ -1,11 +1,10 @@
-package ggc.plugin.manager; 
+package ggc.plugin.manager;
 
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import java.util.Hashtable;
 import java.util.Vector;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -33,12 +32,11 @@ import java.util.Vector;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public abstract class DeviceManager
 {
 
-    protected Hashtable<String,AbstractDeviceCompany> companies_ht = new Hashtable<String,AbstractDeviceCompany>(); 
-    protected Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>(); 
+    protected Hashtable<String, AbstractDeviceCompany> companies_ht = new Hashtable<String, AbstractDeviceCompany>();
+    protected Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>();
     protected Vector<DeviceInterface> supported_devices = new Vector<DeviceInterface>();
 
     /**
@@ -46,23 +44,20 @@ public abstract class DeviceManager
      */
     public DeviceManager()
     {
-    	this.loadDeviceCompanies();
-    	this.loadSupportedDevices();
+        this.loadDeviceCompanies();
+        this.loadSupportedDevices();
     }
 
-    
     /**
      * Load devices companies
      */
     public abstract void loadDeviceCompanies();
-    
-    
+
     /**
      * Load Supported Devices
      */
     public abstract void loadSupportedDevices();
-    
-    
+
     /**
      * Get Companies
      * @return
@@ -71,8 +66,7 @@ public abstract class DeviceManager
     {
         return this.companies;
     }
-   
-    
+
     /**
      * Get Supported Devices
      * @return
@@ -82,8 +76,6 @@ public abstract class DeviceManager
         return this.supported_devices;
     }
 
-
-    
     /**
      * @param company
      */
@@ -92,9 +84,7 @@ public abstract class DeviceManager
         this.companies.add(company);
         this.companies_ht.put(company.getShortName(), company);
     }
-    
-    
-    
+
     /**
      * Gets the name
      * @param group 
@@ -104,18 +94,15 @@ public abstract class DeviceManager
     public DeviceInterface getDevice(String group, String device)
     {
         AbstractDeviceCompany cmp = getCompany(group);
-        
-        if (cmp==null)
-        {
-            //System.out.println("Company not found !");
-            //System.out.println("companies_nt: " + this.companies_ht);
+
+        if (cmp == null)
+            // System.out.println("Company not found !");
+            // System.out.println("companies_nt: " + this.companies_ht);
             return null;
-        }
-        
+
         return cmp.getDevice(device);
     }
-    
-    
+
     /**
      * Get Device Class name
      * 
@@ -127,8 +114,7 @@ public abstract class DeviceManager
     {
         return getDevice(group, device).getDeviceClassName();
     }
-    
-    
+
     /**
      * Get Company
      * 
@@ -138,14 +124,10 @@ public abstract class DeviceManager
     public AbstractDeviceCompany getCompany(String name)
     {
         if (this.companies_ht.containsKey(name))
-        {
             return this.companies_ht.get(name);
-        }
         else
             return null;
-        
+
     }
-    
-    
 
 }

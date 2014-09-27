@@ -5,7 +5,6 @@ import ggc.plugin.output.OutputWriterData;
 
 import com.atech.utils.data.ATechDate;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       CGMS Tool (support for CGMS devices)
@@ -32,11 +31,9 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-
-public class PumpTempValues extends DeviceTempValues 
+public class PumpTempValues extends DeviceTempValues
 {
-    
+
     /**
      * @param _object_type
      * @param _base_type
@@ -44,11 +41,10 @@ public class PumpTempValues extends DeviceTempValues
      */
     public PumpTempValues(int _object_type, int _base_type, int _sub_type)
     {
-        
+
         super(_object_type, _base_type, _sub_type, null);
     }
-    
-    
+
     /**
      * @param _object_type
      * @param _base_type
@@ -60,7 +56,6 @@ public class PumpTempValues extends DeviceTempValues
         super(_object_type, _base_type, _sub_type, _value_template);
     }
 
-    
     /**
      * Constructor
      * 
@@ -72,38 +67,33 @@ public class PumpTempValues extends DeviceTempValues
         super(_object_type, _base_type);
     }
 
-
     /**
      * Pump Object: Base
      */
     public static final int OBJECT_BASE = 1;
 
-    
     // we have base object, and value is in fact sub_type
     /**
      * Pump Object: Base SubType
      */
     public static final int OBJECT_BASE_SET_SUBTYPE = 4;
-    
+
     /**
      * Pump Object: Extended
      */
     public static final int OBJECT_EXT = 2;
-    
+
     /**
      * Pump Object: Profile
      */
     public static final int OBJECT_PROFILE = 3;
-    
-    
-    
+
     /*
-    public void writeObject(OutputWriter ow, String _value)
-    {
-    }*/
+     * public void writeObject(OutputWriter ow, String _value)
+     * {
+     * }
+     */
 
-
-    
     /** 
      * getData
      */
@@ -112,22 +102,25 @@ public class PumpTempValues extends DeviceTempValues
     {
         String val = _value;
         int stype = _sub_type;
-        
-        if (stype==-1)
+
+        if (stype == -1)
+        {
             stype = this.sub_type;
-        
-        if (val==null)
+        }
+
+        if (val == null)
+        {
             val = "";
-        
-        
+        }
+
         if (this.object_type == PumpTempValues.OBJECT_BASE)
         {
             PumpValuesEntry pve = new PumpValuesEntry();
             pve.setBaseType(this.base_type);
             pve.setSubType(stype);
             pve.setDateTimeObject(dt);
-            
-            if (this.value_template==null)
+
+            if (this.value_template == null)
             {
                 pve.setValue(val);
             }
@@ -135,7 +128,7 @@ public class PumpTempValues extends DeviceTempValues
             {
                 pve.setValue(this.value_template + "=" + val);
             }
-            
+
             return pve;
         }
         else if (this.object_type == PumpTempValues.OBJECT_BASE_SET_SUBTYPE)
@@ -144,7 +137,7 @@ public class PumpTempValues extends DeviceTempValues
             pve.setBaseType(this.base_type);
             pve.setSubType(Integer.parseInt(val));
             pve.setDateTimeObject(dt);
-            
+
             return pve;
         }
         else if (this.object_type == PumpTempValues.OBJECT_EXT)
@@ -153,7 +146,7 @@ public class PumpTempValues extends DeviceTempValues
             pvex.setType(this.base_type);
             pvex.setDateTimeObject(dt);
 
-            if (this.value_template==null)
+            if (this.value_template == null)
             {
                 pvex.setValue(val);
             }
@@ -161,15 +154,11 @@ public class PumpTempValues extends DeviceTempValues
             {
                 pvex.setValue(this.value_template + "=" + val);
             }
-        
+
             return pvex;
         }
-        
+
         return null;
     }
 
-
-   
-    
-	
-}	
+}

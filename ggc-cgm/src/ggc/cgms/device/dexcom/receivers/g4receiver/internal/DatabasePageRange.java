@@ -28,7 +28,7 @@ public class DatabasePageRange
 
     public int getPagesCount()
     {
-        return (lastPage + 1) - firstPage;
+        return lastPage + 1 - firstPage;
     }
 
 }

@@ -6,6 +6,7 @@ import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.graph.data.GraphValue;
 import ggc.plugin.graph.data.GraphValuesCapable;
 import ggc.plugin.output.OutputWriterType;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.plugin.util.DeviceValuesEntryUtil;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.graph.PumpGraphContext;
@@ -46,8 +47,11 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesEntryInterface,   /*PumpValuesEntryAbstract,*/ DatabaseObjectHibernate, GraphValuesCapable 
+public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesEntryInterface, /*
+                                                                                                * PumpValuesEntryAbstract
+                                                                                                * ,
+                                                                                                */
+        DatabaseObjectHibernate, GraphValuesCapable
 {
 
     private static final long serialVersionUID = 2300422547257308019L;
@@ -59,58 +63,53 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     private int object_status = 0;
     private boolean checked = false;
     private int output_type = 0;
-    
-    
-    //public boolean checked = false;
-    //public int status = 1; //MeterValuesEntry.
-    
-	// pump 
-//	long datetime;
-//..	int base_type;
-//	int sub_type;
-//	String value;
-//	String profile;
-	
-	// old
-/*	public String bg_str;
-	public int bg_unit;
-	public boolean checked = false;
-	//public
-	public Hashtable<String,String> params;
-	public int status = 1; //MeterValuesEntry.
-	public static I18nControl ic = I18nControl.getInstance(); 
-	
-	public String bg_original = null;
-	public OutputUtil util = new OutputUtil();
-*/	
-	
-    
-	
-    //PumpAdditionalDataType m_pump_add = null;
 
-    
-    
-	/**
-	 * Constructor
-	 * 
-	 * @param pump_add
-	 */
-	/*public PumpValuesEntryExt(PumpAdditionalDataType pump_add)
-	{
-	    this.m_pump_add = pump_add;
-	}*/
+    // public boolean checked = false;
+    // public int status = 1; //MeterValuesEntry.
 
-	
+    // pump
+    // long datetime;
+    // .. int base_type;
+    // int sub_type;
+    // String value;
+    // String profile;
+
+    // old
+    /*
+     * public String bg_str;
+     * public int bg_unit;
+     * public boolean checked = false;
+     * //public
+     * public Hashtable<String,String> params;
+     * public int status = 1; //MeterValuesEntry.
+     * public static I18nControl ic = I18nControl.getInstance();
+     * public String bg_original = null;
+     * public OutputUtil util = new OutputUtil();
+     */
+
+    // PumpAdditionalDataType m_pump_add = null;
+
+    /**
+     * Constructor
+     * 
+     * @param pump_add
+     */
+    /*
+     * public PumpValuesEntryExt(PumpAdditionalDataType pump_add)
+     * {
+     * this.m_pump_add = pump_add;
+     * }
+     */
+
     /**
      * Constructor
      */
     public PumpValuesEntryExt()
     {
-        this((String)null);
-        //m_pump_add = new PumpAdditionalDataType();
+        this((String) null);
+        // m_pump_add = new PumpAdditionalDataType();
     }
 
-    
     /**
      * Constructor
      * 
@@ -119,10 +118,9 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     public PumpValuesEntryExt(String src)
     {
         this.source = src;
-        //m_pump_add = new PumpAdditionalDataType();
+        // m_pump_add = new PumpAdditionalDataType();
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -130,8 +128,8 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      */
     public PumpValuesEntryExt(PumpDataExtendedH pd)
     {
-        //m_pump_add = new PumpAdditionalDataType();
-        
+        // m_pump_add = new PumpAdditionalDataType();
+
         this.setId(pd.getId());
         this.setDt_info(pd.getDt_info());
         this.setType(pd.getType());
@@ -140,10 +138,8 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         this.setPerson_id(pd.getPerson_id());
         this.setComment(pd.getComment());
         this.setChanged(pd.getChanged());
-        
-        
+
     }
-    
 
     /**
      * Has Changed - This is method which is tied only to changes of value or datetime
@@ -154,22 +150,18 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return this.changed;
     }
-    
-	
-/*	
-	public void setDateTime(long dt)
-	{
-	    this.datetime = dt;
-	}
-	
-	
-	
-	public long getDateTime()
-	{
-		return this.datetime;
-	}
-	*/
-	
+
+    /*
+     * public void setDateTime(long dt)
+     * {
+     * this.datetime = dt;
+     * }
+     * public long getDateTime()
+     * {
+     * return this.datetime;
+     * }
+     */
+
     /**
      * Get DateTime Object (ATechDate)
      * 
@@ -179,86 +171,81 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.getDt_info());
     }
-	
-	
-    
-    
-    
-	
-    
-	
-	
-	
-	
-	/**
-	 * Prepare Entry
-	 */
-	public void prepareEntry()
-	{
-	    /*
-	    if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
-	        return;
-	    else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
-	    {
-//	        this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-	        this.entry_object.setChanged(System.currentTimeMillis());
-//	        this.entry_object.setComment(createComment());
-	    }
-	    else
-	    {
-	        this.entry_object = new DayValueH();
-	        this.entry_object.setIns1(0);
-            this.entry_object.setIns2(0);
-            this.entry_object.setCh(0.0f);
-//            this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-//	        this.entry_object.setDt_info(this.datetime);
-            this.entry_object.setChanged(System.currentTimeMillis());
-//            this.entry_object.setComment(createComment());
-	    }
-	    */
-	}
-	
-	
-	
-	
-	
-	/** 
-	 * To String
-	 */
-	public String toString()
-	{
-	    //OutputUtil o= null;
-	    //return "PumpValueEntryExt [unknown]";
-	    
-	    StringBuffer sb = new StringBuffer();
-	    
-        if ((this.getType() != PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB) &&
-            (this.getType() != PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))   
+
+    /**
+     * Prepare Entry
+     */
+    public void prepareEntry()
+    {
+        /*
+         * if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
+         * return;
+         * else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
+         * {
+         * //
+         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil
+         * .BG_MGDL)));
+         * this.entry_object.setChanged(System.currentTimeMillis());
+         * // this.entry_object.setComment(createComment());
+         * }
+         * else
+         * {
+         * this.entry_object = new DayValueH();
+         * this.entry_object.setIns1(0);
+         * this.entry_object.setIns2(0);
+         * this.entry_object.setCh(0.0f);
+         * //
+         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil
+         * .BG_MGDL)));
+         * // this.entry_object.setDt_info(this.datetime);
+         * this.entry_object.setChanged(System.currentTimeMillis());
+         * // this.entry_object.setComment(createComment());
+         * }
+         */
+    }
+
+    /** 
+     * To String
+     */
+    @Override
+    public String toString()
+    {
+        // OutputUtil o= null;
+        // return "PumpValueEntryExt [unknown]";
+
+        StringBuffer sb = new StringBuffer();
+
+        if (this.getType() != PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB
+                && this.getType() != PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)
         {
-    	    sb.append(DataAccessPump.getInstance().getAdditionalTypes().getTypeDescription(this.getType()));
-    	    sb.append(": ");
-	    
-    	    if ((this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY) ||
-    	        (this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT) ||
-    	        (this.getType()==PumpAdditionalDataType.PUMP_ADD_DATA_URINE))
-    	    {
-    	        sb.append(this.getValue());
-    	    }
+            sb.append(DataAccessPump.getInstance().getAdditionalTypes().getTypeDescription(this.getType()));
+            sb.append(": ");
+
+            if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY
+                    || this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT
+                    || this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_URINE)
+            {
+                sb.append(this.getValue());
+            }
             else if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_BG)
             {
-                if (this.da.m_BG_unit==DataAccessPump.BG_MGDL)
+                if (this.da.m_BG_unit == DataAccessPlugInBase.BG_MGDL)
+                {
                     sb.append(this.getValue() + " mg/dL");
+                }
                 else
                 {
-                    //System.out.println("Displayed BG: " + da.getDisplayedBGString(this.getValue()));
+                    // System.out.println("Displayed BG: " +
+                    // da.getDisplayedBGString(this.getValue()));
                     sb.append(da.getDisplayedBGString(this.getValue()));
-                    //sb.append(this.getValue() + " mmol/L");
+                    // sb.append(this.getValue() + " mmol/L");
                     sb.append(" mmol/L");
-                    
-                    //da.getBGValueDifferent(DataAccessPump.BG_MGDL, Float.parseFloat(arg0)bg_value)
+
+                    // da.getBGValueDifferent(DataAccessPump.BG_MGDL,
+                    // Float.parseFloat(arg0)bg_value)
                 }
-                    
-                //po.setValue(this.num_1.getValue().toString());
+
+                // po.setValue(this.num_1.getValue().toString());
             }
             else if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
             {
@@ -268,29 +255,29 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         else
         {
             if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)
+            {
                 sb.append(ic.getMessage("FOOD_SET_DB") + ":  ");
+            }
             else
+            {
                 sb.append(ic.getMessage("FOOD_SET_DESC") + ":  ");
-            
-            if ((this.getValue()==null) || (this.getValue().length()==0))
+            }
+
+            if (this.getValue() == null || this.getValue().length() == 0)
+            {
                 sb.append(ic.getMessage("NO"));
+            }
             else
+            {
                 sb.append(ic.getMessage("YES"));
-        } 
-        
+            }
+        }
 
-	    
-	    
-	    
-	    return sb.toString();
-	    
-	    
-	    
-	    
-//	    return "PumpValueEntryExt [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]"; 
-	}
+        return sb.toString();
 
-	
+        // return "PumpValueEntryExt [date/time=" + this.datetime + ",bg=" +
+        // this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]";
+    }
 
     /** 
      * DbAdd
@@ -301,7 +288,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 
         PumpDataExtendedH ch = new PumpDataExtendedH();
 
-        //ch.setId(id);
+        // ch.setId(id);
         ch.setDt_info(this.getDt_info());
         ch.setType(this.getType());
         ch.setValue(this.getValue());
@@ -310,14 +297,13 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
 
-        Long id = (Long)sess.save(ch);
+        Long id = (Long) sess.save(ch);
         tx.commit();
 
         ch.setId(id.longValue());
-        
-        return ""+id.longValue();
-    }
 
+        return "" + id.longValue();
+    }
 
     /** 
      * DbDelete
@@ -326,7 +312,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         Transaction tx = sess.beginTransaction();
 
-        PumpDataExtendedH ch = (PumpDataExtendedH)sess.get(PumpDataExtendedH.class, new Long(this.getId()));
+        PumpDataExtendedH ch = (PumpDataExtendedH) sess.get(PumpDataExtendedH.class, new Long(this.getId()));
         sess.delete(ch);
         tx.commit();
 
@@ -342,11 +328,11 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
             return false;
 
         Transaction tx = sess.beginTransaction();
-        
-        PumpDataExtendedH ch = (PumpDataExtendedH)sess.get(PumpDataExtendedH.class, new Long(this.getId()));
+
+        PumpDataExtendedH ch = (PumpDataExtendedH) sess.get(PumpDataExtendedH.class, new Long(this.getId()));
 
         // TODO: changed check
-        //ch.setId(id);
+        // ch.setId(id);
         ch.setDt_info(this.getDt_info());
         ch.setType(this.getType());
         ch.setValue(this.getValue());
@@ -357,10 +343,9 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 
         sess.update(ch);
         tx.commit();
-        
+
         return true;
     }
-
 
     /** 
      * Db Get
@@ -371,7 +356,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         return false;
     }
 
-
     /**
      * Db Has Children
      */
@@ -379,7 +363,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return false;
     }
-
 
     /** 
      * Get Action
@@ -389,7 +372,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         return 0;
     }
 
-
     /** 
      * Get Object Name
      */
@@ -397,7 +379,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return "PumpDataExtendedH";
     }
-
 
     /**
      * Is Debug Mode
@@ -414,18 +395,18 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      */
     public String getObjectUniqueId()
     {
-        //System.out.println("getObjectUID: " + this.getId());
+        // System.out.println("getObjectUID: " + this.getId());
         return "" + this.getId();
     }
-    
+
     boolean changed = false;
-	
-    
+
     /**
      * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * 
      * @param dt_info 
      */
+    @Override
     public void setDt_info(long dt_info)
     {
         if (dt_info != getDt_info())
@@ -434,22 +415,21 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
             changed = true;
         }
     }
-    
-    
+
     /**
      * Set Value
      *  
      * @param value parameter
      */
-    public void setValue(String value) 
+    @Override
+    public void setValue(String value)
     {
-        if ((this.getValue()==null) || (!value.equals(this.getValue())))
+        if (this.getValue() == null || !value.equals(this.getValue()))
         {
             super.setValue(value);
             changed = true;
         }
     }
-
 
     /**
      * Get DateTime (long)
@@ -471,10 +451,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         return ATechDate.FORMAT_DATE_AND_TIME_S;
     }
 
-
-
-
-
     /**
      * Set DateTime Object (ATechDate)
      * 
@@ -483,11 +459,8 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     public void setDateTimeObject(ATechDate dt)
     {
         this.setDt_info(dt.getATDateTimeAsLong());
-        
+
     }
-
-
-
 
     /**
      * Get Column Value
@@ -501,7 +474,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         return null;
     }
 
-
     /**
      * Get Db Objects
      * 
@@ -512,7 +484,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         // TODO Auto-generated method stub
         return null;
     }
-
 
     /**
      * Get Table Column Value (in case that we need special display values for download data table, this method 
@@ -535,26 +506,23 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
                 return da.getAdditionalTypes().getTypeDescription(this.getType());
 
             case 3:
-                return ""; 
+                return "";
 
             case 4:
                 return this.getValue();
-                
+
             case 5:
                 return this.getStatus();
-            
+
             case 6:
                 return new Boolean(getChecked());
 
             default:
                 return "";
         }
-        
+
     }
 
-
-
-    
     /**
      * Get Special Id
      * 
@@ -565,7 +533,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         return "PE_" + this.getDt_info() + "_" + this.getType();
     }
 
-    
     /**
      * Get DeviceValuesEntry Name
      * 
@@ -576,20 +543,19 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         return "PumpValuesEntryExt";
     }
 
-
     /**
      * Get Value of object
      * 
      * @return
      */
-/*    public String getValue()
-    {
-        return this.get
-        return null;
-    }
-*/
-    
-    
+    /*
+     * public String getValue()
+     * {
+     * return this.get
+     * return null;
+     * }
+     */
+
     /**
      * Get Checked 
      * 
@@ -600,7 +566,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         return this.checked;
     }
 
-    
     /**
      * Set Checked
      * 
@@ -610,8 +575,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         this.checked = check;
     }
-    
-    
+
     /**
      * Get Status
      * 
@@ -621,8 +585,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return this.status;
     }
-    
-    
+
     /**
      * Set Status
      * 
@@ -632,31 +595,28 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         this.status = status_in;
     }
-    
-    
+
     /**
      * Set Output Type
      * 
      * @see ggc.plugin.output.OutputWriterData#setOutputType(int)
      */
-    
+
     public void setOutputType(int type)
     {
         this.output_type = type;
     }
-    
-    
+
     /**
      * Is Data BG
      * 
      * @see ggc.plugin.output.OutputWriterData#isDataBG()
      */
-    
+
     public boolean isDataBG()
     {
-        return false; 
+        return false;
     }
-
 
     /**
      * Comparator method, for sorting objects
@@ -677,8 +637,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return DeviceValuesEntryUtil.compare(this, d2);
     }
-    
-    
+
     /**
      * Set Object status
      * 
@@ -688,8 +647,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         this.object_status = status;
     }
-    
-    
+
     /**
      * Get Object Status
      * 
@@ -699,10 +657,9 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return this.object_status;
     }
-    
-    
+
     long old_id;
-    
+
     /**
      * Set Old Id (this is used for changing old objects in framework v2)
      * 
@@ -712,8 +669,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         this.old_id = id_in;
     }
-    
-    
+
     /**
      * Get Old Id (this is used for changing old objects in framework v2)
      * 
@@ -723,9 +679,9 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return this.old_id;
     }
-    
+
     String source;
-    
+
     /**
      * Set Source
      * 
@@ -734,9 +690,9 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     public void setSource(String src)
     {
         this.source = src;
-        
+
     }
-    
+
     /**
      * Get Source 
      * 
@@ -746,7 +702,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return this.source;
     }
-     
 
     /**
      * Get Type Description
@@ -757,48 +712,46 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return DataAccessPump.getInstance().getAdditionalTypes().getTypeDescription(this.getType());
     }
-    
-    
-    
+
     /**
      * Get Data As String
      */
     public String getDataAsString()
     {
-        
-        switch(output_type)
+
+        switch (output_type)
         {
             case OutputWriterType.DUMMY:
                 return "";
-                
+
             case OutputWriterType.CONSOLE:
             case OutputWriterType.FILE:
-                return this.getDateTimeObject().getDateTimeString() + ":  Extended Type=" + this.getTypeDesc() + ", Value=" + this.getValue() + ", Comment=" + this.getComment();
-                
+                return this.getDateTimeObject().getDateTimeString() + ":  Extended Type=" + this.getTypeDesc()
+                        + ", Value=" + this.getValue() + ", Comment=" + this.getComment();
+
             case OutputWriterType.GGC_FILE_EXPORT:
-            {
-                /*
-                PumpData pd = new PumpData(this);
-                try
                 {
-                    return pd.dbExport();
+                    /*
+                     * PumpData pd = new PumpData(this);
+                     * try
+                     * {
+                     * return pd.dbExport();
+                     * }
+                     * catch(Exception ex)
+                     * {
+                     * log.error(
+                     * "Problem with PumpValuesEntry export !  Exception: " +
+                     * ex, ex);
+                     * return "Value could not be decoded for export!";
+                     * }
+                     */
                 }
-                catch(Exception ex)
-                {
-                    log.error("Problem with PumpValuesEntry export !  Exception: " + ex, ex);
-                    return "Value could not be decoded for export!";
-                }*/
-            }
-                
-        
+
             default:
                 return "Value is undefined";
-        
+
         }
     }
-
-
-
 
     /** 
      * Has MultiLine ToolTip
@@ -808,7 +761,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         return true;
     }
 
-
     /** 
      * Get MultiLine ToolTip
      */
@@ -816,7 +768,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return "";
     }
-
 
     /** 
      * Get MultiLine ToolTip
@@ -826,7 +777,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         return "" + this.getTableColumnValue(index);
     }
 
-    
     /** 
      * Is Indexed (multiline tooltip)
      */
@@ -835,9 +785,8 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         return true;
     }
 
-
     int multiline_tooltip_type = 1;
-    
+
     /**
      * Set MultiLine Tooltip Type
      * 
@@ -848,7 +797,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         this.multiline_tooltip_type = _multiline_tooltip_type;
     }
 
-    
     /**
      * Get MultiLine Tooltip Type
      * @return 
@@ -857,35 +805,25 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         return this.multiline_tooltip_type;
     }
-    
-    
+
     public void prepareEntry_v2()
     {
 
     }
-
 
     public ArrayList<GraphValue> getGraphValues()
     {
         return null;
     }
 
-
     public GraphValue getGraphValue()
     {
         int map = this.da.getGraphContext().getObjectMapping(PumpGraphContext.OBJECT_PUMP_EXT_VALUES, this.getType());
-        
-        if (map!=-1)
-        {
+
+        if (map != -1)
             return new GraphValue(this.getDt_info(), map, this.getValue());
-        }
         else
             return null;
     }
 
-    
-    
-    
-    
-    
-}	
+}

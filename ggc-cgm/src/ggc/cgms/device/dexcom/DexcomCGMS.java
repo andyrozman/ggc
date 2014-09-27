@@ -39,15 +39,16 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 // FIXME
 
-public abstract class DexcomCGMS extends AbstractCGMS {
+public abstract class DexcomCGMS extends AbstractCGMS
+{
 
     /**
      * Constructor
      */
-    public DexcomCGMS() {
+    public DexcomCGMS()
+    {
         super();
     }
-
 
     /**
      * Constructor
@@ -55,10 +56,10 @@ public abstract class DexcomCGMS extends AbstractCGMS {
      * @param params
      * @param writer
      */
-    public DexcomCGMS(String params, OutputWriter writer) {
+    public DexcomCGMS(String params, OutputWriter writer)
+    {
         super(params, writer);
     }
-
 
     /**
      * Constructor
@@ -67,30 +68,30 @@ public abstract class DexcomCGMS extends AbstractCGMS {
      * @param writer
      * @param da
      */
-    public DexcomCGMS(String params, OutputWriter writer, DataAccessPlugInBase da) {
+    public DexcomCGMS(String params, OutputWriter writer, DataAccessPlugInBase da)
+    {
         super(params, writer, da);
     }
-
 
     /**
      * Constructor
      *
      * @param cmp
      */
-    public DexcomCGMS(AbstractDeviceCompany cmp) {
+    public DexcomCGMS(AbstractDeviceCompany cmp)
+    {
         super(cmp);
     }
-
 
     /**
      * getComment - Get Comment for device
      *
      * @return comment or null
      */
-    public String getComment() {
+    public String getComment()
+    {
         return "";
     }
-
 
     /**
      * getImplementationStatus - Get Implementation Status
@@ -98,10 +99,10 @@ public abstract class DexcomCGMS extends AbstractCGMS {
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() {
+    public int getImplementationStatus()
+    {
         return DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL;
     }
-
 
     /**
      * Open
@@ -109,28 +110,29 @@ public abstract class DexcomCGMS extends AbstractCGMS {
      * @return
      * @throws PlugInBaseException
      */
-    public boolean open() throws PlugInBaseException {
+    public boolean open() throws PlugInBaseException
+    {
         return true;
     }
-
 
     /**
      * Close
      *
      * @throws PlugInBaseException
      */
-    public void close() throws PlugInBaseException {
+    public void close() throws PlugInBaseException
+    {
     }
-
 
     /**
      * This is method for reading configuration, in case that dump doesn't give this information.
      *
      * @throws PlugInBaseException
      */
-    public void readConfiguration() throws PlugInBaseException {
+    @Override
+    public void readConfiguration() throws PlugInBaseException
+    {
     }
-
 
     /**
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should
@@ -139,9 +141,9 @@ public abstract class DexcomCGMS extends AbstractCGMS {
      *
      * @throws PlugInBaseException
      */
-    public void readDeviceDataFull() throws PlugInBaseException {
+    public void readDeviceDataFull() throws PlugInBaseException
+    {
     }
-
 
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy
@@ -149,9 +151,10 @@ public abstract class DexcomCGMS extends AbstractCGMS {
      *
      * @throws PlugInBaseException
      */
-    public void readDeviceDataPartitial() throws PlugInBaseException {
+    @Override
+    public void readDeviceDataPartitial() throws PlugInBaseException
+    {
     }
-
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -159,46 +162,48 @@ public abstract class DexcomCGMS extends AbstractCGMS {
      *
      * @throws PlugInBaseException
      */
-    public void readInfo() throws PlugInBaseException {
+    @Override
+    public void readInfo() throws PlugInBaseException
+    {
     }
-
 
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      *
      * @return
      */
-    public DeviceIdentification getDeviceInfo() {
+    @Override
+    public DeviceIdentification getDeviceInfo()
+    {
         return this.output_writer.getDeviceIdentification();
     }
-
 
     /**
      * Dispose
      */
-    public void dispose() {
+    public void dispose()
+    {
     }
-
 
     /**
      * getConnectionPort - connection port data
      *
      * @return connection port as string
      */
-    public String getConnectionPort() {
+    public String getConnectionPort()
+    {
         return null;
     }
-
 
     /**
      * getConnectionProtocol - returns id of connection protocol
      *
      * @return id of connection protocol
      */
-    public int getConnectionProtocol() {
+    public int getConnectionProtocol()
+    {
         return 0;
     }
-
 
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have
@@ -206,10 +211,11 @@ public abstract class DexcomCGMS extends AbstractCGMS {
      *
      * @return true is progress status is special
      */
-    public boolean hasSpecialProgressStatus() {
+    @Override
+    public boolean hasSpecialProgressStatus()
+    {
         return false;
     }
-
 
     /**
      * getInstructions - get instructions for device
@@ -217,20 +223,20 @@ public abstract class DexcomCGMS extends AbstractCGMS {
      *
      * @return instructions for reading data
      */
-    public String getInstructions() {
+    public String getInstructions()
+    {
         return "INSTRUCTIONS_DEXCOM";
     }
-
 
     /**
      * Is Device Communicating
      *
      * @return
      */
-    public boolean isDeviceCommunicating() {
+    public boolean isDeviceCommunicating()
+    {
         return true;
     }
-
 
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -239,10 +245,11 @@ public abstract class DexcomCGMS extends AbstractCGMS {
      *
      * @return
      */
-    public boolean isReadableDevice() {
+    @Override
+    public boolean isReadableDevice()
+    {
         return false;
     }
-
 
     /**
      * Get DateTime From String
@@ -250,7 +257,8 @@ public abstract class DexcomCGMS extends AbstractCGMS {
      * @param val
      * @return
      */
-    public static long getDateTimeFromString(String val) {
+    public static long getDateTimeFromString(String val)
+    {
         // 2007-03-23 13:13:29.010
 
         val = val.substring(0, val.indexOf("."));
@@ -263,14 +271,14 @@ public abstract class DexcomCGMS extends AbstractCGMS {
         return Long.parseLong(val);
     }
 
-
     /**
      * Get Time From String
      *
      * @param val
      * @return
      */
-    public static int getTimeFromString(String val) {
+    public static int getTimeFromString(String val)
+    {
         val = val.substring(val.indexOf(" ") + 1, val.indexOf("."));
         // val = val.replace(" ", "");
         // val = val.replace("-", "");
@@ -279,11 +287,12 @@ public abstract class DexcomCGMS extends AbstractCGMS {
         return Integer.parseInt(val);
     }
 
-
     /**
      * Load File Contexts - Load file contexts that device supports
      */
-    public void loadFileContexts() {
+    @Override
+    public void loadFileContexts()
+    {
         // System.out.println("loadFileContexts");
         this.file_contexts = new GGCPlugInFileReaderContext[2];
         this.file_contexts[0] = new FRC_DexcomXml_DM3(m_da, this.output_writer);

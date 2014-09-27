@@ -1,8 +1,6 @@
 package ggc.plugin.data.progress;
 
-public enum ProgressType 
+public enum ProgressType
 {
-        Dynamic,
-        Static,
-        Dynamic_Static,
+    Dynamic, Static, Dynamic_Static,
 }

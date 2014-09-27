@@ -1,9 +1,9 @@
 package ggc.core.data;
 
-import ggc.core.util.DataAccess;
-
 import java.io.Serializable;
 import java.util.Hashtable;
+
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -30,13 +30,12 @@ import java.util.Hashtable;
  *  Author: Andy {andy@atech-software.com}  
  */
 
-
 public class WeeklyValues implements Serializable
 {
     private static final long serialVersionUID = 7748966026356288165L;
     private Hashtable<String, DailyValues> m_dataTable = null;
-    //private DataAccess m_da = DataAccess.getInstance();
 
+    // private DataAccess m_da = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -53,8 +52,8 @@ public class WeeklyValues implements Serializable
      */
     public void addDay(DailyValues dv)
     {
-        //System.out.println(dv.getDate());
-        m_dataTable.put(""+dv.getDate(), dv);
+        // System.out.println(dv.getDate());
+        m_dataTable.put("" + dv.getDate(), dv);
     }
 
     /**
@@ -64,12 +63,12 @@ public class WeeklyValues implements Serializable
      */
     public void addDayValueRow(DailyValuesRow dvr)
     {
-        int date = (int)dvr.getDate();
-        //System.out.println(date);
+        int date = (int) dvr.getDate();
+        // System.out.println(date);
 
-        if (m_dataTable.containsKey(""+date))
+        if (m_dataTable.containsKey("" + date))
         {
-            DailyValues dv_int = m_dataTable.get(""+date);
+            DailyValues dv_int = m_dataTable.get("" + date);
             dv_int.addRow(dvr);
         }
         else
@@ -77,7 +76,7 @@ public class WeeklyValues implements Serializable
             DailyValues dv = new DailyValues();
             dv.setDate(dvr.getDateTime());
             dv.addRow(dvr);
-            m_dataTable.put(""+date, dv);
+            m_dataTable.put("" + date, dv);
         }
     }
 
@@ -91,11 +90,10 @@ public class WeeklyValues implements Serializable
      */
     public DailyValues getDayValues(int year, int month, int day)
     {
-        String days = ""+year + DataAccess.getLeadingZero(month, 2) + DataAccess.getLeadingZero(day, 2);
+        String days = "" + year + ATDataAccessAbstract.getLeadingZero(month, 2)
+                + ATDataAccessAbstract.getLeadingZero(day, 2);
         if (!m_dataTable.containsKey(days))
-        {
             return null;
-        }
         else
         {
             DailyValues dv = m_dataTable.get(days);
@@ -103,7 +101,6 @@ public class WeeklyValues implements Serializable
         }
     }
 
-    
     /**
      * Get All Values (Hashtable)
      * 

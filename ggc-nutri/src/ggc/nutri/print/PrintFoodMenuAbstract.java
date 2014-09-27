@@ -49,7 +49,6 @@ import com.itextpdf.text.pdf.PdfPTable;
  *  Author: andyrozman {andy@atech-software.com}
  */
 
-
 public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 {
 
@@ -57,7 +56,6 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
     DayValuesData dayValuesData;
     DataAccess dataAccessCore;
-
 
     /**
      * Constructor
@@ -77,6 +75,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
     /**
      * {@inheritDoc}
      */
+    @Override
     public Paragraph getTitle()
     {
         Paragraph p = new Paragraph();
@@ -85,17 +84,17 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
         p.setAlignment(Element.ALIGN_CENTER);
         p.add(new Paragraph("", f));
-        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " [" + this.dayValuesData.getFromAsLocalizedDate() + " - "
-                + this.dayValuesData.getToAsLocalizedDate() + "]", f));
+        p.add(new Paragraph(
+                this.i18nControl.getMessage(getTitleText()) + " [" + this.dayValuesData.getFromAsLocalizedDate()
+                        + " - " + this.dayValuesData.getToAsLocalizedDate() + "]", f));
 
-        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " " + this.dataAccessCore.getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN,
-                12, Font.ITALIC)));
+        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " " + this.dataAccessCore.getSettings().getUserName(),
+                new Font(FontFamily.TIMES_ROMAN, 12, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
 
         return p;
     }
-
 
     /**
      * {@inheritDoc}
@@ -137,11 +136,14 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
             for (int i = 0; i < dv.getRowCount(); i++)
             {
 
-                DailyValuesRow rw = (DailyValuesRow) dv.getRow(i);
+                DailyValuesRow rw = dv.getRow(i);
 
-                if ( (!this.dataAccess.isValueSet(rw.getMealsIds())) &&
-                     (!this.dataAccess.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION))))
+                if (!this.dataAccess.isValueSet(rw.getMealsIds())
+                        && !this.dataAccess.isValueSet(rw
+                                .getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION)))
+                {
                     continue;
+                }
 
                 if (active_day_entry > 0)
                 {
@@ -152,13 +154,11 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
                 datatable.addCell(new Phrase(rw.getTimeAsString(), f));
 
-
                 if (this.dataAccess.isValueSet(rw.getMealsIds()))
                 {
 
                     DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds(), true);
                     writeTogetherData(datatable, rw);
-
 
                     for (int j = 0; j < mpts.getElementsCount(); j++)
                     {
@@ -174,7 +174,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
             } // for
 
-            if (active_day_entry==0)
+            if (active_day_entry == 0)
             {
                 this.writeEmptyColumnData(datatable);
             }
@@ -189,8 +189,6 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
     }
 
-
-
     /**
      * Get Formated Value (String correctly formated from float value)
      *
@@ -200,7 +198,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      */
     public String getFormatedValue(float value, int dec_places)
     {
-        return this.dataAccess.getDecimalHandler().getDecimalAsString(value, dec_places);  // ch
+        return this.dataAccess.getDecimalHandler().getDecimalAsString(value, dec_places); // ch
 
     }
 
@@ -210,9 +208,8 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
     @Override
     public ITextDocumentPrintSettings getCustomDocumentSettings()
     {
-    	return new ITextDocumentPrintSettings(30, 30, 10, 30);
+        return new ITextDocumentPrintSettings(30, 30, 10, 30);
     }
-
 
     /**
      * {@inheritDoc}
@@ -223,7 +220,6 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
         return this.dayValuesData.getRangeBeginObject().getDateFilenameString() + "-"
                 + this.dayValuesData.getRangeEndObject().getDateFilenameString();
     }
-
 
     /**
      * Get text for title
@@ -270,7 +266,6 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      */
     public abstract void writeColumnData(PdfPTable table, DailyFoodEntry mp) throws Exception;
 
-
     /**
      * Write Food Description Data
      *
@@ -280,7 +275,6 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      */
     public abstract void writeFoodDescData(PdfPTable table, DailyValuesRow mp) throws Exception;
 
-
     /**
      * Write empty column data. If there is no data, this is used, to fill empty places.
      *
@@ -288,6 +282,5 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      * @throws Exception
      */
     public abstract void writeEmptyColumnData(PdfPTable table) throws Exception;
-
 
 }

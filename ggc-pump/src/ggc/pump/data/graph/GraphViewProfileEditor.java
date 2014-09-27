@@ -8,6 +8,7 @@ import ggc.pump.util.DataAccessPump;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartFactory;
@@ -49,25 +50,25 @@ import com.atech.utils.data.ATechDate;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor //implements GraphViewInterface, GraphViewDataProcessorInterface 
+public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // implements
+                                                                          // GraphViewInterface,
+                                                                          // GraphViewDataProcessorInterface
 {
 
-//    GregorianCalendar gc;
+    // GregorianCalendar gc;
     XYSeriesCollection dataset = new XYSeriesCollection();
-    
-//    NumberAxis BGAxis;
-//    DateAxis dateAxis;
-    
-    DefaultCategoryDataset cat_ds =  new DefaultCategoryDataset();
-    
-    
+
+    // NumberAxis BGAxis;
+    // DateAxis dateAxis;
+
+    DefaultCategoryDataset cat_ds = new DefaultCategoryDataset();
+
     DataAccessPump da_local = DataAccessPump.getInstance();
     GGCGraphUtil graph_util = GGCGraphUtil.getInstance(da_local);
-    
+
     ArrayList<ProfileSubEntry> profiles_entries;
     ProfileEditor prof_editor = null;
-    
+
     /**
      * Constructor
      * @param pe 
@@ -77,7 +78,6 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor //impl
         super(DataAccessPump.getInstance());
         this.prof_editor = pe;
     }
-    
 
     /**
      * Get Help Id
@@ -89,29 +89,29 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor //impl
         return null;
     }
 
-    
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      * 
      * @return Rectangle object
      */
+    @Override
     public Rectangle getViewerDialogBounds()
     {
-        return new Rectangle(100,100,500,400);
+        return new Rectangle(100, 100, 500, 400);
     }
 
-    
     /**
      * Load Data
      */
     public void loadData()
     {
-        if (this.profiles_entries==null)
+        if (this.profiles_entries == null)
+        {
             this.profiles_entries = prof_editor.getProfileEntriesAL();
-        
+        }
+
     }
 
-    
     /**
      * Get Data Set
      * 
@@ -127,89 +127,91 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor //impl
      */
     public void preprocessData()
     {
-        
-        if (this.profiles_entries==null)
+
+        if (this.profiles_entries == null)
             return;
-        
+
         dataset.removeAllSeries();
-        
-        XYSeries xy_ser = new XYSeries("", true, true); //, Hour.class);
-        
-        
+
+        XYSeries xy_ser = new XYSeries("", true, true); // , Hour.class);
+
         for (int i = 0; i < this.profiles_entries.size(); i++)
         {
             ProfileSubEntry pse = this.profiles_entries.get(i);
-            
-            for(int k=pse.time_start; k<=pse.time_end; k++)
+
+            for (int k = pse.time_start; k <= pse.time_end; k++)
             {
-                
-                int h = (int)(k/100);
-                int m = k - (h*100);
-                
-                int tm = (h*100);
-                
+
+                int h = k / 100;
+                int m = k - h * 100;
+
+                int tm = h * 100;
+
                 if (m == 60)
                 {
-                    k = (h+1)*100; 
+                    k = (h + 1) * 100;
                     tm = k;
                 }
                 else
+                {
                     tm += m;
-                
+                }
+
                 long time = getTimeMs(tm);
-                
-                if (((m>4) && (m<26)) || ((m>34) && (m<56)))
+
+                if (m > 4 && m < 26 || m > 34 && m < 56)
+                {
                     xy_ser.add(time, pse.amount);
+                }
             }
-            
+
         }
 
         dataset.addSeries(xy_ser);
 
-        int last =0;
-        
-        for(int k=0; k<2400; k+=30)
+        int last = 0;
+
+        for (int k = 0; k < 2400; k += 30)
         {
-            
-            int h = (int)(k/100);
-            int m = k - (h*100);
-            
-            int tm = (h*100);
-            
-            //System.out.println("hh:mm " + h + ":" + m);
-            
-            
+
+            int h = k / 100;
+            int m = k - h * 100;
+
+            int tm = h * 100;
+
+            // System.out.println("hh:mm " + h + ":" + m);
+
             if (m == 60)
             {
-                k = (h+1)*100; 
+                k = (h + 1) * 100;
                 tm = k;
             }
             else
+            {
                 tm += m;
-            
-            
-            //System.out.println("Time: " + tm);
-            
-            for(int j1 = last; j1<this.profiles_entries.size(); j1++)
+            }
+
+            // System.out.println("Time: " + tm);
+
+            for (int j1 = last; j1 < this.profiles_entries.size(); j1++)
             {
                 ProfileSubEntry pse = this.profiles_entries.get(j1);
-                
-                if ((tm>=pse.time_start) && (tm<=pse.time_end))
+
+                if (tm >= pse.time_start && tm <= pse.time_end)
                 {
                     last = j1;
-                    
-                    this.cat_ds.addValue(pse.amount, "1" , "" + tm);
+
+                    this.cat_ds.addValue(pse.amount, "1", "" + tm);
                     break;
                 }
-                
+
             }
         }
-        
+
     }
 
-
     GregorianCalendar gcx = new GregorianCalendar();
-    
+
     /**
      * Get Time in Ms
      * 
@@ -219,30 +221,29 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor //impl
     public long getTimeMs(int time)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time);
-        
-        if (atd.minute==99)
+
+        if (atd.minute == 99)
         {
-            atd.minute=59;
+            atd.minute = 59;
         }
-        
-        gcx.set(GregorianCalendar.HOUR_OF_DAY, atd.hour_of_day);
-        gcx.set(GregorianCalendar.MINUTE, atd.minute);
-        
+
+        gcx.set(Calendar.HOUR_OF_DAY, atd.hour_of_day);
+        gcx.set(Calendar.MINUTE, atd.minute);
+
         return gcx.getTimeInMillis();
     }
-    
-    
+
     /**
      * Get Title (used by GraphViewer)
      * 
      * @return title as string 
      */
+    @Override
     public String getTitle()
     {
         return null;
     }
-    
-    
+
     /**
      * Set Plot
      * 
@@ -250,45 +251,43 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor //impl
      */
     public void setPlot(JFreeChart chart)
     {
-        
+
         XYPlot plot = chart.getXYPlot();
-        
-        XYItemRenderer renderer = (XYItemRenderer) plot.getRenderer();
+
+        XYItemRenderer renderer = plot.getRenderer();
         renderer.setSeriesPaint(0, Color.blue);
-        
+
     }
 
-    
     /**
      * Refresh Data
      */
     public void refreshData()
     {
         this.loadData();
-        
+
         this.preprocessData();
         this.setPlot(chart);
     }
-    
-    
-    
+
     /**
      * Create Chart
      */
+    @Override
     public void createChart()
     {
-        chart = ChartFactory.createXYBarChart(null, m_ic.getMessage("TIME_AXIS_BASAL"), true, m_ic.getMessage("VALUE_AXIS_BASAL"), dataset, PlotOrientation.VERTICAL, false, false, false);
+        chart = ChartFactory.createXYBarChart(null, m_ic.getMessage("TIME_AXIS_BASAL"), true,
+            m_ic.getMessage("VALUE_AXIS_BASAL"), dataset, PlotOrientation.VERTICAL, false, false, false);
         this.setPlot(chart);
     }
-
 
     /**
      * Create Chart Panel
      */
+    @Override
     public void createChartPanel()
     {
         this.chart_panel = new ChartPanel(getChart(), true, true, true, true, false);
     }
 
-    
 }

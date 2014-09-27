@@ -45,43 +45,42 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-//IMPORTANT NOTICE: 
-//This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
-//class, with different type of data. Trying to find a way to use super class instead of this.
+// IMPORTANT NOTICE:
+// This class is not implemented yet, all existing methods should be rechecked
+// (they were copied from similar
+// class, with different type of data. Trying to find a way to use super class
+// instead of this.
 
 public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 {
-	DataAccessCGMS da = DataAccessCGMS.getInstance();
+    DataAccessCGMS da = DataAccessCGMS.getInstance();
     private static Log log = LogFactory.getLog(CGMSValuesEntry.class);
 
-	long id;
+    long id;
 
-	long datetime;
-	long date;
-	ATechDate date_obj = null;
-	
-	int type;
+    long datetime;
+    long date;
+    ATechDate date_obj = null;
 
-	boolean empty = true;
-	
-	private Hashtable<String,String> params;
-	ArrayList<CGMSValuesSubEntry> list = null;
-	String extended = "";
-	int person_id = 0;
-	String item_data = null;
-	
-	
-	/**
-	 * Constructor
-	 */
-	public CGMSValuesEntry()
-	{
-	    super();
-	    list = new ArrayList<CGMSValuesSubEntry>();
-	    //this.person_id = (int)this.da.getCurrentUserId();
-	}
-	
+    int type;
+
+    boolean empty = true;
+
+    private Hashtable<String, String> params;
+    ArrayList<CGMSValuesSubEntry> list = null;
+    String extended = "";
+    int person_id = 0;
+    String item_data = null;
+
+    /**
+     * Constructor
+     */
+    public CGMSValuesEntry()
+    {
+        super();
+        list = new ArrayList<CGMSValuesSubEntry>();
+        // this.person_id = (int)this.da.getCurrentUserId();
+    }
 
     /**
      * Constructor
@@ -98,48 +97,41 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         loadExtended(pdh.getExtended());
         this.person_id = pdh.getPerson_id();
     }
-	
-	
-	
-	
-	
-	/**
-	 * Set Date 
-	 * 
-	 * @param dt
-	 */
-	public void setDate(long dt)
-	{
-	    this.date = dt;
-	    this.date_obj = new ATechDate(ATechDate.FORMAT_DATE_ONLY, dt);
-	    this.datetime = dt;
-	}
-	
-	
-	
+
+    /**
+     * Set Date 
+     * 
+     * @param dt
+     */
+    public void setDate(long dt)
+    {
+        this.date = dt;
+        this.date_obj = new ATechDate(ATechDate.FORMAT_DATE_ONLY, dt);
+        this.datetime = dt;
+    }
+
     /**
      * Get DateTime (long)
      * 
      * @return
      */
-	public long getDateTime()
-	{
-		return this.datetime;
-	}
-	
-	
+    @Override
+    public long getDateTime()
+    {
+        return this.datetime;
+    }
+
     /**
      * Get DateTime Object (ATechDate)
      * 
      * @return ATechDate instance
      */
+    @Override
     public ATechDate getDateTimeObject()
     {
         return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.datetime);
     }
-	
-	
-    
+
     /**
      * Add Sub Entry
      * 
@@ -149,8 +141,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         this.list.add(subentry);
     }
-    
-    
+
     /**
      * Get Sub Entry List
      * 
@@ -160,96 +151,87 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.list;
     }
-    
-    
-    
-	/**
-	 * Set Empty
-	 * 
-	 * @param empty_
-	 */
-	public void setEmpty(boolean empty_)
-	{
-	    this.empty = empty_;
-	}
-	
-	
-	/**
-	 * Is Empty
-	 * 
-	 * @return
-	 */
-	public boolean isEmpty()
-	{
-	    return this.empty;
-	}
-	
-	/**
-	 * Add Parameter
-	 * 
-	 * @param key
-	 * @param value_in
-	 */
-	public void addParameter(String key, String value_in)
-	{
-		if ((value_in.equals("_")) || (value_in.trim().length()==0))
-			return;
-		
-		if (params==null)
-		{
-			params = new Hashtable<String,String>();
-		}
-		
-		this.params.put(key, value_in);
-		
-	}
 
-	
-	
-	
-	
-	/**
-	 * @return
-	 */
-	public String getParametersAsString()
-	{
-		if (this.params==null)
-			return "";
-		
-		StringBuffer sb = new StringBuffer();
-		
-		for(java.util.Enumeration<String> en = this.params.keys(); en.hasMoreElements(); )
-		{
-			String key = en.nextElement();
-			
-			sb.append(key + "=" + this.params.get(key) + ";");
-		}
-		
-		return sb.substring(0, sb.length()-1);
-		
-	}
-	
-	
+    /**
+     * Set Empty
+     * 
+     * @param empty_
+     */
+    public void setEmpty(boolean empty_)
+    {
+        this.empty = empty_;
+    }
+
+    /**
+     * Is Empty
+     * 
+     * @return
+     */
+    public boolean isEmpty()
+    {
+        return this.empty;
+    }
+
+    /**
+     * Add Parameter
+     * 
+     * @param key
+     * @param value_in
+     */
+    public void addParameter(String key, String value_in)
+    {
+        if (value_in.equals("_") || value_in.trim().length() == 0)
+            return;
+
+        if (params == null)
+        {
+            params = new Hashtable<String, String>();
+        }
+
+        this.params.put(key, value_in);
+
+    }
+
+    /**
+     * @return
+     */
+    public String getParametersAsString()
+    {
+        if (this.params == null)
+            return "";
+
+        StringBuffer sb = new StringBuffer();
+
+        for (java.util.Enumeration<String> en = this.params.keys(); en.hasMoreElements();)
+        {
+            String key = en.nextElement();
+
+            sb.append(key + "=" + this.params.get(key) + ";");
+        }
+
+        return sb.substring(0, sb.length() - 1);
+
+    }
+
     /**
      * Prepare Entry [Framework v2]
      */
+    @Override
     public void prepareEntry_v2()
     {
         this.saveExtended();
     }
-	
-	
-	/**
-	 * Set Type 
-	 * 
-	 * @param type_
-	 */
-	public void setType(int type_)
-	{
-	    this.type = type_;
-	}
-	
-	
+
+    /**
+     * Set Type 
+     * 
+     * @param type_
+     */
+    public void setType(int type_)
+    {
+        this.type = type_;
+    }
+
     /**
      * Get Type
      * 
@@ -259,39 +241,35 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.type;
     }
-	
-	
-	/**
-	 * Create Comment
-	 * 
-	 * @return
-	 */
-	public String createComment()
-	{
-	    String p = this.getParametersAsString();
-	    
-	    if ((p==null) || (p.trim().length()==0))
-	    {
-	        return null;
-	        //return "MTI";
-	    }
-	    else
-	        return p;
-	    
-	}
-	
-	
-	/**
-	 * To String
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString()
-	{
-	    return "CGMSValuesEntry [date/time=" + this.datetime  + ",readings=" + this.list.size() + "type=" + type +  "]";
-	}
 
-	
-	/**
+    /**
+     * Create Comment
+     * 
+     * @return
+     */
+    public String createComment()
+    {
+        String p = this.getParametersAsString();
+
+        if (p == null || p.trim().length() == 0)
+            return null;
+        // return "MTI";
+        else
+            return p;
+
+    }
+
+    /**
+     * To String
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        return "CGMSValuesEntry [date/time=" + this.datetime + ",readings=" + this.list.size() + "type=" + type + "]";
+    }
+
+    /**
      * Get Column Value
      * 
      * @param index
@@ -300,39 +278,39 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     @Override
     public Object getColumnValue(int index)
     {
-        switch(index)
+        switch (index)
         {
         /*
-            case 0: // time
-            {
-                return this.datetime.getTimeString();
-            }
-            case 1: // type
-            {
-                return getBaseTypeString();
-            }
-            case 2: // subtype
-            {
-                return getSubTypeString();
-            }
-            case 3: // value
-            {
-                //return this.getValue();
-                return getValuePrint();
-            }
-            case 4: // additional
-            {
-                return this.getAdditionalDisplay();
-            }
-            case 5: // food
-            {
-                return this.isFoodSet();
-            }*/
+         * case 0: // time
+         * {
+         * return this.datetime.getTimeString();
+         * }
+         * case 1: // type
+         * {
+         * return getBaseTypeString();
+         * }
+         * case 2: // subtype
+         * {
+         * return getSubTypeString();
+         * }
+         * case 3: // value
+         * {
+         * //return this.getValue();
+         * return getValuePrint();
+         * }
+         * case 4: // additional
+         * {
+         * return this.getAdditionalDisplay();
+         * }
+         * case 5: // food
+         * {
+         * return this.isFoodSet();
+         * }
+         */
         }
         return "N/A";
     }
 
-    
     /**
      * Get DateTime format
      * 
@@ -344,59 +322,60 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return ATechDate.FORMAT_DATE_AND_TIME_S;
     }
 
-    
     /**
      * Get Db Objects
      * 
      * @return ArrayList of elements extending GGCHibernateObject
      * @deprecated
      */
+    @Deprecated
     @Override
     public ArrayList<? extends GGCHibernateObject> getDbObjects()
     {
         return null;
     }
 
-
     /**
      * Get Data As String
      * 
      * @see ggc.plugin.output.OutputWriterData#getDataAsString()
      */
-    
+
     public String getDataAsString()
     {
-        switch(output_type)
+        switch (output_type)
         {
             case OutputWriterType.DUMMY:
                 return "";
-                
+
             case OutputWriterType.CONSOLE:
             case OutputWriterType.FILE:
-                return this.getDateTimeObject().getDateTimeString() + ":  Type=" + this.type + ", Count=" + this.list.size() ;
-                
+                return this.getDateTimeObject().getDateTimeString() + ":  Type=" + this.type + ", Count="
+                        + this.list.size();
+
             case OutputWriterType.GGC_FILE_EXPORT:
-            {
-                /*
-                PumpData pd = new PumpData(this);
-                try
                 {
-                    return pd.dbExport();
+                    /*
+                     * PumpData pd = new PumpData(this);
+                     * try
+                     * {
+                     * return pd.dbExport();
+                     * }
+                     * catch(Exception ex)
+                     * {
+                     * log.error(
+                     * "Problem with PumpValuesEntry export !  Exception: " +
+                     * ex, ex);
+                     * return "Value could not be decoded for export!";
+                     * }
+                     */
                 }
-                catch(Exception ex)
-                {
-                    log.error("Problem with PumpValuesEntry export !  Exception: " + ex, ex);
-                    return "Value could not be decoded for export!";
-                }*/
-            }
-                
-        
+
             default:
                 return "Value is undefined";
-        
+
         }
     }
-
 
     /**
      * Set DateTime Object (ATechDate)
@@ -409,7 +388,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.datetime = dt.getATDateTimeAsLong();
     }
 
-    
     /**
      * Get Value For Item
      * 
@@ -421,7 +399,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return 0;
     }
 
-    
     /**
      * Get Statistics Action - we define how statistic is done (we have several predefined 
      *    types of statistics
@@ -433,7 +410,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return 0;
     }
-    
 
     /**
      * Is Special Action - tells if selected statistics item has special actions
@@ -445,8 +421,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return false;
     }
-    
-    
+
     /**
      * Get Max Statistics Object - we can have several Statistic types defined here
      * 
@@ -457,7 +432,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return 0;
     }
 
-
     /**
      * If we have any special actions for any of objects
      * 
@@ -467,8 +441,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return false;
     }
-
-
 
     /**
      * Get Table Column Value (in case that we need special display values for download data table, this method 
@@ -485,24 +457,23 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
                 return this.date_obj.getDateString();
 
             case 1:
-                return DataAccessCGMS.value_type[this.type]; //m_ic.getMessage("BASE_TYPE_SH");
+                return DataAccessCGMS.value_type[this.type]; // m_ic.getMessage("BASE_TYPE_SH");
 
             case 2:
-                return "" + this.list.size(); //this.getBaseTypeString();
+                return "" + this.list.size(); // this.getBaseTypeString();
 
             case 3:
                 return new Boolean(getChecked());
-                
+
             case 4:
                 return this.getStatus();
-            
+
             default:
                 return "";
         }
-        
+
     }
 
-    
     /**
      * Get Special Id
      * 
@@ -510,11 +481,9 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getSpecialId()
     {
-        return "CD_" + this.datetime+ "_" + this.type;
+        return "CD_" + this.datetime + "_" + this.type;
     }
-  
-    
-    
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -523,8 +492,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return "" + this.datetime;
     }
-    
-    
+
     /**
      * DbAdd - Add this object to database
      * 
@@ -534,28 +502,27 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String DbAdd(Session sess) throws Exception
     {
-        this.person_id = (int)this.da.getCurrentUserId();
-        
+        this.person_id = (int) this.da.getCurrentUserId();
+
         Transaction tx = sess.beginTransaction();
-        
+
         CGMSDataH pdh = new CGMSDataH();
-        
+
         pdh.setId(this.id);
-        pdh.setDt_info(this.datetime); 
-        pdh.setBase_type(this.type); 
+        pdh.setDt_info(this.datetime);
+        pdh.setBase_type(this.type);
         pdh.setExtended(extended = this.saveExtended());
-        pdh.setPerson_id(this.person_id); 
+        pdh.setPerson_id(this.person_id);
         pdh.setChanged(System.currentTimeMillis());
 
-        Long _id = (Long)sess.save(pdh);
+        Long _id = (Long) sess.save(pdh);
         tx.commit();
 
         pdh.setId(_id.longValue());
-        this.id  = _id.longValue();
-        
-        return ""+_id.longValue();
-    }
+        this.id = _id.longValue();
 
+        return "" + _id.longValue();
+    }
 
     /**
      * DbEdit - Edit this object in database
@@ -566,20 +533,19 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public boolean DbEdit(Session sess) throws Exception
     {
-        this.person_id = (int)this.da.getCurrentUserId();
+        this.person_id = (int) this.da.getCurrentUserId();
 
         Transaction tx = sess.beginTransaction();
-        
+
         System.out.println("old_id: " + old_id);
         System.out.println("id: " + this.id);
-        
-        
-        CGMSDataH pdh = (CGMSDataH)sess.get(CGMSDataH.class, new Long(this.id));
-        
+
+        CGMSDataH pdh = (CGMSDataH) sess.get(CGMSDataH.class, new Long(this.id));
+
         pdh.setId(this.id);
-        pdh.setBase_type(this.type); 
-        pdh.setExtended(this.extended = saveExtended()); 
-        pdh.setPerson_id(this.person_id); 
+        pdh.setBase_type(this.type);
+        pdh.setExtended(this.extended = saveExtended());
+        pdh.setPerson_id(this.person_id);
         pdh.setChanged(System.currentTimeMillis());
 
         sess.update(pdh);
@@ -587,7 +553,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         return true;
     }
-
 
     /**
      * DbDelete - Delete this object in database
@@ -600,13 +565,12 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         Transaction tx = sess.beginTransaction();
 
-        CGMSDataH pdh = (CGMSDataH)sess.get(CGMSDataH.class, new Long(this.id));
+        CGMSDataH pdh = (CGMSDataH) sess.get(CGMSDataH.class, new Long(this.id));
         sess.delete(pdh);
         tx.commit();
 
         return true;
     }
-
 
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
@@ -620,7 +584,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return false;
     }
 
-
     /**
      * DbGet - Loads this object. Id must be set.
      * 
@@ -630,18 +593,17 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public boolean DbGet(Session sess) throws Exception
     {
-        
-        CGMSDataH pdh = (CGMSDataH)sess.get(CGMSDataH.class, new Long(this.id));
-        
+
+        CGMSDataH pdh = (CGMSDataH) sess.get(CGMSDataH.class, new Long(this.id));
+
         this.id = pdh.getId();
         this.datetime = pdh.getDt_info();
         this.type = pdh.getBase_type();
         loadExtended(pdh.getExtended());
         this.person_id = pdh.getPerson_id();
-        
+
         return true;
     }
-    
 
     /**
      * getObjectName - returns name of DatabaseObject
@@ -653,7 +615,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return "CGMSValuesEntry";
     }
 
-
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -663,8 +624,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return false;
     }
-
-
 
     /**
      * getAction - returns action that should be done on object
@@ -682,7 +641,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return 0;
     }
 
-    
     /**
      * Get DeviceValuesEntry Name
      * 
@@ -693,7 +651,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return "CGMSValuesEntry";
     }
 
-
     /**
      * Get Value of object
      * 
@@ -703,10 +660,9 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.item_data;
     }
-    
-   
+
     long old_id;
-    
+
     /**
      * Set Old Id (this is used for changing old objects in framework v2)
      * 
@@ -716,8 +672,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         this.id = id_in;
     }
-    
-    
+
     /**
      * Get Old Id (this is used for changing old objects in framework v2)
      * 
@@ -728,7 +683,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return this.id;
     }
 
-    
     /**
      * Set Old Id (this is used for changing old objects in framework v2)
      * THIS IS JUST COPY, IT MIGHT NOT BE USED, OR PERHAPS NOW FUNCTIONALITY WILL BE BROKEN.
@@ -739,8 +693,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         this.old_id = id_in;
     }
-    
-    
+
     /**
      * Get Old Id (this is used for changing old objects in framework v2)
      * 
@@ -751,10 +704,8 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return this.old_id;
     }
 
-    
-    
     String source;
-    
+
     /**
      * Set Source
      * 
@@ -763,9 +714,9 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     public void setSource(String src)
     {
         this.source = src;
-        
+
     }
-    
+
     /**
      * Get Source 
      * 
@@ -775,72 +726,70 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.source;
     }
-     
-	
+
     private String saveExtended()
     {
         Collections.sort(this.list);
-        
+
         StringBuffer sb = new StringBuffer();
-        
-        for(int i=0; i<this.list.size(); i++)
+
+        for (int i = 0; i < this.list.size(); i++)
         {
             sb.append(this.list.get(i).getSubEntryValue());
             sb.append(";");
         }
-        
-        sb.substring(0, sb.length()-1);
-        
+
+        sb.substring(0, sb.length() - 1);
+
         this.item_data = sb.toString();
 
         StringBuffer sb1 = new StringBuffer("DATA=");
         sb1.append(this.item_data);
-        
-        
+
         sb1.append("#$#SOURCE=");
         sb1.append(this.list.get(0).getSource());
-        
+
         return sb1.toString();
     }
-    
-    
+
     private void loadExtended(String entry)
     {
         this.extended = entry;
-        
+
         StringTokenizer strtok = new StringTokenizer(entry, "#$#");
-        
+
         while (strtok.hasMoreTokens())
         {
             String tok = strtok.nextToken();
-            
+
             if (tok.startsWith("DATA="))
             {
                 tok = tok.substring(5);
-                
+
                 this.item_data = tok;
-                
+
                 StringTokenizer strtok2 = new StringTokenizer(tok, ";");
-                
+
                 while (strtok2.hasMoreTokens())
                 {
                     CGMSValuesSubEntry cvse = new CGMSValuesSubEntry(strtok2.nextToken(), this.type);
                     this.list.add(cvse);
                 }
-                
-                
-                //System.out.println("tok data: " + tok);
+
+                // System.out.println("tok data: " + tok);
             }
             else if (tok.startsWith("SOURCE="))
             {
                 tok = tok.substring(7);
-                //System.out.println("tok src: " + tok);
+                // System.out.println("tok src: " + tok);
             }
             else
+            {
                 log.warn("Unknown token with extended data: " + tok);
-                
+            }
+
         }
-        
+
     }
-    
-}	
+
+}

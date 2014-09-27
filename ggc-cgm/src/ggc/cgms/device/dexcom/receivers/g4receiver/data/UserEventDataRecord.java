@@ -19,7 +19,7 @@ import org.apache.commons.lang.StringUtils;
 public class UserEventDataRecord extends GenericReceiverRecordAbstract
 {
 
-    //  Version      Size: 20
+    // Version Size: 20
     // public int SystemSeconds; 4
     // public int DisplaySeconds; 4
     // public UserEvent EventType; 1
@@ -37,30 +37,32 @@ public class UserEventDataRecord extends GenericReceiverRecordAbstract
     {
     }
 
-    //    public XmlElement toXml(XmlDocument xOwner) throws Exception
-    //    {
-    //        XObject obj2 = new XObject("EventRecord", xOwner);
-    //        
-    //        obj2.SetAttribute("EventType", this.getEventType().ToString());
-    //        obj2.setAttribute("EventSubType", this.getEventSubType());
-    //        obj2.setAttribute("EventTime", this.getEventTime());
-    //        obj2.setAttribute("EventValue", this.getEventValue());
-    //        obj2.setAttribute("EventTypeDescription", this.getEventTypeDescription());
-    //        obj2.setAttribute("EventValueDescription", this.getEventValueDescription());
-    //        return obj2.getElement();
-    //    }
+    // public XmlElement toXml(XmlDocument xOwner) throws Exception
+    // {
+    // XObject obj2 = new XObject("EventRecord", xOwner);
+    //
+    // obj2.SetAttribute("EventType", this.getEventType().ToString());
+    // obj2.setAttribute("EventSubType", this.getEventSubType());
+    // obj2.setAttribute("EventTime", this.getEventTime());
+    // obj2.setAttribute("EventValue", this.getEventValue());
+    // obj2.setAttribute("EventTypeDescription",
+    // this.getEventTypeDescription());
+    // obj2.setAttribute("EventValueDescription",
+    // this.getEventValueDescription());
+    // return obj2.getElement();
+    // }
 
-    public byte getEventSubType() 
+    public byte getEventSubType()
     {
         return this.eventSubType;
     }
 
-    public Date getEventTime() 
+    public Date getEventTime()
     {
         return DexcomUtils.getDateFromSeconds(this.eventTime, DexcomDateParsing.DateWithDifference);
     }
 
-    public UserEvent getEventType() 
+    public UserEvent getEventType()
     {
         return this.eventType;
     }
@@ -68,45 +70,35 @@ public class UserEventDataRecord extends GenericReceiverRecordAbstract
     public String getEventTypeDescription()
     {
         if (this.eventType == null)
-        {
             return "Unknown";
-        }
 
         switch (eventType)
         {
-        case Carbs:
-            return "Carbs";
-        case Insulin:
-            return "Insulin";
-        case Health:
-            {
-                Health health = Health.getEnum(this.eventSubType);
+            case Carbs:
+                return "Carbs";
+            case Insulin:
+                return "Insulin";
+            case Health:
+                {
+                    Health health = Health.getEnum(this.eventSubType);
 
-                if (health == null)
-                {
-                    return "Unknown";
-                }
-                else
-                {
-                    return String.format("Health - %s", health.name());
-                }
+                    if (health == null)
+                        return "Unknown";
+                    else
+                        return String.format("Health - %s", health.name());
 
-            }
-        case Exercise:
-            {
-                Exercise exercise = Exercise.getEnum(this.eventSubType);
+                }
+            case Exercise:
+                {
+                    Exercise exercise = Exercise.getEnum(this.eventSubType);
 
-                if (exercise == null)
-                {
-                    return "Unknown";
+                    if (exercise == null)
+                        return "Unknown";
+                    else
+                        return String.format("Exercise - %s", exercise.name());
                 }
-                else
-                {
-                    return String.format("Exercise - %s", exercise.name());
-                }
-            }
-        default:
-            break;
+            default:
+                break;
 
         }
         return "Unknown";
@@ -120,29 +112,27 @@ public class UserEventDataRecord extends GenericReceiverRecordAbstract
     public String getEventValueDescription()
     {
         if (this.eventType == null)
-        {
             return null;
-        }
 
         switch (this.eventType)
         {
-        case Carbs:
-            return String.format("%s %s", this.eventValue, "grams");
+            case Carbs:
+                return String.format("%s %s", this.eventValue, "grams");
 
-        case Insulin:
-            {
-                double num = (this.eventValue) / 100.0;
-                return String.format("%5.2f %s", num, "units");
-            }
+            case Insulin:
+                {
+                    double num = this.eventValue / 100.0;
+                    return String.format("%5.2f %s", num, "units");
+                }
 
-        case Health:
-            return "";
+            case Health:
+                return "";
 
-        case Exercise:
-            return String.format("%s %s", this.eventValue, "minutes");
+            case Exercise:
+                return String.format("%s %s", this.eventValue, "minutes");
 
-        default:
-            return "";
+            default:
+                return "";
 
         }
 

@@ -40,52 +40,39 @@ public class DailyStatsTableModel extends AbstractTableModel
     DataAccess m_da = DataAccess.getInstance();
 
     /*
-    Object objects[] = 
-    { 
-        new Long(0L), 
-        new String(""),
-        new Float(0.0d),
-        new Float(0.0d),
-        new Float(0.0d),
-        new String(""),
-        new String(""),
-        new String("")
-    };*/
+     * Object objects[] =
+     * {
+     * new Long(0L),
+     * new String(""),
+     * new Float(0.0d),
+     * new Float(0.0d),
+     * new Float(0.0d),
+     * new String(""),
+     * new String(""),
+     * new String("")
+     * };
+     */
 
-    Object objects[] = 
-    { 
-        new String(""), 
-        new String(""),
-        new String(""),
-        new String(""),
-        new String(""),
-        new String(""),
-        new String(""),
-        new String("")
-    };
+    Object objects[] = { new String(""), new String(""), new String(""), new String(""), new String(""),
+                        new String(""), new String(""), new String("") };
 
-
-   
     public DailyStatsTableModel(DailyValues dayData)
     {
         this.dayData = dayData;
         fireTableChanged(null);
     }
 
-    
     public DailyValues getDailyValues()
     {
         return this.dayData;
     }
 
-    
     public void setDailyValues(DailyValues dayData)
     {
         this.dayData = dayData;
         fireTableChanged(null);
     }
 
-    
     public int getColumnCount()
     {
         if (dayData == null)
@@ -94,7 +81,6 @@ public class DailyStatsTableModel extends AbstractTableModel
         return dayData.getColumnCount();
     }
 
-    
     public int getRowCount()
     {
         if (dayData == null)
@@ -103,41 +89,33 @@ public class DailyStatsTableModel extends AbstractTableModel
         return dayData.getRowCount();
     }
 
-    
     public Object getValueAt(int row, int column)
     {
         Object o = dayData.getValueAt(row, column);
 
-	
-        if (o != null && column == 0) 
-        {
-            return ATDataAccessAbstract.getDateTimeAsTimeString(((Long)o).longValue());
-        } 
-        
+        if (o != null && column == 0)
+            return ATDataAccessAbstract.getDateTimeAsTimeString(((Long) o).longValue());
+
         return o;
     }
 
-    
     @Override
     public String getColumnName(int column)
     {
-         return dayData.getColumnName(column);
+        return dayData.getColumnName(column);
     }
 
-    
     @Override
     public Class<?> getColumnClass(int c)
     {
         return this.objects[c].getClass();
     }
 
-    
     @Override
     public boolean isCellEditable(int row, int col)
     {
-        //return true;
+        // return true;
         return false;
     }
 
-    
 }

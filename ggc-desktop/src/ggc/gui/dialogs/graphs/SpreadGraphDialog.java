@@ -74,7 +74,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCapable
 {
     /**
@@ -86,7 +85,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
 
     private DataAccess m_da = DataAccess.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
-    
+
     private SpreadGraphView sGV;
     // private static SpreadGraphFrame singleton = null;
 
@@ -191,7 +190,9 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
             // this.dispose();
         }
         else
+        {
             System.out.println("SpreadGraphFrame: Unknown command: " + action);
+        }
     }
 
     // ****************************************************************

@@ -28,38 +28,30 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class ProfileSubOther extends ProfileSubEntry
 {
-    
 
-    
     /**
      * Event: Pattern Changed
      */
     public static final int EVENT_PATTERN_CHANGED = 1;
-    
-    
+
     /**
      * The time_start.
      */
     public long time_event;
-    
 
     /**
      * Event type
      */
     public int event_type;
 
-    
-    
     @Override
     public int getType()
     {
         return ProfileSubEntry.PROFILE_SUB_EVENT;
     }
-    
-    
+
     /**
      * Get Change Info
      * 
@@ -67,7 +59,8 @@ public class ProfileSubOther extends ProfileSubEntry
      */
     public String getChangeInfo()
     {
-        return " Pattern " + this.profile_id + " changed at " + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.time_event); 
+        return " Pattern " + this.profile_id + " changed at "
+                + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.time_event);
     }
 
     /**
@@ -80,7 +73,7 @@ public class ProfileSubOther extends ProfileSubEntry
      */
     public int compare(ProfileSubOther pse1, ProfileSubOther pse2)
     {
-        return (int)(pse1.time_event - pse2.time_event);
+        return (int) (pse1.time_event - pse2.time_event);
     }
 
     /** 
@@ -93,6 +86,5 @@ public class ProfileSubOther extends ProfileSubEntry
     {
         return compare(this, psp);
     }
-    
-    
+
 }

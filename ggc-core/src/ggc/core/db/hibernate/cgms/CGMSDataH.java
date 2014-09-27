@@ -171,7 +171,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
      * 
      * @return value value
      */
-    public String getValue() 
+    public String getValue()
     {
         return this.value;
     }
@@ -181,7 +181,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
      *  
      * @param value parameter
      */
-    public void setValue(String value) 
+    public void setValue(String value)
     {
         this.value = value;
     }
@@ -266,12 +266,12 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.changed = changed;
     }
 
-    
     /**
      * Equals - method to check equalicy of object
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object other)
     {
         if (!(other instanceof CGMSDataH))
@@ -285,18 +285,19 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

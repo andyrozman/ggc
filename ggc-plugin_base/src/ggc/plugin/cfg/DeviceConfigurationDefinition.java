@@ -31,11 +31,9 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public interface DeviceConfigurationDefinition
 {
-    
-    
+
     /**
      * Keyword used through configuration and configuration file describing device (for meter plugin, this
      * would be word METER).
@@ -43,37 +41,35 @@ public interface DeviceConfigurationDefinition
      * @return keyword representing device
      */
     public String getDevicePrefix();
-    
+
     /**
      * Only certain devices support manual time fix for application (meters do, other's don't).
      * 
      * @return true if time fix is supported, false otherwise
      */
     public boolean doesDeviceSupportTimeFix();
-    
+
     /**
      * Get path to Configuration file as string
      * 
      * @return path to configuration file
      */
     public String getDevicesConfigurationFile();
-    
+
     /**
      * Returns Dummy object (needed for some actions)
      * 
      * @return
      */
     public Object getDummyObject();
-    
-    
+
     /**
      * Returns list of all supported devices for plugin. Needed for device selection
      * 
      * @return
      */
-    public Vector<? extends SelectableInterface> getSupportedDevices(); 
-    
-    
+    public Vector<? extends SelectableInterface> getSupportedDevices();
+
     /**
      * Returns prefix for help context
      * 

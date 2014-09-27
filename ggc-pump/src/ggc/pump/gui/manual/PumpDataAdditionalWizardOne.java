@@ -16,9 +16,11 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -47,7 +49,6 @@ import com.atech.utils.ATSwingUtils;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 // fix this
 
 public class PumpDataAdditionalWizardOne extends JDialog implements ActionListener, HelpCapable
@@ -57,10 +58,9 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     private I18nControlAbstract m_ic = DataAccessPump.getInstance().getI18nControlInstance();
     private DataAccessPump m_da = DataAccessPump.getInstance();
 
-
     JLabel label_title = new JLabel();
 
-//    JComponent components[] = new JComponent[9];
+    // JComponent components[] = new JComponent[9];
 
     Font f_normal = m_da.getFont(DataAccessPump.FONT_NORMAL);
     Font f_bold = m_da.getFont(DataAccessPump.FONT_NORMAL);
@@ -68,49 +68,44 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     JButton help_button = null;
     JPanel main_panel = null;
     private Container m_parent = null;
-    
-    private Hashtable<String,PumpValuesEntryExt> old_data = null;
-    
-    //PumpAdditionalDataType add_data;
+
+    private Hashtable<String, PumpValuesEntryExt> old_data = null;
+
+    // PumpAdditionalDataType add_data;
     JComboBox cb_type;
 
-    
     protected boolean was_action = false;
     protected PumpValuesEntryExt[] pump_objects_ext;
-    
-    
-    
-    
+
     /**
      * Constructor
      * 
      * @param hashtable
      * @param parent
      */
-   public PumpDataAdditionalWizardOne(Hashtable<String, PumpValuesEntryExt> hashtable, JDialog parent) //, PumpAdditionalDataType pump_data)
+    public PumpDataAdditionalWizardOne(Hashtable<String, PumpValuesEntryExt> hashtable, JDialog parent) // ,
+                                                                                                        // PumpAdditionalDataType
+                                                                                                        // pump_data)
     {
         super(parent, "", true);
 
-        //add_data = pump_data;
+        // add_data = pump_data;
         this.old_data = hashtable;
         m_parent = parent;
         init();
     }
-
-
-
 
     private void init()
     {
         int width = 380;
         int height = 310;
 
-        this.setSize(width,height);
+        this.setSize(width, height);
         ATSwingUtils.initLibrary();
-        
+
         m_da.addComponent(this);
         this.m_da.centerJDialog(this, this.m_parent);
-        
+
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, width, height);
         panel.setLayout(null);
@@ -119,50 +114,37 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
         this.getContentPane().add(panel);
 
-        label_title.setFont(m_da.getFont(DataAccessPump.FONT_BIG_BOLD));
-        label_title.setHorizontalAlignment(JLabel.CENTER);
+        label_title.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label_title.setHorizontalAlignment(SwingConstants.CENTER);
         label_title.setBounds(0, 35, width, 35);
         panel.add(label_title);
 
         int startx = 60;
-        
+
         setTitle(m_ic.getMessage("ADD_PARAMETER"));
         label_title.setText(m_ic.getMessage("ADD_PARAMETER"));
-        
 
         JLabel label = new JLabel(m_ic.getMessage("SELECT_ADDITONAL_DATA"));
-        label.setBounds(startx+10, 100, 250, 25);
+        label.setBounds(startx + 10, 100, 250, 25);
         label.setFont(f_bold);
         panel.add(label);
-        
-        
-        
-        
+
         cb_type = new JComboBox(m_da.getAdditionalTypes().createItems(this.old_data));
-        cb_type.setBounds(startx+10, 135, 240, 25);
+        cb_type.setBounds(startx + 10, 135, 240, 25);
         panel.add(cb_type);
-        
-        
 
-        
-        String button_command[] = { 
-                                    "cancel", m_ic.getMessage("CANCEL"),
-                                    "next", m_ic.getMessage("NEXT"),
-//                                    "help", m_ic.getMessage("HELP")
+        String button_command[] = { "cancel", m_ic.getMessage("CANCEL"), "next", m_ic.getMessage("NEXT"),
+        // "help", m_ic.getMessage("HELP")
         };
-        
-        
 
-        
         // button
-        String button_icon[] = { "cancel.png", "nav_right_blue.png" }; 
-                                 //null, "ok.png", "cancel.png" };
+        String button_icon[] = { "cancel.png", "nav_right_blue.png" };
+        // null, "ok.png", "cancel.png" };
 
-        int button_coord[] = { startx, 230, 120, 1,
-                               startx+130, 230, 130, 1, 
-        //                       170, 190, 140, 1, 
-//                               30, 620, 110, 1, 
-//                               145, 620, 110, 1,
+        int button_coord[] = { startx, 230, 120, 1, startx + 130, 230, 130, 1,
+        // 170, 190, 140, 1,
+        // 30, 620, 110, 1,
+        // 145, 620, 110, 1,
         // 250, 390, 80, 0
         };
 
@@ -170,21 +152,22 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         // int j=0;
         for (int i = 0, j = 0, k = 0; i < button_coord.length; i += 4, j += 2, k++)
         {
-            
-            button = ATSwingUtils.getButton("   " + button_command[j + 1], 
-                                   button_coord[i], button_coord[i + 1], button_coord[i + 2], 25, 
-                                   panel, ATSwingUtils.FONT_NORMAL, button_icon[k], button_command[j], this, m_da);
-            
-            /*
-            button = new JButton("   " + button_command[j + 1]);
-            button.setActionCommand(button_command[j]);
-            // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-            button.addActionListener(this);
 
-            if (button_icon[k] != null)
-            {
-                button.setIcon(m_da.getImageIcon_22x22(button_icon[k], this));
-            }*/
+            button = ATSwingUtils
+                    .getButton("   " + button_command[j + 1], button_coord[i], button_coord[i + 1],
+                        button_coord[i + 2], 25, panel, ATSwingUtils.FONT_NORMAL, button_icon[k], button_command[j],
+                        this, m_da);
+
+            /*
+             * button = new JButton("   " + button_command[j + 1]);
+             * button.setActionCommand(button_command[j]);
+             * // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+             * button.addActionListener(this);
+             * if (button_icon[k] != null)
+             * {
+             * button.setIcon(m_da.getImageIcon_22x22(button_icon[k], this));
+             * }
+             */
 
             if (button_coord[i + 3] == 0)
             {
@@ -192,12 +175,13 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
             }
 
             /*
-            if (k <= 1)
-                addComponent(button, button_coord[i], button_coord[i + 1],
-                        button_coord[i + 2], panel);
-            else
-                addComponent(button, button_coord[i], button_coord[i + 1],
-                        button_coord[i + 2], 25, false, panel);*/
+             * if (k <= 1)
+             * addComponent(button, button_coord[i], button_coord[i + 1],
+             * button_coord[i + 2], panel);
+             * else
+             * addComponent(button, button_coord[i], button_coord[i + 1],
+             * button_coord[i + 2], 25, false, panel);
+             */
         }
 
         help_button = m_da.createHelpButtonByBounds(startx + 140, 195, 120, 25, this);
@@ -207,61 +191,47 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
     }
 
-    
-    
-
-/*    
-    public JFormattedTextField getTextField(int columns, int decimal_places,
-            Object value, int x, int y, int width, int height, Container cont)
-
-    {
-        JDecimalTextField tf = new JDecimalTextField(value, decimal_places);
-        tf.setBounds(x, y, width, height);
-//        tf.addKeyListener(this);
-        
-        cont.add(tf);
-        
-        return tf;
-        
-    }
-
-
-    public void addLabel(String text, int posY, JPanel parent)
-    {
-        JLabel label = new JLabel(text);
-        label.setBounds(30, posY, 100, 25);
-        label.setFont(f_bold);
-        parent.add(label);
-        // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
-        // SwingConstants.RIGHT));
-
-    }
-
-    public void addLabel(String text, int posX, int posY, JPanel parent)
-    {
-        JLabel label = new JLabel(text);
-        label.setBounds(posX, posY, 100, 25);
-        label.setFont(f_bold);
-        parent.add(label);
-        // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
-        // SwingConstants.RIGHT));
-
-    }
-
-    public void addComponent(JComponent comp, int posX, int posY, int width,
-            JPanel parent)
-    {
-        addComponent(comp, posX, posY, width, 23, true, parent);
-    }
-
-    public void addComponent(JComponent comp, int posX, int posY, int width,
-            int height, boolean change_font, JPanel parent)
-    {
-        comp.setBounds(posX, posY, width, height);
-//        comp.addKeyListener(this);
-        parent.add(comp);
-    }
-*/
+    /*
+     * public JFormattedTextField getTextField(int columns, int decimal_places,
+     * Object value, int x, int y, int width, int height, Container cont)
+     * {
+     * JDecimalTextField tf = new JDecimalTextField(value, decimal_places);
+     * tf.setBounds(x, y, width, height);
+     * // tf.addKeyListener(this);
+     * cont.add(tf);
+     * return tf;
+     * }
+     * public void addLabel(String text, int posY, JPanel parent)
+     * {
+     * JLabel label = new JLabel(text);
+     * label.setBounds(30, posY, 100, 25);
+     * label.setFont(f_bold);
+     * parent.add(label);
+     * // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
+     * // SwingConstants.RIGHT));
+     * }
+     * public void addLabel(String text, int posX, int posY, JPanel parent)
+     * {
+     * JLabel label = new JLabel(text);
+     * label.setBounds(posX, posY, 100, 25);
+     * label.setFont(f_bold);
+     * parent.add(label);
+     * // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
+     * // SwingConstants.RIGHT));
+     * }
+     * public void addComponent(JComponent comp, int posX, int posY, int width,
+     * JPanel parent)
+     * {
+     * addComponent(comp, posX, posY, width, 23, true, parent);
+     * }
+     * public void addComponent(JComponent comp, int posX, int posY, int width,
+     * int height, boolean change_font, JPanel parent)
+     * {
+     * comp.setBounds(posX, posY, width, height);
+     * // comp.addKeyListener(this);
+     * parent.add(comp);
+     * }
+     */
 
     /**
      * Invoked when an action occurs.
@@ -281,47 +251,48 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         {
             cmdOk();
         }
-/*        else if (action.equals("edit_food"))
-        {
-            
-            DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(
-                    m_da, this.m_dailyValuesRow.getMealsIds());
-
-            if (dvms.wasAction())
-            {
-                this.m_dailyValuesRow.setMealsIds(dvms.getStringForDb());
-                this.ftf_ch.setValue(new Float(dvms.getCHSum()
-                        .replace(',', '.')));
-
-                if (!dvms.getStringForDb().equals(""))
-                {
-                    this.cb_food_set.setSelected(true);
-                }
-        }
-        else if (action.equals("update_ch"))
-        {
-            PanelMealSelector pms = new PanelMealSelector(this, null,
-                    this.m_dailyValuesRow.getMealsIds());
-            this.ftf_ch.setValue(new Float(pms.getCHSumString().replace(',',
-                    '.')));
-        }
-        else if (action.equals("bolus_helper"))
-        {
-            BolusHelper bh = new BolusHelper(this, m_da.getJFormatedTextValueFloat(ftf_bg2), m_da.getJFormatedTextValueFloat(this.ftf_ch), this.dtc.getDateTime());
-            
-            if (bh.hasResult())
-            {
-                this.ftf_ins1.setValue(bh.getResult());
-            }
-        } */
+        /*
+         * else if (action.equals("edit_food"))
+         * {
+         * DailyValuesMealSelectorDialog dvms = new
+         * DailyValuesMealSelectorDialog(
+         * m_da, this.m_dailyValuesRow.getMealsIds());
+         * if (dvms.wasAction())
+         * {
+         * this.m_dailyValuesRow.setMealsIds(dvms.getStringForDb());
+         * this.ftf_ch.setValue(new Float(dvms.getCHSum()
+         * .replace(',', '.')));
+         * if (!dvms.getStringForDb().equals(""))
+         * {
+         * this.cb_food_set.setSelected(true);
+         * }
+         * }
+         * else if (action.equals("update_ch"))
+         * {
+         * PanelMealSelector pms = new PanelMealSelector(this, null,
+         * this.m_dailyValuesRow.getMealsIds());
+         * this.ftf_ch.setValue(new Float(pms.getCHSumString().replace(',',
+         * '.')));
+         * }
+         * else if (action.equals("bolus_helper"))
+         * {
+         * BolusHelper bh = new BolusHelper(this,
+         * m_da.getJFormatedTextValueFloat(ftf_bg2),
+         * m_da.getJFormatedTextValueFloat(this.ftf_ch),
+         * this.dtc.getDateTime());
+         * if (bh.hasResult())
+         * {
+         * this.ftf_ins1.setValue(bh.getResult());
+         * }
+         * }
+         */
         else
+        {
             System.out.println("PumpDataRowDialog::unknown command: " + action);
+        }
 
     }
 
-    
-    
-    
     /**
      * Was Action
      * 
@@ -332,8 +303,6 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         return this.was_action;
     }
 
-    
-    
     /**
      * Get Objects
      * 
@@ -342,115 +311,100 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     public PumpValuesEntryExt[] getObjects()
     {
         return pump_objects_ext;
-        
+
     }
-    
-    
+
     private void cmdOk()
     {
-        // TODO: 
-        //System.out.println("wizard_1 [ok]");
+        // TODO:
+        // System.out.println("wizard_1 [ok]");
         m_da.removeComponent(this);
 
-        
         this.dispose();
-        
-        PumpDataAdditionalWizardTwo padw2 = new PumpDataAdditionalWizardTwo(this, (String)this.cb_type.getSelectedItem()); //, this.add_data); 
+
+        PumpDataAdditionalWizardTwo padw2 = new PumpDataAdditionalWizardTwo(this,
+                (String) this.cb_type.getSelectedItem()); // , this.add_data);
         padw2.setVisible(true);
-        
+
         if (padw2.wasAction())
         {
             this.was_action = true;
             this.pump_objects_ext = padw2.getObjects();
         }
-        
+
         this.m_parent.requestFocus();
-        
-/*        
-        if (this.m_add_action)
-        {
-            // add
 
-            if (debug)
-                System.out.println("dV: " + dV);
-
-            // this.m_dailyValuesRow = new DailyValuesRow();
-
-            this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
-
-            // if (isFieldSet(BGField.getText()))
-
-            float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
-
-            if (f > 0.0)
-            {
-                //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
-                // )+1, f);
-                this.m_dailyValuesRow.setBG(1, f);
-            }
-
-            this.m_dailyValuesRow.setIns1(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins1));
-            this.m_dailyValuesRow.setIns2(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins2));
-            // checkDecimalFields(Ins1Field.getText()));
-            //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
-            // ()));
-            //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
-            // ;
-            this.m_dailyValuesRow.setCH(m_da
-                    .getJFormatedTextValueFloat(this.ftf_ch));
-            this.m_dailyValuesRow.setActivity(ActField.getText());
-            this.m_dailyValuesRow.setUrine(UrineField.getText());
-            this.m_dailyValuesRow.setComment(CommentField.getText());
-            // this.m_dailyValuesRow.setMealIdsList(null);
-
-            dV.setNewRow(this.m_dailyValuesRow);
-            this.m_actionDone = true;
-            this.dispose();
-        }
-        else
-        {
-
-            // edit
-            this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
-
-            float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
-
-            if (f > 0.0)
-            {
-                //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
-                // )+1, f);
-                this.m_dailyValuesRow.setBG(1, f);
-            }
-
-            // if (isFieldSet(BGField.getText()))
-            //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1,
-            // checkDecimalFields(BGField.getText()));
-            this.m_dailyValuesRow.setIns1(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins1));
-            this.m_dailyValuesRow.setIns2(m_da
-                    .getJFormatedTextValueInt(this.ftf_ins2));
-
-            //this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText
-            // ()));
-            //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
-            // ()));
-            this.m_dailyValuesRow.setCH(m_da
-                    .getJFormatedTextValueFloat(this.ftf_ch));
-            //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
-            // ;
-            this.m_dailyValuesRow.setActivity(ActField.getText());
-            this.m_dailyValuesRow.setUrine(UrineField.getText());
-            this.m_dailyValuesRow.setComment(CommentField.getText());
-            // this.m_dailyValuesRow.setMealIdsList(null);
-
-            // mod.fireTableChanged(null);
-            // clearFields();
-            this.m_actionDone = true;
-            this.dispose();
-        }
-*/
+        /*
+         * if (this.m_add_action)
+         * {
+         * // add
+         * if (debug)
+         * System.out.println("dV: " + dV);
+         * // this.m_dailyValuesRow = new DailyValuesRow();
+         * this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
+         * // if (isFieldSet(BGField.getText()))
+         * float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
+         * if (f > 0.0)
+         * {
+         * //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
+         * // )+1, f);
+         * this.m_dailyValuesRow.setBG(1, f);
+         * }
+         * this.m_dailyValuesRow.setIns1(m_da
+         * .getJFormatedTextValueInt(this.ftf_ins1));
+         * this.m_dailyValuesRow.setIns2(m_da
+         * .getJFormatedTextValueInt(this.ftf_ins2));
+         * // checkDecimalFields(Ins1Field.getText()));
+         * //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
+         * // ()));
+         * //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
+         * // ;
+         * this.m_dailyValuesRow.setCH(m_da
+         * .getJFormatedTextValueFloat(this.ftf_ch));
+         * this.m_dailyValuesRow.setActivity(ActField.getText());
+         * this.m_dailyValuesRow.setUrine(UrineField.getText());
+         * this.m_dailyValuesRow.setComment(CommentField.getText());
+         * // this.m_dailyValuesRow.setMealIdsList(null);
+         * dV.setNewRow(this.m_dailyValuesRow);
+         * this.m_actionDone = true;
+         * this.dispose();
+         * }
+         * else
+         * {
+         * // edit
+         * this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
+         * float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
+         * if (f > 0.0)
+         * {
+         * //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
+         * // )+1, f);
+         * this.m_dailyValuesRow.setBG(1, f);
+         * }
+         * // if (isFieldSet(BGField.getText()))
+         * //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1,
+         * // checkDecimalFields(BGField.getText()));
+         * this.m_dailyValuesRow.setIns1(m_da
+         * .getJFormatedTextValueInt(this.ftf_ins1));
+         * this.m_dailyValuesRow.setIns2(m_da
+         * .getJFormatedTextValueInt(this.ftf_ins2));
+         * //this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText
+         * // ()));
+         * //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
+         * // ()));
+         * this.m_dailyValuesRow.setCH(m_da
+         * .getJFormatedTextValueFloat(this.ftf_ch));
+         * //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
+         * // ;
+         * this.m_dailyValuesRow.setActivity(ActField.getText());
+         * this.m_dailyValuesRow.setUrine(UrineField.getText());
+         * this.m_dailyValuesRow.setComment(CommentField.getText());
+         * // this.m_dailyValuesRow.setMealIdsList(null);
+         * // mod.fireTableChanged(null);
+         * // clearFields();
+         * this.m_actionDone = true;
+         * this.dispose();
+         * }
+         */
     }
 
     /**
@@ -461,23 +415,25 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
      */
     public boolean isFieldSet(String text)
     {
-        if ((text == null) || (text.trim().length() == 0))
+        if (text == null || text.trim().length() == 0)
             return false;
         else
             return true;
     }
 
+    /**
+     * @param e
+     */
+    public void keyTyped(KeyEvent e)
+    {
+    }
 
     /**
      * @param e
      */
-    public void keyTyped(KeyEvent e) { }
-
-    
-    /**
-     * @param e
-     */
-    public void keyPressed(KeyEvent e) { }
+    public void keyPressed(KeyEvent e)
+    {
+    }
 
     /**
      * Invoked when a key has been released. See the class description for
@@ -486,17 +442,17 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
      */
     public void keyReleased(KeyEvent e)
     {
-/*
-        if ((e.getSource().equals(this.ftf_bg1)) || (e.getSource().equals(this.ftf_bg2)))
-        {
-            focusProcess(e.getSource());
-        }
-        
-        if (e.getKeyCode() == KeyEvent.VK_ENTER)
-        {
-            cmdOk();
-        }
-*/
+        /*
+         * if ((e.getSource().equals(this.ftf_bg1)) ||
+         * (e.getSource().equals(this.ftf_bg2)))
+         * {
+         * focusProcess(e.getSource());
+         * }
+         * if (e.getKeyCode() == KeyEvent.VK_ENTER)
+         * {
+         * cmdOk();
+         * }
+         */
     }
 
     // ****************************************************************

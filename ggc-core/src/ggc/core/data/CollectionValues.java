@@ -35,12 +35,12 @@ import com.atech.utils.data.ATechDate;
  *  @author  Andy {andy@atech-software.com}  
  */
 
-
 public class CollectionValues extends DailyValues
 {
 
-    //private boolean debug = false;
-    //private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
+    // private boolean debug = false;
+    // private I18nControlAbstract m_ic =
+    // DataAccess.getInstance().getI18nControlInstance();
 
     private static final long serialVersionUID = 4415864395080066275L;
 
@@ -54,7 +54,7 @@ public class CollectionValues extends DailyValues
     float sumBE = 0;
     float sumBasal = 0.0f;
     float sumBolus = 0.0f;
-    
+
     int counterBG = 0;
     int counterBE = 0;
     int counterIns1 = 0;
@@ -70,8 +70,8 @@ public class CollectionValues extends DailyValues
     boolean changed = false;
 
     DataAccess m_da = DataAccess.getInstance();
-    //Hashtable<String,ArrayList>
 
+    // Hashtable<String,ArrayList>
 
     /**
      * Constructor
@@ -85,8 +85,6 @@ public class CollectionValues extends DailyValues
         setDayRange(sDay, eDay);
     }
 
-    
-    
     /**
      * Set Day Range
      * 
@@ -95,91 +93,85 @@ public class CollectionValues extends DailyValues
      */
     public void setDayRange(GregorianCalendar sDay, GregorianCalendar eDay)
     {
-        //long diff = eDay.getTimeInMillis() - sDay.getTimeInMillis();
-        
-        
-        
+        // long diff = eDay.getTimeInMillis() - sDay.getTimeInMillis();
+
         ArrayList<DailyValuesRow> lst = DataAccess.getInstance().getDb().getDayValuesRange(sDay, eDay);
 
-        for (int i=0; i<lst.size(); i++ ) 
+        for (int i = 0; i < lst.size(); i++)
         {
             this.addRow(lst.get(i));
         }
 
     }
 
-    
-    
-    
-    
-
     /**
      * Reset Changed
      */
+    @Override
     public void resetChanged()
     {
-        changed = false;    
+        changed = false;
     }
 
-    
     /**
      * Set Date
      * 
      * @param date
      */
+    @Override
     public void setDate(long date)
     {
         this.date = date;
     }
 
-
     /**
      * Set Std Dev
      * @param stdDev
      */
+    @Override
     public void setStdDev(float stdDev)
     {
         this.stdDev = stdDev;
     }
-    
 
     /**
      * Add Row
      * 
      * @param dVR
      */
+    @Override
     public void addRow(DailyValuesRow dVR)
     {
         dataRows.add(dVR);
         this.sort();
-    
-    	bOnlyInsert = false;
-    	refreshStatData();
-    }
 
+        bOnlyInsert = false;
+        refreshStatData();
+    }
 
     /**
      * Delete Row
      * @param i
      */
+    @Override
     public void deleteRow(int i)
     {
-        try 
-    	{
-    
-    	    DailyValuesRow dVR = getRow(i);
-    
-    	    dataRows.remove(i);
-    	    this.refreshStatData();
-    
-    	    if (dVR.hasHibernateObject())
-    	    {
+        try
+        {
+
+            DailyValuesRow dVR = getRow(i);
+
+            dataRows.remove(i);
+            this.refreshStatData();
+
+            if (dVR.hasHibernateObject())
+            {
                 // problem on delete
                 DataAccess.getInstance().getDb().deleteHibernate(dVR.getHibernateObject());
-    	    }
-    
-        } 
-        catch (Exception ex) 
+            }
+
+        }
+        catch (Exception ex)
         {
             System.out.println("Error on delete from DailyValues" + ex);
         }
@@ -189,17 +181,12 @@ public class CollectionValues extends DailyValues
 
     }
 
-
-
-
-
-
-
     /**
      * Get Row Count
      * 
      * @return
      */
+    @Override
     public int getRowCount()
     {
         if (dataRows == null)
@@ -208,19 +195,17 @@ public class CollectionValues extends DailyValues
             return dataRows.size();
     }
 
-
     /**
      * Get Row
      * 
      * @param index
      * @return
      */
+    @Override
     public DailyValuesRow getRow(int index)
     {
         return this.dataRows.get(index);
     }
-
-
 
     /**
      * Get Value At
@@ -229,75 +214,76 @@ public class CollectionValues extends DailyValues
      * @param column
      * @return
      */
+    @Override
     public Object getValueAt(int row, int column)
     {
         return getRow(row).getValueAt(column);
     }
 
-    
-
-    
     /**
      * Get Day And Month As String
      *  
      * @return
      */
+    @Override
     public String getDayAndMonthAsString()
     {
         int day, month;
         day = (int) (date % 100);
-        month = ((int) (date % 10000))/100;
-        return String.format("%1$02d.%2$02d.", day, month); 
+        month = (int) (date % 10000) / 100;
+        return String.format("%1$02d.%2$02d.", day, month);
     }
 
-    
     /**
      * Get Date
      * 
      * @return A {@code long} with &quot;YYYYMMDD&quot; as contents. E.g. the 3rd January 2012 would be 20120103.
      */
+    @Override
     public long getDate()
     {
         return date;
     }
-
 
     /**
      * Get Date As Localized String
      * 
      * @return
      */
+    @Override
     public String getDateAsLocalizedString()
     {
-        //ATechDate at = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.date); //.getGregorianCalendar(), 4);
-        //System.out.println("Date: (getDate): " + this.getDate() + " , atechdate=" + at.getDateString());
-        //return at.toString();
-        return m_da.getAsLocalizedDateString((new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.date)).getGregorianCalendar(), 4);
+        // ATechDate at = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN,
+        // this.date); //.getGregorianCalendar(), 4);
+        // System.out.println("Date: (getDate): " + this.getDate() +
+        // " , atechdate=" + at.getDateString());
+        // return at.toString();
+        return m_da.getAsLocalizedDateString(
+            new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.date).getGregorianCalendar(), 4);
     }
-    
-    
+
     /**
      * Get Date As String
      * 
      * @return
      */
+    @Override
     public String getDateAsString()
     {
         return getDateAsLocalizedString();
     }
 
-    
     /**
      * Get Changed
      * 
      * @param row
      * @return
      */
+    @Override
     public boolean getChanged(int row)
     {
         return getRow(row).hasChanged();
     }
-
 
     /**
      * Get Sum CH Per Day
@@ -306,13 +292,12 @@ public class CollectionValues extends DailyValues
      */
     public float getSumCHPerDay()
     {
-        if (this.day_count.size()==0)
+        if (this.day_count.size() == 0)
             return 0.0f;
-        
-        return this.getSumCH()/this.day_count.size();
+
+        return this.getSumCH() / this.day_count.size();
     }
-    
-    
+
     /**
      * Get CH Count Per Day
      * 
@@ -320,13 +305,12 @@ public class CollectionValues extends DailyValues
      */
     public float getCHCountPerDay()
     {
-        if (this.day_count.size()==0)
+        if (this.day_count.size() == 0)
             return 0.0f;
 
-        return this.getCHCount()/this.day_count.size();
+        return this.getCHCount() / this.day_count.size();
     }
 
-    
     /**
      * Get Sum Bolus Per Day
      * 
@@ -334,12 +318,11 @@ public class CollectionValues extends DailyValues
      */
     public float getSumBolusPerDay()
     {
-        if (this.day_count.size()==0)
+        if (this.day_count.size() == 0)
             return 0.0f;
 
-        return this.getSumBolus()/this.day_count.size();
+        return this.getSumBolus() / this.day_count.size();
     }
-    
 
     /**
      * Get Bolus Count Per Day
@@ -348,13 +331,12 @@ public class CollectionValues extends DailyValues
      */
     public float getBolusCountPerDay()
     {
-        if (this.day_count.size()==0)
+        if (this.day_count.size() == 0)
             return 0.0f;
 
-        return this.getBolusCount()/this.day_count.size();
+        return this.getBolusCount() / this.day_count.size();
     }
-    
-    
+
     /**
      * Get Sum Basal Per Day
      * 
@@ -362,13 +344,12 @@ public class CollectionValues extends DailyValues
      */
     public float getSumBasalPerDay()
     {
-        if (this.day_count.size()==0)
+        if (this.day_count.size() == 0)
             return 0.0f;
 
-        return this.getSumBasal()/this.day_count.size();
+        return this.getSumBasal() / this.day_count.size();
     }
 
-    
     /**
      * Get Basal Count Per Day
      * 
@@ -376,11 +357,10 @@ public class CollectionValues extends DailyValues
      */
     public float getBasalCountPerDay()
     {
-        if (this.day_count.size()==0)
+        if (this.day_count.size() == 0)
             return 0.0f;
 
-        return this.getBasalCount()/this.day_count.size();
+        return this.getBasalCount() / this.day_count.size();
     }
-    
-    
+
 }

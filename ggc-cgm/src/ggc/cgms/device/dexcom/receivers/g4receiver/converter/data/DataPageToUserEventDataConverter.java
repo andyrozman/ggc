@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DataPageToUserEventDataConverter extends BytesConverterAbstract
 {
-    
+
     public List<UserEventDataRecord> convert(List<DatabasePage> pages) throws DexcomException
     {
         ArrayList<DatabaseRecord> rawRecords = this.getRawRecords(pages, new UserEventDataRecord());
@@ -36,7 +36,7 @@ public class DataPageToUserEventDataConverter extends BytesConverterAbstract
 
             records.add(ued);
 
-            //log.debug(ued);
+            // log.debug(ued);
         }
 
         return records;

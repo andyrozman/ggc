@@ -1,6 +1,5 @@
 package ggc.gui.panels.info;
 
-
 import ggc.core.util.DataAccess;
 import ggc.core.util.RefreshInfo;
 
@@ -39,7 +38,6 @@ import com.atech.misc.refresh.EventObserverInterface;
  *          andyrozman {andy@atech-software.com}  
  */
 
-
 public class InfoPanel extends JPanel implements EventObserverInterface
 {
     private static final long serialVersionUID = -8288632669830259690L;
@@ -56,25 +54,26 @@ public class InfoPanel extends JPanel implements EventObserverInterface
 
         vInfoPanels.add(new OtherInfoPanel(new GeneralInfoPanel(), new HbA1cInfoPanel()));
         vInfoPanels.add(new OtherInfoPanel(new PlugInsInfoPanel(), new DeviceInfoPanel()));
-        
-        
-        //vInfoPanels.add(new GeneralInfoPanel());
-        //vInfoPanels.add(new OtherInfoPanel(new HbA1cInfoPanel(), new DeviceInfoPanel()));
-        //vInfoPanels.add(new HbA1cInfoPanel());
+
+        // vInfoPanels.add(new GeneralInfoPanel());
+        // vInfoPanels.add(new OtherInfoPanel(new HbA1cInfoPanel(), new
+        // DeviceInfoPanel()));
+        // vInfoPanels.add(new HbA1cInfoPanel());
         vInfoPanels.add(new OtherInfoPanel(new ScheduleInfoPanel(), new StocksInfoPanel()));
         vInfoPanels.add(new StatisticsInfoPanel());
 
         addPanels();
-        
+
         m_da.addObserver(DataAccess.OBSERVABLE_PANELS, this);
     }
 
     private void addPanels()
     {
         for (int i = 0; i < vInfoPanels.size(); i++)
+        {
             add(vInfoPanels.get(i));
+        }
     }
-
 
     /**
      * Invalidate Panel Constants
@@ -87,8 +86,6 @@ public class InfoPanel extends JPanel implements EventObserverInterface
         }
     }
 
-
-
     /**
      * Refresh Panel
      */
@@ -99,7 +96,7 @@ public class InfoPanel extends JPanel implements EventObserverInterface
             vInfoPanels.get(i).refreshInfo();
         }
     }
-    
+
     /**
      * RefreshInfo - Refresh info by name 
      *  
@@ -111,9 +108,8 @@ public class InfoPanel extends JPanel implements EventObserverInterface
         {
             vInfoPanels.get(i).refreshInfo(name);
         }
-        
+
     }
-    
 
     /**
      * RefreshInfo - Refresh info by id 
@@ -127,11 +123,7 @@ public class InfoPanel extends JPanel implements EventObserverInterface
             vInfoPanels.get(i).refreshInfo(mask);
         }
     }
-    
-    
-    
 
-    
     /**
      * Refresh Group
      * 
@@ -145,7 +137,7 @@ public class InfoPanel extends JPanel implements EventObserverInterface
         }
         else if (type == RefreshInfo.PANEL_GROUP_ALL_DATA)
         {
-            this.refreshPanels(InfoPanelsIds.INFO_PANEL_HBA1C|InfoPanelsIds.INFO_PANEL_STATISTICS);
+            this.refreshPanels(InfoPanelsIds.INFO_PANEL_HBA1C | InfoPanelsIds.INFO_PANEL_STATISTICS);
         }
         else if (type == RefreshInfo.PANEL_GROUP_GENERAL_INFO)
         {
@@ -158,7 +150,6 @@ public class InfoPanel extends JPanel implements EventObserverInterface
         }
     }
 
-    
     /**
      * Update (From Ovservable)
      */
@@ -166,29 +157,23 @@ public class InfoPanel extends JPanel implements EventObserverInterface
     {
         if (arg instanceof Integer)
         {
-            Integer i = (Integer)arg;
+            Integer i = (Integer) arg;
             this.refreshGroup(i.intValue());
         }
     }
-    
-    
-    
-    
-    
-    
 
     /*
-    public void addPanelAt(int index, AbstractInfoPanel panel)
-    {
-        vInfoPanels.add(index, panel);
-        removeAll();
-        addPanels();
-    }
-
-    public void removePanelAt(int index)
-    {
-        vInfoPanels.remove(index);
-        removeAll();
-        addPanels();
-    }*/
+     * public void addPanelAt(int index, AbstractInfoPanel panel)
+     * {
+     * vInfoPanels.add(index, panel);
+     * removeAll();
+     * addPanels();
+     * }
+     * public void removePanelAt(int index)
+     * {
+     * vInfoPanels.remove(index);
+     * removeAll();
+     * addPanels();
+     * }
+     */
 }

@@ -41,5 +41,5 @@ public class GGCPluginICRunner extends I18nControlRunner
     {
         return "GGCPlugin";
     }
-    
+
 }

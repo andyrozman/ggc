@@ -1,4 +1,3 @@
-
 package ggc.gui.dialogs.graphs;
 
 import ggc.core.data.HbA1cValues;
@@ -20,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
@@ -48,7 +48,6 @@ import com.atech.i18n.I18nControlAbstract;
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
-
 
 public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 {
@@ -81,13 +80,13 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         super(da.getMainParent(), "HbA1c", false);
         this.m_da = da;
         this.m_ic = da.getI18nControlInstance();
-// init
+        // init
         // hbValues = this.m_da.getHbA1c(new GregorianCalendar());
         hbValues = this.m_da.getDb().getHbA1c(new GregorianCalendar(), false);
         init();
         updateLabels();
 
-        //hbView.setHbA1cValues(hbValues);
+        // hbView.setHbA1cValues(hbValues);
 
         this.m_da.enableHelp(this);
         this.setTitle(m_ic.getMessage("CALCULATED_HBA1C"));
@@ -135,20 +134,20 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         JLabel label = new JLabel(m_ic.getMessage("CALCULATED_HBA1C"));
         label.setFont(new Font("SansSerif", Font.BOLD, 20));
         label.setBounds(0, 20, 250, 35);
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         infoPanel.add(label); // , what)
 
         // current hba1c
         label = new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C") + ":");
         label.setBounds(0, 90, 250, 25);
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         infoPanel.add(label);
 
         lblHbA1c = new JLabel();
         lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 16));
         // lblHbA1c.setBounds(100, 130, 50, 30);
         lblHbA1c.setBounds(0, 110, 250, 30);
-        lblHbA1c.setHorizontalAlignment(JLabel.CENTER);
+        lblHbA1c.setHorizontalAlignment(SwingConstants.CENTER);
         infoPanel.add(lblHbA1c);
 
         // valuation
@@ -201,40 +200,37 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 
         rightPanel.add(infoPanel, BorderLayout.CENTER);
         rightPanel.add(bottomRightPanel, BorderLayout.SOUTH);
-        
-//        hbView.redraw();
-//        hbView.redraw();
-//        hbView.redraw();
-//        hbView.redraw();
-//        hbView.redraw();
-        
-    }
-/*
-    public void setHbA1cText(String s)
-    {
-        lblHbA1c.setText(s);
+
+        // hbView.redraw();
+        // hbView.redraw();
+        // hbView.redraw();
+        // hbView.redraw();
+        // hbView.redraw();
+
     }
 
-    public void setBGAvgText(String s)
-    {
-        lblBGAvg.setText(s);
-    }
-
-    public void setReadingsText(String s)
-    {
-        lblReadings.setText(s);
-    }
-
-    public void setReadingsPerDayText(String s)
-    {
-        lblReadingsPerDay.setText(s);
-    }
-
-    public void setExpressivnessText(String s)
-    {
-        lblExp.setText(s);
-    }
-*/
+    /*
+     * public void setHbA1cText(String s)
+     * {
+     * lblHbA1c.setText(s);
+     * }
+     * public void setBGAvgText(String s)
+     * {
+     * lblBGAvg.setText(s);
+     * }
+     * public void setReadingsText(String s)
+     * {
+     * lblReadings.setText(s);
+     * }
+     * public void setReadingsPerDayText(String s)
+     * {
+     * lblReadingsPerDay.setText(s);
+     * }
+     * public void setExpressivnessText(String s)
+     * {
+     * lblExp.setText(s);
+     * }
+     */
     private void closeDialog()
     {
         hbView = null;
@@ -253,7 +249,9 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
             this.closeDialog();
         }
         else
+        {
             System.out.println("HbA1cDialog:Unknown command: " + action);
+        }
     }
 
     // ****************************************************************

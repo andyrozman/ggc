@@ -6,7 +6,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Meter Tool (support for Meter devices)
@@ -33,18 +32,15 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class AscensiaBreeze extends AscensiaMeter 
+public class AscensiaBreeze extends AscensiaMeter
 {
 
-    
     /**
      * Constructor 
      */
     public AscensiaBreeze()
     {
     }
-    
 
     /**
      * Constructor 
@@ -55,8 +51,7 @@ public class AscensiaBreeze extends AscensiaMeter
     {
         super(cmp);
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -68,7 +63,6 @@ public class AscensiaBreeze extends AscensiaMeter
         super(portName, writer);
     }
 
-    
     /**
      * Constructor
      * 
@@ -81,11 +75,9 @@ public class AscensiaBreeze extends AscensiaMeter
         super(comm_parameters, writer, da);
     }
 
-
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -97,9 +89,6 @@ public class AscensiaBreeze extends AscensiaMeter
         return "Breeze";
     }
 
-
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -109,7 +98,6 @@ public class AscensiaBreeze extends AscensiaMeter
     {
         return "ascensia_breeze.png";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -122,7 +110,6 @@ public class AscensiaBreeze extends AscensiaMeter
         return MeterDevicesIds.METER_ASCENSIA_BREEZE;
     }
 
-    
     /** 
      * Get Device ClassName
      */
@@ -130,8 +117,7 @@ public class AscensiaBreeze extends AscensiaMeter
     {
         return "ggc.meter.device.ascensia.AscensiaBreeze";
     }
-    
-    
+
     /**
      * getInstructions - get instructions for device
      * 
@@ -141,7 +127,7 @@ public class AscensiaBreeze extends AscensiaMeter
     {
         return "INSTRUCTIONS_ASCENSIA_BREEZE";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -151,19 +137,17 @@ public class AscensiaBreeze extends AscensiaMeter
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
-    
 
     /**
      * Maximum of records that device can store
@@ -173,6 +157,4 @@ public class AscensiaBreeze extends AscensiaMeter
         return 100;
     }
 
-    
-    
 }

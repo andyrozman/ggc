@@ -43,8 +43,7 @@ public class AnimasPing extends AnimasPump
     {
         super();
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -55,8 +54,7 @@ public class AnimasPing extends AnimasPump
     {
         super(conn_parameter, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -68,8 +66,7 @@ public class AnimasPing extends AnimasPump
     {
         super(conn_parameter, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -79,20 +76,18 @@ public class AnimasPing extends AnimasPump
     {
         super(cmp);
     }
-    
-    
+
     /**
      * getName - Get Name of meter. 
      * 
      * @return name of meter
      */
+    @Override
     public String getName()
     {
         return "Ping";
     }
 
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -102,7 +97,6 @@ public class AnimasPing extends AnimasPump
     {
         return "an_ping.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -115,7 +109,6 @@ public class AnimasPing extends AnimasPump
         return PumpDevicesIds.PUMP_ANIMAS_PING;
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -126,30 +119,30 @@ public class AnimasPing extends AnimasPump
     {
         return "INSTRUCTIONS_ANIMAS_PING";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
      * @return comment or null
      */
+    @Override
     public String getComment()
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    @Override
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -160,7 +153,6 @@ public class AnimasPing extends AnimasPump
         return "ggc.pump.device.animas.AnimasPing";
     }
 
-
     /** 
      * Get Max Memory Records
      */
@@ -168,30 +160,29 @@ public class AnimasPing extends AnimasPump
     {
         return 0;
     }
-    
-    
+
     /**
      * Get Download Support Type
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
      * @return
      */
+    @Override
     public int howManyMonthsOfDataStored()
     {
         return -1;
     }
-    
-    
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -200,13 +191,13 @@ public class AnimasPing extends AnimasPump
      * 
      * @return
      */
+    @Override
     public String getTemporaryBasalTypeDefinition()
     {
-        //return "TYPE=Unit;STEP=0.1";
+        // return "TYPE=Unit;STEP=0.1";
         return null;
     }
-    
-    
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -216,8 +207,7 @@ public class AnimasPing extends AnimasPump
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Get Basal Step (precission)
      * 
@@ -227,20 +217,16 @@ public class AnimasPing extends AnimasPump
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
+    @Override
     public boolean arePumpSettingsSet()
     {
         return false;
     }
 
-    
-    
 }
-
-

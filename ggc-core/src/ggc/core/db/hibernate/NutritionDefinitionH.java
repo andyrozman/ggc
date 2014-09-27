@@ -1,12 +1,14 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class NutritionDefinitionH implements Serializable {
+public class NutritionDefinitionH implements Serializable
+{
 
     /**
      * 
@@ -37,7 +39,8 @@ public class NutritionDefinitionH implements Serializable {
      * @param name 
      * @param decimal_places 
      * @param static_entry */
-    public NutritionDefinitionH(String weight_unit, String tag, String name, String decimal_places, int static_entry) {
+    public NutritionDefinitionH(String weight_unit, String tag, String name, String decimal_places, int static_entry)
+    {
         this.weight_unit = weight_unit;
         this.tag = tag;
         this.name = name;
@@ -46,7 +49,8 @@ public class NutritionDefinitionH implements Serializable {
     }
 
     /** default constructor */
-    public NutritionDefinitionH() {
+    public NutritionDefinitionH()
+    {
     }
 
     /**
@@ -74,7 +78,7 @@ public class NutritionDefinitionH implements Serializable {
      * 
      * @return
      */
-    public String getWeight_unit() 
+    public String getWeight_unit()
     {
         return this.weight_unit;
     }
@@ -84,7 +88,7 @@ public class NutritionDefinitionH implements Serializable {
      * 
      * @param weight_unit 
      */
-    public void setWeight_unit(String weight_unit) 
+    public void setWeight_unit(String weight_unit)
     {
         this.weight_unit = weight_unit;
     }
@@ -94,7 +98,7 @@ public class NutritionDefinitionH implements Serializable {
      * 
      * @return
      */
-    public String getTag() 
+    public String getTag()
     {
         return this.tag;
     }
@@ -104,7 +108,7 @@ public class NutritionDefinitionH implements Serializable {
      * 
      * @param tag 
      */
-    public void setTag(String tag) 
+    public void setTag(String tag)
     {
         this.tag = tag;
     }
@@ -114,7 +118,7 @@ public class NutritionDefinitionH implements Serializable {
      * 
      * @return name
      */
-    public String getName() 
+    public String getName()
     {
         return this.name;
     }
@@ -124,18 +128,17 @@ public class NutritionDefinitionH implements Serializable {
      * 
      * @param name as string
      */
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
-
 
     /**
      * Get Decimal Places
      * 
      * @return
      */
-    public String getDecimal_places() 
+    public String getDecimal_places()
     {
         return this.decimal_places;
     }
@@ -145,7 +148,7 @@ public class NutritionDefinitionH implements Serializable {
      * 
      * @param decimal_places 
      */
-    public void setDecimal_places(String decimal_places) 
+    public void setDecimal_places(String decimal_places)
     {
         this.decimal_places = decimal_places;
     }
@@ -155,7 +158,7 @@ public class NutritionDefinitionH implements Serializable {
      * 
      * @return
      */
-    public int getStatic_entry() 
+    public int getStatic_entry()
     {
         return this.static_entry;
     }
@@ -165,7 +168,7 @@ public class NutritionDefinitionH implements Serializable {
      * 
      * @param static_entry 
      */
-    public void setStatic_entry(int static_entry) 
+    public void setStatic_entry(int static_entry)
     {
         this.static_entry = static_entry;
     }
@@ -175,13 +178,13 @@ public class NutritionDefinitionH implements Serializable {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof NutritionDefinitionH) ) return false;
+        if (!(other instanceof NutritionDefinitionH))
+            return false;
         NutritionDefinitionH castOther = (NutritionDefinitionH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -189,18 +192,19 @@ public class NutritionDefinitionH implements Serializable {
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

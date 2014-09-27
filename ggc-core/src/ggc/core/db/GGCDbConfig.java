@@ -30,11 +30,10 @@ package ggc.core.db;
  * Author: andyrozman {andy@atech-software.com}
  */
 
-
-import com.atech.db.hibernate.HibernateConfiguration;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.atech.db.hibernate.HibernateConfiguration;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -63,19 +62,13 @@ import org.apache.commons.logging.LogFactory;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class GGCDbConfig extends HibernateConfiguration
 {
 
     private static Log log = LogFactory.getLog(GGCDbConfig.class);
 
-    private String[] db_files = { 
-                   "GGC_Main.hbm.xml", 
-                   "GGC_Nutrition.hbm.xml", 
-                   "GGC_Other.hbm.xml",
-                   "GGC_Pump.hbm.xml", 
-                   "GGC_CGMS.hbm.xml" 
-    };
+    private String[] db_files = { "GGC_Main.hbm.xml", "GGC_Nutrition.hbm.xml", "GGC_Other.hbm.xml", "GGC_Pump.hbm.xml",
+                                 "GGC_CGMS.hbm.xml" };
 
     /**
      * Constructor
@@ -123,12 +116,14 @@ public class GGCDbConfig extends HibernateConfiguration
     @Override
     public void loadDefaultDatabase(boolean config_found)
     {
-        //System.out.println("load");
+        // System.out.println("load");
         db_num = 0;
         db_conn_name = "Internal Db (H2)";
 
         if (!config_found)
+        {
             log.info("GGCDb: Database configuration not found. Using default database.");
+        }
         log.info("GGCDb: Loading Db Configuration #" + db_num + ": " + db_conn_name);
 
         db_hib_dialect = "org.hibernate.dialect.H2Dialect";

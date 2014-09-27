@@ -35,19 +35,14 @@ public class DecodeHistoryData
         }
 
     }
-    
-    
+
     public static void main(String args[])
     {
-        
+
         DecodeHistoryData dhd = new DecodeHistoryData();
-        
+
         dhd.decode("test/mm_history_page_0.data");
-        
-        
+
     }
-    
-    
-    
 
 }

@@ -46,11 +46,11 @@ import javax.swing.filechooser.FileFilter;
  * Author: Andy {andy@atech-software.com}
  */
 
-public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileReaderContext {
+public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileReaderContext
+{
 
     ArrayList<CGMSValuesSubEntry> list = new ArrayList<CGMSValuesSubEntry>();
     CGMSValuesTableModel cvtm = null;
-
 
     /**
      * Constructor
@@ -58,44 +58,46 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
      * @param da
      * @param ow
      */
-    public FRC_DexcomTxt_DM3(DataAccessPlugInBase da, OutputWriter ow) {
+    public FRC_DexcomTxt_DM3(DataAccessPlugInBase da, OutputWriter ow)
+    {
         super(da, ow);
     }
 
-
-    public String getFileDescription() {
+    public String getFileDescription()
+    {
         return "DM3 Dexcom Software Export";
     }
-
 
     /**
      * Get File Download Panel
      *
      * @return
      */
-    public JPanel getFileDownloadPanel() {
+    public JPanel getFileDownloadPanel()
+    {
         return null;
     }
 
-
-    public String getFileExtension() {
+    public String getFileExtension()
+    {
         return ".txt";
     }
 
-
-    public String getFullFileDescription() {
+    public String getFullFileDescription()
+    {
         return "DM3 Dexcom Software Export (TXT)";
     }
 
-
-    public boolean hasSpecialSelectorDialog() {
+    public boolean hasSpecialSelectorDialog()
+    {
         return false;
     }
 
-
-    public void readFile(String filename) {
+    public void readFile(String filename)
+    {
         BufferedReader br = null;
-        try {
+        try
+        {
 
             DeviceIdentification di = this.output_writer.getDeviceIdentification();
             di.is_file_import = true;
@@ -106,24 +108,32 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             this.output_writer.setDeviceIdentification(di);
             this.output_writer.writeDeviceIdentification();
 
-            cvtm = (CGMSValuesTableModel)m_da.getDeviceDataHandler().getDeviceValuesTableModel();
+            cvtm = (CGMSValuesTableModel) m_da.getDeviceDataHandler().getDeviceValuesTableModel();
 
             br = new BufferedReader(new FileReader(filename));
 
             String line = null;
 
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null)
+            {
                 processLine(line);
             }
 
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             ex.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
+        }
+        finally
+        {
+            if (br != null)
+            {
+                try
+                {
                     br.close();
-                } catch (IOException e) {
                 }
+                catch (IOException e)
+                {}
             }
         }
         // System.out.println("i = " + i + " lisr: " + list.size());
@@ -133,14 +143,14 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
     int i = 0;
     String tmp_time;
 
-
-    private void addEntry(CGMSValuesSubEntry entry) {
+    private void addEntry(CGMSValuesSubEntry entry)
+    {
         this.list.add(entry);
         this.cvtm.addEntry(entry);
     }
 
-
-    private void processLine(String line) {
+    private void processLine(String line)
+    {
 
         // if (i>20)
         // return;
@@ -151,26 +161,38 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
 
         int read_type = 0;
 
-        if (count == 6) {
+        if (count == 6)
+        {
             read_type = 2;
-        } else if (count == 12) {
+        }
+        else if (count == 12)
+        {
             read_type = 0;
-        } else if (count == 8) {
+        }
+        else if (count == 8)
+        {
             strtok.nextToken();
             strtok.nextToken();
             read_type = 2;
-        } else if (count == 7) {
+        }
+        else if (count == 7)
+        {
             strtok.nextToken();
             read_type = 2;
-        } else if (count == 3) {
+        }
+        else if (count == 3)
+        {
             read_type = 1;
-        } else {
+        }
+        else
+        {
             System.out.println("Tokens: " + count);
         }
 
         // if (read_type>0)
         // if (read_type == 20)
-        if (read_type > 0) {
+        if (read_type > 0)
+        {
             CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
             tmp_time = strtok.nextToken();
             // sub.setDate(DexcomCGMS.getDateFromString(tmp_time));
@@ -182,7 +204,8 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             sub.value = Integer.parseInt(strtok.nextToken());
             addEntry(sub);
 
-            if (read_type == 2) {
+            if (read_type == 2)
+            {
                 sub = new CGMSValuesSubEntry();
                 tmp_time = strtok.nextToken();
                 sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
@@ -202,22 +225,24 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
 
     }
 
+    public FileFilter getFileFilter()
+    {
 
-    public FileFilter getFileFilter() {
-
-        return new FileFilter() {
+        return new FileFilter()
+        {
 
             @Override
-            public boolean accept(File f) {
+            public boolean accept(File f)
+            {
                 if (f.isDirectory())
                     return true;
 
-                return (f.getName().toLowerCase().endsWith(getFileExtension()));
+                return f.getName().toLowerCase().endsWith(getFileExtension());
             }
 
-
             @Override
-            public String getDescription() {
+            public String getDescription()
+            {
                 return getFileDescription() + " (" + getFileExtension() + ")";
             }
 
@@ -225,17 +250,18 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
 
     }
 
-
-    public void goToNextDialog(JDialog currentDialog) {
+    public void goToNextDialog(JDialog currentDialog)
+    {
     }
 
-
-    public String toString() {
+    @Override
+    public String toString()
+    {
         return this.getFullFileDescription();
     }
 
-
-    public void setOutputWriter(OutputWriter ow) {
+    public void setOutputWriter(OutputWriter ow)
+    {
         this.output_writer = ow;
     }
 

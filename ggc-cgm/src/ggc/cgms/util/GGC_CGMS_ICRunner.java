@@ -39,7 +39,7 @@ public class GGC_CGMS_ICRunner extends I18nControlRunner
     @Override
     public String getLanguageFileRoot()
     {
-        return "GGC_CGMSTool"; 
+        return "GGC_CGMSTool";
     }
-    
+
 }

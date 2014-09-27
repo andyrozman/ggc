@@ -1,4 +1,4 @@
-package ggc.meter.manager.company; 
+package ggc.meter.manager.company;
 
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.DataAccessMeter;
@@ -39,13 +39,13 @@ public class USDiagnostic extends AbstractDeviceCompany
      */
     public USDiagnostic()
     {
-        super(true,                                     // empty devices
-            MeterDevicesIds.COMPANY_US_DIAGNOSTICS,     // company_id
-            "US Diagnostic",                            // company name (full)
-            "US Diagnostic",                            // short company name
-            "USDIAGNOSTIC_DESC",                        // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED,
-            DataAccessMeter.getInstance());  // implementation status
+        super(true, // empty devices
+                MeterDevicesIds.COMPANY_US_DIAGNOSTICS, // company_id
+                "US Diagnostic", // company name (full)
+                "US Diagnostic", // short company name
+                "USDIAGNOSTIC_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                                                                                                       // status
     }
-    
+
 }

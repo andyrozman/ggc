@@ -5,7 +5,7 @@ import java.util.HashMap;
 public enum UserEvent
 {
     NullType(0), //
-    Carbs(1), // 
+    Carbs(1), //
     Insulin(2), //
     Health(3), //
     Exercise(4), //

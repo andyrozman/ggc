@@ -77,7 +77,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 {
 
     private static final long serialVersionUID = -7744922647111948669L;
-    private I18nControlAbstract m_ic = null; //I18nControl.getInstance();
+    private I18nControlAbstract m_ic = null; // I18nControl.getInstance();
     private DataAccess m_da = null;
     private GGCDb m_db = null;
 
@@ -175,7 +175,6 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
         /*
          * JMenuBar jmb = new JMenuBar(); this.setJMenuBar(jmb);
-         * 
          * quitAction = new GGCAction("MN_QUIT", "MN_QUIT_DESC", "file_quit");
          * jmb.add(new JMenuItem(quitAction));
          */
@@ -185,9 +184,9 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
         helpInit();
 
-        //m_da.addObserver(observable_id, inst)
-        
-        m_da.startDb(); //statusPanel);
+        // m_da.addObserver(observable_id, inst)
+
+        m_da.startDb(); // statusPanel);
         setDbActions(false);
         statusPanel.setStatusMessage(m_ic.getMessage("INIT"));
 
@@ -244,19 +243,13 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
          * "MN_FROM_METER_DESC", "read_meter");
          * readMeterAction.putValue(Action.SMALL_ICON, new
          * ImageIcon(getClass().getResource("/icons/readmeter.gif")));
-         * 
          * aboutAction = new GGCAction("MN_ABOUT", "MN_ABOUT_DESC",
          * "hlp_about"); aboutAction.putValue(Action.SMALL_ICON, new
          * ImageIcon(getClass().getResource("/icons/about.gif")));
-         * 
          * toolBar.setFloatable(false); toolBar.setLayout(new
          * FlowLayout(FlowLayout.LEFT, 1, 1));
-         * 
-         * 
          * addToolBarSpacer(); addToolBarButton(readMeterAction);
-         * 
          * JLabel l = new JLabel(""); l.setPreferredSize(new Dimension(510,20));
-         * 
          * toolBar.add(l); addToolBarButton(aboutAction);
          */
 
@@ -267,18 +260,13 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
         /*
          * JPopupMenu menu = new JPopupMenu();
-         * 
          * menu.add(createItem("SHOW_APP", "SHOW_APP_DESC", "show_app"));
          * menu.add(createItem("HIDE_APP", "HIDE_APP_DESC", "hide_app"));
          * menu.addSeparator(); menu.add(createItem("EXIT_APP", "EXIT_APP_DESC",
          * "exit_app")); menu.add(new JLabel()); menu.add(new JLabel());
-         * 
-         * 
          * SystemTray tray = SystemTray.getSystemTray();
-         * 
          * TrayIcon ti = new TrayIcon(m_da.getImageIcon("medical_bag.png", 15,
          * 15, this) , m_ic.getMessage("GGC_LITTLE_TITLE"), menu);
-         * 
          * ti.setIconAutoSize(true); ti.addActionListener(new ActionListener() {
          * public void actionPerformed(ActionEvent e) {
          * JOptionPane.showMessageDialog(null,
@@ -293,12 +281,9 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
      * JMenuItem item = new JMenuItem(m_ic.getMessage(name));
      * item.setActionCommand(action); //item.setName(m_ic.getMessage(name));
      * item.setToolTipText(m_ic.getMessage(desc)); item.addActionListener(this);
-     * 
-     * 
      * return item; }
      */
 
-    
     /**
      * Get Status Panel
      * 
@@ -308,18 +293,17 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     {
         return this.statusPanel;
     }
-    
+
     /**
      * Get Information Panel
      * 
      * @return
      */
     public MainLittlePanel getInformationPanel()
-    { 
+    {
         return this.informationPanel;
     }
-    
-    
+
     private JLabel getEmptyLabel(int width, int height)
     {
         JLabel label_empty = new JLabel("");
@@ -378,7 +362,6 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     /*
      * private JMenuItem addMenuItem(JMenu menu, Action action) { JMenuItem item
      * = menu.add(action);
-     * 
      * KeyStroke keystroke = (KeyStroke)action.getValue(Action.ACCELERATOR_KEY);
      * if (keystroke != null) item.setAccelerator(keystroke); return item; }
      */
@@ -401,19 +384,13 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
          * mouseEntered(MouseEvent e) { if (button.isEnabled()) {
          * button.setBorder(BorderFactory.createLineBorder(new Color(8, 36,
          * 106), 1)); button.setBackground(new Color(180, 190, 213)); }
-         * 
          * }
-         * 
          * public void mouseExited(MouseEvent e) {
          * button.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
          * button.setBackground(new Color(213, 210, 205)); }
-         * 
          * public void mouseClicked(MouseEvent e) { }
-         * 
          * public void mousePressed(MouseEvent e) { }
-         * 
          * public void mouseReleased(MouseEvent e) { }
-         * 
          * });
          */
 
@@ -441,10 +418,14 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
             char ch = m_ic.getMnemonic(name);
 
             if (ch != '0')
+            {
                 putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch, Event.CTRL_MASK));
+            }
 
             if (command != null)
+            {
                 putValue(ACTION_COMMAND_KEY, command);
+            }
 
             command = name;
         }
@@ -464,13 +445,19 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
             char ch = m_ic.getMnemonic(name);
 
             if (ch != '0')
+            {
                 putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(ch, Event.CTRL_MASK));
+            }
 
             if (tooltip != null)
+            {
                 putValue(SHORT_DESCRIPTION, m_ic.getMessage(tooltip));
+            }
 
             if (command != null)
+            {
                 putValue(ACTION_COMMAND_KEY, command);
+            }
         }
 
         /*
@@ -512,8 +499,8 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
                 if (dailyStats.getTable().getSelectedRow() == -1)
                 {
-                    JOptionPane.showMessageDialog(getMyParent(), m_ic.getMessage("SELECT_ROW_FIRST"), m_ic
-                            .getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(getMyParent(), m_ic.getMessage("SELECT_ROW_FIRST"),
+                        m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -534,19 +521,17 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
                 if (dailyStats.getTable().getSelectedRow() == -1)
                 {
-                    JOptionPane.showMessageDialog(getMyParent(), m_ic.getMessage("SELECT_ROW_FIRST"), m_ic
-                            .getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(getMyParent(), m_ic.getMessage("SELECT_ROW_FIRST"),
+                        m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                int option_selected = JOptionPane.showOptionDialog(getMyParent(), m_ic
-                        .getMessage("ARE_YOU_SURE_DELETE_ROW"), m_ic.getMessage("QUESTION"), JOptionPane.YES_NO_OPTION,
+                int option_selected = JOptionPane.showOptionDialog(getMyParent(),
+                    m_ic.getMessage("ARE_YOU_SURE_DELETE_ROW"), m_ic.getMessage("QUESTION"), JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE, null, m_da.options_yes_no, JOptionPane.YES_OPTION);
 
                 if (option_selected == JOptionPane.NO_OPTION)
-                {
                     return;
-                }
 
                 try
                 {
@@ -578,7 +563,9 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
                 // JOptionPane.INFORMATION_MESSAGE);
             }
             else
+            {
                 System.out.println("GGCLittle:Unknown Command: " + command);
+            }
 
         }
     }
@@ -621,12 +608,13 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
             {
                 URL hsURL = new URL(help_url);
 
-/*                if (hsURL == null)
-                    System.out.println("HelpSet " + help_url /*
-                                                              * PISMain.mainHelpSetName
-                                                              */ //+ " not found.");
-//                else */
-                    main_help_set = new HelpSet(null, hsURL);
+                /*
+                 * if (hsURL == null)
+                 * System.out.println("HelpSet " + help_url /*
+                 * PISMain.mainHelpSetName
+                 */// + " not found.");
+                // else */
+                main_help_set = new HelpSet(null, hsURL);
             }
             catch (HelpSetException ee)
             {
@@ -674,22 +662,22 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     private boolean checkDateSame()
     {
         if (m_db == null)
+        {
             this.m_db = m_da.getDb();
+        }
 
         if (!m_da.isSameDay(this.gc_current, new GregorianCalendar()))
         {
             // not same date
-            JOptionPane.showMessageDialog(getMyParent(), m_ic.getMessage("CURRENT_DATE_HAS_CHANGED"), m_ic
-                    .getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(getMyParent(), m_ic.getMessage("CURRENT_DATE_HAS_CHANGED"),
+                m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
 
             this.dailyStats.refreshInfo();
 
             return false;
         }
         else
-        {
             return true;
-        }
 
     }
 
@@ -697,27 +685,39 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
     /** 
      */
-    public void windowDeactivated(WindowEvent e) { }
+    public void windowDeactivated(WindowEvent e)
+    {
+    }
 
     /** 
      */
-    public void windowActivated(java.awt.event.WindowEvent e) { }
+    public void windowActivated(java.awt.event.WindowEvent e)
+    {
+    }
 
     /** 
      */
-    public void windowDeiconified(java.awt.event.WindowEvent e) { }
+    public void windowDeiconified(java.awt.event.WindowEvent e)
+    {
+    }
 
     /** 
      */
-    public void windowIconified(java.awt.event.WindowEvent e) { }
-
-    /** 
-     */ 
-    public void windowClosed(java.awt.event.WindowEvent e) { }
+    public void windowIconified(java.awt.event.WindowEvent e)
+    {
+    }
 
     /** 
      */
-    public void windowOpened(java.awt.event.WindowEvent e) { }
+    public void windowClosed(java.awt.event.WindowEvent e)
+    {
+    }
+
+    /** 
+     */
+    public void windowOpened(java.awt.event.WindowEvent e)
+    {
+    }
 
     /**
      * Window Closing Event
@@ -758,7 +758,9 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
             close();
         }
         else
+        {
             System.out.println("Action: " + action);
+        }
 
     }
 
@@ -773,14 +775,10 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
          * GGCLittle gl = new GGCLittle("GGCL - GNU Gluco Control Little",
          * false); Toolkit theKit = gl.getToolkit(); Dimension wndSize =
          * theKit.getScreenSize();
-         * 
          * //mainWindow.setBounds(wndSize.width / 4, wndSize.height / 4,
          * (int)(wndSize.width 0.66), (int)(wndSize.height 0.66));
-         * 
          * int x, y;
-         * 
          * x = wndSize.width/2 - 400; y = wndSize.height/2 - 300;
-         * 
          * gl.setBounds(x, y, 600, 440); gl.setVisible(true);
          */
 

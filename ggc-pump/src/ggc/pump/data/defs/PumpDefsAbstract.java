@@ -29,7 +29,7 @@ import ggc.pump.util.DataAccessPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public abstract class PumpDefsAbstract extends DeviceDefsAbstract 
+public abstract class PumpDefsAbstract extends DeviceDefsAbstract
 {
 
     /**
@@ -40,5 +40,5 @@ public abstract class PumpDefsAbstract extends DeviceDefsAbstract
         this.da = DataAccessPump.getInstance();
         this.ic = da.getI18nControlInstance();
     }
-    
+
 }

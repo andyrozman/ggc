@@ -25,6 +25,7 @@ import javax.swing.event.ListDataListener;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.update.startup.os.OSUtil;
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -53,13 +54,14 @@ import com.atech.utils.ATSwingUtils;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class CommunicationPortSelector extends JDialog implements ActionListener, HelpCapable
 {
-    /* When adding new protocol search for 'New_Item_Edit' entries. There you need to extend everything */
+    /*
+     * When adding new protocol search for 'New_Item_Edit' entries. There you
+     * need to extend everything
+     */
     // New_Item_Edit
-    
-    
+
     /**
      * 
      */
@@ -73,9 +75,9 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     JButton help_button;
     JList data_list;
     boolean was_action = false;
-    
+
     int connection_protocol_type = 0;
-    
+
     /**
      * Constructor 
      * 
@@ -86,7 +88,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     public CommunicationPortSelector(JDialog parent, DataAccessPlugInBase da, int protocol_type)
     {
         super(parent, true);
-     
+
         this.m_da = da;
         this.m_ic = da.getI18nControlInstance();
         this.connection_protocol_type = protocol_type;
@@ -95,36 +97,31 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         {
             this.m_da.addComponent(this);
             ATSwingUtils.initLibrary();
-            
+
             init();
             this.setVisible(true);
         }
-        
-        
-        
+
     }
 
-    
     private boolean checkNative()
     {
-        if (this.connection_protocol_type==ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE)
+        if (this.connection_protocol_type == ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE)
         {
             if (!m_da.checkNativeLibrary("rxtxSerial"))
             {
-                JOptionPane.showMessageDialog(this,
-                    String.format(m_ic.getMessage("NO_BINARY_PART_FOUND"), "Rxtx", OSUtil.getShortOSName(), "rxtxSerial"),
-                    m_ic.getMessage("ERROR") + ": Rxtx", 
-                    JOptionPane.ERROR_MESSAGE, 
-                    null);
-                
+                JOptionPane.showMessageDialog(this, String.format(m_ic.getMessage("NO_BINARY_PART_FOUND"), "Rxtx",
+                    OSUtil.getShortOSName(), "rxtxSerial"), m_ic.getMessage("ERROR") + ": Rxtx",
+                    JOptionPane.ERROR_MESSAGE, null);
+
                 return false;
             }
         }
-        
+
         return true;
-        
+
     }
-    
+
     /**
      * Init
      */
@@ -132,66 +129,57 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     {
         this.setLayout(null);
         this.setBounds(25, 115, 320, 300);
-        
+
         panel = new JPanel();
         panel.setBounds(0, 0, 350, 400);
         panel.setLayout(null);
         this.getContentPane().add(panel);
-        
-        
-        int st_y = initType() + 25;
-        
-        //125, 85
-        
-        label = ATSwingUtils.getLabel(m_ic.getMessage(getProtocolParameterName()) + ":", 20, 20, 300, 25, panel);
-        
 
-        
-        
-        
-        //getAllAvailablePortsString()
-        
+        int st_y = initType() + 25;
+
+        // 125, 85
+
+        label = ATSwingUtils.getLabel(m_ic.getMessage(getProtocolParameterName()) + ":", 20, 20, 300, 25, panel);
+
+        // getAllAvailablePortsString()
+
         /*
-        label = new JLabel(m_ic.getMessage("COMMUNICATION_PORT") + ":");
-        label.setBounds(0, 0, 150, 25);
-        this.add(label);
-        
-        tf_port = new JTextField();
-        tf_port.setBounds(160, 0, 80, 25);
-        tf_port.setEditable(false);
-        this.add(tf_port);
-        */
-       
-        
-        //set the buttons up...
+         * label = new JLabel(m_ic.getMessage("COMMUNICATION_PORT") + ":");
+         * label.setBounds(0, 0, 150, 25);
+         * this.add(label);
+         * tf_port = new JTextField();
+         * tf_port.setBounds(160, 0, 80, 25);
+         * tf_port.setEditable(false);
+         * this.add(tf_port);
+         */
+
+        // set the buttons up...
         JButton button = new JButton("  " + m_ic.getMessage("OK"));
-        //okButton.setPreferredSize(dim);
+        // okButton.setPreferredSize(dim);
         button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
         button.setActionCommand("ok");
-        button.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL));
+        button.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
         button.setBounds(20, st_y, 110, 25);
         button.addActionListener(this);
         panel.add(button);
 
-        button = new JButton("  " +m_ic.getMessage("CANCEL"));
-        //cancelButton.setPreferredSize(dim);
+        button = new JButton("  " + m_ic.getMessage("CANCEL"));
+        // cancelButton.setPreferredSize(dim);
         button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
         button.setActionCommand("cancel");
-        button.setFont(m_da.getFont(DataAccessPlugInBase.FONT_NORMAL));
+        button.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
         button.setBounds(140, st_y, 110, 25);
         button.addActionListener(this);
         panel.add(button);
-        
+
         help_button = m_da.createHelpButtonByBounds(260, st_y, 30, 25, this);
         help_button.setText("");
         panel.add(help_button);
 
         this.setBounds(25, 115, 320, st_y + 80);
-        
-        
+
     }
 
-    
     /**
      * Init Type
      * 
@@ -200,7 +188,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     public int initType()
     {
         // New_Item_Edit
-        switch(this.connection_protocol_type)
+        switch (this.connection_protocol_type)
         {
             case ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML:
             case ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE:
@@ -212,8 +200,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
                 return 0;
         }
     }
-    
-    
+
     private int initList()
     {
         data_list = new JList();
@@ -221,8 +208,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         {
 
             Vector<String> elems = getDataForList();
-            
-            
+
             public void addListDataListener(ListDataListener arg0)
             {
             }
@@ -240,20 +226,18 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
             public void removeListDataListener(ListDataListener arg0)
             {
             }
-            
-        }
-        );
-        
+
+        });
+
         JScrollPane scr = new JScrollPane(data_list);
         scr.setBounds(30, 50, 220, 100);
-        
+
         panel.add(scr);
-        
+
         return 150;
-        
+
     }
-    
-    
+
     /**
      * Check If Item Selected
      * 
@@ -262,20 +246,19 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     public boolean checkIfItemSelected()
     {
         // New_Item_Edit
-        switch(this.connection_protocol_type)
+        switch (this.connection_protocol_type)
         {
             case ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML:
             case ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE:
             case ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL:
                 {
-                    return (this.data_list.getSelectedIndex()>-1);
+                    return this.data_list.getSelectedIndex() > -1;
                 }
             default:
                 return false;
         }
-        
+
     }
-    
 
     /**
      * Get Selected Item
@@ -285,22 +268,20 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     public String getSelectedItem()
     {
         // New_Item_Edit
-        switch(this.connection_protocol_type)
+        switch (this.connection_protocol_type)
         {
             case ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML:
             case ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE:
             case ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL:
                 {
-                    return ((String)this.data_list.getSelectedValue());
+                    return (String) this.data_list.getSelectedValue();
                 }
             default:
                 return null;
         }
-        
+
     }
-    
-    
-    
+
     /**
      * Get Protocol Parameter Name
      * 
@@ -309,12 +290,12 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     public String getProtocolParameterName()
     {
         // New_Item_Edit
-        switch(this.connection_protocol_type)
+        switch (this.connection_protocol_type)
         {
             case ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML:
-            {
-                return "SELECT_MASS_STORAGE_DRIVE";
-            }
+                {
+                    return "SELECT_MASS_STORAGE_DRIVE";
+                }
             case ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL:
             case ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE:
                 {
@@ -323,10 +304,9 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
             default:
                 return "";
         }
-        
+
     }
-    
-    
+
     /**
      * Get Not Fillled Error
      * 
@@ -335,22 +315,20 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     public String getNotFilledError()
     {
         // New_Item_Edit
-        switch(this.connection_protocol_type)
+        switch (this.connection_protocol_type)
         {
             case ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML:
             case ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE:
             case ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL:
                 {
-                    return "SELECT_ITEM_OR_CANCEL"; 
+                    return "SELECT_ITEM_OR_CANCEL";
                 }
             default:
                 return "";
         }
-        
+
     }
-    
-    
-    
+
     protected Vector<String> getDataForList()
     {
         // New_Item_Edit
@@ -360,54 +338,50 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
             {
                 return SerialProtocol.getAllAvailablePortsString();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 System.out.println("Exception: " + ex);
                 return new Vector<String>();
             }
-            
-            
+
         }
         else if (this.connection_protocol_type == ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML)
         {
             File[] fls = File.listRoots();
-            
+
             Vector<String> drives = new Vector<String>();
-            
-            for(int i=0; i<fls.length; i++)
+
+            for (File fl : fls)
             {
-                drives.add(fls[i].toString());
+                drives.add(fl.toString());
             }
-            
+
             if (!System.getProperty("os.name").contains("Win"))
             {
-                // non windows system, will load data from /mnt and /media and /Volumes
+                // non windows system, will load data from /mnt and /media and
+                // /Volumes
                 String[] rts = { "/mnt", "/media", "/Volumes" };
-                
-                for(int i=0; i<rts.length; i++)
+
+                for (String rt : rts)
                 {
-                    File f = new File(rts[i]);
-                    
+                    File f = new File(rt);
+
                     if (f.exists())
                     {
                         File[] f2 = f.listFiles();
-                        
-                        for(int j=0; j<f2.length; j++)
+
+                        for (File element : f2)
                         {
-                            if (f2[j].isDirectory())
+                            if (element.isDirectory())
                             {
-                                drives.add(f2[j].toString());
+                                drives.add(element.toString());
                             }
                         }
                     }
                 }
-                
-                
-                
+
             }
-            
-            
-            
+
             return drives;
         }
         else if (this.connection_protocol_type == ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL)
@@ -416,18 +390,16 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
             {
                 return BlueToothProtocol.getAllAvailablePortsString();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 System.out.println("Exception: " + ex);
                 return new Vector<String>();
             }
-            
-            
+
         }
         else
             return null;
     }
-    
 
     /**
      * Was Action
@@ -438,7 +410,6 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     {
         return was_action;
     }
-    
 
     /**
      * Action Performed (for Action Listener)
@@ -448,7 +419,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     public void actionPerformed(ActionEvent ae)
     {
         String action = ae.getActionCommand();
-        
+
         if (action.equals("ok"))
         {
             if (checkIfItemSelected())
@@ -459,10 +430,11 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
             }
             else
             {
-                JOptionPane.showMessageDialog(this, m_ic.getMessage(getNotFilledError()), m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, m_ic.getMessage(getNotFilledError()), m_ic.getMessage("ERROR"),
+                    JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
         }
         else if (action.equals("cancel"))
         {
@@ -470,14 +442,13 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
             this.dispose();
             this.m_da.removeComponent(this);
         }
-            
+
     }
-    
-    
+
     // ****************************************************************
-    // ******              HelpCapable Implementation             *****
+    // ****** HelpCapable Implementation *****
     // ****************************************************************
-    
+
     /** 
      * getComponent - get component to which to attach help context
      */
@@ -499,9 +470,9 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
      */
     public String getHelpId()
     {
-        //return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Configuration_PortSelector";
+        // return m_da.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // "Configuration_PortSelector";
         return "DeviceTool_Configuration_PortSelector";
     }
-    
-    
+
 }

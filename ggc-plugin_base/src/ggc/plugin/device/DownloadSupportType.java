@@ -28,54 +28,42 @@ package ggc.plugin.device;
 
 public class DownloadSupportType
 {
-    
-    
-    
-    
-    
-    
+
     /**
      * DownloadSupportType: Download possible
      */
-    //public static final int DOWNLOAD_YES = 0;
-    
+    // public static final int DOWNLOAD_YES = 0;
+
     /**
      * DownloadSupportType: Download not possible
      */
     public static final int DOWNLOAD_SUPPORT_NO = 1;
 
-    
     /**
      * DownloadSupportType: Download not supported by device
      */
     public static final int DOWNLOAD_SUPPORT_NA_DEVICE = 2;
-
 
     /**
      * DownloadSupportType: Download not supported by device
      */
     public static final int DOWNLOAD_SUPPORT_NA_GENERIC_DEVICE = 4;
 
-
     /**
      * DownloadSupportType: Download from device
      */
     public static final int DOWNLOAD_FROM_DEVICE = 8;
-    
-    
+
     /**
      * DownloadSupportType: Download from device
      */
     public static final int DOWNLOAD_FROM_DEVICE_FILE = 16;
 
-
     /**
      * DownloadSupportType: Download from device
      */
     public static final int DOWNLOAD_CONFIG_FROM_DEVICE = 32;
-    
-    
-    
+
     /**
      * Is Option Set - checks if bit option is set 
      * 
@@ -85,9 +73,7 @@ public class DownloadSupportType
      */
     public static boolean isOptionSet(int current_status, int option)
     {
-        return ((current_status & option) == option);
+        return (current_status & option) == option;
     }
-    
-    
-    
+
 }

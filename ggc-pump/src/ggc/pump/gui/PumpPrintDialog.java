@@ -39,7 +39,7 @@ import com.atech.print.gui.PrintDialogRange;
 
 public class PumpPrintDialog extends PrintDialogRange
 {
-    
+
     private static final long serialVersionUID = 8767665433469855349L;
 
     /**
@@ -51,10 +51,7 @@ public class PumpPrintDialog extends PrintDialogRange
      * Pump Report: Extended
      */
     public static final int PUMP_REPORT_EXTENDED = 2;
-    
-    
-    
-    
+
     /**
      * Constructor
      * 
@@ -65,7 +62,6 @@ public class PumpPrintDialog extends PrintDialogRange
     {
         super(frame, type, DataAccessPump.getInstance(), true);
     }
-    
 
     /**
      * getHelpId - get id for Help
@@ -76,7 +72,6 @@ public class PumpPrintDialog extends PrintDialogRange
         return "PumpTool_Print";
     }
 
-    
     /**
      * Get Pdf Viewer (path to software)
      * 
@@ -88,7 +83,6 @@ public class PumpPrintDialog extends PrintDialogRange
         return DataAccess.getInstance().getSettings().getExternalPdfVieverPath().replace('\\', '/');
     }
 
-    
     /**
      * Get Report Types
      * 
@@ -97,7 +91,8 @@ public class PumpPrintDialog extends PrintDialogRange
     @Override
     public String[] getReportTypes()
     {
-        return new String[] { this.i18nControl.getMessage("PUMP_DATA_BASE"), this.i18nControl.getMessage("PUMP_DATA_EXT") };
+        return new String[] { this.i18nControl.getMessage("PUMP_DATA_BASE"),
+                             this.i18nControl.getMessage("PUMP_DATA_EXT") };
     }
 
     /**
@@ -108,12 +103,14 @@ public class PumpPrintDialog extends PrintDialogRange
     @Override
     public void startPrintingAction() throws Exception
     {
-     
-        DeviceValuesRange dvr = DataAccessPump.getInstance().getDb().getRangePumpValues(this.getFromDateObject(), this.getToDateObject());
-        //System.out.println(this.dc_from.getDate() + " " + this.dc_to.getDate());
-        
+
+        DeviceValuesRange dvr = DataAccessPump.getInstance().getDb()
+                .getRangePumpValues(this.getFromDateObject(), this.getToDateObject());
+        // System.out.println(this.dc_from.getDate() + " " +
+        // this.dc_to.getDate());
+
         PrintAbstractIText pa = null;
-        
+
         if (this.cbTemplate.getSelectedIndex() == 0)
         {
             pa = new PrintPumpDataBase(dvr);
@@ -122,11 +119,10 @@ public class PumpPrintDialog extends PrintDialogRange
         {
             pa = new PrintPumpDataExt(dvr);
         }
-        
-        displayPDF(pa.getRelativeNameWithPath());
-        
-    }
 
+        displayPDF(pa.getRelativeNameWithPath());
+
+    }
 
     @Override
     public String getExternalPdfViewerParameters()
@@ -134,18 +130,16 @@ public class PumpPrintDialog extends PrintDialogRange
         return DataAccess.getInstance().getSettings().getExternalPdfVieverParameters();
     }
 
-
     @Override
     public boolean isExternalPdfViewerActivated()
     {
         return DataAccess.getInstance().getSettings().getUseExternalPdfViewer();
     }
 
-
     @Override
     public boolean disableLookAndFeelSettingForInternalPdfViewer()
     {
         return true;
     }
-    
+
 }

@@ -34,30 +34,27 @@ import com.atech.help.HelpCapable;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public abstract class AbstractFileSelectorPanel extends JPanel implements ActionListener, HelpCapable 
+public abstract class AbstractFileSelectorPanel extends JPanel implements ActionListener, HelpCapable
 {
 
-	private static final long serialVersionUID = -7597376030031612506L;
-	JButton help_button = null;
-	
-	/**
-	 * Get Panel Sizes
-	 * 
-	 * @return
-	 */
-	public abstract int[] getPanelSizes();
-	
-	
-	public Component getComponent() 
-	{
-		return this;
-	}
+    private static final long serialVersionUID = -7597376030031612506L;
+    JButton help_button = null;
 
-	public JButton getHelpButton() 
-	{
-		return this.help_button;
-	}
-	
-	
+    /**
+     * Get Panel Sizes
+     * 
+     * @return
+     */
+    public abstract int[] getPanelSizes();
+
+    public Component getComponent()
+    {
+        return this;
+    }
+
+    public JButton getHelpButton()
+    {
+        return this.help_button;
+    }
+
 }

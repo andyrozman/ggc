@@ -1,6 +1,7 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -203,7 +204,6 @@ public class DayValueH implements Serializable, GGCHibernateObject
         return this.ch;
     }
 
-    
     /**
      * Set Carbohydrates
      * 
@@ -318,6 +318,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
      * Custom toString implementation
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
@@ -328,6 +329,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object other)
     {
         if (!(other instanceof DayValueH))
@@ -336,12 +338,12 @@ public class DayValueH implements Serializable, GGCHibernateObject
         return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
-    
     /**
      * Hash code generator
      * 
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();

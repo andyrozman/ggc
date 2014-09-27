@@ -1,4 +1,4 @@
-package ggc.pump.manager.company; 
+package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.animas.AnimasIR1200;
@@ -33,35 +33,33 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Animas extends AbstractPumpDeviceCompany
 {
 
-    
     /**
      * Constructor
      */
     public Animas()
     {
-        super(PumpDevicesIds.COMPANY_ANIMAS,        // company_id
-            "Animas",                               // company name (full)
-            "Animas",                               // short company name
-            "ANIMAS_DESC",                          // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE);  // implementation status
-        
+        super(PumpDevicesIds.COMPANY_ANIMAS, // company_id
+                "Animas", // company name (full)
+                "Animas", // short company name
+                "ANIMAS_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE); // implementation
+                                                                          // status
+
         this.addDevice(new AnimasIR1200(this));
         this.addDevice(new AnimasIR1250(this));
         this.addDevice(new AnimasIR2020(this));
         this.addDevice(new AnimasPing(this));
     }
-    
-    
+
     /**
      * Init Profile Names (for Profile Editor)
      */
+    @Override
     public void initProfileNames()
     {
     }
-    
-    
+
 }

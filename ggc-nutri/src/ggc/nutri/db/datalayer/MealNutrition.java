@@ -31,24 +31,22 @@ import java.util.Hashtable;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class MealNutrition
 {
 
-    //private boolean debug = false;
+    // private boolean debug = false;
     private int nutrition_type_id = 0;
     private String nutrition_desc;
     private float amount = 0.0f;
     private float calculated_amount = 0.0f;
 
-//    private float food_value = 0.0f;
+    // private float food_value = 0.0f;
 
     private Hashtable<String, String> multiplier;
     private String component_id;
     private float amount_sum = 0.0f;
 
     DataAccessNutri m_da = DataAccessNutri.getInstance();
-
 
     /**
      * Constructor (value pack: id=amount)
@@ -64,7 +62,10 @@ public class MealNutrition
         this.amount = Float.parseFloat(packed.substring(index + 1).replace(',', '.'));
 
         if (load_description)
-            this.nutrition_desc = DataAccessNutri.getInstance().getDbCache().nutrition_defs.get("" + this.nutrition_type_id).getName();
+        {
+            this.nutrition_desc = DataAccessNutri.getInstance().getDbCache().nutrition_defs.get(
+                "" + this.nutrition_type_id).getName();
+        }
 
         // System.out.println("Meal Nutrition [id=" + this.nutrition_type_id +
         // ",desc="+ this.nutrition_desc + ",amount=" + this.amount);
@@ -105,7 +106,7 @@ public class MealNutrition
     private void init()
     {
         createId();
-//x        this.food_value = this.amount;
+        // x this.food_value = this.amount;
         addMultiplier(this.component_id, this.amount);
     }
 
@@ -225,7 +226,8 @@ public class MealNutrition
      */
     public void addAmountToSum(float _amount)
     {
-        //System.out.println("addAmountToSum: nutr=" + this.nutrition_desc + "old=" + amount_sum + ",add=" + amount);
+        // System.out.println("addAmountToSum: nutr=" + this.nutrition_desc +
+        // "old=" + amount_sum + ",add=" + amount);
         this.amount_sum += _amount;
     }
 
@@ -251,8 +253,7 @@ public class MealNutrition
 
         if (this.multiplier != null)
         {
-            for (Enumeration<String> en = this.multiplier.keys(); en
-                    .hasMoreElements();)
+            for (Enumeration<String> en = this.multiplier.keys(); en.hasMoreElements();)
             {
                 String val = this.multiplier.get(en.nextElement());
                 // System.out.println("multiplikator = " + val);
@@ -272,21 +273,21 @@ public class MealNutrition
     {
         return this.nutrition_desc;
     }
-/*
-    private void loadMealPart()
-    {
-        // DataAccessNutri.getInstance().getDb().getMeals();
 
-    }
-*/
-    
+    /*
+     * private void loadMealPart()
+     * {
+     * // DataAccessNutri.getInstance().getDb().getMeals();
+     * }
+     */
+
     /**
      * Is Glycemic Nutrient (GI, GL)
      * @return
      */
     public boolean isGlycemicNutrient()
     {
-        return ((nutrition_type_id >= 4000) && (nutrition_type_id <= 4005));
+        return nutrition_type_id >= 4000 && nutrition_type_id <= 4005;
     }
 
     /**
@@ -297,10 +298,8 @@ public class MealNutrition
     @Override
     public String toString()
     {
-        return "MealNutrient [id=" + this.nutrition_type_id + ",name="
-                + this.nutrition_desc + ",amount=" + this.amount
-                + ",calc_amount=" + this.calculated_amount + ",multipliers="
-                + this.multiplier + "]\n";
+        return "MealNutrient [id=" + this.nutrition_type_id + ",name=" + this.nutrition_desc + ",amount=" + this.amount
+                + ",calc_amount=" + this.calculated_amount + ",multipliers=" + this.multiplier + "]\n";
     }
 
 }

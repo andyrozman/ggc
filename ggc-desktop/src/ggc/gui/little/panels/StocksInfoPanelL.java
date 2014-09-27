@@ -32,7 +32,6 @@ import javax.swing.JLabel;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class StocksInfoPanelL extends AbstractInfoPanel
 {
     private static final long serialVersionUID = 1947681641559281357L;
@@ -51,8 +50,8 @@ public class StocksInfoPanelL extends AbstractInfoPanel
     private void init()
     {
         add(new JLabel());
-        add(new JLabel(m_ic.getMessage("STOCK_DATA_HERE")+":"));
-        add(new JLabel(m_ic.getMessage("STO_WILL_BE_FOUND_HERE")+ "..." + m_ic.getMessage("NOT_YET")));
+        add(new JLabel(m_ic.getMessage("STOCK_DATA_HERE") + ":"));
+        add(new JLabel(m_ic.getMessage("STO_WILL_BE_FOUND_HERE") + "..." + m_ic.getMessage("NOT_YET")));
         add(new JLabel());
     }
 
@@ -63,26 +62,25 @@ public class StocksInfoPanelL extends AbstractInfoPanel
     public void refreshInfo()
     {
     }
-    
-    
+
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "StocksInfo";
     }
 
-    
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
     }
-    
 
     /**
      * Get Panel Id
@@ -94,5 +92,5 @@ public class StocksInfoPanelL extends AbstractInfoPanel
     {
         return InfoPanelsIds.INFO_PANEL_NONE;
     }
-    
+
 }

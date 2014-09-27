@@ -1,7 +1,5 @@
 package ggc.pump.device.insulet;
 
-import java.util.Hashtable;
-
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
@@ -10,6 +8,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.device.AbstractPump;
+
+import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,14 +37,11 @@ import ggc.pump.device.AbstractPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 // FIXME
 
 public abstract class InsuletPump extends AbstractPump
 {
 
-    
-    
     /**
      * Constructor 
      */
@@ -52,8 +49,7 @@ public abstract class InsuletPump extends AbstractPump
     {
         super();
     }
-    
-    
+
     /**
      * Constructor 
      * 
@@ -64,8 +60,7 @@ public abstract class InsuletPump extends AbstractPump
     {
         super(params, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -77,8 +72,7 @@ public abstract class InsuletPump extends AbstractPump
     {
         super(params, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -88,17 +82,11 @@ public abstract class InsuletPump extends AbstractPump
     {
         super(cmp);
     }
-    
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
-
-    
-    
     /**
      * getComment - Get Comment for device 
      * 
@@ -108,21 +96,17 @@ public abstract class InsuletPump extends AbstractPump
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
-    
-    
-    
 
     /**
      * Open
@@ -131,7 +115,6 @@ public abstract class InsuletPump extends AbstractPump
     {
         return true;
     }
-    
 
     /**
      * Close
@@ -139,17 +122,16 @@ public abstract class InsuletPump extends AbstractPump
     public void close() throws PlugInBaseException
     {
     }
-  
 
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
      * 
      * @throws PlugInBaseException
      */
+    @Override
     public void readConfiguration() throws PlugInBaseException
     {
     }
-
 
     /**
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
@@ -162,17 +144,16 @@ public abstract class InsuletPump extends AbstractPump
     {
     }
 
-
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy 
      * (from some date to another)
      * 
      * @throws PlugInBaseException 
      */
+    @Override
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
-
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -180,20 +161,20 @@ public abstract class InsuletPump extends AbstractPump
      *  
      * @throws PlugInBaseException
      */
+    @Override
     public void readInfo() throws PlugInBaseException
     {
     }
 
-    
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      * @return 
      */
+    @Override
     public DeviceIdentification getDeviceInfo()
     {
         return null;
     }
-  
 
     /**
      * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific 
@@ -205,7 +186,6 @@ public abstract class InsuletPump extends AbstractPump
         return null;
     }
 
-
     /**
      * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
      *     event codes
@@ -215,7 +195,6 @@ public abstract class InsuletPump extends AbstractPump
     {
         return null;
     }
-
 
     /**
      * Get Error Mappings - Map pump specific errors to Pump Tool specific 
@@ -227,7 +206,6 @@ public abstract class InsuletPump extends AbstractPump
         return null;
     }
 
-
     /**
      * Get Event Mappings - Map pump specific events to Pump Tool specific 
      *     event codes
@@ -238,7 +216,6 @@ public abstract class InsuletPump extends AbstractPump
         return null;
     }
 
-    
     /**
      * Get Report Mappings - Map pump specific reports to Pump Tool specific 
      *     event codes
@@ -249,7 +226,6 @@ public abstract class InsuletPump extends AbstractPump
         return null;
     }
 
-
     /**
      * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
      *      create, AlarmMappings and EventMappings and any other pump constants.
@@ -258,7 +234,6 @@ public abstract class InsuletPump extends AbstractPump
     {
     }
 
-
     /** 
      * Dispose
      */
@@ -266,7 +241,6 @@ public abstract class InsuletPump extends AbstractPump
     {
     }
 
-    
     /**
      * getConnectionPort - connection port data
      * 
@@ -276,7 +250,6 @@ public abstract class InsuletPump extends AbstractPump
     {
         return null;
     }
-
 
     /**
      * getConnectionProtocol - returns id of connection protocol
@@ -288,7 +261,6 @@ public abstract class InsuletPump extends AbstractPump
         return 0;
     }
 
-
     /**
      * Is Device Communicating
      * 
@@ -299,7 +271,6 @@ public abstract class InsuletPump extends AbstractPump
         return false;
     }
 
-
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
      * sort of specific device data - in most cases we call them generics, and they don't have ability
@@ -307,95 +278,84 @@ public abstract class InsuletPump extends AbstractPump
      * 
      * @return
      */
+    @Override
     public boolean isReadableDevice()
     {
         return false;
     }
-
 
     /**
      * Get Download Support Type
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
-    
-    
-    
+
 }
 
-
-
-
 /*
-
-* Title: Java Servlet Programming
-* Second Edition: April 2001
-* ISBN: 0-596-00040-5
-* http://www.oreilly.com/catalog/jservlet2/ */
+ * Title: Java Servlet Programming
+ * Second Edition: April 2001
+ * ISBN: 0-596-00040-5
+ * http://www.oreilly.com/catalog/jservlet2/
+ */
 // Copyright (C) 1999-2001 by Jason Hunter <jhunter_AT_acm_DOT_org>.
-// All rights reserved.  Use of this class is limited.
+// All rights reserved. Use of this class is limited.
 // Please see the LICENSE for more information.
 /*
-package com.oreilly.servlet.multipart;
-
-import java.io.OutputStream;
-import java.io.FilterOutputStream;
-import java.io.IOException;
-
-/**
- * A <code>MacBinaryDecoderOutput</code> filters MacBinary files to normal 
+ * package com.oreilly.servlet.multipart;
+ * import java.io.OutputStream;
+ * import java.io.FilterOutputStream;
+ * import java.io.IOException;
+ * /**
+ * A <code>MacBinaryDecoderOutput</code> filters MacBinary files to normal
  * files on the fly; optimized for speed more than readability.
- * 
  * @author Jason Hunter
  */
-/*private class MacBinaryDecoderOutputStream extends FilterOutputStream {
-  private int bytesFiltered = 0;
-  private int dataForkLength = 0;
-
-  public MacBinaryDecoderOutputStream(OutputStream out) {
-    super(out);
-  }
-
-  public void write(int b) throws IOException {
-    // Bytes 83 through 86 are a long representing the data fork length
-    // Check <= 86 first to short circuit early in the common case
-    if (bytesFiltered <= 86 && bytesFiltered >= 83) {
-      int leftShift = (86 - bytesFiltered) * 8;
-      dataForkLength = dataForkLength | (b & 0xff) << leftShift;
-    }
-
-    // Bytes 128 up to (128 + dataForkLength - 1) are the data fork
-    else if (bytesFiltered < (128 + dataForkLength) && bytesFiltered >= 128) {
-      out.write(b);
-    }
-
-    bytesFiltered++;
-  }
-
-  public void write(byte b[]) throws IOException {
-    write(b, 0, b.length);
-  }
-
-  public void write(byte b[], int off, int len) throws IOException {
-    // If the write is for content past the end of the data fork, ignore
-    if (bytesFiltered >= (128 + dataForkLength)) {
-      bytesFiltered += len;
-    }
-    // If the write is entirely within the data fork, write it directly
-    else if (bytesFiltered >= 128 && 
-             (bytesFiltered + len) <= (128 + dataForkLength)) {
-      out.write(b, off, len);
-      bytesFiltered += len;
-    }
-    // Otherwise, do the write a byte at a time to get the logic above
-    else {
-      for (int i = 0 ; i < len ; i++) {
-        write(b[off + i]);
-      }
-    }
-  }
-}*/
+/*
+ * private class MacBinaryDecoderOutputStream extends FilterOutputStream {
+ * private int bytesFiltered = 0;
+ * private int dataForkLength = 0;
+ * public MacBinaryDecoderOutputStream(OutputStream out) {
+ * super(out);
+ * }
+ * public void write(int b) throws IOException {
+ * // Bytes 83 through 86 are a long representing the data fork length
+ * // Check <= 86 first to short circuit early in the common case
+ * if (bytesFiltered <= 86 && bytesFiltered >= 83) {
+ * int leftShift = (86 - bytesFiltered) * 8;
+ * dataForkLength = dataForkLength | (b & 0xff) << leftShift;
+ * }
+ * // Bytes 128 up to (128 + dataForkLength - 1) are the data fork
+ * else if (bytesFiltered < (128 + dataForkLength) && bytesFiltered >= 128) {
+ * out.write(b);
+ * }
+ * bytesFiltered++;
+ * }
+ * public void write(byte b[]) throws IOException {
+ * write(b, 0, b.length);
+ * }
+ * public void write(byte b[], int off, int len) throws IOException {
+ * // If the write is for content past the end of the data fork, ignore
+ * if (bytesFiltered >= (128 + dataForkLength)) {
+ * bytesFiltered += len;
+ * }
+ * // If the write is entirely within the data fork, write it directly
+ * else if (bytesFiltered >= 128 &&
+ * (bytesFiltered + len) <= (128 + dataForkLength)) {
+ * out.write(b, off, len);
+ * bytesFiltered += len;
+ * }
+ * // Otherwise, do the write a byte at a time to get the logic above
+ * else {
+ * for (int i = 0 ; i < len ; i++) {
+ * write(b[off + i]);
+ * }
+ * }
+ * }
+ * }
+ */

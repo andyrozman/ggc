@@ -36,21 +36,21 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class DummyPump extends AbstractPump //implements PumpInterface //extends GenericPump //implements MeterInterface
+public class DummyPump extends AbstractPump // implements PumpInterface
+                                            // //extends GenericPump
+                                            // //implements MeterInterface
 {
 
     /**
      * The m_da.
      */
     DataAccessPump m_da = DataAccessPump.getInstance();
-    
+
     /**
      * The m_ic.
      */
     I18nControlAbstract m_ic = m_da.getI18nControlInstance();
-    
-    
+
     /**
      * Constructor
      */
@@ -58,7 +58,7 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
     {
         super();
     }
-    
+
     /**
      * Constructor
      * 
@@ -67,9 +67,8 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
     public DummyPump(OutputWriter ow)
     {
         super(ow);
-        //super(ow);
+        // super(ow);
     }
-    
 
     /**
      * Used for opening connection with device.
@@ -80,7 +79,6 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
         return true;
     }
 
-
     /**
      * Will be called, when the import is ended and freeing resources.
      */
@@ -89,27 +87,26 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
         return;
     }
 
-
     /**
      * Log: Debug
      */
     public static final int LOG_DEBUG = 1;
-    
+
     /**
      * Log: Info
      */
     public static final int LOG_INFO = 2;
-    
+
     /**
      * Log: Warn
      */
     public static final int LOG_WARN = 3;
-    
+
     /**
      * Log: Error
      */
     public static final int LOG_ERROR = 4;
-    
+
     /**
      * Write Log
      * 
@@ -121,54 +118,36 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
         System.out.println("Dummy -> " + text);
     }
 
-
     /**
      * @return
      */
-    public String getInfo() //throws MeterException
+    public String getInfo() // throws MeterException
     {
         writeLog(LOG_DEBUG, "getVersion() - Start");
         writeLog(LOG_DEBUG, "getVersion() - End");
-        return "Dummy Meter\n" +
-               "v0.1\n" +
-               m_ic.getMessage("DUMMY_INFO_TEXT");
+        return "Dummy Meter\n" + "v0.1\n" + m_ic.getMessage("DUMMY_INFO_TEXT");
     }
-
-    
-
-
-
-
 
     /**
      * Get Name
      * 
      * @return
      */
+    @Override
     public String getName()
     {
         return "Dummy Meter";
     }
 
-
-    
-
-
-
-
-
-
-
-
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
+    // ************************************************
+    // *** Available Functionality ***
+    // ************************************************
 
     /**
      * canReadData - Can Meter Class read data from device
      * @return 
      */
+    @Override
     public boolean canReadData()
     {
         return false;
@@ -178,6 +157,7 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
      * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
      * @return 
      */
+    @Override
     public boolean canReadPartitialData()
     {
         return false;
@@ -192,21 +172,17 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
         return false;
     }
 
-
-
-    //************************************************
-    //***                    Test                  ***
-    //************************************************
+    // ************************************************
+    // *** Test ***
+    // ************************************************
 
     /**
      * 
      */
+    @Override
     public void test()
     {
     }
-
-
-
 
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -214,6 +190,7 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
      * to read data)
      * @return
      */
+    @Override
     public boolean isReadableDevice()
     {
         return false;
@@ -240,6 +217,7 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
     /** 
      * getDeviceInfo
      */
+    @Override
     public DeviceIdentification getDeviceInfo()
     {
         // TODO Auto-generated method stub
@@ -288,7 +266,7 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
     public void loadPumpSpecificValues()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     /** 
@@ -297,7 +275,7 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
     public void dispose()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     /** 
@@ -348,6 +326,7 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
     /** 
      * getDeviceSpecialComment
      */
+    @Override
     public String getDeviceSpecialComment()
     {
         return "DEVICE_DUMMY_SPECIAL_COMMENT";
@@ -383,6 +362,7 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
     /** 
      * hasSpecialProgressStatus
      */
+    @Override
     public boolean hasSpecialProgressStatus()
     {
         // TODO Auto-generated method stub
@@ -401,10 +381,11 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
     /** 
      * readConfiguration
      */
+    @Override
     public void readConfiguration() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     /** 
@@ -413,27 +394,28 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
     public void readDeviceDataFull() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     /** 
      * readDeviceDataPartitial
      */
+    @Override
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     /** 
      * readInfo
      */
+    @Override
     public void readInfo() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     /**
      * Get Temporary Basal Type Definition
@@ -443,13 +425,13 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
      * 
      * @return
      */
+    @Override
     public String getTemporaryBasalTypeDefinition()
     {
-        //return "TYPE=Unit;STEP=0.1";
+        // return "TYPE=Unit;STEP=0.1";
         return null;
     }
-    
-    
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -459,8 +441,7 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Get Basal Step (precission)
      * 
@@ -470,18 +451,16 @@ public class DummyPump extends AbstractPump //implements PumpInterface //extends
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
+    @Override
     public boolean arePumpSettingsSet()
     {
         return false;
     }
-    
-
 
 }

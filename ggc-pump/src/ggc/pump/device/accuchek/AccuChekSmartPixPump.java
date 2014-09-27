@@ -68,7 +68,11 @@ import com.atech.utils.data.ATechDate;
  * Author: Andy {andy@atech-software.com}
  */
 
-public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements PumpInterface //extends AbstractXmlMeter //mlProtocol //implements SelectableInterface
+public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements PumpInterface // extends
+                                                                                             // AbstractXmlMeter
+                                                                                             // //mlProtocol
+                                                                                             // //implements
+                                                                                             // SelectableInterface
 {
 
     private static Log log = LogFactory.getLog(AccuChekSmartPixPump.class);
@@ -225,20 +229,20 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();
 
-        //log.info(" -- Basals --");
+        // log.info(" -- Basals --");
         list.addAll(getBasals());
-        //System.out.println("Basals: " + list.size());
+        // System.out.println("Basals: " + list.size());
 
-        //log.info(" -- Boluses --");
+        // log.info(" -- Boluses --");
         list.addAll(getBoluses());
-        //System.out.println("Boluses: " + list.size());
+        // System.out.println("Boluses: " + list.size());
 
-        //log.info(" -- Events --");
+        // log.info(" -- Events --");
         list.addAll(getEvents());
-        //System.out.println("Events: " + list.size());
+        // System.out.println("Events: " + list.size());
 
-        //log.info(" -- Profiles --");
-        //list.addAll(this.getPumpProfiles());
+        // log.info(" -- Profiles --");
+        // list.addAll(this.getPumpProfiles());
         ArrayList<PumpValuesEntryProfile> list_profiles = this.getPumpProfiles();
 
         /*
@@ -271,11 +275,12 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         List<Node> nodelist;
 
-        //boolean was_broken = true;
+        // boolean was_broken = true;
         log.info("Profile processing - START");
 
         Element id = (Element) this.getNode("IMPORT/IP");
-        //        System.out.println("" + id.attributeValue("Dt") + id.attributeValue("Tm"));
+        // System.out.println("" + id.attributeValue("Dt") +
+        // id.attributeValue("Tm"));
         ATechDate dt = this.getDateTime(id.attributeValue("Dt"), id.attributeValue("Tm"));
 
         // 1. read initial
@@ -284,7 +289,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
         nodelist = getSpecificDataChildren("IMPORT/IP/IPPROFILE");
 
-        //System.out.println("Length: "+ nodelist.size());
+        // System.out.println("Length: "+ nodelist.size());
 
         for (int i = 0; i < nodelist.size(); i++)
         {
@@ -303,7 +308,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 int num = Integer.parseInt(n2.attributeValue("Number"));
 
                 psp.time_start = (num - 1) * 100;
-                psp.time_end = ((num - 1) * 100) + 59;
+                psp.time_end = (num - 1) * 100 + 59;
                 psp.amount = Float.parseFloat(n2.attributeValue("IU"));
 
                 profile.add(psp);
@@ -315,7 +320,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             original_profiles.put(profile.profile_id, profile);
         }
 
-        // 2. read all basal entries (we don't sort them now, we just put them all together, also events)
+        // 2. read all basal entries (we don't sort them now, we just put them
+        // all together, also events)
         log.info("STEP 2 - Reading profile data");
 
         List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/BASAL");
@@ -328,7 +334,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
             ProfileSubEntry pse = this.resolveBasalProfilePatterns(el);
 
-            if ((pse == null) || (pse.profile_id == null))
+            if (pse == null || pse.profile_id == null)
             {
                 continue;
             }
@@ -351,7 +357,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             }
         }
 
-        // 3. sort profile_entries into different profiles and patterns 
+        // 3. sort profile_entries into different profiles and patterns
         log.info("STEP 3 - Remove incompletes and group profiles by name");
 
         // remove incomplete profiles, and group profiles by name
@@ -369,7 +375,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
             if (profile.isCompleteProfile())
             {
-                //System.out.println("Profile id: " + profile.profile_id);
+                // System.out.println("Profile id: " + profile.profile_id);
                 if (profiles_sorted.containsKey(profile.profile_id))
                 {
                     profiles_sorted.get(profile.profile_id).add(profile);
@@ -464,15 +470,15 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
                 if (current_profiles.get(p_curr.profile_id).equals(p_curr))
                 {
-                    current_profiles.get(p_curr.profile_id).profile_active_from = (p_curr.date_at * 1000000);
+                    current_profiles.get(p_curr.profile_id).profile_active_from = p_curr.date_at * 1000000;
                 }
                 else
                 {
                     active_profiles.add(current_profiles.get(p_curr.profile_id));
                     current_profiles.remove(p_curr.profile_id);
                     current_profiles.put(p_curr.profile_id, p_curr);
-                    current_profiles.get(p_curr.profile_id).profile_active_till = ((p_curr.date_at * 1000000) + 235900);
-                    current_profiles.get(p_curr.profile_id).profile_active_from = (p_curr.date_at * 1000000);
+                    current_profiles.get(p_curr.profile_id).profile_active_till = p_curr.date_at * 1000000 + 235900;
+                    current_profiles.get(p_curr.profile_id).profile_active_from = p_curr.date_at * 1000000;
                 }
             }
         }
@@ -492,7 +498,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 ProfileSubOther chan = profile_changes_v3.get(date);
                 p_curr.profile_active_from = chan.time_event;
 
-                if (j != (active_profiles.size() - 1))
+                if (j != active_profiles.size() - 1)
                 {
                     ATechDate aat = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, chan.time_event);
                     aat.add(Calendar.MINUTE, -1);
@@ -512,8 +518,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         {
             Profile p = active_profiles.get(i);
 
-            //            p.profile_active_from = ATechDate.convertATDate(p.profile_active_from, ATechDate.FORMAT_DATE_AND_TIME_S, ATechDate.FORMAT_DATE_AND_TIME_MIN); 
-            //            p.profile_active_till = ATechDate.convertATDate(p.profile_active_till, ATechDate.FORMAT_DATE_AND_TIME_S, ATechDate.FORMAT_DATE_AND_TIME_MIN); 
+            // p.profile_active_from =
+            // ATechDate.convertATDate(p.profile_active_from,
+            // ATechDate.FORMAT_DATE_AND_TIME_S,
+            // ATechDate.FORMAT_DATE_AND_TIME_MIN);
+            // p.profile_active_till =
+            // ATechDate.convertATDate(p.profile_active_till,
+            // ATechDate.FORMAT_DATE_AND_TIME_S,
+            // ATechDate.FORMAT_DATE_AND_TIME_MIN);
 
             pvep.add(p.createDbObject());
         }
@@ -527,14 +539,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     /*
      * private void readPumpDataTest() { ArrayList<PumpValuesEntry> list = new
      * ArrayList<PumpValuesEntry>();
-     * 
      * //System.out.println(" -- Basals --"); //list.addAll(getBasals());
-     * 
-     * 
      * list.addAll(getProfileElements());
-     * 
      * if (first_basal !=null) list.add(first_basal);
-     * 
      * }
      */
 
@@ -559,7 +566,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     @Override
     public void test()
     {
-        //readPumpDataTest();
+        // readPumpDataTest();
         getPumpProfiles();
     }
 
@@ -613,7 +620,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             if (add)
             {
                 // testing only
-                //this.output_writer.writeData(pve);
+                // this.output_writer.writeData(pve);
 
                 lst_out.add(pve);
             }
@@ -630,27 +637,16 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/" + element);
      * ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
      * boolean add = false;
-     * 
-     * 
      * Hashtable<Long,Profile> lst_spec = new Hashtable<Long,Profile>();
-     * 
-     * 
      * for(int i=0; i<lst.size(); i++) { Element el = (Element)lst.get(i);
-     * 
      * PumpValuesEntry pve = new PumpValuesEntry(this.getDeviceSourceName());
      * pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"),
      * el.attributeValue("Tm")));
-     * 
      * add = this.resolveBasalProfile(pve, el);
-     * 
      * if (add) { // testing only this.output_writer.writeData(pve);
-     * 
      * lst_out.add(pve); } }
-     * 
      * System.out.println("Profiles: " + lst_out.size());
-     * 
      * return lst_out;
-     * 
      * }
      */
 
@@ -659,23 +655,15 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * = getSpecificDataChildren("IMPORT/IPDATA/BASAL"); // + element);
      * ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
      * boolean add = false;
-     * 
      * for(int i=0; i<lst.size(); i++) { Element el = (Element)lst.get(i);
-     * 
      * PumpValuesEntry pve = new PumpValuesEntry(this.getDeviceSourceName());
      * pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"),
      * el.attributeValue("Tm")));
-     * 
      * // add = this.resolveBasalProfilePatterns(pve, el);
-     * 
      * if (add) { // testing only // this.output_writer.writeData(pve);
-     * 
      * lst_out.add(pve); } }
-     * 
      * System.out.println("Profiles patterns: " + lst_out.size());
-     * 
      * return lst_out;
-     * 
      * }
      */
 
@@ -689,16 +677,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         String cbrf = el.attributeValue("cbrf");
         String profile = el.attributeValue("profile");
 
-        //System.out.println(el);
+        // System.out.println(el);
 
-        if ((isSet(tbrdec)) || (isSet(tbrinc)))
+        if (isSet(tbrdec) || isSet(tbrinc))
         {
-            if ((remark == null) || (remark.trim().length() == 0))
-            {
+            if (remark == null || remark.trim().length() == 0)
                 return false;
-            }
 
-            //System.out.println(el);
+            // System.out.println(el);
 
             pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
             pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE);
@@ -729,32 +715,36 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                     v));
             }
 
-            //System.out.println("Unknown TBR Event. [remark=" + remark + ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+            // System.out.println("Unknown TBR Event. [remark=" + remark +
+            // ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf +
+            // "]");
 
             return true;
         }
         else if (isSet(remark))
         {
-            // all that are special should be removed, all other are checked over events
+            // all that are special should be removed, all other are checked
+            // over events
             if (remark.contains("changed"))
-            {
-                //System.out.println("Basal Changed Unknown [remark=" + remark + "]");
+                // System.out.println("Basal Changed Unknown [remark=" + remark
+                // + "]");
                 return false;
-            }
             else
             {
                 if (this.getEventMappings().containsKey(remark))
                 {
                     pve.setBaseType(PumpBaseType.PUMP_DATA_EVENT);
                     pve.setSubType(this.getEventMappings().get(remark));
-                    //System.out.println("Basal Event Unknown [remark=" + remark + "]");
+                    // System.out.println("Basal Event Unknown [remark=" +
+                    // remark + "]");
                     return true;
                 }
                 else if (this.getBasalMappings().containsKey(remark))
                 {
                     pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
                     pve.setSubType(this.getBasalMappings().get(remark));
-                    //System.out.println("Basal Event Unknown [remark=" + remark + "]");
+                    // System.out.println("Basal Event Unknown [remark=" +
+                    // remark + "]");
                     return true;
 
                 }
@@ -770,15 +760,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 }
             }
 
-            //System.out.println("Remark:" + remark);
+            // System.out.println("Remark:" + remark);
         }
         else
         {
             if (!isSet(profile))
             {
-                if ((!isSet(tbrdec)) && (!isSet(tbrinc)) && (cbrf.equals("0.00")))
-                {
-                }
+                if (!isSet(tbrdec) && !isSet(tbrinc) && cbrf.equals("0.00"))
+                {}
                 else
                 {
                     log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
@@ -794,7 +783,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     private ProfileSubEntry resolveBasalProfilePatterns(/* PumpValuesEntry pve, */Element el)
     {
-        //pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")));
+        // pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"),
+        // el.attributeValue("Tm")));
 
         long dt = this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")).getATDateTimeAsLong();
 
@@ -812,7 +802,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
         if (isSet(remark))
         {
-            // all that are special should be removed, all other are checked over events
+            // all that are special should be removed, all other are checked
+            // over events
             if (remark.contains("changed"))
             {
                 ProfileSubOther pso = new ProfileSubOther();
@@ -828,11 +819,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
                 pso.profile_id = chh;
 
-                //System.out.println("Profile changed : " + chh);
+                // System.out.println("Profile changed : " + chh);
 
                 // TODO: Changed profile
-                //System.out.println("Basal Changed Unknown [remark=" + remark + "]");
-                //System.out.println("Basal Rate Changed [datetime=" + pve.getDateTimeObject() + ",remark=" + remark + ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                // System.out.println("Basal Changed Unknown [remark=" + remark
+                // + "]");
+                // System.out.println("Basal Rate Changed [datetime=" +
+                // pve.getDateTimeObject() + ",remark=" + remark + ",tbrdec=" +
+                // tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
 
                 return pso;
             }
@@ -840,10 +834,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         else
         {
 
-            if ((isSet(tbrdec)) || (isSet(tbrinc)))
-            {
+            if (isSet(tbrdec) || isSet(tbrinc))
                 return null;
-            }
             else
             {
                 ProfileSubPattern psp = new ProfileSubPattern();
@@ -851,7 +843,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 psp.time_start = (int) ATechDate.convertATDate(dt, ATechDate.FORMAT_DATE_AND_TIME_S,
                     ATechDate.FORMAT_TIME_ONLY_MIN);
 
-                //System.out.println(psp.time_start);
+                // System.out.println(psp.time_start);
 
                 psp.profile_id = profile;
                 psp.amount = Float.parseFloat(cbrf);
@@ -860,9 +852,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
             }
 
-            //System.out.println("non TBR");
+            // System.out.println("non TBR");
 
-            //System.out.println("" + el);
+            // System.out.println("" + el);
 
             /*
              * if (isSet(remark)) { if ((!remark.contains("TBR")) &&
@@ -873,7 +865,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
              * System.out.println(pve.getDateTimeObject().toString() + ",value="
              * + cbrf + ", profile=" + profile);
              */
-            //return null;
+            // return null;
         }
         return null;
 
@@ -884,7 +876,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
          * //System.out.println("Basal Rate Changed [datetime=" +
          * pve.getDateTimeObject() + ",remark=" + remark + ",tbrdec=" + tbrdec +
          * ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
-         * 
          * return false; } else { if
          * ((this.getEventMappings().containsKey(remark)) ||
          * (this.getBasalMappings().containsKey(remark))) { return false; } else
@@ -897,10 +888,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
          * System.out.println("Unknown Profile Event. [remark=" + remark +
          * ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
          * return true; } else return false; } }
-         * 
          * } else { if (!isSet(profile)) { //System.out.println("tbrdec=" +
          * isSet(tbrdec) + "tbrinc=" + isSet(tbrinc));
-         * 
          * if ((!isSet(tbrdec)) && (!isSet(tbrinc)) && (cbrf.equals("0.00"))) {
          * //System.out.println("tbrdec=" + isSet(tbrdec) + "tbrinc=" +
          * isSet(tbrinc)); return false; } else {
@@ -909,18 +898,15 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
          * pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
          * pve.setSubType(PumpBasalSubType.PUMP_BASAL_PROFILE);
          * pve.setValue(profile);
-         * 
          * first_basal = pve;
-         * 
          * //log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc +
          * ",value=" + cbrf + "]");
-         * 
          * if (pve.getDateTimeObject().getTimeString().equals("00:00:00")) {
          * //System.out.println("Profile used: " + pve.getValue()); first_basal
          * = null; return true; } else return false; } }
          */
 
-        //return null;
+        // return null;
 
     }
 
@@ -949,8 +935,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 pve.setBaseType(PumpBaseType.PUMP_DATA_BOLUS);
                 pve.setSubType(this.getBolusMappings().get(type));
 
-                if ((pve.getSubType() == PumpBolusType.PUMP_BOLUS_STANDARD)
-                        || (pve.getSubType() == PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL))
+                if (pve.getSubType() == PumpBolusType.PUMP_BOLUS_STANDARD
+                        || pve.getSubType() == PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL)
                 {
                     pve.setSubType(PumpBolusType.PUMP_BOLUS_STANDARD);
                     pve.setValue(amount);
@@ -1086,7 +1072,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             }
         }
 
-        //pve.setEntryType(PumpDataType.PUMP_DATA_EVENT);
+        // pve.setEntryType(PumpDataType.PUMP_DATA_EVENT);
 
         return true;
 
@@ -1094,14 +1080,10 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     private boolean isSet(String str)
     {
-        if ((str == null) || (str.trim().length() == 0))
-        {
+        if (str == null || str.trim().length() == 0)
             return false;
-        }
         else
-        {
             return true;
-        }
     }
 
     private List<Node> getSpecificDataChildren(String child_path)
@@ -1121,7 +1103,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         String o = ATDataAccessAbstract.replaceExpression(date, "-", "");
 
-        if ((time == null) || (time.length() == 0))
+        if (time == null || time.length() == 0)
         {
             o += "0000";
         }
@@ -1170,7 +1152,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      */
     public void loadPumpSpecificValues()
     {
-        //m_da = DataAccessPump.getInstance();
+        // m_da = DataAccessPump.getInstance();
 
         // alarm mappings
         this.alarm_mappings = new Hashtable<String, Integer>();

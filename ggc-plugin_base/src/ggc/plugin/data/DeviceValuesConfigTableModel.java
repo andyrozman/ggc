@@ -10,7 +10,6 @@ import javax.swing.table.AbstractTableModel;
 import com.atech.graphics.components.MultiLineTooltip;
 import com.atech.graphics.components.MultiLineTooltipModel;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -37,8 +36,7 @@ import com.atech.graphics.components.MultiLineTooltipModel;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class DeviceValuesConfigTableModel extends AbstractTableModel implements MultiLineTooltipModel 
+public class DeviceValuesConfigTableModel extends AbstractTableModel implements MultiLineTooltipModel
 {
 
     private static final long serialVersionUID = -896566044265728328L;
@@ -55,14 +53,13 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
      */
     public DeviceValuesConfigTableModel(DataAccessPlugInBase da, String source)
     {
-        //this.m_ddh = ddh;
+        // this.m_ddh = ddh;
         this.m_da = da;
         this.device_source = source;
         this.data = new ArrayList<DeviceValuesEntryInterface>();
         fireTableChanged(null);
     }
 
-    
     /**
      * Clear Data
      */
@@ -71,9 +68,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
         this.data.clear();
         fireTableChanged(null);
     }
-    
-    
-    
+
     /**
      * Get Column Count
      * 
@@ -84,7 +79,6 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
         return 2;
     }
 
-    
     /**
      * Is Boolean
      * 
@@ -96,7 +90,6 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
         return false;
     }
 
-    
     /**
      * Is Editable Column
      * 
@@ -108,15 +101,14 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
         return false;
     }
 
-    
     /** 
      * Set Value At
      */
+    @Override
     public void setValueAt(Object aValue, int row, int column)
     {
     }
-    
-    
+
     /**
      * Get Column Width
      * 
@@ -126,17 +118,9 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
      */
     public int getColumnWidth(int column, int width)
     {
-        return (int)(50.0f * width);
+        return (int) (50.0f * width);
     }
 
-
-
-    
-    
-    
-    
-
-    
     /**
      * Get Row Count
      * 
@@ -147,7 +131,6 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
         return this.data.size();
     }
 
-    
     /**
      * Get Value At
      * @see javax.swing.table.TableModel#getValueAt(int, int)
@@ -157,9 +140,6 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
         return this.data.get(row).getTableColumnValue(column);
     }
 
-    
-    
-    
     /**
      * Add Entry
      * 
@@ -167,16 +147,11 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
      */
     public void addEntry(DeviceValuesEntryInterface mve)
     {
-            this.data.add(mve);
-            Collections.sort(data);
+        this.data.add(mve);
+        Collections.sort(data);
         this.fireTableDataChanged();
     }
 
-    
-  
-    
-    
-    
     /**
      * Get Column Name
      * 
@@ -185,7 +160,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
     @Override
     public String getColumnName(int column)
     {
-        if (column==0)
+        if (column == 0)
             return m_da.getI18nControlInstance().getMessage("SETTING_GROUP");
         else
             return m_da.getI18nControlInstance().getMessage("VALUE");
@@ -211,15 +186,12 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
      * 
      * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
      */
+    @Override
     public boolean isCellEditable(int row, int col)
     {
         return false;
     }
 
- 
-
-    
-    
     /** 
      * get ToolTip Value
      * 
@@ -230,19 +202,11 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
     public String getToolTipValue(int row, int column)
     {
         DeviceValuesEntryInterface o = data.get(row);
-        
+
         if (o.hasMultiLineToolTip())
-        {
-            return ((MultiLineTooltip)o).getMultiLineToolTip(column);
-        }
+            return ((MultiLineTooltip) o).getMultiLineToolTip(column);
         else
-        {
-            return (String)o.getTableColumnValue(column);
-        }
+            return (String) o.getTableColumnValue(column);
     }
-    
-    
-    
-    
 
 }

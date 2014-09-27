@@ -1,4 +1,4 @@
-package ggc.meter.manager.company; 
+package ggc.meter.manager.company;
 
 import ggc.meter.device.abbott.Freestyle;
 import ggc.meter.device.abbott.OptiumXceed;
@@ -33,26 +33,24 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Abbott extends AbstractDeviceCompany
 {
-    
+
     /**
      * Constructor
      */
     public Abbott()
     {
-        super(false,                            // empty devices
-            MeterDevicesIds.COMPANY_ABBOTT,     // company_id
-            "Abbott",                           // company name (full)
-            "Abbott",                           // short company name
-            "ABBOTT_DESC",                      // company description
-            DeviceImplementationStatus.IMPLEMENTATION_PLANNED,
-            DataAccessMeter.getInstance());  // implementation status
-        
+        super(false, // empty devices
+                MeterDevicesIds.COMPANY_ABBOTT, // company_id
+                "Abbott", // company name (full)
+                "Abbott", // short company name
+                "ABBOTT_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_PLANNED, DataAccessMeter.getInstance()); // implementation
+                                                                                                   // status
+
         addDevice(new Freestyle(this));
         addDevice(new OptiumXceed(this));
     }
-    
-    
+
 }

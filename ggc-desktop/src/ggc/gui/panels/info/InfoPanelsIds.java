@@ -1,7 +1,5 @@
 package ggc.gui.panels.info;
 
-
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -27,49 +25,47 @@ package ggc.gui.panels.info;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-public class InfoPanelsIds 
+public class InfoPanelsIds
 {
-    
+
     /**
      * Info Panel: None
      */
-    public static final int INFO_PANEL_NONE            = 0;
+    public static final int INFO_PANEL_NONE = 0;
 
     /**
      * Info Panel: General
      */
-    public static final int INFO_PANEL_GENERAL         = 1;
+    public static final int INFO_PANEL_GENERAL = 1;
 
     /**
      * Info Panel: HbA1c
      */
-    public static final int INFO_PANEL_HBA1C           = 2;
+    public static final int INFO_PANEL_HBA1C = 2;
 
     /**
      * Info Panel: Plugin Version
      */
-    public static final int INFO_PANEL_PLUGINS         = 4;
+    public static final int INFO_PANEL_PLUGINS = 4;
 
     /**
      * Info Panel: Plugin Devices
      */
-    public static final int INFO_PANEL_PLUGIN_DEVICES  = 8;
+    public static final int INFO_PANEL_PLUGIN_DEVICES = 8;
 
     /**
      * Info Panel: Statistics
      */
-    public static final int INFO_PANEL_STATISTICS      = 16;
+    public static final int INFO_PANEL_STATISTICS = 16;
 
     /**
      * Info Panel: Schedule
      */
-    public static final int INFO_PANEL_SCHEDULE        = 32;
+    public static final int INFO_PANEL_SCHEDULE = 32;
 
     /**
      * Info Panel: Stocks
      */
-    public static final int INFO_PANEL_STOCKS          = 64;
-    
-    
+    public static final int INFO_PANEL_STOCKS = 64;
+
 }

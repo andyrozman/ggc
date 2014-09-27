@@ -35,27 +35,25 @@ import com.atech.db.DbDataReaderAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class GGCDataReader extends DbDataReaderAbstract
 {
 
     private boolean running = true;
     private GGCDb db = null;
     int type = 0;
-    Hashtable<String,DayValueH> data_meter = null;
+    Hashtable<String, DayValueH> data_meter = null;
     private static Log log = LogFactory.getLog(GGCDataReader.class);
-    
+
     /**
      * Data: None
      */
     public static final int DATA_NONE = 0;
-    
+
     /**
      * Data: Meter
      */
     public static final int DATA_METER = 1;
-    
-    
+
     /**
      * Constructor
      * 
@@ -66,49 +64,48 @@ public class GGCDataReader extends DbDataReaderAbstract
     {
         this.db = db;
         this.type = type;
-        this.data_meter = new Hashtable<String,DayValueH>();
+        this.data_meter = new Hashtable<String, DayValueH>();
         this.setStatus(DbDataReaderAbstract.STATUS_READY);
     }
-    
-    
+
     /** 
      * Run - method for running thread
      */
+    @Override
     public void run()
     {
 
-        while(running)
+        while (running)
         {
-            //System.out.println("run.running");
+            // System.out.println("run.running");
             log.info("GGCDataReader - Started");
-            
+
             try
             {
                 this.setStatus(DbDataReaderAbstract.STATUS_READING);
-    
+
                 this.data_meter = this.db.getMeterValues();
-                
+
                 this.setStatus(DbDataReaderAbstract.STATUS_FINISHED_READING);
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 this.setStatus(DbDataReaderAbstract.STATUS_FINISHED_READING_ERROR);
-                //System.out.println("Exception: " + ex);
+                // System.out.println("Exception: " + ex);
                 log.error("GGCDataReader Exception: " + ex, ex);
-                //ex.printStackTrace();
+                // ex.printStackTrace();
                 running = false;
             }
-            
+
             running = false;
-            
-        }  // while
+
+        } // while
 
         log.info("GGCDataReader - Finished");
-        //System.out.println("Exited runner");
+        // System.out.println("Exited runner");
     }
 
-    
     /**
      * Get Data - returns data
      * 
@@ -120,7 +117,6 @@ public class GGCDataReader extends DbDataReaderAbstract
         return this.data_meter;
     }
 
-    
     /**
      * Get Type Of Data - returns type of data
      * 

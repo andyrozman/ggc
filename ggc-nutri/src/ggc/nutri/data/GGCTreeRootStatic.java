@@ -27,11 +27,11 @@
 
 package ggc.nutri.data;
 
+import ggc.nutri.db.GGCDbNutri;
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.db.datalayer.MealGroup;
-import ggc.nutri.db.GGCDbNutri;
 import ggc.nutri.util.DataAccessNutri;
 
 import java.util.ArrayList;
@@ -66,12 +66,10 @@ import org.apache.commons.logging.LogFactory;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-public class GGCTreeRootStatic extends GGCTreeRoot 
+public class GGCTreeRootStatic extends GGCTreeRoot
 {
 
     private Log log = LogFactory.getLog(GGCTreeRootStatic.class);
-
 
     private ArrayList<FoodGroup> import1_grp = null;
     private ArrayList<FoodDescription> import1_foods = null;
@@ -88,17 +86,16 @@ public class GGCTreeRootStatic extends GGCTreeRoot
      * Food Groups as Hashtable
      */
     public Hashtable<String, FoodGroup> m_groups_ht = null;
-    
+
     /**
      * Food Groups Tree
      */
     public ArrayList<FoodGroup> m_groups_tree = null;
-    
+
     /**
      * Foods Hashtable
      */
     public Hashtable<String, FoodDescription> m_foods_ht = null;
-
 
     /**
      * Meal Groups
@@ -118,9 +115,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
      */
     public Hashtable<String, Meal> m_meals_ht = null;
 
-
-
-    //private boolean debug = true;
+    // private boolean debug = true;
     private boolean dev = false;
 
     /**
@@ -141,16 +136,17 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         fillGroups();
     }
 
-    
     /**
      * Constructor
      * 
      * @param type
      */
-/*    public GGCTreeRoot(int type)
-    {
-        this(type, false);
-    }*/
+    /*
+     * public GGCTreeRoot(int type)
+     * {
+     * this(type, false);
+     * }
+     */
 
     /**
      * Constructor
@@ -158,45 +154,42 @@ public class GGCTreeRootStatic extends GGCTreeRoot
      * @param type
      * @param dev
      */
-/*    public GGCTreeRoot(int type, boolean dev)
-    {
-        m_type = type;
-        this.m_db = DataAccessNutri.getInstance().getDb();
-
-        if (!dev)
-        {
-            readDbData(type);
-
-            initReceivedData();
-            createGroupTree();
-            fillGroups();
-        }
-    }*/
+    /*
+     * public GGCTreeRoot(int type, boolean dev)
+     * {
+     * m_type = type;
+     * this.m_db = DataAccessNutri.getInstance().getDb();
+     * if (!dev)
+     * {
+     * readDbData(type);
+     * initReceivedData();
+     * createGroupTree();
+     * fillGroups();
+     * }
+     * }
+     */
 
     /*
-    public void manualCreate(ArrayList<FoodGroup> lst_grp, ArrayList<FoodDescription> lst_food)
-    {
+     * public void manualCreate(ArrayList<FoodGroup> lst_grp,
+     * ArrayList<FoodDescription> lst_food)
+     * {
+     * this.import1_grp = lst_grp;
+     * this.import1_foods = lst_food;
+     * initReceivedData();
+     * createGroupTree();
+     * fillGroups();
+     * }
+     * public void manualCreate2(ArrayList<MealGroup> lst_grp, ArrayList<Meal>
+     * lst_food)
+     * {
+     * this.import2_grp = lst_grp;
+     * this.import2_foods = lst_food;
+     * initReceivedData();
+     * createGroupTree();
+     * fillGroups();
+     * }
+     */
 
-        this.import1_grp = lst_grp;
-        this.import1_foods = lst_food;
-
-        initReceivedData();
-        createGroupTree();
-        fillGroups();
-    }
-
-    public void manualCreate2(ArrayList<MealGroup> lst_grp, ArrayList<Meal> lst_food)
-    {
-
-        this.import2_grp = lst_grp;
-        this.import2_foods = lst_food;
-
-        initReceivedData();
-        createGroupTree();
-        fillGroups();
-    }
-*/
-    
     /**
      * Read Db Data
      * 
@@ -212,36 +205,38 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         if (type == GGCTreeRoot.TREE_USDA_NUTRITION)
         {
             log.trace("USDA Db Load !");
-            //log.trace("USDA Load Started !");
+            // log.trace("USDA Load Started !");
             this.import1_grp = this.m_db.getUSDAFoodGroups();
             this.import1_foods = this.m_db.getUSDAFoodDescriptions();
-            //log.trace("USDA Load Ended !");
+            // log.trace("USDA Load Ended !");
         }
         else if (type == GGCTreeRoot.TREE_USER_NUTRITION)
         {
             log.trace("USER Db Load !");
-            //log.trace("USER Load Started !");
+            // log.trace("USER Load Started !");
             this.import1_grp = this.m_db.getUserFoodGroups();
             this.import1_foods = this.m_db.getUserFoodDescriptions();
-            //log.trace("USDA Load Ended !");
+            // log.trace("USDA Load Ended !");
         }
         else if (type == GGCTreeRoot.TREE_MEALS)
         {
             log.trace("Meals Db Load !");
-            //log.trace("Meals Load Started !");
+            // log.trace("Meals Load Started !");
             this.import2_grp = this.m_db.getMealGroups();
             this.import2_foods = this.m_db.getMeals();
-            //log.trace("Meal Load Ended !");
+            // log.trace("Meal Load Ended !");
         }
         else
+        {
             log.error("Unknown database type: " + type);
+        }
 
     }
 
     // create group list (for tree) and group hashtable (for editing)
     private void initReceivedData()
     {
-        if ((this.m_type == GGCTreeRoot.TREE_USDA_NUTRITION) || (this.m_type == GGCTreeRoot.TREE_USER_NUTRITION))
+        if (this.m_type == GGCTreeRoot.TREE_USDA_NUTRITION || this.m_type == GGCTreeRoot.TREE_USER_NUTRITION)
         {
             this.m_groups_tree = new ArrayList<FoodGroup>();
             this.m_groups_ht = new Hashtable<String, FoodGroup>();
@@ -288,7 +283,9 @@ public class GGCTreeRootStatic extends GGCTreeRoot
                 FoodGroup fg = this.import1_grp.get(i);
 
                 if (fg.getParentId() == 0)
+                {
                     rt.add(fg);
+                }
                 else
                 {
                     this.m_groups_ht.get("" + fg.getParentId()).addChild(fg);
@@ -307,7 +304,9 @@ public class GGCTreeRootStatic extends GGCTreeRoot
                 MealGroup fg = this.import2_grp.get(i);
 
                 if (fg.getParent_id() == 0)
+                {
                     rt.add(fg);
+                }
                 else
                 {
                     this.m_meal_groups_ht.get("" + fg.getParent_id()).addChild(fg);
@@ -319,7 +318,6 @@ public class GGCTreeRootStatic extends GGCTreeRoot
 
     }
 
-    
     /**
      * Add Meal Group
      * 
@@ -360,7 +358,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
 
     private void fillGroups()
     {
-        if ((m_type == GGCTreeRoot.TREE_USDA_NUTRITION) || (m_type == GGCTreeRoot.TREE_USER_NUTRITION))
+        if (m_type == GGCTreeRoot.TREE_USDA_NUTRITION || m_type == GGCTreeRoot.TREE_USER_NUTRITION)
         {
 
             this.m_foods_ht = new Hashtable<String, FoodDescription>();
@@ -417,7 +415,6 @@ public class GGCTreeRootStatic extends GGCTreeRoot
             return DataAccessNutri.getInstance().getI18nControlInstance().getMessage("MEALS_DB");
     }
 
-
     /**
      * Get Child
      * 
@@ -430,7 +427,6 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         return null;
     }
 
-
     /**
      * Get Child Count
      * 
@@ -441,7 +437,6 @@ public class GGCTreeRootStatic extends GGCTreeRoot
     {
         return 0;
     }
-
 
     /**
      * Index Of
@@ -455,7 +450,6 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         return 0;
     }
 
-    
     /**
      * Add Food To Tree
      * 
@@ -466,7 +460,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
     public void addFood2Tree(int type, FoodDescription fd)
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     /**
@@ -479,7 +473,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
     public void addFoodGroup2Tree(int type, FoodGroup fg)
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     /**
@@ -492,7 +486,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
     public void addMeal2Tree(int type, Meal _meal)
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     /**
@@ -521,7 +515,6 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         return null;
     }
 
-
     /**
      * Find Meal Group
      * 
@@ -535,7 +528,6 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         // TODO Auto-generated method stub
         return null;
     }
-
 
     /**
      * Remove Food From Tree
@@ -563,7 +555,6 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         // TODO Auto-generated method stub
     }
 
-    
     /**
      * Remove Meal From Tree
      * 
@@ -575,10 +566,9 @@ public class GGCTreeRootStatic extends GGCTreeRoot
     public void removeMealFromTree(int type, Meal _meal, long prev_group_id)
     {
         // TODO Auto-generated method stub
-        
+
     }
 
-    
     /**
      * Remove Meal Group From Tree
      * 

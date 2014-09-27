@@ -20,6 +20,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileView;
 
 import com.atech.help.HelpCapable;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -65,7 +66,6 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
         // m_da.enableHelp(this);
     }
 
-    
     private void init()
     {
 
@@ -116,14 +116,13 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
 
         add(i, BorderLayout.NORTH);
 
-
         // init values
         fieldEmpty.setText(settings.getPrintEmptyValue());
         fieldPDFViewer.setText(settings.getExternalPdfVieverPath());
 
-        fieldLunchST.setText(m_da.getTimeString(settings.getPrintLunchStartTime()));
-        fieldDinnerST.setText(m_da.getTimeString(settings.getPrintDinnerStartTime()));
-        fieldNightST.setText(m_da.getTimeString(settings.getPrintNightStartTime()));
+        fieldLunchST.setText(ATDataAccessAbstract.getTimeString(settings.getPrintLunchStartTime()));
+        fieldDinnerST.setText(ATDataAccessAbstract.getTimeString(settings.getPrintDinnerStartTime()));
+        fieldNightST.setText(ATDataAccessAbstract.getTimeString(settings.getPrintNightStartTime()));
 
     }
 
@@ -176,7 +175,6 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
         }
     }
 
-    
     /**
      * Action Performed
      * 

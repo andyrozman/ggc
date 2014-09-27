@@ -1,7 +1,5 @@
 package ggc.cgms.data.defs;
 
-
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       CGMS Tool (support for CGMS devices)
@@ -28,17 +26,14 @@ package ggc.cgms.data.defs;
  *  Author: Andy {andy@atech-software.com}
  */
 
-//IMPORTANT NOTICE: 
-//This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
-//class, with different type of data.
-
+// IMPORTANT NOTICE:
+// This class is not implemented yet, all existing methods should be rechecked
+// (they were copied from similar
+// class, with different type of data.
 
 public class CGMSEvents
 {
 
-    
-    
-    
     // start / end
     /**
      * 
@@ -48,8 +43,7 @@ public class CGMSEvents
      * 
      */
     public static final int CGMS_EVENT_CONTROLER_POWER_UP = 2;
-    
-    
+
     // date/time
     /**
      * 
@@ -59,10 +53,7 @@ public class CGMSEvents
      * 
      */
     public static final int CGMS_EVENT_DATETIME_CHANGED = 4;
-    
-    
-    
-    
+
     // SENSOR - basic functions
 
     /**
@@ -74,74 +65,57 @@ public class CGMSEvents
      * 
      */
     public static final int CGMS_EVENT_SENSOR_POWER_UP = 41;
-    
-    
-    
-    
-    
-    
+
     /**
      * 
      */
     public static final int CGMS_EVENT_SENSOR_LOST = 42;
-    
-    
-    
+
     public static final int CGMS_EVENT_SENSOR_START = 43;
-    
-    
-    
+
     public static final int CGMS_EVENT_SENSOR_STOP = 44;
-    
-    
+
     /**
      * 
      */
     public static final int CGMS_EVENT_SENSOR_CALIBRATION_METER_BG_NOW = 50;
-    
 
     /**
      * 
      */
     public static final int CGMS_EVENT_SENSOR_CALIBRATION_WAITING = 51;
-    
-    
+
     /**
      * 
      */
     public static final int CGMS_EVENT_SENSOR_CALIBRATION_FACTOR = 52;
-    
-    
+
     // sensor init/operation
 
     /**
      * 
      */
     public static final int CGMS_EVENT_SENSOR_PRE_INIT = 60;
-    
-    
+
     /**
      * 
      */
     public static final int CGMS_EVENT_SENSOR_INIT = 61;
 
-
     /**
      * 
      */
     public static final int CGMS_EVENT_SENSOR_BURST = 62;
-    
 
     /**
      * 
      */
     public static final int CGMS_EVENT_SENSOR_WEAK_SIGNAL = 63;
-    
-    
-    // Data 
+
+    // Data
     /**
      * 
      */
-    public static final int CGMS_EVENT_DATA_LOW_BG = 64; 
-    
+    public static final int CGMS_EVENT_DATA_LOW_BG = 64;
+
 }

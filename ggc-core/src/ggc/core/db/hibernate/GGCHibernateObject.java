@@ -5,8 +5,7 @@ import java.io.Serializable;
 /** 
  * @author Hibernate CodeGenerator 
  */
-public interface GGCHibernateObject extends Serializable 
+public interface GGCHibernateObject extends Serializable
 {
-
 
 }

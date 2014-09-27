@@ -38,7 +38,7 @@ public class MealFoodDisplay extends ATTableData
     private String description;
     private String amount;
 
-    //private static String[] type_description = null;
+    // private static String[] type_description = null;
 
     MealPart meal_part = null;
 
@@ -175,10 +175,10 @@ public class MealFoodDisplay extends ATTableData
         {
             case 1:
                 return this.description;
-                
+
             case 2:
                 return this.amount;
-    
+
             case 0:
             default:
                 return "" + this.type_desc;

@@ -46,7 +46,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
     private static final long serialVersionUID = 6420234465982434157L;
     PlotSelectorData data = new PlotSelectorData();
     DataAccess dataAccessInstance = DataAccess.getInstance();
-    //I18nControl translator = I18nControl.getInstance();
+    // I18nControl translator = I18nControl.getInstance();
     private I18nControlAbstract translator = dataAccessInstance.getI18nControlInstance();
 
     JCheckBox BGBox = new JCheckBox();
@@ -76,15 +76,14 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
      * Selection Mode: Single
      */
     public static final int SELECTION_MODE_SINGLE = 1;
-    
+
     /**
      * Selection Mode: Multiple
      */
     public static final int SELECTION_MODE_MULTIPLE = 2;
-    
-    int selection_mode = SELECTION_MODE_MULTIPLE; 
-    
-    
+
+    int selection_mode = SELECTION_MODE_MULTIPLE;
+
     /**
      * Mask: BG
      */
@@ -154,7 +153,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
      * Mask: Ins/CH
      */
     public static final int INS_PER_CH_MASK = 32768;
-    
+
     /**
      * Mask: Meals
      */
@@ -236,7 +235,8 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
 
     private void addBoxes()
     {
-        // columns contain related checkboxes, the last row contains unrelated ones
+        // columns contain related checkboxes, the last row contains unrelated
+        // ones
 
         add(BGBox);
         add(CHBox);
@@ -277,9 +277,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
     public void selectBoxes(int initialSelection, boolean enable)
     {
         if (initialSelection == 0)
-        {
             return;
-        }
 
         if ((initialSelection & BG_MASK) == BG_MASK)
         {
@@ -367,15 +365,11 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         setChoice(choiceMask, true);
     }
 
-    
     private boolean checkMask(int value, int mask)
     {
-        return ((value & mask) == mask);
+        return (value & mask) == mask;
     }
-    
-    
-    
-    
+
     /**
      * Disables the specified checkboxes.
      * 
@@ -398,66 +392,95 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
 
         // normal
         if (!checkMask(choiceMask, BG_MASK))
-            this.add(BGBox); 
+        {
+            this.add(BGBox);
+        }
 
         if (!checkMask(choiceMask, CH_MASK))
+        {
             this.add(CHBox);
-        
+        }
+
         if (!checkMask(choiceMask, INS1_MASK))
+        {
             this.add(ins1Box);
+        }
 
         if (!checkMask(choiceMask, INS2_MASK))
+        {
             this.add(ins2Box);
+        }
 
         if (!checkMask(choiceMask, INS_TOTAL_MASK))
+        {
             this.add(insTotalBox);
-        
+        }
+
         // average
         if (!checkMask(choiceMask, BG_AVG_MASK))
+        {
             this.add(BGDayAvgBox);
+        }
 
         if (!checkMask(choiceMask, CH_AVG_MASK))
+        {
             this.add(CHDayAvgBox);
+        }
 
         if (!checkMask(choiceMask, INS1_AVG_MASK))
+        {
             this.add(ins1DayAvgBox);
+        }
 
         if (!checkMask(choiceMask, INS2_AVG_MASK))
+        {
             this.add(ins2DayAvgBox);
+        }
 
         if (!checkMask(choiceMask, INS_TOTAL_AVG_MASK))
+        {
             this.add(insTotalDayAvgBox);
-        
+        }
+
         // sum
         if (!checkMask(choiceMask, CH_SUM_MASK))
+        {
             this.add(CHSumBox);
+        }
 
         if (!checkMask(choiceMask, INS1_SUM_MASK))
+        {
             this.add(ins1SumBox);
+        }
 
         if (!checkMask(choiceMask, INS2_SUM_MASK))
+        {
             this.add(ins2SumBox);
+        }
 
         if (!checkMask(choiceMask, INS_TOTAL_SUM_MASK))
+        {
             this.add(insTotalSumBox);
+        }
 
-        
         // other
         if (!checkMask(choiceMask, BG_READINGS_MASK))
+        {
             this.add(BGReadingsBox);
-        
+        }
+
         if (!checkMask(choiceMask, INS_PER_CH_MASK))
+        {
             this.add(insPerCHBox);
-        
+        }
+
         if (!checkMask(choiceMask, MEALS_MASK))
+        {
             this.add(mealsBox);
-        
-        
+        }
+
     }
-    
-    
-    
-    
+
     /**
      * Disables or enables the specified checkboxes, depending on the value of
      * <code>enable</code>.
@@ -471,9 +494,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
     public void setChoice(int choiceMask, boolean enable)
     {
         if (choiceMask == 0)
-        {
             return;
-        }
 
         if ((choiceMask & BG_MASK) == BG_MASK)
         {
@@ -557,7 +578,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
      */
     public PlotSelectorData getPlotData()
     {
-        
+
         data.setPlotBG(BGBox.isSelected());
         data.setPlotBGDayAvg(BGDayAvgBox.isSelected());
         data.setPlotBGReadings(BGReadingsBox.isSelected());
@@ -575,11 +596,10 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         data.setPlotInsTotalSum(insTotalSumBox.isSelected());
         data.setPlotInsPerCH(insPerCHBox.isSelected());
         data.setPlotMeals(mealsBox.isSelected());
-        
+
         return data;
     }
 
-    
     /**
      * Set Selection Mode
      * 
@@ -589,16 +609,9 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
     {
         this.selection_mode = mode;
     }
-    
-    
-    
-    
+
     boolean in_process = false;
-    
-    
-    
-    
-    
+
     /**
      * State Changed
      * 
@@ -606,16 +619,18 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
      */
     public void stateChanged(ChangeEvent e)
     {
-        
+
         if (in_process)
             return;
         else
-            in_process=true;
-        
-        if (this.selection_mode==PlotSelectorPanel.SELECTION_MODE_SINGLE)
         {
-            JCheckBox cb = (JCheckBox)e.getSource();
-            
+            in_process = true;
+        }
+
+        if (this.selection_mode == PlotSelectorPanel.SELECTION_MODE_SINGLE)
+        {
+            JCheckBox cb = (JCheckBox) e.getSource();
+
             if (!cb.isSelected())
             {
                 cb.setSelected(true);
@@ -630,85 +645,85 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         else
         {
             checkData(e);
-/*
-            if (e.getSource() == BGBox)
-            {
-                data.setPlotBG(BGBox.isSelected());
-            }
-            else if (e.getSource() == BGDayAvgBox)
-            {
-                data.setPlotBGDayAvg(BGDayAvgBox.isSelected());
-            }
-            else if (e.getSource() == BGReadingsBox)
-            {
-                data.setPlotBGReadings(BGReadingsBox.isSelected());
-            }
-            else if (e.getSource() == CHBox)
-            {
-                data.setPlotCH(CHBox.isSelected());
-            }
-            else if (e.getSource() == CHDayAvgBox)
-            {
-                data.setPlotCHDayAvg(CHDayAvgBox.isSelected());
-            }
-            else if (e.getSource() == CHSumBox)
-            {
-                data.setPlotCHSum(CHSumBox.isSelected());
-            }
-            else if (e.getSource() == ins1Box)
-            {
-                data.setPlotIns1(ins1Box.isSelected());
-            }
-            else if (e.getSource() == ins1DayAvgBox)
-            {
-                data.setPlotIns1DayAvg(ins1DayAvgBox.isSelected());
-            }
-            else if (e.getSource() == ins1SumBox)
-            {
-                data.setPlotIns1Sum(ins2SumBox.isSelected());
-            }
-            else if (e.getSource() == ins2Box)
-            {
-                data.setPlotIns2(ins2Box.isSelected());
-            }
-            else if (e.getSource() == ins2DayAvgBox)
-            {
-                data.setPlotIns2DayAvg(ins2DayAvgBox.isSelected());
-            }
-            else if (e.getSource() == ins2SumBox)
-            {
-                data.setPlotIns2Sum(ins2SumBox.isSelected());
-            }
-            else if (e.getSource() == insTotalBox)
-            {
-                data.setPlotInsTotal(insTotalBox.isSelected());
-            }
-            else if (e.getSource() == insTotalDayAvgBox)
-            {
-                data.setPlotInsTotalDayAvg(insTotalDayAvgBox.isSelected());
-            }
-            else if (e.getSource() == insTotalSumBox)
-            {
-                data.setPlotInsTotalSum(insTotalSumBox.isSelected());
-            }
-            else if (e.getSource() == insPerCHBox)
-            {
-                data.setPlotInsPerCH(insPerCHBox.isSelected());
-            }
-            else if (e.getSource() == mealsBox)
-            {
-                data.setPlotMeals(mealsBox.isSelected());
-            } */
+            /*
+             * if (e.getSource() == BGBox)
+             * {
+             * data.setPlotBG(BGBox.isSelected());
+             * }
+             * else if (e.getSource() == BGDayAvgBox)
+             * {
+             * data.setPlotBGDayAvg(BGDayAvgBox.isSelected());
+             * }
+             * else if (e.getSource() == BGReadingsBox)
+             * {
+             * data.setPlotBGReadings(BGReadingsBox.isSelected());
+             * }
+             * else if (e.getSource() == CHBox)
+             * {
+             * data.setPlotCH(CHBox.isSelected());
+             * }
+             * else if (e.getSource() == CHDayAvgBox)
+             * {
+             * data.setPlotCHDayAvg(CHDayAvgBox.isSelected());
+             * }
+             * else if (e.getSource() == CHSumBox)
+             * {
+             * data.setPlotCHSum(CHSumBox.isSelected());
+             * }
+             * else if (e.getSource() == ins1Box)
+             * {
+             * data.setPlotIns1(ins1Box.isSelected());
+             * }
+             * else if (e.getSource() == ins1DayAvgBox)
+             * {
+             * data.setPlotIns1DayAvg(ins1DayAvgBox.isSelected());
+             * }
+             * else if (e.getSource() == ins1SumBox)
+             * {
+             * data.setPlotIns1Sum(ins2SumBox.isSelected());
+             * }
+             * else if (e.getSource() == ins2Box)
+             * {
+             * data.setPlotIns2(ins2Box.isSelected());
+             * }
+             * else if (e.getSource() == ins2DayAvgBox)
+             * {
+             * data.setPlotIns2DayAvg(ins2DayAvgBox.isSelected());
+             * }
+             * else if (e.getSource() == ins2SumBox)
+             * {
+             * data.setPlotIns2Sum(ins2SumBox.isSelected());
+             * }
+             * else if (e.getSource() == insTotalBox)
+             * {
+             * data.setPlotInsTotal(insTotalBox.isSelected());
+             * }
+             * else if (e.getSource() == insTotalDayAvgBox)
+             * {
+             * data.setPlotInsTotalDayAvg(insTotalDayAvgBox.isSelected());
+             * }
+             * else if (e.getSource() == insTotalSumBox)
+             * {
+             * data.setPlotInsTotalSum(insTotalSumBox.isSelected());
+             * }
+             * else if (e.getSource() == insPerCHBox)
+             * {
+             * data.setPlotInsPerCH(insPerCHBox.isSelected());
+             * }
+             * else if (e.getSource() == mealsBox)
+             * {
+             * data.setPlotMeals(mealsBox.isSelected());
+             * }
+             */
         }
-        
-        in_process=false;
-        
+
+        in_process = false;
+
     }
 
-    
     private void checkData(ChangeEvent e)
     {
-        
+
         if (e.getSource() == BGBox)
         {
             data.setPlotBG(BGBox.isSelected());
@@ -777,24 +792,20 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         {
             data.setPlotMeals(mealsBox.isSelected());
         }
-        
-        
+
     }
-    
-    
-    
+
     @SuppressWarnings("deprecation")
     private void unselectAll()
     {
-        for(int i=0; i<this.countComponents(); i++)
+        for (int i = 0; i < this.countComponents(); i++)
         {
             if (this.getComponent(i) instanceof JCheckBox)
             {
-                JCheckBox cb = (JCheckBox)this.getComponent(i);
+                JCheckBox cb = (JCheckBox) this.getComponent(i);
                 cb.setSelected(false);
             }
-        }        
+        }
     }
-    
-    
+
 }

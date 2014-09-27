@@ -53,38 +53,36 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem, PumpValuesEntryInterface, GraphValuesCapable
-//extends PumpDataH implements DatabaseObjectHibernate   // extends PumpValuesEntryAbstract
+public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem, PumpValuesEntryInterface,
+        GraphValuesCapable
+// extends PumpDataH implements DatabaseObjectHibernate // extends
+// PumpValuesEntryAbstract
 {
-    
-    
+
     private static Log log = LogFactory.getLog(PumpValuesEntry.class);
     private static final long serialVersionUID = -2047203215269156938L;
 
-    DataAccessPump m_da = null; //DataAccessPump.getInstance();
+    DataAccessPump m_da = null; // DataAccessPump.getInstance();
     I18nControlAbstract m_ic = null;
-	
-	// pump
+
+    // pump
     long id;
-	ATechDate datetime;
-	int base_type;
-	int sub_type;
-	String value;
-	String extended;
-	//String profile;
-	long person_id;
-	String comment;
-	long changed;
-	String source;
+    ATechDate datetime;
+    int base_type;
+    int sub_type;
+    String value;
+    String extended;
+    // String profile;
+    long person_id;
+    String comment;
+    long changed;
+    String source;
     int multiline_tooltip_type = 1;
 
+    private Hashtable<String, String> params;
 
-	private Hashtable<String,String> params;
-    
     private PumpDataH entry_object = null;
-    private Hashtable<String,PumpValuesEntryExt> additional_data = new Hashtable<String,PumpValuesEntryExt>(); 
-	
+    private Hashtable<String, PumpValuesEntryExt> additional_data = new Hashtable<String, PumpValuesEntryExt>();
 
     /**
      * Constructor
@@ -93,20 +91,18 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public PumpValuesEntry(boolean tr)
     {
-        //m_da = DataAccessPump.getInstance();
-        //m_ic = m_da.getI18nControlInstance();
+        // m_da = DataAccessPump.getInstance();
+        // m_ic = m_da.getI18nControlInstance();
     }
 
-	
-	/**
-	 * Constructor 
-	 */
-	public PumpValuesEntry()
-	{
-	    this((String)null);
-	}
+    /**
+     * Constructor 
+     */
+    public PumpValuesEntry()
+    {
+        this((String) null);
+    }
 
-	
     /**
      * Constructor 
      * 
@@ -116,7 +112,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         m_da = DataAccessPump.getInstance();
         m_ic = m_da.getI18nControlInstance();
-        
+
         this.id = 0L;
         this.datetime = new ATechDate(this.getDateTimeFormat(), new GregorianCalendar());
         this.base_type = 0;
@@ -126,10 +122,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.person_id = m_da.getCurrentUserId();
         this.comment = "";
         this.source = src;
-        
+
     }
-	
-	
 
     /**
      * Constructor
@@ -151,20 +145,19 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.comment = "";
     }
 
-	
-	/**
+    /**
      * Constructor
      * 
-	 * @param pdh
-	 */
-	public PumpValuesEntry(PumpDataH pdh)
-	{
+     * @param pdh
+     */
+    public PumpValuesEntry(PumpDataH pdh)
+    {
         m_da = DataAccessPump.getInstance();
         m_ic = m_da.getI18nControlInstance();
 
-        //this.entry_object = pdh;
-	    this.id = pdh.getId();
-	    this.old_id = pdh.getId();
+        // this.entry_object = pdh;
+        this.id = pdh.getId();
+        this.old_id = pdh.getId();
         this.datetime = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pdh.getDt_info());
         this.base_type = pdh.getBase_type();
         this.sub_type = pdh.getSub_type();
@@ -172,58 +165,54 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.extended = pdh.getExtended();
         this.person_id = pdh.getPerson_id();
         this.comment = pdh.getComment();
-        
-	}
-	
-	
-	/**
-	 * Add Additional Data
-	 * 
-	 * @param adv
-	 */
-	public void addAdditionalData(PumpValuesEntryExt adv)
-	{
-	    this.additional_data.put(new PumpAdditionalDataType().getTypeDescription(adv.getType()), adv);
-	}
-	
-	/**
-	 * Get Additional Data
-	 * 
-	 * @return
-	 */
-	public Hashtable<String,PumpValuesEntryExt> getAdditionalData()
-	{
-	    return this.additional_data; 
-	}
-	
-	
-	/*
-	public void setDateTime(long dt)
-	{
-	    this.datetime = dt;
-	}
-	
-	
-	
-	public long getDateTime()
-	{
-		return this.datetime;
-	}*/
-	
-	/*
-    public ATechDate getDateTimeObject()
+
+    }
+
+    /**
+     * Add Additional Data
+     * 
+     * @param adv
+     */
+    public void addAdditionalData(PumpValuesEntryExt adv)
     {
-        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.datetime);
-    }*/
-	
-	
-	/*
-	public void setBaseType(int base_type)
-	{
-	    this.base_type = base_type;
-	}*/
-	
-	
+        this.additional_data.put(new PumpAdditionalDataType().getTypeDescription(adv.getType()), adv);
+    }
+
+    /**
+     * Get Additional Data
+     * 
+     * @return
+     */
+    public Hashtable<String, PumpValuesEntryExt> getAdditionalData()
+    {
+        return this.additional_data;
+    }
+
+    /*
+     * public void setDateTime(long dt)
+     * {
+     * this.datetime = dt;
+     * }
+     * public long getDateTime()
+     * {
+     * return this.datetime;
+     * }
+     */
+
+    /*
+     * public ATechDate getDateTimeObject()
+     * {
+     * return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.datetime);
+     * }
+     */
+
+    /*
+     * public void setBaseType(int base_type)
+     * {
+     * this.base_type = base_type;
+     * }
+     */
+
     /**
      * Set Sub Type
      * 
@@ -234,7 +223,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.sub_type = sub_type;
     }
 
-    
     /**
      * Set Value
      * 
@@ -252,203 +240,194 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getValue()
     {
-        /*if (this.getSubType()==PumpBaseType.PUMP_DATA_BOLUS)
-        {
-            return this.value;
-        }
-        else */
-            return this.value;
+        /*
+         * if (this.getSubType()==PumpBaseType.PUMP_DATA_BOLUS)
+         * {
+         * return this.value;
+         * }
+         * else
+         */
+        return this.value;
     }
-    
-    
-    
-    
-    
-    
+
     // added - End
-    
+
     /**
      * Add Parameter
      * 
      * @param key
      * @param valuex
      */
-	public void addParameter(String key, String valuex)
-	{
-		if ((valuex.equals("_")) || (valuex.trim().length()==0))
-			return;
-		
-		if (params==null)
-		{
-			params = new Hashtable<String,String>();
-		}
-		
-		this.params.put(key, valuex);
-		
-	}
+    public void addParameter(String key, String valuex)
+    {
+        if (valuex.equals("_") || valuex.trim().length() == 0)
+            return;
 
-	/*
-	public void setBgUnit(int bg_type)
-	{
-		this.bg_unit = bg_type;
-	}
+        if (params == null)
+        {
+            params = new Hashtable<String, String>();
+        }
 
-	public int getBgUnit()
-	{
-		return this.bg_unit;
-	}*/
-	
-	/*
-	public boolean getCheched()
-	{
-	    return this.checked;
-	}
+        this.params.put(key, valuex);
 
-	public int getStatus()
-	{
-	    return this.status;
-	}*/
-	
-	/*
-	public void setBgValue(String value)
-	{
-		this.bg_str = value;
-		
-		if (this.bg_original==null)
-		    this.setDisplayableBGValue(value);
-	}
-	
-	public String getBgValue()
-	{
-		return this.bg_str;
-	}
-	
-	public void setDisplayableBGValue(String value)
-	{
-	    bg_original = value; 
-	}
-	
-	public String getBGValue(int st)
-	{
-	    if (this.bg_unit == OutputUtil.BG_MMOL)
-	    {
-	        if (st == OutputUtil.BG_MMOL)
-	        {
-	            return this.bg_original;
-	        }
-	        else
-	        {
-	            return "" + (int)(this.util.getBGValueDifferent(OutputUtil.BG_MMOL, Float.parseFloat(this.bg_original)));
-	        }
-	    }
-	    else
-	    {
-            if (st == OutputUtil.BG_MGDL)
-            {
-                return this.bg_original;
-            }
-            else
-            {
-                return DataAccessPump.MmolDecimalFormat.format((this.util.getBGValueDifferent(OutputUtil.BG_MGDL, Float.parseFloat(this.bg_original))));
-            }
-	        
-	    }
-	    
-	}
-	*/
-	
-	
-	//int base_type;
-	
-	/**
+    }
+
+    /*
+     * public void setBgUnit(int bg_type)
+     * {
+     * this.bg_unit = bg_type;
+     * }
+     * public int getBgUnit()
+     * {
+     * return this.bg_unit;
+     * }
+     */
+
+    /*
+     * public boolean getCheched()
+     * {
+     * return this.checked;
+     * }
+     * public int getStatus()
+     * {
+     * return this.status;
+     * }
+     */
+
+    /*
+     * public void setBgValue(String value)
+     * {
+     * this.bg_str = value;
+     * if (this.bg_original==null)
+     * this.setDisplayableBGValue(value);
+     * }
+     * public String getBgValue()
+     * {
+     * return this.bg_str;
+     * }
+     * public void setDisplayableBGValue(String value)
+     * {
+     * bg_original = value;
+     * }
+     * public String getBGValue(int st)
+     * {
+     * if (this.bg_unit == OutputUtil.BG_MMOL)
+     * {
+     * if (st == OutputUtil.BG_MMOL)
+     * {
+     * return this.bg_original;
+     * }
+     * else
+     * {
+     * return "" + (int)(this.util.getBGValueDifferent(OutputUtil.BG_MMOL,
+     * Float.parseFloat(this.bg_original)));
+     * }
+     * }
+     * else
+     * {
+     * if (st == OutputUtil.BG_MGDL)
+     * {
+     * return this.bg_original;
+     * }
+     * else
+     * {
+     * return
+     * DataAccessPump.MmolDecimalFormat.format((this.util.getBGValueDifferent
+     * (OutputUtil.BG_MGDL, Float.parseFloat(this.bg_original))));
+     * }
+     * }
+     * }
+     */
+
+    // int base_type;
+
+    /**
      * Get Base Type
      *
-	 * @return
-	 */
-	public int getBaseType()
-	{
-	   return this.base_type;
-	}
-	
+     * @return
+     */
+    public int getBaseType()
+    {
+        return this.base_type;
+    }
+
     /**
      * Set Base Type
      * @param type
      */
     public void setBaseType(int type)
     {
-       this.base_type = type;
+        this.base_type = type;
     }
-	
-	
-	/**
-	 * Get Column Value
-	 */
-	public Object getColumnValue(int column)
-	{
-	    switch(column)
-	    {
-    	    case 0: // time
-    	    {
-    	        return this.datetime.getTimeString();
-    	    }
-    	    case 1: // type
-    	    {
-    	        return getBaseTypeString();
-    	    }
-    	    case 2: // subtype
-    	    {
-    	        return getSubTypeString();
-    	    }
-    	    case 3: // value
-    	    {
-    	        //return this.getValue();
-    	        return getValuePrint();
-    	    }
-    	    case 4: // additional
-    	    {
-    	        return this.getAdditionalDisplay();
-    	    }
-    	    case 5: // food
-    	    {
-    	        return this.isFoodSet();
-    	    }
-	    }
-	    return "";
-	}
-	
-	
-	/**
-	 * Get Parameters As String
-	 * @return
-	 */
-	public String getParametersAsString()
-	{
-		if (this.params==null)
-			return "";
-		
-		StringBuffer sb = new StringBuffer();
-		
-		for(java.util.Enumeration<String> en = this.params.keys(); en.hasMoreElements(); )
-		{
-			String key = en.nextElement();
-			
-			sb.append(key + "=" + this.params.get(key) + ";");
-		}
-		
-		return sb.substring(0, sb.length()-1);
-		
-	}
-	
-	/**
-	 * Get Sub Type
-	 * 
-	 * @return
-	 */
-	public int getSubType()
-	{
-	    return this.sub_type;
-	}
-	
+
+    /**
+     * Get Column Value
+     */
+    @Override
+    public Object getColumnValue(int column)
+    {
+        switch (column)
+        {
+            case 0: // time
+                {
+                    return this.datetime.getTimeString();
+                }
+            case 1: // type
+                {
+                    return getBaseTypeString();
+                }
+            case 2: // subtype
+                {
+                    return getSubTypeString();
+                }
+            case 3: // value
+                {
+                    // return this.getValue();
+                    return getValuePrint();
+                }
+            case 4: // additional
+                {
+                    return this.getAdditionalDisplay();
+                }
+            case 5: // food
+                {
+                    return this.isFoodSet();
+                }
+        }
+        return "";
+    }
+
+    /**
+     * Get Parameters As String
+     * @return
+     */
+    public String getParametersAsString()
+    {
+        if (this.params == null)
+            return "";
+
+        StringBuffer sb = new StringBuffer();
+
+        for (java.util.Enumeration<String> en = this.params.keys(); en.hasMoreElements();)
+        {
+            String key = en.nextElement();
+
+            sb.append(key + "=" + this.params.get(key) + ";");
+        }
+
+        return sb.substring(0, sb.length() - 1);
+
+    }
+
+    /**
+     * Get Sub Type
+     * 
+     * @return
+     */
+    public int getSubType()
+    {
+        return this.sub_type;
+    }
 
     /**
      * Get Sub Type
@@ -460,109 +439,88 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return this.m_da.getPumpBaseTypes().basetype_desc[this.base_type];
     }
 
-	
-	
-	/**
-	 * Get Sub Type
-	 * 
-	 * @return
-	 */
-	public String getSubTypeString()
-	{
-	    //System.out.println("getSubTypeString [" + this.sub_type + "]");
-	    
-	    
-	    if (this.sub_type==0)
-	        return "";
-	    
-	    if (this.base_type==PumpBaseType.PUMP_DATA_BASAL)
-	    {
-	        return m_da.getBasalSubTypes().getDescriptions()[this.sub_type];
-	    }
-	    else if (this.base_type==PumpBaseType.PUMP_DATA_BOLUS)
-	    {
-            return m_da.getBolusSubTypes().getDescriptions().get(this.sub_type);
-	    }
-	    else if (this.base_type==PumpBaseType.PUMP_DATA_REPORT)
-	    {
-            return m_da.getPumpReportTypes().getDescriptions()[this.sub_type];
-	    }
-        else if (this.base_type==PumpBaseType.PUMP_DATA_ALARM)
-        {
-            return m_da.getPumpAlarmTypes().getDescriptionByID(this.sub_type);
-        }
-        else if (this.base_type==PumpBaseType.PUMP_DATA_ERROR)
-        {
-            return m_da.getPumpErrorTypes().getDescriptionByID(this.sub_type);
-        }
-        else if (this.base_type==PumpBaseType.PUMP_DATA_EVENT)
-        {
-            return m_da.getPumpEventTypes().getDescriptionForType(this.sub_type);
-        }
-        else if (this.base_type==PumpBaseType.PUMP_DATA_ADDITIONAL_DATA)
-        {
-            return m_da.getAdditionalTypes().getTypeDescription(this.sub_type);
-        }
-	    else 
-	    {
-	        return "";
-	    }
-	}
-	
-	
-	/**
-	 * Get Additional Display
-	 * @return
-	 */
-	public String getAdditionalDisplay()
-	{
-	    if (this.additional_data.size()==0)
-	        return "";
-	    else
-	    {
-	        StringBuffer sb = new StringBuffer();
-	        int i=0;
-	        //sb.append("<html>");
-	        
-	        for(Enumeration<String> en=this.additional_data.keys(); en.hasMoreElements(); i++ )
-	        {
-	            String key = en.nextElement();
-	            
-	            if (i>0)
-	                sb.append("; ");
-	            
-	            //sb.append(key + "=" + this.additional_data.get(key).toString());
-	            sb.append(this.additional_data.get(key).toString());
-	            
-	            //if (i%3==0)
-	            //    sb.append("");
-	            
-	        }
-	        
-	        //sb.append("</html>");
-	        return sb.toString();
-	    }
-	}
+    /**
+     * Get Sub Type
+     * 
+     * @return
+     */
+    public String getSubTypeString()
+    {
+        // System.out.println("getSubTypeString [" + this.sub_type + "]");
 
-	
-	/**
-	 * Is Food Set
-	 *  
-	 * @return
-	 */
-	public String isFoodSet()
-	{
-	    if ((this.additional_data.containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC])) ||
-	        (this.additional_data.containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB])))
-	    {
-	        return m_da.getI18nControlInstance().getMessage("YES");
-	    }
-	    else
-	    {
+        if (this.sub_type == 0)
+            return "";
+
+        if (this.base_type == PumpBaseType.PUMP_DATA_BASAL)
+            return m_da.getBasalSubTypes().getDescriptions()[this.sub_type];
+        else if (this.base_type == PumpBaseType.PUMP_DATA_BOLUS)
+            return m_da.getBolusSubTypes().getDescriptions().get(this.sub_type);
+        else if (this.base_type == PumpBaseType.PUMP_DATA_REPORT)
+            return m_da.getPumpReportTypes().getDescriptions()[this.sub_type];
+        else if (this.base_type == PumpBaseType.PUMP_DATA_ALARM)
+            return m_da.getPumpAlarmTypes().getDescriptionByID(this.sub_type);
+        else if (this.base_type == PumpBaseType.PUMP_DATA_ERROR)
+            return m_da.getPumpErrorTypes().getDescriptionByID(this.sub_type);
+        else if (this.base_type == PumpBaseType.PUMP_DATA_EVENT)
+            return m_da.getPumpEventTypes().getDescriptionForType(this.sub_type);
+        else if (this.base_type == PumpBaseType.PUMP_DATA_ADDITIONAL_DATA)
+            return m_da.getAdditionalTypes().getTypeDescription(this.sub_type);
+        else
+            return "";
+    }
+
+    /**
+     * Get Additional Display
+     * @return
+     */
+    public String getAdditionalDisplay()
+    {
+        if (this.additional_data.size() == 0)
+            return "";
+        else
+        {
+            StringBuffer sb = new StringBuffer();
+            int i = 0;
+            // sb.append("<html>");
+
+            for (Enumeration<String> en = this.additional_data.keys(); en.hasMoreElements(); i++)
+            {
+                String key = en.nextElement();
+
+                if (i > 0)
+                {
+                    sb.append("; ");
+                }
+
+                // sb.append(key + "=" +
+                // this.additional_data.get(key).toString());
+                sb.append(this.additional_data.get(key).toString());
+
+                // if (i%3==0)
+                // sb.append("");
+
+            }
+
+            // sb.append("</html>");
+            return sb.toString();
+        }
+    }
+
+    /**
+     * Is Food Set
+     *  
+     * @return
+     */
+    public String isFoodSet()
+    {
+        if (this.additional_data
+                .containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC])
+                || this.additional_data
+                        .containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB]))
+            return m_da.getI18nControlInstance().getMessage("YES");
+        else
             return m_da.getI18nControlInstance().getMessage("NO");
-	    }
-	}
-	
+    }
 
     /**
      * Get Additional Display
@@ -570,39 +528,43 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getAdditionalDisplayHTML()
     {
-        if (this.additional_data.size()==0)
+        if (this.additional_data.size() == 0)
             return "";
         else
         {
             StringBuffer sb = new StringBuffer();
-            int i=0;
+            int i = 0;
             sb.append("<html>");
-            
-            for(Enumeration<String> en=this.additional_data.keys(); en.hasMoreElements(); i++ )
+
+            for (Enumeration<String> en = this.additional_data.keys(); en.hasMoreElements(); i++)
             {
                 String key = en.nextElement();
-                
-                if ((key.equals(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB])) ||
-                    (key.equals(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC])))
+
+                if (key.equals(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB])
+                        || key.equals(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC]))
+                {
                     continue;
-                
-                if (i>0)
+                }
+
+                if (i > 0)
+                {
                     sb.append("<br>");
-                
-                //sb.append(key + "=" + this.additional_data.get(key).toString());
+                }
+
+                // sb.append(key + "=" +
+                // this.additional_data.get(key).toString());
                 sb.append(this.additional_data.get(key).toString());
-                
-                //if (i%3==0)
-                //    sb.append("");
-                
+
+                // if (i%3==0)
+                // sb.append("");
+
             }
-            
+
             sb.append("</html>");
             return sb.toString();
         }
     }
-	
-	
+
     /**
      * Get Value HTML
      * 
@@ -611,84 +573,70 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     public String getValueHTML()
     {
         StringBuffer sb = new StringBuffer();
-        
+
         sb.append("<html>");
 
-        if (this.base_type==PumpBaseType.PUMP_DATA_BASAL)
+        if (this.base_type == PumpBaseType.PUMP_DATA_BASAL)
         {
-            if (this.sub_type==PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE)
+            if (this.sub_type == PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE)
             {
                 String s[] = m_da.getParsedValues(this.value);
-                sb.append(String.format("%s: %s<br>%s: %s", 
-                              m_ic.getMessage("DURATION"),
-                              s[0],
-                              m_ic.getMessage("AMOUNT"),
-                              s[1]));
+                sb.append(String.format("%s: %s<br>%s: %s", m_ic.getMessage("DURATION"), s[0],
+                    m_ic.getMessage("AMOUNT"), s[1]));
             }
             else
+            {
                 sb.append(this.getValue());
-                
+            }
+
         }
-        else if (this.base_type==PumpBaseType.PUMP_DATA_BOLUS)
+        else if (this.base_type == PumpBaseType.PUMP_DATA_BOLUS)
         {
-            if (this.sub_type==PumpBolusType.PUMP_BOLUS_SQUARE)
+            if (this.sub_type == PumpBolusType.PUMP_BOLUS_SQUARE)
             {
                 String s[] = m_da.getParsedValues(this.getValue());
-                
-                if (s.length==1)
+
+                if (s.length == 1)
                 {
                     // old format
-                    sb.append(String.format("%s: %s<br>%s: %s", 
-                        m_ic.getMessage("SQUARE_AMOUNT"),
-                        s[0],
-                        m_ic.getMessage("DURATION"),
-                        "??"));
+                    sb.append(String.format("%s: %s<br>%s: %s", m_ic.getMessage("SQUARE_AMOUNT"), s[0],
+                        m_ic.getMessage("DURATION"), "??"));
                 }
                 else
                 {
-                    sb.append(String.format("%s: %s<br>%s: %s", 
-                                  m_ic.getMessage("SQUARE_AMOUNT"),
-                                  s[0],
-                                  m_ic.getMessage("DURATION"),
-                                  s[1]));
+                    sb.append(String.format("%s: %s<br>%s: %s", m_ic.getMessage("SQUARE_AMOUNT"), s[0],
+                        m_ic.getMessage("DURATION"), s[1]));
                 }
             }
-            else if (this.sub_type==PumpBolusType.PUMP_BOLUS_MULTIWAVE)
+            else if (this.sub_type == PumpBolusType.PUMP_BOLUS_MULTIWAVE)
             {
                 String s[] = m_da.getParsedValues(this.getValue());
-                if (s.length==2)
+                if (s.length == 2)
                 {
                     // old format
-                    sb.append(String.format("%s: %s<br>%s: %s<br>%s: %s", 
-                        m_ic.getMessage("IMMEDIATE_AMOUNT"),
-                        s[0],
-                        m_ic.getMessage("SQUARE_AMOUNT"),
-                        s[1],
-                        m_ic.getMessage("DURATION"),
-                        "??"));
+                    sb.append(String.format("%s: %s<br>%s: %s<br>%s: %s", m_ic.getMessage("IMMEDIATE_AMOUNT"), s[0],
+                        m_ic.getMessage("SQUARE_AMOUNT"), s[1], m_ic.getMessage("DURATION"), "??"));
                 }
                 else
                 {
-                    sb.append(String.format("%s: %s<br>%s: %s<br>%s: %s", 
-                                  m_ic.getMessage("IMMEDIATE_AMOUNT"),
-                                  s[0],
-                                  m_ic.getMessage("SQUARE_AMOUNT"),
-                                  s[1],
-                                  m_ic.getMessage("DURATION"),
-                                  s[2]));
+                    sb.append(String.format("%s: %s<br>%s: %s<br>%s: %s", m_ic.getMessage("IMMEDIATE_AMOUNT"), s[0],
+                        m_ic.getMessage("SQUARE_AMOUNT"), s[1], m_ic.getMessage("DURATION"), s[2]));
                 }
             }
             else
+            {
                 sb.append(this.getValue());
+            }
         }
         else
+        {
             sb.append(this.getValue());
-            
+        }
+
         sb.append("</html>");
         return sb.toString();
     }
 
-    
     /**
      * Get Value Print
      * 
@@ -697,45 +645,38 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     public String getValuePrint()
     {
         StringBuffer sb = new StringBuffer();
-        
-        if (this.base_type==PumpBaseType.PUMP_DATA_BASAL)
+
+        if (this.base_type == PumpBaseType.PUMP_DATA_BASAL)
         {
-            if (this.sub_type==PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE)
+            if (this.sub_type == PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE)
             {
                 String s[] = m_da.getParsedValues(this.value);
-                sb.append(String.format("%s: %s, %s: %s", 
-                              m_ic.getMessage("DURATION"),
-                              s[0],
-                              m_ic.getMessage("AMOUNT"),
-                              s[1]));
+                sb.append(String.format("%s: %s, %s: %s", m_ic.getMessage("DURATION"), s[0], m_ic.getMessage("AMOUNT"),
+                    s[1]));
             }
             else
-                sb.append(this.getValue());
-                
-        }
-        else if (this.base_type==PumpBaseType.PUMP_DATA_BOLUS)
-        {
-            if (this.sub_type==PumpBolusType.PUMP_BOLUS_SQUARE)
             {
-                
+                sb.append(this.getValue());
+            }
+
+        }
+        else if (this.base_type == PumpBaseType.PUMP_DATA_BOLUS)
+        {
+            if (this.sub_type == PumpBolusType.PUMP_BOLUS_SQUARE)
+            {
+
                 String s[] = m_da.getParsedValues(this.value);
-                
-                if (s.length==1)
+
+                if (s.length == 1)
                 {
                     // old format
-                    sb.append(String.format("%s: %s, %s: %s", 
-                                  m_ic.getMessage("SQUARE_AMOUNT"),
-                                  s[0],
-                                  m_ic.getMessage("DURATION"),
-                                  "??"));
+                    sb.append(String.format("%s: %s, %s: %s", m_ic.getMessage("SQUARE_AMOUNT"), s[0],
+                        m_ic.getMessage("DURATION"), "??"));
                 }
-                else if (s.length==2) 
+                else if (s.length == 2)
                 {
-                    sb.append(String.format("%s: %s, %s: %s", 
-                                  m_ic.getMessage("SQUARE_AMOUNT"),
-                                  s[0],
-                                  m_ic.getMessage("DURATION"),
-                                  s[1]));
+                    sb.append(String.format("%s: %s, %s: %s", m_ic.getMessage("SQUARE_AMOUNT"), s[0],
+                        m_ic.getMessage("DURATION"), s[1]));
                 }
                 else
                 {
@@ -743,29 +684,19 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
                 }
 
             }
-            else if (this.sub_type==PumpBolusType.PUMP_BOLUS_MULTIWAVE)
+            else if (this.sub_type == PumpBolusType.PUMP_BOLUS_MULTIWAVE)
             {
                 String s[] = m_da.getParsedValues(this.value);
-                if (s.length==2)
+                if (s.length == 2)
                 {
                     // old format
-                    sb.append(String.format("%s: %s, %s: %s, %s: %s", 
-                        m_ic.getMessage("IMMEDIATE_AMOUNT"),
-                        s[0],
-                        m_ic.getMessage("SQUARE_AMOUNT"),
-                        s[1],
-                        m_ic.getMessage("DURATION"),
-                        "??"));
+                    sb.append(String.format("%s: %s, %s: %s, %s: %s", m_ic.getMessage("IMMEDIATE_AMOUNT"), s[0],
+                        m_ic.getMessage("SQUARE_AMOUNT"), s[1], m_ic.getMessage("DURATION"), "??"));
                 }
-                else if (s.length==3)
+                else if (s.length == 3)
                 {
-                    sb.append(String.format("%s: %s, %s: %s, %s: %s", 
-                                  m_ic.getMessage("IMMEDIATE_AMOUNT"),
-                                  s[0],
-                                  m_ic.getMessage("SQUARE_AMOUNT"),
-                                  s[1],
-                                  m_ic.getMessage("DURATION"),
-                                  s[2]));
+                    sb.append(String.format("%s: %s, %s: %s, %s: %s", m_ic.getMessage("IMMEDIATE_AMOUNT"), s[0],
+                        m_ic.getMessage("SQUARE_AMOUNT"), s[1], m_ic.getMessage("DURATION"), s[2]));
                 }
                 else
                 {
@@ -773,27 +704,28 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
                 }
             }
             else
+            {
                 sb.append(this.getValue());
+            }
         }
         else
+        {
             sb.append(this.getValue());
-            
+        }
+
         return sb.toString();
     }
-    
-    
+
     /**
      * Print Additional: All Entries (without food data, just info that food is present)
      */
     public static final int PRINT_ADDITIONAL_ALL_ENTRIES = 1;
 
-    
     /**
      * Print Additional: All Entries (with food data)
      */
     public static final int PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD = 2;
-    
-	
+
     /**
      * Get Additional Display
      * 
@@ -802,101 +734,109 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getAdditionalDataPrint(int type)
     {
-        if (this.additional_data.size()==0)
+        if (this.additional_data.size() == 0)
             return "";
         else
         {
             StringBuffer sb = new StringBuffer();
-            int i=0;
-            
+            int i = 0;
+
             String food_key = null;
-            
-            for(Enumeration<String> en=this.additional_data.keys(); en.hasMoreElements(); i++ )
+
+            for (Enumeration<String> en = this.additional_data.keys(); en.hasMoreElements(); i++)
             {
                 String key = en.nextElement();
-                
-                if (i>0)
-                    sb.append("; ");
-                
-                //sb.append(key + "=" + this.additional_data.get(key).toString());
-                
-                if (type==PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD)
+
+                if (i > 0)
                 {
-                    
-                    if ((key.equals(m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))) ||
-                        (key.equals(m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB))))
+                    sb.append("; ");
+                }
+
+                // sb.append(key + "=" +
+                // this.additional_data.get(key).toString());
+
+                if (type == PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD)
+                {
+
+                    if (key.equals(m_da.getAdditionalTypes().getTypeDescription(
+                        PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))
+                            || key.equals(m_da.getAdditionalTypes().getTypeDescription(
+                                PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)))
                     {
-                       food_key = key; 
+                        food_key = key;
                     }
                     else
+                    {
                         sb.append(this.additional_data.get(key).toString());
-                    
-                    
+                    }
+
                 }
                 else
+                {
                     sb.append(this.additional_data.get(key).toString());
-                
-                //if (i%3==0)
-                //    sb.append("\n");
-                
+                }
+
+                // if (i%3==0)
+                // sb.append("\n");
+
             }
 
-            
-            
-            if ((food_key!=null) && (food_key.length()>0))
+            if (food_key != null && food_key.length() > 0)
             {
-                
-                if (food_key.equals(m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)))
+
+                if (food_key.equals(m_da.getAdditionalTypes().getTypeDescription(
+                    PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)))
                 {
                     PumpValuesEntryExt pvee = this.additional_data.get(food_key);
                     sb.append("\n" + m_ic.getMessage("FOOD_DESC_PRINT") + ": " + pvee.getValue());
                 }
-                else if (food_key.equals(m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)))
+                else if (food_key.equals(m_da.getAdditionalTypes().getTypeDescription(
+                    PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)))
                 {
-                    //PumpValuesEntryExt pvee = this.additional_data.get(food_key);
-                    sb.append("\n" + m_ic.getMessage("FOOD_DB_PRINT") + ": " + m_ic.getMessage("FOOD_DESC_PRINT_NOT_YET"));
+                    // PumpValuesEntryExt pvee =
+                    // this.additional_data.get(food_key);
+                    sb.append("\n" + m_ic.getMessage("FOOD_DB_PRINT") + ": "
+                            + m_ic.getMessage("FOOD_DESC_PRINT_NOT_YET"));
                 }
             }
-            
-            
-            
+
             return sb.toString();
         }
     }
-	
-	
-	
-	/**
+
+    /**
      * Prepare Entry [PlugIn Framework v1] 
      */
-	public void prepareEntry()
-	{
-	    System.out.println("prepareEntry not implemented!");
-	    
-	    /*
-	    if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
-	        return;
-	    else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
-	    {
-	        this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-	        this.entry_object.setChanged(System.currentTimeMillis());
-	        this.entry_object.setComment(createComment());
-	    }
-	    else
-	    {
-	        this.entry_object = new DayValueH();
-	        this.entry_object.setIns1(0);
-            this.entry_object.setIns2(0);
-            this.entry_object.setCh(0.0f);
-            this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-	        this.entry_object.setDt_info(this.datetime);
-            this.entry_object.setChanged(System.currentTimeMillis());
-            this.entry_object.setComment(createComment());
-	    }*/
-	}
-	
-	
-	
+    @Override
+    public void prepareEntry()
+    {
+        System.out.println("prepareEntry not implemented!");
+
+        /*
+         * if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
+         * return;
+         * else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
+         * {
+         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.
+         * BG_MGDL)));
+         * this.entry_object.setChanged(System.currentTimeMillis());
+         * this.entry_object.setComment(createComment());
+         * }
+         * else
+         * {
+         * this.entry_object = new DayValueH();
+         * this.entry_object.setIns1(0);
+         * this.entry_object.setIns2(0);
+         * this.entry_object.setCh(0.0f);
+         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.
+         * BG_MGDL)));
+         * this.entry_object.setDt_info(this.datetime);
+         * this.entry_object.setChanged(System.currentTimeMillis());
+         * this.entry_object.setComment(createComment());
+         * }
+         */
+    }
+
     /**
      * Get Db Objects [PlugIn Framework v1]
      * 
@@ -907,46 +847,43 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         prepareEntry();
         ArrayList<GGCHibernateObject> lst = new ArrayList<GGCHibernateObject>();
-        
-        if (this.entry_object!=null)
+
+        if (this.entry_object != null)
+        {
             lst.add(this.entry_object);
-        
+        }
+
         return lst;
     }
-	
 
+    /**
+     * Create Comment
+     * 
+     * @return
+     */
+    public String createComment()
+    {
+        String p = this.getParametersAsString();
 
-	
-	/**
-	 * Create Comment
-	 * 
-	 * @return
-	 */
-	public String createComment()
-	{
-	    String p = this.getParametersAsString();
-	    
-	    if ((p==null) || (p.trim().length()==0))
-	    {
-	        return "";
-	    }
-	    else
-	        return p;
-	    
-	    
-	}
-	
-	
-	/**
-	 * To String
-	 */
-	public String toString()
-	{
-	    //OutputUtil o= null;
-	    //return "PumpValuesEntry [date/time=" + this.datetime  + ",bg=" + this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]";
-	    return "PumpValuesEntry [date/time=" + this.datetime  + ", base_type=" + this.getBaseTypeString() + ", sub_type=" + this.getSubTypeString() + ", value=" + this.getValue() + "]";
-	}
+        if (p == null || p.trim().length() == 0)
+            return "";
+        else
+            return p;
 
+    }
+
+    /**
+     * To String
+     */
+    @Override
+    public String toString()
+    {
+        // OutputUtil o= null;
+        // return "PumpValuesEntry [date/time=" + this.datetime + ",bg=" +
+        // this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]";
+        return "PumpValuesEntry [date/time=" + this.datetime + ", base_type=" + this.getBaseTypeString()
+                + ", sub_type=" + this.getSubTypeString() + ", value=" + this.getValue() + "]";
+    }
 
     /**
      * DbAdd - Add this object to database
@@ -958,29 +895,28 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     public String DbAdd(Session sess) throws Exception
     {
         Transaction tx = sess.beginTransaction();
-        
+
         PumpDataH pdh = new PumpDataH();
-        
+
         pdh.setId(this.id);
-        pdh.setDt_info(this.datetime.getATDateTimeAsLong()); 
-        pdh.setBase_type(this.base_type); 
+        pdh.setDt_info(this.datetime.getATDateTimeAsLong());
+        pdh.setBase_type(this.base_type);
         pdh.setSub_type(this.sub_type);
         pdh.setValue(this.value);
-        //pdh.setExtended(this.extended);
+        // pdh.setExtended(this.extended);
         pdh.setExtended("SOURCE=" + this.source);
-        pdh.setPerson_id((int)this.person_id); 
-        pdh.setComment(this.comment); 
+        pdh.setPerson_id((int) this.person_id);
+        pdh.setComment(this.comment);
         pdh.setChanged(System.currentTimeMillis());
         pdh.setChanged(System.currentTimeMillis());
 
-        Long _id = (Long)sess.save(pdh);
+        Long _id = (Long) sess.save(pdh);
         tx.commit();
 
         pdh.setId(_id.longValue());
-        
-        return ""+_id.longValue();
-    }
 
+        return "" + _id.longValue();
+    }
 
     /**
      * DbDelete - Delete this object in database
@@ -993,13 +929,12 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         Transaction tx = sess.beginTransaction();
 
-        PumpDataH ch = (PumpDataH)sess.get(PumpDataH.class, new Long(this.id));
+        PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.id));
         sess.delete(ch);
         tx.commit();
 
         return true;
     }
-
 
     /**
      * DbEdit - Edit this object in database
@@ -1011,20 +946,19 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     public boolean DbEdit(Session sess) throws Exception
     {
         Transaction tx = sess.beginTransaction();
-        //System.out.println("id: " + old_id);
-        PumpDataH pdh = (PumpDataH)sess.get(PumpDataH.class, new Long(this.old_id));
-        
-        //System.out.println("PumpDataH: " + pdh);
-        
-        
+        // System.out.println("id: " + old_id);
+        PumpDataH pdh = (PumpDataH) sess.get(PumpDataH.class, new Long(this.old_id));
+
+        // System.out.println("PumpDataH: " + pdh);
+
         pdh.setId(this.old_id);
-        pdh.setDt_info(this.datetime.getATDateTimeAsLong()); 
-        pdh.setBase_type(this.base_type); 
+        pdh.setDt_info(this.datetime.getATDateTimeAsLong());
+        pdh.setBase_type(this.base_type);
         pdh.setSub_type(this.sub_type);
         pdh.setValue(this.value);
-        pdh.setExtended(this.extended); 
-        pdh.setPerson_id((int)this.person_id); 
-        pdh.setComment(this.comment); 
+        pdh.setExtended(this.extended);
+        pdh.setPerson_id((int) this.person_id);
+        pdh.setComment(this.comment);
         pdh.setChanged(System.currentTimeMillis());
 
         sess.update(pdh);
@@ -1032,7 +966,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         return true;
     }
-
 
     /**
      * DbGet - Loads this object. Id must be set.
@@ -1043,8 +976,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public boolean DbGet(Session sess) throws Exception
     {
-        PumpDataH pdh = (PumpDataH)sess.get(PumpDataH.class, new Long(this.id));
-        
+        PumpDataH pdh = (PumpDataH) sess.get(PumpDataH.class, new Long(this.id));
+
         this.id = pdh.getId();
         this.datetime = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pdh.getDt_info());
         this.base_type = pdh.getBase_type();
@@ -1053,10 +986,9 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.extended = pdh.getExtended();
         this.person_id = pdh.getPerson_id();
         this.comment = pdh.getComment();
-        
+
         return true;
     }
-
 
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
@@ -1069,7 +1001,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return false;
     }
-
 
     /**
      * getAction - returns action that should be done on object
@@ -1087,7 +1018,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return 0;
     }
 
-
     /**
      * getObjectName - returns name of DatabaseObject
      * 
@@ -1097,7 +1027,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return "PumpDataH";
     }
-
 
     /**
      * isDebugMode - returns debug mode of object
@@ -1109,7 +1038,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return false;
     }
 
-
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -1119,7 +1047,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return "" + this.entry_object.getId();
     }
 
-    
     /**
      * Get DateTime (long)
      * 
@@ -1128,10 +1055,9 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     @Override
     public long getDateTime()
     {
-        return this.datetime.getATDateTimeAsLong();    
+        return this.datetime.getATDateTimeAsLong();
     }
 
-    
     /**
      * Get DateTime format
      * 
@@ -1143,7 +1069,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return ATechDate.FORMAT_DATE_AND_TIME_S;
     }
 
-
     /**
      * Set DateTime Object (ATechDate)
      * 
@@ -1152,7 +1077,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     @Override
     public void setDateTimeObject(ATechDate dt)
     {
-        this.datetime = dt;        
+        this.datetime = dt;
     }
 
     /**
@@ -1160,34 +1085,38 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getDataAsString()
     {
-        switch(output_type)
+        switch (output_type)
         {
             case OutputWriterType.DUMMY:
                 return "";
-                
+
             case OutputWriterType.CONSOLE:
             case OutputWriterType.FILE:
-                return this.getDateTimeObject().getDateTimeString() + ":  Base Type=" + this.getBaseTypeString() + ", Sub Type=" + this.getSubTypeString() + ", Value=" + this.getValue() + ", Comment=" + this.getComment();
-                
+                return this.getDateTimeObject().getDateTimeString() + ":  Base Type=" + this.getBaseTypeString()
+                        + ", Sub Type=" + this.getSubTypeString() + ", Value=" + this.getValue() + ", Comment="
+                        + this.getComment();
+
             case OutputWriterType.GGC_FILE_EXPORT:
-            {
-                /*
-                PumpData pd = new PumpData(this);
-                try
                 {
-                    return pd.dbExport();
+                    /*
+                     * PumpData pd = new PumpData(this);
+                     * try
+                     * {
+                     * return pd.dbExport();
+                     * }
+                     * catch(Exception ex)
+                     * {
+                     * log.error(
+                     * "Problem with PumpValuesEntry export !  Exception: " +
+                     * ex, ex);
+                     * return "Value could not be decoded for export!";
+                     * }
+                     */
                 }
-                catch(Exception ex)
-                {
-                    log.error("Problem with PumpValuesEntry export !  Exception: " + ex, ex);
-                    return "Value could not be decoded for export!";
-                }*/
-            }
-                
-        
+
             default:
                 return "Value is undefined";
-        
+
         }
     }
 
@@ -1201,19 +1130,19 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.datetime;
     }
-	
 
     /**
      * Get Id
      * 
      * @return
      */
-/*    public long getId()
-    {
-        return this.id;
-    }
-  */  
-    
+    /*
+     * public long getId()
+     * {
+     * return this.id;
+     * }
+     */
+
     /**
      * Get Comment
      * 
@@ -1223,8 +1152,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.comment;
     }
-    
-    
+
     /**
      * Set Comment
      * 
@@ -1235,99 +1163,95 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.comment = value;
     }
 
-    
-    
-    //---
-    //---  Statistics
-    //---
-    
-    
+    // ---
+    // --- Statistics
+    // ---
+
     /**
      * Statistics Value: Bolus Insulin Sum
      */
-    public static final int INS_SUM_BOLUS =1;
-    
+    public static final int INS_SUM_BOLUS = 1;
+
     /**
      * Statistics Value: Basal Insulin Sum
      */
-    public static final int INS_SUM_BASAL =2;
+    public static final int INS_SUM_BASAL = 2;
 
     /**
      * Statistics Value: Both Insulin Sum
      */
-    public static final int INS_SUM_TOGETHER =3;
-    
+    public static final int INS_SUM_TOGETHER = 3;
+
     /**
      * Statistics Value: Bolus Insulin Average
      */
-    public static final int INS_AVG_BOLUS =4;
+    public static final int INS_AVG_BOLUS = 4;
 
     /**
      * Statistics Value: Basal Insulin Average
      */
-    public static final int INS_AVG_BASAL =5;
+    public static final int INS_AVG_BASAL = 5;
 
     /**
      * Statistics Value: Both Insulin Average
      */
-    public static final int INS_AVG_TOGETHER =6;
+    public static final int INS_AVG_TOGETHER = 6;
 
     /**
      * Statistics Value: Bolus Insulin Doses
      */
-    public static final int INS_DOSES_BOLUS =7;
+    public static final int INS_DOSES_BOLUS = 7;
 
     /**
      * Statistics Value: Basal Insulin Doses
      */
-    public static final int INS_DOSES_BASAL =8;
+    public static final int INS_DOSES_BASAL = 8;
 
     /**
      * Statistics Value: Both Insulin Doses
      */
-    public static final int INS_DOSES_TOGETHER =9;
-    
+    public static final int INS_DOSES_TOGETHER = 9;
+
     /**
      * Statistics Value: Carbohydrates Sum
      */
-    public static final int CH_SUM =10;
+    public static final int CH_SUM = 10;
 
     /**
      * Statistics Value: Carbohydrates Average
      */
-    public static final int CH_AVG =11;
+    public static final int CH_AVG = 11;
 
     /**
      * Statistics Value: Meals
      */
-    public static final int MEALS =12;
+    public static final int MEALS = 12;
 
     /**
      * Statistics Value: Blood Glucose Average
      */
-    public static final int BG_AVG =13;
+    public static final int BG_AVG = 13;
 
     /**
      * Statistics Value: Blood Glucose Maximal
      */
-    public static final int BG_MAX =14;
+    public static final int BG_MAX = 14;
 
     /**
      * Statistics Value: Blood Glucose Minimal
      */
-    public static final int BG_MIN =15;
-    
+    public static final int BG_MIN = 15;
+
     /**
      * Statistics Value: Blood Glucose Count
      */
-    public static final int BG_COUNT =16;
-    
+    public static final int BG_COUNT = 16;
+
     /**
      * Statistics Value: Blood Glucose Standard Deviation
      */
-    public static final int BG_STD_DEV =17;
+    public static final int BG_STD_DEV = 17;
 
-    
     /**
      * Get Max Statistics Object - we can have several Statistic types defined here
      * 
@@ -1338,7 +1262,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return 18;
     }
 
-    
     /**
      * Get Statistics Action - we define how statistic is done (we have several predefined 
      *    types of statistics
@@ -1355,45 +1278,37 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             case PumpValuesEntry.BG_AVG:
             case PumpValuesEntry.INS_AVG_BOLUS:
                 return StatisticsObject.OPERATION_AVERAGE;
-        
-        
+
             case PumpValuesEntry.INS_SUM_BOLUS:
             case PumpValuesEntry.CH_SUM:
                 return StatisticsObject.OPERATION_SUM;
-
 
             case PumpValuesEntry.MEALS:
             case PumpValuesEntry.INS_DOSES_BOLUS:
             case PumpValuesEntry.BG_COUNT:
                 return StatisticsObject.OPERATION_COUNT;
-                
 
             case PumpValuesEntry.BG_MAX:
                 return StatisticsObject.OPERATION_MAX;
-                
+
             case PumpValuesEntry.BG_MIN:
                 return StatisticsObject.OPERATION_MIN;
-                
-                
-                
+
             case PumpValuesEntry.INS_SUM_BASAL:
             case PumpValuesEntry.INS_SUM_TOGETHER:
-            
+
             case PumpValuesEntry.INS_AVG_BASAL:
             case PumpValuesEntry.INS_AVG_TOGETHER:
             case PumpValuesEntry.INS_DOSES_BASAL:
-    
+
             case PumpValuesEntry.INS_DOSES_TOGETHER:
             case PumpValuesEntry.BG_STD_DEV:
                 return StatisticsObject.OPERATION_SPECIAL;
-    
-                
-        
+
             default:
                 return 0;
         }
     }
-
 
     /**
      * Get Value For Item
@@ -1408,79 +1323,78 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             case PumpValuesEntry.INS_AVG_BOLUS:
             case PumpValuesEntry.INS_SUM_BOLUS:
             case PumpValuesEntry.INS_DOSES_BOLUS:
-            {
-                if (this.base_type==PumpBaseType.PUMP_DATA_BOLUS)
                 {
-                    if (this.getValue().contains(";"))
+                    if (this.base_type == PumpBaseType.PUMP_DATA_BOLUS)
                     {
-                        String vals[] = this.getValue().split(";");
-                        
-                        float sum = 0.0f;
-                        
-                        for(int i=0; i<vals.length; i++)
+                        if (this.getValue().contains(";"))
                         {
-                            if (vals[i].startsWith("AMOUNT"))
+                            String vals[] = this.getValue().split(";");
+
+                            float sum = 0.0f;
+
+                            for (String val : vals)
                             {
-                                String ps[] = vals[i].split("=");
-                                
-                                sum += m_da.getFloatValueFromString(ps[1], 0.0f);
+                                if (val.startsWith("AMOUNT"))
+                                {
+                                    String ps[] = val.split("=");
+
+                                    sum += m_da.getFloatValueFromString(ps[1], 0.0f);
+                                }
                             }
+
+                            return sum;
                         }
-                        
-                        return sum;
+                        else
+                            return m_da.getFloatValueFromString(this.getValue(), 0.0f);
                     }
+
                     else
-                    {
-                        return m_da.getFloatValueFromString(this.getValue(), 0.0f);
-                    }
+                        return 0.0f;
                 }
-                    
-                else
-                    return 0.0f;
-            }
-                
-                
+
             case PumpValuesEntry.CH_SUM:
             case PumpValuesEntry.CH_AVG:
             case PumpValuesEntry.MEALS:
-            {
-                if (this.additional_data.containsKey(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_CH]))
                 {
-                    return m_da.getFloatValueFromString(this.additional_data.get(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_CH]).getValue(), 0.0f);
+                    if (this.additional_data
+                            .containsKey(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_CH]))
+                        return m_da.getFloatValueFromString(
+                            this.additional_data.get(
+                                m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_CH])
+                                    .getValue(), 0.0f);
+                    else
+                        return 0.0f;
                 }
-                else
-                    return 0.0f;
-            }
-                
-            
+
             case PumpValuesEntry.BG_AVG:
             case PumpValuesEntry.BG_MAX:
             case PumpValuesEntry.BG_MIN:
             case PumpValuesEntry.BG_COUNT:
-            {
-                if (this.additional_data.containsKey(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_BG]))
                 {
-                    return m_da.getFloatValueFromString(this.additional_data.get(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_BG]).getValue(), 0.0f);
+                    if (this.additional_data
+                            .containsKey(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_BG]))
+                        return m_da.getFloatValueFromString(
+                            this.additional_data.get(
+                                m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_BG])
+                                    .getValue(), 0.0f);
+                    else
+                        return 0.0f;
+
                 }
-                else
-                    return 0.0f;
-                
-            }
-                
+
             case PumpValuesEntry.INS_DOSES_BASAL:
             case PumpValuesEntry.INS_DOSES_TOGETHER:
-                
+
             case PumpValuesEntry.BG_STD_DEV:
             case PumpValuesEntry.INS_SUM_BASAL:
             case PumpValuesEntry.INS_SUM_TOGETHER:
             case PumpValuesEntry.INS_AVG_BASAL:
             case PumpValuesEntry.INS_AVG_TOGETHER:
-                
+
             default:
                 return 0.0f;
         }
     }
-
 
     /**
      * Is Special Action - tells if selected statistics item has special actions
@@ -1500,7 +1414,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             case PumpValuesEntry.INS_DOSES_TOGETHER:
             case PumpValuesEntry.BG_STD_DEV:
                 return true;
-                
+
             case PumpValuesEntry.INS_AVG_BOLUS:
             case PumpValuesEntry.INS_SUM_BOLUS:
             case PumpValuesEntry.INS_DOSES_BOLUS:
@@ -1516,7 +1430,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
     }
 
-
     /**
      * If we have any special actions for any of objects
      * 
@@ -1527,65 +1440,62 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return true;
     }
 
-
     /** 
      * Get MultiLine ToolTip
      */
+    @Override
     public String getMultiLineToolTip()
     {
         return null;
     }
 
-
     /** 
      * Get MultiLine ToolTip
      */
+    @Override
     public String getMultiLineToolTip(int index)
     {
-        switch(index)
+        switch (index)
         {
             case 0: // time
-            {
-                return this.datetime.getTimeString();
-            }
+                {
+                    return this.datetime.getTimeString();
+                }
             case 1: // type
-            {
-                return getBaseTypeString();
-            }
+                {
+                    return getBaseTypeString();
+                }
             case 2: // subtype
-            {
-                return getSubTypeString();
-            }
+                {
+                    return getSubTypeString();
+                }
             case 3: // value
-            {
-                return this.getValueHTML();
-            }
+                {
+                    return this.getValueHTML();
+                }
             case 4: // additional
-            {
-                return this.getAdditionalDisplayHTML();
-            }
+                {
+                    return this.getAdditionalDisplayHTML();
+                }
             case 5: // comment
-            {
-                return this.getFoodTip();
-            }
-            
+                {
+                    return this.getFoodTip();
+                }
+
             default:
                 return null;
-                
+
         }
-        
+
     }
 
-    
     /*
-    public String getValue()
-    {
-        
-        return null;
-    }*/
-    
-    
-    
+     * public String getValue()
+     * {
+     * return null;
+     * }
+     */
+
     /**
      * Get Food Tip
      * 
@@ -1593,31 +1503,30 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getFoodTip()
     {
-        if (this.additional_data.containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC]))
+        if (this.additional_data
+                .containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC]))
         {
-            String t = this.additional_data.get(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC]).getValue();
+            String t = this.additional_data.get(
+                m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC]).getValue();
             t = t.replace("]", "]<br>");
             t = t.replace(",", "");
-            
+
             return "<html>" + t + "</html>";
-            
+
         }
-        else if (this.additional_data.containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB]))
-        {
+        else if (this.additional_data
+                .containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB]))
             // TODO
             return "Not implemented yet !";
-        }
         else
-        {
             return null;
-        }
-        
+
     }
-    
 
     /** 
      * Is Indexed (multiline tooltip)
      */
+    @Override
     public boolean isIndexed()
     {
         return true;
@@ -1648,21 +1557,19 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
             case 4:
                 return this.getValuePrint();
-                
+
             case 5:
                 return this.getStatus();
-            
+
             case 6:
                 return new Boolean(getChecked());
 
             default:
                 return "";
         }
-        
+
     }
- 	
-    
-    
+
     /**
      * Get Special Id
      * 
@@ -1673,7 +1580,6 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return "PD_" + this.datetime.getATDateTimeAsLong() + "_" + this.base_type + "_" + this.sub_type;
     }
 
-    
     /**
      * Get DeviceValuesEntry Name
      * 
@@ -1684,23 +1590,20 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return "PumpValuesEntry";
     }
 
-
     /**
      * Get Value of object
      * 
      * 
      */
-/*    public String getValue()
-    {
-        return null;
-    }
-  */ 
-    
- 
-    
+    /*
+     * public String getValue()
+     * {
+     * return null;
+     * }
+     */
+
     long old_id;
 
-    
     /**
      * Set Id (this is used for changing old objects in framework v2)
      * 
@@ -1710,8 +1613,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         this.old_id = id_in;
     }
-    
-    
+
     /**
      * Get Id (this is used for changing old objects in framework v2)
      * 
@@ -1721,8 +1623,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.old_id;
     }
-    
-    
+
     /**
      * Set Source
      * 
@@ -1731,10 +1632,9 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     public void setSource(String src)
     {
         this.source = src;
-        
+
     }
-    
-    
+
     /**
      * Get Source 
      * 
@@ -1744,8 +1644,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.source;
     }
-    
-    
+
     /**
      * Get Additional Data Count
      * 
@@ -1756,35 +1655,32 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return this.additional_data.size();
     }
 
-
     public ArrayList<GraphValue> getGraphValues()
     {
         ArrayList<GraphValue> list = new ArrayList<GraphValue>();
- 
-        for(Enumeration<PumpValuesEntryExt> en=this.additional_data.elements(); en.hasMoreElements(); )
+
+        for (Enumeration<PumpValuesEntryExt> en = this.additional_data.elements(); en.hasMoreElements();)
         {
-            //PumpValuesEntryExt ex = en.nextElement();
+            // PumpValuesEntryExt ex = en.nextElement();
             GraphValue gv = en.nextElement().getGraphValue();
-            
-            if (gv!=null)
+
+            if (gv != null)
+            {
                 list.add(gv);
+            }
         }
-        
+
         // FIXME - Add also current object if necessary
-        
-        
-        //list.add(this.additional_data.elements());
-        
+
+        // list.add(this.additional_data.elements());
+
         // TODO Auto-generated method stub
         return list;
     }
-
 
     public GraphValue getGraphValue()
     {
         return null;
     }
-    
-    
-    
+
 }

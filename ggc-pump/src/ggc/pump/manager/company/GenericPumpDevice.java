@@ -1,13 +1,13 @@
 package ggc.pump.manager.company;
 
-import java.util.Hashtable;
-
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.pump.device.AbstractPump;
+
+import java.util.Hashtable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -37,16 +37,14 @@ import ggc.pump.device.AbstractPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-
 public class GenericPumpDevice extends AbstractPump
 {
-    
+
     /**
      * The apdc.
      */
     AbstractPumpDeviceCompany apdc;
-    
+
     /**
      * Instantiates a new generic pump device.
      * 
@@ -56,19 +54,18 @@ public class GenericPumpDevice extends AbstractPump
     {
         this.apdc = apdc;
     }
-    
-    
+
     /**
      * getDeviceCompany - get Company for device
      * 
      * @return 
      */
+    @Override
     public AbstractDeviceCompany getDeviceCompany()
     {
         return apdc;
     }
-    
-    
+
     /**
      * getConnectionProtocol - returns id of connection protocol
      * 
@@ -79,8 +76,6 @@ public class GenericPumpDevice extends AbstractPump
         return ConnectionProtocols.PROTOCOL_NONE;
     }
 
-    
-    
     /**
      * getConnectionPort - connection port data
      * 
@@ -90,50 +85,48 @@ public class GenericPumpDevice extends AbstractPump
     {
         return "NONE";
     }
-    
+
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
      * sort of specific device data - in most cases we call them generics, and they don't have ability
      * to read data)
      * @return
      */
+    @Override
     public boolean isReadableDevice()
     {
         return false;
     }
-    
+
     /**
      * getName - Get Name of device. 
      * Should be implemented by device class.
      * 
      * @return 
      */
+    @Override
     public String getName()
     {
         return "Generic";
     }
 
-
-    
     /** 
      * getProfileNames
      */
+    @Override
     public String[] getProfileNames()
     {
         return this.apdc.getProfileNames();
     }
-    
-    
-    
+
     /** 
      * close
      */
     public void close() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     /** 
      * getAlarmMappings
@@ -144,7 +137,6 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
-
     /** 
      * getBolusMappings
      */
@@ -154,16 +146,15 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
-
     /** 
      * getDeviceInfo
      */
+    @Override
     public DeviceIdentification getDeviceInfo()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
 
     /** 
      * getErrorMappings
@@ -174,7 +165,6 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
-
     /** 
      * getEventMappings
      */
@@ -183,7 +173,6 @@ public class GenericPumpDevice extends AbstractPump
         // TODO Auto-generated method stub
         return null;
     }
-
 
     /** 
      * getMaxMemoryRecords
@@ -194,7 +183,6 @@ public class GenericPumpDevice extends AbstractPump
         return 0;
     }
 
-
     /** 
      * getReportMappings
      */
@@ -204,16 +192,14 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
-
     /** 
      * loadPumpSpecificValues
      */
     public void loadPumpSpecificValues()
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     /** 
      * open
@@ -224,16 +210,14 @@ public class GenericPumpDevice extends AbstractPump
         return false;
     }
 
-
     /** 
      * dispose
      */
     public void dispose()
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     /** 
      * getComment
@@ -244,7 +228,6 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
-
     /** 
      * getDeviceClassName
      */
@@ -253,7 +236,6 @@ public class GenericPumpDevice extends AbstractPump
         // TODO Auto-generated method stub
         return null;
     }
-
 
     /** 
      * getDeviceId
@@ -264,16 +246,15 @@ public class GenericPumpDevice extends AbstractPump
         return 0;
     }
 
-
     /** 
      * getDeviceSpecialComment
      */
+    @Override
     public String getDeviceSpecialComment()
     {
         // TODO Auto-generated method stub
         return null;
     }
-
 
     /** 
      * getIconName
@@ -284,7 +265,6 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
-
     /** 
      * getImplementationStatus
      */
@@ -293,7 +273,6 @@ public class GenericPumpDevice extends AbstractPump
         // TODO Auto-generated method stub
         return 0;
     }
-
 
     /** 
      * getInstructions
@@ -304,16 +283,15 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
-
     /** 
      * hasSpecialProgressStatus
      */
+    @Override
     public boolean hasSpecialProgressStatus()
     {
         // TODO Auto-generated method stub
         return false;
     }
-
 
     /** 
      * isDeviceCommunicating
@@ -324,16 +302,15 @@ public class GenericPumpDevice extends AbstractPump
         return false;
     }
 
-
     /** 
      * readConfiguration
      */
+    @Override
     public void readConfiguration() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     /** 
      * readDeviceDataFull
@@ -341,55 +318,51 @@ public class GenericPumpDevice extends AbstractPump
     public void readDeviceDataFull() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     /** 
      * readDeviceDataPartitial
      */
+    @Override
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     /** 
      * readInfo
      */
+    @Override
     public void readInfo() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
-        
+
     }
 
-    
-    
-    
-    
     /**
      * Get Download Support Type
      * 
      * @return
      */
+    @Override
     public int getDownloadSupportType()
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NA_GENERIC_DEVICE;
     }
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
      * @return
      */
+    @Override
     public int howManyMonthsOfDataStored()
     {
         return -1;
     }
-    
-    
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -398,13 +371,13 @@ public class GenericPumpDevice extends AbstractPump
      * 
      * @return
      */
+    @Override
     public String getTemporaryBasalTypeDefinition()
     {
-        //return "TYPE=Unit;STEP=0.1";
+        // return "TYPE=Unit;STEP=0.1";
         return null;
     }
-    
-    
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -414,8 +387,7 @@ public class GenericPumpDevice extends AbstractPump
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Get Basal Step (precission)
      * 
@@ -425,19 +397,16 @@ public class GenericPumpDevice extends AbstractPump
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
+    @Override
     public boolean arePumpSettingsSet()
     {
         return false;
     }
-    
-    
-    
-    
+
 }

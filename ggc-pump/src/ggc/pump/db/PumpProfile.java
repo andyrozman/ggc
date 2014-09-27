@@ -15,6 +15,7 @@ import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 
 /**
@@ -47,19 +48,18 @@ import com.atech.utils.data.ATechDate;
 
 // TODO: DL
 
-public class PumpProfile extends PumpProfileH implements BackupRestoreObject, DatabaseObjectHibernate, SelectableInterface
+public class PumpProfile extends PumpProfileH implements BackupRestoreObject, DatabaseObjectHibernate,
+        SelectableInterface
 {
 
     private static final long serialVersionUID = 4355479385042532802L;
     private boolean selected = false;
     I18nControlAbstract ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
-    
-    
+
     /**
      * The backup_mode.
      */
     boolean backup_mode = false;
-    
 
     /**
      * Constructor
@@ -67,8 +67,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     public PumpProfile()
     {
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -88,7 +87,6 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         this.setChanged(ch.getChanged());
     }
 
-    
     /**
      * Constructor
      * 
@@ -99,14 +97,11 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         this.ic = _ic;
         backup_mode = true;
     }
-    
-    
-    //---
-    //---  BackupRestoreObject
-    //---
 
-    
-    
+    // ---
+    // --- BackupRestoreObject
+    // ---
+
     /**
      * Get Target Name
      * 
@@ -121,6 +116,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      * Get Name
      * @return 
      */
+    @Override
     public String getName()
     {
         if (backup_mode)
@@ -138,13 +134,13 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return "ggc.core.db.hibernate.pump.PumpProfileH";
     }
-    
 
     /**
      * To String
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString()
     {
         if (backup_mode)
@@ -152,7 +148,6 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         else
             return "Pump Profile: " + super.toString();
     }
-    
 
     /** 
      * getChildren
@@ -177,7 +172,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         this.selected = newValue;
     }
-    
+
     /**
      * Is Object Collection
      * 
@@ -187,8 +182,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return false;
     }
-    
-    
+
     /**
      * Has Children
      */
@@ -196,8 +190,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return false;
     }
-    
-    
+
     /**
      * DbAdd - Add this object to database
      * 
@@ -221,15 +214,14 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         ch.setPerson_id(this.getPerson_id());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
-        
+
         Long id = (Long) sess.save(ch);
         tx.commit();
         ch.setId(id.longValue());
-        
+
         return "" + id.longValue();
     }
 
-    
     /**
      * DbDelete - Delete this object in database
      * 
@@ -249,7 +241,6 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return true;
     }
 
-    
     /**
      * DbEdit - Edit this object in database
      * 
@@ -259,7 +250,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      */
     public boolean DbEdit(Session sess) throws Exception
     {
-        
+
         Transaction tx = sess.beginTransaction();
 
         PumpProfileH ch = (PumpProfileH) sess.get(PumpProfileH.class, new Long(this.getId()));
@@ -274,14 +265,13 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         ch.setPerson_id(this.getPerson_id());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
-        
+
         sess.update(ch);
         tx.commit();
 
         return true;
     }
 
-    
     /**
      * DbGet - Loads this object. Id must be set.
      * 
@@ -303,11 +293,10 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         this.setPerson_id(ch.getPerson_id());
         this.setComment(ch.getComment());
         this.setChanged(ch.getChanged());
-        
+
         return true;
     }
 
-    
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
      * 
@@ -332,8 +321,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      * Table Version
      */
     public int TABLE_VERSION = 1;
-    
-    
+
     /**
      * Get Table Version - returns version of table
      * 
@@ -343,8 +331,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return this.TABLE_VERSION;
     }
-    
-    
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -377,11 +364,10 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         sb.append("|");
         sb.append(this.getChanged());
         sb.append("\n");
-        
+
         return sb.toString();
     }
 
-    
     /**
      * dbExport - returns export String, for current version 
      *
@@ -392,8 +378,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return dbExport(this.TABLE_VERSION);
     }
-    
-    
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -402,14 +387,10 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      */
     public String dbExportHeader(int table_version)
     {
-        return "; Columns: id|name|basal_base|basal_diffs|active_from|active_till|extended|person_id|comment|changed\n" + 
-               "; Table version: " + getTableVersion() + "\n";
+        return "; Columns: id|name|basal_base|basal_diffs|active_from|active_till|extended|person_id|comment|changed\n"
+                + "; Table version: " + getTableVersion() + "\n";
     }
-    
-    
-    
-    
-    
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -419,8 +400,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return this.dbExportHeader(this.TABLE_VERSION);
     }
-    
-    
+
     /**
      * dbImport - processes input entry to right fields
      * 
@@ -432,7 +412,6 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         dbImport(table_version, value_entry, null);
     }
-    
 
     /**
      * dbImport - processes input entry to right fields
@@ -446,9 +425,9 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         DataAccess da = DataAccess.getInstance();
 
-        value_entry = DataAccessPump.replaceExpression(value_entry, "||", "| |");
+        value_entry = ATDataAccessAbstract.replaceExpression(value_entry, "||", "| |");
         String[] arr = da.splitString(value_entry, "|");
-        
+
         this.setId(da.getLongValueFromString(arr[0]));
         this.setName(arr[1]);
         this.setBasal_base(da.getFloatValue(arr[2]));
@@ -460,9 +439,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         this.setComment(arr[8]);
         this.setChanged(da.getLongValueFromString(arr[9]));
     }
-    
-    
-    
+
     /**
      * getBackupFile - name of backup file (base part)
      * 
@@ -472,7 +449,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return "PumpProfileH";
     }
-    
+
     /**
      * getBackupClassName - name of class which will be updated/restored
      * 
@@ -482,10 +459,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return "ggc.core.db.hibernate.pump.PumpProfileH";
     }
-    
-    
-    
-    
+
     /** 
      * getObjectName
      */
@@ -501,9 +475,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return false;
     }
-    
-    
-    
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -512,7 +484,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return "" + this.getId();
     }
-    
+
     /**
      * Has To Be Clean - if table needs to be cleaned before import
      * 
@@ -522,9 +494,6 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return true;
     }
- 
-    
-    
 
     /** 
      * Get Column Count
@@ -533,7 +502,6 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return 3;
     }
-
 
     /** 
      * Get Column Name
@@ -544,16 +512,15 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         {
             case 3:
                 return ic.getMessage("NAME");
-    
+
             case 2:
                 return ic.getMessage("TILL");
-    
+
             default:
                 return ic.getMessage("FROM");
 
         }
     }
-
 
     /** 
      * getColumnValue
@@ -564,22 +531,27 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         {
             case 3:
                 return this.getName();
-    
+
             case 2:
                 return getDateDisplay(this.getActive_till());
-/*                if (this.getActive_till() <= 0)
-                    return "";
-                else
-                    return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_till());*/
-    
+                /*
+                 * if (this.getActive_till() <= 0)
+                 * return "";
+                 * else
+                 * return
+                 * ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN
+                 * , this.getActive_till());
+                 */
+
             default:
                 return getDateDisplay(this.getActive_from());
-//                return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.getActive_from());
+                // return
+                // ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN,
+                // this.getActive_from());
 
         }
     }
 
-    
     private String getDateDisplay(long dt)
     {
         if (dt <= 0)
@@ -587,17 +559,16 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         else
         {
             String s = "" + dt;
-            
-            if (s.length()==12)
+
+            if (s.length() == 12)
+            {
                 dt *= 100;
-            
+            }
+
             return ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, dt);
         }
-        
+
     }
-    
-    
-    
 
     /** 
      * getColumnValueObject
@@ -607,7 +578,6 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return getColumnValue(num);
     }
 
-
     /** 
      * getColumnWidth
      */
@@ -616,15 +586,14 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         switch (num)
         {
             case 3:
-                return (int) (width * 33);
+                return width * 33;
             case 2:
-                return (int) (width * 33);
+                return width * 33;
             default:
-                return (int) (width * 33);
+                return width * 33;
 
-        } 
+        }
     }
-
 
     /** 
      * getItemId
@@ -633,7 +602,6 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return this.getId();
     }
-
 
     /** 
      * getShortDescription
@@ -644,7 +612,6 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return null;
     }
 
-
     /** 
      * isFound
      */
@@ -652,7 +619,6 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     {
         return true;
     }
-
 
     /** 
      * isFound
@@ -662,29 +628,25 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return true;
     }
 
-
     /** 
      * isFound
      */
     public boolean isFound(int from, int till, int state)
     {
-        switch(state)
+        switch (state)
         {
             case 2:
-                return (this.getActive_from() >= (from * 1000)) & (this.getActive_till() <= (till* 1000));
-                
+                return this.getActive_from() >= from * 1000 & this.getActive_till() <= till * 1000;
+
             case 1:
-                return (this.getActive_from() >= (from * 1000));
-            
+                return this.getActive_from() >= from * 1000;
+
             default:
                 return true;
-                
+
         }
 
     }
-
-
-
 
     /** 
      * setSearchContext
@@ -692,11 +654,9 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     public void setSearchContext()
     {
         // TODO Auto-generated method stub
-        
+
     }
-   
-   
-   
+
     // ---
     // --- Column sorting
     // ---
@@ -769,7 +729,5 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return this.columnSorter.compareObjects(this, o);
 
     }
-   
-    
-    
+
 }

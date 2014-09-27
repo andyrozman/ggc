@@ -42,8 +42,10 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
+import com.atech.db.hibernate.transfer.ImportExportAbstract;
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.db.hibernate.transfer.RestoreFileInfo;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -70,12 +72,11 @@ import com.atech.db.hibernate.transfer.RestoreFileInfo;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class ImportNutrition extends ImportTool implements Runnable
 {
 
     GGCDb m_db = null;
-//    public String file_name;
+    // public String file_name;
     private static Log log = LogFactory.getLog(ImportDailyValues.class);
 
     DataAccess m_da = DataAccess.getInstance();
@@ -89,8 +90,7 @@ public class ImportNutrition extends ImportTool implements Runnable
     {
         this(file_name, true);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -101,9 +101,8 @@ public class ImportNutrition extends ImportTool implements Runnable
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportTool.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
     }
-
 
     /**
      * Constructor
@@ -116,13 +115,11 @@ public class ImportNutrition extends ImportTool implements Runnable
         super(DataAccess.getInstance().getDb().getHibernateConfiguration(), res);
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportTool.STATUS_SPECIAL);
-        
+        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
+
         this.selected_class = res.class_name;
     }
-    
-    
-    
+
     /**
      * Constructor
      * 
@@ -139,7 +136,9 @@ public class ImportNutrition extends ImportTool implements Runnable
         this.restore_file = new File(file_name);
 
         if (identify)
+        {
             this.identifyAndImport();
+        }
     }
 
     /**
@@ -194,7 +193,6 @@ public class ImportNutrition extends ImportTool implements Runnable
             this.importMealGroups();
         }
 
-
         System.out.println();
 
     }
@@ -202,6 +200,7 @@ public class ImportNutrition extends ImportTool implements Runnable
     /**
      * Get Active Session
      */
+    @Override
     public int getActiveSession()
     {
         return 2;
@@ -217,7 +216,6 @@ public class ImportNutrition extends ImportTool implements Runnable
         try
         {
 
-            
             this.openFileForReading(this.restore_file);
 
             String line;
@@ -242,7 +240,6 @@ public class ImportNutrition extends ImportTool implements Runnable
         }
     }
 
-    
     /**
      * Import User Food
      */
@@ -255,22 +252,22 @@ public class ImportNutrition extends ImportTool implements Runnable
         {
 
             this.clearExistingData("ggc.core.db.hibernate.FoodUserDescriptionH");
-            
+
             System.out.println("\nLoading UserFoodDescription (5/dot)");
 
             this.openFileForReading(this.restore_file);
 
             int dot_mark = 5;
             int count = 0;
-            
-            
 
             while ((line = this.br_file.readLine()) != null)
             {
                 if (line.startsWith(";"))
+                {
                     continue;
+                }
 
-                line = m_da.replaceExpression(line, "||", "| |");
+                line = ATDataAccessAbstract.replaceExpression(line, "||", "| |");
 
                 StringTokenizer strtok = new StringTokenizer(line, "|");
 
@@ -283,15 +280,19 @@ public class ImportNutrition extends ImportTool implements Runnable
                 long id = this.getLong(strtok.nextToken());
 
                 if (id != 0)
+                {
                     fud.setId(id);
+                }
 
                 fud.setName(getString(strtok.nextToken()));
                 fud.setName_i18n(getString(strtok.nextToken()));
 
                 int group = getInt(strtok.nextToken());
 
-                if (group == 0) // root can't have elements
+                if (group == 0)
+                {
                     group = 1;
+                }
 
                 fud.setGroup_id(group);
 
@@ -303,19 +304,18 @@ public class ImportNutrition extends ImportTool implements Runnable
 
                 this.hibernate_util.addHibernate(fud);
 
-                
                 count++;
                 this.writeStatus(dot_mark, count);
-                
-                /*
-                i++;
 
-                if (i % 5 == 0)
-                    System.out.print(".");*/
+                /*
+                 * i++;
+                 * if (i % 5 == 0)
+                 * System.out.print(".");
+                 */
             }
 
             this.closeFile();
-            
+
         }
         catch (Exception ex)
         {
@@ -325,7 +325,6 @@ public class ImportNutrition extends ImportTool implements Runnable
 
     }
 
-    
     /**
      * Import User Groups
      */
@@ -337,22 +336,22 @@ public class ImportNutrition extends ImportTool implements Runnable
         try
         {
             this.clearExistingData("ggc.core.db.hibernate.FoodUserGroupH");
-            
+
             System.out.println("\nLoading UserGroups (2/dot)");
 
             this.openFileForReading(this.restore_file);
 
             int dot_mark = 5;
             int count = 0;
-            
-            
 
             while ((line = this.br_file.readLine()) != null)
             {
                 if (line.startsWith(";"))
+                {
                     continue;
+                }
 
-                line = m_da.replaceExpression(line, "||", "| |");
+                line = ATDataAccessAbstract.replaceExpression(line, "||", "| |");
 
                 StringTokenizer strtok = new StringTokenizer(line, "|");
 
@@ -364,7 +363,9 @@ public class ImportNutrition extends ImportTool implements Runnable
                 long id = this.getLong(strtok.nextToken());
 
                 if (id != 0)
+                {
                     fug.setId(id);
+                }
 
                 fug.setName(getString(strtok.nextToken()));
                 fug.setName_i18n(getString(strtok.nextToken()));
@@ -380,19 +381,18 @@ public class ImportNutrition extends ImportTool implements Runnable
 
                 this.hibernate_util.addHibernate(fug);
 
-                
                 count++;
                 this.writeStatus(dot_mark, count);
-                
-                /*
-                i++;
 
-                if (i % 2 == 0)
-                    System.out.print(".");*/
+                /*
+                 * i++;
+                 * if (i % 2 == 0)
+                 * System.out.print(".");
+                 */
             }
 
             this.closeFile();
-            
+
         }
         catch (Exception ex)
         {
@@ -402,7 +402,6 @@ public class ImportNutrition extends ImportTool implements Runnable
 
     }
 
-    
     /**
      * Import Meals
      */
@@ -414,22 +413,22 @@ public class ImportNutrition extends ImportTool implements Runnable
         try
         {
             this.clearExistingData("ggc.core.db.hibernate.MealH");
-            
+
             System.out.println("\nLoading MealsDescription (5/dot)");
 
             this.openFileForReading(this.restore_file);
 
             int dot_mark = 5;
             int count = 0;
-            
-            
 
             while ((line = this.br_file.readLine()) != null)
             {
                 if (line.startsWith(";"))
+                {
                     continue;
+                }
 
-                line = m_da.replaceExpression(line, "||", "| |");
+                line = ATDataAccessAbstract.replaceExpression(line, "||", "| |");
 
                 StringTokenizer strtok = new StringTokenizer(line, "|");
 
@@ -440,15 +439,19 @@ public class ImportNutrition extends ImportTool implements Runnable
                 long id = this.getLong(strtok.nextToken());
 
                 if (id != 0)
+                {
                     ml.setId(id);
+                }
 
                 ml.setName(getString(strtok.nextToken()));
                 ml.setName_i18n(getString(strtok.nextToken()));
 
                 int group = getInt(strtok.nextToken());
 
-                if (group == 0) // root can't have elements
+                if (group == 0)
+                {
                     group = 1;
+                }
 
                 ml.setGroup_id(group);
 
@@ -461,19 +464,18 @@ public class ImportNutrition extends ImportTool implements Runnable
 
                 this.hibernate_util.addHibernate(ml);
 
-                
                 count++;
                 this.writeStatus(dot_mark, count);
-                
-                /*
-                i++;
 
-                if (i % 5 == 0)
-                    System.out.print(".");*/
+                /*
+                 * i++;
+                 * if (i % 5 == 0)
+                 * System.out.print(".");
+                 */
             }
 
             this.closeFile();
-            
+
         }
         catch (Exception ex)
         {
@@ -483,7 +485,6 @@ public class ImportNutrition extends ImportTool implements Runnable
 
     }
 
-    
     /**
      * Import Meal Groups
      */
@@ -502,15 +503,15 @@ public class ImportNutrition extends ImportTool implements Runnable
 
             int dot_mark = 5;
             int count = 0;
-            
-            
 
             while ((line = this.br_file.readLine()) != null)
             {
                 if (line.startsWith(";"))
+                {
                     continue;
+                }
 
-                line = m_da.replaceExpression(line, "||", "| |");
+                line = ATDataAccessAbstract.replaceExpression(line, "||", "| |");
 
                 StringTokenizer strtok = new StringTokenizer(line, "|");
 
@@ -522,7 +523,9 @@ public class ImportNutrition extends ImportTool implements Runnable
                 long id = this.getLong(strtok.nextToken());
 
                 if (id != 0)
+                {
                     mg.setId(id);
+                }
 
                 mg.setName(getString(strtok.nextToken()));
                 mg.setName_i18n(getString(strtok.nextToken()));
@@ -538,19 +541,18 @@ public class ImportNutrition extends ImportTool implements Runnable
 
                 this.hibernate_util.addHibernate(mg);
 
-                
                 count++;
                 this.writeStatus(dot_mark, count);
-                
-                /*
-                i++;
 
-                if (i % 2 == 0)
-                    System.out.print(".");*/
+                /*
+                 * i++;
+                 * if (i % 2 == 0)
+                 * System.out.print(".");
+                 */
             }
 
             this.closeFile();
-            
+
         }
         catch (Exception ex)
         {
@@ -559,13 +561,12 @@ public class ImportNutrition extends ImportTool implements Runnable
         }
     }
 
-    
     /**
      * Thread Run
      */
     public void run()
     {
-        
+
         if (this.selected_class.equals("ggc.core.db.hibernate.FoodUserDescriptionH"))
         {
             this.importUserFood();
@@ -582,11 +583,9 @@ public class ImportNutrition extends ImportTool implements Runnable
         {
             this.importMealGroups();
         }
-        
-        
+
     }
-    
-    
+
     /**
      * @param args
      */

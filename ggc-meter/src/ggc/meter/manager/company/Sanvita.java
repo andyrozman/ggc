@@ -1,4 +1,4 @@
-package ggc.meter.manager.company; 
+package ggc.meter.manager.company;
 
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.DataAccessMeter;
@@ -31,80 +31,70 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Sanvita extends AbstractDeviceCompany
 {
 
-    
     /**
      * Constructor
      */
     public Sanvita()
     {
-        super(true,                             // empty devices
-            MeterDevicesIds.COMPANY_SANVITA,    // company_id
-            "Sanvita",                           // company name (full)
-            "Sanvita",                           // short company name
-            "SANVITA_DESC",                      // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED,
-            DataAccessMeter.getInstance());  // implementation status
+        super(true, // empty devices
+                MeterDevicesIds.COMPANY_SANVITA, // company_id
+                "Sanvita", // company name (full)
+                "Sanvita", // short company name
+                "SANVITA_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                                                                                                       // status
     }
 
-
-
-    
-    
-    
-    //********************************************************
-    //***      Meter Company Identification Methods        ***
-    //********************************************************
-
+    // ********************************************************
+    // *** Meter Company Identification Methods ***
+    // ********************************************************
 
     /**
      * getName - Get Name of meter. 
      * 
      * @return name of meter
      */
+    @Override
     public String getName()
     {
         return "Sanvita";
     }
 
-    
     /**
      * getCompanyId - Get Company Id 
      * 
      * @return id of company
      */
+    @Override
     public int getCompanyId()
     {
         return 10;
     }
-    
-    
+
     /**
      * getInstructions - get instructions for device
      * 
      * @return instructions for reading data 
      */
+    @Override
     public String getDescription()
     {
-       return "SANVITA_DESC"; 
+        return "SANVITA_DESC";
     }
-    
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
+    @Override
     public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
     }
-    
-    
-    
+
 }

@@ -57,7 +57,7 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.IntervalXYDataset;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.date.SerialDate;
+import org.jfree.date.MonthConstants;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
@@ -67,7 +67,7 @@ import org.jfree.ui.RefineryUtilities;
  *
  * @author David Gilbert
  */
-public class Test extends ApplicationFrame 
+public class Test extends ApplicationFrame
 {
 
     /**
@@ -80,7 +80,8 @@ public class Test extends ApplicationFrame
      *
      * @param title  the frame title.
      */
-    public Test(String title) {
+    public Test(String title)
+    {
 
         super(title);
         JFreeChart chart = createCombinedChart();
@@ -95,26 +96,31 @@ public class Test extends ApplicationFrame
      *
      * @return the combined chart.
      */
-    private JFreeChart createCombinedChart() {
+    private JFreeChart createCombinedChart()
+    {
 
         // create subplot 1...
         IntervalXYDataset data1 = createDataset1();
         XYItemRenderer renderer1 = new XYBarRenderer(0.20);
-        /*renderer1.setToolTipGenerator(
-            new StandardXYItemLabelGenerator(
-                new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.0")
-            )
-        );*/
+        /*
+         * renderer1.setToolTipGenerator(
+         * new StandardXYItemLabelGenerator(
+         * new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.0")
+         * )
+         * );
+         */
         XYPlot subplot1 = new XYPlot(data1, new DateAxis("Date"), null, renderer1);
 
         // create subplot 2...
         XYDataset data2 = createDataset2();
         XYItemRenderer renderer2 = new StandardXYItemRenderer();
-        /*renderer2.setToolTipGenerator(
-            new StandardXYItemLabelGenerator(
-                new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.0")
-            )
-        );*/
+        /*
+         * renderer2.setToolTipGenerator(
+         * new StandardXYItemLabelGenerator(
+         * new SimpleDateFormat("d-MMM-yyyy"), new DecimalFormat("0,000.0")
+         * )
+         * );
+         */
         XYPlot subplot2 = new XYPlot(data2, new DateAxis("Date"), null, renderer2);
 
         // create a parent plot...
@@ -125,54 +131,59 @@ public class Test extends ApplicationFrame
         plot.add(subplot2, 1);
 
         // return a new chart containing the overlaid plot...
-        return new JFreeChart("Combined (Range) XY Plot",
-                              JFreeChart.DEFAULT_TITLE_FONT, plot, true);
+        return new JFreeChart("Combined (Range) XY Plot", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
 
     }
 
     // ****************************************************************************
-    // * JFREECHART DEVELOPER GUIDE                                               *
-    // * The JFreeChart Developer Guide, written by David Gilbert, is available   *
-    // * to purchase from Object Refinery Limited:                                *
-    // *                                                                          *
-    // * http://www.object-refinery.com/jfreechart/guide.html                     *
-    // *                                                                          *
-    // * Sales are used to provide funding for the JFreeChart project - please    * 
-    // * support us so that we can continue developing free software.             *
+    // * JFREECHART DEVELOPER GUIDE *
+    // * The JFreeChart Developer Guide, written by David Gilbert, is available
+    // *
+    // * to purchase from Object Refinery Limited: *
+    // * *
+    // * http://www.object-refinery.com/jfreechart/guide.html *
+    // * *
+    // * Sales are used to provide funding for the JFreeChart project - please *
+    // * support us so that we can continue developing free software. *
     // ****************************************************************************
-    
+
     /**
      * Creates a sample dataset.
      *
      * @return Series 1.
      */
     @SuppressWarnings("deprecation")
-    private IntervalXYDataset createDataset1() {
+    private IntervalXYDataset createDataset1()
+    {
 
         // create dataset 1...
         TimeSeries series1 = new TimeSeries("Series 1", Day.class);
-        series1.add(new Day(1, SerialDate.MARCH, 2002), 12353.3);
-        series1.add(new Day(2, SerialDate.MARCH, 2002), 13734.4);
-        series1.add(new Day(3, SerialDate.MARCH, 2002), 14525.3);
-        series1.add(new Day(4, SerialDate.MARCH, 2002), 13984.3);
-        series1.add(new Day(5, SerialDate.MARCH, 2002), 12999.4);
-        series1.add(new Day(6, SerialDate.MARCH, 2002), 14274.3);
-        series1.add(new Day(7, SerialDate.MARCH, 2002), 15943.5);
-        series1.add(new Day(8, SerialDate.MARCH, 2002), 14845.3);
-        series1.add(new Day(9, SerialDate.MARCH, 2002), 14645.4);
-        series1.add(new Day(10, SerialDate.MARCH, 2002), 16234.6);
-        series1.add(new Day(11, SerialDate.MARCH, 2002), 17232.3);
-        series1.add(new Day(12, SerialDate.MARCH, 2002), 14232.2);
-        series1.add(new Day(13, SerialDate.MARCH, 2002), 13102.2);
-        series1.add(new Day(14, SerialDate.MARCH, 2002), 14230.2);
-        series1.add(new Day(15, SerialDate.MARCH, 2002), 11235.2);
+        series1.add(new Day(1, MonthConstants.MARCH, 2002), 12353.3);
+        series1.add(new Day(2, MonthConstants.MARCH, 2002), 13734.4);
+        series1.add(new Day(3, MonthConstants.MARCH, 2002), 14525.3);
+        series1.add(new Day(4, MonthConstants.MARCH, 2002), 13984.3);
+        series1.add(new Day(5, MonthConstants.MARCH, 2002), 12999.4);
+        series1.add(new Day(6, MonthConstants.MARCH, 2002), 14274.3);
+        series1.add(new Day(7, MonthConstants.MARCH, 2002), 15943.5);
+        series1.add(new Day(8, MonthConstants.MARCH, 2002), 14845.3);
+        series1.add(new Day(9, MonthConstants.MARCH, 2002), 14645.4);
+        series1.add(new Day(10, MonthConstants.MARCH, 2002), 16234.6);
+        series1.add(new Day(11, MonthConstants.MARCH, 2002), 17232.3);
+        series1.add(new Day(12, MonthConstants.MARCH, 2002), 14232.2);
+        series1.add(new Day(13, MonthConstants.MARCH, 2002), 13102.2);
+        series1.add(new Day(14, MonthConstants.MARCH, 2002), 14230.2);
+        series1.add(new Day(15, MonthConstants.MARCH, 2002), 11235.2);
 
         TimeSeriesCollection collection = new TimeSeriesCollection(series1);
-        collection.setDomainIsPointsInTime(false);  // this tells the time series collection that
-                                                    // we intend the data to represent time periods
-                                                    // NOT points in time.  This is required when
-                                                    // determining the min/max values in the
-                                                    // dataset's domain.
+        collection.setDomainIsPointsInTime(false); // this tells the time series
+                                                   // collection that
+                                                   // we intend the data to
+                                                   // represent time periods
+                                                   // NOT points in time. This
+                                                   // is required when
+                                                   // determining the min/max
+                                                   // values in the
+                                                   // dataset's domain.
         return collection;
 
     }
@@ -182,25 +193,26 @@ public class Test extends ApplicationFrame
      *
      * @return Series 2.
      */
-    private XYDataset createDataset2() {
+    private XYDataset createDataset2()
+    {
 
         // create dataset 2...
         TimeSeries series2 = new TimeSeries("Series 2", Day.class);
 
-        series2.add(new Day(3, SerialDate.MARCH, 2002), 16853.2);
-        series2.add(new Day(4, SerialDate.MARCH, 2002), 19642.3);
-        series2.add(new Day(5, SerialDate.MARCH, 2002), 18253.5);
-        series2.add(new Day(6, SerialDate.MARCH, 2002), 15352.3);
-        series2.add(new Day(7, SerialDate.MARCH, 2002), 13532.0);
-        series2.add(new Day(8, SerialDate.MARCH, 2002), 12635.3);
-        series2.add(new Day(9, SerialDate.MARCH, 2002), 13998.2);
-        series2.add(new Day(10, SerialDate.MARCH, 2002), 11943.2);
-        series2.add(new Day(11, SerialDate.MARCH, 2002), 16943.9);
-        series2.add(new Day(12, SerialDate.MARCH, 2002), 17843.2);
-        series2.add(new Day(13, SerialDate.MARCH, 2002), 16495.3);
-        series2.add(new Day(14, SerialDate.MARCH, 2002), 17943.6);
-        series2.add(new Day(15, SerialDate.MARCH, 2002), 18500.7);
-        series2.add(new Day(16, SerialDate.MARCH, 2002), 19595.9);
+        series2.add(new Day(3, MonthConstants.MARCH, 2002), 16853.2);
+        series2.add(new Day(4, MonthConstants.MARCH, 2002), 19642.3);
+        series2.add(new Day(5, MonthConstants.MARCH, 2002), 18253.5);
+        series2.add(new Day(6, MonthConstants.MARCH, 2002), 15352.3);
+        series2.add(new Day(7, MonthConstants.MARCH, 2002), 13532.0);
+        series2.add(new Day(8, MonthConstants.MARCH, 2002), 12635.3);
+        series2.add(new Day(9, MonthConstants.MARCH, 2002), 13998.2);
+        series2.add(new Day(10, MonthConstants.MARCH, 2002), 11943.2);
+        series2.add(new Day(11, MonthConstants.MARCH, 2002), 16943.9);
+        series2.add(new Day(12, MonthConstants.MARCH, 2002), 17843.2);
+        series2.add(new Day(13, MonthConstants.MARCH, 2002), 16495.3);
+        series2.add(new Day(14, MonthConstants.MARCH, 2002), 17943.6);
+        series2.add(new Day(15, MonthConstants.MARCH, 2002), 18500.7);
+        series2.add(new Day(16, MonthConstants.MARCH, 2002), 19595.9);
 
         return new TimeSeriesCollection(series2);
 
@@ -211,7 +223,8 @@ public class Test extends ApplicationFrame
      *
      * @param args  ignored.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 
         Test demo = new Test("Combined XY Plot Demo");
         demo.pack();

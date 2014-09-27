@@ -61,32 +61,29 @@ import javax.swing.JPanel;
  *          andyrozman {andy@atech-software.com}  
  */
 
-
-public class PrefMainPane extends AbstractPrefOptionsPanel 
+public class PrefMainPane extends AbstractPrefOptionsPanel
 {
 
     private static final long serialVersionUID = -7014183829896704623L;
-    //private I18nControl m_ic = I18nControl.getInstance();
 
+    // private I18nControl m_ic = I18nControl.getInstance();
 
     /**
      * Constructor
      * 
      * @param dialog
      */
-    public PrefMainPane(PropertiesDialog dialog) 
+    public PrefMainPane(PropertiesDialog dialog)
     {
         super(dialog);
         init();
     }
 
-    private void init() 
+    private void init()
     {
         JPanel a = new JPanel(new GridLayout(2, 2));
 
-
         a.add(new JLabel(m_ic.getMessage("HAHAHA") + ":"));
-
 
         Box c = Box.createHorizontalBox();
         c.add(a);
@@ -100,7 +97,7 @@ public class PrefMainPane extends AbstractPrefOptionsPanel
      * @see ggc.gui.panels.prefs.AbstractPrefOptionsPanel#saveProps()
      */
     @Override
-    public void saveProps() 
+    public void saveProps()
     {
     }
 }

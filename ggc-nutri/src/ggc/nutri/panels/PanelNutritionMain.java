@@ -1,7 +1,6 @@
 package ggc.nutri.panels;
 
 import ggc.nutri.dialogs.NutritionTreeDialog;
-import ggc.nutri.util.DataAccessNutri;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -11,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import com.atech.help.HelpCapable;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -48,22 +48,9 @@ public class PanelNutritionMain extends GGCTreePanel implements HelpCapable
 
     NutritionTreeDialog m_dialog = null;
 
-    String[] nutrition_db = {
-	    "",
-	    "USDA_NUTRITION_DATABASE",
-	    "USER_NUTRITION_DATABASE",
-	    "MEALS_DATABASE"
-    };
-    
-    
-    String[] help_ids = {
-        "",
-        "GGC_Food_USDA_Main",
-        "GGC_Food_User_Main",
-        "GGC_Food_Meal_Main"
-    };
-    
-    
+    String[] nutrition_db = { "", "USDA_NUTRITION_DATABASE", "USER_NUTRITION_DATABASE", "MEALS_DATABASE" };
+
+    String[] help_ids = { "", "GGC_Food_USDA_Main", "GGC_Food_User_Main", "GGC_Food_Meal_Main" };
 
     /**
      * Constructor
@@ -76,15 +63,13 @@ public class PanelNutritionMain extends GGCTreePanel implements HelpCapable
 
         m_dialog = dia;
 
-        font_big = m_da.getFont(DataAccessNutri.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
+        font_big = m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD);
+        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
 
         createPanel();
 
     }
-
-
 
     private void createPanel()
     {
@@ -94,26 +79,24 @@ public class PanelNutritionMain extends GGCTreePanel implements HelpCapable
         Font fnt_18 = new Font("Times New Roman", Font.PLAIN, 14);
 
         String nut_db = nutrition_db[this.m_dialog.getNutritionType()];
-        
+
         label = new JLabel(ic.getMessage(nut_db));
         label.setBounds(0, 35, 520, 40);
-        label.setFont(font_big); 
+        label.setFont(font_big);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(label, null);
 
-
         label = new JLabel(ic.getMessage(nut_db + "_DESC"));
         label.setBounds(40, 120, 400, 250);
-        label.setVerticalAlignment(JLabel.TOP);
-        label.setFont(fnt_18); 
+        label.setVerticalAlignment(SwingConstants.TOP);
+        label.setFont(fnt_18);
         this.add(label, null);
 
-        
         this.help_button = m_da.createHelpIconByBounds(470, 10, 35, 35, this);
         this.add(help_button);
-        
+
         m_da.enableHelp(this);
-        
+
         return;
     }
 
@@ -122,21 +105,21 @@ public class PanelNutritionMain extends GGCTreePanel implements HelpCapable
      * 
      * @see com.atech.graphics.components.EditableAbstractPanel#setParent(java.lang.Object)
      */
+    @Override
     public void setParent(Object obj)
     {
     }
-
 
     /**
      * Set Data
      * 
      * @see com.atech.graphics.components.EditableAbstractPanel#setData(java.lang.Object)
      */
+    @Override
     public void setData(Object obj)
     {
     }
 
-    
     /**
      * Get Warning string. This method returns warning string for either add or edit.
      * If value returned is null, then no warning message box will be displayed.
@@ -144,59 +127,49 @@ public class PanelNutritionMain extends GGCTreePanel implements HelpCapable
      * @param _action_type type of action (ACTION_ADD, ACTION_EDIT)
      * @return String value as warning string
      */
+    @Override
     public String getWarningString(int _action_type)
     {
         return null;
     }
-
-
 
     /**
      * Was data in this panel changed.
      * 
      * @return true if data changed, false otherwise
      */
+    @Override
     public boolean hasDataChanged()
     {
         return false;
     }
-
-
 
     /**
      * Save data in panel
      * 
      * @return true if save was successful
      */
+    @Override
     public boolean saveData()
     {
         return false;
     }
 
-
-
+    @Override
     public Component getComponent()
     {
         return this.m_dialog;
     }
 
-
-
+    @Override
     public JButton getHelpButton()
     {
         return this.help_button;
     }
 
-
-
     public String getHelpId()
     {
         return this.help_ids[this.m_dialog.getNutritionType()];
     }
-    
-    
 
 }
-    
-    
-

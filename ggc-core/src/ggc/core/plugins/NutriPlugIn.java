@@ -37,75 +37,62 @@ import com.atech.plugin.PlugInServer;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class NutriPlugIn extends PlugInClient
 {
 
-    
     /**
      * Command: Db USDA Tree
      */
     public static final int COMMAND_DB_USDA = 0;
-    
-    
+
     /**
      * Command: Db User Tree
      */
     public static final int COMMAND_DB_USER = 1;
-    
+
     /**
      * Command: Db Meal Tree
      */
     public static final int COMMAND_DB_MEAL = 2;
-    
+
     /**
      *  Command: Load Database  
      */
     public static final int COMMAND_LOAD_DATABASE = 3;
-    
+
     /**
      * Command: About
      */
     public static final int COMMAND_ABOUT = 4;
-    
+
     /**
      * Command: Food Selector
      */
     public static final int COMMAND_DB_FOOD_SELECTOR = 5;
-    
+
     /**
      * Command: Recalculate CH
      */
     public static final int COMMAND_RECALCULATE_CH = 6;
-    
-    
-    
-    
-    
-/*    
-    private String commands[] = { 
-                                  "MN_NUTRI_DB_USDA", 
-                                  "MN_NUTRI_DB_USER", 
-                                  "MN_NUTRI_DB_MEAL",
-                                                               
-                                  "MN_LOAD_DATABASE_DESC", 
-                                  "MN_NUTRI_ABOUT", 
-                                  "MN_OPEN_DB_SELECTOR", 
-                                  "MN_RECALCULATE_CH};
-    
-  */  
-    
-    
-    
+
+    /*
+     * private String commands[] = {
+     * "MN_NUTRI_DB_USDA",
+     * "MN_NUTRI_DB_USER",
+     * "MN_NUTRI_DB_MEAL",
+     * "MN_LOAD_DATABASE_DESC",
+     * "MN_NUTRI_ABOUT",
+     * "MN_OPEN_DB_SELECTOR",
+     * "MN_RECALCULATE_CH};
+     */
+
     /**
      * Return Object: Selected Device with parameters
      */
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
 
-    
     DataAccess m_da = DataAccess.getInstance();
-    
-    
+
     /**
      * Constructor
      * 
@@ -114,7 +101,7 @@ public class NutriPlugIn extends PlugInClient
      */
     public NutriPlugIn(Component parent, I18nControlAbstract ic)
     {
-        super((JFrame)parent, ic);
+        super((JFrame) parent, ic);
     }
 
     /**
@@ -128,6 +115,7 @@ public class NutriPlugIn extends PlugInClient
     /**
      * Check If Installed
      */
+    @Override
     public void checkIfInstalled()
     {
         try
@@ -136,14 +124,11 @@ public class NutriPlugIn extends PlugInClient
 
             this.m_server = (PlugInServer) c.newInstance();
             installed = true;
-            
-            this.m_server.init(this.parent, 
-                DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(), 
-                DataAccess.getInstance(), 
-                this, 
-                DataAccess.getInstance().getDb() );
-            
-            //System.out.println("Class done");
+
+            this.m_server.init(this.parent, DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(),
+                DataAccess.getInstance(), this, DataAccess.getInstance().getDb());
+
+            // System.out.println("Class done");
         }
         catch (Exception ex)
         {
@@ -151,21 +136,21 @@ public class NutriPlugIn extends PlugInClient
         }
     }
 
-    
     /**
      * Get Name Base (untranslated)
      * 
      * @return name of plugin
      */
+    @Override
     public String getNameBase()
     {
         return "NUTRITION_PLUGIN";
     }
 
-    
     /**
      * Init Plugin
      */
+    @Override
     public void initPlugin()
     {
         this.commands = new String[7];
@@ -185,7 +170,7 @@ public class NutriPlugIn extends PlugInClient
         this.commands_implemented[4] = true;
         this.commands_implemented[5] = true;
         this.commands_implemented[6] = true;
-        
+
         this.commands_will_be_done = new String[7];
         this.commands_will_be_done[0] = null;
         this.commands_will_be_done[1] = null;
@@ -194,38 +179,38 @@ public class NutriPlugIn extends PlugInClient
         this.commands_will_be_done[4] = null;
         this.commands_will_be_done[5] = null;
         this.commands_will_be_done[6] = null;
-        
-    }
 
+    }
 
     /**
      * actionPerformed
      */
+    @Override
     public void actionPerformed(ActionEvent e)
     {
         this.m_server.actionPerformed(e);
-        //String command = e.getActionCommand();
-        //System.out.println("Wrong command for this plug-in [Nutri]: " + command);
+        // String command = e.getActionCommand();
+        // System.out.println("Wrong command for this plug-in [Nutri]: " +
+        // command);
     }
 
-    
     /**
      * Get When Will Be Implemented
      * 
      * @return
      */
+    @Override
     public String getWhenWillBeImplemented()
     {
         return "0.5";
     }
-    
-    
-    
+
     /**
      * Get Short Status
      * 
      * @return
      */
+    @Override
     public String getShortStatus()
     {
         if (this.m_server != null)
@@ -234,21 +219,20 @@ public class NutriPlugIn extends PlugInClient
             return ic.getMessage("STATUS_NOT_INSTALLED");
     }
 
-    
     @SuppressWarnings("unused")
     private void refreshPanels(int mask)
     {
-//        MainFrame mf = (MainFrame)parent;
-//        mf.informationPanel.refreshGroup(mask);
+        // MainFrame mf = (MainFrame)parent;
+        // mf.informationPanel.refreshGroup(mask);
     }
-    
-    
+
     /**
      * Set Return Data (for getting data from plugin - async)
      * 
      * @param return_data
      * @param stat_rep_int
      */
+    @Override
     public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
     {
     }

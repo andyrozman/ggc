@@ -26,61 +26,49 @@ package ggc.plugin.protocol;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class ConnectionProtocols
 {
-    
+
     /**
      * Protocol: None
      */
     public static final int PROTOCOL_NONE = 0;
-    
+
     /**
      * Protocol: Serial or Serial to USB/Bridge
      */
     public static final int PROTOCOL_SERIAL_USBBRIDGE = 1;
-    
+
     /**
      * Protocol: USB
      */
     public static final int PROTOCOL_USB = 2;
-    
+
     /**
      * Protocol: Mass Storage XML
      */
     public static final int PROTOCOL_MASS_STORAGE_XML = 3;
-    
+
     /**
      * Protocol: Bluetooth
      */
     public static final int PROTOCOL_BLUETOOTH_SERIAL = 4;
-    
+
     /**
      * Protocol: File Import
      */
     public static final int PROTOCOL_FILE_IMPORT = 5;
-    
+
     /**
      * Protocol: Database
      */
     public static final int PROTOCOL_DATABASE = 6;
-    
+
     /**
      * Protocol Descriptions
      */
-    public static String[] connectionProtocolDescription = { 
-                             "PROT_NONE",
-                             "PROT_SERIAL_BRIDGE",
-                             "PROT_SERIAL_USB",
-                             "PROT_MASS_STORAGE_XML",
-                             "PROT_BLUETOOTH_SERIAL",
-                             "PROT_FILE_IMPORT",
-                             "PROT_DATABASE"
-                           };
-    
+    public static String[] connectionProtocolDescription = { "PROT_NONE", "PROT_SERIAL_BRIDGE", "PROT_SERIAL_USB",
+                                                            "PROT_MASS_STORAGE_XML", "PROT_BLUETOOTH_SERIAL",
+                                                            "PROT_FILE_IMPORT", "PROT_DATABASE" };
 
-   
-    
-    
 }
-

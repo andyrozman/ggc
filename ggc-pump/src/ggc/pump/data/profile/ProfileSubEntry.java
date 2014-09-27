@@ -1,9 +1,9 @@
 package ggc.pump.data.profile;
 
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.util.DataAccessPump;
 
 import com.atech.utils.data.ATechDate;
-
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,48 +34,44 @@ import com.atech.utils.data.ATechDate;
 
 public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
 {
-    
+
     /**
      * Profile Sub: Pattern
      */
     public static final int PROFILE_SUB_PATTERN = 1;
-    
+
     /**
      * Profile Sub: Event
      */
     public static final int PROFILE_SUB_EVENT = 2;
-    
-    
+
     /**
      * Profile Id
      */
     public String profile_id = "";
 
-    
     /**
      * The time_start.
      */
     public int time_start;
-    
+
     /**
      * The time_end.
      */
     public int time_end;
-    
+
     /**
      * The amount.
      */
     public float amount;
-    
-    
-    
+
     /**
      * Instantiates a new profile sub entry.
      */
     public ProfileSubEntry()
     {
     }
-    
+
     /**
      * Instantiates a new profile sub entry.
      * 
@@ -84,15 +80,14 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
     public ProfileSubEntry(String input)
     {
         String[] ss = input.split("[-=]");
-        
+
         DataAccessPump da = DataAccessPump.getInstance();
-        
+
         time_start = da.getIntValueFromString(ss[0]);
         time_end = da.getIntValueFromString(ss[1]);
         amount = da.getFloatValueFromString(ss[2]);
     }
-    
-    
+
     /**
      * Sets the values.
      * 
@@ -104,7 +99,7 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
         this.time_end = pse.time_end;
         this.amount = pse.amount;
     }
-    
+
     /**
      * Gets the packed.
      * 
@@ -112,16 +107,18 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
      */
     public String getPacked()
     {
-        return time_start + "-" + time_end + "=" + DataAccessPump.Decimal2Format.format(amount);
+        return time_start + "-" + time_end + "=" + DataAccessPlugInBase.Decimal2Format.format(amount);
     }
-    
-    
+
     /** 
      * toString
      */
+    @Override
     public String toString()
     {
-        return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_start) + " - " + ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_end) + " = " + DataAccessPump.Decimal2Format.format(amount);
+        return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_start) + " - "
+                + ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_end) + " = "
+                + DataAccessPlugInBase.Decimal2Format.format(amount);
     }
 
     /**
@@ -134,17 +131,14 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
      */
     public int compare(ProfileSubEntry pse1, ProfileSubEntry pse2)
     {
-        //System.out.println("Same: " + pse1.time_start + ", " + pse2.time_start);
+        // System.out.println("Same: " + pse1.time_start + ", " +
+        // pse2.time_start);
         if (pse1.time_start == pse2.time_start)
-        {
-            //System.out.println("Same: ");
-            return (pse1.time_end - pse2.time_end);
-        }
+            // System.out.println("Same: ");
+            return pse1.time_end - pse2.time_end;
         else
-        {
-            //System.out.println("Subn");
-            return (pse1.time_start - pse2.time_start);
-        }
+            // System.out.println("Subn");
+            return pse1.time_start - pse2.time_start;
     }
 
     /** 
@@ -154,14 +148,11 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
     {
         return compare(this, pse);
     }
-  
-    
-    
+
     /**
      * Get Profile SubEntry Type
      * @return
      */
     public abstract int getType();
-    
-    
+
 }

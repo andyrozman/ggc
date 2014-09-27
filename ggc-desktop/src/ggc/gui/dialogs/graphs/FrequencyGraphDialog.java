@@ -72,7 +72,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class FrequencyGraphDialog extends JDialog implements ActionListener, HelpCapable
 {
     /**
@@ -103,7 +102,6 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
         /*
          * Rectangle rec = parent.getBounds(); int x = rec.x + (rec.width/2);
          * int y = rec.y + (rec.height/2);
-         * 
          * setBounds(x-350, y-250, 700, 500); addWindowListener(new
          * CloseListener());
          */
@@ -195,7 +193,9 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
             closeDialog();
         }
         else
+        {
             System.out.println("FrequencyGraphFrame: Unknown command: " + action);
+        }
     }
 
     // ****************************************************************

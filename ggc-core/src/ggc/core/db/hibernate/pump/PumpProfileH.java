@@ -54,7 +54,9 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
      * @param person_id 
      * @param comment 
      * @param changed */
-    public PumpProfileH(String name, float basal_base, String basal_diffs, long active_from, long active_till, String extended, int person_id, String comment, long changed) {
+    public PumpProfileH(String name, float basal_base, String basal_diffs, long active_from, long active_till,
+            String extended, int person_id, String comment, long changed)
+    {
         this.name = name;
         this.basal_base = basal_base;
         this.basal_diffs = basal_diffs;
@@ -67,12 +69,14 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     }
 
     /** default constructor */
-    public PumpProfileH() {
+    public PumpProfileH()
+    {
     }
 
     /** minimal constructor 
      * @param person_id */
-    public PumpProfileH(int person_id) {
+    public PumpProfileH(int person_id)
+    {
         this.person_id = person_id;
     }
 
@@ -96,13 +100,12 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         this.id = id;
     }
 
-
     /**
      * Get Name
      * 
      * @return name
      */
-    public String getName() 
+    public String getName()
     {
         return this.name;
     }
@@ -112,18 +115,17 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
      * 
      * @param name as string
      */
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
-
 
     /**
      * Get Basal Rate - Base
      * 
      * @return basal_base value
      */
-    public float getBasal_base() 
+    public float getBasal_base()
     {
         return this.basal_base;
     }
@@ -133,7 +135,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
      * 
      * @param basal_base value
      */
-    public void setBasal_base(float basal_base) 
+    public void setBasal_base(float basal_base)
     {
         this.basal_base = basal_base;
     }
@@ -143,7 +145,8 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
      * 
      * @return basal_diffs value
      */
-    public String getBasal_diffs() {
+    public String getBasal_diffs()
+    {
         return this.basal_diffs;
     }
 
@@ -152,7 +155,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
      * 
      * @param basal_diffs value
      */
-    public void setBasal_diffs(String basal_diffs) 
+    public void setBasal_diffs(String basal_diffs)
     {
         this.basal_diffs = basal_diffs;
     }
@@ -162,7 +165,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
      * 
      * @return active_from value
      */
-    public long getActive_from() 
+    public long getActive_from()
     {
         return this.active_from;
     }
@@ -172,7 +175,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
      * 
      * @param active_from value
      */
-    public void setActive_from(long active_from) 
+    public void setActive_from(long active_from)
     {
         this.active_from = active_from;
     }
@@ -182,7 +185,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
      * 
      * @return active_till value
      */
-    public long getActive_till() 
+    public long getActive_till()
     {
         return this.active_till;
     }
@@ -192,7 +195,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
      * 
      * @param active_till value
      */
-    public void setActive_till(long active_till) 
+    public void setActive_till(long active_till)
     {
         this.active_till = active_till;
     }
@@ -277,19 +280,18 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         this.changed = changed;
     }
 
-
     /**
      * Equals - method to check equalicy of object
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof PumpProfileH) ) return false;
+        if (!(other instanceof PumpProfileH))
+            return false;
         PumpProfileH castOther = (PumpProfileH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -297,18 +299,19 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

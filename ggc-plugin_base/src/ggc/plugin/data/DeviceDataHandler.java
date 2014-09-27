@@ -18,7 +18,6 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.StatusReporterInterface;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -45,7 +44,6 @@ import com.atech.graphics.components.StatusReporterInterface;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public abstract class DeviceDataHandler implements DbDataReadingFinishedInterface, StatusReporterInterface
 {
 
@@ -54,13 +52,13 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     protected OutputWriter m_output_writer;
     protected DeviceConfigEntry configured_device;
     protected DbDataReaderAbstract m_reader;
-    protected Hashtable<String,?> old_data;
+    protected Hashtable<String, ?> old_data;
     protected StatusReporterInterface export_dialog;
-    DbDataReadingFinishedInterface m_reading_inst = null; 
+    DbDataReadingFinishedInterface m_reading_inst = null;
     protected DeviceValuesTableModel m_model;
     protected DeviceInterface device_interface;
     protected DeviceValuesTableModel m_dvtm;
-    
+
     /**
      * Dialog: Config
      */
@@ -71,7 +69,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      */
     public DeviceDisplayDataDialog dialog_data = null;
     protected int transfer_type = 0;
-    
+
     /**
      * Selected File Context
      */
@@ -81,24 +79,22 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      * Selected File
      */
     public String selected_file = null;
-    
-    
+
     /**
      * Transfer Type: Read Data
      */
     public static final int TRANSFER_READ_DATA = 1;
-    
+
     /**
      * Transfer Type: Read Configuration
      */
     public static final int TRANSFER_READ_CONFIGURATION = 2;
-    
+
     /**
      * Transfer Type: Read File
      */
     public static final int TRANSFER_READ_FILE = 3;
-    
-    
+
     /**
      * Constructor
      * 
@@ -108,9 +104,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         this.m_da = da;
     }
-    
-    
-    
+
     /**
      * Set Device PlugIn Server
      * 
@@ -120,8 +114,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         this.m_server = server;
     }
-    
-    
+
     /**
      * Set Configured Device
      * 
@@ -131,7 +124,6 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         this.configured_device = _configured_device;
     }
-    
 
     /**
      * Get Configured Device
@@ -140,10 +132,9 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      */
     public DeviceConfigEntry getConfiguredDevice()
     {
-        return this.configured_device; 
+        return this.configured_device;
     }
-    
-    
+
     /**
      * Set Db Data Reader
      * 
@@ -164,8 +155,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         return this.m_reader;
     }
-    
-    
+
     /**
      * Execute Export
      * 
@@ -174,13 +164,16 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     public void executeExport(StatusReporterInterface exp)
     {
         this.export_dialog = exp;
-        
-        if (!isOutputWriterSet())
-            this.executeExportDb();
-        else
-            this.executeExportOther();
-    }
 
+        if (!isOutputWriterSet())
+        {
+            this.executeExportDb();
+        }
+        else
+        {
+            this.executeExportOther();
+        }
+    }
 
     /**
      * Is Output Writer Set
@@ -189,10 +182,9 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      */
     public boolean isOutputWriterSet()
     {
-        return (this.m_output_writer!=null);
+        return this.m_output_writer != null;
     }
-    
-    
+
     /**
      * Has Old Data for checking if old data exists
      * 
@@ -200,91 +192,90 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      */
     public boolean hasOldData()
     {
-        return (this.old_data!=null);
+        return this.old_data != null;
     }
-    
+
     /**
      * Get Old data
      * 
      * @return Hashtable with old data
      */
-    public Hashtable<String,?> getOldData()
+    public Hashtable<String, ?> getOldData()
     {
         return this.old_data;
     }
 
-    
-    
     /**
      * Execute export to Database
      */
     public void executeExportDb()
     {
         HibernateDb db = m_da.getHibernateDb();
-        
+
         Hashtable<String, ArrayList<DatabaseObjectHibernate>> ll = this.m_model.getCheckedDOHObjects();
-        
+
         float full_count = 0.0f;
-        
+
         full_count += ll.get("ADD").size();
         full_count += ll.get("EDIT").size();
-        
-        
-        //System.out.println("Full count: " + full_count);
-        
+
+        // System.out.println("Full count: " + full_count);
+
         int count = 0;
-        
-        
-        for(Enumeration<String> en = ll.keys(); en.hasMoreElements(); )
+
+        for (Enumeration<String> en = ll.keys(); en.hasMoreElements();)
         {
             String key = en.nextElement();
-            
+
             boolean add = false;
-            
+
             if (key.equals("ADD"))
+            {
                 add = true;
-            
+            }
+
             ArrayList<DatabaseObjectHibernate> list = ll.get(key);
-            
-            for(int i=0; i<list.size(); i++)
+
+            for (int i = 0; i < list.size(); i++)
             {
                 if (add)
+                {
                     db.add(list.get(i));
+                }
                 else
+                {
                     db.edit(list.get(i));
-                
+                }
+
                 count++;
-                
-                float f = (count*(1.0f)) / full_count;
+
+                float f = count * 1.0f / full_count;
                 f *= 100.0f;
-                
-                int proc = (int)f;
-                
-                if (proc==100)
+
+                int proc = (int) f;
+
+                if (proc == 100)
+                {
                     proc = 99;
-                
-                //System.out.println("Procents: " + proc);
-        
+                }
+
+                // System.out.println("Procents: " + proc);
+
                 this.setStatus(proc);
-                
+
             }
-            
+
         }
 
         this.setStatus(100);
         this.export_dialog.setReadingFinished();
-        //this.export_dialog.setStatus(100);
+        // this.export_dialog.setStatus(100);
     }
-    
-    
-    
-    
-    
+
     /**
      * Execute export to Other stuff
      */
     public abstract void executeExportOther();
-    
 
     /**
      * Is Old Data Reading Finished
@@ -292,11 +283,10 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      */
     public boolean isOldDataReadingFinished()
     {
-        //return this.m_reader.isFinished();
+        // return this.m_reader.isFinished();
         return true;
     }
-    
-    
+
     /**
      * Set Reading Finished Object
      * 
@@ -306,40 +296,37 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         this.m_reading_inst = ddrf;
     }
-    
-    
+
     /** 
      * readingFinished
      */
     @SuppressWarnings("unchecked")
     public void readingFinished()
     {
-        //System.out.println("DDH Reading finsihed");
-        
-        if (this.m_reading_inst!=null)
+        // System.out.println("DDH Reading finsihed");
+
+        if (this.m_reading_inst != null)
+        {
             this.m_reading_inst.readingFinished();
-        
-        
-        
-        if (this.m_reader==null)
+        }
+
+        if (this.m_reader == null)
         {
             this.setDeviceData(null);
         }
         else
         {
-            this.setDeviceData((Hashtable<String,?>)this.m_reader.getData());
+            this.setDeviceData((Hashtable<String, ?>) this.m_reader.getData());
         }
     }
 
-    
     /**
      * Set Device Data
      * 
      * @param data data as Hashtable<String,?> data
      */
-    public abstract void setDeviceData(Hashtable<String,?> data);
-    
-    
+    public abstract void setDeviceData(Hashtable<String, ?> data);
+
     /**
      * Get Device Values Table Model
      * 
@@ -347,18 +334,18 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      */
     public DeviceValuesTableModel getDeviceValuesTableModel()
     {
-        if (m_model==null)
+        if (m_model == null)
+        {
             createDeviceValuesTableModel();
-        
+        }
+
         return m_model;
     }
-    
-    
+
     /**
      * Create Device Values Table Model
      */
     public abstract void createDeviceValuesTableModel();
-
 
     /**
      * Set Status
@@ -369,10 +356,9 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         this.export_dialog.setStatus(status);
     }
-    
-    
-    //public abstract 
-    
+
+    // public abstract
+
     /**
      * Set Device Interface 
      * 
@@ -382,7 +368,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         this.device_interface = di;
     }
-    
+
     /**
      * Get Device Interface
      * 
@@ -392,8 +378,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         return this.device_interface;
     }
-    
-    
+
     /**
      * Set Transfer Type
      * 
@@ -403,7 +388,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         this.transfer_type = _type;
     }
-    
+
     /**
      * Get Transfer Type
      * 
@@ -414,8 +399,6 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         return this.transfer_type;
     }
 
-    
-    
     /**
      * Is Data Transfer
      * 
@@ -423,9 +406,9 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      */
     public boolean isDataTransfer()
     {
-        return (this.transfer_type != DeviceDataHandler.TRANSFER_READ_CONFIGURATION);
+        return this.transfer_type != DeviceDataHandler.TRANSFER_READ_CONFIGURATION;
     }
-    
+
     /**
      * Is Config Transfer
      * 
@@ -433,22 +416,20 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      */
     public boolean isConfigTransfer()
     {
-        return (this.transfer_type == DeviceDataHandler.TRANSFER_READ_CONFIGURATION);
+        return this.transfer_type == DeviceDataHandler.TRANSFER_READ_CONFIGURATION;
     }
-    
-    
+
     /*
-    public void setCustomDialog(int type, JDialog dialog)
-    {
-        if ((type==DeviceDataHandler.TRANSFER_READ_DATA) || 
-            (type==DeviceDataHandler.TRANSFER_READ_FILE))
-            this.dialog_data = (DeviceDisplayDataDialog)dialog;
-        else
-            this.dialog_config = (DeviceDisplayConfigDialog)dialog;
-    }*/
-    
-    
-    
+     * public void setCustomDialog(int type, JDialog dialog)
+     * {
+     * if ((type==DeviceDataHandler.TRANSFER_READ_DATA) ||
+     * (type==DeviceDataHandler.TRANSFER_READ_FILE))
+     * this.dialog_data = (DeviceDisplayDataDialog)dialog;
+     * else
+     * this.dialog_config = (DeviceDisplayConfigDialog)dialog;
+     * }
+     */
+
     /**
      * set Device Values Table Model
      * 
@@ -458,7 +439,5 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         this.m_dvtm = dvtm;
     }
-    
-    
-    
-}	
+
+}

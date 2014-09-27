@@ -29,7 +29,7 @@ import ggc.plugin.protocol.ConnectionProtocols;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class DummyMeter extends AbstractMeter //implements MeterInterface
+public class DummyMeter extends AbstractMeter // implements MeterInterface
 {
 
     /**
@@ -39,13 +39,10 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     {
         setDeviceAllowedActions(false, false, false, false);
     }
-    
-    
-    
-    //DataAccessMeter m_da = DataAccessMeter.getInstance();
-    //I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
-    
+    // DataAccessMeter m_da = DataAccessMeter.getInstance();
+    // I18nControlAbstract m_ic = m_da.getI18nControlInstance();
+
     /**
      * This is method for reading data from device. All reading from actual device should be done from here.
      * Reading can be done directly here, or event can be used to read data.
@@ -53,8 +50,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     public void readDeviceDataFull() throws PlugInBaseException
     {
     }
-    
-    
 
     /**
      * Used for opening connection with device.
@@ -65,7 +60,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
         return true;
     }
 
-
     /**
      * Will be called, when the import is ended and freeing resources.
      */
@@ -74,62 +68,47 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
         return;
     }
 
-
-    
-
-
-
-
-    
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
      *    normal progress status, but with some special devices we calculate progress through other means.
      * @return true is progress status is special
      */
+    @Override
     public boolean hasSpecialProgressStatus()
     {
         return false;
     }
-    
-    
-
-
 
     /**
      * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
      *    special comment about device (for example pix device, doesn't display anything till the end, which
      *    would be nice if user knew. 
      */
+    @Override
     public String getDeviceSpecialComment()
     {
         return "DEVICE_DUMMY_SPECIAL_COMMENT";
     }
 
+    // ************************************************
+    // *** Available Functionality ***
+    // ************************************************
 
-
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
-
-
-    //************************************************
-    //***                    Test                  ***
-    //************************************************
+    // ************************************************
+    // *** Test ***
+    // ************************************************
 
     /** 
      * test
      */
+    @Override
     public void test()
     {
     }
 
-
-
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -141,7 +120,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
         return "Dummy Meter";
     }
 
-
     /**
      * getIconName - Get Icon of meter
      * 
@@ -151,7 +129,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     {
         return null;
     }
-    
 
     /**
      * getCompanyId - Get Company Id 
@@ -162,8 +139,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     {
         return 0;
     }
-    
-    
+
     /**
      * getInstructions - get instructions for device
      * 
@@ -173,7 +149,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     {
         return null;
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -183,19 +159,17 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Company Id 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return 0;
     }
-
 
     /**
      * Get Device ClassName
@@ -205,17 +179,10 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
         return "ggc.meter.device.DummyMeter";
     }
 
-    
-    
-    
-    //************************************************
-    //***       Device Implemented methods         ***
-    //************************************************
-    
+    // ************************************************
+    // *** Device Implemented methods ***
+    // ************************************************
 
-    
-    
-    
     /** 
      * getConnectionPort
      */
@@ -224,7 +191,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
         return "No port";
     }
 
-
     /** 
      * Get Connection Protocol
      */
@@ -232,8 +198,7 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     {
         return ConnectionProtocols.PROTOCOL_NONE;
     }
-    
-    
+
     /** 
      * Get Max Memory Records
      * @return 
@@ -242,39 +207,36 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     {
         return 1;
     }
-    
- 
+
     /**
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
      */
+    @Override
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
-        
-    }
 
+    }
 
     /** 
      * This is method for reading configuration
      * 
      * @throws PlugInBaseException
      */
+    @Override
     public void readConfiguration() throws PlugInBaseException
     {
     }
-    
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do). 
      * @throws PlugInBaseException
      */
+    @Override
     public void readInfo() throws PlugInBaseException
     {
     }
-    
-    
-
 
     /** 
      * Get Device Id
@@ -283,7 +245,6 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
     {
         return 0;
     }
-
 
     /**
      * Is Device Communicating
@@ -296,18 +257,16 @@ public class DummyMeter extends AbstractMeter //implements MeterInterface
         return false;
     }
 
-
-    
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
      * sort of specific device data - in most cases we call them generics, and they don't have ability
      * to read data)
      * @return
      */
+    @Override
     public boolean isReadableDevice()
     {
         return false;
     }
 
-    
 }

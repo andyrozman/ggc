@@ -37,28 +37,27 @@ import javax.swing.JTable;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
-public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel implements ActionListener
+public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
+                                                        // implements
+                                                        // ActionListener
 {
-    
+
     private static final long serialVersionUID = 3519092324025060409L;
     private DailyStatsTableModel model = null;
     JScrollPane resultsPane;
     private JTable table;
     private DailyValues dayData;
 
-
     /**
      * Constructor
      */
     public DailyStatsPanelL()
     {
-        super(""); 
+        super("");
 
         setTitle(m_ic.getMessage("DAILY_VALUES") + ": (" + m_da.getCurrentDateString() + ")");
         init();
     }
-
 
     /**
      * Get Table Model
@@ -72,7 +71,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
 
     /**
      * Refresh Information 
-     */    
+     */
     @Override
     public void refreshInfo()
     {
@@ -88,7 +87,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
     {
         return this.table;
     }
-    
+
     /**
      * Get Day Data
      * 
@@ -98,44 +97,44 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
     {
         return this.dayData;
     }
-    
-    
+
     private void refreshDayData()
     {
         DailyValues dv = m_da.getDayStats(new GregorianCalendar());
 
-        if (dv!=null)
+        if (dv != null)
         {
             dayData = dv;
             model.setDailyValues(dayData);
             this.model.fireTableChanged(null);
         }
     }
-    
-    
-    
+
     private void init()
     {
-        this.setLayout(new GridLayout(1,1));
+        this.setLayout(new GridLayout(1, 1));
 
         dayData = m_da.getDayStats(new GregorianCalendar());
 
-        //if (dayData==null)
-        //    dayData = DataAccess.getInstance().getDayStats(new GregorianCalendar());
-//        refreshDayData();
-  
+        // if (dayData==null)
+        // dayData = DataAccess.getInstance().getDayStats(new
+        // GregorianCalendar());
+        // refreshDayData();
+
         System.out.println("DailyStatPanelL: " + dayData);
-        
+
         model = new DailyStatsTableModel(dayData);
-        /*model.addTableModelListener(new TableModelListener()
-        {
-            public void tableChanged(TableModelEvent e)
-            {
-                //DailyGraphFrame.redraw();
-                //updateLabels();
-                //saveButton.setEnabled(true);
-            }
-        }); */
+        /*
+         * model.addTableModelListener(new TableModelListener()
+         * {
+         * public void tableChanged(TableModelEvent e)
+         * {
+         * //DailyGraphFrame.redraw();
+         * //updateLabels();
+         * //saveButton.setEnabled(true);
+         * }
+         * });
+         */
         table = new JTable(model);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
         resultsPane = new JScrollPane(table);
@@ -144,25 +143,24 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
         setVisible(true);
     }
 
-    
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "DailyStatsPanel";
     }
 
-    
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
     }
-    
 
     /**
      * Get Panel Id
@@ -174,6 +172,5 @@ public class DailyStatsPanelL extends AbstractInfoPanel //extends JPanel impleme
     {
         return InfoPanelsIds.INFO_PANEL_NONE;
     }
-    
-    
+
 }

@@ -2,7 +2,6 @@ package ggc.pump.device.minimed;
 
 import java.util.Hashtable;
 
-
 // TODO: Auto-generated Javadoc
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -31,8 +30,7 @@ import java.util.Hashtable;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class MinimedSPMData 
+public class MinimedSPMData
 {
     /**
      * Source: None
@@ -48,7 +46,7 @@ public class MinimedSPMData
      * Source: CGMS
      */
     public static final int SOURCE_CGMS = 2;
-    
+
     /**
      * Value Type: Double
      */
@@ -68,56 +66,52 @@ public class MinimedSPMData
      * Value Type: Profile
      */
     public static final int VALUE_PROFILE = 4;
-    
 
     /**
      * The source.
      */
     public int source = 0;
-    
+
     /**
      * The datetime.
      */
     public long datetime = 0L;
-    
+
     /**
      * The base_type.
      */
     public int base_type = 0;
-    
+
     /**
      * The sub_type.
      */
     public int sub_type = 0;
-    
+
     /**
      * The value_type.
      */
     public int value_type = 0;
-    
+
     /**
      * The value_dbl.
      */
     public double value_dbl = 0.0d;
-    
+
     /**
      * The value_int.
      */
     public int value_int = 0;
-    
+
     /**
      * The value_str.
      */
     public String value_str = "";
-    
-    
-    
+
     /**
      * Profiles hashtable
      */
-    public Hashtable<Long,Float> profiles = null;
-    
-    
+    public Hashtable<Long, Float> profiles = null;
+
     /**
      * Constructor
      * 
@@ -129,9 +123,7 @@ public class MinimedSPMData
         this.source = _source;
         this.value_type = _value_type;
     }
-    
-    
-    
+
     /**
      * Gets the value.
      * 
@@ -140,18 +132,13 @@ public class MinimedSPMData
     public String getValue()
     {
         if (value_type == VALUE_DOUBLE)
-        {
             return "" + value_dbl;
-        }
         else if (value_type == VALUE_INT)
-        {
             return "" + value_int;
-        }
         else
             return null;
     }
 
-    
     /**
      * Add Profile 
      * 
@@ -161,20 +148,19 @@ public class MinimedSPMData
     public void addProfile(short time, float value)
     {
         long dt = 0L;
-        
-        int hour = (int)(time/60);
-        int minute = time - (hour*60);
-        
-        dt = (hour * 100) + minute;
-        
-        if (this.profiles==null)
+
+        int hour = time / 60;
+        int minute = time - hour * 60;
+
+        dt = hour * 100 + minute;
+
+        if (this.profiles == null)
         {
-            this.profiles = new Hashtable<Long,Float>();
+            this.profiles = new Hashtable<Long, Float>();
         }
-        
+
         this.profiles.put(dt, value);
-        
+
     }
-    
-    
+
 }

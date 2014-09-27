@@ -1,4 +1,4 @@
-package ggc.pump.manager.company; 
+package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.accuchek.AccuChekCombo;
@@ -33,7 +33,6 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Roche extends AbstractPumpDeviceCompany
 {
 
@@ -42,30 +41,31 @@ public class Roche extends AbstractPumpDeviceCompany
      */
     public Roche()
     {
-        super(PumpDevicesIds.COMPANY_ROCHE,         // company_id
-            "Accu-Chek/Roche",                      // company name (full)
-            "Roche",                                // short company name
-            "ROCHE_DESC",                           // company description
-            DeviceImplementationStatus.IMPLEMENTATION_TESTING);  // implementation status
-        
+        super(PumpDevicesIds.COMPANY_ROCHE, // company_id
+                "Accu-Chek/Roche", // company name (full)
+                "Roche", // short company name
+                "ROCHE_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_TESTING); // implementation
+                                                                    // status
+
         this.addDevice(new DisetronicDTron(this));
         this.addDevice(new AccuChekDTron(this));
         this.addDevice(new AccuChekSpirit(this));
         this.addDevice(new AccuChekCombo(this));
     }
 
-
     /**
      * Init Profile Names (for Profile Editor)
      */
+    @Override
     public void initProfileNames()
     {
         profile_names = new String[5];
-        
-        for(int i=0; i<5; i++)
+
+        for (int i = 0; i < 5; i++)
         {
-            profile_names[i] = "" + (i+1);
+            profile_names[i] = "" + (i + 1);
         }
     }
-    
+
 }

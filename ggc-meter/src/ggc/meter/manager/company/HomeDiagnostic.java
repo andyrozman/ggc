@@ -1,4 +1,4 @@
-package ggc.meter.manager.company; 
+package ggc.meter.manager.company;
 
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.DataAccessMeter;
@@ -31,7 +31,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class HomeDiagnostic extends AbstractDeviceCompany
 {
 
@@ -40,14 +39,13 @@ public class HomeDiagnostic extends AbstractDeviceCompany
      */
     public HomeDiagnostic()
     {
-        super(true,                             // empty devices
-            MeterDevicesIds.COMPANY_HOME_DIAGNOSTICS,    // company_id
-            "Home Diagnostic",                           // company name (full)
-            "Home Diagnostic",                           // short company name
-            "HOMEDIAGNOSTIC_DESC",                       // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED,
-            DataAccessMeter.getInstance());  // implementation status
+        super(true, // empty devices
+                MeterDevicesIds.COMPANY_HOME_DIAGNOSTICS, // company_id
+                "Home Diagnostic", // company name (full)
+                "Home Diagnostic", // short company name
+                "HOMEDIAGNOSTIC_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                                                                                                       // status
     }
 
-    
 }

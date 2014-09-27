@@ -41,26 +41,24 @@ import org.jfree.data.xy.XYSeriesCollection;
  *  Author: rumbi   
  */
 
-
-public class GraphViewRatios extends BREGraphsAbstract //implements GraphViewInterface, GraphViewDataProcessorInterface 
+public class GraphViewRatios extends BREGraphsAbstract // implements
+                                                       // GraphViewInterface,
+                                                       // GraphViewDataProcessorInterface
 {
 
     XYSeriesCollection dataset = new XYSeriesCollection();
-    //TimeSeriesCollection dataset = new TimeSeriesCollection();
-    //DefaultCategoryDataset dataset = new DefaultCategoryDataset(); 
+    // TimeSeriesCollection dataset = new TimeSeriesCollection();
+    // DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
     NumberAxis BGAxis;
-//    private TimeSeriesCollection BGDataset = new TimeSeriesCollection();
-    //private DailyValues data = new DailyValues();
+    // private TimeSeriesCollection BGDataset = new TimeSeriesCollection();
+    // private DailyValues data = new DailyValues();
     DateAxis dateAxis;
     NumberAxis insBUAxis;
-    //private TimeSeriesCollection insBUDataset = new TimeSeriesCollection();
-    //private XYSeriesCollection insBUDataset = new XYSeriesCollection();
-    
-    
 
-    
-    
+    // private TimeSeriesCollection insBUDataset = new TimeSeriesCollection();
+    // private XYSeriesCollection insBUDataset = new XYSeriesCollection();
+
     /**
      * Constructor
      */
@@ -68,45 +66,40 @@ public class GraphViewRatios extends BREGraphsAbstract //implements GraphViewInt
     {
         super();
     }
-    
 
     /**
      * Get Help Id
      * 
      * @return
      */
+    @Override
     public String getHelpId()
     {
-        return null; 
+        return null;
     }
 
-    
-
-    
     /**
      * Load Data
      */
     public void loadData()
     {
-        if (this.data_coll==null)
+        if (this.data_coll == null)
             return;
-        
-        
-        
-/*        if (gluco_values==null)
-        {
-            this.gluco_values = new GlucoValues(this.gc, (GregorianCalendar)this.gc.clone(), true);
-            
-            System.out.println("Gluco Values: " + this.gluco_values.getDailyValuesRowsCount());
-            
-            GregorianCalendar gc_prev = (GregorianCalendar)this.gc.clone();
-            gc_prev.add(GregorianCalendar.DAY_OF_YEAR, -1);
-            this.gluco_values_prev = new GlucoValues(gc_prev, gc_prev, true);
-        }
-        */
+
+        /*
+         * if (gluco_values==null)
+         * {
+         * this.gluco_values = new GlucoValues(this.gc,
+         * (GregorianCalendar)this.gc.clone(), true);
+         * System.out.println("Gluco Values: " +
+         * this.gluco_values.getDailyValuesRowsCount());
+         * GregorianCalendar gc_prev = (GregorianCalendar)this.gc.clone();
+         * gc_prev.add(GregorianCalendar.DAY_OF_YEAR, -1);
+         * this.gluco_values_prev = new GlucoValues(gc_prev, gc_prev, true);
+         * }
+         */
     }
 
-    
     /**
      * Get Data Set
      * 
@@ -122,46 +115,44 @@ public class GraphViewRatios extends BREGraphsAbstract //implements GraphViewInt
      */
     public void preprocessData()
     {
-        
-        if (this.data_coll==null)
+
+        if (this.data_coll == null)
             return;
-        
+
         dataset.removeAllSeries();
-        
-        XYSeries ratio_ch_ins = new XYSeries(this.m_ic.getMessage("CH_INS_RATIO"), true, true); //, Hour.class);
-        XYSeries ratio_bg_ins = new XYSeries(this.m_ic.getMessage("BG_INS_RATIO"), true, true); //, Hour.class);
-        XYSeries ratio_ch_bg = new XYSeries(this.m_ic.getMessage("CH_BG_RATIO"), true, true); //, Hour.class);
-        
+
+        XYSeries ratio_ch_ins = new XYSeries(this.m_ic.getMessage("CH_INS_RATIO"), true, true); // ,
+                                                                                                // Hour.class);
+        XYSeries ratio_bg_ins = new XYSeries(this.m_ic.getMessage("BG_INS_RATIO"), true, true); // ,
+                                                                                                // Hour.class);
+        XYSeries ratio_ch_bg = new XYSeries(this.m_ic.getMessage("CH_BG_RATIO"), true, true); // ,
+                                                                                              // Hour.class);
+
         ArrayList<RatioData> lst = this.data_coll.getRatiosCollection(BREData.BRE_DATA_BASAL_RATIO);
-        
+
         for (int i = 0; i < lst.size(); i++)
         {
             RatioData rd = lst.get(i);
-            
+
             long time = getTimeMs(rd.time_start);
-            
+
             ratio_ch_ins.add(time, rd.ratio_ch_insulin);
             ratio_bg_ins.add(time, rd.ratio_bg_insulin);
             ratio_ch_bg.add(time, rd.ratio_ch_bg);
-            
+
             time = getTimeMs(rd.time_end);
 
             ratio_ch_ins.add(time, rd.ratio_ch_insulin);
             ratio_bg_ins.add(time, rd.ratio_bg_insulin);
             ratio_ch_bg.add(time, rd.ratio_ch_bg);
         }
-        
-        
+
         dataset.addSeries(ratio_ch_ins);
         dataset.addSeries(ratio_bg_ins);
-        dataset.addSeries(ratio_ch_bg); 
-        
+        dataset.addSeries(ratio_ch_bg);
+
     }
 
-    
-    
-    
-    
     /**
      * Set Plot
      * 
@@ -170,82 +161,81 @@ public class GraphViewRatios extends BREGraphsAbstract //implements GraphViewInt
     public void setPlot(JFreeChart chart)
     {
 
-        
         XYPlot plot = chart.getXYPlot();
-        //XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
-        //XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
+        // XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer)
+        // plot.getRenderer();
+        // XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
         dateAxis = (DateAxis) plot.getDomainAxis();
         BGAxis = (NumberAxis) plot.getRangeAxis();
         insBUAxis = new NumberAxis();
-        
-        //plot.s
 
-        //ColorSchemeH colorScheme = graph_util.getColorScheme();
+        // plot.s
 
-        //chart.setBackgroundPaint(graph_util.backgroundColor);
-        
-        /*
-        RenderingHints rh = graph_util.getRenderingHints();
-        
-        if (rh!=null)
-            chart.setRenderingHints(rh);
-        
-        chart.setBorderVisible(false);*/
+        // ColorSchemeH colorScheme = graph_util.getColorScheme();
+
+        // chart.setBackgroundPaint(graph_util.backgroundColor);
 
         /*
-        plot.setRangeAxis(1, insBUAxis);
-        plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
-        plot.setDataset(1, insBUDataset);
-        plot.mapDatasetToRangeAxis(1, 1);
-        plot.setRenderer(1, insBURenderer); */
-/*
-        graph_util.applyMarkers(plot);
-        plot.setRangeGridlinesVisible(false);
-        plot.setDomainGridlinesVisible(false);
+         * RenderingHints rh = graph_util.getRenderingHints();
+         * if (rh!=null)
+         * chart.setRenderingHints(rh);
+         * chart.setBorderVisible(false);
+         */
 
-        defaultRenderer.setSeriesPaint(0, da_local.getColor(colorScheme.getColor_bg()));
-        insBURenderer.setSeriesPaint(0, da_local.getColor(colorScheme.getColor_ch()));
-        insBURenderer.setSeriesPaint(1, da_local.getColor(colorScheme.getColor_ins1()));
-        insBURenderer.setSeriesPaint(2, da_local.getColor(colorScheme.getColor_ins2()));
-*/        
+        /*
+         * plot.setRangeAxis(1, insBUAxis);
+         * plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
+         * plot.setDataset(1, insBUDataset);
+         * plot.mapDatasetToRangeAxis(1, 1);
+         * plot.setRenderer(1, insBURenderer);
+         */
+        /*
+         * graph_util.applyMarkers(plot);
+         * plot.setRangeGridlinesVisible(false);
+         * plot.setDomainGridlinesVisible(false);
+         * defaultRenderer.setSeriesPaint(0,
+         * da_local.getColor(colorScheme.getColor_bg()));
+         * insBURenderer.setSeriesPaint(0,
+         * da_local.getColor(colorScheme.getColor_ch()));
+         * insBURenderer.setSeriesPaint(1,
+         * da_local.getColor(colorScheme.getColor_ins1()));
+         * insBURenderer.setSeriesPaint(2,
+         * da_local.getColor(colorScheme.getColor_ins2()));
+         */
         // fdfdd defaultRenderer.setSeriesShapesVisible(0, true);
-        //insBURenderer.setSeriesShapesVisible(0, true);
-        //insBURenderer.setSeriesShapesVisible(1, true);
-        //insBURenderer.setSeriesShapesVisible(2, true);
+        // insBURenderer.setSeriesShapesVisible(0, true);
+        // insBURenderer.setSeriesShapesVisible(1, true);
+        // insBURenderer.setSeriesShapesVisible(2, true);
 
-// AX        dateAxis.setDateFormatOverride(new SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS")));
-// AX       dateAxis.setAutoRange(false);
-/*        dateAxis.setRange(this.gluco_values.getRangeFrom().getTime(), 
-            this.gluco_values.getRangeTo().getTime());
-        dateAxis.setDefaultAutoRange(new DateRange(this.gluco_values.getRangeFrom().getTime(), 
-            this.gluco_values.getRangeTo().getTime()));
-  */      
-        //BGAxis.setAutoRangeIncludesZero(true);
+        // AX dateAxis.setDateFormatOverride(new
+        // SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS")));
+        // AX dateAxis.setAutoRange(false);
+        /*
+         * dateAxis.setRange(this.gluco_values.getRangeFrom().getTime(),
+         * this.gluco_values.getRangeTo().getTime());
+         * dateAxis.setDefaultAutoRange(new
+         * DateRange(this.gluco_values.getRangeFrom().getTime(),
+         * this.gluco_values.getRangeTo().getTime()));
+         */
+        // BGAxis.setAutoRangeIncludesZero(true);
 
-// ax        insBUAxis.setLabel(m_ic.getMessage("CH_LONG") + " / " + m_ic.getMessage("INSULIN"));
-// ax        insBUAxis.setAutoRangeIncludesZero(true);
-        
+        // ax insBUAxis.setLabel(m_ic.getMessage("CH_LONG") + " / " +
+        // m_ic.getMessage("INSULIN"));
+        // ax insBUAxis.setAutoRangeIncludesZero(true);
+
     }
 
-    
-    
     /**
      * Create Chart
      */
+    @Override
     public void createChart()
     {
-        chart = ChartFactory.createTimeSeriesChart(null, 
-            this.m_ic.getMessage("AXIS_TIME_LABEL"), 
-            String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"), this.graph_util.getUnitLabel()), 
-            this.dataset, 
-            false, 
-            true, 
-            false);
-        
+        chart = ChartFactory.createTimeSeriesChart(null, this.m_ic.getMessage("AXIS_TIME_LABEL"),
+            String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"), this.graph_util.getUnitLabel()), this.dataset,
+            false, true, false);
+
         this.setPlot(chart);
     }
 
-
-
-    
 }

@@ -40,8 +40,8 @@ import com.atech.i18n.I18nControlAbstract;
 
 // backup/restore todo
 
-public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
-        DatabaseObjectHibernate, SelectableInterface
+public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements DatabaseObjectHibernate,
+        SelectableInterface
 {
 
     private static final long serialVersionUID = -2073935312018845795L;
@@ -136,8 +136,8 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 
         Transaction tx = sess.beginTransaction();
 
-        NutritionHomeWeightTypeH ch = (NutritionHomeWeightTypeH) sess.get(
-                NutritionHomeWeightTypeH.class, new Long(this.getId()));
+        NutritionHomeWeightTypeH ch = (NutritionHomeWeightTypeH) sess.get(NutritionHomeWeightTypeH.class,
+            new Long(this.getId()));
 
         ch.setId(this.getId());
         ch.setName(this.getName());
@@ -161,8 +161,8 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 
         Transaction tx = sess.beginTransaction();
 
-        NutritionHomeWeightTypeH ch = (NutritionHomeWeightTypeH) sess.get(
-                NutritionHomeWeightTypeH.class, new Long(this.getId()));
+        NutritionHomeWeightTypeH ch = (NutritionHomeWeightTypeH) sess.get(NutritionHomeWeightTypeH.class,
+            new Long(this.getId()));
 
         sess.delete(ch);
         tx.commit();
@@ -195,8 +195,8 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      */
     public boolean DbGet(Session sess) throws Exception
     {
-        NutritionHomeWeightTypeH ch = (NutritionHomeWeightTypeH) sess.get(
-                NutritionHomeWeightTypeH.class, new Long(this.getId()));
+        NutritionHomeWeightTypeH ch = (NutritionHomeWeightTypeH) sess.get(NutritionHomeWeightTypeH.class,
+            new Long(this.getId()));
 
         this.setId(ch.getId());
         this.setName(ch.getName());
@@ -257,14 +257,14 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     {
         switch (num)
         {
-        case 3:
-            return ic.getMessage("USER_DEFINED");
+            case 3:
+                return ic.getMessage("USER_DEFINED");
 
-        case 2:
-            return ic.getMessage("NAME");
+            case 2:
+                return ic.getMessage("NAME");
 
-        default:
-            return ic.getMessage("ID");
+            default:
+                return ic.getMessage("ID");
 
         }
     }
@@ -276,14 +276,14 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     {
         switch (num)
         {
-        case 3:
-            return getYesNo(this.getStatic_entry());
+            case 3:
+                return getYesNo(this.getStatic_entry());
 
-        case 2:
-            return this.getResolvedName();
+            case 2:
+                return this.getResolvedName();
 
-        default:
-            return "" + this.getItemId();
+            default:
+                return "" + this.getItemId();
 
         }
 
@@ -306,10 +306,10 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         {
             case 3:
                 return getYesNo(this.getStatic_entry());
-    
+
             case 2:
                 return getResolvedName();
-    
+
             default:
                 return new Long(this.getItemId());
 
@@ -334,14 +334,14 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 
         switch (num)
         {
-        case 3:
-            return (int) (width * 20);
-        case 2:
-            return (int) (width * 60);
-        default:
-            return (int) (width * 20);
+            case 3:
+                return width * 20;
+            case 2:
+                return width * 60;
+            default:
+                return width * 20;
 
-        } 
+        }
 
     }
 
@@ -374,8 +374,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      */
     public boolean isFound(String text)
     {
-        if ((this.text_idx.indexOf(text.toUpperCase()) != -1)
-                || (text.length() == 0))
+        if (this.text_idx.indexOf(text.toUpperCase()) != -1 || text.length() == 0)
             return true;
         else
             return false;
@@ -386,8 +385,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
      */
     public void setSearchContext()
     {
-        text_idx = this.getResolvedName().toUpperCase() + " "
-                + this.getName().toUpperCase();
+        text_idx = this.getResolvedName().toUpperCase() + " " + this.getName().toUpperCase();
     }
 
     // ---
@@ -463,7 +461,6 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 
     }
 
-    
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -472,6 +469,5 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     {
         return "" + this.getId();
     }
-    
-    
+
 }

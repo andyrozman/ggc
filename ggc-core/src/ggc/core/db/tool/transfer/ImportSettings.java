@@ -39,8 +39,10 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
+import com.atech.db.hibernate.transfer.ImportExportAbstract;
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.db.hibernate.transfer.RestoreFileInfo;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -67,12 +69,11 @@ import com.atech.db.hibernate.transfer.RestoreFileInfo;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class ImportSettings extends ImportTool implements Runnable
 {
 
     GGCDb m_db = null;
-//    public String file_name;
+    // public String file_name;
     private static Log log = LogFactory.getLog(ImportSettings.class);
 
     DataAccess m_da = DataAccess.getInstance();
@@ -100,12 +101,13 @@ public class ImportSettings extends ImportTool implements Runnable
         m_db = new GGCDb();
         m_db.initDb();
         setHibernateConfiguration(m_db.getHibernateConfiguration());
-//        this.file_name = file_name;
+        // this.file_name = file_name;
         this.restore_file = new File(file_name);
 
-        
         if (identify)
+        {
             importSettings();
+        }
 
         System.out.println();
 
@@ -122,17 +124,14 @@ public class ImportSettings extends ImportTool implements Runnable
         super(cfg);
         // m_db = new GGCDb();
         // m_db.initDb();
-        //this.file_name = file_name;
+        // this.file_name = file_name;
         this.restore_file = new File(file_name);
-
 
         importSettings();
 
         System.out.println();
     }
 
-    
-    
     /**
      * Constructor
      * 
@@ -143,9 +142,8 @@ public class ImportSettings extends ImportTool implements Runnable
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportTool.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
     }
-    
 
     /**
      * Constructor
@@ -158,20 +156,18 @@ public class ImportSettings extends ImportTool implements Runnable
         super(DataAccess.getInstance().getDb().getHibernateConfiguration(), res);
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportTool.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
     }
-    
-    
-    
+
     /**
      * Get Active Session
      */
+    @Override
     public int getActiveSession()
     {
         return 2;
     }
-    
-    
+
     /**
      * Import Settings
      */
@@ -182,62 +178,65 @@ public class ImportSettings extends ImportTool implements Runnable
 
         try
         {
-            
+
             this.clearExistingData("ggc.core.db.hibernate.SettingsH");
 
-            
             System.out.println("\nLoading Settings (5/dot)");
 
             this.openFileForReading(this.restore_file);
 
             int dot_mark = 5;
             int count = 0;
-            
-            
 
             while ((line = this.br_file.readLine()) != null)
             {
                 if (line.startsWith(";"))
+                {
                     continue;
+                }
 
                 // line = line.replaceAll("||", "| |");
-                line = m_da.replaceExpression(line, "||", "| |");
+                line = ATDataAccessAbstract.replaceExpression(line, "||", "| |");
 
                 StringTokenizer strtok = new StringTokenizer(line, "|");
 
                 SettingsH dvh = new SettingsH();
 
-                // ; Columns: id; key; value; type; description; person_id 
+                // ; Columns: id; key; value; type; description; person_id
 
                 long id = this.getLong(strtok.nextToken());
 
                 if (id != 0)
+                {
                     dvh.setId(id);
+                }
 
                 dvh.setKey(strtok.nextToken());
                 dvh.setValue(strtok.nextToken());
                 dvh.setType(getInt(strtok.nextToken()));
                 dvh.setDescription(strtok.nextToken());
-                
+
                 int person_id = this.getInt(strtok.nextToken());
 
                 if (person_id == 0)
+                {
                     dvh.setPerson_id(1);
+                }
                 else
+                {
                     dvh.setPerson_id(person_id);
-
+                }
 
                 this.hibernate_util.addHibernate(dvh);
 
-                
                 count++;
                 this.writeStatus(dot_mark, count);
-                
-                /*
-                i++;
 
-                if (i % 5 == 0)
-                    System.out.print(".");*/
+                /*
+                 * i++;
+                 * if (i % 5 == 0)
+                 * System.out.print(".");
+                 */
             }
 
             this.closeFile();
@@ -252,17 +251,14 @@ public class ImportSettings extends ImportTool implements Runnable
 
     }
 
-    
     /**
      * Thread Run
      */
     public void run()
     {
         this.importSettings();
-    }    
-    
-    
-    
+    }
+
     /**
      * @param args
      */

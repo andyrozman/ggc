@@ -39,7 +39,6 @@ import java.awt.geom.Rectangle2D;
  *  Author:   reini
  */
 
-
 public class SpreadGraphView extends AbstractGraphView
 {
 
@@ -149,7 +148,7 @@ public class SpreadGraphView extends AbstractGraphView
         int diffH = h - lowerSpace - upperSpace;
         int diffW = w - rightSpace - leftSpace;
         // distance between lables on the vertical scale
-        float labelDeltaV = ((float) BGDiff) / counter;
+        float labelDeltaV = (float) BGDiff / counter;
 
         Rectangle2D.Float rect0 = new Rectangle2D.Float(0, 0, w, h);
         g2D.setPaint(Color.white);
@@ -161,7 +160,7 @@ public class SpreadGraphView extends AbstractGraphView
 
         for (int i = 0; i <= counter; i++)
         {
-            markPos = upperSpace + i * (diffH) / counter;
+            markPos = upperSpace + i * diffH / counter;
             g2D.drawString(Math.round(maxBG - labelDeltaV * i) + "", 5, markPos + 5);
             g2D.drawLine(leftSpace - 5, markPos, leftSpace, markPos);
         }
@@ -169,7 +168,7 @@ public class SpreadGraphView extends AbstractGraphView
 
         for (int i = 0; i <= 6; i++)
         {
-            markPos = leftSpace + i * (diffW) / 6;
+            markPos = leftSpace + i * diffW / 6;
             g2D.drawLine(markPos, h - lowerSpace, markPos, h - lowerSpace + 5);
             g2D.drawString(4 * i + ":00", markPos - 10, h - lowerSpace + 20);
         }
@@ -234,7 +233,7 @@ public class SpreadGraphView extends AbstractGraphView
 
                 // draw BG
                 float tmpBG = dV.getRow(j).getBG();
-                if (drawBG && (tmpBG != 0))
+                if (drawBG && tmpBG != 0)
                 {
                     g2D.setPaint(colorBG);
                     g2D.fillRect(offset - 1, BGtoCoord(tmpBG) - 1, 3, 3);
@@ -247,13 +246,15 @@ public class SpreadGraphView extends AbstractGraphView
                             firstBG = false;
                         }
                         else
+                        {
                             plBG.lineTo(offset, BGtoCoord(tmpBG));
+                        }
                     }
                 }
 
                 // draw BU
                 float tmpBU = dV.getRow(j).getCH();
-                if (drawCH && (tmpBU != 0))
+                if (drawCH && tmpBU != 0)
                 {
                     g2D.setPaint(colorBU);
                     g2D.fillRect(offset - 1, BUtoCoord(tmpBU) - 1, 3, 3);
@@ -266,13 +267,15 @@ public class SpreadGraphView extends AbstractGraphView
                             firstBU = false;
                         }
                         else
+                        {
                             plBU.lineTo(offset, BUtoCoord(tmpBU));
+                        }
                     }
                 }
 
                 // draw Ins1
                 float tmpIns1 = dV.getRow(j).getIns1();
-                if (drawIns1 && (tmpIns1 != 0))
+                if (drawIns1 && tmpIns1 != 0)
                 {
                     g2D.setPaint(colorIns1);
                     g2D.fillRect(offset - 1, InstoCoord(tmpIns1) - 1, 3, 3);
@@ -285,13 +288,15 @@ public class SpreadGraphView extends AbstractGraphView
                             firstIns1 = false;
                         }
                         else
+                        {
                             plIns1.lineTo(offset, InstoCoord(tmpIns1));
+                        }
                     }
                 }
 
                 // draw Ins2
                 float tmpIns2 = dV.getRow(j).getIns2();
-                if (drawIns2 && (tmpIns2 != 0))
+                if (drawIns2 && tmpIns2 != 0)
                 {
                     g2D.setPaint(colorIns2);
                     g2D.fillRect(offset - 1, InstoCoord(tmpIns2) - 1, 3, 3);
@@ -304,7 +309,9 @@ public class SpreadGraphView extends AbstractGraphView
                             firstIns2 = false;
                         }
                         else
+                        {
                             plIns2.lineTo(offset, InstoCoord(tmpIns2));
+                        }
                     }
                 }
             }

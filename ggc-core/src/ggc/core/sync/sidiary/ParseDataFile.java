@@ -1,6 +1,4 @@
-
 package ggc.core.sync.sidiary;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -29,5 +27,5 @@ package ggc.core.sync.sidiary;
 
 public class ParseDataFile
 {
-    
+
 }

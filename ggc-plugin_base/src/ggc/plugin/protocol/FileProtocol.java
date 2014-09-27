@@ -1,6 +1,5 @@
 package ggc.plugin.protocol;
 
-
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -30,15 +29,12 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
+// STUB ONLY. Not implemented
 
-//STUB ONLY. Not implemented
-
-
-public abstract class FileProtocol 
+public abstract class FileProtocol
 {
 
-    protected DataAccessPlugInBase m_da = null; 
-
+    protected DataAccessPlugInBase m_da = null;
 
     /**
      * Constructor
@@ -57,7 +53,6 @@ public abstract class FileProtocol
         this.m_da = da;
     }
 
-
     /**
      * Get Connection Protocol
      * 
@@ -67,7 +62,5 @@ public abstract class FileProtocol
     {
         return ConnectionProtocols.PROTOCOL_FILE_IMPORT;
     }
-    
-
 
 }

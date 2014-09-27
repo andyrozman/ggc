@@ -41,7 +41,7 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
 {
 
     AccuChekSmartPix pix;
-    
+
     /**
      * Constructor
      * 
@@ -79,8 +79,7 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
     {
         return "Accu-Chek SmartPix Xml (XML)";
     }
-    
-    
+
     public boolean hasSpecialSelectorDialog()
     {
         return false;
@@ -92,24 +91,20 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
         {
             pix.processXml(new File(filename));
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.out.println("Error reading file: " + ex);
         }
-        
-        
+
     }
-    
-    
+
     int i = 0;
     String tmp_time;
-    
-    
 
     public FileFilter getFileFilter()
     {
-        
-        return new FileFilter() 
+
+        return new FileFilter()
         {
 
             @Override
@@ -117,15 +112,15 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
             {
                 if (f.isDirectory())
                     return true;
-                
-                
-                //System.out.println(f.getName());
-                //System.out.println(f.getName().toLowerCase().endsWith(getFileExtension()));
-                
-                //System.out.println(f.getName());
-                //System.out.println(f.getName());
-                
-                return ( (f.getName().toLowerCase().endsWith(getFileExtension())) && (f.getName().toLowerCase().startsWith(pix.getFirstLetterForReport().toLowerCase())) );
+
+                // System.out.println(f.getName());
+                // System.out.println(f.getName().toLowerCase().endsWith(getFileExtension()));
+
+                // System.out.println(f.getName());
+                // System.out.println(f.getName());
+
+                return f.getName().toLowerCase().endsWith(getFileExtension())
+                        && f.getName().toLowerCase().startsWith(pix.getFirstLetterForReport().toLowerCase());
             }
 
             @Override
@@ -133,19 +128,16 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
             {
                 return getFileDescription() + " (" + getFileExtension() + ")";
             }
-            
+
         };
-        
-        
+
     }
 
     public void goToNextDialog(JDialog currentDialog)
     {
     }
-    
-    
-    
-    
+
+    @Override
     public String toString()
     {
         return this.getFullFileDescription();
@@ -156,9 +148,5 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
         this.output_writer = ow;
         this.pix.setOutputWriter(ow);
     }
-
-    
-    
-    
 
 }

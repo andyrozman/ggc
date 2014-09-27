@@ -28,29 +28,23 @@ import java.util.Hashtable;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PumpBolusType extends PumpDefsAbstract
 {
 
-    //DataAccessPump da = DataAccessPump.getInstance();
-    //I18nControlAbstract ic = da.getI18nControlInstance();
+    // DataAccessPump da = DataAccessPump.getInstance();
+    // I18nControlAbstract ic = da.getI18nControlInstance();
 
     /**
      * Bolus Descriptions (for manual entry module)
      */
-    public String[] bolus_desc = { ic.getMessage("SELECT_BOLUS_TYPE"),
-                       ic.getMessage("BOLUS_STANDARD"),             
-                       ic.getMessage("BOLUS_AUDIO"),             
-                       ic.getMessage("BOLUS_SQUARE"),             
-                       ic.getMessage("BOLUS_MULTIWAVE"),             
-    };
-    
-    
-    Hashtable<String,String> bolus_mapping = new Hashtable<String,String>(); 
-    
-    
+    public String[] bolus_desc = { ic.getMessage("SELECT_BOLUS_TYPE"), ic.getMessage("BOLUS_STANDARD"),
+                                  ic.getMessage("BOLUS_AUDIO"), ic.getMessage("BOLUS_SQUARE"),
+                                  ic.getMessage("BOLUS_MULTIWAVE"), };
+
+    Hashtable<String, String> bolus_mapping = new Hashtable<String, String>();
+
     // "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s"
-    
+
     /**
      * Pump Bolus: None
      */
@@ -75,42 +69,37 @@ public class PumpBolusType extends PumpDefsAbstract
      * Pump Bolus: Multiwave
      */
     public static final int PUMP_BOLUS_MULTIWAVE = 4;
-    
 
-    
-    
     /**
      * Pump Bolus: Dual/Normal
      */
     public static final int PUMP_BOLUS_DUAL_NORMAL = 6;
 
-    
     /**
      * Pump Bolus: Dual/Square (Insulin value through some duration)
      */
     public static final int PUMP_BOLUS_DUAL_SQUARE = 7;
-    
-    
+
     /**
      * Constructor
      */
     public PumpBolusType()
     {
         super();
-        
+
         this.setDataDesc(PumpBolusType.PUMP_BOLUS_STANDARD, ic.getMessage("BOLUS_STANDARD"));
         this.setDataDesc(PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL, ic.getMessage("BOLUS_AUDIO"));
         this.setDataDesc(PumpBolusType.PUMP_BOLUS_SQUARE, ic.getMessage("BOLUS_SQUARE"), "AMOUNT_SQUARE=%s;DURATION=%s");
-        this.setDataDesc(PumpBolusType.PUMP_BOLUS_MULTIWAVE, ic.getMessage("BOLUS_MULTIWAVE"), "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s");
+        this.setDataDesc(PumpBolusType.PUMP_BOLUS_MULTIWAVE, ic.getMessage("BOLUS_MULTIWAVE"),
+            "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s");
         this.setDataDesc(PumpBolusType.PUMP_BOLUS_DUAL_NORMAL, ic.getMessage("BOLUS_DUAL_NORMAL"));
-        this.setDataDesc(PumpBolusType.PUMP_BOLUS_DUAL_SQUARE, ic.getMessage("BOLUS_DUAL_SQUARE"), "AMOUNT_SQUARE=%s;DURATION=%s");
+        this.setDataDesc(PumpBolusType.PUMP_BOLUS_DUAL_SQUARE, ic.getMessage("BOLUS_DUAL_SQUARE"),
+            "AMOUNT_SQUARE=%s;DURATION=%s");
         this.setDataDesc(PumpBolusType.PUMP_BOLUS_NONE, ic.getMessage("BOLUS_NONE"));
-        
+
         this.finalizeAdding();
     }
-    
-    
-    
+
     /**
      * Get Descriptions (array)
      * 
@@ -120,6 +109,5 @@ public class PumpBolusType extends PumpDefsAbstract
     {
         return this.bolus_desc;
     }
-    
 
 }

@@ -1,12 +1,14 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class DoctorTypeH implements Serializable {
+public class DoctorTypeH implements Serializable
+{
 
     /**
      * 
@@ -25,13 +27,15 @@ public class DoctorTypeH implements Serializable {
     /** full constructor 
      * @param name 
      * @param predefined */
-    public DoctorTypeH(String name, int predefined) {
+    public DoctorTypeH(String name, int predefined)
+    {
         this.name = name;
         this.predefined = predefined;
     }
 
     /** default constructor */
-    public DoctorTypeH() {
+    public DoctorTypeH()
+    {
     }
 
     /**
@@ -54,13 +58,12 @@ public class DoctorTypeH implements Serializable {
         this.id = id;
     }
 
-
     /**
      * Get Name
      * 
      * @return name
      */
-    public String getName() 
+    public String getName()
     {
         return this.name;
     }
@@ -70,18 +73,17 @@ public class DoctorTypeH implements Serializable {
      * 
      * @param name as string
      */
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
-
 
     /**
      * Get Predefined
      * 
      * @return predefined value
      */
-    public int getPredefined() 
+    public int getPredefined()
     {
         return this.predefined;
     }
@@ -91,7 +93,7 @@ public class DoctorTypeH implements Serializable {
      * 
      * @param predefined value
      */
-    public void setPredefined(int predefined) 
+    public void setPredefined(int predefined)
     {
         this.predefined = predefined;
     }
@@ -101,13 +103,13 @@ public class DoctorTypeH implements Serializable {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof DoctorTypeH) ) return false;
+        if (!(other instanceof DoctorTypeH))
+            return false;
         DoctorTypeH castOther = (DoctorTypeH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -115,18 +117,19 @@ public class DoctorTypeH implements Serializable {
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

@@ -12,7 +12,8 @@ import java.util.List;
 
 public class DataPagesToInsertionTimeConverter extends BytesConverterAbstract
 {
-    //private static final Log log = LogFactory.getLog(DataPagesToInsertionTimeConverter.class);
+    // private static final Log log =
+    // LogFactory.getLog(DataPagesToInsertionTimeConverter.class);
 
     public List<InsertionTimeRecord> convert(List<DatabasePage> pages) throws DexcomException
     {
@@ -35,7 +36,7 @@ public class DataPagesToInsertionTimeConverter extends BytesConverterAbstract
 
             records.add(itr);
 
-            //log.debug(itr);
+            // log.debug(itr);
         }
 
         return records;

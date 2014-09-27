@@ -4,7 +4,6 @@ import ggc.nutri.display.HomeWeightDataDisplay;
 
 import java.util.Comparator;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -29,7 +28,6 @@ import java.util.Comparator;
  * 
  *  Author: Andy {andy@atech-software.com}  
  */
-
 
 public class HomeWeightComparator implements Comparator<HomeWeightDataDisplay>
 {

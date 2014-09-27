@@ -40,8 +40,6 @@ import com.atech.utils.file.FileReaderContext;
 public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
 {
 
-    
-    
     /**
      * @param da
      */
@@ -50,6 +48,7 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
         super(da);
     }
 
+    @Override
     public String getFileDescription()
     {
         return "DM3 Dexcom Software Export";
@@ -60,71 +59,69 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
      * 
      * @return
      */
+    @Override
     public JPanel getFileDownloadPanel()
     {
         return null;
     }
 
+    @Override
     public String getFileExtension()
     {
         return ".txt";
     }
 
+    @Override
     public String getFullFileDescription()
     {
         return "DM3 Dexcom Software Export (TXT)";
     }
-    
-    
+
+    @Override
     public boolean hasSpecialSelectorDialog()
     {
         return false;
     }
 
-    
     /*
-    public voidreadFile(String filename)
-    {
-        try
-        {
-            cvtm = (CGMSValuesTableModel)m_da.getDeviceDataHandler().getDeviceValuesTableModel();
-            
-            BufferedReader br = new BufferedReader(new FileReader(filename));
-            
-            String line = null;
-            
-            while ((line=br.readLine()) != null)
-            {
-                processLine(line);
-            }
-        
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-        System.out.println("i = " + i + " lisr: " + list.size());
-        
-    }
-    */
-    
+     * public voidreadFile(String filename)
+     * {
+     * try
+     * {
+     * cvtm =
+     * (CGMSValuesTableModel)m_da.getDeviceDataHandler().getDeviceValuesTableModel
+     * ();
+     * BufferedReader br = new BufferedReader(new FileReader(filename));
+     * String line = null;
+     * while ((line=br.readLine()) != null)
+     * {
+     * processLine(line);
+     * }
+     * }
+     * catch (Exception ex)
+     * {
+     * ex.printStackTrace();
+     * }
+     * System.out.println("i = " + i + " lisr: " + list.size());
+     * }
+     */
+
     int i = 0;
     String tmp_time;
-    
-    
-    /*
-    private void addEntry(CGMSValuesSubEntry entry)
-    {
-        this.list.add(entry);
-        this.cvtm.addEntry(entry); 
-    }*/
-    
-    
 
+    /*
+     * private void addEntry(CGMSValuesSubEntry entry)
+     * {
+     * this.list.add(entry);
+     * this.cvtm.addEntry(entry);
+     * }
+     */
+
+    @Override
     public FileFilter getFileFilter()
     {
-        
-        return new FileFilter() 
+
+        return new FileFilter()
         {
 
             @Override
@@ -132,8 +129,8 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
             {
                 if (f.isDirectory())
                     return true;
-                
-                return (f.getName().toLowerCase().endsWith(getFileExtension()));
+
+                return f.getName().toLowerCase().endsWith(getFileExtension());
             }
 
             @Override
@@ -141,19 +138,17 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
             {
                 return getFileDescription() + " (" + getFileExtension() + ")";
             }
-            
+
         };
-        
-        
+
     }
 
+    @Override
     public void goToNextDialog(JDialog currentDialog)
     {
     }
-    
-    
-    
-    
+
+    @Override
     public String toString()
     {
         return this.getFullFileDescription();
@@ -177,6 +172,7 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
         return 0;
     }
 
+    @Override
     public String getDeviceSpecialComment()
     {
         // TODO Auto-generated method stub
@@ -206,10 +202,5 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
         // TODO Auto-generated method stub
         return null;
     }
-    
-    
-    
-    
-    
 
 }

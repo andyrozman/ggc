@@ -53,7 +53,7 @@ import com.atech.utils.ATDataAccessAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class PrintingDialog extends ActionExceptionCatchDialog implements PrintRequester 
+public class PrintingDialog extends ActionExceptionCatchDialog implements PrintRequester
 {
     private static final long serialVersionUID = 2693207247071685559L;
     private DataAccess dataAccess = DataAccess.getInstance();
@@ -67,13 +67,12 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
     JButton helpButton;
     DateComponent dateComponentTo, dateComponentFrom;
     Font fontNormal, fontNormalBold;
-    
+
     GregorianCalendar gc = null;
     PrintProcessor printProcessor;
 
     private String[] reportTypes = { i18nControl.getMessage("SIMPLE_MONTHLY_REPORT"),
-                                      i18nControl.getMessage("EXTENDED_MONTHLY_REPORT") };
-
+                                    i18nControl.getMessage("EXTENDED_MONTHLY_REPORT") };
 
     /**
      * Dialog Options: Year and Month Option
@@ -94,7 +93,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
      * @param type
      * @param master_type
      */
-    public PrintingDialog(JFrame frame, int type, int master_type) 
+    public PrintingDialog(JFrame frame, int type, int master_type)
     {
         super(DataAccess.getInstance(), "printing");
         this.setLayout(null);
@@ -108,17 +107,18 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         this.master_type = master_type;
 
         if (master_type == PrintingDialog.PRINT_DIALOG_YEAR_MONTH_OPTION)
+        {
             init();
-        //else
-        //    initRange();
+            // else
+            // initRange();
+        }
 
         this.comboBoxTemplate.setSelectedIndex(type - 1);
 
         this.setVisible(true);
     }
 
-    
-    private void init() 
+    private void init()
     {
         setSize(350, 320);
         this.dataAccess.centerJDialog(this);
@@ -187,79 +187,67 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         panel.add(helpButton);
 
         dataAccess.enableHelp(this);
-        
+
         printProcessor = new PrintProcessor(i18nControl, this);
     }
 
-    
     /*
-    protected void initRange() // throws Exception
-    {
-        setSize(350, 420);
-        this.dataAccess.centerJDialog(this);
-
-        JPanel panel = new JPanel();
-        panel.setBounds(0, 0, 350, 400);
-        panel.setLayout(null);
-
-        this.getContentPane().add(panel);
-
-        JLabel label = new JLabel(i18nControl.getMessage("PRINTING"));
-        label.setFont(dataAccess.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setBounds(0, 20, 350, 35);
-        panel.add(label);
-
-        label = new JLabel(i18nControl.getMessage("TYPE_OF_REPORT") + ":");
-        label.setFont(this.font_normal_bold);
-        label.setBounds(40, 75, 280, 25);
-        panel.add(label);
-
-        comboBoxTemplate = new JComboBox(report_types_2);
-        comboBoxTemplate.setFont(this.font_normal);
-        comboBoxTemplate.setBounds(40, 105, 230, 25);
-        panel.add(comboBoxTemplate);
-
-        label = new JLabel(i18nControl.getMessage("SELECT_STARTING_RANGE") + ":");
-        label.setFont(this.font_normal_bold);
-        label.setBounds(40, 155, 180, 25);
-        panel.add(label);
-
-        dateComponentFrom = new DateComponent(dataAccess);
-        dateComponentFrom.setBounds(40, 180, 120, 25);
-        panel.add(dateComponentFrom);
-
-        label = new JLabel(i18nControl.getMessage("SELECT_ENDING_RANGE") + ":");
-        label.setFont(this.font_normal_bold);
-        label.setBounds(40, 225, 180, 25);
-        panel.add(label);
-
-        dateComponentTo = new DateComponent(dataAccess);
-        dateComponentTo.setBounds(40, 250, 120, 25);
-        panel.add(dateComponentTo);
-
-        JButton button = new JButton("   " + i18nControl.getMessage("OK"));
-        // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-        button.setActionCommand("ok");
-        button.addActionListener(this);
-        button.setIcon(dataAccess.getImageIcon_22x22("ok.png", this));
-        button.setBounds(40, 340, 125, 25);
-        panel.add(button);
-
-        button = new JButton("   " + i18nControl.getMessage("CANCEL"));
-        // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
-        button.setActionCommand("cancel");
-        button.setIcon(dataAccess.getImageIcon_22x22("cancel.png", this));
-        button.addActionListener(this);
-        button.setBounds(175, 340, 125, 25);
-        panel.add(button);
-
-        help_button = dataAccess.createHelpButtonByBounds(185, 310, 115, 25, this);
-        panel.add(help_button);
-
-        dataAccess.enableHelp(this);
-    }*/
-
+     * protected void initRange() // throws Exception
+     * {
+     * setSize(350, 420);
+     * this.dataAccess.centerJDialog(this);
+     * JPanel panel = new JPanel();
+     * panel.setBounds(0, 0, 350, 400);
+     * panel.setLayout(null);
+     * this.getContentPane().add(panel);
+     * JLabel label = new JLabel(i18nControl.getMessage("PRINTING"));
+     * label.setFont(dataAccess.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+     * label.setHorizontalAlignment(SwingConstants.CENTER);
+     * label.setBounds(0, 20, 350, 35);
+     * panel.add(label);
+     * label = new JLabel(i18nControl.getMessage("TYPE_OF_REPORT") + ":");
+     * label.setFont(this.font_normal_bold);
+     * label.setBounds(40, 75, 280, 25);
+     * panel.add(label);
+     * comboBoxTemplate = new JComboBox(report_types_2);
+     * comboBoxTemplate.setFont(this.font_normal);
+     * comboBoxTemplate.setBounds(40, 105, 230, 25);
+     * panel.add(comboBoxTemplate);
+     * label = new JLabel(i18nControl.getMessage("SELECT_STARTING_RANGE") +
+     * ":");
+     * label.setFont(this.font_normal_bold);
+     * label.setBounds(40, 155, 180, 25);
+     * panel.add(label);
+     * dateComponentFrom = new DateComponent(dataAccess);
+     * dateComponentFrom.setBounds(40, 180, 120, 25);
+     * panel.add(dateComponentFrom);
+     * label = new JLabel(i18nControl.getMessage("SELECT_ENDING_RANGE") + ":");
+     * label.setFont(this.font_normal_bold);
+     * label.setBounds(40, 225, 180, 25);
+     * panel.add(label);
+     * dateComponentTo = new DateComponent(dataAccess);
+     * dateComponentTo.setBounds(40, 250, 120, 25);
+     * panel.add(dateComponentTo);
+     * JButton button = new JButton("   " + i18nControl.getMessage("OK"));
+     * // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+     * button.setActionCommand("ok");
+     * button.addActionListener(this);
+     * button.setIcon(dataAccess.getImageIcon_22x22("ok.png", this));
+     * button.setBounds(40, 340, 125, 25);
+     * panel.add(button);
+     * button = new JButton("   " + i18nControl.getMessage("CANCEL"));
+     * // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+     * button.setActionCommand("cancel");
+     * button.setIcon(dataAccess.getImageIcon_22x22("cancel.png", this));
+     * button.addActionListener(this);
+     * button.setBounds(175, 340, 125, 25);
+     * panel.add(button);
+     * help_button = dataAccess.createHelpButtonByBounds(185, 310, 115, 25,
+     * this);
+     * panel.add(help_button);
+     * dataAccess.enableHelp(this);
+     * }
+     */
 
     /**
      * {@inheritDoc}
@@ -288,34 +276,38 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
                 if (this.comboBoxTemplate.getSelectedIndex() == 0)
                 {
                     PrintSimpleMonthlyReport psm = new PrintSimpleMonthlyReport(mv);
-//                    System.out.println("PSM: " + psm.getRelativeNameWithPath());
+                    // System.out.println("PSM: " +
+                    // psm.getRelativeNameWithPath());
                     displayPDF(psm.getRelativeNameWithPath());
                 }
                 else
                 {
                     PrintExtendedMonthlyReport psm = new PrintExtendedMonthlyReport(mv);
-//                    System.out.println("PESM: " + psm.getRelativeNameWithPath());
+                    // System.out.println("PESM: " +
+                    // psm.getRelativeNameWithPath());
                     displayPDF(psm.getRelativeNameWithPath());
                 }
             }
         }
     }
 
-    
     public boolean actionSuccessful()
     {
         return actionDone;
     }
 
-    
     public String[] getActionResults()
     {
         String[] res = new String[3];
 
         if (actionDone)
+        {
             res[0] = "1";
+        }
         else
+        {
             res[0] = "0";
+        }
 
         res[1] = this.tfName.getText();
         res[2] = this.comboBoxTemplate.getSelectedItem().toString();
@@ -323,15 +315,13 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         return res;
     }
 
-    
     public void displayPDF(String name) throws Exception
     {
         printProcessor.displayPDF(name);
     }
-    
-    
+
     // ****************************************************************
-    // ******            HelpCapable Implementation               *****
+    // ****** HelpCapable Implementation *****
     // ****************************************************************
 
     /**
@@ -367,9 +357,8 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         return this;
     }
 
-
     // ****************************************************************
-    // ******           PrintRequester Implementation             *****
+    // ****** PrintRequester Implementation *****
     // ****************************************************************
 
     /**
@@ -380,7 +369,6 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         return DataAccess.getInstance().getSettings().getExternalPdfVieverPath().replace('\\', '/');
     }
 
-    
     /**
      * {@inheritDoc}
      */
@@ -389,7 +377,6 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         return DataAccess.getInstance().getSettings().getExternalPdfVieverParameters();
     }
 
-    
     /**
      * {@inheritDoc}
      */
@@ -398,13 +385,12 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         return DataAccess.getInstance().getSettings().getUseExternalPdfViewer();
     }
 
-    
     /**
      * {@inheritDoc}
      */
     public boolean disableLookAndFeelSettingForInternalPdfViewer()
     {
         return true;
-    }    
-    
+    }
+
 }

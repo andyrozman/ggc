@@ -39,10 +39,10 @@ import org.apache.commons.logging.LogFactory;
 public class MeterDataReader extends OldDataReaderAbstract
 {
     private static Log log = LogFactory.getLog(MeterDataReader.class);
-    
+
     GGCMeterDb db = null;
     DataAccessMeter m_da = null;
-    
+
     /**
      * Constructor
      * 
@@ -52,11 +52,11 @@ public class MeterDataReader extends OldDataReaderAbstract
     {
         super(da);
         m_da = da;
-        //db = m_da.getDb();
-        
-        //System.out.println("db: " )
+        // db = m_da.getDb();
+
+        // System.out.println("db: " )
     }
-    
+
     /**
      * Get Max Entries
      */
@@ -76,7 +76,6 @@ public class MeterDataReader extends OldDataReaderAbstract
         return db.getMeterValues(this);
         // TODO Auto-generated method stub
     }
-    
 
     /**
      * Write status of reading
@@ -91,45 +90,45 @@ public class MeterDataReader extends OldDataReaderAbstract
      * 
      * @param current_entry
      */
+    @Override
     public void writeStatus(int current_entry)
     {
-        if (current_entry==-1)
+        if (current_entry == -1)
         {
             this.m_drr.setOldDataReadingProgress(0);
-            log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: 0% not started");
+            log.debug("Old Data reading progress [" + m_da.getApplicationName() + "]: 0% not started");
         }
-        else if (current_entry==0)
+        else if (current_entry == 0)
         {
             this.m_drr.setOldDataReadingProgress(40);
-            log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: 40% read from database");
-            log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: Started to sort through data (progress will not be displayed)");
+            log.debug("Old Data reading progress [" + m_da.getApplicationName() + "]: 40% read from database");
+            log.debug("Old Data reading progress [" + m_da.getApplicationName()
+                    + "]: Started to sort through data (progress will not be displayed)");
         }
-        else if (current_entry==-2)
+        else if (current_entry == -2)
         {
             this.m_drr.setOldDataReadingProgress(100);
         }
         else
         {
             int proc = this.getElementProcent(current_entry);
-            
-            float proc_total = ((((proc* 1.0f) + 40.0f) ) / 140.0f) * 100.0f;  
-            int proc_total_i = (int)proc_total;
 
-//            log.debug("Old Data reading progress [" + m_da.getApplicationName() +  "]: " + proc_total_i + " %" );
+            float proc_total = (proc * 1.0f + 40.0f) / 140.0f * 100.0f;
+            int proc_total_i = (int) proc_total;
+
+            // log.debug("Old Data reading progress [" +
+            // m_da.getApplicationName() + "]: " + proc_total_i + " %" );
             this.m_drr.setOldDataReadingProgress(proc_total_i);
-            
-            /*try
-            {
-                Thread.sleep(1);
-            }
-            catch(InterruptedException ex) {} */
-            
+
+            /*
+             * try
+             * {
+             * Thread.sleep(1);
+             * }
+             * catch(InterruptedException ex) {}
+             */
+
         }
     }
-    
-    
 
 }
-
-
-

@@ -33,13 +33,12 @@ import ggc.pump.util.DataAccessPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterface //, SelectableInterface
+public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterface // ,
+                                                                                   // SelectableInterface
 {
 
     String connection_port = "";
-    
-    
+
     /**
      * Constructor
      * 
@@ -49,8 +48,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     {
         super(DataAccessPump.getInstance(), ow);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -58,13 +56,11 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
      */
     public AbstractXmlPump(AbstractDeviceCompany cmp)
     {
-        super(DataAccessPump.getInstance());        
+        super(DataAccessPump.getInstance());
         this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }
-    
-    
-    
+
     /**
      * Set Pump Type
      * 
@@ -73,23 +69,24 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
      */
     public void setPumpType(String group, String device)
     {
-        //this.device_name = device;
-        
+        // this.device_name = device;
+
         DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
-        
-        if (this.output_writer!=null)
+
+        if (this.output_writer != null)
+        {
             this.output_writer.setDeviceIdentification(di);
-        //this.output_writer.
-        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
-        
+            // this.output_writer.
+            // this.device_instance =
+            // MeterManager.getInstance().getMeterDevice(group, device);
+        }
+
         this.device_source_name = group + " " + device;
-        
+
     }
-    
-    
-    
+
     /**
      * getConnectionPort - connection port data
      * 
@@ -99,8 +96,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     {
         return this.connection_port;
     }
-    
-    
+
     /**
      * setConnectionPort - connection port data
      * @param con_port 
@@ -110,27 +106,17 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     {
         this.connection_port = con_port;
     }
-    
-    
+
     /**
      * Dispose
      */
     public void dispose()
     {
     }
-    
-    
-    
-    
-    
-    
-    //************************************************
-    //***       Device Implemented methods         ***
-    //************************************************
-    
 
-    
-    
+    // ************************************************
+    // *** Device Implemented methods ***
+    // ************************************************
 
     /** 
      * Is Device Communicating
@@ -140,8 +126,6 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         return true;
     }
 
-
-
     /** 
      * Get Download Support Type
      */
@@ -149,8 +133,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     {
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
-    
-    
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -162,6 +145,5 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     {
         return "TYPE=Unit;STEP=0.1";
     }
-   
-    
+
 }

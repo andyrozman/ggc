@@ -41,7 +41,6 @@ import com.itextpdf.text.pdf.PdfPTable;
  *  Author: andyrozman {andy@atech-software.com}
  */
 
-
 public class PrintExtendedMonthlyReport extends PrintAbstractIText
 {
 
@@ -57,46 +56,46 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
     {
         super(DataAccess.getInstance().getI18nControlInstance(), false);
 
-        dataAccessLocal = (DataAccess)this.dataAccess;
+        dataAccessLocal = (DataAccess) this.dataAccess;
         this.monthlyValues = mv;
 
         this.init();
     }
 
-
     /**
      * {@inheritDoc}
      */
+    @Override
     public Paragraph getTitle()
     {
         Paragraph p = new Paragraph();
 
-        Font f = new Font(this.baseFontTimes , 16, Font.BOLD);
+        Font f = new Font(this.baseFontTimes, 16, Font.BOLD);
 
         p.setAlignment(Element.ALIGN_CENTER);
-        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " - " + this.dataAccessLocal.getMonthsArray()[monthlyValues.getMonth()-1] + " " + monthlyValues.getYear(), f));
-        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " " + this.dataAccessLocal.getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN, 12, Font.ITALIC)));
+        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " - "
+                + this.dataAccessLocal.getMonthsArray()[monthlyValues.getMonth() - 1] + " " + monthlyValues.getYear(),
+                f));
+        p.add(new Paragraph(
+                this.i18nControl.getMessage("FOR") + " " + this.dataAccessLocal.getSettings().getUserName(), new Font(
+                        FontFamily.TIMES_ROMAN, 12, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
 
         return p;
     }
 
-
     public String getTitleText()
     {
         return "EXTENDED_MONTHLY_REPORT";
     }
 
-
     private void setComment(String text, PdfPTable table)
     {
-    	table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-    	table.addCell(new Phrase(text, this.textFontNormal));
-    	table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+        table.addCell(new Phrase(text, this.textFontNormal));
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
     }
-
-
 
     private void addEmptyValues(int day, PdfPTable table)
     {
@@ -110,31 +109,36 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
         table.addCell("");
     }
 
-
     private void addValues(int entry, int day, DailyValuesRow dvr, PdfPTable table)
     {
-        if (entry==0)
+        if (entry == 0)
+        {
             table.addCell(day + "." + this.monthlyValues.getMonth());
+        }
         else
+        {
             table.addCell("");
-
+        }
 
         table.addCell(dvr.getTimeAsString());
 
-        if (dvr.getBG()>0.0)
+        if (dvr.getBG() > 0.0)
+        {
             table.addCell(dvr.getBGAsString());
+        }
         else
+        {
             table.addCell("");
+        }
 
         table.addCell(dvr.getIns1AsString());
         table.addCell(dvr.getIns2AsString());
         table.addCell(dvr.getCHAsString());
         table.addCell(dvr.getUrine());
-        //table.addCell(GetPhrasedCell(dvr.getComment()));
+        // table.addCell(GetPhrasedCell(dvr.getComment()));
 
         setComment(dvr.getComment(), table);
     }
-
 
     /**
      * {@inheritDoc}
@@ -145,10 +149,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
         int numColumns = 8;
 
         PdfPTable datatable = new PdfPTable(numColumns);
-        int headerwidths[] = { 10, 10,
-                               10, 10, 10,
-                               10, 10,
-                               30 }; // percentage
+        int headerwidths[] = { 10, 10, 10, 10, 10, 10, 10, 30 }; // percentage
         datatable.setWidths(headerwidths);
         datatable.setWidthPercentage(100); // percentage
 
@@ -165,7 +166,6 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
         datatable.addCell(createBoldTextPhrase("URINE"));
         datatable.addCell(createBoldTextPhrase("COMMENTS"));
 
-
         datatable.setHeaderRows(1); // this is the end of the table header
 
         datatable.getDefaultCell().setBorderWidth(1);
@@ -177,7 +177,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
 
             DailyValues dv = this.monthlyValues.getDayValuesExtended(i);
 
-            if (dv==null)
+            if (dv == null)
             {
                 this.setBackground(count, datatable);
                 addEmptyValues(i, datatable);
@@ -185,7 +185,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
             }
             else
             {
-                for(int j=0; j<dv.getRowCount(); j++)
+                for (int j = 0; j < dv.getRowCount(); j++)
                 {
                     this.setBackground(count, datatable);
                     addValues(j, i, dv.getRow(j), datatable);
@@ -212,7 +212,8 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
         p.setWidths(wdts);
         p.setWidthPercentage(100); // percentage
         p.addCell("");
-        p.addCell(new Phrase(String.format(this.i18nControl.getMessage("COMMING_IN_VERSION"), "0.7"), this.textFontNormal));
+        p.addCell(new Phrase(String.format(this.i18nControl.getMessage("COMMING_IN_VERSION"), "0.7"),
+                this.textFontNormal));
 
         document.add(p);
 
@@ -225,9 +226,6 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
 
     }
 
-
-
-
     /**
      * {@inheritDoc}
      */
@@ -236,7 +234,6 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
     {
         return "ReportExt";
     }
-
 
     /**
      * {@inheritDoc}
@@ -256,12 +253,10 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
         return 12;
     }
 
-
     @Override
     public ITextDocumentPrintSettings getCustomDocumentSettings()
     {
-    	return new ITextDocumentPrintSettings(30, 30, 10, 30);
+        return new ITextDocumentPrintSettings(30, 30, 10, 30);
     }
-
 
 }

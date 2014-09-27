@@ -55,7 +55,7 @@ public class DexcomG4Api
 {
 
     private static final Log log = LogFactory.getLog(DexcomG4Api.class);
-    //private CommPort serialDevice;
+    // private CommPort serialDevice;
     private ShortUtils shortUtils = DexcomUtils.getShortUtils();
     private PartitionInfo partitionInfo;
     private CommPortIdentifier commPortIdentifier;
@@ -73,8 +73,8 @@ public class DexcomG4Api
     {
         serialDevice = new NRSerialPort(portName, 115200);
 
-        //this.serialDevice = serialPort;
-        //this.commPortIdentifier = commPortIdentifier;
+        // this.serialDevice = serialPort;
+        // this.commPortIdentifier = commPortIdentifier;
         this.progressReport = progressReport;
 
         serialDevice.connect();
@@ -109,7 +109,7 @@ public class DexcomG4Api
 
         try
         {
-            SerialPort serialPort = (SerialPort) this.commPortIdentifier.open("ggc", 4000);
+            SerialPort serialPort = this.commPortIdentifier.open("ggc", 4000);
 
             if (serialPort != null)
             {
@@ -139,15 +139,15 @@ public class DexcomG4Api
     {
         if (!databasePagesRanges.containsKey(recordType))
         {
-        	databasePagesRanges.put(recordType, this.readDatabasePageRangeReal(recordType));
+            databasePagesRanges.put(recordType, this.readDatabasePageRangeReal(recordType));
         }
 
         return databasePagesRanges.get(recordType);
     }
-    
+
     public boolean isDatabasePageRangeCached(ReceiverRecordType recordType)
     {
-    	return databasePagesRanges.containsKey(recordType);
+        return databasePagesRanges.containsKey(recordType);
     }
 
     public DatabasePageRange readDatabasePageRangeReal(ReceiverRecordType recordType) throws DexcomException
@@ -164,7 +164,7 @@ public class DexcomG4Api
             recordType.name(), dpr.getFirstPage(), dpr.getLastPage(), dpr.getPagesCount()));
 
         this.addToProgressAndCheckIfCanceled(1);
-        
+
         return dpr;
     }
 
@@ -180,7 +180,7 @@ public class DexcomG4Api
         List<InsertionTimeRecord> records = cnv.convert(pages);
 
         // log.debug("InsertionTime Records: " + records.size());
-        log.debug(String.format("InsertionTime Data [records=%s,pages=%s]",  records.size(), pages.size()));
+        log.debug(String.format("InsertionTime Data [records=%s,pages=%s]", records.size(), pages.size()));
 
         return records;
     }
@@ -189,15 +189,15 @@ public class DexcomG4Api
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.MeterData);
 
-        //log.debug("Meter entries pages: " + pages.size());
+        // log.debug("Meter entries pages: " + pages.size());
 
         DataPagesToMeterConverter cnv = (DataPagesToMeterConverter) DexcomUtils
                 .getConverter(ConverterType.DataPagesToMeterConverter);
 
         List<MeterDataRecord> records = cnv.convert(pages);
 
-        //log.debug("MeterDataRecord Records: " + records.size());
-        log.debug(String.format("Meter Data [records=%s,pages=%s]",  records.size(), pages.size()));
+        // log.debug("MeterDataRecord Records: " + records.size());
+        log.debug(String.format("Meter Data [records=%s,pages=%s]", records.size(), pages.size()));
 
         return records;
     }
@@ -206,15 +206,15 @@ public class DexcomG4Api
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.UserEventData);
 
-        //log.debug("EventData pages: " + pages.size());
+        // log.debug("EventData pages: " + pages.size());
 
         DataPageToUserEventDataConverter cnv = (DataPageToUserEventDataConverter) DexcomUtils
                 .getConverter(ConverterType.DataPageToUserEventDataConverter);
 
         List<UserEventDataRecord> records = cnv.convert(pages);
 
-        //log.debug("EventData Records: " + records.size());
-        log.debug(String.format("Event Data [records=%s,pages=%s]",  records.size(), pages.size()));
+        // log.debug("EventData Records: " + records.size());
+        log.debug(String.format("Event Data [records=%s,pages=%s]", records.size(), pages.size()));
 
         return records;
     }
@@ -224,36 +224,34 @@ public class DexcomG4Api
 
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.EGVData);
 
-        //log.debug("EGV Data pages: " + pages.size());
+        // log.debug("EGV Data pages: " + pages.size());
 
         DataPageToEGVDataConverter cnv = (DataPageToEGVDataConverter) DexcomUtils
                 .getConverter(ConverterType.DataPageToEGVDataConverter);
 
         List<EGVRecord> records = cnv.convert(pages);
 
-        log.debug(String.format("EGV Data [records=%s,pages=%s]",  records.size(), pages.size()));
+        log.debug(String.format("EGV Data [records=%s,pages=%s]", records.size(), pages.size()));
 
         return records;
     }
-    
-    
+
     public void saveDatabasePages(ReceiverRecordType recordType) throws DexcomException
     {
         List<DatabasePage> pages = readDatabasePagesAll(recordType);
-        
-        DataPageToFileConverter cnv = (DataPageToFileConverter)DexcomUtils
+
+        DataPageToFileConverter cnv = (DataPageToFileConverter) DexcomUtils
                 .getConverter(ConverterType.DataPageToFileConverter);
-        
-        int i=0;
-        
-        for(DatabasePage page : pages)
+
+        int i = 0;
+
+        for (DatabasePage page : pages)
         {
             cnv.convert(page, i, recordType);
             i++;
         }
-        
+
     }
-    
 
     public HashMap<String, String> readAllRecordsForManufacturingData() throws DexcomException
     {
@@ -288,9 +286,9 @@ public class DexcomG4Api
             }
         }
 
-        //log.debug(paramMap);
-        log.debug(String.format("Manufacturing Data [parameters=%s, pages=%s]",  paramMap.size(), pages.size()));
-        //this.addToProgressAndCheckIfCanceled(1);
+        // log.debug(paramMap);
+        log.debug(String.format("Manufacturing Data [parameters=%s, pages=%s]", paramMap.size(), pages.size()));
+        // this.addToProgressAndCheckIfCanceled(1);
 
         return paramMap;
     }
@@ -298,11 +296,9 @@ public class DexcomG4Api
     public List<DatabasePage> readDatabasePagesAll(ReceiverRecordType recordType) throws DexcomException
     {
         DatabasePageRange dpr = readDatabasePageRange(recordType);
-        
-        if (dpr.getFirstPage()==-1)
-        {
+
+        if (dpr.getFirstPage() == -1)
             return new ArrayList<DatabasePage>();
-        }
 
         int i = dpr.getFirstPage();
         int j = 4;
@@ -313,11 +309,11 @@ public class DexcomG4Api
             // if i>
             // j = i + 5;
 
-            if ((i + j) > dpr.getLastPage())
+            if (i + j > dpr.getLastPage())
             {
                 // adjust j
-                j = (dpr.getPagesCount() - i) + dpr.getFirstPage();
-                //log.debug("J: " + j);
+                j = dpr.getPagesCount() - i + dpr.getFirstPage();
+                // log.debug("J: " + j);
             }
 
             pages.addAll(readDatabasePages(recordType, i, j));
@@ -332,13 +328,13 @@ public class DexcomG4Api
             throws DexcomException
     {
 
-        if ((numberOfPages == 1) && (pageNumber == 0))
+        if (numberOfPages == 1 && pageNumber == 0)
         {
             log.debug(String.format("Reading pages %s of %s", pageNumber, recordType.name()));
         }
         else
         {
-            log.debug(String.format("Reading pages %s - %s of %s", pageNumber, ((pageNumber + numberOfPages) - 1),
+            log.debug(String.format("Reading pages %s - %s of %s", pageNumber, pageNumber + numberOfPages - 1,
                 recordType.name()));
         }
 
@@ -473,8 +469,8 @@ public class DexcomG4Api
         CommandPacket cmdPacket = this.createCommandPacket(command, parameters);
         this.writeCommandAndReadRawResponse(null, cmdPacket, parameters);
 
-        //System.out.println(cmdPacket.getResponse());
-        //log.debug(cmdPacket.getResponse());
+        // System.out.println(cmdPacket.getResponse());
+        // log.debug(cmdPacket.getResponse());
 
         return ParserUtils.parsePacketResponse(cmdPacket);
     }
@@ -507,17 +503,16 @@ public class DexcomG4Api
 
         int retries = 0;
         DexcomException exception;
-        
+
         do
         {
-        
-            
+
             try
             {
                 try
                 {
                     short[] cmd = cmdPacket.getCommand();
-   
+
                     for (int element : cmd)
                     {
                         this.serialDevice.getOutputStream().write(element);
@@ -528,135 +523,130 @@ public class DexcomG4Api
                     throw new DexcomException(DexcomExceptionType.Receiver_ErrorWritingToReceiver,
                             new Object[] { ex.getLocalizedMessage() }, ex);
                 }
-   
+
                 if (cmdPacket.getExpectedResponseLength() != 0)
                 {
                     this.readGenericCommandPacket(5000, cmdPacket);
                     this.verifyResponseCommandByte(cmdPacket);
-   
+
                     if (cmdPacket.getExpectedResponseLength() > 0)
                     {
                         this.verifyPayloadLength(cmdPacket);
                     }
-   
+
                     return cmdPacket.getResponse();
                 }
                 else
-                {
                     return new short[0];
-                }
             }
             catch (DexcomException ex)
             {
                 exception = ex;
-                //e.printStackTrace();
+                // e.printStackTrace();
             }
-        } while (retries <4);
-        
-        if (exception!=null)
+        } while (retries < 4);
+
+        if (exception != null)
             throw exception;
-        
+
         return new short[0];
-        
+
     }
 
     // FIXME
     public short[] readGenericCommandPacket(int maxWaitMs, CommandPacket packet) throws DexcomException
     {
         if (this.serialDevice == null)
-        {
             throw new DexcomException("Invalid port or port closed!");
-        }
 
         short[] destinationArray = null;
         short[] buffer2 = new short[0x10005];
         int destinationIndex = 0;
-        //long now = System.currentTimeMillis();
+        // long now = System.currentTimeMillis();
 
         DexcomException exception = null;
         // maxWaitMs
-        //while (System.currentTimeMillis() < (now + 20000))
-        
-        int retries = 0; 
-        
-        //do
-        //{
-            try
+        // while (System.currentTimeMillis() < (now + 20000))
+
+        int retries = 0;
+
+        // do
+        // {
+        try
+        {
+            short[] sourceArray = this.readSpecifiedBytes(4);
+
+            if (sourceArray[0] == 1)
             {
-                short[] sourceArray = this.readSpecifiedBytes(4);
+                System.arraycopy(sourceArray, 0, buffer2, 0, 4);
+                destinationIndex = 4;
+                packet.setResponseCommandId(sourceArray[3]);
+                int length = this.shortUtils.convertIntsToUnsignedShort(sourceArray[2], sourceArray[1]);
+                // BitConverter.ToUInt16(sourceArray, 1);
 
-                
-                if (sourceArray[0] == 1)
+                if (length > 6)
                 {
-                    System.arraycopy(sourceArray, 0, buffer2, 0, 4);
-                    destinationIndex = 4;
-                    packet.setResponseCommandId(sourceArray[3]);
-                    int length = this.shortUtils.convertIntsToUnsignedShort(sourceArray[2], sourceArray[1]);
-                    // BitConverter.ToUInt16(sourceArray, 1);
+                    length = length - 6;
 
-                    if (length > 6)
-                    {
-                        length = (length - 6);
+                    destinationArray = new short[length];
 
-                        destinationArray = new short[length];
+                    // log.debug("Expected length: " + length);
 
-                        //log.debug("Expected length: " + length);
-
-                        short[] buffer4 = this.readSpecifiedBytes(length);
-                        System.arraycopy(buffer4, 0, buffer2, destinationIndex, length);
-                        System.arraycopy(buffer4, 0, destinationArray, 0, length);
-                        destinationIndex += length;
-                    }
-                    else
-                    {
-                        destinationArray = new short[0];
-                    }
-
-                    // CRC
-                    short[] buffer5 = this.readSpecifiedBytes(2);
-                    int num3 = this.shortUtils.convertIntsToUnsignedShort(buffer5[1], buffer5[0]);
-                    // BitConverter.ToUInt16(buffer5, 0);
-                    int num4 = DexcomUtils.calculateCRC16(buffer2, 0, destinationIndex);
-                    System.arraycopy(buffer5, 0, buffer2, destinationIndex, 2);
-                    destinationIndex += 2;
-                    if (num3 != num4)
-                    {
-                        exception = new DexcomException("Failed CRC check in packet.");
-                        throw exception;
-                    }
-                    else
-                    {
-                        exception = null;
-                    }
-                    
-                    
+                    short[] buffer4 = this.readSpecifiedBytes(length);
+                    System.arraycopy(buffer4, 0, buffer2, destinationIndex, length);
+                    System.arraycopy(buffer4, 0, destinationArray, 0, length);
+                    destinationIndex += length;
                 }
                 else
                 {
-                    // log.error("SourceArray: " + this.byteUtils.getDebugByteArray(sourceArray));
-                    exception = new DexcomException("Unknown data read. Failed to read start of packet.");
+                    destinationArray = new short[0];
+                }
+
+                // CRC
+                short[] buffer5 = this.readSpecifiedBytes(2);
+                int num3 = this.shortUtils.convertIntsToUnsignedShort(buffer5[1], buffer5[0]);
+                // BitConverter.ToUInt16(buffer5, 0);
+                int num4 = DexcomUtils.calculateCRC16(buffer2, 0, destinationIndex);
+                System.arraycopy(buffer5, 0, buffer2, destinationIndex, 2);
+                destinationIndex += 2;
+                if (num3 != num4)
+                {
+                    exception = new DexcomException("Failed CRC check in packet.");
                     throw exception;
                 }
-                
-                //break;
+                else
+                {
+                    exception = null;
+                }
 
             }
-            catch (DexcomException ex)
+            else
             {
-                exception = ex;
-                //throw ex;
+                // log.error("SourceArray: " +
+                // this.byteUtils.getDebugByteArray(sourceArray));
+                exception = new DexcomException("Unknown data read. Failed to read start of packet.");
+                throw exception;
             }
-            catch (Exception ex)
-            {
-                exception = new DexcomException("Failed to read contents of generic packets.", ex);
-                //packet.setException(exception);
-                //throw exception;
 
-            }
-            
-            retries++;
-            
-        //} while (retries < 4);
+            // break;
+
+        }
+        catch (DexcomException ex)
+        {
+            exception = ex;
+            // throw ex;
+        }
+        catch (Exception ex)
+        {
+            exception = new DexcomException("Failed to read contents of generic packets.", ex);
+            // packet.setException(exception);
+            // throw exception;
+
+        }
+
+        retries++;
+
+        // } while (retries < 4);
 
         if (exception != null)
         {
@@ -669,7 +659,7 @@ public class DexcomG4Api
     }
 
     // FIXME DexcomException
-    
+
     public short[] readSpecifiedBytes(int nrBytes) throws Exception
     {
         int count = 0;
@@ -681,11 +671,10 @@ public class DexcomG4Api
         {
 
             if (System.currentTimeMillis() > till)
-            {
                 throw new DexcomException("Timeout: ");
-            }
 
-            //log.warn("Waiting for data: " + is.available() + ", Req: " + nrBytes);
+            // log.warn("Waiting for data: " + is.available() + ", Req: " +
+            // nrBytes);
 
             Thread.sleep(44);
         }
@@ -711,10 +700,8 @@ public class DexcomG4Api
     {
 
         if (cmdPacket.getResponse().length != cmdPacket.getExpectedResponseLength())
-        {
             throw new DexcomException(String.format("Receiver packet response length of %d != expected length of %d",
                 cmdPacket.getResponse().length, cmdPacket.getExpectedResponseLength()));
-        }
     }
 
     public void verifyResponseCommandByte(CommandPacket packet) throws DexcomException
@@ -724,28 +711,26 @@ public class DexcomG4Api
         // ReceiverTools.GetReceiverCommandFromByte(commandByte);
         switch (receiverCommandFromByte)
         {
-        case Ack:
-            return;
+            case Ack:
+                return;
 
-        case Nak:
-            throw new DexcomException("Receiver reported NAK or an invalid CRC error.");
+            case Nak:
+                throw new DexcomException("Receiver reported NAK or an invalid CRC error.");
 
-        case InvalidCommand:
-            throw new DexcomException("Receiver reported an invalid command error.");
+            case InvalidCommand:
+                throw new DexcomException("Receiver reported an invalid command error.");
 
-        case InvalidParam:
-            if ((packet.getResponse() != null) && (packet.getResponse().length >= 1))
-            {
-                throw new DexcomException(String.format(
-                    "Receiver reported an invalid parameter error for parameter {0}.", packet.getResponse()[0]));
-            }
-            throw new DexcomException("Receiver reported an invalid parameter error.");
+            case InvalidParam:
+                if (packet.getResponse() != null && packet.getResponse().length >= 1)
+                    throw new DexcomException(String.format(
+                        "Receiver reported an invalid parameter error for parameter {0}.", packet.getResponse()[0]));
+                throw new DexcomException("Receiver reported an invalid parameter error.");
 
-        case ReceiverError:
-            throw new DexcomException("Receiver reported an internal error.");
+            case ReceiverError:
+                throw new DexcomException("Receiver reported an internal error.");
 
-        default:
-            break;
+            default:
+                break;
         }
         throw new DexcomException(String.format("Unknown or invalid receiver command %s=%s.",
             packet.getResponseCommandId(), receiverCommandFromByte));

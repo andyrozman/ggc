@@ -1,6 +1,7 @@
 package ggc.cgms.data;
 
 import ggc.cgms.util.DataAccessCGMS;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.ArrayList;
 
@@ -32,12 +33,11 @@ import com.atech.misc.statistics.StatisticsCollection;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public class CGMSDailyStatistics extends StatisticsCollection 
+public class CGMSDailyStatistics extends StatisticsCollection
 {
-    //public int bg_type = -1;
+    // public int bg_type = -1;
     DataAccessCGMS da_pump = DataAccessCGMS.getInstance();
-    
+
     /**
      * Constructor
      */
@@ -45,26 +45,25 @@ public class CGMSDailyStatistics extends StatisticsCollection
     {
         super(DataAccessCGMS.getInstance(), new CGMSValuesSubEntry());
     }
-    
 
     /**
      * Process Special Statistics
      * 
      * @see com.atech.misc.statistics.StatisticsCollection#processSpecialStatistics()
      */
+    @Override
     public void processSpecialStatistics()
     {
-        //DataAccessCGMS.notImplemented("CGMSDailyStatistics::processSpecialStatistics()");
+        // DataAccessCGMS.notImplemented("CGMSDailyStatistics::processSpecialStatistics()");
 
-        
-        if (this.items.size()==0)
+        if (this.items.size() == 0)
         {
             this.special_processed = true;
             return;
         }
-        
-        //System.out.println("SS: " + da_pump.getBGMeasurmentType());
-        if (da_pump.getBGMeasurmentType()==DataAccessCGMS.BG_MMOL)
+
+        // System.out.println("SS: " + da_pump.getBGMeasurmentType());
+        if (da_pump.getBGMeasurmentType() == DataAccessPlugInBase.BG_MMOL)
         {
             setBGValue(CGMSValuesSubEntry.STAT_AVG_BG1);
             setBGValue(CGMSValuesSubEntry.STAT_MIN_BG1);
@@ -73,109 +72,104 @@ public class CGMSDailyStatistics extends StatisticsCollection
             setBGValue(CGMSValuesSubEntry.STAT_MIN_BG2);
             setBGValue(CGMSValuesSubEntry.STAT_MAX_BG2);
         }
-        
-        
-        setValue(CGMSValuesSubEntry.STAT_STD_DEV_BG1, getStandardDeviation(1)); 
-        setValue(CGMSValuesSubEntry.STAT_STD_DEV_BG2, getStandardDeviation(2)); 
-        
+
+        setValue(CGMSValuesSubEntry.STAT_STD_DEV_BG1, getStandardDeviation(1));
+        setValue(CGMSValuesSubEntry.STAT_STD_DEV_BG2, getStandardDeviation(2));
+
         ArrayList<CGMSValuesSubEntry> lst = new ArrayList<CGMSValuesSubEntry>();
-        
+
         /*
-        for(int i=0; i<this.items.size(); i++)
-        {
-            CGMSValuesSubEntry pve = (CGMSValuesSubEntry)this.items.get(i);
-            
-            if (pve.base_type==PumpBaseType.PUMP_DATA_BASAL)
-                lst.add(pve);
-        }*/
+         * for(int i=0; i<this.items.size(); i++)
+         * {
+         * CGMSValuesSubEntry pve = (CGMSValuesSubEntry)this.items.get(i);
+         * if (pve.base_type==PumpBaseType.PUMP_DATA_BASAL)
+         * lst.add(pve);
+         * }
+         */
 
-        //float v = this.stat_objects.get(index-1).sum;
+        // float v = this.stat_objects.get(index-1).sum;
 
-        //int count = 0;
+        // int count = 0;
         float sum = 0;
-        
-        
-        for(int i=0; i<lst.size(); i++)
+
+        for (int i = 0; i < lst.size(); i++)
         {
             CGMSValuesSubEntry pve = lst.get(i);
-         
-            if (isCurrentlyIgnoredEntry(pve))
-                continue;
-            
-//            if ((pve.base_type == PumpBaseType.PUMP_DATA_BASAL) && 
-//                (pve.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
-//                continue;
 
-            if ((i+1)==lst.size())
+            if (isCurrentlyIgnoredEntry(pve))
+            {
+                continue;
+            }
+
+            // if ((pve.base_type == PumpBaseType.PUMP_DATA_BASAL) &&
+            // (pve.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
+            // continue;
+
+            if (i + 1 == lst.size())
             {
                 int s = 24 - pve.getDateTimeObject().hour_of_day;
                 float val = m_da.getFloatValueFromString(pve.getValue());
-                sum += s * val; 
-                
-            //    System.out.println("Time diff: " + s + ", val=" + val);
+                sum += s * val;
+
+                // System.out.println("Time diff: " + s + ", val=" + val);
             }
             else
             {
-                CGMSValuesSubEntry pve2 = lst.get(i+1);
+                CGMSValuesSubEntry pve2 = lst.get(i + 1);
 
                 if (isCurrentlyIgnoredEntry(pve2))
+                {
                     continue;
-                
-//                if ((pve2.base_type == PumpBaseType.PUMP_DATA_BASAL) && 
-//                    (pve2.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
-//                      continue;
-                
-                
-                //System.out.println("Hour: " + pve2.getDateTimeObject().hour_of_day + ", hour2=" + pve.getDateTimeObject().hour_of_day);
+                }
 
-                //System.out.println("pve2: " + pve2.getBaseTypeString() + pve2.getSubTypeString());
-                
+                // if ((pve2.base_type == PumpBaseType.PUMP_DATA_BASAL) &&
+                // (pve2.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
+                // continue;
+
+                // System.out.println("Hour: " +
+                // pve2.getDateTimeObject().hour_of_day + ", hour2=" +
+                // pve.getDateTimeObject().hour_of_day);
+
+                // System.out.println("pve2: " + pve2.getBaseTypeString() +
+                // pve2.getSubTypeString());
+
                 int s = pve2.getDateTimeObject().hour_of_day - pve.getDateTimeObject().hour_of_day;
                 float val = da_pump.getFloatValueFromString(pve.getValue());
-                sum += s * val; 
+                sum += s * val;
 
-                //System.out.println("Time diff: " + s + ", val=" + val);
+                // System.out.println("Time diff: " + s + ", val=" + val);
             }
-         
+
             System.out.println("Sum: " + sum);
         }
-        
-        
-        
-        //this.stat_objects.get(PumpValuesEntry.INS_SUM_BASAL-1).setCount(lst.size());
 
-        //this.stat_objects.get(PumpValuesEntry.INS_AVG_BASAL-1).setSum(sum/24.0f);
-        //this.stat_objects.get(PumpValuesEntry.INS_SUM_BASAL-1).setCount(lst.size());
-        
-        
-//        public static final int BG_AVG =13;
-//        public static final int BG_MAX =14;
-//        public static final int BG_MIN =15;
-//        public static final int BG_COUNT =16;
-//        public static final int BG_STD_DEV =17;
-        
-        
-        
-        
-        
-        
+        // this.stat_objects.get(PumpValuesEntry.INS_SUM_BASAL-1).setCount(lst.size());
+
+        // this.stat_objects.get(PumpValuesEntry.INS_AVG_BASAL-1).setSum(sum/24.0f);
+        // this.stat_objects.get(PumpValuesEntry.INS_SUM_BASAL-1).setCount(lst.size());
+
+        // public static final int BG_AVG =13;
+        // public static final int BG_MAX =14;
+        // public static final int BG_MIN =15;
+        // public static final int BG_COUNT =16;
+        // public static final int BG_STD_DEV =17;
+
         this.special_processed = true;
 
     }
-    
-    
+
     private boolean isCurrentlyIgnoredEntry(CGMSValuesSubEntry pve)
     {
         return false;
     }
-    
-    
+
     private float getStandardDeviation(int type)
     {
 
-        if (type==1)
+        if (type == 1)
         {
-            float f = this.getValueInternal(CGMSValuesSubEntry.STAT_AVG_BG1) - this.getValueInternal(CGMSValuesSubEntry.STAT_MIN_BG1);
+            float f = this.getValueInternal(CGMSValuesSubEntry.STAT_AVG_BG1)
+                    - this.getValueInternal(CGMSValuesSubEntry.STAT_MIN_BG1);
 
             if (f < 0)
             {
@@ -187,7 +181,8 @@ public class CGMSDailyStatistics extends StatisticsCollection
         }
         else
         {
-            float f = this.getValueInternal(CGMSValuesSubEntry.STAT_AVG_BG2) - this.getValueInternal(CGMSValuesSubEntry.STAT_MIN_BG2);
+            float f = this.getValueInternal(CGMSValuesSubEntry.STAT_AVG_BG2)
+                    - this.getValueInternal(CGMSValuesSubEntry.STAT_MIN_BG2);
 
             if (f < 0)
             {
@@ -197,29 +192,25 @@ public class CGMSDailyStatistics extends StatisticsCollection
             else
                 return f;
         }
-        
+
     }
-    
-    
+
     private void setBGValue(int index)
     {
-        float v = this.stat_objects.get(index-1).sum;
-        float new_val = da_pump.getBGValueDifferent(DataAccessCGMS.BG_MGDL, v);
-        
+        float v = this.stat_objects.get(index - 1).sum;
+        float new_val = da_pump.getBGValueDifferent(DataAccessPlugInBase.BG_MGDL, v);
+
         setValue(index, new_val);
     }
-    
+
     private float getValueInternal(int index)
     {
-        return this.stat_objects.get(index-1).getStatistics();
+        return this.stat_objects.get(index - 1).getStatistics();
     }
-    
-    
+
     private void setValue(int index, float val)
     {
-        this.stat_objects.get(index-1).sum = val;
+        this.stat_objects.get(index - 1).sum = val;
     }
-    
-    
-	
-}	
+
+}

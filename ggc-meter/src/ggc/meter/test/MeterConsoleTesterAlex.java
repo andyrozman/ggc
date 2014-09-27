@@ -64,7 +64,6 @@ import com.atech.utils.data.TimeZoneUtil;
  *  Author: Alex {abalaban1@yahoo.ca}
  */
 
-
 public class MeterConsoleTesterAlex // extends JFrame
 {
 
@@ -124,20 +123,20 @@ public class MeterConsoleTesterAlex // extends JFrame
         try
         {
             Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
-    
+
             System.out.println(" --- List Serial Ports -----");
-    
+
             for (int i = 0; i < vct.size(); i++)
             {
                 System.out.println(vct.get(i));
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.out.println("Exception getting serial ports. Ex: " + ex);
             ex.printStackTrace();
         }
-        
+
     }
 
     /**
@@ -151,9 +150,13 @@ public class MeterConsoleTesterAlex // extends JFrame
         {
 
             if (args.length == 0)
+            {
                 new MeterConsoleTesterAlex("COM5");
+            }
             else
+            {
                 new MeterConsoleTesterAlex(args[0]);
+            }
 
         }
         catch (Exception ex)

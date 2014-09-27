@@ -8,7 +8,6 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.SwingConstants;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -34,20 +33,20 @@ import javax.swing.SwingConstants;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class ConfigCellRenderer extends DefaultListCellRenderer
 {
 
     private static final long serialVersionUID = -2728552153803274776L;
     DataAccess da = DataAccess.getInstance();
 
+    @Override
     @SuppressWarnings("rawtypes")
-    public Component getListCellRendererComponent(
-                                                 JList list,
-                                                 Object value,   // value to display
-                                                 int index,      // cell index
-                                                 boolean iss,    // is the cell selected
-                                                 boolean chf)    // the list and the cell have the focus
+    public Component getListCellRendererComponent(JList list, Object value, // value
+                                                                            // to
+                                                                            // display
+            int index, // cell index
+            boolean iss, // is the cell selected
+            boolean chf) // the list and the cell have the focus
     {
         super.getListCellRendererComponent(list, value, index, iss, chf);
         setIcon(da.config_icons[index]);

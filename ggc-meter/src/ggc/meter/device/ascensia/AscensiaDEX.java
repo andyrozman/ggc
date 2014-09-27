@@ -34,7 +34,6 @@ import javax.swing.ImageIcon;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class AscensiaDEX extends AscensiaMeter
 {
 
@@ -45,7 +44,6 @@ public class AscensiaDEX extends AscensiaMeter
     {
     }
 
-    
     /**
      * Constructor
      * 
@@ -55,19 +53,17 @@ public class AscensiaDEX extends AscensiaMeter
     {
         super(cmp);
     }
-    
-    
-	/**
+
+    /**
      * Constructor
      * 
-	 * @param portName
-	 * @param writer
-	 */
-	public AscensiaDEX(String portName, OutputWriter writer) 
-	{
-		super(portName, writer);
-	}
-
+     * @param portName
+     * @param writer
+     */
+    public AscensiaDEX(String portName, OutputWriter writer)
+    {
+        super(portName, writer);
+    }
 
     /**
      * Constructor
@@ -80,13 +76,10 @@ public class AscensiaDEX extends AscensiaMeter
     {
         super(comm_parameters, writer, da);
     }
-	
-	
-	
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -97,7 +90,6 @@ public class AscensiaDEX extends AscensiaMeter
     {
         return "DEX";
     }
-
 
     /**
      * getIcon - Get Icon of meter
@@ -110,7 +102,6 @@ public class AscensiaDEX extends AscensiaMeter
         return null;
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -120,7 +111,6 @@ public class AscensiaDEX extends AscensiaMeter
     {
         return "ascensia_dex2.png";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -132,8 +122,7 @@ public class AscensiaDEX extends AscensiaMeter
     {
         return MeterDevicesIds.METER_ASCENSIA_DEX;
     }
-    
-    
+
     /**
      * getInstructions - get instructions for device
      * 
@@ -143,7 +132,7 @@ public class AscensiaDEX extends AscensiaMeter
     {
         return "INSTRUCTIONS_ASCENSIA_DEX";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -153,20 +142,18 @@ public class AscensiaDEX extends AscensiaMeter
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
-	
-	
+
     /** 
      * Get Device ClassName
      */
@@ -175,7 +162,6 @@ public class AscensiaDEX extends AscensiaMeter
         return "ggc.meter.device.ascensia.AscensiaDEX";
     }
 
-    
     /**
      * Maximum of records that device can store
      */
@@ -183,6 +169,5 @@ public class AscensiaDEX extends AscensiaMeter
     {
         return 100;
     }
-    
-	
+
 }

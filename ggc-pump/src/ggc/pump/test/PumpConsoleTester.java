@@ -46,7 +46,7 @@ import com.atech.utils.data.TimeZoneUtil;
  * Author: Andy {andy@atech-software.com}
  */
 
-public class PumpConsoleTester //extends JFrame
+public class PumpConsoleTester // extends JFrame
 {
 
     String path_to_test_files = "../../test/";
@@ -73,12 +73,12 @@ public class PumpConsoleTester //extends JFrame
         try
         {
             startRoche(portName);
-            //startAnimas();
-            //startCosmo();
-            //startDana(portName);
-            //startMinimed("./dta/CareLink-Export-1213803114904.csv");
-            //startMinimed("");
-            //test();
+            // startAnimas();
+            // startCosmo();
+            // startDana(portName);
+            // startMinimed("./dta/CareLink-Export-1213803114904.csv");
+            // startMinimed("");
+            // test();
         }
         catch (Exception ex)
         {
@@ -122,31 +122,33 @@ public class PumpConsoleTester //extends JFrame
      */
     public void startRoche(String portName) throws Exception
     {
-        DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
-        //dap.setHelpContext(da.getHelpContext());
-        //dap.setPlugInServerInstance(this);
-        //dap.createDb(da.getHibernateDb());
+        DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
+        // dap.setHelpContext(da.getHelpContext());
+        // dap.setPlugInServerInstance(this);
+        // dap.createDb(da.getHibernateDb());
         dap.initAllObjects();
         dap.loadSpecialParameters();
-        //this.backup_restore_enabled = true;
+        // this.backup_restore_enabled = true;
 
-        //da.loadSpecialParameters();
+        // da.loadSpecialParameters();
 
-        //        AccuChekSpirit acs = new AccuChekSpirit("", new ConsoleOutputWriter());
-        //acs.processXml(new File("../test/I0014072.XML"));
-        //        acs.processXml(new File("../test/I0026117_2303_2010.XML"));
+        // AccuChekSpirit acs = new AccuChekSpirit("", new
+        // ConsoleOutputWriter());
+        // acs.processXml(new File("../test/I0014072.XML"));
+        // acs.processXml(new File("../test/I0026117_2303_2010.XML"));
 
         path_to_test_files = "d:\\";
 
         AccuChekCombo acc = new AccuChekCombo("", new ConsoleOutputWriter());
         acc.processXml(new File(path_to_test_files + "I0122425_2014_0706-0918.XML"));
-        // I0122425_1112_2010.XML, I0122425_1510_2010.XML , I0122425_2808_2010.XML
+        // I0122425_1112_2010.XML, I0122425_1510_2010.XML ,
+        // I0122425_2808_2010.XML
 
-        //"../test/I0026117.XML"));
-        //acs.test();
+        // "../test/I0026117.XML"));
+        // acs.test();
 
-        //AccuChekSmartPixPump pp = (AccuChekSmartPixPump)acs;
-        //pp.test();
+        // AccuChekSmartPixPump pp = (AccuChekSmartPixPump)acs;
+        // pp.test();
 
     }
 
@@ -158,27 +160,28 @@ public class PumpConsoleTester //extends JFrame
      */
     public void startMinimed(String file) throws Exception
     {
-        //MinimedCareLink mcl = new MinimedCareLink();
-        //mcl.parseExportFile(new File(file));
-        //MinimedSMP msp = new MinimedSMP("f:\\Rozman_A_Plus_20090423.mmp");
+        // MinimedCareLink mcl = new MinimedCareLink();
+        // mcl.parseExportFile(new File(file));
+        // MinimedSMP msp = new MinimedSMP("f:\\Rozman_A_Plus_20090423.mmp");
 
         DataAccess da = DataAccess.getInstance();
 
         GGCDb db = new GGCDb(da);
-        //db.initDb();
+        // db.initDb();
 
         da.setDb(db);
 
         DataAccessPump dap = DataAccessPump.createInstance(da.getLanguageManager());
-        //dap.setHelpContext(da.getHelpContext());
-        //dap.setPlugInServerInstance(this);
-        //        dap.createDb(da.getHibernateDb());
+        // dap.setHelpContext(da.getHelpContext());
+        // dap.setPlugInServerInstance(this);
+        // dap.createDb(da.getHibernateDb());
         dap.initAllObjects();
         dap.loadSpecialParameters();
-        //this.backup_restore_enabled = true;
+        // this.backup_restore_enabled = true;
 
         da.loadSpecialParameters();
-        //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
+        // System.out.println("PumpServer: " +
+        // m_da.getSpecialParameters().get("BG"));
 
         dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
 
@@ -188,8 +191,9 @@ public class PumpConsoleTester //extends JFrame
                 MinimedCareLink.READ_DEVICE_DATA);
         mcl.parseExportFile(new File(path_to_test_files + "CareLink-Export-1213803114904.csv"));
 
-        //MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp", DataAccessPump.getInstance());
-        //msp.readData();
+        // MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp",
+        // DataAccessPump.getInstance());
+        // msp.readData();
 
     }
 
@@ -205,18 +209,19 @@ public class PumpConsoleTester //extends JFrame
 
         da.setDb(db);
 
-        DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
+        DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
 
-        //DataAccessPump dap = DataAccessPump.getInstance();
-        //        dap.setHelpContext(da.getHelpContext());
-        //dap.setPlugInServerInstance(this);
+        // DataAccessPump dap = DataAccessPump.getInstance();
+        // dap.setHelpContext(da.getHelpContext());
+        // dap.setPlugInServerInstance(this);
         dap.createDb(da.getHibernateDb());
         dap.initAllObjects();
         dap.loadSpecialParameters();
-        //this.backup_restore_enabled = true;
+        // this.backup_restore_enabled = true;
 
         da.loadSpecialParameters();
-        //System.out.println("PumpServer: " + m_da.getSpecialParameters().get("BG"));
+        // System.out.println("PumpServer: " +
+        // m_da.getSpecialParameters().get("BG"));
 
         dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
 
@@ -230,39 +235,34 @@ public class PumpConsoleTester //extends JFrame
      */
     public void startCosmo()
     {
-        //DataAccess da = DataAccess.getInstance();
+        // DataAccess da = DataAccess.getInstance();
 
         /*
          * GGCDb db = new GGCDb(da); db.initDb();
-         * 
          * da.setDb(db);
          */
 
-        //DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
+        // DataAccessPump dap = DataAccessPump.createInstance(new
+        // LanguageManager(new GGCLanguageManagerRunner())); //.getInstance();
 
-        //DataAccessPump dap = DataAccessPump.getInstance();
-        //        dap.setHelpContext(da.getHelpContext());
-        //dap.setPlugInServerInstance(this);
+        // DataAccessPump dap = DataAccessPump.getInstance();
+        // dap.setHelpContext(da.getHelpContext());
+        // dap.setPlugInServerInstance(this);
         /*
          * dap.createDb(da.getHibernateDb()); dap.initAllObjects();
          * dap.loadSpecialParameters(); //this.backup_restore_enabled = true;
-         * 
          * da.loadSpecialParameters(); //System.out.println("PumpServer: " +
          * m_da.getSpecialParameters().get("BG"));
-         * 
          * dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters
          * ().get("BG")));
-         * 
-         * 
          * //FRC_EZManager_v2 ezm = new FRC_EZManager_v2(new
          * ConsoleOutputWriter());
          * //ezm.readFile("/home/andy/workspace/EZMD.mdb");
-         * 
          * //CoPilot cp = new CoPilot(dap);
          */
 
-        //        CoPilot cp = new CoPilot(dap);
-        //        cp.readFile("/home/andy/workspace/GGC Desktop/test/CoPilot_Arch.XML");
+        // CoPilot cp = new CoPilot(dap);
+        // cp.readFile("/home/andy/workspace/GGC Desktop/test/CoPilot_Arch.XML");
 
     }
 
@@ -295,8 +295,8 @@ public class PumpConsoleTester //extends JFrame
      */
     public static void something()
     {
-        //String input = "0-400=0.2";
-        //String[] ss = input.split("[-=]");
+        // String input = "0-400=0.2";
+        // String[] ss = input.split("[-=]");
 
     }
 

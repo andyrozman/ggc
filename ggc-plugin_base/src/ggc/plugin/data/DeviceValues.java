@@ -1,6 +1,5 @@
 package ggc.plugin.data;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -27,14 +26,12 @@ package ggc.plugin.data;
  *  Author: Andy {andy@atech-software.com}
  */
 
+// IMPORTANT NOTICE:
+// This class is not implemented yet.
 
-
-//IMPORTANT NOTICE: 
-//This class is not implemented yet.
-
-public class DeviceValues 
+public class DeviceValues
 {
 
-	// TODO: Make whole class
-	
-}	
+    // TODO: Make whole class
+
+}

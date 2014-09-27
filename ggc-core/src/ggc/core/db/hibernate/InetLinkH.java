@@ -1,12 +1,14 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class InetLinkH implements Serializable {
+public class InetLinkH implements Serializable
+{
 
     /**
      * 
@@ -29,14 +31,16 @@ public class InetLinkH implements Serializable {
      * @param name 
      * @param description 
      * @param comment */
-    public InetLinkH(String name, String description, String comment) {
+    public InetLinkH(String name, String description, String comment)
+    {
         this.name = name;
         this.description = description;
         this.comment = comment;
     }
 
     /** default constructor */
-    public InetLinkH() {
+    public InetLinkH()
+    {
     }
 
     /**
@@ -59,13 +63,12 @@ public class InetLinkH implements Serializable {
         this.id = id;
     }
 
-
     /**
      * Get Name
      * 
      * @return name
      */
-    public String getName() 
+    public String getName()
     {
         return this.name;
     }
@@ -75,18 +78,17 @@ public class InetLinkH implements Serializable {
      * 
      * @param name as string
      */
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
-
 
     /**
      * Get Description
      * 
      * @return description parameter
      */
-    public String getDescription() 
+    public String getDescription()
     {
         return this.description;
     }
@@ -96,7 +98,7 @@ public class InetLinkH implements Serializable {
      * 
      * @param description parameter
      */
-    public void setDescription(String description) 
+    public void setDescription(String description)
     {
         this.description = description;
     }
@@ -121,19 +123,18 @@ public class InetLinkH implements Serializable {
         this.comment = comment;
     }
 
-
     /** 
      * Custom equals implementation
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof InetLinkH) ) return false;
+        if (!(other instanceof InetLinkH))
+            return false;
         InetLinkH castOther = (InetLinkH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -141,18 +142,19 @@ public class InetLinkH implements Serializable {
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

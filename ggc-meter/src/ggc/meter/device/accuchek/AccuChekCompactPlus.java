@@ -32,10 +32,9 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class AccuChekCompactPlus extends AccuChekSmartPixMeter
 {
-    
+
     /**
      * Constructor
      * 
@@ -45,8 +44,7 @@ public class AccuChekCompactPlus extends AccuChekSmartPixMeter
     {
         super(cmp);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -57,8 +55,7 @@ public class AccuChekCompactPlus extends AccuChekSmartPixMeter
     {
         super(drive_letter, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -70,12 +67,10 @@ public class AccuChekCompactPlus extends AccuChekSmartPixMeter
     {
         super(comm_parameters, writer, da);
     }
-    
-    
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of meter. 
@@ -87,7 +82,6 @@ public class AccuChekCompactPlus extends AccuChekSmartPixMeter
         return "CompactPlus";
     }
 
-
     /**
      * getIconName - Get Icon of meter
      * 
@@ -97,7 +91,6 @@ public class AccuChekCompactPlus extends AccuChekSmartPixMeter
     {
         return "ac_compact_plus.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -110,7 +103,6 @@ public class AccuChekCompactPlus extends AccuChekSmartPixMeter
         return MeterDevicesIds.METER_ACCUCHEK_COMPACT_PLUS;
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -121,7 +113,7 @@ public class AccuChekCompactPlus extends AccuChekSmartPixMeter
     {
         return "INSTRUCTIONS_ACCUCHEK_COMPACTPLUS";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -131,41 +123,39 @@ public class AccuChekCompactPlus extends AccuChekSmartPixMeter
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
-    
-    
+
     /**
      * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory
      * 
      * @return number
      */
+    @Override
     public int getMaxMemoryRecords()
     {
         return 300;
     }
-    
-    
+
     /**
      * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
      * @return number of elements
      */
+    @Override
     public int getNrOfElementsFor1s()
     {
         return 10;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -175,6 +165,5 @@ public class AccuChekCompactPlus extends AccuChekSmartPixMeter
     {
         return "ggc.meter.device.accuchek.AccuChekCompactPlus";
     }
-    
-    
+
 }

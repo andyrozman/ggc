@@ -44,7 +44,7 @@ import com.atech.graphics.calendar.DateRangeData;
  * @author rumbi
  * @author andy
  */
-public class PlotSelectorData implements Cloneable //, ReadablePlotData
+public class PlotSelectorData implements Cloneable // , ReadablePlotData
 {
     boolean plotBG = true;
     boolean plotBGDayAvg = false;
@@ -70,31 +70,30 @@ public class PlotSelectorData implements Cloneable //, ReadablePlotData
     boolean plotMeals = false;
 
     DateRangeData range_data;
-    
+
     /**
      * Time Range: 1 Week
      */
-//    public static final int TIME_RANGE_1_WEEK = 1;
+    // public static final int TIME_RANGE_1_WEEK = 1;
     /**
      * Time Range: 1 Month
      */
-//    public static final int TIME_RANGE_1_MONTH = 2;
+    // public static final int TIME_RANGE_1_MONTH = 2;
     /**
      * Time Range: 3 Months
      */
-//    public static final int TIME_RANGE_3_MONTHS = 3;
+    // public static final int TIME_RANGE_3_MONTHS = 3;
     /**
      * Time Range: Custom
      */
-//    public static final int TIME_RANGE_CUSTOM = 4;
-    
-  /*  
-    int time_range = TIME_RANGE_1_MONTH;
-    
-    GregorianCalendar time_range_from = null;
-    GregorianCalendar time_range_to = null;
-    */
-    
+    // public static final int TIME_RANGE_CUSTOM = 4;
+
+    /*
+     * int time_range = TIME_RANGE_1_MONTH;
+     * GregorianCalendar time_range_from = null;
+     * GregorianCalendar time_range_to = null;
+     */
+
     /**
      * Initializes all data as <code>false</code>.
      */
@@ -138,7 +137,6 @@ public class PlotSelectorData implements Cloneable //, ReadablePlotData
         this.range_data = data.range_data;
     }
 
-    
     /**
      * Get Date Range Data 
      * 
@@ -149,7 +147,6 @@ public class PlotSelectorData implements Cloneable //, ReadablePlotData
         return this.range_data;
     }
 
-    
     /**
      * Set Date Range Data
      *  
@@ -159,12 +156,7 @@ public class PlotSelectorData implements Cloneable //, ReadablePlotData
     {
         this.range_data = drd;
     }
-    
-    
-    
-    
-    
-    
+
     /**
      * (non-Javadoc)
      * 
@@ -524,39 +516,23 @@ public class PlotSelectorData implements Cloneable //, ReadablePlotData
     {
         return super.clone();
     }
-    
+
+    @Override
     public String toString()
     {
-        
-        return "PlotSelectorData [" +
-        "bg=" +  plotBG +
-        ", bg_day_avg=" + plotBGDayAvg +
-        ", bg_reads=" + plotBGReadings +
 
-        ", chs=" + plotCH +
-        ", ch_day_avg=" + plotCHDayAvg +
-        ", ch_sum=" + plotCHSum +
+        return "PlotSelectorData [" + "bg=" + plotBG + ", bg_day_avg=" + plotBGDayAvg + ", bg_reads=" + plotBGReadings +
 
-        ", bg_reads=" + plotIns1 +
-        ", ins1_day_avg=" + plotIns1DayAvg +
-        ", ins1_sum=" + plotIns1Sum +
+        ", chs=" + plotCH + ", ch_day_avg=" + plotCHDayAvg + ", ch_sum=" + plotCHSum +
 
-        ", ins2=" + plotIns2 +
-        ", ins2_day_avg=" + plotIns2DayAvg +
-        ", ins2_sum=" + plotIns2Sum +
+        ", bg_reads=" + plotIns1 + ", ins1_day_avg=" + plotIns1DayAvg + ", ins1_sum=" + plotIns1Sum +
 
-        ", ins_all=" + plotInsTotal +
-        ", ins_all_day_avg=" + plotInsTotalDayAvg +
-        ", ins_all_sum=" + plotInsTotalSum + 
+        ", ins2=" + plotIns2 + ", ins2_day_avg=" + plotIns2DayAvg + ", ins2_sum=" + plotIns2Sum +
 
-        ", ins_per_ch=" + plotInsPerCH +
-        ", meals=" + plotMeals + "]";
-        
-        
-        
-        
-        
+        ", ins_all=" + plotInsTotal + ", ins_all_day_avg=" + plotInsTotalDayAvg + ", ins_all_sum=" + plotInsTotalSum +
+
+        ", ins_per_ch=" + plotInsPerCH + ", meals=" + plotMeals + "]";
+
     }
-    
-    
+
 }

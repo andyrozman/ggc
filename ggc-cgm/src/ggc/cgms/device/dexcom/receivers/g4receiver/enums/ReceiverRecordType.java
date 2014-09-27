@@ -4,20 +4,20 @@ import java.util.HashMap;
 
 public enum ReceiverRecordType
 {
-    ManufacturingData(0), // 
-    FirmwareParameterData(1), // 
+    ManufacturingData(0), //
+    FirmwareParameterData(1), //
     PCSoftwareParameter(2), //
-    SensorData(3), // 
+    SensorData(3), //
     EGVData(4), //
     CalSet(5), //
     Aberration(6), //
 
     InsertionTime(7), //
     ReceiverLogData(8), //
-    ReceiverErrorData(9), // 
+    ReceiverErrorData(9), //
     MeterData(10), //
     UserEventData(11), //
-    UserSettingData(12), // 
+    UserSettingData(12), //
     MaxValue(13), //
 
     None(-1);

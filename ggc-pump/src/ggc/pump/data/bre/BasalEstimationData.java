@@ -25,6 +25,7 @@ public class BasalEstimationData
     /** 
      * toString
      */
+    @Override
     public String toString()
     {
         return "BasalEstimationData [time=" + time + ",basal=" + basal_value + ",insulin=" + insulin_value;

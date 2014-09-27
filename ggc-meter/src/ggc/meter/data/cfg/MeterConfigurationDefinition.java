@@ -34,10 +34,9 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class MeterConfigurationDefinition implements DeviceConfigurationDefinition
 {
-    
+
     /**
      * Keyword used through configuration and configuration file describing device (for meter plugin, this
      * would be word METER).
@@ -98,6 +97,5 @@ public class MeterConfigurationDefinition implements DeviceConfigurationDefiniti
     {
         return "MeterTool_";
     }
-    
 
 }

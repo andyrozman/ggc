@@ -14,10 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 
 import com.atech.graphics.components.TimeComponent;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -57,7 +59,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
     JButton help_button;
     JLabel label_title = new JLabel();
     TimeComponent tc_from, tc_till;
-//    private Container m_parent = null;
+    // private Container m_parent = null;
     ProfileSubEntry m_pse;
     JSpinner sp_amount;
 
@@ -66,36 +68,33 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
      * 
      * @param dialog
      */
-    public ProfileEntryDialog(JDialog dialog) 
+    public ProfileEntryDialog(JDialog dialog)
     {
         super(dialog, "", true);
-//        m_parent = dialog;
+        // m_parent = dialog;
         ATSwingUtils.initLibrary();
-        //initParameters(ndV,nDate);
-        
+        // initParameters(ndV,nDate);
+
         m_pse = new ProfileSubPattern();
         init();
     }
 
-    
     /**
      * Constructor
      * 
      * @param pse
      * @param dialog
      */
-    public ProfileEntryDialog(ProfileSubEntry pse, JDialog dialog) 
+    public ProfileEntryDialog(ProfileSubEntry pse, JDialog dialog)
     {
         super(dialog, "", true);
-//        m_parent = dialog;
+        // m_parent = dialog;
         ATSwingUtils.initLibrary();
-        //initParameters(ndV,nDate);
+        // initParameters(ndV,nDate);
         m_pse = pse;
         init();
         load();
     }
-    
-    
 
     private void load()
     {
@@ -108,123 +107,106 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
     {
         m_pse.time_start = this.tc_from.getTime();
         m_pse.time_end = this.tc_till.getTime();
-        m_pse.amount = ((Float)this.sp_amount.getValue()).floatValue();
+        m_pse.amount = ((Float) this.sp_amount.getValue()).floatValue();
     }
 
     private void init()
     {
-        
+
         // FIXME
-        //m_da.enableHelp(this);
+        // m_da.enableHelp(this);
         m_da.addComponent(this);
-        
-        
+
         // FIXME
         int x = 100;
         int y = 100;
         int width = 390;
         int height = 280;
-        
-        // FIXME
-/*
-        Rectangle bnd = m_parent.getBounds();
 
-        x = (bnd.width/2) + bnd.x - (width/2);
-        y = (bnd.height/2) + bnd.y - (height/2);
-        */
+        // FIXME
+        /*
+         * Rectangle bnd = m_parent.getBounds();
+         * x = (bnd.width/2) + bnd.x - (width/2);
+         * y = (bnd.height/2) + bnd.y - (height/2);
+         */
         this.setBounds(x, y, width, height);
-        
+
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, width, height);
         panel.setLayout(null);
 
         this.getContentPane().add(panel);
 
-        label_title.setFont(m_da.getFont(DataAccessPump.FONT_BIG_BOLD));
-        label_title.setHorizontalAlignment(JLabel.CENTER);
+        label_title.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label_title.setHorizontalAlignment(SwingConstants.CENTER);
         label_title.setBounds(0, 15, width, 35);
         label_title.setText(m_ic.getMessage("PROFILE_BASAL_ENTRY"));
         panel.add(label_title);
-        
+
         this.setTitle(m_ic.getMessage("PROFILE_BASAL_ENTRY"));
 
-        
-        ATSwingUtils.getLabel(m_ic.getMessage("TIME_FROM") + ":", 
-                              30, 78, 100, 25, panel);
+        ATSwingUtils.getLabel(m_ic.getMessage("TIME_FROM") + ":", 30, 78, 100, 25, panel);
 
-        ATSwingUtils.getLabel(m_ic.getMessage("TIME_TILL") + ":", 
-            30, 110, 100, 25, panel);
-        
-        ATSwingUtils.getLabel(m_ic.getMessage("BASAL_AMOUNT") + ":", 
-            30, 145, 100, 25, panel);
+        ATSwingUtils.getLabel(m_ic.getMessage("TIME_TILL") + ":", 30, 110, 100, 25, panel);
+
+        ATSwingUtils.getLabel(m_ic.getMessage("BASAL_AMOUNT") + ":", 30, 145, 100, 25, panel);
 
         tc_from = new TimeComponent();
         tc_from.setBounds(160, 75, 100, 35);
         panel.add(tc_from);
-        
+
         tc_till = new TimeComponent();
         tc_till.setBounds(160, 110, 100, 35);
         panel.add(tc_till);
 
-        SpinnerNumberModel model = new SpinnerNumberModel(new Float(0.0f), new Float(0.0f), new Float(m_da.getMaxBasalValue()), new Float(m_da.getBasalStep()));
-        
+        SpinnerNumberModel model = new SpinnerNumberModel(new Float(0.0f), new Float(0.0f), new Float(
+                m_da.getMaxBasalValue()), new Float(m_da.getBasalStep()));
+
         sp_amount = new JSpinner(model);
         sp_amount.setBounds(160, 145, 55, 25);
         panel.add(sp_amount);
-        
 
-        ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 
-                               30, 200, 100, 25, panel, 
-                               ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, m_da);
-        
-        ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 
-                               140, 200, 100, 25, panel, 
-                               ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
+        ATSwingUtils.getButton("  " + m_ic.getMessage("OK"), 30, 200, 100, 25, panel, ATSwingUtils.FONT_NORMAL,
+            "ok.png", "ok", this, m_da);
 
-        
+        ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 140, 200, 100, 25, panel, ATSwingUtils.FONT_NORMAL,
+            "cancel.png", "cancel", this, m_da);
+
         this.help_button = this.m_da.createHelpButtonByBounds(250, 200, 100, 25, this);
         panel.add(this.help_button);
 
         m_da.enableHelp(this);
 
-/*
-        String button_command[] = { "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"),
-                                    "edit", m_ic.getMessage("EDIT"),
-                                    "ok", m_ic.getMessage("OK"),
-                                    "cancel", m_ic.getMessage("CANCEL"),
-                                    "help", m_ic.getMessage("HELP")
-        };
-
-        int button_coord[] = { 210, 228, 120, 0, 
-                               230, 258, 100, 0,
-                               50, 390, 80, 1,
-                               140, 390, 80, 1,
-                               250, 390, 80, 0
-        };
-
-        JButton button;
-        //int j=0;
-        for (int i=0, j=0; i<button_coord.length; i+=4, j+=2)
-        {
-            button = new JButton(button_command[j+1]);
-            button.setActionCommand(button_command[j]);
-            button.addActionListener(this);
-
-            if (button_coord[i+3]==0)
-            {
-                button.setEnabled(false);
-            }
-
-            addComponent(button, button_coord[i], button_coord[i+1], button_coord[i+2], panel);
-            
-            
-        }
-  */      
+        /*
+         * String button_command[] = { "update_ch",
+         * m_ic.getMessage("UPDATE_FROM_FOOD"),
+         * "edit", m_ic.getMessage("EDIT"),
+         * "ok", m_ic.getMessage("OK"),
+         * "cancel", m_ic.getMessage("CANCEL"),
+         * "help", m_ic.getMessage("HELP")
+         * };
+         * int button_coord[] = { 210, 228, 120, 0,
+         * 230, 258, 100, 0,
+         * 50, 390, 80, 1,
+         * 140, 390, 80, 1,
+         * 250, 390, 80, 0
+         * };
+         * JButton button;
+         * //int j=0;
+         * for (int i=0, j=0; i<button_coord.length; i+=4, j+=2)
+         * {
+         * button = new JButton(button_command[j+1]);
+         * button.setActionCommand(button_command[j]);
+         * button.addActionListener(this);
+         * if (button_coord[i+3]==0)
+         * {
+         * button.setEnabled(false);
+         * }
+         * addComponent(button, button_coord[i], button_coord[i+1],
+         * button_coord[i+2], panel);
+         * }
+         */
     }
-
-
-    
-
 
     /**
      * Invoked when an action occurs.
@@ -259,7 +241,6 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         return m_action_done;
     }
 
-    
     /**
      * Get Result - returns result of this dialog
      * 
@@ -269,8 +250,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
     {
         return this.m_pse;
     }
-    
-    
+
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
@@ -304,8 +284,6 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
     {
         return "PumpTool_Profile_Entry_Editor";
     }
-    
-    
 
     /**
      * For Test
@@ -316,10 +294,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         JDialog d = new JDialog();
         ProfileEntryDialog ped = new ProfileEntryDialog(d);
         ped.setVisible(true);
-        
+
     }
-    
-    
-    
 
 }

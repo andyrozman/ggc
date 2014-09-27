@@ -30,11 +30,9 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class MinimedSpecialConfig extends DeviceSpecialConfigPanelAbstract
 {
 
-    
     /**
      * Constructor
      * 
@@ -55,27 +53,26 @@ public class MinimedSpecialConfig extends DeviceSpecialConfigPanelAbstract
     public void readParametersFromGUI()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     public void initParameters()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     public void loadParametersToGUI()
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     public void initPanel()
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
 }

@@ -6,7 +6,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -42,16 +41,12 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-
 public interface DeviceInterface extends SelectableInterface
 {
 
-
-    //************************************************
-    //***      Device Identification Methods       ***
-    //************************************************
-
+    // ************************************************
+    // *** Device Identification Methods ***
+    // ************************************************
 
     /**
      * getName - Get Name of device. 
@@ -61,14 +56,12 @@ public interface DeviceInterface extends SelectableInterface
      */
     String getName();
 
-
     /**
      * getIcon - Get Icon of device
      * Should be implemented by device class.
      * @return 
      */
     String getIconName();
-
 
     /**
      * getDeviceId - Get Device Id, this are plugin specific and global (for example only one device 
@@ -79,8 +72,6 @@ public interface DeviceInterface extends SelectableInterface
      */
     int getDeviceId();
 
-    
-    
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -88,8 +79,7 @@ public interface DeviceInterface extends SelectableInterface
      * @return instructions for reading data 
      */
     String getInstructions();
-    
-    
+
     /**
      * getComment - Get Comment for device 
      * Should be implemented by device class.
@@ -97,18 +87,14 @@ public interface DeviceInterface extends SelectableInterface
      * @return comment or null
      */
     String getComment();
-    
 
-    
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    int getImplementationStatus(); 
-    
-   
+    int getImplementationStatus();
 
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
@@ -116,18 +102,15 @@ public interface DeviceInterface extends SelectableInterface
      * @return class name as string
      */
     String getDeviceClassName();
-    
-    
+
     /**
      * dispose this device interface
      */
     void dispose();
-    
 
-    //************************************************
-    //***          Device GUI Methods              ***
-    //************************************************
-
+    // ************************************************
+    // *** Device GUI Methods ***
+    // ************************************************
 
     /**
      * setDeviceAllowedActions - sets actions which are allowed by implementation
@@ -138,19 +121,12 @@ public interface DeviceInterface extends SelectableInterface
      * @param can_read_device_info
      * @param can_read_device_configuration
      */
-    public void setDeviceAllowedActions(boolean can_read_data, 
-    									boolean can_read_partitial_data,
-    									boolean can_read_device_info,
-    									boolean can_read_device_configuration);
-    
-    
-    
-    
+    public void setDeviceAllowedActions(boolean can_read_data, boolean can_read_partitial_data,
+            boolean can_read_device_info, boolean can_read_device_configuration);
 
-    //************************************************
-    //***       Device Implemented methods         ***
-    //************************************************
-    
+    // ************************************************
+    // *** Device Implemented methods ***
+    // ************************************************
 
     /**
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
@@ -160,8 +136,7 @@ public interface DeviceInterface extends SelectableInterface
      * @throws PlugInBaseException 
      */
     void readDeviceDataFull() throws PlugInBaseException;
-    
-    
+
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy 
      * (from some date to another)
@@ -170,14 +145,12 @@ public interface DeviceInterface extends SelectableInterface
      */
     void readDeviceDataPartitial() throws PlugInBaseException;
 
-
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
      * 
      * @throws PlugInBaseException
      */
     void readConfiguration() throws PlugInBaseException;
-    
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -186,9 +159,7 @@ public interface DeviceInterface extends SelectableInterface
      * @throws PlugInBaseException
      */
     void readInfo() throws PlugInBaseException;
-    
 
-    
     /**
      * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
      *    special comment about device (for example pix device, doesn't display anything till the end, which
@@ -196,9 +167,7 @@ public interface DeviceInterface extends SelectableInterface
      * @return 
      */
     public String getDeviceSpecialComment();
-    
-    
-    
+
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
      *    normal progress status, but with some special devices we calculate progress through other means.
@@ -206,16 +175,14 @@ public interface DeviceInterface extends SelectableInterface
      * @return true is progress status is special
      */
     public boolean hasSpecialProgressStatus();
-    
-    
+
     /**
      * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
      *     left to right side, without displaying progress.
      * @return
      */
     public boolean hasIndeterminateProgressStatus();
-    
-    
+
     /**
      * Is Device Communicating
      * 
@@ -223,12 +190,9 @@ public interface DeviceInterface extends SelectableInterface
      */
     public boolean isDeviceCommunicating();
 
-    
-
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
+    // ************************************************
+    // *** Available Functionality ***
+    // ************************************************
 
     /**
      * canReadData - Can Meter Class read data from device
@@ -237,16 +201,13 @@ public interface DeviceInterface extends SelectableInterface
      */
     public boolean canReadData();
 
-
-    
     /**
      * canReadDeviceInfo - tells if we can read info about device
      * 
      * @return true if action is allowed
      */
     public boolean canReadDeviceInfo();
-    
-    
+
     /**
      * canReadConfiguration - tells if we can read configuration from device
      * 
@@ -254,23 +215,19 @@ public interface DeviceInterface extends SelectableInterface
      */
     public boolean canReadConfiguration();
 
-
-
-    //************************************************
-    //***                    Test                  ***
-    //************************************************
+    // ************************************************
+    // *** Test ***
+    // ************************************************
 
     /**
      * Test
      */
     void test();
 
+    // ************************************************
+    // *** Connection type/parameters ***
+    // ************************************************
 
-    //************************************************
-    //***        Connection type/parameters        ***
-    //************************************************
-    
-    
     /**
      * getConnectionProtocol - returns id of connection protocol
      * 
@@ -278,39 +235,35 @@ public interface DeviceInterface extends SelectableInterface
      */
     public int getConnectionProtocol();
 
-    
-    
     /**
      * getConnectionPort - connection port data
      *
      * @deprecated use getConnectionParamter instead
      * @return connection port as string
      */
+    @Deprecated
     public String getConnectionPort();
-    
-    
+
     /**
      * Get Connection Parameters
      * 
      * @return
      */
     public String getConnectionParameters();
-    
+
     /**
      * Set Connection Parameters
      * 
      * @param param 
      */
     public void setConnectionParameters(String param);
-    
-    
+
     /**
      * Are Connection Parameters Valid - validate
      * 
      * @return
      */
     public boolean areConnectionParametersValid();
-    
 
     /**
      * Are Connection Parameters Valid (String) - validate
@@ -319,8 +272,7 @@ public interface DeviceInterface extends SelectableInterface
      * @return
      */
     public boolean areConnectionParametersValid(String param);
-    
-    
+
     /**
      * Has No Connection Parameters - In rare cases we have no parameters for a device (for example if 
      * we support just import from non-permanent location)
@@ -328,21 +280,18 @@ public interface DeviceInterface extends SelectableInterface
      * @return
      */
     public boolean hasNoConnectionParameters();
-    
-    
-    //************************************************
-    //***          Company Specific Settings                ***
-    //************************************************
 
-  
+    // ************************************************
+    // *** Company Specific Settings ***
+    // ************************************************
+
     /**
      * setDeviceCompany - set Company for device
      * 
      * @param company
      */
     public void setDeviceCompany(AbstractDeviceCompany company);
-    
-    
+
     /**
      * getDeviceCompany - get Company for device
      * 
@@ -350,13 +299,10 @@ public interface DeviceInterface extends SelectableInterface
      */
     public AbstractDeviceCompany getDeviceCompany();
 
-    
-    
-    //************************************************
-    //***             Download Support             ***
-    //************************************************
-    
-    
+    // ************************************************
+    // *** Download Support ***
+    // ************************************************
+
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
      * sort of specific device data - in most cases we call them generics, and they don't have ability
@@ -366,30 +312,26 @@ public interface DeviceInterface extends SelectableInterface
      */
     public boolean isReadableDevice();
 
-    
     /**
      * Get Download Support Type
      * 
      * @return
      */
     public int getDownloadSupportType();
-    
 
     /**
      * Get Download Support Type
      * 
      * @return
      */
-    //public int getDownloadSupportTypeConfiguration();
-    
-    
+    // public int getDownloadSupportTypeConfiguration();
+
     /**
      * Get Device Source Name
      * 
      * @return
      */
     public String getDeviceSourceName();
-    
 
     /**
      * Does this device support file download. Some devices have their native software, which offers export 
@@ -399,58 +341,48 @@ public interface DeviceInterface extends SelectableInterface
      * @return
      */
     public boolean isFileDownloadSupported();
-    
-    
+
     /**
      * Get File Download Types as FileReaderContext. 
      * 
      * @return
      */
     public GGCPlugInFileReaderContext[] getFileDownloadTypes();
-    
-    
-    
-    //************************************************
-    //***              Special Config              ***
-    //************************************************
-    
-    
+
+    // ************************************************
+    // *** Special Config ***
+    // ************************************************
+
     /**
      * Has Special Config
      * 
      * @return
      */
     public boolean hasSpecialConfig();
-    
-    
+
     /**
      * Get Special Config Panel
      * 
      * @return
      */
     public DeviceSpecialConfigPanelInterface getSpecialConfigPanel();
-    
-    
-    
+
     /**
      * Initialize Special Config
      */
     public void initSpecialConfig();
-    
-    
-    
+
     /**
      * Has Default Parameter (if device has default parameter)
      * 
      * @return
      */
     public boolean hasDefaultParameter();
-    
 
-    //************************************************
-    //***                 Pre-init                 ***
-    //************************************************
-    
+    // ************************************************
+    // *** Pre-init ***
+    // ************************************************
+
     /**
      * Has Pre Init - Some devices when started are in unusal state, this methods
      *    help us to put them in state we need. Example is AccuChek SmartPix, which is
@@ -460,16 +392,12 @@ public interface DeviceInterface extends SelectableInterface
      * @return
      */
     public boolean hasPreInit();
-    
-    
+
     /**
      * Pre Init Device - Does preinit
      * 
      * @see hasPreInit
      */
     public void preInitDevice();
-    
-    
-    
-    
+
 }

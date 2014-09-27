@@ -38,7 +38,6 @@ import com.atech.db.hibernate.HibernateDb;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PluginDb
 {
 
@@ -48,8 +47,7 @@ public class PluginDb
     private int m_errorCode = 0;
     private String m_errorDesc = "";
     private String m_addId = "";
-    
-    
+
     /**
      * Constructor
      * 
@@ -59,9 +57,7 @@ public class PluginDb
     {
         this.db = db;
     }
-    
 
-    
     /**
      * Get Session
      * 
@@ -72,10 +68,6 @@ public class PluginDb
         return this.db.getSession();
     }
 
-    
-    
-    
-    
     // ---
     // --- BASIC METHODS (Hibernate and DataLayer processing)
     // ---
@@ -131,7 +123,6 @@ public class PluginDb
 
     }
 
-    
     /**
      * Commit entry to database
      * 
@@ -142,21 +133,16 @@ public class PluginDb
     {
         if (obj instanceof DatabaseObjectHibernate)
         {
-            if (((DatabaseObjectHibernate)obj).getObjectUniqueId().equals("0"))
-            {
+            if (((DatabaseObjectHibernate) obj).getObjectUniqueId().equals("0"))
                 return this.add(obj);
-            }
             else
-            {
                 return this.edit(obj);
-            }
-            
+
         }
         else
             return false;
     }
-    
-    
+
     /**
      * Add hibernate entry to database
      * 
@@ -234,7 +220,6 @@ public class PluginDb
 
     }
 
-    
     /**
      * Edit hibernate entry in database
      * 
@@ -266,7 +251,6 @@ public class PluginDb
 
     }
 
-    
     /**
      * Delete hibernate entry to database
      * 
@@ -424,7 +408,6 @@ public class PluginDb
         return this.m_errorCode;
     }
 
-    
     /**
      * Get Error Description
      * 
@@ -435,7 +418,6 @@ public class PluginDb
         return this.m_errorDesc;
     }
 
-    
     /**
      * Set Error
      * 
@@ -448,6 +430,5 @@ public class PluginDb
         this.m_errorCode = code;
         this.m_errorDesc = source + " : " + desc;
     }
-    
 
 }

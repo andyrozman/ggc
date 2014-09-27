@@ -1,4 +1,4 @@
-package ggc.cgms.manager.company; 
+package ggc.cgms.manager.company;
 
 import ggc.cgms.device.dexcom.DexcomG4;
 import ggc.cgms.device.dexcom.DexcomSeven;
@@ -34,7 +34,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Dexcom extends AbstractDeviceCompany
 {
 
@@ -43,18 +42,17 @@ public class Dexcom extends AbstractDeviceCompany
      */
     public Dexcom()
     {
-        super(false,                            // empty devices
-            CGMSDevicesIds.COMPANY_DEXCOM,      // company_id
-            "Dexcom",                           // company name (full)
-            "Dexcom",                           // short company name
-            "DEXCOM_DESC",                      // company description
-            DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL,
-            DataAccessCGMS.getInstance());  // implementation status
-        
+        super(false, // empty devices
+                CGMSDevicesIds.COMPANY_DEXCOM, // company_id
+                "Dexcom", // company name (full)
+                "Dexcom", // short company name
+                "DEXCOM_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL, DataAccessCGMS.getInstance()); // implementation
+                                                                                                    // status
+
         this.addDevice(new DexcomSeven(this));
         this.addDevice(new DexcomSevenPlus(this));
         this.addDevice(new DexcomG4(this));
-    }    
-    
-    
+    }
+
 }

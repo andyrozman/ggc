@@ -35,14 +35,12 @@ import org.apache.commons.logging.LogFactory;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class PrecisionXtra extends OptiumXceed
 {
 
     @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog(PrecisionXtra.class);
-    
-    
+
     /**
      * Constructor
      */
@@ -50,7 +48,7 @@ public class PrecisionXtra extends OptiumXceed
     {
         super();
     }
-    
+
     /**
      * Constructor for device manager
      * 
@@ -60,9 +58,7 @@ public class PrecisionXtra extends OptiumXceed
     {
         super(cmp);
     }
-    
-    
-    
+
     /**
      * Constructor
      * 
@@ -73,8 +69,7 @@ public class PrecisionXtra extends OptiumXceed
     {
         super(portName, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -87,10 +82,10 @@ public class PrecisionXtra extends OptiumXceed
         super(comm_parameters, writer, da);
     }
 
-
     /** 
      * Get Device ClassName
      */
+    @Override
     public String getDeviceClassName()
     {
         return "ggc.meter.device.abbott.PrecisionXtra";
@@ -101,6 +96,7 @@ public class PrecisionXtra extends OptiumXceed
      * 
      * @return id of device within company
      */
+    @Override
     public int getDeviceId()
     {
         return MeterDevicesIds.METER_ABBOTT_PRECISION_XTRA;
@@ -111,6 +107,7 @@ public class PrecisionXtra extends OptiumXceed
      * 
      * @return icon name
      */
+    @Override
     public String getIconName()
     {
         return "ab_precision_xtra.jpg";
@@ -121,45 +118,44 @@ public class PrecisionXtra extends OptiumXceed
      * 
      * @return name of meter
      */
+    @Override
     public String getName()
     {
         return "Abbott Precision Xtra";
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * 
      * @return instructions for reading data 
      */
+    @Override
     public String getInstructions()
     {
         return "INSTRUCTIONS_ABBOTT_OPTIUMXCEED";
     }
-    
 
     /**
      * getComment - Get Comment for device 
      * 
      * @return comment or null
      */
+    @Override
     public String getComment()
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    @Override
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
-    
-    
-}
 
+}

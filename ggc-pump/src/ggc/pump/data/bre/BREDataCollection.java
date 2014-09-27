@@ -6,40 +6,39 @@ import java.util.ArrayList;
 /**
  * The Class BREDataCollection.
  */
-public class BREDataCollection //extends ArrayList<BasalRateEstimatorData> 
+public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
 {
 
     /**
      * The bg.
      */
     ArrayList<BREData> bg;
-    
+
     /**
      * The basal_old.
      */
     ArrayList<BREData> basal_old;
-    
+
     /**
      * The basal_new.
      */
     ArrayList<BREData> basal_new;
-    
+
     /**
      * The ratios.
      */
     ArrayList<RatioData> ratios;
-    
+
     /**
      * The ratios_graph.
      */
     ArrayList<RatioData> ratios_graph;
-    
+
     /**
      * The basal_estimation.
      */
     ArrayList<BasalEstimationData> basal_estimation;
-    
-    
+
     /**
      * Instantiates a new bRE data collection.
      */
@@ -53,7 +52,6 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         basal_estimation = new ArrayList<BasalEstimationData>();
     }
 
-    
     /**
      * Adds the BREData
      * 
@@ -65,29 +63,29 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         switch (type)
         {
             case BREData.BRE_DATA_BASAL_NEW:
-            {
-                this.basal_new.add(data);
-            } break;
-            
+                {
+                    this.basal_new.add(data);
+                }
+                break;
+
             case BREData.BRE_DATA_BASAL_OLD:
-            {
-                this.basal_old.add(data);
-            } break;
-                
+                {
+                    this.basal_old.add(data);
+                }
+                break;
+
             case BREData.BRE_DATA_BG:
-            {
-                this.bg.add(data);
-            } break;
-                
-                
+                {
+                    this.bg.add(data);
+                }
+                break;
+
             default:
                 break;
         }
-        
-        
+
     }
-    
-    
+
     /**
      * Adds the BREData
      * 
@@ -101,7 +99,6 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         add(type, data);
     }
 
-    
     /**
      * Adds the BREData
      * 
@@ -115,7 +112,6 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         RatioData data = new RatioData(time_i, ratio_ch_insulin, ratio_bg_insulin, ratio_ch_bg);
         this.ratios.add(data);
     }
-    
 
     /**
      * Gets the data by type
@@ -130,19 +126,18 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         {
             case BREData.BRE_DATA_BASAL_NEW:
                 return this.basal_new;
-            
+
             case BREData.BRE_DATA_BASAL_OLD:
                 return this.basal_old;
-                
+
             default:
             case BREData.BRE_DATA_BG:
                 return this.bg;
-                
+
         }
-        
+
     }
 
-    
     /**
      * Gets the ratios collection
      * 
@@ -156,40 +151,38 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
         {
             case BREData.BRE_DATA_BASAL_RATIO:
                 return this.ratios;
-            
+
             case BREData.BRE_DATA_BASAL_RATIO_GRAPH:
             default:
                 return this.ratios_graph;
-                
+
         }
-        
+
     }
-    
-    
+
     /**
      * Process ratios
      */
     public void processRatios()
     {
-        
-        for(int i=0; i<this.ratios.size(); i++)
+
+        for (int i = 0; i < this.ratios.size(); i++)
         {
             RatioData rd = this.ratios.get(i);
-            
-            if (i==(this.ratios.size()-1))
+
+            if (i == this.ratios.size() - 1)
             {
                 rd.time_end = 2359;
             }
             else
             {
-                RatioData rd2 = this.ratios.get(i+1);
+                RatioData rd2 = this.ratios.get(i + 1);
                 rd.time_end = rd2.time_start - 1;
             }
         }
-        
+
     }
 
-    
     /**
      * Process old basals
      */
@@ -197,24 +190,23 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
     {
         processBasals(this.basal_old);
         /*
-        for(int i=0; i<this.basal_old.size(); i++)
-        {
-            BREData rd = this.basal_old.get(i);
-            
-            if (i==(this.basal_old.size()-1))
-            {
-                rd.time_end = 2359;
-            }
-            else
-            {
-                BREData rd2 = this.basal_old.get(i+1);
-                rd.time_end = rd2.time - 1;
-            }
-        }*/
-        
+         * for(int i=0; i<this.basal_old.size(); i++)
+         * {
+         * BREData rd = this.basal_old.get(i);
+         * if (i==(this.basal_old.size()-1))
+         * {
+         * rd.time_end = 2359;
+         * }
+         * else
+         * {
+         * BREData rd2 = this.basal_old.get(i+1);
+         * rd.time_end = rd2.time - 1;
+         * }
+         * }
+         */
+
     }
 
-    
     /**
      * Process new basals
      */
@@ -222,7 +214,6 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
     {
         processBasals(this.basal_new);
     }
-    
 
     /**
      * Process basals
@@ -231,29 +222,28 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
      */
     public void processBasals(ArrayList<BREData> list)
     {
-        
-        for(int i=0; i<list.size(); i++)
+
+        for (int i = 0; i < list.size(); i++)
         {
             BREData rd = list.get(i);
-            
-            if (i==0)
+
+            if (i == 0)
             {
                 rd.time = 0;
             }
-            
-            if (i==(list.size()-1))
+
+            if (i == list.size() - 1)
             {
                 rd.time_end = 2359;
             }
             else
             {
-                BREData rd2 = list.get(i+1);
+                BREData rd2 = list.get(i + 1);
                 rd.time_end = rd2.time - 1;
             }
         }
     }
-    
-    
+
     /**
      * Sets the basal estimation data
      * 
@@ -263,8 +253,7 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
     {
         this.basal_estimation = data;
     }
- 
-    
+
     /**
      * Gets the basal estimation data
      * 
@@ -274,5 +263,5 @@ public class BREDataCollection //extends ArrayList<BasalRateEstimatorData>
     {
         return this.basal_estimation;
     }
-    
+
 }

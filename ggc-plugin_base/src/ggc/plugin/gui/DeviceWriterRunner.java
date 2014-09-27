@@ -31,8 +31,8 @@ import ggc.plugin.data.DeviceDataHandler;
 public class DeviceWriterRunner extends Thread
 {
     DeviceExportDialog m_ded = null;
-    DeviceDataHandler m_ddh =  null;
-    
+    DeviceDataHandler m_ddh = null;
+
     /**
      * Constructor
      * 
@@ -44,14 +44,14 @@ public class DeviceWriterRunner extends Thread
         this.m_ded = ded;
         this.m_ddh = ddh;
     }
-    
+
     /** 
      * Thread running method
      */
+    @Override
     public void run()
     {
         this.m_ddh.executeExport(this.m_ded);
     }
-    
-    
+
 }

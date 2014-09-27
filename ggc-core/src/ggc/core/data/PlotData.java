@@ -1,5 +1,6 @@
 package ggc.core.data;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -75,23 +76,21 @@ public class PlotData implements Cloneable, ReadablePlotData
      * Time Range: Custom
      */
     public static final int TIME_RANGE_CUSTOM = 4;
-    
-    
+
     int time_range = TIME_RANGE_1_MONTH;
-    
+
     GregorianCalendar time_range_from = null;
     GregorianCalendar time_range_to = null;
-    
-    
+
     /**
      * Initializes all data as <code>false</code>.
      */
     public PlotData()
     {
         this.time_range_from = new GregorianCalendar();
-        this.time_range_from.add(GregorianCalendar.MONTH, -4);
+        this.time_range_from.add(Calendar.MONTH, -4);
         this.time_range_to = new GregorianCalendar();
-        this.time_range_to.add(GregorianCalendar.MONTH, -5);
+        this.time_range_to.add(Calendar.MONTH, -5);
     }
 
     /**
@@ -127,14 +126,12 @@ public class PlotData implements Cloneable, ReadablePlotData
         plotMeals = data.plotMeals;
 
         time_range = data.time_range;
-        
+
         time_range_from = data.time_range_from;
         time_range_to = data.time_range_to;
-    
-    
+
     }
 
-    
     /**
      * Get Time Range Type
      * 
@@ -145,7 +142,6 @@ public class PlotData implements Cloneable, ReadablePlotData
         return this.time_range;
     }
 
-    
     /**
      * Set Time Range Type
      * 
@@ -155,10 +151,7 @@ public class PlotData implements Cloneable, ReadablePlotData
     {
         this.time_range = type;
     }
-    
-    
-    
-    
+
     /**
      * Get Time Range From
      * 
@@ -169,7 +162,6 @@ public class PlotData implements Cloneable, ReadablePlotData
         return this.time_range_from;
     }
 
-    
     /**
      * Set Time Range From
      * 
@@ -179,9 +171,7 @@ public class PlotData implements Cloneable, ReadablePlotData
     {
         this.time_range_from = gc;
     }
-    
-    
-    
+
     /**
      * Get Time Range To
      * 
@@ -192,7 +182,6 @@ public class PlotData implements Cloneable, ReadablePlotData
         return this.time_range_to;
     }
 
-    
     /**
      * Set Time Range To
      * 
@@ -202,8 +191,7 @@ public class PlotData implements Cloneable, ReadablePlotData
     {
         this.time_range_to = gc;
     }
-    
-    
+
     /**
      * (non-Javadoc)
      * 

@@ -30,15 +30,13 @@ import com.atech.utils.file.FileReaderContext;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public interface GGCPlugInFileReaderContext extends FileReaderContext
 {
-    
+
     /**
      * Set OutputWriter
      * @param ow
      */
     void setOutputWriter(OutputWriter ow);
-    
 
 }

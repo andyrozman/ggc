@@ -68,7 +68,6 @@ import com.atech.help.HelpCapable;
  *          andyrozman {andy@atech-software.com}  
  */
 
-
 public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements MouseListener, ActionListener,
         ListSelectionListener, ItemListener, HelpCapable
 {
@@ -91,10 +90,12 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     private DailyGraphView dgv = null;
     long selected_id = 0;
 
-    private JPanel schemePanel;//Moved declarations out of the init() to be able to use them later in updateGraphView.
+    private JPanel schemePanel;// Moved declarations out of the init() to be
+                               // able to use them later in updateGraphView.
     private JPanel colorPanel;
     private JPanel testingPanel;
-    private Box box;           //End Moved declarations out of the init() to be able to use them later in updateGraphView.
+    private Box box; // End Moved declarations out of the init() to be able to
+                     // use them later in updateGraphView.
 
     /**
      * Constructor
@@ -129,7 +130,6 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         // m_da.enableHelp(this);
     }
 
-    
     private void init()
     {
         setLayout(null);
@@ -141,9 +141,9 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
         JLabel label = new JLabel(m_ic.getMessage("SELECTED_COLOR_SCHEME") + ":");
         label.setBounds(10, 13, 150, 30);
-        
+
         schemePanel.add(label);
-        
+
         cb_scheme = new JComboBox(av_schemes_names);
         cb_scheme.setBounds(170, 15, 140, 25);
         schemePanel.add(cb_scheme);
@@ -155,12 +155,9 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         bt_edit_scheme = new JButton(m_ic.getMessage("EDIT_DEL_SHORT"));
         bt_edit_scheme.setBounds(410, 15, 90, 25);
         schemePanel.add(bt_edit_scheme);
-        
-        
+
         this.add(schemePanel);
-        
-        
-        
+
         bt_new_scheme.addActionListener(this);
         bt_new_scheme.setActionCommand("add");
 
@@ -170,9 +167,8 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         cb_scheme.setSelectedItem(this.selected_sheme.getName());
         cb_scheme.addItemListener(this);
 
-
         // Color panel
-        
+
         colorPanel = new JPanel();
         colorPanel.setLayout(null);
         colorPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLORS")));
@@ -183,16 +179,15 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         itemList.setBorder(new LineBorder(Color.black, 1));
         itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         itemList.addListSelectionListener(this);
-        
-        //itemList.s
-        
+
+        // itemList.s
+
         JScrollPane scp = new JScrollPane(itemList);
-        scp.setBounds(10,20, 200, 75); // 80
+        scp.setBounds(10, 20, 200, 75); // 80
         colorPanel.add(scp);
-        
-        
-        //JPanel a = new JPanel(null);
-        //a.add(lblcolor = new JLabel(" "));
+
+        // JPanel a = new JPanel(null);
+        // a.add(lblcolor = new JLabel(" "));
 
         lblcolor = new JLabel(" ");
         lblcolor.setBounds(215, 20, 290, 75); // 80
@@ -200,44 +195,37 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         lblcolor.setBorder(BorderFactory.createLineBorder(Color.black));
         lblcolor.addMouseListener(this);
 
-//        colorPanel.add(itemList, BorderLayout.WEST);
-        colorPanel.add(lblcolor); //a, BorderLayout.CENTER);
+        // colorPanel.add(itemList, BorderLayout.WEST);
+        colorPanel.add(lblcolor); // a, BorderLayout.CENTER);
 
-        
-//        if (true)
-//            return;
-        
-        
-        
+        // if (true)
+        // return;
+
         testingPanel = new JPanel();
         testingPanel.setLayout(new BorderLayout());
         testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
         testingPanel.setBounds(0, 152, 515, 269);
-        
+
         dgv = new DailyGraphView(selected_sheme, createDailyGraphValues());
         dgv.setBounds(10, 17, 500, 50);
-        
-        //testingPanel.setPreferredSize(new Dimension(150, 170));
+
+        // testingPanel.setPreferredSize(new Dimension(150, 170));
         testingPanel.add(dgv);
 
         this.add(testingPanel);
-        
-        //colorPanel.setBounds(0, 50, 515, 130);
-        
-        /*
-        box = Box.createVerticalBox();
-        box.add(schemePanel);
-        box.add(colorPanel);
-        box.add(testingPanel);
 
-        add(box);
-*/
+        // colorPanel.setBounds(0, 50, 515, 130);
+
+        /*
+         * box = Box.createVerticalBox();
+         * box.add(schemePanel);
+         * box.add(colorPanel);
+         * box.add(testingPanel);
+         * add(box);
+         */
         itemList.setSelectedIndex(0);
     }
 
-    
-    
-    
     @SuppressWarnings("unused")
     private void init_old_v1()
     {
@@ -261,12 +249,11 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         cb_scheme.addItemListener(this);
 
         // Color scheme
-        
+
         itemList = new JList(items);
         itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         itemList.addListSelectionListener(this);
 
-        
         colorPanel = new JPanel(new BorderLayout());
         colorPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLORS")));
 
@@ -296,9 +283,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
         itemList.setSelectedIndex(0);
     }
-    
-    
-    
+
     /**
      * updateGraphView() updates the graphs in the preferences section to reflect
      * changes in mmol/l or mg/dl and the other values(high/low BG etc).
@@ -306,32 +291,30 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
      * 
      * @author henrik
      */
-   public void updateGraphView()
-   {
-       //if (true)
-       //    return;
+    public void updateGraphView()
+    {
+        // if (true)
+        // return;
 
-       
-        //box.remove(testingPanel);
-        //testingPanel = new JPanel(new BorderLayout());
-        //testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
-       testingPanel.removeAll(); 
-       
-       dgv = null;
-       dgv = new DailyGraphView(selected_sheme, createDailyGraphValues());
-       dgv.setBounds(8, 20, 500, 245);
-       //dgv.setBounds(0, 0, 510, 210);
-       
-       testingPanel.add(dgv);
-       
-       
-        //testingPanel.setPreferredSize(new Dimension(150, 170));
-        //testingPanel.add(dgv, BorderLayout.CENTER);
-        //box.add(testingPanel);
-        //box.validate();
-        //box.repaint();
-        
-   }
+        // box.remove(testingPanel);
+        // testingPanel = new JPanel(new BorderLayout());
+        // testingPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("COLOR_PREVIEW")));
+        testingPanel.removeAll();
+
+        dgv = null;
+        dgv = new DailyGraphView(selected_sheme, createDailyGraphValues());
+        dgv.setBounds(8, 20, 500, 245);
+        // dgv.setBounds(0, 0, 510, 210);
+
+        testingPanel.add(dgv);
+
+        // testingPanel.setPreferredSize(new Dimension(150, 170));
+        // testingPanel.add(dgv, BorderLayout.CENTER);
+        // box.add(testingPanel);
+        // box.validate();
+        // box.repaint();
+
+    }
 
     /**
      * Creates a sample piece of <code>{@link DailyValues data}</code> for the
@@ -382,22 +365,30 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
     /**
      * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
      */
-    public void mousePressed(MouseEvent e) { }
+    public void mousePressed(MouseEvent e)
+    {
+    }
 
     /**
      * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
      */
-    public void mouseReleased(MouseEvent e) { }
+    public void mouseReleased(MouseEvent e)
+    {
+    }
 
     /**
      * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
      */
-    public void mouseEntered(MouseEvent e) { }
+    public void mouseEntered(MouseEvent e)
+    {
+    }
 
     /**
      * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
      */
-    public void mouseExited(MouseEvent e) { }
+    public void mouseExited(MouseEvent e)
+    {
+    }
 
     /**
      * Get Color
@@ -410,25 +401,45 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         int color = 0;
 
         if (name.equals(m_ic.getMessage("BG_HIGH_ZONE")))
+        {
             color = this.selected_sheme.getColor_bg_high();
+        }
         else if (name.equals(m_ic.getMessage("BG_TARGET_ZONE")))
+        {
             color = this.selected_sheme.getColor_bg_target();
+        }
         else if (name.equals(m_ic.getMessage("BG_LOW_ZONE")))
+        {
             color = this.selected_sheme.getColor_bg_low();
+        }
         else if (name.equals(m_ic.getMessage("BG")))
+        {
             color = this.selected_sheme.getColor_bg();
+        }
         else if (name.equals(m_ic.getMessage("BG_AVERAGE")))
+        {
             color = this.selected_sheme.getColor_bg_avg();
+        }
         else if (name.equals(m_ic.getMessage("BREAD_UNITS")))
+        {
             color = this.selected_sheme.getColor_ch();
+        }
         else if (name.equals(m_ic.getMessage("INSULIN") + " " + settings.getIns1Abbr()))
+        {
             color = this.selected_sheme.getColor_ins1();
+        }
         else if (name.equals(m_ic.getMessage("INSULIN") + " " + settings.getIns2Abbr()))
+        {
             color = this.selected_sheme.getColor_ins2();
+        }
         else if (name.equals(m_ic.getMessage("INSULIN")))
+        {
             color = this.selected_sheme.getColor_ins();
+        }
         else if (name.equals(m_ic.getMessage("INS_SLASH_BU_QUOTIENT")))
+        {
             color = this.selected_sheme.getColor_ins_perbu();
+        }
 
         return m_da.getColor(color);
 
@@ -445,32 +456,51 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         int color = clr.getRGB();
 
         if (name.equals(m_ic.getMessage("BG_HIGH_ZONE")))
+        {
             this.selected_sheme.setColor_bg_high(color);
+        }
         else if (name.equals(m_ic.getMessage("BG_TARGET_ZONE")))
+        {
             this.selected_sheme.setColor_bg_target(color);
+        }
         else if (name.equals(m_ic.getMessage("BG_LOW_ZONE")))
+        {
             this.selected_sheme.setColor_bg_low(color);
+        }
         else if (name.equals(m_ic.getMessage("BG")))
+        {
             this.selected_sheme.setColor_bg(color);
+        }
         else if (name.equals(m_ic.getMessage("BG_AVERAGE")))
+        {
             this.selected_sheme.setColor_bg_avg(color);
+        }
         else if (name.equals(m_ic.getMessage("BREAD_UNITS")))
+        {
             this.selected_sheme.setColor_ch(color);
+        }
         else if (name.equals(m_ic.getMessage("INSULIN") + " " + settings.getIns1Abbr()))
+        {
             this.selected_sheme.setColor_ins1(color);
+        }
         else if (name.equals(m_ic.getMessage("INSULIN") + " " + settings.getIns2Abbr()))
+        {
             this.selected_sheme.setColor_ins2(color);
+        }
         else if (name.equals(m_ic.getMessage("INSULIN")))
+        {
             this.selected_sheme.setColor_ins(color);
+        }
         else if (name.equals(m_ic.getMessage("INS_SLASH_BU_QUOTIENT")))
+        {
             this.selected_sheme.setColor_ins_perbu(color);
+        }
     }
 
     /*
      * x private int findIndex(String col) { for (int i=0;
      * i<this.av_schemes_names.length; i++) { if
      * (this.av_schemes_names[i].equals(col)) { return i; } }
-     * 
      * return -1; }
      */
 
@@ -521,13 +551,13 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
                 // System.out.println("As Template: " + str[2]);
 
-                selected_sheme = new ColorSchemeH(str[1], 1, cs.getColor_bg(), cs.getColor_bg_avg(), cs
-                        .getColor_bg_low(), cs.getColor_bg_high(), cs.getColor_bg_target(), cs.getColor_ins(), cs
-                        .getColor_ins1(), cs.getColor_ins2(), cs.getColor_ins_perbu(), cs.getColor_ch());
+                selected_sheme = new ColorSchemeH(str[1], 1, cs.getColor_bg(), cs.getColor_bg_avg(),
+                        cs.getColor_bg_low(), cs.getColor_bg_high(), cs.getColor_bg_target(), cs.getColor_ins(),
+                        cs.getColor_ins1(), cs.getColor_ins2(), cs.getColor_ins_perbu(), cs.getColor_ch());
 
                 this.color_schemes.put(selected_sheme.getName(), selected_sheme);
 
-                String[] strs = new String[(this.av_schemes_names.length + 1)];
+                String[] strs = new String[this.av_schemes_names.length + 1];
 
                 int i = 0;
 
@@ -554,16 +584,16 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
             if (cs.getCustom_type() == 0)
             {
-                JOptionPane.showMessageDialog(this, m_ic.getMessage("PREDEFINED_SCHEME_CANT_BE_CHANGED"), m_ic
-                        .getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("PREDEFINED_SCHEME_CANT_BE_CHANGED"),
+                    m_ic.getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
             else
             {
                 // DataAccess.notImplemented(
                 // "PrefFonts...:actionPerformed.edit Non Custom");
-                SchemeEDDialog sed = new SchemeEDDialog(this.parent, av_schemes_names, (String) this.cb_scheme
-                        .getSelectedItem());
+                SchemeEDDialog sed = new SchemeEDDialog(this.parent, av_schemes_names,
+                        (String) this.cb_scheme.getSelectedItem());
 
                 if (sed.actionSuccessful())
                 {
@@ -618,17 +648,21 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
             this.cb_scheme.removeAllItems();
 
-            for (int j = 0; j < this.av_schemes_names.length; j++)
+            for (String av_schemes_name : this.av_schemes_names)
             {
-                this.cb_scheme.addItem(this.av_schemes_names[j]);
+                this.cb_scheme.addItem(av_schemes_name);
             }
 
             item_changed_status = true;
 
             if (action_delete)
+            {
                 this.cb_scheme.setSelectedIndex(0);
+            }
             else
+            {
                 this.cb_scheme.setSelectedIndex(sel_item);
+            }
         }
 
     }
@@ -644,7 +678,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
 
         for (Enumeration<String> en = this.color_schemes.keys(); en.hasMoreElements();)
         {
-            String key = (String) en.nextElement();
+            String key = en.nextElement();
             ColorSchemeH cs = this.color_schemes.get(key);
 
             if (cs.getCustom_type() == 1)

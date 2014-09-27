@@ -5,12 +5,12 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 
 import java.util.HashMap;
 
-public class ParserUtils {
+public class ParserUtils
+{
 
     // private static ParserUtils sParserUtils;
 
     private static HashMap<ParserType, DexcomCommandParserInterface> parsers = new HashMap<ParserType, DexcomCommandParserInterface>();
-
 
     static
     {
@@ -20,10 +20,10 @@ public class ParserUtils {
         parsers.put(ParserType.StringUTF8Parser, new StringUTF8Parser());
         parsers.put(ParserType.XmlParser, new XmlParser());
     }
-    
-    private ParserUtils() {
-    }
 
+    private ParserUtils()
+    {
+    }
 
     // public static ParserUtils getInstance() {
     // if (ParserUtils.sParserUtils == null) {
@@ -33,17 +33,18 @@ public class ParserUtils {
     // return ParserUtils.sParserUtils;
     // }
 
-    public static DexcomCommandParserInterface getParser(ParserType parserType) {
+    public static DexcomCommandParserInterface getParser(ParserType parserType)
+    {
         return parsers.get(parserType);
     }
 
-
-    public static DexcomCommandParserInterface getParser(CommandPacket cmdPacket) {
+    public static DexcomCommandParserInterface getParser(CommandPacket cmdPacket)
+    {
         return parsers.get(cmdPacket.getParserType());
     }
 
-
-    public static Object parsePacketResponse(CommandPacket cmdPacket) throws DexcomException {
+    public static Object parsePacketResponse(CommandPacket cmdPacket) throws DexcomException
+    {
         return getParser(cmdPacket).parse(cmdPacket);
     }
 

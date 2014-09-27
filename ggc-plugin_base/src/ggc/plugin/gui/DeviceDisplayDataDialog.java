@@ -36,6 +36,7 @@ import javax.swing.ScrollPaneConstants;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  * Application: GGC - GNU Gluco Control 
@@ -92,7 +93,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     DeviceDataHandler m_ddh;
     JFrame m_parent = null;
     JDialog m_parent_d = null;
-    
+
     boolean indeterminate = false;
 
     /*
@@ -106,12 +107,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
     /*
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da) { super();
-     * 
      * this.m_da = da; this.m_ic = da.getI18nControlInstance();
      * //this.loadConfiguration();
-     * 
      * this.mrr = new DeviceReaderRunner(m_da, this.configured_meter, this);
-     * 
      * dialogPreInit(); }
      */
 
@@ -138,7 +136,6 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         dialogPreInit();
     }
 
-    
     /**
      * Constructor
      * 
@@ -146,23 +143,22 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * @param da
      * @param ddh
      */
-   /* public DeviceDisplayDataDialog(JDialog parent, DataAccessPlugInBase da, DeviceDataHandler ddh)
-    {
-        super(parent, "", true);
+    /*
+     * public DeviceDisplayDataDialog(JDialog parent, DataAccessPlugInBase da,
+     * DeviceDataHandler ddh)
+     * {
+     * super(parent, "", true);
+     * this.m_da = da;
+     * this.m_ic = da.getI18nControlInstance();
+     * //this.m_parent_d = parent;
+     * this.m_ddh = ddh;
+     * this.m_ddh.dialog_data = this;
+     * // this.m_ddh.setTransferType(DeviceDataHandler.TRANSFER_READ_DATA);
+     * this.mrr = new DeviceReaderRunner(m_da, this.m_ddh);
+     * dialogPreInit();
+     * }
+     */
 
-        this.m_da = da;
-        this.m_ic = da.getI18nControlInstance();
-        //this.m_parent_d = parent;
-
-        this.m_ddh = ddh;
-        this.m_ddh.dialog_data = this;
-        // this.m_ddh.setTransferType(DeviceDataHandler.TRANSFER_READ_DATA);
-        this.mrr = new DeviceReaderRunner(m_da, this.m_ddh);
-
-        dialogPreInit();
-    }
-    */
-    
     /**
      * Constructor (for testing GUI)
      * 
@@ -187,13 +183,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     /*
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry
      * mce) { super();
-     * 
      * this.m_da = da; this.m_ic = da.getI18nControlInstance();
-     * 
      * this.configured_meter = mce;
-     * 
      * this.mrr = new DeviceReaderRunner(m_da, this.configured_meter, this);
-     * 
      * dialogPreInit(); }
      */
 
@@ -201,28 +193,28 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry
      * mce, Hashtable<String,?> meter_data, DevicePlugInServer server) {
      * super();
-     * 
      * this.m_da = da; this.m_ic = da.getI18nControlInstance();
-     * 
      * this.configured_meter = mce; this.meter_data = meter_data;
-     * 
      * this.mrr = new DeviceReaderRunner(m_da, this.configured_meter, this);
-     * 
      * this.server = server; dialogPreInit(); }
      */
 
     private void dialogPreInit()
     {
         if (m_ddh != null)
+        {
             setTitle(String.format(m_ic.getMessage("READ_DEVICE_DATA_TITLE"),
                 this.m_ddh.getConfiguredDevice().device_device, this.m_ddh.getConfiguredDevice().communication_port));
+        }
 
         m_da.addComponent(this);
 
         init();
 
         if (this.mrr != null)
+        {
             this.mrr.start();
+        }
 
         this.setVisible(true);
 
@@ -237,7 +229,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     public void setSpecialProgress(int value)
     {
         if (!this.indeterminate)
+        {
             this.progress.setValue(value);
+        }
     }
 
     private void addLogText(String s)
@@ -261,10 +255,12 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         int wide_add = 0;
 
         if (m_da.isDataDownloadSceenWide())
+        {
             wide_add = 200;
+        }
 
-        Font normal = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL);
-        Font normal_b = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL_BOLD);
+        Font normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        Font normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
 
         setBounds(0, 0, 480 + wide_add, 660);
 
@@ -466,7 +462,6 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         // int[] cw = { 110, 80, 70, 80, 30 };
 
         /*
-         * 
          * // removed TableColumn column = null; for (int i = 0; i <
          * this.m_da.getColumnsWidthTable().length; i++) { column =
          * table_in.getColumnModel().getColumn(i);
@@ -529,7 +524,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
         }
         else
+        {
             System.out.println("DeviceDisplayDataDialog::Unknown command: " + action);
+        }
 
     }
 
@@ -538,7 +535,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public void endOutput()
     {
-        //System.out.println("endOutput()");
+        // System.out.println("endOutput()");
         if (this.indeterminate)
         {
             this.progress.setIndeterminate(false);
@@ -557,8 +554,10 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public DeviceIdentification getDeviceIdentification()
     {
-        if (device_ident==null)
+        if (device_ident == null)
+        {
             device_ident = new DeviceIdentification(m_da.getI18nControlInstance());
+        }
         return device_ident;
     }
 
@@ -677,9 +676,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public void setStatus(int status)
     {
-        if ((this.reading_status == AbstractOutputWriter.STATUS_STOPPED_DEVICE)
-                || (this.reading_status == AbstractOutputWriter.STATUS_STOPPED_USER)
-                || (this.reading_status == AbstractOutputWriter.STATUS_READER_ERROR))
+        if (this.reading_status == AbstractOutputWriter.STATUS_STOPPED_DEVICE
+                || this.reading_status == AbstractOutputWriter.STATUS_STOPPED_USER
+                || this.reading_status == AbstractOutputWriter.STATUS_READER_ERROR)
             return;
 
         this.reading_status = status;
@@ -716,7 +715,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
         current_status = status;
 
-        if ((this.sub_status == null) || (this.sub_status.length() == 0))
+        if (this.sub_status == null || this.sub_status.length() == 0)
         {
             this.lbl_status.setText(this.m_da.getReadingStatuses()[status]);
         }
@@ -728,56 +727,56 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         switch (status)
         {
 
-        case AbstractOutputWriter.STATUS_DOWNLOADING: // downloading
-            {
-                this.bt_break.setEnabled(true);
-                this.bt_close.setEnabled(false);
-                this.bt_import.setEnabled(false);
-            }
-            break;
+            case AbstractOutputWriter.STATUS_DOWNLOADING: // downloading
+                {
+                    this.bt_break.setEnabled(true);
+                    this.bt_close.setEnabled(false);
+                    this.bt_import.setEnabled(false);
+                }
+                break;
 
-        case AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED: // finished
-            {
-                this.bt_break.setEnabled(false);
-                this.bt_close.setEnabled(true);
-                this.bt_import.setEnabled(true);
-                filter_combo.setEnabled(true);
-                sel_all.setEnabled(true);
-                unsel_all.setEnabled(true);
-                //this.progress.setIndeterminate(false);
-                
-            }
-            break;
+            case AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED: // finished
+                {
+                    this.bt_break.setEnabled(false);
+                    this.bt_close.setEnabled(true);
+                    this.bt_import.setEnabled(true);
+                    filter_combo.setEnabled(true);
+                    sel_all.setEnabled(true);
+                    unsel_all.setEnabled(true);
+                    // this.progress.setIndeterminate(false);
 
-        case AbstractOutputWriter.STATUS_READER_ERROR: // error
-            {
-                this.bt_break.setEnabled(false);
-                this.bt_close.setEnabled(true);
-                this.bt_import.setEnabled(false);
-                filter_combo.setEnabled(false);
-                sel_all.setEnabled(false);
-                unsel_all.setEnabled(false);
-            }
-            break;
+                }
+                break;
 
-        case AbstractOutputWriter.STATUS_STOPPED_DEVICE: // stopped - device
-        case AbstractOutputWriter.STATUS_STOPPED_USER: // stoped - user
-            {
-                this.bt_break.setEnabled(false);
-                this.bt_close.setEnabled(true);
-                this.bt_import.setEnabled(false);
-            }
-            break;
+            case AbstractOutputWriter.STATUS_READER_ERROR: // error
+                {
+                    this.bt_break.setEnabled(false);
+                    this.bt_close.setEnabled(true);
+                    this.bt_import.setEnabled(false);
+                    filter_combo.setEnabled(false);
+                    sel_all.setEnabled(false);
+                    unsel_all.setEnabled(false);
+                }
+                break;
 
-        case AbstractOutputWriter.STATUS_READY: // ready
-            // case 0: // none
-        default:
-            {
-                this.bt_break.setEnabled(false);
-                this.bt_close.setEnabled(false);
-                this.bt_import.setEnabled(false);
-            }
-            break;
+            case AbstractOutputWriter.STATUS_STOPPED_DEVICE: // stopped - device
+            case AbstractOutputWriter.STATUS_STOPPED_USER: // stoped - user
+                {
+                    this.bt_break.setEnabled(false);
+                    this.bt_close.setEnabled(true);
+                    this.bt_import.setEnabled(false);
+                }
+                break;
+
+            case AbstractOutputWriter.STATUS_READY: // ready
+                // case 0: // none
+            default:
+                {
+                    this.bt_break.setEnabled(false);
+                    this.bt_close.setEnabled(false);
+                    this.bt_import.setEnabled(false);
+                }
+                break;
         }
 
     }
@@ -795,9 +794,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     /*
      * public static void main(String[] args) { JFrame f = new JFrame();
      * f.setSize(800,600);
-     * 
      * DataAccessMeter.getInstance().addComponent(f);
-     * 
      * // MeterReadDialog mrd = new MeterDisplayDataDialog(); // new
      * AscensiaContour("COM12", new // ConsoleOutputWriter())); }
      */
@@ -861,7 +858,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public String getHelpId()
     {
-        //return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Reading_View";
+        // return m_da.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // "Reading_View";
         return "DeviceTool_Reading_View";
     }
 
@@ -919,20 +917,17 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         this.progress.setStringPainted(false);
     }
 
-
     public void addErrorMessage(String msg)
     {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 
     public int getErrorMessageCount()
     {
         // TODO Auto-generated method stub
         return 0;
     }
-
 
     public ArrayList<String> getErrorMessages()
     {

@@ -2,10 +2,12 @@ package ggc.core.data;
 
 import ggc.core.util.DataAccess;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 
 /**
@@ -36,13 +38,12 @@ import com.atech.utils.data.ATechDate;
  *          Andy {andy@atech-software.com}  
  */
 
-
 public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValues>
 {
 
     private Hashtable<String, DailyValues> m_dataTable = null;
     private DataAccess m_da = DataAccess.getInstance();
-    
+
     private long range_from = 0L;
     private GregorianCalendar range_from_gc = null;
     private long range_to = 0L;
@@ -55,10 +56,8 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     public static final int RANGE_MONTH = 3;
     public static final int RANGE_3_MONTHS = 4;
     public static final int RANGE_CUSTOM = 5;
-    
-    
-    private int type = DayValuesData.RANGE_NONE;
 
+    private int type = DayValuesData.RANGE_NONE;
 
     /**
      * Constructor
@@ -70,13 +69,13 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     {
         m_dataTable = new Hashtable<String, DailyValues>();
         this.type = DayValuesData.RANGE_CUSTOM;
-        
+
         this.setRangeFrom(from);
         this.setRangeTo(till);
     }
 
     // TODO: more constructors
-    
+
     /**
      * Add Day
      * 
@@ -85,7 +84,7 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     public void addDay(DailyValues dv)
     {
         // TODO: check range
-        m_dataTable.put(""+dv.getDate(), dv);
+        m_dataTable.put("" + dv.getDate(), dv);
     }
 
     /**
@@ -96,12 +95,12 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     public void addDayValueRow(DailyValuesRow dvr)
     {
         // TODO: check range
-        int date = (int)dvr.getDate();
-        //System.out.println(date);
+        int date = (int) dvr.getDate();
+        // System.out.println(date);
 
-        if (m_dataTable.containsKey(""+date))
+        if (m_dataTable.containsKey("" + date))
         {
-            DailyValues dv_int = m_dataTable.get(""+date);
+            DailyValues dv_int = m_dataTable.get("" + date);
             dv_int.addRow(dvr);
         }
         else
@@ -109,7 +108,7 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
             DailyValues dv = new DailyValues();
             dv.setDate(dvr.getDateTime());
             dv.addRow(dvr);
-            m_dataTable.put(""+date, dv);
+            m_dataTable.put("" + date, dv);
         }
     }
 
@@ -123,11 +122,10 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
      */
     public DailyValues getDailyValuesObject(int year, int month, int day)
     {
-        String days = ""+year + DataAccess.getLeadingZero(month, 2) + DataAccess.getLeadingZero(day, 2);
+        String days = "" + year + ATDataAccessAbstract.getLeadingZero(month, 2)
+                + ATDataAccessAbstract.getLeadingZero(day, 2);
         if (!m_dataTable.containsKey(days))
-        {
             return null;
-        }
         else
         {
             DailyValues dv = m_dataTable.get(days);
@@ -135,7 +133,6 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
         }
     }
 
-    
     /**
      * Set Range From
      * 
@@ -147,7 +144,6 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
         this.range_from = from;
         range_from_gc = new ATechDate(ATechDate.FORMAT_DATE_ONLY, from).getGregorianCalendar();
     }
-    
 
     /**
      * Set Range To
@@ -160,8 +156,7 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
         this.range_to = to;
         range_to_gc = new ATechDate(ATechDate.FORMAT_DATE_ONLY, to).getGregorianCalendar();
     }
-    
-    
+
     /**
      * Get From As Localized String
      * 
@@ -179,16 +174,13 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
      */
     public String getToAsLocalizedDate()
     {
-//        return "xx";
+        // return "xx";
         return m_da.getAsLocalizedDateString(this.range_to_gc, 2);
     }
-    
-    
-    //public static final int DATE_MONTH = 0;
-    //public static final int DATE_YEAR = 0;
-    
-    
-    
+
+    // public static final int DATE_MONTH = 0;
+    // public static final int DATE_YEAR = 0;
+
     /**
      * Get All Values
      * 
@@ -217,7 +209,6 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     {
         return this.range_from;
     }
-    
 
     /**
      * Get Range End (long)
@@ -229,7 +220,6 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
         return this.range_to;
     }
 
-    
     /**
      * Get Range Begin (ATechDate)
      * 
@@ -239,7 +229,6 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     {
         return new ATechDate(this.range_from);
     }
-    
 
     /**
      * Get Range End (ATechDate)
@@ -258,12 +247,12 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
      */
     public Iterator<DailyValues> iterator()
     {
-        //System.out.println("dasta: " + this.m_dataTable);
+        // System.out.println("dasta: " + this.m_dataTable);
         return this;
     }
 
     private long current_element = 0L;
-    
+
     /**
      * Has Next
      * 
@@ -271,50 +260,49 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
      */
     public boolean hasNext()
     {
-        
-        if (this.m_dataTable.size()==0)
+
+        if (this.m_dataTable.size() == 0)
             return false;
 
-        //System.out.println("current: " + this.current_element);
-        
-        if (this.current_element==this.range_to)  // we came to end
+        // System.out.println("current: " + this.current_element);
+
+        if (this.current_element == this.range_to) // we came to end
             return false;
         else
-        {
-            return (findNext(false)!=null);
-        }
+            return findNext(false) != null;
     }
 
-    
     private DailyValues findNext(boolean iterate)
     {
-        //long srch = 0L;
-        
+        // long srch = 0L;
+
         ATechDate atd = null;
-        
-        if (this.current_element==0)
+
+        if (this.current_element == 0)
         {
             atd = new ATechDate(ATechDate.FORMAT_DATE_ONLY, this.range_from);
         }
         else
         {
             atd = new ATechDate(ATechDate.FORMAT_DATE_ONLY, this.current_element);
-            atd.add(GregorianCalendar.DAY_OF_MONTH, 1);
+            atd.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        
-        //System.out.println("range: " + range_from);
-        //System.out.println("el: " +atd.getATDateTimeAsLong());
-        
+        // System.out.println("range: " + range_from);
+        // System.out.println("el: " +atd.getATDateTimeAsLong());
+
         boolean found = false;
         while (!(found = this.m_dataTable.containsKey("" + atd.getATDateTimeAsLong())))
         {
-            if (atd.getATDateTimeAsLong()==this.range_to)
+            if (atd.getATDateTimeAsLong() == this.range_to)
+            {
                 break;
+            }
             else
-                atd.add(GregorianCalendar.DAY_OF_MONTH, 1);
+            {
+                atd.add(Calendar.DAY_OF_MONTH, 1);
+            }
         }
-                
 
         if (!found)
             return null;
@@ -326,9 +314,9 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
             }
             return this.m_dataTable.get("" + atd.getATDateTimeAsLong());
         }
-        
+
     }
-    
+
     /**
      * Next Value
      * @see java.util.Iterator#next()
@@ -346,9 +334,7 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     public void remove()
     {
     }
-    
-    
-    
+
     /**
      * Size of collection
      * 
@@ -358,7 +344,5 @@ public class DayValuesData implements Iterable<DailyValues>, Iterator<DailyValue
     {
         return this.m_dataTable.size();
     }
-    
-    
-    
+
 }

@@ -39,8 +39,7 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public abstract class AbstractFileSelectorDialog extends JDialog implements ActionListener, HelpCapable 
+public abstract class AbstractFileSelectorDialog extends JDialog implements ActionListener, HelpCapable
 {
 
     private static final long serialVersionUID = -7597376030031612506L;
@@ -49,14 +48,9 @@ public abstract class AbstractFileSelectorDialog extends JDialog implements Acti
     protected I18nControlAbstract m_ic = null;
     protected JDialog dialog_parent = null;
     protected DeviceDataHandler m_ddh = null;
-    
-    
-    
-    
-    
-//    public abstract int[] getPanelSizes();
-    
-    
+
+    // public abstract int[] getPanelSizes();
+
     /**
      * Constructor
      * 
@@ -76,25 +70,23 @@ public abstract class AbstractFileSelectorDialog extends JDialog implements Acti
         m_da.centerJDialog(this, this.dialog_parent);
         this.setVisible(true);
     }
-    
+
     /**
      * Init
      */
     public abstract void init();
-    
-    
+
+    @Override
     public abstract Dimension getSize();
-    
-    
-    public Component getComponent() 
+
+    public Component getComponent()
     {
         return this;
     }
 
-    public JButton getHelpButton() 
+    public JButton getHelpButton()
     {
         return this.help_button;
     }
-    
-    
+
 }

@@ -15,7 +15,6 @@ import org.jfree.ui.Layer;
 import com.atech.graphics.graphs.GraphUtil;
 import com.atech.utils.ATDataAccessAbstract;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -52,29 +51,29 @@ public class GGCGraphUtil extends GraphUtil
     public Color backgroundColor = Color.WHITE;
     int BGUnit = DataAccess.BG_MGDL;
     JFreeChart chart;
-    GGCProperties settings;  
-    
+    GGCProperties settings;
+
     ChartPanel chartPanel;
-    //DataAccess dataAccessInst = DataAccess.getInstance();
-    //GGCProperties settings = dataAccessInst.getSettings();
+    // DataAccess dataAccessInst = DataAccess.getInstance();
+    // GGCProperties settings = dataAccessInst.getSettings();
     ColorSchemeH colorScheme; // = settings.getSelectedColorScheme();
     float maxBG = 200;
     float minBG = 50;
     float BGDiff = maxBG - minBG;
-    //RenderingHints renderingHints;
+    // RenderingHints renderingHints;
 
-    //private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
-    
-    String unitLabel; //removed ="mg/dl" to reflect changes  made in properties
-    
+    // private I18nControlAbstract m_ic =
+    // DataAccess.getInstance().getI18nControlInstance();
+
+    String unitLabel; // removed ="mg/dl" to reflect changes made in properties
+
     DataAccess m_da_local;
 
     /**
      * Static instance of Graph Util
      */
-    public static GGCGraphUtil s_graph_util; 
-    
-    
+    public static GGCGraphUtil s_graph_util;
+
     /**
      * Does some basic preparation needed by all graphs. Should be called from
      * all constructors and every subclass.
@@ -83,24 +82,23 @@ public class GGCGraphUtil extends GraphUtil
     {
         super(da);
 
-
-        //getRenderingQuality();
+        // getRenderingQuality();
     }
 
-    
     /**
      * Init Local
      * 
      * @see com.atech.graphics.graphs.GraphUtil#initLocal()
      */
+    @Override
     public void initLocal()
     {
-        //System.out.println("GGCGraphUtil");
-        
+        // System.out.println("GGCGraphUtil");
+
         m_da_local = DataAccess.getInstance();
-        
-        settings = m_da_local.getSettings(); //DataAccess.getSettings();
-        
+
+        settings = m_da_local.getSettings(); // DataAccess.getSettings();
+
         colorScheme = settings.getSelectedColorScheme();
         BGUnit = settings.getBG_unit();
 
@@ -122,10 +120,9 @@ public class GGCGraphUtil extends GraphUtil
         BGDiff = maxBG - minBG;
 
         getRenderingQuality();
-        
+
     }
-    
-    
+
     /**
      * Get Instance (Singelton)
      * 
@@ -134,13 +131,13 @@ public class GGCGraphUtil extends GraphUtil
      */
     public static GGCGraphUtil getInstance(ATDataAccessAbstract da)
     {
-        if (GGCGraphUtil.s_graph_util==null)
+        if (GGCGraphUtil.s_graph_util == null)
+        {
             GGCGraphUtil.s_graph_util = new GGCGraphUtil(da);
-        
+        }
+
         return GGCGraphUtil.s_graph_util;
     }
-    
-
 
     /**
      * Adds <code>{@link IntervalMarker IntervalMarkers}</code> to the passed
@@ -153,31 +150,30 @@ public class GGCGraphUtil extends GraphUtil
     public void applyMarkers(XYPlot plot)
     {
         if (plot == null)
-        {
             return;
-        }
 
         IntervalMarker lowBGMarker;
         IntervalMarker targetBGMarker;
 
-        //System.out.println("colorScheme: " + this.colorScheme);
-        //System.out.println("settings: " + this.settings);
-        //System.out.println("m_da_local: " + this.m_da_local);
-        
+        // System.out.println("colorScheme: " + this.colorScheme);
+        // System.out.println("settings: " + this.settings);
+        // System.out.println("m_da_local: " + this.m_da_local);
+
         switch (this.settings.getBG_unit())
         {
-        case DataAccess.BG_MMOL:
-            lowBGMarker = new IntervalMarker(0, settings.getBG2_TargetLow(), 
-                m_da_local.getColor(colorScheme.getColor_bg_low()));
-            targetBGMarker = new IntervalMarker(settings.getBG2_TargetLow(), settings.getBG2_TargetHigh(),
-                m_da_local.getColor(colorScheme.getColor_bg_target()));
-            break;
-        case DataAccess.BG_MGDL:
-        default:
-            lowBGMarker = new IntervalMarker(0, settings.getBG1_TargetLow(), m_da_local.getColor(colorScheme.getColor_bg_low()));
-            targetBGMarker = new IntervalMarker(settings.getBG1_TargetLow(), settings.getBG1_TargetHigh(),
-                m_da_local.getColor(colorScheme.getColor_bg_target()));
-            break;
+            case DataAccess.BG_MMOL:
+                lowBGMarker = new IntervalMarker(0, settings.getBG2_TargetLow(), m_da_local.getColor(colorScheme
+                        .getColor_bg_low()));
+                targetBGMarker = new IntervalMarker(settings.getBG2_TargetLow(), settings.getBG2_TargetHigh(),
+                        m_da_local.getColor(colorScheme.getColor_bg_target()));
+                break;
+            case DataAccess.BG_MGDL:
+            default:
+                lowBGMarker = new IntervalMarker(0, settings.getBG1_TargetLow(), m_da_local.getColor(colorScheme
+                        .getColor_bg_low()));
+                targetBGMarker = new IntervalMarker(settings.getBG1_TargetLow(), settings.getBG1_TargetHigh(),
+                        m_da_local.getColor(colorScheme.getColor_bg_target()));
+                break;
         }
 
         plot.clearRangeMarkers();
@@ -185,7 +181,7 @@ public class GGCGraphUtil extends GraphUtil
         plot.addRangeMarker(targetBGMarker, Layer.BACKGROUND);
         plot.setBackgroundPaint(m_da_local.getColor(colorScheme.getColor_bg_high()));
     }
-    
+
     /**
      * Get Color Scheme
      * 
@@ -196,7 +192,6 @@ public class GGCGraphUtil extends GraphUtil
         return this.colorScheme;
     }
 
-    
     /**
      * Get Unit Label
      * 
@@ -218,5 +213,5 @@ public class GGCGraphUtil extends GraphUtil
         }
         return this.unitLabel;
     }
-    
+
 }

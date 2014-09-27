@@ -1,12 +1,10 @@
 package ggc.meter.device;
 
-
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -34,17 +32,19 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-public abstract class AbstractMeter extends DeviceAbstract //implements MeterInterface, SelectableInterface
+public abstract class AbstractMeter extends DeviceAbstract // implements
+                                                           // MeterInterface,
+                                                           // SelectableInterface
 {
 
-    //AbstractDeviceCompany meter_company;
+    // AbstractDeviceCompany meter_company;
 
-    //protected int m_status = 0;
-    //protected I18nControlAbstract ic = DataAccessMeter.getInstance().getI18nControlInstance();
-    //protected OutputWriter output_writer;
-    //protected ArrayList<MeterValuesEntry> data = null;
-    //protected DataAccessMeter m_da = null;
+    // protected int m_status = 0;
+    // protected I18nControlAbstract ic =
+    // DataAccessMeter.getInstance().getI18nControlInstance();
+    // protected OutputWriter output_writer;
+    // protected ArrayList<MeterValuesEntry> data = null;
+    // protected DataAccessMeter m_da = null;
 
     /**
      * Constructor
@@ -52,9 +52,8 @@ public abstract class AbstractMeter extends DeviceAbstract //implements MeterInt
     public AbstractMeter()
     {
         super(DataAccessMeter.getInstance());
-        //m_da = DataAccessMeter.getInstance();
+        // m_da = DataAccessMeter.getInstance();
     }
-
 
     /**
      * Constructor
@@ -66,17 +65,13 @@ public abstract class AbstractMeter extends DeviceAbstract //implements MeterInt
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
-    
-    
-    
-    
-    //boolean can_read_data = false; 
-    //boolean can_read_partitial_data = false;
-    //boolean can_clear_data = false;
-    //boolean can_read_device_info = false;
-    //boolean can_read_device_configuration = false;
-    
-    
+
+    // boolean can_read_data = false;
+    // boolean can_read_partitial_data = false;
+    // boolean can_clear_data = false;
+    // boolean can_read_device_info = false;
+    // boolean can_read_device_configuration = false;
+
     /**
      * Dispose instance
      * 
@@ -85,11 +80,7 @@ public abstract class AbstractMeter extends DeviceAbstract //implements MeterInt
     public void dispose()
     {
     }
-    
-    
-    
-    
-    
+
     /**
      * Set Meter type
      * 
@@ -98,35 +89,35 @@ public abstract class AbstractMeter extends DeviceAbstract //implements MeterInt
      */
     public void setMeterType(String group, String device)
     {
-        //this.device_name = device;
-        
+        // this.device_name = device;
+
         DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
-        
-        if (this.output_writer!=null)
+
+        if (this.output_writer != null)
+        {
             this.output_writer.setDeviceIdentification(di);
-        //this.output_writer.
-        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
-        
+            // this.output_writer.
+            // this.device_instance =
+            // MeterManager.getInstance().getMeterDevice(group, device);
+        }
+
         this.device_source_name = group + " " + device;
     }
 
-
-
-    //************************************************
-    //***        Available Functionality           ***
-    //************************************************
-
+    // ************************************************
+    // *** Available Functionality ***
+    // ************************************************
 
     /** 
      * getShortDescription
      */
+    @Override
     public String getShortDescription()
     {
         return this.getName();
     }
-
 
     /**
      * Get Download Support Type
@@ -138,8 +129,6 @@ public abstract class AbstractMeter extends DeviceAbstract //implements MeterInt
         return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
 
-
-    
     /**
      * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
      *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
@@ -150,7 +139,5 @@ public abstract class AbstractMeter extends DeviceAbstract //implements MeterInt
     {
         return MeterInterface.METER_INTERFACE_SIMPLE;
     }
-    
-    
-    
+
 }

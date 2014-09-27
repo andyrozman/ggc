@@ -43,7 +43,6 @@ import com.atech.i18n.I18nControlAbstract;
  *          andyrozman {andy@atech-software.com}  
  */
 
-
 public abstract class AbstractPrefOptionsPanel extends JPanel implements DocumentListener, ItemListener, ActionListener
 {
 
@@ -63,8 +62,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
     {
         this.parent = dialog;
     }
-    
-    
+
     /**
      * Set Changed
      * 
@@ -111,7 +109,8 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
      * @see javax.swing.event.DocumentListener#changedUpdate(javax.swing.event.DocumentEvent)
      */
     public void changedUpdate(DocumentEvent e)
-    {}
+    {
+    }
 
     /**
      * Action Performed
@@ -133,26 +132,25 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
         changed = true;
     }
 
-    
     /**
      * Save Properties
      */
     public abstract void saveProps();
-    
-    
+
     /**
      * Kill - If changed, it asks if values should be changed
      */
     public void kill()
     {
-        if (changed) 
+        if (changed)
         {
-            int res = JOptionPane.showConfirmDialog(null, m_ic.getMessage("SOME_VALUES_CHANGED_LIKE_TO_SAVE"), m_ic.getMessage("VALUES_CHANGED"), JOptionPane.YES_NO_OPTION);
+            int res = JOptionPane.showConfirmDialog(null, m_ic.getMessage("SOME_VALUES_CHANGED_LIKE_TO_SAVE"),
+                m_ic.getMessage("VALUES_CHANGED"), JOptionPane.YES_NO_OPTION);
             if (res == JOptionPane.YES_OPTION)
+            {
                 saveProps();
+            }
         }
     }
-
-
 
 }

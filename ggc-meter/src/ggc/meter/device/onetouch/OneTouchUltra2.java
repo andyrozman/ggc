@@ -1,11 +1,11 @@
 package ggc.meter.device.onetouch;
 
-import com.atech.utils.data.HexUtils;
-
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
+
+import com.atech.utils.data.HexUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -35,14 +35,13 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 // done, not tested
 // not done (protocol not same as OT Ultra)
-// trying new sollution 
+// trying new sollution
 
 public class OneTouchUltra2 extends OneTouchMeter
 {
     // No picture
-    
+
     HexUtils hex_utils = new HexUtils();
-    
 
     /**
      * Constructor used by most classes
@@ -55,7 +54,6 @@ public class OneTouchUltra2 extends OneTouchMeter
         super(portName, writer);
     }
 
-    
     /**
      * Constructor
      * 
@@ -67,8 +65,6 @@ public class OneTouchUltra2 extends OneTouchMeter
     {
         super(comm_parameters, writer, da);
     }
-    
-    
 
     /**
      * Constructor
@@ -77,7 +73,7 @@ public class OneTouchUltra2 extends OneTouchMeter
     {
         super();
     }
-    
+
     /**
      * Constructor for device manager
      * 
@@ -88,7 +84,6 @@ public class OneTouchUltra2 extends OneTouchMeter
         super(cmp);
     }
 
-    
     /**
      * getName - Get Name of meter. 
      * 
@@ -99,16 +94,14 @@ public class OneTouchUltra2 extends OneTouchMeter
         return "One Touch Ultra 2";
     }
 
-    
-     /**
-     * getDeviceClassName - Get class name of device
-     */
+    /**
+    * getDeviceClassName - Get class name of device
+    */
     public String getDeviceClassName()
     {
         return "ggc.meter.device.onetouch.OneTouchUltra2";
     }
 
-    
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
      * Should be implemented by device class.
@@ -120,7 +113,6 @@ public class OneTouchUltra2 extends OneTouchMeter
         return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA_2;
     }
 
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -132,17 +124,16 @@ public class OneTouchUltra2 extends OneTouchMeter
         return null;
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * 
      * @return instructions for reading data 
      */
+    @Override
     public String getInstructions()
     {
         return "INSTRUCTIONS_LIFESCAN_OFF";
     }
-    
 
     /**
      * Maximum of records that device can store
@@ -157,111 +148,101 @@ public class OneTouchUltra2 extends OneTouchMeter
      * 
      * @return short name of meter
      */
+    @Override
     public String getShortName()
     {
         return "Ultra 2";
     }
 
-    
-    
     /** 
      * readDeviceDataFull
      */
+    @Override
     public void readDeviceDataFull()
     {
-        
+
         try
         {
             String cmd_prefix = "11" + "0D" + "0A";
-            
-            String cmd = cmd_prefix + "44" + "4D" + "3F";  // DM?  444d3f
-            
+
+            String cmd = cmd_prefix + "44" + "4D" + "3F"; // DM? 444d3f
+
             write(hex_utils.reconvert(cmd));
-            
+
             /*
-            write("D".getBytes());
-            waitTime(100);
-            write("M".getBytes());
-            waitTime(100);
-            write("?".getBytes());
-            waitTime(100);
-            */
-            
+             * write("D".getBytes());
+             * waitTime(100);
+             * write("M".getBytes());
+             * waitTime(100);
+             * write("?".getBytes());
+             * waitTime(100);
+             */
+
             waitTime(1000);
-            
+
             String line;
 
-            //System.out.println("Serial Number: " + this.readLine());
-            //System.out.println("Serial Number: " + this.readLine());
-            
-            
-            while((line=this.readLine())==null)
+            // System.out.println("Serial Number: " + this.readLine());
+            // System.out.println("Serial Number: " + this.readLine());
+
+            while ((line = this.readLine()) == null)
             {
                 System.out.println("Serial Number1: " + line);
             }
-            
+
             System.out.println("Serial Number2: " + line);
-            //System.out.println("Serial Number: " + this.readLine());
-            //System.out.println("Serial Number: " + this.readLine());
-            
-            
-            cmd = cmd_prefix + "44" + "4D" + "50";  // DMP
-            
+            // System.out.println("Serial Number: " + this.readLine());
+            // System.out.println("Serial Number: " + this.readLine());
+
+            cmd = cmd_prefix + "44" + "4D" + "50"; // DMP
+
             write(hex_utils.reconvert(cmd));
-            
 
             waitTime(100);
-            
-            //write()
-            
-/*            
-            write("D".getBytes());
-            waitTime(100);
-            write("M".getBytes());
-            waitTime(100);
-            write("P".getBytes());
-            waitTime(100);
-  */          
-    
-            
-            while (((line = this.readLine()) != null) && (!isDeviceStopped(line)))
+
+            // write()
+
+            /*
+             * write("D".getBytes());
+             * waitTime(100);
+             * write("M".getBytes());
+             * waitTime(100);
+             * write("P".getBytes());
+             * waitTime(100);
+             */
+
+            while ((line = this.readLine()) != null && !isDeviceStopped(line))
             {
-                
+
                 System.out.println(line);
                 processEntry(line);
-                
-                System.out.println(this.entries_current + "/" + this.entries_max  );
-                
-                //if (line==null)
-                //    break;
-                
+
+                System.out.println(this.entries_current + "/" + this.entries_max);
+
+                // if (line==null)
+                // break;
+
             }
-            
+
             this.output_writer.setSpecialProgress(100);
             this.output_writer.setSubStatus(null);
-        
+
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.out.println("Exception: " + ex);
             ex.printStackTrace();
-            
+
         }
-        
+
         if (this.isDeviceFinished())
         {
             this.output_writer.endOutput();
         }
-        
-        //this.output_writer.setStatus(100);
+
+        // this.output_writer.setStatus(100);
         System.out.println("Reading finsihed");
-        
+
     }
-    
-    
-    
-    
-    
-    
-    
+
 }

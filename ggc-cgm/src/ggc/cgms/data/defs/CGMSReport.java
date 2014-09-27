@@ -1,7 +1,5 @@
 package ggc.cgms.data.defs;
 
-
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       CGMS Tool (support for CGMS devices)
@@ -28,14 +26,12 @@ package ggc.cgms.data.defs;
  *  Author: Andy {andy@atech-software.com}
  */
 
-//IMPORTANT NOTICE: 
-//This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
-//class, with different type of data.
-
+// IMPORTANT NOTICE:
+// This class is not implemented yet, all existing methods should be rechecked
+// (they were copied from similar
+// class, with different type of data.
 
 public class CGMSReport
 {
-
-    
 
 }

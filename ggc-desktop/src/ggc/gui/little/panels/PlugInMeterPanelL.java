@@ -32,13 +32,11 @@ import javax.swing.JLabel;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class PlugInMeterPanelL extends AbstractInfoPanel
 {
-    
+
     private static final long serialVersionUID = 8602621885397419968L;
-    
-    
+
     /**
      * Constructor
      */
@@ -52,10 +50,10 @@ public class PlugInMeterPanelL extends AbstractInfoPanel
 
     private void init()
     {
-    	String text = "<html><body>"; 
-    	text += String.format(m_ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
-    	text += "</body></html>";
-	
+        String text = "<html><body>";
+        text += String.format(m_ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
+        text += "</body></html>";
+
         add(new JLabel(text));
     }
 
@@ -66,27 +64,26 @@ public class PlugInMeterPanelL extends AbstractInfoPanel
     public void refreshInfo()
     {
     }
-    
-    
+
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "PlugInMeterInfo";
     }
 
-    
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
     }
 
-    
     /**
      * Get Panel Id
      * 
@@ -97,6 +94,5 @@ public class PlugInMeterPanelL extends AbstractInfoPanel
     {
         return InfoPanelsIds.INFO_PANEL_NONE;
     }
-    
-    
+
 }

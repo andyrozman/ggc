@@ -34,15 +34,12 @@ import java.util.Hashtable;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public interface PumpInterface extends DeviceInterface
 {
 
-
-    //************************************************
-    //***          Working with device             ***
-    //************************************************
-
+    // ************************************************
+    // *** Working with device ***
+    // ************************************************
 
     /**
      * Used for opening connection with device.
@@ -52,7 +49,6 @@ public interface PumpInterface extends DeviceInterface
      */
     boolean open() throws PlugInBaseException;
 
-
     /**
      * Used for closing connection with device
      * 
@@ -60,12 +56,10 @@ public interface PumpInterface extends DeviceInterface
      */
     void close() throws PlugInBaseException;
 
+    // ************************************************
+    // *** Meter Identification Methods ***
+    // ************************************************
 
-    //************************************************
-    //***      Meter Identification Methods        ***
-    //************************************************
-
-    
     /**
      * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory
      * 
@@ -73,63 +67,52 @@ public interface PumpInterface extends DeviceInterface
      */
     public int getMaxMemoryRecords();
 
-    
-
     /**
      * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
      *      create, AlarmMappings and EventMappings and any other pump constants.
      */
-    public void loadPumpSpecificValues(); 
-    
-    
+    public void loadPumpSpecificValues();
+
     /**
      * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific 
      *     alarm codes
      * @return
      */
-    public Hashtable<String,Integer> getAlarmMappings();
-    
-    
+    public Hashtable<String, Integer> getAlarmMappings();
+
     /**
      * Get Event Mappings - Map pump specific events to Pump Tool specific 
      *     event codes
      * @return
      */
-    public Hashtable<String,Integer> getEventMappings();
-    
-    
+    public Hashtable<String, Integer> getEventMappings();
+
     /**
      * Get Error Mappings - Map pump specific errors to Pump Tool specific 
      *     event codes
      * @return
      */
-    public Hashtable<String,Integer> getErrorMappings();
-    
+    public Hashtable<String, Integer> getErrorMappings();
 
     /**
      * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
      *     event codes
      * @return
      */
-    public Hashtable<String,Integer> getBolusMappings();
-    
+    public Hashtable<String, Integer> getBolusMappings();
 
     /**
      * Get Report Mappings - Map pump specific reports to Pump Tool specific 
      *     event codes
      * @return
      */
-    public Hashtable<String,Integer> getReportMappings();
-    
-    
-    
-    
+    public Hashtable<String, Integer> getReportMappings();
+
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      * @return 
      */
     public DeviceIdentification getDeviceInfo();
-    
 
     /**
      * Get Temporary Basal Type Definition
@@ -140,40 +123,33 @@ public interface PumpInterface extends DeviceInterface
      * @return
      */
     public String getTemporaryBasalTypeDefinition();
-    
-    
+
     /**
      * Get Bolus Step (precission)
      * 
      * @return
      */
     public float getBolusStep();
-    
-    
+
     /**
      * Get Basal Step (precission)
      * 
      * @return
      */
     public float getBasalStep();
-    
-    
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
     public boolean arePumpSettingsSet();
-    
-    
-    
+
     /**
      * How Many Months Of Data Stored
      * 
      * @return
      */
     public int howManyMonthsOfDataStored();
-    
-    
-    
+
 }

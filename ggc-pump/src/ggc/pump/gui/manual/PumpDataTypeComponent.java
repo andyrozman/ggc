@@ -34,6 +34,7 @@ import javax.swing.SpinnerNumberModel;
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.components.TimeComponent;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
 
 /**
@@ -68,17 +69,17 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     private static final long serialVersionUID = -4449947661003378689L;
 
     /*
-    public static final int TYPE_NONE = 0;
-    public static final int TYPE_BASAL = 1;
-    public static final int TYPE_BOLUS = 2;
-    public static final int TYPE_EVENT = 3;
-    public static final int TYPE_ALARM = 4;
-    public static final int TYPE_ERROR = 5;
-    public static final int TYPE_REPORT = 6;
-    public static final int TYPE_PEN_INJECTION_BASAL = 7;
-    public static final int TYPE_PEN_INJECTION_BOLUS = 8;
-    public static final int TYPE_ADDITIONAL_DATA = 9;
-    */
+     * public static final int TYPE_NONE = 0;
+     * public static final int TYPE_BASAL = 1;
+     * public static final int TYPE_BOLUS = 2;
+     * public static final int TYPE_EVENT = 3;
+     * public static final int TYPE_ALARM = 4;
+     * public static final int TYPE_ERROR = 5;
+     * public static final int TYPE_REPORT = 6;
+     * public static final int TYPE_PEN_INJECTION_BASAL = 7;
+     * public static final int TYPE_PEN_INJECTION_BOLUS = 8;
+     * public static final int TYPE_ADDITIONAL_DATA = 9;
+     */
     TemporaryBasalRateComponent tbr_cmp = null;
     SquareBolusComponent bolus_sq = null;
     JLabel label_1, label_2, label_3, label_4;
@@ -95,28 +96,23 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     int height = 0;
     int width = 400;
 
-    //PumpReport m_p_report = new PumpReport();
-    //PumpEvents m_p_event = new PumpEvents();
-//    PumpAlarms m_p_alarm = new PumpAlarms();
-//    PumpErrors m_p_error = new PumpErrors();
-//    PumpBolusType m_p_bolus = new PumpBolusType();
-//    PumpBasalSubType m_p_basal = new PumpBasalSubType();
+    // PumpReport m_p_report = new PumpReport();
+    // PumpEvents m_p_event = new PumpEvents();
+    // PumpAlarms m_p_alarm = new PumpAlarms();
+    // PumpErrors m_p_error = new PumpErrors();
+    // PumpBolusType m_p_bolus = new PumpBolusType();
+    // PumpBasalSubType m_p_basal = new PumpBasalSubType();
 
     PumpDataRowDialog m_parent = null;
 
     private DataAccessPump m_da = DataAccessPump.getInstance();
     private I18nControlAbstract ic = m_da.getI18nControlInstance();
 
-    private Object[] type_items = { ic.getMessage("SELECT_ITEM"), 
-                                    ic.getMessage("BASAL_DOSE"), 
-                                    ic.getMessage("BOLUS_DOSE"), 
-                                    ic.getMessage("EVENT"), 
-                                    ic.getMessage("ALARM"), 
-                                    ic.getMessage("ERROR"), 
-                                    ic.getMessage("REPORT"), 
-                                    ic.getMessage("PEN_INJECTION_BASAL"), 
-                                    ic.getMessage("PEN_INJECTION_BOLUS"), 
-                                    ic.getMessage("ADDITIONAL_DATA") };
+    private Object[] type_items = { ic.getMessage("SELECT_ITEM"), ic.getMessage("BASAL_DOSE"),
+                                   ic.getMessage("BOLUS_DOSE"), ic.getMessage("EVENT"), ic.getMessage("ALARM"),
+                                   ic.getMessage("ERROR"), ic.getMessage("REPORT"),
+                                   ic.getMessage("PEN_INJECTION_BASAL"), ic.getMessage("PEN_INJECTION_BOLUS"),
+                                   ic.getMessage("ADDITIONAL_DATA") };
 
     /**
      * Constructor
@@ -141,16 +137,16 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         tbr_cmp = new TemporaryBasalRateComponent();
         this.add(tbr_cmp);
         label_1 = new JLabel();
-        label_1.setFont(m_da.getFont(DataAccessPump.FONT_NORMAL_BOLD));
+        label_1.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
         this.add(label_1);
         label_2 = new JLabel();
-        label_2.setFont(m_da.getFont(DataAccessPump.FONT_NORMAL_BOLD));
+        label_2.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
         this.add(label_2);
         label_3 = new JLabel();
-        label_3.setFont(m_da.getFont(DataAccessPump.FONT_NORMAL_BOLD));
+        label_3.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
         this.add(label_3);
         label_4 = new JLabel();
-        label_4.setFont(m_da.getFont(DataAccessPump.FONT_NORMAL_BOLD));
+        label_4.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
         this.add(label_4);
         text_1 = new JTextField();
         this.add(text_1);
@@ -185,15 +181,13 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         this.tc_1 = new TimeComponent();
         this.add(tc_1);
-        
-        
-        
-        this.button_1 = ATSwingUtils.getButton("", 0, 0, 0, 0, this, ATSwingUtils.FONT_NORMAL, "magic-wand.png", "bolus_helper", this, m_da);
+
+        this.button_1 = ATSwingUtils.getButton("", 0, 0, 0, 0, this, ATSwingUtils.FONT_NORMAL, "magic-wand.png",
+            "bolus_helper", this, m_da);
 
         this.bolus_sq = new SquareBolusComponent();
         this.add(this.bolus_sq);
-        
-        
+
     }
 
     /**
@@ -211,46 +205,46 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         switch (this.type)
         {
 
-        case PumpBaseType.PUMP_DATA_EVENT:
-        case PumpBaseType.PUMP_DATA_ALARM:
-        case PumpBaseType.PUMP_DATA_ERROR:
-            {
-                this.setComboAndText();
-            }
-            break;
+            case PumpBaseType.PUMP_DATA_EVENT:
+            case PumpBaseType.PUMP_DATA_ALARM:
+            case PumpBaseType.PUMP_DATA_ERROR:
+                {
+                    this.setComboAndText();
+                }
+                break;
 
-        case PumpBaseType.PUMP_DATA_BASAL:
-            {
-                this.setBasal();
-            }
-            break;
+            case PumpBaseType.PUMP_DATA_BASAL:
+                {
+                    this.setBasal();
+                }
+                break;
 
-        case PumpBaseType.PUMP_DATA_BOLUS:
-            {
-                this.setBolus();
-            }
-            break;
+            case PumpBaseType.PUMP_DATA_BOLUS:
+                {
+                    this.setBolus();
+                }
+                break;
 
-        case PumpBaseType.PUMP_DATA_REPORT:
-            {
-                this.setReport();
-            }
-            break;
+            case PumpBaseType.PUMP_DATA_REPORT:
+                {
+                    this.setReport();
+                }
+                break;
 
-        case PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL:
-        case PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS:
-            {
-                this.setNumericTextAndText();
-            }
-            break;
+            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL:
+            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS:
+                {
+                    this.setNumericTextAndText();
+                }
+                break;
 
-        case PumpBaseType.PUMP_DATA_NONE:
-        case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA:
-        default:
-            {
-                this.setEmpty();
-            }
-            break;
+            case PumpBaseType.PUMP_DATA_NONE:
+            case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA:
+            default:
+                {
+                    this.setEmpty();
+                }
+                break;
         }
 
     }
@@ -288,7 +282,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.button_1.setVisible(false);
         this.tc_1.setVisible(false);
         this.bolus_sq.setVisible(false);
-        
+
         this.repaint();
     }
 
@@ -299,14 +293,16 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     }
 
     /*
-    private void setUnsupported()
-    {
-        this.hideAll();
-        label_1.setBounds(0, 20, 370, 25);
-        label_1.setText("Component doesn't support this type: " + this.type_items[type]);
-        label_1.setVisible(true);
-        this.setHeight(40);
-    }*/
+     * private void setUnsupported()
+     * {
+     * this.hideAll();
+     * label_1.setBounds(0, 20, 370, 25);
+     * label_1.setText("Component doesn't support this type: " +
+     * this.type_items[type]);
+     * label_1.setVisible(true);
+     * this.setHeight(40);
+     * }
+     */
 
     // type: event, alarm, error
     private void setComboAndText()
@@ -453,8 +449,10 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         if (this.sub_type == stype)
             return;
         else
+        {
             this.sub_type = stype;
-        
+        }
+
         this.combo_1.setSelectedIndex(stype);
 
         this.num_tf_1_d2.setVisible(false);
@@ -479,110 +477,110 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         switch (this.sub_type)
         {
-        case PumpBasalSubType.PUMP_BASAL_VALUE:
-            {
-                this.label_2.setBounds(0, 92, 150, 25);
-                this.text_1.setBounds(150, 90, 180, 25);
+            case PumpBasalSubType.PUMP_BASAL_VALUE:
+                {
+                    this.label_2.setBounds(0, 92, 150, 25);
+                    this.text_1.setBounds(150, 90, 180, 25);
 
-                this.num_tf_1_d2.setBounds(150, 55, 180, 25);
-                this.num_tf_1_d2.setVisible(true);
-                this.label_3.setBounds(0, 55, 150, 25);
-                this.label_3.setText(ic.getMessage("AMOUNT") + ":");
-                this.label_3.setVisible(true);
+                    this.num_tf_1_d2.setBounds(150, 55, 180, 25);
+                    this.num_tf_1_d2.setVisible(true);
+                    this.label_3.setBounds(0, 55, 150, 25);
+                    this.label_3.setText(ic.getMessage("AMOUNT") + ":");
+                    this.label_3.setVisible(true);
 
-                this.setHeight(115);
+                    this.setHeight(115);
 
-            }
-            break;
+                }
+                break;
 
-        case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:
-            {
-                this.label_2.setBounds(0, 92, 150, 25);
-                this.text_1.setBounds(150, 90, 180, 25);
+            case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:
+                {
+                    this.label_2.setBounds(0, 92, 150, 25);
+                    this.text_1.setBounds(150, 90, 180, 25);
 
-                this.tbr_cmp.setBounds(0, 55, 180, 25);
-                this.tbr_cmp.setVisible(true);
+                    this.tbr_cmp.setBounds(0, 55, 180, 25);
+                    this.tbr_cmp.setVisible(true);
 
-                // this.num_tf_1_d2.setVisible(true);
-                // this.label_3.setBounds(0, 55, 150, 25);
-                // this.label_3.setText(ic.getMessage("AMOUNT") + ":");
-                // this.label_3.setVisible(true);
+                    // this.num_tf_1_d2.setVisible(true);
+                    // this.label_3.setBounds(0, 55, 150, 25);
+                    // this.label_3.setText(ic.getMessage("AMOUNT") + ":");
+                    // this.label_3.setVisible(true);
 
-                this.setHeight(115);
+                    this.setHeight(115);
 
-            }
-            break;
+                }
+                break;
 
-        case PumpBasalSubType.PUMP_BASAL_PROFILE:
-            {
-                this.label_2.setBounds(0, 90, 150, 25);
-                this.text_1.setBounds(150, 90, 180, 25);
+            case PumpBasalSubType.PUMP_BASAL_PROFILE:
+                {
+                    this.label_2.setBounds(0, 90, 150, 25);
+                    this.text_1.setBounds(150, 90, 180, 25);
 
-                this.profile_comp.setBounds(0, 55, 180, 25);
-                this.profile_comp.setVisible(true);
+                    this.profile_comp.setBounds(0, 55, 180, 25);
+                    this.profile_comp.setVisible(true);
 
-                this.setHeight(115);
+                    this.setHeight(115);
 
-            }
-            break;
+                }
+                break;
 
-        case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_PROFILE:
-            {
-                this.label_2.setBounds(0, 127, 150, 25);
-                this.text_1.setBounds(150, 125, 180, 25);
+            case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_PROFILE:
+                {
+                    this.label_2.setBounds(0, 127, 150, 25);
+                    this.text_1.setBounds(150, 125, 180, 25);
 
-                this.profile_comp.setBounds(0, 55, 180, 25);
-                this.profile_comp.setVisible(true);
+                    this.profile_comp.setBounds(0, 55, 180, 25);
+                    this.profile_comp.setVisible(true);
 
-                this.tbr_cmp.setBounds(0, 90, 180, 25);
-                this.tbr_cmp.setVisible(true);
+                    this.tbr_cmp.setBounds(0, 90, 180, 25);
+                    this.tbr_cmp.setVisible(true);
 
-                this.setHeight(150);
+                    this.setHeight(150);
 
-            }
-            break;
+                }
+                break;
 
-        case PumpBasalSubType.PUMP_BASAL_PUMP_STATUS:
-            {
-                this.label_2.setBounds(0, 142, 150, 25);
-                this.text_1.setBounds(150, 140, 180, 25);
+            case PumpBasalSubType.PUMP_BASAL_PUMP_STATUS:
+                {
+                    this.label_2.setBounds(0, 142, 150, 25);
+                    this.text_1.setBounds(150, 140, 180, 25);
 
-                this.rb_1.setText("  " + ic.getMessage("ON"));
-                this.rb_1.setBounds(150, 55, 200, 25);
-                this.rb_1.setVisible(true);
-                this.rb_1.setSelected(true);
-                this.rb_2.setText("  " + ic.getMessage("OFF"));
-                this.rb_2.setBounds(150, 80, 200, 25);
-                this.rb_2.setVisible(true);
-                this.rb_3.setText("  " + ic.getMessage("SUSPENDED"));
-                this.rb_3.setBounds(150, 105, 200, 25);
-                this.rb_3.setVisible(true);
+                    this.rb_1.setText("  " + ic.getMessage("ON"));
+                    this.rb_1.setBounds(150, 55, 200, 25);
+                    this.rb_1.setVisible(true);
+                    this.rb_1.setSelected(true);
+                    this.rb_2.setText("  " + ic.getMessage("OFF"));
+                    this.rb_2.setBounds(150, 80, 200, 25);
+                    this.rb_2.setVisible(true);
+                    this.rb_3.setText("  " + ic.getMessage("SUSPENDED"));
+                    this.rb_3.setBounds(150, 105, 200, 25);
+                    this.rb_3.setVisible(true);
 
-                this.bg.add(rb_1);
-                this.bg.add(rb_2);
-                this.bg.add(rb_3);
+                    this.bg.add(rb_1);
+                    this.bg.add(rb_2);
+                    this.bg.add(rb_3);
 
-                // this.num_tf_1_d2.setBounds(150, 55, 180, 25);
-                // this.num_tf_1_d2.setVisible(true);
+                    // this.num_tf_1_d2.setBounds(150, 55, 180, 25);
+                    // this.num_tf_1_d2.setVisible(true);
 
-                this.label_3.setBounds(0, 57, 150, 25);
-                this.label_3.setText(ic.getMessage("PUMP_STATUS") + ":");
-                this.label_3.setVisible(true);
+                    this.label_3.setBounds(0, 57, 150, 25);
+                    this.label_3.setText(ic.getMessage("PUMP_STATUS") + ":");
+                    this.label_3.setVisible(true);
 
-                this.setHeight(165);
+                    this.setHeight(165);
 
-            }
-            break;
+                }
+                break;
 
-        default:
-            {
-                this.label_2.setVisible(false);
-                this.text_1.setVisible(false);
+            default:
+                {
+                    this.label_2.setVisible(false);
+                    this.text_1.setVisible(false);
 
-                this.setHeight(55);
+                    this.setHeight(55);
 
-            }
-            break;
+                }
+                break;
         }
 
         this.m_parent.realignComponents();
@@ -599,19 +597,17 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.label_1.setVisible(true);
         this.label_1.setText(ic.getMessage("BOLUS_TYPE") + ":");
 
-        
-        //System.out.println("DHHHD" + DataAccess.this.m_da.getBolusSubTypes().getStaticDescriptionArray());
-        
-        
+        // System.out.println("DHHHD" +
+        // DataAccess.this.m_da.getBolusSubTypes().getStaticDescriptionArray());
+
         this.combo_1.setBounds(150, 20, 180, 25);
         this.combo_1.setVisible(true);
         this.combo_1.setActionCommand("bolus");
         addAllItems(this.combo_1, this.m_da.getBolusSubTypes().getStaticDescriptionArray());
-        //this.combo_1.setSelectedIndex(1);
-        
+        // this.combo_1.setSelectedIndex(1);
+
         this.button_1.setBounds(120, 20, 25, 25);
         this.button_1.setVisible(true);
-        
 
         this.label_2.setBounds(0, 55, 150, 25);
         this.label_2.setVisible(true);
@@ -622,7 +618,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         this.sub_type = -1;
         this.setBolusSubType(PumpBolusType.PUMP_BOLUS_STANDARD);
-        //this.setHeight(85);
+        // this.setHeight(85);
 
     }
 
@@ -636,16 +632,15 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         if (this.sub_type == stype)
             return;
         else
+        {
             this.sub_type = stype;
+        }
 
-        
         // fix subtype
-        //getIndexFromStaticDescriptionArrayWithID(stype)
-        
-        
-        
+        // getIndexFromStaticDescriptionArrayWithID(stype)
+
         this.combo_1.setSelectedIndex(this.m_da.getBolusSubTypes().getIndexFromStaticDescriptionArrayWithID(stype));
-        
+
         this.num_tf_1_d2.setVisible(false);
         this.num_tf_2_d2.setVisible(false);
         this.label_3.setVisible(false);
@@ -661,76 +656,80 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 {
                     this.label_2.setBounds(0, 90, 150, 25);
                     this.text_1.setBounds(150, 90, 180, 25);
-    
-                    //this.text_1.setVisible(true);
-                    //this.label_2.setVisible(true);
-                    
+
+                    // this.text_1.setVisible(true);
+                    // this.label_2.setVisible(true);
+
                     this.num_tf_1_d2.setBounds(150, 55, 180, 25);
                     this.num_tf_1_d2.setVisible(true);
                     this.label_3.setBounds(0, 55, 150, 25);
                     this.label_3.setText(ic.getMessage("AMOUNT") + ":");
                     this.label_3.setVisible(true);
-    
+
                     this.setHeight(115);
-                } break;
-                
+                }
+                break;
+
             case PumpBolusType.PUMP_BOLUS_SQUARE:
             case PumpBolusType.PUMP_BOLUS_DUAL_SQUARE:
                 {
                     // TODO
                     this.label_2.setBounds(0, 90, 150, 25);
                     this.text_1.setBounds(110, 90, 220, 25);
-    
-                    //this.num_tf_1_d2.setBounds(150, 55, 180, 25);
-                    //this.num_tf_1_d2.setVisible(true);
-                    //this.label_3.setBounds(0, 55, 150, 25);
-                    //this.label_3.setText(ic.getMessage("AMOUNT") + ":");
-                    //this.label_3.setVisible(true);
-    
+
+                    // this.num_tf_1_d2.setBounds(150, 55, 180, 25);
+                    // this.num_tf_1_d2.setVisible(true);
+                    // this.label_3.setBounds(0, 55, 150, 25);
+                    // this.label_3.setText(ic.getMessage("AMOUNT") + ":");
+                    // this.label_3.setVisible(true);
+
                     this.bolus_sq.setBounds(0, 55, 200, 25);
                     this.bolus_sq.setType(SquareBolusComponent.SQUARE_SINGLE);
                     this.bolus_sq.setVisible(true);
-                    
+
                     this.setHeight(115);
                 }
                 break;
-    
+
             case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
                 {
                     this.label_2.setBounds(0, 125, 150, 25);
                     this.text_1.setBounds(150, 125, 180, 25);
-    
+
                     this.num_tf_1_d2.setBounds(150, 55, 180, 25);
                     this.num_tf_1_d2.setVisible(true);
                     this.label_3.setBounds(0, 55, 150, 25);
                     this.label_3.setText(ic.getMessage("IMMEDIATE_AMOUNT") + ":");
                     this.label_3.setVisible(true);
-    
+
                     // 90
-                    /*this.label_4.setText(ic.getMessage("AMOUNT_MW_2") + ":");
-                    label_4.setBounds(0, 90, 150, 25);
-                    this.label_4.setVisible(true);
-                    this.num_tf_2_d2.setBounds(150, 90, 180, 25);
-                    this.num_tf_2_d2.setVisible(true); */
-                    //this.tc_1.setVisible(false);
-                    
+                    /*
+                     * this.label_4.setText(ic.getMessage("AMOUNT_MW_2") + ":");
+                     * label_4.setBounds(0, 90, 150, 25);
+                     * this.label_4.setVisible(true);
+                     * this.num_tf_2_d2.setBounds(150, 90, 180, 25);
+                     * this.num_tf_2_d2.setVisible(true);
+                     */
+                    // this.tc_1.setVisible(false);
+
                     this.bolus_sq.setBounds(0, 90, 200, 25);
                     this.bolus_sq.setType(SquareBolusComponent.SQUARE_DUAL);
                     this.bolus_sq.setVisible(true);
-                    
-                    
+
                     this.setHeight(150);
-    
+
                 }
                 break;
-    
+
             case PumpBolusType.PUMP_BOLUS_NONE:
                 {
-                    /*                this.num_tf_1_d2.setVisible(false);
-                                    this.num_tf_2_d2.setVisible(false);
-                                    this.label_3.setVisible(false);
-                                    this.label_4.setVisible(false); */
-    
+                    /*
+                     * this.num_tf_1_d2.setVisible(false);
+                     * this.num_tf_2_d2.setVisible(false);
+                     * this.label_3.setVisible(false);
+                     * this.label_4.setVisible(false);
+                     */
+
                     this.label_2.setBounds(0, 55, 150, 25);
                     this.text_1.setBounds(150, 55, 180, 25);
                     this.setHeight(85);
@@ -750,101 +749,101 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
      */
     public boolean areRequiredElementsSet()
     {
-//        System.out.println("!!!!  Are Elements Set - Not Implemented   !!!!");
-        
-        switch(this.type)
+        // System.out.println("!!!!  Are Elements Set - Not Implemented   !!!!");
+
+        switch (this.type)
         {
-        
+
             case PumpBaseType.PUMP_DATA_BASAL:
-            {
-                switch(this.sub_type)
                 {
-                    case PumpBasalSubType.PUMP_BASAL_VALUE:
-                        {
-                            return (m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) >= 0);
-                        }
-         
-                    case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:
-                        {
-                            return this.tbr_cmp.isValueSet();
-                        }
-         
-                    case PumpBasalSubType.PUMP_BASAL_PROFILE:
-                        {
-                            return this.profile_comp.isValueSet();
-                        }
-             
-                    case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_PROFILE:
-                        {
-                            return (this.tbr_cmp.isValueSet() && this.profile_comp.isValueSet());
-                        }
-         
-                    case PumpBasalSubType.PUMP_BASAL_PUMP_STATUS:
-                        {
-                            return (((this.rb_1.isSelected()) || (this.rb_2.isSelected()) || 
-                                    (this.rb_3.isSelected())));
-                        }
-         
-                    default:
-                        return false;
+                    switch (this.sub_type)
+                    {
+                        case PumpBasalSubType.PUMP_BASAL_VALUE:
+                            {
+                                return m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) >= 0;
+                            }
+
+                        case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:
+                            {
+                                return this.tbr_cmp.isValueSet();
+                            }
+
+                        case PumpBasalSubType.PUMP_BASAL_PROFILE:
+                            {
+                                return this.profile_comp.isValueSet();
+                            }
+
+                        case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_PROFILE:
+                            {
+                                return this.tbr_cmp.isValueSet() && this.profile_comp.isValueSet();
+                            }
+
+                        case PumpBasalSubType.PUMP_BASAL_PUMP_STATUS:
+                            {
+                                return this.rb_1.isSelected() || this.rb_2.isSelected() || this.rb_3.isSelected();
+                            }
+
+                        default:
+                            return false;
+                    }
                 }
-            } 
 
             case PumpBaseType.PUMP_DATA_BOLUS:
-            {
-                switch(this.sub_type)
                 {
-                    case PumpBolusType.PUMP_BOLUS_STANDARD:
-                    case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
-                        {
-                            return (this.num_tf_1_d2.getText().length() > 0);
-                            //return (m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) > 0);
-                        } 
-                    case PumpBolusType.PUMP_BOLUS_SQUARE:
-                        {
-                            return this.bolus_sq.isValueSet();
-                        } 
-                        
-                    case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
-                        {
-                            return ((m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) > 0) &&
-                                    (this.bolus_sq.isValueSet()));
-                        } 
-                        
-                    default:
-                        {
-                            return false;
-                            
-                        } 
+                    switch (this.sub_type)
+                    {
+                        case PumpBolusType.PUMP_BOLUS_STANDARD:
+                        case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
+                            {
+                                return this.num_tf_1_d2.getText().length() > 0;
+                                // return
+                                // (m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue())
+                                // > 0);
+                            }
+                        case PumpBolusType.PUMP_BOLUS_SQUARE:
+                            {
+                                return this.bolus_sq.isValueSet();
+                            }
 
+                        case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
+                            {
+                                return m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) > 0
+                                        && this.bolus_sq.isValueSet();
+                            }
+
+                        default:
+                            {
+                                return false;
+
+                            }
+
+                    }
                 }
-            } 
 
             case PumpBaseType.PUMP_DATA_EVENT:
             case PumpBaseType.PUMP_DATA_ALARM:
             case PumpBaseType.PUMP_DATA_ERROR:
-            {
-                return (this.combo_1.getSelectedIndex()>0);
-            } 
+                {
+                    return this.combo_1.getSelectedIndex() > 0;
+                }
 
             case PumpBaseType.PUMP_DATA_REPORT:
-            {
-                return ((this.combo_1.getSelectedIndex()>0) &&
-                        (this.text_2.getText().trim().length()!=0));
-            } 
+                {
+                    return this.combo_1.getSelectedIndex() > 0 && this.text_2.getText().trim().length() != 0;
+                }
 
             case PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL:
             case PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS:
-            {
-                return (m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) > 0);
-            } 
+                {
+                    return m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) > 0;
+                }
 
             case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA:
             default:
                 return true;
-        
+
         }
-        
+
     }
 
     /**
@@ -854,133 +853,146 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
      */
     public void loadData(PumpValuesEntry data)
     {
-        //System.out.println("Load data not implemented yet !");
+        // System.out.println("Load data not implemented yet !");
         setType(data.getBaseType());
         this.text_1.setText(data.getComment());
-        
-        //this.combo_1.setSelectedIndex(data.getBaseType());
-        switch(this.type)
+
+        // this.combo_1.setSelectedIndex(data.getBaseType());
+        switch (this.type)
         {
             case PumpBaseType.PUMP_DATA_BASAL:
-            {
-                this.setBasalSubType(data.getSubType());
-
-                switch(this.sub_type)
                 {
-                    case PumpBasalSubType.PUMP_BASAL_VALUE:
-                        {
-                            this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(data.getValue()));
-                        }
-                        break;
-         
-                    case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:
-                        {
-                            this.tbr_cmp.setValue(data.getValue());
-                        }
-                        break;
-         
-                    case PumpBasalSubType.PUMP_BASAL_PROFILE:
-                        {
-                            this.profile_comp.setValue(data.getValue());
-                        }
-                        break;
-             
-                    case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_PROFILE:
-                        {
-                            String s[] = this.getParsedValues(data.getValue());
-                            this.profile_comp.setValue(s[0]);
-                            this.tbr_cmp.setValue(s[1]);
-                        }
-                        break;
-         
-                    case PumpBasalSubType.PUMP_BASAL_PUMP_STATUS:
-                        {
-                            int i= m_da.getIntValueFromString(data.getValue(), 0);
-                            
-                            if (i==1)
-                                this.rb_1.setSelected(true);
-                            else if (i==2)
-                                this.rb_2.setSelected(true);
-                            else if (i==3)
-                                this.rb_3.setSelected(true);
-                        }
-                        break;
-         
-                    default:
-                        break;
+                    this.setBasalSubType(data.getSubType());
+
+                    switch (this.sub_type)
+                    {
+                        case PumpBasalSubType.PUMP_BASAL_VALUE:
+                            {
+                                this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(data.getValue()));
+                            }
+                            break;
+
+                        case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:
+                            {
+                                this.tbr_cmp.setValue(data.getValue());
+                            }
+                            break;
+
+                        case PumpBasalSubType.PUMP_BASAL_PROFILE:
+                            {
+                                this.profile_comp.setValue(data.getValue());
+                            }
+                            break;
+
+                        case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_PROFILE:
+                            {
+                                String s[] = this.getParsedValues(data.getValue());
+                                this.profile_comp.setValue(s[0]);
+                                this.tbr_cmp.setValue(s[1]);
+                            }
+                            break;
+
+                        case PumpBasalSubType.PUMP_BASAL_PUMP_STATUS:
+                            {
+                                int i = m_da.getIntValueFromString(data.getValue(), 0);
+
+                                if (i == 1)
+                                {
+                                    this.rb_1.setSelected(true);
+                                }
+                                else if (i == 2)
+                                {
+                                    this.rb_2.setSelected(true);
+                                }
+                                else if (i == 3)
+                                {
+                                    this.rb_3.setSelected(true);
+                                }
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
-            } break;
+                break;
 
             case PumpBaseType.PUMP_DATA_BOLUS:
-            {
-                this.setBolusSubType(data.getSubType());
-                
-                switch(this.sub_type)
                 {
-                    case PumpBolusType.PUMP_BOLUS_STANDARD:
-                    case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
-                        {
-                            this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(data.getValue()));
-                        } break;
+                    this.setBolusSubType(data.getSubType());
 
-                    case PumpBolusType.PUMP_BOLUS_SQUARE:
-                        {
-                            this.bolus_sq.setValue(data.getValue());
-                        } break;
-                        
-                        
-                    case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
-                        {
-                            
-                            
-                            String s[] = this.getParsedValues(data.getValue());
-                            //String s[] = data.getValue().split(regex)
-                            this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(s[0]));
-                            //this.num_tf_2_d2.setValue(m_da.getFloatValueFromString(s[1]));
-                            this.bolus_sq.setValue(data.getValue());
-                            
-                        } break;
-                        
-                    default:
-                        {
-                            
-                        } break;
+                    switch (this.sub_type)
+                    {
+                        case PumpBolusType.PUMP_BOLUS_STANDARD:
+                        case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
+                            {
+                                this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(data.getValue()));
+                            }
+                            break;
 
+                        case PumpBolusType.PUMP_BOLUS_SQUARE:
+                            {
+                                this.bolus_sq.setValue(data.getValue());
+                            }
+                            break;
+
+                        case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
+                            {
+
+                                String s[] = this.getParsedValues(data.getValue());
+                                // String s[] = data.getValue().split(regex)
+                                this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(s[0]));
+                                // this.num_tf_2_d2.setValue(m_da.getFloatValueFromString(s[1]));
+                                this.bolus_sq.setValue(data.getValue());
+
+                            }
+                            break;
+
+                        default:
+                            {
+
+                            }
+                            break;
+
+                    }
+                    // TODO
                 }
-                // TODO
-            } break;
+                break;
 
             case PumpBaseType.PUMP_DATA_EVENT:
-            {
-                this.combo_1.setSelectedItem(data.getSubTypeString());
-            } break;
+                {
+                    this.combo_1.setSelectedItem(data.getSubTypeString());
+                }
+                break;
             case PumpBaseType.PUMP_DATA_ALARM:
             case PumpBaseType.PUMP_DATA_ERROR:
-            {
-                this.combo_1.setSelectedIndex(data.getSubType());
-            } break;
+                {
+                    this.combo_1.setSelectedIndex(data.getSubType());
+                }
+                break;
 
             case PumpBaseType.PUMP_DATA_REPORT:
-            {
-                this.combo_1.setSelectedIndex(data.getSubType());
-                this.text_2.setText(data.getValue());
-            } break;
+                {
+                    this.combo_1.setSelectedIndex(data.getSubType());
+                    this.text_2.setText(data.getValue());
+                }
+                break;
 
             case PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL:
             case PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS:
-            {
-                this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(data.getValue()));
-            } break;
+                {
+                    this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(data.getValue()));
+                }
+                break;
 
             case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA:
                 break;
-                
+
             default:
                 System.out.println("Load not implemented for this type: " + data.getBaseType());
                 break;
-        
-        }
 
+        }
 
     }
 
@@ -991,180 +1003,200 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
      */
     public void saveData(PumpValuesEntry pve)
     {
-       pve.setComment(this.text_1.getText());
-       
-       switch(this.type)
-       {
-           case PumpBaseType.PUMP_DATA_BASAL:
-           {
-               pve.setSubType(sub_type);
+        pve.setComment(this.text_1.getText());
 
-               switch(this.sub_type)
-               {
-                   case PumpBasalSubType.PUMP_BASAL_VALUE:
-                       {
-                           pve.setValue("" + this.num_tf_1_d2.getCurrentValue());
-                       }
-                       break;
-        
-                   case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:
-                       {
-                           pve.setValue(this.tbr_cmp.getValue());
-                       }
-                       break;
-        
-                   case PumpBasalSubType.PUMP_BASAL_PROFILE:
-                       {
-                           pve.setValue(this.profile_comp.getValue());
-                       }
-                       break;
-            
-                   case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_PROFILE:
-                       {
-                           pve.setValue("PROFILE_ID=" + this.profile_comp.getValue() +
-                                        ";TBR=" + this.tbr_cmp.getValue());
-                       }
-                       break;
-        
-                   case PumpBasalSubType.PUMP_BASAL_PUMP_STATUS:
-                       {
-                           if (this.rb_1.isSelected())
-                               pve.setValue("1");
-                           else if (this.rb_2.isSelected())
-                               pve.setValue("2");
-                           else if (this.rb_3.isSelected())
-                               pve.setValue("3");
-                           else
-                               pve.setValue("0");
-                       }
-                       break;
-        
-                   default:
-                       break;
-               }
-           } break;
+        switch (this.type)
+        {
+            case PumpBaseType.PUMP_DATA_BASAL:
+                {
+                    pve.setSubType(sub_type);
 
-           case PumpBaseType.PUMP_DATA_BOLUS:
-           {
-               pve.setSubType(sub_type);
-               
-               switch(this.sub_type)
-               {
-                   case PumpBolusType.PUMP_BOLUS_STANDARD:
-                   case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
-                       {
-                           pve.setValue("" + this.num_tf_1_d2.getCurrentValue());
-                           
-                       } break;
-                   
-                   //case PumpBolusType.PUMP_BOLUS_DUAL_SQUARE:    
-                   case PumpBolusType.PUMP_BOLUS_SQUARE:
-                       {
-                           pve.setValue(this.bolus_sq.getValue());
-                           // pve.setValue("AMOUNT_SQUARE=" + amount + ";DURATION=" + e);
+                    switch (this.sub_type)
+                    {
+                        case PumpBasalSubType.PUMP_BASAL_VALUE:
+                            {
+                                pve.setValue("" + this.num_tf_1_d2.getCurrentValue());
+                            }
+                            break;
 
-                       } break;
-                       
-                   case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
-                       {
-                           /*pve.setValue(String.format("AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s", 
-                               str[0], 
-                               str[2], 
-                               str[3])); */
-                           
-                           //pve.setValue("AMOUNT_1=" + this.num_tf_1_d2.getCurrentValue() +
-                           //             ";AMOUNT_2=" + this.num_tf_2_d2.getCurrentValue());
+                        case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE:
+                            {
+                                pve.setValue(this.tbr_cmp.getValue());
+                            }
+                            break;
 
-                           pve.setValue("IMMEDIATE_AMOUNT=" + this.num_tf_1_d2.getCurrentValue() + ";"+
-                                        this.bolus_sq.getValue());
-                           
-                           
-                       } break;
-                       
-                   default:
-                       {
-                           
-                       } break;
+                        case PumpBasalSubType.PUMP_BASAL_PROFILE:
+                            {
+                                pve.setValue(this.profile_comp.getValue());
+                            }
+                            break;
 
-               }
-               // TODO
-           } break;
+                        case PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_PROFILE:
+                            {
+                                pve.setValue("PROFILE_ID=" + this.profile_comp.getValue() + ";TBR="
+                                        + this.tbr_cmp.getValue());
+                            }
+                            break;
 
-           case PumpBaseType.PUMP_DATA_EVENT:
-           {
-               pve.setSubType(m_da.getPumpEventTypes().getTypeFromDescription((String)this.combo_1.getSelectedItem()));
-           } break;
-           
-           case PumpBaseType.PUMP_DATA_ALARM:
-           case PumpBaseType.PUMP_DATA_ERROR:
-           {
-               pve.setSubType(this.combo_1.getSelectedIndex());
-           } break;
+                        case PumpBasalSubType.PUMP_BASAL_PUMP_STATUS:
+                            {
+                                if (this.rb_1.isSelected())
+                                {
+                                    pve.setValue("1");
+                                }
+                                else if (this.rb_2.isSelected())
+                                {
+                                    pve.setValue("2");
+                                }
+                                else if (this.rb_3.isSelected())
+                                {
+                                    pve.setValue("3");
+                                }
+                                else
+                                {
+                                    pve.setValue("0");
+                                }
+                            }
+                            break;
 
-           case PumpBaseType.PUMP_DATA_REPORT:
-           {
-               pve.setSubType(this.combo_1.getSelectedIndex());
-               pve.setValue(this.text_2.getText());
-           } break;
+                        default:
+                            break;
+                    }
+                }
+                break;
 
-           case PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL:
-           case PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS:
-           {
-               pve.setSubType(0);
-               pve.setValue("" + this.num_tf_1_d2.getCurrentValue());
-           } break;
+            case PumpBaseType.PUMP_DATA_BOLUS:
+                {
+                    pve.setSubType(sub_type);
 
-           case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA:
-           default:
-               break;
-       
-       }
-       
-        
-        //System.out.println("Save data not implemented yet !");
-        
+                    switch (this.sub_type)
+                    {
+                        case PumpBolusType.PUMP_BOLUS_STANDARD:
+                        case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
+                            {
+                                pve.setValue("" + this.num_tf_1_d2.getCurrentValue());
+
+                            }
+                            break;
+
+                        // case PumpBolusType.PUMP_BOLUS_DUAL_SQUARE:
+                        case PumpBolusType.PUMP_BOLUS_SQUARE:
+                            {
+                                pve.setValue(this.bolus_sq.getValue());
+                                // pve.setValue("AMOUNT_SQUARE=" + amount +
+                                // ";DURATION=" + e);
+
+                            }
+                            break;
+
+                        case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
+                            {
+                                /*
+                                 * pve.setValue(String.format(
+                                 * "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s",
+                                 * str[0],
+                                 * str[2],
+                                 * str[3]));
+                                 */
+
+                                // pve.setValue("AMOUNT_1=" +
+                                // this.num_tf_1_d2.getCurrentValue() +
+                                // ";AMOUNT_2=" +
+                                // this.num_tf_2_d2.getCurrentValue());
+
+                                pve.setValue("IMMEDIATE_AMOUNT=" + this.num_tf_1_d2.getCurrentValue() + ";"
+                                        + this.bolus_sq.getValue());
+
+                            }
+                            break;
+
+                        default:
+                            {
+
+                            }
+                            break;
+
+                    }
+                    // TODO
+                }
+                break;
+
+            case PumpBaseType.PUMP_DATA_EVENT:
+                {
+                    pve.setSubType(m_da.getPumpEventTypes().getTypeFromDescription(
+                        (String) this.combo_1.getSelectedItem()));
+                }
+                break;
+
+            case PumpBaseType.PUMP_DATA_ALARM:
+            case PumpBaseType.PUMP_DATA_ERROR:
+                {
+                    pve.setSubType(this.combo_1.getSelectedIndex());
+                }
+                break;
+
+            case PumpBaseType.PUMP_DATA_REPORT:
+                {
+                    pve.setSubType(this.combo_1.getSelectedIndex());
+                    pve.setValue(this.text_2.getText());
+                }
+                break;
+
+            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL:
+            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS:
+                {
+                    pve.setSubType(0);
+                    pve.setValue("" + this.num_tf_1_d2.getCurrentValue());
+                }
+                break;
+
+            case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA:
+            default:
+                break;
+
+        }
+
+        // System.out.println("Save data not implemented yet !");
+
     }
 
     private String[] getParsedValues(String val)
     {
         ArrayList<String> lst = new ArrayList<String>();
-        
+
         StringTokenizer strtok = new StringTokenizer(val, ";");
-        
-        while(strtok.hasMoreTokens())
+
+        while (strtok.hasMoreTokens())
         {
             String tk = strtok.nextToken();
-            lst.add(tk.substring(tk.indexOf("=")+1));
+            lst.add(tk.substring(tk.indexOf("=") + 1));
         }
-        
+
         String ia[] = new String[lst.size()];
         return lst.toArray(ia);
     }
-    
-    
+
     private void addAllItems(JComboBox cb, String[] array)
     {
         cb.removeAllItems();
 
-        for (int i = 0; i < array.length; i++)
+        for (String element : array)
         {
-            cb.addItem(array[i]);
+            cb.addItem(element);
         }
     }
 
-    
-    private void addAllItems(JComboBox cb, Hashtable<Integer,String> ht)
+    private void addAllItems(JComboBox cb, Hashtable<Integer, String> ht)
     {
         cb.removeAllItems();
 
-        for(Enumeration<Integer> en=ht.keys(); en.hasMoreElements(); )
+        for (Enumeration<Integer> en = ht.keys(); en.hasMoreElements();)
         {
             Integer i = en.nextElement();
             cb.addItem(ht.get(i));
         }
     }
-    
-    
+
     /**
      * Set Height
      * 
@@ -1179,12 +1211,12 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     /**
      * Get Height
      */
+    @Override
     public int getHeight()
     {
         return this.height;
     }
 
-    
     /**
      * Get Base Type
      * 
@@ -1194,8 +1226,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     {
         return this.type;
     }
-    
-    
+
     /**
      * Action Performed
      */
@@ -1207,11 +1238,11 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         {
             // System.out.println("Bolus event: " +
             // this.combo_1.getSelectedIndex());
-            
-            String s = (String)this.combo_1.getSelectedItem();
+
+            String s = (String) this.combo_1.getSelectedItem();
             setBolusSubType(this.m_da.getBolusSubTypes().getTypeFromDescription(s));
-            
-            //setBolusSubType(this.combo_1.getSelectedIndex());
+
+            // setBolusSubType(this.combo_1.getSelectedIndex());
         }
         else if (cmd.equals("basal"))
         {
@@ -1221,46 +1252,45 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         }
         else if (cmd.equals("bolus_helper"))
         {
-            System.out.println("Bolus Helper"); //Basal event: " +
+            System.out.println("Bolus Helper"); // Basal event: " +
             // this.combo_1.getSelectedIndex());
-            //setBasalSubType(this.combo_1.getSelectedIndex());
-            //m_parent.dtc
-            
-            float _bg =0.0f;
+            // setBasalSubType(this.combo_1.getSelectedIndex());
+            // m_parent.dtc
+
+            float _bg = 0.0f;
             float ch = 0.0f;
-            
-            if (m_parent.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_BG)))
+
+            if (m_parent.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(
+                PumpAdditionalDataType.PUMP_ADD_DATA_BG)))
             {
-                PumpValuesEntryExt pvex = m_parent.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_BG));
+                PumpValuesEntryExt pvex = m_parent.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(
+                    PumpAdditionalDataType.PUMP_ADD_DATA_BG));
                 _bg = m_da.getFloatValueFromString(pvex.getValue());
-                
-                if (m_da.getBGMeasurmentType()!=DataAccess.BG_MGDL)
+
+                if (m_da.getBGMeasurmentType() != DataAccess.BG_MGDL)
                 {
                     _bg = m_da.getBGValueDifferent(DataAccess.BG_MGDL, _bg);
                 }
             }
 
-            
-            if (m_parent.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH)))
+            if (m_parent.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(
+                PumpAdditionalDataType.PUMP_ADD_DATA_CH)))
             {
-                PumpValuesEntryExt pvex = m_parent.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
+                PumpValuesEntryExt pvex = m_parent.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(
+                    PumpAdditionalDataType.PUMP_ADD_DATA_CH));
                 ch = m_da.getFloatValueFromString(pvex.getValue());
             }
-            
-            BolusHelper bh = new BolusHelper(m_parent, 
-                _bg, //m_da.getJFormatedTextValueFloat(ftf_bg2), 
-                ch, //m_da.getJFormatedTextValueFloat(this.ftf_ch), 
-                m_parent.dtc.getDateTime(), 2, DataAccess.INSULIN_PUMP);
+
+            BolusHelper bh = new BolusHelper(m_parent, _bg, // m_da.getJFormatedTextValueFloat(ftf_bg2),
+                    ch, // m_da.getJFormatedTextValueFloat(this.ftf_ch),
+                    m_parent.dtc.getDateTime(), 2, DataAccess.INSULIN_PUMP);
 
             if (bh.hasResult())
             {
                 this.num_tf_1_d2.setValue(bh.getResult());
-                //this.ftf_ins1.setValue(bh.getResult());
+                // this.ftf_ins1.setValue(bh.getResult());
             }
-            
-            
-            
-            
+
         }
     }
 
@@ -1270,7 +1300,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         private static final long serialVersionUID = 1195430308386555236L;
         JLabel label_1_1, label_2_1;
         JButton b_button_1;
-        //PumpValuesEntryProfile profile = null;
+        // PumpValuesEntryProfile profile = null;
         String profile;
 
         public ProfileComponent()
@@ -1284,7 +1314,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         {
             label_1_1 = new JLabel(ic.getMessage("PROFILE") + ":");
             label_1_1.setBounds(0, 0, 140, 25);
-            label_1_1.setFont(m_da.getFont(DataAccessPump.FONT_NORMAL_BOLD));
+            label_1_1.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
             this.add(label_1_1);
 
             label_2_1 = new JLabel(ic.getMessage("NOT_SELECTED"));
@@ -1298,6 +1328,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         }
 
+        @Override
         public void setBounds(int x, int y, int width, int height)
         {
             super.setBounds(x, y, 350, 30);
@@ -1311,63 +1342,61 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 label_2_1.setText(psp.getSelectedObject().toString());
                 this.profile = psp.getSelectedObject().toString();
             }
-/*            
-            System.out.println("Profile Selector N/A !!!");
-            JOptionPane.showMessageDialog(this, 
-                "Profile functionality will be added at " +
-                "later time (version 0.5), so profile " +
-                "selecttion is currently not possible.", 
-                ic.getMessage("PFORILE"), 
-                JOptionPane.WARNING_MESSAGE);*/
+            /*
+             * System.out.println("Profile Selector N/A !!!");
+             * JOptionPane.showMessageDialog(this,
+             * "Profile functionality will be added at " +
+             * "later time (version 0.5), so profile " +
+             * "selecttion is currently not possible.",
+             * ic.getMessage("PFORILE"),
+             * JOptionPane.WARNING_MESSAGE);
+             */
         }
 
         public boolean isSelected()
         {
-            return (profile!=null);
-            //return !(label_2_1.getText().equals(ic.getMessage("NOT_SELECTED")));
+            return profile != null;
+            // return
+            // !(label_2_1.getText().equals(ic.getMessage("NOT_SELECTED")));
         }
-        
+
         public boolean isValueSet()
         {
             return isSelected();
         }
-        
-        
+
         public String getValue()
         {
             /*
-            if (this.profile==null)
-                return "0";
-            else
-                return "" + this.profile.getId();
-                */
+             * if (this.profile==null)
+             * return "0";
+             * else
+             * return "" + this.profile.getId();
+             */
             return this.profile;
         }
-        
+
         public void setValue(String val)
         {
-            
+
             this.profile = val;
-            label_2_1.setText(this.profile); 
+            label_2_1.setText(this.profile);
             /*
-            long id = m_da.getLongValueFromString(val, 0L);
-            
-            if (id == 0)
-            {
-                this.profile = null;
-            }
-            else
-            {   
-                this.profile = new PumpValuesEntryProfile();
-                this.profile.setId(id);
-                
-                m_da.getDb().get(this.profile);
-            }*/
+             * long id = m_da.getLongValueFromString(val, 0L);
+             * if (id == 0)
+             * {
+             * this.profile = null;
+             * }
+             * else
+             * {
+             * this.profile = new PumpValuesEntryProfile();
+             * this.profile.setId(id);
+             * m_da.getDb().get(this.profile);
+             * }
+             */
         }
     }
 
-    
-    
     /**
      *  Square Bolus Component - Component used for setting Square Bolus   
      */
@@ -1376,19 +1405,18 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         private static final long serialVersionUID = -1888760063675164725L;
 
-//        String[] vals = { "-", "+" };
+        // String[] vals = { "-", "+" };
 
         JSpinner spinner = null;
-        //JComboBox cb_sign = null;
+        // JComboBox cb_sign = null;
         JLabel label_1_1, label_2_1;
         TimeComponent cmp_time = null;
         int m_type = 0;
-        
+
         public static final int SQUARE_SINGLE = 1;
         public static final int SQUARE_DUAL = 2;
         DataAccessPump da = DataAccessPump.getInstance();
-        
-        
+
         public SquareBolusComponent()
         {
             super();
@@ -1399,8 +1427,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         private void init()
         {
-            label_1_1 = ATSwingUtils.getLabel(ic.getMessage("SQUARE_AMOUNT") + ":", 
-                                              0, 0, 120, 25, this, ATSwingUtils.FONT_NORMAL_BOLD); 
+            label_1_1 = ATSwingUtils.getLabel(ic.getMessage("SQUARE_AMOUNT") + ":", 0, 0, 120, 25, this,
+                ATSwingUtils.FONT_NORMAL_BOLD);
             this.add(label_1_1);
 
             spinner = new JSpinner();
@@ -1409,49 +1437,45 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             spinner.setValue(0.1f);
             this.add(spinner);
 
-            label_2_1 = ATSwingUtils.getLabel(ic.getMessage("DURATION_SHORT") + ":", 
-                                              175, 0, 120, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
+            label_2_1 = ATSwingUtils.getLabel(ic.getMessage("DURATION_SHORT") + ":", 175, 0, 120, 25, this,
+                ATSwingUtils.FONT_NORMAL_BOLD);
             this.add(label_2_1);
-            
+
             cmp_time = new TimeComponent();
             cmp_time.setBounds(245, 0, 50, 25);
             this.add(cmp_time);
-            
+
         }
 
-        
-        
         // Type: 1 = AMOUNT_SQUARE=%s;DURATION=%s
-        //       2 = AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s
+        // 2 = AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s
         public void setType(int type_in)
         {
             this.m_type = type_in;
         }
-        
-        
+
+        @Override
         public void setBounds(int x, int y, int width, int height)
         {
             super.setBounds(x, y, 350, 30);
         }
-        
+
         public String getValue()
         {
-            return String.format("AMOUNT_SQUARE=%s;DURATION=%s", 
+            return String.format("AMOUNT_SQUARE=%s;DURATION=%s",
                 "" + m_da.getFormatedBolusValue(m_da.getFloatValue(this.spinner.getValue())),
                 this.cmp_time.getTimeString());
-            
-            
-            
-            //System.out.println("getValue not implemented");
-            //return null;
-            
+
+            // System.out.println("getValue not implemented");
+            // return null;
+
         }
-        
+
         public void setValue(String val)
         {
             String s[] = getParsedValues(val);
-            
-            if (m_type==SquareBolusComponent.SQUARE_SINGLE)
+
+            if (m_type == SquareBolusComponent.SQUARE_SINGLE)
             {
                 this.spinner.setValue(m_da.getFloatValueFromString(s[0], 0.0f));
                 this.setTime(s[1]);
@@ -1459,78 +1483,74 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             else
             {
                 this.spinner.setValue(m_da.getFloatValueFromString(s[1], 0.0f));
-                
-                if (s.length>2)
+
+                if (s.length > 2)
+                {
                     this.setTime(s[2]);
+                }
                 else
+                {
                     this.cmp_time.setTime(0);
+                }
             }
-            
-            //String s[] = data.getValue().split(regex)
-            //this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(s[0]));
-            //this.num_tf_2_d2.setValue(m_da.getFloatValueFromString(s[1]));
-            
-            //System.out.println("setValue not implemented");
+
+            // String s[] = data.getValue().split(regex)
+            // this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(s[0]));
+            // this.num_tf_2_d2.setValue(m_da.getFloatValueFromString(s[1]));
+
+            // System.out.println("setValue not implemented");
         }
-        
-        
+
         private void setTime(String val)
         {
             String s1, s2;
-            
+
             s1 = val.substring(0, val.indexOf(":"));
-            s2 = val.substring(val.indexOf(":")+1);
-            
-            int tm = (m_da.getIntValueFromString(s1, 0) * 100) + m_da.getIntValueFromString(s2, 0);
-            
+            s2 = val.substring(val.indexOf(":") + 1);
+
+            int tm = m_da.getIntValueFromString(s1, 0) * 100 + m_da.getIntValueFromString(s2, 0);
+
             this.cmp_time.setTime(tm);
         }
-        
 
         public boolean isValueSet()
         {
             return true;
         }
 
+        @Override
         public void setVisible(boolean vis)
         {
-            //System.out.println("SquareBolusCompo: setVisible" + vis);
+            // System.out.println("SquareBolusCompo: setVisible" + vis);
             super.setVisible(vis);
-            
+
             spinner.setVisible(vis);
             label_1_1.setVisible(vis);
             label_2_1.setVisible(vis);
             cmp_time.setVisible(vis);
         }
-        
-        
+
     }
-    
-    
-    
-    
+
     private class TemporaryBasalRateComponent extends JPanel implements ItemListener
     {
-        //I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+        // I18nControlAbstract ic =
+        // DataAccessPump.getInstance().getI18nControlInstance();
         ConfigurationManager cm = m_da.getConfigurationManager();
-        
+
         private static final long serialVersionUID = -1192269467658397557L;
         String[] vals = { "-", "+" };
-        String[] units = { ic.getMessage("TBR_TYPE_UNIT"), 
-                           ic.getMessage("TBR_TYPE_PROC")
-        };
-        
+        String[] units = { ic.getMessage("TBR_TYPE_UNIT"), ic.getMessage("TBR_TYPE_PROC") };
 
         JSpinner spinner = null;
         JComboBox cb_sign = null;
         JComboBox cb_unit = null;
         JLabel label_1_1, label_2_1;
-        
+
         TimeComponent cmp_time = null;
-        
+
         SpinnerNumberModel model_unit;
         SpinnerNumberModel model_proc;
-        
 
         public TemporaryBasalRateComponent()
         {
@@ -1543,7 +1563,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         {
             label_1_1 = new JLabel(ic.getMessage("TEMPORARY_BASAL_RATE_SHORT") + ":");
             label_1_1.setBounds(0, 0, 140, 25);
-            label_1_1.setFont(m_da.getFont(DataAccessPump.FONT_NORMAL_BOLD));
+            label_1_1.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
             this.add(label_1_1);
 
             cb_sign = new JComboBox(vals);
@@ -1551,18 +1571,14 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             cb_sign.setSelectedIndex(1);
             this.add(cb_sign);
 
-            model_unit = new SpinnerNumberModel(0, 
-                cm.getFloatValue("PUMP_UNIT_MIN"),
-                cm.getFloatValue("PUMP_UNIT_MAX"),
-                cm.getFloatValue("PUMP_UNIT_STEP"));
-            
-            model_proc = new SpinnerNumberModel(100, 
-                cm.getFloatValue("PUMP_PROC_MIN"),
-                cm.getFloatValue("PUMP_PROC_MAX"),
-                cm.getFloatValue("PUMP_PROC_STEP"));
-            
+            model_unit = new SpinnerNumberModel(0, cm.getFloatValue("PUMP_UNIT_MIN"),
+                    cm.getFloatValue("PUMP_UNIT_MAX"), cm.getFloatValue("PUMP_UNIT_STEP"));
+
+            model_proc = new SpinnerNumberModel(100, cm.getFloatValue("PUMP_PROC_MIN"),
+                    cm.getFloatValue("PUMP_PROC_MAX"), cm.getFloatValue("PUMP_PROC_STEP"));
+
             spinner = new JSpinner();
-            //spinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+            // spinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
             spinner.setBounds(168, 0, 48, 25);
             spinner.setValue(100);
             this.add(spinner);
@@ -1571,37 +1587,36 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             cb_unit.setBounds(220, 0, 110, 25);
             cb_unit.addItemListener(this);
             this.add(cb_unit);
-            
+
             int tbr_type = cm.getIntValue("PUMP_TBR_TYPE");
-            
-            if (tbr_type!=0)
+
+            if (tbr_type != 0)
             {
                 cb_unit.setEnabled(false);
-                cb_unit.setSelectedIndex(tbr_type-1);
+                cb_unit.setSelectedIndex(tbr_type - 1);
             }
-            
+
             setSpinnerModel();
-            
-            
-            label_2_1 = ATSwingUtils.getLabel(ic.getMessage("DURATION_SHORT") + ":", 
-                175, 0, 120, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
+
+            label_2_1 = ATSwingUtils.getLabel(ic.getMessage("DURATION_SHORT") + ":", 175, 0, 120, 25, this,
+                ATSwingUtils.FONT_NORMAL_BOLD);
             this.add(label_2_1);
 
             cmp_time = new TimeComponent();
             cmp_time.setBounds(245, 0, 50, 25);
             this.add(cmp_time);
-            
-            
+
             /*
-            label_2_1 = new JLabel("%");
-            label_2_1.setBounds(320, 0, 40, 25);
-            this.add(label_2_1); */
+             * label_2_1 = new JLabel("%");
+             * label_2_1.setBounds(320, 0, 40, 25);
+             * this.add(label_2_1);
+             */
 
         }
 
         private void setSpinnerModel()
         {
-            if (this.cb_unit.getSelectedIndex()==0)
+            if (this.cb_unit.getSelectedIndex() == 0)
             {
                 spinner.setModel(model_unit);
             }
@@ -1610,60 +1625,64 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 spinner.setModel(model_proc);
             }
         }
-        
-        
-        
+
+        @Override
         public void setBounds(int x, int y, int width, int height)
         {
             super.setBounds(x, y, 350, 30);
         }
-        
+
         public String getValue()
         {
-            String sign="", unit="%", val = "";
-            
-            if (this.cb_sign.getSelectedIndex()==0)
-                sign = "-";
+            String sign = "", unit = "%", val = "";
 
-            if (this.cb_unit.getSelectedIndex()==0)
+            if (this.cb_sign.getSelectedIndex() == 0)
+            {
+                sign = "-";
+            }
+
+            if (this.cb_unit.getSelectedIndex() == 0)
             {
                 unit = "U";
                 // FIXME
-//                val = Rounding.specialRounding(m_da.getDoinput_val, cm.getStringValue("PEN_BASAL_PRECISSION"));
+                // val = Rounding.specialRounding(m_da.getDoinput_val,
+                // cm.getStringValue("PEN_BASAL_PRECISSION"));
             }
             else
             {
                 val = "" + m_da.getIntValue(spinner.getValue());
             }
-            
-            return String.format("TBR_VALUE=%s%s;TBR_UNIT=%s;DURATION=%s", 
-                                 sign, 
-                                 val, 
-                                 unit,
-                                 this.cmp_time.getTimeString());
-            
+
+            return String.format("TBR_VALUE=%s%s;TBR_UNIT=%s;DURATION=%s", sign, val, unit,
+                this.cmp_time.getTimeString());
+
         }
-        
+
         public void setValue(String val)
         {
             String[] str = getParsedValues(val);
             String s = str[0];
-            
+
             if (s.startsWith("-"))
             {
                 s = s.substring(1);
                 this.cb_sign.setSelectedIndex(0);
             }
             else
+            {
                 this.cb_sign.setSelectedIndex(1);
+            }
 
             if (str[1].equals("%"))
+            {
                 this.cb_unit.setSelectedIndex(1);
+            }
             else
+            {
                 this.cb_unit.setSelectedIndex(0);
-            
+            }
+
         }
-        
 
         public boolean isValueSet()
         {
@@ -1674,7 +1693,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         {
             setSpinnerModel();
         }
-        
+
     }
 
 }

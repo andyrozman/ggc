@@ -45,37 +45,28 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
 {
 
     I18nControlAbstract ic = DataAccessCGMS.getInstance().getI18nControlInstance();
-    
-    private String[] object_desc = {
-        ic.getMessage("CGMS_DATA"),
-        ic.getMessage("CGMS_DATA_EXTENDED"),
-    };
-    
-    
-    private String[] object_name = {
-        "ggc.core.db.hibernate.cgms.CGMSDataH",
-        "ggc.core.db.hibernate.cgms.CGMSDataExtendedH",
-    };
-    
-    
-    
-    
+
+    private String[] object_desc = { ic.getMessage("CGMS_DATA"), ic.getMessage("CGMS_DATA_EXTENDED"), };
+
+    private String[] object_name = { "ggc.core.db.hibernate.cgms.CGMSDataH",
+                                    "ggc.core.db.hibernate.cgms.CGMSDataExtendedH", };
+
     /**
      * Constructor
      */
     public BackupRestoreCGMSHandler()
     {
-        //ic = I18nControl.getInstance();
+        // ic = I18nControl.getInstance();
     }
-    
 
     /**
      * Do Backup
      */
+    @Override
     public void doBackup(BackupRestoreRunner brr)
     {
 
-        for(int i=0; i<this.object_desc.length; i++)
+        for (int i = 0; i < this.object_desc.length; i++)
         {
             if (brr.isBackupObjectSelected(this.object_desc[i]))
             {
@@ -86,20 +77,22 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
                 brr.setStatus(100);
             }
             else
+            {
                 System.out.println("NOT Selected: " + this.object_desc[i]);
+            }
 
         }
-        
+
     }
-    
-    
+
     /**
      * Do Restore
      */
+    @Override
     public void doRestore(BackupRestoreRunner brr)
     {
 
-        for(int i=0; i<this.object_desc.length; i++)
+        for (int i = 0; i < this.object_desc.length; i++)
         {
             if (brr.isRestoreObjectSelected(this.object_name[i]))
             {
@@ -109,10 +102,9 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
                 brr.setStatus(100);
             }
         }
-        
+
     }
-    
-    
+
     /** 
      * Get Backup Restore Object
      */
@@ -120,18 +112,13 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
     public BackupRestoreObject getBackupRestoreObject(String class_name)
     {
         if (class_name.equals("ggc.core.db.hibernate.cgms.CGMSDataH"))
-        {
             return new CGMSData();
-        }
         else if (class_name.equals("ggc.core.db.hibernate.cgms.CGMSDataExtendedH"))
-        {
             return new CGMSDataExtended();
-        }
         else
             return null;
     }
-    
-    
+
     /** 
      * Get Backup Restore Object
      */
@@ -140,19 +127,18 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
     {
         if (bro.getBackupClassName().equals("ggc.core.db.hibernate.cgms.CGMSDataH"))
         {
-            CGMSDataH eh = (CGMSDataH)obj;
+            CGMSDataH eh = (CGMSDataH) obj;
             return new CGMSData(eh);
         }
         else if (bro.getBackupClassName().equals("ggc.core.db.hibernate.cgms.CGMSDataExtendedH"))
         {
-            CGMSDataExtendedH eh = (CGMSDataExtendedH)obj;
+            CGMSDataExtendedH eh = (CGMSDataExtendedH) obj;
             return new CGMSDataExtended(eh);
         }
         else
             return null;
-            
-    }
 
+    }
 
     /** 
      * Does Contain Backup Restore Object
@@ -160,15 +146,13 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
     @Override
     public boolean doesContainBackupRestoreObject(String bro_name)
     {
-        for(int i=0; i<this.object_name.length; i++)
+        for (String element : this.object_name)
         {
-            if (this.object_name[i].equals(bro_name))
+            if (element.equals(bro_name))
                 return true;
         }
-        
+
         return false;
     }
-    
-    
 
 }

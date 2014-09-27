@@ -36,5 +36,5 @@ public class GGCCoreICRunner extends I18nControlRunner
         // TODO Auto-generated method stub
         return "GGC";
     }
-    
+
 }

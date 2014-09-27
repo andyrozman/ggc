@@ -8,6 +8,8 @@ import java.awt.RenderingHints;
 
 import javax.swing.JComponent;
 
+import com.atech.utils.ATDataAccessAbstract;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -39,7 +41,6 @@ import javax.swing.JComponent;
  *                       there are meters around that display less
  */
 
-
 public abstract class AbstractGraphView extends JComponent
 {
     private static final long serialVersionUID = 1215044753220287075L;
@@ -48,7 +49,7 @@ public abstract class AbstractGraphView extends JComponent
 
     DataAccess m_da = DataAccess.getInstance();
 
-    //GGCProperties props = GGCProperties.getInstance();
+    // GGCProperties props = GGCProperties.getInstance();
 
     int BGunit, maxBG, minBG, BGDiff;
     int counter = 10;
@@ -67,7 +68,7 @@ public abstract class AbstractGraphView extends JComponent
     float hourWidth = 0;
     float minuteWidth = 0;
     long dayCount = 0L;
-    
+
     String unitLabel;
 
     /**
@@ -78,25 +79,24 @@ public abstract class AbstractGraphView extends JComponent
 
         BGunit = m_da.getSettings().getBG_unit();
 
-    	switch (BGunit) 
-    	{
-    	    case DataAccess.BG_MMOL:
-    		maxBG = 44;
-    		minBG = 0;
-    		unitLabel = "mmol/l";
-    		break;
-    	    case DataAccess.BG_MGDL:
-    	    default:
-    		maxBG = 450;
-    		minBG = 0;
-    		unitLabel = "mg/dl";
-    		break;
+        switch (BGunit)
+        {
+            case DataAccess.BG_MMOL:
+                maxBG = 44;
+                minBG = 0;
+                unitLabel = "mmol/l";
+                break;
+            case DataAccess.BG_MGDL:
+            default:
+                maxBG = 450;
+                minBG = 0;
+                unitLabel = "mg/dl";
+                break;
         }
         BGDiff = maxBG - minBG;
-            
+
         getRenderingQuality();
     }
-
 
     protected abstract void drawFramework(Graphics2D g2D);
 
@@ -110,12 +110,12 @@ public abstract class AbstractGraphView extends JComponent
         drawableWidth = viewWidth - rightSpace - leftSpace;
         drawableHeight = viewHeight - lowerSpace - upperSpace;
 
-        //continuous drawing
+        // continuous drawing
         dayWidthC = drawableWidth / (dayCount > 0 ? dayCount : 1);
         hourWidthC = dayWidthC / 24;
         minuteWidthC = hourWidthC / 60;
 
-        //whole width is one day
+        // whole width is one day
         dayWidth = drawableWidth;
         hourWidth = dayWidth / 24;
         minuteWidth = hourWidth / 60;
@@ -123,66 +123,61 @@ public abstract class AbstractGraphView extends JComponent
 
     protected int BGtoCoord(float BG)
     {
-        return (int)(drawableHeight + upperSpace - (drawableHeight / BGDiff) * BG);
+        return (int) (drawableHeight + upperSpace - drawableHeight / BGDiff * BG);
     }
 
     protected int BUtoCoord(float BU)
     {
-        return (int)(drawableHeight + upperSpace - (drawableHeight / 60) * BU);
+        return (int) (drawableHeight + upperSpace - drawableHeight / 60 * BU);
     }
 
     protected int InstoCoord(float Ins)
     {
-        return (int)(drawableHeight + upperSpace - (drawableHeight / 60) * Ins);
+        return (int) (drawableHeight + upperSpace - drawableHeight / 60 * Ins);
     }
 
     protected int InsPerBUtoCoord(float factor)
     {
-        return (int)(drawableHeight + upperSpace - (drawableHeight / 4) * factor);
+        return (int) (drawableHeight + upperSpace - drawableHeight / 4 * factor);
     }
-/*
-    protected int DateTimetoCoord(java.util.Date time)
-    {
-        int timeH = time.getHours();
-        int timeM = time.getMinutes();
 
-        return (int)(leftSpace + timeH * hourWidthC + timeM * minuteWidthC);
-    }
-    */
+    /*
+     * protected int DateTimetoCoord(java.util.Date time)
+     * {
+     * int timeH = time.getHours();
+     * int timeM = time.getMinutes();
+     * return (int)(leftSpace + timeH * hourWidthC + timeM * minuteWidthC);
+     * }
+     */
 
     protected int DateTimetoCoord(long datetime)
     {
         return timeToCoordReal(datetime);
     }
 
-
     private int timeToCoordReal(long datetime)
     {
-        String dt = m_da.getDateTimeAsTimeString(datetime);
+        String dt = ATDataAccessAbstract.getDateTimeAsTimeString(datetime);
 
-        int timeH = Integer.parseInt(dt.substring(0,2));
-        int timeM = Integer.parseInt(dt.substring(0,2));
+        int timeH = Integer.parseInt(dt.substring(0, 2));
+        int timeM = Integer.parseInt(dt.substring(0, 2));
 
-        return (int)(leftSpace + timeH * hourWidthC + timeM * minuteWidthC);
+        return (int) (leftSpace + timeH * hourWidthC + timeM * minuteWidthC);
     }
-
 
     /*
-    protected int TimetoCoord(java.util.Date time)
-    {
-        int timeH = time.getHours();
-        int timeM = time.getMinutes();
-
-        return (int)(leftSpace + timeH * hourWidth + timeM * minuteWidth);
-    }
-    */
-
+     * protected int TimetoCoord(java.util.Date time)
+     * {
+     * int timeH = time.getHours();
+     * int timeM = time.getMinutes();
+     * return (int)(leftSpace + timeH * hourWidth + timeM * minuteWidth);
+     * }
+     */
 
     protected int TimetoCoord(long datetime)
     {
         return timeToCoordReal(datetime);
     }
-
 
     /**
      * Set New Rendering Quality
@@ -195,8 +190,8 @@ public abstract class AbstractGraphView extends JComponent
     private void getRenderingQuality()
     {
 
-       switch (m_da.getSettings().getAntiAliasing()) 
-       {
+        switch (m_da.getSettings().getAntiAliasing())
+        {
             case 1:
                 oAA = RenderingHints.VALUE_ANTIALIAS_OFF;
                 break;
@@ -206,9 +201,9 @@ public abstract class AbstractGraphView extends JComponent
             default:
                 oAA = RenderingHints.VALUE_ANTIALIAS_DEFAULT;
         }
-        //System.out.println("rendering " + oAA);
+        // System.out.println("rendering " + oAA);
 
-        switch (m_da.getSettings().getColorRendering()) 
+        switch (m_da.getSettings().getColorRendering())
         {
             case 1:
                 oCR = RenderingHints.VALUE_COLOR_RENDER_QUALITY;
@@ -219,9 +214,9 @@ public abstract class AbstractGraphView extends JComponent
             default:
                 oCR = RenderingHints.VALUE_COLOR_RENDER_DEFAULT;
         }
-        //System.out.println("colorrend " + oCR);
+        // System.out.println("colorrend " + oCR);
 
-        switch (m_da.getSettings().getDithering()) 
+        switch (m_da.getSettings().getDithering())
         {
             case 1:
                 oD = RenderingHints.VALUE_DITHER_DISABLE;
@@ -232,9 +227,9 @@ public abstract class AbstractGraphView extends JComponent
             default:
                 oD = RenderingHints.VALUE_DITHER_DEFAULT;
         }
-        //System.out.println("dithering " + oD);
+        // System.out.println("dithering " + oD);
 
-        switch (m_da.getSettings().getFractionalMetrics()) 
+        switch (m_da.getSettings().getFractionalMetrics())
         {
             case 1:
                 oFM = RenderingHints.VALUE_FRACTIONALMETRICS_OFF;
@@ -245,9 +240,9 @@ public abstract class AbstractGraphView extends JComponent
             default:
                 oFM = RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT;
         }
-        //System.out.println("fractional " + oFM);
+        // System.out.println("fractional " + oFM);
 
-        switch (m_da.getSettings().getInterpolation()) 
+        switch (m_da.getSettings().getInterpolation())
         {
             case 1:
                 oI = RenderingHints.VALUE_INTERPOLATION_BICUBIC;
@@ -258,9 +253,9 @@ public abstract class AbstractGraphView extends JComponent
             default:
                 oI = RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR;
         }
-        //System.out.println("interpolation " + oI);
+        // System.out.println("interpolation " + oI);
 
-        switch (m_da.getSettings().getRendering()) 
+        switch (m_da.getSettings().getRendering())
         {
             case 1:
                 oR = RenderingHints.VALUE_RENDER_QUALITY;
@@ -271,9 +266,9 @@ public abstract class AbstractGraphView extends JComponent
             default:
                 oR = RenderingHints.VALUE_RENDER_DEFAULT;
         }
-        //System.out.println("rendering " + oR);
+        // System.out.println("rendering " + oR);
 
-        switch (m_da.getSettings().getTextAntiAliasing()) 
+        switch (m_da.getSettings().getTextAntiAliasing())
         {
             case 1:
                 oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_OFF;
@@ -284,7 +279,7 @@ public abstract class AbstractGraphView extends JComponent
             default:
                 oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT;
         }
-        //System.out.println("text AA " + oTAA);
+        // System.out.println("text AA " + oTAA);
 
     }
 }

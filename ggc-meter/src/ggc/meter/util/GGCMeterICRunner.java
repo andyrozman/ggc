@@ -41,5 +41,5 @@ public class GGCMeterICRunner extends I18nControlRunner
     {
         return "GGCMeterTool";
     }
-    
+
 }

@@ -28,7 +28,6 @@ import com.atech.i18n.info.LanguageInfo;
  *  Author:  andyrozman {andy@atech-software.com}  
  */
 
-
 public class GGCLanguageInfo extends LanguageInfo
 {
 
@@ -71,8 +70,4 @@ public class GGCLanguageInfo extends LanguageInfo
         return "/GGC_Languages.properties";
     }
 
-    
-    
-    
-    
 }

@@ -16,11 +16,13 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -48,12 +50,11 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class DeviceExportDialog extends JDialog implements ActionListener, StatusReporterInterface, HelpCapable
 {
 
     private static final long serialVersionUID = -5673838593827489827L;
-    
+
     private DataAccessPlugInBase m_da; // = DataAccessMeter.getInstance();
     I18nControlAbstract m_ic; // = m_da.getI18nControlInstance();
 
@@ -63,9 +64,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     JLabel lbl_status;
     DeviceDataHandler m_ddh;
     boolean reading_finsihed = false;
-    
-    
-    
+
     /**
      * Constructor 
      * 
@@ -81,10 +80,9 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
 
         this.m_ddh = ddh;
         this.m_da.centerJDialog(this, parent);
-        
+
         dialogPreInit(!ddh.isOutputWriterSet());
     }
-
 
     private void dialogPreInit(boolean start)
     {
@@ -93,7 +91,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         m_da.addComponent(this);
 
         init();
-     
+
         if (start)
         {
             this.bt_start.setVisible(false);
@@ -102,31 +100,27 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
 
         this.setVisible(true);
     }
-    
-    
+
     private void setStart()
     {
         this.started = true;
         this.bt_close.setEnabled(false);
-        
+
         // Andy [6.3.2010] - we do this in thread now
-        //this.m_ddh.executeExport(this);
-        
+        // this.m_ddh.executeExport(this);
+
         DeviceWriterRunner dwr = new DeviceWriterRunner(this, this.m_ddh);
         dwr.start();
-        
-        //this.server.setReturnData(this.meter_data, this);
-        this.lbl_status.setText(m_ic.getMessage("EXPORT_STATUS_EXPORTING"));
-/*        
-        if ((!this.isVisible()) && (reading_finsihed))
-        {
-            this.bt_close.setEnabled(true);
-        } */
-    }
-    
-    
-    
 
+        // this.server.setReturnData(this.meter_data, this);
+        this.lbl_status.setText(m_ic.getMessage("EXPORT_STATUS_EXPORTING"));
+        /*
+         * if ((!this.isVisible()) && (reading_finsihed))
+         * {
+         * this.bt_close.setEnabled(true);
+         * }
+         */
+    }
 
     protected void init()
     {
@@ -142,59 +136,47 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         getContentPane().add(panel, BorderLayout.CENTER);
 
-        
         label = new JLabel(String.format(m_ic.getMessage("EXPORT_DEVICE_DATA"), m_ic.getMessage("DEVICE_NAME_BIG")));
-        label.setFont(m_da.getFont(DataAccessPlugInBase.FONT_BIG_BOLD));
+        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
         label.setBounds(0, 15, 320, 35);
-        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(label);
-        
-        
-        Font normal = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL);
-        Font bold = m_da.getFont(DataAccessPlugInBase.FONT_NORMAL_BOLD);
 
+        Font normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        Font bold = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
 
         label = new JLabel(m_ic.getMessage("EXPORT_OUTPUT") + ":");
         label.setBounds(30, 70, 310, 25);
         label.setFont(bold);
         panel.add(label);
 
-        String[] exp = 
-        {
-             m_ic.getMessage("GGC_APPLICATION")
-        };
-        
-        
+        String[] exp = { m_ic.getMessage("GGC_APPLICATION") };
+
         JComboBox cb = new JComboBox(exp);
-        cb.setBounds(30,95,250,23);
-        //cb.setEnabled(false);
+        cb.setBounds(30, 95, 250, 23);
+        // cb.setEnabled(false);
         panel.add(cb);
-        
+
         // progress
         label = new JLabel(m_ic.getMessage("EXPORT_PROGRESS") + ":");
         label.setBounds(30, 155, 200, 25);
         label.setFont(bold);
         panel.add(label);
 
-
         lbl_status = new JLabel(m_ic.getMessage("EXPORT_STATUS_READY"));
         lbl_status.setBounds(130, 155, 150, 25);
-        lbl_status.setHorizontalAlignment(JLabel.RIGHT);
+        lbl_status.setHorizontalAlignment(SwingConstants.RIGHT);
         lbl_status.setFont(normal);
         panel.add(lbl_status);
-        
-        
+
         this.progress = new JProgressBar();
         this.progress.setBounds(30, 180, 250, 20);
         this.progress.setStringPainted(true);
-        //this.progress.setBorderPainted(true);
+        // this.progress.setBorderPainted(true);
         this.progress.setBorder(new LineBorder(Color.black));
         this.progress.setForeground(Color.black);
         panel.add(this.progress);
 
-        
-        
-        
         bt_start = new JButton(m_ic.getMessage("START"));
         bt_start.setBounds(50, 250, 100, 25);
         // bt_break.setEnabled(this.m_mim.isStatusOK());
@@ -215,11 +197,6 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         m_da.enableHelp(this);
     }
 
-
-    
-
-
-
     /**
      * Invoked when an action occurs.
      */
@@ -230,19 +207,23 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         if (action_cmd.equals("close"))
         {
             if (started)
+            {
                 this.action = true;
-            
+            }
+
             this.m_da.removeComponent(this);
             this.dispose();
         }
         else
+        {
             System.out.println("DeviceExportDialog::Unknown command: " + action);
+        }
 
     }
 
     boolean started = false;
     boolean action = false;
-    
+
     /**
      * Was action succesful
      * @return
@@ -257,22 +238,23 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
      */
     public void setStatus(int status)
     {
-        if (this.progress!=null)
-            this.progress.setValue(status);
-        
-//        System.out.println("setStatus: " + status);
-        
-        if (status==100)
+        if (this.progress != null)
         {
-//            System.out.println("setStatusXXXX: " + status);
+            this.progress.setValue(status);
+        }
+
+        // System.out.println("setStatus: " + status);
+
+        if (status == 100)
+        {
+            // System.out.println("setStatusXXXX: " + status);
             bt_close.setEnabled(true);
             this.lbl_status.setText(m_ic.getMessage("EXPORT_STATUS_FINISHED"));
             bt_close.setEnabled(true);
             this.action = true;
         }
     }
-    
-    
+
     /**
      * Set reading finsihed
      */
@@ -281,7 +263,6 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         setCloseEnabled(true);
     }
 
-    
     /**
      * Set Close Enabled
      * 
@@ -291,13 +272,11 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     {
         bt_close.setEnabled(cls);
     }
-    
-    
-    
+
     // ****************************************************************
-    // ******              HelpCapable Implementation             *****
+    // ****** HelpCapable Implementation *****
     // ****************************************************************
-    
+
     /** 
      * getComponent - get component to which to attach help context
      * 
@@ -325,23 +304,18 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
      */
     public String getHelpId()
     {
-        //return m_da.getDeviceConfigurationDefinition().getHelpPrefix() + "Export_Data";
+        // return m_da.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // "Export_Data";
         return "DeviceTool_Export_Data";
     }
-    
-    
-    
-/*    
-    public static void main(String[] args)
-    {
-        // MeterReadDialog mrd =
-        new DeviceExportDialog(); // new AscensiaContour("COM12", new
-                                      // ConsoleOutputWriter()));
-    }
-*/
 
-    
-    
-    
-    
+    /*
+     * public static void main(String[] args)
+     * {
+     * // MeterReadDialog mrd =
+     * new DeviceExportDialog(); // new AscensiaContour("COM12", new
+     * // ConsoleOutputWriter()));
+     * }
+     */
+
 }

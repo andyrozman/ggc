@@ -27,77 +27,57 @@ package ggc.plugin.device.impl.minimed;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class MinimedDevicesIds
 {
 
     /**
      * Pump Company: Minimed
      */
-    public static final int COMPANY_MINIMED              = 1;
-    
+    public static final int COMPANY_MINIMED = 1;
 
-    
-    
-    
     /**
      * Pump Minimed 508
      */
-    public static final int PUMP_MINIMED_508      = 10001;
+    public static final int PUMP_MINIMED_508 = 10001;
 
-    
     /**
      * Pump Minimed 508
      */
-    public static final int PUMP_MINIMED_508c     = 10002;
-    
+    public static final int PUMP_MINIMED_508c = 10002;
 
     /**
      * Pump Minimed 511
      */
-    public static final int PUMP_MINIMED_511      = 10003;
-    
-    
+    public static final int PUMP_MINIMED_511 = 10003;
+
     /**
      * Pump Minimed 512/712
      */
-    public static final int PUMP_MINIMED_512      = 10004;
+    public static final int PUMP_MINIMED_512 = 10004;
 
-    
     /**
      * Pump Minimed 515/715
      */
-    public static final int PUMP_MINIMED_515      = 10005;
+    public static final int PUMP_MINIMED_515 = 10005;
 
-    
     /**
      * Pump Minimed 522/722
      */
-    public static final int PUMP_MINIMED_522      = 10006;
+    public static final int PUMP_MINIMED_522 = 10006;
 
-    
     /**
      * Pump Minimed 523/723
      */
-    public static final int PUMP_MINIMED_523      = 10007;
-    
+    public static final int PUMP_MINIMED_523 = 10007;
 
     /**
      * Pump Minimed 553/753
      */
-    public static final int PUMP_MINIMED_553      = 10008;
-    
-    
-    
+    public static final int PUMP_MINIMED_553 = 10008;
+
     /**
      * Pump Minimed 554/754 (Veo)
      */
-    public static final int PUMP_MINIMED_554      = 10009;
-    
-    
-    
-    
-    
-    
-    
+    public static final int PUMP_MINIMED_554 = 10009;
+
 }

@@ -43,7 +43,6 @@ import com.itextpdf.text.pdf.PdfPTable;
  *  Author: andyrozman {andy@atech-software.com}
  */
 
-
 public abstract class PrintPumpDataAbstract extends PrintAbstractIText
 {
 
@@ -75,26 +74,27 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
 
         p.setAlignment(Element.ALIGN_CENTER);
         p.add(new Paragraph("", f));
-        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " [" + this.getDateString(this.deviceValuesRange.getStartGC()) + " - "
+        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " ["
+                + this.getDateString(this.deviceValuesRange.getStartGC()) + " - "
                 + this.getDateString(this.deviceValuesRange.getEndGC()) + "]", f));
-        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " " + DataAccess.getInstance().getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN,
-                10, Font.ITALIC)));
+        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " "
+                + DataAccess.getInstance().getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN, 10,
+                Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
 
         return p;
     }
 
-
     protected String getDateString(GregorianCalendar gc)
     {
-        return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH) +1 ) + "." + gc.get(Calendar.YEAR);
+        return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
     }
-
 
     /**
      * Get Text Size
      */
+    @Override
     public int getTextSize()
     {
         return 8;
@@ -106,9 +106,8 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
     @Override
     public ITextDocumentPrintSettings getCustomDocumentSettings()
     {
-    	return new ITextDocumentPrintSettings(30, 30, 10, 30);
+        return new ITextDocumentPrintSettings(30, 30, 10, 30);
     }
-
 
     /**
      * {@inheritDoc}
@@ -116,19 +115,18 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
     @Override
     public abstract void fillDocumentBody(Document document) throws Exception;
 
-
     /**
      * {@inheritDoc}
      */
     @Override
     public String getFileNameRange()
     {
-        ATechDate atd1 = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), deviceValuesRange.getStartGC());
+        ATechDate atd1 = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(),
+                deviceValuesRange.getStartGC());
         ATechDate atd2 = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), deviceValuesRange.getEndGC());
 
         return atd1.getDateFilenameString() + "-" + atd2.getDateFilenameString();
     }
-
 
     /**
      * Get text for title
@@ -173,7 +171,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
      * @param mp
      * @throws Exception
      */
-    public abstract void writeColumnData(PdfPTable table, Object /*DailyFoodEntry*/ mp) throws Exception;
+    public abstract void writeColumnData(PdfPTable table, Object /* DailyFoodEntry */mp) throws Exception;
 
     /**
      * Write empty column data. If there is no data, this is used, to fill empty places.
@@ -183,11 +181,10 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
      */
     public void writeEmptyColumnData(PdfPTable table) throws Exception
     {
-        for(int i=0; i<this.getTableColumnsCount(); i++)
+        for (int i = 0; i < this.getTableColumnsCount(); i++)
         {
             table.addCell(this.createEmptyTextPhrase());
         }
     }
-
 
 }

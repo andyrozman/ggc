@@ -35,7 +35,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class DailyFoodEntries // implements SelectableInterface
 {
     String text_idx;
@@ -56,7 +55,6 @@ public class DailyFoodEntries // implements SelectableInterface
         entries = new ArrayList<DailyFoodEntry>();
     }
 
-    
     /**
      * Constructor
      * 
@@ -66,13 +64,12 @@ public class DailyFoodEntries // implements SelectableInterface
     {
         entries = new ArrayList<DailyFoodEntry>();
         StringTokenizer strtok = new StringTokenizer(meals_ids, ";");
-        
+
         while (strtok.hasMoreTokens())
         {
             addDailyFoodEntry(new DailyFoodEntry(strtok.nextToken()));
         }
     }
-    
 
     /**
      * Constructor
@@ -83,17 +80,19 @@ public class DailyFoodEntries // implements SelectableInterface
     public DailyFoodEntries(String meals_ids, boolean print_mode)
     {
         this.print_mode = print_mode;
-        
+
         entries = new ArrayList<DailyFoodEntry>();
         StringTokenizer strtok = new StringTokenizer(meals_ids, ";");
-        
+
         while (strtok.hasMoreTokens())
         {
-            addDailyFoodEntry(new DailyFoodEntry(strtok.nextToken() /*, print_mode */));
+            addDailyFoodEntry(new DailyFoodEntry(strtok.nextToken() /*
+                                                                     * ,
+                                                                     * print_mode
+                                                                     */));
         }
     }
-    
-    
+
     /**
      * Add Daily Food Entry
      * 
@@ -104,9 +103,13 @@ public class DailyFoodEntries // implements SelectableInterface
         if (dfe.hasChildren())
         {
             if (this.print_mode)
+            {
                 this.entries.add(dfe);
+            }
             else
+            {
                 this.entries.addAll(dfe.getChildren());
+            }
         }
         else
         {
@@ -126,38 +129,38 @@ public class DailyFoodEntries // implements SelectableInterface
 
         Hashtable<String, MealNutrition> ht = new Hashtable<String, MealNutrition>();
 
-        //System.out.println("Entries: \n" + this.entries);
+        // System.out.println("Entries: \n" + this.entries);
 
         for (int i = 0; i < this.entries.size(); i++)
         {
             ArrayList<MealNutrition> lst = this.entries.get(i).getNutrients();
 
-            //System.out.println("Lst: " + lst);
+            // System.out.println("Lst: " + lst);
 
             for (int j = 0; j < lst.size(); j++)
             {
                 MealNutrition mn = lst.get(j);
-                
-                if ((mn.getId()>=4000) && (mn.getId()<=4005))
+
+                if (mn.getId() >= 4000 && mn.getId() <= 4005)
                 {
                     // glycemic nutrients
-                    
+
                     // TODO: Implement this
-                    
+
                 }
                 else
                 {
                     // non-glycemic nutrients
-                    
+
                     if (!ht.containsKey("" + mn.getId()))
                     {
                         mn.clearSum();
-    
+
                         float cm = mn.getCalculatedAmount();
-    
+
                         // System.out.println("Calculated amount: " + cm);
                         mn.addAmountToSum(cm);
-    
+
                         ht.put("" + mn.getId(), mn);
                     }
                     else
@@ -178,7 +181,6 @@ public class DailyFoodEntries // implements SelectableInterface
         return out_lst;
     }
 
-    
     /**
      * Get Elements Count
      * 
@@ -188,8 +190,7 @@ public class DailyFoodEntries // implements SelectableInterface
     {
         return this.entries.size();
     }
-    
-    
+
     /**
      * Get Element
      * 
@@ -200,10 +201,7 @@ public class DailyFoodEntries // implements SelectableInterface
     {
         return this.entries.get(index);
     }
-    
-    
-    
-    
+
     /**
      * To String
      * 
@@ -212,7 +210,7 @@ public class DailyFoodEntries // implements SelectableInterface
     @Override
     public String toString()
     {
-        return "DailyFoodEntries [count=" + this.entries.size() + "]"; 
+        return "DailyFoodEntries [count=" + this.entries.size() + "]";
     }
 
 }

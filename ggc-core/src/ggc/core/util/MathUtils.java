@@ -78,10 +78,8 @@ public abstract class MathUtils
         double b = numB.doubleValue();
         double result = a + b;
 
-        if (((a > 0) && (b > 0) && (result < 0)) || ((a < 0) && (b < 0) && (result > 0)))
-        {
+        if (a > 0 && b > 0 && result < 0 || a < 0 && b < 0 && result > 0)
             throw new ArithmeticException("Sum was too large to be contained in a double: " + a + " " + b);
-        }
 
         return result;
     }

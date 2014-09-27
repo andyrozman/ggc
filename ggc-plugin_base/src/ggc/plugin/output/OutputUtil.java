@@ -34,39 +34,33 @@ import com.atech.utils.TimerControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class OutputUtil extends TimerControlAbstract
 {
 
     private int max_records = 1;
-    
-	/**
-	 * Units Name
-	 */
-	public static String[] unitsName = { "", "mg/dL", "mmol/L" };
-	
+
+    /**
+     * Units Name
+     */
+    public static String[] unitsName = { "", "mg/dL", "mmol/L" };
+
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
      */
     public int m_BG_unit = BG_MGDL;
-	
+
     private OutputWriter writer;
-    
+
     /**
      * Singelton instance of this class
      */
     public static OutputUtil s_outputUtil;
-    
-    
+
     private OutputUtil()
     {
-//a    	setAllowedChangeTime(10);
+        // a setAllowedChangeTime(10);
     }
-	
-    
-    
-    
-    
+
     /**
      * Get Instance
      * 
@@ -74,16 +68,15 @@ public class OutputUtil extends TimerControlAbstract
      */
     public static OutputUtil getInstance()
     {
-        if (OutputUtil.s_outputUtil==null)
+        if (OutputUtil.s_outputUtil == null)
         {
             OutputUtil.s_outputUtil = new OutputUtil();
         }
-        
+
         return OutputUtil.s_outputUtil;
-        
+
     }
 
-    
     /**
      * Get Instance
      * 
@@ -92,17 +85,15 @@ public class OutputUtil extends TimerControlAbstract
      */
     public static OutputUtil getInstance(OutputWriter writer)
     {
-        if (OutputUtil.s_outputUtil==null)
+        if (OutputUtil.s_outputUtil == null)
         {
             OutputUtil.s_outputUtil = new OutputUtil();
         }
-        
+
         OutputUtil.s_outputUtil.setOutputWriter(writer);
         return OutputUtil.s_outputUtil;
     }
-    
-    
-    
+
     /**
      * Set Output Writer
      * 
@@ -112,13 +103,13 @@ public class OutputUtil extends TimerControlAbstract
     {
         this.writer = writer;
     }
-    
+
     /*
-    public OutputUtil()
-    {
-    }*/
-    
-    
+     * public OutputUtil()
+     * {
+     * }
+     */
+
     /**
      * BG: mg/dL
      */
@@ -158,7 +149,7 @@ public class OutputUtil extends TimerControlAbstract
     {
         return OutputUtil.unitsName[this.m_BG_unit];
     }
-    
+
     /**
      * Get BG Measurment Type Name
      * 
@@ -169,7 +160,6 @@ public class OutputUtil extends TimerControlAbstract
     {
         return OutputUtil.unitsName[type];
     }
-    
 
     /**
      * Get BG Type Name Static
@@ -181,8 +171,7 @@ public class OutputUtil extends TimerControlAbstract
     {
         return OutputUtil.unitsName[type];
     }
-    
-    
+
     private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
 
     private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
@@ -197,14 +186,14 @@ public class OutputUtil extends TimerControlAbstract
     {
         switch (this.m_BG_unit)
         {
-        case BG_MMOL:
-            // this POS should return a float rounded to 3 decimal places,
-            // if I understand the docu correctly
-            return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR,
-                    new MathContext(3, RoundingMode.HALF_UP)).floatValue());
-        case BG_MGDL:
-        default:
-            return dbValue;
+            case BG_MMOL:
+                // this POS should return a float rounded to 3 decimal places,
+                // if I understand the docu correctly
+                return new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR, new MathContext(3, RoundingMode.HALF_UP))
+                        .floatValue();
+            case BG_MGDL:
+            default:
+                return dbValue;
         }
     }
 
@@ -218,14 +207,13 @@ public class OutputUtil extends TimerControlAbstract
     {
         switch (this.m_BG_unit)
         {
-        case BG_MMOL:
-            return (bg_value * MGDL_TO_MMOL_FACTOR);
-        case BG_MGDL:
-        default:
-            return bg_value;
+            case BG_MMOL:
+                return bg_value * MGDL_TO_MMOL_FACTOR;
+            case BG_MGDL:
+            default:
+                return bg_value;
         }
     }
-
 
     /**
      * Get BG Value by type
@@ -238,14 +226,13 @@ public class OutputUtil extends TimerControlAbstract
     {
         switch (type)
         {
-        case BG_MMOL:
-            return (bg_value * MGDL_TO_MMOL_FACTOR);
-        case BG_MGDL:
-        default:
-            return bg_value;
+            case BG_MMOL:
+                return bg_value * MGDL_TO_MMOL_FACTOR;
+            case BG_MGDL:
+            default:
+                return bg_value;
         }
     }
-
 
     /**
      * Get BG Value by type
@@ -257,23 +244,18 @@ public class OutputUtil extends TimerControlAbstract
      */
     public float getBGValueByType(int input_type, int output_type, float bg_value)
     {
-        
-        if (input_type==output_type)
+
+        if (input_type == output_type)
             return bg_value;
         else
         {
-            if (output_type==DataAccessPlugInBase.BG_MGDL)
-            {
+            if (output_type == DataAccessPlugInBase.BG_MGDL)
                 return bg_value * OutputUtil.MGDL_TO_MMOL_FACTOR;
-            }
             else
-            {
                 return bg_value * OutputUtil.MMOL_TO_MGDL_FACTOR;
-            }
         }
 
     }
-
 
     /**
      * Get BG Value Different
@@ -285,76 +267,66 @@ public class OutputUtil extends TimerControlAbstract
     public float getBGValueDifferent(int type, float bg_value)
     {
 
-            if (type==DataAccessPlugInBase.BG_MGDL)
-            {
-                return bg_value * OutputUtil.MGDL_TO_MMOL_FACTOR;
-            }
-            else
-            {
-                return bg_value * OutputUtil.MMOL_TO_MGDL_FACTOR;
-            }
+        if (type == DataAccessPlugInBase.BG_MGDL)
+            return bg_value * OutputUtil.MGDL_TO_MMOL_FACTOR;
+        else
+            return bg_value * OutputUtil.MMOL_TO_MGDL_FACTOR;
     }
 
-	
-	
-	/**
-	 * Set Output BG Type
-	 * 
-	 * @param bg_type BG type
-	 */
-	public void setOutputBGType(int bg_type)
-	{
-		this.m_BG_unit = bg_type;
-	}
-	
-	
-	/**
-	 * Stop Action
-	 * 
-	 * @see com.atech.utils.TimerControlAbstract#stopAction()
-	 */
-	public void stopAction()
-	{
-	    
-		this.writer.endOutput();
-		
-		//System.exit(0);
+    /**
+     * Set Output BG Type
+     * 
+     * @param bg_type BG type
+     */
+    public void setOutputBGType(int bg_type)
+    {
+        this.m_BG_unit = bg_type;
+    }
 
-	}
-	
-	
-	/**
-	 * Set Max Memory Records
-	 * 
-	 * @param val number of records
-	 */
-	public void setMaxMemoryRecords(int val)
-	{
-	    this.max_records = val;
-	}
-	
-	/**
-	 * Get Max Memory Records
-	 * 
-	 * @return max records supported by device
-	 */
-	public int getMaxMemoryRecords()
-	{
-	    return this.max_records;
-	}
-	
-	
+    /**
+     * Stop Action
+     * 
+     * @see com.atech.utils.TimerControlAbstract#stopAction()
+     */
+    @Override
+    public void stopAction()
+    {
+
+        this.writer.endOutput();
+
+        // System.exit(0);
+
+    }
+
+    /**
+     * Set Max Memory Records
+     * 
+     * @param val number of records
+     */
+    public void setMaxMemoryRecords(int val)
+    {
+        this.max_records = val;
+    }
+
+    /**
+     * Get Max Memory Records
+     * 
+     * @return max records supported by device
+     */
+    public int getMaxMemoryRecords()
+    {
+        return this.max_records;
+    }
+
     /**
      * Get BG Unit Name
      * 
      * @param unit unit as int 
      * @return type as string
      */
-	public static String getBGUnitName(int unit)
-	{
-	    return OutputUtil.unitsName[unit];
-	}
-	
-	
-	
+    public static String getBGUnitName(int unit)
+    {
+        return OutputUtil.unitsName[unit];
+    }
+
 }

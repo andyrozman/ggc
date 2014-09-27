@@ -17,10 +17,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import com.atech.db.hibernate.HibernateDb;
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 
 /**
@@ -49,7 +50,6 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class GGC_CGMSDb extends PluginDb
 {
     private static Log log = LogFactory.getLog(GGC_CGMSDb.class);
@@ -64,10 +64,9 @@ public class GGC_CGMSDb extends PluginDb
     {
         super(db);
         log.debug("Created CGMSDb");
-        //getAllElementsCount();
+        // getAllElementsCount();
     }
-    
-    
+
     /**
      * Get Daily Pump Values
      * 
@@ -76,41 +75,40 @@ public class GGC_CGMSDb extends PluginDb
      */
     public DeviceValuesDay getDailyCGMSValues(GregorianCalendar gc)
     {
-//        DataAccessCGMS.notImplemented("GGC_CGMSDb::getDailyCGMSValues()");
+        // DataAccessCGMS.notImplemented("GGC_CGMSDb::getDailyCGMSValues()");
 
-//        DeviceValuesDay dV = new DeviceValuesDay(m_da);
-//        dV.setDateTimeGC(gc);
+        // DeviceValuesDay dV = new DeviceValuesDay(m_da);
+        // dV.setDateTimeGC(gc);
 
-        
         log.info("getCGMSDayStats()");
 
         long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
-        //long dt = 20070323;
-        
+        // long dt = 20070323;
+
         DeviceValuesDay dV = new DeviceValuesDay(m_da);
         dV.setDateTimeGC(gc);
-        
-        
-        
+
         String sql = "";
-        
+
         try
         {
-            sql = "SELECT dv from ggc.core.db.hibernate.cgms.CGMSDataH as dv WHERE dv.dt_info =  " + dt + " ORDER BY dv.dt_info ";  
-//            + "000000 AND dv.dt_info <= " + dt +  "235959 ORDER BY dv.dt_info";
-            
+            sql = "SELECT dv from ggc.core.db.hibernate.cgms.CGMSDataH as dv WHERE dv.dt_info =  " + dt
+                    + " ORDER BY dv.dt_info ";
+            // + "000000 AND dv.dt_info <= " + dt +
+            // "235959 ORDER BY dv.dt_info";
+
             Query q = this.db.getSession().createQuery(sql);
 
             Iterator<?> it = q.list().iterator();
 
             while (it.hasNext())
             {
-                CGMSDataH pdh = (CGMSDataH)it.next();
+                CGMSDataH pdh = (CGMSDataH) it.next();
                 CGMSValuesEntry dv = new CGMSValuesEntry(pdh);
-                
+
                 dV.addList(dv.getSubEntryList());
             }
-            
+
         }
         catch (Exception ex)
         {
@@ -119,12 +117,10 @@ public class GGC_CGMSDb extends PluginDb
         }
 
         return dV;
- 
-  //      return null;
-    }
-    
 
-    
+        // return null;
+    }
+
     /**
      * Get Pump Values Range
      * 
@@ -134,67 +130,49 @@ public class GGC_CGMSDb extends PluginDb
      */
     public DeviceValuesRange getRangePumpValues(GregorianCalendar from, GregorianCalendar to)
     {
-        DataAccessCGMS.notImplemented("GGC_CGMSDb::getRangePumpValues()");
+        ATDataAccessAbstract.notImplemented("GGC_CGMSDb::getRangePumpValues()");
         return null;
 
         /*
-        log.info("getPumpDayStats()");
-
-        long dt_from = ATechDate.getATDateTimeFromGC(from, ATechDate.FORMAT_DATE_ONLY);
-        long dt_to = ATechDate.getATDateTimeFromGC(to, ATechDate.FORMAT_DATE_ONLY);
-        
-        String sql = "";
-        DeviceValuesRange dvr = new DeviceValuesRange(DataAccessPump.getInstance(), from, to);
-        
-        try
-        {
-            sql = "SELECT dv from " + "ggc.core.db.hibernate.pump.PumpDataH as dv " + "WHERE dv.dt_info >=  " + dt_from  
-            + "000000 AND dv.dt_info <= " + dt_to + "235959 ORDER BY dv.dt_info";
-            
-            //System.out.println("SQL: " + sql);
-            
-            Query q = this.db.getSession().createQuery(sql);
-
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                PumpDataH pdh = (PumpDataH)it.next();
-                PumpValuesEntry dv = new PumpValuesEntry(pdh);
-                
-                dvr.addEntry(dv);
-            }
-            
-            ArrayList<PumpValuesEntryExt> lst_ext = getRangePumpValuesExtended(from, to);
-            mergeRangePumpData(dvr, lst_ext);
-            
-            
-//            ArrayList<PumpValuesEntryExt> lst_ext = getDailyPumpValuesExtended(gc);
-//            mergeDailyPumpData(dV, lst_ext);
-            
-            
-        }
-        catch (Exception ex)
-        {
-            log.debug("Sql: " + sql);
-            log.error("getDayStats(). Exception: " + ex, ex);
-        }
-
-        return dvr;*/
+         * log.info("getPumpDayStats()");
+         * long dt_from = ATechDate.getATDateTimeFromGC(from,
+         * ATechDate.FORMAT_DATE_ONLY);
+         * long dt_to = ATechDate.getATDateTimeFromGC(to,
+         * ATechDate.FORMAT_DATE_ONLY);
+         * String sql = "";
+         * DeviceValuesRange dvr = new
+         * DeviceValuesRange(DataAccessPump.getInstance(), from, to);
+         * try
+         * {
+         * sql = "SELECT dv from " +
+         * "ggc.core.db.hibernate.pump.PumpDataH as dv " +
+         * "WHERE dv.dt_info >=  " + dt_from
+         * + "000000 AND dv.dt_info <= " + dt_to + "235959 ORDER BY dv.dt_info";
+         * //System.out.println("SQL: " + sql);
+         * Query q = this.db.getSession().createQuery(sql);
+         * Iterator<?> it = q.list().iterator();
+         * while (it.hasNext())
+         * {
+         * PumpDataH pdh = (PumpDataH)it.next();
+         * PumpValuesEntry dv = new PumpValuesEntry(pdh);
+         * dvr.addEntry(dv);
+         * }
+         * ArrayList<PumpValuesEntryExt> lst_ext =
+         * getRangePumpValuesExtended(from, to);
+         * mergeRangePumpData(dvr, lst_ext);
+         * // ArrayList<PumpValuesEntryExt> lst_ext =
+         * getDailyPumpValuesExtended(gc);
+         * // mergeDailyPumpData(dV, lst_ext);
+         * }
+         * catch (Exception ex)
+         * {
+         * log.debug("Sql: " + sql);
+         * log.error("getDayStats(). Exception: " + ex, ex);
+         * }
+         * return dvr;
+         */
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     /**
      * Get All Elements Count
      * 
@@ -204,17 +182,16 @@ public class GGC_CGMSDb extends PluginDb
     {
         Integer in = null;
         int sum_all = 0;
-        
+
         Criteria criteria = this.getSession().createCriteria(CGMSDataH.class);
-        criteria.add(Expression.eq("person_id", (int)m_da.getCurrentUserId()));
+        criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
         criteria.setProjection(Projections.rowCount());
         in = (Integer) criteria.list().get(0);
         sum_all = in.intValue();
 
         return sum_all;
     }
-    
-    
+
     /**
      * Get Pump Values
      * @param pdr
@@ -224,40 +201,40 @@ public class GGC_CGMSDb extends PluginDb
     {
         String sql = "";
 
-        Hashtable<String, DeviceValuesEntryInterface> dt = new Hashtable<String, DeviceValuesEntryInterface>(); 
-        
+        Hashtable<String, DeviceValuesEntryInterface> dt = new Hashtable<String, DeviceValuesEntryInterface>();
+
         try
         {
             int counter = 0;
-            
-            sql = "SELECT dv from ggc.core.db.hibernate.cgms.CGMSDataH as dv WHERE dv.person_id=" + m_da.getCurrentUserId() + " ORDER BY dv.dt_info ";
-            
+
+            sql = "SELECT dv from ggc.core.db.hibernate.cgms.CGMSDataH as dv WHERE dv.person_id="
+                    + m_da.getCurrentUserId() + " ORDER BY dv.dt_info ";
+
             Query q = this.db.getSession().createQuery(sql);
 
             Iterator<?> it = q.list().iterator();
-            
+
             pdr.writeStatus(-1);
-            //id = "PD_%s_%s_%s";
-            
+            // id = "PD_%s_%s_%s";
+
             while (it.hasNext())
             {
                 counter++;
-                
-                CGMSValuesEntry pve = new CGMSValuesEntry((CGMSDataH)it.next());
+
+                CGMSValuesEntry pve = new CGMSValuesEntry((CGMSDataH) it.next());
                 dt.put(pve.getSpecialId(), pve);
                 pdr.writeStatus(counter);
             }
-            
-            pdr.finishReading();   
+
+            pdr.finishReading();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            //System.out.println("Exception on getCGMSValues: " + ex);
-            log.error("Exception on getCGMSValues.\nsql:"+ sql + "\nEx: " + ex, ex);
+            // System.out.println("Exception on getCGMSValues: " + ex);
+            log.error("Exception on getCGMSValues.\nsql:" + sql + "\nEx: " + ex, ex);
         }
-        
+
         return dt;
     }
-    
-    
+
 }

@@ -51,6 +51,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -88,12 +89,12 @@ public class StockListDialog extends JDialog implements ActionListener
     private DataAccess m_da = DataAccess.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
-//x    private boolean m_actionDone = false;
+    // x private boolean m_actionDone = false;
 
-//x    private JTextField tfName;
+    // x private JTextField tfName;
     private JComboBox cb_template = null;
     private JTable t_stocks = null;
-//x    private String[] schemes_names = null;
+    // x private String[] schemes_names = null;
 
     GregorianCalendar gc = null;
     JSpinner sl_year = null, sl_month = null;
@@ -101,20 +102,13 @@ public class StockListDialog extends JDialog implements ActionListener
     /**
      * Filter Type
      */
-    public String[] filter_types = 
-    {
-        m_ic.getMessage("FILTER_VISIBLE"),
-        m_ic.getMessage("FILTER_ALL")
-    };
+    public String[] filter_types = { m_ic.getMessage("FILTER_VISIBLE"), m_ic.getMessage("FILTER_ALL") };
 
     @SuppressWarnings("unused")
     private ArrayList<DoctorH> list_full;
     private ArrayList<DoctorH> active_list = new ArrayList<DoctorH>();
-    
-    
-    
-    Font font_normal, font_normal_bold;
 
+    Font font_normal, font_normal_bold;
 
     public StockListDialog()
     {
@@ -123,167 +117,138 @@ public class StockListDialog extends JDialog implements ActionListener
         initComponents();
         this.setVisible(true);
     }
-    
-    
+
     /**
      * Constructor
      * 
      * @param frame
      */
-    public StockListDialog(JFrame frame) 
+    public StockListDialog(JFrame frame)
     {
         super(frame, "", true);
 
-        
         Rectangle rec = frame.getBounds();
-        int x = rec.x + (rec.width/2);
-        int y = rec.y + (rec.height/2);
+        int x = rec.x + rec.width / 2;
+        int y = rec.y + rec.height / 2;
 
-        setBounds(x-175, y-150, 450, 380);        
-        
+        setBounds(x - 175, y - 150, 450, 380);
+
         initComponents();
 
         this.list_full = new ArrayList<DoctorH>();
         populateList();
-        
-        //this.cb_template.setSelectedIndex(type-1);
+
+        // this.cb_template.setSelectedIndex(type-1);
 
         this.setVisible(true);
     }
 
-
-
-    private void initComponents() 
+    private void initComponents()
     {
 
-        
         getContentPane().setLayout(null);
 
-        font_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-        font_normal_bold = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        font_normal_bold = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
 
         gc = new GregorianCalendar();
-                
-        
-        
+
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 750, 478);
         panel.setLayout(null);
-    
+
         this.getContentPane().add(panel);
 
         JLabel label = new JLabel(m_ic.getMessage("STOCKS_LIST"));
-        label.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBounds(0, 20, 450, 35);
         panel.add(label);
-        
-    
-        label = new JLabel(m_ic.getMessage("FILTER") + ":" );
+
+        label = new JLabel(m_ic.getMessage("FILTER") + ":");
         label.setFont(this.font_normal_bold);
         label.setBounds(40, 75, 100, 25);
         panel.add(label);
-        
-        
-        
+
         cb_template = new JComboBox(filter_types);
         cb_template.setFont(this.font_normal);
         cb_template.setBounds(120, 75, 80, 25);
         panel.add(cb_template);
-            
+
         this.t_stocks = new JTable(new AbstractTableModel()
+        {
+
+            /**
+                     * 
+                     */
+            private static final long serialVersionUID = 9088931662879087375L;
+
+            public int getColumnCount()
             {
-
-
-        /**
-                 * 
-                 */
-                private static final long serialVersionUID = 9088931662879087375L;
-
-        public int getColumnCount()
-        {
-            // TODO Auto-generated method stub
-            return 2;
-        }
-
-        public int getRowCount()
-        {
-            active_list.size();
-            return 0;
-        }
-
-        public Object getValueAt(int row, int column)
-        {
-            // TODO Auto-generated method stub
-            DoctorH dh = active_list.get(row);
-            
-            switch(column)
-            {
-            case 0:
-                return dh.getName();
-                
-            case 1:
-                return m_ic.getMessage(dh.getDoctor_type().getName());
+                // TODO Auto-generated method stub
+                return 2;
             }
-            
-            return null;
-        }
-                
-            })  ;  
-        
+
+            public int getRowCount()
+            {
+                active_list.size();
+                return 0;
+            }
+
+            public Object getValueAt(int row, int column)
+            {
+                // TODO Auto-generated method stub
+                DoctorH dh = active_list.get(row);
+
+                switch (column)
+                {
+                    case 0:
+                        return dh.getName();
+
+                    case 1:
+                        return m_ic.getMessage(dh.getDoctor_type().getName());
+                }
+
+                return null;
+            }
+
+        });
+
         JScrollPane scp = new JScrollPane(this.t_stocks);
         scp.setBounds(40, 120, 653, 303);
         panel.add(scp);
-            
-        String[] names = {
-            m_ic.getMessage("ADD"),
-            m_ic.getMessage("EDIT"),
-            m_ic.getMessage("CLOSE"),
-        };
 
-        String[] cmds = {
-            m_ic.getMessage("add"),
-            m_ic.getMessage("edit"),
-            m_ic.getMessage("close"),
-        };
-        
-        
-        int[] coords = {
-            120, 150, 220, 
-        };
-        
+        String[] names = { m_ic.getMessage("ADD"), m_ic.getMessage("EDIT"), m_ic.getMessage("CLOSE"), };
+
+        String[] cmds = { m_ic.getMessage("add"), m_ic.getMessage("edit"), m_ic.getMessage("close"), };
+
+        int[] coords = { 120, 150, 220, };
+
         JButton button;
-        
-        for(int i=0; i<coords.length; i++)
+
+        for (int i = 0; i < coords.length; i++)
         {
             button = new JButton(names[i]);
-            button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+            button.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
             button.setActionCommand(cmds[i]);
             button.addActionListener(this);
             button.setBounds(340, coords[i], 80, 25);
             panel.add(button);
         }
-        
 
     }
-
 
     private void populateList()
     {
     }
-    
-    
-    
-    
-    
-    
+
     /**
      * Invoked when an action occurs.
      */
     public void actionPerformed(ActionEvent e)
     {
         String action = e.getActionCommand();
-    
+
         if (action.equals("close"))
         {
             this.dispose();
@@ -297,7 +262,9 @@ public class StockListDialog extends JDialog implements ActionListener
             System.out.println("Edit not implemented");
         }
         else
+        {
             System.out.println("DoctorsDialog: Unknown command: " + action);
+        }
 
     }
 }

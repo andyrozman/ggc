@@ -9,7 +9,6 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.USBProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-import gnu.io.SerialPortEvent;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
@@ -39,17 +38,16 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public abstract class AbstractUsbMeter extends USBProtocol implements MeterInterface, SelectableInterface
 {
 
-    //protected I18nControlAbstract ic = null; //DataAccessMeter.getInstance().getI18nControlInstance();
-    //protected OutputWriter output_writer;
-    //AbstractDeviceCompany device_company = null;
+    // protected I18nControlAbstract ic = null;
+    // //DataAccessMeter.getInstance().getI18nControlInstance();
+    // protected OutputWriter output_writer;
+    // AbstractDeviceCompany device_company = null;
     protected int m_status = 0;
     protected boolean communication_established = false;
-    
-    
+
     /**
      * Constructor
      */
@@ -58,7 +56,6 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
         super(DataAccessMeter.getInstance());
     }
 
-    
     /**
      * Constructor
      * @param cmp
@@ -69,8 +66,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -83,19 +79,20 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
         super(parameters, writer, da);
     }
 
-
-
-
     /** 
      * Set Communication Settings
      */
-/*    public void setCommunicationSettings(int baudrate, int databits, int stopbits, int parity, int flow_control, int event_type)
-    {
-        //super.setCommunicationSettings(baudrate, databits, stopbits, parity, flow_control, event_type);
-    }*/
+    /*
+     * public void setCommunicationSettings(int baudrate, int databits, int
+     * stopbits, int parity, int flow_control, int event_type)
+     * {
+     * //super.setCommunicationSettings(baudrate, databits, stopbits, parity,
+     * flow_control, event_type);
+     * }
+     */
 
-    //String meter_group = null;
-    //String meter_device = null;
+    // String meter_group = null;
+    // String meter_device = null;
 
     /**
      * Dispose this instance
@@ -113,20 +110,22 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
      */
     public void setMeterType(String group, String device)
     {
-//        this.device_name = device;
-        
+        // this.device_name = device;
+
         DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
-        
-        if (this.output_writer!=null)
+
+        if (this.output_writer != null)
+        {
             this.output_writer.setDeviceIdentification(di);
-        //this.output_writer.
-        //this.device_instance = MeterManager.getInstance().getMeterDevice(group, device);
-        
+            // this.output_writer.
+            // this.device_instance =
+            // MeterManager.getInstance().getMeterDevice(group, device);
+        }
+
         this.device_source_name = group + " " + device;
     }
-
 
     String serial_port = null;
 
@@ -136,11 +135,13 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
      * @param port
      * @throws PlugInBaseException
      */
-/*    public void setSerialPort(String port) throws PlugInBaseException
-    {
-        this.serial_port = port;
-        this.setPort(port);
-    }*/
+    /*
+     * public void setSerialPort(String port) throws PlugInBaseException
+     * {
+     * this.serial_port = port;
+     * this.setPort(port);
+     * }
+     */
 
     /**
      * getConnectionPort - connection port data
@@ -167,6 +168,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
      *    normal progress status, but with some special devices we calculate progress through other means.
      * @return true is progress status is special
      */
+    @Override
     public boolean hasSpecialProgressStatus()
     {
         return false;
@@ -177,12 +179,12 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
      * 
      * @return boolean - if connection established
      */
+    @Override
     public boolean open() throws PlugInBaseException
     {
-        return (communication_established = super.open());
+        return communication_established = super.open();
     }
 
-    
     /**
      * Is Device Communicating
      * 
@@ -192,40 +194,31 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
     {
         return this.communication_established;
     }
-    
+
     /**
      * Will be called, when the import is ended and freeing resources.
      */
+    @Override
     public void close()
     {
-/*
-        if (this.serialPort == null)
-            return;
-
-        this.serialPort.removeEventListener();
-        this.serialPort.close();
-        */
+        /*
+         * if (this.serialPort == null)
+         * return;
+         * this.serialPort.removeEventListener();
+         * this.serialPort.close();
+         */
     }
-
-
 
     // ************************************************
     // *** Device Implemented methods ***
     // ************************************************
 
-
-
-    
     protected void deviceDisconnected()
     {
         this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
         this.output_writer.endOutput();
     }
-    
 
-    
-
-    
     /**
      * Get Download Support Type
      * 
@@ -235,8 +228,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
     {
         return DownloadSupportType.DOWNLOAD_FROM_DEVICE;
     }
-    
-    
+
     /**
      * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
      *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
@@ -248,6 +240,4 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
         return MeterInterface.METER_INTERFACE_SIMPLE;
     }
 
-
-    
 }

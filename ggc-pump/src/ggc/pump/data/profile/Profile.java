@@ -37,49 +37,42 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Profile implements Comparable<Profile>
 {
 
     private static Log log = LogFactory.getLog(Profile.class);
-    
+
     /**
      * Profile Id
      */
     public String profile_id = "";
-    
+
     // if we are resolving
     /**
      * Date (ATech)
      */
     public long date_at = 0L;
-    
+
     /**
      * Pattern Entries
      */
     public ArrayList<ProfileSubPattern> pattern_entries = new ArrayList<ProfileSubPattern>();
-    
-    
+
     /**
      * Other Entries
      */
     public ArrayList<ProfileSubOther> other_entries = new ArrayList<ProfileSubOther>();
-    
-    
-    
+
     /**
      * Profile active from
      */
     public long profile_active_from = 0L;
-    
-    
-    
+
     /**
      * Profile active till
      */
     public long profile_active_till = 0L;
-    
-    
+
     /**
      * Sort Order: Ascending
      */
@@ -89,20 +82,18 @@ public class Profile implements Comparable<Profile>
      * Sort Order: Descending
      */
     public static final int SORT_ORDER_DESC = 1;
-    
+
     /**
      * Sort Order
      */
     public int sort_order = SORT_ORDER_DESC;
-    
-    
+
     /**
      * Constructor
      */
     public Profile()
     {
     }
-    
 
     /**
      * Add profile sub entry
@@ -111,13 +102,16 @@ public class Profile implements Comparable<Profile>
      */
     public void add(ProfileSubEntry entry)
     {
-        if (entry.getType()==ProfileSubEntry.PROFILE_SUB_EVENT)
-            this.add((ProfileSubOther)entry);
+        if (entry.getType() == ProfileSubEntry.PROFILE_SUB_EVENT)
+        {
+            this.add((ProfileSubOther) entry);
+        }
         else
-            this.add((ProfileSubPattern)entry);
+        {
+            this.add((ProfileSubPattern) entry);
+        }
     }
-    
-    
+
     /**
      * Add profile sub other
      * 
@@ -127,7 +121,6 @@ public class Profile implements Comparable<Profile>
     {
         this.other_entries.add(entry);
     }
-    
 
     /**
      * Add profile sub pattern
@@ -138,79 +131,73 @@ public class Profile implements Comparable<Profile>
     {
         this.pattern_entries.add(entry);
     }
-    
-    
+
     /**
      * Fill End Times
      */
     public void fillEndTimes()
     {
-        
+
         Collections.sort(this.pattern_entries);
-//        ProfileSubPattern first=null, last=null;
-//        first = this.pattern_entries.get(0);
-//        last = this.pattern_entries.get(0);
-        
-        //ArrayList<ProfileSubPattern> pe = new ArrayList<ProfileSubPattern>();
-        
-        
-        for(int i=1; i<this.pattern_entries.size(); i++)
+        // ProfileSubPattern first=null, last=null;
+        // first = this.pattern_entries.get(0);
+        // last = this.pattern_entries.get(0);
+
+        // ArrayList<ProfileSubPattern> pe = new ArrayList<ProfileSubPattern>();
+
+        for (int i = 1; i < this.pattern_entries.size(); i++)
         {
-            //if (first.amount!=this.pattern_entries.get(i).amount)
+            // if (first.amount!=this.pattern_entries.get(i).amount)
             {
-                int time_h = (int)Math.floor(this.pattern_entries.get(i).time_start/100);
-                
-                int end_time = ((time_h-1)*100) + 59;
-                
-                this.pattern_entries.get(i-1).time_end = end_time;
+                int time_h = (int) Math.floor(this.pattern_entries.get(i).time_start / 100);
+
+                int end_time = (time_h - 1) * 100 + 59;
+
+                this.pattern_entries.get(i - 1).time_end = end_time;
             }
 
         }
 
-        this.pattern_entries.get(this.pattern_entries.size()-1).time_end = 2359;
-        
+        this.pattern_entries.get(this.pattern_entries.size() - 1).time_end = 2359;
+
         Collections.sort(this.pattern_entries);
-        
-        
+
     }
-    
-    
+
     /**
      * Pack Profiles (if we have start and end time)
      */
     public void packProfiles()
     {
         Collections.sort(this.pattern_entries);
-        ProfileSubPattern first=null, last=null;
+        ProfileSubPattern first = null, last = null;
         first = this.pattern_entries.get(0);
         last = this.pattern_entries.get(0);
-        
+
         ArrayList<ProfileSubPattern> pe = new ArrayList<ProfileSubPattern>();
-        
-        
-        for(int i=1; i<this.pattern_entries.size(); i++)
+
+        for (int i = 1; i < this.pattern_entries.size(); i++)
         {
-            if (first.amount!=this.pattern_entries.get(i).amount)
+            if (first.amount != this.pattern_entries.get(i).amount)
             {
                 first.time_end = last.time_end;
                 pe.add(first);
-                
+
                 first = this.pattern_entries.get(i);
             }
 
             last = this.pattern_entries.get(i);
         }
-        
+
         first.time_end = last.time_end;
         pe.add(first);
-        
+
         this.pattern_entries.clear();
         this.pattern_entries.addAll(pe);
         Collections.sort(this.pattern_entries);
-        
+
     }
-    
-    
+
     /**
      * Get Profile Information
      * 
@@ -219,27 +206,26 @@ public class Profile implements Comparable<Profile>
     public String getProfileInformation()
     {
         StringBuffer sb = new StringBuffer();
-        
+
         sb.append(" Profile [name=" + this.profile_id);
         sb.append(",patterns=");
-        
-        for(int i=0; i<this.pattern_entries.size(); i++)
+
+        for (int i = 0; i < this.pattern_entries.size(); i++)
         {
             sb.append("{" + this.pattern_entries.get(i).getPacked() + "},");
-        }        
-        
+        }
+
         sb.append("]");
-        
+
         return sb.toString();
     }
-    
-    
+
+    @Override
     public String toString()
     {
         return this.getProfileInformation();
     }
-    
-    
+
     /**
      * Is Complete Profile
      * 
@@ -248,46 +234,45 @@ public class Profile implements Comparable<Profile>
     public boolean isCompleteProfile()
     {
         int[][] time_stamps = new int[24][60];
-        
-        for(int i=0; i<24; i++)
+
+        for (int i = 0; i < 24; i++)
         {
-            for(int j=0; j<60; j++)
+            for (int j = 0; j < 60; j++)
             {
                 time_stamps[i][j] = 0;
             }
-        }         
-        
-        for(int i=0; i<this.pattern_entries.size(); i++)
+        }
+
+        for (int i = 0; i < this.pattern_entries.size(); i++)
         {
             this.pattern_entries.get(i).checkTimePresence(time_stamps);
-        }         
-        
+        }
+
         boolean error = false;
-        
+
         StringBuilder sb_not_set = new StringBuilder("Not set: [");
         StringBuilder sb_multiple_set = new StringBuilder("Multiple set: [");
-        
-        
-        for(int i=0; i<24; i++)
+
+        for (int i = 0; i < 24; i++)
         {
-            for(int j=0; j<60; j++)
+            for (int j = 0; j < 60; j++)
             {
-                if (time_stamps[i][j]!=1)
+                if (time_stamps[i][j] != 1)
                 {
-                    if (time_stamps[i][j]==0)
+                    if (time_stamps[i][j] == 0)
                     {
-                        sb_not_set.append(getPackedTime(i,j,0));
+                        sb_not_set.append(getPackedTime(i, j, 0));
                         error = true;
                     }
-                    else if (time_stamps[i][j]>1)
+                    else if (time_stamps[i][j] > 1)
                     {
-                        sb_multiple_set.append(getPackedTime(i,j,time_stamps[i][j]));
+                        sb_multiple_set.append(getPackedTime(i, j, time_stamps[i][j]));
                         error = true;
                     }
                 }
             }
-        }         
-        
+        }
+
         if (!sb_not_set.toString().equals("Not set: ["))
         {
             log.debug(sb_not_set.toString() + "]");
@@ -297,39 +282,49 @@ public class Profile implements Comparable<Profile>
         {
             log.debug(sb_multiple_set.toString() + "]");
         }
-        
-        return (!error);
+
+        return !error;
     }
-    
-    
+
     private String getPackedTime(int i, int j, int stamps)
     {
-        
+
         String time = "";
-        
-        if (i==0)
+
+        if (i == 0)
+        {
             time = "00:";
-        else if (i<10)
+        }
+        else if (i < 10)
+        {
             time = "0" + i + ":";
+        }
         else
+        {
             time = i + ":";
-        
-        if (j==0)
+        }
+
+        if (j == 0)
+        {
             time += "00";
-        else if (j<10)
+        }
+        else if (j < 10)
+        {
             time += "0" + j;
+        }
         else
+        {
             time += j;
-        
-        if (stamps!=0)
+        }
+
+        if (stamps != 0)
+        {
             time += "," + stamps;
-        
+        }
+
         return "{" + time + "}";
     }
-    
-    
-    
-    
+
     /**
      * Compare.
      * 
@@ -341,9 +336,9 @@ public class Profile implements Comparable<Profile>
     public int compare(Profile pse1, Profile pse2)
     {
         if (DataAccessPump.getInstance().getSortSetting("Profile").equals("ASC"))
-            return (int)(pse1.date_at - pse2.date_at);
+            return (int) (pse1.date_at - pse2.date_at);
         else
-            return (int)(pse2.date_at - pse1.date_at);
+            return (int) (pse2.date_at - pse1.date_at);
     }
 
     /** 
@@ -353,9 +348,7 @@ public class Profile implements Comparable<Profile>
     {
         return compare(this, pse);
     }
-    
-    
-    
+
     /**
      * Equals
      * 
@@ -366,8 +359,7 @@ public class Profile implements Comparable<Profile>
     {
         return this.getProfileInformation().equals(p_in.getProfileInformation());
     }
-    
-    
+
     /**
      * Get Profile Time Info
      * 
@@ -375,10 +367,11 @@ public class Profile implements Comparable<Profile>
      */
     public String getProfileTimeInfo()
     {
-        return "From: " + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.profile_active_from) + ", Till: " + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.profile_active_till) + ", Profile: " + this.profile_id;
+        return "From: " + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.profile_active_from)
+                + ", Till: " + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.profile_active_till)
+                + ", Profile: " + this.profile_id;
     }
-    
-    
+
     /**
      * Create Db Object
      * 
@@ -387,20 +380,19 @@ public class Profile implements Comparable<Profile>
     public PumpValuesEntryProfile createDbObject()
     {
         PumpValuesEntryProfile p = new PumpValuesEntryProfile();
-        
+
         p.setName(this.profile_id);
         p.setBasal_base(0);
         p.setBasal_diffs(createBasalDiffs());
         p.setActive_from(this.profile_active_from);
         p.setActive_till(this.profile_active_till);
-        p.setPerson_id((int)DataAccessPump.getInstance().getCurrentUserId());
+        p.setPerson_id((int) DataAccessPump.getInstance().getCurrentUserId());
         p.setComment("");
         p.setChanged(System.currentTimeMillis());
-     
+
         return p;
     }
-    
-    
+
     /**
      * Create Basal Diffs
      * 
@@ -409,18 +401,17 @@ public class Profile implements Comparable<Profile>
     public String createBasalDiffs()
     {
         StringBuilder sb = new StringBuilder();
-        
+
         Collections.sort(this.pattern_entries);
-        
-        for(int i=0; i<this.pattern_entries.size(); i++)
+
+        for (int i = 0; i < this.pattern_entries.size(); i++)
         {
             sb.append(this.pattern_entries.get(i).getPacked());
             sb.append(";");
         }
-        
-        return sb.substring(0, sb.length()-1);
-        
+
+        return sb.substring(0, sb.length() - 1);
+
     }
-    
-    
+
 }

@@ -39,10 +39,10 @@ import org.apache.commons.logging.LogFactory;
 public class PumpDataReader extends OldDataReaderAbstract
 {
     private static Log log = LogFactory.getLog(PumpDataReader.class);
-    
+
     GGCPumpDb db = null;
     DataAccessPump m_da = null;
-    
+
     /**
      * Constructor
      * 
@@ -53,7 +53,6 @@ public class PumpDataReader extends OldDataReaderAbstract
         super(da);
         m_da = da;
     }
-    
 
     /**
      * Get Max Entries
@@ -73,11 +72,10 @@ public class PumpDataReader extends OldDataReaderAbstract
     {
         return db.getPumpValues(this);
     }
-    
-    
+
     float db_reading = 0.0f;
     int current_entry = 0;
-    
+
     /**
      * Write status of reading
      * this must be implemebted by all children, since some children will require more reading into database, 
@@ -89,38 +87,34 @@ public class PumpDataReader extends OldDataReaderAbstract
      * 
      * @param centry
      */
+    @Override
     public void writeStatus(int centry)
     {
-        if (centry==-1)
+        if (centry == -1)
         {
             db_reading += 20.0f;
-            log.debug("Old Data reading progress +20% [" + m_da.getApplicationName() +  "]");
+            log.debug("Old Data reading progress +20% [" + m_da.getApplicationName() + "]");
         }
         else
         {
             this.current_entry = centry;
         }
-        
+
         int proc = this.getElementProcent(current_entry);
-        
-        float proc_total = ((((proc* 1.0f) + db_reading) ) / 160.0f) * 100.0f;  
-        int proc_total_i = (int)proc_total;
+
+        float proc_total = (proc * 1.0f + db_reading) / 160.0f * 100.0f;
+        int proc_total_i = (int) proc_total;
 
         this.m_drr.setOldDataReadingProgress(proc_total_i);
-        
-        /*try
-        {
-            Thread.sleep(1);
-        }
-        catch(InterruptedException ex) {} */
-        
-        
-    }
-    
-    
 
+        /*
+         * try
+         * {
+         * Thread.sleep(1);
+         * }
+         * catch(InterruptedException ex) {}
+         */
+
+    }
 
 }
-
-
-

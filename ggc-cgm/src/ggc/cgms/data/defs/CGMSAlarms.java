@@ -1,6 +1,5 @@
 package ggc.cgms.data.defs;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       CGMS Tool (support for CGMS devices)
@@ -27,87 +26,83 @@ package ggc.cgms.data.defs;
  *  Author: Andy {andy@atech-software.com}
  */
 
-//IMPORTANT NOTICE: 
-//This class is not implemented yet, all existing methods should be rechecked (they were copied from similar 
-//class, with different type of data.
-
+// IMPORTANT NOTICE:
+// This class is not implemented yet, all existing methods should be rechecked
+// (they were copied from similar
+// class, with different type of data.
 
 public class CGMSAlarms extends CGMSDefsAbstract
 {
-     
-    
+
     // Device
-    
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_METER_BG_NOW = 104; //Meter BG Now (104)
 
     /**
      * 
      */
-    public static final int CGMS_ALARM_WEAK_SIGNAL = 112; //Weak Signal (112)
-    
-    
-    
+    public static final int CGMS_ALARM_METER_BG_NOW = 104; // Meter BG Now (104)
+
+    /**
+     * 
+     */
+    public static final int CGMS_ALARM_WEAK_SIGNAL = 112; // Weak Signal (112)
+
     // SENSOR
 
     /**
      * 
      */
     public static final int CGMS_ALARM_SENSOR_ALARM = 105; // (105)
-    
-    
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_CALIBRATION_ERROR = 106; //Calibration Error (106)
-    
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_SENSOR_END = 107; //Sensor End (107)
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_SENSOR_CHANGE = 108; //Change Sensor (108)
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_SENSOR_ERROR = 109; //Sensor Error (109)
-    
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_SENSOR_LOST = 113; //Lost Sensor (113)
-    
-    
 
-    
+    /**
+     * 
+     */
+    public static final int CGMS_ALARM_CALIBRATION_ERROR = 106; // Calibration
+                                                                // Error (106)
+
+    /**
+     * 
+     */
+    public static final int CGMS_ALARM_SENSOR_END = 107; // Sensor End (107)
+    /**
+     * 
+     */
+    public static final int CGMS_ALARM_SENSOR_CHANGE = 108; // Change Sensor
+                                                            // (108)
+    /**
+     * 
+     */
+    public static final int CGMS_ALARM_SENSOR_ERROR = 109; // Sensor Error (109)
+
+    /**
+     * 
+     */
+    public static final int CGMS_ALARM_SENSOR_LOST = 113; // Lost Sensor (113)
+
     // BG
-    
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_HIGH_GLUCOSE_PREDICTED = 114; //High Glucose Predicted (114)
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_LOW_GLUCOSE_PREDICTED = 115; //Low Glucose Predicted (115)
 
-    
     /**
      * 
      */
-    public static final int CGMS_ALARM_HIGH_GLUCOSE = 101; //High Glucose (101)
-    
+    public static final int CGMS_ALARM_HIGH_GLUCOSE_PREDICTED = 114; // High
+                                                                     // Glucose
+                                                                     // Predicted
+                                                                     // (114)
     /**
      * 
      */
-    public static final int CGMS_ALARM_LOW_GLUCOSE = 102; //Low Glucose (102)
-    
-    
-    
-    
-    
+    public static final int CGMS_ALARM_LOW_GLUCOSE_PREDICTED = 115; // Low
+                                                                    // Glucose
+                                                                    // Predicted
+                                                                    // (115)
+
+    /**
+     * 
+     */
+    public static final int CGMS_ALARM_HIGH_GLUCOSE = 101; // High Glucose (101)
+
+    /**
+     * 
+     */
+    public static final int CGMS_ALARM_LOW_GLUCOSE = 102; // Low Glucose (102)
+
 }

@@ -1,6 +1,7 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -8,7 +9,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /** 
  * @author Hibernate CodeGenerator 
  */
-public class StockTypeH implements Serializable 
+public class StockTypeH implements Serializable
 {
 
     /**
@@ -28,13 +29,15 @@ public class StockTypeH implements Serializable
     /** full constructor 
      * @param name 
      * @param name_i18n */
-    public StockTypeH(String name, String name_i18n) {
+    public StockTypeH(String name, String name_i18n)
+    {
         this.name = name;
         this.name_i18n = name_i18n;
     }
 
     /** default constructor */
-    public StockTypeH() {
+    public StockTypeH()
+    {
     }
 
     /**
@@ -62,7 +65,7 @@ public class StockTypeH implements Serializable
      * 
      * @return name
      */
-    public String getName() 
+    public String getName()
     {
         return this.name;
     }
@@ -72,7 +75,7 @@ public class StockTypeH implements Serializable
      * 
      * @param name as string
      */
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
@@ -82,7 +85,7 @@ public class StockTypeH implements Serializable
      * 
      * @return name
      */
-    public String getName_i18n() 
+    public String getName_i18n()
     {
         return this.name_i18n;
     }
@@ -92,24 +95,23 @@ public class StockTypeH implements Serializable
      * 
      * @param name_i18n as string
      */
-    public void setName_i18n(String name_i18n) 
+    public void setName_i18n(String name_i18n)
     {
         this.name_i18n = name_i18n;
     }
 
-    
     /** 
      * Custom equals implementation
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof StockTypeH) ) return false;
+        if (!(other instanceof StockTypeH))
+            return false;
         StockTypeH castOther = (StockTypeH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -117,18 +119,19 @@ public class StockTypeH implements Serializable
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

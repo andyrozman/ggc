@@ -33,13 +33,11 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 // FIXME
 
 public class AccuChekCombo extends AccuChekSmartPixPump
 {
 
-    
     /**
      * Constructor 
      * 
@@ -50,8 +48,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         super(drive_letter, writer);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -63,8 +60,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         super(params, writer, da);
     }
-    
-    
+
     /**
      * Constructor
      * 
@@ -74,7 +70,6 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         super(cmp);
     }
-
 
     /**
      * getName - Get Name of meter. 
@@ -86,8 +81,6 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         return "Combo";
     }
 
-
-    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -97,7 +90,6 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         return "ac_combo.jpg";
     }
-    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -105,12 +97,12 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      * 
      * @return id of device within company
      */
+    @Override
     public int getDeviceId()
     {
         return PumpDevicesIds.PUMP_ACCUCHEK_COMBO;
     }
 
-    
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -121,7 +113,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         return "INSTRUCTIONS_ACCUCHEK_SPIRIT";
     }
-    
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -131,41 +123,39 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         return null;
     }
-    
-    
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
     }
-    
-    
+
     /**
      * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory
      * 
      * @return number
      */
+    @Override
     public int getMaxMemoryRecords()
     {
         return 2000;
     }
-    
-    
+
     /**
      * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
      * @return number of elements
      */
+    @Override
     public int getNrOfElementsFor1s()
     {
         return 85;
     }
-    
-    
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -176,24 +166,23 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         return "ggc.pump.device.accuchek.AccuChekCombo";
     }
 
-
     /**
      * Open
      */
+    @Override
     public boolean open() throws PlugInBaseException
     {
         return true;
     }
-    
 
     /**
      * Close
      */
+    @Override
     public void close() throws PlugInBaseException
     {
     }
- 
-    
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -204,11 +193,10 @@ public class AccuChekCombo extends AccuChekSmartPixPump
      */
     public String getTemporaryBasalTypeDefinition()
     {
-        //return "TYPE=Unit;STEP=0.1";
+        // return "TYPE=Unit;STEP=0.1";
         return null;
     }
-    
-    
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -218,8 +206,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         return 0.1f;
     }
-    
-    
+
     /**
      * Get Basal Step (precission)
      * 
@@ -229,17 +216,16 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         return 0.01f;
     }
-    
-    
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
+    @Override
     public boolean arePumpSettingsSet()
     {
         return false;
     }
-    
-    
+
 }

@@ -7,7 +7,8 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.enums.TrendArrow;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.GenericReceiverRecordAbstract;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 
-public class EGVRecord extends GenericReceiverRecordAbstract // implements IGenericRecord
+public class EGVRecord extends GenericReceiverRecordAbstract // implements
+                                                             // IGenericRecord
 {
     public static int IsDisplayOnlyEgvMask = 0x8000;
     public static int EgvValueMask = 0x3ff;
@@ -28,17 +29,17 @@ public class EGVRecord extends GenericReceiverRecordAbstract // implements IGene
 
     public boolean getIsDisplayOnly()
     {
-        return ((this.glucoseValueWithFlags & IsDisplayOnlyEgvMask) != 0);
+        return (this.glucoseValueWithFlags & IsDisplayOnlyEgvMask) != 0;
     }
 
     public boolean getIsImmediateMatch()
     {
-        return ((this.trendArrowAndNoise & DexcomUtils.ImmediateMatchMask) != 0);
+        return (this.trendArrowAndNoise & DexcomUtils.ImmediateMatchMask) != 0;
     }
 
     public NoiseMode getNoiseMode()
     {
-        return NoiseMode.getEnum(((this.trendArrowAndNoise & NoiseMask) >> 4));
+        return NoiseMode.getEnum((this.trendArrowAndNoise & NoiseMask) >> 4);
     }
 
     public String getSpecialValue()
@@ -46,18 +47,14 @@ public class EGVRecord extends GenericReceiverRecordAbstract // implements IGene
         SpecialGlucoseValues sgv = SpecialGlucoseValues.getEnum(this.getGlucoseValue());
 
         if (sgv == null)
-        {
             return "";
-        }
         else
-        {
             return sgv.name();
-        }
     }
 
     public TrendArrow getTrendArrow()
     {
-        return TrendArrow.getEnum((this.trendArrowAndNoise & TrendArrowMask));
+        return TrendArrow.getEnum(this.trendArrowAndNoise & TrendArrowMask);
     }
 
     public int getImplementedRecordSize()
@@ -84,8 +81,9 @@ public class EGVRecord extends GenericReceiverRecordAbstract // implements IGene
         sb.append("DisplaySeconds=" + DexcomUtils.getDateTimeString(this.getDisplayDate()));
         sb.append(", GlucoseValue= " + this.getGlucoseValue());
         sb.append(", TrendArrow=" + this.getTrendArrow().name() + "]");
-        //sb.append(", InsertionTimeinSeconds=" + this.insertionTimeinSeconds);
-        //sb.append(", SensorSessionState=" + this.sensorSessionState.name() + "]");
+        // sb.append(", InsertionTimeinSeconds=" + this.insertionTimeinSeconds);
+        // sb.append(", SensorSessionState=" + this.sensorSessionState.name() +
+        // "]");
 
         return sb.toString();
     }

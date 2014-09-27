@@ -72,8 +72,6 @@ public class HbA1cView extends JFAbstractGraphView
     private HbA1cValues data; // = new HbA1cValues();
     private DefaultPieDataset dataset = new DefaultPieDataset();
 
-    
-    
     /**
      * Constructor
      * 
@@ -83,36 +81,35 @@ public class HbA1cView extends JFAbstractGraphView
     {
         data = hbValues;
         m_chart = ChartFactory.createPieChart3D(null, dataset, true, true, false);
-        
-        //title, dataset, legend, tooltips, urls).createPieChart(
+
+        // title, dataset, legend, tooltips, urls).createPieChart(
         chartPanel = new ChartPanel(m_chart, false, true, true, false, true);
         redraw();
         setLayout(new BorderLayout());
         add(chartPanel, BorderLayout.CENTER);
     }
-/*
-    public void setHbA1cValues(HbA1cValues hbValues)
-    {
-        data = hbValues;
-    }
-*/
+
+    /*
+     * public void setHbA1cValues(HbA1cValues hbValues)
+     * {
+     * data = hbValues;
+     * }
+     */
     @Override
     protected void drawFramework(JFreeChart chart)
     {
-        if ((data == null) || (chart == null))
-        {
+        if (data == null || chart == null)
             return;
-        }
 
         PiePlot plot = (PiePlot) chart.getPlot();
 
-        //chart.setRenderingHints(renderingHints);
+        // chart.setRenderingHints(renderingHints);
 
         plot.setBackgroundPaint(backgroundColor);
         plot.setCircular(true);
-        //plot.setBackgroundAlpha(0.5f);
+        // plot.setBackgroundAlpha(0.5f);
         plot.setForegroundAlpha(0.5f);
-        //plot.s
+        // plot.s
         plot.setSectionPaint(translator.getMessage("DAYS_WITH_READINGS_0_1"), Color.RED);
         plot.setSectionPaint(translator.getMessage("DAYS_WITH_READINGS_2_3"), Color.ORANGE);
         plot.setSectionPaint(translator.getMessage("DAYS_WITH_READINGS_4_5"), Color.YELLOW);
@@ -123,15 +120,13 @@ public class HbA1cView extends JFAbstractGraphView
     @Override
     protected void drawValues(JFreeChart chart)
     {
-        if ((data == null) || (dataset == null))
-        {
+        if (data == null || dataset == null)
             return;
-        }
 
         dataset.clear();
 
-        System.out.println("Read classes:\n" + data.getPercentOfDaysInClass(0) + "\n" + data.getPercentOfDaysInClass(1) + "\n"
-                + data.getPercentOfDaysInClass(2) + "\n" + data.getPercentOfDaysInClass(3) + "\n"
+        System.out.println("Read classes:\n" + data.getPercentOfDaysInClass(0) + "\n" + data.getPercentOfDaysInClass(1)
+                + "\n" + data.getPercentOfDaysInClass(2) + "\n" + data.getPercentOfDaysInClass(3) + "\n"
                 + data.getPercentOfDaysInClass(4));
         dataset.insertValue(0, translator.getMessage("DAYS_WITH_READINGS_0_1"), data.getPercentOfDaysInClass(0));
         dataset.insertValue(1, translator.getMessage("DAYS_WITH_READINGS_2_3"), data.getPercentOfDaysInClass(1));

@@ -1,6 +1,5 @@
 package ggc.plugin.protocol;
 
-
 import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -43,19 +42,13 @@ import org.dom4j.io.SAXReader;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-
-public abstract class XmlProtocol extends DeviceAbstract 
+public abstract class XmlProtocol extends DeviceAbstract
 {
 
-    //protected DataAccessPlugInBase m_da = null; 
-    //protected OutputWriter output_writer = null;
-    //protected I18nControlAbstract ic = null;
+    // protected DataAccessPlugInBase m_da = null;
+    // protected OutputWriter output_writer = null;
+    // protected I18nControlAbstract ic = null;
 
-
-    
-    
-    
     /**
      * Constructor
      * 
@@ -78,7 +71,6 @@ public abstract class XmlProtocol extends DeviceAbstract
         this.output_writer = ow;
     }
 
-
     /**
      * Constructor
      * 
@@ -88,13 +80,10 @@ public abstract class XmlProtocol extends DeviceAbstract
     public XmlProtocol(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
         super(cmp, da);
-        //this.output_writer = ow;
+        // this.output_writer = ow;
     }
-    
-    
-    
-    protected Document document;
 
+    protected Document document;
 
     /**
      * Open Xml File
@@ -103,15 +92,14 @@ public abstract class XmlProtocol extends DeviceAbstract
      * @return
      * @throws DocumentException
      */
-    public Document openXmlFile(File file) throws DocumentException 
+    public Document openXmlFile(File file) throws DocumentException
     {
         SAXReader reader = new SAXReader();
-        
+
         document = reader.read(file);
         return document;
     }
-    
-    
+
     /**
      * Get Node
      * 
@@ -122,8 +110,7 @@ public abstract class XmlProtocol extends DeviceAbstract
     {
         return document.selectSingleNode(tag_path);
     }
-    
-    
+
     /**
      * Get Element
      * 
@@ -132,10 +119,9 @@ public abstract class XmlProtocol extends DeviceAbstract
      */
     public Element getElement(String tag_path)
     {
-        return (Element)getNode(tag_path);
+        return (Element) getNode(tag_path);
     }
-    
-    
+
     /**
      * Return List of nodes from path
      * 
@@ -148,6 +134,5 @@ public abstract class XmlProtocol extends DeviceAbstract
         List<Node> nodes = document.selectNodes(tag_path);
         return nodes;
     }
- 
 
 }

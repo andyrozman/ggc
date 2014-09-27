@@ -6,7 +6,7 @@ public enum GlucoseUnitType
 {
 
     mgPerDL(1, "GLUCOSE_UNIT_MGDL"), //
-    mmolPerL(2, "GLUCOSE_UNIT_MMOLL" ), //
+    mmolPerL(2, "GLUCOSE_UNIT_MMOLL"), //
     None(0, "NONE"); //
 
     private int value;
@@ -42,12 +42,14 @@ public enum GlucoseUnitType
         return map.get(value);
     }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription()
+    {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
 
 }

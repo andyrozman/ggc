@@ -1,4 +1,4 @@
-package ggc.pump.manager.company; 
+package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.pump.device.deltec.DeltecCosmo1700;
@@ -31,33 +31,32 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class Deltec extends AbstractPumpDeviceCompany
 {
-    
+
     /**
      * Constructor
      */
     public Deltec()
     {
-        super(                                  // empty devices
-            PumpDevicesIds.COMPANY_DELTEC,      // company_id
-            "Deltec",                           // company name (full)
-            "Deltec",                           // short company name
-            "DELTEC_DESC",                      // company description
-            DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE);  // implementation status
-        
+        super( // empty devices
+                PumpDevicesIds.COMPANY_DELTEC, // company_id
+                "Deltec", // company name (full)
+                "Deltec", // short company name
+                "DELTEC_DESC", // company description
+                DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE); // implementation
+                                                                          // status
+
         this.addDevice(new DeltecCosmo1700(this));
         this.addDevice(new DeltecCosmo1800(this));
     }
-    
-    
+
     /**
      * Init Profile Names (for Profile Editor)
      */
+    @Override
     public void initProfileNames()
     {
     }
-    
-    
+
 }

@@ -30,90 +30,90 @@ import com.atech.i18n.mgr.LanguageManager;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
 public class I18nControlPlugin extends I18nControlLangMgrDual
 {
-    
+
     protected I18nControlLangMgrDual m_ic_core = null;
-    
-    
+
     /**
      * Constructor
      * 
      * @param lm
      * @param icr
      */
-    public I18nControlPlugin(LanguageManager lm, I18nControlRunner icr) //  I18nControlLangMgr ic_core)
+    public I18nControlPlugin(LanguageManager lm, I18nControlRunner icr) // I18nControlLangMgr
+                                                                        // ic_core)
     {
         super(lm, icr);
-        
+
     }
-    
-    
+
+    @Override
     public synchronized String getMessageFromCatalog(String msg)
     {
         if (!checkIfValidMessageKey(msg))
             return msg;
-        
+
         String ret = this.getMessageFromCatalogSelectedLanaguge(msg);
-        
+
         if (ret.equals(msg))
         {
-            if (this.m_ic_core==null)
+            if (this.m_ic_core == null)
+            {
                 this.loadPluginI18n();
-            
+            }
+
             ret = this.m_ic_core.getMessageFromCatalogSelectedLanaguge(msg);
-            
+
             if (ret.equals(msg))
             {
                 if (this.language_manager.findUntraslatedKeys())
                     return ret;
-                
-                ret = this.getMessageFromCatalogDefaultLangauge(msg); 
-                
+
+                ret = this.getMessageFromCatalogDefaultLangauge(msg);
+
                 if (ret.equals(msg))
                 {
                     ret = this.m_ic_core.getMessageFromCatalogDefaultLangauge(msg);
                 }
             }
         }
-        
+
         return ret;
     }
-    
+
+    @Override
     public String getMessage(String key)
     {
         String tmp = super.getMessage(key);
-        
-        if ((tmp.equals(key))) //&& (this.m_ic_core!=null))
+
+        if (tmp.equals(key)) // && (this.m_ic_core!=null))
         {
-            if (this.m_ic_core==null)
+            if (this.m_ic_core == null)
+            {
                 this.loadPluginI18n();
-            
+            }
+
             tmp = this.m_ic_core.getMessage(key);
         }
-        
+
         return tmp;
     }
-    
-    
+
+    @Override
     public void initAdditional()
     {
         loadPluginI18n();
     }
-    
-    
+
     /**
      * Load PlugIn I18n
      */
     public void loadPluginI18n()
     {
-        //System.out.println("Creating ic core");
+        // System.out.println("Creating ic core");
         this.m_ic_core = new I18nControlLangMgrDual(this.language_manager, new GGCPluginICRunner());
-        //System.out.println("Creating ic core: " + this.m_ic_core);
+        // System.out.println("Creating ic core: " + this.m_ic_core);
     }
-    
 
-    
-    
 }

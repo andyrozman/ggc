@@ -38,7 +38,6 @@ import com.atech.plugin.PlugInServer;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class CGMSPlugIn extends PlugInClient
 {
 
@@ -46,28 +45,27 @@ public class CGMSPlugIn extends PlugInClient
      * Command: Read CGMS Data
      */
     public static final int COMMAND_READ_CGMS_DATA = 0;
-    
+
     /**
      * Command: CGMS List
      */
     public static final int COMMAND_CGMS_LIST = 1;
-    
+
     /**
      * Command: CGMS Configuration
      */
     public static final int COMMAND_CGMS_CONFIGURATION = 2;
-    
+
     /**
      * Command: CGMS About
      */
     public static final int COMMAND_CGMS_ABOUT = 3;
-    
+
     /**
      * Return Object: Selected Device with parameters
      */
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
-    
-    
+
     /**
      * Constructor
      * 
@@ -76,10 +74,9 @@ public class CGMSPlugIn extends PlugInClient
      */
     public CGMSPlugIn(Component parent, I18nControlAbstract ic)
     {
-        super((JFrame)parent, ic);
+        super((JFrame) parent, ic);
     }
 
-    
     /**
      * Constructor
      */
@@ -88,50 +85,46 @@ public class CGMSPlugIn extends PlugInClient
         super();
     }
 
-    
     /**
      * Check If Installed
      */
+    @Override
     public void checkIfInstalled()
     {
-        
+
         try
         {
             Class<?> c = Class.forName("ggc.cgms.plugin.CGMSPlugInServer");
 
             this.m_server = (PlugInServer) c.newInstance();
             installed = true;
-            
-            this.m_server.init(this.parent, 
-                DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(), 
-                DataAccess.getInstance(), 
-                this, 
-                DataAccess.getInstance().getDb() );
+
+            this.m_server.init(this.parent, DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(),
+                DataAccess.getInstance(), this, DataAccess.getInstance().getDb());
         }
         catch (Exception ex)
         {
             System.out.println("CGMSPlugInServer::Exception:" + ex);
             ex.printStackTrace();
         }
-        
-        
+
     }
 
-    
     /**
      * Get Name Base (untranslated)
      * 
      * @return name of plugin
      */
+    @Override
     public String getNameBase()
     {
         return "CGMS_PLUGIN";
     }
 
-    
     /**
      * Init Plugin
      */
+    @Override
     public void initPlugin()
     {
         this.commands = new String[4];
@@ -154,7 +147,6 @@ public class CGMSPlugIn extends PlugInClient
 
     }
 
-    
     /**
      * Read CGMS Data
      */
@@ -163,11 +155,10 @@ public class CGMSPlugIn extends PlugInClient
         this.featureNotImplemented(commands[0]);
     }
 
-    
-
     /** 
      * actionPerformed
      */
+    @Override
     public void actionPerformed(ActionEvent e)
     {
         String command = e.getActionCommand();
@@ -176,9 +167,7 @@ public class CGMSPlugIn extends PlugInClient
         {
             this.readCGMSData();
             refreshPanels(RefreshInfo.PANEL_GROUP_ALL_DATA);
-            
-            
-            
+
         }
         else if (command.equals("cgms_list"))
         {
@@ -200,23 +189,23 @@ public class CGMSPlugIn extends PlugInClient
 
     }
 
-    
     /**
      * Get When Will Be Implemented
      * 
      * @return
      */
+    @Override
     public String getWhenWillBeImplemented()
     {
         return "0.6";
     }
 
-    
     /**
      * Get Short Status
      * 
      * @return
      */
+    @Override
     public String getShortStatus()
     {
         if (this.m_server != null)
@@ -225,15 +214,11 @@ public class CGMSPlugIn extends PlugInClient
             return ic.getMessage("STATUS_NOT_INSTALLED");
     }
 
-    
-    
     private void refreshPanels(int mask)
     {
         DataAccess.getInstance().setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, mask);
     }
-    
 
-    
     /**
      * This is method which can be used by server side to do certain action. Mainly this will be used
      * to run refreshes and such actions. This needs to be implemented by Client side, if you wish to use
@@ -241,9 +226,10 @@ public class CGMSPlugIn extends PlugInClient
      * 
      * @param action_type
      */
+    @Override
     public void executeReturnAction(int action_type)
     {
-        
+
         if (action_type == PumpsPlugIn.RETURN_ACTION_READ_DATA)
         {
             refreshPanels(RefreshInfo.PANEL_GROUP_ALL_DATA);
@@ -252,17 +238,16 @@ public class CGMSPlugIn extends PlugInClient
         {
             refreshPanels(RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES);
         }
-        
+
     }
-    
-    
-    
+
     /**
      * Set Return Data (for getting data from plugin - async)
      * 
      * @param return_data
      * @param stat_rep_int
      */
+    @Override
     public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
     {
     }

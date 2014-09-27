@@ -42,7 +42,6 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
 {
 
@@ -59,34 +58,32 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     /**
      * Children - Groups
      */
-    public ArrayList<FoodGroup> children_group = null; //new ArrayList<FoodGroup>();
+    public ArrayList<FoodGroup> children_group = null; // new
+                                                       // ArrayList<FoodGroup>();
 
     /**
      * Children - All
      */
-    public ArrayList<Object> children = null; //new ArrayList<Object>();
+    public ArrayList<Object> children = null; // new ArrayList<Object>();
 
     /**
      * Children - Foods
      */
-    public ArrayList<FoodDescription> children_food = null; //new ArrayList<Meal>();
+    public ArrayList<FoodDescription> children_food = null; // new
+                                                            // ArrayList<Meal>();
 
-    
-    
-//    public ArrayList<MealGroup> children_group = null; //new ArrayList<MealGroup>();
-//    public ArrayList<Meal> children_meal = null; //new ArrayList<Meal>();
-    
-//    public ArrayList<Object> children = null; //new ArrayList<Object>();
-    
-    
+    // public ArrayList<MealGroup> children_group = null; //new
+    // ArrayList<MealGroup>();
+    // public ArrayList<Meal> children_meal = null; //new ArrayList<Meal>();
+
+    // public ArrayList<Object> children = null; //new ArrayList<Object>();
+
     private int object_load_status = 0;
 
-    
     boolean empty = false;
     I18nControlAbstract ic = null; // DataAccessNutri.getInstance().
 
     // getI18nControlInstance();
-
 
     /**
      * Constructor
@@ -99,7 +96,6 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         this.ic = ic;
     }
 
-    
     /**
      * Constructor
      * 
@@ -185,10 +181,8 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
      */
     public long getId()
     {
-        if ((this.group_db1 == null) && (this.group_db2 == null))
-        {
+        if (this.group_db1 == null && this.group_db2 == null)
             return this.id;
-        }
 
         if (group_type == 1)
             return this.group_db1.getId();
@@ -213,14 +207,20 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
      */
     public void setId(long id)
     {
-        if ((this.group_db1 == null) && (this.group_db2 == null))
+        if (this.group_db1 == null && this.group_db2 == null)
+        {
             this.id = id;
+        }
         else
         {
             if (group_type == 1)
+            {
                 this.group_db1.setId(id);
+            }
             else
+            {
                 this.group_db2.setId(id);
+            }
         }
     }
 
@@ -245,9 +245,13 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     public void setName(String name)
     {
         if (group_type == 1)
+        {
             this.group_db1.setName(name);
+        }
         else
+        {
             this.group_db2.setName(name);
+        }
     }
 
     /**
@@ -271,9 +275,13 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     public void setName_i18n(String name)
     {
         if (group_type == 1)
+        {
             this.group_db1.setName_i18n(name);
+        }
         else
+        {
             this.group_db2.setName_i18n(name);
+        }
     }
 
     /**
@@ -284,9 +292,13 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     public void setDescription(String name)
     {
         if (group_type == 1)
+        {
             this.group_db1.setDescription(name);
+        }
         else
+        {
             this.group_db2.setDescription(name);
+        }
     }
 
     /**
@@ -332,7 +344,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     public boolean hasGroupChildren()
     {
         checkLoadStatus();
-        return (getGroupChildrenCount() != 0);
+        return getGroupChildrenCount() != 0;
     }
 
     /**
@@ -343,7 +355,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     public boolean hasChildren()
     {
         checkLoadStatus();
-        return (getChildCount() != 0);
+        return getChildCount() != 0;
     }
 
     /**
@@ -353,16 +365,15 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
      */
     public void addChild(FoodGroup fg)
     {
-        //checkLoadStatus();
-        
-        if (this.children==null)
+        // checkLoadStatus();
+
+        if (this.children == null)
         {
             this.children_group = new ArrayList<FoodGroup>();
             this.children_food = new ArrayList<FoodDescription>();
             this.children = new ArrayList<Object>();
         }
-        
-        
+
         children_group.add(fg);
         children.add(fg);
     }
@@ -374,17 +385,21 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
      */
     public void addChild(FoodDescription fd)
     {
-        if (this.children_food==null)
+        if (this.children_food == null)
         {
-            if (this.children_group==null)
+            if (this.children_group == null)
+            {
                 this.children_group = new ArrayList<FoodGroup>();
-            
-            if (this.children==null)
+            }
+
+            if (this.children == null)
+            {
                 this.children = new ArrayList<Object>();
+            }
 
             this.children_food = new ArrayList<FoodDescription>();
         }
-        
+
         children_food.add(fd);
         children.add(fd);
     }
@@ -480,7 +495,9 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     public void setParentId(long parent_id)
     {
         if (this.group_type == 2)
+        {
             this.group_db2.setParent_id(parent_id);
+        }
     }
 
     /**
@@ -507,45 +524,41 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return "FoodGroup [id=" + this.getId() + ",name=" + this.getName() + ",parent_id=" + this.getParentId() + "]";
     }
 
-    
-    
     /**
      * Load Children
      */
     public void loadChildren()
     {
         GGCDbCache cache = DataAccessNutri.getInstance().getDbCache();
-        
+
         this.children_group = cache.getChildrenFoodGroup(this.group_type, this.getId());
         this.children_food = cache.getChildrenFoods(this.group_type, this.getId());
-        
-        if (children==null)
+
+        if (children == null)
         {
             this.children = new ArrayList<Object>();
         }
-        
-        //if (children_group!=null)
+
+        // if (children_group!=null)
         this.children.addAll(this.children_group);
         this.children.addAll(this.children_food);
-        
+
         this.object_load_status = GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED;
-        //if (cache.getChildrenFoodGroup(type, parent_id))
-        
+        // if (cache.getChildrenFoodGroup(type, parent_id))
+
     }
-    
-    
+
     /**
      * Check Load Status
      */
     public void checkLoadStatus()
     {
         if (this.object_load_status != GGCDbCache.OBJECT_LOADED_STATUS_CHILDREN_LOADED)
-        {   
+        {
             loadChildren();
         }
     }
-    
-    
+
     /**
      * Get Load Status
      * 
@@ -555,11 +568,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     {
         return this.object_load_status;
     }
-    
-    
-    
-    
-    
+
     // ---
     // --- DatabaseObjectHibernate
     // ---
@@ -693,8 +702,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     {
         return "Food Group";
     }
-    
-    
+
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -776,7 +784,6 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return false;
     }
 
-    
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -786,13 +793,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return "" + this.getId();
     }
 
-    
     /**
      * Table Version
      */
     public int TABLE_VERSION = 1;
-    
-    
+
     /**
      * getTableVersion - returns version of table
      * 
@@ -802,8 +807,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     {
         return this.TABLE_VERSION;
     }
-    
-    
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -816,7 +820,6 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return null;
     }
 
-    
     /**
      * dbExport - returns export String, for current version 
      *
@@ -827,8 +830,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     {
         return dbExport(this.TABLE_VERSION);
     }
-    
-    
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -840,7 +842,6 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         // TODO
         return null;
     }
-    
 
     /**
      * dbExportHeader - header for export file
@@ -851,8 +852,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     {
         return this.dbExportHeader(this.TABLE_VERSION);
     }
-    
-    
+
     /**
      * dbImport - processes input entry to right fields
      * 
@@ -864,7 +864,6 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     {
         dbImport(table_version, value_entry, null);
     }
-    
 
     /**
      * dbImport - processes input entry to right fields
@@ -878,9 +877,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     {
         // TODO
     }
-    
-    
-    
+
     /**
      * getBackupFile - name of backup file (base part)
      * 
@@ -891,7 +888,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         // TODO
         return "DayValueH";
     }
-    
+
     /**
      * getBackupClassName - name of class which will be updated/restored
      * 
@@ -902,7 +899,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         // TODO
         return "";
     }
-    
+
     /**
      * Has To Be Clean - if table needs to be cleaned before import
      * 
@@ -913,7 +910,6 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return true;
     }
 
-
     /**
      * Get Node Children
      */
@@ -922,7 +918,6 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
         return null;
     }
 
-
     /**
      * Has Node Children
      */
@@ -930,5 +925,5 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     {
         return false;
     }
-    
+
 }

@@ -29,7 +29,6 @@ import javax.swing.JLabel;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class StocksInfoPanel extends AbstractInfoPanel
 {
     private static final long serialVersionUID = -6551579241451753792L;
@@ -40,16 +39,16 @@ public class StocksInfoPanel extends AbstractInfoPanel
     public StocksInfoPanel()
     {
         super("STOCK");
-        //setLayout(new GridLayout(5, 3));
-        setLayout(new GridLayout(0,2));
+        // setLayout(new GridLayout(5, 3));
+        setLayout(new GridLayout(0, 2));
         init();
         refreshInfo();
     }
 
     private void init()
     {
-        add(new JLabel(m_ic.getMessage("STOCK_DATA_HERE")+":"));
-        add(new JLabel(m_ic.getMessage("STO_WILL_BE_FOUND_HERE")+ "..." + m_ic.getMessage("NOT_YET")));
+        add(new JLabel(m_ic.getMessage("STOCK_DATA_HERE") + ":"));
+        add(new JLabel(m_ic.getMessage("STO_WILL_BE_FOUND_HERE") + "..." + m_ic.getMessage("NOT_YET")));
     }
 
     /**
@@ -59,26 +58,26 @@ public class StocksInfoPanel extends AbstractInfoPanel
     public void refreshInfo()
     {
     }
-    
+
     /**
      * Get Tab Name
      * 
      * @return name as string
      */
+    @Override
     public String getTabName()
     {
         return "StocksInfo";
     }
-    
-    
+
     /**
      * Do Refresh - This method can do Refresh
      */
+    @Override
     public void doRefresh()
     {
     }
-    
-    
+
     /**
      * Get Panel Id
      * 
@@ -89,6 +88,5 @@ public class StocksInfoPanel extends AbstractInfoPanel
     {
         return InfoPanelsIds.INFO_PANEL_STOCKS;
     }
-    
-    
+
 }

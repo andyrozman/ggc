@@ -4,7 +4,6 @@ import ggc.plugin.output.OutputWriterData;
 
 import com.atech.utils.data.ATechDate;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -31,16 +30,13 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-
-
-public abstract class DeviceTempValues 
+public abstract class DeviceTempValues
 {
     protected int object_type = 1;
     protected int base_type = 1;
     protected int sub_type = 0;
     protected String value_template;
 
-    
     /**
      * @param _object_type
      * @param _base_type
@@ -51,7 +47,6 @@ public abstract class DeviceTempValues
         this(_object_type, _base_type, _sub_type, null);
     }
 
-    
     /**
      * @param _object_type
      * @param _base_type
@@ -61,8 +56,7 @@ public abstract class DeviceTempValues
     {
         this(_object_type, _base_type, 0, null);
     }
-    
-    
+
     /**
      * @param _object_type
      * @param _base_type
@@ -71,13 +65,12 @@ public abstract class DeviceTempValues
      */
     public DeviceTempValues(int _object_type, int _base_type, int _sub_type, String _value_template)
     {
-        this.object_type = _object_type; 
+        this.object_type = _object_type;
         this.base_type = _base_type;
         this.sub_type = _sub_type;
         this.value_template = _value_template;
     }
-    
-    
+
     /**
      * Get Data
      * 
@@ -90,7 +83,6 @@ public abstract class DeviceTempValues
         return getData(dt, _sub_type, null);
     }
 
-    
     /**
      * Get Data
      * 
@@ -102,9 +94,7 @@ public abstract class DeviceTempValues
     {
         return getData(dt, -1, _value);
     }
-    
-    
-    
+
     /**
      * Get Data
      * 
@@ -114,6 +104,5 @@ public abstract class DeviceTempValues
      * @return
      */
     public abstract OutputWriterData getData(ATechDate dt, int _sub_type, String _value);
-    
-    
-}	
+
+}

@@ -34,11 +34,9 @@ import com.itextpdf.text.pdf.PdfPTable;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-
 public class PrintFoodMenuBase extends PrintFoodMenuAbstract
 {
-   
-    
+
     /**
      * Constructor 
      * 
@@ -49,21 +47,16 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
         super(mv);
     }
 
-    
-
     /**
      * {@inheritDoc}
      */
     @Override
     public int[] getTableColumnWidths()
     {
-        int headerwidths[] = { 13, 7,
-                               40, 20, 10, 10 
-                                }; // percentage
+        int headerwidths[] = { 13, 7, 40, 20, 10, 10 }; // percentage
         return headerwidths;
     }
 
-    
     /**
      * {@inheritDoc}
      */
@@ -72,7 +65,6 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
     {
         return 6;
     }
-
 
     /**
      * {@inheritDoc}
@@ -83,8 +75,6 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
         return "FOOD_MENU_BASE";
     }
 
-
-
     /**
      * {@inheritDoc}
      */
@@ -93,7 +83,6 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
     {
         table.addCell(this.createBoldTextPhrase("CH"));
     }
-
 
     /**
      * {@inheritDoc}
@@ -108,7 +97,6 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
         table.addCell(this.createEmptyTextPhrase());
     }
 
-    
     /**
      * {@inheritDoc}
      */
@@ -117,35 +105,34 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
     {
         table.addCell(this.createEmptyTextPhrase());
         table.addCell(this.createEmptyTextPhrase());
-        
+
         table.addCell(new Phrase(mp.getName(), this.textFontNormal));
-        
-        
+
         float value = 0.0f;
-        
-        if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
+
+        if (mp.getAmountType() == DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
         {
             table.addCell(this.createNormalTextPhrase("AMOUNT_LBL"));
             value = mp.getMealCH();
-            
+
         }
-        else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
+        else if (mp.getAmountType() == DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
         {
             table.addCell(this.createNormalTextPhrase("WEIGHT_LBL2"));
             value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
         }
         else
         {
-            table.addCell(
-                new Phrase(mp.getHomeWeightDescription() + " (" + DataAccessPlugInBase.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100) + " g)", this.textFontNormal));
+            table.addCell(new Phrase(mp.getHomeWeightDescription() + " ("
+                    + DataAccessPlugInBase.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100) + " g)",
+                    this.textFontNormal));
             value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
         }
-        
+
         table.addCell(new Phrase(mp.getAmountSingleDecimalString(), this.textFontNormal));
-        table.addCell(new Phrase(DataAccessPlugInBase.Decimal2Format.format(value), this.textFontNormal));  // ch
+        table.addCell(new Phrase(DataAccessPlugInBase.Decimal2Format.format(value), this.textFontNormal)); // ch
 
     }
-
 
     /**
      * {@inheritDoc}
@@ -160,21 +147,20 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
         table.addCell(new Phrase(DataAccessPlugInBase.Decimal2Format.format(rw.getCH()), this.textFontItalic));
     }
 
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void writeFoodDescData(PdfPTable table, DailyValuesRow dvr) throws Exception
     {
-        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION), this.textFontNormal));
+        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION),
+                this.textFontNormal));
         table.addCell(this.createNormalTextPhrase("DESCRIPTION"));
         table.addCell(this.createEmptyTextPhrase());
 
         table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_CH), this.textFontItalic));
     }
-    
-    
+
     /**
      * {@inheritDoc}
      */
@@ -184,7 +170,6 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
         return "FoodMenuBase";
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -193,10 +178,5 @@ public class PrintFoodMenuBase extends PrintFoodMenuAbstract
     {
         return 12;
     }
-    
-    
+
 }
-
-
-
-

@@ -1,12 +1,14 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /** @author Hibernate CodeGenerator */
-public class StockSubTypeH implements Serializable {
+public class StockSubTypeH implements Serializable
+{
 
     /**
      * 
@@ -37,7 +39,8 @@ public class StockSubTypeH implements Serializable {
      * @param description 
      * @param content 
      * @param comment */
-    public StockSubTypeH(long stock_type_id, String name, String description, float content, String comment) {
+    public StockSubTypeH(long stock_type_id, String name, String description, float content, String comment)
+    {
         this.stock_type_id = stock_type_id;
         this.name = name;
         this.description = description;
@@ -46,7 +49,8 @@ public class StockSubTypeH implements Serializable {
     }
 
     /** default constructor */
-    public StockSubTypeH() {
+    public StockSubTypeH()
+    {
     }
 
     /**
@@ -74,7 +78,7 @@ public class StockSubTypeH implements Serializable {
      * 
      * @return stock_type_id value
      */
-    public long getStock_type_id() 
+    public long getStock_type_id()
     {
         return this.stock_type_id;
     }
@@ -84,18 +88,17 @@ public class StockSubTypeH implements Serializable {
      * 
      * @param stock_type_id value
      */
-    public void setStock_type_id(long stock_type_id) 
+    public void setStock_type_id(long stock_type_id)
     {
         this.stock_type_id = stock_type_id;
     }
 
-    
     /**
      * Get Name
      * 
      * @return name
      */
-    public String getName() 
+    public String getName()
     {
         return this.name;
     }
@@ -105,18 +108,17 @@ public class StockSubTypeH implements Serializable {
      * 
      * @param name as string
      */
-    public void setName(String name) 
+    public void setName(String name)
     {
         this.name = name;
     }
-
 
     /**
      * Get Description
      * 
      * @return description parameter
      */
-    public String getDescription() 
+    public String getDescription()
     {
         return this.description;
     }
@@ -126,7 +128,7 @@ public class StockSubTypeH implements Serializable {
      * 
      * @param description parameter
      */
-    public void setDescription(String description) 
+    public void setDescription(String description)
     {
         this.description = description;
     }
@@ -136,7 +138,7 @@ public class StockSubTypeH implements Serializable {
      * 
      * @return content parameter
      */
-    public float getContent() 
+    public float getContent()
     {
         return this.content;
     }
@@ -146,7 +148,7 @@ public class StockSubTypeH implements Serializable {
      * 
      * @param content parameter
      */
-    public void setContent(float content) 
+    public void setContent(float content)
     {
         this.content = content;
     }
@@ -171,19 +173,18 @@ public class StockSubTypeH implements Serializable {
         this.comment = comment;
     }
 
-    
     /** 
      * Custom equals implementation
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object other) 
+    @Override
+    public boolean equals(Object other)
     {
-        if ( !(other instanceof StockSubTypeH) ) return false;
+        if (!(other instanceof StockSubTypeH))
+            return false;
         StockSubTypeH castOther = (StockSubTypeH) other;
-        return new EqualsBuilder()
-            .append(this.getId(), castOther.getId())
-            .isEquals();
+        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
     /**
@@ -191,18 +192,19 @@ public class StockSubTypeH implements Serializable {
      * 
      * @see java.lang.Object#toString()
      */
-    public String toString() 
+    @Override
+    public String toString()
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
-    
-    
+
     /**
      * Create Hash Code
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() 
+    @Override
+    public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
     }

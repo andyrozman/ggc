@@ -6,7 +6,6 @@ import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.nutri.display.HomeWeightDataDisplay;
 import ggc.nutri.display.NutritionDataDisplay;
-import ggc.nutri.util.DataAccessNutri;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -26,6 +25,7 @@ import javax.swing.table.TableColumnModel;
 import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.layout.ZeroLayout;
+import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -51,7 +51,6 @@ import com.atech.graphics.layout.ZeroLayout;
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
-
 
 public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements ActionListener
 {
@@ -91,9 +90,9 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         this.hwd = new HomeWeightDataDisplay(ic);
         this.ndd = new NutritionDataDisplay(ic);
 
-        font_big = m_da.getFont(DataAccessNutri.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(DataAccessNutri.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(DataAccessNutri.FONT_NORMAL);
+        font_big = m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD);
+        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
 
         createPanel();
 
@@ -132,7 +131,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         label_name = new JLabel();
         // label_name.setBounds(30, 125, 460, 50);
         label_name.setBounds(190, 80, 300, 25);
-        label_name.setVerticalAlignment(JLabel.TOP);
+        label_name.setVerticalAlignment(SwingConstants.TOP);
         label_name.setFont(fnt_14);
         this.add(label_name, ZeroLayout.DYNAMIC);
 
@@ -163,8 +162,6 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
          * label = new JLabel(ic.getMessage("TRANSLATED_NAME") + ":");
          * label.setBounds(30, 140, 300, 60); label.setFont(fnt_14_bold);
          * this.add(label, null);
-         * 
-         * 
          * this.label_name_i18n = new JLabel(); // 180
          * this.label_name_i18n.setBounds(30, 165, 460, 50);
          * label_name.setVerticalAlignment(JLabel.TOP);
@@ -259,10 +256,9 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
         this.help_button = m_da.createHelpIconByBounds(470, 10, 35, 35, this);
         this.add(help_button);
-        
+
         m_da.enableHelp(this);
-        
-        
+
         return;
     }
 
@@ -271,6 +267,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
      * 
      * @see com.atech.graphics.components.EditableAbstractPanel#setParent(java.lang.Object)
      */
+    @Override
     public void setParent(Object obj)
     {
 
@@ -281,6 +278,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
      * 
      * @see com.atech.graphics.components.EditableAbstractPanel#setData(java.lang.Object)
      */
+    @Override
     public void setData(Object obj)
     {
         FoodDescription fd = (FoodDescription) obj;
@@ -303,9 +301,11 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
         if (fd.getGroup_id() > 0)
         {
-            //this.food_group = m_da.tree_roots.get("" + fd.getFoodType()).m_groups_ht.get("" + fd.getGroup_id());
-            
-            this.food_group = m_da.getDbCache().tree_roots.get("" + fd.getFoodType()).findFoodGroup(fd.getFoodType(), fd.getGroup_id());
+            // this.food_group = m_da.tree_roots.get("" +
+            // fd.getFoodType()).m_groups_ht.get("" + fd.getGroup_id());
+
+            this.food_group = m_da.getDbCache().tree_roots.get("" + fd.getFoodType()).findFoodGroup(fd.getFoodType(),
+                fd.getGroup_id());
             this.label_group.setText(this.food_group.getName());
         }
         else
@@ -316,17 +316,17 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
         // System.out.println(fd.getNutritions());
         StringTokenizer strtok = null;
-        
+
         list_nutrition.clear();
-        
+
         if (m_da.isValueSet(fd.getNutritions()))
         {
             strtok = new StringTokenizer(fd.getNutritions(), ";");
-    
+
             while (strtok.hasMoreTokens())
             {
                 NutritionDataDisplay ndd1 = new NutritionDataDisplay(ic, strtok.nextToken());
-    
+
                 ndd1.setNutritionDefinition(m_da.getDbCache().nutrition_defs.get(ndd1.getId()));
                 list_nutrition.add(ndd1);
             }
@@ -354,8 +354,8 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
-    //public static final int MODEL_NUTRITIONS = 1;
-    //public static final int MODEL_HOME_WEIGHTS = 2;
+    // public static final int MODEL_NUTRITIONS = 1;
+    // public static final int MODEL_HOME_WEIGHTS = 2;
 
     private void createModel(ArrayList<?> lst, JTable table, ATTableData object)
     {
@@ -393,6 +393,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
      * @param _action_type type of action (ACTION_ADD, ACTION_EDIT)
      * @return String value as warning string
      */
+    @Override
     public String getWarningString(int _action_type)
     {
         return null;
@@ -403,6 +404,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
      * 
      * @return true if data changed, false otherwise
      */
+    @Override
     public boolean hasDataChanged()
     {
         return false;
@@ -413,21 +415,18 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
      * 
      * @return true if save was successful
      */
+    @Override
     public boolean saveData()
     {
         return false;
     }
 
-    
-    
     public String getHelpId()
     {
-        if (this.m_dialog.getNutritionType()==GGCTreeRoot.TREE_USDA_NUTRITION)
+        if (this.m_dialog.getNutritionType() == GGCTreeRoot.TREE_USDA_NUTRITION)
             return "GGC_Food_USDA_View";
         else
             return "GGC_Food_User_Food_View";
     }
-    
-    
-    
+
 }
