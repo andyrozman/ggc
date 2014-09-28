@@ -5,6 +5,27 @@
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
+<td width="150">2014-09-27</td>
+<td>GGC 0.5.0.3 (release 2)</td>
+</tr>
+<tr>
+<td colspan="2">
+Our latest release had one file missing. We helped several GGC users by sending them missing
+file. But for all others, here is release with all files. We are really sorry for this problem.<br><br>
+But some good news, development of GGC is now back on track and we plan regular updates
+(twice a year, probably in June and in December).<br><br>
+Next release will contain support for Dexcom G4 CGMS, internal PDF viewer for Reports (Printing) and 
+perhaps one or two other changes and/or fixes, it should be out by end of December.  
+<br>
+</td>
+</tr>
+</table> 
+
+<br><br>
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
 <td width="150">2014-05-18</td>
 <td>GGC 0.5.0.3</td>
 </tr>

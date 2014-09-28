@@ -9,7 +9,7 @@ in SVN, but now they will also be here. Some of them are translated, but not all
 <h2>GGC Application</h2>
 
 <a href="docs/README.en">README</a> - Main GGC documentation (<a href="docs/README.de">German</a>, <a href="docs/README.si">Slovene</a>)<br>
-<a href="docs/How_Can_I_Help.txt">How Can I Help</a> - This are detailed instructions on how to create build environment, prepare computer for making translation,...<br>
+<a href="docs/How_Can_I_Help.txt">How Can I Help</a> - This are detailed instructions on how to create build environment (old one, before maven change), prepare computer for making translation,...<br>
 <a href="docs/Changelog">Changelog</a> - Document of changes (detailed)<br> 
 <a href="docs/IDEAS.txt">Ideas</a> - Misc ideas of developers<br>
 <a href="docs/TO-DO.txt">To-Do</a> - Detailed To-do list<br>
