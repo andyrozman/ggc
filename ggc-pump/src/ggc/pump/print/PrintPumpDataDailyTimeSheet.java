@@ -13,32 +13,28 @@ import com.atech.utils.data.ATechDate;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 
 /**
- *  Application:   GGC - GNU Gluco Control
- *
- *  See AUTHORS for copyright information.
- * 
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 2 of the License, or (at your option) any later
- *  version.
- * 
- *  This program is distributed in the hope that it will be useful, but WITHOUT
- *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- *  details.
- * 
- *  You should have received a copy of the GNU General Public License along with
- *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     PrintFoodMenuBase  
- *  Description:  Print Base Food Menu
- * 
- *  Author: andyrozman {andy@atech-software.com}  
+ * Application: GGC - GNU Gluco Control
+ * See AUTHORS for copyright information.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ * Filename: PrintFoodMenuBase
+ * Description: Print Base Food Menu
+ * Author: andyrozman {andy@atech-software.com}
  */
 
 // WARNING: THIS IS WORK IN PROGRESS, PLEASE DON'T EDIT. Andy
@@ -48,12 +44,39 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
 
     /**
      * Constructor
-     *  
-     * @param dvr 
+     * 
+     * @param dvr
      */
     public PrintPumpDataDailyTimeSheet(DeviceValuesRange dvr)
     {
         super(dvr);
+    }
+
+    public PrintPumpDataDailyTimeSheet()
+    {
+        super();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Paragraph getTitle()
+    {
+        Paragraph p = new Paragraph();
+
+        Font f = new Font(this.baseFontTimes, 14, Font.BOLD);
+
+        p.setAlignment(Element.ALIGN_CENTER);
+        p.add(new Paragraph("", f));
+        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()), f));
+        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " "
+                + DataAccess.getInstance().getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN, 10,
+                Font.ITALIC)));
+        p.add(new Paragraph("", f));
+        p.add(new Paragraph("", f));
+
+        return p;
     }
 
     /**
@@ -62,8 +85,6 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     @Override
     public void fillDocumentBody(Document document) throws Exception
     {
-        // int count = 0;
-
         Font f = this.textFontNormal;
 
         PdfPTable datatable = new PdfPTable(getTableColumnsCount());
@@ -79,11 +100,11 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
         datatable.addCell(this.createBoldTextPhrase("BASE_TYPE"));
         datatable.addCell(this.createBoldTextPhrase("SUB_TYPE"));
         datatable.addCell(this.createBoldTextPhrase("VALUE_SHORT"));
-        datatable.addCell(this.createBoldTextPhrase("OTHER_DATA_FOOD"));
+        datatable.addCell(this.createBoldTextPhrase("OTHER_DATA"));
 
         // writeAdditionalHeader(datatable);
 
-        GregorianCalendar gc_end = this.deviceValuesRange.getEndGC();
+        GregorianCalendar gc_end = deviceValuesRange.getEndGC();
         gc_end.add(Calendar.DAY_OF_MONTH, 1);
 
         GregorianCalendar gc_current = deviceValuesRange.getStartGC();
@@ -116,9 +137,9 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
                     datatable.addCell(new Phrase(atdx.getTimeString(), f));
                     datatable.addCell(new Phrase(pve.getBaseTypeString(), f));
                     datatable.addCell(new Phrase(pve.getSubTypeString(), f));
-                    datatable.addCell(new Phrase(pve.getValuePrint(), f));
+                    datatable.addCell(new Phrase(pve.getValue(), f));
                     datatable.addCell(new Phrase(pve
-                            .getAdditionalDataPrint(PumpValuesEntry.PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD), f));
+                            .getAdditionalDataPrint(PumpValuesEntry.PRINT_ADDITIONAL_ALL_ENTRIES), f));
                 }
 
             }
@@ -145,7 +166,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     @Override
     public int[] getTableColumnWidths()
     {
-        int headerwidths[] = { 9, 7, 10, 10, 12, 52 }; // percentage
+        int headerwidths[] = { 25, 25, 25, 25 }; // percentage
         return headerwidths;
     }
 
@@ -155,7 +176,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     @Override
     public int getTableColumnsCount()
     {
-        return 6;
+        return 4;
     }
 
     /**
@@ -186,7 +207,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
         table.addCell(this.createEmptyTextPhrase());
         table.addCell(this.createEmptyTextPhrase());
         table.addCell(this.createEmptyTextPhrase());
-        table.addCell(this.createEmptyTextPhrase());
+        // table.addCell(this.createEmptyTextPhrase());
     }
 
     /**
@@ -234,11 +255,6 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     @Override
     public void writeTogetherData(PdfPTable table, DailyValuesRow rw) throws Exception
     {
-        table.addCell(this.createItalicTextPhrase("TOGETHER"));
-        table.addCell(this.createEmptyTextPhrase());
-        table.addCell(this.createEmptyTextPhrase());
-
-        table.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.textFontItalic));
     }
 
     /**
@@ -248,6 +264,17 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     public String getFileNameBase()
     {
         return "PumpDataExt";
+    }
+
+    public static void main(String[] args)
+    {
+        /*
+         * DeviceValuesRange dvr = DataAccessPump.getInstance().getDb()
+         * .getRangePumpValues(this.getFromDateObject(),
+         * this.getToDateObject());
+         * PrintPumpDataDailyTimeSheet pa = new PrintPumpDataBase(dvr);
+         * displayPDF(pa.getRelativeNameWithPath());
+         */
     }
 
 }
