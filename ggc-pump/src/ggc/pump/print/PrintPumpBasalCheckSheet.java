@@ -2,7 +2,10 @@ package ggc.pump.print;
 
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCLanguageManagerRunner;
+import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
+
+import java.util.GregorianCalendar;
 
 import com.atech.i18n.mgr.LanguageManager;
 import com.atech.print.engine.ITextDocumentPrintSettings;
@@ -36,14 +39,28 @@ import com.itextpdf.text.pdf.PdfPTable;
 public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
 {
 
+    GregorianCalendar startDate = null;
+    PumpProfile profileForDate;
+
     /**
      * Constructor
-     * 
+     *
      * @param dvr
      */
     public PrintPumpBasalCheckSheet(PrintParameters parameters)
     {
         super(DataAccessPump.getInstance(), parameters, true);
+    }
+
+    @Override
+    public void initData()
+    {
+        if (printParameters.containsKey("START_DATE"))
+            this.startDate = null;
+        else
+            this.startDate = new GregorianCalendar();
+
+        profileForDate = DataAccessPump.getInstance().getDb().getProfileForDayAndTime(this.startDate);
     }
 
     /**
@@ -104,7 +121,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
 
                 if (i == 0)
                 {
-                    writeDataLine(datatable, startHour, 0.0f);
+                    writeDataLine(datatable, startHour, null);
                 }
                 else
                 {
@@ -183,7 +200,12 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
         if (hour != null)
         {
             table.addCell(this.createNormalTextPhrase(hour + ":00"));
-            table.addCell(this.createNormalTextPhrase(basalRate.toString()));
+
+            if (basalRate != null)
+                table.addCell(this.createNormalTextPhrase(basalRate.toString()));
+            else
+                table.addCell(this.createEmptyTextPhrase());
+
             table.addCell(this.createEmptyTextPhrase());
             table.addCell(this.createEmptyTextPhrase());
         }
@@ -288,13 +310,6 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
     {
         // TODO Auto-generated method stub
         return null;
-    }
-
-    @Override
-    public void initData()
-    {
-        // TODO Auto-generated method stub
-
     }
 
     @Override

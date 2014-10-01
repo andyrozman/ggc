@@ -37,29 +37,23 @@ import com.atech.db.hibernate.HibernateDb;
 import com.atech.utils.data.ATechDate;
 
 /**
- *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
- *
- *  See AUTHORS for copyright information.
- * 
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 2 of the License, or (at your option) any later
- *  version.
- * 
- *  This program is distributed in the hope that it will be useful, but WITHOUT
- *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- *  details.
- * 
- *  You should have received a copy of the GNU General Public License along with
- *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:  ###---###  
- *  Description:
- * 
- *  Author: Andy {andy@atech-software.com}
+ * Application: GGC - GNU Gluco Control
+ * Plug-in: Pump Tool (support for Pump devices)
+ * See AUTHORS for copyright information.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ * Filename: ###---###
+ * Description:
+ * Author: Andy {andy@atech-software.com}
  */
 
 public class GGCPumpDb extends PluginDb implements PlugInGraphDb
@@ -69,7 +63,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     /**
      * Constructor
-     * 
+     *
      * @param db
      */
     public GGCPumpDb(HibernateDb db)
@@ -81,7 +75,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     /**
      * Get Daily Pump Values
-     * 
+     *
      * @param gc
      * @return
      */
@@ -135,9 +129,9 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     /**
      * Get Pump Values Range
-     * 
-     * @param from 
-     * @param to 
+     *
+     * @param from
+     * @param to
      * @return
      */
     public DeviceValuesRange getRangePumpValues(GregorianCalendar from, GregorianCalendar to)
@@ -194,7 +188,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     /**
      * Get Daily Pump Values Extended
-     * 
+     *
      * @param gc
      * @return
      */
@@ -240,9 +234,9 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     /**
      * Get Daily Pump Values Extended
-     * 
-     * @param from 
-     * @param to 
+     *
+     * @param from
+     * @param to
      * @return
      */
     public ArrayList<PumpValuesEntryExt> getRangePumpValuesExtended(GregorianCalendar from, GregorianCalendar to)
@@ -286,7 +280,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     /**
      * Merge Daily Pump Data
-     * 
+     *
      * @param dV
      * @param lst_ext
      */
@@ -320,8 +314,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     /**
      * Merge Daily Pump Data
-     * 
-     * @param dvr 
+     *
+     * @param dvr
      * @param lst_ext
      */
     public void mergeRangePumpData(DeviceValuesRange dvr, ArrayList<PumpValuesEntryExt> lst_ext)
@@ -373,7 +367,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     /**
      * Get Profiles
-     * 
+     *
      * @return
      */
     public ArrayList<PumpProfile> getProfiles()
@@ -409,8 +403,50 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
     }
 
     /**
+     * Get Profiles
+     *
+     * @return
+     */
+    public PumpProfile getProfileForDayAndTime(GregorianCalendar gc)
+    {
+        log.info("getProfileForDayAndTime() - Run");
+
+        String sql = "";
+
+        long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_AND_TIME_S);
+
+        try
+        {
+            sql = "SELECT dv " + //
+                    "from ggc.core.db.hibernate.pump.PumpProfileH as dv " + //
+                    "where dv.active_from < " + dt + //
+                    " and (dv.active_till > " + dt + " or dv.active_till is null) " + //
+                    " and dv.person_id=" + m_da.getCurrentUserId();
+
+            Query q = this.db.getSession().createQuery(sql);
+
+            Iterator<?> it = q.list().iterator();
+
+            if (it.hasNext())
+            {
+                PumpProfileH pdh = (PumpProfileH) it.next();
+                return new PumpProfile(pdh);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            log.debug("Sql: " + sql);
+            log.error("getProfileForDayAndTime(). Exception: " + ex, ex);
+        }
+
+        return null;
+
+    }
+
+    /**
      * Get All Elements Count
-     * 
+     *
      * @return
      */
     public int getAllElementsCount()
@@ -431,7 +467,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         in = (Integer) criteria.list().get(0);
         sum_all = in.intValue();
 
-        System.out.println("Pump Data : " + in.intValue());
+        log.debug("  Pump Data : " + in.intValue());
 
         criteria = this.getSession().createCriteria(PumpDataExtendedH.class);
         criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
@@ -441,7 +477,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         in = (Integer) criteria.list().get(0);
         sum_all += in.intValue();
 
-        System.out.println("Pump Extended Data : " + in.intValue());
+        log.debug("  Pump Extended Data : " + in.intValue());
 
         criteria = this.getSession().createCriteria(PumpProfileH.class);
         criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
@@ -450,13 +486,14 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         in = (Integer) criteria.list().get(0);
         sum_all += in.intValue();
 
-        System.out.println("Pump Profiles : " + in.intValue());
+        log.debug("  Pump Profiles : " + in.intValue());
 
         return sum_all;
     }
 
     /**
      * Get Pump Values
+     *
      * @param pdr
      * @return
      */
@@ -480,13 +517,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         {
             int counter = 0;
 
-            sql = "SELECT dv from " + "ggc.core.db.hibernate.pump.PumpDataH as dv " + "WHERE dv.dt_info >=  " + dt_from /*
-                                                                                                                         * atd
-                                                                                                                         * .
-                                                                                                                         * getDateString
-                                                                                                                         * (
-                                                                                                                         * )
-                                                                                                                         */
+            sql = "SELECT dv from " + "ggc.core.db.hibernate.pump.PumpDataH as dv " + "WHERE dv.dt_info >=  " + dt_from
                     + "000000 and dv.person_id=" + m_da.getCurrentUserId() + " ORDER BY dv.dt_info ";
 
             Query q = this.db.getSession().createQuery(sql);
@@ -494,22 +525,14 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
             Iterator<?> it = q.list().iterator();
 
             pdr.writeStatus(-1);
-            // id = "PD_%s_%s_%s";
 
             while (it.hasNext())
             {
                 counter++;
 
                 PumpValuesEntry pve = new PumpValuesEntry((PumpDataH) it.next());
-                // PumpDataH pdh = (PumpDataH)it.next();
 
                 dt.put(pve.getSpecialId(), pve);
-                /*
-                 * String.format(id,
-                 * pdh.getDt_info(),
-                 * pdh.getBase_type(),
-                 * pdh.getSub_type()) , pdh);
-                 */
 
                 pdr.writeStatus(counter);
             }
@@ -529,13 +552,6 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
                 counter++;
 
                 PumpValuesEntryExt pvex = new PumpValuesEntryExt((PumpDataExtendedH) it.next());
-                /*
-                 * PumpDataExtendedH pdh = (PumpDataExtendedH) it.next();
-                 * dt.put(String.format(id,
-                 * pdh.getDt_info(),
-                 * pdh.getType()) , pdh);
-                 */
-
                 dt.put(pvex.getSpecialId(), pvex);
 
                 pdr.writeStatus(counter);
