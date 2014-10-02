@@ -2,13 +2,22 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.6.3 [21.9.2014]
+    * fixes of pdf-viewer classes
+
+
+0.6.2 [30.8.2014]
+    * changes of some files for Dexcom integration
+    * integration of new pdf viewer (untested)
+
+
 0.6.1 [3.6.2011]
     * integration with Meter Tool Framework v3
     * started work on USB Protocol (for HID devices)
     * changes in DeviceConfiguration, DeviceValuesTableModel, DataAccessPlugInBase
     * fixes on Accu-Check Xml reader (preinit)
     * started work on Graph Editor
-    
+
 
 0.5.2 [20.6.2010]
     * PreInit
@@ -29,7 +38,7 @@ Changes file for GGC Plug-In Base
 
 0.4.8 [17.5.2010]
     * Additional Settings functionality added
-    * Accu-Chek SmartPix changes 
+    * Accu-Chek SmartPix changes
     * Companies class changed constructors
 
 0.4.7 [23.4.2010]
@@ -62,7 +71,7 @@ Changes file for GGC Plug-In Base
     * major changes in DeviceValuesTableModel, which are used on all sub projects
     * fixed configuration, now if new device is added it is also selected
     * "My Device" is now correctly translated for all sub projects
-    * Download context is being changed, so that now we can have wide display 
+    * Download context is being changed, so that now we can have wide display
 
 0.4.0 [11.6.2009] Andy
     * From this version we have Plugin Framework version 2.0
@@ -72,10 +81,10 @@ Changes file for GGC Plug-In Base
 
 0.3.3
 
-0.3.2 
-    * Added DeviceValuesRange class, which is used for getting data from device for same range (for printing 
+0.3.2
+    * Added DeviceValuesRange class, which is used for getting data from device for same range (for printing
       purposes for now, later probably for graphs too).
-    
+
 0.3.1
     * Changes which resulted from ggc-core beeing separate entity
     * Some minor changes to Configuration utility as is needed by Pump tools (no timezone fix)
@@ -83,7 +92,7 @@ Changes file for GGC Plug-In Base
 
 0.2.7
     - minor changes to DataAccessPlugInBase, because of Atech Tools changes
-    - DeviceValuesEntry now extends StatisticsItem 
+    - DeviceValuesEntry now extends StatisticsItem
 
 0.2.6
     - Native Library problems fixed (if native part of Rxtx is missing there is now warning displayed)
@@ -100,14 +109,14 @@ Changes file for GGC Plug-In Base
     - changed GUI classes to use ATSwingUtils for better code visibility
 
 0.2.2
-    - moved most of data classes, here (DeviceValues, DeviceValuesDay, DeviceValuesEntry, 
+    - moved most of data classes, here (DeviceValues, DeviceValuesDay, DeviceValuesEntry,
       DeviceValuesTable, DeviceValuesTableModel)
     - because of move several new items were added DataAccess classes
     - moved GUI for reading data, this code is complete, but must be tested !!!
-    - when adding GUI to plugins, we now need to implement only some methods in DataAccess*, 
-      add *ValuesEntry (derived from DeviceValuesEntry), and *ValuesTableModel 
+    - when adding GUI to plugins, we now need to implement only some methods in DataAccess*,
+      add *ValuesEntry (derived from DeviceValuesEntry), and *ValuesTableModel
       (also derived)
-    - we might have to change some stuff here, when we add new types of data, but changes 
+    - we might have to change some stuff here, when we add new types of data, but changes
       should be minor.
 
 
@@ -118,7 +127,7 @@ Changes file for GGC Plug-In Base
 0.1.9
     - added web stuff
 
-0.1.8 
+0.1.8
     - added features to about dialog
 
 0.1.7 (22.10)
@@ -151,4 +160,4 @@ Changes file for GGC Plug-In Base
 
 0.1.1 (12.8.2008)
     - creation of this sub-project. In time it will become base for all plugin projects, containing all
-      classes that are common to all sub-projects 
+      classes that are common to all sub-projects

@@ -10,25 +10,25 @@ import com.atech.utils.data.ATechDate;
  *  Application:   GGC - GNU Gluco Control
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     RatioEntry  
- *  Description:  
- * 
- *  Author: andyrozman {andy@atech-software.com}  
+ *
+ *  Filename:     RatioEntry
+ *  Description:
+ *
+ *  Author: andyrozman {andy@atech-software.com}
  */
 
 public class RatioEntry
@@ -105,18 +105,18 @@ public class RatioEntry
     public int getMinuteFrom()
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, this.from);
-        return atd.hour_of_day * 60 + atd.minute;
+        return atd.hourOfDay * 60 + atd.minute;
     }
 
     public int getMinuteTo()
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, this.to);
-        return atd.hour_of_day * 60 + atd.minute;
+        return atd.hourOfDay * 60 + atd.minute;
     }
 
     /**
      * Get Column Value
-     * 
+     *
      * @param column
      * @return
      */
@@ -149,7 +149,7 @@ public class RatioEntry
 
     /**
      * Get Columns
-     * 
+     *
      * @return
      */
     public int getColumns()
@@ -159,9 +159,9 @@ public class RatioEntry
 
     /**
      * Get Column Name
-     * @param index 
-     * @return 
-     * 
+     * @param index
+     * @return
+     *
      * @see javax.swing.table.AbstractTableModel#getColumnName(int)
      */
     public String getColumnName(int index)
@@ -194,7 +194,7 @@ public class RatioEntry
 
     /**
      * Get Save Data
-     * 
+     *
      * @return
      */
     public String getSaveData()

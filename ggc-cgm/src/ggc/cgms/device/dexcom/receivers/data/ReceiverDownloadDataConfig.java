@@ -1,4 +1,4 @@
-﻿package ggc.cgms.device.dexcom.receivers.data;
+package ggc.cgms.device.dexcom.receivers.data;
 
 public class ReceiverDownloadDataConfig
 {

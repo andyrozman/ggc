@@ -59,10 +59,8 @@
 			<artifactId>pygmy-handlers</artifactId>
 		</dependency>
 
-		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId>
 			<version>3.8.1</version> <scope>test</scope> </dependency> -->
-		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>servlet-api</artifactId> 
-			<version>2.5</version> <scope>provided</scope> </dependency> -->
 
 		<dependency>
 			<groupId>com.itextpdf</groupId>
@@ -79,16 +77,10 @@
 			<artifactId>javahelp</artifactId>
 		</dependency>
 
-		<!-- <dependency> <groupId>net.sf.squirrel-sql.thirdparty-non-maven</groupId> 
-			<artifactId>skinlf</artifactId> </dependency> -->
-
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 		</dependency>
-
-		<!-- <dependency> <groupId>net.sf.jasperreports</groupId> <artifactId>jasperreports</artifactId> 
-			</dependency> -->
 
 		<dependency>
 			<groupId>jfree</groupId>

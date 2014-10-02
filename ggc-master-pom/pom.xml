@@ -10,21 +10,6 @@
 
 	<!-- <modules> <module>project-a</module> <module>project-b</module> </modules> -->
 
-	<!-- <artifactId>atech-tools</artifactId> <version>0.7-SNAPSHOT</version> -->
-
-	<!-- <repositories> <repository> <id>central</id> <name>Maven Repository 
-		Switchboard</name> <layout>default</layout> <url>http://repo1.maven.org/maven2</url> 
-		<snapshots> <enabled>false</enabled> </snapshots> </repository> </repositories> 
-		<pluginRepositories> <pluginRepository> <id>central</id> <name>Maven Plugin 
-		Repository</name> <url>http://repo1.maven.org/maven2</url> <layout>default</layout> 
-		<snapshots> <enabled>false</enabled> </snapshots> <releases> <updatePolicy>never</updatePolicy> 
-		</releases> </pluginRepository> </pluginRepositories> -->
-	<!-- <repositories> <repository> <id>pygmy-repo</id> <name>Pygmy Repository</name> 
-		<layout>default</layout> <url>https://oss.sonatype.org/service/local/repositories/netsfggc-042/content/</url> -->
-	<!--https://oss.sonatype.org/content/repositories/netsfggc-046/net/sf/ggc/pygmy-httpd/pygmy-handlers/0.2/pygmy-handlers-0.2.pom 
-		https://oss.sonatype.org/service/local/repositories/netsfggc-042/content/ -->
-	<!-- <snapshots> <enabled>false</enabled> </snapshots> </repository> -->
-
 	<repositories>
 		<repository>
 			<id>atechrepositorypublic</id>
@@ -33,14 +18,14 @@
 			<!-- <url>http://www.atech-software.com:8080/nexus/content/groups/public/</url> -->
 		</repository>
 
-		<!-- <repository> <id>mvnrepository</id> <name>Mvn Central Repository</name> 
-			<url>http://www.mvnrepository.com</url> </repository> <repository> <id>jbossrepository</id> 
-			<name>jbossrepository</name> <url>https://repository.jboss.org/nexus/</url> 
-			</repository> <repository> <id>sonatype</id> <name>Sonatype OSS Snapshots 
-			Repository</name> <url>http://oss.sonatype.org/content/groups/public</url> 
-			</repository> <repository> <id>javanet</id> <name>Download Java Net Repository</name> 
-			<url>http://download.java.net/maven/2/</url> </repository> <repository> <id>mavenrepository</id> 
-			<name>Maven Repository Repository</name> <layout>legacy</layout> <url>http://maven-repository.com/artifacts/</url> 
+		<!-- <repository> <id>mvnrepository</id> <name>Mvn Central Repository</name>
+			<url>http://www.mvnrepository.com</url> </repository> <repository> <id>jbossrepository</id>
+			<name>jbossrepository</name> <url>https://repository.jboss.org/nexus/</url>
+			</repository> <repository> <id>sonatype</id> <name>Sonatype OSS Snapshots
+			Repository</name> <url>http://oss.sonatype.org/content/groups/public</url>
+			</repository> <repository> <id>javanet</id> <name>Download Java Net Repository</name>
+			<url>http://download.java.net/maven/2/</url> </repository> <repository> <id>mavenrepository</id>
+			<name>Maven Repository Repository</name> <layout>legacy</layout> <url>http://maven-repository.com/artifacts/</url>
 			</repository> -->
 	</repositories>
 
@@ -101,7 +86,7 @@
 		<outputDirectory>target/site</outputDirectory>
 	</reporting>
 
-	<!-- <modules> <module>ggc-core</module> <module>ggc-plugin-base</module> 
+	<!-- <modules> <module>ggc-core</module> <module>ggc-plugin-base</module>
 		</modules> -->
 
 	<dependencyManagement>
@@ -222,9 +207,9 @@
 				<version>${jfreechart.version}</version>
 			</dependency>
 
-			<!-- This should be replaced with nrserial, which is just extention of 
+			<!-- This should be replaced with nrserial, which is just extention of
 				rxtx that also contains binary files in jar. -->
-			<!-- <dependency> <groupId>org.bidib.jbidib.org.qbang.rxtx</groupId> <artifactId>rxtxcomm</artifactId> 
+			<!-- <dependency> <groupId>org.bidib.jbidib.org.qbang.rxtx</groupId> <artifactId>rxtxcomm</artifactId>
 				<version>${rxtxcomm.version}</version> </dependency> -->
 
 			<dependency>
@@ -239,9 +224,9 @@
 				<version>${jna.version}</version>
 			</dependency>
 
-			<!--This is some outdated library which we use only for BlueTooth, it 
-				needs to be removed or changed, but so far it's here and it's version is 
-				fixed. This NEEDS to be removed and changed to some other library in near 
+			<!--This is some outdated library which we use only for BlueTooth, it
+				needs to be removed or changed, but so far it's here and it's version is
+				fixed. This NEEDS to be removed and changed to some other library in near
 				future and tested with Dana Pump (only BT device we have so far) -->
 			<dependency>
 				<groupId>com.ibm.old.comapi</groupId>
@@ -249,9 +234,9 @@
 				<version>${ibm-compapi.version}</version>
 			</dependency>
 
-			<!-- This library is created in parallel to GGC and it should be used 
-				for USB communication. For USB devices that have HID interfaces (most of 
-				them), we will use other library, but for legacy support we use this for 
+			<!-- This library is created in parallel to GGC and it should be used
+				for USB communication. For USB devices that have HID interfaces (most of
+				them), we will use other library, but for legacy support we use this for
 				now. -->
 			<dependency>
 				<groupId>net.sf.ggc.libusb4j</groupId>
@@ -286,8 +271,8 @@
 		<ggc-plugin-base.version>0.6.3-SNAPSHOT</ggc-plugin-base.version>
 		<ggc-meter-tool.version>2.0.4-SNAPSHOT</ggc-meter-tool.version>
 		<ggc-pump-tool.version>1.3.5-SNAPSHOT</ggc-pump-tool.version>
-		<ggc-cgms-tool.version>1.0.4-SNAPSHOT</ggc-cgms-tool.version>
-		<ggc-nutri-tool.version>1.3.4-SNAPSHOT</ggc-nutri-tool.version>
+		<ggc-cgms-tool.version>1.1-SNAPSHOT</ggc-cgms-tool.version>
+		<ggc-nutri-tool.version>1.3.5-SNAPSHOT</ggc-nutri-tool.version>
 
 		<ggc-desktop.version>0.5.1-SNAPSHOT</ggc-desktop.version>
 
@@ -297,7 +282,7 @@
 		<ggc-lang.version>0.4.3-SNAPSHOT</ggc-lang.version>
 
 		<!-- Dependencies versions -->
-		<atech-tools.version>0.7.8-SNAPSHOT</atech-tools.version>
+		<atech-tools.version>0.7.10-SNAPSHOT</atech-tools.version>
 		<jna.version>3.3.0</jna.version>
 		<rxtxcomm.version>2.2</rxtxcomm.version>
 		<libusb4jwo.version>0.2</libusb4jwo.version>
@@ -319,6 +304,8 @@
 		<hidapi.version>1.1</hidapi.version>
 		<jssc.version>2.8.0</jssc.version>
 		<nrjavaserial.version>3.9.3</nrjavaserial.version>
+		<icepdf-core.version>5.0.7</icepdf-core.version>
+		<icepdf-viewer.version>5.0.7</icepdf-viewer.version>
 
 		<maven.compiler.source>1.5</maven.compiler.source>
 		<maven.compiler.target>1.5</maven.compiler.target>

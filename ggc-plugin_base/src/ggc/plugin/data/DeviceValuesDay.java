@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
+import java.util.List;
 
 import com.atech.utils.data.ATechDate;
 
@@ -15,41 +16,43 @@ import com.atech.utils.data.ATechDate;
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     DeviceValuesDay  
+ *
+ *  Filename:     DeviceValuesDay
  *  Description:  Device Values Day, with table constructs for Daily Overview table
- * 
+ *
  *  Author: Andy {andy@atech-software.com}
  */
 
 public class DeviceValuesDay
 {
 
-    private ArrayList<DeviceValuesEntry> list = null;
-    private Hashtable<String, DeviceValuesEntry> table = null;
-    DataAccessPlugInBase m_da;
-    GregorianCalendar gc_today;
-    boolean m_use_index = false; // we can index files for easy access, but this
-                                 // might not work
-                                 // for each instance of this object
+    private List<DeviceValuesEntry> allEntries = null;
+    private Hashtable<String, DeviceValuesEntry> entriesIndexedByHour = null;
+    private Hashtable<Integer, List<DeviceValuesEntry>> entriesGroupedByHour = null;
+
+    DataAccessPlugInBase dataAccessPluginBase;
+    GregorianCalendar gcToday;
+    boolean useIndex = false; // we can index files for easy access, but this
+                              // might not work
+                              // for each instance of this object
 
     /**
      * Constructor
-     * 
+     *
      * @param da
      */
     public DeviceValuesDay(DataAccessPlugInBase da)
@@ -59,9 +62,9 @@ public class DeviceValuesDay
 
     /**
      * Constructor
-     * 
+     *
      * @param da
-     * @param gc 
+     * @param gc
      */
     public DeviceValuesDay(DataAccessPlugInBase da, GregorianCalendar gc)
     {
@@ -70,48 +73,66 @@ public class DeviceValuesDay
 
     /**
      * Constructor
-     * 
+     *
      * @param da
-     * @param gc 
-     * @param use_index 
+     * @param gc
+     * @param use_index
      */
     public DeviceValuesDay(DataAccessPlugInBase da, GregorianCalendar gc, boolean use_index)
     {
-        this.m_da = da;
-        list = new ArrayList<DeviceValuesEntry>();
-        table = new Hashtable<String, DeviceValuesEntry>();
-        this.gc_today = gc;
-        this.m_use_index = use_index;
+        this.dataAccessPluginBase = da;
+        allEntries = new ArrayList<DeviceValuesEntry>();
+        this.useIndex = use_index;
+
+        if (use_index)
+        {
+            entriesIndexedByHour = new Hashtable<String, DeviceValuesEntry>();
+        }
+        this.gcToday = gc;
     }
 
     /**
      * Add List
-     * 
+     *
      * @param lst
      */
     public void addList(ArrayList<? extends DeviceValuesEntry> lst)
     {
-        this.list.addAll(lst);
+        for (DeviceValuesEntry dve : lst)
+        {
+            this.addEntry(dve, false);
+        }
+
         this.sort();
+    }
+
+    public void addEntry(DeviceValuesEntry pve)
+    {
+        addEntry(pve, true);
     }
 
     /**
      * Add Entry
-     * 
-     * @param pve DeviceValuesEntry instance (or derivate)
+     *
+     * @param pve
+     *            DeviceValuesEntry instance (or derivate)
      */
-    public void addEntry(DeviceValuesEntry pve)
+    public void addEntry(DeviceValuesEntry pve, boolean doSort)
     {
-        this.list.add(pve);
-        this.sort();
+        this.allEntries.add(pve);
 
-        if (this.m_use_index)
+        if (doSort)
+        {
+            this.sort();
+        }
+
+        if (this.useIndex)
         {
             ATechDate atd = new ATechDate(pve.getDateTimeFormat(), pve.getDateTime());
 
-            if (!this.table.containsKey(atd.getTimeString()))
+            if (!this.entriesIndexedByHour.containsKey(atd.getTimeString()))
             {
-                this.table.put(atd.getTimeString(), pve);
+                this.entriesIndexedByHour.put(atd.getTimeString(), pve);
             }
         }
 
@@ -119,21 +140,21 @@ public class DeviceValuesDay
 
     /**
      * Remove Entry
-     * 
+     *
      * @param index
      */
     public void removeEntry(int index)
     {
-        DeviceValuesEntryInterface dvei = this.list.get(index);
-        this.list.remove(index);
+        DeviceValuesEntryInterface dvei = this.allEntries.get(index);
+        this.allEntries.remove(index);
 
-        if (this.m_use_index)
+        if (this.useIndex)
         {
             ATechDate atd = new ATechDate(dvei.getDateTimeFormat(), dvei.getDateTime());
 
-            if (!this.table.containsKey(atd.getTimeString()))
+            if (!this.entriesIndexedByHour.containsKey(atd.getTimeString()))
             {
-                this.table.remove(dvei);
+                this.entriesIndexedByHour.remove(dvei);
             }
         }
 
@@ -141,56 +162,57 @@ public class DeviceValuesDay
 
     /**
      * Is Entry Available
-     * 
+     *
      * @param datetime
      * @return
      */
     public boolean isEntryAvailable(long datetime)
     {
-        if (!this.m_use_index)
+        if (!this.useIndex)
             return false;
 
-        ATechDate atd = new ATechDate(m_da.getDataEntryObject().getDateTimeFormat(), datetime);
-        return this.table.containsKey(atd.getTimeString());
+        ATechDate atd = new ATechDate(dataAccessPluginBase.getDataEntryObject().getDateTimeFormat(), datetime);
+        return this.entriesIndexedByHour.containsKey(atd.getTimeString());
     }
 
     /**
      * Get Entry
-     * 
+     *
      * @param dt
      * @return
      */
     public DeviceValuesEntry getEntry(long dt)
     {
-        if (!this.m_use_index)
+        if (!this.useIndex)
             return null;
 
-        ATechDate atd = new ATechDate(m_da.getDataEntryObject().getDateTimeFormat(), dt);
-        return this.table.get(atd.getTimeString());
+        ATechDate atd = new ATechDate(dataAccessPluginBase.getDataEntryObject().getDateTimeFormat(), dt);
+        return this.entriesIndexedByHour.get(atd.getTimeString());
     }
 
     /**
      * Set Date Time GC
+     *
      * @param gc
      */
     public void setDateTimeGC(GregorianCalendar gc)
     {
-        this.gc_today = gc;
+        this.gcToday = gc;
     }
 
     /**
      * Set Date Time GC
-     * 
-     * @return 
+     *
+     * @return
      */
     public GregorianCalendar getDateTimeGC()
     {
-        return this.gc_today;
+        return this.gcToday;
     }
 
     /**
      * Get Column Width
-     * 
+     *
      * @param column
      * @param width
      * @return
@@ -212,59 +234,59 @@ public class DeviceValuesDay
 
     /**
      * Get Column Count
-     * 
+     *
      * @return
      */
     public int getColumnCount()
     {
-        return this.m_da.getColumnsManual().length;
+        return this.dataAccessPluginBase.getColumnsManual().length;
     }
 
     /**
      * Get Row Count
-     * 
+     *
      * @return
      */
     public int getRowCount()
     {
-        if (this.list == null)
+        if (this.allEntries == null)
             return 0;
         else
-            return this.list.size();
+            return this.allEntries.size();
     }
 
     /**
      * Get Row At
-     * 
+     *
      * @param index
      * @return
      */
     public DeviceValuesEntry getRowAt(int index)
     {
-        return this.list.get(index);
+        return this.allEntries.get(index);
     }
 
     /**
      * Get Column Name
-     * 
+     *
      * @param column
      * @return
      */
     public String getColumnName(int column)
     {
-        return this.m_da.getColumnsManual()[column];
+        return this.dataAccessPluginBase.getColumnsManual()[column];
     }
 
     /**
      * Get Value At
-     * 
+     *
      * @param row
      * @param column
      * @return
      */
     public Object getValueAt(int row, int column)
     {
-        return this.list.get(row).getColumnValue(column);
+        return this.allEntries.get(row).getColumnValue(column);
     }
 
     /**
@@ -272,27 +294,53 @@ public class DeviceValuesDay
      */
     public void sort()
     {
-        Collections.sort(list); // , new DeviceValuesEntry());
+        Collections.sort(allEntries); // , new DeviceValuesEntry());
     }
 
     /**
      * Sort of elements
-     * 
-     * @param dve 
+     *
+     * @param dve
      */
     public void sort(Comparator<DeviceValuesEntry> dve)
     {
-        Collections.sort(list, dve); // , new DeviceValuesEntry());
+        Collections.sort(allEntries, dve); // , new DeviceValuesEntry());
     }
 
     /**
      * Get List
-     * 
+     *
      * @return
      */
-    public ArrayList<DeviceValuesEntry> getList()
+    public List<DeviceValuesEntry> getList()
     {
-        return this.list;
+        return this.allEntries;
+    }
+
+    /**
+     * Group entries by Hour
+     */
+    public void prepareHourlyEntries()
+    {
+        this.sort();
+
+        entriesGroupedByHour = new Hashtable<Integer, List<DeviceValuesEntry>>();
+
+        for (int i = 0; i < 24; i++)
+        {
+            entriesGroupedByHour.put(i, new ArrayList<DeviceValuesEntry>());
+        }
+
+        for (DeviceValuesEntry dve : this.allEntries)
+        {
+            ATechDate atd = new ATechDate(dve.getDateTimeFormat(), dve.getDateTime());
+            entriesGroupedByHour.get(atd.getHourOfDay()).add(dve);
+        }
+    }
+
+    public List<DeviceValuesEntry> getEntriesForHour(int hour)
+    {
+        return entriesGroupedByHour.get(hour);
     }
 
 }

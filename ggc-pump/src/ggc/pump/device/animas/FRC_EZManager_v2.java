@@ -39,7 +39,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
     /**
      * Constructor
-     * 
+     *
      * @param ow
      */
     public FRC_EZManager_v2(OutputWriter ow)
@@ -590,8 +590,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
     }
 
     /**
-     * Get ATech Date from int's 
-     * 
+     * Get ATech Date from int's
+     *
      * @param day
      * @param month
      * @param year
@@ -602,10 +602,10 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
     public ATechDate getAtechDate(int day, int month, int year, int hour, int minute)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S);
-        atd.day_of_month = day;
+        atd.dayOfMonth = day;
         atd.month = month;
         atd.year = year;
-        atd.hour_of_day = hour;
+        atd.hourOfDay = hour;
         atd.minute = minute;
         atd.second = 0;
 
@@ -613,8 +613,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
     }
 
     /**
-     * Get ATech Date from int's 
-     * 
+     * Get ATech Date from int's
+     *
      * @param day
      * @param month
      * @param year
@@ -625,10 +625,10 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
     public ATechDate getAtechDate(String day, String month, String year, String hour, String minute)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S);
-        atd.day_of_month = getInt(day);
+        atd.dayOfMonth = getInt(day);
         atd.month = getInt(month);
         atd.year = getInt(year);
-        atd.hour_of_day = getInt(hour);
+        atd.hourOfDay = getInt(hour);
         atd.minute = getInt(minute);
         atd.second = 0;
 

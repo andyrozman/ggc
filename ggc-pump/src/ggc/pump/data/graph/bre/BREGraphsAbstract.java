@@ -17,32 +17,32 @@ import com.atech.utils.data.ATechDate;
  *  Application:   GGC - GNU Gluco Control
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     GraphViewDaily  
+ *
+ *  Filename:     GraphViewDaily
  *  Description:  GraphView implementation for Daily, used by new graph framework.
  *          Most of rumbi's code from DailyGraphView was reused and extended.
- * 
- *  Author: andyrozman {andy@atech-software.com}  
- *  Author: rumbi   
+ *
+ *  Author: andyrozman {andy@atech-software.com}
+ *  Author: rumbi
  */
 
 public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor // implements
-                                                                              // GraphViewInterface,
-                                                                              // GraphViewDataProcessorInterface
+// GraphViewInterface,
+// GraphViewDataProcessorInterface
 {
 
     protected DataAccessPump da_local = DataAccessPump.getInstance();
@@ -62,7 +62,7 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
 
     /**
      * Get Help Id
-     * 
+     *
      * @return
      */
     public String getHelpId()
@@ -72,7 +72,7 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
 
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
-     * 
+     *
      * @return Rectangle object
      */
     @Override
@@ -82,8 +82,8 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
     }
 
     /**
-     * Get Time Ms 
-     * 
+     * Get Time Ms
+     *
      * @param time
      * @return
      */
@@ -91,14 +91,14 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time);
 
-        System.out.println("Ms: " + atd.hour_of_day + ":" + atd.minute);
+        System.out.println("Ms: " + atd.hourOfDay + ":" + atd.minute);
 
         if (atd.minute == 99)
         {
             atd.minute = 59;
         }
 
-        gcx.set(Calendar.HOUR_OF_DAY, atd.hour_of_day);
+        gcx.set(Calendar.HOUR_OF_DAY, atd.hourOfDay);
         gcx.set(Calendar.MINUTE, atd.minute);
 
         return gcx.getTimeInMillis();
@@ -106,7 +106,7 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
 
     /**
      * Set Data
-     * 
+     *
      * @param data_coll
      */
     public void setData(BREDataCollection data_coll)
@@ -129,8 +129,8 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
 
     /**
      * Get Title (used by GraphViewer)
-     * 
-     * @return title as string 
+     *
+     * @return title as string
      */
     @Override
     public String getTitle()

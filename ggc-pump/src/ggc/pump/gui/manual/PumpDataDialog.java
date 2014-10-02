@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -52,24 +53,24 @@ import com.atech.i18n.I18nControlAbstract;
  *  Plug-in:       Pump Tool (support for Pump devices)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     PumpDataDialog  
+ *
+ *  Filename:     PumpDataDialog
  *  Description:  Pump Data Dialog
- * 
+ *
  *  Author: Andy {andy@atech-software.com}
  */
 
@@ -79,7 +80,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
     // private static Log log = LogFactory.getLog(PumpDataDialog.class);
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -4403053763073221824L;
     private DataAccessPump m_da = DataAccessPump.getInstance();
@@ -115,7 +116,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     /**
      * Constructor
-     * 
+     *
      * @param da
      * @param _parent
      */
@@ -131,7 +132,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     /**
      * Constructor
-     * 
+     *
      * @param da
      * @param _parent
      */
@@ -147,7 +148,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     /**
      * Set Title
-     * 
+     *
      * @param gc
      */
     public void setTitle(GregorianCalendar gc)
@@ -159,7 +160,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     /**
      * Get Table Model
-     * 
+     *
      * @return
      */
     public PumpDataTableModel getTableModel()
@@ -180,7 +181,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         this.model.fireTableChanged(null);
     }
 
-    private ArrayList<PumpValuesEntry> getDataList(ArrayList<DeviceValuesEntry> list_in)
+    private ArrayList<PumpValuesEntry> getDataList(List<DeviceValuesEntry> list_in)
     {
         ArrayList<PumpValuesEntry> lst = new ArrayList<PumpValuesEntry>();
 

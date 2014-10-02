@@ -31,24 +31,24 @@ import com.atech.utils.data.TimeZoneUtil;
  *  Plug-in:       Meter Tool (support for Meter devices)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  *  Filename:     FreeStyleMeter.java
  *  Description:  Class for FreeStyle Meter.
- * 
+ *
  *  Author: Andy {andy@atech-software.com} - Base file, with approximate device reading
  *  Author: Ophir Setter {ophir.setter@gmail.com} - Testing and final changes for device reading
  */
@@ -84,7 +84,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     /**
      * Constructor for device manager
-     * 
+     *
      * @param cmp
      */
     public FreestyleMeter(AbstractDeviceCompany cmp)
@@ -94,7 +94,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     /**
      * Constructor
-     * 
+     *
      * @param portName
      * @param writer
      */
@@ -105,10 +105,10 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     /**
      * Constructor
-     * 
+     *
      * @param portName
      * @param writer
-     * @param da 
+     * @param da
      */
     public FreestyleMeter(String portName, OutputWriter writer, DataAccessPlugInBase da)
     {
@@ -167,7 +167,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     }
 
-    /** 
+    /**
      * getComment
      */
     public String getComment()
@@ -176,7 +176,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     }
 
     // DO
-    /** 
+    /**
      * getImplementationStatus
      */
     public int getImplementationStatus()
@@ -184,7 +184,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
 
-    /** 
+    /**
      * getInstructions
      */
     public String getInstructions()
@@ -192,7 +192,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         return null;
     }
 
-    /** 
+    /**
      * readDeviceDataFull
      */
     public void readDeviceDataFull() throws PlugInBaseException
@@ -254,7 +254,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     }
 
     /**
-     * This is method for reading partitial data from device. All reading from actual device should be done from 
+     * This is method for reading partitial data from device. All reading from actual device should be done from
      * here. Reading can be done directly here, or event can be used to read data.
      */
     @Override
@@ -263,9 +263,9 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     }
 
-    /** 
+    /**
      * This is method for reading configuration
-     * 
+     *
      * @throws PlugInBaseException
      */
     @Override
@@ -275,7 +275,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
-     * information (most dumps do). 
+     * information (most dumps do).
      * @throws PlugInBaseException
      */
     @Override
@@ -329,7 +329,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     /**
      * Process BG Data
-     * 
+     *
      * @param entry
      */
     public void processBGData(String entry)
@@ -393,9 +393,9 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         String mnth = datetime.substring(0, 3);
 
         // dt.month =
-        dt.day_of_month = Integer.parseInt(datetime.substring(5, 7));
+        dt.dayOfMonth = Integer.parseInt(datetime.substring(5, 7));
         dt.year = Integer.parseInt(datetime.substring(8, 12));
-        dt.hour_of_day = Integer.parseInt(datetime.substring(13, 15));
+        dt.hourOfDay = Integer.parseInt(datetime.substring(13, 15));
         dt.minute = Integer.parseInt(datetime.substring(16, 18));
 
         for (int i = 0; i < FreestyleMeter.months_en.length; i++)
@@ -435,7 +435,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     }
 
     /**
-     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have
      *    normal progress status, but with some special devices we calculate progress through other means.
      * @return true is progress status is special
      */
@@ -447,14 +447,14 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     /**
      * Returns short name for meter (for example OT Ultra, would return "Ultra")
-     * 
+     *
      * @return short name of meter
      */
     // public abstract String getShortName();
 
     /**
-     * We don't use serial event for reading data, because process takes too long, we use serial event just 
-     * to determine if device is stopped (interrupted) 
+     * We don't use serial event for reading data, because process takes too long, we use serial event just
+     * to determine if device is stopped (interrupted)
      */
     @Override
     public void serialEvent(SerialPortEvent event)
@@ -496,8 +496,8 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     }
 
     /**
-     * getCompanyId - Get Company Id 
-     * 
+     * getCompanyId - Get Company Id
+     *
      * @return id of company
      */
     public int getCompanyId()

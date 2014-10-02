@@ -1,10 +1,14 @@
 
-Changelog file for GGC Nutrition Tool 
+Changelog file for GGC Nutrition Tool
 =======================================
 
 Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
+
+1.3.4 [21.09.2014]
+    * printing changes
+
 
 1.3.3 [26.9.2011]
     * jdk7 changes
@@ -16,13 +20,13 @@ Newer entries are on top, older on bottom.
 1.2.1 (current)
     * Extended Food Selector (with plugin active check)
     * required base plugin is now 0.4.1 (framework v2)
-    * this plugin already uses some of v2 features 
+    * this plugin already uses some of v2 features
 
 1.2 (10.6.2009) [andy]
     * Given ability to call Food Selector and Recalculation of CH (change in plugin functionality)
-    * Minor cosmetic changes in NutriPlugInServer 
+    * Minor cosmetic changes in NutriPlugInServer
     * Cosmetic changes in HWSelectorDialog
-    
+
 
 1.1.3 (16.4.2009) [andy]
     * Fixed tree loading
@@ -32,7 +36,7 @@ Newer entries are on top, older on bottom.
 
 1.1.1 (27.3.2009) [andy]
     * Nutrition is now separate project
-    
+
 
 --------------------------------------------------------------------------------------------------
 

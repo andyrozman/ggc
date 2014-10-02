@@ -26,32 +26,32 @@ import com.atech.utils.data.ATechDate;
  *  Application:   GGC - GNU Gluco Control
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     GraphViewDaily  
+ *
+ *  Filename:     GraphViewDaily
  *  Description:  GraphView implementation for Daily, used by new graph framework.
  *          Most of rumbi's code from DailyGraphView was reused and extended.
- * 
- *  Author: andyrozman {andy@atech-software.com}  
- *  Author: rumbi   
+ *
+ *  Author: andyrozman {andy@atech-software.com}
+ *  Author: rumbi
  */
 
 public class GraphViewBasalRate extends BREGraphsAbstract // implements
-                                                          // GraphViewInterface,
-                                                          // GraphViewDataProcessorInterface
+// GraphViewInterface,
+// GraphViewDataProcessorInterface
 {
 
     XYSeriesCollection dataset = new XYSeriesCollection();
@@ -67,8 +67,8 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
 
     /**
      * Constructor
-     * 
-     * @param type 
+     *
+     * @param type
      */
     public GraphViewBasalRate(int type)
     {
@@ -80,7 +80,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
 
     /**
      * Get Help Id
-     * 
+     *
      * @return
      */
     @Override
@@ -91,7 +91,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
 
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
-     * 
+     *
      * @return Rectangle object
      */
     @Override
@@ -124,7 +124,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
 
     /**
      * Get Data Set
-     * 
+     *
      * @return AbstractDataset instance
      */
     public AbstractDataset getDataSet()
@@ -196,7 +196,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
 
     // GregorianCalendar gcx = new GregorianCalendar();
 
-    /** 
+    /**
      * Get Time in Ms
      */
     @Override
@@ -204,7 +204,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, time);
 
-        gcx.set(Calendar.HOUR_OF_DAY, atd.hour_of_day);
+        gcx.set(Calendar.HOUR_OF_DAY, atd.hourOfDay);
         gcx.set(Calendar.MINUTE, atd.minute);
 
         return gcx.getTimeInMillis();
@@ -212,8 +212,8 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
 
     /**
      * Get Title (used by GraphViewer)
-     * 
-     * @return title as string 
+     *
+     * @return title as string
      */
     @Override
     public String getTitle()
@@ -223,7 +223,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
 
     /**
      * Set Plot
-     * 
+     *
      * @param chart JFreeChart instance
      */
     public void setPlot(JFreeChart chart)
@@ -292,7 +292,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
 
     }
 
-    /** 
+    /**
      * Set Data
      */
     @Override

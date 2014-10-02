@@ -11,50 +11,30 @@ import com.atech.graphics.components.MultiLineTooltip;
 import com.atech.utils.data.ATechDate;
 
 /**
- *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       GGC PlugIn Base (base class for all plugins)
- *
- *  See AUTHORS for copyright information.
- * 
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 2 of the License, or (at your option) any later
- *  version.
- * 
- *  This program is distributed in the hope that it will be useful, but WITHOUT
- *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- *  details.
- * 
- *  You should have received a copy of the GNU General Public License along with
- *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     DeviceValuesEntry
- *  Description:  Collection of DeviceValuesEntry, which contains all daily values.
- * 
- *  Author: Andy {andy@atech-software.com}
+ * Application: GGC - GNU Gluco Control
+ * Plug-in: GGC PlugIn Base (base class for all plugins)
+ * See AUTHORS for copyright information.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ * Filename: DeviceValuesEntry
+ * Description: Collection of DeviceValuesEntry, which contains all daily
+ * values.
+ * Author: Andy {andy@atech-software.com}
  */
-
-// IMPORTANT NOTICE:
-// This class is not implemented yet, all existing methods should be rechecked
-// (they were copied from similar
-// class, with different type of data. Trying to find a way to use super class
-// instead of this.
-
-public interface DeviceValuesEntryInterface extends OutputWriterData, /*
-                                                                       * (
-                                                                       * OutputWriter
-                                                                       * ,
-                                                                       */
-Comparator<DeviceValuesEntryInterface>, Comparable<DeviceValuesEntryInterface>,
-// StatisticsItem,
+public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator<DeviceValuesEntryInterface>,
+        Comparable<DeviceValuesEntryInterface>,
+        // StatisticsItem,
         DatabaseObjectHibernate, MultiLineTooltip
 {
-    // public boolean checked = false;
-    // public int status = 1;
-    // public int output_type = 0;
-    // public boolean is_bg = false;
 
     /**
      * Status: Unknown
@@ -77,241 +57,230 @@ Comparator<DeviceValuesEntryInterface>, Comparable<DeviceValuesEntryInterface>,
     public static final int STATUS_OLD = 3;
 
     /**
-     *  Object Status: New
+     * Object Status: New
      */
     public static final int OBJECT_STATUS_NEW = 1;
 
     /**
-     *  Object Status: Edit
+     * Object Status: Edit
      */
     public static final int OBJECT_STATUS_EDIT = 2;
 
     /**
-     *  Object Status: Old (existing)
+     * Object Status: Old (existing)
      */
     public static final int OBJECT_STATUS_OLD = 3;
 
     /**
-     * Object status
-     */
-    // public int object_status = 0;
-
-    /*
-     * private static String entry_statuses[] =
-     * {
-     * "UNKNOWN",
-     * "NEW",
-     * "CHANGED",
-     * "OLD"
-     * };
-     */
-
-    /**
-     * Entry Status Icons 
+     * Entry Status Icons
      */
     public static String entry_status_icons[] = { "led_gray.gif", "led_green.gif", "led_yellow.gif", "led_red.gif" };
 
     /**
      * Get DateTime (long)
-     * 
+     *
      * @return
      */
-    public abstract long getDateTime();
+    long getDateTime();
 
     /**
      * Set DateTime Object (ATechDate)
-     * 
-     * @param dt ATechDate instance
+     *
+     * @param dt
+     *            ATechDate instance
      */
-    public abstract void setDateTimeObject(ATechDate dt);
+    void setDateTimeObject(ATechDate dt);
 
     /**
      * Get DateTime Object (ATechDate)
-     * 
+     *
      * @return ATechDate instance
      */
-    public abstract ATechDate getDateTimeObject();
+    ATechDate getDateTimeObject();
 
     /**
      * Get DateTime format
-     * 
+     *
      * @return format of date time (precission)
      */
-    public abstract int getDateTimeFormat();
+    int getDateTimeFormat();
 
     /**
      * Get Column Value
-     * 
+     *
      * @param index
      * @return
      */
-    public abstract Object getColumnValue(int index);
+    Object getColumnValue(int index);
 
     /**
-     * Get Table Column Value (in case that we need special display values for download data table, this method 
-     * can be used, if it's the same as getColumnValue, we can just call that one. 
-     * 
+     * Get Table Column Value (in case that we need special display values for
+     * download data table, this method
+     * can be used, if it's the same as getColumnValue, we can just call that
+     * one.
+     *
      * @param index
      * @return
      */
-    public abstract Object getTableColumnValue(int index);
+    Object getTableColumnValue(int index);
 
     /**
-     * Get Checked 
-     * 
+     * Get Checked
+     *
      * @return true if element is checked
      */
-    public boolean getChecked();
+    boolean getChecked();
 
     /**
      * Set Checked
-     * 
-     * @param check true if element is checked
+     *
+     * @param check
+     *            true if element is checked
      */
-    public void setChecked(boolean check);
+    void setChecked(boolean check);
 
     /**
      * Get Status
-     * 
+     *
      * @return status
      */
-    public int getStatus();
+    int getStatus();
 
     /**
      * Set Status
-     * 
+     *
      * @param status_in
      */
-    public void setStatus(int status_in);
+    void setStatus(int status_in);
 
     /**
      * Prepare Entry [Framework v1]
      */
-    public abstract void prepareEntry();
+    void prepareEntry();
 
     /**
      * Prepare Entry [Framework v2]
      */
-    public abstract void prepareEntry_v2();
+    void prepareEntry_v2();
 
     /**
      * Get Db Objects
-     * 
+     *
      * @return ArrayList of elements extending GGCHibernateObject
      */
-    public abstract ArrayList<? extends GGCHibernateObject> getDbObjects();
+    ArrayList<? extends GGCHibernateObject> getDbObjects();
 
     /**
      * Get DeviceValuesEntry Name
-     * 
+     *
      * @return
      */
-    public abstract String getDVEName();
+    String getDVEName();
 
     /**
      * Get Value of object
-     * 
+     *
      * @return
      */
-    public abstract String getValue();
+    String getValue();
 
     /**
      * Set Output Type
-     * 
+     *
      * @see ggc.plugin.output.OutputWriterData#setOutputType(int)
      */
-
-    public void setOutputType(int type);
+    void setOutputType(int type);
 
     /**
      * Is Data BG
-     * @return 
-     * 
+     *
+     * @return
      * @see ggc.plugin.output.OutputWriterData#isDataBG()
      */
-    public boolean isDataBG();
+    boolean isDataBG();
 
     /**
      * Set Old Id (this is used for changing old objects in framework v2)
-     * 
+     *
      * @param id_in
      */
-    public void setId(long id_in);
+    void setId(long id_in);
 
     /**
      * Get Id (this is used for changing old objects in framework v2)
-     * 
+     *
      * @return id of old object
      */
-    public long getId();
+    long getId();
 
     /**
      * Comparator method, for sorting objects
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compare(DeviceValuesEntryInterface d1, DeviceValuesEntryInterface d2);
+    int compare(DeviceValuesEntryInterface d1, DeviceValuesEntryInterface d2);
 
     /**
      * Comparator method, for sorting objects
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
-    public int compareTo(DeviceValuesEntryInterface d2);
+    int compareTo(DeviceValuesEntryInterface d2);
 
     /**
      * Set Object status
-     * 
+     *
      * @param status
      */
-    public void setObjectStatus(int status);
+    void setObjectStatus(int status);
 
     /**
      * Get Object Status
-     * 
+     *
      * @return
      */
-    public int getObjectStatus();
+    int getObjectStatus();
 
     /**
      * Get Special Id
-     * 
+     *
      * @return
      */
-    public String getSpecialId();
+    String getSpecialId();
 
     /**
      * Set Source
-     * 
+     *
      * @param src
      */
-    public void setSource(String src);
+    void setSource(String src);
 
     /**
-     * Get Source 
-     * 
+     * Get Source
+     *
      * @return
      */
-    public String getSource();
+    String getSource();
 
     /**
      * Has MultiLine Tooltip
-     * 
+     *
      * @return
      */
-    public boolean hasMultiLineToolTip();
+    boolean hasMultiLineToolTip();
 
     /**
      * Set MultiLine Tooltip Type
-     * 
+     *
      * @param _multiline_tooltip_type
      */
-    public void setMultiLineTooltipType(int _multiline_tooltip_type);
+    void setMultiLineTooltipType(int _multiline_tooltip_type);
 
     /**
      * Get MultiLine Tooltip Type
-     * @return 
+     *
+     * @return
      */
-    public int getMultiLineTooltipType();
+    int getMultiLineTooltipType();
 
 }

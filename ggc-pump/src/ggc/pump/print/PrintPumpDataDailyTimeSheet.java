@@ -1,15 +1,14 @@
 package ggc.pump.print;
 
-import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
-import ggc.plugin.data.DeviceValuesDay;
-import ggc.plugin.data.DeviceValuesRange;
-import ggc.pump.data.PumpValuesEntry;
+import ggc.core.util.GGCLanguageManagerRunner;
+import ggc.pump.data.PumpDeviceValueType;
+import ggc.pump.util.DataAccessPump;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import com.atech.utils.data.ATechDate;
+import com.atech.i18n.mgr.LanguageManager;
+import com.atech.print.engine.ITextDocumentPrintSettings;
+import com.atech.print.engine.PrintAbstractITextWithDataRead;
+import com.atech.print.engine.PrintParameters;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -39,22 +38,19 @@ import com.itextpdf.text.pdf.PdfPTable;
 
 // WARNING: THIS IS WORK IN PROGRESS, PLEASE DON'T EDIT. Andy
 
-public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
+public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 {
+    Font smallFont = null;
 
-    /**
-     * Constructor
-     * 
-     * @param dvr
-     */
-    public PrintPumpDataDailyTimeSheet(DeviceValuesRange dvr)
+    public PrintPumpDataDailyTimeSheet(PrintParameters parameters)
     {
-        super(dvr);
-    }
+        super(DataAccessPump.getInstance(), parameters, false);
 
-    public PrintPumpDataDailyTimeSheet()
-    {
-        super();
+        smallFont = new Font(this.baseFontTimes, 6, Font.BOLD);
+
+        this.initData();
+        this.init();
+
     }
 
     /**
@@ -85,85 +81,192 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     @Override
     public void fillDocumentBody(Document document) throws Exception
     {
-        Font f = this.textFontNormal;
 
-        PdfPTable datatable = new PdfPTable(getTableColumnsCount());
-        datatable.setWidths(getTableColumnWidths());
+        PdfPTable datatable = new PdfPTable(27);
+        datatable.setWidths(new float[] { 4.0f, 6.0f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f,
+                                         3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f,
+                                         6.0f }); // 6 + 2 + 4
         datatable.setWidthPercentage(100); // percentage
 
         datatable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
         datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); // ALIGN_CENTER);
         datatable.getDefaultCell().setBorderWidth(1);
 
-        datatable.addCell(this.createBoldTextPhrase("DATE"));
-        datatable.addCell(this.createBoldTextPhrase("TIME"));
-        datatable.addCell(this.createBoldTextPhrase("BASE_TYPE"));
-        datatable.addCell(this.createBoldTextPhrase("SUB_TYPE"));
-        datatable.addCell(this.createBoldTextPhrase("VALUE_SHORT"));
-        datatable.addCell(this.createBoldTextPhrase("OTHER_DATA"));
+        /*
+         * datatable.addCell(this.createBoldTextPhrase("DATE"));
+         * datatable.addCell(this.createBoldTextPhrase("TIME"));
+         * datatable.addCell(this.createBoldTextPhrase("BASE_TYPE"));
+         * datatable.addCell(this.createBoldTextPhrase("SUB_TYPE"));
+         * datatable.addCell(this.createBoldTextPhrase("VALUE_SHORT"));
+         * datatable.addCell(this.createBoldTextPhrase("OTHER_DATA"));
+         */
+        // PdfCell c = new PdfCell();
+        // c.
 
-        // writeAdditionalHeader(datatable);
+        // line 1
 
-        GregorianCalendar gc_end = deviceValuesRange.getEndGC();
-        gc_end.add(Calendar.DAY_OF_MONTH, 1);
+        // cell 1
+        datatable.addCell(this.createEmptyTextPhrase());
+        datatable.addCell(this.createEmptyTextPhrase());
 
-        GregorianCalendar gc_current = deviceValuesRange.getStartGC();
-
-        do
+        for (int i = 0; i < 24; i++)
         {
+            datatable.addCell(this.createBoldTextPhrase("" + i));
+        }
 
-            ATechDate atd = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), gc_current);
+        datatable.addCell(this.createBoldTextPhrase("SUM"));
 
-            if (deviceValuesRange.isDayEntryAvailable(atd.getATDateTimeAsLong()))
+        for (int j = 0; j < 4; j++)
+        {
+            if (j == 0)
             {
+                datatable.addCell(this.createEmptyTextPhrase());
+                datatable.addCell(this.createEmptyTextPhrase());
 
-                DeviceValuesDay dvd = deviceValuesRange.getDayEntry(atd.getATDateTimeAsLong());
+                writeHourlyValues(PumpDeviceValueType.BASAL, datatable);
+            }
+            else if (j == 1)
+            {
+                datatable.addCell(this.createEmptyTextPhrase());
+                datatable.addCell(this.createEmptyTextPhrase());
 
-                // FIXME fix this
-                datatable.addCell(new Phrase(atd.getDateString(), f));
+                writeHourlyValues(PumpDeviceValueType.BOLUS, datatable);
+            }
+            else if (j == 2)
+            {
+                datatable.addCell(this.createEmptyTextPhrase());
+                datatable.addCell(this.createEmptyTextPhrase());
 
-                for (int i = 0; i < dvd.getList().size(); i++)
-                {
-
-                    PumpValuesEntry pve = (PumpValuesEntry) dvd.getList().get(i);
-
-                    ATechDate atdx = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), pve.getDateTime());
-
-                    if (i != 0)
-                    {
-                        datatable.addCell(new Phrase("", f));
-                    }
-
-                    datatable.addCell(new Phrase(atdx.getTimeString(), f));
-                    datatable.addCell(new Phrase(pve.getBaseTypeString(), f));
-                    datatable.addCell(new Phrase(pve.getSubTypeString(), f));
-                    datatable.addCell(new Phrase(pve.getValue(), f));
-                    datatable.addCell(new Phrase(pve
-                            .getAdditionalDataPrint(PumpValuesEntry.PRINT_ADDITIONAL_ALL_ENTRIES), f));
-                }
-
+                writeHourlyValues(PumpDeviceValueType.BG, datatable);
             }
             else
+            // if (j==3)
             {
-                datatable.addCell(new Phrase(atd.getDateString(), f));
-                this.writeEmptyColumnData(datatable);
+                datatable.addCell(this.createEmptyTextPhrase());
+                datatable.addCell(this.createEmptyTextPhrase());
+
+                writeHourlyValues(PumpDeviceValueType.CH, datatable);
             }
 
-            gc_current.add(Calendar.DAY_OF_MONTH, 1);
-
-        } while (gc_current.before(gc_end));
+        }
 
         document.add(datatable);
 
-        // System.out.println("Elements all: " + this.m_data.size() +
-        // " in iterator: " + count);
+    }
+
+    private void writeHourlyValues(PumpDeviceValueType type, PdfPTable table)
+    {
+        // TODO Auto-generated method stub
+        float sum = 0.0f;
+        float count = 0;
+
+        for (int i = 0; i < 24; i++)
+        {
+            if (type == PumpDeviceValueType.BASAL)
+            {
+                table.addCell(this.createNormalTextPhraseSmall("10.25"));
+            }
+            else if (type == PumpDeviceValueType.BOLUS)
+            {
+                table.addCell(this.createNormalTextPhraseSmall("20.50"));
+            }
+            else if (type == PumpDeviceValueType.BG)
+            {
+                table.addCell(this.createNormalTextPhraseSmall("10.1"));
+            }
+            else
+            // CH
+            {
+                table.addCell(this.createNormalTextPhraseSmall("100"));
+            }
+        }
+
+        if (type == PumpDeviceValueType.BG)
+        {
+            // format
+            float d = sum / (count * (1.0f));
+            table.addCell(this.createNormalTextPhrase("" + d));
+        }
+        else
+        {
+            // format
+            table.addCell(this.createNormalTextPhrase("" + sum));
+        }
 
     }
+
+    private Phrase createNormalTextPhraseSmall(String text)
+    {
+        return new Phrase(this.i18nControl.getMessage(text), smallFont);
+    }
+
+    /*
+     * public void fillDocumentBodyCCC(Document document) throws Exception
+     * {
+     * Font f = this.textFontNormal;
+     * PdfPTable datatable = new PdfPTable(getTableColumnsCount());
+     * datatable.setWidths(getTableColumnWidths());
+     * datatable.setWidthPercentage(100); // percentage
+     * datatable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
+     * datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); //
+     * ALIGN_CENTER);
+     * datatable.getDefaultCell().setBorderWidth(1);
+     * datatable.addCell(this.createBoldTextPhrase("DATE"));
+     * datatable.addCell(this.createBoldTextPhrase("TIME"));
+     * datatable.addCell(this.createBoldTextPhrase("BASE_TYPE"));
+     * datatable.addCell(this.createBoldTextPhrase("SUB_TYPE"));
+     * datatable.addCell(this.createBoldTextPhrase("VALUE_SHORT"));
+     * datatable.addCell(this.createBoldTextPhrase("OTHER_DATA"));
+     * // writeAdditionalHeader(datatable);
+     * GregorianCalendar gc_end = deviceValuesRange.getEndGC();
+     * gc_end.add(Calendar.DAY_OF_MONTH, 1);
+     * GregorianCalendar gc_current = deviceValuesRange.getStartGC();
+     * do
+     * {
+     * ATechDate atd = new
+     * ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), gc_current);
+     * if (deviceValuesRange.isDayEntryAvailable(atd.getATDateTimeAsLong()))
+     * {
+     * DeviceValuesDay dvd =
+     * deviceValuesRange.getDayEntry(atd.getATDateTimeAsLong());
+     * // FIXME fix this
+     * datatable.addCell(new Phrase(atd.getDateString(), f));
+     * for (int i = 0; i < dvd.getList().size(); i++)
+     * {
+     * PumpValuesEntry pve = (PumpValuesEntry) dvd.getList().get(i);
+     * ATechDate atdx = new
+     * ATechDate(da_local.getDataEntryObject().getDateTimeFormat(),
+     * pve.getDateTime());
+     * if (i != 0)
+     * {
+     * datatable.addCell(new Phrase("", f));
+     * }
+     * datatable.addCell(new Phrase(atdx.getTimeString(), f));
+     * datatable.addCell(new Phrase(pve.getBaseTypeString(), f));
+     * datatable.addCell(new Phrase(pve.getSubTypeString(), f));
+     * datatable.addCell(new Phrase(pve.getValue(), f));
+     * datatable.addCell(new Phrase(pve
+     * .getAdditionalDataPrint(PumpValuesEntry.PRINT_ADDITIONAL_ALL_ENTRIES),
+     * f));
+     * }
+     * }
+     * else
+     * {
+     * datatable.addCell(new Phrase(atd.getDateString(), f));
+     * this.writeEmptyColumnData(datatable);
+     * }
+     * gc_current.add(Calendar.DAY_OF_MONTH, 1);
+     * } while (gc_current.before(gc_end));
+     * document.add(datatable);
+     * // System.out.println("Elements all: " + this.m_data.size() +
+     * // " in iterator: " + count);
+     * }
+     */
 
     /**
      * {@inheritDoc}
      */
-    @Override
+
     public int[] getTableColumnWidths()
     {
         int headerwidths[] = { 25, 25, 25, 25 }; // percentage
@@ -173,7 +276,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     /**
      * {@inheritDoc}
      */
-    @Override
+
     public int getTableColumnsCount()
     {
         return 4;
@@ -182,7 +285,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     /**
      * {@inheritDoc}
      */
-    @Override
+
     public String getTitleText()
     {
         return "PUMP_DATA_EXT";
@@ -191,29 +294,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void writeAdditionalHeader(PdfPTable table) throws Exception
-    {
-        // table.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void writeEmptyColumnData(PdfPTable table) throws Exception
-    {
-        table.addCell(this.createEmptyTextPhrase());
-        table.addCell(this.createEmptyTextPhrase());
-        table.addCell(this.createEmptyTextPhrase());
-        table.addCell(this.createEmptyTextPhrase());
-        // table.addCell(this.createEmptyTextPhrase());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void writeColumnData(PdfPTable table, Object /* DailyFoodEntry */mp) throws Exception
     {
         /*
@@ -253,28 +334,51 @@ public class PrintPumpDataDailyTimeSheet extends PrintPumpDataAbstract
      * {@inheritDoc}
      */
     @Override
-    public void writeTogetherData(PdfPTable table, DailyValuesRow rw) throws Exception
-    {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public String getFileNameBase()
     {
-        return "PumpDataExt";
+        return "Pump_DailyTimeSheet";
     }
 
     public static void main(String[] args)
     {
-        /*
-         * DeviceValuesRange dvr = DataAccessPump.getInstance().getDb()
-         * .getRangePumpValues(this.getFromDateObject(),
-         * this.getToDateObject());
-         * PrintPumpDataDailyTimeSheet pa = new PrintPumpDataBase(dvr);
-         * displayPDF(pa.getRelativeNameWithPath());
-         */
+        LanguageManager lm = new LanguageManager(new GGCLanguageManagerRunner());
+
+        DataAccessPump da = DataAccessPump.createInstance(lm);
+
+        PrintPumpDataDailyTimeSheet pa = new PrintPumpDataDailyTimeSheet(new PrintParameters());
+        // pa.init();
+
+        System.out.println("Path: " + pa.getRelativeNameWithPath());
+
+        // displayPDF(pa.getRelativeNameWithPath());
+
+    }
+
+    @Override
+    public void initData()
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public ITextDocumentPrintSettings getCustomDocumentSettings()
+    {
+        return new ITextDocumentPrintSettings(20, 20, 10, 30);
+    }
+
+    @Override
+    public String getFileNameRange()
+    {
+        // TODO Auto-generated method stub
+        return "";
+    }
+
+    @Override
+    public int getTextSize()
+    {
+        // TODO Auto-generated method stub
+        return 8;
     }
 
 }
