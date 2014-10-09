@@ -45,7 +45,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
 
     /**
      * Constructor
-     * 
+     *
      * @param dvr
      */
     public PrintPumpDataAbstract(DeviceValuesRange dvr)
@@ -142,14 +142,14 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
 
     /**
      * Return count of table columns
-     * 
+     *
      * @return
      */
     public abstract int getTableColumnsCount();
 
     /**
      * Return columns widths for table
-     * 
+     *
      * @return
      */
     public abstract int[] getTableColumnWidths();

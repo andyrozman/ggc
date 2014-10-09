@@ -20,26 +20,26 @@ import com.atech.plugin.BackupRestorePlugin;
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     PluginDb  
- *  Description:  This is master class for using Db instance within plug-in. In most cases, we 
+ *
+ *  Filename:     PluginDb
+ *  Description:  This is master class for using Db instance within plug-in. In most cases, we
  *                would want data to be handled by outside authority (GGC), but in some cases
  *                we wouldn't want that.
- * 
+ *
  *  Author: Andy {andy@atech-software.com}
  */
 
@@ -109,7 +109,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
 
     }
 
-    /** 
+    /**
      * Get Backup Restore Object
      */
     @Override
@@ -125,7 +125,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
             return null;
     }
 
-    /** 
+    /**
      * Get Backup Restore Object
      */
     @Override
@@ -151,7 +151,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
 
     }
 
-    /** 
+    /**
      * Does Contain Backup Restore Object
      */
     @Override

@@ -31,31 +31,30 @@ import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.mgr.LanguageManager;
 
-// TODO: Auto-generated Javadoc
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     DataAccessPump  
+ *
+ *  Filename:     DataAccessPump
  *  Description:  Contains instances of utilities, private (plugin specific) data,
  *                help classes, ...
- * 
+ *
  *  Author: Andy {andy@atech-software.com}
  */
 
@@ -130,7 +129,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      *
      *  This is DataAccess constructor; Since classes use Singleton Pattern,
-     *  constructor is protected and can be accessed only with getInstance() 
+     *  constructor is protected and can be accessed only with getInstance()
      *  method.<br><br>
      *
      */
@@ -169,11 +168,11 @@ public class DataAccessPump extends DataAccessPlugInBase
     // Author: Andy
     /**
      *
-     *  This method returns reference to DataAccessPump object created, or if no 
+     *  This method returns reference to DataAccessPump object created, or if no
      *  object was created yet, it creates one.<br><br>
      *
      *  @return Reference to DataAccessPump object
-     * 
+     *
      */
     public static DataAccessPump getInstance()
     {
@@ -184,7 +183,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Create Instance
-     *  
+     *
      * @param lm
      * @return
      */
@@ -199,7 +198,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Pump Base Types
-     * 
+     *
      * @return
      */
     public PumpBaseType getPumpBaseTypes()
@@ -209,7 +208,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Bolus Sub Types
-     * 
+     *
      * @return
      */
     public PumpBolusType getBolusSubTypes()
@@ -219,7 +218,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Basal Sub Types
-     * 
+     *
      * @return
      */
     public PumpBasalSubType getBasalSubTypes()
@@ -229,7 +228,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Pump Report Types
-     * 
+     *
      * @return
      */
     public PumpReport getPumpReportTypes()
@@ -239,7 +238,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Pump Alarm Types
-     * 
+     *
      * @return
      */
     public PumpAlarms getPumpAlarmTypes()
@@ -249,7 +248,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Pump Error Types
-     * 
+     *
      * @return
      */
     public PumpErrors getPumpErrorTypes()
@@ -259,7 +258,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Pump Events Types
-     * 
+     *
      * @return
      */
     public PumpEvents getPumpEventTypes()
@@ -269,7 +268,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Additional Types
-     * 
+     *
      * @return
      */
     public PumpAdditionalDataType getAdditionalTypes()
@@ -349,7 +348,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     }
 
-    /** 
+    /**
      * Get Application Name
      */
     @Override
@@ -555,7 +554,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Create Custom Db
-     * 
+     *
      * This is for plug-in specific database implementation
      */
     @Override
@@ -566,7 +565,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Db
-     * 
+     *
      * @return
      */
     public GGCPumpDb getDb()
@@ -646,8 +645,8 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Images for Devices (must end with backslash)
-     * 
-     * @return String with images path 
+     *
+     * @return String with images path
      */
     @Override
     public String getDeviceImagesRoot()
@@ -657,7 +656,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Selected Persons Id
-     * 
+     *
      * @return
      */
     /*
@@ -678,7 +677,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Load Special Parameters
-     * 
+     *
      * @see com.atech.utils.ATDataAccessAbstract#loadSpecialParameters()
      */
     @Override
@@ -688,7 +687,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.special_parameters.put("BG", "" + this.getBGMeasurmentType());
     }
 
-    /** 
+    /**
      * Load PlugIns
      */
     @Override
@@ -698,7 +697,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     }
 
-    /** 
+    /**
      * Get About Image Size - Define about image size
      */
     @Override
@@ -715,7 +714,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Gets the max basal value.
-     * 
+     *
      * @return the max basal value
      */
     public float getMaxBasalValue()
@@ -726,7 +725,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Gets the max bolus value.
-     * 
+     *
      * @return the max bolus value
      */
     public float getMaxBolusValue()
@@ -737,7 +736,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Gets the basal step.
-     * 
+     *
      * @return the basal step
      */
     public float getBasalStep()
@@ -748,7 +747,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Gets the bolus step.
-     * 
+     *
      * @return the bolus step
      */
     public float getBolusStep()
@@ -759,7 +758,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Bolus Precision
-     * 
+     *
      * @return
      */
     public int getBolusPrecision()
@@ -778,7 +777,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Formated Bolus Value
-     * 
+     *
      * @param val
      * @return
      */
@@ -789,7 +788,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Decimal Handler
-     * 
+     *
      * @return
      */
     /*
@@ -801,7 +800,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Parsed Values
-     * 
+     *
      * @param val
      * @return
      */
@@ -823,7 +822,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Sleep MS
-     * 
+     *
      * @param ms
      */
     public void sleepMs(long ms)
@@ -844,7 +843,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Max Decimals that will be used by DecimalHandler
-     * 
+     *
      * @return
      */
     @Override
