@@ -159,9 +159,9 @@ public class RatioEntry
 
     /**
      * Get Column Name
+
      * @param index
      * @return
-     *
      * @see javax.swing.table.AbstractTableModel#getColumnName(int)
      */
     public String getColumnName(int index)

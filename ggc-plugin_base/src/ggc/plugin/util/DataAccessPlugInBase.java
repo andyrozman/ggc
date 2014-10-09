@@ -660,6 +660,22 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     }
 
+    public String getDisplayedBGString(Float bgValue)
+    {
+        float val = 0.0f;
+
+        if (bgValue != null)
+        {
+            val = getDisplayedBG(bgValue);
+        }
+
+        if (this.m_BG_unit == BG_MGDL)
+            return DataAccessPlugInBase.Decimal0Format.format(val);
+        else
+            return DataAccessPlugInBase.Decimal1Format.format(val);
+
+    }
+
     /**
      * Get BG Value (converted to current display type)
      * 

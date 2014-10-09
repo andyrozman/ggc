@@ -15,28 +15,22 @@ import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessLMAbstract;
 
 /**
- *  Application:   GGC - GNU Gluco Control
- *
- *  See AUTHORS for copyright information.
- * 
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 2 of the License, or (at your option) any later
- *  version.
- * 
- *  This program is distributed in the hope that it will be useful, but WITHOUT
- *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- *  details.
- * 
- *  You should have received a copy of the GNU General Public License along with
- *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     PumpsPlugIn  
- *  Description:  Class Pump Plugin Client
- * 
- *  Author: andyrozman {andy@atech-software.com}  
+ * Application: GGC - GNU Gluco Control
+ * See AUTHORS for copyright information.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ * Filename: PumpsPlugIn
+ * Description: Class Pump Plugin Client
+ * Author: andyrozman {andy@atech-software.com}
  */
 
 public class PumpsPlugIn extends PlugInClient
@@ -143,8 +137,9 @@ public class PumpsPlugIn extends PlugInClient
         }
         catch (Exception ex)
         {
-            System.out.println("PumpsPlugIn::Exception:" + ex);
-            ex.printStackTrace();
+            this.installed = false;
+            // System.out.println("PumpsPlugIn::Exception:" + ex);
+            // ex.printStackTrace();
         }
     }
 
@@ -300,8 +295,10 @@ public class PumpsPlugIn extends PlugInClient
     }
 
     /**
-     * This is method which can be used by server side to do certain action. Mainly this will be used
-     * to run refreshes and such actions. This needs to be implemented by Client side, if you wish to use
+     * This is method which can be used by server side to do certain action.
+     * Mainly this will be used
+     * to run refreshes and such actions. This needs to be implemented by Client
+     * side, if you wish to use
      * it.
      * 
      * @param action_type

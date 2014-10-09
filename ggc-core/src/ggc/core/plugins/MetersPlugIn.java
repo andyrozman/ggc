@@ -152,34 +152,38 @@ public class MetersPlugIn extends PlugInClient
      */
     public void readMeterData()
     {
-        // this.featureNotImplemented(commands[MetersPlugIn.COMMAND_READ_METER_DATA]);
-        int command = MetersPlugIn.COMMAND_READ_METER_DATA;
 
-        if (m_server == null)
-        {
-            if (this.isCommandImplemented(command))
-            {
-                // this.showMessage(String.format(ic.getMessage("PLUGIN_NOT_INSTALLED"),
-                // this.getName()));
-                this.showMessage(ic.getMessage("PLUGIN_NOT_INSTALLED"));
-            }
-            else
-            {
-                this.featureNotImplemented(commands[command]);
-            }
-        }
-        else
-        {
-            m_server.executeCommand(command);
-            // TODO
-            /*
-             * GGCDataReader greader = new
-             * GGCDataReader(DataAccess.getInstance().getDb(),
-             * GGCDataReader.DATA_METER);
-             * greader.start();
-             * m_server.executeCommand(command, greader);
-             */
-        }
+        this.executeCommand(MetersPlugIn.COMMAND_READ_METER_DATA);
+
+        // this.featureNotImplemented(commands[MetersPlugIn.COMMAND_READ_METER_DATA]);
+        // int command = MetersPlugIn.COMMAND_READ_METER_DATA;
+        //
+        // if (m_server == null)
+        // {
+        // if (this.isCommandImplemented(command))
+        // {
+        // //
+        // this.showMessage(String.format(ic.getMessage("PLUGIN_NOT_INSTALLED"),
+        // // this.getName()));
+        // this.showMessage(ic.getMessage("PLUGIN_NOT_INSTALLED"));
+        // }
+        // else
+        // {
+        // this.featureNotImplemented(commands[command]);
+        // }
+        // }
+        // else
+        // {
+        // m_server.executeCommand(command);
+        // // TODO
+        // /*
+        // * GGCDataReader greader = new
+        // * GGCDataReader(DataAccess.getInstance().getDb(),
+        // * GGCDataReader.DATA_METER);
+        // * greader.start();
+        // * m_server.executeCommand(command, greader);
+        // */
+        // }
 
     }
 

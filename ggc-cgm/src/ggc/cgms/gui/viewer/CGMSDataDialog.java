@@ -174,13 +174,13 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         this.model.fireTableChanged(null);
     }
 
-    private ArrayList<CGMSValuesSubEntry> getDataList(List<DeviceValuesEntry> list_in)
+    private ArrayList<CGMSValuesSubEntry> getDataList(List<DeviceValuesEntry> list)
     {
         ArrayList<CGMSValuesSubEntry> lst = new ArrayList<CGMSValuesSubEntry>();
 
-        for (int i = 0; i < list_in.size(); i++)
+        for (int i = 0; i < list.size(); i++)
         {
-            lst.add((CGMSValuesSubEntry) list_in.get(i));
+            lst.add((CGMSValuesSubEntry) list.get(i));
         }
 
         return lst;

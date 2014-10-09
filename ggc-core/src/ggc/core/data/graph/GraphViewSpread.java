@@ -97,7 +97,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
 
     /**
      * Get Title (used by GraphViewer)
-     *
+     * 
      * @return title as string
      */
     @Override
@@ -263,7 +263,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
 
     private long getFakeDateMs(ATechDate date)
     {
-        gc_temp.set(Calendar.HOUR_OF_DAY, date.hourOfDay);
+        gc_temp.set(Calendar.HOUR_OF_DAY, date.getHourOfDay());
         gc_temp.set(Calendar.MINUTE, date.minute);
 
         return gc_temp.getTimeInMillis();
@@ -272,7 +272,8 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
     /**
      * Set Plot
      *
-     * @param chart JFreeChart instance
+     * @param chart
+     *            JFreeChart instance
      */
     @SuppressWarnings("deprecation")
     public void setPlot(JFreeChart chart)
