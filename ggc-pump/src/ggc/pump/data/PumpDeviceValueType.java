@@ -8,7 +8,7 @@ public enum PumpDeviceValueType implements DeviceValueTypeInterface
     BOLUS, //
     BG("PUMP_ADD_DATA_BG"), //
     CH, //
-    ;
+    COMMENT, ;
 
     private String additionalKey;
 

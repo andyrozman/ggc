@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.mgr.LanguageManager;
 import com.atech.print.engine.ITextDocumentPrintSettings;
 import com.atech.print.engine.PrintAbstractITextWithDataRead;
@@ -63,6 +64,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
     private GregorianCalendar gc_from;
     private GregorianCalendar gc_to;
     DataAccessPump dataAccessPump = DataAccessPump.getInstance();
+    I18nControlAbstract i18nControl = dataAccessPump.getI18nControlInstance();
     PumpValuesHourProcessor pumpValuesHourProcessor;
 
     public PrintPumpDataDailyTimeSheet(PrintParameters parameters)
@@ -102,7 +104,6 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
     @Override
     public void initData()
     {
-        // TODO Auto-generated method stub
 
         // FIXME read from parameters
 
@@ -124,6 +125,10 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         GregorianCalendar gc_end = deviceValuesRange.getEndGC();
         gc_end.add(Calendar.DAY_OF_MONTH, 1);
 
+        PdfPTable mainTable = new PdfPTable(1);
+        mainTable.setWidthPercentage(100);
+        mainTable.getDefaultCell().setBorderWidth(0);
+
         do
         {
 
@@ -133,34 +138,39 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
             {
                 DeviceValuesDay dvd = deviceValuesRange.getDayEntry(atd.getATDateTimeAsLong());
                 dvd.prepareHourlyEntries();
-                createDayEntry(document, dvd, gc_current);
+                createDayEntry(mainTable, dvd, gc_current);
             }
 
             gc_current.add(Calendar.DAY_OF_MONTH, 1);
 
         } while (gc_current.before(gc_end));
 
+        document.add(mainTable);
     }
 
     /**
      * TODO
-     * 
-     * - main view table (day, comment, space)
-     * - multiple BG in comment
-     * - comments
-     * - bolus swuare or extended
-     * - sums 
-     * 
+     *
+     * + main view table (day, comment, space)    100%
+     * - multiple BG in comment                   100%
+     * - comments                                   0%
+     * - bolus swuare or extended                   0%
+     * + sums                                     100%
+     * - days resolve                               0%
+     * - basal                                      0%
+     *
+     * NOT IMPORTANT FOR NOW:
+     * - special pump statues (stopped pump, change of pump material, TBR)
+     * - Hipo, Hyper ?
+     *
+     *
+     * PROFILES REPORT                              0%
+     *
      */
 
-    /**
-     * {@inheritDoc}
-     */
-
-    public void createDayEntry(Document document, DeviceValuesDay deviceValuesDay, GregorianCalendar gcCurrent)
+    private void createDayEntry(PdfPTable mainTable, DeviceValuesDay deviceValuesDay, GregorianCalendar gcCurrent)
             throws Exception
     {
-
         PdfPTable datatable = new PdfPTable(27);
         datatable.setWidths(new float[] { 4.0f, 6.0f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f,
                                          3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f,
@@ -168,22 +178,8 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         datatable.setWidthPercentage(100); // percentage
 
         datatable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-        datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); // ALIGN_CENTER);
+        datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER); // ALIGN_CENTER);
         datatable.getDefaultCell().setBorderWidth(1);
-        // datatable.getDefaultCell().setBorder(1);
-
-        /*
-         * datatable.addCell(this.createBoldTextPhrase("DATE"));
-         * datatable.addCell(this.createBoldTextPhrase("TIME"));
-         * datatable.addCell(this.createBoldTextPhrase("BASE_TYPE"));
-         * datatable.addCell(this.createBoldTextPhrase("SUB_TYPE"));
-         * datatable.addCell(this.createBoldTextPhrase("VALUE_SHORT"));
-         * datatable.addCell(this.createBoldTextPhrase("OTHER_DATA"));
-         */
-        // PdfCell c = new PdfCell();
-        // c.
-
-        // line 1
 
         // cell 1
         datatable.addCell(this.createBoldTextPhrase("DAY"));
@@ -196,10 +192,19 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
         datatable.addCell(this.createBoldTextPhrase("SUM"));
 
+        pumpValuesHourProcessor.clearComments();
+
         for (int j = 0; j < 4; j++)
         {
             if (j == 0)
             {
+                // SU=Su
+                // MO=Mo
+                // TU=Tu
+                // WE=We
+                // TH=Th
+                // FR=Fr
+                // SA=Sa
 
                 datatable.addCell(this.createNormalTextPhrase("???"));
                 datatable.addCell(this.createBoldTextPhrase("BASAL"));
@@ -210,13 +215,10 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
             {
                 PdfPCell cell = new PdfPCell();
                 cell.setPhrase(this.createBoldTextPhrase(gcCurrent.get(Calendar.DAY_OF_MONTH) + "."));
-                // cell.setBorderColorBottom(BaseColor.WHITE);
                 cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT | Rectangle.TOP);
                 cell.setBorderWidth(1);
-                // cell.setVerticalAlignment(PdfPCell.ALIGN_BOTTOM);
                 cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                // cell.setGrayFill(value);
 
                 datatable.addCell(cell);
                 datatable.addCell(this.createBoldTextPhrase("BOLUS"));
@@ -226,16 +228,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
             else if (j == 2)
             {
                 PdfPCell cell = new PdfPCell();
-                // cell.addElement(this.createBoldTextPhrase("1."));
-                // cell.setBorderColorBottom(BaseColor.WHITE);
-                // cell.setBorderColorTop(BaseColor.WHITE);
-                cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT); // | //
-                                                                  // Rectangle.TOP
-                                                                  // |
-                                                                  // Rectangle.BOTTOM);
-                // cell.setBorder(1);
-                // cell.setBorder(0);
-
+                cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);
                 cell.setBorderWidth(1);
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -251,14 +244,11 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
             // if (j==3)
             {
                 PdfPCell cell = new PdfPCell();
-                // cell.addElement(this.createBoldTextPhrase("2014"));
-                // cell.setBorderColorTop(BaseColor.WHITE);
                 cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT | Rectangle.BOTTOM);
                 cell.setBorderWidth(1);
                 cell.setVerticalAlignment(Element.ALIGN_TOP);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setPhrase(this.createBoldTextPhrase("" + gcCurrent.get(Calendar.YEAR)));
-                // cell.setBorder(0);
 
                 datatable.addCell(cell);
                 datatable.addCell(this.createBoldTextPhrase("CH"));
@@ -268,7 +258,25 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
         }
 
-        document.add(datatable);
+        mainTable.addCell(datatable);
+
+        // comment table
+        PdfPTable tableComment = new PdfPTable(2);
+        tableComment.setWidths(new float[] { 8.0f, 92.0f });
+        tableComment.setWidthPercentage(100);
+        tableComment.getDefaultCell().setBorderWidth(0);
+        tableComment.addCell(this.createBoldTextPhrase(this.i18nControl.getMessage("COMMENT") + ":"));
+        tableComment.addCell(this.createNormalTextPhrase(this.pumpValuesHourProcessor.getFullComment()));
+
+        mainTable.addCell(tableComment);
+
+        // empty line
+        PdfPCell cell = new PdfPCell();
+        cell.setFixedHeight(12);
+        cell.setBorder(0);
+        cell.setPhrase(this.createEmptyTextPhrase());
+
+        mainTable.addCell(cell);
 
     }
 
@@ -296,6 +304,11 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                 if (type == PumpDeviceValueType.BASAL)
                 {
                     table.addCell(this.createNormalTextPhraseSmall("xx.xx"));
+
+                    // sum += pumpValuesHour.getBolus();
+                    // table.addCell(this.createNormalTextPhraseSmall(dataAccessPump
+                    // .getFormatedBolusValue(pumpValuesHour.getBolus())));
+
                 }
                 else
                 {
@@ -306,38 +319,37 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
                     if (type == PumpDeviceValueType.BOLUS)
                     {
-
                         if (pumpValuesHour.getBolus() > 0.0f)
                         {
                             sum += pumpValuesHour.getBolus();
-                            table.addCell(this.createNormalTextPhraseSmall(DataAccessPlugInBase.Decimal2Format
-                                    .format(pumpValuesHour.getBolus())));
+                            table.addCell(this.createNormalTextPhraseSmall(dataAccessPump
+                                    .getFormatedBolusValue(pumpValuesHour.getBolus())));
+
+                            // FIXME special boluses
+                            // pumpValuesHourProcessor.addComments(PumpDeviceValueType.BG,
+                            // pumpValuesHour.getMultipleBgs());
+
                         }
                         else
                         {
                             table.addCell(this.createEmptyTextPhraseSmall());
                         }
 
-                        // float value =
-                        // pumpValuesHourProcessor.getValueForType(entries,
-                        // PumpDeviceValueType.BOLUS);
-                        // table.addCell(this.createNormalTextPhraseSmall(DataAccessPlugInBase.Decimal2Format
-                        // .format(value)));
                     }
                     else if (type == PumpDeviceValueType.BG)
                     {
-                        // float value =
-                        // pumpValuesHourProcessor.getValueForType(entries,
-                        // PumpDeviceValueType.BG);
-
                         if (pumpValuesHour.getBgs().size() > 1)
                         {
-                            table.addCell(this.createNormalTextPhraseSmall("!!!!"));
+                            table.addCell(this.createNormalTextPhraseSmall("*"));
+
+                            pumpValuesHourProcessor
+                                    .addComments(PumpDeviceValueType.BG, pumpValuesHour.getMultipleBgs());
                         }
                         else if (pumpValuesHour.getBgs().size() == 1)
                         {
-                            sum += pumpValuesHour.getBgProcessedValue();
+                            sum += dataAccessPump.getDisplayedBG(pumpValuesHour.getBgProcessedValue());
                             count++;
+
                             table.addCell(this.createNormalTextPhraseSmall(dataAccessPump
                                     .getDisplayedBGString(pumpValuesHour.getBgProcessedValue())));
                         }
@@ -345,8 +357,6 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                         {
                             table.addCell(this.createEmptyTextPhraseSmall());
                         }
-
-                        // table.addCell(this.createNormalTextPhraseSmall(DataAccessPump.Decimal1Format.format(value)));
                     }
                     else
                     {
@@ -361,11 +371,10 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                         {
                             table.addCell(this.createEmptyTextPhraseSmall());
                         }
-
-                        // table.addCell(this.createNormalTextPhraseSmall("100"));
-                        // table.addCell(this.createNormalTextPhraseSmall(DataAccessPlugInBase.Decimal0Format
-                        // .format(value)));
                     }
+
+                    // FIXME add comments
+
                 }
             }
         }
@@ -374,14 +383,21 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         {
             if (type == PumpDeviceValueType.BG)
             {
-                // format
                 float d = sum / (count * (1.0f));
-                table.addCell(this.createNormalTextPhrase("" + d));
+
+                table.addCell(this.createNormalTextPhrase(dataAccessPump.getDisplayedBGString(d)));
+            }
+            else if (type == PumpDeviceValueType.BASAL)
+            {
+                table.addCell(this.createNormalTextPhrase(dataAccessPump.getFormatedBasalValue(sum)));
+            }
+            else if (type == PumpDeviceValueType.BOLUS)
+            {
+                table.addCell(this.createNormalTextPhrase(dataAccessPump.getFormatedBolusValue(sum)));
             }
             else
             {
-                // format
-                table.addCell(this.createNormalTextPhrase("" + sum));
+                table.addCell(this.createNormalTextPhrase(DataAccessPlugInBase.Decimal0Format.format(sum)));
             }
 
         }
@@ -402,134 +418,12 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         return new Phrase(this.i18nControl.getMessage(text), smallFont);
     }
 
-    /*
-     * public void fillDocumentBodyCCC(Document document) throws Exception
-     * {
-     * Font f = this.textFontNormal;
-     * PdfPTable datatable = new PdfPTable(getTableColumnsCount());
-     * datatable.setWidths(getTableColumnWidths());
-     * datatable.setWidthPercentage(100); // percentage
-     * datatable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-     * datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT); //
-     * ALIGN_CENTER);
-     * datatable.getDefaultCell().setBorderWidth(1);
-     * datatable.addCell(this.createBoldTextPhrase("DATE"));
-     * datatable.addCell(this.createBoldTextPhrase("TIME"));
-     * datatable.addCell(this.createBoldTextPhrase("BASE_TYPE"));
-     * datatable.addCell(this.createBoldTextPhrase("SUB_TYPE"));
-     * datatable.addCell(this.createBoldTextPhrase("VALUE_SHORT"));
-     * datatable.addCell(this.createBoldTextPhrase("OTHER_DATA"));
-     * // writeAdditionalHeader(datatable);
-     * GregorianCalendar gc_end = deviceValuesRange.getEndGC();
-     * gc_end.add(Calendar.DAY_OF_MONTH, 1);
-     * GregorianCalendar gc_current = deviceValuesRange.getStartGC();
-     * do
-     * {
-     * ATechDate atd = new
-     * ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), gc_current);
-     * if (deviceValuesRange.isDayEntryAvailable(atd.getATDateTimeAsLong()))
-     * {
-     * DeviceValuesDay dvd =
-     * deviceValuesRange.getDayEntry(atd.getATDateTimeAsLong());
-     * // FIXME fix this
-     * datatable.addCell(new Phrase(atd.getDateString(), f));
-     * for (int i = 0; i < dvd.getList().size(); i++)
-     * {
-     * PumpValuesEntry pve = (PumpValuesEntry) dvd.getList().get(i);
-     * ATechDate atdx = new
-     * ATechDate(da_local.getDataEntryObject().getDateTimeFormat(),
-     * pve.getDateTime());
-     * if (i != 0)
-     * {
-     * datatable.addCell(new Phrase("", f));
-     * }
-     * datatable.addCell(new Phrase(atdx.getTimeString(), f));
-     * datatable.addCell(new Phrase(pve.getBaseTypeString(), f));
-     * datatable.addCell(new Phrase(pve.getSubTypeString(), f));
-     * datatable.addCell(new Phrase(pve.getValue(), f));
-     * datatable.addCell(new Phrase(pve
-     * .getAdditionalDataPrint(PumpValuesEntry.PRINT_ADDITIONAL_ALL_ENTRIES),
-     * f));
-     * }
-     * }
-     * else
-     * {
-     * datatable.addCell(new Phrase(atd.getDateString(), f));
-     * this.writeEmptyColumnData(datatable);
-     * }
-     * gc_current.add(Calendar.DAY_OF_MONTH, 1);
-     * } while (gc_current.before(gc_end));
-     * document.add(datatable);
-     * // System.out.println("Elements all: " + this.m_data.size() +
-     * // " in iterator: " + count);
-     * }
-     */
-
     /**
      * {@inheritDoc}
      */
-
-    public int[] getTableColumnWidths()
-    {
-        int headerwidths[] = { 25, 25, 25, 25 }; // percentage
-        return headerwidths;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-
-    public int getTableColumnsCount()
-    {
-        return 4;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-
     public String getTitleText()
     {
-        return "PUMP_DATA_EXT";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-
-    public void writeColumnData(PdfPTable table, Object /* DailyFoodEntry */mp) throws Exception
-    {
-        /*
-         * table.addCell(new Phrase("", this.text_normal));
-         * table.addCell(new Phrase("", this.text_normal));
-         * table.addCell(new Phrase(mp.getName(), this.text_normal));
-         * float value = 0.0f;
-         * if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
-         * {
-         * table.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"),
-         * this.text_normal));
-         * //value = mp.getNutrientValue(205);
-         * value = mp.getMealCH();
-         * }
-         * else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
-         * {
-         * table.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"),
-         * this.text_normal));
-         * //value = mp.getNutrientValue(205);
-         * value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
-         * }
-         * else
-         * {
-         * table.addCell(new Phrase(mp.getHomeWeightDescription() + " (" +
-         * DataAccess.Decimal0Format.format(mp.getHomeWeightMultiplier() * 100)
-         * + " g)", this.text_normal));
-         * value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
-         * }
-         * table.addCell(new Phrase(mp.getAmountSingleDecimalString(),
-         * this.text_normal));
-         * table.addCell(new Phrase(DataAccess.Decimal2Format.format(value),
-         * this.text_normal)); // ch
-         */
+        return "PUMP_DATA_DAILY_TIMESHEET";
     }
 
     /**
@@ -557,7 +451,6 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
     @Override
     public int getTextSize()
     {
-        // TODO Auto-generated method stub
         return 6;
     }
 

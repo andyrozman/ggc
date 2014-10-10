@@ -731,7 +731,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     public float getMaxBolusValue()
     {
         // TODO read from pump
-        return 18.0f;
+        return 25.0f;
     }
 
     /**
@@ -742,7 +742,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     public float getBasalStep()
     {
         // TODO read from pump
-        return 0.1f;
+        return 0.05f;
     }
 
     /**
@@ -767,6 +767,16 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
     /**
+     * Get Basal Precision
+     *
+     * @return
+     */
+    public int getBasalPrecision()
+    {
+        return 2;
+    }
+
+    /**
      * Create Old Data Reader
      */
     @Override
@@ -784,6 +794,17 @@ public class DataAccessPump extends DataAccessPlugInBase
     public String getFormatedBolusValue(float val)
     {
         return this.getDecimalHandler().getDecimalAsString(val, this.getBolusPrecision());
+    }
+
+    /**
+     * Get Formated Bolus Value
+     *
+     * @param val
+     * @return
+     */
+    public String getFormatedBasalValue(float val)
+    {
+        return this.getDecimalHandler().getDecimalAsString(val, this.getBasalPrecision());
     }
 
     /**

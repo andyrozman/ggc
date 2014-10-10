@@ -5,12 +5,33 @@ import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.util.DataAccessPump;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class PumpValuesHourProcessor
 {
 
     DataAccessPump dataAccessPump = DataAccessPump.getInstance();
+    HashMap<PumpDeviceValueType, List<String>> comments = null;
+
+    public void clearComments()
+    {
+        if (comments == null)
+        {
+            comments = new HashMap<PumpDeviceValueType, List<String>>();
+            comments.put(PumpDeviceValueType.BG, new ArrayList<String>());
+            comments.put(PumpDeviceValueType.BOLUS, new ArrayList<String>());
+            comments.put(PumpDeviceValueType.COMMENT, new ArrayList<String>());
+        }
+        else
+        {
+            comments.get(PumpDeviceValueType.BG).clear();
+            comments.get(PumpDeviceValueType.BOLUS).clear();
+            comments.get(PumpDeviceValueType.COMMENT).clear();
+        }
+
+    }
 
     public float getValueForType(List<DeviceValuesEntry> deviceValues, PumpDeviceValueType valueType)
     {
@@ -35,7 +56,7 @@ public class PumpValuesHourProcessor
 
     public PumpValuesHour createPumpValuesHour(List<DeviceValuesEntry> deviceValues)
     {
-        PumpValuesHour pumpValuesHour = new PumpValuesHour();
+        PumpValuesHour pumpValuesHour = new PumpValuesHour(this.dataAccessPump);
 
         String keyBG = dataAccessPump.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_BG);
         String keyCH = dataAccessPump.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH);
@@ -67,14 +88,41 @@ public class PumpValuesHourProcessor
             if ((pve.getBaseType() == PumpBaseType.PUMP_DATA_BOLUS)
                     || (pve.getBaseType() == PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS))
             {
-                pumpValuesHour.addBolus(pve.getValue());
-                System.out.println("Bolus");
+                pumpValuesHour.addBolus(pve);
             }
-
-            // if keyCH
-
         }
 
         return pumpValuesHour;
     }
+
+    public void addComments(PumpDeviceValueType valueType, String partComment)
+    {
+        comments.get(valueType).add(partComment);
+    }
+
+    public String getFullComment()
+    {
+        StringBuffer fullComment = new StringBuffer();
+
+        List<String> listComms = comments.get(PumpDeviceValueType.BG);
+
+        if (!listComms.isEmpty())
+        {
+            StringBuffer sb = new StringBuffer();
+            sb.append(dataAccessPump.getI18nControlInstance().getMessage("BG"));
+            sb.append(": ");
+
+            for (String entry : listComms)
+            {
+                sb.append(entry);
+                sb.append(",");
+            }
+
+            fullComment.append(sb.toString().substring(0, sb.length() - 1));
+            fullComment.append("; ");
+        }
+
+        return fullComment.toString();
+    }
+
 }
