@@ -35,8 +35,8 @@ import com.itextpdf.text.pdf.PdfPTable;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     PrintFoodMenuBase  
- *  Description:  Print Base Food Menu
+ *  Filename:     PrintPumpDataExt  
+ *  Description:  Print Pump Extended Report
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */

@@ -50,25 +50,25 @@ import com.sun.jna.NativeLibrary;
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  *  Filename:     DataAccessPlugInBase
  *  Description:  This is superclass for all DataAccess classes for each plugin. Here are defined
  *                plugin specific features.
- * 
+ *
  *  Author: Andy {andy@atech-software.com}
  */
 
@@ -237,7 +237,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     PlugInServer plugin_server;
 
     /**
-     * Entry Status Icons 
+     * Entry Status Icons
      */
     public static String entry_status_icons[] = { "led_gray.gif", "led_green.gif", "led_yellow.gif", "led_red.gif" };
 
@@ -267,10 +267,10 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     /**
      *
      *  This is DataAccessPlugInBase constructor; Since classes use Singleton Pattern,
-     *  constructor is protected and can be accessed only with getInstance() 
+     *  constructor is protected and can be accessed only with getInstance()
      *  method.<br><br>
-     *  
-     *  @param lm language manager 
+     *
+     *  @param lm language manager
      *  @param icr i18n control runner
      *
      */
@@ -286,7 +286,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get PlugIn Server Instance
-     * 
+     *
      * @param server
      */
     public void setPlugInServerInstance(PlugInServer server)
@@ -296,8 +296,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Set PlugIn Server Instance
-     * 
-     * @return 
+     *
+     * @return
      */
     public PlugInServer getPlugInServerInstance()
     {
@@ -308,13 +308,13 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     // ****** Init Methods *****
     // ********************************************************
 
-    /** 
+    /**
      * Get Application Name
      */
     @Override
     public abstract String getApplicationName();
 
-    /** 
+    /**
      * Check Prerequisites for Plugin
      */
     @Override
@@ -322,7 +322,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
     }
 
-    /** 
+    /**
      * Get Images Root
      */
     @Override
@@ -333,13 +333,13 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Images for Devices
-     * 
+     *
      * @see ggc.plugin.util.DataAccessPlugInBase#getDeviceImagesRoot()
-     * @return String with images path 
+     * @return String with images path
      */
     public abstract String getDeviceImagesRoot();
 
-    /** 
+    /**
      * loadBackupRestoreCollection
      */
     @Override
@@ -358,7 +358,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get About Dialog image name
-     * 
+     *
      * @return
      */
     public String getAboutImageName()
@@ -368,7 +368,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get About Image Size
-     * 
+     *
      * @return
      */
     public int[] getAboutImageSize()
@@ -382,7 +382,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get About Plugin Copyright
-     * 
+     *
      * @return
      */
     public String getAboutPluginCopyright()
@@ -398,7 +398,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get PlugIn Libraries
-     * 
+     *
      * @return
      */
     public ArrayList<LibraryInfoEntry> getPlugInLibraries()
@@ -408,7 +408,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Plugin Developers
-     * 
+     *
      * @return
      */
     public ArrayList<CreditsGroup> getPlugInDevelopers()
@@ -418,7 +418,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Plugin Features
-     * 
+     *
      * @return
      */
     public ArrayList<FeaturesGroup> getPlugInFeatures()
@@ -440,8 +440,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get WebLister Port, return poer on which WebLister is residing
-     * 
-     * @return number of port 
+     *
+     * @return number of port
      */
     public int getWebListerPort()
     {
@@ -455,7 +455,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Web Lister Title
-     * 
+     *
      * @return web lister title
      */
     public String getWebListerTitle()
@@ -465,7 +465,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Web Lister Description
-     * 
+     *
      * @return description text
      */
     public String getWebListerDescription()
@@ -475,7 +475,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Web Lister Items
-     * 
+     *
      * @return
      */
     public ArrayList<BaseListEntry> getWebListerItems()
@@ -494,7 +494,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Device Configuration Definition
-     * 
+     *
      * @return DeviceConfigurationDefinition instance
      */
     public DeviceConfigurationDefinition getDeviceConfigurationDefinition()
@@ -504,7 +504,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Device COnfiguration
-     * 
+     *
      * @return DeviceConfiguration instance
      */
     public DeviceConfiguration getDeviceConfiguration()
@@ -528,7 +528,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Plugin Version
-     * 
+     *
      * @return version as string
      */
     public String getPlugInVersion()
@@ -557,7 +557,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get BG Measurment Type
-     * 
+     *
      * @return type as int of measurement type
      */
     public int getBGMeasurmentType()
@@ -567,7 +567,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Set BG Measurment Type
-     * 
+     *
      * @param type as int of measurement type
      */
     public void setBGMeasurmentType(int type)
@@ -577,7 +577,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get BG Measurment Type Name
-     * 
+     *
      * @return type as string
      */
     public String getBGMeasurmentTypeName()
@@ -587,8 +587,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get BG Measurment Type Name
-     * 
-     * @param type type index 
+     *
+     * @param type type index
      * @return type as string
      */
     public String getBGTypeName(int type)
@@ -598,7 +598,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get BG Type Name Static
-     * 
+     *
      * @param type measurment type
      * @return name as string
      */
@@ -633,8 +633,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
 
     /**
-     * Get Displayed BG String 
-     * 
+     * Get Displayed BG String
+     *
      * @param bgValue
      * @return
      */
@@ -678,7 +678,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get BG Value (converted to current display type)
-     * 
+     *
      * @param bg_value bg values
      * @return bg_value
      */
@@ -696,7 +696,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get BG Value by type
-     * 
+     *
      * @param type input type
      * @param bg_value bg value to convert
      * @return converted value
@@ -715,7 +715,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get BG Value by type
-     * 
+     *
      * @param input_type input type
      * @param output_type output type
      * @param bg_value bg value to convert
@@ -744,7 +744,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get BG Value In Selected Format
-     * 
+     *
      * @param bg_value bg value to convert
      * @return converted value
      */
@@ -762,7 +762,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get BG Value by Type
-     * 
+     *
      * @param input_type input type
      * @param output_type output type
      * @param bg_value_s bg value to convert (as String)
@@ -786,7 +786,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get BG Value Different
-     * 
+     *
      * @param type current type
      * @param bg_value BG value
      * @return converted BG value
@@ -806,7 +806,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Create Db
-     * 
+     *
      * @param db
      */
     public void createDb(HibernateDb db)
@@ -815,7 +815,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         createCustomDb();
     }
 
-    /** 
+    /**
      * Get HibernateDb instance (for working with database in plugin)
      */
     @Override
@@ -826,7 +826,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Create Custom Db
-     * 
+     *
      * This is for plug-in specific database implementation
      */
     public abstract void createCustomDb();
@@ -836,8 +836,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     // ********************************************************
 
     /**
-     * Get Device Manager 
-     * 
+     * Get Device Manager
+     *
      * @return DeviceManager instance
      */
     public DeviceManager getManager()
@@ -879,7 +879,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Columns for Retrieval Entry
-     * 
+     *
      * @return
      */
     public String[] getColumnsTable()
@@ -889,7 +889,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Columns Width for Retrieval Entry
-     * 
+     *
      * @return
      */
     public int[] getColumnsWidthTable()
@@ -899,7 +899,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Entry Statuses
-     * 
+     *
      * @return
      */
     public String[] getEntryStatuses()
@@ -909,7 +909,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Data Entry Object
-     * 
+     *
      * @return
      */
     public DeviceValuesEntry getDataEntryObject()
@@ -924,7 +924,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Device Data Handler
-     * 
+     *
      * @return DeviceDataHandler instance
      */
     public DeviceDataHandler getDeviceDataHandler()
@@ -934,7 +934,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Reading Statuses
-     * 
+     *
      * @return
      */
     public String[] getReadingStatuses()
@@ -944,7 +944,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Filtering States
-     * 
+     *
      * @return
      */
     public String[] getFilteringStates()
@@ -962,7 +962,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Start Year
-     * 
+     *
      * @see com.atech.utils.ATDataAccessAbstract#getStartYear()
      */
     @Override
@@ -973,7 +973,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Load Graph Config Properties
-     * 
+     *
      * @see com.atech.utils.ATDataAccessAbstract#loadGraphConfigProperties()
      */
     @Override
@@ -983,7 +983,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Sleep MS
-     * 
+     *
      * @param ms
      */
     public void sleepMS(int ms)
@@ -998,7 +998,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Check if specified exception was caused by UnsatisfiedLinkError
-     * 
+     *
      * @param ex1
      * @return
      */
@@ -1018,9 +1018,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
 
     /**
-     * Get Extended data for UnsatisfiedLinkError (if we add new libraries that need native 
+     * Get Extended data for UnsatisfiedLinkError (if we add new libraries that need native
      * parts, this is the method to extend it).
-     * 
+     *
      * @param ex1
      * @return String[], it contains following data: [0] = library name, [1] = native file name, [2] = short os name
      */
@@ -1049,7 +1049,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Check Native Library
-     * 
+     *
      * @param native_dll_file
      * @return
      */
@@ -1088,7 +1088,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Load Special Parameters
-     * 
+     *
      * @see com.atech.utils.ATDataAccessAbstract#loadSpecialParameters()
      */
     @Override
@@ -1106,7 +1106,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         // TODO Auto-generated method stub
     }
 
-    /** 
+    /**
      * Get Selected Lang Index
      */
     @Override
@@ -1115,7 +1115,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return 0;
     }
 
-    /** 
+    /**
      * Set Selected Lang Index
      */
     @Override
@@ -1132,7 +1132,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     /**
      * Get Old Data Reader (instance of OldDataReaderAbstract which can read data already in database -
      *    for comparison purposes)
-     *     
+     *
      * @return
      */
     public OldDataReaderAbstract getOldDataReader()
@@ -1142,7 +1142,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Current User Id
-     * 
+     *
      * @return
      */
     @Override
@@ -1153,7 +1153,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Set Current User Id
-     * 
+     *
      * @param user_id
      */
     @Override
@@ -1164,7 +1164,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Is Data Download Screen Wide
-     * 
+     *
      * @return
      */
     public boolean isDataDownloadSceenWide()
@@ -1174,7 +1174,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Yes/No option
-     * 
+     *
      * @param val
      * @return
      */
@@ -1192,11 +1192,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      *   0 = No status
      *   1 = Device not selected
      *   2 = Device doesn't support Download
-     *   
+     *
      *  10 = Download from device supported
      *  11 = Download from fileexport supported
      *  12 = 10 + 11
-     * 
+     *
      * @return
      */
     public int getDownloadStatus()
@@ -1213,7 +1213,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Selected Device Instance
-     * 
+     *
      * @return
      */
     public DeviceInterface getSelectedDeviceInstance()
@@ -1235,7 +1235,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Source Device
-     * 
+     *
      * @return
      */
     public String getSourceDevice()
@@ -1245,7 +1245,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Configuration Manager
-     * 
+     *
      * @return
      */
     public ConfigurationManager getConfigurationManager()
@@ -1255,7 +1255,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Set Configuration Manager
-     * 
+     *
      * @param conf_mgr
      */
     public void setConfigurationManager(ConfigurationManager conf_mgr)
@@ -1265,7 +1265,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Max Decimals that will be used by DecimalHandler
-     * 
+     *
      * @return
      */
     @Override
@@ -1275,9 +1275,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
 
     /**
-     * Get Parent I18nControl Instance. This will be used where translation will be taken 
+     * Get Parent I18nControl Instance. This will be used where translation will be taken
      * from parent (Core). For example in printing.
-     * 
+     *
      * @return
      */
     public I18nControlAbstract getParentI18nControlInstance()
@@ -1286,11 +1286,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
 
     /**
-     * Set Parent I18nControl Instance. This will be used where translation will be taken 
+     * Set Parent I18nControl Instance. This will be used where translation will be taken
      * from parent (Core). For example in printing.
-     * 
-     * @param ic 
-     * 
+     *
+     * @param ic
+     *
      */
     public void setParentI18nControlInstance(I18nControlAbstract ic)
     {
@@ -1299,7 +1299,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get PlugIn Device Util
-     * 
+     *
      * @return
      */
     public PlugInDeviceUtil getPluginDeviceUtil()
@@ -1362,6 +1362,14 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         days[5] = i18n_plugin.getMessage("SATURDAY");
         days[6] = i18n_plugin.getMessage("SUNDAY");
 
+        gcDays[0] = m_i18n.getMessage("SUNDAY");
+        gcDays[1] = m_i18n.getMessage("MONDAY");
+        gcDays[2] = m_i18n.getMessage("TUESDAY");
+        gcDays[3] = m_i18n.getMessage("WEDNESDAY");
+        gcDays[4] = m_i18n.getMessage("THURSDAY");
+        gcDays[5] = m_i18n.getMessage("FRIDAY");
+        gcDays[6] = m_i18n.getMessage("SATURDAY");
+
         reading_statuses = new String[7];
 
         reading_statuses[0] = i18n_plugin.getMessage("STATUS_NONE");
@@ -1387,7 +1395,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Path Resolver
-     * 
+     *
      * @param path
      * @return
      */
@@ -1404,7 +1412,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get BG Converter
-     * 
+     *
      * @return
      */
     public Converter_mgdL_mmolL getBGConverter()
@@ -1444,7 +1452,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     /**
      * Get Graph Context
-     * 
+     *
      * @return
      */
     public PlugInGraphContext getGraphContext()

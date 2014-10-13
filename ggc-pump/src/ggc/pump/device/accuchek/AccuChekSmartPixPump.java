@@ -307,8 +307,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 ProfileSubPattern psp = new ProfileSubPattern();
                 int num = Integer.parseInt(n2.attributeValue("Number"));
 
-                psp.time_start = (num - 1) * 100;
-                psp.time_end = (num - 1) * 100 + 59;
+                psp.timeStart = (num - 1) * 100;
+                psp.timeEnd = (num - 1) * 100 + 59;
                 psp.amount = Float.parseFloat(n2.attributeValue("IU"));
 
                 profile.add(psp);
@@ -334,7 +334,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
             ProfileSubEntry pse = this.resolveBasalProfilePatterns(el);
 
-            if (pse == null || pse.profile_id == null)
+            if (pse == null || pse.profileId == null)
             {
                 continue;
             }
@@ -346,7 +346,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             {
                 Profile p = new Profile();
                 p.date_at = dt_current;
-                p.profile_id = pse.profile_id;
+                p.profile_id = pse.profileId;
                 p.add(pse);
 
                 profiles_raw.put(dt_current, p);
@@ -810,14 +810,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
                 pso.time_event = dt;
                 pso.event_type = ProfileSubOther.EVENT_PATTERN_CHANGED;
-                pso.profile_id = profile;
-                pso.time_start = (int) ATechDate.convertATDate(dt, ATechDate.FORMAT_DATE_AND_TIME_S,
+                pso.profileId = profile;
+                pso.timeStart = (int) ATechDate.convertATDate(dt, ATechDate.FORMAT_DATE_AND_TIME_S,
                     ATechDate.FORMAT_TIME_ONLY_MIN);
 
                 String chh = remark.substring(remark.indexOf("changed") + "changed".length());
                 chh = chh.trim();
 
-                pso.profile_id = chh;
+                pso.profileId = chh;
 
                 // System.out.println("Profile changed : " + chh);
 
@@ -840,12 +840,12 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             {
                 ProfileSubPattern psp = new ProfileSubPattern();
                 psp.dt_start = dt;
-                psp.time_start = (int) ATechDate.convertATDate(dt, ATechDate.FORMAT_DATE_AND_TIME_S,
+                psp.timeStart = (int) ATechDate.convertATDate(dt, ATechDate.FORMAT_DATE_AND_TIME_S,
                     ATechDate.FORMAT_TIME_ONLY_MIN);
 
                 // System.out.println(psp.time_start);
 
-                psp.profile_id = profile;
+                psp.profileId = profile;
                 psp.amount = Float.parseFloat(cbrf);
 
                 return psp;

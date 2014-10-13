@@ -17,6 +17,7 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
@@ -32,24 +33,24 @@ import com.atech.utils.data.ATechDate;
  *  Plug-in:       Pump Tool (support for Pump devices)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  *  Filename:     PumpValuesEntry
  *  Description:  Pump Values Entry, with all data, also statistics item.
- * 
+ *
  *  Author: Andy {andy@atech-software.com}
  */
 
@@ -86,7 +87,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Constructor
-     * 
+     *
      * @param tr
      */
     public PumpValuesEntry(boolean tr)
@@ -96,7 +97,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     }
 
     /**
-     * Constructor 
+     * Constructor
      */
     public PumpValuesEntry()
     {
@@ -104,9 +105,9 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     }
 
     /**
-     * Constructor 
-     * 
-     * @param src 
+     * Constructor
+     *
+     * @param src
      */
     public PumpValuesEntry(String src)
     {
@@ -127,7 +128,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Constructor
-     * 
+     *
      * @param base_type
      */
     public PumpValuesEntry(int base_type)
@@ -147,7 +148,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Constructor
-     * 
+     *
      * @param pdh
      */
     public PumpValuesEntry(PumpDataH pdh)
@@ -170,7 +171,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Add Additional Data
-     * 
+     *
      * @param adv
      */
     public void addAdditionalData(PumpValuesEntryExt adv)
@@ -180,7 +181,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Additional Data
-     * 
+     *
      * @return
      */
     public Hashtable<String, PumpValuesEntryExt> getAdditionalData()
@@ -215,7 +216,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Set Sub Type
-     * 
+     *
      * @param sub_type
      */
     public void setSubType(int sub_type)
@@ -225,7 +226,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Set Value
-     * 
+     *
      * @param val
      */
     public void setValue(String val)
@@ -235,8 +236,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Set Value
-     * 
-     * @return 
+     *
+     * @return
      */
     public String getValue()
     {
@@ -254,7 +255,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Add Parameter
-     * 
+     *
      * @param key
      * @param valuex
      */
@@ -421,7 +422,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Sub Type
-     * 
+     *
      * @return
      */
     public int getSubType()
@@ -431,7 +432,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Sub Type
-     * 
+     *
      * @return
      */
     public String getBaseTypeString()
@@ -441,7 +442,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Sub Type
-     * 
+     *
      * @return
      */
     public String getSubTypeString()
@@ -508,7 +509,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Is Food Set
-     *  
+     *
      * @return
      */
     public String isFoodSet()
@@ -567,7 +568,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Value HTML
-     * 
+     *
      * @return
      */
     public String getValueHTML()
@@ -639,7 +640,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Value Print
-     * 
+     *
      * @return
      */
     public String getValuePrint()
@@ -728,8 +729,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Additional Display
-     * 
-     * @param type 
+     *
+     * @param type
      * @return
      */
     public String getAdditionalDataPrint(int type)
@@ -805,7 +806,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     }
 
     /**
-     * Prepare Entry [PlugIn Framework v1] 
+     * Prepare Entry [PlugIn Framework v1]
      */
     @Override
     public void prepareEntry()
@@ -839,7 +840,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Db Objects [PlugIn Framework v1]
-     * 
+     *
      * @return ArrayList of elements extending GGCHibernateObject
      */
     @Override
@@ -858,7 +859,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Create Comment
-     * 
+     *
      * @return
      */
     public String createComment()
@@ -881,13 +882,50 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         // OutputUtil o= null;
         // return "PumpValuesEntry [date/time=" + this.datetime + ",bg=" +
         // this.bg_str + " " + OutputUtil.getBGUnitName(this.bg_unit) + "]";
-        return "PumpValuesEntry [date/time=" + this.datetime + ", base_type=" + this.getBaseTypeString()
-                + ", sub_type=" + this.getSubTypeString() + ", value=" + this.getValue() + "]";
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("PumpValuesEntry [date/time=" + this.datetime + ", base_type=" + this.getBaseTypeString());
+
+        if (this.getSubType() != 0)
+        {
+            sb.append(", sub_type=" + this.getSubTypeString());
+        }
+
+        if (StringUtils.isNotBlank(this.getValue()))
+        {
+            sb.append(", value=" + this.getValue());
+        }
+
+        if (this.additional_data.size() > 0)
+        {
+            sb.append(", add_data=" + this.additional_data);
+        }
+
+        sb.append("]");
+
+        return sb.toString();
+
+        // if (this.additional_data.size()==0)
+        // {
+        // return "PumpValuesEntry [date/time=" + this.datetime + ", base_type="
+        // + this.getBaseTypeString()
+        // + ", sub_type=" + this.getSubTypeString() + ", value=" +
+        // this.getValue() + "]";
+        // }
+        // else
+        // {
+        // return "PumpValuesEntry [date/time=" + this.datetime + ", base_type="
+        // + this.getBaseTypeString()
+        // + ", sub_type=" + this.getSubTypeString() + ", value=" +
+        // this.getValue() + ", add_data=" + this.additional_data + "]";
+        //
+        // }
+
     }
 
     /**
      * DbAdd - Add this object to database
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return id in type of String
@@ -920,7 +958,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * DbDelete - Delete this object in database
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -938,7 +976,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * DbEdit - Edit this object in database
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -969,7 +1007,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * DbGet - Loads this object. Id must be set.
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -992,7 +1030,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -1008,9 +1046,9 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      *    1 = add action
      *    2 = edit action
      *    3 = delete action
-     *    This is used mainly for objects, contained in lists and dialogs, used for 
+     *    This is used mainly for objects, contained in lists and dialogs, used for
      *    processing by higher classes (classes calling selectors, wizards, etc...
-     * 
+     *
      * @return number of action
      */
     public int getAction()
@@ -1020,7 +1058,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * getObjectName - returns name of DatabaseObject
-     * 
+     *
      * @return name of object (not Hibernate object)
      */
     public String getObjectName()
@@ -1030,7 +1068,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * isDebugMode - returns debug mode of object
-     * 
+     *
      * @return true if object in debug mode
      */
     public boolean isDebugMode()
@@ -1049,7 +1087,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get DateTime (long)
-     * 
+     *
      * @return
      */
     @Override
@@ -1060,7 +1098,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get DateTime format
-     * 
+     *
      * @return format of date time (precission)
      */
     @Override
@@ -1071,7 +1109,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Set DateTime Object (ATechDate)
-     * 
+     *
      * @param dt ATechDate instance
      */
     @Override
@@ -1122,7 +1160,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get DateTime Object (ATechDate)
-     * 
+     *
      * @return ATechDate instance
      */
     @Override
@@ -1133,7 +1171,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Id
-     * 
+     *
      * @return
      */
     /*
@@ -1145,7 +1183,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Comment
-     * 
+     *
      * @return
      */
     public String getComment()
@@ -1155,7 +1193,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Set Comment
-     * 
+     *
      * @param value
      */
     public void setComment(String value)
@@ -1254,7 +1292,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Max Statistics Object - we can have several Statistic types defined here
-     * 
+     *
      * @return
      */
     public int getMaxStatisticsObject()
@@ -1263,10 +1301,10 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     }
 
     /**
-     * Get Statistics Action - we define how statistic is done (we have several predefined 
+     * Get Statistics Action - we define how statistic is done (we have several predefined
      *    types of statistics
-     * 
-     * @param index index for statistics item 
+     *
+     * @param index index for statistics item
      * @return
      */
     public int getStatisticsAction(int index)
@@ -1312,9 +1350,9 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Value For Item
-     * 
-     * @param index index for statistics item 
-     * @return 
+     *
+     * @param index index for statistics item
+     * @return
      */
     public float getValueForItem(int index)
     {
@@ -1398,7 +1436,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Is Special Action - tells if selected statistics item has special actions
-     * 
+     *
      * @param index
      * @return
      */
@@ -1432,7 +1470,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * If we have any special actions for any of objects
-     * 
+     *
      * @return
      */
     public boolean weHaveSpecialActions()
@@ -1440,7 +1478,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return true;
     }
 
-    /** 
+    /**
      * Get MultiLine ToolTip
      */
     @Override
@@ -1449,7 +1487,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return null;
     }
 
-    /** 
+    /**
      * Get MultiLine ToolTip
      */
     @Override
@@ -1498,7 +1536,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Food Tip
-     * 
+     *
      * @return
      */
     public String getFoodTip()
@@ -1523,7 +1561,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     }
 
-    /** 
+    /**
      * Is Indexed (multiline tooltip)
      */
     @Override
@@ -1533,9 +1571,9 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     }
 
     /**
-     * Get Table Column Value (in case that we need special display values for download data table, this method 
-     * can be used, if it's the same as getColumnValue, we can just call that one. 
-     * 
+     * Get Table Column Value (in case that we need special display values for download data table, this method
+     * can be used, if it's the same as getColumnValue, we can just call that one.
+     *
      * @param column
      * @return
      */
@@ -1572,7 +1610,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Special Id
-     * 
+     *
      * @return
      */
     public String getSpecialId()
@@ -1582,7 +1620,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get DeviceValuesEntry Name
-     * 
+     *
      * @return
      */
     public String getDVEName()
@@ -1592,8 +1630,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Value of object
-     * 
-     * 
+     *
+     *
      */
     /*
      * public String getValue()
@@ -1606,7 +1644,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Set Id (this is used for changing old objects in framework v2)
-     * 
+     *
      * @param id_in
      */
     public void setId(long id_in)
@@ -1616,7 +1654,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Id (this is used for changing old objects in framework v2)
-     * 
+     *
      * @return id of old object
      */
     public long getId()
@@ -1626,7 +1664,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Set Source
-     * 
+     *
      * @param src
      */
     public void setSource(String src)
@@ -1636,8 +1674,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     }
 
     /**
-     * Get Source 
-     * 
+     * Get Source
+     *
      * @return
      */
     public String getSource()
@@ -1647,7 +1685,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     /**
      * Get Additional Data Count
-     * 
+     *
      * @return
      */
     public int getAdditionalDataCount()

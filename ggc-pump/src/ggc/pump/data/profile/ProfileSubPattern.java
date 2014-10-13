@@ -10,31 +10,31 @@ import com.atech.utils.data.ATechDate;
  *  Plug-in:       Pump Tool (support for Pump devices)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:  ###---###  
+ *
+ *  Filename:  ###---###
  *  Description:
- * 
+ *
  *  Author: Andy {andy@atech-software.com}
  */
 
 // this is now used instead ProfileSubEntry, but we need to keep all variables,
 // methods and constructors
 public class ProfileSubPattern extends ProfileSubEntry // implements
-                                                       // Comparable<ProfileSubPattern>
+// Comparable<ProfileSubPattern>
 {
 
     /**
@@ -71,7 +71,7 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
 
     /**
      * Instantiates a new profile sub entry.
-     * 
+     *
      * @param input the input
      */
     public ProfileSubPattern(String input)
@@ -80,12 +80,12 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
 
         DataAccessPump da = DataAccessPump.getInstance();
 
-        time_start = da.getIntValueFromString(ss[0]);
-        time_end = da.getIntValueFromString(ss[1]);
+        timeStart = da.getIntValueFromString(ss[0]);
+        timeEnd = da.getIntValueFromString(ss[1]);
 
-        if (time_end == 0)
+        if (timeEnd == 0)
         {
-            time_end = 2359;
+            timeEnd = 2359;
         }
 
         amount = da.getFloatValueFromString(ss[2]);
@@ -93,44 +93,44 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
 
     /**
      * Sets the values.
-     * 
+     *
      * @param pse the new values
      */
     public void setValues(ProfileSubPattern pse)
     {
-        this.time_start = pse.time_start;
-        this.time_end = pse.time_end;
+        this.timeStart = pse.timeStart;
+        this.timeEnd = pse.timeEnd;
         this.amount = pse.amount;
     }
 
     /**
      * Gets the packed.
-     * 
+     *
      * @return the packed
      */
     @Override
     public String getPacked()
     {
-        return time_start + "-" + time_end + "=" + DataAccessPlugInBase.Decimal2Format.format(amount);
+        return timeStart + "-" + timeEnd + "=" + DataAccessPlugInBase.Decimal2Format.format(amount);
     }
 
-    /** 
+    /**
      * toString
      */
     @Override
     public String toString()
     {
-        return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_start) + " - "
-                + ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, time_end) + " = "
+        return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, timeStart) + " - "
+                + ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, timeEnd) + " = "
                 + DataAccessPlugInBase.Decimal2Format.format(amount);
     }
 
     /**
      * Compare.
-     * 
+     *
      * @param pse1 the pse1
      * @param pse2 the pse2
-     * 
+     *
      * @return the int
      */
     /*
@@ -148,11 +148,11 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
      * }
      * }
      */
-    /** 
+    /**
      * compareTo
-     * 
+     *
      * @param psp
-     * @return 
+     * @return
      */
     /*
      * public int compareTo(ProfileSubPattern psp)
@@ -160,6 +160,13 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
      * return compare(this, psp);
      * }
      */
+
+    public boolean isForHour(int hour)
+    {
+        int fullHour = (hour * 100) + 1;
+
+        return ((this.timeStart < fullHour) && (fullHour < this.timeEnd));
+    }
 
     @Override
     public int getType()
@@ -169,7 +176,7 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
 
     /**
      * Check Time Presence
-     * 
+     *
      * @param time_table
      */
     public void checkTimePresence(int[][] time_table)
@@ -198,11 +205,11 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
          * System.exit(0);
          */
 
-        int start_h = (int) Math.floor(this.time_start / 100);
-        int start_m = this.time_start - start_h * 100;
+        int start_h = (int) Math.floor(this.timeStart / 100);
+        int start_m = this.timeStart - start_h * 100;
 
-        int end_h = (int) Math.floor(this.time_end / 100);
-        int end_m = this.time_end - end_h * 100;
+        int end_h = (int) Math.floor(this.timeEnd / 100);
+        int end_m = this.timeEnd - end_h * 100;
 
         // int x = (int)Math.floor((this.time_end/100));
         // System.out.println("Time end: " + time_end + ", x: " + x);

@@ -94,8 +94,8 @@ public class MinimedCareLinkPumpProfile extends MinimedCareLinkData // extends
 
             ProfileSubPattern psp = new ProfileSubPattern();
             psp.amount = Float.parseFloat(rate);
-            psp.time_start = Integer.parseInt(ATDataAccessAbstract.replaceExpression(start_time, ":", ""));
-            psp.profile_id = this.pattern_name;
+            psp.timeStart = Integer.parseInt(ATDataAccessAbstract.replaceExpression(start_time, ":", ""));
+            psp.profileId = this.pattern_name;
 
             this.entries_index.put(index, psp);
 
@@ -117,7 +117,7 @@ public class MinimedCareLinkPumpProfile extends MinimedCareLinkData // extends
     {
         for (int i = 0; i < this.num_profiles - 1; i++)
         {
-            this.entries_index.get("" + i).time_end = this.entries_index.get("" + (i + 1)).time_start;
+            this.entries_index.get("" + i).timeEnd = this.entries_index.get("" + (i + 1)).timeStart;
         }
 
         this.entries_index.get("" + this.num_profiles).dt_end = 2359;

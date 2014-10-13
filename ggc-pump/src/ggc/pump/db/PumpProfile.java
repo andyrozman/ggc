@@ -2,9 +2,14 @@ package ggc.pump.db;
 
 import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.core.util.DataAccess;
+import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.StringTokenizer;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -22,28 +27,28 @@ import com.atech.utils.data.ATechDate;
  *  Application:   GGC - GNU Gluco Control
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  *  Filename:     FoodDescription
- *  Description:  This is DataLayer file (data file, with methods to work with database or in 
- *                this case Hibernate). This one is used for FoodDescriptionH and FoodUserDescriptionH. 
- *                This one is also BackupRestoreObject. 
+ *  Description:  This is DataLayer file (data file, with methods to work with database or in
+ *                this case Hibernate). This one is used for FoodDescriptionH and FoodUserDescriptionH.
+ *                This one is also BackupRestoreObject.
  *                File is not YET DataLayer File at least not active
- * 
- *  Author: andyrozman {andy@atech-software.com}  
+ *
+ *  Author: andyrozman {andy@atech-software.com}
  */
 
 // TODO: DL
@@ -55,6 +60,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     private static final long serialVersionUID = 4355479385042532802L;
     private boolean selected = false;
     I18nControlAbstract ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
+    List<ProfileSubPattern> patterns = null;
 
     /**
      * The backup_mode.
@@ -70,7 +76,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * Constructor
-     * 
+     *
      * @param ch
      */
     public PumpProfile(PumpProfileH ch)
@@ -89,7 +95,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * Constructor
-     * 
+     *
      * @param _ic
      */
     public PumpProfile(I18nControlAbstract _ic)
@@ -104,7 +110,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * Get Target Name
-     * 
+     *
      * @see com.atech.db.hibernate.transfer.BackupRestoreBase#getTargetName()
      */
     public String getTargetName()
@@ -112,9 +118,9 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return DataAccessPump.getInstance().getI18nControlInstance().getMessage("PUMP_PROFILE");
     }
 
-    /** 
+    /**
      * Get Name
-     * @return 
+     * @return
      */
     @Override
     public String getName()
@@ -127,7 +133,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * getBackupClassName - name of class which will be updated/restored
-     * 
+     *
      * @return
      */
     public String getClassName()
@@ -137,7 +143,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * To String
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -149,7 +155,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
             return "Pump Profile: " + super.toString();
     }
 
-    /** 
+    /**
      * getChildren
      */
     public ArrayList<CheckBoxTreeNodeInterface> getNodeChildren()
@@ -157,7 +163,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return null;
     }
 
-    /** 
+    /**
      * isSelected
      */
     public boolean isSelected()
@@ -165,7 +171,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return selected;
     }
 
-    /** 
+    /**
      * setSelected
      */
     public void setSelected(boolean newValue)
@@ -175,7 +181,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * Is Object Collection
-     * 
+     *
      * @return true if it has children
      */
     public boolean isCollection()
@@ -193,7 +199,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * DbAdd - Add this object to database
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return id in type of String
@@ -224,7 +230,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * DbDelete - Delete this object in database
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -243,7 +249,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * DbEdit - Edit this object in database
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -274,7 +280,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * DbGet - Loads this object. Id must be set.
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -299,7 +305,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -309,7 +315,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return false;
     }
 
-    /** 
+    /**
      * getAction
      */
     public int getAction()
@@ -324,7 +330,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * Get Table Version - returns version of table
-     * 
+     *
      * @return version information
      */
     public int getTableVersion()
@@ -333,7 +339,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     }
 
     /**
-     * dbExport - returns export String, for current version 
+     * dbExport - returns export String, for current version
      *
      * @return line that will be exported
      * @throws Exception if export for table is not supported
@@ -369,7 +375,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     }
 
     /**
-     * dbExport - returns export String, for current version 
+     * dbExport - returns export String, for current version
      *
      * @return line that will be exported
      * @throws Exception if export for table is not supported
@@ -381,7 +387,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * dbExportHeader - header for export file
-     * 
+     *
      * @param table_version
      * @return
      */
@@ -393,7 +399,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * dbExportHeader - header for export file
-     * 
+     *
      * @return
      */
     public String dbExportHeader()
@@ -403,7 +409,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * dbImport - processes input entry to right fields
-     * 
+     *
      * @param table_version version of table
      * @param value_entry whole import line
      * @throws Exception if import for selected table version is not supported or it fails
@@ -415,7 +421,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * dbImport - processes input entry to right fields
-     * 
+     *
      * @param table_version version of table
      * @param value_entry whole import line
      * @param parameters parameters
@@ -442,7 +448,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * getBackupFile - name of backup file (base part)
-     * 
+     *
      * @return
      */
     public String getBackupFile()
@@ -452,7 +458,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * getBackupClassName - name of class which will be updated/restored
-     * 
+     *
      * @return
      */
     public String getBackupClassName()
@@ -460,7 +466,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return "ggc.core.db.hibernate.pump.PumpProfileH";
     }
 
-    /** 
+    /**
      * getObjectName
      */
     public String getObjectName()
@@ -468,7 +474,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return "PumpProfile";
     }
 
-    /** 
+    /**
      * isDebugMode
      */
     public boolean isDebugMode()
@@ -487,7 +493,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * Has To Be Clean - if table needs to be cleaned before import
-     * 
+     *
      * @return true if we need to clean
      */
     public boolean hasToBeCleaned()
@@ -495,7 +501,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return true;
     }
 
-    /** 
+    /**
      * Get Column Count
      */
     public int getColumnCount()
@@ -503,7 +509,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return 3;
     }
 
-    /** 
+    /**
      * Get Column Name
      */
     public String getColumnName(int num)
@@ -522,7 +528,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         }
     }
 
-    /** 
+    /**
      * getColumnValue
      */
     public String getColumnValue(int num)
@@ -570,7 +576,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     }
 
-    /** 
+    /**
      * getColumnValueObject
      */
     public Object getColumnValueObject(int num)
@@ -578,7 +584,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return getColumnValue(num);
     }
 
-    /** 
+    /**
      * getColumnWidth
      */
     public int getColumnWidth(int num, int width)
@@ -595,7 +601,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         }
     }
 
-    /** 
+    /**
      * getItemId
      */
     public long getItemId()
@@ -603,7 +609,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return this.getId();
     }
 
-    /** 
+    /**
      * getShortDescription
      */
     public String getShortDescription()
@@ -612,7 +618,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return null;
     }
 
-    /** 
+    /**
      * isFound
      */
     public boolean isFound(String text)
@@ -620,7 +626,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return true;
     }
 
-    /** 
+    /**
      * isFound
      */
     public boolean isFound(int value)
@@ -628,7 +634,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         return true;
     }
 
-    /** 
+    /**
      * isFound
      */
     public boolean isFound(int from, int till, int state)
@@ -648,7 +654,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     }
 
-    /** 
+    /**
      * setSearchContext
      */
     public void setSearchContext()
@@ -665,7 +671,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
     /**
      * setColumnSorter - sets class that will help with column sorting
-     * 
+     *
      * @param cs
      *            ColumnSorter instance
      */
@@ -678,23 +684,23 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      * Compares this object with the specified object for order. Returns a
      * negative integer, zero, or a positive integer as this object is less
      * than, equal to, or greater than the specified object.
-     * 
+     *
      * <p>
      * The implementor must ensure <tt>sgn(x.compareTo(y)) ==
      * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>. (This
      * implies that <tt>x.compareTo(y)</tt> must throw an exception iff
      * <tt>y.compareTo(x)</tt> throws an exception.)
-     * 
+     *
      * <p>
      * The implementor must also ensure that the relation is transitive:
      * <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)</tt> implies
      * <tt>x.compareTo(z)&gt;0</tt>.
-     * 
+     *
      * <p>
      * Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
      * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for all
      * <tt>z</tt>.
-     * 
+     *
      * <p>
      * It is strongly recommended, but <i>not</i> strictly required that
      * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>. Generally speaking, any
@@ -702,18 +708,18 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
      * condition should clearly indicate this fact. The recommended language is
      * "Note: this class has a natural ordering that is inconsistent with
      * equals."
-     * 
+     *
      * <p>
      * In the foregoing description, the notation <tt>sgn(</tt><i>expression</i>
      * <tt>)</tt> designates the mathematical <i>signum</i> function, which is
      * defined to return one of <tt>-1</tt>, <tt>0</tt>, or <tt>1</tt> according
      * to whether the value of <i>expression</i> is negative, zero or positive.
-     * 
+     *
      * @param o
      *            the object to be compared.
      * @return a negative integer, zero, or a positive integer as this object is
      *         less than, equal to, or greater than the specified object.
-     * 
+     *
      * @throws ClassCastException
      *             if the specified object's type prevents it from being
      *             compared to this object.
@@ -728,6 +734,54 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
         return this.columnSorter.compareObjects(this, o);
 
+    }
+
+    public void createProfileSubPatterns()
+    {
+        if (this.patterns == null)
+        {
+            String basalPatts = this.getBasal_diffs();
+
+            StringTokenizer strTok = new StringTokenizer(basalPatts, ";");
+
+            this.patterns = new ArrayList<ProfileSubPattern>();
+
+            while (strTok.hasMoreTokens())
+            {
+                String pat = strTok.nextToken();
+
+                this.patterns.add(new ProfileSubPattern(pat));
+            }
+        }
+    }
+
+    public boolean containsPatternForHourAndDate(GregorianCalendar gc, int hour)
+    {
+        GregorianCalendar gcTest = (GregorianCalendar) gc.clone();
+
+        gcTest.set(Calendar.HOUR_OF_DAY, hour);
+        gcTest.set(Calendar.MINUTE, 1);
+        gcTest.set(Calendar.SECOND, 0);
+
+        long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_AND_TIME_S);
+
+        return ((this.getActive_from() < dt) && (dt < this.getActive_till()));
+    }
+
+    public ProfileSubPattern getPatternForHour(int hour)
+    {
+        if (this.patterns == null)
+        {
+            createProfileSubPatterns();
+        }
+
+        for (ProfileSubPattern psp : this.patterns)
+        {
+            if (psp.isForHour(hour))
+                return psp;
+        }
+
+        return null;
     }
 
 }

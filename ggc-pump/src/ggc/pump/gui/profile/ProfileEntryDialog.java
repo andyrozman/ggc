@@ -98,15 +98,15 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
 
     private void load()
     {
-        this.tc_from.setTime(m_pse.time_start);
-        this.tc_till.setTime(m_pse.time_end);
+        this.tc_from.setTime(m_pse.timeStart);
+        this.tc_till.setTime(m_pse.timeEnd);
         this.sp_amount.setValue(m_pse.amount);
     }
 
     private void save()
     {
-        m_pse.time_start = this.tc_from.getTime();
-        m_pse.time_end = this.tc_till.getTime();
+        m_pse.timeStart = this.tc_from.getTime();
+        m_pse.timeEnd = this.tc_till.getTime();
         m_pse.amount = ((Float) this.sp_amount.getValue()).floatValue();
     }
 

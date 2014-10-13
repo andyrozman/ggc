@@ -59,7 +59,7 @@ public class ProfileSubOther extends ProfileSubEntry
      */
     public String getChangeInfo()
     {
-        return " Pattern " + this.profile_id + " changed at "
+        return " Pattern " + this.profileId + " changed at "
                 + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.time_event);
     }
 

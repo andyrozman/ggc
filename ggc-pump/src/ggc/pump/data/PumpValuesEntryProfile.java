@@ -263,12 +263,12 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         {
             for (int i = 1; i < this.sub_entries.size(); i++)
             {
-                long dt_end = this.sub_entries.get(i).time_start;
+                long dt_end = this.sub_entries.get(i).timeStart;
 
                 ATechDate atd = new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, dt_end);
                 atd.add(Calendar.MINUTE, -1);
 
-                this.sub_entries.get(i - 1).time_end = (int) atd.getATDateTimeAsLong();
+                this.sub_entries.get(i - 1).timeEnd = (int) atd.getATDateTimeAsLong();
             }
         }
 

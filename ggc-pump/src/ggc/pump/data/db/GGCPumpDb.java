@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -409,6 +410,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public PumpProfile getProfileForDayAndTime(GregorianCalendar gc)
     {
+        // FIXME this doesn't work like it should, we need to get active
+        // profile, not all profiles active on specific day
         log.info("getProfileForDayAndTime() - Run");
 
         String sql = "";
@@ -441,6 +444,61 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
 
         return null;
+
+    }
+
+    /**
+     * Get Profiles
+     *
+     * @return
+     */
+    public List<PumpProfile> getProfilesForRange(GregorianCalendar gcFrom, GregorianCalendar gcTill)
+    {
+        // FIXME this doesn't work like it should, we need to get active
+        // profile, not all profiles active on specific day
+        log.info("getProfilesForRange() - Run");
+
+        String sql = "";
+
+        List<PumpProfile> listProfiles = new ArrayList<PumpProfile>();
+
+        long dtFrom = ATechDate.getATDateTimeFromGC(gcFrom, ATechDate.FORMAT_DATE_AND_TIME_S);
+        long dtTill = ATechDate.getATDateTimeFromGC(gcTill, ATechDate.FORMAT_DATE_AND_TIME_S);
+
+        System.out.println("From: " + dtFrom + ", till: " + dtTill);
+
+        try
+        {
+            sql = "SELECT dv " + //
+                    "from ggc.core.db.hibernate.pump.PumpProfileH as dv " + //
+                    "where (dv.active_from > " + dtFrom + //
+                    " and active_from <> 0 )" + //
+                    " or active_till > " + dtFrom + //
+                    // " and dv.active_till < " + dtTill +
+                    // " and dv.active_till > " + dtFrom +
+                    // " or dv.active_till is null) " + //
+                    " and dv.person_id=" + m_da.getCurrentUserId();
+
+            // " and (dv.active_till < " + dtFrom +
+
+            Query q = this.db.getSession().createQuery(sql);
+
+            Iterator<?> it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+                PumpProfileH pdh = (PumpProfileH) it.next();
+                listProfiles.add(new PumpProfile(pdh));
+            }
+
+        }
+        catch (Exception ex)
+        {
+            log.debug("Sql: " + sql);
+            log.error("getProfilesForRange(). Exception: " + ex, ex);
+        }
+
+        return listProfiles;
 
     }
 

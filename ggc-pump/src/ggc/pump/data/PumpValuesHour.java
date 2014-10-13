@@ -1,6 +1,7 @@
 package ggc.pump.data;
 
 import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ExceptionHandling;
 
 public class PumpValuesHour
 {
@@ -19,12 +21,16 @@ public class PumpValuesHour
     private StringBuffer sbBgs = new StringBuffer();
     private float chs = 0.0f;
     private float bolus = 0.0f;
+    private float bolusSpecial = 0.0f;
+    private StringBuffer sbBolus = new StringBuffer();
+
     private static final Log LOG = LogFactory.getLog(PumpValuesHour.class);
     DataAccessPump dataAccessPump;
 
     public PumpValuesHour(DataAccessPump da)
     {
         this.dataAccessPump = da;
+        this.dataAccessPump.setNumberParsingExceptionHandling(ExceptionHandling.THROW_EXCEPTION);
     }
 
     public void addBGEntry(PumpValuesEntryExt pumpValuesEntryExt)
@@ -81,7 +87,7 @@ public class PumpValuesHour
     {
         try
         {
-            return Float.parseFloat(value);
+            return dataAccessPump.getFloatValueFromStringWithException(value, 0.0f);
         }
         catch (Exception ex)
         {
@@ -106,9 +112,67 @@ public class PumpValuesHour
         {
             // special boluses
             // pump values
-            bolus += parseFloat(pve.getValue(), "Pump-Bolus");
-        }
 
+            switch (pve.getSubType())
+            {
+                case PumpBolusType.PUMP_BOLUS_STANDARD:
+                case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
+                case PumpBolusType.PUMP_BOLUS_DUAL_NORMAL:
+                    {
+                        this.bolus += this.parseFloat(pve.getValue(), "Pump-Bolus");
+                    }
+                    break;
+
+                case PumpBolusType.PUMP_BOLUS_DUAL_SQUARE:
+                case PumpBolusType.PUMP_BOLUS_SQUARE:
+                    {
+                        addBolusSpecial(getTimeAsString(pve.getDateTime()) + "=" + pve.getValue());
+
+                        String val = pve.getValue();
+                        val = val.substring("AMOUNT_SQUARE=".length(), val.indexOf(";DURATION="));
+
+                        this.bolusSpecial += this.parseFloat(val, "Pump-Bolus-Square");
+                        // pve.setValue("AMOUNT_SQUARE=" + amount + ";DURATION="
+                        // + e);
+                    }
+                    break;
+
+                case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
+                    {
+                        // immediate (as normal)
+                        String val = pve.getValue();
+
+                        // System.out.println("MW: " + val);
+
+                        val = val.substring("AMOUNT=".length(), val.indexOf(";AMOUNT_SQUARE="));
+
+                        // System.out.println("MW-2: " + val);
+
+                        this.bolus += this.parseFloat(val, "Pump-Bolus-Multiwave(Imm)");
+
+                        // square
+                        val = pve.getValue();
+                        val = val.substring(val.indexOf("AMOUNT_SQUARE="));
+
+                        addBolusSpecial(getTimeAsString(pve.getDateTime()) + "=" + val);
+
+                        // String val = pve.getValue();
+                        val = val.substring("AMOUNT_SQUARE=".length(), val.indexOf(";DURATION="));
+
+                        this.bolusSpecial += this.parseFloat(val, "Pump-Bolus-Multiwave(Sq)");
+
+                        // pve.setValue(String.format("AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s",
+                        // pve.setValue("AMOUNT_1=%s;AMOUNT_2=%s
+                        // pve.setValue("IMMEDIATE_AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s"
+
+                    }
+                    break;
+
+                default:
+                    {}
+                    break;
+            }
+        }
     }
 
     public float getBolus()
@@ -122,6 +186,44 @@ public class PumpValuesHour
         mBgs.trim();
 
         return mBgs;
+    }
+
+    public float getBolusSpecialForSum()
+    {
+        return bolusSpecial;
+    }
+
+    public void setBolusSpecial(float bolusSpecial)
+    {
+        this.bolusSpecial = bolusSpecial;
+    }
+
+    public void addBolusSpecial(String blsSpecial)
+    {
+        // BOLUS_SQUARE
+        // AMOUNT_SQUARE=%s;DURATION=%s
+
+        blsSpecial = blsSpecial.replaceAll("AMOUNT_SQUARE=",
+            this.dataAccessPump.getI18nControlInstance().getMessage("BOLUS_SQUARE") + " ");
+        blsSpecial = blsSpecial.replaceAll(";DURATION=", " (");
+        blsSpecial += ")";
+
+        sbBolus.append(" ");
+        sbBolus.append(blsSpecial);
+        sbBolus.append(",");
+    }
+
+    public boolean hasBolusSpecial()
+    {
+        return (sbBolus.length() > 0);
+    }
+
+    public String getBolusSpecial()
+    {
+        String mSpBol = sbBolus.substring(0, sbBolus.length() - 1);
+        mSpBol.trim();
+
+        return mSpBol;
     }
 
 }

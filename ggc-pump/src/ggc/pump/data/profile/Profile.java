@@ -149,16 +149,16 @@ public class Profile implements Comparable<Profile>
         {
             // if (first.amount!=this.pattern_entries.get(i).amount)
             {
-                int time_h = (int) Math.floor(this.pattern_entries.get(i).time_start / 100);
+                int time_h = (int) Math.floor(this.pattern_entries.get(i).timeStart / 100);
 
                 int end_time = (time_h - 1) * 100 + 59;
 
-                this.pattern_entries.get(i - 1).time_end = end_time;
+                this.pattern_entries.get(i - 1).timeEnd = end_time;
             }
 
         }
 
-        this.pattern_entries.get(this.pattern_entries.size() - 1).time_end = 2359;
+        this.pattern_entries.get(this.pattern_entries.size() - 1).timeEnd = 2359;
 
         Collections.sort(this.pattern_entries);
 
@@ -180,7 +180,7 @@ public class Profile implements Comparable<Profile>
         {
             if (first.amount != this.pattern_entries.get(i).amount)
             {
-                first.time_end = last.time_end;
+                first.timeEnd = last.timeEnd;
                 pe.add(first);
 
                 first = this.pattern_entries.get(i);
@@ -189,7 +189,7 @@ public class Profile implements Comparable<Profile>
             last = this.pattern_entries.get(i);
         }
 
-        first.time_end = last.time_end;
+        first.timeEnd = last.timeEnd;
         pe.add(first);
 
         this.pattern_entries.clear();

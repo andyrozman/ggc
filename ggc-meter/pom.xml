@@ -37,6 +37,8 @@
 				<directory>src/test/resources</directory>
 			</testResource>
 		</testResources>
+
+
 	</build>
 
 	<dependencies>
@@ -78,6 +80,7 @@
 			<artifactId>nrjavaserial</artifactId>
 		</dependency>
 	</dependencies>
+
 
 	<properties>
 

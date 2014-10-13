@@ -139,7 +139,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
         {
             ProfileSubEntry pse = this.profiles_entries.get(i);
 
-            for (int k = pse.time_start; k <= pse.time_end; k++)
+            for (int k = pse.timeStart; k <= pse.timeEnd; k++)
             {
 
                 int h = k / 100;
@@ -197,7 +197,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
             {
                 ProfileSubEntry pse = this.profiles_entries.get(j1);
 
-                if (tm >= pse.time_start && tm <= pse.time_end)
+                if (tm >= pse.timeStart && tm <= pse.timeEnd)
                 {
                     last = j1;
 

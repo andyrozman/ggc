@@ -92,7 +92,7 @@ public class MinimedSPMPump extends MinimedSPM
 
                 long key = en.nextElement().longValue();
 
-                pse.time_start = (int) key;
+                pse.timeStart = (int) key;
                 pse.amount = data.profiles.get(key);
 
                 pvep.addProfileSubEntry(pse);

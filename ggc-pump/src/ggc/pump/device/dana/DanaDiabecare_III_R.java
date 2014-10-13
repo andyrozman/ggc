@@ -1110,8 +1110,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             for (int i = 0; i < 24; i++)
             {
                 ProfileSubPattern pse = new ProfileSubPattern();
-                pse.time_start = i * 100;
-                pse.time_end = pse.time_start + 59;
+                pse.timeStart = i * 100;
+                pse.timeEnd = pse.timeStart + 59;
                 pse.amount = this.hex_utils.getIntFromArray(6 + i * 2) / 100.0f;
 
                 // all_data[i] = (this.hex_utils.getIntFromArray(6 + (i*2)) /
