@@ -9,6 +9,8 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -22,9 +24,11 @@ import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.update.startup.os.OSUtil;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
 
@@ -62,10 +66,9 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
      */
     // New_Item_Edit
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1965963565398592466L;
+    private static final Log LOG = LogFactory.getLog(CommunicationPortSelector.class);
+
     I18nControlAbstract m_ic;
     JLabel label;
     JTextField tf_port;
@@ -93,33 +96,11 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         this.m_ic = da.getI18nControlInstance();
         this.connection_protocol_type = protocol_type;
 
-        if (checkNative())
-        {
-            this.m_da.addComponent(this);
-            ATSwingUtils.initLibrary();
+        this.m_da.addComponent(this);
+        ATSwingUtils.initLibrary();
 
-            init();
-            this.setVisible(true);
-        }
-
-    }
-
-    private boolean checkNative()
-    {
-        if (this.connection_protocol_type == ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE)
-        {
-            if (!m_da.checkNativeLibrary("rxtxSerial"))
-            {
-                JOptionPane.showMessageDialog(this, String.format(m_ic.getMessage("NO_BINARY_PART_FOUND"), "Rxtx",
-                    OSUtil.getShortOSName(), "rxtxSerial"), m_ic.getMessage("ERROR") + ": Rxtx",
-                    JOptionPane.ERROR_MESSAGE, null);
-
-                return false;
-            }
-        }
-
-        return true;
-
+        init();
+        this.setVisible(true);
     }
 
     /**
@@ -177,7 +158,6 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         panel.add(help_button);
 
         this.setBounds(25, 115, 320, st_y + 80);
-
     }
 
     /**
@@ -207,7 +187,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         data_list.setModel(new ListModel()
         {
 
-            Vector<String> elems = getDataForList();
+            List<String> elems = getDataForList();
 
             public void addListDataListener(ListDataListener arg0)
             {
@@ -329,8 +309,10 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
 
     }
 
-    protected Vector<String> getDataForList()
+    protected List<String> getDataForList()
     {
+        List<String> portList = new ArrayList<String>();
+
         // New_Item_Edit
         if (this.connection_protocol_type == ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE)
         {
@@ -340,27 +322,49 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
             }
             catch (Exception ex)
             {
-                System.out.println("Exception: " + ex);
-                return new Vector<String>();
+                LOG.warn("Couldn't read available ports. Ex: " + ex);
             }
 
         }
         else if (this.connection_protocol_type == ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML)
         {
-            File[] fls = File.listRoots();
 
             Vector<String> drives = new Vector<String>();
 
-            for (File fl : fls)
+            if (System.getProperty("os.name").contains("Win"))
             {
-                drives.add(fl.toString());
-            }
+                File[] fls = File.listRoots();
 
-            if (!System.getProperty("os.name").contains("Win"))
+                for (File fl : fls)
+                {
+                    drives.add(fl.toString());
+                }
+            }
+            else
             {
                 // non windows system, will load data from /mnt and /media and
-                // /Volumes
-                String[] rts = { "/mnt", "/media", "/Volumes" };
+                // /Volumes. Some Linux machines also have additional mount
+                // point in latest releases (/media/<username>), which is
+                // also checked.
+
+                List<String> rts = new ArrayList<String>();
+                rts.add("/mnt");
+                rts.add("/Volumes");
+
+                if (System.getProperty("os.name").equals("Linux"))
+                {
+                    String fName = "/media/" + System.getProperty("user.name");
+                    File f = new File(fName);
+
+                    if (f.exists())
+                    {
+                        rts.add(fName);
+                    }
+                    else
+                    {
+                        rts.add("/media");
+                    }
+                }
 
                 for (String rt : rts)
                 {
@@ -392,13 +396,11 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
             }
             catch (Exception ex)
             {
-                System.out.println("Exception: " + ex);
-                return new Vector<String>();
+                LOG.warn("Couldn't read available ports. Ex: " + ex);
             }
-
         }
-        else
-            return null;
+
+        return portList;
     }
 
     /**
