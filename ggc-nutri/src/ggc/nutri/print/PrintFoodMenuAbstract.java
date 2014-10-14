@@ -64,7 +64,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      */
     public PrintFoodMenuAbstract(DayValuesData mv)
     {
-        super(DataAccessNutri.getInstance().getParentI18nControlInstance(), false);
+        super(DataAccessNutri.getInstance(), false);
 
         this.dayValuesData = mv;
         dataAccessCore = DataAccess.getInstance();
@@ -138,8 +138,8 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
                 DailyValuesRow rw = dv.getRow(i);
 
-                if (!this.dataAccess.isValueSet(rw.getMealsIds())
-                        && !this.dataAccess.isValueSet(rw
+                if (!this.dataAccessCore.isValueSet(rw.getMealsIds())
+                        && !this.dataAccessCore.isValueSet(rw
                                 .getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION)))
                 {
                     continue;
@@ -154,7 +154,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
                 datatable.addCell(new Phrase(rw.getTimeAsString(), f));
 
-                if (this.dataAccess.isValueSet(rw.getMealsIds()))
+                if (this.dataAccessCore.isValueSet(rw.getMealsIds()))
                 {
 
                     DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds(), true);
@@ -167,7 +167,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
                     }
                 }
 
-                if (this.dataAccess.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION)))
+                if (this.dataAccessCore.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION)))
                 {
                     writeFoodDescData(datatable, rw);
                 }
@@ -198,7 +198,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      */
     public String getFormatedValue(float value, int dec_places)
     {
-        return this.dataAccess.getDecimalHandler().getDecimalAsString(value, dec_places); // ch
+        return this.dataAccessCore.getDecimalHandler().getDecimalAsString(value, dec_places); // ch
 
     }
 
