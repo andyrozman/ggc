@@ -222,19 +222,16 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
 
     }
 
-    private Phrase createEmptyTextPhraseSmall()
-    {
-        return new Phrase("", smallFont);
-    }
+    // private Phrase createEmptyTextPhraseSmall()
+    // {
+    // return new Phrase("", smallFont);
+    // }
 
     private Phrase createNormalTextPhraseSmall(String text)
     {
         return new Phrase(this.i18nControl.getMessage(text), smallFont);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public String getTitleText()
     {
         return "PUMP_PROFILES";

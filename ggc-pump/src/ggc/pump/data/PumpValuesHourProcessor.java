@@ -17,23 +17,23 @@ public class PumpValuesHourProcessor
 {
 
     DataAccessPump dataAccessPump = DataAccessPump.getInstance();
-    HashMap<PumpDeviceValueType, List<String>> comments = null;
+    HashMap<PumpDeviceValueType, List<String>> additionalData = null;
     HashMap<String, String> index = new HashMap<String, String>();
 
     public void clearComments()
     {
-        if (comments == null)
+        if (additionalData == null)
         {
-            comments = new HashMap<PumpDeviceValueType, List<String>>();
-            comments.put(PumpDeviceValueType.BG, new ArrayList<String>());
-            comments.put(PumpDeviceValueType.BOLUS, new ArrayList<String>());
-            comments.put(PumpDeviceValueType.COMMENT, new ArrayList<String>());
+            additionalData = new HashMap<PumpDeviceValueType, List<String>>();
+            additionalData.put(PumpDeviceValueType.BG, new ArrayList<String>());
+            additionalData.put(PumpDeviceValueType.PUMP_ADDITIONAL_DATA, new ArrayList<String>());
+            additionalData.put(PumpDeviceValueType.COMMENT, new ArrayList<String>());
         }
         else
         {
-            comments.get(PumpDeviceValueType.BG).clear();
-            comments.get(PumpDeviceValueType.BOLUS).clear();
-            comments.get(PumpDeviceValueType.COMMENT).clear();
+            additionalData.get(PumpDeviceValueType.BG).clear();
+            additionalData.get(PumpDeviceValueType.PUMP_ADDITIONAL_DATA).clear();
+            additionalData.get(PumpDeviceValueType.COMMENT).clear();
         }
 
     }
@@ -102,7 +102,7 @@ public class PumpValuesHourProcessor
                 {
                     if (!this.index.containsKey(pve.toString()))
                     {
-                        this.addComments(PumpDeviceValueType.COMMENT, com);
+                        this.addAdditionalData(PumpDeviceValueType.COMMENT, com);
                         this.index.put(pve.toString(), "");
                     }
 
@@ -121,7 +121,8 @@ public class PumpValuesHourProcessor
             {
                 if (!this.index.containsKey(pve.toString()))
                 {
-                    this.addComments(PumpDeviceValueType.COMMENT, pve.getComment());
+                    System.out.println("C:" + pve.getComment());
+                    this.addAdditionalData(PumpDeviceValueType.COMMENT, pve.getComment());
                     this.index.put(pve.toString(), "");
                 }
             }
@@ -130,16 +131,42 @@ public class PumpValuesHourProcessor
         return pumpValuesHour;
     }
 
-    public void addComments(PumpDeviceValueType valueType, String partComment)
+    public void addAdditionalData(PumpDeviceValueType valueType, String partComment)
     {
-        comments.get(valueType).add(partComment);
+        additionalData.get(valueType).add(partComment);
+    }
+
+    public boolean isAdditionalDataForPumpTypeSet(PumpDeviceValueType type)
+    {
+        return (this.additionalData.get(type).size() > 0);
+    }
+
+    public String getAdditionalDataForPumpTypeSet(PumpDeviceValueType type)
+    {
+        List<String> listComms = additionalData.get(type);
+
+        if (!listComms.isEmpty())
+        {
+            StringBuffer sb = new StringBuffer();
+
+            for (String entry : listComms)
+            {
+                sb.append(entry);
+                sb.append(",");
+            }
+
+            return sb.toString().substring(0, sb.length() - 1);
+        }
+        else
+            return "";
+
     }
 
     public String getFullComment()
     {
         StringBuffer fullComment = new StringBuffer();
 
-        List<String> listComms = comments.get(PumpDeviceValueType.BG);
+        List<String> listComms = additionalData.get(PumpDeviceValueType.BG);
 
         if (!listComms.isEmpty())
         {
@@ -157,7 +184,7 @@ public class PumpValuesHourProcessor
             fullComment.append("; ");
         }
 
-        listComms = comments.get(PumpDeviceValueType.BOLUS);
+        listComms = additionalData.get(PumpDeviceValueType.BOLUS);
 
         if (!listComms.isEmpty())
         {
@@ -175,7 +202,7 @@ public class PumpValuesHourProcessor
             fullComment.append("; ");
         }
 
-        listComms = comments.get(PumpDeviceValueType.COMMENT);
+        listComms = additionalData.get(PumpDeviceValueType.COMMENT);
 
         if (!listComms.isEmpty())
         {

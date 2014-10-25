@@ -7,6 +7,7 @@ import ggc.plugin.graph.data.GraphValue;
 import ggc.plugin.graph.data.GraphValuesCapable;
 import ggc.plugin.output.OutputWriterType;
 import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpAlarms;
 import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpBolusType;
@@ -459,7 +460,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         else if (this.base_type == PumpBaseType.PUMP_DATA_REPORT)
             return m_da.getPumpReportTypes().getDescriptions()[this.sub_type];
         else if (this.base_type == PumpBaseType.PUMP_DATA_ALARM)
-            return m_da.getPumpAlarmTypes().getDescriptionByID(this.sub_type);
+            return PumpAlarms.getDescriptionByID(this.sub_type);
         else if (this.base_type == PumpBaseType.PUMP_DATA_ERROR)
             return m_da.getPumpErrorTypes().getDescriptionByID(this.sub_type);
         else if (this.base_type == PumpBaseType.PUMP_DATA_EVENT)

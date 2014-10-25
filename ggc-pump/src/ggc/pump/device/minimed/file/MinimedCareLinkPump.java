@@ -86,7 +86,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
     public void setMappingData()
     {
         // new PumpAlarms();
-        this.alarm_mappings.put("4", PumpAlarms.PUMP_ALARM_NO_DELIVERY);
+        this.alarm_mappings.put("4", PumpAlarms.NO_DELIVERY.getAlarmCode());
 
         profile_names = new String[3];
         profile_names[0] = "Standard";
@@ -386,10 +386,10 @@ public class MinimedCareLinkPump extends MinimedCareLink
                 PumpEvents.PUMP_EVENT_SELF_TEST));
 
         this.dvw.put("JournalEntryPumpLowBattery", new PumpTempValues(PumpTempValues.OBJECT_BASE,
-                PumpBaseType.PUMP_DATA_ALARM, PumpAlarms.PUMP_ALARM_BATTERY_LOW));
+                PumpBaseType.PUMP_DATA_ALARM, PumpAlarms.BATTERY_LOW.getAlarmCode()));
 
         this.dvw.put("JournalEntryPumpLowReservoir", new PumpTempValues(PumpTempValues.OBJECT_BASE,
-                PumpBaseType.PUMP_DATA_ALARM, PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW));
+                PumpBaseType.PUMP_DATA_ALARM, PumpAlarms.CARTRIDGE_LOW.getAlarmCode()));
 
     }
 

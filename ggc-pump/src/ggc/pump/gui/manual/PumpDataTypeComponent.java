@@ -5,6 +5,7 @@ import ggc.core.util.DataAccess;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpAlarms;
 import ggc.pump.data.defs.PumpBasalSubType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpBolusType;
@@ -333,7 +334,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         else if (this.type == PumpBaseType.PUMP_DATA_ALARM)
         {
             this.label_1.setText(ic.getMessage("ALARM_TYPE") + ":");
-            addAllItems(this.combo_1, this.m_da.getPumpAlarmTypes().getDescriptions());
+            addAllItems(this.combo_1, PumpAlarms.getDescriptions());
         }
         else if (this.type == PumpBaseType.PUMP_DATA_ERROR)
         {

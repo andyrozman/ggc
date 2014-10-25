@@ -341,7 +341,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.m_pump_bolus_type = new PumpBolusType();
         this.m_pump_basal_type = new PumpBasalSubType();
         this.m_pump_report = new PumpReport();
-        this.m_pump_alarms = new PumpAlarms();
+        // this.m_pump_alarms = new PumpAlarms();
         this.m_pump_events = new PumpEvents();
         this.m_pump_add_type = new PumpAdditionalDataType();
         this.m_pump_errors = new PumpErrors();

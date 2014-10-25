@@ -69,10 +69,10 @@ import com.atech.utils.data.ATechDate;
  */
 
 public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements PumpInterface // extends
-                                                                                             // AbstractXmlMeter
-                                                                                             // //mlProtocol
-                                                                                             // //implements
-                                                                                             // SelectableInterface
+// AbstractXmlMeter
+// //mlProtocol
+// //implements
+// SelectableInterface
 {
 
     private static Log log = LogFactory.getLog(AccuChekSmartPixPump.class);
@@ -1156,14 +1156,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
         // alarm mappings
         this.alarm_mappings = new Hashtable<String, Integer>();
-        this.alarm_mappings.put("A1", new Integer(PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW));
-        this.alarm_mappings.put("A2", new Integer(PumpAlarms.PUMP_ALARM_BATTERY_LOW));
-        this.alarm_mappings.put("A3", new Integer(PumpAlarms.PUMP_ALARM_REVIEW_DATETIME));
-        this.alarm_mappings.put("A4", new Integer(PumpAlarms.PUMP_ALARM_ALARM_CLOCK));
-        this.alarm_mappings.put("A5", new Integer(PumpAlarms.PUMP_ALARM_PUMP_TIMER));
-        this.alarm_mappings.put("A6", new Integer(PumpAlarms.PUMP_ALARM_TEMPORARY_BASAL_RATE_CANCELED));
-        this.alarm_mappings.put("A7", new Integer(PumpAlarms.PUMP_ALARM_TEMPORARY_BASAL_RATE_OVER));
-        this.alarm_mappings.put("A8", new Integer(PumpAlarms.PUMP_ALARM_BOLUS_CANCELED));
+        this.alarm_mappings.put("A1", new Integer(PumpAlarms.CARTRIDGE_LOW.getAlarmCode()));
+        this.alarm_mappings.put("A2", new Integer(PumpAlarms.BATTERY_LOW.getAlarmCode()));
+        this.alarm_mappings.put("A3", new Integer(PumpAlarms.REVIEW_DATETIME.getAlarmCode()));
+        this.alarm_mappings.put("A4", new Integer(PumpAlarms.ALARM_CLOCK.getAlarmCode()));
+        this.alarm_mappings.put("A5", new Integer(PumpAlarms.PUMP_TIMER.getAlarmCode()));
+        this.alarm_mappings.put("A6", new Integer(PumpAlarms.TEMPORARY_BASAL_RATE_CANCELED.getAlarmCode()));
+        this.alarm_mappings.put("A7", new Integer(PumpAlarms.TEMPORARY_BASAL_RATE_OVER.getAlarmCode()));
+        this.alarm_mappings.put("A8", new Integer(PumpAlarms.BOLUS_CANCELED.getAlarmCode()));
 
         this.event_mappings = new Hashtable<String, Integer>();
         this.event_mappings.put("prime infusion set", new Integer(PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET));

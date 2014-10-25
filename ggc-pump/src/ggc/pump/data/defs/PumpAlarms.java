@@ -26,111 +26,78 @@ package ggc.pump.data.defs;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class PumpAlarms extends PumpDefsAbstract
+public enum PumpAlarms // extends PumpDefsAbstract
 {
 
-    /**
-     * Alarm Descriptions
-     */
-    /*
-     * private String[] alarms_desc = {
-     * ic.getMessage("ALARM_UNKNOWN"),
-     * ic.getMessage("ALARM_CARTRIDGE_LOW"),
-     * ic.getMessage("ALARM_BATTERY_LOW"),
-     * ic.getMessage("ALARM_REVIEW_DATETIME"),
-     * ic.getMessage("ALARM_ALARM_CLOCK"),
-     * ic.getMessage("ALARM_PUMP_TIMER"),
-     * ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"),
-     * ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"),
-     * ic.getMessage("ALARM_BOLUS_CANCELED"),
-     * };
-     */
+    UNKNOWN_ALARM(0, "ALARM_UNKNOWN"), //
+    CARTRIDGE_LOW(1, "ALARM_CARTRIDGE_LOW"), //
+    BATTERY_LOW(2, "ALARM_BATTERY_LOW"), //
+    BATTERY_REPLACE(11, ""), //
+    REVIEW_DATETIME(3, "ALARM_REVIEW_DATETIME"), //
+    ALARM_CLOCK(4, "ALARM_ALARM_CLOCK"), //
+    PUMP_TIMER(5, "ALARM_PUMP_TIMER"), //
+    TEMPORARY_BASAL_RATE_CANCELED(6, "ALARM_TEMPORARY_BASAL_RATE_CANCELED"), //
+    TEMPORARY_BASAL_RATE_OVER(7, "ALARM_TEMPORARY_BASAL_RATE_OVER"), //
+    BOLUS_CANCELED(8, "ALARM_BOLUS_CANCELED"), //
+    NO_DELIVERY(10, "ALARM_NO_DELIVERY"), //
+    EMPTY_CARTRIDGE(12, ""), //
+    AUTO_OFF(13, ""), //
+    CALL_SERVICE(14, ""), //
+    ;
 
-    /*
-     * private String[] alarms_desc_comp = {
-     * ic.getMessage("SELECT_SUBTYPE"),
-     * ic.getMessage("ALARM_CARTRIDGE_LOW"),
-     * ic.getMessage("ALARM_BATTERY_LOW"),
-     * ic.getMessage("ALARM_REVIEW_DATETIME"),
-     * ic.getMessage("ALARM_ALARM_CLOCK"),
-     * ic.getMessage("ALARM_PUMP_TIMER"),
-     * ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"),
-     * ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"),
-     * ic.getMessage("ALARM_BOLUS_CANCELED"),
-     * };
-     */
+    int alarmCode;
 
-    // Hashtable<String,String> alarms_mapping = new Hashtable<String,String>();
-
-    /**
-     * Pump Alarm: Cartridge Low
-     */
-    public final static int PUMP_ALARM_UNKNOWN = 0;
-
-    /**
-     * Pump Alarm: Cartridge Low
-     */
-    public final static int PUMP_ALARM_CARTRIDGE_LOW = 1;
-
-    /**
-     * Pump Alarm: Battery Low
-     */
-    public final static int PUMP_ALARM_BATTERY_LOW = 2;
-
-    /**
-     * Pump Alarm: Review Datetime
-     */
-    public final static int PUMP_ALARM_REVIEW_DATETIME = 3;
-
-    /**
-     * Pump Alarm: Alarm Clock
-     */
-    public final static int PUMP_ALARM_ALARM_CLOCK = 4;
-
-    /**
-     * Pump Alarm: Pump Timer
-     */
-    public final static int PUMP_ALARM_PUMP_TIMER = 5;
-
-    /**
-     * Pump Alarm: Temporary Basal Rate Canceled
-     */
-    public final static int PUMP_ALARM_TEMPORARY_BASAL_RATE_CANCELED = 6;
-
-    /**
-     * Pump Alarm: Temporary Basal Rate Over
-     */
-    public final static int PUMP_ALARM_TEMPORARY_BASAL_RATE_OVER = 7;
-
-    /**
-     * Pump Alarm: Bolus Canceled
-     */
-    public final static int PUMP_ALARM_BOLUS_CANCELED = 8;
-
-    /**
-     * Pump Alarm: No Delivery
-     */
-    public final static int PUMP_ALARM_NO_DELIVERY = 10;
-
-    /**
-     * Constructor
-     */
-    public PumpAlarms()
+    public int getAlarmCode()
     {
-        super();
-        this.setDataDesc(PumpAlarms.PUMP_ALARM_UNKNOWN, ic.getMessage("ALARM_UNKNOWN"));
-        this.setDataDesc(PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW, ic.getMessage("ALARM_CARTRIDGE_LOW"));
-        this.setDataDesc(PumpAlarms.PUMP_ALARM_BATTERY_LOW, ic.getMessage("ALARM_BATTERY_LOW"));
-        this.setDataDesc(PumpAlarms.PUMP_ALARM_REVIEW_DATETIME, ic.getMessage("ALARM_REVIEW_DATETIME"));
-        this.setDataDesc(PumpAlarms.PUMP_ALARM_ALARM_CLOCK, ic.getMessage("ALARM_ALARM_CLOCK"));
-        this.setDataDesc(PumpAlarms.PUMP_ALARM_PUMP_TIMER, ic.getMessage("ALARM_PUMP_TIMER"));
-        this.setDataDesc(PumpAlarms.PUMP_ALARM_TEMPORARY_BASAL_RATE_CANCELED,
-            ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"));
-        this.setDataDesc(PumpAlarms.PUMP_ALARM_TEMPORARY_BASAL_RATE_OVER,
-            ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"));
-        this.setDataDesc(PumpAlarms.PUMP_ALARM_BOLUS_CANCELED, ic.getMessage("ALARM_BOLUS_CANCELED"));
-        this.setDataDesc(PumpAlarms.PUMP_ALARM_NO_DELIVERY, ic.getMessage("ALARM_NO_DELIVERY"));
+        return alarmCode;
     }
+
+    public String getAlarmMessage()
+    {
+        return alarmMessage;
+    }
+
+    public String getAlarmMessageTranslated()
+    {
+        return alarmMessageTranslated;
+    }
+
+    String alarmMessage;
+    String alarmMessageTranslated;
+
+    private PumpAlarms(int code, String i18nMessage)
+    {
+        this.alarmCode = code;
+        this.alarmMessage = i18nMessage;
+    }
+
+    // /**
+    // * Constructor
+    // */
+    // public PumpAlarms()
+    // {
+    // super();
+    // this.setDataDesc(PumpAlarms.PUMP_ALARM_UNKNOWN,
+    // ic.getMessage("ALARM_UNKNOWN"));
+    // this.setDataDesc(PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW,
+    // ic.getMessage("ALARM_CARTRIDGE_LOW"));
+    // this.setDataDesc(PumpAlarms.PUMP_ALARM_BATTERY_LOW,
+    // ic.getMessage("ALARM_BATTERY_LOW"));
+    // this.setDataDesc(PumpAlarms.PUMP_ALARM_REVIEW_DATETIME,
+    // ic.getMessage("ALARM_REVIEW_DATETIME"));
+    // this.setDataDesc(PumpAlarms.PUMP_ALARM_ALARM_CLOCK,
+    // ic.getMessage("ALARM_ALARM_CLOCK"));
+    // this.setDataDesc(PumpAlarms.PUMP_ALARM_PUMP_TIMER,
+    // ic.getMessage("ALARM_PUMP_TIMER"));
+    // this.setDataDesc(PumpAlarms.PUMP_ALARM_TEMPORARY_BASAL_RATE_CANCELED,
+    // ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"));
+    // this.setDataDesc(PumpAlarms.PUMP_ALARM_TEMPORARY_BASAL_RATE_OVER,
+    // ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"));
+    // this.setDataDesc(PumpAlarms.PUMP_ALARM_BOLUS_CANCELED,
+    // ic.getMessage("ALARM_BOLUS_CANCELED"));
+    // this.setDataDesc(PumpAlarms.PUMP_ALARM_NO_DELIVERY,
+    // ic.getMessage("ALARM_NO_DELIVERY"));
+    // }
 
     /**
      * Get Type from Description
@@ -155,12 +122,18 @@ public class PumpAlarms extends PumpDefsAbstract
      * 
      * @return
      */
-    /*
-     * public String[] getDescriptions()
-     * {
-     * return alarms_desc_comp;
-     * }
-     */
+
+    // FIXME
+    public static String[] getDescriptions()
+    {
+        return null;
+    }
+
+    // FIXME
+    public static String getDescriptionByID(int sub_type)
+    {
+        return null;
+    }
 
     /*
      * Minimed

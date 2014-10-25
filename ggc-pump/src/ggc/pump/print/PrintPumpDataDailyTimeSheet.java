@@ -18,6 +18,7 @@ import ggc.pump.util.DataAccessPump;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 
 import com.atech.i18n.I18nControlAbstract;
@@ -32,6 +33,7 @@ import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.html.WebColors;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
@@ -74,6 +76,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
     I18nControlAbstract i18nControl = dataAccessPump.getI18nControlInstance();
     PumpValuesHourProcessor pumpValuesHourProcessor;
     List<PumpProfile> profilesRange;
+    HashMap<String, Font> fontColors = new HashMap<String, Font>();
 
     public PrintPumpDataDailyTimeSheet(PrintParameters parameters)
     {
@@ -138,6 +141,30 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
         System.out.println("Profiles all: " + this.profilesRange.size());
 
+        // colors
+        this.fontColors.put("BG_COLOR", createFont("DarkRed")); // createFont(63));
+                                                                // // DarkRed
+        this.fontColors.put("BASAL_COLOR", createFont("MidnightBlue")); // createFont(37));
+                                                                        // //
+                                                                        // MidnightBlue
+        this.fontColors.put("BOLUS_COLOR", createFont("DodgerBlue")); // createFont(128));
+                                                                      // //
+                                                                      // IndianRed
+        this.fontColors.put("CH_COLOR", createFont("DarkGreen")); // createFont(186));
+                                                                  // //
+                                                                  // YellowGreen
+        this.fontColors.put("PUMP_ADD_DATA_COLOR", createFont("MediumSeaGreen")); // createFont(213));
+        // //
+        // PowderBlue
+    }
+
+    public Font createFont(String colorName)
+    {
+        return new Font(FontFamily.HELVETICA, 6, Font.BOLD, WebColors.getRGBColor(colorName));
+        // Font f = new Font(this.baseFontTimes, 6, Font.NORMAL);
+        // f.setColor(new BaseColor(colorNumber));
+
+        // return f;
     }
 
     // TODO move this to abstract class for printing
@@ -231,11 +258,13 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
      * - basal                                     95%  some bugs to fix...
      *
      * NOT IMPORTANT FOR NOW:
-     * - special pump statues (stopped pump, change of pump material, TBR)
-     * - Hipo, Hyper ?
+     * - special pump statues (stopped pump, change   
+     *   of pump material, TBR)                           0%
+     * - Extended and Multiwave in table and comm.        0%
+     * - Color display                                   40%
+     * - Comments types                                  30% 
      *
-     *
-     * PROFILES REPORT                              0%
+     * PROFILES REPORT                             100%
      *
      */
 
@@ -330,8 +359,30 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         tableComment.setWidths(new float[] { 8.0f, 92.0f });
         tableComment.setWidthPercentage(100);
         tableComment.getDefaultCell().setBorderWidth(0);
-        tableComment.addCell(this.createBoldTextPhrase(this.i18nControl.getMessage("COMMENT") + ":"));
-        tableComment.addCell(this.createNormalTextPhrase(this.pumpValuesHourProcessor.getFullComment()));
+
+        if (this.pumpValuesHourProcessor.isAdditionalDataForPumpTypeSet(PumpDeviceValueType.BG))
+        {
+            tableComment.addCell(this.createBoldTextPhrase(this.i18nControl.getMessage("BG") + ":"));
+            tableComment.addCell(this.createNormalTextPhraseSmall(
+                this.pumpValuesHourProcessor.getAdditionalDataForPumpTypeSet(PumpDeviceValueType.BG),
+                PumpDeviceValueType.BG.getColorKey()));
+        }
+
+        if (this.pumpValuesHourProcessor.isAdditionalDataForPumpTypeSet(PumpDeviceValueType.PUMP_ADDITIONAL_DATA))
+        {
+            tableComment.addCell(this.createBoldTextPhrase(this.i18nControl.getMessage("PUMP") + ":"));
+            tableComment.addCell(this.createNormalTextPhraseSmall(
+                this.pumpValuesHourProcessor.getAdditionalDataForPumpTypeSet(PumpDeviceValueType.PUMP_ADDITIONAL_DATA),
+                PumpDeviceValueType.PUMP_ADDITIONAL_DATA.getColorKey()));
+        }
+
+        // if
+        // (this.pumpValuesHourProcessor.isAdditionalDataForPumpTypeSet(PumpDeviceValueType.COMMENT))
+        {
+            tableComment.addCell(this.createBoldTextPhrase(this.i18nControl.getMessage("COMMENT") + ":"));
+            tableComment.addCell(this.createNormalTextPhrase(this.pumpValuesHourProcessor
+                    .getAdditionalDataForPumpTypeSet(PumpDeviceValueType.COMMENT)));
+        }
 
         mainTable.addCell(tableComment);
 
@@ -441,7 +492,8 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                     }
                     else
                     {
-                        table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBasalValue(value)));
+                        table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBasalValue(value),
+                            type.getColorKey()));
                     }
                 }
                 else
@@ -493,7 +545,8 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                     }
                     else
                     {
-                        table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBasalValue(value)));
+                        table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBasalValue(value),
+                            type.getColorKey()));
                     }
                 }
                 else
@@ -505,12 +558,12 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                         if (pumpValuesHour.getBolus() > 0.0f)
                         {
                             sum += pumpValuesHour.getBolus();
-                            table.addCell(this.createNormalTextPhraseSmall(dataAccessPump
-                                    .getFormatedBolusValue(pumpValuesHour.getBolus())));
+                            table.addCell(this.createNormalTextPhraseSmall(
+                                dataAccessPump.getFormatedBolusValue(pumpValuesHour.getBolus()), type.getColorKey()));
 
                             if (pumpValuesHour.hasBolusSpecial())
                             {
-                                pumpValuesHourProcessor.addComments(PumpDeviceValueType.BOLUS,
+                                pumpValuesHourProcessor.addAdditionalData(PumpDeviceValueType.PUMP_ADDITIONAL_DATA,
                                     pumpValuesHour.getBolusSpecial());
 
                                 sum += pumpValuesHour.getBolusSpecialForSum();
@@ -526,18 +579,19 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                     {
                         if (pumpValuesHour.getBgs().size() > 1)
                         {
-                            table.addCell(this.createNormalTextPhraseSmall("*"));
+                            table.addCell(this.createNormalTextPhraseSmall("*", type.getColorKey()));
 
-                            pumpValuesHourProcessor
-                                    .addComments(PumpDeviceValueType.BG, pumpValuesHour.getMultipleBgs());
+                            pumpValuesHourProcessor.addAdditionalData(PumpDeviceValueType.BG,
+                                pumpValuesHour.getMultipleBgs());
                         }
                         else if (pumpValuesHour.getBgs().size() == 1)
                         {
                             sum += pumpValuesHour.getBgProcessedValue();
                             count++;
 
-                            table.addCell(this.createNormalTextPhraseSmall(dataAccessPump
-                                    .getDisplayedBGString(pumpValuesHour.getBgProcessedValue())));
+                            table.addCell(this.createNormalTextPhraseSmall(
+                                dataAccessPump.getDisplayedBGString(pumpValuesHour.getBgProcessedValue()),
+                                type.getColorKey()));
                         }
                         else
                         {
@@ -550,8 +604,8 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                         if (pumpValuesHour.getCH() > 0.0f)
                         {
                             sum += pumpValuesHour.getCH();
-                            table.addCell(this.createNormalTextPhraseSmall(DataAccessPlugInBase.Decimal0Format
-                                    .format(pumpValuesHour.getCH())));
+                            table.addCell(this.createNormalTextPhraseSmall(
+                                DataAccessPlugInBase.Decimal0Format.format(pumpValuesHour.getCH()), type.getColorKey()));
                         }
                         else
                         {
@@ -568,19 +622,23 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
             {
                 float d = sum / (count * (1.0f));
 
-                table.addCell(this.createNormalTextPhrase(dataAccessPump.getDisplayedBGString(d)));
+                table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getDisplayedBGString(d),
+                    type.getColorKey()));
             }
             else if (type == PumpDeviceValueType.BASAL)
             {
-                table.addCell(this.createNormalTextPhrase(dataAccessPump.getFormatedBasalValue(sum)));
+                table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBasalValue(sum),
+                    type.getColorKey()));
             }
             else if (type == PumpDeviceValueType.BOLUS)
             {
-                table.addCell(this.createNormalTextPhrase(dataAccessPump.getFormatedBolusValue(sum)));
+                table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBolusValue(sum),
+                    type.getColorKey()));
             }
             else
             {
-                table.addCell(this.createNormalTextPhrase(DataAccessPlugInBase.Decimal0Format.format(sum)));
+                table.addCell(this.createNormalTextPhraseSmall(DataAccessPlugInBase.Decimal0Format.format(sum),
+                    type.getColorKey()));
             }
 
         }
@@ -601,9 +659,22 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         return new Phrase(this.i18nControl.getMessage(text), smallFont);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    private Phrase createNormalTextPhraseSmall(String text, String fontName)
+    {
+        return new Phrase(this.i18nControl.getMessage(text), getFont(fontName));
+    }
+
+    private Font getFont(String fontName)
+    {
+        if (this.fontColors.containsKey(fontName))
+        {
+            // System.out.println("fontName: " + fontName);
+            return this.fontColors.get(fontName);
+        }
+        else
+            return this.smallFont;
+    }
+
     public String getTitleText()
     {
         return "PUMP_DATA_DAILY_TIMESHEET";

@@ -4,31 +4,32 @@ import ggc.plugin.data.DeviceValueTypeInterface;
 
 public enum PumpDeviceValueType implements DeviceValueTypeInterface
 {
-    BASAL, //
-    BOLUS, //
-    BG("PUMP_ADD_DATA_BG"), //
-    CH, //
-    COMMENT, ;
+    BASAL("BASAL_COLOR"), //
+    BOLUS("BOLUS_COLOR"), //
+    BG("BG_COLOR"), //
+    CH("CH_COLOR"), //
+    PUMP_ADDITIONAL_DATA("PUMP_ADD_DATA_COLOR"), //
+    COMMENT("");
 
-    private String additionalKey;
+    private String colorKey;
 
     private PumpDeviceValueType()
     {
     }
 
-    private PumpDeviceValueType(String additionalKey)
+    private PumpDeviceValueType(String colorKey)
     {
-        this.additionalKey = additionalKey;
+        this.colorKey = colorKey;
     }
 
-    public String getAdditionalKey()
+    public String getColorKey()
     {
-        return additionalKey;
+        return colorKey;
     }
 
-    public void setAdditionalKey(String additionalKey)
+    public void setColorKey(String colorKey)
     {
-        this.additionalKey = additionalKey;
+        this.colorKey = colorKey;
     }
 
 }

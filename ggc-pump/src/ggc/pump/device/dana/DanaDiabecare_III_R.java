@@ -833,8 +833,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         error_map.put("26410", PumpErrors.PUMP_ERROR_CARTRIDGE_EMPTY);
 
         alarm_map = new Hashtable<String, Integer>();
-        alarm_map.put("17030", PumpAlarms.PUMP_ALARM_BATTERY_LOW);
-        alarm_map.put("26410", PumpAlarms.PUMP_ALARM_CARTRIDGE_LOW);
+        alarm_map.put("17030", PumpAlarms.BATTERY_LOW.getAlarmCode());
+        alarm_map.put("26410", PumpAlarms.CARTRIDGE_LOW.getAlarmCode());
     }
 
     /**
@@ -1210,7 +1210,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             else
             {
                 log.info("DanaDiabecare_III_R: Unknown Alarm [type=" + type + ", code=" + code + "]");
-                return PumpAlarms.PUMP_ALARM_UNKNOWN;
+                return PumpAlarms.UNKNOWN_ALARM.getAlarmCode();
             }
         }
         else
