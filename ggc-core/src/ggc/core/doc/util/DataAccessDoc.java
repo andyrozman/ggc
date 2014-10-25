@@ -18,6 +18,7 @@ import ggc.core.plugins.NutriPlugIn;
 import ggc.core.plugins.PumpsPlugIn;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
+import ggc.core.util.GGCSoftwareMode;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -431,10 +432,9 @@ public class DataAccessDoc extends DataAccess
      * 
      * @return
      */
-    @Override
     public boolean isPenInjectionMode()
     {
-        return getSoftwareMode() == GGC_MODE_PEN_INJECTION;
+        return getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE;
     }
 
     /**
@@ -442,10 +442,9 @@ public class DataAccessDoc extends DataAccess
      * 
      * @return
      */
-    @Override
     public boolean isPumpMode()
     {
-        return getSoftwareMode() == GGC_MODE_PUMP;
+        return getSoftwareMode() == GGCSoftwareMode.PUMP_MODE;
     }
 
     /**
@@ -453,12 +452,9 @@ public class DataAccessDoc extends DataAccess
      * 
      * @return
      */
-    @Override
-    public int getSoftwareMode()
+    public GGCSoftwareMode getSoftwareMode()
     {
-        // System.out.println("Sw Mode: " +
-        // this.m_cfgMgr.getIntValue("SW_MODE"));
-        return this.m_cfgMgr.getIntValue("SW_MODE");
+        return GGCSoftwareMode.getEnum(this.m_cfgMgr.getIntValue("SW_MODE"));
     }
 
     /**

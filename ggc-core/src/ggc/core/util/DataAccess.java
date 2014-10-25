@@ -13,6 +13,7 @@ import ggc.core.db.datalayer.Settings;
 import ggc.core.db.datalayer.SettingsColorScheme;
 import ggc.core.db.tool.DbToolApplicationGGC;
 import ggc.core.plugins.CGMSPlugIn;
+import ggc.core.plugins.GGCPluginType;
 import ggc.core.plugins.MetersPlugIn;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.plugins.PumpsPlugIn;
@@ -170,32 +171,32 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Plug In - Meter Tool
      */
-    public static final String PLUGIN_METERS = "MetersPlugIn";
+    // public static final String PLUGIN_METERS = "MetersPlugIn";
 
     /**
      * Plug In - Pump Tool
      */
-    public static final String PLUGIN_PUMPS = "PumpsPlugIn";
+    // public static final String PLUGIN_PUMPS = "PumpsPlugIn";
 
     /**
      * Plug In - CGMS Tool
      */
-    public static final String PLUGIN_CGMS = "CGMSPlugIn";
+    // public static final String PLUGIN_CGMS = "CGMSPlugIn";
 
     /**
      * Plug In - Nutrition Tool
      */
-    public static final String PLUGIN_NUTRITION = "NutritionPlugIn";
+    // public static final String PLUGIN_NUTRITION = "NutritionPlugIn";
 
     /**
      * GGC Mode: Pen/Injection
      */
-    public static final int GGC_MODE_PEN_INJECTION = 0;
+    // public static final int GGC_MODE_PEN_INJECTION = 0;
 
     /**
      * GGC Mode: Pump
      */
-    public static final int GGC_MODE_PUMP = 1;
+    // public static final int GGC_MODE_PUMP = 1;
 
     /**
      * Converter: BG     
@@ -426,7 +427,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public boolean isPenInjectionMode()
     {
-        return getSoftwareMode() == GGC_MODE_PEN_INJECTION;
+        return getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE;
     }
 
     /**
@@ -436,7 +437,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public boolean isPumpMode()
     {
-        return getSoftwareMode() == GGC_MODE_PUMP;
+        return getSoftwareMode() == GGCSoftwareMode.PUMP_MODE;
     }
 
     /**
@@ -444,11 +445,9 @@ public class DataAccess extends ATDataAccessLMAbstract
      * 
      * @return
      */
-    public int getSoftwareMode()
+    public GGCSoftwareMode getSoftwareMode()
     {
-        // System.out.println("Sw Mode: " +
-        // this.m_cfgMgr.getIntValue("SW_MODE"));
-        return this.m_cfgMgr.getIntValue("SW_MODE");
+        return GGCSoftwareMode.getEnum(this.m_cfgMgr.getIntValue("SW_MODE"));
     }
 
     /**
@@ -722,17 +721,31 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
 
         log.debug("init Plugins: Meter Tool");
-        addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
+        addPlugIn(GGCPluginType.METER_TOOL_PLUGIN.getKey(), //
+            new MetersPlugIn(this.m_main, this.m_i18n));
 
         log.debug("init Plugins: Pumps Tool");
-        addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this.m_main, this));
+        addPlugIn(GGCPluginType.PUMP_TOOL_PLUGIN.getKey(), //
+            new PumpsPlugIn(this.m_main, this));
 
         log.debug("init Plugins: CGMS Tool");
-        addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this.m_main, this.m_i18n));
+        addPlugIn(GGCPluginType.CGMS_TOOL_PLUGIN.getKey(), //
+            new CGMSPlugIn(this.m_main, this.m_i18n));
 
         log.debug("init Plugins: Nutrition Tool");
-        addPlugIn(DataAccess.PLUGIN_NUTRITION, new NutriPlugIn(this.m_main, this.m_i18n));
+        addPlugIn(GGCPluginType.NUTRITION_TOOL_PLUGIN.getKey(), //
+            new NutriPlugIn(this.m_main, this.m_i18n));
 
+    }
+
+    public PlugInClient getPlugIn(GGCPluginType pluginType)
+    {
+        return this.getPlugIn(pluginType.getKey());
+    }
+
+    public boolean isPluginAvailable(GGCPluginType pluginType)
+    {
+        return isPluginAvailable(pluginType.getKey());
     }
 
     /**

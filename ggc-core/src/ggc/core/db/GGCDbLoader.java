@@ -1,5 +1,6 @@
 package ggc.core.db;
 
+import ggc.core.plugins.GGCPluginType;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
 import ggc.core.util.RefreshInfo;
@@ -102,38 +103,7 @@ public class GGCDbLoader extends Thread
     public GGCDbLoader(DataAccess da)
     {
         m_da = da;
-        // System.out.println("GGCDbLoader in development mode");
-        // part_start = true;
     }
-
-    /**
-     * Constructor
-     * 
-     * @param da
-     * @param bar
-     */
-    /*
-     * public GGCDbLoader(DataAccess da) //, StatusBar bar)
-     * {
-     * m_da = da;
-     * //m_bar = bar;
-     * // System.out.println("GGCDbLoader inited");
-     * }
-     */
-
-    /**
-     * Constructor
-     * 
-     * @param da
-     * @param bar2
-     */
-    /*
-     * public GGCDbLoader(DataAccess da, StatusBarL bar2)
-     * {
-     * m_da = da;
-     * m_barL = bar2;
-     * }
-     */
 
     /**
      * Run (Thread)
@@ -239,9 +209,9 @@ public class GGCDbLoader extends Thread
 
         // 5 - Load plugin data
 
-        if (m_da.isPluginAvailable(DataAccess.PLUGIN_NUTRITION))
+        if (m_da.isPluginAvailable(GGCPluginType.NUTRITION_TOOL_PLUGIN))
         {
-            m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).executeCommand(NutriPlugIn.COMMAND_LOAD_DATABASE);
+            m_da.getPlugIn(GGCPluginType.NUTRITION_TOOL_PLUGIN).executeCommand(NutriPlugIn.COMMAND_LOAD_DATABASE);
         }
         m_da.setDbLoadingStatus(GGCDbLoader.DB_DATA_PLUGINS);
         setDbStatus(RefreshInfo.DB_LOADED);

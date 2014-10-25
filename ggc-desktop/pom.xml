@@ -94,6 +94,12 @@
 			<artifactId>jfreechart</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>8.4-702.jdbc3</version>
+		</dependency>
+
 		<!-- <dependency> <groupId>org.swinglabs</groupId> <artifactId>pdf-renderer</artifactId> 
 			</dependency> <dependency> <groupId>com.google.guava</groupId> <artifactId>guava</artifactId> 
 			</dependency> -->
