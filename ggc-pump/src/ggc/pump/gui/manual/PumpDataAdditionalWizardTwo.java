@@ -1,6 +1,7 @@
 package ggc.pump.gui.manual;
 
 import ggc.core.data.Converter_mgdL_mmolL;
+import ggc.core.plugins.GGCPluginType;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -42,24 +43,24 @@ import com.atech.utils.ATSwingUtils;
  *  Plug-in:       Pump Tool (support for Pump devices)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  *  Filename:     PumpDataAdditionalWizardTwo
  *  Description:  Wizard for adding Additional data (step 2)
- * 
+ *
  *  Author: Andy {andy@atech-software.com}
  */
 
@@ -108,7 +109,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     // new data
     /**
      * Constructor
-     * 
+     *
      * @param wiz_one
      * @param type
      */
@@ -131,7 +132,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     /**
      * Constructor
-     * 
+     *
      * @param dialog
      * @param pc
      */
@@ -157,10 +158,10 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     /**
      * Constructor
-     * 
+     *
      * @param dialog
      * @param pc
-     * @param pc2 
+     * @param pc2
      */
     public PumpDataAdditionalWizardTwo(JDialog dialog, PumpValuesEntryExt pc, PumpValuesEntryExt pc2)
     {
@@ -544,7 +545,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             }
             else
             {
-                PlugInClient pc = DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION);
+                PlugInClient pc = DataAccess.getInstance().getPlugIn(GGCPluginType.NUTRITION_TOOL_PLUGIN);
 
                 if (pc.isActiveWarning(true, this))
                 {
@@ -578,7 +579,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     /**
      * Was Action
-     * 
+     *
      * @return
      */
     public boolean wasAction()
@@ -588,7 +589,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     /**
      * Get Objects
-     * 
+     *
      * @return
      */
     public PumpValuesEntryExt[] getObjects()
@@ -774,14 +775,14 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     }
 
-    /** 
+    /**
      * keyTyped
      */
     public void keyTyped(KeyEvent e)
     {
     }
 
-    /** 
+    /**
      * keyPressed
      */
     public void keyPressed(KeyEvent e)

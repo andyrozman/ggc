@@ -111,8 +111,8 @@ public class PumpValuesHourProcessor
                 }
             }
 
-            if ((pve.getBaseType() == PumpBaseType.PUMP_DATA_BOLUS)
-                    || (pve.getBaseType() == PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS))
+            if ((pve.getBaseType() == PumpBaseType.Bolus) || //
+                    (pve.getBaseType() == PumpBaseType.PenInjectionBolus))
             {
                 pumpValuesHour.addBolus(pve);
             }

@@ -308,7 +308,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 int num = Integer.parseInt(n2.attributeValue("Number"));
 
                 psp.timeStart = (num - 1) * 100;
-                psp.timeEnd = (num - 1) * 100 + 59;
+                psp.timeEnd = ((num - 1) * 100) + 59;
                 psp.amount = Float.parseFloat(n2.attributeValue("IU"));
 
                 profile.add(psp);
@@ -334,7 +334,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
             ProfileSubEntry pse = this.resolveBasalProfilePatterns(el);
 
-            if (pse == null || pse.profileId == null)
+            if ((pse == null) || (pse.profileId == null))
             {
                 continue;
             }
@@ -477,7 +477,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                     active_profiles.add(current_profiles.get(p_curr.profile_id));
                     current_profiles.remove(p_curr.profile_id);
                     current_profiles.put(p_curr.profile_id, p_curr);
-                    current_profiles.get(p_curr.profile_id).profile_active_till = p_curr.date_at * 1000000 + 235900;
+                    current_profiles.get(p_curr.profile_id).profile_active_till = (p_curr.date_at * 1000000) + 235900;
                     current_profiles.get(p_curr.profile_id).profile_active_from = p_curr.date_at * 1000000;
                 }
             }
@@ -498,7 +498,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 ProfileSubOther chan = profile_changes_v3.get(date);
                 p_curr.profile_active_from = chan.time_event;
 
-                if (j != active_profiles.size() - 1)
+                if (j != (active_profiles.size() - 1))
                 {
                     ATechDate aat = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, chan.time_event);
                     aat.add(Calendar.MINUTE, -1);
@@ -538,11 +538,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     /*
      * private void readPumpDataTest() { ArrayList<PumpValuesEntry> list = new
-     * ArrayList<PumpValuesEntry>();
-     * //System.out.println(" -- Basals --"); //list.addAll(getBasals());
-     * list.addAll(getProfileElements());
-     * if (first_basal !=null) list.add(first_basal);
-     * }
+     * ArrayList<PumpValuesEntry>(); //System.out.println(" -- Basals --");
+     * //list.addAll(getBasals()); list.addAll(getProfileElements()); if
+     * (first_basal !=null) list.add(first_basal); }
      */
 
     private ArrayList<PumpValuesEntry> getBoluses()
@@ -636,35 +634,29 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * private ArrayList<PumpValuesEntry> getSpecificElements2(String element) {
      * List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/" + element);
      * ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
-     * boolean add = false;
-     * Hashtable<Long,Profile> lst_spec = new Hashtable<Long,Profile>();
-     * for(int i=0; i<lst.size(); i++) { Element el = (Element)lst.get(i);
-     * PumpValuesEntry pve = new PumpValuesEntry(this.getDeviceSourceName());
+     * boolean add = false; Hashtable<Long,Profile> lst_spec = new
+     * Hashtable<Long,Profile>(); for(int i=0; i<lst.size(); i++) { Element el =
+     * (Element)lst.get(i); PumpValuesEntry pve = new
+     * PumpValuesEntry(this.getDeviceSourceName());
      * pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"),
-     * el.attributeValue("Tm")));
-     * add = this.resolveBasalProfile(pve, el);
-     * if (add) { // testing only this.output_writer.writeData(pve);
-     * lst_out.add(pve); } }
-     * System.out.println("Profiles: " + lst_out.size());
-     * return lst_out;
-     * }
+     * el.attributeValue("Tm"))); add = this.resolveBasalProfile(pve, el); if
+     * (add) { // testing only this.output_writer.writeData(pve);
+     * lst_out.add(pve); } } System.out.println("Profiles: " + lst_out.size());
+     * return lst_out; }
      */
 
     /*
      * private ArrayList<PumpValuesEntry> getProfileElements() { List<Node> lst
      * = getSpecificDataChildren("IMPORT/IPDATA/BASAL"); // + element);
      * ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
-     * boolean add = false;
-     * for(int i=0; i<lst.size(); i++) { Element el = (Element)lst.get(i);
-     * PumpValuesEntry pve = new PumpValuesEntry(this.getDeviceSourceName());
+     * boolean add = false; for(int i=0; i<lst.size(); i++) { Element el =
+     * (Element)lst.get(i); PumpValuesEntry pve = new
+     * PumpValuesEntry(this.getDeviceSourceName());
      * pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"),
-     * el.attributeValue("Tm")));
-     * // add = this.resolveBasalProfilePatterns(pve, el);
-     * if (add) { // testing only // this.output_writer.writeData(pve);
-     * lst_out.add(pve); } }
-     * System.out.println("Profiles patterns: " + lst_out.size());
-     * return lst_out;
-     * }
+     * el.attributeValue("Tm"))); // add = this.resolveBasalProfilePatterns(pve,
+     * el); if (add) { // testing only // this.output_writer.writeData(pve);
+     * lst_out.add(pve); } } System.out.println("Profiles patterns: " +
+     * lst_out.size()); return lst_out; }
      */
 
     private static String PUMP_STOP = "Stop";
@@ -681,12 +673,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
         if (isSet(tbrdec) || isSet(tbrinc))
         {
-            if (remark == null || remark.trim().length() == 0)
+            if ((remark == null) || (remark.trim().length() == 0))
+            {
                 return false;
+            }
 
             // System.out.println(el);
 
-            pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
+            pve.setBaseType(PumpBaseType.Basal.getCode());
             pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE);
 
             String v = "";
@@ -726,14 +720,16 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             // all that are special should be removed, all other are checked
             // over events
             if (remark.contains("changed"))
+            {
                 // System.out.println("Basal Changed Unknown [remark=" + remark
                 // + "]");
                 return false;
+            }
             else
             {
                 if (this.getEventMappings().containsKey(remark))
                 {
-                    pve.setBaseType(PumpBaseType.PUMP_DATA_EVENT);
+                    pve.setBaseType(PumpBaseType.Event.getCode());
                     pve.setSubType(this.getEventMappings().get(remark));
                     // System.out.println("Basal Event Unknown [remark=" +
                     // remark + "]");
@@ -741,7 +737,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 }
                 else if (this.getBasalMappings().containsKey(remark))
                 {
-                    pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
+                    pve.setBaseType(PumpBaseType.Basal.getCode());
                     pve.setSubType(this.getBasalMappings().get(remark));
                     // System.out.println("Basal Event Unknown [remark=" +
                     // remark + "]");
@@ -767,7 +763,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             if (!isSet(profile))
             {
                 if (!isSet(tbrdec) && !isSet(tbrinc) && cbrf.equals("0.00"))
-                {}
+                {
+                }
                 else
                 {
                     log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
@@ -835,7 +832,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         {
 
             if (isSet(tbrdec) || isSet(tbrinc))
+            {
                 return null;
+            }
             else
             {
                 ProfileSubPattern psp = new ProfileSubPattern();
@@ -875,9 +874,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
          * System.out.println("Basal Changed Unknown [remark=" + remark + "]");
          * //System.out.println("Basal Rate Changed [datetime=" +
          * pve.getDateTimeObject() + ",remark=" + remark + ",tbrdec=" + tbrdec +
-         * ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
-         * return false; } else { if
-         * ((this.getEventMappings().containsKey(remark)) ||
+         * ",tbrinc=" + tbrinc + ",value=" + cbrf + "]"); return false; } else {
+         * if ((this.getEventMappings().containsKey(remark)) ||
          * (this.getBasalMappings().containsKey(remark))) { return false; } else
          * { if (remark.contains(" - ")) {
          * pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
@@ -887,21 +885,19 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
          * remark.substring(remark.indexOf(" - ")+ 3)); //
          * System.out.println("Unknown Profile Event. [remark=" + remark +
          * ",tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
-         * return true; } else return false; } }
-         * } else { if (!isSet(profile)) { //System.out.println("tbrdec=" +
-         * isSet(tbrdec) + "tbrinc=" + isSet(tbrinc));
-         * if ((!isSet(tbrdec)) && (!isSet(tbrinc)) && (cbrf.equals("0.00"))) {
+         * return true; } else return false; } } } else { if (!isSet(profile)) {
          * //System.out.println("tbrdec=" + isSet(tbrdec) + "tbrinc=" +
-         * isSet(tbrinc)); return false; } else {
+         * isSet(tbrinc)); if ((!isSet(tbrdec)) && (!isSet(tbrinc)) &&
+         * (cbrf.equals("0.00"))) { //System.out.println("tbrdec=" +
+         * isSet(tbrdec) + "tbrinc=" + isSet(tbrinc)); return false; } else {
          * log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc +
          * ",value=" + cbrf + "]"); return false; } } else { // profile used
          * pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
          * pve.setSubType(PumpBasalSubType.PUMP_BASAL_PROFILE);
-         * pve.setValue(profile);
-         * first_basal = pve;
+         * pve.setValue(profile); first_basal = pve;
          * //log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc +
-         * ",value=" + cbrf + "]");
-         * if (pve.getDateTimeObject().getTimeString().equals("00:00:00")) {
+         * ",value=" + cbrf + "]"); if
+         * (pve.getDateTimeObject().getTimeString().equals("00:00:00")) {
          * //System.out.println("Profile used: " + pve.getValue()); first_basal
          * = null; return true; } else return false; } }
          */
@@ -932,11 +928,11 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         {
             if (this.getBolusMappings().containsKey(type))
             {
-                pve.setBaseType(PumpBaseType.PUMP_DATA_BOLUS);
+                pve.setBaseType(PumpBaseType.Bolus.getCode());
                 pve.setSubType(this.getBolusMappings().get(type));
 
-                if (pve.getSubType() == PumpBolusType.PUMP_BOLUS_STANDARD
-                        || pve.getSubType() == PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL)
+                if ((pve.getSubType() == PumpBolusType.PUMP_BOLUS_STANDARD)
+                        || (pve.getSubType() == PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL))
                 {
                     pve.setSubType(PumpBolusType.PUMP_BOLUS_STANDARD);
                     pve.setValue(amount);
@@ -978,7 +974,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         {
             if (this.getReportMappings().containsKey(remark))
             {
-                pve.setBaseType(PumpBaseType.PUMP_DATA_REPORT);
+                pve.setBaseType(PumpBaseType.Report.getCode());
                 pve.setSubType(this.getReportMappings().get(remark));
                 pve.setValue(amount);
             }
@@ -1009,7 +1005,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             {
                 if (this.getAlarmMappings().containsKey(info))
                 {
-                    pve.setBaseType(PumpBaseType.PUMP_DATA_ALARM);
+                    pve.setBaseType(PumpBaseType.Alarm.getCode());
                     pve.setSubType(this.getAlarmMappings().get(info).intValue());
                 }
                 else
@@ -1021,7 +1017,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             {
                 if (this.getErrorMappings().containsKey(info))
                 {
-                    pve.setBaseType(PumpBaseType.PUMP_DATA_ERROR);
+                    pve.setBaseType(PumpBaseType.Error.getCode());
                     pve.setSubType(this.getErrorMappings().get(info).intValue());
                 }
                 else
@@ -1034,7 +1030,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             {
                 if (this.getEventMappings().containsKey(info))
                 {
-                    pve.setBaseType(PumpBaseType.PUMP_DATA_EVENT);
+                    pve.setBaseType(PumpBaseType.Event.getCode());
                     pve.setSubType(this.getEventMappings().get(info));
                     pve.setValue(info);
                 }
@@ -1048,7 +1044,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
                 if (this.getEventMappings().containsKey(desc))
                 {
-                    pve.setBaseType(PumpBaseType.PUMP_DATA_EVENT);
+                    pve.setBaseType(PumpBaseType.Event.getCode());
                     pve.setSubType(this.getEventMappings().get(desc));
                     pve.setValue(info);
                 }
@@ -1063,7 +1059,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         {
             if (this.getEventMappings().containsKey(desc))
             {
-                pve.setBaseType(PumpBaseType.PUMP_DATA_EVENT);
+                pve.setBaseType(PumpBaseType.Event.getCode());
                 pve.setSubType(this.getEventMappings().get(desc));
             }
             else
@@ -1080,10 +1076,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     private boolean isSet(String str)
     {
-        if (str == null || str.trim().length() == 0)
+        if ((str == null) || (str.trim().length() == 0))
+        {
             return false;
+        }
         else
+        {
             return true;
+        }
     }
 
     private List<Node> getSpecificDataChildren(String child_path)
@@ -1103,7 +1103,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         String o = ATDataAccessAbstract.replaceExpression(date, "-", "");
 
-        if (time == null || time.length() == 0)
+        if ((time == null) || (time.length() == 0))
         {
             o += "0000";
         }
@@ -1156,14 +1156,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
         // alarm mappings
         this.alarm_mappings = new Hashtable<String, Integer>();
-        this.alarm_mappings.put("A1", new Integer(PumpAlarms.CARTRIDGE_LOW.getAlarmCode()));
-        this.alarm_mappings.put("A2", new Integer(PumpAlarms.BATTERY_LOW.getAlarmCode()));
-        this.alarm_mappings.put("A3", new Integer(PumpAlarms.REVIEW_DATETIME.getAlarmCode()));
-        this.alarm_mappings.put("A4", new Integer(PumpAlarms.ALARM_CLOCK.getAlarmCode()));
-        this.alarm_mappings.put("A5", new Integer(PumpAlarms.PUMP_TIMER.getAlarmCode()));
-        this.alarm_mappings.put("A6", new Integer(PumpAlarms.TEMPORARY_BASAL_RATE_CANCELED.getAlarmCode()));
-        this.alarm_mappings.put("A7", new Integer(PumpAlarms.TEMPORARY_BASAL_RATE_OVER.getAlarmCode()));
-        this.alarm_mappings.put("A8", new Integer(PumpAlarms.BOLUS_CANCELED.getAlarmCode()));
+        this.alarm_mappings.put("A1", new Integer(PumpAlarms.CartridgeLow.getCode()));
+        this.alarm_mappings.put("A2", new Integer(PumpAlarms.BatteryLow.getCode()));
+        this.alarm_mappings.put("A3", new Integer(PumpAlarms.ReviewDatetime.getCode()));
+        this.alarm_mappings.put("A4", new Integer(PumpAlarms.AlarmClock.getCode()));
+        this.alarm_mappings.put("A5", new Integer(PumpAlarms.PumpTimer.getCode()));
+        this.alarm_mappings.put("A6", new Integer(PumpAlarms.TemporaryBasalRateCanceled.getCode()));
+        this.alarm_mappings.put("A7", new Integer(PumpAlarms.TemporaryBasalRateOver.getCode()));
+        this.alarm_mappings.put("A8", new Integer(PumpAlarms.BolusCanceled.getCode()));
 
         this.event_mappings = new Hashtable<String, Integer>();
         this.event_mappings.put("prime infusion set", new Integer(PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET));

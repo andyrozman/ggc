@@ -5,141 +5,124 @@ import ggc.pump.util.DataAccessPump;
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.data.CodeEnumWithTranslation;
 
 /**
- *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
+ * devices)
  *
- *  See AUTHORS for copyright information.
- * 
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 2 of the License, or (at your option) any later
- *  version.
- * 
- *  This program is distributed in the hope that it will be useful, but WITHOUT
- *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- *  details.
- * 
- *  You should have received a copy of the GNU General Public License along with
- *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     PumpBaseType  
- *  Description:  Pump Base Types 
- * 
- *  Author: Andy {andy@atech-software.com}
+ * See AUTHORS for copyright information.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ * Filename:    PumpBaseType
+ * Description: Pump Base Types
+ *
+ * Author: Andy {andy@atech-software.com}
  */
 
-public class PumpBaseType
+public enum PumpBaseType implements CodeEnumWithTranslation
 {
 
-    DataAccessPump da = DataAccessPump.getInstance();
-    I18nControlAbstract ic = da.getI18nControlInstance();
+    None(0, "NONE"), //
+    Basal(1, "BASAL_DOSE"), //
+    Bolus(2, "BOLUS_DOSE"), //
+    Event(3, "EVENT"), //
+    Alarm(4, "ALARM"), //
+    Error(5, "ERROR"), //
+    Report(6, "REPORT"), //
+    PenInjectionBasal(7, "PEN_INJECTION_BASAL"), //
+    PenInjectionBolus(8, "PEN_INJECTION_BOLUS"), //
+    AdditionalData(9, "ADDITIONAL_DATA"), //
 
-    /**
-     * Base Type Descriptions
-     */
-    public String[] basetype_desc = { ic.getMessage("NONE"), ic.getMessage("BASAL_DOSE"), ic.getMessage("BOLUS_DOSE"),
-                                     ic.getMessage("EVENT"), ic.getMessage("ALARM"), ic.getMessage("ERROR"),
-                                     ic.getMessage("REPORT"), ic.getMessage("PEN_INJECTION_BASAL"),
-                                     ic.getMessage("PEN_INJECTION_BOLUS"), ic.getMessage("ADDITIONAL_DATA"), };
+    ;
 
-    Hashtable<String, String> basetype_mapping = new Hashtable<String, String>();
+    static Hashtable<String, PumpBaseType> basetypeTranslationMapping = new Hashtable<String, PumpBaseType>();
+    static Hashtable<Integer, PumpBaseType> basetypeCodeMapping = new Hashtable<Integer, PumpBaseType>();
 
-    /**
-     * Pump Data: None
-     */
-    public static final int PUMP_DATA_NONE = 0;
-
-    /**
-     * Pump Data: Bassl
-     */
-    public static final int PUMP_DATA_BASAL = 1;
-
-    /**
-     * Pump Data: Bolus 
-     */
-    public static final int PUMP_DATA_BOLUS = 2;
-
-    /**
-     * Pump Data: Event
-     */
-    public static final int PUMP_DATA_EVENT = 3;
-
-    /**
-     * Pump Data: Alarm
-     */
-    public static final int PUMP_DATA_ALARM = 4;
-
-    /**
-     * Pump Data: Error
-     */
-    public static final int PUMP_DATA_ERROR = 5;
-
-    /**
-     * Pump Data: Report
-     */
-    public static final int PUMP_DATA_REPORT = 6;
-
-    /**
-     * Pump Data: Pen Injection Basal
-     */
-    public static final int PUMP_DATA_PEN_INJECTION_BASAL = 7;
-
-    /**
-     * Pump Data: Pen Injection Bolus
-     */
-    public static final int PUMP_DATA_PEN_INJECTION_BOLUS = 8;
-
-    /**
-     * Pump Data: Additional Data
-     */
-    public static final int PUMP_DATA_ADDITIONAL_DATA = 9;
-
-    /**
-     * Constructor
-     */
-    public PumpBaseType()
+    static
     {
-        this.basetype_mapping.put(ic.getMessage("BASAL_DOSE"), "1");
-        this.basetype_mapping.put(ic.getMessage("BOLUS_DOSE"), "2");
-        this.basetype_mapping.put(ic.getMessage("EVENT"), "3");
-        this.basetype_mapping.put(ic.getMessage("ALARM"), "4");
-        this.basetype_mapping.put(ic.getMessage("ERROR"), "5");
-        this.basetype_mapping.put(ic.getMessage("REPORT"), "6");
-        this.basetype_mapping.put(ic.getMessage("PEN_INJECTION_BASAL"), "7");
-        this.basetype_mapping.put(ic.getMessage("PEN_INJECTION_BOLUS"), "8");
-        this.basetype_mapping.put(ic.getMessage("ADDITIONAL_DATA"), "9");
+        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+
+        for (PumpBaseType pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            basetypeTranslationMapping.put(pbt.getTranslation(), pbt);
+            basetypeCodeMapping.put(pbt.code, pbt);
+        }
+    }
+
+    int code;
+    String i18nKey;
+    String translation;
+
+    public String getTranslation()
+    {
+        return translation;
+    }
+
+    public void setTranslation(String translation)
+    {
+        this.translation = translation;
+    }
+
+    public int getCode()
+    {
+        return code;
+    }
+
+    public String getI18nKey()
+    {
+        return i18nKey;
+    }
+
+    private PumpBaseType(int code, String i18nKey)
+    {
+        this.code = code;
+        this.i18nKey = i18nKey;
     }
 
     /**
      * Get Type from Description
-     * 
-     * @param str type as string
+     *
+     * @param str
+     *            type as string
      * @return type as int
      */
     public int getTypeFromDescription(String str)
     {
-        String s = "0";
-
-        if (this.basetype_mapping.containsKey(str))
+        if (PumpBaseType.basetypeTranslationMapping.containsKey(str))
         {
-            s = this.basetype_mapping.get(str);
+            return PumpBaseType.basetypeTranslationMapping.get(str).getCode();
         }
-
-        return Integer.parseInt(s);
+        else
+        {
+            return 0;
+        }
     }
 
-    /**
-     * Get Descriptions (array)
-     * 
-     * @return array of strings with description
-     */
-    public String[] getDescriptions()
+    public static PumpBaseType getPumpBaseTypeByCode(int code)
     {
-        return this.basetype_desc;
+        if (basetypeCodeMapping.containsKey(code))
+        {
+            return basetypeCodeMapping.get(code);
+        }
+        else
+        {
+            return PumpBaseType.None;
+        }
     }
 
 }

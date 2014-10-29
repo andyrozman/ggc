@@ -361,7 +361,8 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         // resultsPane.getViewport().addMouseListener(ma);
         // resultsPane.getViewport().setBackground(table.getBackground());
 
-        DeviceValuesDay pvd = new DeviceValuesDay(DataAccessPump.getInstance());
+        // DeviceValuesDay pvd = new
+        // DeviceValuesDay(DataAccessPump.getInstance());
 
         m_da.getColumnsWidthManual();
 
@@ -433,8 +434,6 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         // getContentPane().add(EntryBox, BorderLayout.SOUTH);
         getContentPane().add(gg, BorderLayout.SOUTH);
 
-        // updateLabels();
-        // TODO re-enable
         m_da.enableHelp(this);
 
         setVisible(true);
@@ -574,7 +573,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
                 boolean refresh = false;
 
-                if (pve.getBaseType() == PumpBaseType.PUMP_DATA_ADDITIONAL_DATA)
+                if (pve.getBaseType() == PumpBaseType.AdditionalData)
                 {
                     refresh = deleteAdditionalDataCheck(pve, idx); // , false);
 

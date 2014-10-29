@@ -10,30 +10,29 @@ import ggc.pump.util.DataAccessPump;
 import java.util.Enumeration;
 
 /**
- *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
+ * devices)
  *
- *  See AUTHORS for copyright information.
+ * See AUTHORS for copyright information.
  * 
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 2 of the License, or (at your option) any later
- *  version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  * 
- *  This program is distributed in the hope that it will be useful, but WITHOUT
- *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- *  details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- *  You should have received a copy of the GNU General Public License along with
- *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     MinimedCareLink
- *  Description:  Minimed CareLink "device". This is for importing data from CareLink
- *                export file
+ * Filename: MinimedCareLink Description: Minimed CareLink "device". This is for
+ * importing data from CareLink export file
  * 
- *  Author: Andy {andy@atech-software.com}
+ * Author: Andy {andy@atech-software.com}
  */
 
 public class MinimedSPMPump extends MinimedSPM
@@ -45,15 +44,15 @@ public class MinimedSPMPump extends MinimedSPM
     /**
      * Constructor
      * 
-     * @param filename 
-     * @param da 
+     * @param filename
+     * @param da
      */
     public MinimedSPMPump(String filename, DataAccessPlugInBase da)
     {
         super(filename, da);
     }
 
-    /** 
+    /**
      * Read Data
      */
     @Override
@@ -69,10 +68,10 @@ public class MinimedSPMPump extends MinimedSPM
         this.readBasals();
     }
 
-    /** 
+    /**
      * Process Data Entry
      * 
-     * @param data 
+     * @param data
      */
     @Override
     public void processDataEntry(MinimedSPMData data)
@@ -108,7 +107,7 @@ public class MinimedSPMPump extends MinimedSPM
         else
         {
 
-            if (data.base_type == PumpBaseType.PUMP_DATA_ADDITIONAL_DATA)
+            if (data.base_type == PumpBaseType.AdditionalData.getCode())
             {
 
             }
@@ -127,22 +126,12 @@ public class MinimedSPMPump extends MinimedSPM
 
         /*
          * if ((data.base_type==PumpBaseType.PUMP_DATA_REPORT) || //
-         * PUMP_DATA_REPORT
-         * (data.base_type==PumpBaseType.PUMP_DATA_EVENT)) // primes
-         * {
-         * PumpDataH pdh = new PumpDataH();
-         * pdh.setDt_info(data.datetime);
-         * pdh.setBase_type(data.base_type);
-         * pdh.setSub_type(data.sub_type);
-         * pdh.setValue("" + data.value_dbl);
-         * }
-         * else if (data.base_type==PumpBaseType.PUMP_DATA_EVENT) // primes
-         * {
-         * //if (sub_type == )
-         * }
-         * else if (data.base_type==4)
-         * {
-         * }
+         * PUMP_DATA_REPORT (data.base_type==PumpBaseType.PUMP_DATA_EVENT)) //
+         * primes { PumpDataH pdh = new PumpDataH();
+         * pdh.setDt_info(data.datetime); pdh.setBase_type(data.base_type);
+         * pdh.setSub_type(data.sub_type); pdh.setValue("" + data.value_dbl); }
+         * else if (data.base_type==PumpBaseType.PUMP_DATA_EVENT) // primes {
+         * //if (sub_type == ) } else if (data.base_type==4) { }
          */
     }
 

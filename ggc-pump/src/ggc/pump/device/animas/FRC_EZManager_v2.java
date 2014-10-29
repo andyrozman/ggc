@@ -50,18 +50,11 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
     }
 
     /*
-     * public PluginInfo GetPluginInfo()
-     * {
-     * boolean hasPrefs = false;
-     * hasPrefs = true;
-     * return new PluginInfo(new AboutInfo(
-     * "EZ Manager Plus Database Reader",
-     * "2.0",
+     * public PluginInfo GetPluginInfo() { boolean hasPrefs = false; hasPrefs =
+     * true; return new PluginInfo(new AboutInfo(
+     * "EZ Manager Plus Database Reader", "2.0",
      * "This reads data from the Access Database file (.mdb) used by Animas' Easy Manager Plus software."
-     * ,
-     * "Copyright 2009",
-     * "",
-     * new string[]{"Nate Barish <natenate@gmail.com>"},
+     * , "Copyright 2009", "", new string[]{"Nate Barish <natenate@gmail.com>"},
      * "GNU GLP"),
      * "This reads data from the Access Database file (.mdb) used by Animas' Easy Manager Plus software. "
      * +
@@ -70,11 +63,9 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
      * "these instructions are for 2007 other version are probally similar:  Goto DatabaseTools -> "
      * +
      * "Users and Permissions -> User and Group Permissions and check all Permissions for all Users "
-     * +
-     * "and Groups.  You should only have to do this once \n\n" +
+     * + "and Groups.  You should only have to do this once \n\n" +
      * "In the Preference window you can choose what you want to import.",
-     * hasPrefs);
-     * }
+     * hasPrefs); }
      */
 
     private void callBack(int progress)
@@ -92,17 +83,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         // exact sqls
 
         /*
-         * activityDb
-         * activityLog
-         * basalprograms
-         * X bgLog
-         * X dailytotalslog
-         * errorcodes
-         * foodLog
-         * insulinLog
-         * insulinLog2
-         * notesLog
-         * X pumpbasallog
+         * activityDb activityLog basalprograms X bgLog X dailytotalslog
+         * errorcodes foodLog insulinLog insulinLog2 notesLog X pumpbasallog
          */
 
         // ArrayList<PumpValuesEntry> entries = new
@@ -132,7 +114,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                         PumpValuesEntry pve = new PumpValuesEntry();
                         pve.setDateTimeObject(atd);
 
-                        pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);
+                        pve.setBaseType(PumpBaseType.AdditionalData.getCode());
                         pve.setSubType(PumpAdditionalDataType.PUMP_ADD_DATA_BG);
                         pve.setValue(rs.getString("bg"));
 
@@ -181,21 +163,21 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
                         PumpValuesEntry pve = new PumpValuesEntry();
                         pve.setDateTimeObject(atd);
-                        pve.setBaseType(PumpBaseType.PUMP_DATA_REPORT);
+                        pve.setBaseType(PumpBaseType.Report.getCode());
                         pve.setSubType(PumpReport.PUMP_REPORT_BASAL_TOTAL_DAY);
                         pve.setValue(DataAccessPlugInBase.Decimal3Format.format(basal));
                         this.output_writer.writeData(pve);
 
                         pve = new PumpValuesEntry();
                         pve.setDateTimeObject(atd);
-                        pve.setBaseType(PumpBaseType.PUMP_DATA_REPORT);
+                        pve.setBaseType(PumpBaseType.Report.getCode());
                         pve.setSubType(PumpReport.PUMP_REPORT_BOLUS_TOTAL_DAY);
                         pve.setValue(DataAccessPlugInBase.Decimal3Format.format(total - basal));
                         this.output_writer.writeData(pve);
 
                         pve = new PumpValuesEntry();
                         pve.setDateTimeObject(atd);
-                        pve.setBaseType(PumpBaseType.PUMP_DATA_REPORT);
+                        pve.setBaseType(PumpBaseType.Report.getCode());
                         pve.setSubType(PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY);
                         pve.setValue(DataAccessPlugInBase.Decimal3Format.format(total));
                         this.output_writer.writeData(pve);
@@ -258,12 +240,9 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                     // DateTime dt = new DateTime(year,month,day,hour,min,0,0);
 
                     /*
-                     * InsulinEntry entry = new InsulinEntry();
-                     * entry.Device = Device.Pump;
-                     * entry.Time = dt;
-                     * entry.Amount = units;
-                     * entry.Insulin = Insulin.Unknown;
-                     * entries.Add(entry);
+                     * InsulinEntry entry = new InsulinEntry(); entry.Device =
+                     * Device.Pump; entry.Time = dt; entry.Amount = units;
+                     * entry.Insulin = Insulin.Unknown; entries.Add(entry);
                      */
                 }
                 rs.close();
@@ -312,7 +291,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                     PumpValuesEntry pve = new PumpValuesEntry();
                     pve.setDateTimeObject(atd);
 
-                    pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);
+                    pve.setBaseType(PumpBaseType.AdditionalData.getCode());
                     pve.setSubType(PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT);
                     pve.setValue(note);
 
@@ -327,9 +306,11 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
                         }
                         else if (note.startsWith("Cannula filled"))
-                        {}
+                        {
+                        }
                         else if (note.startsWith("Pump suspended.  Resume time:"))
-                        {}
+                        {
+                        }
                         else
                         {
                             System.out.println("Note: " + note);
@@ -340,10 +321,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                     // FIXME
                     /*
                      * DateTime dt = new DateTime(year,month,day,hour,min,0,0);
-                     * OtherEntry entry = new OtherEntry();
-                     * entry.Device = Device.Pump;
-                     * entry.Time = dt;
-                     * entry.Text = note;
+                     * OtherEntry entry = new OtherEntry(); entry.Device =
+                     * Device.Pump; entry.Time = dt; entry.Text = note;
                      * entries.Add(entry);
                      */
                 }
@@ -418,20 +397,16 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                     PumpValuesEntry pve = new PumpValuesEntry();
                     pve.setDateTimeObject(atd);
 
-                    pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);
+                    pve.setBaseType(PumpBaseType.AdditionalData.getCode());
 
                     /*
                      * DateTime dt = new DateTime(year,month,day,hour,min,0,0);
-                     * FoodEntry entry = new FoodEntry();
-                     * entry.Device = Device.Pump;
-                     * entry.Time = dt;
-                     * entry.Name = name;
-                     * entry.Nutrition.TotalCarb = carbs;
-                     * entry.Nutrition.Fiber = fiber;
-                     * entry.Nutrition.Calories = calories;
+                     * FoodEntry entry = new FoodEntry(); entry.Device =
+                     * Device.Pump; entry.Time = dt; entry.Name = name;
+                     * entry.Nutrition.TotalCarb = carbs; entry.Nutrition.Fiber
+                     * = fiber; entry.Nutrition.Calories = calories;
                      * entry.Nutrition.Protien = protien;
-                     * entry.Nutrition.TotalFat = fat;
-                     * entries.Add(entry);
+                     * entry.Nutrition.TotalFat = fat; entries.Add(entry);
                      */
 
                 }
@@ -447,8 +422,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
         /*
          * OleDbCommand com = new OleDbCommand("select * from activityLog",
-         * con);
-         * OleDbDataReader reader = com.ExecuteReader();
+         * con); OleDbDataReader reader = com.ExecuteReader();
          */
 
         rs = this.executeQuery("select * from activityLog");
@@ -476,18 +450,15 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                     PumpValuesEntry pve = new PumpValuesEntry();
                     pve.setDateTimeObject(atd);
 
-                    pve.setBaseType(PumpBaseType.PUMP_DATA_ADDITIONAL_DATA);
+                    pve.setBaseType(PumpBaseType.AdditionalData.getCode());
 
                     // FIXME
 
                     /*
                      * DateTime dt = new DateTime(year,month,day,hour,min,0,0);
-                     * ExerciseEntry entry = new ExerciseEntry();
-                     * entry.Device = Device.Pump;
-                     * entry.Time = dt;
-                     * entry.Name = name;
-                     * entry.Duration = duration;
-                     * entries.Add(entry);
+                     * ExerciseEntry entry = new ExerciseEntry(); entry.Device =
+                     * Device.Pump; entry.Time = dt; entry.Name = name;
+                     * entry.Duration = duration; entries.Add(entry);
                      */
                 }
                 rs.close();
@@ -521,7 +492,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                         PumpValuesEntry pve = new PumpValuesEntry();
                         pve.setDateTimeObject(atd);
 
-                        pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
+                        pve.setBaseType(PumpBaseType.Basal.getCode());
                         pve.setSubType(PumpBasalSubType.PUMP_BASAL_VALUE);
 
                         double rate = rs.getInt("rate") / 1000.0d; // units per
@@ -549,30 +520,14 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         callBack(90);
 
         /*
-         * entries.Sort(new EntryComparer());
-         * double totalNum = entries.Count;
-         * double numberOn = 0;
-         * //determine lenght inbetween basal changes
-         * GradualInsulinEntry lastEntry = null;
-         * foreach (Entry e in entries)
-         * {
-         * if (e is GradualInsulinEntry)
-         * {
-         * if (lastEntry != null)
-         * {
-         * TimeSpan span = e.Time - lastEntry.Time;
-         * double mins = span.TotalMinutes;
-         * lastEntry.Length = mins;
-         * }
-         * lastEntry = (GradualInsulinEntry)e;
-         * }
-         * numberOn += 1;
-         * callBack((int)(90.0 + (numberOn / totalNum * 10.0)));
-         * }
-         * if (lastEntry == null)
-         * {
-         * entries.Remove(lastEntry);
-         * }
+         * entries.Sort(new EntryComparer()); double totalNum = entries.Count;
+         * double numberOn = 0; //determine lenght inbetween basal changes
+         * GradualInsulinEntry lastEntry = null; foreach (Entry e in entries) {
+         * if (e is GradualInsulinEntry) { if (lastEntry != null) { TimeSpan
+         * span = e.Time - lastEntry.Time; double mins = span.TotalMinutes;
+         * lastEntry.Length = mins; } lastEntry = (GradualInsulinEntry)e; }
+         * numberOn += 1; callBack((int)(90.0 + (numberOn / totalNum * 10.0)));
+         * } if (lastEntry == null) { entries.Remove(lastEntry); }
          */
         callBack(100);
 

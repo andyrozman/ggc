@@ -32,30 +32,29 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.mgr.LanguageManager;
 
 /**
- *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
+ * devices)
  *
- *  See AUTHORS for copyright information.
+ * See AUTHORS for copyright information.
  *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 2 of the License, or (at your option) any later
- *  version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *
- *  This program is distributed in the hope that it will be useful, but WITHOUT
- *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- *  details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *
- *  You should have received a copy of the GNU General Public License along with
- *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  *
- *  Filename:     DataAccessPump
- *  Description:  Contains instances of utilities, private (plugin specific) data,
- *                help classes, ...
+ * Filename: DataAccessPump Description: Contains instances of utilities,
+ * private (plugin specific) data, help classes, ...
  *
- *  Author: Andy {andy@atech-software.com}
+ * Author: Andy {andy@atech-software.com}
  */
 
 public class DataAccessPump extends DataAccessPlugInBase
@@ -128,9 +127,10 @@ public class DataAccessPump extends DataAccessPlugInBase
     // Constructor: DataAccess
     /**
      *
-     *  This is DataAccess constructor; Since classes use Singleton Pattern,
-     *  constructor is protected and can be accessed only with getInstance()
-     *  method.<br><br>
+     * This is DataAccess constructor; Since classes use Singleton Pattern,
+     * constructor is protected and can be accessed only with getInstance()
+     * method.<br>
+     * <br>
      *
      */
     private DataAccessPump(LanguageManager lm)
@@ -168,10 +168,11 @@ public class DataAccessPump extends DataAccessPlugInBase
     // Author: Andy
     /**
      *
-     *  This method returns reference to DataAccessPump object created, or if no
-     *  object was created yet, it creates one.<br><br>
+     * This method returns reference to DataAccessPump object created, or if no
+     * object was created yet, it creates one.<br>
+     * <br>
      *
-     *  @return Reference to DataAccessPump object
+     * @return Reference to DataAccessPump object
      *
      */
     public static DataAccessPump getInstance()
@@ -277,15 +278,13 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
     /*
-     * static public DataAccess getInstance()
-     * {
-     * return m_da;
-     * }
+     * static public DataAccess getInstance() { return m_da; }
      */
 
     // Method: deleteInstance
     /**
-     *  This method sets handle to DataAccess to null and deletes the instance. <br><br>
+     * This method sets handle to DataAccess to null and deletes the instance. <br>
+     * <br>
      */
     public void deleteInstance()
     {
@@ -294,37 +293,28 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
     /*
-     * public void loadPumpsTable()
-     * {
-     * metersUrl = new Hashtable<String,String>();
-     * metersNames = new ArrayList<String>();
+     * public void loadPumpsTable() { metersUrl = new
+     * Hashtable<String,String>(); metersNames = new ArrayList<String>();
      * metersNames.add("Abbott Diabetes Care");
      * metersUrl.put("Abbott Diabetes Care", "abbott.html");
-     * metersNames.add("Bayer Diagnostics");
-     * metersUrl.put("Bayer Diagnostics", "bayer.html");
-     * metersNames.add("Diabetic Supply of Suncoast");
+     * metersNames.add("Bayer Diagnostics"); metersUrl.put("Bayer Diagnostics",
+     * "bayer.html"); metersNames.add("Diabetic Supply of Suncoast");
      * metersUrl.put("Diabetic Supply of Suncoast", "suncoast.html");
      * metersNames.add("Diagnostic Devices");
      * metersUrl.put("Diagnostic Devices", "prodigy.html");
      * metersNames.add("Arkray USA (formerly Hypoguard)");
      * metersUrl.put("Arkray USA (formerly Hypoguard)", "arkray.html");
-     * metersNames.add("HealthPia America");
-     * metersUrl.put("HealthPia America", "healthpia.html");
-     * metersNames.add("Home Diagnostics");
+     * metersNames.add("HealthPia America"); metersUrl.put("HealthPia America",
+     * "healthpia.html"); metersNames.add("Home Diagnostics");
      * metersUrl.put("Home Diagnostics", "home_diganostics.html");
-     * metersNames.add("Lifescan");
-     * metersUrl.put("Lifescan", "lifescan.html");
-     * metersNames.add("Nova Biomedical");
-     * metersUrl.put("Nova Biomedical", "nova_biomedical.html");
-     * metersNames.add("Roche Diagnostics");
+     * metersNames.add("Lifescan"); metersUrl.put("Lifescan", "lifescan.html");
+     * metersNames.add("Nova Biomedical"); metersUrl.put("Nova Biomedical",
+     * "nova_biomedical.html"); metersNames.add("Roche Diagnostics");
      * metersUrl.put("Roche Diagnostics", "roche.html");
-     * metersNames.add("Sanvita");
-     * metersUrl.put("Sanvita", "sanvita.html");
-     * metersNames.add("U.S. Diagnostics");
-     * metersUrl.put("U.S. Diagnostics", "us_diagnostics.html");
-     * metersNames.add("WaveSense");
-     * metersUrl.put("WaveSense", "wavesense.html");
-     * }
+     * metersNames.add("Sanvita"); metersUrl.put("Sanvita", "sanvita.html");
+     * metersNames.add("U.S. Diagnostics"); metersUrl.put("U.S. Diagnostics",
+     * "us_diagnostics.html"); metersNames.add("WaveSense");
+     * metersUrl.put("WaveSense", "wavesense.html"); }
      */
 
     // ********************************************************
@@ -337,7 +327,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void initAllObjects()
     {
-        this.m_pump_base_type = new PumpBaseType();
+        //this.m_pump_base_type = new PumpBaseType();
         this.m_pump_bolus_type = new PumpBolusType();
         this.m_pump_basal_type = new PumpBasalSubType();
         this.m_pump_report = new PumpReport();
@@ -476,9 +466,8 @@ public class DataAccessPump extends DataAccessPlugInBase
         // public BaseListEntry(String name, String page, int status)
 
         /*
-         * metersUrl = new Hashtable<String,String>();
-         * metersNames = new ArrayList<String>();
-         * metersNames.add("Abbott Diabetes Care");
+         * metersUrl = new Hashtable<String,String>(); metersNames = new
+         * ArrayList<String>(); metersNames.add("Abbott Diabetes Care");
          * metersUrl.put("Abbott Diabetes Care", "abbott.html");
          * metersNames.add("Bayer Diagnostics");
          * metersUrl.put("Bayer Diagnostics", "bayer.html");
@@ -492,18 +481,16 @@ public class DataAccessPump extends DataAccessPlugInBase
          * metersUrl.put("HealthPia America", "healthpia.html");
          * metersNames.add("Home Diagnostics");
          * metersUrl.put("Home Diagnostics", "home_diganostics.html");
-         * metersNames.add("Lifescan");
-         * metersUrl.put("Lifescan", "lifescan.html");
-         * metersNames.add("Nova Biomedical");
+         * metersNames.add("Lifescan"); metersUrl.put("Lifescan",
+         * "lifescan.html"); metersNames.add("Nova Biomedical");
          * metersUrl.put("Nova Biomedical", "nova_biomedical.html");
          * metersNames.add("Roche Diagnostics");
          * metersUrl.put("Roche Diagnostics", "roche.html");
-         * metersNames.add("Sanvita");
-         * metersUrl.put("Sanvita", "sanvita.html");
+         * metersNames.add("Sanvita"); metersUrl.put("Sanvita", "sanvita.html");
          * metersNames.add("U.S. Diagnostics");
          * metersUrl.put("U.S. Diagnostics", "us_diagnostics.html");
-         * metersNames.add("WaveSense");
-         * metersUrl.put("WaveSense", "wavesense.html");
+         * metersNames.add("WaveSense"); metersUrl.put("WaveSense",
+         * "wavesense.html");
          */
     }
 
@@ -511,10 +498,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     // ****** Pumps *****
     // ********************************************************
     /*
-     * public PumpManager getPumpManager()
-     * {
-     * return this.m_pumpManager;
-     * }
+     * public PumpManager getPumpManager() { return this.m_pumpManager; }
      */
 
     // ********************************************************
@@ -660,18 +644,13 @@ public class DataAccessPump extends DataAccessPlugInBase
      * @return
      */
     /*
-     * public long getSelectedPersonId()
-     * {
-     * return this.selected_person_id;
-     * }
-     * /**
+     * public long getSelectedPersonId() { return this.selected_person_id; } /**
      * Set Selected Persons Id
+     * 
      * @param id
      */
     /*
-     * public void setSelectedPersonId(long id)
-     * {
-     * this.selected_person_id = id;
+     * public void setSelectedPersonId(long id) { this.selected_person_id = id;
      * }
      */
 
@@ -813,10 +792,7 @@ public class DataAccessPump extends DataAccessPlugInBase
      * @return
      */
     /*
-     * public DecimalHandler getDecimalHandler()
-     * {
-     * return this.dec_handler;
-     * }
+     * public DecimalHandler getDecimalHandler() { return this.dec_handler; }
      */
 
     /**
@@ -853,7 +829,8 @@ public class DataAccessPump extends DataAccessPlugInBase
             Thread.sleep(ms);
         }
         catch (Exception ex)
-        {}
+        {
+        }
     }
 
     @Override
@@ -875,6 +852,7 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     /**
      * Get Name of Plugin (for internal use)
+     * 
      * @return
      */
     @Override

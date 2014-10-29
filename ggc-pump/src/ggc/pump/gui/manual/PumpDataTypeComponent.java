@@ -20,6 +20,8 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
 import javax.swing.ButtonGroup;
@@ -37,30 +39,31 @@ import com.atech.graphics.components.TimeComponent;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
+import com.atech.utils.data.CodeEnumWithTranslation;
 
 /**
- * Application: GGC - GNU Gluco Control 
+ * Application: GGC - GNU Gluco Control
  * Plug-in: Pump Tool (support for Pump devices)
- * 
+ *
  * See AUTHORS for copyright information.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- * Filename:     PumpDataTypeComponent 
+ *
+ * Filename:     PumpDataTypeComponent
  * Description:  Selection for different base selections and settings
- * 
+ *
  * Author: Andy {andy@atech-software.com}
  */
 
@@ -69,18 +72,6 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     private static final long serialVersionUID = -4449947661003378689L;
 
-    /*
-     * public static final int TYPE_NONE = 0;
-     * public static final int TYPE_BASAL = 1;
-     * public static final int TYPE_BOLUS = 2;
-     * public static final int TYPE_EVENT = 3;
-     * public static final int TYPE_ALARM = 4;
-     * public static final int TYPE_ERROR = 5;
-     * public static final int TYPE_REPORT = 6;
-     * public static final int TYPE_PEN_INJECTION_BASAL = 7;
-     * public static final int TYPE_PEN_INJECTION_BOLUS = 8;
-     * public static final int TYPE_ADDITIONAL_DATA = 9;
-     */
     TemporaryBasalRateComponent tbr_cmp = null;
     SquareBolusComponent bolus_sq = null;
     JLabel label_1, label_2, label_3, label_4;
@@ -93,7 +84,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     JButton button_1;
     TimeComponent tc_1;
 
-    int type = 0;
+    PumpBaseType type = PumpBaseType.None;
     int height = 0;
     int width = 400;
 
@@ -117,7 +108,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     /**
      * Constructor
-     * 
+     *
      * @param parent
      * @param startx
      */
@@ -193,10 +184,10 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     /**
      * Set Type
-     * 
+     *
      * @param type
      */
-    public void setType(int type)
+    public void setType(PumpBaseType type)
     {
         if (this.type == type)
             return;
@@ -206,41 +197,41 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         switch (this.type)
         {
 
-            case PumpBaseType.PUMP_DATA_EVENT:
-            case PumpBaseType.PUMP_DATA_ALARM:
-            case PumpBaseType.PUMP_DATA_ERROR:
+            case Event:
+            case Alarm:
+            case Error:
                 {
                     this.setComboAndText();
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_BASAL:
+            case Basal:
                 {
                     this.setBasal();
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_BOLUS:
+            case Bolus:
                 {
                     this.setBolus();
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_REPORT:
+            case Report:
                 {
                     this.setReport();
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL:
-            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS:
+            case PenInjectionBasal:
+            case PenInjectionBolus:
                 {
                     this.setNumericTextAndText();
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_NONE:
-            case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA:
+            case None:
+            case AdditionalData:
             default:
                 {
                     this.setEmpty();
@@ -252,7 +243,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     /**
      * Get Items
-     * 
+     *
      * @return
      */
     public Object[] getItems()
@@ -326,17 +317,17 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         this.setHeight(85);
 
-        if (this.type == PumpBaseType.PUMP_DATA_EVENT)
+        if (this.type == PumpBaseType.Event)
         {
             this.label_1.setText(ic.getMessage("EVENT_TYPE") + ":");
             addAllItems(this.combo_1, this.m_da.getPumpEventTypes().getDescriptions());
         }
-        else if (this.type == PumpBaseType.PUMP_DATA_ALARM)
+        else if (this.type == PumpBaseType.Alarm)
         {
             this.label_1.setText(ic.getMessage("ALARM_TYPE") + ":");
             addAllItems(this.combo_1, PumpAlarms.getDescriptions());
         }
-        else if (this.type == PumpBaseType.PUMP_DATA_ERROR)
+        else if (this.type == PumpBaseType.Error)
         {
             this.label_1.setText(ic.getMessage("ERROR_TYPE") + ":");
             addAllItems(this.combo_1, this.m_da.getPumpErrorTypes().getDescriptions());
@@ -369,11 +360,11 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         this.setHeight(85);
 
-        if (this.type == PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL)
+        if (this.type == PumpBaseType.PenInjectionBasal)
         {
             this.label_1.setText(ic.getMessage("BASAL_INSULIN") + ":");
         }
-        else if (this.type == PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS)
+        else if (this.type == PumpBaseType.PenInjectionBolus)
         {
             this.label_1.setText(ic.getMessage("BOLUS_INSULIN") + ":");
         }
@@ -441,7 +432,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     /**
      * Set Basal Sub Type
-     * 
+     *
      * @param stype
      */
     public void setBasalSubType(int stype)
@@ -745,7 +736,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     /**
      * Are Required Elements Set. For checking if elements are set.
-     * 
+     *
      * @return
      */
     public boolean areRequiredElementsSet()
@@ -755,7 +746,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         switch (this.type)
         {
 
-            case PumpBaseType.PUMP_DATA_BASAL:
+            case Basal:
                 {
                     switch (this.sub_type)
                     {
@@ -789,7 +780,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                     }
                 }
 
-            case PumpBaseType.PUMP_DATA_BOLUS:
+            case Bolus:
                 {
                     switch (this.sub_type)
                     {
@@ -821,25 +812,25 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                     }
                 }
 
-            case PumpBaseType.PUMP_DATA_EVENT:
-            case PumpBaseType.PUMP_DATA_ALARM:
-            case PumpBaseType.PUMP_DATA_ERROR:
+            case Event:
+            case Alarm:
+            case Error:
                 {
                     return this.combo_1.getSelectedIndex() > 0;
                 }
 
-            case PumpBaseType.PUMP_DATA_REPORT:
+            case Report:
                 {
                     return this.combo_1.getSelectedIndex() > 0 && this.text_2.getText().trim().length() != 0;
                 }
 
-            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL:
-            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS:
+            case PenInjectionBasal:
+            case PenInjectionBolus:
                 {
                     return m_da.getFloatValue(this.num_tf_1_d2.getCurrentValue()) > 0;
                 }
 
-            case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA:
+            case AdditionalData:
             default:
                 return true;
 
@@ -849,7 +840,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     /**
      * Load Data
-     * 
+     *
      * @param data
      */
     public void loadData(PumpValuesEntry data)
@@ -861,7 +852,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         // this.combo_1.setSelectedIndex(data.getBaseType());
         switch (this.type)
         {
-            case PumpBaseType.PUMP_DATA_BASAL:
+            case Basal:
                 {
                     this.setBasalSubType(data.getSubType());
 
@@ -918,7 +909,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_BOLUS:
+            case Bolus:
                 {
                     this.setBolusSubType(data.getSubType());
 
@@ -960,33 +951,33 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_EVENT:
+            case Event:
                 {
                     this.combo_1.setSelectedItem(data.getSubTypeString());
                 }
                 break;
-            case PumpBaseType.PUMP_DATA_ALARM:
-            case PumpBaseType.PUMP_DATA_ERROR:
+            case Alarm:
+            case Error:
                 {
                     this.combo_1.setSelectedIndex(data.getSubType());
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_REPORT:
+            case Report:
                 {
                     this.combo_1.setSelectedIndex(data.getSubType());
                     this.text_2.setText(data.getValue());
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL:
-            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS:
+            case PenInjectionBasal:
+            case PenInjectionBolus:
                 {
                     this.num_tf_1_d2.setValue(m_da.getFloatValueFromString(data.getValue()));
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA:
+            case AdditionalData:
                 break;
 
             default:
@@ -999,8 +990,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     /**
      * Save Data (we put in PumpValuesEntry, which is then set to right values)
-     * 
-     * @param pve 
+     *
+     * @param pve
      */
     public void saveData(PumpValuesEntry pve)
     {
@@ -1008,7 +999,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         switch (this.type)
         {
-            case PumpBaseType.PUMP_DATA_BASAL:
+            case Basal:
                 {
                     pve.setSubType(sub_type);
 
@@ -1066,7 +1057,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_BOLUS:
+            case Bolus:
                 {
                     pve.setSubType(sub_type);
 
@@ -1122,36 +1113,36 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_EVENT:
+            case Event:
                 {
                     pve.setSubType(m_da.getPumpEventTypes().getTypeFromDescription(
                         (String) this.combo_1.getSelectedItem()));
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_ALARM:
-            case PumpBaseType.PUMP_DATA_ERROR:
+            case Alarm:
+            case Error:
                 {
                     pve.setSubType(this.combo_1.getSelectedIndex());
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_REPORT:
+            case Report:
                 {
                     pve.setSubType(this.combo_1.getSelectedIndex());
                     pve.setValue(this.text_2.getText());
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BASAL:
-            case PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS:
+            case PenInjectionBasal:
+            case PenInjectionBolus:
                 {
                     pve.setSubType(0);
                     pve.setValue("" + this.num_tf_1_d2.getCurrentValue());
                 }
                 break;
 
-            case PumpBaseType.PUMP_DATA_ADDITIONAL_DATA:
+            case AdditionalData:
             default:
                 break;
 
@@ -1198,9 +1189,19 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         }
     }
 
+    private void addAllItems(JComboBox cb, Map<Integer, ? extends CodeEnumWithTranslation> map)
+    {
+        cb.removeAllItems();
+
+        for (Entry<Integer, ? extends CodeEnumWithTranslation> en : map.entrySet())
+        {
+            cb.addItem(en.getValue().getTranslation());
+        }
+    }
+
     /**
      * Set Height
-     * 
+     *
      * @param height
      */
     public void setHeight(int height)
@@ -1220,10 +1221,10 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
     /**
      * Get Base Type
-     * 
+     *
      * @return
      */
-    public int getBaseType()
+    public PumpBaseType getBaseType()
     {
         return this.type;
     }
@@ -1399,7 +1400,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     }
 
     /**
-     *  Square Bolus Component - Component used for setting Square Bolus   
+     *  Square Bolus Component - Component used for setting Square Bolus
      */
     private class SquareBolusComponent extends JPanel
     {

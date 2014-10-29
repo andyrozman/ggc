@@ -43,24 +43,24 @@ import com.atech.utils.ATSwingUtils;
  *  Plug-in:       Pump Tool (support for Pump devices)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     PumpDataRowDialog  
+ *
+ *  Filename:     PumpDataRowDialog
  *  Description:  Data dialog for specific row (entry)
- * 
+ *
  *  Author: Andy {andy@atech-software.com}
  */
 
@@ -108,7 +108,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     /**
      * Constructor
-     * 
+     *
      * @param ndV
      * @param nDate
      * @param dialog
@@ -123,7 +123,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     /**
      * Constructor
-     * 
+     *
      * @param ndr
      * @param dialog
      */
@@ -136,7 +136,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     /**
      * Init Parameters
-     * 
+     *
      * @param ndV
      * @param nDate
      */
@@ -161,7 +161,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     /**
      * Init Parameters
-     * 
+     *
      * @param ndr
      */
     public void initParameters(PumpValuesEntry ndr)
@@ -222,7 +222,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     /**
      *  Populates JList component
-     * @param input 
+     * @param input
      */
     public void populateJListExtended(ArrayList<?> input)
     {
@@ -242,7 +242,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
     public void load()
     {
         this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
-        this.cb_entry_type.setSelectedIndex(this.m_dailyValuesRow.getBaseType());
+        this.cb_entry_type.setSelectedIndex(this.m_dailyValuesRow.getBaseType().getCode());
         this.pdtc.loadData(this.m_dailyValuesRow);
     }
 
@@ -280,7 +280,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         pdtc = new PumpDataTypeComponent(this, 175);
-        pdtc.setType(PumpBaseType.PUMP_DATA_NONE);
+        pdtc.setType(PumpBaseType.None);
         panel.add(pdtc);
 
         cb_entry_type = new JComboBox(pdtc.getItems());
@@ -393,7 +393,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         else if (action.equals("ok"))
         {
 
-            if ((this.pdtc.getBaseType() == 0 || this.pdtc.getBaseType() == PumpBaseType.PUMP_DATA_ADDITIONAL_DATA)
+            if ((this.pdtc.getBaseType() == PumpBaseType.None || this.pdtc.getBaseType() == PumpBaseType.AdditionalData)
                     && this.list_data.size() == 0 || !this.pdtc.areRequiredElementsSet())
             {
                 this.warningNotSet();
@@ -470,7 +470,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         }
         else if (action.equals("event_type"))
         {
-            this.pdtc.setType(this.cb_entry_type.getSelectedIndex());
+            this.pdtc.setType(PumpBaseType.getPumpBaseTypeByCode(this.cb_entry_type.getSelectedIndex()));
             this.realignComponents();
             // System.out.println("Event changes: " +
             // this.cb_entry_type.getSelectedIndex());
@@ -683,7 +683,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         // System.out.println("Entry Type: " +
         // this.cb_entry_type.getSelectedIndex());
 
-        if (this.cb_entry_type.getSelectedIndex() != PumpBaseType.PUMP_DATA_ADDITIONAL_DATA
+        if (this.cb_entry_type.getSelectedIndex() != PumpBaseType.AdditionalData.getCode()
                 && this.cb_entry_type.getSelectedIndex() != 0)
         {
             if (this.m_dailyValuesRow == null)
@@ -736,7 +736,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     /**
      * Was Action
-     * 
+     *
      * @return
      */
     public boolean wasAction()

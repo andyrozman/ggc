@@ -104,7 +104,7 @@ public class PumpValuesHour
     public void addBolus(PumpValuesEntry pve)
     {
 
-        if (pve.base_type == PumpBaseType.PUMP_DATA_PEN_INJECTION_BOLUS)
+        if (pve.baseType == PumpBaseType.PenInjectionBolus)
         {
             bolus += parseFloat(pve.getValue(), "Pen-Bolus");
         }

@@ -82,7 +82,7 @@ public class PumpDailyStatistics extends StatisticsCollection
         {
             PumpValuesEntry pve = (PumpValuesEntry) this.items.get(i);
 
-            if (pve.base_type == PumpBaseType.PUMP_DATA_BASAL)
+            if (pve.baseType == PumpBaseType.Basal)
             {
                 lst.add(pve);
             }
@@ -178,7 +178,7 @@ public class PumpDailyStatistics extends StatisticsCollection
 
     private boolean isCurrentlyIgnoredEntry(PumpValuesEntry pve)
     {
-        if (pve.base_type == PumpBaseType.PUMP_DATA_BASAL)
+        if (pve.baseType == PumpBaseType.Basal)
             return pve.sub_type != PumpBasalSubType.PUMP_BASAL_VALUE;
         else
             return false;

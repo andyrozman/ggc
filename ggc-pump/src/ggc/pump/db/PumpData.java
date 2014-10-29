@@ -20,28 +20,28 @@ import com.atech.utils.ATDataAccessAbstract;
  *  Application:   GGC - GNU Gluco Control
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  *  Filename:     FoodDescription
- *  Description:  This is DataLayer file (data file, with methods to work with database or in 
- *                this case Hibernate). This one is used for FoodDescriptionH and FoodUserDescriptionH. 
- *                This one is also BackupRestoreObject. 
+ *  Description:  This is DataLayer file (data file, with methods to work with database or in
+ *                this case Hibernate). This one is used for FoodDescriptionH and FoodUserDescriptionH.
+ *                This one is also BackupRestoreObject.
  *                File is not YET DataLayer File at least not active
- * 
- *  Author: andyrozman {andy@atech-software.com}  
+ *
+ *  Author: andyrozman {andy@atech-software.com}
  */
 
 // TODO: DL
@@ -62,7 +62,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * Constructor
-     * 
+     *
      * @param ch
      */
     public PumpData(PumpDataH ch)
@@ -80,14 +80,14 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * Constructor
-     * 
+     *
      * @param pve
      */
     public PumpData(PumpValuesEntry pve)
     {
         this.setId(0L);
         this.setDt_info(pve.getDateTime());
-        this.setBase_type(pve.getBaseType());
+        this.setBase_type(pve.getBaseType().getCode());
         this.setSub_type(pve.getSubType());
         this.setValue(pve.getValue());
         this.setExtended("");
@@ -98,7 +98,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * Constructor
-     * 
+     *
      * @param _ic
      */
     public PumpData(I18nControlAbstract _ic)
@@ -112,7 +112,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * Get Target Name
-     * 
+     *
      * @see com.atech.db.hibernate.transfer.BackupRestoreBase#getTargetName()
      */
     public String getTargetName()
@@ -120,9 +120,9 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return DataAccessPump.getInstance().getI18nControlInstance().getMessage("PUMP_DATA");
     }
 
-    /** 
+    /**
      * Get Name
-     * @return 
+     * @return
      */
     public String getName()
     {
@@ -131,7 +131,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * getBackupClassName - name of class which will be updated/restored
-     * 
+     *
      * @return
      */
     public String getClassName()
@@ -141,7 +141,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * To String
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
@@ -150,7 +150,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return this.getTargetName();
     }
 
-    /** 
+    /**
      * getChildren
      */
     public ArrayList<CheckBoxTreeNodeInterface> getNodeChildren()
@@ -158,7 +158,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return null;
     }
 
-    /** 
+    /**
      * isSelected
      */
     public boolean isSelected()
@@ -166,7 +166,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return selected;
     }
 
-    /** 
+    /**
      * setSelected
      */
     public void setSelected(boolean newValue)
@@ -176,7 +176,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * Is Object Collection
-     * 
+     *
      * @return true if it has children
      */
     public boolean isCollection()
@@ -194,7 +194,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * DbAdd - Add this object to database
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return id in type of String
@@ -224,7 +224,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * DbDelete - Delete this object in database
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -243,7 +243,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * DbEdit - Edit this object in database
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -272,7 +272,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * DbGet - Loads this object. Id must be set.
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -296,7 +296,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
-     * 
+     *
      * @param sess Hibernate Session object
      * @throws Exception (HibernateException) with error
      * @return true if action done or Exception if not
@@ -306,7 +306,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return false;
     }
 
-    /** 
+    /**
      * getAction
      */
     public int getAction()
@@ -321,7 +321,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * Get Table Version - returns version of table
-     * 
+     *
      * @return version information
      */
     public int getTableVersion()
@@ -330,7 +330,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     }
 
     /**
-     * dbExport - returns export String, for current version 
+     * dbExport - returns export String, for current version
      *
      * @return line that will be exported
      * @throws Exception if export for table is not supported
@@ -364,7 +364,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     }
 
     /**
-     * dbExport - returns export String, for current version 
+     * dbExport - returns export String, for current version
      *
      * @return line that will be exported
      * @throws Exception if export for table is not supported
@@ -376,7 +376,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * dbExportHeader - header for export file
-     * 
+     *
      * @param table_version
      * @return
      */
@@ -388,7 +388,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * dbExportHeader - header for export file
-     * 
+     *
      * @return
      */
     public String dbExportHeader()
@@ -398,7 +398,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * dbImport - processes input entry to right fields
-     * 
+     *
      * @param table_version version of table
      * @param value_entry whole import line
      * @throws Exception if import for selected table version is not supported or it fails
@@ -410,7 +410,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * dbImport - processes input entry to right fields
-     * 
+     *
      * @param table_version version of table
      * @param value_entry whole import line
      * @param parameters parameters
@@ -437,7 +437,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * getBackupFile - name of backup file (base part)
-     * 
+     *
      * @return
      */
     public String getBackupFile()
@@ -447,7 +447,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * getBackupClassName - name of class which will be updated/restored
-     * 
+     *
      * @return
      */
     public String getBackupClassName()
@@ -455,7 +455,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return "ggc.core.db.hibernate.pump.PumpDataH";
     }
 
-    /** 
+    /**
      * getObjectName
      */
     public String getObjectName()
@@ -463,7 +463,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return "PumpData";
     }
 
-    /** 
+    /**
      * isDebugMode
      */
     public boolean isDebugMode()
@@ -482,7 +482,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     /**
      * Has To Be Clean - if table needs to be cleaned before import
-     * 
+     *
      * @return true if we need to clean
      */
     public boolean hasToBeCleaned()

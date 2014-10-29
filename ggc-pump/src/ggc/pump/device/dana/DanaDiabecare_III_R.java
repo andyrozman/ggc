@@ -40,29 +40,29 @@ import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.HexUtils;
 
 /**
- *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
+ * devices)
  *
- *  See AUTHORS for copyright information.
+ * See AUTHORS for copyright information.
  * 
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 2 of the License, or (at your option) any later
- *  version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  * 
- *  This program is distributed in the hope that it will be useful, but WITHOUT
- *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- *  details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- *  You should have received a copy of the GNU General Public License along with
- *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- *  Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     DanaDiabecare_III  
- *  Description:  Dana Diabecare R/III device implementation 
+ * Filename: DanaDiabecare_III Description: Dana Diabecare R/III device
+ * implementation
  * 
- *  Author: Andy {andy@atech-software.com}
+ * Author: Andy {andy@atech-software.com}
  */
 
 public class DanaDiabecare_III_R extends AbstractBlueToothPump
@@ -196,7 +196,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     public static final byte RECORD_TYPE_PRIME = 3;
 
     /**
-     * Constructor 
+     * Constructor
      */
     public DanaDiabecare_III_R()
     {
@@ -218,8 +218,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     /**
      * Constructor
      * 
-     * @param params 
-     * @param writer 
+     * @param params
+     * @param writer
      */
     public DanaDiabecare_III_R(String params, OutputWriter writer)
     {
@@ -232,7 +232,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
      * 
      * @param params
      * @param writer
-     * @param da 
+     * @param da
      */
     public DanaDiabecare_III_R(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
@@ -289,7 +289,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * getName - Get Name of device 
+     * getName - Get Name of device
      * 
      * @return name of device
      */
@@ -309,8 +309,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * getDeviceId - Get Device Id, within MgrCompany class 
-     * Should be implemented by device class.
+     * getDeviceId - Get Device Id, within MgrCompany class Should be
+     * implemented by device class.
      * 
      * @return id of device within company
      */
@@ -320,10 +320,10 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * getInstructions - get instructions for device
-     * Should be implemented by meter class.
+     * getInstructions - get instructions for device Should be implemented by
+     * meter class.
      * 
-     * @return instructions for reading data 
+     * @return instructions for reading data
      */
     public String getInstructions()
     {
@@ -331,7 +331,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * getComment - Get Comment for device 
+     * getComment - Get Comment for device
      * 
      * @return comment or null
      */
@@ -341,7 +341,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * getImplementationStatus - Get Implementation Status 
+     * getImplementationStatus - Get Implementation Status
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
@@ -352,7 +352,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
+     * getDeviceClassName - Get Class name of device implementation, used by
+     * Reflection at later time
      * 
      * @return class name as string
      */
@@ -361,10 +362,10 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return "ggc.pump.device.dana.DanaDiabecare_III_R";
     }
 
-    /** 
+    /**
      * Get Max Memory Records
      * 
-     * @return 
+     * @return
      */
     public int getMaxMemoryRecords()
     {
@@ -412,11 +413,12 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     /**
      * Gets the device record.
      * 
-     * @param command 
-     * @param write 
+     * @param command
+     * @param write
      * 
-     
-     * @throws Exception the exception
+     * 
+     * @throws Exception
+     *             the exception
      */
     public void getDeviceRecord(byte[] command, boolean write) throws Exception
     {
@@ -473,7 +475,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
                 byte record_code = hex_utils.getByteFromArray(13);
                 int record_value = hex_utils.getIntFromArray(14);
 
-                if (atd.equals(this.atd_1) && old_record_code == record_code && old_record_value == record_value)
+                if (atd.equals(this.atd_1) && (old_record_code == record_code) && (old_record_value == record_value))
                 {
                     break;
                 }
@@ -515,14 +517,18 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     {
         String v = "";
 
-        if (type == RECORD_TYPE_BOLUS || type == RECORD_TYPE_DAILY || type == RECORD_TYPE_PRIME)
+        if ((type == RECORD_TYPE_BOLUS) || (type == RECORD_TYPE_DAILY) || (type == RECORD_TYPE_PRIME))
         {
             v = DataAccessPlugInBase.Decimal1Format.format(value / 100.0f);
         }
         else if (type == RECORD_TYPE_ALARM)
+        {
             return this.getWriter().writeObject(key, atd, getCorrectCode(CODE_TYPE_ALARM, value), null);
+        }
         else if (type == RECORD_TYPE_ERROR)
+        {
             return this.getWriter().writeObject(key, atd, getCorrectCode(CODE_TYPE_ERROR, value), null);
+        }
         else
         {
             v = "" + value;
@@ -539,9 +545,13 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         year += 2000;
 
         if (year > current_year)
+        {
             return current_year;
+        }
         else
+        {
             return year;
+        }
     }
 
     private ATechDate getDateTime(byte y, byte m, byte d, byte h, byte min, byte s)
@@ -560,7 +570,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
     }
 
-    /** 
+    /**
      * open
      */
     @Override
@@ -572,7 +582,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             byte[] buffer = new byte[0x100];
 
             if (!super.open())
+            {
                 return false;
+            }
 
             waitTime(2000); // wait for device to settle
 
@@ -591,8 +603,10 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
             // byte num4 = reader.getCommand();
             // byte num5 = reader.getSubCommand();
-            if (!(buffer[4] == (byte) 3) && buffer[5] == (byte) 3)
+            if (!(buffer[4] == (byte) 3) && (buffer[5] == (byte) 3))
+            {
                 throw new Exception("Port (" + this.port_name + ") is not for DANA Diabecare R");
+            }
 
             this.readLine();
             waitTime(200);
@@ -610,9 +624,11 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     /**
      * Read data.
      * 
-     * @param buffer the buffer
+     * @param buffer
+     *            the buffer
      * @return the int
-     * @throws Exception the exception
+     * @throws Exception
+     *             the exception
      */
     public int readData(byte[] buffer) throws Exception
     {
@@ -620,15 +636,17 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         try
         {
             if (this.read(buffer, 0, 4) == 0)
-            {}
+            {
+            }
 
             num = buffer[2] - 1;
             this.read(buffer, 4, num + 4);
             int v = this.createCRC(buffer, 3, num + 1);
-            byte num4 = (byte) (v >> 8 & 0xff);
+            byte num4 = (byte) ((v >> 8) & 0xff);
             byte num5 = (byte) (v & 0xff);
-            if (buffer[4 + num] != num4 || buffer[4 + num + 1] != num5)
-            {}
+            if ((buffer[4 + num] != num4) || (buffer[4 + num + 1] != num5))
+            {
+            }
 
         }
         catch (Exception ex)
@@ -665,12 +683,12 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             // logger.debug("writeData:Start");
             destinationArray[0] = 0x7e;
             destinationArray[1] = 0x7e;
-            destinationArray[2] = (byte) (length + 1 & 0xff);
+            destinationArray[2] = (byte) ((length + 1) & 0xff);
             // logger.debug("Send length: " + length);
             destinationArray[3] = (byte) 0xf1;
             System.arraycopy(buffer, offset, destinationArray, 4, length);
             int v = this.createCRC(buffer, offset, length);
-            destinationArray[4 + length] = (byte) (v >> 8 & 0xff);
+            destinationArray[4 + length] = (byte) ((v >> 8) & 0xff);
             destinationArray[5 + length] = (byte) (v & 0xff);
             // logger.debug("CRC: " + DanaUtil.toHexString(v));
             destinationArray[6 + length] = 0x2e;
@@ -684,10 +702,10 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
     }
 
-    /** 
+    /**
      * serialEvent
      * 
-     * @param event 
+     * @param event
      */
     public void serialEvent(SerialPortEvent event)
     {
@@ -710,10 +728,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
      * @return
      */
     /*
-     * public int getDownloadSupportTypeConfiguration()
-     * {
-     * return DownloadSupportType.DOWNLOAD_YES;
-     * }
+     * public int getDownloadSupportTypeConfiguration() { return
+     * DownloadSupportType.DOWNLOAD_YES; }
      */
 
     /**
@@ -727,8 +743,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * Get Temporary Basal Type Definition
-     * "TYPE=Unit;STEP=0.1"
+     * Get Temporary Basal Type Definition "TYPE=Unit;STEP=0.1"
      * "TYPE=Procent;STEP=10;MIN=0;MAX=200"
      * "TYPE=Both;STEP_UNIT=0.1;STEP=10;MIN=0;MAX=200"
      * 
@@ -772,6 +787,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
     /**
      * Map pump specific alarms to PumpTool specific alarm codes
+     * 
      * @return
      */
     public Hashtable<String, Integer> getAlarmMappings()
@@ -780,8 +796,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
-     *     event codes
+     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific event
+     * codes
+     * 
      * @return
      */
     public Hashtable<String, Integer> getBolusMappings()
@@ -790,8 +807,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * Get Error Mappings - Map pump specific errors to Pump Tool specific 
-     *     event codes
+     * Get Error Mappings - Map pump specific errors to Pump Tool specific event
+     * codes
+     * 
      * @return
      */
     public Hashtable<String, Integer> getErrorMappings()
@@ -801,6 +819,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
     /**
      * Map pump specific events to PumpTool specific event codes
+     * 
      * @return
      */
     public Hashtable<String, Integer> getEventMappings()
@@ -809,8 +828,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * Get Report Mappings - Map pump specific reports to Pump Tool specific 
-     *     event codes
+     * Get Report Mappings - Map pump specific reports to Pump Tool specific
+     * event codes
+     * 
      * @return
      */
     public Hashtable<String, Integer> getReportMappings()
@@ -822,8 +842,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     Hashtable<String, Integer> alarm_map;
 
     /**
-     * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
-     *      create, AlarmMappings and EventMappings and any other pump constants.
+     * loadPumpSpecificValues - should be called from constructor of any
+     * AbstractPump classes and should create, AlarmMappings and EventMappings
+     * and any other pump constants.
      */
     public void loadPumpSpecificValues()
     {
@@ -833,14 +854,15 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         error_map.put("26410", PumpErrors.PUMP_ERROR_CARTRIDGE_EMPTY);
 
         alarm_map = new Hashtable<String, Integer>();
-        alarm_map.put("17030", PumpAlarms.BATTERY_LOW.getAlarmCode());
-        alarm_map.put("26410", PumpAlarms.CARTRIDGE_LOW.getAlarmCode());
+        alarm_map.put("17030", PumpAlarms.BatteryLow.getCode());
+        alarm_map.put("26410", PumpAlarms.CartridgeLow.getCode());
     }
 
     /**
-     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
-     *    normal progress status, but with some special devices we calculate progress through other means.
-     *    
+     * hasSpecialProgressStatus - in most cases we read data directly from
+     * device, in this case we have normal progress status, but with some
+     * special devices we calculate progress through other means.
+     * 
      * @return true is progress status is special
      */
     @Override
@@ -849,7 +871,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return true;
     }
 
-    /** 
+    /**
      * This is method for reading configuration
      * 
      * @throws PlugInBaseException
@@ -864,7 +886,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             this.open();
 
             if (!this.device_communicating)
+            {
                 return;
+            }
 
             this.connect();
 
@@ -904,7 +928,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
     }
 
-    /** 
+    /**
      * Read Device Data Full
      */
     public void readDeviceDataFull() throws PlugInBaseException
@@ -912,7 +936,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         this.current_year = new GregorianCalendar().get(Calendar.YEAR);
 
         if (!this.device_communicating)
+        {
             return;
+        }
 
         try
         {
@@ -920,7 +946,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             this.open();
 
             if (!this.device_communicating)
+            {
                 return;
+            }
 
             this.connect();
 
@@ -984,8 +1012,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * This is method for reading partitial data from device. All reading from actual device should be done from 
-     * here. Reading can be done directly here, or event can be used to read data.
+     * This is method for reading partitial data from device. All reading from
+     * actual device should be done from here. Reading can be done directly
+     * here, or event can be used to read data.
      */
     @Override
     public void readDeviceDataPartitial() throws PlugInBaseException
@@ -993,9 +1022,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     }
 
     /**
-     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
-     * information (most dumps do).
-     *  
+     * This is for reading device information. This should be used only if
+     * normal dump doesn't retrieve this information (most dumps do).
+     * 
      * @throws PlugInBaseException
      */
     @Override
@@ -1035,10 +1064,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             /*
              * ATechDate atd = getDateTime(this.hex_utils.getByteFromArray(16),
              * this.hex_utils.getByteFromArray(17),
-             * this.hex_utils.getByteFromArray(18),
-             * (byte)0, (byte)0, (byte)0);
-             * System.out.println("Date: " + atd.getDateString());
-             * String cnt = this.hex_utils.getAsciiFromArray(19, 3);
+             * this.hex_utils.getByteFromArray(18), (byte)0, (byte)0, (byte)0);
+             * System.out.println("Date: " + atd.getDateString()); String cnt =
+             * this.hex_utils.getAsciiFromArray(19, 3);
              * System.out.println("Country: " + cnt);
              */
 
@@ -1061,10 +1089,14 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
     private boolean checkIfValid(byte[] arr)
     {
-        if (arr[0] == check_response[0] && arr[1] == check_response[1] && arr[3] == check_response[2])
+        if ((arr[0] == check_response[0]) && (arr[1] == check_response[1]) && (arr[3] == check_response[2]))
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
     }
 
     private void incrementError()
@@ -1112,7 +1144,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
                 ProfileSubPattern pse = new ProfileSubPattern();
                 pse.timeStart = i * 100;
                 pse.timeEnd = pse.timeStart + 59;
-                pse.amount = this.hex_utils.getIntFromArray(6 + i * 2) / 100.0f;
+                pse.amount = this.hex_utils.getIntFromArray(6 + (i * 2)) / 100.0f;
 
                 // all_data[i] = (this.hex_utils.getIntFromArray(6 + (i*2)) /
                 // 100.0f);
@@ -1162,30 +1194,30 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         this.dvw.setOutputWriter(this.output_writer);
 
         // bolus - standard
-        this.dvw.put("1_66", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_BOLUS,
+        this.dvw.put("1_66", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus.getCode(),
                 PumpBolusType.PUMP_BOLUS_STANDARD));
 
         // bolus - wave (this is unhandled, data is not all available)
-        this.dvw.put("1_69", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_BOLUS,
+        this.dvw.put("1_69", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus.getCode(),
                 PumpBolusType.PUMP_BOLUS_MULTIWAVE));
 
         // daily insulin record
-        this.dvw.put("2_68", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_REPORT,
+        this.dvw.put("2_68", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Report.getCode(),
                 PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY));
         // CH (carbohydrates)
         this.dvw.put("8_82", new PumpTempValues(PumpTempValues.OBJECT_EXT, PumpAdditionalDataType.PUMP_ADD_DATA_CH, 0));
         // prime
-        this.dvw.put("3_80", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_EVENT,
+        this.dvw.put("3_80", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
                 PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET));
 
         // BG
         this.dvw.put("6_71", new PumpTempValues(PumpTempValues.OBJECT_EXT, PumpAdditionalDataType.PUMP_ADD_DATA_BG, 0));
 
         // alarm
-        this.dvw.put("5_66", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_ALARM, 0));
+        this.dvw.put("5_66", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(), 0));
 
         // error
-        this.dvw.put("4_2", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.PUMP_DATA_ERROR, 0));
+        this.dvw.put("4_2", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Error.getCode(), 0));
 
     }
 
@@ -1205,19 +1237,23 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         {
             // s("CodeTypeAlarm" + code);
             if (this.alarm_map.containsKey("" + code))
+            {
                 // s("CodeTypeAlarm: found. Code: " + code);
                 return this.alarm_map.get("" + code);
+            }
             else
             {
                 log.info("DanaDiabecare_III_R: Unknown Alarm [type=" + type + ", code=" + code + "]");
-                return PumpAlarms.UNKNOWN_ALARM.getAlarmCode();
+                return PumpAlarms.UnknownAlarm.getCode();
             }
         }
         else
         {
             if (this.error_map.containsKey("" + code))
+            {
                 // s("CodeTypeAlarm: found. Code: " + code);
                 return this.error_map.get("" + code);
+            }
             else
             {
                 log.info("DanaDiabecare_III_R: Unknown Error [type=" + type + ", code=" + code + "]");
@@ -1231,19 +1267,22 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     private int crc16(byte data, int crc)
     {
         int num = 0;
-        num = crc >> 8 & 0xff | crc << 8;
+        num = ((crc >> 8) & 0xff) | (crc << 8);
         num ^= data & 0xff;
-        num ^= (num & 0xff) >> 4 & 0xfff;
+        num ^= ((num & 0xff) >> 4) & 0xfff;
         num ^= num << 8 << 4;
-        return num ^ ((num & 0xff) << 5 | ((num & 0xff) >> 3 & 0x1fff) << 8);
+        return num ^ (((num & 0xff) << 5) | ((((num & 0xff) >> 3) & 0x1fff) << 8));
     }
 
     /**
      * Creates the crc.
      * 
-     * @param data the data
-     * @param offset the offset
-     * @param length the length
+     * @param data
+     *            the data
+     * @param offset
+     *            the offset
+     * @param length
+     *            the length
      * 
      * @return the int
      */
@@ -1282,9 +1321,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
             if (cmd == COMMAND_SETT_GENER)
             {
-                writeConfiguration("PCFG_BASAL_INCREMENT", "" + hex_utils.getByteFromArray(6) / 100.0f,
+                writeConfiguration("PCFG_BASAL_INCREMENT", "" + (hex_utils.getByteFromArray(6) / 100.0f),
                     PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
-                writeConfiguration("PCFG_BOLUS_INCREMENT", "" + hex_utils.getByteFromArray(7) / 100.0f,
+                writeConfiguration("PCFG_BOLUS_INCREMENT", "" + (hex_utils.getByteFromArray(7) / 100.0f),
                     PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
                 writeConfiguration("PCFG_BOLUS_PRESET", "" + getTrueOrFalse(hex_utils.getByteFromArray(8)),
                     PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
@@ -1310,11 +1349,11 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             }
             else if (cmd == COMMAND_SETT_MAX)
             {
-                writeConfiguration("PCFG_MAX_BOLUS", "" + hex_utils.getIntFromArray(6) / 100.0f,
+                writeConfiguration("PCFG_MAX_BOLUS", "" + (hex_utils.getIntFromArray(6) / 100.0f),
                     PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
-                writeConfiguration("PCFG_MAX_BASAL", "" + hex_utils.getIntFromArray(8) / 100.0f,
+                writeConfiguration("PCFG_MAX_BASAL", "" + (hex_utils.getIntFromArray(8) / 100.0f),
                     PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
-                writeConfiguration("PCFG_MAX_DAILY", "" + hex_utils.getIntFromArray(10) / 100.0f,
+                writeConfiguration("PCFG_MAX_DAILY", "" + (hex_utils.getIntFromArray(10) / 100.0f),
                     PumpConfiguration.PUMP_CONFIG_GROUP_INSULIN);
             }
             else if (cmd == COMMAND_SETT_GLUCOMODE)
@@ -1365,7 +1404,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
                 writeConfiguration("PCFG_ACTIVE_INSULIN_RATE",
                     "" + DataAccessPlugInBase.Decimal0Format.format(hex_utils.getIntFromArray(10) / 100.0f),
                     PumpConfiguration.PUMP_CONFIG_GROUP_BOLUS_HELPER);
-                writeConfiguration("PCFG_ACTIVE_INSULIN_DECREMENT_RATIO", "" + hex_utils.getByteFromArray(14) * 5,
+                writeConfiguration("PCFG_ACTIVE_INSULIN_DECREMENT_RATIO", "" + (hex_utils.getByteFromArray(14) * 5),
                     PumpConfiguration.PUMP_CONFIG_GROUP_BOLUS_HELPER);
 
             }
@@ -1382,7 +1421,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     private void writeConfiguration(String key, String value, int config_group)
     {
         if (!config_mode)
+        {
             return;
+        }
 
         PumpValuesEntryConfig pvec = new PumpValuesEntryConfig(ic.getMessage(key), value, config_group);
         this.output_writer.writeData(pvec);
@@ -1393,9 +1434,13 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     private String getTrueOrFalse(byte val)
     {
         if (val == 0)
+        {
             return ic.getMessage("FALSE");
+        }
         else
+        {
             return ic.getMessage("TRUE");
+        }
     }
 
 }
