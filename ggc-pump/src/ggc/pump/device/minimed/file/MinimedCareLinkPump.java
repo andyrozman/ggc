@@ -23,23 +23,23 @@ import java.util.Hashtable;
  * devices)
  *
  * See AUTHORS for copyright information.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  * Filename: MinimedCareLinkPump Description: Minimed CareLink Pump
- * 
+ *
  * Author: Andy {andy@atech-software.com}
  */
 
@@ -66,7 +66,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
 
     /**
      * Constructor
-     * 
+     *
      * @param da
      * @param ow
      * @param reading_type
@@ -291,66 +291,66 @@ public class MinimedCareLinkPump extends MinimedCareLink
         // FIXME
 
         this.dvw.put("Prime", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET));
+                PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET, true));
 
         this.dvw.put("Rewind", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                PumpEvents.PUMP_EVENT_CARTRIDGE_REWIND));
+                PumpEvents.PUMP_EVENT_CARTRIDGE_REWIND, false));
 
         this.dvw.put("AlarmPump",
-            new PumpTempValues(PumpTempValues.OBJECT_BASE_SET_SUBTYPE, PumpBaseType.Alarm.getCode()));
+            new PumpTempValues(PumpTempValues.OBJECT_BASE_SET_SUBTYPE, PumpBaseType.Alarm.getCode(), false));
 
         this.dvw.put("BolusNormal", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus.getCode(),
-                PumpBolusType.PUMP_BOLUS_STANDARD));
+                PumpBolusType.PUMP_BOLUS_STANDARD, true));
 
         this.dvw.put("BolusSquare", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus.getCode(),
-                PumpBolusType.PUMP_BOLUS_SQUARE));
+                PumpBolusType.PUMP_BOLUS_SQUARE, false)); // ?
 
         this.dvw.put("BolusMultiwave", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus.getCode(),
-                PumpBolusType.PUMP_BOLUS_MULTIWAVE));
+                PumpBolusType.PUMP_BOLUS_MULTIWAVE, false));
 
         this.dvw.put("BolusWizardBolusEstimate",
             new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                    PumpEvents.PUMP_EVENT_BOLUS_WIZARD));
+                    PumpEvents.PUMP_EVENT_BOLUS_WIZARD, false));
 
         this.dvw.put("BGReceived", new PumpTempValues(PumpTempValues.OBJECT_EXT,
-                PumpAdditionalDataType.PUMP_ADD_DATA_BG));
+                PumpAdditionalDataType.PUMP_ADD_DATA_BG, true));
 
         // ChangeTempBasalPercent
         this.dvw.put("ChangeTempBasalPercent",
             new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Basal.getCode(),
-                    PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE));
+                    PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE, false));
 
         this.dvw.put("TBROver", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Basal.getCode(),
-                PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_ENDED));
+                PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_ENDED, false));
 
         this.dvw.put("ChangeActiveBasalProfilePattern", new PumpTempValues(PumpTempValues.OBJECT_BASE,
-                PumpBaseType.Basal.getCode(), PumpBasalSubType.PUMP_BASAL_PROFILE));
+                PumpBaseType.Basal.getCode(), PumpBasalSubType.PUMP_BASAL_PROFILE, false));
 
         this.dvw.put("ChangeSuspendEnable", new PumpTempValues(PumpTempValues.OBJECT_BASE,
-                PumpBaseType.Event.getCode(), PumpEvents.PUMP_EVENT_BASAL_STOP));
+                PumpBaseType.Event.getCode(), PumpEvents.PUMP_EVENT_BASAL_STOP, false));
 
         this.dvw.put("ChangeSuspendEnableNot",
             new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                    PumpEvents.PUMP_EVENT_BASAL_RUN));
+                    PumpEvents.PUMP_EVENT_BASAL_RUN, false));
 
         this.dvw.put("ResultDailyTotal", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Report.getCode(),
-                PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY));
+                PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY, true));
 
         this.dvw.put("SelfTest", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                PumpEvents.PUMP_EVENT_SELF_TEST));
+                PumpEvents.PUMP_EVENT_SELF_TEST, false));
 
         this.dvw.put("ChangeTime", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                PumpEvents.PUMP_EVENT_SELF_TEST));
+                PumpEvents.PUMP_EVENT_SELF_TEST, false));
 
         this.dvw.put(
             "JournalEntryPumpLowBattery",
             new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(), PumpAlarms.BatteryLow
-                    .getCode()));
+                    .getCode(), false));
 
         this.dvw.put(
             "JournalEntryPumpLowReservoir",
             new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(), PumpAlarms.CartridgeLow
-                    .getCode()));
+                    .getCode(), false));
 
     }
 

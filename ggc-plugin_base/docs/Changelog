@@ -2,6 +2,14 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.6.4 [11.11.2014 - ]
+    * DeviceTempValues, added isNumericValue parameter, and added several constructors with CodeEnumWithTranslation parameters as base and sub
+      type
+    * DeviceValuesWriter, added numeric parameter and better handling for value (we parsed value to change , to ., now this is dependand on
+      numericParameter in DeviceTempValues or by command.
+
+
+
 0.6.3 [21.9.2014]
     * fixes of pdf-viewer classes
 

@@ -4,6 +4,7 @@ import ggc.plugin.output.OutputWriter;
 
 import java.util.Hashtable;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -14,24 +15,24 @@ import com.atech.utils.data.ATechDate;
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
+ *
  *  Filename:     DeviceValuesWriter
  *  Description:  Collection of DeviceTempValues
- * 
+ *
  *  Author: Andy {andy@atech-software.com}
  */
 
@@ -56,7 +57,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
 
     /**
      * Constructor
-     * @param is_silent 
+     * @param is_silent
      */
     public DeviceValuesWriter(boolean is_silent)
     {
@@ -75,7 +76,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
 
     /**
      * Set output writer
-     * 
+     *
      * @param ow
      */
     public void setOutputWriter(OutputWriter ow)
@@ -84,18 +85,48 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     }
 
     /**
-     * Write Object 
-     * @param _type 
-     * @param _datetime 
-     * @param _value 
-     * @return 
+     * Write Object
+     * @param _type
+     * @param _datetime
+     * @param _value
+     * @return
      */
     public boolean writeObject(String _type, ATechDate _datetime, String _value)
     {
+        return this.writeObject(_type, _datetime, _value, StringUtils.isNotBlank(_value));
+    }
+
+    /**
+     * Write Object
+     * @param _type
+     * @param _datetime
+     * @param _value
+     * @return
+     */
+    public boolean writeObject(String _type, ATechDate _datetime, String _value, boolean isNumericValue)
+    {
         if (this.containsKey(_type))
         {
-            _value = _value.replace(',', '.');
             DeviceTempValues dtv = this.get(_type);
+
+            if (StringUtils.isNotBlank(_value))
+            {
+                boolean numeric = false;
+
+                if (dtv.getIsNumericValue() != null)
+                {
+                    numeric = dtv.getIsNumericValue().booleanValue();
+                }
+                else
+                {
+                    numeric = isNumericValue;
+                }
+
+                if (numeric)
+                {
+                    _value = _value.replace(',', '.');
+                }
+            }
 
             if (!this.is_silent_mode)
             {
@@ -111,13 +142,13 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     }
 
     /**
-     * Write Object 
-     * 
-     * @param _type 
-     * @param _datetime 
-     * @param code_type 
-     * @param _value 
-     * @return 
+     * Write Object
+     *
+     * @param _type
+     * @param _datetime
+     * @param code_type
+     * @param _value
+     * @return
      */
     public boolean writeObject(String _type, ATechDate _datetime, int code_type, String _value)
     {

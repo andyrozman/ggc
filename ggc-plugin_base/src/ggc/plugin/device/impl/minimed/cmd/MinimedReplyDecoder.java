@@ -15,7 +15,6 @@ import org.apache.commons.logging.LogFactory;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.CRCUtils;
-import com.atech.utils.data.HexUtils;
 
 public class MinimedReplyDecoder
 {
@@ -254,7 +253,7 @@ public class MinimedReplyDecoder
 
     /**
      * Decode Insulin Sensitivities
-     * 
+     *
      * @param cmd
      * @return
      */
@@ -680,7 +679,7 @@ public class MinimedReplyDecoder
 
     public boolean sensorSettings(MinimedCommand cmd)
     {
-        HexUtils hu = this.util.getHexUtils();
+        CRCUtils hu = this.util.getHexUtils();
         int rd[] = cmd.reply.raw_data;
 
         if (this.device.getMinimedDeviceId() == MinimedDevicesIds.PUMP_MINIMED_522)
@@ -1030,7 +1029,7 @@ public class MinimedReplyDecoder
 
     /**
      * Get Unsigned Short
-     * 
+     *
      * @param mc
      * @param parameter
      * @return
@@ -1042,7 +1041,7 @@ public class MinimedReplyDecoder
 
     /**
      * Get Unsigned Short
-     * 
+     *
      * @param mc
      * @param parameter
      * @return
@@ -1055,7 +1054,7 @@ public class MinimedReplyDecoder
 
     /**
      * Get String
-     * 
+     *
      * @param mc
      * @return
      */
@@ -1066,9 +1065,9 @@ public class MinimedReplyDecoder
 
     /**
      * Get String
-     * 
+     *
      * @param mc
-     * @param parameter 
+     * @param parameter
      * @return
      */
     public String getString(MinimedCommand mc, int parameter)

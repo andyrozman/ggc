@@ -14,31 +14,31 @@ import gnu.io.SerialPort;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.atech.utils.data.HexUtils;
+import com.atech.utils.data.CRCUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     Minimed522  
+ *
+ *  Filename:     Minimed522
  *  Description:  Minimed 522/722 implementation (just settings)
- * 
+ *
  *  Author: Andy {andy@atech-software.com}
  */
 
@@ -49,10 +49,10 @@ public class Minimed523 extends Minimed522
 
     /**
      * Constructor
-     *  
+     *
      * @param da - data access instance
-     * @param device_type - device type 
-     * @param full_port - full port identification 
+     * @param device_type - device type
+     * @param full_port - full port identification
      * @param writer - output writer instance
      */
     public Minimed523(DataAccessPlugInBase da, int device_type, String full_port, OutputWriter writer)
@@ -62,9 +62,9 @@ public class Minimed523 extends Minimed522
 
     /**
      * Constructor
-     *  
+     *
      * @param da - data access instance
-     * @param full_port - full port identification 
+     * @param full_port - full port identification
      * @param writer - output writer instance
      */
     public Minimed523(DataAccessPlugInBase da, String full_port, OutputWriter writer)
@@ -74,7 +74,7 @@ public class Minimed523 extends Minimed522
 
     /**
      * Constructor
-     * 
+     *
      * @param cmp
      */
     public Minimed523(AbstractDeviceCompany cmp)
@@ -163,8 +163,8 @@ public class Minimed523 extends Minimed522
     }
 
     /**
-     * getName - Get Name of meter. 
-     * 
+     * getName - Get Name of meter.
+     *
      * @return name of meter
      */
     @Override
@@ -175,7 +175,7 @@ public class Minimed523 extends Minimed522
 
     /**
      * getIconName - Get Icon of meter
-     * 
+     *
      * @return icon name
      */
     @Override
@@ -185,9 +185,9 @@ public class Minimed523 extends Minimed522
     }
 
     /**
-     * getDeviceId - Get Device Id, within MgrCompany class 
+     * getDeviceId - Get Device Id, within MgrCompany class
      * Should be implemented by device class.
-     * 
+     *
      * @return id of device within company
      */
     @Override
@@ -199,8 +199,8 @@ public class Minimed523 extends Minimed522
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
-     * 
-     * @return instructions for reading data 
+     *
+     * @return instructions for reading data
      */
     @Override
     public String getInstructions()
@@ -209,8 +209,8 @@ public class Minimed523 extends Minimed522
     }
 
     /**
-     * getComment - Get Comment for device 
-     * 
+     * getComment - Get Comment for device
+     *
      * @return comment or null
      */
     @Override
@@ -220,8 +220,8 @@ public class Minimed523 extends Minimed522
     }
 
     /**
-     * getImplementationStatus - Get Implementation Status 
-     * 
+     * getImplementationStatus - Get Implementation Status
+     *
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
@@ -233,7 +233,7 @@ public class Minimed523 extends Minimed522
 
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
-     * 
+     *
      * @return class name as string
      */
     @Override
@@ -242,7 +242,7 @@ public class Minimed523 extends Minimed522
         return "ggc.pump.device.minimed.Minimed522";
     }
 
-    /** 
+    /**
      * Get Max Memory Records
      */
     @Override
@@ -253,7 +253,7 @@ public class Minimed523 extends Minimed522
 
     /**
      * Get Download Support Type
-     * 
+     *
      * @return
      */
     @Override
@@ -264,7 +264,7 @@ public class Minimed523 extends Minimed522
 
     /**
      * How Many Months Of Data Stored
-     * 
+     *
      * @return
      */
     @Override
@@ -278,7 +278,7 @@ public class Minimed523 extends Minimed522
      * "TYPE=Unit;STEP=0.1"
      * "TYPE=Procent;STEP=10;MIN=0;MAX=200"
      * "TYPE=Both;STEP_UNIT=0.1;STEP=10;MIN=0;MAX=200"
-     * 
+     *
      * @return
      */
     @Override
@@ -290,7 +290,7 @@ public class Minimed523 extends Minimed522
 
     /**
      * Get Bolus Step (precission)
-     * 
+     *
      * @return
      */
     @Override
@@ -301,7 +301,7 @@ public class Minimed523 extends Minimed522
 
     /**
      * Get Basal Step (precission)
-     * 
+     *
      * @return
      */
     @Override
@@ -312,7 +312,7 @@ public class Minimed523 extends Minimed522
 
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
-     * 
+     *
      * @return
      */
     @Override
@@ -436,7 +436,7 @@ public class Minimed523 extends Minimed522
         // util.getHexUtils().getHexCompact(cmd.reply.raw_data));
 
         int[] rd = cmd.reply.raw_data;
-        HexUtils hu = util.getHexUtils();
+        CRCUtils hu = util.getHexUtils();
 
         int i = hu.makeInt(rd[0], rd[1]);
 
