@@ -1120,9 +1120,27 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
             case OutputWriterType.CONSOLE:
             case OutputWriterType.FILE:
-                return this.getDateTimeObject().getDateTimeString() + ":  Base Type=" + this.getBaseTypeString()
-                        + ", Sub Type=" + this.getSubTypeString() + ", Value=" + this.getValue() + ", Comment="
-                        + this.getComment();
+                {
+                    StringBuffer sb = new StringBuffer();
+                    sb.append(this.getDateTimeObject().getDateTimeString() + ":  Base Type=" + this.getBaseTypeString());
+
+                    if (StringUtils.isNotBlank(this.getSubTypeString()))
+                    {
+                        sb.append(", Sub Type=" + this.getSubTypeString());
+                    }
+
+                    if (StringUtils.isNotBlank(this.getValue()))
+                    {
+                        sb.append(", Value=" + this.getValue());
+                    }
+
+                    if (StringUtils.isNotBlank(this.getComment()))
+                    {
+                        sb.append(", Comment=" + this.getComment());
+                    }
+
+                    return sb.toString();
+                }
 
             case OutputWriterType.GGC_FILE_EXPORT:
                 {
