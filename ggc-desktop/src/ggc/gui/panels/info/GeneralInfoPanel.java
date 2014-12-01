@@ -8,6 +8,7 @@ import java.util.Hashtable;
 
 import javax.swing.JLabel;
 
+import ggc.core.util.GGCSoftwareMode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -50,7 +51,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     // private JLabel lblMeter = new JLabel();
     // private JLabel lblPumps = new JLabel();
     // private JLabel lblCGMS = new JLabel();
-    private int current_mode = -1;
+    private GGCSoftwareMode currentMode = null;
     private Hashtable<String, JLabel> list_elems;
     private static Log log = LogFactory.getLog(GeneralInfoPanel.class);
 
@@ -101,31 +102,31 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         // add(new JLabel());
         // add(new JLabel());
 
-        changeMode(DataAccess.GGC_MODE_PEN_INJECTION);
+        changeMode(GGCSoftwareMode.PEN_INJECTION_MODE);
 
     }
 
-    private void changeMode(int new_mode)
+    private void changeMode(GGCSoftwareMode newMode)
     {
-        if (this.current_mode == new_mode)
+        if (newMode.equals(this.currentMode))
             return;
 
         this.removeAll();
-        this.current_mode = new_mode;
+        this.currentMode = newMode;
 
         String[] sel_elements = null;
 
-        if (new_mode == DataAccess.GGC_MODE_PEN_INJECTION)
+        if (newMode.equals(GGCSoftwareMode.PEN_INJECTION_MODE))
         {
             sel_elements = this.pen_mode;
         }
-        else if (new_mode == DataAccess.GGC_MODE_PUMP)
+        else if (newMode.equals(GGCSoftwareMode.PUMP_MODE))
         {
             sel_elements = this.pump_mode;
         }
         else
         {
-            log.warn("Error setting mode in General Panel: " + new_mode);
+            log.warn("Error setting mode in General Panel: " + newMode);
             return;
         }
 

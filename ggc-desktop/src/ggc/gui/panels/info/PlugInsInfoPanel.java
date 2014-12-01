@@ -1,5 +1,6 @@
 package ggc.gui.panels.info;
 
+import ggc.core.plugins.GGCPluginType;
 import ggc.core.util.DataAccess;
 
 import java.awt.BorderLayout;
@@ -112,18 +113,25 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
     @Override
     public void refreshInfo()
     {
-        if (m_da.getPlugIn(DataAccess.PLUGIN_METERS) == null)
-            return;
+        if (m_da.isPluginAvailable(GGCPluginType.METER_TOOL_PLUGIN))
+        {
+            lblMeter.setText(m_da.getPlugIn(GGCPluginType.METER_TOOL_PLUGIN).getShortStatus());
+        }
 
-        lblMeter.setText(m_da.getPlugIn(DataAccess.PLUGIN_METERS).getShortStatus());
-        lblPump.setText(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).getShortStatus());
-        lblCgms.setText(m_da.getPlugIn(DataAccess.PLUGIN_CGMS).getShortStatus());
-        lblNutri.setText(m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).getShortStatus());
+        if (m_da.isPluginAvailable(GGCPluginType.PUMP_TOOL_PLUGIN))
+        {
+            lblPump.setText(m_da.getPlugIn(GGCPluginType.PUMP_TOOL_PLUGIN).getShortStatus());
+        }
 
-        // lblMeter.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_METERS)));
-        // lblPump.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS)));
-        // lblCgms.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_CGMS)));
-        // m_da.getPlugIn(key)
+        if (m_da.isPluginAvailable(GGCPluginType.CGMS_TOOL_PLUGIN))
+        {
+            lblCgms.setText(m_da.getPlugIn(GGCPluginType.CGMS_TOOL_PLUGIN).getShortStatus());
+        }
+
+        if (m_da.isPluginAvailable(GGCPluginType.NUTRITION_TOOL_PLUGIN))
+        {
+            lblCgms.setText(m_da.getPlugIn(GGCPluginType.NUTRITION_TOOL_PLUGIN).getShortStatus());
+        }
     }
 
     /**

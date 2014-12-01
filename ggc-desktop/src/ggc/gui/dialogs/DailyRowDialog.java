@@ -4,6 +4,7 @@ import ggc.core.data.Converter_mgdL_mmolL;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.ExtendedDailyValue;
+import ggc.core.plugins.GGCPluginType;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
@@ -626,9 +627,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                 if (m_da.isValueSet(this.m_dailyValuesRow.getMealsIds()))
                 {
 
-                    PlugInClient pc = DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION);
+                    PlugInClient pc = DataAccess.getInstance().getPlugIn(GGCPluginType.NUTRITION_TOOL_PLUGIN);
 
-                    if (pc.isActiveWarning(true, this))
+                    if ((pc!=null) && (pc.isActiveWarning(true, this)))
                     {
                         Object[] data = pc.executeCommandDialogReturn(this, NutriPlugIn.COMMAND_RECALCULATE_CH,
                             this.m_dailyValuesRow.getMealsIds());
@@ -677,9 +678,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private void commandEditFood()
     {
-        PlugInClient pc = DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION);
+        PlugInClient pc = DataAccess.getInstance().getPlugIn(GGCPluginType.NUTRITION_TOOL_PLUGIN);
 
-        if (pc.isActiveWarning(true, this))
+        if ((pc!=null) && (pc.isActiveWarning(true, this)))
         {
             Object[] data = pc.executeCommandDialogReturn(this, NutriPlugIn.COMMAND_DB_FOOD_SELECTOR,
                 this.m_dailyValuesRow.getMealsIds());

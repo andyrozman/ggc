@@ -53,9 +53,9 @@ public class CGMSTempValues extends DeviceTempValues
      * @param _sub_type
      * @param _value_template
      */
-    public CGMSTempValues(int _object_type, int _base_type, int _sub_type, String _value_template)
+    public CGMSTempValues(int _object_type, int _base_type, int _sub_type, String _value_template, Boolean isNumericValue)
     {
-        super(_object_type, _base_type, _sub_type, _value_template);
+        super(_object_type, _base_type, _sub_type, _value_template, isNumericValue);
     }
 
     /**

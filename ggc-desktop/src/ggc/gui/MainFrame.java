@@ -6,6 +6,7 @@ import ggc.core.data.graph.GraphViewSpread;
 import ggc.core.db.GGCDbLoader;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
+import ggc.core.plugins.GGCPluginType;
 import ggc.core.util.DataAccess;
 import ggc.core.util.RefreshInfo;
 import ggc.gui.dialogs.AboutGGCDialog;
@@ -294,8 +295,8 @@ public class MainFrame extends JFrame implements EventObserverInterface
     {
         // System.out.println("SW: " + m_da.getSoftwareMode());
 
-        if (m_da.getSoftwareMode() == -1)
-            return;
+        //if (m_da.getSoftwareMode() == -1)
+        //    return;
 
         String title_full = "  GGC - GNU Gluco Control (" + GGC.full_version + ")";
 
@@ -1091,19 +1092,19 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
             if (command.startsWith("meters_"))
             {
-                m_da.getPlugIn(DataAccess.PLUGIN_METERS).actionPerformed(e);
+                m_da.getPlugIn(GGCPluginType.METER_TOOL_PLUGIN).actionPerformed(e);
             }
             else if (command.startsWith("pumps_") || command.startsWith("report_print_pump"))
             {
-                m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).actionPerformed(e);
+                m_da.getPlugIn(GGCPluginType.PUMP_TOOL_PLUGIN).actionPerformed(e);
             }
             else if (command.startsWith("cgms_"))
             {
-                m_da.getPlugIn(DataAccess.PLUGIN_CGMS).actionPerformed(e);
+                m_da.getPlugIn(GGCPluginType.CGMS_TOOL_PLUGIN).actionPerformed(e);
             }
             else if (command.startsWith("food_"))
             {
-                m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).actionPerformed(e);
+                m_da.getPlugIn(GGCPluginType.NUTRITION_TOOL_PLUGIN).actionPerformed(e);
             }
             else if (command.equals("file_quit"))
             {
@@ -1455,7 +1456,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.menuBar.add(this.menus.get("MENU_FILE"));
         this.menuBar.add(this.menus.get("MENU_PEN"));
 
-        JMenu menu = getPlugInMenu(DataAccess.PLUGIN_NUTRITION);
+        JMenu menu = getPlugInMenu(GGCPluginType.NUTRITION_TOOL_PLUGIN);
 
         if (menu != null)
         {
@@ -1490,9 +1491,9 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         this.menuBar.add(this.menus.get("MENU_PRINT"));
 
-        String[] keys = { DataAccess.PLUGIN_METERS, DataAccess.PLUGIN_PUMPS, DataAccess.PLUGIN_CGMS, };
+        GGCPluginType[] keys = { GGCPluginType.METER_TOOL_PLUGIN, GGCPluginType.PUMP_TOOL_PLUGIN, GGCPluginType.CGMS_TOOL_PLUGIN, };
 
-        for (String key : keys)
+        for (GGCPluginType key : keys)
         {
             if (m_da.isPluginAvailable(key))
             {
@@ -1520,7 +1521,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.refreshMenus(false);
     }
 
-    private JMenu getPlugInMenu(String name)
+    private JMenu getPlugInMenu(GGCPluginType name)
     {
         if (m_da.isPluginAvailable(name))
         {

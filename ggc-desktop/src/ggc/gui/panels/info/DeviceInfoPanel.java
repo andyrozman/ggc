@@ -1,5 +1,6 @@
 package ggc.gui.panels.info;
 
+import ggc.core.plugins.GGCPluginType;
 import ggc.core.util.DataAccess;
 
 import java.awt.BorderLayout;
@@ -127,12 +128,18 @@ public class DeviceInfoPanel extends AbstractInfoPanel
     @Override
     public void doRefresh()
     {
-        if (m_da.getPlugIn(DataAccess.PLUGIN_METERS) == null)
-            return;
-
-        lblMeter.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_METERS)));
-        lblPump.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_PUMPS)));
-        lblCgms.setText(getDeviceInfo(m_da.getPlugIn(DataAccess.PLUGIN_CGMS)));
+        if (m_da.isPluginAvailable(GGCPluginType.METER_TOOL_PLUGIN))
+        {
+            lblMeter.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.METER_TOOL_PLUGIN)));
+        }
+        if (m_da.isPluginAvailable(GGCPluginType.PUMP_TOOL_PLUGIN))
+        {
+            lblPump.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.PUMP_TOOL_PLUGIN)));
+        }
+        if (m_da.isPluginAvailable(GGCPluginType.CGMS_TOOL_PLUGIN))
+        {
+            lblCgms.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.CGMS_TOOL_PLUGIN)));
+        }
     }
 
     /**

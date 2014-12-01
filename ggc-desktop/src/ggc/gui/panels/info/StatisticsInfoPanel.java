@@ -1,6 +1,7 @@
 package ggc.gui.panels.info;
 
 import ggc.core.data.CollectionValues;
+import ggc.core.plugins.GGCPluginType;
 import ggc.core.util.DataAccess;
 
 import java.awt.GridLayout;
@@ -15,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
+import ggc.core.util.GGCSoftwareMode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -200,7 +202,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
 
         // System.out.println("Statictics::doRefresh()");
 
-        if (m_da.getSoftwareMode() == DataAccess.GGC_MODE_PEN_INJECTION)
+        if (m_da.getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE)
         {
 
             log.debug("Statistics - Pen/Injection Mode");
@@ -237,7 +239,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
             gcs[0] = startDate;
             gcs[1] = endDate;
 
-            Object obj = m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).getReturnObject(100, gcs);
+            Object obj = m_da.getPlugIn(GGCPluginType.PUMP_TOOL_PLUGIN).getReturnObject(100, gcs);
 
             if (obj != null)
             {
