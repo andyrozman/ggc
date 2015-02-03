@@ -200,11 +200,11 @@ public class GGCOutputParser implements DataOutputParserInterface
 
         if (record.getIsInserted())
         {
-            sub.value = CGMSEvents.CGMS_EVENT_SENSOR_START;
+            sub.value = CGMSEvents.SensorStart.getCode();
         }
         else
         {
-            sub.value = CGMSEvents.CGMS_EVENT_SENSOR_STOP;
+            sub.value = CGMSEvents.SensorStop.getCode();
         }
 
         addEntry(sub);

@@ -42,7 +42,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
 {
 
     /**
-     * The m_da.
+     * The dataAccess.
      */
     DataAccessPump m_da = DataAccessPump.getInstance();
 
@@ -196,23 +196,6 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return false;
     }
 
-    /** 
-     * getAlarmMappings
-     */
-    public Hashtable<String, Integer> getAlarmMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /** 
-     * getBolusMappings
-     */
-    public Hashtable<String, Integer> getBolusMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /** 
      * getDeviceInfo
@@ -224,23 +207,6 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return null;
     }
 
-    /** 
-     * getErrorMappings
-     */
-    public Hashtable<String, Integer> getErrorMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /** 
-     * getEventMappings
-     */
-    public Hashtable<String, Integer> getEventMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /** 
      * getMaxMemoryRecords
@@ -251,23 +217,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return 0;
     }
 
-    /** 
-     * getReportMappings
-     */
-    public Hashtable<String, Integer> getReportMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
-    /** 
-     * loadPumpSpecificValues
-     */
-    public void loadPumpSpecificValues()
-    {
-        // TODO Auto-generated method stub
-
-    }
 
     /** 
      * dispose
@@ -283,7 +233,6 @@ public class DummyPump extends AbstractPump // implements PumpInterface
      */
     public String getComment()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -292,7 +241,6 @@ public class DummyPump extends AbstractPump // implements PumpInterface
      */
     public String getConnectionPort()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -301,7 +249,6 @@ public class DummyPump extends AbstractPump // implements PumpInterface
      */
     public int getConnectionProtocol()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -310,7 +257,6 @@ public class DummyPump extends AbstractPump // implements PumpInterface
      */
     public String getDeviceClassName()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -319,7 +265,6 @@ public class DummyPump extends AbstractPump // implements PumpInterface
      */
     public int getDeviceId()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -337,7 +282,6 @@ public class DummyPump extends AbstractPump // implements PumpInterface
      */
     public String getIconName()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -346,7 +290,6 @@ public class DummyPump extends AbstractPump // implements PumpInterface
      */
     public int getImplementationStatus()
     {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -355,7 +298,6 @@ public class DummyPump extends AbstractPump // implements PumpInterface
      */
     public String getInstructions()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 

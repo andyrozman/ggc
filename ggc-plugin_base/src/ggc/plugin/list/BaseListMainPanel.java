@@ -146,12 +146,12 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
      */
     public String getHelpId()
     {
-        // System.out.println("m_da: " + m_da);
+        // System.out.println("dataAccess: " + dataAccess);
         // System.out.println("DevConfDef: " +
-        // m_da.getDeviceConfigurationDefinition());
+        // dataAccess.getDeviceConfigurationDefinition());
         // System.out.println("Help Prefix: " +
-        // m_da.getDeviceConfigurationDefinition().getHelpPrefix());
-        // return m_da.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // dataAccess.getDeviceConfigurationDefinition().getHelpPrefix());
+        // return dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
         // "List";
 
         return "DeviceTool_List";

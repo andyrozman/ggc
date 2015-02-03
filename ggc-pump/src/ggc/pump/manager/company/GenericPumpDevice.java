@@ -128,23 +128,6 @@ public class GenericPumpDevice extends AbstractPump
 
     }
 
-    /** 
-     * getAlarmMappings
-     */
-    public Hashtable<String, Integer> getAlarmMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /** 
-     * getBolusMappings
-     */
-    public Hashtable<String, Integer> getBolusMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /** 
      * getDeviceInfo
@@ -156,23 +139,6 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
-    /** 
-     * getErrorMappings
-     */
-    public Hashtable<String, Integer> getErrorMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /** 
-     * getEventMappings
-     */
-    public Hashtable<String, Integer> getEventMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /** 
      * getMaxMemoryRecords
@@ -183,23 +149,6 @@ public class GenericPumpDevice extends AbstractPump
         return 0;
     }
 
-    /** 
-     * getReportMappings
-     */
-    public Hashtable<String, Integer> getReportMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /** 
-     * loadPumpSpecificValues
-     */
-    public void loadPumpSpecificValues()
-    {
-        // TODO Auto-generated method stub
-
-    }
 
     /** 
      * open

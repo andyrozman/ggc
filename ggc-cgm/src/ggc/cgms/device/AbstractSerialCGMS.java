@@ -42,10 +42,10 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 public abstract class AbstractSerialCGMS extends SerialProtocol implements CGMSInterface, SelectableInterface
 {
 
-    // protected I18nControlAbstract ic = null;
+    // protected I18nControlAbstract i18nControlAbstract = null;
     // //DataAccessMeter.getInstance().getI18nControlInstance();
-    // protected OutputWriter output_writer;
-    // AbstractDeviceCompany device_company = null;
+    // protected OutputWriter outputWriter;
+    // AbstractDeviceCompany deviceCompany = null;
     protected int m_status = 0;
     protected boolean communication_established = false;
 
@@ -121,19 +121,19 @@ public abstract class AbstractSerialCGMS extends SerialProtocol implements CGMSI
     {
         // this.device_name = device;
 
-        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(dataAccess.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
 
-        if (this.output_writer != null)
+        if (this.outputWriter != null)
         {
-            this.output_writer.setDeviceIdentification(di);
-            // this.output_writer.
+            this.outputWriter.setDeviceIdentification(di);
+            // this.outputWriter.
             // this.device_instance =
             // MeterManager.getInstance().getMeterDevice(group, device);
         }
 
-        this.device_source_name = group + " " + device;
+        this.deviceSourceName = group + " " + device;
     }
 
     String serial_port = null;
@@ -221,8 +221,8 @@ public abstract class AbstractSerialCGMS extends SerialProtocol implements CGMSI
 
     protected void deviceDisconnected()
     {
-        this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
-        this.output_writer.endOutput();
+        this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+        this.outputWriter.endOutput();
     }
 
     /**
@@ -235,15 +235,6 @@ public abstract class AbstractSerialCGMS extends SerialProtocol implements CGMSI
         return DownloadSupportType.DOWNLOAD_FROM_DEVICE;
     }
 
-    /**
-     * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
-     *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
-     *    ... - OT Smart, etc), this devices require more extended data display. 
-     * @return
-     */
-    public int getInterfaceTypeForMeter()
-    {
-        return 0;
-    }
+
 
 }

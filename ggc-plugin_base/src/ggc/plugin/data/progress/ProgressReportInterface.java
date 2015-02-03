@@ -1,5 +1,7 @@
 package ggc.plugin.data.progress;
 
+import ggc.plugin.device.PlugInBaseException;
+
 public interface ProgressReportInterface
 {
 
@@ -12,8 +14,7 @@ public interface ProgressReportInterface
 
     void addToProgress(ProgressType progressType, int progressAdd);
 
-    // void addToProgressAndCheckIfCanceled(ProgressType progressType, int
-    // progressAdd) throws DexcomException;
+    void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws PlugInBaseException;
 
     // void setMaxElementsForStaticProgress(int maxElements);
 

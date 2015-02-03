@@ -89,7 +89,7 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
      * try
      * {
      * cvtm =
-     * (CGMSValuesTableModel)m_da.getDeviceDataHandler().getDeviceValuesTableModel
+     * (CGMSValuesTableModel)dataAccess.getDeviceDataHandler().getDeviceValuesTableModel
      * ();
      * BufferedReader br = new BufferedReader(new FileReader(filename));
      * String line = null;

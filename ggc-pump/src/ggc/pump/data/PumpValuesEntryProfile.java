@@ -79,12 +79,12 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      * //public
      * public Hashtable<String,String> params;
      * public int status = 1; //MeterValuesEntry.
-     * public static I18nControl ic = I18nControl.getInstance();
+     * public static I18nControl i18nControlAbstract = I18nControl.getInstance();
      * public String bg_original = null;
      * public OutputUtil util = new OutputUtil();
      */
 
-    // PumpAdditionalDataType m_pump_add = null;
+    // PumpAdditionalDataType pumpAdditionalDataType = null;
 
     /**
      * Constructor
@@ -94,7 +94,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     /*
      * public PumpValuesEntryExt(PumpAdditionalDataType pump_add)
      * {
-     * this.m_pump_add = pump_add;
+     * this.pumpAdditionalDataType = pump_add;
      * }
      */
 
@@ -103,7 +103,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      */
     public PumpValuesEntryProfile()
     {
-        // m_pump_add = new PumpAdditionalDataType();
+        // pumpAdditionalDataType = new PumpAdditionalDataType();
     }
 
     /**

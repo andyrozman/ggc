@@ -83,9 +83,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
     }
 
     /**
-     * Write Data to OutputWriter
-     * 
-     * @param data OutputWriterData instance
+     * {@inheritDoc}
      */
     public void writeData(OutputWriterData data)
     {
@@ -98,6 +96,15 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
             setReadData();
         }
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public void writeConfigurationData(OutputWriterConfigData configData)
+    {
+    }
+
 
     /**
      * Write Raw Data
@@ -116,7 +123,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
     }
 
     /**
-     * Write Device Identification
+     * {@inheritDoc}
      */
     public void writeDeviceIdentification()
     {
@@ -124,7 +131,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
     }
 
     /**
-     * Write Header
+     * {@inheritDoc}
      */
     @Override
     public void writeHeader()
@@ -162,7 +169,7 @@ public class GGCFileOutputWriter extends AbstractOutputWriter
     }
 
     /**
-     * End Output
+     * {@inheritDoc}
      */
     @Override
     public void endOutput()

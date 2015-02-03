@@ -286,7 +286,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
          * null,
          * new TitledBorder(m_ic.getMessage("COMMUNICATION_SETTINGS")),
          * main_panel);
-         * this.comm_port_comp = new CommunicationPortComponent(m_da, this);
+         * this.comm_port_comp = new CommunicationPortComponent(dataAccess, this);
          * pan_comm_settings.add(this.comm_port_comp);
          */
 
@@ -828,7 +828,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
      */
     public String getHelpId()
     {
-        // return this.m_da.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // return this.dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
         // "Configuration";
         return "DeviceTool_Configuration";
     }

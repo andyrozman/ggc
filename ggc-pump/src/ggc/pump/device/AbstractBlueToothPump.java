@@ -6,9 +6,11 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.BlueToothProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.defs.*;
 import ggc.pump.util.DataAccessPump;
 
 import javax.comm.SerialPortEvent;
+import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,13 +43,13 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
 {
 
     // protected int m_status = 0;
-    // protected I18nControlAbstract ic = null;
+    // protected I18nControlAbstract i18nControlAbstract = null;
     // //DataAccessPump.getInstance().getI18nControlInstance();
 
     // protected String m_info = "";
     // protected int m_time_difference = 0;
     protected String device_name = "Undefined";
-    // protected OutputWriter output_writer;
+    // protected OutputWriter outputWriter;
 
     // AbstractDeviceCompany pump_company = null;
     boolean communication_established = false;
@@ -82,7 +84,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
         super(cmp, DataAccessPump.getInstance());
         // super(cmp);
 
-        // System.out.println("m_Da: " + m_da);
+        // System.out.println("m_Da: " + dataAccess);
         // System.out.println("DAP: " + DataAccessPump.getInstance());
 
         // this.setDeviceCompany(cmp);
@@ -99,19 +101,19 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     {
         this.device_name = device;
 
-        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(dataAccess.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
 
-        if (this.output_writer != null)
+        if (this.outputWriter != null)
         {
-            this.output_writer.setDeviceIdentification(di);
-            // this.output_writer.
+            this.outputWriter.setDeviceIdentification(di);
+            // this.outputWriter.
             // this.device_instance =
             // MeterManager.getInstance().getMeterDevice(group, device);
         }
 
-        this.device_source_name = group + " " + device;
+        this.deviceSourceName = group + " " + device;
 
     }
 
@@ -247,6 +249,65 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
         this.serialPort.removeEventListener();
         this.serialPort.close();
         this.serialPort = null;
+    }
+
+
+    /**
+     * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific
+     *     alarm codes
+     * @return
+     */
+    public Hashtable<String, PumpAlarms> getAlarmMappings()
+    {
+        return null;
+    }
+
+    /**
+     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific
+     *     event codes
+     * @return
+     */
+    public Hashtable<String, PumpBolusType> getBolusMappings()
+    {
+        return null;
+    }
+
+    /**
+     * Get Error Mappings - Map pump specific errors to Pump Tool specific
+     *     event codes
+     * @return
+     */
+    public Hashtable<String, PumpErrors> getErrorMappings()
+    {
+        return null;
+    }
+
+    /**
+     * Get Event Mappings - Map pump specific events to Pump Tool specific
+     *     event codes
+     * @return
+     */
+    public Hashtable<String, PumpEvents> getEventMappings()
+    {
+        return null;
+    }
+
+    /**
+     * Get Report Mappings - Map pump specific reports to Pump Tool specific
+     *     event codes
+     * @return
+     */
+    public Hashtable<String, PumpReport> getReportMappings()
+    {
+        return null;
+    }
+
+    /**
+     * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
+     *      create, AlarmMappings and EventMappings and any other pump constants.
+     */
+    public void loadPumpSpecificValues()
+    {
     }
 
 }

@@ -37,35 +37,45 @@ public class DummyOutputWriter extends AbstractOutputWriter
         super();
     }
 
+
     /**
-     * Write Data to OutputWriter
-     * 
-     * @param data OutputWriterData instance
+     * {@inheritDoc}
      */
     public void writeData(OutputWriterData data)
     {
     }
 
+
     /**
-     * Write Header
+     * {@inheritDoc}
      */
     @Override
     public void writeHeader()
     {
     }
 
+
     /**
-     * Write Device Identification
+     * {@inheritDoc}
      */
     public void writeDeviceIdentification()
     {
     }
 
+
     /**
-     * End Output
+     * {@inheritDoc}
      */
     @Override
     public void endOutput()
+    {
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public void writeConfigurationData(OutputWriterConfigData configData)
     {
     }
 

@@ -77,12 +77,12 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     private static Log log = LogFactory.getLog(AccuChekSmartPixPump.class);
 
-    private Hashtable<String, Integer> alarm_mappings = null;
-    private Hashtable<String, Integer> event_mappings = null;
-    private Hashtable<String, Integer> error_mappings = null;
-    private Hashtable<String, Integer> bolus_mappings = null;
-    private Hashtable<String, Integer> report_mappings = null;
-    private Hashtable<String, Integer> basal_mappings = null;
+    private Hashtable<String, PumpAlarms> alarm_mappings = null;
+    private Hashtable<String, PumpEvents> event_mappings = null;
+    private Hashtable<String, PumpErrors> error_mappings = null;
+    private Hashtable<String, PumpBolusType> bolus_mappings = null;
+    private Hashtable<String, PumpReport> report_mappings = null;
+    private Hashtable<String, PumpBasalSubType> basal_mappings = null;
 
     /**
      * Constructor
@@ -156,7 +156,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             getPixDeviceInfo();
             getPumpDeviceInfo();
 
-            this.output_writer.writeDeviceIdentification();
+            this.outputWriter.writeDeviceIdentification();
 
             readPumpData();
         }
@@ -185,7 +185,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      */
     private void getPixDeviceInfo()
     {
-        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+        DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
         Node nd = getNode("IMPORT/ACSPIX");
 
@@ -211,7 +211,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     private void getPumpDeviceInfo()
     {
-        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+        DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
         Element el = getElement("IMPORT/IP");
 
@@ -257,12 +257,12 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
         for (int i = 0; i < list.size(); i++)
         {
-            this.output_writer.writeData(list.get(i));
+            this.outputWriter.writeData(list.get(i));
         }
 
         for (int i = 0; i < list_profiles.size(); i++)
         {
-            this.output_writer.writeData(list_profiles.get(i));
+            this.outputWriter.writeData(list_profiles.get(i));
         }
 
     }
@@ -446,7 +446,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             current_profiles.put(key, original_profiles.get(key));
         }
 
-        m_da.setSortSetting("Profile", "DESC");
+        dataAccess.setSortSetting("Profile", "DESC");
 
         for (Enumeration<String> en = current_profiles.keys(); en.hasMoreElements();)
         {
@@ -618,7 +618,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             if (add)
             {
                 // testing only
-                // this.output_writer.writeData(pve);
+                // this.outputWriter.writeData(pve);
 
                 lst_out.add(pve);
             }
@@ -640,7 +640,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * PumpValuesEntry(this.getDeviceSourceName());
      * pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"),
      * el.attributeValue("Tm"))); add = this.resolveBasalProfile(pve, el); if
-     * (add) { // testing only this.output_writer.writeData(pve);
+     * (add) { // testing only this.outputWriter.writeData(pve);
      * lst_out.add(pve); } } System.out.println("Profiles: " + lst_out.size());
      * return lst_out; }
      */
@@ -654,7 +654,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * PumpValuesEntry(this.getDeviceSourceName());
      * pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"),
      * el.attributeValue("Tm"))); // add = this.resolveBasalProfilePatterns(pve,
-     * el); if (add) { // testing only // this.output_writer.writeData(pve);
+     * el); if (add) { // testing only // this.outputWriter.writeData(pve);
      * lst_out.add(pve); } } System.out.println("Profiles patterns: " +
      * lst_out.size()); return lst_out; }
      */
@@ -680,8 +680,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
             // System.out.println(el);
 
-            pve.setBaseType(PumpBaseType.Basal.getCode());
-            pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE);
+            pve.setBaseType(PumpBaseType.Basal);
+            pve.setSubType(PumpBasalSubType.TemporaryBasalRate.getCode());
 
             String v = "";
 
@@ -698,7 +698,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
             if (PUMP_STOP.equals(remark))
             {
-                pve.setSubType(PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_CANCELED);
+                pve.setSubType(PumpBasalSubType.TemporaryBasalRateCanceled.getCode());
             }
             else
             {
@@ -730,7 +730,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 if (this.getEventMappings().containsKey(remark))
                 {
                     pve.setBaseType(PumpBaseType.Event.getCode());
-                    pve.setSubType(this.getEventMappings().get(remark));
+                    pve.setSubType(this.getEventMappings().get(remark).getCode());
                     // System.out.println("Basal Event Unknown [remark=" +
                     // remark + "]");
                     return true;
@@ -738,7 +738,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 else if (this.getBasalMappings().containsKey(remark))
                 {
                     pve.setBaseType(PumpBaseType.Basal.getCode());
-                    pve.setSubType(this.getBasalMappings().get(remark));
+                    pve.setSubType(this.getBasalMappings().get(remark).getCode());
                     // System.out.println("Basal Event Unknown [remark=" +
                     // remark + "]");
                     return true;
@@ -928,21 +928,23 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         {
             if (this.getBolusMappings().containsKey(type))
             {
-                pve.setBaseType(PumpBaseType.Bolus.getCode());
-                pve.setSubType(this.getBolusMappings().get(type));
+                pve.setBaseType(PumpBaseType.Bolus);
 
-                if ((pve.getSubType() == PumpBolusType.PUMP_BOLUS_STANDARD)
-                        || (pve.getSubType() == PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL))
+                PumpBolusType bolusType = this.getBolusMappings().get(type);
+
+                pve.setSubType(bolusType.getCode());
+
+                if ((bolusType == PumpBolusType.Normal)
+                        || (bolusType == PumpBolusType.Audio))
                 {
-                    pve.setSubType(PumpBolusType.PUMP_BOLUS_STANDARD);
                     pve.setValue(amount);
                 }
-                else if (pve.getSubType() == PumpBolusType.PUMP_BOLUS_SQUARE)
+                else if (bolusType == PumpBolusType.Extended)
                 {
                     String e = remark.substring(0, remark.indexOf(" h"));
                     pve.setValue("AMOUNT_SQUARE=" + amount + ";DURATION=" + e);
                 }
-                else if (pve.getSubType() == PumpBolusType.PUMP_BOLUS_MULTIWAVE)
+                else if (bolusType == PumpBolusType.Multiwave)
                 {
                     if (remark != null)
                     {
@@ -975,7 +977,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             if (this.getReportMappings().containsKey(remark))
             {
                 pve.setBaseType(PumpBaseType.Report.getCode());
-                pve.setSubType(this.getReportMappings().get(remark));
+                pve.setSubType(this.getReportMappings().get(remark).getCode());
                 pve.setValue(amount);
             }
             else
@@ -1005,8 +1007,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             {
                 if (this.getAlarmMappings().containsKey(info))
                 {
-                    pve.setBaseType(PumpBaseType.Alarm.getCode());
-                    pve.setSubType(this.getAlarmMappings().get(info).intValue());
+                    pve.setBaseType(PumpBaseType.Alarm);
+                    pve.setSubType(this.getAlarmMappings().get(info).getCode());
                 }
                 else
                 {
@@ -1018,7 +1020,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 if (this.getErrorMappings().containsKey(info))
                 {
                     pve.setBaseType(PumpBaseType.Error.getCode());
-                    pve.setSubType(this.getErrorMappings().get(info).intValue());
+                    pve.setSubType(this.getErrorMappings().get(info).getCode());
                 }
                 else
                 {
@@ -1031,7 +1033,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 if (this.getEventMappings().containsKey(info))
                 {
                     pve.setBaseType(PumpBaseType.Event.getCode());
-                    pve.setSubType(this.getEventMappings().get(info));
+                    pve.setSubType(this.getEventMappings().get(info).getCode());
                     pve.setValue(info);
                 }
                 else
@@ -1045,7 +1047,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 if (this.getEventMappings().containsKey(desc))
                 {
                     pve.setBaseType(PumpBaseType.Event.getCode());
-                    pve.setSubType(this.getEventMappings().get(desc));
+                    pve.setSubType(this.getEventMappings().get(desc).getCode());
                     pve.setValue(info);
                 }
                 else
@@ -1060,7 +1062,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             if (this.getEventMappings().containsKey(desc))
             {
                 pve.setBaseType(PumpBaseType.Event.getCode());
-                pve.setSubType(this.getEventMappings().get(desc));
+                pve.setSubType(this.getEventMappings().get(desc).getCode());
             }
             else
             {
@@ -1152,62 +1154,62 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      */
     public void loadPumpSpecificValues()
     {
-        // m_da = DataAccessPump.getInstance();
+        // dataAccess = DataAccessPump.getInstance();
 
         // alarm mappings
-        this.alarm_mappings = new Hashtable<String, Integer>();
-        this.alarm_mappings.put("A1", new Integer(PumpAlarms.CartridgeLow.getCode()));
-        this.alarm_mappings.put("A2", new Integer(PumpAlarms.BatteryLow.getCode()));
-        this.alarm_mappings.put("A3", new Integer(PumpAlarms.ReviewDatetime.getCode()));
-        this.alarm_mappings.put("A4", new Integer(PumpAlarms.AlarmClock.getCode()));
-        this.alarm_mappings.put("A5", new Integer(PumpAlarms.PumpTimer.getCode()));
-        this.alarm_mappings.put("A6", new Integer(PumpAlarms.TemporaryBasalRateCanceled.getCode()));
-        this.alarm_mappings.put("A7", new Integer(PumpAlarms.TemporaryBasalRateOver.getCode()));
-        this.alarm_mappings.put("A8", new Integer(PumpAlarms.BolusCanceled.getCode()));
+        this.alarm_mappings = new Hashtable<String, PumpAlarms>();
+        this.alarm_mappings.put("A1", PumpAlarms.CartridgeLow);
+        this.alarm_mappings.put("A2", PumpAlarms.BatteryLow);
+        this.alarm_mappings.put("A3", PumpAlarms.ReviewDatetime);
+        this.alarm_mappings.put("A4", PumpAlarms.AlarmClock);
+        this.alarm_mappings.put("A5", PumpAlarms.PumpTimer);
+        this.alarm_mappings.put("A6", PumpAlarms.TemporaryBasalRateCanceled);
+        this.alarm_mappings.put("A7", PumpAlarms.TemporaryBasalRateOver);
+        this.alarm_mappings.put("A8", PumpAlarms.BolusCanceled);
 
-        this.event_mappings = new Hashtable<String, Integer>();
-        this.event_mappings.put("prime infusion set", new Integer(PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET));
-        this.event_mappings.put("cartridge changed", new Integer(PumpEvents.PUMP_EVENT_CARTRIDGE_CHANGED));
-        this.event_mappings.put("Run", new Integer(PumpEvents.PUMP_EVENT_BASAL_RUN));
-        this.event_mappings.put("Stop", new Integer(PumpEvents.PUMP_EVENT_BASAL_STOP));
-        this.event_mappings.put("power down", new Integer(PumpEvents.PUMP_EVENT_POWER_DOWN));
-        this.event_mappings.put("power up", new Integer(PumpEvents.PUMP_EVENT_POWER_UP));
-        this.event_mappings.put("time / date set", new Integer(PumpEvents.PUMP_EVENT_DATETIME_SET));
-        this.event_mappings.put("time / date corrected", new Integer(PumpEvents.PUMP_EVENT_DATETIME_CORRECTED));
-        this.event_mappings.put("time / date set (time shift back)", PumpEvents.PUMP_EVENT_DATETIME_CORRECTED);
-        this.event_mappings.put("W1", PumpEvents.PUMP_EVENT_RESERVOIR_LOW);
-        this.event_mappings.put("W8", PumpEvents.PUMP_EVENT_BOLUS_CANCELLED);
-        this.event_mappings.put("W2", PumpEvents.PUMP_EVENT_BATERRY_LOW);
+        this.event_mappings = new Hashtable<String, PumpEvents>();
+        this.event_mappings.put("prime infusion set", PumpEvents.PrimeInfusionSet);
+        this.event_mappings.put("cartridge changed", PumpEvents.CartridgeChange);
+        this.event_mappings.put("Run", PumpEvents.BasalRun);
+        this.event_mappings.put("Stop", PumpEvents.BasalStop);
+        this.event_mappings.put("power down", PumpEvents.PowerDown);
+        this.event_mappings.put("power up", PumpEvents.PowerUp);
+        this.event_mappings.put("time / date set", PumpEvents.DateTimeSet);
+        this.event_mappings.put("time / date corrected", PumpEvents.DateTimeCorrect);
+        this.event_mappings.put("time / date set (time shift back)", PumpEvents.DateTimeCorrect);
+        this.event_mappings.put("W1", PumpEvents.ReservoirLow);
+        this.event_mappings.put("W8", PumpEvents.BolusCancelled);
+        this.event_mappings.put("W2", PumpEvents.BatteryLow);
 
-        this.error_mappings = new Hashtable<String, Integer>();
-        this.error_mappings.put("E1", new Integer(PumpErrors.PUMP_ERROR_CARTRIDGE_EMPTY));
-        this.error_mappings.put("E2", new Integer(PumpErrors.PUMP_ERROR_BATTERY_DEPLETED));
-        this.error_mappings.put("E3", new Integer(PumpErrors.PUMP_ERROR_AUTOMATIC_OFF));
-        this.error_mappings.put("E4", new Integer(PumpErrors.PUMP_ERROR_NO_DELIVERY));
-        this.error_mappings.put("E5", new Integer(PumpErrors.PUMP_ERROR_END_OF_OPERATION));
-        this.error_mappings.put("E6", new Integer(PumpErrors.PUMP_ERROR_MECHANICAL_ERROR));
-        this.error_mappings.put("E7", new Integer(PumpErrors.PUMP_ERROR_ELECTRONIC_ERROR));
-        this.error_mappings.put("E8", new Integer(PumpErrors.PUMP_ERROR_POWER_INTERRUPT));
-        this.error_mappings.put("E10", new Integer(PumpErrors.PUMP_ERROR_CARTRIDGE_ERROR));
-        this.error_mappings.put("E11", new Integer(PumpErrors.PUMP_ERROR_SET_NOT_PRIMED));
-        this.error_mappings.put("E12", new Integer(PumpErrors.PUMP_ERROR_DATA_INTERRUPTED));
-        this.error_mappings.put("E13", new Integer(PumpErrors.PUMP_ERROR_LANGUAGE_ERROR));
-        this.error_mappings.put("E14", new Integer(PumpErrors.PUMP_ERROR_INSULIN_CHANGED));
+        this.error_mappings = new Hashtable<String, PumpErrors>();
+        this.error_mappings.put("E1", PumpErrors.CartridgeEmpty);
+        this.error_mappings.put("E2", PumpErrors.BatteryDepleted);
+        this.error_mappings.put("E3", PumpErrors.AutomaticOff);
+        this.error_mappings.put("E4", PumpErrors.NoDeliveryOcclusion);
+        this.error_mappings.put("E5", PumpErrors.EndOfOperation);
+        this.error_mappings.put("E6", PumpErrors.MechanicalError);
+        this.error_mappings.put("E7", PumpErrors.ElectronicError);
+        this.error_mappings.put("E8", PumpErrors.PowerInterrupt);
+        this.error_mappings.put("E10", PumpErrors.CartridgeError);
+        this.error_mappings.put("E11", PumpErrors.SetNotPrimed);
+        this.error_mappings.put("E12", PumpErrors.DataInterrupted);
+        this.error_mappings.put("E13", PumpErrors.LanguageError);
+        this.error_mappings.put("E14", PumpErrors.InsulinChanged);
 
-        this.bolus_mappings = new Hashtable<String, Integer>();
-        this.bolus_mappings.put("Std", new Integer(PumpBolusType.PUMP_BOLUS_STANDARD));
-        this.bolus_mappings.put("Scr", new Integer(PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL));
-        this.bolus_mappings.put("Ext", new Integer(PumpBolusType.PUMP_BOLUS_SQUARE));
-        this.bolus_mappings.put("Mul", new Integer(PumpBolusType.PUMP_BOLUS_MULTIWAVE));
+        this.bolus_mappings = new Hashtable<String, PumpBolusType>();
+        this.bolus_mappings.put("Std", PumpBolusType.Normal);
+        this.bolus_mappings.put("Scr", PumpBolusType.Audio);
+        this.bolus_mappings.put("Ext", PumpBolusType.Extended);
+        this.bolus_mappings.put("Mul", PumpBolusType.Multiwave);
 
         // report
-        this.report_mappings = new Hashtable<String, Integer>();
-        this.report_mappings.put("Bolus Total", new Integer(PumpReport.PUMP_REPORT_BOLUS_TOTAL_DAY));
-        this.report_mappings.put("Bolus+Basal Total", new Integer(PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY));
+        this.report_mappings = new Hashtable<String, PumpReport>();
+        this.report_mappings.put("Bolus Total", PumpReport.BolusTotalDay);
+        this.report_mappings.put("Bolus+Basal Total", PumpReport.InsulinTotalDay);
 
-        this.basal_mappings = new Hashtable<String, Integer>();
-        this.basal_mappings.put("TBR End (cancelled)", PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_CANCELED);
-        this.basal_mappings.put("TBR End", PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_ENDED);
+        this.basal_mappings = new Hashtable<String, PumpBasalSubType>();
+        this.basal_mappings.put("TBR End (cancelled)", PumpBasalSubType.TemporaryBasalRateCanceled);
+        this.basal_mappings.put("TBR End", PumpBasalSubType.TemporaryBasalRateEnded);
 
     }
 
@@ -1216,7 +1218,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * 
      * @return
      */
-    public Hashtable<String, Integer> getAlarmMappings()
+    public Hashtable<String, PumpAlarms> getAlarmMappings()
     {
         return this.alarm_mappings;
     }
@@ -1226,7 +1228,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * 
      * @return
      */
-    public Hashtable<String, Integer> getEventMappings()
+    public Hashtable<String, PumpEvents> getEventMappings()
     {
         return this.event_mappings;
     }
@@ -1237,7 +1239,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * 
      * @return
      */
-    public Hashtable<String, Integer> getErrorMappings()
+    public Hashtable<String, PumpErrors> getErrorMappings()
     {
         return this.error_mappings;
     }
@@ -1248,7 +1250,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * 
      * @return
      */
-    public Hashtable<String, Integer> getBolusMappings()
+    public Hashtable<String, PumpBolusType> getBolusMappings()
     {
         return this.bolus_mappings;
     }
@@ -1259,7 +1261,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * 
      * @return
      */
-    public Hashtable<String, Integer> getBasalMappings()
+    public Hashtable<String, PumpBasalSubType> getBasalMappings()
     {
         return this.basal_mappings;
     }
@@ -1270,7 +1272,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * 
      * @return
      */
-    public Hashtable<String, Integer> getReportMappings()
+    public Hashtable<String, PumpReport> getReportMappings()
     {
         return this.report_mappings;
     }

@@ -70,7 +70,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
     private static final long serialVersionUID = -1199131576461686895L;
     private DataAccessPlugInBase m_da = null; // =
                                               // DataAccessMeter.getInstance();
-    I18nControlAbstract m_ic = null; // m_da.getI18nControlInstance();
+    I18nControlAbstract m_ic = null; // dataAccess.getI18nControlInstance();
     DeviceInterface device_interface;
     DeviceConfigEntry configured_device;
     DeviceDataHandler m_ddh;
@@ -110,10 +110,10 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      * da, int continued_type)
      * {
      * super();
-     * this.m_da = da;
+     * this.dataAccess = da;
      * this.m_ic = da.getI18nControlInstance();
      * //this.m_dtd = DeviceTransferData.getInstance();
-     * this.m_ddh = m_da.getDeviceDataHandler();
+     * this.m_ddh = dataAccess.getDeviceDataHandler();
      * this.m_ddh.setTransferType(continued_type);
      * //this.m_dtd.device_data_handler = this.m_ddh;
      * this.checkReading(this.m_ddh.isOldDataReadingFinished());
@@ -124,7 +124,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      * return;
      * }
      * init();
-     * m_da.centerJDialog(this, parent);
+     * dataAccess.centerJDialog(this, parent);
      * this.setResizable(false);
      * this.setVisible(true);
      * }
@@ -165,7 +165,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
             return;
         }
 
-        // this.m_da.listComponents();
+        // this.dataAccess.listComponents();
         int read_stats = this.device_interface.getDownloadSupportType();
 
         if (this.continuing_type == DeviceDataHandler.TRANSFER_READ_DATA)
@@ -487,7 +487,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
          * button_start =
          * ATSwingUtils.getButton(m_ic.getMessage("START_DOWNLOAD"), 370, 520,
          * 240, 25, panel,
-         * ATSwingUtils.FONT_NORMAL, null, "start_download", this, m_da);
+         * ATSwingUtils.FONT_NORMAL, null, "start_download", this, dataAccess);
          */
         // this.button_start.setEnabled(false);
 
@@ -581,7 +581,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
                     m_da.removeComponent(this);
                     new MultipleFileSelectorDialog(m_da, this, m_ddh);
                 }
-                // new DeviceDisplayConfigDialog(m_da, m_ddh);
+                // new DeviceDisplayConfigDialog(dataAccess, m_ddh);
             }
 
         }
@@ -639,7 +639,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      */
     public String getHelpId()
     {
-        // return m_da.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // return dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
         // "Read_Instruction";
         return "DeviceTool_Read_Instruction";
     }

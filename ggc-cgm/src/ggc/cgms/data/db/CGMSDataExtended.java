@@ -17,6 +17,7 @@ import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  * 

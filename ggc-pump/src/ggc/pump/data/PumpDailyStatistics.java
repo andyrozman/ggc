@@ -179,7 +179,7 @@ public class PumpDailyStatistics extends StatisticsCollection
     private boolean isCurrentlyIgnoredEntry(PumpValuesEntry pve)
     {
         if (pve.baseType == PumpBaseType.Basal)
-            return pve.sub_type != PumpBasalSubType.PUMP_BASAL_VALUE;
+            return pve.sub_type != PumpBasalSubType.Value.getCode();
         else
             return false;
     }

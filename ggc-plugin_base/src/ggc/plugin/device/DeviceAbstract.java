@@ -39,20 +39,20 @@ import com.atech.i18n.I18nControlAbstract;
 public abstract class DeviceAbstract implements DeviceInterface, SelectableInterface
 {
 
-    protected DataAccessPlugInBase m_da;
-    protected AbstractDeviceCompany device_company;
-    protected String device_source_name;
-    protected String connection_parameters = null;
-    protected String connection_parameters_raw = null;
+    protected DataAccessPlugInBase dataAccess;
+    protected AbstractDeviceCompany deviceCompany;
+    protected String deviceSourceName;
+    protected String connectionParameters = null;
+    protected String connectionParametersRaw = null;
     protected DeviceSpecialConfigPanelInterface special_config = null;
 
-    protected boolean can_read_data = false;
-    protected boolean can_read_partitial_data = false;
-    protected boolean can_read_device_info = false;
-    protected boolean can_read_device_configuration = false;
-    protected I18nControlAbstract ic = null; // DataAccessMeter.getInstance().getI18nControlInstance();
-    protected OutputWriter output_writer;
-    protected GGCPlugInFileReaderContext[] file_contexts;
+    protected boolean canReadData = false;
+    protected boolean canReadPartitialData = false;
+    protected boolean canReadDeviceInfo = false;
+    protected boolean canReadDeviceConfiguration = false;
+    protected GGCI18nControl i18nControlAbstract = null; // DataAccessMeter.getInstance().getI18nControlInstance();
+    protected OutputWriter outputWriter;
+    protected GGCPlugInFileReaderContext[] fileContexts;
 
     /**
      * Device Type: Meter
@@ -82,8 +82,8 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     public DeviceAbstract(DataAccessPlugInBase da)
     {
         // System.out.println("DeviceAbstract: " + da);
-        this.m_da = da;
-        this.ic = da.getI18nControlInstance();
+        this.dataAccess = da;
+        this.i18nControlAbstract = da.getI18nControlInstance();
         loadFileContexts();
         this.initSpecialConfig();
     }
@@ -98,18 +98,18 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         this(da);
         /*
-         * this.m_da = da;
-         * this.ic = da.getI18nControlInstance();
+         * this.dataAccess = da;
+         * this.i18nControlAbstract = da.getI18nControlInstance();
          * loadFileContexts();
          * this.initSpecialConfig();
          */
 
-        // System.out.println("DA: " + this.m_da);
+        // System.out.println("DA: " + this.dataAccess);
 
         this.setDeviceCompany(adc);
         /*
-         * this.m_da = da;
-         * this.ic = da.getI18nControlInstance();
+         * this.dataAccess = da;
+         * this.i18nControlAbstract = da.getI18nControlInstance();
          * loadFileContexts();
          */
         // this.initSpecialConfig();
@@ -123,9 +123,9 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public DeviceAbstract(DataAccessPlugInBase da, OutputWriter output_writer_)
     {
-        this.m_da = da;
-        this.ic = da.getI18nControlInstance();
-        this.output_writer = output_writer_;
+        this.dataAccess = da;
+        this.i18nControlAbstract = da.getI18nControlInstance();
+        this.outputWriter = output_writer_;
         loadFileContexts();
         this.initSpecialConfig();
     }
@@ -139,9 +139,9 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public DeviceAbstract(String parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
-        this.m_da = da;
-        this.ic = da.getI18nControlInstance();
-        this.output_writer = writer;
+        this.dataAccess = da;
+        this.i18nControlAbstract = da.getI18nControlInstance();
+        this.outputWriter = writer;
         loadFileContexts();
         this.initSpecialConfig();
         this.setConnectionParameters(parameters);
@@ -156,9 +156,9 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public void preInitInit(String parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
-        this.m_da = da;
-        this.ic = da.getI18nControlInstance();
-        this.output_writer = writer;
+        this.dataAccess = da;
+        this.i18nControlAbstract = da.getI18nControlInstance();
+        this.outputWriter = writer;
         loadFileContexts();
         this.initSpecialConfig();
         this.setConnectionParameters(parameters);
@@ -208,10 +208,10 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     public void setDeviceAllowedActions(boolean can_read_data, boolean can_read_partitial_data,
             boolean can_read_device_info, boolean can_read_device_configuration)
     {
-        this.can_read_data = can_read_data;
-        this.can_read_partitial_data = can_read_partitial_data;
-        this.can_read_device_info = can_read_device_info;
-        this.can_read_device_configuration = can_read_device_configuration;
+        this.canReadData = can_read_data;
+        this.canReadPartitialData = can_read_partitial_data;
+        this.canReadDeviceInfo = can_read_device_info;
+        this.canReadDeviceConfiguration = can_read_device_configuration;
     }
 
     /**
@@ -221,7 +221,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public boolean canReadData()
     {
-        return this.can_read_data;
+        return this.canReadData;
     }
 
     /**
@@ -231,7 +231,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public boolean canReadPartitialData()
     {
-        return this.can_read_partitial_data;
+        return this.canReadPartitialData;
     }
 
     /**
@@ -241,7 +241,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public boolean canReadDeviceInfo()
     {
-        return this.can_read_device_info;
+        return this.canReadDeviceInfo;
     }
 
     /**
@@ -251,7 +251,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public boolean canReadConfiguration()
     {
-        return this.can_read_device_configuration;
+        return this.canReadDeviceConfiguration;
     }
 
     /**
@@ -261,7 +261,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public void setDeviceCompany(AbstractDeviceCompany company)
     {
-        this.device_company = company;
+        this.deviceCompany = company;
     }
 
     /**
@@ -269,7 +269,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public AbstractDeviceCompany getDeviceCompany()
     {
-        return this.device_company;
+        return this.deviceCompany;
     }
 
     /**
@@ -279,7 +279,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public DeviceIdentification getDeviceInfo()
     {
-        return this.output_writer.getDeviceIdentification();
+        return this.outputWriter.getDeviceIdentification();
     }
 
     /**
@@ -289,7 +289,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public String getDeviceSourceName()
     {
-        return device_source_name;
+        return deviceSourceName;
     }
 
     /**
@@ -298,8 +298,8 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public void setDataAccessInstance(DataAccessPlugInBase da)
     {
-        this.m_da = da;
-        this.ic = da.getI18nControlInstance();
+        this.dataAccess = da;
+        this.i18nControlAbstract = da.getI18nControlInstance();
     }
 
     // SelectableInterface
@@ -319,7 +319,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public int getColumnCount()
     {
-        return m_da.getPluginDeviceUtil().getColumnCount();
+        return dataAccess.getPluginDeviceUtil().getColumnCount();
     }
 
     /**
@@ -330,7 +330,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public String getColumnName(int num)
     {
-        return m_da.getPluginDeviceUtil().getColumnName(num);
+        return dataAccess.getPluginDeviceUtil().getColumnName(num);
     }
 
     /**
@@ -341,7 +341,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public String getColumnValue(int num)
     {
-        return m_da.getPluginDeviceUtil().getColumnValue(num, this);
+        return dataAccess.getPluginDeviceUtil().getColumnValue(num, this);
     }
 
     /**
@@ -364,7 +364,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public int getColumnWidth(int num, int width)
     {
-        return m_da.getPluginDeviceUtil().getColumnWidth(num, width);
+        return dataAccess.getPluginDeviceUtil().getColumnWidth(num, width);
     }
 
     /**
@@ -506,7 +506,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public GGCPlugInFileReaderContext[] getFileDownloadTypes()
     {
-        return this.file_contexts;
+        return this.fileContexts;
     }
 
     /**
@@ -544,16 +544,16 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public void setDeviceType(String group, String device, int type)
     {
-        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(dataAccess.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
 
-        if (this.output_writer != null)
+        if (this.outputWriter != null)
         {
-            this.output_writer.setDeviceIdentification(di);
+            this.outputWriter.setDeviceIdentification(di);
         }
 
-        this.device_source_name = group + " " + device;
+        this.deviceSourceName = group + " " + device;
     }
 
     /**
@@ -563,7 +563,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public String getMainConnectionParameter()
     {
-        return this.connection_parameters;
+        return this.connectionParameters;
     }
 
     /**
@@ -573,7 +573,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public String getConnectionParameters()
     {
-        return this.connection_parameters;
+        return this.connectionParameters;
     }
 
     /**
@@ -583,22 +583,22 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public void setConnectionParameters(String param)
     {
-        this.connection_parameters_raw = param;
+        this.connectionParametersRaw = param;
 
         if (this.hasNoConnectionParameters())
         {
-            this.connection_parameters = "";
+            this.connectionParameters = "";
         }
         else
         {
             if (this.hasSpecialConfig())
             {
                 this.special_config.loadConnectionParameters(param);
-                this.connection_parameters = this.special_config.getDefaultParameter();
+                this.connectionParameters = this.special_config.getDefaultParameter();
             }
             else
             {
-                this.connection_parameters = this.connection_parameters_raw;
+                this.connectionParameters = this.connectionParametersRaw;
             }
         }
 
@@ -611,7 +611,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public boolean areConnectionParametersValid()
     {
-        return this.areConnectionParametersValid(this.connection_parameters);
+        return this.areConnectionParametersValid(this.connectionParameters);
     }
 
     /**
@@ -632,7 +632,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
                 return this.getSpecialConfigPanel().areConnectionParametersValid();
             }
             else
-                return this.connection_parameters != null && this.connection_parameters.length() > 0;
+                return this.connectionParameters != null && this.connectionParameters.length() > 0;
         }
     }
 
@@ -690,7 +690,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     /**
      * Pre Init Device - Does preinit
      * 
-     * @see hasPreInit
+     * @see hasPreInit()
      */
     public void preInitDevice()
     {
@@ -703,7 +703,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public void setOutputWriter(OutputWriter ow)
     {
-        this.output_writer = ow;
+        this.outputWriter = ow;
     }
 
     public boolean hasDefaultParameter()
@@ -722,7 +722,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public OutputWriter getOutputWriter()
     {
-        return this.output_writer;
+        return this.outputWriter;
     }
 
 }

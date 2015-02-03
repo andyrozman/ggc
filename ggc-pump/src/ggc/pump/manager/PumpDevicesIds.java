@@ -135,25 +135,37 @@ public class PumpDevicesIds
      */
     public static final int PUMP_DISETRONIC_D_TRON = 30001;
 
+
+
+
+
+    public static final int PUMP_ANIMAS_IR_1000 = 40001;
+
     /**
      * Pump Animas IR 1200
      */
-    public static final int PUMP_ANIMAS_IR_1200 = 40001;
+    public static final int PUMP_ANIMAS_IR_1200 = 40002;
 
     /**
      * Pump Animas IR 1250
      */
-    public static final int PUMP_ANIMAS_IR_1250 = 40002;
+    public static final int PUMP_ANIMAS_IR_1250 = 40003;
 
     /**
      * Pump Animas IR 2020
      */
-    public static final int PUMP_ANIMAS_IR_2020 = 40003;
+    public static final int PUMP_ANIMAS_IR_2020 = 40004;
 
     /**
      * Pump Animas Ping
      */
-    public static final int PUMP_ANIMAS_PING = 40004;
+    public static final int PUMP_ANIMAS_PING = 40005;
+
+    /**
+     * Pump Animas Vibe
+     */
+    public static final int PUMP_ANIMAS_VIBE = 40006;
+
 
     /**
      * Deltec - Cosmo 1700
@@ -184,5 +196,6 @@ public class PumpDevicesIds
      * Dana Diabecare III R
      */
     public static final int PUMP_DANA_DIABECARE_III_R = 70003;
+
 
 }

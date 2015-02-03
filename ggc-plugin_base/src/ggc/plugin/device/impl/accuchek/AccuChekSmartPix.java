@@ -96,11 +96,11 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         super(da, writer);
         // super();
         // this.setConnectionPort(drive_letter);
-        this.output_writer = writer;
+        this.outputWriter = writer;
         // this.setConnectionParameters(params);
-        this.m_da = da;
+        this.dataAccess = da;
         // this.max_records = max_records;
-        this.ic = m_da.getI18nControlInstance();
+        this.i18nControlAbstract = dataAccess.getI18nControlInstance();
 
         this.setConnectionParameters(params);
 
@@ -138,11 +138,11 @@ public abstract class AccuChekSmartPix extends XmlProtocol
 
         if (this.special_config.getParameter("SMARTPIX_VERSION").equals(AccuChekSmartPixSpecialConfig.SMARTPIX_V2))
         {
-            this.reader = new AccuChekSmartPixReaderV2(m_da, this.output_writer, this);
+            this.reader = new AccuChekSmartPixReaderV2(dataAccess, this.outputWriter, this);
         }
         else
         {
-            this.reader = new AccuChekSmartPixReaderV3(m_da, this.output_writer, this);
+            this.reader = new AccuChekSmartPixReaderV3(dataAccess, this.outputWriter, this);
         }
 
         try
@@ -209,9 +209,9 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     {
 
         this.writeStatus("PIX_FINISHED_REPORT_READY");
-        this.output_writer.setSpecialProgress(95);
+        this.outputWriter.setSpecialProgress(95);
 
-        File f1 = new File(m_da.pathResolver(this.getMainConnectionParameter() + "\\REPORT\\XML"));
+        File f1 = new File(dataAccess.pathResolver(this.getMainConnectionParameter() + "\\REPORT\\XML"));
 
         File[] fls = f1.listFiles(new FileFilter()
         {
@@ -226,8 +226,8 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         // processXml(fls[0]);
         this.processXml(fls[0]);
 
-        this.output_writer.setSpecialProgress(100);
-        this.output_writer.setSubStatus(null);
+        this.outputWriter.setSpecialProgress(100);
+        this.outputWriter.setSubStatus(null);
     }
 
     /**
@@ -237,7 +237,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public boolean isDeviceStopped()
     {
-        if (this.output_writer.isReadingStopped())
+        if (this.outputWriter.isReadingStopped())
             return true;
 
         return false;
@@ -249,9 +249,9 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      */
     public void setDeviceStopped()
     {
-        this.output_writer.setSubStatus(null);
-        this.output_writer.setSpecialProgress(100);
-        this.output_writer.endOutput();
+        this.outputWriter.setSubStatus(null);
+        this.outputWriter.setSpecialProgress(100);
+        this.outputWriter.endOutput();
     }
 
     /**
@@ -276,14 +276,14 @@ public abstract class AccuChekSmartPix extends XmlProtocol
 
         if (process)
         {
-            tx = ic.getMessage(text_i18n);
+            tx = i18nControlAbstract.getMessage(text_i18n);
         }
         else
         {
             tx = text_i18n;
         }
 
-        this.output_writer.setSubStatus(tx);
+        this.outputWriter.setSubStatus(tx);
         // x System.out.println(tx);
         // write log
 
@@ -381,13 +381,13 @@ public abstract class AccuChekSmartPix extends XmlProtocol
 
     private boolean openDevice()
     {
-        // System.out.println("open():: m_da: " + m_da);
+        // System.out.println("open():: dataAccess: " + dataAccess);
         // System.out.println("open():: getMainConnectionParameter: " +
         // this.getMainConnectionParameter());
-        File f = new File(m_da.pathResolver(this.getMainConnectionParameter()));
+        File f = new File(dataAccess.pathResolver(this.getMainConnectionParameter()));
 
         // System.out.println("open():: " +
-        // m_da.pathResolver(this.getMainConnectionParameter()));
+        // dataAccess.pathResolver(this.getMainConnectionParameter()));
 
         if (f.exists())
         {
@@ -433,7 +433,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         else
         {
             // System.out.println("!!!!!!!! inti Special config");
-            this.special_config = new AccuChekSmartPixSpecialConfig(m_da, this);
+            this.special_config = new AccuChekSmartPixSpecialConfig(dataAccess, this);
             DataAccessPlugInBase.special_configs.put("AccuChekSmartPix",
                 (DeviceSpecialConfigPanelAbstract) this.special_config);
         }
@@ -482,8 +482,8 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     @Override
     public void loadFileContexts()
     {
-        this.file_contexts = new GGCPlugInFileReaderContext[1];
-        this.file_contexts[0] = new FRC_AccuChekSmartPixXml(m_da, this.output_writer, this);
+        this.fileContexts = new GGCPlugInFileReaderContext[1];
+        this.fileContexts[0] = new FRC_AccuChekSmartPixXml(dataAccess, this.outputWriter, this);
     }
 
     public String getConnectionPort()

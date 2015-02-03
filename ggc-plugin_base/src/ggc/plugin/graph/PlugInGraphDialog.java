@@ -101,7 +101,7 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
         // getContentPane().add(controlPanel, ZeroLayout.STATIC);
 
         // main_panel.add(controlPanel, ZeroLayout.STATIC);
-        // m_da.enableHelp(this);
+        // dataAccess.enableHelp(this);
         getContentPane().add(main_panel);
 
         setVisible(true);
@@ -146,19 +146,19 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
          * | DataPlotSelectorPanel.INS_TOTAL_MASK);
          * cGV.setData(selectionPanel.getPlotData());
          * JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-         * help_button = m_da.createHelpButtonBySize(120, 25, this);
+         * help_button = dataAccess.createHelpButtonBySize(120, 25, this);
          * buttonPanel.add(help_button);
          * // Dimension dim = new Dimension(80, 20);
          * Dimension dim = new Dimension(120, 25);
          * JButton drawButton = new JButton("    " + m_ic.getMessage("DRAW"));
          * drawButton.setPreferredSize(dim);
-         * drawButton.setIcon(m_da.getImageIcon_22x22("paint.png", this));
+         * drawButton.setIcon(dataAccess.getImageIcon_22x22("paint.png", this));
          * drawButton.setActionCommand("draw");
          * drawButton.addActionListener(this);
          * JButton closeButton = new JButton("    " + m_ic.getMessage("CLOSE"));
          * closeButton.setPreferredSize(dim);
          * closeButton.setActionCommand("close");
-         * closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+         * closeButton.setIcon(dataAccess.getImageIcon_22x22("cancel.png", this));
          * closeButton.addActionListener(this);
          * buttonPanel.add(drawButton);
          * buttonPanel.add(closeButton);

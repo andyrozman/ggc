@@ -7,6 +7,7 @@ import ggc.cgms.data.ExtendedCGMSValuesExtendedEntry;
 import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
 import ggc.cgms.data.db.GGC_CGMSDb;
 import ggc.cgms.manager.CGMSManager;
+import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -56,7 +57,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.1.1"; // 1.0.2
+    public static final String PLUGIN_VERSION = "1.2.0"; // 1.0.2
 
     private static final String EXTENDED_HANDLER_CGMSValuesExtendedEntry = "CGMSValuesExtendedEntry";
 
@@ -153,6 +154,13 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     // ********************************************************
     // ****** Abstract Methods *****
     // ********************************************************
+
+    @Override
+    public GGCPluginType getPluginType()
+    {
+        return GGCPluginType.CGMSToolPlugin;
+    }
+
 
     /** 
      * Get Application Name
@@ -292,31 +300,16 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     public void createPlugInAboutContext()
     {
         I18nControlAbstract ic = this.getI18nControlInstance();
-        // this.about_title = ic.getMessage("PUMP_PLUGIN_ABOUT");
+        // this.about_title = i18nControlAbstract.getMessage("PUMP_PLUGIN_ABOUT");
         this.about_image_name = "/icons/cgms_about.jpg";
 
         this.about_plugin_copyright_from = 2009;
-        // this.about_plugin_name = ic.getMessage("PUMP_PLUGIN");
+        // this.about_plugin_name = i18nControlAbstract.getMessage("PUMP_PLUGIN");
 
         // libraries
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
 
-        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.7.x", "www.atech-software.com", "LGPL",
-                "Helper Library for Swing/Hibernate/...",
-                "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
-        lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", "2.4", "commons.apache.org/lang/", "Apache",
-                "Helper methods for java.lang library"));
-        lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", "1.0.4", "commons.apache.org/logging/", "Apache",
-                "Logger and all around wrapper for logging utilities"));
-        lst_libs.add(new LibraryInfoEntry("dom4j", "1.6.1", "http://www.dom4j.org/", "BSD",
-                "Framework for Xml manipulation"));
-        // lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.1.7",
-        // "www.rxtx.org", "LGPL", "Comm API"));
-        // lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c",
-        // "http://www.extreme.indiana.edu/xgws/xsoap/xpp/",
-        // "Indiana University Extreme! Lab Software License",
-        // "Xml parser for processing xml document",
-        // "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
+        lst_libs.addAll(getBaseLibraries());
 
         this.plugin_libraries = lst_libs;
 
@@ -329,10 +322,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
                                                // Roche devices"));
         lst_credits.add(cg);
 
-        // cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
-        // cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "",
-        // "Supplied hardware for Roche development"));
-        // lst_credits.add(cg);
+
 
         this.plugin_developers = lst_credits;
 
@@ -345,7 +335,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
         fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
         fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
-        fg.addFeaturesEntry(new FeaturesEntry("List of CGMS"));
+        fg.addFeaturesEntry(new FeaturesEntry("List of CGMSes"));
         fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
 
         lst_features.add(fg);
@@ -354,23 +344,11 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         fg.addFeaturesEntry(new FeaturesEntry("Dexcom (file imports from DM3 App)"));
         fg.addFeaturesEntry(new FeaturesEntry("Dexcom G4"));
 
-        // fg.addFeaturesEntry(new
-        // FeaturesEntry("Roche (partitialy, Basal Pattern History is not fully supported due to incomplete export of SmartPix device)"));
-        // fg.addFeaturesEntry(new
-        // FeaturesEntry("Dana (only works on Windows and Linux)"));
-        // fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
-        // fg.addFeaturesEntry(new
-        // FeaturesEntry("LifeScan: Ultra, Ultra2, Profile, Easy, UltraSmart"));
-
         lst_features.add(fg);
 
         fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
-
-        // fg.addFeaturesEntry(new
-        // FeaturesEntry("Graphical Interface (GGC integration) [Ready]"));
-        // fg.addFeaturesEntry(new FeaturesEntry("Configuration [Ready]"));
-        // fg.addFeaturesEntry(new FeaturesEntry("Profiles"));
         fg.addFeaturesEntry(new FeaturesEntry("Graphs"));
+        fg.addFeaturesEntry(new FeaturesEntry("Printing"));
 
         lst_features.add(fg);
 
@@ -406,19 +384,14 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void createWebListerContext()
     {
-        // this.loadWebLister();
-
-        // I18nControlAbstract ic = getI18nControlInstance();
-
         this.weblister_items = new ArrayList<BaseListEntry>();
         this.weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html",
-                BaseListEntry.STATUS_PLANNED));
-        this.weblister_items.add(new BaseListEntry("Dexcom", "/cgms/dexcom.html", BaseListEntry.STATUS_PLANNED));
+                BaseListEntry.STATUS_NOTPLANNED));
+        this.weblister_items.add(new BaseListEntry("Dexcom", "/cgms/dexcom.html", BaseListEntry.STATUS_PART_IMPLEMENTED));
         this.weblister_items.add(new BaseListEntry("Minimed", "/cgms/minimed.html", BaseListEntry.STATUS_PLANNED));
 
         this.weblister_title = this.m_i18n.getMessage("DEVICE_LIST_WEB");
         this.weblister_desc = this.m_i18n.getMessage("DEVICE_LIST_WEB_DESC");
-
     }
 
     /**

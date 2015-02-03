@@ -10,7 +10,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -41,7 +41,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
     // AbstractDeviceCompany cgms_company;
 
     // protected int m_status = 0;
-    // protected I18nControlAbstract ic = null;
+    // protected I18nControlAbstract i18nControlAbstract = null;
     // //DataAccessPump.getInstance().getI18nControlInstance();
 
     // protected String m_info = "";
@@ -52,11 +52,11 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
 
     // protected String[] profile_names = null;
     protected String device_name;
-    // protected OutputWriter output_writer;
+    // protected OutputWriter outputWriter;
     protected String parameter;
 
-    // protected DataAccessCGMS m_da;
-    // protected GGCPlugInFileReaderContext[] file_contexts = null;
+    // protected DataAccessCGMS dataAccess;
+    // protected GGCPlugInFileReaderContext[] fileContexts = null;
 
     /**
      * Constructor
@@ -89,7 +89,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
     }
 
     /**
-     * Constructor
+     * Constructor (should be used)
      * 
      * @param cmp
      */
@@ -123,19 +123,19 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
     {
         this.device_name = device;
 
-        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(dataAccess.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
 
-        if (this.output_writer != null)
+        if (this.outputWriter != null)
         {
-            this.output_writer.setDeviceIdentification(di);
-            // this.output_writer.
+            this.outputWriter.setDeviceIdentification(di);
+            // this.outputWriter.
             // this.device_instance =
             // MeterManager.getInstance().getMeterDevice(group, device);
         }
 
-        this.device_source_name = group + " " + device;
+        this.deviceSourceName = group + " " + device;
 
     }
 
@@ -183,5 +183,16 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
     {
         return false;
     }
+
+    /**
+     * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but
+     *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
+     *    ... - OT Smart, etc), this devices require more extended data display.
+     * @return
+     */
+    /*public int getInterfaceTypeForMeter()
+    {
+        return 0;
+    }*/
 
 }

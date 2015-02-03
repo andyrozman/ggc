@@ -113,18 +113,16 @@ public class PumpValuesHour
             // special boluses
             // pump values
 
-            switch (pve.getSubType())
+            switch (PumpBolusType.getByCode(pve.getSubType()))
             {
-                case PumpBolusType.PUMP_BOLUS_STANDARD:
-                case PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL:
-                case PumpBolusType.PUMP_BOLUS_DUAL_NORMAL:
+                case Normal:
+                case Audio:
                     {
                         this.bolus += this.parseFloat(pve.getValue(), "Pump-Bolus");
                     }
                     break;
 
-                case PumpBolusType.PUMP_BOLUS_DUAL_SQUARE:
-                case PumpBolusType.PUMP_BOLUS_SQUARE:
+                case Extended:
                     {
                         addBolusSpecial(getTimeAsString(pve.getDateTime()) + "=" + pve.getValue());
 
@@ -137,7 +135,7 @@ public class PumpValuesHour
                     }
                     break;
 
-                case PumpBolusType.PUMP_BOLUS_MULTIWAVE:
+                case Multiwave:
                     {
                         // immediate (as normal)
                         String val = pve.getValue();

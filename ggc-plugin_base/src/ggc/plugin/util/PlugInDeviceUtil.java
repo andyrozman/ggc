@@ -63,9 +63,11 @@ public class PlugInDeviceUtil
     public String getColumnValue(int num, DeviceInterface di)
     {
         // System.out.println("Num: " + num);
+        System.out.println("DeviceInterface: " + di);
         switch (num)
         {
             case 1:
+                System.out.println("Di:" + di + ", company: " + di.getDeviceCompany() + ", shortName: ");
                 return di.getDeviceCompany().getShortName();
 
             case 2:
@@ -127,7 +129,7 @@ public class PlugInDeviceUtil
 
                 // case 5:
                 // return "Bo/Ba/Tbr";
-                // return this.m_da.getYesNoOption(false);
+                // return this.dataAccess.getYesNoOption(false);
 
             default:
                 return "N/A: " + num;

@@ -32,7 +32,7 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public abstract class MinimedCareLinkData
 {
-    // DataAccessCGM m_da = DataAccessCGM.getInstance();
+    // DataAccessCGM dataAccess = DataAccessCGM.getInstance();
 
     protected boolean data_processed = false;
 
@@ -586,8 +586,8 @@ public abstract class MinimedCareLinkData
     /*
      * private ATechDate getATDate()
      * {
-     * String[] time_p = mcl.m_da.splitString(date, mcl.mm_date.date_delimiter);
-     * String[] date_p = mcl.m_da.splitString(date, mcl.mm_date.date_delimiter);
+     * String[] time_p = mcl.dataAccess.splitString(date, mcl.mm_date.date_delimiter);
+     * String[] date_p = mcl.dataAccess.splitString(date, mcl.mm_date.date_delimiter);
      * this.date;
      * this.time;
      * // 08.6.17, 11:22:29
@@ -614,7 +614,7 @@ public abstract class MinimedCareLinkData
             s = s.substring(0, s.length() - 1);
         }
 
-        // s = this.mcl.m_da.replaceExpression(s, " ", "");
+        // s = this.mcl.dataAccess.replaceExpression(s, " ", "");
         // s = s.replace(',', '.');
 
         return s;
@@ -633,7 +633,7 @@ public abstract class MinimedCareLinkData
             s = s.substring(0, s.length() - 1);
         }
 
-        // s = this.mcl.m_da.replaceExpression(s, " ", "");
+        // s = this.mcl.dataAccess.replaceExpression(s, " ", "");
         // s = s.replace(',', '.');
 
         return s;

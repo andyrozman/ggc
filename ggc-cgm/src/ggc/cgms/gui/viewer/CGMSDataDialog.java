@@ -426,19 +426,19 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         /*
          * JButton addButton = new JButton("  " + m_ic.getMessage("ADD"));
          * addButton.setPreferredSize(dim);
-         * addButton.setIcon(m_da.getImageIcon_22x22("table_add.png", this));
+         * addButton.setIcon(dataAccess.getImageIcon_22x22("table_add.png", this));
          * addButton.setActionCommand("add_row");
          * addButton.addActionListener(this);
          * EntryBox.add(addButton);
          * JButton editButton = new JButton("  " + m_ic.getMessage("EDIT"));
          * editButton.setPreferredSize(dim);
-         * editButton.setIcon(m_da.getImageIcon_22x22("table_edit.png", this));
+         * editButton.setIcon(dataAccess.getImageIcon_22x22("table_edit.png", this));
          * editButton.setActionCommand("edit_row");
          * editButton.addActionListener(this);
          * EntryBox.add(editButton);
          * JButton delButton = new JButton("  " + m_ic.getMessage("DELETE"));
          * delButton.setPreferredSize(dim);
-         * delButton.setIcon(m_da.getImageIcon_22x22("table_delete.png", this));
+         * delButton.setIcon(dataAccess.getImageIcon_22x22("table_delete.png", this));
          * delButton.setActionCommand("delete_row");
          * delButton.addActionListener(this);
          * EntryBox.add(delButton);
@@ -530,7 +530,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
          * PumpValuesEntry.BG_COUNT, 0));
          * //if ()
          * int dec_pls = 1;
-         * if (this.m_da.getBGMeasurmentType()==DataAccessPump.BG_MGDL)
+         * if (this.dataAccess.getBGMeasurmentType()==DataAccessPump.BG_MGDL)
          * {
          * dec_pls = 0;
          * avgBG.setText(this.stats.getItemStatisticValueAsStringFloat(
@@ -630,7 +630,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
          * m_ic.getMessage("ARE_YOU_SURE_DELETE"), m_ic
          * .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION,
          * JOptionPane.QUESTION_MESSAGE, null,
-         * m_da.options_yes_no, JOptionPane.YES_OPTION);
+         * dataAccess.options_yes_no, JOptionPane.YES_OPTION);
          * if (option_selected == JOptionPane.YES_OPTION)
          * {
          * int idx = table.getSelectedRow();
@@ -676,7 +676,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         else if (command.equals("show_daily_graph"))
         {
             System.out.println("CGMSDataDialog:Unimplemented Action: show_daily_graph");
-            // new GraphViewer(new GraphViewDailyPump(this.current_date), m_da,
+            // new GraphViewer(new GraphViewDailyPump(this.current_date), dataAccess,
             // this, true);
         }
         else

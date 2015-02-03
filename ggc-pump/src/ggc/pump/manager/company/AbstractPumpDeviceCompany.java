@@ -18,7 +18,7 @@ public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
     /**
      * Instantiates a new abstract pump device company
      * 
-     * @param ic the ic
+     * @param ic the i18nControlAbstract
      * @param value the value
      */
     public AbstractPumpDeviceCompany(boolean value)

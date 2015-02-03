@@ -218,23 +218,23 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
          * da_local.loadManager();
          * ic_local = da_local.getI18nControlInstance();
          * da_local.addComponent(this.parent);
-         * da_local.setParentI18nControlInstance(ic);
-         * da_local.setHelpContext(this.m_da.getHelpContext());
+         * da_local.setParentI18nControlInstance(i18nControlAbstract);
+         * da_local.setHelpContext(this.dataAccess.getHelpContext());
          * da_local.setPlugInServerInstance(this);
-         * da_local.createDb(m_da.getHibernateDb());
+         * da_local.createDb(dataAccess.getHibernateDb());
          * //da_local.initAllObjects();
          * da_local.loadSpecialParameters();
-         * da_local.setCurrentUserId(((DataAccess)m_da).current_user_id);
-         * da_local.setConfigurationManager(((DataAccess)m_da).
+         * da_local.setCurrentUserId(((DataAccess)dataAccess).current_user_id);
+         * da_local.setConfigurationManager(((DataAccess)dataAccess).
          * getConfigurationManager());
          * //this.backup_restore_enabled = true;
          * this.backup_restore_enabled = false;
-         * m_da.loadSpecialParameters();
+         * dataAccess.loadSpecialParameters();
          * //System.out.println("PumpServer: " +
-         * m_da.getSpecialParameters().get("BG"));
-         * da_local.setBGMeasurmentType(m_da.getIntValueFromString(m_da.
+         * dataAccess.getSpecialParameters().get("BG"));
+         * da_local.setBGMeasurmentType(dataAccess.getIntValueFromString(dataAccess.
          * getSpecialParameters().get("BG")));
-         * da_local.setGraphConfigProperties(m_da.getGraphConfigProperties());
+         * da_local.setGraphConfigProperties(dataAccess.getGraphConfigProperties());
          */
     }
 

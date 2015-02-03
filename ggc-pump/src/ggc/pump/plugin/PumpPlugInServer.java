@@ -172,7 +172,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
          * {
          * new DeviceConfigurationDialog((JFrame)this.parent,
          * DataAccessPump.getInstance());
-         * //new SimpleConfigurationDialog(this.m_da);
+         * //new SimpleConfigurationDialog(this.dataAccess);
          * return;
          * }
          * case PumpPlugInServer.COMMAND_PUMPS_LIST:
@@ -270,24 +270,24 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         /*
          * da_local.loadManager();
          * ic_local = da_local.getI18nControlInstance();
-         * da_local.setParentI18nControlInstance(ic);
+         * da_local.setParentI18nControlInstance(i18nControlAbstract);
          * //System.out.println(da_local.getI18nControlInstance().toString());
          * da_local.addComponent(this.parent);
-         * da_local.setHelpContext(this.m_da.getHelpContext());
+         * da_local.setHelpContext(this.dataAccess.getHelpContext());
          * da_local.setPlugInServerInstance(this);
-         * da_local.createDb(m_da.getHibernateDb());
+         * da_local.createDb(dataAccess.getHibernateDb());
          * da_local.initAllObjects();
          * da_local.loadSpecialParameters();
-         * da_local.setCurrentUserId(((DataAccess)m_da).current_user_id);
-         * da_local.setConfigurationManager(((DataAccess)m_da).
+         * da_local.setCurrentUserId(((DataAccess)dataAccess).current_user_id);
+         * da_local.setConfigurationManager(((DataAccess)dataAccess).
          * getConfigurationManager());
          * this.backup_restore_enabled = true;
-         * m_da.loadSpecialParameters();
+         * dataAccess.loadSpecialParameters();
          * //System.out.println("PumpServer: " +
-         * m_da.getSpecialParameters().get("BG"));
-         * da_local.setBGMeasurmentType(m_da.getIntValueFromString(m_da.
+         * dataAccess.getSpecialParameters().get("BG"));
+         * da_local.setBGMeasurmentType(dataAccess.getIntValueFromString(dataAccess.
          * getSpecialParameters().get("BG")));
-         * da_local.setGraphConfigProperties(m_da.getGraphConfigProperties());
+         * da_local.setGraphConfigProperties(dataAccess.getGraphConfigProperties());
          */
     }
 
@@ -302,10 +302,10 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     {
         if (ret_obj_id == PumpPlugInServer.RETURN_OBJECT_DEVICE_WITH_PARAMS)
         {
-            // System.out.println("m_da: " + DataAccessPump.getInstance());
-            // System.out.println("m_da: getDeviceConfiguration: " +
+            // System.out.println("dataAccess: " + DataAccessPump.getInstance());
+            // System.out.println("dataAccess: getDeviceConfiguration: " +
             // DataAccessPump.getInstance().getDeviceConfiguration());
-            // System.out.println("m_da: getSelectedDevice: " +
+            // System.out.println("dataAccess: getSelectedDevice: " +
             // DataAccessPump.getInstance().getDeviceConfiguration().getSelectedDeviceInstance());
 
             DataAccessPump da = DataAccessPump.getInstance();

@@ -26,67 +26,69 @@ package ggc.plugin.manager;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class DeviceImplementationStatus
+public enum DeviceImplementationStatus
 {
 
     /**
      * Implementation: Not Available
      */
-    public static final int IMPLEMENTATION_NOT_AVAILABLE = 0;
+    IMPLEMENTATION_NOT_AVAILABLE, // 0
 
     /**
      * Implementation: Not Planned
      */
-    public static final int IMPLEMENTATION_NOT_PLANNED = 1;
+    IMPLEMENTATION_NOT_PLANNED, // 1
 
     /**
      * Implementation: Planned
      */
-    public static final int IMPLEMENTATION_PLANNED = 2;
+    IMPLEMENTATION_PLANNED, // 2;
 
     /**
      * Implementation: Partitial
      */
-    public static final int IMPLEMENTATION_PARTITIAL = 3;
+    IMPLEMENTATION_PARTITIAL, //3;
 
     /**
      * Implementation: Full
      */
-    public static final int IMPLEMENTATION_FULL = 4;
+    IMPLEMENTATION_FULL, // = 4;
 
     /**
      * Implementation: In Progress
      */
-    public static final int IMPLEMENTATION_IN_PROGRESS = 5;
+    IMPLEMENTATION_IN_PROGRESS, // = 5;
 
     /**
      * Implementation: Testing
      */
-    public static final int IMPLEMENTATION_TESTING = 6;
+    IMPLEMENTATION_TESTING, // = 6;
 
     /**
      * Implementation: Done
      */
-    public static final int IMPLEMENTATION_DONE = 7;
+    IMPLEMENTATION_DONE, // = 7;
 
     /**
      * Functionality: Read Data Full
      */
-    public static final int FUNCTIONALITY_READ_DATA_FULL = 1;
+    FUNCTIONALITY_READ_DATA_FULL, // = 1;
 
     /**
      * Functionality: Read Data Partitial
      */
-    public static final int FUNCTIONALITY_READ_DATA_PARTITIAL = 2;
+    FUNCTIONALITY_READ_DATA_PARTITIAL, // = 2;
 
     /**
      * Functionality: Read Info
      */
-    public static final int FUNCTIONALITY_READ_INFO = 4;
+    FUNCTIONALITY_READ_INFO, // = 4;
 
     /**
      * Functionality: Read Config
      */
-    public static final int FUNCTIONALITY_READ_CONFIG = 8;
+    FUNCTIONALITY_READ_CONFIG, // = 8;
+
+    ;
 
 }

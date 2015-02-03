@@ -17,7 +17,7 @@ public class GraphValuesCollection
     // Date Type
     private Hashtable<Integer, Hashtable<Integer, ArrayList<GraphValue>>> packed_collection = null;
     private Hashtable<Integer, ArrayList<GraphValue>> typed_collection = null;
-    // DataAccessPlugInBase m_da;
+    // DataAccessPlugInBase dataAccess;
     GregorianCalendar gc_from;
     GregorianCalendar gc_to;
 
@@ -32,12 +32,12 @@ public class GraphValuesCollection
      */
     public GraphValuesCollection(GregorianCalendar from, GregorianCalendar to)
     {
-        // this.m_da = da;
+        // this.dataAccess = da;
         // list = new ArrayList<DeviceValuesEntry>();
         // hash_table = new Hashtable<String,DeviceValuesDay>();
         this.gc_from = from;
         this.gc_to = to;
-        // dve = m_da.getDataEntryObject();
+        // dve = dataAccess.getDataEntryObject();
 
         packed_collection = new Hashtable<Integer, Hashtable<Integer, ArrayList<GraphValue>>>();
         typed_collection = new Hashtable<Integer, ArrayList<GraphValue>>();
@@ -87,7 +87,7 @@ public class GraphValuesCollection
          * pve.getDateTime());
          * if (!this.hash_table.containsKey(atd.getDateFilenameString()))
          * {
-         * DeviceValuesDay dvd = new DeviceValuesDay(this.m_da,
+         * DeviceValuesDay dvd = new DeviceValuesDay(this.dataAccess,
          * atd.getGregorianCalendar());
          * dvd.addEntry(pve);
          * this.hash_table.put(atd.getDateFilenameString(), dvd);

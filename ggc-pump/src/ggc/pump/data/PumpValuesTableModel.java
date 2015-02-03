@@ -41,7 +41,7 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
     private static final long serialVersionUID = -3199123443953228082L;
 
     // private I18nControl m_ic = I18nControl.getInstance();
-    // x private DataAccessMeter m_da = DataAccessMeter.getInstance();
+    // x private DataAccessMeter dataAccess = DataAccessMeter.getInstance();
 
     /**
      * Constructor

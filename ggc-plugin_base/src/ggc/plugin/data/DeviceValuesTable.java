@@ -323,7 +323,7 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
                 status = i.intValue();
 
                 setText(m_da.getEntryStatuses()[status]);
-                // setIcon(m_da.getImageIcon(DeviceValuesEntry.entry_status_icons[status],
+                // setIcon(dataAccess.getImageIcon(DeviceValuesEntry.entry_status_icons[status],
                 // 8, 8, this));
                 setIcon(DataAccessPlugInBase.entry_status_iconimage[status]);
             }

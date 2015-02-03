@@ -63,15 +63,9 @@ public class PumpValuesHourProcessor
     {
         PumpValuesHour pumpValuesHour = new PumpValuesHour(this.dataAccessPump);
 
-        String keyBG = dataAccessPump.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_BG);
-        String keyCH = dataAccessPump.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH);
-        String keyComment = dataAccessPump.getAdditionalTypes().getTypeDescription(
-            PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT);
-
-        // String keyBG =
-        // dataAccessPump.getI18nControlInstance().getMessage(PumpDeviceValueType.BG.getAdditionalKey());
-
-        // System.out.println("KeyBG: " + keyBG + ", " + keyBG1);
+        String keyBG = PumpAdditionalDataType.BloodGlucose.getTranslation();
+        String keyCH = PumpAdditionalDataType.Carbohydrates.getTranslation();
+        String keyComment = PumpAdditionalDataType.Comment.getTranslation();
 
         for (DeviceValuesEntry entry : deviceValues)
         {

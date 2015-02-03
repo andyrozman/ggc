@@ -175,7 +175,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     @Override
     public DeviceIdentification getDeviceInfo()
     {
-        return this.output_writer.getDeviceIdentification();
+        return this.outputWriter.getDeviceIdentification();
     }
 
     /**
@@ -294,9 +294,9 @@ public abstract class DexcomCGMS extends AbstractCGMS
     public void loadFileContexts()
     {
         // System.out.println("loadFileContexts");
-        this.file_contexts = new GGCPlugInFileReaderContext[2];
-        this.file_contexts[0] = new FRC_DexcomXml_DM3(m_da, this.output_writer);
-        this.file_contexts[1] = new FRC_DexcomTxt_DM3(m_da, this.output_writer);
+        this.fileContexts = new GGCPlugInFileReaderContext[2];
+        this.fileContexts[0] = new FRC_DexcomXml_DM3(dataAccess, this.outputWriter);
+        this.fileContexts[1] = new FRC_DexcomTxt_DM3(dataAccess, this.outputWriter);
     }
 
 }

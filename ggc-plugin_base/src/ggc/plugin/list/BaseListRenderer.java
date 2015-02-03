@@ -64,7 +64,7 @@ public class BaseListRenderer extends DefaultTreeCellRenderer
 
     private static final long serialVersionUID = -5179522965356580379L;
 
-    private static Color[] list_status_color = { Color.black, Color.green, Color.cyan, Color.magenta, Color.blue,
+    private static Color[] list_status_color = { Color.black, Color.green.darker(), Color.cyan, Color.magenta, Color.blue,
                                                 Color.orange, Color.red };
 
     /**

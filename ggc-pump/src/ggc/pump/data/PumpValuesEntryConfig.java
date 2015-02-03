@@ -66,7 +66,7 @@ public class PumpValuesEntryConfig extends PumpProfileH implements PumpValuesEnt
      */
     public PumpValuesEntryConfig()
     {
-        // m_pump_add = new PumpAdditionalDataType();
+        // pumpAdditionalDataType = new PumpAdditionalDataType();
     }
 
     /**

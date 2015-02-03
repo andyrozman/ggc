@@ -2,8 +2,13 @@
 Changes file for GGC Pump Tool
 ==============================
 
+1.4.0 [4.1.2015]
+    * support for Animas pump
+
+
+
 1.3.5 [21.09.2014]
-    * printing
+    * printing reports ...
 
 
 

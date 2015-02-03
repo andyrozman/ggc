@@ -13,6 +13,7 @@ our people, when they deem it necessary).
 - Daily Graph implement and fix [1.0.1]
 -..........
 
+- Problem with upload from Pump Xml Roche [Pump 1.3.6]
 - Roche Basal Pattern History [1.0.1]
 - TBR [1.0.1]
 - TBR from pump device [1.0.1] 

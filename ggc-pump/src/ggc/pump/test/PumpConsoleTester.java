@@ -1,5 +1,6 @@
 package ggc.pump.test;
 
+import com.atech.i18n.I18nControlAbstract;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCLanguageManagerRunner;
@@ -87,6 +88,12 @@ public class PumpConsoleTester // extends JFrame
         }
 
     }
+
+    public PumpConsoleTester()
+    {
+
+    }
+
 
     /**
      * Test
@@ -181,7 +188,7 @@ public class PumpConsoleTester // extends JFrame
 
         da.loadSpecialParameters();
         // System.out.println("PumpServer: " +
-        // m_da.getSpecialParameters().get("BG"));
+        // dataAccess.getSpecialParameters().get("BG"));
 
         dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
 
@@ -196,6 +203,45 @@ public class PumpConsoleTester // extends JFrame
         // msp.readData();
 
     }
+
+
+    public void checkTranslation()
+    {
+
+        DataAccess da = DataAccess.getInstance();
+        //da.initSpecial();
+
+
+        //GGCDb db = new GGCDb(da);
+        // db.initDb();
+
+        //da.setDb(db);
+
+        DataAccessPump dap = DataAccessPump.createInstance(da.getLanguageManager());
+        // dap.setHelpContext(da.getHelpContext());
+        // dap.setPlugInServerInstance(this);
+        // dap.createDb(da.getHibernateDb());
+        dap.initAllObjects();
+        dap.loadSpecialParameters();
+        // this.backup_restore_enabled = true;
+
+        da.loadSpecialParameters();
+        // System.out.println("PumpServer: " +
+        // dataAccess.getSpecialParameters().get("BG"));
+
+        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+
+        I18nControlAbstract ic = dap.getI18nControlInstance();
+
+        System.out.println("Profiles: " + ic.getMessage("PUMP_DATA_PROFILES"));
+
+        System.out.println("January: " + ic.getMessage("JANUARY"));
+
+        System.out.println("Report Type: " + ic.getMessage("REPORT_TYPE"));
+
+
+    }
+
 
     /**
      * Start Animas
@@ -221,7 +267,7 @@ public class PumpConsoleTester // extends JFrame
 
         da.loadSpecialParameters();
         // System.out.println("PumpServer: " +
-        // m_da.getSpecialParameters().get("BG"));
+        // dataAccess.getSpecialParameters().get("BG"));
 
         dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
 
@@ -252,7 +298,7 @@ public class PumpConsoleTester // extends JFrame
          * dap.createDb(da.getHibernateDb()); dap.initAllObjects();
          * dap.loadSpecialParameters(); //this.backup_restore_enabled = true;
          * da.loadSpecialParameters(); //System.out.println("PumpServer: " +
-         * m_da.getSpecialParameters().get("BG"));
+         * dataAccess.getSpecialParameters().get("BG"));
          * dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters
          * ().get("BG")));
          * //FRC_EZManager_v2 ezm = new FRC_EZManager_v2(new
@@ -311,7 +357,8 @@ public class PumpConsoleTester // extends JFrame
         {
             if (args.length == 0)
             {
-                new PumpConsoleTester("");
+                PumpConsoleTester pct = new PumpConsoleTester();
+                pct.checkTranslation();
             }
             else
             {

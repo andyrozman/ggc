@@ -92,7 +92,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener // 
         tree = new JTree();
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         this.setTreeModel(tree);
-        // tree.setModel(new NutritionTreeModel(m_da.m_nutrition_treeroot));
+        // tree.setModel(new NutritionTreeModel(dataAccess.m_nutrition_treeroot));
         tree.addTreeSelectionListener(this);
         tree.setCellRenderer(new BaseListRenderer());
         // tree.addMouseListener(this);

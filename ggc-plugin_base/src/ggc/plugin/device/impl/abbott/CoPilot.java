@@ -119,7 +119,7 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
 
             XMLReader xmlReader = XMLReaderFactory.createXMLReader();
 
-            MyCoPilotHandler myCH = new MyCoPilotHandler(this.m_da);
+            MyCoPilotHandler myCH = new MyCoPilotHandler(this.dataAccess);
             xmlReader.setProperty("http://xml.org/sax/properties/lexical-handler", myCH);
             xmlReader.setProperty("http://xml.org/sax/properties/declaration-handler", myCH);
             xmlReader.setContentHandler(myCH);
@@ -326,7 +326,7 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         // public static final int READING_SENSOR = 1;
         // public static final int READING_METER = 2;
 
-        // DataAccessPlugInBase m_da;
+        // DataAccessPlugInBase dataAccess;
 
         public MyCoPilotHandler(DataAccessPlugInBase da)
         {

@@ -48,6 +48,12 @@ public class ConsoleOutputWriter extends AbstractOutputWriter
         System.out.println(data.getDataAsString());
     }
 
+    public void writeConfigurationData(OutputWriterConfigData configData)
+    {
+        System.out.println(configData.getDataKey() + "=" + configData.getDataValue());
+    }
+
+
     /**
      * Write Header
      */
@@ -56,7 +62,7 @@ public class ConsoleOutputWriter extends AbstractOutputWriter
     {
         // header
         System.out.println("=======================================================");
-        System.out.println("==             Meter Tool Data Dump                  ==");
+        System.out.println("==             " + this.getPluginName() + " Data Dump                  ==");
         System.out.println("=======================================================");
     }
 

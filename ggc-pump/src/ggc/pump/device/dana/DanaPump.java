@@ -6,6 +6,7 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.defs.*;
 import ggc.pump.device.AbstractPump;
 
 import java.util.Hashtable;
@@ -175,63 +176,6 @@ public abstract class DanaPump extends AbstractPump
         return null;
     }
 
-    /**
-     * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific 
-     *     alarm codes
-     * @return
-     */
-    public Hashtable<String, Integer> getAlarmMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getBolusMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Error Mappings - Map pump specific errors to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getErrorMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Event Mappings - Map pump specific events to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getEventMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Report Mappings - Map pump specific reports to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getReportMappings()
-    {
-        return null;
-    }
-
-    /**
-     * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
-     *      create, AlarmMappings and EventMappings and any other pump constants.
-     */
-    public void loadPumpSpecificValues()
-    {
-    }
 
     /** 
      * Dispose

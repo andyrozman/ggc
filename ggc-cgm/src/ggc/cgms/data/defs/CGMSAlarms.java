@@ -1,5 +1,12 @@
 package ggc.cgms.data.defs;
 
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.data.CodeEnum;
+import com.atech.utils.data.CodeEnumWithTranslation;
+import ggc.cgms.util.DataAccessCGMS;
+
+import java.util.Hashtable;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       CGMS Tool (support for CGMS devices)
@@ -31,78 +38,114 @@ package ggc.cgms.data.defs;
 // (they were copied from similar
 // class, with different type of data.
 
-public class CGMSAlarms extends CGMSDefsAbstract
+public enum CGMSAlarms implements CodeEnumWithTranslation
 {
+    UnknownAlarm(0, ""),
+
+    BatteryLow(50, "ALARM_BATTERY_LOW"),
+    ReviewDateTime(51, "ALARM_REVIEW_DATETIME"),
+    AlarmClock(52, "ALARM_ALARM_CLOCK"),
+
+    CalibrationRequired(104, "ALARM_CALIBRATION_REQUIRED"), // deprecated , MeterBgNow
+    WeakSignal(112, "ALARM_WEAK_SIGNAL"), //
+    SensorAlarm(105, "ALARM_SENSOR_ALARM"), //
+    CalibrationError(106, "ALARM_CALIBRATION_ERROR"), //
+    SensorEndOfLifeAproaching(107, "ALARM_SENSOR_END_OF_LIFE"), //
+    SensorEndOfLifeAproachingDescription(120, "ALARM_SENSOR_END_OF_LIFE_DESC"), //
+    SensorError(109, "ALARM_SENSOR_ERROR"), //
+    SensorChangeRequired(108, "ALARM_SENSOR_CHANGE_REQUIRED"), // deprecated
+    SensorLost(113, "ALARM_SENSOR_SIGNAL_LOST"), //
+    HighGlucosePredicted(114, "ALARM_HIGH_GLUCOSE_PREDICTED"), //
+    LowGlucosePredicted(115, "ALARM_LOW_GLUCOSE_PREDICTED"), //
+    HighGlucose(101, "ALARM_HIGH_GLUCOSE"), //
+    LowGlucose(102, "ALARM_LOW_GLUCOSE"), //
+    ;
+
+
+    static Hashtable<String, CGMSAlarms> translationMapping = new Hashtable<String, CGMSAlarms>();
+    static Hashtable<Integer, CGMSAlarms> codeMapping = new Hashtable<Integer, CGMSAlarms>();
+
+    static
+    {
+        I18nControlAbstract ic = DataAccessCGMS.getInstance().getI18nControlInstance();
+
+        for (CGMSAlarms pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMapping.put(pbt.getTranslation(), pbt);
+            codeMapping.put(pbt.code, pbt);
+        }
+    }
+
+    int code;
+    String i18nKey;
+    String translation;
+
+    private CGMSAlarms(int code, String i18nKey)
+    {
+        this.code = code;
+        this.i18nKey = i18nKey;
+    }
+
+
+    public String getTranslation()
+    {
+        return translation;
+    }
+
+
+    public void setTranslation(String translation)
+    {
+        this.translation = translation;
+    }
+
+
+    public int getCode()
+    {
+        return code;
+    }
+
+
+    public String getI18nKey()
+    {
+        return i18nKey;
+    }
+
+
+    public static CGMSAlarms getByCode(int code)
+    {
+        if (codeMapping.containsKey(code))
+        {
+            return codeMapping.get(code);
+        }
+        else
+        {
+            return CGMSAlarms.UnknownAlarm;
+        }
+    }
+
+
+
 
     // Device
 
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_METER_BG_NOW = 104; // Meter BG Now (104)
-
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_WEAK_SIGNAL = 112; // Weak Signal (112)
-
-    // SENSOR
-
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_SENSOR_ALARM = 105; // (105)
-
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_CALIBRATION_ERROR = 106; // Calibration
-                                                                // Error (106)
-
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_SENSOR_END = 107; // Sensor End (107)
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_SENSOR_CHANGE = 108; // Change Sensor
-                                                            // (108)
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_SENSOR_ERROR = 109; // Sensor Error (109)
-
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_SENSOR_LOST = 113; // Lost Sensor (113)
-
-    // BG
-
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_HIGH_GLUCOSE_PREDICTED = 114; // High
-                                                                     // Glucose
-                                                                     // Predicted
-                                                                     // (114)
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_LOW_GLUCOSE_PREDICTED = 115; // Low
-                                                                    // Glucose
-                                                                    // Predicted
-                                                                    // (115)
-
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_HIGH_GLUCOSE = 101; // High Glucose (101)
-
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM_LOW_GLUCOSE = 102; // Low Glucose (102)
+//    // Meter BG Now (104)
+//    // Weak Signal (112)
+//
+//    // SENSOR
+//
+//    // Sensor Alarm (105)
+//    // Calibration Error (106)
+//    // Sensor End (107)
+//    // Change Sensor (108)
+//    // Sensor Error (109)
+//    // Lost Sensor (113)
+//
+//    // BG
+//
+//    // High Glucose Predicted (114)
+//    // Low Glucose Predicted (115)
+//    // High Glucose (101)
+//    // Low Glucose (102)
 
 }

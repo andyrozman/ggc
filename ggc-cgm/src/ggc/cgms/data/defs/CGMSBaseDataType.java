@@ -1,6 +1,12 @@
 package ggc.cgms.data.defs;
 
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.data.CodeEnum;
+import com.atech.utils.data.CodeEnumWithTranslation;
+import ggc.cgms.util.DataAccessCGMS;
+
 import java.util.HashMap;
+import java.util.Hashtable;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -35,7 +41,7 @@ import java.util.HashMap;
 
 // TODO this class/enum is in refactoring process
 
-public enum CGMSBaseDataType
+public enum CGMSBaseDataType implements CodeEnumWithTranslation
 {
 
     // CGMS_BG_READING(1),
@@ -50,65 +56,94 @@ public enum CGMSBaseDataType
     //
     // CGMS_TREND(6),
 
-    None(0, "NONE"), SensorReading(1, "CGMS_READING"), MeterCalibration(2, "CALIBRATION_READINGS"), DeviceAlarm(3,
-            "CGMS_DATA_ALARM"), DeviceEvent(4, "CGMS_DATA_EVENT"), DeviceError(5, "CGMS_DATA_ERROR"), SensorReadingTrend(
-            6, "CGMS_READING_TREND"),
+    None(0, "NONE"), //
+    SensorReading(1, "CGMS_READING"), //
+    MeterCalibration(2, "CALIBRATION_READINGS"), //
+    DeviceAlarm(3, "CGMS_DATA_ALARM"), //
+    DeviceEvent(4, "CGMS_DATA_EVENT"), //
+    DeviceError(5, "CGMS_DATA_ERROR"), //
+    SensorReadingTrend(6, "CGMS_READING_TREND"), //
 
     ;
 
-    // DataAccessCGMS.value_type[1] =
-    // this.i18n_plugin.getMessage("CGMS_READING");
-    // DataAccessCGMS.value_type[2] =
-    // this.i18n_plugin.getMessage("CALIBRATION_READINGS");
-    // DataAccessCGMS.value_type[4] =
-    // this.i18n_plugin.getMessage("CGMS_DATA_EVENT");
-    // DataAccessCGMS.value_type[3] =
-    // this.i18n_plugin.getMessage("CGMS_DATA_ALARM");
-    // DataAccessCGMS.value_type[5] =
-    // this.i18n_plugin.getMessage("CGMS_DATA_ERROR");
-    // DataAccessCGMS.value_type[6] =
-    // this.i18n_plugin.getMessage("CGMS_READING_TREND");
 
-    private int dataType;
-
-    private String description;
-    private static HashMap<Integer, CGMSBaseDataType> map = new HashMap<Integer, CGMSBaseDataType>();
+    static Hashtable<String, CGMSBaseDataType> translationMapping = new Hashtable<String, CGMSBaseDataType>();
+    static Hashtable<Integer, CGMSBaseDataType> codeMapping = new Hashtable<Integer, CGMSBaseDataType>();
 
     static
     {
-        for (CGMSBaseDataType el : values())
+        I18nControlAbstract ic = DataAccessCGMS.getInstance().getI18nControlInstance();
+
+        for (CGMSBaseDataType pbt : values())
         {
-            map.put(el.getValue(), el);
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMapping.put(pbt.getTranslation(), pbt);
+            codeMapping.put(pbt.code, pbt);
         }
     }
 
-    private CGMSBaseDataType(int type, String description)
+    int code;
+    String i18nKey;
+    String translation;
+
+    private CGMSBaseDataType(int code, String i18nKey)
     {
-        this.dataType = type;
-        this.description = description;
+        this.code = code;
+        this.i18nKey = i18nKey;
     }
 
-    public int getValue()
+
+    public String getTranslation()
     {
-        return dataType;
+        return translation;
     }
 
-    public static CGMSBaseDataType getEnum(int value)
+    public void setTranslation(String translation)
     {
-        if (map.containsKey(value))
-            return map.get(value);
+        this.translation = translation;
+    }
+
+    public int getCode()
+    {
+        return code;
+    }
+
+    public String getI18nKey()
+    {
+        return i18nKey;
+    }
+
+
+    /**
+     * Get Type from Description
+     *
+     * @param str
+     *            type as string
+     * @return type as int
+     */
+    public int getTypeFromDescription(String str)
+    {
+        if (translationMapping.containsKey(str))
+        {
+            return translationMapping.get(str).getCode();
+        }
         else
+        {
+            return 0;
+        }
+    }
+
+    public static CGMSBaseDataType getByCode(int code)
+    {
+        if (codeMapping.containsKey(code))
+        {
+            return codeMapping.get(code);
+        }
+        else
+        {
             return CGMSBaseDataType.None;
+        }
     }
 
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
 
 }

@@ -1,10 +1,13 @@
 package ggc.pump.device.animas;
 
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.device.animas.impl.AnimasPumpDeviceReader;
+import ggc.plugin.device.impl.animas.util.AnimasException;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -28,9 +31,9 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
  *  Filename:     AnimasIR1200  
- *  Description:  Animas IR 1200 implementation (just settings)
- * 
- *  Author: Andy {andy@atech-software.com}
+ *  Description:  Animas IR 1200 implementation
+ *
+ *  Author: Andy Rozman {andy@atech-software.com}
  */
 
 public class AnimasIR1200 extends AnimasPump
@@ -43,30 +46,20 @@ public class AnimasIR1200 extends AnimasPump
     {
         super();
     }
-
+    
+    
     /**
      * Constructor 
      * 
-     * @param conn_parameter 
+     * @param communicationPort
      * @param writer 
      */
-    public AnimasIR1200(String conn_parameter, OutputWriter writer)
+    public AnimasIR1200(String communicationPort, OutputWriter writer)
     {
-        super(conn_parameter, writer);
+        super(communicationPort, writer);
     }
-
-    /**
-     * Constructor
-     * 
-     * @param conn_parameter
-     * @param writer
-     * @param da 
-     */
-    public AnimasIR1200(String conn_parameter, OutputWriter writer, DataAccessPlugInBase da)
-    {
-        super(conn_parameter, writer, da);
-    }
-
+    
+    
     /**
      * Constructor
      * 
@@ -76,18 +69,20 @@ public class AnimasIR1200 extends AnimasPump
     {
         super(cmp);
     }
+    
 
     /**
      * getName - Get Name of meter. 
      * 
      * @return name of meter
      */
-    @Override
     public String getName()
     {
         return "IR 1200";
     }
 
+
+    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -97,6 +92,7 @@ public class AnimasIR1200 extends AnimasPump
     {
         return "an_ir1200.jpg";
     }
+    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -109,6 +105,7 @@ public class AnimasIR1200 extends AnimasPump
         return PumpDevicesIds.PUMP_ANIMAS_IR_1200;
     }
 
+    
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -117,32 +114,32 @@ public class AnimasIR1200 extends AnimasPump
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_ANIMAS_IR1200";
+        return "INSTRUCTIONS_ANIMAS_V2";
     }
-
+    
     /**
      * getComment - Get Comment for device 
      * 
      * @return comment or null
      */
-    @Override
     public String getComment()
     {
         return null;
     }
-
+    
+    
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    @Override
-    public int getImplementationStatus()
+    public int getImplementationStatus() 
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
-
+    
+    
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -150,8 +147,9 @@ public class AnimasIR1200 extends AnimasPump
      */
     public String getDeviceClassName()
     {
-        return "ggc.pump.device.animas.AnimasIR1200";
+        return this.getClass().getName();
     }
+
 
     /** 
      * Get Max Memory Records
@@ -161,28 +159,40 @@ public class AnimasIR1200 extends AnimasPump
         return 0;
     }
 
+    public void loadPumpSpecificValues()
+    {
+
+    }
+
+    @Override
+    public AnimasDeviceType getAnimasDeviceType()
+    {
+        return AnimasDeviceType.Animas_IR1200;
+    }
+
+
     /**
      * Get Download Support Type
      * 
      * @return
      */
-    @Override
     public int getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+        return DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE | DownloadSupportType.DOWNLOAD_FROM_DEVICE;
     }
-
+    
+    
     /**
      * How Many Months Of Data Stored
      * 
      * @return
      */
-    @Override
     public int howManyMonthsOfDataStored()
     {
         return -1;
     }
-
+    
+    
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -191,13 +201,12 @@ public class AnimasIR1200 extends AnimasPump
      * 
      * @return
      */
-    @Override
     public String getTemporaryBasalTypeDefinition()
     {
-        // return "TYPE=Unit;STEP=0.1";
-        return null;
+        return "TYPE=Procent;STEP=10;MIN=-100;MAX=100";
     }
-
+    
+    
     /**
      * Get Bolus Step (precission)
      * 
@@ -207,7 +216,8 @@ public class AnimasIR1200 extends AnimasPump
     {
         return 0.1f;
     }
-
+    
+    
     /**
      * Get Basal Step (precission)
      * 
@@ -217,16 +227,48 @@ public class AnimasIR1200 extends AnimasPump
     {
         return 0.1f;
     }
-
+    
+    
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
-    @Override
     public boolean arePumpSettingsSet()
     {
         return false;
     }
+
+
+    @Override
+    public void readConfiguration() throws PlugInBaseException
+    {
+        try
+        {
+            AnimasPumpDeviceReader reader = new AnimasPumpDeviceReader(this.communicationPort, this.getAnimasDeviceType(), this.outputWriter);
+            reader.downloadPumpSettings();
+        }
+        catch(AnimasException ex)
+        {
+            throw new PlugInBaseException(ex);
+        }
+
+    }
+
+
+    @Override
+    public void readDeviceDataFull() throws PlugInBaseException
+    {
+        try
+        {
+            AnimasPumpDeviceReader reader = new AnimasPumpDeviceReader(this.communicationPort, this.getAnimasDeviceType(), this.outputWriter);
+            reader.downloadPumpData();
+        }
+        catch(AnimasException ex)
+        {
+            throw new PlugInBaseException(ex);
+        }
+    }
+
 
 }

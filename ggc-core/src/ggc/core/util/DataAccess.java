@@ -1,5 +1,8 @@
 package ggc.core.util;
 
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.i18n.I18nControlLangMgr;
+import com.atech.i18n.I18nControlLangMgrDual;
 import ggc.core.data.Converter_mgdL_mmolL;
 import ggc.core.data.DailyValues;
 import ggc.core.data.ExtendedDailyValue;
@@ -159,44 +162,17 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public String[] bg_units_config = { "mg/dl", "mmol/l" };
 
-    // public Hashtable<String, String> timeZones;
-
-    // public ArrayList<Container> parents_list;
 
     /**
      * Config Icons 
      */
     public ImageIcon config_icons[] = null;
 
-    /**
-     * Plug In - Meter Tool
-     */
-    // public static final String PLUGIN_METERS = "MetersPlugIn";
 
-    /**
-     * Plug In - Pump Tool
-     */
-    // public static final String PLUGIN_PUMPS = "PumpsPlugIn";
+    GGCI18nControl ggci18nControl;
 
-    /**
-     * Plug In - CGMS Tool
-     */
-    // public static final String PLUGIN_CGMS = "CGMSPlugIn";
 
-    /**
-     * Plug In - Nutrition Tool
-     */
-    // public static final String PLUGIN_NUTRITION = "NutritionPlugIn";
 
-    /**
-     * GGC Mode: Pen/Injection
-     */
-    // public static final int GGC_MODE_PEN_INJECTION = 0;
-
-    /**
-     * GGC Mode: Pump
-     */
-    // public static final int GGC_MODE_PUMP = 1;
 
     /**
      * Converter: BG     
@@ -244,12 +220,15 @@ public class DataAccess extends ATDataAccessLMAbstract
         doTest();
         this.initObservable();
 
-        // System.out.println("init Special");
-        // this.tree_roots = new Hashtable<String, GGCTreeRoot>();
+        loadLanguageIntoContext();
+
+
+                // System.out.println("init Special");
+                // this.tree_roots = new Hashtable<String, GGCTreeRoot>();
 
         // Help Context Init
         // HelpContext hc = new HelpContext("../data/help/en/GGC.hs");
-        HelpContext hc = new HelpContext("../data/" + this.lang_mgr.getHelpSet());
+        HelpContext hc = new HelpContext("/" + this.lang_mgr.getHelpSet());
         this.setHelpContext(hc);
         this.help_enabled = true;
 
@@ -288,6 +267,55 @@ public class DataAccess extends ATDataAccessLMAbstract
          */
 
     }
+
+    private void loadLanguageIntoContext()
+    {
+        I18nControlAbstract ic =  this.getI18nControlInstanceBase();
+
+        GGCI18nControlContext ctx = GGCI18nControlContext.getInstance();
+
+        ctx.setDefaultLanguage(this.getLanguageManager().getDefaultLanguage());
+        ctx.setSelectedLanguage(this.getLanguageManager().getSelectedLanguage());
+
+        ctx.setDefaultLanguageRecognitionInitialized(true);
+
+        ctx.addLanguageInstance(GGCPluginType.Core, ctx.getSelectedLanguage(), this.getI18nControlInstanceBase());
+
+        if (!ctx.isSelectedLanguageDefaultLanguage())
+        {
+            I18nControlLangMgr mgr = this.getLanguageManager().getI18nControl(this.m_icr);
+
+            if (mgr instanceof I18nControlLangMgrDual)
+            {
+                I18nControlLangMgrDual mgrd = (I18nControlLangMgrDual)mgr;
+                mgrd.getDefaultLanguageInstance();
+
+                ctx.addLanguageInstance(GGCPluginType.Core, ctx.getDefaultLanguage(), this.getI18nControlInstanceBase());
+
+            }
+            else
+            {
+                log.error("I18nControl instance is not Mgr Dual !!!!!!");
+            }
+        }
+
+        ctx.prepareContext();
+
+        ggci18nControl = new GGCI18nControl(GGCPluginType.Core);
+    }
+
+
+    public I18nControlAbstract getI18nControlInstanceBase() {
+        return this.m_i18n;
+    }
+
+    @Override
+    public I18nControlAbstract getI18nControlInstance()
+    {
+        return this.ggci18nControl;
+    }
+
+
 
     /**
      * Run After Db Load
@@ -721,20 +749,20 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
 
         log.debug("init Plugins: Meter Tool");
-        addPlugIn(GGCPluginType.METER_TOOL_PLUGIN.getKey(), //
-            new MetersPlugIn(this.m_main, this.m_i18n));
+        addPlugIn(GGCPluginType.MeterToolPlugin.getKey(), //
+            new MetersPlugIn(this.m_main, this.ggci18nControl));
 
         log.debug("init Plugins: Pumps Tool");
-        addPlugIn(GGCPluginType.PUMP_TOOL_PLUGIN.getKey(), //
-            new PumpsPlugIn(this.m_main, this));
+        addPlugIn(GGCPluginType.PumpToolPlugin.getKey(), //
+            new PumpsPlugIn(this.m_main, this.ggci18nControl));
 
         log.debug("init Plugins: CGMS Tool");
-        addPlugIn(GGCPluginType.CGMS_TOOL_PLUGIN.getKey(), //
-            new CGMSPlugIn(this.m_main, this.m_i18n));
+        addPlugIn(GGCPluginType.CGMSToolPlugin.getKey(), //
+            new CGMSPlugIn(this.m_main, this.ggci18nControl));
 
         log.debug("init Plugins: Nutrition Tool");
-        addPlugIn(GGCPluginType.NUTRITION_TOOL_PLUGIN.getKey(), //
-            new NutriPlugIn(this.m_main, this.m_i18n));
+        addPlugIn(GGCPluginType.NutritionToolPlugin.getKey(), //
+            new NutriPlugIn(this.m_main, this.ggci18nControl));
 
     }
 
@@ -973,21 +1001,56 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Get BG Value
      * 
-     * @param bg_value
+     * @param bgValue
      * @return
      */
-    public float getBGValue(float bg_value)
+    public float getBGValue(float bgValue)
     {
         switch (this.getBGMeasurmentType())
         {
             case BG_MMOL:
-                return bg_value * MGDL_TO_MMOL_FACTOR;
+                return bgValue * MGDL_TO_MMOL_FACTOR;
             case BG_MGDL:
             default:
-                return bg_value;
+                return bgValue;
         }
 
     }
+
+
+    /**
+     * Get BG Value
+     *
+     * @param bgValue
+     * @return
+     */
+    public float getBGValue(String bgValue)
+    {
+        return getFloatValueFromString(bgValue, 0.0f);
+    }
+
+
+    /**
+     * Get BG Value
+     *
+     * @param bgValue
+     * @return
+     */
+    public String getBGValueAsString(String bgValue)
+    {
+        float f = getFloatValueFromString(bgValue, 0.0f);
+
+        switch (this.getBGMeasurmentType())
+        {
+            case BG_MMOL:
+                return Decimal1Format.format(f);
+            case BG_MGDL:
+            default:
+                return Decimal0Format.format(f);
+        }
+
+    }
+
 
     /**
      * Get BG Value By Type

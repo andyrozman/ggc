@@ -43,7 +43,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
     protected DeviceDataHandler m_ddh = null;
     protected DataAccessPlugInBase m_da;
     protected String device_source;
-    protected ArrayList<DeviceValuesEntryInterface> data = null;
+    protected ArrayList<DeviceValueConfigEntryInterface> data = null;
 
     /**
      * Constructor
@@ -56,7 +56,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
         // this.m_ddh = ddh;
         this.m_da = da;
         this.device_source = source;
-        this.data = new ArrayList<DeviceValuesEntryInterface>();
+        this.data = new ArrayList<DeviceValueConfigEntryInterface>();
         fireTableChanged(null);
     }
 
@@ -137,7 +137,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
      */
     public Object getValueAt(int row, int column)
     {
-        return this.data.get(row).getTableColumnValue(column);
+        return this.data.get(row).getColumnValue(column);
     }
 
     /**
@@ -145,7 +145,7 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
      * 
      * @param mve DeviceValuesEntry instance
      */
-    public void addEntry(DeviceValuesEntryInterface mve)
+    public void addEntry(DeviceValueConfigEntryInterface mve)
     {
         this.data.add(mve);
         Collections.sort(data);
@@ -201,12 +201,12 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
      */
     public String getToolTipValue(int row, int column)
     {
-        DeviceValuesEntryInterface o = data.get(row);
+        DeviceValueConfigEntryInterface o = data.get(row);
 
         if (o.hasMultiLineToolTip())
             return ((MultiLineTooltip) o).getMultiLineToolTip(column);
         else
-            return (String) o.getTableColumnValue(column);
+            return (String) o.getColumnValue(column);
     }
 
 }

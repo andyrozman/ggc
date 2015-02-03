@@ -2,6 +2,10 @@
 Changes file for GGC CGM Tool
 ==============================
 
+1.2.0 [4.1.2015]
+    * some minor changes all around
+    * updated Lists
+
 1.1 [30.8.2014]
     * Added Dexcom G4 device
     * changed some classes to enums

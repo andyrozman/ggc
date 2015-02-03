@@ -60,7 +60,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
      */
     public BackupRestorePumpHandler()
     {
-        // ic = I18nControl.getInstance();
+        // i18nControlAbstract = I18nControl.getInstance();
     }
 
     /**

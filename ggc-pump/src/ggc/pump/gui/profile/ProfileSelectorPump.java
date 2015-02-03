@@ -160,7 +160,7 @@ public class ProfileSelectorPump extends SelectorAbstractDialog
         this.setHelpStringId("PumpTool_Profile_Type_Selector");
         this.setHelpEnabled(true);
         use_generic_select = true;
-        // setNewItemString(ic.getMessage("NEW__PROFILE"));
+        // setNewItemString(i18nControlAbstract.getMessage("NEW__PROFILE"));
     }
 
     /** 

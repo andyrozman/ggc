@@ -113,7 +113,7 @@ public enum PumpBaseType implements CodeEnumWithTranslation
         }
     }
 
-    public static PumpBaseType getPumpBaseTypeByCode(int code)
+    public static PumpBaseType getByCode(int code)
     {
         if (basetypeCodeMapping.containsKey(code))
         {

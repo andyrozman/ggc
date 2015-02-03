@@ -32,7 +32,7 @@ public abstract class CGMSDefsAbstract extends DeviceDefsAbstract
 {
 
     // protected DataAccessPump da = DataAccessPump.getInstance();
-    // protected I18nControlAbstract ic = da.getI18nControlInstance();
+    // protected I18nControlAbstract i18nControlAbstract = da.getI18nControlInstance();
 
     /**
      * Constructor

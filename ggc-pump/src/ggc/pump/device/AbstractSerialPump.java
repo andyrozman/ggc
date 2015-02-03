@@ -27,26 +27,16 @@ import gnu.io.SerialPortEvent;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      AbstractSerialPump
+ *  Description:   Abstract class for Pump using Serial Interface (extends SerialProtocol
+ *       and implements PumpInterface
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
-public abstract class AbstractSerialPump extends SerialProtocol implements PumpInterface // ,
-                                                                                         // SelectableInterface
+public abstract class AbstractSerialPump extends SerialProtocol implements PumpInterface
 {
 
-    // protected int m_status = 0;
-    // protected I18nControlAbstract ic =
-    // DataAccessPump.getInstance().getI18nControlInstance();
-
-    // protected String m_info = "";
-    // protected int m_time_difference = 0;
-    // protected String device_name = "Undefined";
-    // protected OutputWriter output_writer;
-
-    // AbstractDeviceCompany pump_company = null;
     boolean communication_established = false;
 
     /**
@@ -68,8 +58,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     public AbstractSerialPump(int i2, int i3, int i4, int i5)
     {
         super(DataAccessPump.getInstance());
-        // m_da = DataAccessPump.getInstance();
-        // ic = m_da.getI18nControlInstance();
+        // dataAccess = DataAccessPump.getInstance();
+        // i18nControlAbstract = dataAccess.getI18nControlInstance();
     }
 
     /**
@@ -80,8 +70,8 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     public AbstractSerialPump(AbstractDeviceCompany cmp)
     {
         super(DataAccessPump.getInstance());
-        // m_da = DataAccessPump.getInstance();
-        // ic = m_da.getI18nControlInstance();
+        // dataAccess = DataAccessPump.getInstance();
+        // i18nControlAbstract = dataAccess.getI18nControlInstance();
 
         this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
@@ -97,19 +87,19 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     {
         // this.device_name = device;
 
-        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(dataAccess.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
 
-        if (this.output_writer != null)
+        if (this.outputWriter != null)
         {
-            this.output_writer.setDeviceIdentification(di);
-            // this.output_writer.
+            this.outputWriter.setDeviceIdentification(di);
+            // this.outputWriter.
             // this.device_instance =
             // MeterManager.getInstance().getMeterDevice(group, device);
         }
 
-        this.device_source_name = group + " " + device;
+        this.deviceSourceName = group + " " + device;
 
     }
 
@@ -150,11 +140,11 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
      * public void setMeterType(String group, String device)
      * {
      * this.device_name = device;
-     * DeviceIdentification di = new DeviceIdentification(ic);
+     * DeviceIdentification di = new DeviceIdentification(i18nControlAbstract);
      * di.company = group;
      * di.device_selected = device;
-     * this.output_writer.setDeviceIdentification(di);
-     * //this.output_writer.
+     * this.outputWriter.setDeviceIdentification(di);
+     * //this.outputWriter.
      * //this.device_instance = MeterManager.getInstance().getMeterDevice(group,
      * device);
      * }

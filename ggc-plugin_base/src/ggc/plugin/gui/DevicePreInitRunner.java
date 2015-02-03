@@ -68,7 +68,7 @@ public class DevicePreInitRunner extends Thread // extends JDialog implements
     public void run()
     {
 
-        // m_da.sleepMS(1000);
+        // dataAccess.sleepMS(1000);
 
         try
         {

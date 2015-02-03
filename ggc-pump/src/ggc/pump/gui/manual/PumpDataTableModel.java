@@ -135,7 +135,7 @@ public class PumpDataTableModel extends AbstractTableModel implements MultiLineT
         /*
          * if (o != null && column == 0)
          * {
-         * return m_da.getDateTimeAsTimeString(((Long)o).longValue());
+         * return dataAccess.getDateTimeAsTimeString(((Long)o).longValue());
          * //System.out.println("DailyStatsTableModel: " + o);
          * //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
          * //return sdf.format(o);
@@ -153,9 +153,9 @@ public class PumpDataTableModel extends AbstractTableModel implements MultiLineT
         return this.column_names[column];
         /*
          * if (column == 2)
-         * return m_da.getSettings().getIns1Abbr();
+         * return dataAccess.getSettings().getIns1Abbr();
          * if (column == 3)
-         * return m_da.getSettings().getIns2Abbr();
+         * return dataAccess.getSettings().getIns2Abbr();
          */
         // ..return dayData.getColumnName(column);
     }

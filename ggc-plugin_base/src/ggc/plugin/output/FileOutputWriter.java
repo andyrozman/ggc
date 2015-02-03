@@ -55,9 +55,7 @@ public class FileOutputWriter extends AbstractOutputWriter
     }
 
     /**
-     * Write Data to OutputWriter
-     * 
-     * @param data OutputWriterData instance
+     * {@inheritDoc}
      */
     public void writeData(OutputWriterData data)
     {
@@ -66,7 +64,14 @@ public class FileOutputWriter extends AbstractOutputWriter
     }
 
     /**
-     * Write Header
+     * {@inheritDoc}
+     */
+    public void writeConfigurationData(OutputWriterConfigData configData)
+    {
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void writeHeader()

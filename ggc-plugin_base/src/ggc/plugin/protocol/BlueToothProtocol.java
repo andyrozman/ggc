@@ -96,7 +96,7 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
     private static Log log = LogFactory.getLog(BlueToothProtocol.class);
 
     // protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
-    // protected DataAccessPlugInBase m_da = null;
+    // protected DataAccessPlugInBase dataAccess = null;
     // //DataAccessMeter.getInstance();
 
     protected boolean isPortOpen = false;
@@ -342,12 +342,12 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
 
         try
         {
-            // this.output_writer.writeLog(LogEntryType.INFO,
+            // this.outputWriter.writeLog(LogEntryType.INFO,
             // "AbstractSerialMeter::open()");
             // System.out.println("SerialProtocol: open() - open");
             serialPort = (SerialPort) portIdentifier.open("ggc", (int) timeOut);
 
-            // this.output_writer.writeLog(LogEntryType.INFO,
+            // this.outputWriter.writeLog(LogEntryType.INFO,
             // "AbstractSerialMeter::open() - setting parameters");
 
             log.debug("SerialProtocol:open()");
@@ -930,7 +930,7 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
             catch (Exception ex)
             {
                 System.out.println(ex);
-                if (m_da.checkUnsatisfiedLink(ex))
+                if (dataAccess.checkUnsatisfiedLink(ex))
                 {
                     System.out.println("UNSATISFIED");
                 }

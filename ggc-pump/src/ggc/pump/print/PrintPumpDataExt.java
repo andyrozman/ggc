@@ -171,7 +171,7 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
     @Override
     public void writeAdditionalHeader(PdfPTable table) throws Exception
     {
-        // table.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
+        // table.addCell(new Phrase(i18nControlAbstract.getMessage("CH"), this.text_bold));
     }
 
     /**
@@ -200,14 +200,14 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
          * float value = 0.0f;
          * if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
          * {
-         * table.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"),
+         * table.addCell(new Phrase(i18nControlAbstract.getMessage("AMOUNT_LBL"),
          * this.text_normal));
          * //value = mp.getNutrientValue(205);
          * value = mp.getMealCH();
          * }
          * else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
          * {
-         * table.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"),
+         * table.addCell(new Phrase(i18nControlAbstract.getMessage("WEIGHT_LBL2"),
          * this.text_normal));
          * //value = mp.getNutrientValue(205);
          * value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);

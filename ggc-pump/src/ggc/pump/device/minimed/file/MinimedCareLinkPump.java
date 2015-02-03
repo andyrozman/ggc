@@ -85,7 +85,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
     public void setMappingData()
     {
         // new PumpAlarms();
-        this.alarm_mappings.put("4", PumpAlarms.NoDelivery.getCode());
+        this.alarm_mappings.put("4", PumpAlarms.NoDelivery);
 
         profile_names = new String[3];
         profile_names[0] = "Standard";
@@ -139,19 +139,6 @@ public class MinimedCareLinkPump extends MinimedCareLink
         this.defs_pump_config.put("x7", "");
         this.defs_pump_config.put("x8", "");
         this.defs_pump_config.put("x9", "");
-
-        /*
-         * this.defs_pump_config.put("x1", ""); this.defs_pump_config.put("x2",
-         * ""); this.defs_pump_config.put("x3", "");
-         * this.defs_pump_config.put("x4", ""); this.defs_pump_config.put("x5",
-         * ""); this.defs_pump_config.put("x6", "");
-         * this.defs_pump_config.put("x7", ""); this.defs_pump_config.put("x8",
-         * ""); this.defs_pump_config.put("x9", "");
-         */
-
-        // this.defs_pump_config.put("x", "");
-        // FIXME
-
     }
 
     long debug = 0L;
@@ -290,57 +277,57 @@ public class MinimedCareLinkPump extends MinimedCareLink
 
         // FIXME
 
-        this.dvw.put("Prime", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET, true));
+        this.dvw.put("Prime", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+                PumpEvents.PrimeInfusionSet, true));
 
-        this.dvw.put("Rewind", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                PumpEvents.PUMP_EVENT_CARTRIDGE_REWIND, false));
+        this.dvw.put("Rewind", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+                PumpEvents.CartridgeRewind, false));
 
         this.dvw.put("AlarmPump",
             new PumpTempValues(PumpTempValues.OBJECT_BASE_SET_SUBTYPE, PumpBaseType.Alarm.getCode(), false));
 
-        this.dvw.put("BolusNormal", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus.getCode(),
-                PumpBolusType.PUMP_BOLUS_STANDARD, true));
+        this.dvw.put("BolusNormal", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus,
+                PumpBolusType.Normal, true));
 
-        this.dvw.put("BolusSquare", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus.getCode(),
-                PumpBolusType.PUMP_BOLUS_SQUARE, false)); // ?
+        this.dvw.put("BolusSquare", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus,
+                PumpBolusType.Extended, false)); // ?
 
-        this.dvw.put("BolusMultiwave", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus.getCode(),
-                PumpBolusType.PUMP_BOLUS_MULTIWAVE, false));
+        this.dvw.put("BolusMultiwave", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus,
+                PumpBolusType.Multiwave, false));
 
         this.dvw.put("BolusWizardBolusEstimate",
-            new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                    PumpEvents.PUMP_EVENT_BOLUS_WIZARD, false));
+            new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+                    PumpEvents.BolusWizard, false));
 
         this.dvw.put("BGReceived", new PumpTempValues(PumpTempValues.OBJECT_EXT,
-                PumpAdditionalDataType.PUMP_ADD_DATA_BG, true));
+                PumpAdditionalDataType.BloodGlucose, true));
 
         // ChangeTempBasalPercent
         this.dvw.put("ChangeTempBasalPercent",
-            new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Basal.getCode(),
-                    PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE, false));
+            new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Basal,
+                    PumpBasalSubType.TemporaryBasalRate, false));
 
-        this.dvw.put("TBROver", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Basal.getCode(),
-                PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE_ENDED, false));
+        this.dvw.put("TBROver", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Basal,
+                PumpBasalSubType.TemporaryBasalRateEnded, false));
 
         this.dvw.put("ChangeActiveBasalProfilePattern", new PumpTempValues(PumpTempValues.OBJECT_BASE,
-                PumpBaseType.Basal.getCode(), PumpBasalSubType.PUMP_BASAL_PROFILE, false));
+                PumpBaseType.Basal, PumpBasalSubType.Profile, false));
 
         this.dvw.put("ChangeSuspendEnable", new PumpTempValues(PumpTempValues.OBJECT_BASE,
-                PumpBaseType.Event.getCode(), PumpEvents.PUMP_EVENT_BASAL_STOP, false));
+                PumpBaseType.Event, PumpEvents.BasalStop, false));
 
         this.dvw.put("ChangeSuspendEnableNot",
-            new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                    PumpEvents.PUMP_EVENT_BASAL_RUN, false));
+            new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+                    PumpEvents.BasalRun, false));
 
-        this.dvw.put("ResultDailyTotal", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Report.getCode(),
-                PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY, true));
+        this.dvw.put("ResultDailyTotal", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Report,
+                PumpReport.InsulinTotalDay, true));
 
-        this.dvw.put("SelfTest", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                PumpEvents.PUMP_EVENT_SELF_TEST, false));
+        this.dvw.put("SelfTest", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+                PumpEvents.SelfTest, false));
 
-        this.dvw.put("ChangeTime", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event.getCode(),
-                PumpEvents.PUMP_EVENT_SELF_TEST, false));
+        this.dvw.put("ChangeTime", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+                PumpEvents.DateTimeCorrect, false));
 
         this.dvw.put(
             "JournalEntryPumpLowBattery",

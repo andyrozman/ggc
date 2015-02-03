@@ -37,6 +37,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     DeviceIdentification device_info = null;
     String sub_status;
     protected ArrayList<String> error_list = null;
+    String pluginName;
 
     /**
      * Constructor
@@ -305,6 +306,17 @@ public abstract class AbstractOutputWriter implements OutputWriter
     public ArrayList<String> getErrorMessages()
     {
         return this.error_list;
+    }
+
+
+    public void setPluginName(String pluginName)
+    {
+        this.pluginName = pluginName;
+    }
+
+    public String getPluginName()
+    {
+        return this.pluginName;
     }
 
 }

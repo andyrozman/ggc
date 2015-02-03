@@ -161,11 +161,11 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
             /*
              * button = new JButton("   " + button_command[j + 1]);
              * button.setActionCommand(button_command[j]);
-             * // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+             * // button.setFont(dataAccess.getFont(DataAccess.FONT_NORMAL));
              * button.addActionListener(this);
              * if (button_icon[k] != null)
              * {
-             * button.setIcon(m_da.getImageIcon_22x22(button_icon[k], this));
+             * button.setIcon(dataAccess.getImageIcon_22x22(button_icon[k], this));
              * }
              */
 
@@ -256,7 +256,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
          * {
          * DailyValuesMealSelectorDialog dvms = new
          * DailyValuesMealSelectorDialog(
-         * m_da, this.m_dailyValuesRow.getMealsIds());
+         * dataAccess, this.m_dailyValuesRow.getMealsIds());
          * if (dvms.wasAction())
          * {
          * this.m_dailyValuesRow.setMealsIds(dvms.getStringForDb());
@@ -277,8 +277,8 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
          * else if (action.equals("bolus_helper"))
          * {
          * BolusHelper bh = new BolusHelper(this,
-         * m_da.getJFormatedTextValueFloat(ftf_bg2),
-         * m_da.getJFormatedTextValueFloat(this.ftf_ch),
+         * dataAccess.getJFormatedTextValueFloat(ftf_bg2),
+         * dataAccess.getJFormatedTextValueFloat(this.ftf_ch),
          * this.dtc.getDateTime());
          * if (bh.hasResult())
          * {
@@ -343,23 +343,23 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
          * // this.m_dailyValuesRow = new DailyValuesRow();
          * this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
          * // if (isFieldSet(BGField.getText()))
-         * float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
+         * float f = dataAccess.getJFormatedTextValueFloat(ftf_bg1);
          * if (f > 0.0)
          * {
          * //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
          * // )+1, f);
          * this.m_dailyValuesRow.setBG(1, f);
          * }
-         * this.m_dailyValuesRow.setIns1(m_da
+         * this.m_dailyValuesRow.setIns1(dataAccess
          * .getJFormatedTextValueInt(this.ftf_ins1));
-         * this.m_dailyValuesRow.setIns2(m_da
+         * this.m_dailyValuesRow.setIns2(dataAccess
          * .getJFormatedTextValueInt(this.ftf_ins2));
          * // checkDecimalFields(Ins1Field.getText()));
          * //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
          * // ()));
          * //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
          * // ;
-         * this.m_dailyValuesRow.setCH(m_da
+         * this.m_dailyValuesRow.setCH(dataAccess
          * .getJFormatedTextValueFloat(this.ftf_ch));
          * this.m_dailyValuesRow.setActivity(ActField.getText());
          * this.m_dailyValuesRow.setUrine(UrineField.getText());
@@ -373,7 +373,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
          * {
          * // edit
          * this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
-         * float f = m_da.getJFormatedTextValueFloat(ftf_bg1);
+         * float f = dataAccess.getJFormatedTextValueFloat(ftf_bg1);
          * if (f > 0.0)
          * {
          * //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex(
@@ -383,15 +383,15 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
          * // if (isFieldSet(BGField.getText()))
          * //this.m_dailyValuesRow.setBG(this.cob_bg_type.getSelectedIndex()+1,
          * // checkDecimalFields(BGField.getText()));
-         * this.m_dailyValuesRow.setIns1(m_da
+         * this.m_dailyValuesRow.setIns1(dataAccess
          * .getJFormatedTextValueInt(this.ftf_ins1));
-         * this.m_dailyValuesRow.setIns2(m_da
+         * this.m_dailyValuesRow.setIns2(dataAccess
          * .getJFormatedTextValueInt(this.ftf_ins2));
          * //this.m_dailyValuesRow.setIns1(checkDecimalFields(Ins1Field.getText
          * // ()));
          * //this.m_dailyValuesRow.setIns2(checkDecimalFields(Ins2Field.getText
          * // ()));
-         * this.m_dailyValuesRow.setCH(m_da
+         * this.m_dailyValuesRow.setCH(dataAccess
          * .getJFormatedTextValueFloat(this.ftf_ch));
          * //this.m_dailyValuesRow.setCH(checkDecimalFields(BUField.getText()))
          * // ;

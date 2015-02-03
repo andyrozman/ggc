@@ -3,6 +3,7 @@ package ggc.pump.device;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.pump.data.defs.*;
 
 import java.util.Hashtable;
 
@@ -37,24 +38,6 @@ import java.util.Hashtable;
 public interface PumpInterface extends DeviceInterface
 {
 
-    // ************************************************
-    // *** Working with device ***
-    // ************************************************
-
-    /**
-     * Used for opening connection with device.
-     * 
-     * @return boolean - if connection established
-     * @throws PlugInBaseException 
-     */
-    boolean open() throws PlugInBaseException;
-
-    /**
-     * Used for closing connection with device
-     * 
-     * @throws PlugInBaseException 
-     */
-    void close() throws PlugInBaseException;
 
     // ************************************************
     // *** Meter Identification Methods ***
@@ -78,35 +61,35 @@ public interface PumpInterface extends DeviceInterface
      *     alarm codes
      * @return
      */
-    public Hashtable<String, Integer> getAlarmMappings();
+    public Hashtable<String, PumpAlarms> getAlarmMappings();
 
     /**
      * Get Event Mappings - Map pump specific events to Pump Tool specific 
      *     event codes
      * @return
      */
-    public Hashtable<String, Integer> getEventMappings();
+    public Hashtable<String, PumpEvents> getEventMappings();
 
     /**
      * Get Error Mappings - Map pump specific errors to Pump Tool specific 
      *     event codes
      * @return
      */
-    public Hashtable<String, Integer> getErrorMappings();
+    public Hashtable<String, PumpErrors> getErrorMappings();
 
     /**
      * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
      *     event codes
      * @return
      */
-    public Hashtable<String, Integer> getBolusMappings();
+    public Hashtable<String, PumpBolusType> getBolusMappings();
 
     /**
      * Get Report Mappings - Map pump specific reports to Pump Tool specific 
      *     event codes
      * @return
      */
-    public Hashtable<String, Integer> getReportMappings();
+    public Hashtable<String, PumpReport> getReportMappings();
 
     /**
      * getDeviceInfo - get Device info (firmware and software revision)

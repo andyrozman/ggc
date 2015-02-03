@@ -2,6 +2,7 @@ package ggc.plugin.device;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -94,7 +95,7 @@ public interface DeviceInterface extends SelectableInterface
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    int getImplementationStatus();
+    DeviceImplementationStatus getImplementationStatus();
 
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
@@ -238,10 +239,10 @@ public interface DeviceInterface extends SelectableInterface
     /**
      * getConnectionPort - connection port data
      *
-     * @deprecated use getConnectionParamter instead
+     * was deprecated (getConnectionParameter) I set it back...
+     *
      * @return connection port as string
      */
-    @Deprecated
     public String getConnectionPort();
 
     /**
@@ -396,7 +397,7 @@ public interface DeviceInterface extends SelectableInterface
     /**
      * Pre Init Device - Does preinit
      * 
-     * @see hasPreInit
+     * @see ggc.plugin.device.DeviceInterface.hasPreInit
      */
     public void preInitDevice();
 

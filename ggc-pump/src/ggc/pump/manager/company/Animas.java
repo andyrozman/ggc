@@ -1,10 +1,8 @@
 package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
-import ggc.pump.device.animas.AnimasIR1200;
-import ggc.pump.device.animas.AnimasIR1250;
-import ggc.pump.device.animas.AnimasIR2020;
-import ggc.pump.device.animas.AnimasPing;
+import ggc.pump.device.animas.*;
+
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -45,13 +43,14 @@ public class Animas extends AbstractPumpDeviceCompany
                 "Animas", // company name (full)
                 "Animas", // short company name
                 "ANIMAS_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE); // implementation
+                DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL); // implementation
                                                                           // status
 
         this.addDevice(new AnimasIR1200(this));
         this.addDevice(new AnimasIR1250(this));
         this.addDevice(new AnimasIR2020(this));
-        this.addDevice(new AnimasPing(this));
+        this.addDevice(new OneTouchPing(this));
+        this.addDevice(new OneTouchVibe(this));
     }
 
     /**
@@ -60,6 +59,12 @@ public class Animas extends AbstractPumpDeviceCompany
     @Override
     public void initProfileNames()
     {
+        profile_names = new String[5];
+
+        for (int i = 0; i < 4; i++)
+        {
+            profile_names[i] = "" + (i + 1);
+        }
     }
 
 }

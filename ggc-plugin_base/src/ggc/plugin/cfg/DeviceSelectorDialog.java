@@ -118,9 +118,9 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     public void setHelpContext()
     {
         // TODO:
-        // m_da.getHelpContext().getMainHelpBroker().enableHelpOnButton(this.getHelpButton(),
+        // dataAccess.getHelpContext().getMainHelpBroker().enableHelpOnButton(this.getHelpButton(),
         // this.getHelpId(), null);
-        // m_da.getHelpContext().getMainHelpBroker().enableHelpKey(this.getRootPane(),
+        // dataAccess.getHelpContext().getMainHelpBroker().enableHelpKey(this.getRootPane(),
         // this.getHelpId(), null);
     }
 

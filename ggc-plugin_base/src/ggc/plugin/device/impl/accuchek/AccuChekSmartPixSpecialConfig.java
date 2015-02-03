@@ -94,7 +94,7 @@ public class AccuChekSmartPixSpecialConfig extends DeviceSpecialConfigPanelAbstr
         int size[] = { 17, 17 };
 
         ATSwingUtils.getButton("", 365, 5, 25, 25, this.config_panel, ATSwingUtils.FONT_NORMAL, "about.png",
-            "get_info", this, m_da, size); // , this, m_da, size);
+            "get_info", this, m_da, size); // , this, dataAccess, size);
     }
 
     public int getHeight()

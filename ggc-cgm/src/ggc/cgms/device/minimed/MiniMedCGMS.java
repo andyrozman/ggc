@@ -327,8 +327,8 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     public void loadFileContexts()
     {
         // System.out.println("loadFileContexts");
-        this.file_contexts = new GGCPlugInFileReaderContext[1];
-        this.file_contexts[0] = new FRC_MinimedCarelink(m_da, this.output_writer);
+        this.fileContexts = new GGCPlugInFileReaderContext[1];
+        this.fileContexts[0] = new FRC_MinimedCarelink(dataAccess, this.outputWriter);
     }
 
     /**

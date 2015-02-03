@@ -470,7 +470,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         }
         else if (action.equals("event_type"))
         {
-            this.pdtc.setType(PumpBaseType.getPumpBaseTypeByCode(this.cb_entry_type.getSelectedIndex()));
+            this.pdtc.setType(PumpBaseType.getByCode(this.cb_entry_type.getSelectedIndex()));
             this.realignComponents();
             // System.out.println("Event changes: " +
             // this.cb_entry_type.getSelectedIndex());
@@ -480,7 +480,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
          * {
          * DailyValuesMealSelectorDialog dvms = new
          * DailyValuesMealSelectorDialog(
-         * m_da, this.m_dailyValuesRow.getMealsIds());
+         * dataAccess, this.m_dailyValuesRow.getMealsIds());
          * if (dvms.wasAction())
          * {
          * this.m_dailyValuesRow.setMealsIds(dvms.getStringForDb());
@@ -501,8 +501,8 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
          * else if (action.equals("bolus_helper"))
          * {
          * BolusHelper bh = new BolusHelper(this,
-         * m_da.getJFormatedTextValueFloat(ftf_bg2),
-         * m_da.getJFormatedTextValueFloat(this.ftf_ch),
+         * dataAccess.getJFormatedTextValueFloat(ftf_bg2),
+         * dataAccess.getJFormatedTextValueFloat(this.ftf_ch),
          * this.dtc.getDateTime());
          * if (bh.hasResult())
          * {
@@ -523,21 +523,14 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
         PumpDataAdditionalWizardTwo pdawo;
 
-        if (pc.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB
-                || pc.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)
+        if (pc.getTypeEnum() == PumpAdditionalDataType.FoodDb
+                || pc.getTypeEnum() == PumpAdditionalDataType.FoodDescription)
         {
             PumpValuesEntryExt pc2 = null;
 
-            // System.out.println("ht=" + this.ht_data);
-            // System.out.println("hh:" +
-            // this.m_da.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_CH));
-
-            if (this.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(
-                PumpAdditionalDataType.PUMP_ADD_DATA_CH)))
+            if (this.ht_data.containsKey(PumpAdditionalDataType.Carbohydrates.getTranslation()))
             {
-                pc2 = this.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(
-                    PumpAdditionalDataType.PUMP_ADD_DATA_CH));
-                // System.out.println("pc2=" + pc2);
+                pc2 = this.ht_data.get(PumpAdditionalDataType.Carbohydrates.getTranslation());
             }
 
             pdawo = new PumpDataAdditionalWizardTwo(this, pc, pc2);
@@ -596,7 +589,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
                     m_da.getDb().edit(o1);
                 }
 
-                // deleteAddItem(this.m_da.getAdditionalTypes().getTypeDescription(objs[i].getType()));
+                // deleteAddItem(this.dataAccess.getAdditionalTypes().getTypeDescription(objs[i].getType()));
             }
             else
             {
@@ -609,7 +602,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
          * {
          * if (objs[i].getObjectUniqueId().equals("0"))
          * {
-         * this.m_da.getDb().add(objs[i]);
+         * this.dataAccess.getDb().add(objs[i]);
          * }
          * else
          * {
@@ -617,7 +610,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
          * {
          * if (objs[i].getObjectUniqueId().equals("0"))
          * {
-         * this.m_da.getDb().edit(objs[i]);
+         * this.dataAccess.getDb().edit(objs[i]);
          * }
          * }
          * }
@@ -630,11 +623,11 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
          * //System.out.println("objs[]: " + objs);
          * //System.out.println("objs[].getType(): " + objs[i].getType());
          * //System.out.println("ht_data: " + ht_data);
-         * //System.out.println("add types: " + this.m_da.getAdditionalTypes());
-         * if (this.ht_data.containsKey(this.m_da.getAdditionalTypes().
+         * //System.out.println("add types: " + this.dataAccess.getAdditionalTypes());
+         * if (this.ht_data.containsKey(this.dataAccess.getAdditionalTypes().
          * getTypeDescription(objs[i].getType())))
          * {
-         * deleteAddItem(this.m_da.getAdditionalTypes().getTypeDescription(objs[i
+         * deleteAddItem(this.dataAccess.getAdditionalTypes().getTypeDescription(objs[i
          * ].getType()));
          * }
          * addAddItem(objs[i]);

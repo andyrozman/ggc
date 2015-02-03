@@ -57,9 +57,9 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
      * 
      * @param ic
      */
-    public AbstractDeviceCompany(/* I18nControlAbstract ic */)
+    public AbstractDeviceCompany(/* I18nControlAbstract i18nControlAbstract */)
     {
-        // this.m_ic = ic;
+        // this.m_ic = i18nControlAbstract;
     }
 
     /**

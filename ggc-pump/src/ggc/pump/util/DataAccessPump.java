@@ -1,5 +1,6 @@
 package ggc.pump.util;
 
+import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -63,7 +64,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.3.4";
+    public static final String PLUGIN_VERSION = "1.4.0";
 
     private static DataAccessPump s_da = null; // This is handle to unique
 
@@ -278,7 +279,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
     /*
-     * static public DataAccess getInstance() { return m_da; }
+     * static public DataAccess getInstance() { return dataAccess; }
      */
 
     // Method: deleteInstance
@@ -328,14 +329,20 @@ public class DataAccessPump extends DataAccessPlugInBase
     public void initAllObjects()
     {
         //this.m_pump_base_type = new PumpBaseType();
-        this.m_pump_bolus_type = new PumpBolusType();
-        this.m_pump_basal_type = new PumpBasalSubType();
-        this.m_pump_report = new PumpReport();
+        //this.m_pump_bolus_type = new PumpBolusType();
+        //this.m_pump_basal_type = new PumpBasalSubType();
+        //this.m_pump_report = new PumpReport();
         // this.m_pump_alarms = new PumpAlarms();
-        this.m_pump_events = new PumpEvents();
-        this.m_pump_add_type = new PumpAdditionalDataType();
-        this.m_pump_errors = new PumpErrors();
+        //this.m_pump_events = new PumpEvents();
+        //this.m_pump_add_type = new PumpAdditionalDataType();
+        //this.m_pump_errors = new PumpErrors();
 
+    }
+
+    @Override
+    public GGCPluginType getPluginType()
+    {
+        return GGCPluginType.PumpToolPlugin;
     }
 
     /**
@@ -355,25 +362,17 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
 
         I18nControlAbstract ic = this.getI18nControlInstance();
-        // this.about_title = ic.getMessage("PUMP_PLUGIN_ABOUT");
+        // this.about_title = i18nControlAbstract.getMessage("PUMP_PLUGIN_ABOUT");
         this.about_image_name = "/icons/pumps_about.jpg";
 
         this.about_plugin_copyright_from = 2008;
-        // this.about_plugin_name = ic.getMessage("PUMP_PLUGIN");
+        // this.about_plugin_name = i18nControlAbstract.getMessage("PUMP_PLUGIN");
 
         // libraries
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
 
-        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.3.x", "www.atech-software.com", "LGPL",
-                "Helper Library for Swing/Hibernate/...",
-                "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
-        lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", "2.4", "commons.apache.org/lang/", "Apache",
-                "Helper methods for java.lang library"));
-        lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", "1.0.4", "commons.apache.org/logging/", "Apache",
-                "Logger and all around wrapper for logging utilities"));
-        lst_libs.add(new LibraryInfoEntry("dom4j", "1.6.1", "http://www.dom4j.org/", "BSD",
-                "Framework for Xml manipulation"));
-        lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.1.7", "www.rxtx.org", "LGPL", "Comm API"));
+        lst_libs.addAll(getBaseLibraries());
+
         lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c",
                 "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License",
                 "Xml parser for processing xml document",
@@ -390,7 +389,7 @@ public class DataAccessPump extends DataAccessPlugInBase
                                                // Roche devices"));
         lst_credits.add(cg);
 
-        // cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
+        // cg = new CreditsGroup(i18nControlAbstract.getMessage("HELPERS_DESC"));
         // cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "",
         // "Supplied hardware for Roche development"));
         // lst_credits.add(cg);
@@ -417,7 +416,8 @@ public class DataAccessPump extends DataAccessPlugInBase
         // fg.addFeaturesEntry(new
         // FeaturesEntry("Roche (partitialy, Basal Pattern History is not fully supported due to incomplete export of SmartPix device)"));
         fg.addFeaturesEntry(new FeaturesEntry("Dana (only works on Windows and Linux)"));
-        // fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
+        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
+        fg.addFeaturesEntry(new FeaturesEntry("Animas/One Touch (partitialy implemented)"));
         // fg.addFeaturesEntry(new
         // FeaturesEntry("LifeScan: Ultra, Ultra2, Profile, Easy, UltraSmart"));
 
@@ -433,9 +433,9 @@ public class DataAccessPump extends DataAccessPlugInBase
         lst_features.add(fg);
 
         fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Minimed (in 2010)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Roche (in 2010)"));
-        // fg.addFeaturesEntry(new FeaturesEntry("Dana (in 2009/2010)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Minimed (in 2015)"));
+
+
 
         lst_features.add(fg);
 
@@ -452,46 +452,18 @@ public class DataAccessPump extends DataAccessPlugInBase
 
         this.weblister_items = new ArrayList<BaseListEntry>();
 
-        this.weblister_items.add(new BaseListEntry("Animas", "/pumps/animas.html", BaseListEntry.STATUS_PLANNED));
+        this.weblister_items.add(new BaseListEntry("Animas", "/pumps/animas.html", BaseListEntry.STATUS_PART_IMPLEMENTED));
         this.weblister_items.add(new BaseListEntry("Deltec", "/pumps/deltec.html", BaseListEntry.STATUS_NOTPLANNED));
         this.weblister_items.add(new BaseListEntry("Insulet", "/pumps/insulet.html", BaseListEntry.STATUS_NOTPLANNED));
         this.weblister_items
                 .add(new BaseListEntry("Minimed", "/pumps/minimed.html", BaseListEntry.STATUS_IMPLEMENTING));
-        this.weblister_items.add(new BaseListEntry("Roche", "/pumps/roche.html", BaseListEntry.STATUS_IMPLEMENTING));
-        this.weblister_items.add(new BaseListEntry("Sooil", "/pumps/sooil.html", BaseListEntry.STATUS_IMPLEMENTING));
+        this.weblister_items.add(new BaseListEntry("Roche", "/pumps/roche.html", BaseListEntry.STATUS_DONE));
+        this.weblister_items.add(new BaseListEntry("Sooil", "/pumps/sooil.html", BaseListEntry.STATUS_DONE));
 
         this.weblister_title = this.m_i18n.getMessage("DEVICE_LIST_WEB");
         this.weblister_desc = this.m_i18n.getMessage("DEVICE_LIST_WEB_DESC");
 
-        // public BaseListEntry(String name, String page, int status)
 
-        /*
-         * metersUrl = new Hashtable<String,String>(); metersNames = new
-         * ArrayList<String>(); metersNames.add("Abbott Diabetes Care");
-         * metersUrl.put("Abbott Diabetes Care", "abbott.html");
-         * metersNames.add("Bayer Diagnostics");
-         * metersUrl.put("Bayer Diagnostics", "bayer.html");
-         * metersNames.add("Diabetic Supply of Suncoast");
-         * metersUrl.put("Diabetic Supply of Suncoast", "suncoast.html");
-         * metersNames.add("Diagnostic Devices");
-         * metersUrl.put("Diagnostic Devices", "prodigy.html");
-         * metersNames.add("Arkray USA (formerly Hypoguard)");
-         * metersUrl.put("Arkray USA (formerly Hypoguard)", "arkray.html");
-         * metersNames.add("HealthPia America");
-         * metersUrl.put("HealthPia America", "healthpia.html");
-         * metersNames.add("Home Diagnostics");
-         * metersUrl.put("Home Diagnostics", "home_diganostics.html");
-         * metersNames.add("Lifescan"); metersUrl.put("Lifescan",
-         * "lifescan.html"); metersNames.add("Nova Biomedical");
-         * metersUrl.put("Nova Biomedical", "nova_biomedical.html");
-         * metersNames.add("Roche Diagnostics");
-         * metersUrl.put("Roche Diagnostics", "roche.html");
-         * metersNames.add("Sanvita"); metersUrl.put("Sanvita", "sanvita.html");
-         * metersNames.add("U.S. Diagnostics");
-         * metersUrl.put("U.S. Diagnostics", "us_diagnostics.html");
-         * metersNames.add("WaveSense"); metersUrl.put("WaveSense",
-         * "wavesense.html");
-         */
     }
 
     // ********************************************************
@@ -772,7 +744,7 @@ public class DataAccessPump extends DataAccessPlugInBase
      */
     public String getFormatedBolusValue(float val)
     {
-        return this.getDecimalHandler().getDecimalAsString(val, this.getBolusPrecision());
+        return this.getDecimalHandler().getDecimalNumberAsString(val, this.getBolusPrecision());
     }
 
     /**
@@ -783,7 +755,7 @@ public class DataAccessPump extends DataAccessPlugInBase
      */
     public String getFormatedBasalValue(float val)
     {
-        return this.getDecimalHandler().getDecimalAsString(val, this.getBasalPrecision());
+        return this.getDecimalHandler().getDecimalNumberAsString(val, this.getBasalPrecision());
     }
 
     /**

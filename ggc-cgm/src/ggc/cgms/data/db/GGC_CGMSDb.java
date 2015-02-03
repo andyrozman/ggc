@@ -77,7 +77,7 @@ public class GGC_CGMSDb extends PluginDb
     {
         // DataAccessCGMS.notImplemented("GGC_CGMSDb::getDailyCGMSValues()");
 
-        // DeviceValuesDay dV = new DeviceValuesDay(m_da);
+        // DeviceValuesDay dV = new DeviceValuesDay(dataAccess);
         // dV.setDateTimeGC(gc);
 
         log.info("getCGMSDayStats()");

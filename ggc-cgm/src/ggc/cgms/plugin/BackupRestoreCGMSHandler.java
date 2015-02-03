@@ -56,7 +56,7 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
      */
     public BackupRestoreCGMSHandler()
     {
-        // ic = I18nControl.getInstance();
+        // i18nControlAbstract = I18nControl.getInstance();
     }
 
     /**

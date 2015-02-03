@@ -105,12 +105,12 @@ public class PumpSimple
 
         try
         {
-            // this.output_writer.writeLog(LogEntryType.INFO,
+            // this.outputWriter.writeLog(LogEntryType.INFO,
             // "AbstractSerialMeter::open()");
             // System.out.println("SerialProtocol: open() - open");
             serialPort = portIdentifier.open("ggc", (int) timeOut);
 
-            // this.output_writer.writeLog(LogEntryType.INFO,
+            // this.outputWriter.writeLog(LogEntryType.INFO,
             // "AbstractSerialMeter::open() - setting parameters");
 
             log.debug("SerialProtocol:open()");
@@ -351,7 +351,7 @@ public class PumpSimple
          * //this.backup_restore_enabled = true;
          * da.loadSpecialParameters();
          * //System.out.println("PumpServer: " +
-         * m_da.getSpecialParameters().get("BG"));
+         * dataAccess.getSpecialParameters().get("BG"));
          * dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters
          * ().get("BG")));
          * MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp",

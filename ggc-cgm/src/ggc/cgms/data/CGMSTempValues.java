@@ -1,5 +1,8 @@
 package ggc.cgms.data;
 
+import com.atech.utils.data.CodeEnum;
+import ggc.cgms.data.defs.CGMSBaseDataType;
+import ggc.cgms.data.defs.CGMSObject;
 import ggc.plugin.data.DeviceTempValues;
 import ggc.plugin.output.OutputWriterData;
 
@@ -34,54 +37,73 @@ import com.atech.utils.data.ATechDate;
 public class CGMSTempValues extends DeviceTempValues
 {
 
-    // FIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
     /**
-     * @param _object_type
-     * @param _base_type
-     * @param _sub_type
+     * @param objectType
+     * @param baseType
+     * @param subType
      */
-    public CGMSTempValues(int _object_type, int _base_type, int _sub_type)
+    public CGMSTempValues(int objectType, int baseType, int subType)
     {
 
-        super(_object_type, _base_type, _sub_type, null);
+        super(objectType, baseType, subType, null);
+    }
+
+
+    /**
+     * @param objectType
+     * @param baseType
+     * @param subType
+     */
+    public CGMSTempValues(CGMSObject objectType, CGMSBaseDataType baseType, CodeEnum subType)
+    {
+        super(objectType.getCode(), baseType.getCode(), subType.getCode(), null);
     }
 
     /**
-     * @param _object_type
-     * @param _base_type
-     * @param _sub_type
+     * @param objectType
+     * @param baseType
+     * @param subType
      * @param _value_template
      */
-    public CGMSTempValues(int _object_type, int _base_type, int _sub_type, String _value_template, Boolean isNumericValue)
+    public CGMSTempValues(int objectType, int baseType, int subType, String _value_template, Boolean isNumericValue)
     {
-        super(_object_type, _base_type, _sub_type, _value_template, isNumericValue);
+        super(objectType, baseType, subType, _value_template, isNumericValue);
     }
 
+
     /**
-     * @param _object_type
-     * @param _base_type
+     * @param objectType
+     * @param baseType
+     * @param subType
+     * @param _value_template
      */
-    public CGMSTempValues(int _object_type, int _base_type)
+    public CGMSTempValues(CGMSObject objectType,  CGMSBaseDataType baseType, int subType, String _value_template, Boolean isNumericValue)
     {
-        super(_object_type, _base_type);
+        super(objectType.getCode(), baseType.getCode(), subType, _value_template, isNumericValue);
     }
 
-    /**
-     * Pump Object: Base
-     */
-    public static final int OBJECT_BASE = 1;
 
-    // we have base object, and value is in fact sub_type
-    /**
-     * 
-     */
-    public static final int OBJECT_BASE_SET_SUBTYPE = 4;
 
     /**
-     * Pump Object: Extended
+     * @param objectType
+     * @param baseType
      */
-    public static final int OBJECT_SUB_ENTRY = 2;
+    public CGMSTempValues(int objectType, int baseType)
+    {
+        super(objectType, baseType);
+    }
+
+
+    /**
+     * @param objectType
+     * @param baseType
+     */
+    public CGMSTempValues(CGMSObject objectType,  CGMSBaseDataType baseType)
+    {
+        super(objectType.getCode(), baseType.getCode());
+    }
+
+
 
     /*
      * public void writeObject(OutputWriter ow, String _value)
@@ -93,10 +115,10 @@ public class CGMSTempValues extends DeviceTempValues
      * getData
      */
     @Override
-    public OutputWriterData getData(ATechDate dt, int _sub_type, String _value)
+    public OutputWriterData getData(ATechDate dt, int subType, String _value)
     {
         String val = _value;
-        int stype = _sub_type;
+        int stype = subType;
 
         if (stype == -1)
         {
@@ -108,7 +130,7 @@ public class CGMSTempValues extends DeviceTempValues
             val = "";
         }
 
-        if (this.object_type == CGMSTempValues.OBJECT_BASE)
+        if (this.object_type == CGMSObject.Base.getCode())
         {
             CGMSValuesEntry pve = new CGMSValuesEntry();
             /*
@@ -136,7 +158,7 @@ public class CGMSTempValues extends DeviceTempValues
          * return pve;
          * }
          */
-        else if (this.object_type == CGMSTempValues.OBJECT_SUB_ENTRY)
+        else if (this.object_type == CGMSObject.SubEntry.getCode())
         {
 
             // SUB_TYPE= ; VALUE=; ISIG=

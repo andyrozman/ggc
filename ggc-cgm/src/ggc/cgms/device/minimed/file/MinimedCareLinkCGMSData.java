@@ -286,7 +286,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
             {
                 if (this.isig_set)
                 {
-                    v = String.format("VALUE=%s;ISIG=%s", v, m_da.getDecimalHandler().getDecimalAsString(ISIG, 2));
+                    v = String.format("VALUE=%s;ISIG=%s", v, m_da.getDecimalHandler().getDecimalNumberAsString(ISIG, 2));
                 }
 
                 this.mcl.dvw.writeObject(this.raw_type, this.mcl.mm_date.getAtechDate(date, time), v);
@@ -782,7 +782,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
          * {
          * String a = "Unsupported profile pattern change: " + s + "\n" +
          * this.full_data_line;
-         * this.mcl.output_writer.addErrorMessage(a);
+         * this.mcl.outputWriter.addErrorMessage(a);
          * log.error(a);
          * return null;
          * }
@@ -837,7 +837,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
          * {
          * String a = "Unsupported alarm mapping: " + s + "\n" +
          * this.full_data_line;
-         * this.mcl.output_writer.addErrorMessage(a);
+         * this.mcl.outputWriter.addErrorMessage(a);
          * log.error(a);
          * return null;
          * }

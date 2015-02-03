@@ -20,8 +20,8 @@ package ggc.cgms.manager;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     PumpDevicesIds  
- *  Description:  This class contains all ids from this plugins. This means companies and pump devices,
+ *  Filename:     CGMSDevicesIds
+ *  Description:  This class contains all ids from this plugins. This means companies and CGMS devices,
  *                all classes should use Ids from here, so that Ids can change globally. 
  * 
  *  Author: Andy {andy@atech-software.com}
@@ -36,14 +36,21 @@ public class CGMSDevicesIds
     public static final int COMPANY_ABBOTT = 1;
 
     /**
-     * Pump Company: Dexcom
+     * CGMS Company: Dexcom
      */
     public static final int COMPANY_DEXCOM = 2;
 
     /**
-     * Pump Company: Minimed
+     * CGMS Company: Minimed
      */
     public static final int COMPANY_MINIMED = 3;
+
+
+    /**
+     * CGMS Company: Animas (integration only)
+     */
+    public static final int COMPANY_ANIMAS = 4;
+
 
     /**
      * CGMS (Abbott) - Freestyle Navigator
@@ -79,5 +86,11 @@ public class CGMSDevicesIds
      * CGMS (Minimed) - Minimed RealTime
      */
     public static final int CGMS_MINIMED_REALTIME = 30003;
+
+
+    /**
+     * CGMS (Minimed) - Minimed RealTime
+     */
+    public static final int CGMS_ANIMAS_VIBE_DEXCOM_INTEGRATION = 40001;
 
 }

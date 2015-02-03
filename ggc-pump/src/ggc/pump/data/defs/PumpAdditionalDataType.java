@@ -1,5 +1,6 @@
 package ggc.pump.data.defs;
 
+import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.util.DataAccessPump;
 
@@ -34,89 +35,26 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class PumpAdditionalDataType
+public enum PumpAdditionalDataType implements CodeEnumWithTranslation
 {
 
-    DataAccessPump da = DataAccessPump.getInstance();
-    I18nControlAbstract ic = da.getI18nControlInstance();
+    Activity(1, "ADD_DATA_ACTIVITY"), //
+    Comment(2, "ADD_DATA_COMMENT"), //
+    BloodGlucose(3, "ADD_DATA_BG"), //
+    Urine(4, "ADD_DATA_URINE"), //
+    Carbohydrates(5, "ADD_DATA_CH"), //
+    FoodDb(6, "ADD_DATA_FOOD_DB"), //
+    FoodDescription(7, "ADD_DATA_FOOD_DESC")
+    ;
+
+
 
     /**
      * Additional data description
      */
-    public String[] addata_desc = { ic.getMessage("SELECT_ADDITIONAL_DATA"), ic.getMessage("ADD_DATA_ACTIVITY"),
-                                   ic.getMessage("ADD_DATA_COMMENT"), ic.getMessage("ADD_DATA_BG"),
-                                   ic.getMessage("ADD_DATA_URINE"), ic.getMessage("ADD_DATA_CH"),
-                                   ic.getMessage("ADD_DATA_FOOD_DB"), ic.getMessage("ADD_DATA_FOOD_DESC"), };
+    public static String[] addata_desc = null;
 
-    Hashtable<String, String> addata_mapping = new Hashtable<String, String>();
 
-    /**
-     * Pump Additional Data Type: Activity
-     */
-    public static final int PUMP_ADD_DATA_ACTIVITY = 1;
-
-    /**
-     * Pump Additional Data Type: Comment
-     */
-    public static final int PUMP_ADD_DATA_COMMENT = 2;
-
-    /**
-     * Pump Additional Data Type: BG
-     */
-    public static final int PUMP_ADD_DATA_BG = 3;
-
-    /**
-     * Pump Additional Data Type: Urine
-     */
-    public static final int PUMP_ADD_DATA_URINE = 4;
-
-    /**
-     * Pump Additional Data Type: CH (Carbohydrates)
-     */
-    public static final int PUMP_ADD_DATA_CH = 5;
-
-    /**
-     * Pump Additional Data Type: Food Db
-     */
-    public static final int PUMP_ADD_DATA_FOOD_DB = 6;
-
-    /**
-     * Pump Additional Data Type: Food Db
-     */
-    public static final int PUMP_ADD_DATA_FOOD_DESC = 7;
-
-    /**
-     * Constructor
-     */
-    public PumpAdditionalDataType()
-    {
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_ACTIVITY"), "1");
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_COMMENT"), "2");
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_BG"), "3");
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_URINE"), "4");
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_CH"), "5");
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_FOOD_DB"), "6");
-        this.addata_mapping.put(ic.getMessage("ADD_DATA_FOOD_DESC"), "7");
-    }
-
-    /**
-     * Get Type from Description
-     * 
-     * @param str type as string
-     * @return type as int
-     */
-    public int getTypeFromDescription(String str)
-    {
-        String s = "0";
-
-        if (this.addata_mapping.containsKey(str))
-        {
-            s = this.addata_mapping.get(str);
-        }
-
-        return Integer.parseInt(s);
-
-    }
 
     /**
      * Get Type Description
@@ -139,26 +77,119 @@ public class PumpAdditionalDataType
         return this.addata_desc;
     }
 
+
+
+
+    static Hashtable<String, PumpAdditionalDataType> translationMapping = new Hashtable<String, PumpAdditionalDataType>();
+    static Hashtable<Integer, PumpAdditionalDataType> codeMapping = new Hashtable<Integer, PumpAdditionalDataType>();
+
+    static
+    {
+        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+
+        for (PumpAdditionalDataType pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMapping.put(pbt.getTranslation(), pbt);
+            codeMapping.put(pbt.code, pbt);
+        }
+
+        String[] addata_desc_lcl = { ic.getMessage("SELECT_ADDITIONAL_DATA"), ic.getMessage("ADD_DATA_ACTIVITY"),
+                ic.getMessage("ADD_DATA_COMMENT"), ic.getMessage("ADD_DATA_BG"),
+                ic.getMessage("ADD_DATA_URINE"), ic.getMessage("ADD_DATA_CH"),
+                ic.getMessage("ADD_DATA_FOOD_DB"), ic.getMessage("ADD_DATA_FOOD_DESC"), };
+    }
+
+    int code;
+    String i18nKey;
+    String translation;
+
+    private PumpAdditionalDataType(int code, String i18nKey)
+    {
+        this.code = code;
+        this.i18nKey = i18nKey;
+    }
+
+
+    public String getTranslation()
+    {
+        return translation;
+    }
+
+    public void setTranslation(String translation)
+    {
+        this.translation = translation;
+    }
+
+    public int getCode()
+    {
+        return code;
+    }
+
+    public String getI18nKey()
+    {
+        return i18nKey;
+    }
+
+
     /**
-     * Create Items (for Combo Box)
-     * 
-     * @param old_data
-     * @return
+     * Get Type from Description
+     *
+     * @param str
+     *            type as string
+     * @return type as int
      */
-    public Object[] createItems(Hashtable<String, PumpValuesEntryExt> old_data)
+    public int getTypeFromDescription(String str)
+    {
+        if (translationMapping.containsKey(str))
+        {
+            return translationMapping.get(str).getCode();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+
+    public static PumpAdditionalDataType getByDescription(String description)
+    {
+        if (translationMapping.containsKey(description))
+        {
+            return translationMapping.get(description);
+        }
+        else
+        {
+            return PumpAdditionalDataType.Comment;
+        }
+    }
+
+    public static PumpAdditionalDataType getByCode(int code)
+    {
+        if (codeMapping.containsKey(code))
+        {
+            return codeMapping.get(code);
+        }
+        else
+        {
+            return PumpAdditionalDataType.Comment;
+        }
+    }
+
+    public static Object[] createItems(Hashtable<String, PumpValuesEntryExt> old_data)
     {
         ArrayList<String> items = new ArrayList<String>();
 
-        for (int i = 1; i < this.addata_desc.length; i++)
+        for (int i = 1; i < addata_desc.length; i++)
         {
-            if (!old_data.containsKey(this.addata_desc[i]))
+            if (!old_data.containsKey(addata_desc[i]))
             {
-                items.add(this.addata_desc[i]);
+                items.add(addata_desc[i]);
             }
         }
 
         return items.toArray();
-
     }
+
 
 }

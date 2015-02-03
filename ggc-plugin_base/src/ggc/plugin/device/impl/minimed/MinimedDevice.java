@@ -77,15 +77,15 @@ public abstract class MinimedDevice extends DeviceAbstract // implements
     private MinimedComm_Interface m_communication_protocol = null;
     protected int m_error_code = 0;
     protected MinimedDeviceUtil util = null; // MinimedDeviceUtil.getInstance();
-    // protected DataAccessPump m_da = DataAccessPump.getInstance();
+    // protected DataAccessPump dataAccess = DataAccessPump.getInstance();
     protected DataAccessPlugInBase m_da = null;
     // AbstractDeviceCompany abstract_device_company = null;
     // AbstractDeviceCompany pump_company = null;
-    // OutputWriter output_writer = null;
-    // boolean can_read_data = false;
-    // boolean can_read_partitial_data = false;
-    // boolean can_read_device_info = false;
-    // boolean can_read_device_configuration = false;
+    // OutputWriter outputWriter = null;
+    // boolean canReadData = false;
+    // boolean canReadPartitialData = false;
+    // boolean canReadDeviceInfo = false;
+    // boolean canReadDeviceConfiguration = false;
 
     private static Log log = LogFactory.getLog(MinimedDevice.class);
 
@@ -238,11 +238,7 @@ public abstract class MinimedDevice extends DeviceAbstract // implements
         return false;
     }
 
-    public Hashtable<String, Integer> getAlarmMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
+
 
     public float getBasalStep()
     {
@@ -250,11 +246,7 @@ public abstract class MinimedDevice extends DeviceAbstract // implements
         return 0;
     }
 
-    public Hashtable<String, Integer> getBolusMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
+
 
     public float getBolusStep()
     {
@@ -262,17 +254,7 @@ public abstract class MinimedDevice extends DeviceAbstract // implements
         return 0;
     }
 
-    public Hashtable<String, Integer> getErrorMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
-    public Hashtable<String, Integer> getEventMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     public int getMaxMemoryRecords()
     {
@@ -280,11 +262,7 @@ public abstract class MinimedDevice extends DeviceAbstract // implements
         return 0;
     }
 
-    public Hashtable<String, Integer> getReportMappings()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
+
 
     public String getTemporaryBasalTypeDefinition()
     {
@@ -298,11 +276,7 @@ public abstract class MinimedDevice extends DeviceAbstract // implements
         return 0;
     }
 
-    public void loadPumpSpecificValues()
-    {
-        // TODO Auto-generated method stub
 
-    }
 
     public String getComment()
     {
@@ -416,7 +390,7 @@ public abstract class MinimedDevice extends DeviceAbstract // implements
     @Override
     public DeviceIdentification getDeviceInfo()
     {
-        return this.output_writer.getDeviceIdentification();
+        return this.outputWriter.getDeviceIdentification();
     }
 
     public boolean open() throws PlugInBaseException

@@ -178,55 +178,6 @@ public abstract class MinimedPump extends AbstractPump
         return null;
     }
 
-    /**
-     * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific 
-     *     alarm codes
-     * @return
-     */
-    public Hashtable<String, Integer> getAlarmMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getBolusMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Error Mappings - Map pump specific errors to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getErrorMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Event Mappings - Map pump specific events to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getEventMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Report Mappings - Map pump specific reports to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getReportMappings()
-    {
-        return null;
-    }
 
     /**
      * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
@@ -333,8 +284,8 @@ public abstract class MinimedPump extends AbstractPump
     public void loadFileContexts()
     {
         // System.out.println("loadFileContexts");
-        this.file_contexts = new GGCPlugInFileReaderContext[1];
-        this.file_contexts[0] = new FRC_MinimedCarelink(m_da, this.output_writer);
+        this.fileContexts = new GGCPlugInFileReaderContext[1];
+        this.fileContexts[0] = new FRC_MinimedCarelink(dataAccess, this.outputWriter);
     }
 
 }

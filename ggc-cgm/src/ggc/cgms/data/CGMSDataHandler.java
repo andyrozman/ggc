@@ -76,7 +76,7 @@ public class CGMSDataHandler extends DeviceDataHandler
     @Override
     public void createDeviceValuesTableModel()
     {
-        this.m_model = new CGMSValuesTableModel(this, m_da.getSourceDevice()); // m_da.getSourceDevice());
+        this.m_model = new CGMSValuesTableModel(this, m_da.getSourceDevice()); // dataAccess.getSourceDevice());
         // System.out.println("Model");
     }
 

@@ -60,7 +60,7 @@ public class MinimedDeviceUtil
 
     Hashtable<Integer, MinimedCommand> commands;
     DataAccessPlugInBase m_da = null;
-    // DataAccessPump m_da = DataAccessPump.getInstance();
+    // DataAccessPump dataAccess = DataAccessPump.getInstance();
     I18nControlAbstract m_ic = null;
 
     public boolean device_stopped = false;

@@ -62,21 +62,5 @@ import ggc.plugin.device.PlugInBaseException;
 public interface CGMSInterface extends DeviceInterface
 {
 
-    // ************************************************
-    // *** Working with device ***
-    // ************************************************
-
-    /**
-     * Used for opening connection with device.
-     * @return boolean - if connection established
-     * @throws PlugInBaseException 
-     */
-    boolean open() throws PlugInBaseException;
-
-    /**
-     * Will be called, when the import is ended and freeing resources.
-     * @throws PlugInBaseException 
-     */
-    void close() throws PlugInBaseException;
 
 }

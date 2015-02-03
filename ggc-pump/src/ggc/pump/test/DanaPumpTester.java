@@ -133,7 +133,7 @@ public class DanaPumpTester // extends JFrame
 
         // da.loadSpecialParameters();
         // System.out.println("PumpServer: " +
-        // m_da.getSpecialParameters().get("BG"));
+        // dataAccess.getSpecialParameters().get("BG"));
 
         dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
 

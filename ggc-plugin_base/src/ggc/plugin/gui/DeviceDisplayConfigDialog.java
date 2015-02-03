@@ -1,14 +1,8 @@
 package ggc.plugin.gui;
 
-import ggc.plugin.data.DeviceDataHandler;
-import ggc.plugin.data.DeviceValuesConfigTable;
-import ggc.plugin.data.DeviceValuesConfigTableModel;
-import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.data.*;
 import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.output.AbstractOutputWriter;
-import ggc.plugin.output.OutputUtil;
-import ggc.plugin.output.OutputWriter;
-import ggc.plugin.output.OutputWriterData;
+import ggc.plugin.output.*;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.BorderLayout;
@@ -70,7 +64,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     DeviceReaderRunner mrr;
 
     private DataAccessPlugInBase m_da; // = DataAccessMeter.getInstance();
-    I18nControlAbstract m_ic; // = m_da.getI18nControlInstance();
+    I18nControlAbstract m_ic; // = dataAccess.getI18nControlInstance();
 
     /**
      * 
@@ -127,7 +121,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         this.m_ic = da.getI18nControlInstance();
 
         this.m_ddh = ddh;
-        // this.mrr = new DeviceReaderRunner(m_da,
+        // this.mrr = new DeviceReaderRunner(dataAccess,
         // this.m_ddh.getConfiguredDevice(), this);
 
         dialogPreInit();
@@ -626,9 +620,25 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
      */
     public void writeData(OutputWriterData data)
     {
-        count++;
-        this.model.addEntry((DeviceValuesEntryInterface) data);
     }
+
+
+    public void writeConfigurationData(OutputWriterConfigData configData)
+    {
+        count++;
+        this.model.addEntry((DeviceValueConfigEntryInterface) configData);
+    }
+
+    public void setPluginName(String pluginName)
+    {
+
+    }
+
+    public String getPluginName()
+    {
+        return null;
+    }
+
 
     /**
      * Write log entry
@@ -678,7 +688,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
      */
     public String getHelpId()
     {
-        // return m_da.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // return dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
         // "Config_Reading_View";
         return "DeviceTool_Reading_Config_View";
     }

@@ -99,7 +99,7 @@ public class DeviceIdentification
     /**
      * Constructor 
      * 
-     * @param ic
+     * @param i18nControlAbstract
      */
     /*
      * public DeviceIdentification()

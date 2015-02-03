@@ -47,10 +47,7 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesEntryInterface, /*
-                                                                                                * PumpValuesEntryAbstract
-                                                                                                * ,
-                                                                                                */
+public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesEntryInterface,
         DatabaseObjectHibernate, GraphValuesCapable
 {
 
@@ -82,12 +79,12 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      * //public
      * public Hashtable<String,String> params;
      * public int status = 1; //MeterValuesEntry.
-     * public static I18nControl ic = I18nControl.getInstance();
+     * public static I18nControl i18nControlAbstract = I18nControl.getInstance();
      * public String bg_original = null;
      * public OutputUtil util = new OutputUtil();
      */
 
-    // PumpAdditionalDataType m_pump_add = null;
+    PumpAdditionalDataType pumpAdditionalDataType;
 
     /**
      * Constructor
@@ -97,7 +94,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     /*
      * public PumpValuesEntryExt(PumpAdditionalDataType pump_add)
      * {
-     * this.m_pump_add = pump_add;
+     * this.pumpAdditionalDataType = pump_add;
      * }
      */
 
@@ -107,7 +104,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     public PumpValuesEntryExt()
     {
         this((String) null);
-        // m_pump_add = new PumpAdditionalDataType();
+        // pumpAdditionalDataType = new PumpAdditionalDataType();
     }
 
     /**
@@ -118,7 +115,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     public PumpValuesEntryExt(String src)
     {
         this.source = src;
-        // m_pump_add = new PumpAdditionalDataType();
+        // pumpAdditionalDataType = new PumpAdditionalDataType();
     }
 
     /**
@@ -128,7 +125,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      */
     public PumpValuesEntryExt(PumpDataExtendedH pd)
     {
-        // m_pump_add = new PumpAdditionalDataType();
+        // pumpAdditionalDataType = new PumpAdditionalDataType();
 
         this.setId(pd.getId());
         this.setDt_info(pd.getDt_info());
@@ -204,6 +201,19 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
          */
     }
 
+
+    public PumpAdditionalDataType getTypeEnum()
+    {
+        if (pumpAdditionalDataType==null)
+        {
+            pumpAdditionalDataType = PumpAdditionalDataType.getByCode(this.getType());
+        }
+
+        return this.pumpAdditionalDataType;
+    }
+
+
+
     /** 
      * To String
      */
@@ -215,19 +225,19 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 
         StringBuffer sb = new StringBuffer();
 
-        if (this.getType() != PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB
-                && this.getType() != PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)
+        if (this.getTypeEnum() != PumpAdditionalDataType.FoodDb
+                && this.getTypeEnum() != PumpAdditionalDataType.FoodDescription)
         {
-            sb.append(DataAccessPump.getInstance().getAdditionalTypes().getTypeDescription(this.getType()));
+            sb.append(this.getTypeEnum().getTranslation());
             sb.append(": ");
 
-            if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_ACTIVITY
-                    || this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT
-                    || this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_URINE)
+            if (this.getTypeEnum() == PumpAdditionalDataType.Activity
+                    || this.getTypeEnum() == PumpAdditionalDataType.Comment
+                    || this.getTypeEnum() == PumpAdditionalDataType.Urine)
             {
                 sb.append(this.getValue());
             }
-            else if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_BG)
+            else if (this.getTypeEnum() == PumpAdditionalDataType.BloodGlucose)
             {
                 if (this.da.m_BG_unit == DataAccessPlugInBase.BG_MGDL)
                 {
@@ -247,14 +257,14 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 
                 // po.setValue(this.num_1.getValue().toString());
             }
-            else if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_CH)
+            else if (this.getTypeEnum() == PumpAdditionalDataType.Carbohydrates)
             {
                 sb.append(this.getValue() + " g");
             }
         }
         else
         {
-            if (this.getType() == PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)
+            if (this.getTypeEnum() == PumpAdditionalDataType.FoodDescription)
             {
                 sb.append(ic.getMessage("FOOD_SET_DB") + ":  ");
             }

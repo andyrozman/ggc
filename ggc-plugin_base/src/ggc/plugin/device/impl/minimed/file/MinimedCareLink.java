@@ -1,5 +1,6 @@
 package ggc.plugin.device.impl.minimed.file;
 
+import com.atech.utils.data.CodeEnum;
 import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -42,7 +43,7 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public abstract class MinimedCareLink
 {
-    // DataAccessPump m_da = DataAccessPump.getInstance();
+    // DataAccessPump dataAccess = DataAccessPump.getInstance();
     public DataAccessPlugInBase m_da = null;
 
     public DeviceValuesWriter dvw = null;
@@ -52,8 +53,8 @@ public abstract class MinimedCareLink
     public MinimedCareLinkData temp_data = null;
     int count_unk = 0;
 
-    public Hashtable<String, Integer> alarm_mappings = new Hashtable<String, Integer>();
-    public Hashtable<String, Integer> error_mappings = new Hashtable<String, Integer>();
+    public Hashtable<String, CodeEnum> alarm_mappings = new Hashtable<String, CodeEnum>();
+    public Hashtable<String, CodeEnum> error_mappings = new Hashtable<String, CodeEnum>();
 
     public static final int READ_DEVICE_DATA = 1;
     public static final int READ_DEVICE_CONFIG_DATA = 2;

@@ -5,10 +5,7 @@ import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTable;
 import ggc.plugin.data.DeviceValuesTableModel;
 import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.output.AbstractOutputWriter;
-import ggc.plugin.output.OutputUtil;
-import ggc.plugin.output.OutputWriter;
-import ggc.plugin.output.OutputWriterData;
+import ggc.plugin.output.*;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.BorderLayout;
@@ -72,7 +69,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     DeviceReaderRunner mrr;
 
     private DataAccessPlugInBase m_da; // = DataAccessMeter.getInstance();
-    I18nControlAbstract m_ic; // = m_da.getI18nControlInstance();
+    I18nControlAbstract m_ic; // = dataAccess.getI18nControlInstance();
 
     /**
      * 
@@ -107,9 +104,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
     /*
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da) { super();
-     * this.m_da = da; this.m_ic = da.getI18nControlInstance();
+     * this.dataAccess = da; this.m_ic = da.getI18nControlInstance();
      * //this.loadConfiguration();
-     * this.mrr = new DeviceReaderRunner(m_da, this.configured_meter, this);
+     * this.mrr = new DeviceReaderRunner(dataAccess, this.configured_meter, this);
      * dialogPreInit(); }
      */
 
@@ -148,13 +145,13 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * DeviceDataHandler ddh)
      * {
      * super(parent, "", true);
-     * this.m_da = da;
+     * this.dataAccess = da;
      * this.m_ic = da.getI18nControlInstance();
      * //this.m_parent_d = parent;
      * this.m_ddh = ddh;
      * this.m_ddh.dialog_data = this;
      * // this.m_ddh.setTransferType(DeviceDataHandler.TRANSFER_READ_DATA);
-     * this.mrr = new DeviceReaderRunner(m_da, this.m_ddh);
+     * this.mrr = new DeviceReaderRunner(dataAccess, this.m_ddh);
      * dialogPreInit();
      * }
      */
@@ -174,7 +171,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         this.m_ic = da.getI18nControlInstance();
 
         this.m_ddh = ddh;
-        // this.mrr = new DeviceReaderRunner(m_da,
+        // this.mrr = new DeviceReaderRunner(dataAccess,
         // this.m_ddh.getConfiguredDevice(), this);
 
         dialogPreInit();
@@ -183,9 +180,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     /*
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry
      * mce) { super();
-     * this.m_da = da; this.m_ic = da.getI18nControlInstance();
+     * this.dataAccess = da; this.m_ic = da.getI18nControlInstance();
      * this.configured_meter = mce;
-     * this.mrr = new DeviceReaderRunner(m_da, this.configured_meter, this);
+     * this.mrr = new DeviceReaderRunner(dataAccess, this.configured_meter, this);
      * dialogPreInit(); }
      */
 
@@ -193,9 +190,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry
      * mce, Hashtable<String,?> meter_data, DevicePlugInServer server) {
      * super();
-     * this.m_da = da; this.m_ic = da.getI18nControlInstance();
+     * this.dataAccess = da; this.m_ic = da.getI18nControlInstance();
      * this.configured_meter = mce; this.meter_data = meter_data;
-     * this.mrr = new DeviceReaderRunner(m_da, this.configured_meter, this);
+     * this.mrr = new DeviceReaderRunner(dataAccess, this.configured_meter, this);
      * this.server = server; dialogPreInit(); }
      */
 
@@ -463,9 +460,9 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
         /*
          * // removed TableColumn column = null; for (int i = 0; i <
-         * this.m_da.getColumnsWidthTable().length; i++) { column =
+         * this.dataAccess.getColumnsWidthTable().length; i++) { column =
          * table_in.getColumnModel().getColumn(i);
-         * column.setPreferredWidth(this.m_da.getColumnsWidthTable()[i]); }
+         * column.setPreferredWidth(this.dataAccess.getColumnsWidthTable()[i]); }
          */
         JPanel container = new JPanel(new BorderLayout());
         container.add(toolBar, "North");
@@ -810,6 +807,19 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         this.model.addEntry((DeviceValuesEntryInterface) data);
     }
 
+    public void writeConfigurationData(OutputWriterConfigData configData)
+    {
+    }
+
+    public void setPluginName(String pluginName)
+    {
+    }
+
+    public String getPluginName()
+    {
+        return null;
+    }
+
     /**
      * Write log entry
      * 
@@ -858,7 +868,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      */
     public String getHelpId()
     {
-        // return m_da.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // return dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
         // "Reading_View";
         return "DeviceTool_Reading_View";
     }

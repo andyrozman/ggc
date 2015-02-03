@@ -18,6 +18,32 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     FRC_MinimedCarelink
+ *  Description:  Minimed Carelink File Handler
+ *
+ *  Author: Andy {andy@atech-software.com}
+ */
+
+/**
+ *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
  *
  *  See AUTHORS for copyright information.
@@ -90,83 +116,72 @@ public class DexcomG4 extends AbstractSerialCGMS
     // *** Device Identification Methods ***
     // ************************************************
 
+
     /**
-     * getName - Get Name of device 
-     * 
-     * @return name of device
+     * {@inheritDoc}
      */
     public String getName()
     {
         return "Dexcom G4";
     }
 
+
     /**
-     * getIconName - Get Icon of meter
-     * 
-     * @return icon name
+     * {@inheritDoc}
      */
     public String getIconName()
     {
-        // FIXME
-        return "dx_dexcom7.jpg";
+        return "dx_dexcomG4.jpg";
     }
 
+
     /**
-     * getDeviceId - Get Device Id, within MgrCompany class 
-     * Should be implemented by device class.
-     * 
-     * @return id of device within company
+     * {@inheritDoc}
      */
     public int getDeviceId()
     {
         return CGMSDevicesIds.CGMS_DEXCOM_G4;
     }
 
+
     /**
-     * getComment - Get Comment for device 
-     * 
-     * @return comment or null
+     * {@inheritDoc}
      */
     public String getComment()
     {
         return "";
     }
 
+
     /**
-     * getImplementationStatus - Get Implementation Status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
+     * {@inheritDoc}
      */
     public int getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
 
+
     /**
-     * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
-     * 
-     * @return class name as string
+     * {@inheritDoc}
      */
     public String getDeviceClassName()
     {
-        return "ggc.cgms.device.dexcom.DexcomG4";
+        return this.getClass().getSimpleName();
     }
 
-    /** 
-     * Get Max Memory Records
-     * 
-     * @return 
+
+    /**
+     * {@inheritDoc}
      */
     public int getMaxMemoryRecords()
     {
         return 0;
     }
 
+
     /**
-     * Get Download Support Type
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public int getDownloadSupportType()
@@ -175,10 +190,9 @@ public class DexcomG4 extends AbstractSerialCGMS
         // DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
     }
 
+
     /**
-     * How Many Months Of Data Stored
-     * 
-     * @return
+     * {@inheritDoc}
      */
     public int howManyMonthsOfDataStored()
     {
@@ -198,10 +212,10 @@ public class DexcomG4 extends AbstractSerialCGMS
         {
             prepareBaseDeviceIdentification();
 
-            ddr = new DexcomDeviceReader(this.connection_parameters, DexcomDevice.Dexcom_G4);
+            ddr = new DexcomDeviceReader(this.connectionParameters, DexcomDevice.Dexcom_G4);
 
-            GGCOutputParser gop = new GGCOutputParser(this.output_writer, DexcomDevice.Dexcom_G4);
-            ddr.setOutputWriter(output_writer);
+            GGCOutputParser gop = new GGCOutputParser(this.outputWriter, DexcomDevice.Dexcom_G4);
+            ddr.setOutputWriter(outputWriter);
             ddr.setDataOutputParser(gop);
 
             ddr.downloadSettings();
@@ -222,14 +236,14 @@ public class DexcomG4 extends AbstractSerialCGMS
 
     private void prepareBaseDeviceIdentification()
     {
-        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+        DeviceIdentification di = this.outputWriter.getDeviceIdentification();
         // di.is_file_import = true;
         // di.fi_file_name = new File(filename).getName();
-        di.company = this.m_da.getSelectedDeviceInstance().getDeviceCompany().getName();
-        di.device_selected = this.m_da.getSelectedDeviceInstance().getName();
+        di.company = this.dataAccess.getSelectedDeviceInstance().getDeviceCompany().getName();
+        di.device_selected = this.dataAccess.getSelectedDeviceInstance().getName();
         // di.device_serial_number = "";
 
-        this.output_writer.setDeviceIdentification(di);
+        this.outputWriter.setDeviceIdentification(di);
     }
 
     /**
@@ -242,10 +256,10 @@ public class DexcomG4 extends AbstractSerialCGMS
         {
             prepareBaseDeviceIdentification();
 
-            ddr = new DexcomDeviceReader(this.connection_parameters, DexcomDevice.Dexcom_G4);
+            ddr = new DexcomDeviceReader(this.connectionParameters, DexcomDevice.Dexcom_G4);
 
-            GGCOutputParser gop = new GGCOutputParser(this.output_writer, DexcomDevice.Dexcom_G4);
-            ddr.setOutputWriter(output_writer);
+            GGCOutputParser gop = new GGCOutputParser(this.outputWriter, DexcomDevice.Dexcom_G4);
+            ddr.setOutputWriter(outputWriter);
             ddr.setDataOutputParser(gop);
 
             ddr.downloadData();
@@ -261,7 +275,7 @@ public class DexcomG4 extends AbstractSerialCGMS
                 ddr.dispose();
             }
 
-            this.output_writer.endOutput();
+            this.outputWriter.endOutput();
         }
 
     }

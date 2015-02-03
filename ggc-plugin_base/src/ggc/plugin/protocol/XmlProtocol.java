@@ -45,9 +45,9 @@ import org.dom4j.io.SAXReader;
 public abstract class XmlProtocol extends DeviceAbstract
 {
 
-    // protected DataAccessPlugInBase m_da = null;
-    // protected OutputWriter output_writer = null;
-    // protected I18nControlAbstract ic = null;
+    // protected DataAccessPlugInBase dataAccess = null;
+    // protected OutputWriter outputWriter = null;
+    // protected I18nControlAbstract i18nControlAbstract = null;
 
     /**
      * Constructor
@@ -68,7 +68,7 @@ public abstract class XmlProtocol extends DeviceAbstract
     public XmlProtocol(DataAccessPlugInBase da, OutputWriter ow)
     {
         super(da);
-        this.output_writer = ow;
+        this.outputWriter = ow;
     }
 
     /**
@@ -80,7 +80,7 @@ public abstract class XmlProtocol extends DeviceAbstract
     public XmlProtocol(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
         super(cmp, da);
-        // this.output_writer = ow;
+        // this.outputWriter = ow;
     }
 
     protected Document document;

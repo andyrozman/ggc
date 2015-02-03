@@ -240,11 +240,9 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
 
             // System.out.println(row.getDateTimeAsDate());
 
-            if (pve.getAdditionalData().containsKey(
-                da_local.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_BG)))
+            if (pve.getAdditionalData().containsKey(PumpAdditionalDataType.BloodGlucose.getTranslation()))
             {
-                PumpValuesEntryExt pvext = pve.getAdditionalData().get(
-                    da_local.getAdditionalTypes().getTypeDescription(PumpAdditionalDataType.PUMP_ADD_DATA_BG));
+                PumpValuesEntryExt pvext = pve.getAdditionalData().get(PumpAdditionalDataType.BloodGlucose.getTranslation());
                 BGSeries.add(time,
                     da_local.getBGValueByType(DataAccessPlugInBase.BG_MGDL, da_local.m_BG_unit, pvext.getValue()));
             }

@@ -234,7 +234,7 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
 
     public String getTitleText()
     {
-        return "PUMP_PROFILES";
+        return "PUMP_DATA_PROFILES";
     }
 
     /**

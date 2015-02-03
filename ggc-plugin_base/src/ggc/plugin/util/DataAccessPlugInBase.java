@@ -2,6 +2,9 @@ package ggc.plugin.util;
 
 import ggc.core.data.Converter_mgdL_mmolL;
 import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.plugins.GGCPluginType;
+import ggc.core.util.GGCI18nControl;
+import ggc.core.util.GGCI18nControlContext;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.cfg.DeviceConfigurationDefinition;
@@ -21,10 +24,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
+import java.util.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -259,6 +259,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     protected PlugInGraphContext graph_context = null;
 
+    protected GGCI18nControl i18n = null;
+
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
@@ -278,11 +280,17 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         super(lm, icr); // I18nControl.getInstance());
 
-        this.i18n_plugin = new I18nControlPlugin(lm, icr);
+        this.i18n_plugin = new I18nControlPlugin(lm, icr, this.getPluginType());
+        this.i18n = new GGCI18nControl(this.getPluginType());
         loadIcons();
         initSpecial();
         this.help_enabled = true;
     }
+
+
+    public abstract GGCPluginType getPluginType();
+
+
 
     /**
      * Get PlugIn Server Instance
@@ -1312,16 +1320,26 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.plugin_device_util;
     }
 
-    @Override
-    public I18nControlPlugin getI18nControlInstance()
+
+    public I18nControlPlugin getI18nControlInstanceBase()
     {
         if (this.i18n_plugin == null)
         {
-            this.i18n_plugin = new I18nControlPlugin(this.lang_mgr, this.m_icr);
+            this.i18n_plugin = new I18nControlPlugin(this.lang_mgr, this.m_icr, this.getPluginType());
         }
 
         return this.i18n_plugin;
     }
+
+
+    @Override
+    public GGCI18nControl getI18nControlInstance()
+    {
+        return this.i18n;
+    }
+
+
+
 
     /**
      * Load Base PlugIn Translations
@@ -1459,5 +1477,85 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.graph_context;
     }
+
+
+    public List<LibraryInfoEntry> getBaseLibraries()
+    {
+
+        // libraries
+        ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
+
+        lst_libs.add(new LibraryInfoEntry("Atech-Tools", //
+                "0.8.x", //
+                "www.atech-software.com", //
+                "LGPL", //
+                "Helper Library for Swing/Hibernate/SQL...", //
+                "Copyright (c) 2006-2015 Atech Software Ltd. All rights reserved."));
+
+        lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", //
+                "2.4", //
+                "commons.apache.org/lang/", //
+                "Apache", //
+                "Helper methods for java.lang library"));
+
+        lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", //
+                "1.0.4", //
+                "commons.apache.org/logging/", //
+                "Apache", //
+                "Logger and all around wrapper for logging utilities"));
+
+        lst_libs.add(new LibraryInfoEntry("dom4j", //
+                "1.6.1", //
+                "http://www.dom4j.org/", //
+                "BSD", //
+                "Framework for Xml manipulation"));
+
+        lst_libs.add(new LibraryInfoEntry("NRSerial",
+                "3.9.3",
+                "https://github.com/NeuronRobotics/nrjavaserial",
+                "LGPL",
+                "Comm API"));
+
+        lst_libs.add(new LibraryInfoEntry("IBM Com Api",
+                "1.3",
+                "https://www.ibm.com",
+                "LGPL",
+                "Comm API (used for BT devices for now)"));
+
+        lst_libs.add(new LibraryInfoEntry("Jaxen", //
+                "1.1.6", //
+                "http://jaxen.codehaus.org/", //
+                "Custom", //
+                "Jaxen is a universal Java XPath engine."));
+
+        lst_libs.add(new LibraryInfoEntry("libusb4j", //
+                "0.2", //
+                "", //
+                "LGPL", //
+                "Experimental library for reading usb devices."));
+
+        lst_libs.add(new LibraryInfoEntry("Java Native Access", //
+                "3.3.0", //
+                "https://github.com/twall/jna", //
+                "LGPL (2.1)", //
+                "Access to Native libraries."));
+
+        return lst_libs;
+
+    }
+
+
+
+    public int getIndexOfElementInArray(String[] descriptions, String description)
+    {
+        for(int i=0; i<descriptions.length; i++)
+        {
+            if (descriptions[i].equals(description))
+                return i;
+        }
+
+        return 0;
+    }
+
 
 }

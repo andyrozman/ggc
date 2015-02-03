@@ -157,7 +157,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
 
             // System.out.println("url_x: " + url_x);
             /*
-             * URL url = new URL("http://localhost: " + m_da.getWebListerPort()
+             * URL url = new URL("http://localhost: " + dataAccess.getWebListerPort()
              * + url_src);
              * //this.getClass().getResource("/html/abbott_diabetes_care.html");
              * System.out.println("url: " + url.toString());

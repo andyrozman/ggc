@@ -1,10 +1,10 @@
 package ggc.pump.device.animas;
 
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -28,14 +28,12 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
  *  Filename:     AnimasIR1250  
- *  Description:  Animas IR 1250 implementation (just settings)
- * 
- *  Author: Andy {andy@atech-software.com}
+ *  Description:  Animas IR 1250 implementation
+ *
+ *  Author: Andy Rozman {andy@atech-software.com}
  */
 
-// FIXME
-
-public class AnimasIR1250 extends AnimasPump
+public class AnimasIR1250 extends AnimasIR1200
 {
 
     /**
@@ -45,30 +43,19 @@ public class AnimasIR1250 extends AnimasPump
     {
         super();
     }
-
+    
+    
     /**
      * Constructor 
      * 
-     * @param conn_parameter 
+     * @param communicationPort
      * @param writer 
      */
-    public AnimasIR1250(String conn_parameter, OutputWriter writer)
+    public AnimasIR1250(String communicationPort, OutputWriter writer)
     {
-        super(conn_parameter, writer);
+        super(communicationPort, writer);
     }
-
-    /**
-     * Constructor
-     * 
-     * @param conn_parameter
-     * @param writer
-     * @param da 
-     */
-    public AnimasIR1250(String conn_parameter, OutputWriter writer, DataAccessPlugInBase da)
-    {
-        super(conn_parameter, writer, da);
-    }
-
+    
     /**
      * Constructor
      * 
@@ -79,17 +66,19 @@ public class AnimasIR1250 extends AnimasPump
         super(cmp);
     }
 
+
     /**
      * getName - Get Name of meter. 
      * 
      * @return name of meter
      */
-    @Override
     public String getName()
     {
         return "IR 1250";
     }
 
+
+    
     /**
      * getIconName - Get Icon of meter
      * 
@@ -99,6 +88,7 @@ public class AnimasIR1250 extends AnimasPump
     {
         return "an_ir1250.jpg";
     }
+    
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -111,125 +101,14 @@ public class AnimasIR1250 extends AnimasPump
         return PumpDevicesIds.PUMP_ANIMAS_IR_1250;
     }
 
-    /**
-     * getInstructions - get instructions for device
-     * Should be implemented by meter class.
-     * 
-     * @return instructions for reading data 
-     */
-    public String getInstructions()
-    {
-        return "INSTRUCTIONS_ANIMAS_IR1250";
-    }
 
-    /**
-     * getComment - Get Comment for device 
-     * 
-     * @return comment or null
-     */
+
     @Override
-    public String getComment()
+    public AnimasDeviceType getAnimasDeviceType()
     {
-        return null;
+        return AnimasDeviceType.Animas_IR1250;
     }
 
-    /**
-     * getImplementationStatus - Get Implementation Status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    @Override
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
-    }
-
-    /**
-     * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
-     * 
-     * @return class name as string
-     */
-    public String getDeviceClassName()
-    {
-        return "ggc.pump.device.animas.AnimasIR1200";
-    }
-
-    /** 
-     * Get Max Memory Records
-     */
-    public int getMaxMemoryRecords()
-    {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-    /**
-     * Get Download Support Type
-     * 
-     * @return
-     */
-    @Override
-    public int getDownloadSupportType()
-    {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
-    }
-
-    /**
-     * How Many Months Of Data Stored
-     * 
-     * @return
-     */
-    @Override
-    public int howManyMonthsOfDataStored()
-    {
-        return -1;
-    }
-
-    /**
-     * Get Temporary Basal Type Definition
-     * "TYPE=Unit;STEP=0.1"
-     * "TYPE=Procent;STEP=10;MIN=0;MAX=200"
-     * "TYPE=Both;STEP_UNIT=0.1;STEP=10;MIN=0;MAX=200"
-     * 
-     * @return
-     */
-    @Override
-    public String getTemporaryBasalTypeDefinition()
-    {
-        // return "TYPE=Unit;STEP=0.1";
-        return null;
-    }
-
-    /**
-     * Get Bolus Step (precission)
-     * 
-     * @return
-     */
-    public float getBolusStep()
-    {
-        return 0.1f;
-    }
-
-    /**
-     * Get Basal Step (precission)
-     * 
-     * @return
-     */
-    public float getBasalStep()
-    {
-        return 0.1f;
-    }
-
-    /**
-     * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
-     * 
-     * @return
-     */
-    @Override
-    public boolean arePumpSettingsSet()
-    {
-        return false;
-    }
 
 }
+

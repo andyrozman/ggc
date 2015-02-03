@@ -52,7 +52,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
     /**
      * Constructor
      *
-     * @param dvr
+     * @param parameters
      */
     public PrintPumpBasalCheckSheet(PrintParameters parameters)
     {
@@ -240,7 +240,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
 
     public String getTitleText()
     {
-        return "PUMP_DATA_BASAL_CHECK_SHEET";
+        return "PUMP_DATA_BASAL_CHECK";
     }
 
     /**
@@ -309,7 +309,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
          * ATechDate(da_local.getDataEntryObject().getDateTimeFormat(),
          * deviceValuesRange.getEndGC());
          */
-        return "test"; // atd1.getDateFilenameString() + "-" +
+        return ""; // atd1.getDateFilenameString() + "-" +
                        // atd2.getDateFilenameString();
     }
 

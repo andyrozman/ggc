@@ -677,7 +677,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
     public String getTitleText()
     {
-        return "PUMP_DATA_DAILY_TIMESHEET";
+        return "PUMP_DATA_DAILY_TIMESHEET_1";
     }
 
     /**

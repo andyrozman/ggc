@@ -6,11 +6,7 @@ import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.graph.data.GraphValue;
 import ggc.plugin.graph.data.GraphValuesCapable;
 import ggc.plugin.output.OutputWriterType;
-import ggc.pump.data.defs.PumpAdditionalDataType;
-import ggc.pump.data.defs.PumpAlarms;
-import ggc.pump.data.defs.PumpBasalSubType;
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.data.defs.*;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
@@ -93,8 +89,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public PumpValuesEntry(boolean tr)
     {
-        // m_da = DataAccessPump.getInstance();
-        // m_ic = m_da.getI18nControlInstance();
+        // dataAccess = DataAccessPump.getInstance();
+        // m_ic = dataAccess.getI18nControlInstance();
     }
 
     /**
@@ -130,7 +126,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     /**
      * Constructor
      *
-     * @param base_type
+     * @param baseType
      */
     public PumpValuesEntry(int baseType)
     {
@@ -139,7 +135,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         this.id = 0L;
         this.datetime = new ATechDate(this.getDateTimeFormat(), new GregorianCalendar());
-        this.baseType = PumpBaseType.getPumpBaseTypeByCode(baseType);
+        this.baseType = PumpBaseType.getByCode(baseType);
         this.sub_type = 0;
         this.value = "";
         this.extended = "";
@@ -161,7 +157,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.id = pdh.getId();
         this.old_id = pdh.getId();
         this.datetime = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pdh.getDt_info());
-        this.baseType = PumpBaseType.getPumpBaseTypeByCode(pdh.getBase_type());
+        this.baseType = PumpBaseType.getByCode(pdh.getBase_type());
         this.sub_type = pdh.getSub_type();
         this.value = pdh.getValue();
         this.extended = pdh.getExtended();
@@ -177,7 +173,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public void addAdditionalData(PumpValuesEntryExt adv)
     {
-        this.additional_data.put(new PumpAdditionalDataType().getTypeDescription(adv.getType()), adv);
+        this.additional_data.put(PumpAdditionalDataType.getByCode(adv.getType()).getTranslation(), adv);
     }
 
     /**
@@ -305,9 +301,15 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public void setBaseType(int type)
     {
-        this.baseType = PumpBaseType.getPumpBaseTypeByCode(type);
+        this.baseType = PumpBaseType.getByCode(type);
     }
 
+
+    /**
+     * Set Base Type
+     *
+     * @param type
+     */
     public void setBaseType(PumpBaseType type)
     {
         this.baseType = type;
@@ -411,11 +413,11 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         if (this.baseType == PumpBaseType.Basal)
         {
-            return m_da.getBasalSubTypes().getDescriptions()[this.sub_type];
+            return PumpBasalSubType.getByCode(this.sub_type).getTranslation();
         }
         else if (this.baseType == PumpBaseType.Bolus)
         {
-            return m_da.getBolusSubTypes().getDescriptions().get(this.sub_type);
+            return PumpBolusType.getByCode(this.sub_type).getTranslation();
         }
         else if (this.baseType == PumpBaseType.Report)
         {
@@ -423,19 +425,19 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
         else if (this.baseType == PumpBaseType.Alarm)
         {
-            return PumpAlarms.getPumpAlarmByCode(this.sub_type).getTranslation();
+            return PumpAlarms.getByCode(this.sub_type).getTranslation();
         }
         else if (this.baseType == PumpBaseType.Error)
         {
-            return m_da.getPumpErrorTypes().getDescriptionByID(this.sub_type);
+            return PumpErrors.getByCode(this.sub_type).getTranslation();
         }
         else if (this.baseType == PumpBaseType.Event)
         {
-            return m_da.getPumpEventTypes().getDescriptionForType(this.sub_type);
+            return PumpEvents.getByCode(this.sub_type).getTranslation();
         }
         else if (this.baseType == PumpBaseType.AdditionalData)
         {
-            return m_da.getAdditionalTypes().getTypeDescription(this.sub_type);
+            return PumpAdditionalDataType.getByCode(this.sub_type).getTranslation();
         }
         else
         {
@@ -490,10 +492,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String isFoodSet()
     {
-        if (this.additional_data
-                .containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC])
-                || this.additional_data
-                        .containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB]))
+        if (this.additional_data.containsKey(PumpAdditionalDataType.FoodDescription.getTranslation()) ||
+            this.additional_data.containsKey(PumpAdditionalDataType.FoodDb.getTranslation()))
         {
             return m_da.getI18nControlInstance().getMessage("YES");
         }
@@ -524,8 +524,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             {
                 String key = en.nextElement();
 
-                if (key.equals(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB])
-                        || key.equals(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC]))
+                if (key.equals(PumpAdditionalDataType.FoodDb.getTranslation()) ||
+                    key.equals(PumpAdditionalDataType.FoodDescription.getTranslation()))
                 {
                     continue;
                 }
@@ -562,7 +562,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         if (this.baseType == PumpBaseType.Basal)
         {
-            if (this.sub_type == PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE)
+            if (this.sub_type == PumpBasalSubType.TemporaryBasalRate.getCode())
             {
                 String s[] = m_da.getParsedValues(this.value);
                 sb.append(String.format("%s: %s<br>%s: %s", m_ic.getMessage("DURATION"), s[0],
@@ -576,7 +576,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
         else if (this.baseType == PumpBaseType.Bolus)
         {
-            if (this.sub_type == PumpBolusType.PUMP_BOLUS_SQUARE)
+            if (this.sub_type == PumpBolusType.Extended.getCode())
             {
                 String s[] = m_da.getParsedValues(this.getValue());
 
@@ -592,7 +592,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
                         m_ic.getMessage("DURATION"), s[1]));
                 }
             }
-            else if (this.sub_type == PumpBolusType.PUMP_BOLUS_MULTIWAVE)
+            else if (this.sub_type == PumpBolusType.Multiwave.getCode())
             {
                 String s[] = m_da.getParsedValues(this.getValue());
                 if (s.length == 2)
@@ -632,7 +632,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         if (this.baseType == PumpBaseType.Basal)
         {
-            if (this.sub_type == PumpBasalSubType.PUMP_BASAL_TEMPORARY_BASAL_RATE)
+            if (this.sub_type == PumpBasalSubType.TemporaryBasalRate.getCode())
             {
                 String s[] = m_da.getParsedValues(this.value);
                 sb.append(String.format("%s: %s, %s: %s", m_ic.getMessage("DURATION"), s[0], m_ic.getMessage("AMOUNT"),
@@ -646,7 +646,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
         else if (this.baseType == PumpBaseType.Bolus)
         {
-            if (this.sub_type == PumpBolusType.PUMP_BOLUS_SQUARE)
+            if (this.sub_type == PumpBolusType.Extended.getCode())
             {
 
                 String s[] = m_da.getParsedValues(this.value);
@@ -668,7 +668,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
                 }
 
             }
-            else if (this.sub_type == PumpBolusType.PUMP_BOLUS_MULTIWAVE)
+            else if (this.sub_type == PumpBolusType.Multiwave.getCode())
             {
                 String s[] = m_da.getParsedValues(this.value);
                 if (s.length == 2)
@@ -739,16 +739,10 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
                     sb.append("; ");
                 }
 
-                // sb.append(key + "=" +
-                // this.additional_data.get(key).toString());
-
                 if (type == PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD)
                 {
-
-                    if (key.equals(m_da.getAdditionalTypes().getTypeDescription(
-                        PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC))
-                            || key.equals(m_da.getAdditionalTypes().getTypeDescription(
-                                PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)))
+                    if (key.equals(PumpAdditionalDataType.FoodDescription.getTranslation()) || //
+                        key.equals(PumpAdditionalDataType.FoodDb.getTranslation()))
                     {
                         food_key = key;
                     }
@@ -771,17 +765,14 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             if ((food_key != null) && (food_key.length() > 0))
             {
 
-                if (food_key.equals(m_da.getAdditionalTypes().getTypeDescription(
-                    PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC)))
+                if (food_key.equals(PumpAdditionalDataType.FoodDescription.getTranslation()))
                 {
                     PumpValuesEntryExt pvee = this.additional_data.get(food_key);
                     sb.append("\n" + m_ic.getMessage("FOOD_DESC_PRINT") + ": " + pvee.getValue());
                 }
-                else if (food_key.equals(m_da.getAdditionalTypes().getTypeDescription(
-                    PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB)))
+                else if (food_key.equals(PumpAdditionalDataType.FoodDb.getTranslation()))
                 {
-                    // PumpValuesEntryExt pvee =
-                    // this.additional_data.get(food_key);
+                    // FIXME
                     sb.append("\n" + m_ic.getMessage("FOOD_DB_PRINT") + ": "
                             + m_ic.getMessage("FOOD_DESC_PRINT_NOT_YET"));
                 }
@@ -1006,7 +997,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         this.id = pdh.getId();
         this.datetime = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pdh.getDt_info());
-        this.baseType = PumpBaseType.getPumpBaseTypeByCode(pdh.getBase_type());
+        this.baseType = PumpBaseType.getByCode(pdh.getBase_type());
         this.sub_type = pdh.getSub_type();
         this.value = pdh.getValue();
         this.extended = pdh.getExtended();
@@ -1400,11 +1391,10 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             case PumpValuesEntry.MEALS:
                 {
                     if (this.additional_data
-                            .containsKey(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_CH]))
+                            .containsKey(PumpAdditionalDataType.Carbohydrates.getTranslation()))
                     {
                         return m_da.getFloatValueFromString(
-                            this.additional_data.get(
-                                m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_CH])
+                            this.additional_data.get(PumpAdditionalDataType.Carbohydrates.getTranslation())
                                     .getValue(), 0.0f);
                     }
                     else
@@ -1418,12 +1408,10 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             case PumpValuesEntry.BG_MIN:
             case PumpValuesEntry.BG_COUNT:
                 {
-                    if (this.additional_data
-                            .containsKey(m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_BG]))
+                    if (this.additional_data.containsKey(PumpAdditionalDataType.BloodGlucose.getTranslation()))
                     {
                         return m_da.getFloatValueFromString(
-                            this.additional_data.get(
-                                m_da.getAdditionalTypes().getDescriptions()[PumpAdditionalDataType.PUMP_ADD_DATA_BG])
+                            this.additional_data.get(PumpAdditionalDataType.BloodGlucose.getTranslation())
                                     .getValue(), 0.0f);
                     }
                     else
@@ -1551,19 +1539,16 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getFoodTip()
     {
-        if (this.additional_data
-                .containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC]))
+        if (this.additional_data.containsKey(PumpAdditionalDataType.FoodDescription.getTranslation()))
         {
-            String t = this.additional_data.get(
-                m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DESC]).getValue();
+            String t = this.additional_data.get(PumpAdditionalDataType.FoodDescription.getTranslation()).getValue();
             t = t.replace("]", "]<br>");
             t = t.replace(",", "");
 
             return "<html>" + t + "</html>";
 
         }
-        else if (this.additional_data
-                .containsKey(m_da.getAdditionalTypes().addata_desc[PumpAdditionalDataType.PUMP_ADD_DATA_FOOD_DB]))
+        else if (this.additional_data.containsKey(PumpAdditionalDataType.FoodDb.getTranslation()))
         {
             // TODO
             return "Not implemented yet !";

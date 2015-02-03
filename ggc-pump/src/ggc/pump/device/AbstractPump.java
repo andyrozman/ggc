@@ -6,7 +6,10 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.defs.*;
 import ggc.pump.util.DataAccessPump;
+
+import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,24 +41,15 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
                                                                                    // SelectableInterface
 {
 
-    // AbstractDeviceCompany pump_company;
-
     protected int m_status = 0;
-    // protected I18nControlAbstract ic = null;
-    // //DataAccessPump.getInstance().getI18nControlInstance();
 
-    // protected String m_info = "";
-    // protected int m_time_difference = 0;
-    // protected ArrayList<PumpValuesEntry> data = null;
-
-    // protected OutputWriter m_output_writer = null;
 
     protected String[] profile_names = null;
     protected String device_name;
-    // protected OutputWriter output_writer;
+    // protected OutputWriter outputWriter;
     protected String parameter;
 
-    // protected DataAccessPump m_da;
+    // protected DataAccessPump dataAccess;
 
     /**
      * Constructor
@@ -122,19 +116,19 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         this.device_name = device;
 
-        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(dataAccess.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
 
-        if (this.output_writer != null)
+        if (this.outputWriter != null)
         {
-            this.output_writer.setDeviceIdentification(di);
-            // this.output_writer.
+            this.outputWriter.setDeviceIdentification(di);
+            // this.outputWriter.
             // this.device_instance =
             // MeterManager.getInstance().getMeterDevice(group, device);
         }
 
-        this.device_source_name = group + " " + device;
+        this.deviceSourceName = group + " " + device;
 
     }
 
@@ -221,5 +215,66 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         return 6;
     }
+
+
+    /**
+     * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific
+     *     alarm codes
+     * @return
+     */
+    public Hashtable<String, PumpAlarms> getAlarmMappings()
+    {
+        return null;
+    }
+
+    /**
+     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific
+     *     event codes
+     * @return
+     */
+    public Hashtable<String, PumpBolusType> getBolusMappings()
+    {
+        return null;
+    }
+
+    /**
+     * Get Error Mappings - Map pump specific errors to Pump Tool specific
+     *     event codes
+     * @return
+     */
+    public Hashtable<String, PumpErrors> getErrorMappings()
+    {
+        return null;
+    }
+
+    /**
+     * Get Event Mappings - Map pump specific events to Pump Tool specific
+     *     event codes
+     * @return
+     */
+    public Hashtable<String, PumpEvents> getEventMappings()
+    {
+        return null;
+    }
+
+    /**
+     * Get Report Mappings - Map pump specific reports to Pump Tool specific
+     *     event codes
+     * @return
+     */
+    public Hashtable<String, PumpReport> getReportMappings()
+    {
+        return null;
+    }
+
+    /**
+     * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
+     *      create, AlarmMappings and EventMappings and any other pump constants.
+     */
+    public void loadPumpSpecificValues()
+    {
+    }
+
+
 
 }

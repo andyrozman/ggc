@@ -32,7 +32,7 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class PumpConfiguration
+public class PumpConfigurationOld
 {
 
     DataAccessPump da = DataAccessPump.getInstance();
@@ -92,7 +92,7 @@ public class PumpConfiguration
     /**
      * Constructor
      */
-    public PumpConfiguration()
+    public PumpConfigurationOld()
     {
         this.errors_mapping.put(ic.getMessage("ERROR_UNKNOWN_ERROR"), "0");
         this.errors_mapping.put(ic.getMessage("ERROR_CARTRIDGE_EMPTY"), "1");

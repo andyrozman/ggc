@@ -71,10 +71,13 @@
 			<artifactId>libusb4jwo</artifactId>
 		</dependency>
 
+ <!-- Its copied to atech-tools for now, since we need version in jdk 1.5
 		<dependency>
 			<groupId>com.codeminders</groupId>
 			<artifactId>hidapi</artifactId>
 		</dependency>
+-->
+
 
 		<dependency>
 			<groupId>com.neuronrobotics</groupId>

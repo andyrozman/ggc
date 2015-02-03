@@ -1,5 +1,11 @@
 package ggc.pump.data.defs;
 
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.data.CodeEnumWithTranslation;
+import ggc.pump.util.DataAccessPump;
+
+import java.util.Hashtable;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -26,203 +32,205 @@ package ggc.pump.data.defs;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class PumpEvents extends PumpDefsAbstract
+public enum PumpEvents implements CodeEnumWithTranslation
 {
 
-    // infussion sets
-    /**
-     * Pump Event: Prime Infusion Set
-     */
-    public static final int PUMP_EVENT_PRIME_INFUSION_SET = 1;
+    None(0, "NONE"), //
+    PrimeInfusionSet(1, "EVENT_PRIME_INFUSION_SET"), //
+    CartridgeChange(2, "EVENT_CARTRIDGE_CHANGED"), //
+    CartridgeRewind(3, "EVENT_REWIND_INFUSION_SET"), //
+    ReservoirLow(4, "EVENT_RESERVOIR_LOW"), //
+    ReservoirLowDesc(5, "EVENT_RESERVOIR_LOW_DESC"), //
+    FillCannula(6, "EVENT_FILL_CANNULA"), //
+    SetTemporaryBasalRateType(10, "EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"), //  Unit setting (1=%, 0=U)
+    SetBasalPattern(15, "EVENT_SET_BASAL_PATTERN"), //
 
-    /**
-     * Pump Event: Cartridge Changed
-     */
-    public static final int PUMP_EVENT_CARTRIDGE_CHANGED = 2;
+    BasalRun(20, "EVENT_BASAL_RUN"), //
+    BasalStop(21, "EVENT_BASAL_STOP"), //
+    PowerDown(22, "EVENT_POWER_DOWN"), //
+    PowerUp(23, "EVENT_POWER_UP"), //
 
-    /**
-     * Pump Event: Cartridge Changed
-     */
-    public static final int PUMP_EVENT_CARTRIDGE_REWIND = 3;
+    SelfTest(30, "EVENT_SELF_TEST"), //
+    Download(31, "EVENT_DOWNLOAD"), //
 
-    /**
-     * Pump Event: Reservoir Low
-     */
-    public static final int PUMP_EVENT_RESERVOIR_LOW = 4;
+    DateTimeSet(40, "EVENT_DATETIME_SET"), //
+    DateTimeCorrect(41, "EVENT_DATETIME_CORRECT"), //
 
-    /**
-     * Pump Event: Reservoir Low
-     */
-    public static final int PUMP_EVENT_RESERVOIR_LOW_DESC = 5;
+    SetMaxBasal(50, "EVENT_SET_MAX_BASAL"), //
+    SetMaxBolus(51, "EVENT_SET_MAX_BOLUS"), //
 
-    /**
-     * Pump Event: Temporary Basal Rate, Unit setting (1=%, 0=U)
-     */
-    public static final int PUMP_EVENT_SET_TEMPORARY_BASAL_RATE_TYPE = 10;
+    BatteryRemoved(55, "EVENT_BATERRY_REMOVED"), //
+    BatteryReplaced(56, "EVENT_BATERRY_REPLACED"), //
+    BatteryLow(57, "EVENT_BATERRY_LOW"), //
+    BatteryLowDesc(58, "EVENT_BATERRY_LOW_DESC"), //
 
-    /**
-     * Pump Event: Basal Pattern Set
-     */
-    public static final int PUMP_EVENT_SET_BASAL_PATTERN = 15;
+    BgFromMeter(70, "EVENT_BG_FROM_METER"), //
+    BolusCancelled(80, "ALARM_BOLUS_CANCELED"), //
 
-    // start / end
+    BolusWizard(81, "EVENT_BOLUS_WIZARD", "BG=%s;CH=%s;CH_UNIT=%s;" +
+            "CH_INS_RATIO=%s;BG_INS_RATIO=%s;BG_TARGET_LOW=%s;BG_TARGET_HIGH=%s;BOLUS_TOTAL=%s;" +
+            "BOLUS_CORRECTION=%s;BOLUS_FOOD=%s;UNABSORBED_INSULIN=%s"), //
 
-    /**
-     * Pump Event: Basal Run
-     */
-    public static final int PUMP_EVENT_BASAL_RUN = 20;
+    ;
 
-    /**
-     * Pump Event: Basal Stop
-     */
-    public static final int PUMP_EVENT_BASAL_STOP = 21;
 
-    /**
-     * Pump Event: Power Down
-     */
-    public static final int PUMP_EVENT_POWER_DOWN = 22;
 
-    /**
-     * Pump Event: Power Up
-     */
-    public static final int PUMP_EVENT_POWER_UP = 23;
+    static String[] descriptions;
 
-    /**
-     * Pump Event: Self Test
-     */
-    public static final int PUMP_EVENT_SELF_TEST = 30;
+    static Hashtable<String, PumpEvents> translationMapping = new Hashtable<String, PumpEvents>();
+    static Hashtable<Integer, PumpEvents> codeMapping = new Hashtable<Integer, PumpEvents>();
 
-    /**
-     * Pump Event: Download data
-     */
-    public static final int PUMP_EVENT_DOWNLOAD = 31;
-
-    // date/time
-
-    /**
-     * Pump Event: Date/Time Set
-     */
-    public static final int PUMP_EVENT_DATETIME_SET = 40;
-
-    /**
-     * Pump Event: Date/Time Correct
-     */
-    public static final int PUMP_EVENT_DATETIME_CORRECTED = 41;
-
-    /**
-     * Pump Event: Set Max Basal
-     */
-    public static final int PUMP_EVENT_SET_MAX_BASAL = 50;
-
-    /**
-     * Pump Event: Set Max Bolus
-     */
-    public static final int PUMP_EVENT_SET_MAX_BOLUS = 51;
-
-    /**
-     * Pump Event: Battery Removed
-     */
-    public static final int PUMP_EVENT_BATERRY_REMOVED = 55;
-
-    /**
-     * Pump Event: Battery Replaced
-     */
-    public static final int PUMP_EVENT_BATERRY_REPLACED = 56;
-
-    /**
-     * Pump Event: Battery Low
-     */
-    public static final int PUMP_EVENT_BATERRY_LOW = 57;
-
-    /**
-     * Pump Event: Battery Low (Desc)
-     */
-    public static final int PUMP_EVENT_BATERRY_LOW_DESC = 58;
-
-    /**
-     * Pump Event: BG From Meter
-     */
-    public static final int PUMP_EVENT_BG_FROM_METER = 70;
-
-    /**
-     * Pump Event: Bolus Cancelled
-     */
-    public static final int PUMP_EVENT_BOLUS_CANCELLED = 80;
-
-    /**
-     * Pump Event: Bolus Wizard
-     */
-    public static final int PUMP_EVENT_BOLUS_WIZARD = 81;
-
-    /**
-     * Constructor
-     */
-    public PumpEvents()
+    static
     {
-        super();
-        setDataDesc(PumpEvents.PUMP_EVENT_PRIME_INFUSION_SET, "EVENT_PRIME_INFUSION_SET");
-        setDataDesc(PumpEvents.PUMP_EVENT_CARTRIDGE_CHANGED, "EVENT_CARTRIDGE_CHANGED");
-        setDataDesc(PumpEvents.PUMP_EVENT_CARTRIDGE_REWIND, "EVENT_REWIND_INFUSION_SET");
-        setDataDesc(PumpEvents.PUMP_EVENT_RESERVOIR_LOW, "EVENT_RESERVOIR_LOW");
-        setDataDesc(PumpEvents.PUMP_EVENT_RESERVOIR_LOW_DESC, "EVENT_RESERVOIR_LOW_DESC");
-        setDataDesc(PumpEvents.PUMP_EVENT_SET_TEMPORARY_BASAL_RATE_TYPE, "EVENT_SET_TEMPORARY_BASAL_RATE_TYPE");
-        setDataDesc(PumpEvents.PUMP_EVENT_SET_BASAL_PATTERN, "EVENT_SET_BASAL_PATTERN");
+        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
 
-        setDataDesc(PumpEvents.PUMP_EVENT_BASAL_RUN, "EVENT_BASAL_RUN");
-        setDataDesc(PumpEvents.PUMP_EVENT_BASAL_STOP, "EVENT_BASAL_STOP");
-        setDataDesc(PumpEvents.PUMP_EVENT_POWER_DOWN, "EVENT_POWER_DOWN");
-        setDataDesc(PumpEvents.PUMP_EVENT_POWER_UP, "EVENT_POWER_UP");
+        for (PumpEvents pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMapping.put(pbt.getTranslation(), pbt);
+            codeMapping.put(pbt.code, pbt);
+        }
 
-        setDataDesc(PumpEvents.PUMP_EVENT_SELF_TEST, "EVENT_SELF_TEST");
-        setDataDesc(PumpEvents.PUMP_EVENT_DOWNLOAD, "EVENT_DOWNLOAD");
+        String[] descriptions_lcl = {
+                ic.getMessage("SELECT_SUBTYPE"),
+                ic.getMessage("EVENT_PRIME_INFUSION_SET"),
+                ic.getMessage("EVENT_CARTRIDGE_CHANGED"),
+                ic.getMessage("EVENT_REWIND_INFUSION_SET"),
+                ic.getMessage("EVENT_RESERVOIR_LOW"),
+                ic.getMessage("EVENT_RESERVOIR_LOW_DESC"),
+                ic.getMessage("EVENT_FILL_CANNULA"),
+                ic.getMessage("EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"),
+                ic.getMessage("EVENT_SET_BASAL_PATTERN"),
+                ic.getMessage("EVENT_BASAL_RUN"),
 
-        setDataDesc(PumpEvents.PUMP_EVENT_DATETIME_SET, "EVENT_DATETIME_SET");
-        setDataDesc(PumpEvents.PUMP_EVENT_DATETIME_CORRECTED, "EVENT_DATETIME_CORRECT");
+                ic.getMessage("EVENT_BASAL_STOP"),
+                ic.getMessage("EVENT_POWER_DOWN"),
+                ic.getMessage("EVENT_POWER_UP"),
+                ic.getMessage("EVENT_SELF_TEST"),
+                ic.getMessage("EVENT_DOWNLOAD"),
+                ic.getMessage("EVENT_DATETIME_SET"),
+                ic.getMessage("EVENT_DATETIME_CORRECT"),
 
-        setDataDesc(PumpEvents.PUMP_EVENT_SET_MAX_BASAL, "EVENT_SET_MAX_BASAL");
-        setDataDesc(PumpEvents.PUMP_EVENT_SET_MAX_BOLUS, "EVENT_SET_MAX_BOLUS");
+                ic.getMessage("EVENT_SET_MAX_BASAL"),
+                ic.getMessage("EVENT_SET_MAX_BOLUS"),
+                ic.getMessage("EVENT_BATERRY_REMOVED"),
 
-        setDataDesc(PumpEvents.PUMP_EVENT_BATERRY_REMOVED, "EVENT_BATERRY_REMOVED");
-        setDataDesc(PumpEvents.PUMP_EVENT_BATERRY_REPLACED, "EVENT_BATERRY_REPLACED");
-        setDataDesc(PumpEvents.PUMP_EVENT_BATERRY_LOW, "EVENT_BATERRY_LOW");
-        setDataDesc(PumpEvents.PUMP_EVENT_BATERRY_LOW_DESC, "EVENT_BATERRY_LOW_DESC");
+                ic.getMessage("EVENT_BATERRY_REPLACED"),
+                ic.getMessage("EVENT_BATERRY_LOW"),
+                ic.getMessage("EVENT_BATERRY_LOW_DESC"),
+                ic.getMessage("EVENT_BG_FROM_METER"),
+                ic.getMessage("ALARM_BOLUS_CANCELED"),
+                ic.getMessage("EVENT_BOLUS_WIZARD")
+        };
 
-        setDataDesc(PumpEvents.PUMP_EVENT_BG_FROM_METER, "EVENT_BG_FROM_METER");
-        // EVENT_SET_MAX_BASAL, EVENT_SET_MAX_BOLUS
-        // EVENT_BATERRY_REMOVED, EVENT_BATERRY_REPLACED, EVENT_BATERRY_LOW,
-        // EVENT_BATERRY_LOW_DESC, EVENT_BG_FROM_METER
-
-        setDataDesc(PumpEvents.PUMP_EVENT_BOLUS_CANCELLED, "ALARM_BOLUS_CANCELED");
-
-        String s = "BG=%s;CH=%s;CH_UNIT=%s;CH_INS_RATIO=%s;BG_INS_RATIO=%s;BG_TARGET_LOW=%s;";
-        s += "BG_TARGET_HIGH=%s;BOLUS_TOTAL=%s;BOLUS_CORRECTION=%s;BOLUS_FOOD=%s;";
-        s += "UNABSORBED_INSULIN=%s";
-
-        setDataDesc(PumpEvents.PUMP_EVENT_BOLUS_WIZARD, "EVENT_BOLUS_WIZARD", s);
-
-        // EVENT_RESERVOIR_LOW, EVENT_RESERVOIR_LOW_DESC,
-        // EVENT_SET_TEMPORARY_BASAL_RATE_TYPE, EVENT_SET_BASAL_PATTERN
-        // EVENT_SELF_TEST, EVENT_DOWNLOAD
-
+        descriptions = descriptions_lcl;
     }
 
+
+    int code;
+    String i18nKey;
+    String translation;
+    private String valueTemplate;
+
+    private PumpEvents(int code, String i18nKey)
+    {
+        this.code = code;
+        this.i18nKey = i18nKey;
+    }
+
+
+    private PumpEvents(int code, String i18nKey, String valueTemplate)
+    {
+        this.code = code;
+        this.i18nKey = i18nKey;
+        this.setValueTemplate(valueTemplate);
+    }
+
+    public String getTranslation()
+    {
+        return translation;
+    }
+
+    public void setTranslation(String translation)
+    {
+        this.translation = translation;
+    }
+
+    public int getCode()
+    {
+        return code;
+    }
+
+    public String getI18nKey()
+    {
+        return i18nKey;
+    }
+
+
     /**
-     * Shows if this type of event has value associated with it (most don't) 
+     * Get Type from Description
+     *
+     * @param str
+     *            type as string
+     * @return type as int
+     */
+    public int getTypeFromDescription(String str)
+    {
+        if (translationMapping.containsKey(str))
+        {
+            return translationMapping.get(str).getCode();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public static PumpEvents getByCode(int code)
+    {
+        if (codeMapping.containsKey(code))
+        {
+            return codeMapping.get(code);
+        }
+        else
+        {
+            return PumpEvents.None;
+        }
+    }
+
+
+    /**
+     * Shows if this type of event has value associated with it (most don't)
      * @param type
      * @return
      */
-    public boolean hasValue(int type)
+    public boolean hasValue(PumpEvents type)
     {
         switch (type)
         {
-            case PUMP_EVENT_SET_MAX_BASAL:
-            case PUMP_EVENT_SET_MAX_BOLUS:
-            case PUMP_EVENT_BATERRY_LOW_DESC:
+            case SetMaxBasal:
+            case SetMaxBolus:
+            case BatteryLowDesc:
                 return true;
 
             default:
                 return false;
         }
+    }
+
+    public String getValueTemplate()
+    {
+        return valueTemplate;
+    }
+
+    public void setValueTemplate(String valueTemplate)
+    {
+        this.valueTemplate = valueTemplate;
+    }
+
+    public static String[] getDescriptions()
+    {
+        return descriptions;
     }
 
 }

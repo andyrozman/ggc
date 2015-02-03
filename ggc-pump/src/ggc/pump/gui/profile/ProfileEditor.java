@@ -340,19 +340,19 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
 
         /*
          * JButton bt_item_1 = new
-         * JButton(m_da.getImageIcon_22x22("document_add.png", this));
+         * JButton(dataAccess.getImageIcon_22x22("document_add.png", this));
          * bt_item_1.setActionCommand("item_add");
          * bt_item_1.addActionListener(this);
          * bt_item_1.setBounds(585, 470, 30, 30);
          * panel.add(bt_item_1);
          * JButton bt_item_2 = new
-         * JButton(m_da.getImageIcon_22x22("document_edit.png", this));
+         * JButton(dataAccess.getImageIcon_22x22("document_edit.png", this));
          * bt_item_2.setActionCommand("item_edit");
          * bt_item_2.addActionListener(this);
          * bt_item_2.setBounds(635, 470, 30, 30);
          * panel.add(bt_item_2);
          * JButton bt_item_3 = new
-         * JButton(m_da.getImageIcon_22x22("document_delete.png", this));
+         * JButton(dataAccess.getImageIcon_22x22("document_delete.png", this));
          * bt_item_3.setActionCommand("item_delete");
          * bt_item_3.addActionListener(this);
          * bt_item_3.setBounds(685, 470, 30, 30);
@@ -360,7 +360,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
          */
         /*
          * JButton bt_item_3 = new
-         * JButton(m_da.getImageIcon_22x22("document_delete.png", this));
+         * JButton(dataAccess.getImageIcon_22x22("document_delete.png", this));
          * bt_item_3.setActionCommand("item_delete");
          * bt_item_3.addActionListener(this);
          * bt_item_3.setBounds(685, 470, 30, 30);
@@ -368,7 +368,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
          * document_exchange.png
          * ATSwingUtils.getButton("   " + m_ic.getMessage("IMPORT"),
          * 570, 445, 160, 22, panel,
-         * ATSwingUtils.FONT_NORMAL, null, "import_profile", this, m_da);
+         * ATSwingUtils.FONT_NORMAL, null, "import_profile", this, dataAccess);
          */
 
         ATSwingUtils.getButton("   " + m_ic.getMessage("OK"), 610, 75, 120, 25, panel, ATSwingUtils.FONT_NORMAL,

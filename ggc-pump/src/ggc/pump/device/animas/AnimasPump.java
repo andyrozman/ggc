@@ -1,78 +1,70 @@
 package ggc.pump.device.animas;
 
-import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.device.DownloadSupportType;
+import java.util.Hashtable;
+
+import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.util.DataAccessPlugInBase;
-import ggc.pump.device.AbstractPump;
-
-import java.util.Hashtable;
+import ggc.pump.data.defs.*;
+import ggc.pump.device.AbstractSerialPump;
+import gnu.io.SerialPortEvent;
 
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
  *
  *  See AUTHORS for copyright information.
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
  *  Foundation; either version 2 of the License, or (at your option) any later
  *  version.
- * 
+ *
  *  This program is distributed in the hope that it will be useful, but WITHOUT
  *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  *  details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License along with
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     AccuChekSpirit  
- *  Description:  Accu Chek Spirit Pump Implementation
- * 
- *  Author: Andy {andy@atech-software.com}
+ *
+ *  Filename:     AnimasPump
+ *  Description:  This is abstract class for Animas Pumps
+ *
+ *  Author: Andy Rozman {andy@atech-software.com}
  */
 
-// FIXME
-
-public abstract class AnimasPump extends AbstractPump
+public abstract class AnimasPump extends AbstractSerialPump
 {
 
-    /**
-     * Constructor 
-     */
+    protected String communicationPort;
+    protected OutputWriter output_writer;
+    protected AbstractDeviceCompany device_company;
+    
+    
     public AnimasPump()
     {
         super();
     }
 
+    
     /**
-     * Constructor
-     *  
-     * @param conn_parameter 
+     * Constructor 
+     * 
+     * @param communicationPort
      * @param writer 
      */
-    public AnimasPump(String conn_parameter, OutputWriter writer)
+    public AnimasPump(String communicationPort, OutputWriter writer)
     {
-        super(conn_parameter, writer);
+        super();
+        this.communicationPort = communicationPort;
+        this.output_writer = writer;
     }
-
-    /**
-     * Constructor
-     * 
-     * @param conn_parameter
-     * @param writer
-     * @param da 
-     */
-    public AnimasPump(String conn_parameter, OutputWriter writer, DataAccessPlugInBase da)
-    {
-        super(conn_parameter, writer, da);
-    }
-
+    
+    
     /**
      * Constructor
      * 
@@ -80,230 +72,203 @@ public abstract class AnimasPump extends AbstractPump
      */
     public AnimasPump(AbstractDeviceCompany cmp)
     {
-        super(cmp);
+        super();
+        this.device_company = cmp;
     }
-
-    // ************************************************
-    // *** Meter Identification Methods ***
-    // ************************************************
-
-    /**
-     * getComment - Get Comment for device 
-     * 
-     * @return comment or null
-     */
-    public String getComment()
-    {
-        return null;
-    }
-
-    /**
-     * getImplementationStatus - Get Implementation Status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
-    }
-
-    /**
-     * Open
-     */
-    public boolean open() throws PlugInBaseException
-    {
-        return true;
-    }
-
-    /**
-     * Close
-     */
-    public void close() throws PlugInBaseException
-    {
-    }
-
-    /** 
-     * This is method for reading configuration, in case that dump doesn't give this information.
-     * 
-     * @throws PlugInBaseException
-     */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @Override
-    public void readConfiguration() throws PlugInBaseException
+    public void serialEvent(SerialPortEvent event)
     {
     }
 
-    /**
-     * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
-     * be done from here. Reading can be done directly here, or event can be used to read data. Usage of events 
-     * is discouraged because reading takes 3-4x more time.
-     * 
-     * @throws PlugInBaseException 
-     */
-    public void readDeviceDataFull() throws PlugInBaseException
-    {
-    }
 
-    /**
-     * This is method for reading partial data from device. This can be used if your device can be read partialy 
-     * (from some date to another)
-     * 
-     * @throws PlugInBaseException 
-     */
-    @Override
-    public void readDeviceDataPartitial() throws PlugInBaseException
-    {
-    }
-
-    /**
-     * This is for reading device information. This should be used only if normal dump doesn't retrieve this
-     * information (most dumps do).
-     *  
-     * @throws PlugInBaseException
-     */
-    @Override
-    public void readInfo() throws PlugInBaseException
-    {
-    }
-
-    /**
-     * getDeviceInfo - get Device info (firmware and software revision)
-     * @return 
-     */
-    @Override
-    public DeviceIdentification getDeviceInfo()
-    {
-        return null;
-    }
-
-    /**
-     * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific 
-     *     alarm codes
-     * @return
-     */
-    public Hashtable<String, Integer> getAlarmMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getBolusMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Error Mappings - Map pump specific errors to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getErrorMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Event Mappings - Map pump specific events to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getEventMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Report Mappings - Map pump specific reports to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getReportMappings()
-    {
-        return null;
-    }
-
-    /**
-     * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
-     *      create, AlarmMappings and EventMappings and any other pump constants.
-     */
-    public void loadPumpSpecificValues()
-    {
-    }
-
-    /** 
-     * Dispose
-     */
     public void dispose()
     {
+        // TODO Auto-generated method stub
     }
 
-    /**
-     * getConnectionPort - connection port data
-     * 
-     * @return connection port as string
-     */
-    public String getConnectionPort()
+
+    
+    
+    
+    
+    
+    
+    
+    public String getComment()
     {
+        // TODO Auto-generated method stub
         return null;
     }
 
-    /**
-     * getConnectionProtocol - returns id of connection protocol
-     * 
-     * @return id of connection protocol
-     */
-    public int getConnectionProtocol()
+
+    public String getConnectionPort()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+
+    public String getDeviceSpecialComment()
+    {
+        return "Test implementation";
+    }
+
+
+    public int getDownloadSupportType()
     {
         return 0;
     }
 
-    /**
-     * Is Device Communicating
-     * 
-     * @return
-     */
+
+    public GGCPlugInFileReaderContext[] getFileDownloadTypes()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+
+
+    public boolean hasIndeterminateProgressStatus()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
+    public boolean hasSpecialProgressStatus()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
     public boolean isDeviceCommunicating()
     {
+        // TODO Auto-generated method stub
         return false;
     }
 
-    /**
-     * Is Device Readable (there are some devices that are not actual devices, but are used to get some
-     * sort of specific device data - in most cases we call them generics, and they don't have ability
-     * to read data)
-     * 
-     * @return
-     */
-    @Override
+
+    public boolean isFileDownloadSupported()
+    {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+
     public boolean isReadableDevice()
     {
+        // TODO Auto-generated method stub
         return false;
     }
 
+
+    public void readConfiguration() throws PlugInBaseException
+    {
+
+    }
+
+
+    public void readDeviceDataFull() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void readDeviceDataPartitial() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public void readInfo() throws PlugInBaseException
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public long getItemId()
+    {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
     /**
-     * Get Download Support Type
-     * 
+     * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific
+     *     alarm codes
      * @return
      */
-    @Override
-    public int getDownloadSupportType()
+    public Hashtable<String, PumpAlarms> getAlarmMappings()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+        return null;
     }
 
     /**
-     * How Many Months Of Data Stored
-     * 
+     * Get Event Mappings - Map pump specific events to Pump Tool specific
+     *     event codes
      * @return
      */
-    @Override
-    public int howManyMonthsOfDataStored()
+    public Hashtable<String, PumpEvents> getEventMappings()
     {
-        return -1;
+        return null;
     }
+
+
+    /**
+     * Get Error Mappings - Map pump specific errors to Pump Tool specific
+     *     event codes
+     * @return
+     */
+    public Hashtable<String, PumpErrors> getErrorMappings()
+    {
+        return null;
+    }
+
+    /**
+     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific
+     *     event codes
+     * @return
+     */
+    public Hashtable<String, PumpBolusType> getBolusMappings()
+    {
+        return null;
+    }
+
+    /**
+     * Get Report Mappings - Map pump specific reports to Pump Tool specific
+     *     event codes
+     * @return
+     */
+    public Hashtable<String, PumpReport> getReportMappings()
+    {
+        return null;
+    }
+
+
+    public void loadPumpSpecificValues()
+    {
+
+
+    }
+
+
+    public abstract AnimasDeviceType getAnimasDeviceType();
 
 }

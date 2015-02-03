@@ -37,7 +37,7 @@ public class BasalRateEstimator extends JDialog implements ActionListener
     private static final long serialVersionUID = 3285623806907044947L;
 
     /**
-     * The m_da.
+     * The dataAccess.
      */
     DataAccessPump m_da = DataAccessPump.getInstance();
 
@@ -192,10 +192,10 @@ public class BasalRateEstimator extends JDialog implements ActionListener
             this, m_da);
 
         // ATSwingUtils.getButton("Algorithm", 570, 250, 190, 25, panel,
-        // ATSwingUtils.FONT_NORMAL, null, "algorithm", this, m_da);
+        // ATSwingUtils.FONT_NORMAL, null, "algorithm", this, dataAccess);
 
         // ATSwingUtils.getButton("Change Date", 500, 50, 150, 25, panel,
-        // ATSwingUtils.FONT_NORMAL, null, "change_date", this, m_da);
+        // ATSwingUtils.FONT_NORMAL, null, "change_date", this, dataAccess);
 
     }
 
@@ -305,14 +305,14 @@ public class BasalRateEstimator extends JDialog implements ActionListener
      * ATSwingUtils.getLabel("02/02/2009", 690, 80, 200, 25, panel,
      * ATSwingUtils.FONT_NORMAL);
      * ATSwingUtils.getButton("Change Date", 570, 130, 190, 25, panel,
-     * ATSwingUtils.FONT_NORMAL, null, "change_date", this, m_da);
+     * ATSwingUtils.FONT_NORMAL, null, "change_date", this, dataAccess);
      * JButton b = ATSwingUtils.getButton("Configure Ratios", 570, 170, 190, 25,
-     * panel, ATSwingUtils.FONT_NORMAL, null, "change_ratios", this, m_da);
+     * panel, ATSwingUtils.FONT_NORMAL, null, "change_ratios", this, dataAccess);
      * b.setEnabled(false);
      * //ATSwingUtils.getButton("Algorithm", 570, 250, 190, 25, panel,
-     * ATSwingUtils.FONT_NORMAL, null, "algorithm", this, m_da);
+     * ATSwingUtils.FONT_NORMAL, null, "algorithm", this, dataAccess);
      * //ATSwingUtils.getButton("Change Date", 500, 50, 150, 25, panel,
-     * ATSwingUtils.FONT_NORMAL, null, "change_date", this, m_da);
+     * ATSwingUtils.FONT_NORMAL, null, "change_date", this, dataAccess);
      * }
      */
 
@@ -371,14 +371,14 @@ public class BasalRateEstimator extends JDialog implements ActionListener
      * ATSwingUtils.getLabel("02/02/2009", 690, 120, 200, 25, panel,
      * ATSwingUtils.FONT_NORMAL);
      * ATSwingUtils.getButton("Change Date", 570, 170, 190, 25, panel,
-     * ATSwingUtils.FONT_NORMAL, null, "change_date", this, m_da);
+     * ATSwingUtils.FONT_NORMAL, null, "change_date", this, dataAccess);
      * JButton b = ATSwingUtils.getButton("Configure Ratios", 570, 210, 190, 25,
-     * panel, ATSwingUtils.FONT_NORMAL, null, "change_ratios", this, m_da);
+     * panel, ATSwingUtils.FONT_NORMAL, null, "change_ratios", this, dataAccess);
      * b.setEnabled(false);
      * ATSwingUtils.getButton("Algorithm", 570, 250, 190, 25, panel,
-     * ATSwingUtils.FONT_NORMAL, null, "algorithm", this, m_da);
+     * ATSwingUtils.FONT_NORMAL, null, "algorithm", this, dataAccess);
      * //ATSwingUtils.getButton("Change Date", 500, 50, 150, 25, panel,
-     * ATSwingUtils.FONT_NORMAL, null, "change_date", this, m_da);
+     * ATSwingUtils.FONT_NORMAL, null, "change_date", this, dataAccess);
      * }
      */
 

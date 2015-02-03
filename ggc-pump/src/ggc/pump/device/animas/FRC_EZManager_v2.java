@@ -21,6 +21,32 @@ import org.apache.commons.logging.LogFactory;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.file.FileReaderContext;
 
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     AnimasIR2020
+ *  Description:  Animas IR 2020 implementation
+ *
+ *  Author: Andy Rozman {andy@atech-software.com}
+ */
+
 // EZManagerPlugin.cs
 // User: innominate at 9:02 PM 8/23/2008
 //
@@ -115,7 +141,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                         pve.setDateTimeObject(atd);
 
                         pve.setBaseType(PumpBaseType.AdditionalData.getCode());
-                        pve.setSubType(PumpAdditionalDataType.PUMP_ADD_DATA_BG);
+                        pve.setSubType(PumpAdditionalDataType.BloodGlucose.getCode());
                         pve.setValue(rs.getString("bg"));
 
                         this.output_writer.writeData(pve);
@@ -164,21 +190,21 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                         PumpValuesEntry pve = new PumpValuesEntry();
                         pve.setDateTimeObject(atd);
                         pve.setBaseType(PumpBaseType.Report.getCode());
-                        pve.setSubType(PumpReport.PUMP_REPORT_BASAL_TOTAL_DAY);
+                        pve.setSubType(PumpReport.BasalTotalDay.getCode());
                         pve.setValue(DataAccessPlugInBase.Decimal3Format.format(basal));
                         this.output_writer.writeData(pve);
 
                         pve = new PumpValuesEntry();
                         pve.setDateTimeObject(atd);
                         pve.setBaseType(PumpBaseType.Report.getCode());
-                        pve.setSubType(PumpReport.PUMP_REPORT_BOLUS_TOTAL_DAY);
+                        pve.setSubType(PumpReport.BolusTotalDay.getCode());
                         pve.setValue(DataAccessPlugInBase.Decimal3Format.format(total - basal));
                         this.output_writer.writeData(pve);
 
                         pve = new PumpValuesEntry();
                         pve.setDateTimeObject(atd);
                         pve.setBaseType(PumpBaseType.Report.getCode());
-                        pve.setSubType(PumpReport.PUMP_REPORT_INSULIN_TOTAL_DAY);
+                        pve.setSubType(PumpReport.InsulinTotalDay.getCode());
                         pve.setValue(DataAccessPlugInBase.Decimal3Format.format(total));
                         this.output_writer.writeData(pve);
 
@@ -292,7 +318,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                     pve.setDateTimeObject(atd);
 
                     pve.setBaseType(PumpBaseType.AdditionalData.getCode());
-                    pve.setSubType(PumpAdditionalDataType.PUMP_ADD_DATA_COMMENT);
+                    pve.setSubType(PumpAdditionalDataType.Comment.getCode());
                     pve.setValue(note);
 
                     if (error_code > 0)
@@ -492,8 +518,8 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                         PumpValuesEntry pve = new PumpValuesEntry();
                         pve.setDateTimeObject(atd);
 
-                        pve.setBaseType(PumpBaseType.Basal.getCode());
-                        pve.setSubType(PumpBasalSubType.PUMP_BASAL_VALUE);
+                        pve.setBaseType(PumpBaseType.Basal);
+                        pve.setSubType(PumpBasalSubType.Value.getCode());
 
                         double rate = rs.getInt("rate") / 1000.0d; // units per
                                                                    // hour

@@ -114,7 +114,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
     {
 
         // FIXME
-        // m_da.enableHelp(this);
+        // dataAccess.enableHelp(this);
         m_da.addComponent(this);
 
         // FIXME

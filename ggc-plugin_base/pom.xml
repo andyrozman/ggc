@@ -51,6 +51,12 @@
 			<artifactId>atech-tools</artifactId>
 		</dependency>
 
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-core</artifactId>
+        </dependency>
+
+
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna</artifactId>

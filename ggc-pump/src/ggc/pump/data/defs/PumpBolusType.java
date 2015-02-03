@@ -1,5 +1,9 @@
 package ggc.pump.data.defs;
 
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.data.CodeEnumWithTranslation;
+import ggc.pump.util.DataAccessPump;
+
 import java.util.Hashtable;
 
 /**
@@ -28,86 +32,124 @@ import java.util.Hashtable;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class PumpBolusType extends PumpDefsAbstract
+public enum PumpBolusType implements CodeEnumWithTranslation
 {
+    None(0, "NONE"), //
+    Normal(1, "BOLUS_STANDARD"),
+    Audio(2, "BOLUS_AUDIO"),
+    Extended(3, "BOLUS_SQUARE", "AMOUNT_SQUARE=%s;DURATION=%s"),
+    Multiwave(4, "BOLUS_MULTIWAVE", "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s")
 
-    // DataAccessPump da = DataAccessPump.getInstance();
-    // I18nControlAbstract ic = da.getI18nControlInstance();
+    ;
 
-    /**
-     * Bolus Descriptions (for manual entry module)
-     */
-    public String[] bolus_desc = { ic.getMessage("SELECT_BOLUS_TYPE"), ic.getMessage("BOLUS_STANDARD"),
-                                  ic.getMessage("BOLUS_AUDIO"), ic.getMessage("BOLUS_SQUARE"),
-                                  ic.getMessage("BOLUS_MULTIWAVE"), };
+    static String[] bolus_desc;
+    static Hashtable<String, PumpBolusType> translationMapping = new Hashtable<String, PumpBolusType>();
+    static Hashtable<Integer, PumpBolusType> codeMapping = new Hashtable<Integer, PumpBolusType>();
 
-    Hashtable<String, String> bolus_mapping = new Hashtable<String, String>();
-
-    // "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s"
-
-    /**
-     * Pump Bolus: None
-     */
-    public static final int PUMP_BOLUS_NONE = 0;
-
-    /**
-     * Pump Bolus: Standard
-     */
-    public static final int PUMP_BOLUS_STANDARD = 1;
-
-    /**
-     * Pump Bolus: Scrool
-     */
-    public static final int PUMP_BOLUS_AUDIO_SCROLL = 2;
-
-    /**
-     * Pump Bolus: Square (Insulin value through some duration)
-     */
-    public static final int PUMP_BOLUS_SQUARE = 3;
-
-    /**
-     * Pump Bolus: Multiwave
-     */
-    public static final int PUMP_BOLUS_MULTIWAVE = 4;
-
-    /**
-     * Pump Bolus: Dual/Normal
-     */
-    public static final int PUMP_BOLUS_DUAL_NORMAL = 6;
-
-    /**
-     * Pump Bolus: Dual/Square (Insulin value through some duration)
-     */
-    public static final int PUMP_BOLUS_DUAL_SQUARE = 7;
-
-    /**
-     * Constructor
-     */
-    public PumpBolusType()
+    static
     {
-        super();
+        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
 
-        this.setDataDesc(PumpBolusType.PUMP_BOLUS_STANDARD, ic.getMessage("BOLUS_STANDARD"));
-        this.setDataDesc(PumpBolusType.PUMP_BOLUS_AUDIO_SCROLL, ic.getMessage("BOLUS_AUDIO"));
-        this.setDataDesc(PumpBolusType.PUMP_BOLUS_SQUARE, ic.getMessage("BOLUS_SQUARE"), "AMOUNT_SQUARE=%s;DURATION=%s");
-        this.setDataDesc(PumpBolusType.PUMP_BOLUS_MULTIWAVE, ic.getMessage("BOLUS_MULTIWAVE"),
-            "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s");
-        this.setDataDesc(PumpBolusType.PUMP_BOLUS_DUAL_NORMAL, ic.getMessage("BOLUS_DUAL_NORMAL"));
-        this.setDataDesc(PumpBolusType.PUMP_BOLUS_DUAL_SQUARE, ic.getMessage("BOLUS_DUAL_SQUARE"),
-            "AMOUNT_SQUARE=%s;DURATION=%s");
-        this.setDataDesc(PumpBolusType.PUMP_BOLUS_NONE, ic.getMessage("BOLUS_NONE"));
+        for (PumpBolusType pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMapping.put(pbt.getTranslation(), pbt);
+            codeMapping.put(pbt.code, pbt);
+        }
 
-        this.finalizeAdding();
+
+        String[] bolus_desc_lcl = { ic.getMessage("SELECT_BOLUS_TYPE"),
+                ic.getMessage("BOLUS_STANDARD"), //
+                ic.getMessage("BOLUS_AUDIO"), //
+                ic.getMessage("BOLUS_SQUARE"), //
+                ic.getMessage("BOLUS_MULTIWAVE"), };
+
+        bolus_desc = bolus_desc_lcl;
     }
+
+    int code;
+    String i18nKey;
+    String translation;
+    String valueTemplate;
+
+    private PumpBolusType(int code, String i18nKey)
+    {
+        this.code = code;
+        this.i18nKey = i18nKey;
+    }
+
+    private PumpBolusType(int code, String i18nKey, String valueTemplate)
+    {
+        this.code = code;
+        this.i18nKey = i18nKey;
+        this.valueTemplate = valueTemplate;
+    }
+
+
+    public String getTranslation()
+    {
+        return translation;
+    }
+
+
+    public void setTranslation(String translation)
+    {
+        this.translation = translation;
+    }
+
+
+    public int getCode()
+    {
+        return code;
+    }
+
+
+    public String getI18nKey()
+    {
+        return i18nKey;
+    }
+
+
+    /**
+     * Get Type from Description
+     *
+     * @param str
+     *            type as string
+     * @return type as int
+     */
+    public int getTypeFromDescription(String str)
+    {
+        if (translationMapping.containsKey(str))
+        {
+            return translationMapping.get(str).getCode();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+
+    public static PumpBolusType getByCode(int code)
+    {
+        if (codeMapping.containsKey(code))
+        {
+            return codeMapping.get(code);
+        }
+        else
+        {
+            return PumpBolusType.None;
+        }
+    }
+
 
     /**
      * Get Descriptions (array)
-     * 
+     *
      * @return array of strings with description
      */
-    public String[] getDescriptionsArray()
+    public static String[] getDescriptions()
     {
-        return this.bolus_desc;
+        return bolus_desc;
     }
-
 }

@@ -101,7 +101,7 @@ public abstract class DevicePlugInServer extends PlugInServer
 
         da_ggc_core.loadSpecialParameters();
         // System.out.println("PumpServer: " +
-        // m_da.getSpecialParameters().get("BG"));
+        // dataAccess.getSpecialParameters().get("BG"));
 
         da_plugin.setBGMeasurmentType(m_da.getIntValueFromString(da_ggc_core.getSpecialParameters().get("BG")));
         da_plugin.setGraphConfigProperties(da_ggc_core.getGraphConfigProperties());

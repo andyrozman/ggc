@@ -143,7 +143,7 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
              * else if (st==20)
              * {
              * this.writeStatus("PIX_DEVICE_NOT_FOUND");
-             * this.output_writer.setSpecialProgress(100);
+             * this.outputWriter.setSpecialProgress(100);
              * //System.out.println("Unrecoverable error - Aborting");
              * return;
              * }
@@ -158,8 +158,8 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
                     /*
                      * this.parent.writeStatus("PIX_FINISHED_REPORT_READY");
                      * //System.out.println("Finished reading. Report ready." );
-                     * this.output_writer.setSpecialProgress(95);
-                     * File f1 = new File(m_da.pathResolver(drv +
+                     * this.outputWriter.setSpecialProgress(95);
+                     * File f1 = new File(dataAccess.pathResolver(drv +
                      * "\\REPORT\\XML"));
                      * File[] fls = f1.listFiles(new FileFilter()
                      * {
@@ -173,8 +173,8 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
                      * );
                      * //processXml(fls[0]);
                      * this.parent.processXml(fls[0]);
-                     * this.output_writer.setSpecialProgress(100);
-                     * this.output_writer.setSubStatus(null);
+                     * this.outputWriter.setSpecialProgress(100);
+                     * this.outputWriter.setSubStatus(null);
                      */
                     return;
 
@@ -223,7 +223,7 @@ public class AccuChekSmartPixReaderV2 extends AccuChekSmartPixReaderAbstract
             // boolean error_found = false;
             // boolean image_found = false;
 
-            // System.out.println("Scan path: " + m_da.pathResolver(drive +
+            // System.out.println("Scan path: " + dataAccess.pathResolver(drive +
             // "\\REPORT\\SCAN.HTM"));
 
             BufferedReader br = new BufferedReader(new FileReader(new File(m_da.pathResolver(drive

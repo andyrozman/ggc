@@ -55,8 +55,8 @@ public class MinimedComm_ComLink extends SerialProtocol implements MinimedComm_I
     private static int COMLINK_ENCODING_PROTOCOL[] = { 21, 49, 50, 35, 52, 37, 38, 22, 26, 25, 42, 11, 44, 13, 14, 28 };
     MinimedDeviceUtil util = MinimedDeviceUtil.getInstance();
     CRCUtils hex_utils = new CRCUtils();
-    // DataAccessPump m_da = DataAccessPump.getInstance();
-    I18nControlAbstract m_ic = m_da.getI18nControlInstance();
+    // DataAccessPump dataAccess = DataAccessPump.getInstance();
+    I18nControlAbstract m_ic = dataAccess.getI18nControlInstance();
 
     // MinimedCommandResponse mcr;
     MinimedDevice device;

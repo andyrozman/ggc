@@ -96,7 +96,7 @@ public enum PumpAlarms implements CodeEnumWithTranslation
         this.i18nKey = i18nKey;
     }
 
-    public static PumpAlarms getPumpAlarmByCode(int code)
+    public static PumpAlarms getByCode(int code)
     {
         if (alarmCodeMapping.containsKey(code))
         {

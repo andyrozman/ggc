@@ -1,8 +1,11 @@
 package ggc.pump.data.defs;
 
+import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.pump.util.DataAccessPump;
 
 import com.atech.i18n.I18nControlAbstract;
+
+import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -30,41 +33,110 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class PumpReport
+public enum PumpReport implements CodeEnumWithTranslation
 {
-    DataAccessPump da = DataAccessPump.getInstance();
-    I18nControlAbstract ic = da.getI18nControlInstance();
+
+    None(0, "NONE"),
+    Misc(1, "REPORT_MISC"),
+    BolusTotalDay(2, "REPORT_BOLUS_TOTAL_DAY"),
+    BasalTotalDay(3, "REPORT_BASAL_TOTAL_DAY"),
+    InsulinTotalDay(4, "REPORT_INSULIN_TOTAL_DAY"),
+
+    ;
+
 
     /**
      * Report Descriptions
      */
-    public String[] report_desc = { ic.getMessage("SELECT_SUBTYPE"), ic.getMessage("REPORT_MISC"),
-                                   ic.getMessage("REPORT_BOLUS_TOTAL_DAY"), ic.getMessage("REPORT_BASAL_TOTAL_DAY"),
-                                   ic.getMessage("REPORT_INSULIN_TOTAL_DAY"), };
+    public static String[] report_desc = null;
+
+    static Hashtable<String, PumpReport> translationMapping = new Hashtable<String, PumpReport>();
+    static Hashtable<Integer, PumpReport> codeMapping = new Hashtable<Integer, PumpReport>();
+
+    static
+    {
+        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+
+        for (PumpReport pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMapping.put(pbt.getTranslation(), pbt);
+            codeMapping.put(pbt.code, pbt);
+        }
+
+        String[] report_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), ic.getMessage("REPORT_MISC"),
+                ic.getMessage("REPORT_BOLUS_TOTAL_DAY"), ic.getMessage("REPORT_BASAL_TOTAL_DAY"),
+                ic.getMessage("REPORT_INSULIN_TOTAL_DAY"), };
+
+        report_desc = report_desc_lcl;
+    }
+
+    int code;
+    String i18nKey;
+    String translation;
+
+    private PumpReport(int code, String i18nKey)
+    {
+        this.code = code;
+        this.i18nKey = i18nKey;
+    }
+
+
+    public String getTranslation()
+    {
+        return translation;
+    }
+
+    public void setTranslation(String translation)
+    {
+        this.translation = translation;
+    }
+
+    public int getCode()
+    {
+        return code;
+    }
+
+    public String getI18nKey()
+    {
+        return i18nKey;
+    }
+
 
     /**
-     * Pump Report: Misc
+     * Get Type from Description
+     *
+     * @param str
+     *            type as string
+     * @return type as int
      */
-    public static final int PUMP_REPORT_MISC = 1;
+    public int getTypeFromDescription(String str)
+    {
+        if (translationMapping.containsKey(str))
+        {
+            return translationMapping.get(str).getCode();
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
-    /**
-     * Pump Report: Bolus Total Day
-     */
-    public static final int PUMP_REPORT_BOLUS_TOTAL_DAY = 2;
-
-    /**
-     * Pump Report: Basal Total Day
-     */
-    public static final int PUMP_REPORT_BASAL_TOTAL_DAY = 3;
-
-    /**
-     * Pump Report: Basal Total Day
-     */
-    public static final int PUMP_REPORT_INSULIN_TOTAL_DAY = 4;
+    public static PumpReport getByCode(int code)
+    {
+        if (codeMapping.containsKey(code))
+        {
+            return codeMapping.get(code);
+        }
+        else
+        {
+            return PumpReport.None;
+        }
+    }
 
     /**
      * Get Descriptions (array)
-     * 
+     *
      * @return array of strings with description
      */
     public String[] getDescriptions()
@@ -72,4 +144,4 @@ public class PumpReport
         return this.report_desc;
     }
 
-}
+    }

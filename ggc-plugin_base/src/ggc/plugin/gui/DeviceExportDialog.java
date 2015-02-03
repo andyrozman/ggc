@@ -56,7 +56,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
     private static final long serialVersionUID = -5673838593827489827L;
 
     private DataAccessPlugInBase m_da; // = DataAccessMeter.getInstance();
-    I18nControlAbstract m_ic; // = m_da.getI18nControlInstance();
+    I18nControlAbstract m_ic; // = dataAccess.getI18nControlInstance();
 
     private JProgressBar progress = null;
 
@@ -304,7 +304,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
      */
     public String getHelpId()
     {
-        // return m_da.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // return dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
         // "Export_Data";
         return "DeviceTool_Export_Data";
     }

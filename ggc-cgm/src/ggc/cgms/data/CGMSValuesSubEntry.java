@@ -527,12 +527,12 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     public void setType(int type)
     {
         this.type = type;
-        this.typeObject = CGMSBaseDataType.getEnum(type);
+        this.typeObject = CGMSBaseDataType.getByCode(type);
     }
 
     public void setType(CGMSBaseDataType type)
     {
-        this.type = type.getValue();
+        this.type = type.getCode();
         this.typeObject = type;
     }
 

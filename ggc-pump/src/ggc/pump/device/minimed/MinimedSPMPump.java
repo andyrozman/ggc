@@ -37,7 +37,7 @@ import java.util.Enumeration;
 
 public class MinimedSPMPump extends MinimedSPM
 {
-    // DataAccessPlugInBase m_da = null; //DataAccessPump.getInstance();
+    // DataAccessPlugInBase dataAccess = null; //DataAccessPump.getInstance();
     // int count_unk = 0;
     // private static Log log = LogFactory.getLog(MinimedSPM.class);
 

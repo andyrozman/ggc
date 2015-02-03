@@ -1,0 +1,55 @@
+
+	GGC ANIMAS PROJECT
+	==================
+
+	Phase 1:   Base reading of data (sett and pump data, full refactoring, integration with GGC)                    19.12.2014
+	Phase 2:   Dexcom                                                                                               01.05.2015  ?
+	Phase 3:   Extended configuration (edit cfg, tunes, food db)                                                    01.12.2015
+
+
+
+Phase 2.1:
+
+  Animas Dexcom
+  ==============
+   - 2015... TO BE DETERMINED
+
+   - decode settings
+   - get all settings together to display
+
+   - data collect
+   - write data after downloaded (5.12)
+
+   - download progress
+   - import into GGC
+   - test data in GGC + progress
+   - test settings in GGC + progress
+
+   - when no data available (timeout) connection recovery and retry [Phase 1]
+
+
+  Animas Dexcom Data Convert
+  ==========================
+
+decode settings                            Setting   Decode Pckt  Collect Setting
+   Dexcom_C1(42)                               -         -             -
+   Dexcom_C3(44)                               -         -             -
+   Dexcom_C5(48)                               -         -             -
+   Dexcom_C6(46)                               -         -             -             ?
+   Dexcom_C7(47)                               -         -             -             ?
+
+
+decode data                                 Read     Decode   Converter    All Data Val   GGC Write
+   DexcomWarnings(43/C2)                      +         +          -           -             -
+   Dexcom_C4 (45/History)                     +         +          -           -             -
+
+
+
+
+
+FINISHED
+=========
+
+Phase 1: 
+
+

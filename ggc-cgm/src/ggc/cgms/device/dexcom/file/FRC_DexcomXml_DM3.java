@@ -152,7 +152,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
         private ArrayList<CGMSValuesSubEntry> list_subs = new ArrayList<CGMSValuesSubEntry>();
         CGMSValuesTableModel cvtm = null;
 
-        // DataAccessPlugInBase m_da;
+        // DataAccessPlugInBase dataAccess;
 
         public MyContentHandler(DataAccessPlugInBase da)
         {

@@ -4,10 +4,7 @@ import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
-import ggc.plugin.output.AbstractOutputWriter;
-import ggc.plugin.output.OutputUtil;
-import ggc.plugin.output.OutputWriter;
-import ggc.plugin.output.OutputWriterData;
+import ggc.plugin.output.*;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.plugin.util.LogEntryType;
 
@@ -67,11 +64,15 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
     DeviceDisplayDataDialog dialog_data;
     DeviceDisplayConfigDialog dialog_config;
 
+    Log LOG = LogFactory.getLog(DeviceReaderRunner.class);
+
     boolean running = true;
     DataAccessPlugInBase m_da;
     boolean reading_started = false;
 
     DeviceDataHandler m_ddh;
+
+    String pluginName;
 
     /**
      * Constructor
@@ -306,12 +307,50 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
             }
             else
             {
+                // FIXME we need to remove this, we have new method for writing configuration
                 this.dialog_config.progress.setValue((int) f);
             }
         }
 
         getOutputWriter().writeData(data);
     }
+
+    public void writeConfigurationData(OutputWriterConfigData configData)
+    {
+        if (this.dialog_config==null)
+        {
+            LOG.warn("We can't write configuration data when no dialogConfig is set.");
+        }
+
+        if (!this.special_status)
+        {
+            count++;
+
+            float f = count * 1.0f / getOutputUtil().getMaxMemoryRecords() * 100.0f;
+
+            // int i = (int)((count/500) * 100);
+            // System.out.println("Progress: " + f + "  " + count + " max: " +
+            // this.dialog.output_util.getMaxMemoryRecords());
+
+            this.dialog_config.progress.setValue((int) f);
+        }
+
+        getOutputWriter().writeConfigurationData(configData);
+
+    }
+
+    public void setPluginName(String pluginName)
+    {
+        this.pluginName = pluginName;
+    }
+
+    public String getPluginName()
+    {
+        return pluginName;
+    }
+
+
+
 
     /**
      * Write log entry

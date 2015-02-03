@@ -2,10 +2,7 @@ package ggc.pump.gui;
 
 import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesRange;
-import ggc.pump.print.PrintPumpDataBase;
-import ggc.pump.print.PrintPumpDataDailyTimeSheet;
-import ggc.pump.print.PrintPumpDataExt;
-import ggc.pump.print.PrintPumpDataProfiles;
+import ggc.pump.print.*;
 import ggc.pump.util.DataAccessPump;
 
 import javax.swing.JFrame;
@@ -97,7 +94,12 @@ public class PumpPrintDialog extends PrintDialogRange
         // FIXME
 
         return new String[] { this.i18nControl.getMessage("PUMP_DATA_BASE"),
-                             this.i18nControl.getMessage("PUMP_DATA_EXT"), "Daily Table Report", "Active Profiles List" };
+                              this.i18nControl.getMessage("PUMP_DATA_EXT"), //
+                              this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
+                              this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
+                              this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
+                //"Daily Table Report II (Events,Color)", //
+                 };
     }
 
     /**
@@ -136,13 +138,16 @@ public class PumpPrintDialog extends PrintDialogRange
 
             if (this.cbTemplate.getSelectedIndex() == 2)
             {
-                pa = new PrintPumpDataDailyTimeSheet(parameters);
+                pa = new PrintPumpDataProfiles(parameters);
             }
             else if (this.cbTemplate.getSelectedIndex() == 3)
             {
-                pa = new PrintPumpDataProfiles(parameters);
+                pa = new PrintPumpBasalCheckSheet(parameters);
             }
-
+            else if (this.cbTemplate.getSelectedIndex() == 4)
+            {
+                pa = new PrintPumpDataDailyTimeSheet(parameters);
+            }
         }
 
         displayPDF(pa.getRelativeNameWithPath());

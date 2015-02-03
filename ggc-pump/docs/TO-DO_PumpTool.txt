@@ -9,13 +9,10 @@ Development of Pump Tools runs totally independent on GGC project
     * Graphs (0.6)
     
     * Specific pump models import implementations:
-          o MiniMed (2009 ?)  - protocol not public (use minimed's web tool)
-          o Sooil Dana (2010 ?) - current pumps don't have PC support
-          o Roche/Disetronic (2009) - got all info
-          o Animas (?)  - no reply yet
+          o MiniMed (2015)  - protocol not public (use minimed's web tool)
           o Omni Pod (?) - Couldn't send mail... Problem with web ??
-          o Smith's Cosmo (?)  - no reply yet (Cosmo has on 31/03/09 decided to go out of diabetes bussiness, so 
-               we probably won't support it)
+          o T:Slim (?)
+
 
 
 
@@ -58,21 +55,17 @@ DONE
             - Base report (no foods)
             - Extended report (foods too)
 
+    * Specific pump models import implementations:
+          o Sooil Dana (2011)
+          o Roche/Disetronic (2011) - got all info
+          o Smith's Cosmo (?)  - Pump is not manufactured anymore, so it won't be supported
+          o Animas (2014)
+
 
 
 ===============================================================================
 
 
-Pumps to implement
-===================
-
-Animas       - IR 2020
-Deltec:      - Cozmo
-Disetronic:   - Spirit
-              - D-Tron
-Minimed :  - Minimed
-Insulet:  - Omni pod
-Dana:  - DiabetcareIIS              
 
 
 

@@ -46,7 +46,7 @@ import com.atech.utils.ATSwingUtils;
 public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
 {
     private static final long serialVersionUID = -4620972246237384499L;
-    // DataAccessPlugInBase m_da = null;
+    // DataAccessPlugInBase dataAccess = null;
     // I18nControlAbstract m_ic = null;
     // JDialog dialog_parent = null;
     // JPanel previous = null;
@@ -67,7 +67,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
     public ImportFileSelectorDialog(DataAccessPlugInBase da, JDialog previous_parent, DeviceDataHandler ddh)
     {
         super(da, ddh, previous_parent);
-        // m_da = da;
+        // dataAccess = da;
         // m_ic = da.getI18nControlInstance();
         // this.dialog_parent = dialog;
         // this.previous = previous_panel;
@@ -144,7 +144,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
         {
 
             JFileChooser file_chooser = new JFileChooser();
-            // file_chooser.setDialogTitle(ic.getMessage("SELECT_FILE_TO_RESTORE"));
+            // file_chooser.setDialogTitle(i18nControlAbstract.getMessage("SELECT_FILE_TO_RESTORE"));
             file_chooser.setDialogType(JFileChooser.OPEN_DIALOG);
             file_chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             file_chooser.setMultiSelectionEnabled(false);

@@ -46,7 +46,7 @@ public class XmlProtocolFile
     protected DataAccessPlugInBase m_da = null;
     protected OutputWriter output_writer = null;
 
-    // protected I18nControlAbstract ic = null;
+    // protected I18nControlAbstract i18nControlAbstract = null;
 
     /**
      * Constructor
