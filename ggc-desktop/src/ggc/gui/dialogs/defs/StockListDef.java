@@ -125,7 +125,7 @@ public class StockListDef extends GUIListDefAbstract
                         case 1:
                             return se.getDescription();
                             // return
-                            // ic.getMessage(dh.getDoctor_type().getName());
+                            // i18nControlAbstract.getMessage(dh.getDoctor_type().getName());
                     }
 
                     return null;
@@ -153,7 +153,7 @@ public class StockListDef extends GUIListDefAbstract
         // this.filter_enabled = true;
 
         this.filter_type = GUIListDefAbstract.FILTER_COMBO_AND_TEXT;
-        // this.filter_text = ic.getMessage("FILTER") + ":";
+        // this.filter_text = i18nControlAbstract.getMessage("FILTER") + ":";
 
         String s1[] = { ic.getMessage("STATUS_USED") + ":", ic.getMessage("DESCRIPTION") + ":" };
         this.filter_texts = s1;
@@ -170,7 +170,7 @@ public class StockListDef extends GUIListDefAbstract
                 "table_add.png"));
         this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_type", "STOCKS_TABLE_EDIT_DESC",
                 "table_edit.png"));
-        // this.button_defs.add(new ButtonDef(this.ic.getMessage("VIEW_TYPE"),
+        // this.button_defs.add(new ButtonDef(this.i18nControlAbstract.getMessage("VIEW_TYPE"),
         // "view", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
         this.button_defs.add(new LabelDef(this.ic.getMessage("STOCK_AMOUNTS"), LabelDef.FONT_BOLD));
 

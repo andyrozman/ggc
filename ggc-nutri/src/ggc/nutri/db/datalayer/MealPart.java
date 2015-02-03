@@ -143,7 +143,7 @@ public class MealPart
     {
         if (type == GGCTreeRoot.TREE_USDA_NUTRITION || type == GGCTreeRoot.TREE_USER_NUTRITION)
         {
-            // this.meal_obj_food = m_da.tree_roots.get("" +
+            // this.meal_obj_food = dataAccess.tree_roots.get("" +
             // type).m_foods_ht.get(id);
             this.meal_obj_food = m_da.getDbCache().tree_roots.get("" + type).findFood(type, Long.parseLong(id));
             System.out.println("MealPart [Food]: " + this.meal_obj_food + ",type=" + type + ",id=" + id);
@@ -151,7 +151,7 @@ public class MealPart
         else
         {
             this.meal_obj_meal = m_da.getDbCache().tree_roots.get("" + type).findMeal(3, Long.parseLong(id));
-            // this.meal_obj_meal = m_da.tree_roots.get("3").m_meals_ht.get(id);
+            // this.meal_obj_meal = dataAccess.tree_roots.get("3").m_meals_ht.get(id);
             System.out.println("MealPart [Meal]: " + this.meal_obj_food + ",id=" + id);
         }
 

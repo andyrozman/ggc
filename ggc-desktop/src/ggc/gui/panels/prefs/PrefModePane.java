@@ -85,7 +85,7 @@ public class PrefModePane extends AbstractPrefOptionsPanel implements HelpCapabl
         config_manager = DataAccess.getInstance().getConfigurationManager();
         ATSwingUtils.initLibrary();
         init();
-        // m_da.enableHelp(this);
+        // dataAccess.enableHelp(this);
         // parent = this;
     }
 

@@ -1,7 +1,6 @@
 package ggc.gui.panels.info;
 
 import ggc.core.plugins.GGCPluginType;
-import ggc.core.util.DataAccess;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -47,7 +46,7 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
     private JLabel lblCgms;
     private JLabel lblNutri;
 
-    // private DataAccess m_da = DataAccess.getInstance();
+    // private DataAccess dataAccess = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -113,24 +112,24 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
     @Override
     public void refreshInfo()
     {
-        if (m_da.isPluginAvailable(GGCPluginType.METER_TOOL_PLUGIN))
+        if (m_da.isPluginAvailable(GGCPluginType.MeterToolPlugin))
         {
-            lblMeter.setText(m_da.getPlugIn(GGCPluginType.METER_TOOL_PLUGIN).getShortStatus());
+            lblMeter.setText(m_da.getPlugIn(GGCPluginType.MeterToolPlugin).getShortStatus());
         }
 
-        if (m_da.isPluginAvailable(GGCPluginType.PUMP_TOOL_PLUGIN))
+        if (m_da.isPluginAvailable(GGCPluginType.PumpToolPlugin))
         {
-            lblPump.setText(m_da.getPlugIn(GGCPluginType.PUMP_TOOL_PLUGIN).getShortStatus());
+            lblPump.setText(m_da.getPlugIn(GGCPluginType.PumpToolPlugin).getShortStatus());
         }
 
-        if (m_da.isPluginAvailable(GGCPluginType.CGMS_TOOL_PLUGIN))
+        if (m_da.isPluginAvailable(GGCPluginType.CGMSToolPlugin))
         {
-            lblCgms.setText(m_da.getPlugIn(GGCPluginType.CGMS_TOOL_PLUGIN).getShortStatus());
+            lblCgms.setText(m_da.getPlugIn(GGCPluginType.CGMSToolPlugin).getShortStatus());
         }
 
-        if (m_da.isPluginAvailable(GGCPluginType.NUTRITION_TOOL_PLUGIN))
+        if (m_da.isPluginAvailable(GGCPluginType.NutritionToolPlugin))
         {
-            lblCgms.setText(m_da.getPlugIn(GGCPluginType.NUTRITION_TOOL_PLUGIN).getShortStatus());
+            this.lblNutri.setText(m_da.getPlugIn(GGCPluginType.NutritionToolPlugin).getShortStatus());
         }
     }
 

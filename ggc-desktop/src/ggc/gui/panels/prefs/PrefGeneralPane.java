@@ -66,7 +66,7 @@ public class PrefGeneralPane extends AbstractPrefOptionsPanel implements HelpCap
     {
         super(dia);
         init();
-        // m_da.enableHelp(this);
+        // dataAccess.enableHelp(this);
         // parent = this;
     }
 

@@ -85,7 +85,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
     // private String m_errorDesc = "";
     // private String m_addId = "";
 
-    // private DataAccessNutri m_da;
+    // private DataAccessNutri dataAccess;
 
     private int m_loadStatus = 0;
 
@@ -184,7 +184,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         // tree root, now in static data
         cache_db.tree_roots.put("1", new GGCTreeRootDyn(GGCTreeRoot.TREE_USDA_NUTRITION, this));
 
-        // m_da.m_nutrition_treeroot = new GGCTreeRoot(1, this);
+        // dataAccess.m_nutrition_treeroot = new GGCTreeRoot(1, this);
 
     }
 
@@ -1163,7 +1163,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         logInfo("getDayStats()");
 
         DailyValues dV = new DailyValues();
-        // dV.setDate(m_da.getDateTimeFromDateObject(day.getTime()) / 10000);
+        // dV.setDate(dataAccess.getDateTimeFromDateObject(day.getTime()) / 10000);
 
         dV.setDate(ATechDate.getATDateTimeFromGC(day, ATechDate.FORMAT_DATE_ONLY));
 

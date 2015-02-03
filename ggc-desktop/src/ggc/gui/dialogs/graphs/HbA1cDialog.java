@@ -81,7 +81,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         this.m_da = da;
         this.m_ic = da.getI18nControlInstance();
         // init
-        // hbValues = this.m_da.getHbA1c(new GregorianCalendar());
+        // hbValues = this.dataAccess.getHbA1c(new GregorianCalendar());
         hbValues = this.m_da.getDb().getHbA1c(new GregorianCalendar(), false);
         init();
         updateLabels();

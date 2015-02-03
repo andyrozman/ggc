@@ -174,7 +174,7 @@ public class HomeWeightDataDisplay extends ATTableData
      */
     public void setHomeWeightDefinition(String name)
     {
-        // this.weight_type = ic.getMessage(name);
+        // this.weight_type = i18nControlAbstract.getMessage(name);
         this.weight_type = nic.getPartitialTranslation(name, "_");
     }
 

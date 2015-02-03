@@ -64,7 +64,7 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
     // public
     private Hashtable<String, String> params;
     // public int status = 1; //MeterValuesEntry.
-    // private static I18nControl ic = I18nControl.getInstance();
+    // private static I18nControl i18nControlAbstract = I18nControl.getInstance();
 
     private String bg_original = null;
     private OutputUtil util = OutputUtil.getInstance();

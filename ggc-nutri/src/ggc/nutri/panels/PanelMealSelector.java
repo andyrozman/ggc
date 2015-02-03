@@ -104,13 +104,13 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         super();
 
         this.action_listener = list;
-        // super(true, dia.ic);
+        // super(true, dia.i18nControlAbstract);
 
         m_dialog = dialog;
         m_da = DataAccessNutri.getInstance();
         ic = m_da.getI18nControlInstance();
 
-        // this.mpd = new MealFoodDisplay(ic);
+        // this.mpd = new MealFoodDisplay(i18nControlAbstract);
         this.dfed = new DailyFoodEntryDisplay(ic);
         this.mnd = new MealNutritionsDisplay(ic);
 
@@ -345,8 +345,8 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     /*
      * private void createKeyWord() { String key =
-     * m_da.makeI18nKeyword(tf_name.getText()); tf_name_i18n_key.setText(key);
-     * tf_name_i18n.setText(ic.getMessage(key)); }
+     * dataAccess.makeI18nKeyword(tf_name.getText()); tf_name_i18n_key.setText(key);
+     * tf_name_i18n.setText(i18nControlAbstract.getMessage(key)); }
      */
 
     private void refreshFoodParts()
@@ -444,11 +444,11 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
         /*
          * if (action.equals("add_meal")) { System.out.println("Add Meal");
-         * MealSelectorDialog msd = new MealSelectorDialog(m_da,
+         * MealSelectorDialog msd = new MealSelectorDialog(dataAccess,
          * this.meal.getId());
          * if (msd.wasAction()) { MealPart mp = new
          * MealPart(msd.getSelectedObjectType(), msd.getSelectedObject(),
-         * msd.getAmountValue()); this.list_parts.add(new MealPartsDisplay(ic,
+         * msd.getAmountValue()); this.list_parts.add(new MealPartsDisplay(i18nControlAbstract,
          * mp));
          * this.createModel(this.list_parts, this.table_1, this.mpd);
          * refreshNutritions(); }
@@ -456,11 +456,11 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
          * System.out.println("Edit Meal");
          * if (this.table_1.getSelectedRowCount()==0) {
          * JOptionPane.showConfirmDialog(this,
-         * ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"),
+         * i18nControlAbstract.getMessage("SELECT_ITEM_FIRST"), i18nControlAbstract.getMessage("ERROR"),
          * JOptionPane.CLOSED_OPTION); return; }
          * MealPartsDisplay mnd =
          * this.list_parts.get(this.table_1.getSelectedRow());
-         * MealSelectorDialog msd = new MealSelectorDialog(m_da,
+         * MealSelectorDialog msd = new MealSelectorDialog(dataAccess,
          * mnd.getMealPart());
          * if (msd.wasAction()) { mnd.setAmount(msd.getAmountValue());
          * this.createModel(this.list_parts, this.table_1, this.mpd);
@@ -469,10 +469,10 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
          * System.out.println("Remove Meal");
          * if (this.table_1.getSelectedRowCount()==0) {
          * JOptionPane.showConfirmDialog(this,
-         * ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"),
+         * i18nControlAbstract.getMessage("SELECT_ITEM_FIRST"), i18nControlAbstract.getMessage("ERROR"),
          * JOptionPane.CLOSED_OPTION); return; }
          * int ii = JOptionPane.showConfirmDialog(this,
-         * ic.getMessage("ARE_YOU_SURE_DELETE"), ic.getMessage("ERROR"),
+         * i18nControlAbstract.getMessage("ARE_YOU_SURE_DELETE"), i18nControlAbstract.getMessage("ERROR"),
          * JOptionPane.YES_NO_OPTION);
          * if (ii==JOptionPane.YES_OPTION) { MealPartsDisplay mnd =
          * this.list_parts.get(this.table_1.getSelectedRow()); //PersonContact
@@ -547,13 +547,13 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
      * MealNutrition meal_nut = nut_list.get(i); //en.nextElement());
      * System.out.println(meal_nut.getCalculatedAmount());
      * if (meal_nut.getAmount() > 0) { MealNutritionsDisplay mnd = new
-     * MealNutritionsDisplay(ic, meal_nut);
+     * MealNutritionsDisplay(i18nControlAbstract, meal_nut);
      * NutritionDefinition nd =
-     * this.m_da.getDb().nutrition_defs.get(mnd.getId());
+     * this.dataAccess.getDb().nutrition_defs.get(mnd.getId());
      * mnd.setNutritionDefinition(nd);
      * this.list_nutritions.add(mnd); } }
      * java.util.Collections.sort(this.list_nutritions, new
-     * MealNutritionsDisplay(ic)); this.createModel(this.list_nutritions,
+     * MealNutritionsDisplay(i18nControlAbstract)); this.createModel(this.list_nutritions,
      * this.table_2, this.mnd);
      * }
      */
@@ -757,12 +757,12 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
      * StringTokenizer strtok = new StringTokenizer(parts, ";");
      * while (strtok.hasMoreTokens()) { MealPart mp = new
      * MealPart(strtok.nextToken()); this.list_parts.add(new
-     * MealPartsDisplay(ic, mp)); }
+     * MealPartsDisplay(i18nControlAbstract, mp)); }
      * this.createModel(this.list_parts, this.table_1, this.mpd);
      * refreshNutritions();
      * / MealPart mp = new MealPart(msd.getSelectedObjectType(),
      * msd.getSelectedObject(), msd.getAmountValue()); this.list_parts.add(new
-     * MealPartsDispay(ic, mp));
+     * MealPartsDispay(i18nControlAbstract, mp));
      * this.createModel(this.list_parts, this.table_1, this.mpd);
      * refreshNutritions();
      */
@@ -773,11 +773,11 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
      * public void setParent(Object obj) {
      * setTypeOfAction(EditableAbstractPanel.ACTION_ADD);
      * this.meal = new Meal();
-     * this.label_title.setText(ic.getMessage("ADD_MEAL"));
+     * this.label_title.setText(i18nControlAbstract.getMessage("ADD_MEAL"));
      * this.meal_group = (MealGroup)obj;
      * this.tf_group.setText(this.meal_group.getName());
      * this.button_select.setEnabled(false);
-     * this.tf_name.setText(ic.getMessage("NEW_MEAL"));
+     * this.tf_name.setText(i18nControlAbstract.getMessage("NEW_MEAL"));
      * this.tf_name_i18n_key.setText(""); this.tf_name_i18n.setText("");
      * this.jta_desc.setText("");
      * this.loadMealsParts();
@@ -785,16 +785,16 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
      * public void setData(Object obj) { this.meal = (Meal)obj;
      * this.was_saved = false;
      * setTypeOfAction(EditableAbstractPanel.ACTION_EDIT);
-     * this.label_title.setText(ic.getMessage("MEAL_EDIT"));
+     * this.label_title.setText(i18nControlAbstract.getMessage("MEAL_EDIT"));
      * this.tf_name.setText(this.meal.getName());
      * this.tf_name_i18n_key.setText(this.meal.getName_i18n());
-     * this.tf_name_i18n.setText(ic.getMessage(this.meal.getName_i18n()));
+     * this.tf_name_i18n.setText(i18nControlAbstract.getMessage(this.meal.getName_i18n()));
      * this.jta_desc.setText(this.meal.getDescription());
      * if (this.meal.getGroup_id()>0) { this.meal_group =
-     * m_da.tree_roots.get("3").m_meal_groups_ht.get("" +
+     * dataAccess.tree_roots.get("3").m_meal_groups_ht.get("" +
      * this.meal.getGroup_id());
      * this.tf_group.setText(this.meal_group.getName()); } else {
-     * this.meal_group = null; this.tf_group.setText(ic.getMessage("ROOT")); }
+     * this.meal_group = null; this.tf_group.setText(i18nControlAbstract.getMessage("ROOT")); }
      * this.loadMealsParts(); this.button_select.setEnabled(true);
      * createKeyWord();
      * }

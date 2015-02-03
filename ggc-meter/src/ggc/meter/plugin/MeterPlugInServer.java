@@ -56,7 +56,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 {
 
     DataAccessMeter da_local; // = DataAccessMeter.getInstance();
-    // I18nControlAbstract ic_main = m_da.getI18nControlInstance();
+    // I18nControlAbstract ic_main = dataAccess.getI18nControlInstance();
     private static Log log = LogFactory.getLog(MeterPlugInServer.class);
 
     /**
@@ -172,8 +172,8 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 
             case MeterPlugInServer.COMMAND_CONFIGURATION:
                 {
-                    // m_da.listComponents();
-                    // new SimpleConfigurationDialog(this.m_da);
+                    // dataAccess.listComponents();
+                    // new SimpleConfigurationDialog(this.dataAccess);
                     new DeviceConfigurationDialog((JFrame) parent, da_local);
                     return;
                 }
@@ -254,22 +254,22 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         this.backup_restore_enabled = false;
 
         /*
-         * ic = da_local.getI18nControlInstance();
-         * da_local.setParentI18nControlInstance(m_da.getI18nControlInstance());
+         * i18nControlAbstract = da_local.getI18nControlInstance();
+         * da_local.setParentI18nControlInstance(dataAccess.getI18nControlInstance());
          * da_local.loadManager();
          * //DataAccessMeter da = DataAccessMeter.getInstance();
-         * // ic = da.getI18nControlInstance();
+         * // i18nControlAbstract = da.getI18nControlInstance();
          * da_local.addComponent(this.parent);
-         * da_local.setHelpContext(m_da.getHelpContext());
-         * da_local.setCurrentUserId(((DataAccess)m_da).current_user_id);
-         * da_local.createDb(m_da.getHibernateDb());
+         * da_local.setHelpContext(dataAccess.getHelpContext());
+         * da_local.setCurrentUserId(((DataAccess)dataAccess).current_user_id);
+         * da_local.createDb(dataAccess.getHibernateDb());
          */
 
         // FIXME
         // da_local.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow,
-        // m_da.getExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow));
+        // dataAccess.getExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow));
 
-        // DataAccessMeter.getInstance().setBGMeasurmentType(m_da.get)
+        // DataAccessMeter.getInstance().setBGMeasurmentType(dataAccess.get)
     }
 
     /**

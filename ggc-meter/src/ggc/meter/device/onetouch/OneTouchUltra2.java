@@ -224,8 +224,8 @@ public class OneTouchUltra2 extends OneTouchMeter
 
             }
 
-            this.output_writer.setSpecialProgress(100);
-            this.output_writer.setSubStatus(null);
+            this.outputWriter.setSpecialProgress(100);
+            this.outputWriter.setSubStatus(null);
 
         }
         catch (Exception ex)
@@ -237,10 +237,10 @@ public class OneTouchUltra2 extends OneTouchMeter
 
         if (this.isDeviceFinished())
         {
-            this.output_writer.endOutput();
+            this.outputWriter.endOutput();
         }
 
-        // this.output_writer.setStatus(100);
+        // this.outputWriter.setStatus(100);
         System.out.println("Reading finsihed");
 
     }

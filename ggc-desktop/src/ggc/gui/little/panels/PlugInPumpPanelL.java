@@ -37,7 +37,7 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
 
     private static final long serialVersionUID = 2496714983251707250L;
 
-    // private I18nControl ic = I18nControl.getInstance();
+    // private I18nControl i18nControlAbstract = I18nControl.getInstance();
 
     /**
      * Constructor

@@ -61,7 +61,7 @@ import com.atech.utils.data.TimeZoneUtil;
 public abstract class AscensiaMeterUsb extends AbstractUsbMeter
 {
 
-    // protected I18nControl ic = I18nControl.getInstance();
+    // protected I18nControl i18nControlAbstract = I18nControl.getInstance();
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     private static Log log = LogFactory.getLog(AscensiaMeterUsb.class);
@@ -126,8 +126,8 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
          */
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
-        this.output_writer = writer;
-        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        this.outputWriter = writer;
+        this.outputWriter.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
 
         // set meter type (this will be deprecated in future, but it's needed
         // for now
@@ -147,7 +147,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
                 // this.m_status = 1;
                 return;
 
-            this.output_writer.writeHeader();
+            this.outputWriter.writeHeader();
 
             // this.serialPort.notifyOnOutputEmpty(true); // notify on empty for
             // stopping
@@ -441,7 +441,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
         if (!this.device_running)
             return true;
 
-        if (this.output_writer.isReadingStopped())
+        if (this.outputWriter.isReadingStopped())
             return true;
 
         // if (vals.contains(this.end_strings[0]))
@@ -450,7 +450,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
         if (vals.contains(this.end_strings[1]))
         {
             // System.out.println("EOT");
-            this.output_writer.endOutput();
+            this.outputWriter.endOutput();
             // System.out.println("EOT");
             return true;
         }
@@ -465,7 +465,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
     public void setDeviceStopped()
     {
         this.device_running = false;
-        this.output_writer.endOutput();
+        this.outputWriter.endOutput();
     }
 
     /**
@@ -484,7 +484,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
         // If break event append BREAK RECEIVED message.
             case SerialPortEvent.BI:
                 System.out.println("recievied break");
-                this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+                this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
                 setDeviceStopped();
                 break;
             case SerialPortEvent.CD:
@@ -550,14 +550,14 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
         readDeviceId(devId);
         readDateInformation(date);
 
-        this.output_writer.writeDeviceIdentification();
+        this.outputWriter.writeDeviceIdentification();
 
     }
 
     protected void readDeviceId(String input)
     {
 
-        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+        DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
         // System.out.println("readDeviceId: " + input);
         StringTokenizer strtok = new StringTokenizer(input, "^");
@@ -568,7 +568,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
         String versions = strtok.nextToken();
         String serial = strtok.nextToken();
 
-        inf += ic.getMessage("PRODUCT_CODE") + ": ";
+        inf += i18nControlAbstract.getMessage("PRODUCT_CODE") + ": ";
 
         String tmp;
 
@@ -608,10 +608,10 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
         di.device_hardware_version = strtok2.nextToken();
         di.device_serial_number = serial;
 
-        inf += ic.getMessage("SOFTWARE_VERSION") + ": " + di.device_software_version;
-        inf += ic.getMessage("\nEEPROM_VERSION") + ": " + di.device_hardware_version;
+        inf += i18nControlAbstract.getMessage("SOFTWARE_VERSION") + ": " + di.device_software_version;
+        inf += i18nControlAbstract.getMessage("\nEEPROM_VERSION") + ": " + di.device_hardware_version;
 
-        inf += ic.getMessage("\nSERIAL_NUMBER") + ": " + serial;
+        inf += i18nControlAbstract.getMessage("\nSERIAL_NUMBER") + ": " + serial;
 
         // this.m_info = inf;
         System.out.println("Info: " + inf);
@@ -713,7 +713,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
                 // dv.setBG(DailyValuesRow.BG_MMOLL, value);
             }
 
-            this.output_writer.writeData(mve);
+            this.outputWriter.writeData(mve);
 
         }
         catch (Exception ex)

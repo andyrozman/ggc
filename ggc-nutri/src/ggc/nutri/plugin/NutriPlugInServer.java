@@ -105,7 +105,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
      * "MN_NUTRI_ABOUT" };
      */
 
-    // I18nControl ic = I18nControl.getInstance();
+    // I18nControl i18nControlAbstract = I18nControl.getInstance();
 
     /**
      * Constructor
@@ -156,7 +156,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
          * {
          * new DeviceConfigurationDialog((JFrame)this.parent,
          * DataAccessPump.getInstance());
-         * //new SimpleConfigurationDialog(this.m_da);
+         * //new SimpleConfigurationDialog(this.dataAccess);
          * return;
          * }
          * case PumpPlugInServer.COMMAND_PUMPS_LIST:
@@ -240,9 +240,9 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
             da_local = DataAccessNutri.createInstance(((ATDataAccessLMAbstract) m_da).getLanguageManager());
         }
 
-        // this.initPlugInServer((DataAccess)m_da, da_local);
+        // this.initPlugInServer((DataAccess)dataAccess, da_local);
 
-        // ic = m_da.getI18nControlInstance();
+        // i18nControlAbstract = dataAccess.getI18nControlInstance();
         // I18nControl.getInstance().setLanguage(this.selected_lang);
 
         // DataAccessNutri da = DataAccessNutri.getInstance();
@@ -250,7 +250,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         da_local.setHelpContext(this.m_da.getHelpContext());
         da_local.setPlugInServerInstance(this);
         da_local.setParentI18nControlInstance(ic);
-        // da.createDb(m_da.getHibernateDb());
+        // da.createDb(dataAccess.getHibernateDb());
         // da.initAllObjects();
         da_local.loadSpecialParameters();
 
@@ -260,11 +260,11 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         this.backup_restore_enabled = true;
         m_da.loadSpecialParameters();
         // System.out.println("PumpServer: " +
-        // m_da.getSpecialParameters().get("BG"));
+        // dataAccess.getSpecialParameters().get("BG"));
 
         this.ic_local = da_local.getI18nControlInstance();
 
-        // da.setBGMeasurmentType(m_da.getIntValueFromString(m_da.getSpecialParameters().get("BG")));
+        // da.setBGMeasurmentType(dataAccess.getIntValueFromString(dataAccess.getSpecialParameters().get("BG")));
     }
 
     /**

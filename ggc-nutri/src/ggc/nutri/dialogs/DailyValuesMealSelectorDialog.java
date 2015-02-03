@@ -128,9 +128,9 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
         /*
          * else if (cmd.equals("add_food"))
          * {
-         * MealSpecialSelectorDialog mssd = new MealSpecialSelectorDialog(m_da,
+         * MealSpecialSelectorDialog mssd = new MealSpecialSelectorDialog(dataAccess,
          * 0L);
-         * DailyFoodEntryDisplay dfed = new DailyFoodEntryDisplay(ic,
+         * DailyFoodEntryDisplay dfed = new DailyFoodEntryDisplay(i18nControlAbstract,
          * mssd.getDailyFoodEntry());
          * this.panel_meal_selector.addFoodPart(dfed);
          * }
@@ -139,14 +139,14 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
          * if (this.panel_meal_selector.getFoodTable().getSelectedRowCount()==0)
          * {
          * JOptionPane.showConfirmDialog(this,
-         * ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"),
+         * i18nControlAbstract.getMessage("SELECT_ITEM_FIRST"), i18nControlAbstract.getMessage("ERROR"),
          * JOptionPane.CLOSED_OPTION);
          * return;
          * }
          * NutritionDataDisplay ndd =
          * this.list_nutritions.get(this.table_1.getSelectedRow());
          * FoodPartMainSelectorDialog fpmsd = new
-         * FoodPartMainSelectorDialog(m_da, ndd);
+         * FoodPartMainSelectorDialog(dataAccess, ndd);
          * if (fpmsd.wasAction())
          * {
          * System.out.println("Returned value: " + fpmsd.getAmountValue());
@@ -159,12 +159,12 @@ public class DailyValuesMealSelectorDialog extends TransferDialog implements Act
          * if (this.table_1.getSelectedRowCount()==0)
          * {
          * JOptionPane.showConfirmDialog(this,
-         * ic.getMessage("SELECT_ITEM_FIRST"), ic.getMessage("ERROR"),
+         * i18nControlAbstract.getMessage("SELECT_ITEM_FIRST"), i18nControlAbstract.getMessage("ERROR"),
          * JOptionPane.CLOSED_OPTION);
          * return;
          * }
          * int ii = JOptionPane.showConfirmDialog(this,
-         * ic.getMessage("ARE_YOU_SURE_DELETE"), ic.getMessage("ERROR"),
+         * i18nControlAbstract.getMessage("ARE_YOU_SURE_DELETE"), i18nControlAbstract.getMessage("ERROR"),
          * JOptionPane.YES_NO_OPTION);
          * if (ii==JOptionPane.YES_OPTION)
          * {

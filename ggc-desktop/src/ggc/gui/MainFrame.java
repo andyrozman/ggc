@@ -208,8 +208,8 @@ public class MainFrame extends JFrame implements EventObserverInterface
         // System.out.println("MainFrame before creation");
         m_da = DataAccess.createInstance(this);
 
-        // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  m_da: "
-        // + m_da);
+        // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  dataAccess: "
+        // + dataAccess);
 
         m_ic = m_da.getI18nControlInstance();
 
@@ -246,11 +246,13 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         // setTitle("");
 
-        this.setSoftwareMode();
+
 
         createMenus();
 
         createToolBars();
+
+        this.setSoftwareMode();
 
         m_da.addObserver(DataAccess.OBSERVABLE_STATUS, this);
 
@@ -293,9 +295,9 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     private void setSoftwareMode()
     {
-        // System.out.println("SW: " + m_da.getSoftwareMode());
+        // System.out.println("SW: " + dataAccess.getSoftwareMode());
 
-        //if (m_da.getSoftwareMode() == -1)
+        //if (dataAccess.getSoftwareMode() == -1)
         //    return;
 
         String title_full = "  GGC - GNU Gluco Control (" + GGC.full_version + ")";
@@ -345,12 +347,12 @@ public class MainFrame extends JFrame implements EventObserverInterface
      * private void initPlugIns()
      * {
      * // TODO: deprecated
-     * m_da.addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this, m_ic));
-     * // m_da.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
-     * m_da.addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this, m_ic));
-     * // m_da.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
-     * m_da.addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this, m_ic));
-     * // m_da.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
+     * dataAccess.addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this, m_ic));
+     * // dataAccess.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
+     * dataAccess.addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this, m_ic));
+     * // dataAccess.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
+     * dataAccess.addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this, m_ic));
+     * // dataAccess.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
      * }
      */
 
@@ -550,10 +552,81 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     }
 
+
     private void helpInit()
     {
+        log.debug("JavaHelp - START");
+
+        //System.out.println("Help. Selected language: " + dataAccess.getLanguageManager().getSelectedLanguage());
+
+        HelpContext hc = m_da.getHelpContext();
+
+        log.debug("JavaHelp - HelpContext: " + hc);
+
+        JMenuItem helpItem = new JMenuItem(m_ic.getMessage("HELP") + "...");
+        helpItem.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
+        hc.setHelpItem(helpItem);
+
+        String mainHelpSetName = "/" +  m_da.getLanguageManager().getHelpSet();
+
+        log.debug("JavaHelp - MainHelpSetName: " + mainHelpSetName);
+
+        hc.setMainHelpSetName(mainHelpSetName);
+
+        // try to find the helpset and create a HelpBroker object
+        if (hc.getMainHelpBroker() == null)
+        {
+
+            HelpSet main_help_set = null;
+
+            try
+            {
+                URL hsURL = getClass().getResource(mainHelpSetName);
+                main_help_set = new HelpSet(null, hsURL);
+            }
+            catch (HelpSetException ex)
+            {
+                log.error("HelpSet " + mainHelpSetName + " could not be opened.", ex);
+            }
+
+            HelpBroker main_help_broker = null;
+
+            if (main_help_set != null)
+            {
+                log.debug("JavaHelp - Main Help Set present, creating broker.");
+                main_help_broker = main_help_set.createHelpBroker();
+            }
+
+            CSH.DisplayHelpFromSource csh = null;
+
+            if (main_help_broker != null)
+            {
+                // CSH.DisplayHelpFromSource is a convenience class to display the helpset
+                csh = new CSH.DisplayHelpFromSource(main_help_broker);
+
+                if (csh != null)
+                {
+                    // listen to ActionEvents from the helpItem
+                    hc.getHelpItem().addActionListener(csh);
+                }
+            }
+
+            hc.setDisplayHelpFromSourceInstance(csh);
+            hc.setMainHelpBroker(main_help_broker);
+            hc.setMainHelpSet(main_help_set);
+
+            CSH.trackCSEvents();
+        }
+
+        log.debug("JavaHelp - END");
+    }
+
+
+
+    private void helpInit_Old()
+    {
         // HelpContext hc = new HelpContext("../data/help/GGC.hs");
-        // m_da.setHelpContext(hc);
+        // dataAccess.setHelpContext(hc);
         boolean help_debug = true;
 
         if (help_debug)
@@ -564,8 +637,8 @@ public class MainFrame extends JFrame implements EventObserverInterface
         System.out.println("Help. Selected language: " + m_da.getLanguageManager().getSelectedLanguage());
 
         // String selected_language =
-        // m_da.getLanguageManager().getSelectedLanguage();
-        // String default_help = m_da.getLanguageManager().getDefaultHelp();
+        // dataAccess.getLanguageManager().getSelectedLanguage();
+        // String default_help = dataAccess.getLanguageManager().getDefaultHelp();
 
         HelpContext hc = m_da.getHelpContext();
 
@@ -1092,19 +1165,19 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
             if (command.startsWith("meters_"))
             {
-                m_da.getPlugIn(GGCPluginType.METER_TOOL_PLUGIN).actionPerformed(e);
+                m_da.getPlugIn(GGCPluginType.MeterToolPlugin).actionPerformed(e);
             }
             else if (command.startsWith("pumps_") || command.startsWith("report_print_pump"))
             {
-                m_da.getPlugIn(GGCPluginType.PUMP_TOOL_PLUGIN).actionPerformed(e);
+                m_da.getPlugIn(GGCPluginType.PumpToolPlugin).actionPerformed(e);
             }
             else if (command.startsWith("cgms_"))
             {
-                m_da.getPlugIn(GGCPluginType.CGMS_TOOL_PLUGIN).actionPerformed(e);
+                m_da.getPlugIn(GGCPluginType.CGMSToolPlugin).actionPerformed(e);
             }
             else if (command.startsWith("food_"))
             {
-                m_da.getPlugIn(GGCPluginType.NUTRITION_TOOL_PLUGIN).actionPerformed(e);
+                m_da.getPlugIn(GGCPluginType.NutritionToolPlugin).actionPerformed(e);
             }
             else if (command.equals("file_quit"))
             {
@@ -1124,7 +1197,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
             else if (command.equals("view_freq"))
             {
-                // new FrequencyGraphDialog(m_da);
+                // new FrequencyGraphDialog(dataAccess);
                 featureNotImplementedDescription(m_ic.getMessage("FREQGRAPHFRAME"), next_version);
             }
             else if (command.equals("view_hba1c"))
@@ -1177,17 +1250,17 @@ public class MainFrame extends JFrame implements EventObserverInterface
             /*
              * else if (command.equals("food_nutrition_1"))
              * {
-             * new NutritionTreeDialog(MainFrame.this, m_da,
+             * new NutritionTreeDialog(MainFrame.this, dataAccess,
              * GGCTreeRoot.TREE_USDA_NUTRITION);
              * }
              * else if (command.equals("food_nutrition_2"))
              * {
-             * new NutritionTreeDialog(MainFrame.this, m_da,
+             * new NutritionTreeDialog(MainFrame.this, dataAccess,
              * GGCTreeRoot.TREE_USER_NUTRITION);
              * }
              * else if (command.equals("food_meals"))
              * {
-             * new NutritionTreeDialog(MainFrame.this, m_da,
+             * new NutritionTreeDialog(MainFrame.this, dataAccess,
              * GGCTreeRoot.TREE_MEALS);
              * }
              */
@@ -1295,11 +1368,11 @@ public class MainFrame extends JFrame implements EventObserverInterface
                 // new DailyRowMealsDialog(null, new JDialog());
 
                 // spread graph
-                // new GraphViewer(new GraphViewSpread(), m_da);
+                // new GraphViewer(new GraphViewSpread(), dataAccess);
 
                 /*
                  * // graph course
-                 * new GraphViewer(new GraphViewCourse(), m_da);
+                 * new GraphViewer(new GraphViewCourse(), dataAccess);
                  */
 
                 // ratio calculator
@@ -1315,15 +1388,15 @@ public class MainFrame extends JFrame implements EventObserverInterface
                  * gc.set(GregorianCalendar.DAY_OF_MONTH, 18);
                  * gc.set(GregorianCalendar.MONTH, 10);
                  * gc.set(GregorianCalendar.YEAR, 2008);
-                 * new GraphViewer(new GraphViewDaily(gc), m_da);
+                 * new GraphViewer(new GraphViewDaily(gc), dataAccess);
                  */
 
-                // new HbA1cDialog(m_da);
+                // new HbA1cDialog(dataAccess);
                 // ImportDacioDb idb = new
                 // ImportDacioDb("../data/temp/zivila.csv", true); //args[
                 // idb.convertFoods();
                 /*
-                 * DayValuesData dvd = m_da.getDb().getDayValuesData(20081001,
+                 * DayValuesData dvd = dataAccess.getDb().getDayValuesData(20081001,
                  * 20091007); // .getMonthlyValues(yr,
                  * // mnth);
                  * PrintFoodMenuExt2 psm = new PrintFoodMenuExt2(dvd);
@@ -1346,7 +1419,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
                  * catch (Exception ex)
                  * {
                  * System.out.println("we falled into exception");
-                 * m_da.createErrorDialog("MainFrame", "", ex,
+                 * dataAccess.createErrorDialog("MainFrame", "", ex,
                  * "Exception in mainframe.");
                  * }
                  */
@@ -1456,7 +1529,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.menuBar.add(this.menus.get("MENU_FILE"));
         this.menuBar.add(this.menus.get("MENU_PEN"));
 
-        JMenu menu = getPlugInMenu(GGCPluginType.NUTRITION_TOOL_PLUGIN);
+        JMenu menu = getPlugInMenu(GGCPluginType.NutritionToolPlugin);
 
         if (menu != null)
         {
@@ -1491,7 +1564,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         this.menuBar.add(this.menus.get("MENU_PRINT"));
 
-        GGCPluginType[] keys = { GGCPluginType.METER_TOOL_PLUGIN, GGCPluginType.PUMP_TOOL_PLUGIN, GGCPluginType.CGMS_TOOL_PLUGIN, };
+        GGCPluginType[] keys = { GGCPluginType.MeterToolPlugin, GGCPluginType.PumpToolPlugin, GGCPluginType.CGMSToolPlugin, };
 
         for (GGCPluginType key : keys)
         {

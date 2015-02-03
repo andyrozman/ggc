@@ -154,8 +154,8 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         lblName.setText(m_da.getSettings().getUserName());
         lblIns1.setText(getInsulins(DataAccess.INSULIN_DOSE_BOLUS));
         lblIns2.setText(getInsulins(DataAccess.INSULIN_DOSE_BASAL));
-        // lblIns2.setText(m_da.getSettings().getIns2Name() + "  (" +
-        // m_da.getSettings().getIns2Abbr() + ")");
+        // lblIns2.setText(dataAccess.getSettings().getIns2Name() + "  (" +
+        // dataAccess.getSettings().getIns2Abbr() + ")");
         lblUnit.setText(m_da.getSettings().getBG_unitString());
 
         int unit = m_da.getSettings().getBG_unit();
@@ -176,7 +176,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
 
         float avg = (float) ((min + max) / 2.0);
 
-        // String s = m_da.getConfigurationManager().getFloatValue(key)
+        // String s = dataAccess.getConfigurationManager().getFloatValue(key)
 
         lblTarget.setText(DataAccess.Decimal1Format.format(min) + " - " + DataAccess.Decimal1Format.format(max) + " ["
                 + DataAccess.Decimal1Format.format(avg) + "]");

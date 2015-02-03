@@ -153,7 +153,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
      */
     public void reloadTable()
     {
-        // m_da.getDayStats(new GregorianCalendar());
+        // dataAccess.getDayStats(new GregorianCalendar());
         m_da.loadDailySettingsLittle(m_gc, true);
         this.m_mlp.dailyStats.getTableModel().setDailyValues(m_da.getDayStats(m_gc));
     }

@@ -55,7 +55,7 @@ public class PrefLanguagePane extends AbstractPrefOptionsPanel implements HelpCa
         ATSwingUtils.initLibrary();
         init();
 
-        // m_da.enableHelp(this);
+        // dataAccess.enableHelp(this);
         // parent = this;
     }
 
@@ -72,7 +72,7 @@ public class PrefLanguagePane extends AbstractPrefOptionsPanel implements HelpCa
         ATSwingUtils.getTitleLabel(m_ic.getMessage("LANGUAGE"), 0, 0, 500, 36, panel, ATSwingUtils.FONT_BIG_BOLD);
 
         /*
-         * JLabel label = new JLabel(ic.getMessage("LANGUAGE"));
+         * JLabel label = new JLabel(i18nControlAbstract.getMessage("LANGUAGE"));
          * label.setFont(font_big);
          * label.setBounds(0, 05, 420, 36);
          * label.setHorizontalAlignment(JLabel.CENTER);
@@ -84,7 +84,7 @@ public class PrefLanguagePane extends AbstractPrefOptionsPanel implements HelpCa
 
         /*
          * XA
-         * label = new JLabel(ic.getMessage("LANGPACK_VERSION") + ":");
+         * label = new JLabel(i18nControlAbstract.getMessage("LANGPACK_VERSION") + ":");
          * label.setFont(font_normal_b);
          * label.setBounds(40, 50, 360, 25);
          * panel.add(label);
@@ -101,7 +101,7 @@ public class PrefLanguagePane extends AbstractPrefOptionsPanel implements HelpCa
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         /*
-         * label = new JLabel(ic.getMessage("LANG_WITH_HELP") + ":");
+         * label = new JLabel(i18nControlAbstract.getMessage("LANG_WITH_HELP") + ":");
          * label.setFont(font_normal_b);
          * label.setBounds(60, 70, 360, 25);
          * panel.add(label);
@@ -117,7 +117,7 @@ public class PrefLanguagePane extends AbstractPrefOptionsPanel implements HelpCa
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         /*
-         * label = new JLabel(ic.getMessage("LANG_WITHOUT_HELP") + ":");
+         * label = new JLabel(i18nControlAbstract.getMessage("LANG_WITHOUT_HELP") + ":");
          * label.setFont(font_normal_b);
          * label.setBounds(60, 90, 360, 25);
          * panel.add(label);
@@ -141,7 +141,7 @@ public class PrefLanguagePane extends AbstractPrefOptionsPanel implements HelpCa
         /*
          * cb_DBs = new JComboBox(langInfo.availableLang);
          * cb_DBs.setBounds(40, 280, 300, 25);
-         * cb_DBs.setSelectedIndex(m_da.getSelectedLangIndex() - 1);
+         * cb_DBs.setSelectedIndex(dataAccess.getSelectedLangIndex() - 1);
          * cb_DBs.setFont(font_normal);
          * cb_DBs.addItemListener(this);
          * cb_DBs.setActionCommand("select_lang");

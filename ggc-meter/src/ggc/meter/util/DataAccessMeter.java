@@ -1,6 +1,7 @@
 package ggc.meter.util;
 
 import ggc.core.data.ExtendedDailyValue;
+import ggc.core.plugins.GGCPluginType;
 import ggc.meter.data.MeterDataHandler;
 import ggc.meter.data.MeterDataReader;
 import ggc.meter.data.cfg.MeterConfigurationDefinition;
@@ -187,6 +188,15 @@ public class DataAccessMeter extends DataAccessPlugInBase
     // ****** About Methods *****
     // ********************************************************
 
+
+    @Override
+    public GGCPluginType getPluginType()
+    {
+        return GGCPluginType.MeterToolPlugin;
+    }
+
+
+
     /**
      * Create About Context for plugin
      */
@@ -195,23 +205,16 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         I18nControlAbstract ic = getI18nControlInstance();
 
-        // about_title = ic.getMessage("METER_PLUGIN_ABOUT");
+        // about_title = i18nControlAbstract.getMessage("METER_PLUGIN_ABOUT");
         about_image_name = "/icons/about_meter.jpg";
         // about_image_name = "/icons/about_logo.gif";
         about_plugin_copyright_from = 2006;
-        // about_plugin_name = ic.getMessage("METER_PLUGIN");
+        // about_plugin_name = i18nControlAbstract.getMessage("METER_PLUGIN");
 
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
-        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.7.x", "www.atech-software.com", "LGPL",
-                "Helper Library for Swing/Hibernate/...",
-                "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
-        lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", "2.4", "commons.apache.org/lang/", "Apache",
-                "Helper methods for java.lang library"));
-        lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", "1.0.4", "commons.apache.org/logging/", "Apache",
-                "Logger and all around wrapper for logging utilities"));
-        lst_libs.add(new LibraryInfoEntry("dom4j", "1.6.1", "http://www.dom4j.org/", "BSD",
-                "Framework for Xml manipulation"));
-        lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.2", "www.rxtx.org", "LGPL", "Comm API"));
+
+        lst_libs.addAll(getBaseLibraries());
+
         lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c",
                 "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License",
                 "Xml parser for processing xml document",
@@ -253,7 +256,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         // FIXME
         lst_features.add(fg);
 
-        // fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
+        // fg = new FeaturesGroup(i18nControlAbstract.getMessage("NOT_IMPLEMENTED_FEATURES"));
         // fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
 
         // lst_features.add(fg);
@@ -294,7 +297,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
 
         this.loadWebLister();
 
-        // I18nControlAbstract ic = getI18nControlInstance();
+        // I18nControlAbstract i18nControlAbstract = getI18nControlInstance();
 
         weblister_items = new ArrayList<BaseListEntry>();
         weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/meters/abbott.html", 4));
@@ -311,7 +314,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         weblister_items.add(new BaseListEntry("U.S. Diagnostics", "/meters/us_diagnostics.html", 5));
         weblister_items.add(new BaseListEntry("WaveSense", "/meters/wavesense.html", 5));
 
-        // weblister_title = ic.getMessage("METERS_LIST_WEB");
+        // weblister_title = i18nControlAbstract.getMessage("METERS_LIST_WEB");
         weblister_desc = i18n_plugin.getMessage("METERS_LIST_WEB_DESC");
     }
 

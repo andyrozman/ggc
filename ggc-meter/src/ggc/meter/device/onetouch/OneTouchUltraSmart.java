@@ -123,8 +123,8 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
-        this.output_writer = writer;
-        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        this.outputWriter = writer;
+        this.outputWriter.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
 
         // set meter type (this will be deprecated in future, but it's needed
         // for now
@@ -145,7 +145,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
                 return;
             }
 
-            this.output_writer.writeHeader();
+            this.outputWriter.writeHeader();
 
         }
         catch (Exception ex)
@@ -293,8 +293,8 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     @Override
     public void readInfo()
     {
-        DeviceIdentification di = this.output_writer.getDeviceIdentification();
-        this.output_writer.setSubStatus(ic.getMessage("READING_SERIAL_NR_SETTINGS"));
+        DeviceIdentification di = this.outputWriter.getDeviceIdentification();
+        this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_SERIAL_NR_SETTINGS"));
 
         try
         {
@@ -312,8 +312,8 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
             String line = this.readLine();
             System.out.println("Serial number: " + line);
             di.device_serial_number = line;
-            this.output_writer.setDeviceIdentification(di);
-            this.output_writer.writeDeviceIdentification();
+            this.outputWriter.setDeviceIdentification(di);
+            this.outputWriter.writeDeviceIdentification();
         }
         catch (Exception ex)
         {
@@ -321,7 +321,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         }
         finally
         {
-            this.output_writer.setSpecialProgress(4);
+            this.outputWriter.setSpecialProgress(4);
         }
     }
 
@@ -414,9 +414,9 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
 
         logger.info("Reading device data - done");
 
-        this.output_writer.setSpecialProgress(100);
-        this.output_writer.setSubStatus(null);
-        this.output_writer.endOutput();
+        this.outputWriter.setSpecialProgress(100);
+        this.outputWriter.setSubStatus(null);
+        this.outputWriter.endOutput();
     }
 
     /**
@@ -440,7 +440,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         int recNo = this.entries_current + 1;
 
         String msg = "Processing record #" + recNo++;
-        this.output_writer.setSubStatus(ic.getMessage("READING_PROCESSING_ENTRY") + recNo);
+        this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_PROCESSING_ENTRY") + recNo);
         entries_current++;
 
         // stripping the comm bytes and checksum byte
@@ -521,7 +521,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
 
         mve.setBgValue(Integer.toString(bgMg));
 
-        this.output_writer.writeData(mve);
+        this.outputWriter.writeData(mve);
     }
 
     @SuppressWarnings("unused")
@@ -662,7 +662,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     {
         float proc_read = this.entries_current * 1.0f / this.entries_max;
         float proc_total = 4 + 96 * proc_read;
-        this.output_writer.setSpecialProgress((int) proc_total);
+        this.outputWriter.setSpecialProgress((int) proc_total);
     }
 
 }

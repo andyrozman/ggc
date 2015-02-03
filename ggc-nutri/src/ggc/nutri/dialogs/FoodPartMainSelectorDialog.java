@@ -308,9 +308,9 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 
         action_done = false;
         /*
-         * type = new String[3]; type[0] = ic.getMessage("USDA_NUTRITION");
-         * type[1] = ic.getMessage("USER_NUTRITION"); type[2] =
-         * ic.getMessage("MEAL");
+         * type = new String[3]; type[0] = i18nControlAbstract.getMessage("USDA_NUTRITION");
+         * type[1] = i18nControlAbstract.getMessage("USER_NUTRITION"); type[2] =
+         * i18nControlAbstract.getMessage("MEAL");
          */
 
         font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
@@ -324,17 +324,17 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 
         /*
          * JPanel panel1 = new JPanel(); panel1.setBorder(new
-         * TitledBorder(ic.getMessage("SELECTOR"))); panel1.setLayout(null);
+         * TitledBorder(i18nControlAbstract.getMessage("SELECTOR"))); panel1.setLayout(null);
          * panel1.setBounds(10, 10, 270, 140); panel.add(panel1, null);
          * //new javax.swing.border.TitledBorder("Some");
          * //javax.swing.border.
          * JLabel label = new
-         * JLabel(ic.getMessage("NUTRITION_TYPE_FOR_SELECTOR"));
+         * JLabel(i18nControlAbstract.getMessage("NUTRITION_TYPE_FOR_SELECTOR"));
          * label.setBounds(30, 20, 220, 25); label.setFont(font_normal_b);
          * panel1.add(label, null);
          * cb_type = new JComboBox(type); cb_type.setBounds(30, 50, 210, 25);
          * panel1.add(cb_type);
-         * button_select = new JButton(ic.getMessage("SELECT_ITEM"));
+         * button_select = new JButton(i18nControlAbstract.getMessage("SELECT_ITEM"));
          * button_select.setActionCommand("select_item");
          * button_select.setBounds(30, 95, 210, 25);
          * button_select.addActionListener(this); panel1.add(button_select,
@@ -357,10 +357,10 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         panel2.add(button_select, null);
 
         /*
-         * label = new JLabel(ic.getMessage("NUTRITION_TYPE")+ ":");
+         * label = new JLabel(i18nControlAbstract.getMessage("NUTRITION_TYPE")+ ":");
          * label.setBounds(20, 25, 220, 25); label.setFont(font_normal_b);
          * panel2.add(label, null);
-         * label_item_type = new JLabel(ic.getMessage("NONE"));
+         * label_item_type = new JLabel(i18nControlAbstract.getMessage("NONE"));
          * label_item_type.setBounds(20, 45, 220, 25);
          * label_item_type.setFont(font_normal); panel2.add(label_item_type,
          * null);
@@ -446,12 +446,12 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         panel.add(help_button);
 
         /*
-         * JButton button = new JButton(ic.getMessage("OK"));
+         * JButton button = new JButton(i18nControlAbstract.getMessage("OK"));
          * button.setActionCommand("ok");
          * button.setBounds(65, button_y, 80, 25);
          * button.addActionListener(this);
          * panel.add(button, null);
-         * button = new JButton(ic.getMessage("CANCEL"));
+         * button = new JButton(i18nControlAbstract.getMessage("CANCEL"));
          * button.setActionCommand("cancel");
          * button.setBounds(160, button_y, 80, 25);
          * button.addActionListener(this);

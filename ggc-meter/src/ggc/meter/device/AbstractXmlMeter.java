@@ -49,8 +49,8 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     public AbstractXmlMeter(OutputWriter ow)
     {
         super(DataAccessMeter.getInstance(), ow);
-        m_da = DataAccessMeter.getInstance();
-        ic = m_da.getI18nControlInstance();
+        dataAccess = DataAccessMeter.getInstance();
+        i18nControlAbstract = dataAccess.getI18nControlInstance();
     }
 
     /**
@@ -81,19 +81,19 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
     {
         this.device_name = device;
 
-        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(dataAccess.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
 
-        if (this.output_writer != null)
+        if (this.outputWriter != null)
         {
-            this.output_writer.setDeviceIdentification(di);
-            // this.output_writer.
+            this.outputWriter.setDeviceIdentification(di);
+            // this.outputWriter.
             // this.device_instance =
             // MeterManager.getInstance().getMeterDevice(group, device);
         }
 
-        this.device_source_name = group + " " + device;
+        this.deviceSourceName = group + " " + device;
     }
 
     public void dispose()

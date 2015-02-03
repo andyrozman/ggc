@@ -157,12 +157,12 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
         panel.add(help_button);
 
         /*
-         * JButton button = new JButton(ic.getMessage("OK"));
+         * JButton button = new JButton(i18nControlAbstract.getMessage("OK"));
          * button.setActionCommand("select");
          * button.setBounds(180, 30, 80, 25);
          * button.addActionListener(this);
          * panel.add(button);
-         * button = new JButton(ic.getMessage("CANCEL"));
+         * button = new JButton(i18nControlAbstract.getMessage("CANCEL"));
          * button.setActionCommand("close");
          * button.setBounds(180, 60, 80, 25);
          * button.addActionListener(this);
@@ -172,7 +172,7 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
         tree = new JTree();
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         this.setTreeModel(tree);
-        // tree.setModel(new NutritionTreeModel(m_da.m_nutrition_treeroot));
+        // tree.setModel(new NutritionTreeModel(dataAccess.m_nutrition_treeroot));
         tree.addTreeSelectionListener(this);
 
         JScrollPane treeView = new JScrollPane(tree);

@@ -79,7 +79,7 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
     {
         super(dia);
         init();
-        // m_da.enableHelp(this);
+        // dataAccess.enableHelp(this);
     }
 
     private void init()
@@ -95,7 +95,7 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
         a.add(fieldIns1Name = new JTextField(m_da.getSettings().getIns1Name(), 20));
         a.add(new JLabel(m_ic.getMessage("INSULIN") + " 1 " + m_ic.getMessage("SETTINGS") + ":"));
         // a.add(fieldIns1Abbr = new
-        // JTextField(m_da.getSettings().getIns1Abbr(), 20));
+        // JTextField(dataAccess.getSettings().getIns1Abbr(), 20));
         a.add(this.cb_ins1_type = new JComboBox(this.insulin_settings));
         this.cb_ins1_type.setSelectedIndex(m_da.getSettings().getIns1Type());
 
@@ -103,7 +103,7 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
         a.add(fieldIns2Name = new JTextField(m_da.getSettings().getIns2Name(), 20));
         a.add(new JLabel(m_ic.getMessage("INSULIN") + " 2 " + m_ic.getMessage("SETTINGS") + ":"));
         // a.add(fieldIns2Abbr = new
-        // JTextField(m_da.getSettings().getIns2Abbr(), 20));
+        // JTextField(dataAccess.getSettings().getIns2Abbr(), 20));
         a.add(this.cb_ins2_type = new JComboBox(this.insulin_settings));
         this.cb_ins2_type.setSelectedIndex(m_da.getSettings().getIns2Type());
         // this.cb_ins1_type
@@ -115,7 +115,7 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
         this.cb_ins3_type.setSelectedIndex(m_da.getSettings().getIns3Type());
 
         // a.add(this.tb_ins3_abbr = new
-        // JTextField(m_da.getSettings().getIns3Abbr(), 20));
+        // JTextField(dataAccess.getSettings().getIns3Abbr(), 20));
         a.add(new JLabel(m_ic.getMessage("PUMP_INSULIN") + ":"));
         a.add(this.tb_pump_insulin = new JTextField(m_da.getSettings().getPumpInsulin(), 20));
 
@@ -170,16 +170,16 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
          * TitledBorder(m_ic.getMessage("BLOOD_GLUCOSE_SETTINGS_1")));
          * c.add(new JLabel(m_ic.getMessage("HIGH_BG") + ":"));
          * c.add(fieldHighBG1 = new JTextField("" +
-         * m_da.getSettings().getBG1_High(), 10));
+         * dataAccess.getSettings().getBG1_High(), 10));
          * c.add(new JLabel(m_ic.getMessage("LOW_BG") + ":"));
          * c.add(fieldLowBG1 = new JTextField("" +
-         * m_da.getSettings().getBG1_Low(), 10));
+         * dataAccess.getSettings().getBG1_Low(), 10));
          * c.add(new JLabel(m_ic.getMessage("TARGET_HIGH_BG") + ":"));
          * c.add(fieldTargetHighBG1 = new JTextField("" +
-         * m_da.getSettings().getBG1_TargetHigh(), 10));
+         * dataAccess.getSettings().getBG1_TargetHigh(), 10));
          * c.add(new JLabel(m_ic.getMessage("TARGET_LOW_BG") + ":"));
          * c.add(fieldTargetLowBG1 = new JTextField("" +
-         * m_da.getSettings().getBG1_TargetLow(), 10));
+         * dataAccess.getSettings().getBG1_TargetLow(), 10));
          * fieldHighBG1.getDocument().addDocumentListener(this);
          * fieldLowBG1.getDocument().addDocumentListener(this);
          * fieldTargetHighBG1.getDocument().addDocumentListener(this);
@@ -190,16 +190,16 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
          * TitledBorder(m_ic.getMessage("BLOOD_GLUCOSE_SETTINGS_2")));
          * b.add(new JLabel(m_ic.getMessage("HIGH_BG") + ":"));
          * b.add(fieldHighBG2 = new JTextField("" +
-         * m_da.getSettings().getBG2_High(), 10));
+         * dataAccess.getSettings().getBG2_High(), 10));
          * b.add(new JLabel(m_ic.getMessage("LOW_BG") + ":"));
          * b.add(fieldLowBG2 = new JTextField("" +
-         * m_da.getSettings().getBG2_Low(), 10));
+         * dataAccess.getSettings().getBG2_Low(), 10));
          * b.add(new JLabel(m_ic.getMessage("TARGET_HIGH_BG") + ":"));
          * b.add(fieldTargetHighBG2 = new JTextField("" +
-         * m_da.getSettings().getBG2_TargetHigh(), 10));
+         * dataAccess.getSettings().getBG2_TargetHigh(), 10));
          * b.add(new JLabel(m_ic.getMessage("TARGET_LOW_BG") + ":"));
          * b.add(fieldTargetLowBG2 = new JTextField("" +
-         * m_da.getSettings().getBG2_TargetLow(), 10));
+         * dataAccess.getSettings().getBG2_TargetLow(), 10));
          * fieldHighBG2.getDocument().addDocumentListener(this);
          * fieldLowBG2.getDocument().addDocumentListener(this);
          * fieldTargetHighBG2.getDocument().addDocumentListener(this);
@@ -244,7 +244,7 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel implements Hel
             cb_ratio_type.setSelectedIndex(1);
         }
 
-        // d.add(cbUnit = new JComboBox(m_da.bg_units));
+        // d.add(cbUnit = new JComboBox(dataAccess.bg_units));
         // cbUnit.setSelectedIndex(settings.getBG_unit() - 1);
 
         Box i = Box.createVerticalBox();

@@ -43,8 +43,8 @@ public abstract class AbstractOtherMeter extends AbstractMeter /**extends XmlPro
     public AbstractOtherMeter()
     {
         super();
-        m_da = DataAccessMeter.getInstance();
-        ic = m_da.getI18nControlInstance();
+        dataAccess = DataAccessMeter.getInstance();
+        i18nControlAbstract = dataAccess.getI18nControlInstance();
     }
 
     /**
@@ -54,8 +54,8 @@ public abstract class AbstractOtherMeter extends AbstractMeter /**extends XmlPro
     public AbstractOtherMeter(AbstractDeviceCompany cmp)
     {
         super();
-        m_da = DataAccessMeter.getInstance();
-        ic = m_da.getI18nControlInstance();
+        dataAccess = DataAccessMeter.getInstance();
+        i18nControlAbstract = dataAccess.getI18nControlInstance();
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
@@ -74,19 +74,19 @@ public abstract class AbstractOtherMeter extends AbstractMeter /**extends XmlPro
     {
         this.device_name = device;
 
-        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(dataAccess.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
 
-        if (this.output_writer != null)
+        if (this.outputWriter != null)
         {
-            this.output_writer.setDeviceIdentification(di);
-            // this.output_writer.
+            this.outputWriter.setDeviceIdentification(di);
+            // this.outputWriter.
             // this.device_instance =
             // MeterManager.getInstance().getMeterDevice(group, device);
         }
 
-        this.device_source_name = group + " " + device;
+        this.deviceSourceName = group + " " + device;
     }
 
     /**

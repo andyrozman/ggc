@@ -257,7 +257,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         scroll_1.updateUI();
 
         this.button = new JButton(m_da.getImageIcon("food_add.gif", 27, 27, this));
-        // new ImageIcon(m_da.getImage("/icons/food_add.gif", this)));
+        // new ImageIcon(dataAccess.getImage("/icons/food_add.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("add_nutrition");
         this.button.setToolTipText(ic.getMessage("MEAL_FOOD_ADD_DESC"));
@@ -265,7 +265,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         this.add(button, null);
 
         this.button = new JButton(m_da.getImageIcon("food_edit.gif", 27, 27, this));
-        // new ImageIcon(m_da.getImage("/icons/food_edit.gif", this)));
+        // new ImageIcon(dataAccess.getImage("/icons/food_edit.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("edit_nutrition");
         this.button.setToolTipText(ic.getMessage("MEAL_FOOD_EDIT_DESC"));
@@ -273,7 +273,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         this.add(button, null);
 
         this.button = new JButton(m_da.getImageIcon("food_delete.gif", 27, 27, this));
-        // new ImageIcon(m_da.getImage("/icons/food_delete.gif", this)));
+        // new ImageIcon(dataAccess.getImage("/icons/food_delete.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("remove_nutrition");
         this.button.setToolTipText(ic.getMessage("MEAL_FOOD_DELETE_DESC"));
@@ -303,7 +303,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         scroll_2.updateUI();
 
         this.button = new JButton(m_da.getImageIcon("weight_add.png", 27, 27, this));
-        // new ImageIcon(m_da.get.getImage("/icons/food_add.gif", this)));
+        // new ImageIcon(dataAccess.get.getImage("/icons/food_add.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("add_home_weight");
         this.button.setToolTipText(ic.getMessage("HOME_WEIGHT_ADD_DESC"));
@@ -311,7 +311,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         this.add(button, null);
 
         this.button = new JButton(m_da.getImageIcon("weight_edit.png", 27, 27, this));
-        // new ImageIcon(m_da.getImage("/icons/food_edit.gif", this)));
+        // new ImageIcon(dataAccess.getImage("/icons/food_edit.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("edit_home_weight");
         this.button.setToolTipText(ic.getMessage("HOME_WEIGHT_EDIT_DESC"));
@@ -319,7 +319,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         this.add(button, null);
 
         this.button = new JButton(m_da.getImageIcon("weight_delete.png", 27, 27, this));
-        // new ImageIcon(m_da.getImage("/icons/food_delete.gif", this)));
+        // new ImageIcon(dataAccess.getImage("/icons/food_delete.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("remove_home_weight");
         this.button.setToolTipText(ic.getMessage("HOME_WEIGHT_DELETE_DESC"));
@@ -329,7 +329,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         button = new JButton(m_da.getImageIcon("disk_blue.png", 27, 27, this));
         // button.setAlignmentX(JButton.CENTER_ALIGNMENT);
         // button.setAlignmentY(JButton.CENTER_ALIGNMENT);
-        // button.setIcon(m_da.getImageIcon("disk_blue.png", 30, 30, this));
+        // button.setIcon(dataAccess.getImageIcon("disk_blue.png", 30, 30, this));
         button.setBounds(440, 10, 32, 32);
         button.addActionListener(this);
         button.setActionCommand("save");
@@ -622,7 +622,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
 
         if (this.food.getGroup_id() > 0)
         {
-            // this.food_group = m_da.tree_roots.get("2").m_groups_ht.get("" +
+            // this.food_group = dataAccess.tree_roots.get("2").m_groups_ht.get("" +
             // this.food.getGroup_id());
             this.food_group = m_da.getDbCache().tree_roots.get("2").findFoodGroup(2, this.food.getGroup_id());
             this.tf_group.setText(this.food_group.getName());
@@ -710,7 +710,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         }
 
         this.temp_nutritions = sb.toString();
-        // m_da.replaceExpression(sb.toString(), ".", ",");
+        // dataAccess.replaceExpression(sb.toString(), ".", ",");
         // sb.toString().replaceAll(".", ",");
 
         Collections.sort(this.list_hweight, new HomeWeightComparator());
@@ -728,7 +728,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         }
 
         this.temp_home_weight = sb.toString();
-        // m_da.replaceExpression(sb.toString(), ".", ",");
+        // dataAccess.replaceExpression(sb.toString(), ".", ",");
         // sb.toString().replaceAll(".", ",");
 
     }
@@ -827,9 +827,9 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
     private void addFood2Tree(FoodDescription _food)
     {
         // System.out.println(food);
-        // m_da.tree_roots.get("2").m_groups_ht.get("" +
+        // dataAccess.tree_roots.get("2").m_groups_ht.get("" +
         // _food.getGroup_id()).addChild(_food);
-        // m_da.tree_roots.get("2").m_foods_ht.put("" + _food.getId(), _food);
+        // dataAccess.tree_roots.get("2").m_foods_ht.put("" + _food.getId(), _food);
 
         m_da.getDbCache().tree_roots.get("2").addFood2Tree(2, _food);
 
@@ -839,7 +839,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
     private void removeFoodFromTree(FoodDescription _food, long prev_group_id)
     {
         m_da.getDbCache().tree_roots.get("2").removeFoodFromTree(2, _food, prev_group_id);
-        // m_da.tree_roots.get("2").m_groups_ht.get("" +
+        // dataAccess.tree_roots.get("2").m_groups_ht.get("" +
         // prev_group_id).removeChild(_food);
     }
 

@@ -63,7 +63,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
     {
         super(dia);
         init();
-        // m_da.enableHelp(this);
+        // dataAccess.enableHelp(this);
     }
 
     private void init()

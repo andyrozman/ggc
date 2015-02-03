@@ -229,14 +229,14 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
      * dateComponentTo.setBounds(40, 250, 120, 25);
      * panel.add(dateComponentTo);
      * JButton button = new JButton("   " + i18nControl.getMessage("OK"));
-     * // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+     * // button.setFont(dataAccess.getFont(DataAccess.FONT_NORMAL));
      * button.setActionCommand("ok");
      * button.addActionListener(this);
      * button.setIcon(dataAccess.getImageIcon_22x22("ok.png", this));
      * button.setBounds(40, 340, 125, 25);
      * panel.add(button);
      * button = new JButton("   " + i18nControl.getMessage("CANCEL"));
-     * // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+     * // button.setFont(dataAccess.getFont(DataAccess.FONT_NORMAL));
      * button.setActionCommand("cancel");
      * button.setIcon(dataAccess.getImageIcon_22x22("cancel.png", this));
      * button.addActionListener(this);

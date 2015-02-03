@@ -48,7 +48,7 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
     private JLabel lblReadings;
     private JLabel lblReadingsPerDay;
 
-    // private DataAccess m_da = DataAccess.getInstance();
+    // private DataAccess dataAccess = DataAccess.getInstance();
 
     /**
      * Constructor

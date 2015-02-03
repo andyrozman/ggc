@@ -127,7 +127,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel implements M
         items.add(m_ic.getMessage("INS_SLASH_BU_QUOTIENT"));
 
         init();
-        // m_da.enableHelp(this);
+        // dataAccess.enableHelp(this);
     }
 
     private void init()

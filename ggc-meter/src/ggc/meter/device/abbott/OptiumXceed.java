@@ -97,8 +97,8 @@ public class OptiumXceed extends AbstractSerialMeter
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
-        this.output_writer = writer;
-        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        this.outputWriter = writer;
+        this.outputWriter.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
 
         // set meter type (this will be deprecated in future, but it's needed
         // for now
@@ -119,7 +119,7 @@ public class OptiumXceed extends AbstractSerialMeter
                 return;
             }
 
-            this.output_writer.writeHeader();
+            this.outputWriter.writeHeader();
 
         }
         catch (Exception ex)
@@ -147,8 +147,8 @@ public class OptiumXceed extends AbstractSerialMeter
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
-        this.output_writer = writer;
-        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        this.outputWriter = writer;
+        this.outputWriter.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
 
         // set meter type (this will be deprecated in future, but it's needed
         // for now
@@ -169,7 +169,7 @@ public class OptiumXceed extends AbstractSerialMeter
                 return;
             }
 
-            this.output_writer.writeHeader();
+            this.outputWriter.writeHeader();
 
         }
         catch (Exception ex)
@@ -197,7 +197,7 @@ public class OptiumXceed extends AbstractSerialMeter
 
             this.sendMessageToMeter("1GET_EVENTS\00348\r\n");
 
-            this.output_writer.setSubStatus(ic.getMessage("PIX_READING"));
+            this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("PIX_READING"));
 
             for (data_back = readLine(); data_back.indexOf("END_OF_DATA") == -1;)
             {
@@ -212,7 +212,7 @@ public class OptiumXceed extends AbstractSerialMeter
                     break;
                 }
 
-                if (this.output_writer.isReadingStopped())
+                if (this.outputWriter.isReadingStopped())
                 {
                     break;
                 }
@@ -222,12 +222,12 @@ public class OptiumXceed extends AbstractSerialMeter
             writeCommand(6);
             readByteTimed();
 
-            this.output_writer.setSpecialProgress(100);
-            this.output_writer.setSubStatus(null);
+            this.outputWriter.setSpecialProgress(100);
+            this.outputWriter.setSubStatus(null);
 
             if (this.isDeviceFinished())
             {
-                this.output_writer.endOutput();
+                this.outputWriter.endOutput();
             }
 
         }
@@ -294,7 +294,7 @@ public class OptiumXceed extends AbstractSerialMeter
 
         try
         {
-            String[] data = m_da.splitString(line, "\t");
+            String[] data = dataAccess.splitString(line, "\t");
 
             if (!data[1].equals("1"))
                 return;
@@ -365,9 +365,9 @@ public class OptiumXceed extends AbstractSerialMeter
 
     private void endReading()
     {
-        this.output_writer.setSubStatus(null);
-        this.output_writer.endOutput();
-        this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+        this.outputWriter.setSubStatus(null);
+        this.outputWriter.endOutput();
+        this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
         // System.out.println("Reading finished prematurely !");
     }
 
@@ -406,8 +406,8 @@ public class OptiumXceed extends AbstractSerialMeter
     {
         try
         {
-            this.output_writer.setSubStatus(ic.getMessage("READING_SERIAL_NR_SETTINGS"));
-            this.output_writer.setSpecialProgress(1);
+            this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_SERIAL_NR_SETTINGS"));
+            this.outputWriter.setSpecialProgress(1);
 
             if (!this.startMessageToMeter())
                 return;
@@ -430,20 +430,20 @@ public class OptiumXceed extends AbstractSerialMeter
             }
 
             // first we read device identification data
-            DeviceIdentification di = this.output_writer.getDeviceIdentification();
+            DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
             di.device_serial_number = ids[0]; // this.readLineDebug();
-            this.output_writer.setSpecialProgress(2);
+            this.outputWriter.setSpecialProgress(2);
             di.device_hardware_version = ids[1]; // this.readLineDebug();
-            this.output_writer.setSpecialProgress(3);
+            this.outputWriter.setSpecialProgress(3);
             // this.readLineDebug();
-            this.output_writer.setSpecialProgress(4);
+            this.outputWriter.setSpecialProgress(4);
             this.entries_max = this.getMaxMemoryRecords(); // Integer.parseInt(this.readLineDebug());
 
-            this.output_writer.setDeviceIdentification(di);
-            this.output_writer.writeDeviceIdentification();
+            this.outputWriter.setDeviceIdentification(di);
+            this.outputWriter.writeDeviceIdentification();
 
-            this.output_writer.setSpecialProgress(5);
+            this.outputWriter.setSpecialProgress(5);
 
         }
         catch (Exception ex)
@@ -468,10 +468,10 @@ public class OptiumXceed extends AbstractSerialMeter
         MeterValuesEntry mve = new MeterValuesEntry();
         mve.setBgUnit(OutputUtil.BG_MGDL);
 
-        mve.setBgValue("" + m_da.getIntValueFromString(data));
+        mve.setBgValue("" + dataAccess.getIntValueFromString(data));
         mve.setDateTimeObject(adt);
 
-        this.output_writer.writeData(mve);
+        this.outputWriter.writeData(mve);
         this.entries_current++;
         readingEntryStatus();
     }
@@ -492,11 +492,11 @@ public class OptiumXceed extends AbstractSerialMeter
 
         mve.setDateTimeObject(adt);
         mve.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MMOLL, DataAccessPlugInBase.Decimal1Format
-                .format(m_da.getBGValueByType(DataAccessPlugInBase.BG_MGDL, DataAccessPlugInBase.BG_MMOL, data)));
+                .format(dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MGDL, DataAccessPlugInBase.BG_MMOL, data)));
 
-        // mve.setBgValue("" + m_da.getIntValueFromString(data));
+        // mve.setBgValue("" + dataAccess.getIntValueFromString(data));
 
-        this.output_writer.writeData(mve);
+        this.outputWriter.writeData(mve);
         this.entries_current++;
         readingEntryStatus();
     }
@@ -504,14 +504,14 @@ public class OptiumXceed extends AbstractSerialMeter
     protected void setDeviceStopped()
     {
         this.device_running = false;
-        this.output_writer.endOutput();
+        this.outputWriter.endOutput();
     }
 
     protected ATechDate getDateTime(String date, String time)
     {
-        long dt = m_da.getLongValueFromString(date) * 10000L;
+        long dt = dataAccess.getLongValueFromString(date) * 10000L;
         String tm = ATDataAccessAbstract.replaceExpression(time, ":", "");
-        dt += m_da.getLongValueFromString(tm);
+        dt += dataAccess.getLongValueFromString(tm);
 
         return tzu.getCorrectedDateTime(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dt));
     }
@@ -522,7 +522,7 @@ public class OptiumXceed extends AbstractSerialMeter
     {
         float proc_read = this.entries_current * 1.0f / this.entries_max;
         float proc_total = 5 + 95 * proc_read;
-        this.output_writer.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
+        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
     }
 
     /**
@@ -551,7 +551,7 @@ public class OptiumXceed extends AbstractSerialMeter
         // If break event append BREAK RECEIVED message.
             case SerialPortEvent.BI:
                 System.out.println("recievied break");
-                this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+                this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
                 // setDeviceStopped();
                 break;
             case SerialPortEvent.CD:

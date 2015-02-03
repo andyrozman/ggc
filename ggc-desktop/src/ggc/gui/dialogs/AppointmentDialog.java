@@ -123,7 +123,7 @@ public class AppointmentDialog extends JDialog implements ActionListener
          * cb_template.setBounds(40, 105, 230, 25);
          * panel.add(cb_template);
          */
-        // int year = m_da.getC
+        // int year = dataAccess.getC
 
         int year = gc.get(Calendar.YEAR);
         int month = gc.get(Calendar.MONTH) + 1;
@@ -145,7 +145,7 @@ public class AppointmentDialog extends JDialog implements ActionListener
         /*
          * tfName = new JTextField();
          * tfName.setBounds(120, 205, 160, 25);
-         * tfName.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+         * tfName.setFont(dataAccess.getFont(DataAccess.FONT_NORMAL));
          * //panel.add(sl);
          */
 

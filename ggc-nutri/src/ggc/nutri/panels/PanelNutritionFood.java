@@ -159,7 +159,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         this.add(label_name_i18n, null);
 
         /*
-         * label = new JLabel(ic.getMessage("TRANSLATED_NAME") + ":");
+         * label = new JLabel(i18nControlAbstract.getMessage("TRANSLATED_NAME") + ":");
          * label.setBounds(30, 140, 300, 60); label.setFont(fnt_14_bold);
          * this.add(label, null);
          * this.label_name_i18n = new JLabel(); // 180
@@ -235,7 +235,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         label.setFont(fnt_14_bold);
         this.add(label, null);
 
-        // HomeWeightDataDisplay hwd = new HomeWeightDataDisplay(ic);
+        // HomeWeightDataDisplay hwd = new HomeWeightDataDisplay(i18nControlAbstract);
         // System.out.println(hwd.getColumnsCount());
 
         table_2 = new JTable();
@@ -301,7 +301,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
         if (fd.getGroup_id() > 0)
         {
-            // this.food_group = m_da.tree_roots.get("" +
+            // this.food_group = dataAccess.tree_roots.get("" +
             // fd.getFoodType()).m_groups_ht.get("" + fd.getGroup_id());
 
             this.food_group = m_da.getDbCache().tree_roots.get("" + fd.getFoodType()).findFoodGroup(fd.getFoodType(),

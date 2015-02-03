@@ -48,7 +48,7 @@ public class DeviceInfoPanel extends AbstractInfoPanel
     private JLabel lblPump;
     private JLabel lblCgms;
 
-    // private DataAccess m_da = DataAccess.getInstance();
+    // private DataAccess dataAccess = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -128,17 +128,17 @@ public class DeviceInfoPanel extends AbstractInfoPanel
     @Override
     public void doRefresh()
     {
-        if (m_da.isPluginAvailable(GGCPluginType.METER_TOOL_PLUGIN))
+        if (m_da.isPluginAvailable(GGCPluginType.MeterToolPlugin))
         {
-            lblMeter.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.METER_TOOL_PLUGIN)));
+            lblMeter.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.MeterToolPlugin)));
         }
-        if (m_da.isPluginAvailable(GGCPluginType.PUMP_TOOL_PLUGIN))
+        if (m_da.isPluginAvailable(GGCPluginType.PumpToolPlugin))
         {
-            lblPump.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.PUMP_TOOL_PLUGIN)));
+            lblPump.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.PumpToolPlugin)));
         }
-        if (m_da.isPluginAvailable(GGCPluginType.CGMS_TOOL_PLUGIN))
+        if (m_da.isPluginAvailable(GGCPluginType.CGMSToolPlugin))
         {
-            lblCgms.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.CGMS_TOOL_PLUGIN)));
+            lblCgms.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.CGMSToolPlugin)));
         }
     }
 

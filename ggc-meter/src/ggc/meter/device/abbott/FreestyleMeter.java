@@ -120,8 +120,8 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
-        this.output_writer = writer;
-        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        this.outputWriter = writer;
+        this.outputWriter.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
 
         // set meter type (this will be deprecated in future, but it's needed
         // for now
@@ -142,7 +142,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
                 return;
             }
 
-            this.output_writer.writeHeader();
+            this.outputWriter.writeHeader();
 
         }
         catch (Exception ex)
@@ -226,8 +226,8 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
                 // break;
             }
 
-            this.output_writer.setSpecialProgress(100);
-            this.output_writer.setSubStatus(null);
+            this.outputWriter.setSpecialProgress(100);
+            this.outputWriter.setSubStatus(null);
 
         }
         catch (Exception ex)
@@ -239,10 +239,10 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
         if (this.isDeviceFinished())
         {
-            this.output_writer.endOutput();
+            this.outputWriter.endOutput();
         }
 
-        // this.output_writer.setStatus(100);
+        // this.outputWriter.setStatus(100);
         System.out.println("Reading finsihed");
         super.close();
 
@@ -283,25 +283,25 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     {
         try
         {
-            this.output_writer.setSubStatus(ic.getMessage("READING_SERIAL_NR_SETTINGS"));
-            this.output_writer.setSpecialProgress(1);
+            this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_SERIAL_NR_SETTINGS"));
+            this.outputWriter.setSpecialProgress(1);
 
             // first we read device identification data
-            DeviceIdentification di = this.output_writer.getDeviceIdentification();
+            DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
             this.readLineDebug();
             di.device_serial_number = this.readLineDebug();
-            this.output_writer.setSpecialProgress(2);
+            this.outputWriter.setSpecialProgress(2);
             di.device_hardware_version = this.readLineDebug();
-            this.output_writer.setSpecialProgress(3);
+            this.outputWriter.setSpecialProgress(3);
             this.readLineDebug();
-            this.output_writer.setSpecialProgress(4);
+            this.outputWriter.setSpecialProgress(4);
             String entries_max_string = this.readLineDebug().trim();
             this.entries_max = Integer.parseInt(entries_max_string);
 
-            this.output_writer.setDeviceIdentification(di);
-            this.output_writer.writeDeviceIdentification();
-            this.output_writer.setSpecialProgress(5);
+            this.outputWriter.setDeviceIdentification(di);
+            this.outputWriter.writeDeviceIdentification();
+            this.outputWriter.setSpecialProgress(5);
         }
         catch (IOException ex)
         {
@@ -321,7 +321,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     private boolean isDeviceStopped(String vals)
     {
         if (vals == null || this.reading_status == 1 && vals.length() == 0 || !this.device_running
-                || this.output_writer.isReadingStopped())
+                || this.outputWriter.isReadingStopped())
             return true;
 
         return false;
@@ -340,7 +340,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         if (entry.contains("END"))
         {
             this.device_running = false;
-            this.output_writer.setReadingStop();
+            this.outputWriter.setReadingStop();
             return;
         }
 
@@ -363,7 +363,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         String timeString = entry.substring(5, 23);
         mve.setDateTimeObject(getDateTime(timeString));
 
-        this.output_writer.writeData(mve);
+        this.outputWriter.writeData(mve);
         this.entries_current++;
         readingEntryStatus();
     }
@@ -371,7 +371,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     protected void setDeviceStopped()
     {
         this.device_running = false;
-        this.output_writer.endOutput();
+        this.outputWriter.endOutput();
     }
 
     protected String getParameterValue(String val)
@@ -431,7 +431,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         // System.out.println("proc_read: " + proc_read + ", proc_total: " +
         // proc_total);
 
-        this.output_writer.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
+        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
     }
 
     /**
@@ -467,7 +467,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         // If break event append BREAK RECEIVED message.
             case SerialPortEvent.BI:
                 System.out.println("recievied break");
-                this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+                this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
                 // setDeviceStopped();
                 break;
             case SerialPortEvent.CD:
@@ -518,7 +518,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
          */
 
         Freestyle fm = new Freestyle();
-        fm.output_writer = new ConsoleOutputWriter();
+        fm.outputWriter = new ConsoleOutputWriter();
 
         String data[] = { "093  May  30 2005 00:46 16 0x01", "105  May  30 2005 00:42 16 0x00",
                          "085  May  29 2005 23:52 16 0x00", "073  May  29 2005 21:13 16 0x00",

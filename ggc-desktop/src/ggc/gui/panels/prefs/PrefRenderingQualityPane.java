@@ -66,7 +66,7 @@ public class PrefRenderingQualityPane extends AbstractPrefOptionsPanel implement
     {
         super(dia);
         init();
-        // m_da.enableHelp(this);
+        // dataAccess.enableHelp(this);
     }
 
     private void init() // Did a total rewrite of init() to get a better grip of

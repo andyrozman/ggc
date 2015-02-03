@@ -257,8 +257,8 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
     /*
      * private void createKeyWord() { String key =
-     * m_da.makeI18nKeyword(tf_name.getText()); tf_name_i18n_key.setText(key);
-     * tf_name_i18n.setText(ic.getMessage(key)); }
+     * dataAccess.makeI18nKeyword(tf_name.getText()); tf_name_i18n_key.setText(key);
+     * tf_name_i18n.setText(i18nControlAbstract.getMessage(key)); }
      */
 
     /**
@@ -512,7 +512,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
         /*
          * MealPart mp = new MealPart(msd.getSelectedObjectType(),
          * msd.getSelectedObject(), msd.getAmountValue());
-         * this.list_parts.add(new MealPartsDispay(ic, mp));
+         * this.list_parts.add(new MealPartsDispay(i18nControlAbstract, mp));
          * this.createModel(this.list_parts, this.table_1, this.mpd);
          * refreshNutritions();
          */
@@ -541,7 +541,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
         // setTypeOfAction(EditableAbstractPanel.ACTION_EDIT);
 
-        // this.label_title.setText(ic.getMessage("MEAL_EDIT"));
+        // this.label_title.setText(i18nControlAbstract.getMessage("MEAL_EDIT"));
         this.label_name.setText(this.meal.getName());
         this.label_name.setToolTipText(this.meal.getName());
         this.label_name_i18n_key.setText(this.meal.getName_i18n());
@@ -554,7 +554,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
         if (this.meal.getGroup_id() > 0)
         {
             // this.meal_group =
-            // m_da.tree_roots.get("3").m_meal_groups_ht.get("" +
+            // dataAccess.tree_roots.get("3").m_meal_groups_ht.get("" +
             // this.meal.getGroup_id());
             this.meal_group = m_da.getDbCache().tree_roots.get("3").findMealGroup(3, this.meal.getGroup_id());
             this.label_group.setText(this.meal_group.getName());
@@ -646,7 +646,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
          * this.meal.setParts(this.temp_parts);
          * this.meal.setNutritions(this.temp_nutritions);
          * this.meal.setGroup_id(this.meal_group.getId());
-         * this.m_da.getDb().add(this.meal); this.was_saved = true;
+         * this.dataAccess.getDb().add(this.meal); this.was_saved = true;
          * addMeal2Tree(this.meal);
          * return true; } else {
          * long prev_group_id = this.meal.getGroup_id();
@@ -656,7 +656,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
          * this.meal.setParts(this.temp_parts);
          * this.meal.setNutritions(this.temp_nutritions);
          * this.meal.setGroup_id(this.meal_group.getId());
-         * this.m_da.getDb().edit(this.meal); this.was_saved = true;
+         * this.dataAccess.getDb().edit(this.meal); this.was_saved = true;
          * if (prev_group_id != this.meal.getGroup_id()) {
          * removeMealFromTree(this.meal, prev_group_id);
          * addMeal2Tree(this.meal); }
@@ -667,10 +667,10 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
     /*
      * private void addMeal2Tree(Meal meal) {
-     * m_da.tree_roots.get("3").m_meal_groups_ht.get("" +
+     * dataAccess.tree_roots.get("3").m_meal_groups_ht.get("" +
      * meal.getGroup_id()).addChild(meal); }
      * public void removeMealFromTree(Meal meal, long prev_group_id) {
-     * m_da.tree_roots.get("3").m_meal_groups_ht.get("" +
+     * dataAccess.tree_roots.get("3").m_meal_groups_ht.get("" +
      * prev_group_id).removeChild(meal); }
      */
 

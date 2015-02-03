@@ -239,7 +239,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
             gcs[0] = startDate;
             gcs[1] = endDate;
 
-            Object obj = m_da.getPlugIn(GGCPluginType.PUMP_TOOL_PLUGIN).getReturnObject(100, gcs);
+            Object obj = m_da.getPlugIn(GGCPluginType.PumpToolPlugin).getReturnObject(100, gcs);
 
             if (obj != null)
             {

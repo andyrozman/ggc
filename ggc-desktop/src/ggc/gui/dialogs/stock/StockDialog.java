@@ -298,11 +298,11 @@ public class StockDialog extends JDialog implements ActionListener
          * addLabel(m_ic.getMessage("URINE") + ":", 288, panel);
          * addLabel(m_ic.getMessage("ACTIVITY") + ":", 318, panel);
          * addLabel(m_ic.getMessage("COMMENT") + ":", 348, panel);
-         * this.dtc = new DateTimeComponent(this.m_da,
+         * this.dtc = new DateTimeComponent(this.dataAccess,
          * DateTimeComponent.ALIGN_VERTICAL, 5);
          * dtc.setBounds(140, 75, 100, 35);
          * panel.add(dtc);
-         * addComponent(cob_bg_type = new JComboBox(this.m_da.bg_units), 220,
+         * addComponent(cob_bg_type = new JComboBox(this.dataAccess.bg_units), 220,
          * 138, 80, panel);
          * addComponent(BGField = new JTextField(), 140, 138, 55, panel);
          * addComponent(Ins1Field = new JTextField(), 140, 168, 55, panel);
@@ -389,7 +389,7 @@ public class StockDialog extends JDialog implements ActionListener
      * JPanel a = new JPanel(new GridLayout(0, 1));
      * a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
      * a.add(new JLabel(m_ic.getMessage("BG") + ":", SwingConstants.RIGHT));
-     * a.add(new JLabel(m_da.getSettings().getIns1Abbr() + ":",
+     * a.add(new JLabel(dataAccess.getSettings().getIns1Abbr() + ":",
      * SwingConstants.RIGHT));
      * a.add(new JLabel(m_ic.getMessage("ACT") + ":", SwingConstants.RIGHT));
      * JPanel b = new JPanel(new GridLayout(0, 1));
@@ -412,7 +412,7 @@ public class StockDialog extends JDialog implements ActionListener
      * JPanel c = new JPanel(new GridLayout(0, 1));
      * c.add(new JLabel(m_ic.getMessage("TIME") + ":", SwingConstants.RIGHT));
      * c.add(new JLabel(m_ic.getMessage("BU") + ":", SwingConstants.RIGHT));
-     * c.add(new JLabel(m_da.getSettings().getIns2Abbr() + ":",
+     * c.add(new JLabel(dataAccess.getSettings().getIns2Abbr() + ":",
      * SwingConstants.RIGHT));
      * c.add(new JLabel(m_ic.getMessage("COMMENT") + ":",
      * SwingConstants.RIGHT));

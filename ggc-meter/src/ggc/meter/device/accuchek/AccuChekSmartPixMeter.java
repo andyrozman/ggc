@@ -59,8 +59,8 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
                                                                                                // SelectableInterface
 {
 
-    // DataAccessMeter m_da = DataAccessMeter.getInstance();
-    // OutputWriter output_writer = null;
+    // DataAccessMeter dataAccess = DataAccessMeter.getInstance();
+    // OutputWriter outputWriter = null;
 
     private int bg_unit = OutputUtil.BG_MGDL;
 
@@ -139,7 +139,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
             getMeterDeviceInfo();
             System.out.println();
 
-            this.output_writer.writeDeviceIdentification();
+            this.outputWriter.writeDeviceIdentification();
 
             readData();
 
@@ -154,7 +154,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
     private void getPixDeviceInfo()
     {
-        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+        DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
         Node nd = getNode("IMPORT/ACSPIX");
         System.out.println(nd);
@@ -170,7 +170,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
         StringBuilder sb2 = new StringBuilder();
 
-        sb2.append(ic.getMessage("VERSION") + " v" + e.attributeValue("Ver"));
+        sb2.append(i18nControlAbstract.getMessage("VERSION") + " v" + e.attributeValue("Ver"));
         sb2.append(" [S/N=" + e.attributeValue("SN") + "]");
 
         di.device_selected = sb2.toString();
@@ -196,16 +196,16 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
     private void getMeterDeviceInfo()
     {
-        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+        DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
         Element el = getElement("IMPORT/DEVICE");
         // System.out.println(nd);
 
         StringBuffer sb = new StringBuffer();
-        sb.append(ic.getMessage("DEVICE_DEVICE") + ": Accu-Chek " + el.attributeValue("Name"));
-        sb.append("\nS/N=" + el.attributeValue("SN") + ", " + ic.getMessage("BG_UNIT") + ": ");
+        sb.append(i18nControlAbstract.getMessage("DEVICE_DEVICE") + ": Accu-Chek " + el.attributeValue("Name"));
+        sb.append("\nS/N=" + el.attributeValue("SN") + ", " + i18nControlAbstract.getMessage("BG_UNIT") + ": ");
         sb.append(el.attributeValue("BGUnit"));
-        sb.append(", " + ic.getMessage("TIME_ON_DEVICE") + ": " + el.attributeValue("Tm") + " "
+        sb.append(", " + i18nControlAbstract.getMessage("TIME_ON_DEVICE") + ": " + el.attributeValue("Tm") + " "
                 + el.attributeValue("Dt"));
 
         di.device_identified = sb.toString();
@@ -224,7 +224,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
     private void readData()
     {
-        // this.output_writer.
+        // this.outputWriter.
 
         List<Node> nodes = getNodes("IMPORT/BGDATA/BG");
         ArrayList<MeterValuesEntry> lst = new ArrayList<MeterValuesEntry>();
@@ -264,7 +264,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
         if (!just_ch)
         {
-            this.output_writer.writeData(mve);
+            this.outputWriter.writeData(mve);
             list.add(mve);
         }
 
@@ -276,7 +276,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
             mve = getEmptyEntry(el);
             mve.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH, element_attribute);
 
-            this.output_writer.writeData(mve);
+            this.outputWriter.writeData(mve);
             list.add(mve);
         }
 
@@ -350,7 +350,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
         // System.out.println(mve);
 
-        this.output_writer.writeData(mve);
+        this.outputWriter.writeData(mve);
         // .writeBGData(mve);
 
         return mve;
@@ -415,19 +415,19 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
     {
         // this.device_name = device;
 
-        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(dataAccess.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
 
-        if (this.output_writer != null)
+        if (this.outputWriter != null)
         {
-            this.output_writer.setDeviceIdentification(di);
-            // this.output_writer.
+            this.outputWriter.setDeviceIdentification(di);
+            // this.outputWriter.
             // this.device_instance =
             // MeterManager.getInstance().getMeterDevice(group, device);
         }
 
-        this.device_source_name = group + " " + device;
+        this.deviceSourceName = group + " " + device;
     }
 
 }

@@ -44,7 +44,7 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
 
     // GGCProperties props = GGCProperties.getInstance();
     // private I18nControl m_ic = I18nControl.getInstance();
-    // DataAccess m_da = DataAccess.getInstance();
+    // DataAccess dataAccess = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -84,8 +84,8 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
             lblName.setText(m_da.getSettings().getUserName());
             lblIns1.setText(m_da.getSettings().getIns1Name() + "  (" + m_da.getSettings().getIns1Abbr() + ")");
             lblIns2.setText(m_da.getSettings().getIns2Name() + "  (" + m_da.getSettings().getIns2Abbr() + ")");
-            // lblMeter.setText(m_da.getSettings().getMeterTypeString() + "  ("
-            // + m_da.getSettings().getMeterPort() + ")");
+            // lblMeter.setText(dataAccess.getSettings().getMeterTypeString() + "  ("
+            // + dataAccess.getSettings().getMeterPort() + ")");
             lblUnit.setText(m_da.getSettings().getBG_unitString());
         }
     }

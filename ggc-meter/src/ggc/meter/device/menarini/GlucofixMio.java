@@ -55,7 +55,7 @@ import com.atech.utils.data.TimeZoneUtil;
 public class GlucofixMio extends AbstractSerialMeter
 {
 
-    // protected I18nControl ic = I18nControl.getInstance();
+    // protected I18nControl i18nControlAbstract = I18nControl.getInstance();
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     private static Log log = LogFactory.getLog(GlucofixMio.class);
@@ -103,8 +103,8 @@ public class GlucofixMio extends AbstractSerialMeter
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
-        this.output_writer = writer;
-        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        this.outputWriter = writer;
+        this.outputWriter.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
 
         // set meter type (this will be deprecated in future, but it's needed
         // for now
@@ -122,7 +122,7 @@ public class GlucofixMio extends AbstractSerialMeter
                 // this.m_status = 1;
                 return;
 
-            this.output_writer.writeHeader();
+            this.outputWriter.writeHeader();
 
             this.serialPort.setDTR(true);
             this.serialPort.setRTS(true);
@@ -276,7 +276,7 @@ public class GlucofixMio extends AbstractSerialMeter
         if (lst.size() == 2)
         {
 
-            DeviceIdentification di = this.output_writer.getDeviceIdentification();
+            DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
             StringTokenizer strtok = new StringTokenizer(lst.get(0), ",");
 
@@ -286,13 +286,13 @@ public class GlucofixMio extends AbstractSerialMeter
             di.device_serial_number = strtok.nextToken();
             di.device_software_version = ATDataAccessAbstract.replaceExpression(strtok.nextToken(), "\n", "");
 
-            this.output_writer.setSpecialProgress(4);
+            this.outputWriter.setSpecialProgress(4);
             this.entries_max = this.getMaxMemoryRecords();
 
-            this.output_writer.setDeviceIdentification(di);
-            this.output_writer.writeDeviceIdentification();
+            this.outputWriter.setDeviceIdentification(di);
+            this.outputWriter.writeDeviceIdentification();
 
-            this.output_writer.setSpecialProgress(5);
+            this.outputWriter.setSpecialProgress(5);
 
         }
 
@@ -370,9 +370,9 @@ public class GlucofixMio extends AbstractSerialMeter
 
             }
 
-            this.output_writer.setSpecialProgress(100);
-            this.output_writer.setSubStatus(null);
-            this.output_writer.endOutput();
+            this.outputWriter.setSpecialProgress(100);
+            this.outputWriter.setSubStatus(null);
+            this.outputWriter.endOutput();
 
         }
         catch (Exception ex)
@@ -438,7 +438,7 @@ public class GlucofixMio extends AbstractSerialMeter
 
         mve.setDateTimeObject(getDateTime(vals[4], vals[5]));
 
-        this.output_writer.writeData(mve);
+        this.outputWriter.writeData(mve);
 
     }
 
@@ -484,10 +484,10 @@ public class GlucofixMio extends AbstractSerialMeter
         // 080531,0950
 
         long dt = 20000000L;
-        dt += m_da.getLongValueFromString(date);
+        dt += dataAccess.getLongValueFromString(date);
 
         dt *= 10000L;
-        dt += m_da.getLongValueFromString(time);
+        dt += dataAccess.getLongValueFromString(time);
 
         return tzu.getCorrectedDateTime(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dt));
 
@@ -497,14 +497,14 @@ public class GlucofixMio extends AbstractSerialMeter
     {
         float proc_read = this.entries_current * 1.0f / this.entries_max;
         float proc_total = 5 + 95 * proc_read;
-        this.output_writer.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
+        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
     }
 
     private void endReading()
     {
-        this.output_writer.setSubStatus(null);
-        this.output_writer.endOutput();
-        this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+        this.outputWriter.setSubStatus(null);
+        this.outputWriter.endOutput();
+        this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
         System.out.println("Reading finished prematurely !");
     }
 

@@ -63,8 +63,8 @@ public class DailyRowMealsDialog extends TransferDialog /* JDialog */implements 
 
     private static Log log = LogFactory.getLog(DailyRowMealsDialog.class);
     private I18nControlAbstract m_ic = null;
-    // private DataAccess m_da = DataAccess.getInstance();
-    // private GGCProperties props = m_da.getSettings();
+    // private DataAccess dataAccess = DataAccess.getInstance();
+    // private GGCProperties props = dataAccess.getSettings();
 
     JLabel label_title;
     JDecimalTextField ftf_ch;
@@ -80,8 +80,8 @@ public class DailyRowMealsDialog extends TransferDialog /* JDialog */implements 
 
     JComponent components[] = new JComponent[9];
 
-    // Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-    // Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
+    // Font f_normal = dataAccess.getFont(DataAccess.FONT_NORMAL);
+    // Font f_bold = dataAccess.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
     boolean debug = true;
     JButton help_button = null;
@@ -134,7 +134,7 @@ public class DailyRowMealsDialog extends TransferDialog /* JDialog */implements 
         transfer_mode = true;
         init();
         // load();
-        // m_da.centerJDialog(this);
+        // dataAccess.centerJDialog(this);
 
     }
 
@@ -153,7 +153,7 @@ public class DailyRowMealsDialog extends TransferDialog /* JDialog */implements 
         transfer_mode = true;
         // init();
         // load();
-        // m_da.centerJDialog(this);
+        // dataAccess.centerJDialog(this);
 
     }
 
@@ -496,8 +496,8 @@ public class DailyRowMealsDialog extends TransferDialog /* JDialog */implements 
         food_desc = (String) ip[2];
         food_ch = (String) ip[3];
 
-        // m_da.addComponent(this);
-        // m_da.centerJDialog(this, di);
+        // dataAccess.addComponent(this);
+        // dataAccess.centerJDialog(this, di);
 
         init();
         load();

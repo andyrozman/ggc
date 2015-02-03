@@ -51,6 +51,11 @@
 
 		<dependency>
 			<groupId>net.sf.ggc</groupId>
+			<artifactId>ggc-help</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.ggc</groupId>
 			<artifactId>ggc-plugin-base</artifactId>
 		</dependency>
 

@@ -67,17 +67,17 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
      * datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
      * //ALIGN_CENTER);
      * datatable.getDefaultCell().setBorderWidth(1);
-     * datatable.addCell(new Phrase(ic.getMessage("DATE"), this.text_bold));
-     * datatable.addCell(new Phrase(ic.getMessage("TIME"), this.text_bold));
-     * datatable.addCell(new Phrase(ic.getMessage("PRINT_FOOD_DESC"),
+     * datatable.addCell(new Phrase(i18nControlAbstract.getMessage("DATE"), this.text_bold));
+     * datatable.addCell(new Phrase(i18nControlAbstract.getMessage("TIME"), this.text_bold));
+     * datatable.addCell(new Phrase(i18nControlAbstract.getMessage("PRINT_FOOD_DESC"),
      * this.text_bold));
-     * datatable.addCell(new Phrase(ic.getMessage("WEIGHT_TYPE"),
+     * datatable.addCell(new Phrase(i18nControlAbstract.getMessage("WEIGHT_TYPE"),
      * this.text_bold));
-     * datatable.addCell(new Phrase(ic.getMessage("AMOUNT_SHORT"),
+     * datatable.addCell(new Phrase(i18nControlAbstract.getMessage("AMOUNT_SHORT"),
      * this.text_bold));
-     * datatable.addCell(new Phrase(ic.getMessage("CH"), this.text_bold));
-     * datatable.addCell(new Phrase(ic.getMessage("INS"), this.text_bold));
-     * datatable.addCell(new Phrase(ic.getMessage("BG"), this.text_bold));
+     * datatable.addCell(new Phrase(i18nControlAbstract.getMessage("CH"), this.text_bold));
+     * datatable.addCell(new Phrase(i18nControlAbstract.getMessage("INS"), this.text_bold));
+     * datatable.addCell(new Phrase(i18nControlAbstract.getMessage("BG"), this.text_bold));
      * // document.add(datatable);
      * while (it.hasNext())
      * {
@@ -99,7 +99,7 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
      * active_day_entry++;
      * datatable.addCell(new Phrase(rw.getTimeAsString(), f));
      * DailyFoodEntries mpts = new DailyFoodEntries(rw.getMealsIds(), true);
-     * datatable.addCell(new Phrase(ic.getMessage("TOGETHER"),
+     * datatable.addCell(new Phrase(i18nControlAbstract.getMessage("TOGETHER"),
      * this.text_italic));
      * datatable.addCell(new Phrase("", f));
      * datatable.addCell(new Phrase("", f));
@@ -119,7 +119,7 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
      * float value = 0.0f;
      * if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
      * {
-     * datatable.addCell(new Phrase(ic.getMessage("AMOUNT_LBL"), f));
+     * datatable.addCell(new Phrase(i18nControlAbstract.getMessage("AMOUNT_LBL"), f));
      * //value = mp.getNutrientValue(205);
      * // System.out.println("nutr val 205" + mp.getNutrientValue(205) +
      * // "\namount: " + mp.amount +
@@ -129,7 +129,7 @@ public class PrintFoodMenuExt2 extends PrintFoodMenuAbstract
      * }
      * else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
      * {
-     * datatable.addCell(new Phrase(ic.getMessage("WEIGHT_LBL2"), f));
+     * datatable.addCell(new Phrase(i18nControlAbstract.getMessage("WEIGHT_LBL2"), f));
      * //value = mp.getNutrientValue(205);
      * value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
      * }

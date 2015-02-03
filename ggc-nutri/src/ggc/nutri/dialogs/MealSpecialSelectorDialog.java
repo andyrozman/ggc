@@ -546,7 +546,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
         // Object o = this.amountField.getValue();
 
-        // return m_da.getFloatValue(o);
+        // return dataAccess.getFloatValue(o);
 
         /*
          * if (o instanceof Long) { //System.out.println("Amount(long): " +
@@ -594,8 +594,8 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
                  * (Meal)ntd.getSelectedObject();
                  * if (m.getId() == this.input_id) {
                  * JOptionPane.showMessageDialog(this,
-                 * ic.getMessage("CANT_SELECT_CIRCULAR_MEAL"),
-                 * ic.getMessage("WARNING"),JOptionPane.WARNING_MESSAGE);
+                 * i18nControlAbstract.getMessage("CANT_SELECT_CIRCULAR_MEAL"),
+                 * i18nControlAbstract.getMessage("WARNING"),JOptionPane.WARNING_MESSAGE);
                  * return; } }
                  */
 

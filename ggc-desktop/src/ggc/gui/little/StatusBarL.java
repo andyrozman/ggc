@@ -138,7 +138,7 @@ public class StatusBarL extends JPanel implements EventObserverInterface
     {
         this.lblLed.setIcon(statusIcons[status]);
         // this.little.setMenusByDbLoad(status);
-        // ((MainFrame)m_da.getMainParent()).setMenusByDbLoad(status);
+        // ((MainFrame)dataAccess.getMainParent()).setMenusByDbLoad(status);
     }
 
     /**

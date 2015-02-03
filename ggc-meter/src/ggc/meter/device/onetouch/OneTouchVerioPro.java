@@ -154,8 +154,8 @@ public class OneTouchVerioPro extends AbstractUsbMeter
          */
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
-        this.output_writer = writer;
-        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        this.outputWriter = writer;
+        this.outputWriter.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
 
         // set meter type (this will be deprecated in future, but it's needed
         // for now
@@ -176,7 +176,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
                 return;
             }
 
-            this.output_writer.writeHeader();
+            this.outputWriter.writeHeader();
 
         }
         catch (Exception ex)
@@ -322,7 +322,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     public void readDeviceDataFull()
     {
 
-        this.output_writer.setBGOutputType(OutputUtil.BG_MMOL);
+        this.outputWriter.setBGOutputType(OutputUtil.BG_MMOL);
 
         try
         {
@@ -330,7 +330,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
             cmdDisconnectAcknowledge();
 
-            this.output_writer.setSpecialProgress(1);
+            this.outputWriter.setSpecialProgress(1);
 
             if (!readDeviceInfo())
             {
@@ -339,7 +339,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
             }
 
             // read entry 501 to return count
-            this.output_writer.setSubStatus(ic.getMessage("READING_DATA_COUNTER"));
+            this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_DATA_COUNTER"));
 
             System.out.println("PC-> read record 501 to receive nr");
 
@@ -352,7 +352,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
             int nr = reta[1] * 255 + reta[0];
             this.entries_max = nr;
-            this.output_writer.setSpecialProgress(6);
+            this.outputWriter.setSpecialProgress(6);
 
             // System.out.println("Entries: " + nr);
 
@@ -369,7 +369,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
             cmdDisconnectAcknowledge();
 
-            this.output_writer.setSubStatus(null);
+            this.outputWriter.setSubStatus(null);
 
         }
         catch (Exception ex)
@@ -380,7 +380,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
         if (this.isDeviceFinished())
         {
-            this.output_writer.endOutput();
+            this.outputWriter.endOutput();
         }
 
         System.out.println("Reading finsihed");
@@ -396,7 +396,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     private boolean readDeviceInfo() throws Exception
     {
 
-        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+        DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
         // read sw version and sw creation date
 
@@ -404,7 +404,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         String read_sw_ver_create = getCommand(OneTouchMeter2.COMMAND_READ_SW_VERSION_AND_CREATE);
         // "02" + "09" + "00" + "05" + "0D" + "02" + "03" + "DA" + "71";
 
-        this.output_writer.setSubStatus(ic.getMessage("READING_SW_VERSION"));
+        this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_SW_VERSION"));
 
         write(hex_utils.reconvert(read_sw_ver_create));
 
@@ -416,7 +416,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
             // System.out.println("Reading from device FAILED !!!");
             return false;
 
-        this.output_writer.setSpecialProgress(2);
+        this.outputWriter.setSpecialProgress(2);
         // System.out.println("Sw Ver: " + sw_dd.substring(0, idx ) + " date: "
         // + sw_dd.substring(idx));
         cmdAcknowledge();
@@ -424,7 +424,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         di.device_hardware_version = sw_dd.substring(0, idx) + ", " + sw_dd.substring(idx);
 
         // read serial number
-        this.output_writer.setSubStatus(ic.getMessage("READING_SERIAL_NR"));
+        this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_SERIAL_NR"));
 
         // System.out.println("PC-> read serial nr");
 
@@ -447,9 +447,9 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
         this.cmdAcknowledge();
 
-        this.output_writer.setSpecialProgress(4);
+        this.outputWriter.setSpecialProgress(4);
 
-        this.output_writer.writeDeviceIdentification();
+        this.outputWriter.writeDeviceIdentification();
 
         return true;
     }
@@ -490,7 +490,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     private boolean readEntry(int number) throws IOException
     {
 
-        this.output_writer.setSubStatus(ic.getMessage("READING_PROCESSING_ENTRY") + number);
+        this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_PROCESSING_ENTRY") + number);
 
         int num_nr = number - 1;
 
@@ -637,7 +637,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
                 + hex_utils.getCorrectHexValue(dt_bg[5]) + hex_utils.getCorrectHexValue(dt_bg[4]), 16);
 
         // System.out.println("BG: " + bg_val + " -> " +
-        // m_da.getBGValueDifferent(DataAccessMeter.BG_MGDL, bg_val));
+        // dataAccess.getBGValueDifferent(DataAccessMeter.BG_MGDL, bg_val));
 
         long dt_val = Integer.parseInt(hex_utils.getCorrectHexValue(dt_bg[3]) + hex_utils.getCorrectHexValue(dt_bg[2])
                 + hex_utils.getCorrectHexValue(dt_bg[1]) + hex_utils.getCorrectHexValue(dt_bg[0]), 16);
@@ -651,7 +651,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         mve.setBgValue("" + bg_val);
         mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, gc)));
 
-        this.output_writer.writeData(mve);
+        this.outputWriter.writeData(mve);
 
         this.entries_current = number;
         readingEntryStatus();
@@ -667,7 +667,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
         System.out.println("proc_read: " + proc_read + ", proc_total: " + proc_total);
 
-        this.output_writer.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
+        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
 
     }
 
@@ -752,7 +752,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     private boolean isDeviceStopped(String vals)
     {
         if (vals == null || this.reading_status == 1 && vals.length() == 0 || !this.device_running
-                || this.output_writer.isReadingStopped())
+                || this.outputWriter.isReadingStopped())
             return true;
 
         return false;
@@ -764,7 +764,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     public void setDeviceStopped()
     {
         this.device_running = false;
-        this.output_writer.endOutput();
+        this.outputWriter.endOutput();
     }
 
     protected String getParameterValue(String val)

@@ -184,7 +184,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
         helpInit();
 
-        // m_da.addObserver(observable_id, inst)
+        // dataAccess.addObserver(observable_id, inst)
 
         m_da.startDb(); // statusPanel);
         setDbActions(false);
@@ -265,7 +265,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
          * menu.addSeparator(); menu.add(createItem("EXIT_APP", "EXIT_APP_DESC",
          * "exit_app")); menu.add(new JLabel()); menu.add(new JLabel());
          * SystemTray tray = SystemTray.getSystemTray();
-         * TrayIcon ti = new TrayIcon(m_da.getImageIcon("medical_bag.png", 15,
+         * TrayIcon ti = new TrayIcon(dataAccess.getImageIcon("medical_bag.png", 15,
          * 15, this) , m_ic.getMessage("GGC_LITTLE_TITLE"), menu);
          * ti.setIconAutoSize(true); ti.addActionListener(new ActionListener() {
          * public void actionPerformed(ActionEvent e) {

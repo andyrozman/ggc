@@ -64,9 +64,9 @@ public class TestNutritionData
     {
         m_da = DataAccessNutri.getInstance();
         /*
-         * db = new GGCDb(m_da);
+         * db = new GGCDb(dataAccess);
          * db.initDb();
-         * m_da.setDb(db);
+         * dataAccess.setDb(db);
          */
         createTree();
     }
@@ -79,11 +79,11 @@ public class TestNutritionData
     public TestNutritionData(int type)
     {
         /*
-         * m_da = DataAccessNutri.getInstance();
-         * db = new GGCDb(m_da);
+         * dataAccess = DataAccessNutri.getInstance();
+         * db = new GGCDb(dataAccess);
          * db.initDb();
-         * m_da.setDb(db);
-         * // m_da.setI18nControlInstance(I18nControl.getInstance());
+         * dataAccess.setDb(db);
+         * // dataAccess.setI18nControlInstance(I18nControl.getInstance());
          * db.loadNutritionDbBase();
          * if (type == 1)
          * {
@@ -109,14 +109,14 @@ public class TestNutritionData
         // createFakeData_Meals();
         // createFakeData_User();
 
-        // new FoodPartMainSelectorDialog(m_da,
+        // new FoodPartMainSelectorDialog(dataAccess,
         // FoodPartMainSelectorDialog.SELECTOR_NUTRITION, null);
 
         // for dialog checking
-        // new NutritionTreeDialog(m_da, type);
+        // new NutritionTreeDialog(dataAccess, type);
 
         // for partitial translation checking
-        // FoodPartSelectorDialog fd = new FoodPartSelectorDialog(m_da, 2,
+        // FoodPartSelectorDialog fd = new FoodPartSelectorDialog(dataAccess, 2,
         // null);
 
         // Meal selector for DailyValues
@@ -169,7 +169,7 @@ public class TestNutritionData
 
         frame.setBounds(0, 0, 640, 480);
 
-        // BackupRestoreDialog brd = new BackupRestoreDialog(frame, m_da, brc);
+        // BackupRestoreDialog brd = new BackupRestoreDialog(frame, dataAccess, brc);
 
         /* BackupDialog brd = */new BackupDialog(frame, m_da /* , brc */);
 
@@ -217,7 +217,7 @@ public class TestNutritionData
          * lst1.add(this.getMealDescription(2, 3));
          * GGCTreeRoot gtr = new GGCTreeRoot(GGCTreeRoot.TREE_MEALS, true);
          * gtr.manualCreate2(lst, lst1);
-         * m_da.tree_roots.put("" + GGCTreeRoot.TREE_MEALS, gtr);
+         * dataAccess.tree_roots.put("" + GGCTreeRoot.TREE_MEALS, gtr);
          */
     }
 
@@ -239,7 +239,7 @@ public class TestNutritionData
          * GGCTreeRoot gtr = new GGCTreeRoot(GGCTreeRoot.TREE_USER_NUTRITION,
          * true);
          * gtr.manualCreate(lst, lst1);
-         * m_da.tree_roots.put("2", gtr);
+         * dataAccess.tree_roots.put("2", gtr);
          */
     }
 

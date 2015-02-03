@@ -52,7 +52,7 @@ public class MeterDataReader extends OldDataReaderAbstract
     {
         super(da);
         m_da = da;
-        // db = m_da.getDb();
+        // db = dataAccess.getDb();
 
         // System.out.println("db: " )
     }
@@ -117,7 +117,7 @@ public class MeterDataReader extends OldDataReaderAbstract
             int proc_total_i = (int) proc_total;
 
             // log.debug("Old Data reading progress [" +
-            // m_da.getApplicationName() + "]: " + proc_total_i + " %" );
+            // dataAccess.getApplicationName() + "]: " + proc_total_i + " %" );
             this.m_drr.setOldDataReadingProgress(proc_total_i);
 
             /*

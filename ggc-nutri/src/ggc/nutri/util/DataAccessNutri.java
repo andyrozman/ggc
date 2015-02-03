@@ -1,6 +1,7 @@
 package ggc.nutri.util;
 
 import ggc.core.db.GGCDb;
+import ggc.core.plugins.GGCPluginType;
 import ggc.nutri.db.GGCDbCache;
 import ggc.nutri.db.GGCDbNutri;
 import ggc.plugin.cfg.DeviceConfiguration;
@@ -176,11 +177,11 @@ public class DataAccessNutri extends DataAccessPlugInBase
     {
         I18nControlAbstract ic = getI18nControlInstance();
 
-        // about_title = ic.getMessage("METER_PLUGIN_ABOUT");
+        // about_title = i18nControlAbstract.getMessage("METER_PLUGIN_ABOUT");
         about_image_name = "/icons/about_meter.jpg";
         // about_image_name = "/icons/about_logo.gif";
         about_plugin_copyright_from = 2006;
-        // about_plugin_name = ic.getMessage("METER_PLUGIN");
+        // about_plugin_name = i18nControlAbstract.getMessage("METER_PLUGIN");
 
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
         lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.2.x", "www.atech-software.com", "LGPL",
@@ -232,7 +233,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
 
         lst_features.add(fg);
 
-        // fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
+        // fg = new FeaturesGroup(i18nControlAbstract.getMessage("NOT_IMPLEMENTED_FEATURES"));
         // fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
 
         // lst_features.add(fg);
@@ -291,7 +292,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
         weblister_items.add(new BaseListEntry("U.S. Diagnostics", "/meters/us_diagnostics.html", 5));
         weblister_items.add(new BaseListEntry("WaveSense", "/meters/wavesense.html", 5));
 
-        // weblister_title = ic.getMessage("METERS_LIST_WEB");
+        // weblister_title = i18nControlAbstract.getMessage("METERS_LIST_WEB");
         weblister_desc = ic.getMessage("METERS_LIST_WEB_DESC");
     }
 
@@ -299,7 +300,13 @@ public class DataAccessNutri extends DataAccessPlugInBase
     // ****** Abstract Methods *****
     // ********************************************************
 
-    /** 
+    @Override
+    public GGCPluginType getPluginType()
+    {
+        return GGCPluginType.NutritionToolPlugin;
+    }
+
+    /**
      * Get Application Name
      */
     @Override

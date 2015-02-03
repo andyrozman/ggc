@@ -40,11 +40,11 @@ public abstract class AbstractMeter extends DeviceAbstract // implements
     // AbstractDeviceCompany meter_company;
 
     // protected int m_status = 0;
-    // protected I18nControlAbstract ic =
+    // protected I18nControlAbstract i18nControlAbstract =
     // DataAccessMeter.getInstance().getI18nControlInstance();
-    // protected OutputWriter output_writer;
+    // protected OutputWriter outputWriter;
     // protected ArrayList<MeterValuesEntry> data = null;
-    // protected DataAccessMeter m_da = null;
+    // protected DataAccessMeter dataAccess = null;
 
     /**
      * Constructor
@@ -52,7 +52,7 @@ public abstract class AbstractMeter extends DeviceAbstract // implements
     public AbstractMeter()
     {
         super(DataAccessMeter.getInstance());
-        // m_da = DataAccessMeter.getInstance();
+        // dataAccess = DataAccessMeter.getInstance();
     }
 
     /**
@@ -66,11 +66,11 @@ public abstract class AbstractMeter extends DeviceAbstract // implements
         this.setMeterType(cmp.getName(), getName());
     }
 
-    // boolean can_read_data = false;
-    // boolean can_read_partitial_data = false;
+    // boolean canReadData = false;
+    // boolean canReadPartitialData = false;
     // boolean can_clear_data = false;
-    // boolean can_read_device_info = false;
-    // boolean can_read_device_configuration = false;
+    // boolean canReadDeviceInfo = false;
+    // boolean canReadDeviceConfiguration = false;
 
     /**
      * Dispose instance
@@ -91,19 +91,19 @@ public abstract class AbstractMeter extends DeviceAbstract // implements
     {
         // this.device_name = device;
 
-        DeviceIdentification di = new DeviceIdentification(m_da.getI18nControlInstance());
+        DeviceIdentification di = new DeviceIdentification(dataAccess.getI18nControlInstance());
         di.company = group;
         di.device_selected = device;
 
-        if (this.output_writer != null)
+        if (this.outputWriter != null)
         {
-            this.output_writer.setDeviceIdentification(di);
-            // this.output_writer.
+            this.outputWriter.setDeviceIdentification(di);
+            // this.outputWriter.
             // this.device_instance =
             // MeterManager.getInstance().getMeterDevice(group, device);
         }
 
-        this.device_source_name = group + " " + device;
+        this.deviceSourceName = group + " " + device;
     }
 
     // ************************************************

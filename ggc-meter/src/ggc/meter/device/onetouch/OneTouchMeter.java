@@ -111,8 +111,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
-        this.output_writer = writer;
-        this.output_writer.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
+        this.outputWriter = writer;
+        this.outputWriter.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
 
         // set meter type (this will be deprecated in future, but it's needed
         // for now
@@ -133,7 +133,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                 return;
             }
 
-            this.output_writer.writeHeader();
+            this.outputWriter.writeHeader();
 
         }
         catch (Exception ex)
@@ -234,8 +234,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
             }
 
-            this.output_writer.setSpecialProgress(100);
-            this.output_writer.setSubStatus(null);
+            this.outputWriter.setSpecialProgress(100);
+            this.outputWriter.setSubStatus(null);
 
         }
         catch (Exception ex)
@@ -247,10 +247,10 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
         if (this.isDeviceFinished())
         {
-            this.output_writer.endOutput();
+            this.outputWriter.endOutput();
         }
 
-        // this.output_writer.setStatus(100);
+        // this.outputWriter.setStatus(100);
         System.out.println("Reading finsihed");
 
     }
@@ -293,7 +293,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     protected boolean isDeviceStopped(String vals)
     {
         if (vals == null || this.reading_status == 1 && vals.length() == 0 || !this.device_running
-                || this.output_writer.isReadingStopped())
+                || this.outputWriter.isReadingStopped())
             return true;
 
         return false;
@@ -338,12 +338,12 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     protected void setDeviceStopped()
     {
         this.device_running = false;
-        this.output_writer.endOutput();
+        this.outputWriter.endOutput();
     }
 
     private void readInfo(StringTokenizer strtok)
     {
-        this.output_writer.setSubStatus(ic.getMessage("READING_SERIAL_NR_SETTINGS"));
+        this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_SERIAL_NR_SETTINGS"));
 
         /*
          * P nnn, MeterSN ,MG/DL
@@ -362,14 +362,14 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
         String dev = strtok.nextToken(); // 2. token: device id
 
-        DeviceIdentification di = this.output_writer.getDeviceIdentification();
+        DeviceIdentification di = this.outputWriter.getDeviceIdentification();
         di.device_serial_number = dev;
         // di.company = "OneTouch";
         // di.device_selected = "Ultra";
 
-        this.output_writer.setDeviceIdentification(di);
-        this.output_writer.writeDeviceIdentification();
-        this.output_writer.setSpecialProgress(2);
+        this.outputWriter.setDeviceIdentification(di);
+        this.outputWriter.writeDeviceIdentification();
+        this.outputWriter.setSpecialProgress(2);
 
         if (this.getDeviceId() != MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA
                 && this.getDeviceId() != MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA_2)
@@ -394,7 +394,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
         reading_status = 1;
 
-        this.output_writer.setSpecialProgress(4);
+        this.outputWriter.setSpecialProgress(4);
 
     }
 
@@ -454,7 +454,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
             String res = this.getParameterValue(strtok.nextToken());
 
-            this.output_writer.setSubStatus(ic.getMessage("READING_PROCESSING_ENTRY") + (this.entries_current + 1));
+            this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_PROCESSING_ENTRY") + (this.entries_current + 1));
 
             // if ((res.contains("CHIGH")) || (res.contains("C ")))
             if (res.startsWith("C") || // control solution
@@ -495,7 +495,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                         try
                         {
                             mve.setBgValue(""
-                                    + m_da.getBGValueByType(DataAccessPlugInBase.BG_MMOL, DataAccessPlugInBase.BG_MGDL,
+                                    + dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MMOL, DataAccessPlugInBase.BG_MGDL,
                                         res));
                         }
                         catch (Exception ex)
@@ -508,7 +508,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                     }
                 }
 
-                this.output_writer.writeData(mve);
+                this.outputWriter.writeData(mve);
                 readingEntryStatus();
             }
         }
@@ -639,7 +639,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         // System.out.println("proc_read: " + proc_read + ", proc_total: " +
         // proc_total);
 
-        this.output_writer.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
+        this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
     }
 
     /**
@@ -675,7 +675,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         // If break event append BREAK RECEIVED message.
             case SerialPortEvent.BI:
                 System.out.println("recievied break");
-                this.output_writer.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+                this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
                 // setDeviceStopped();
                 break;
             case SerialPortEvent.CD:

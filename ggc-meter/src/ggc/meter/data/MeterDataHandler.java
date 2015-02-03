@@ -368,7 +368,7 @@ public class MeterDataHandler extends DeviceDataHandler
          * // there will be a lot of comments here.
          * //this.m_server.setReturnData(this.getDeviceValuesTableModel().
          * getCheckedEntries(), this);
-         * GGCMeterDb db = ((DataAccessMeter)m_da).getDb();
+         * GGCMeterDb db = ((DataAccessMeter)dataAccess).getDb();
          * Hashtable<String, ArrayList<DeviceValuesEntry>> ll =
          * getDeviceValuesTableModel().getCheckedDVE();
          * // this.m_model.getCheckedDVE();
@@ -526,9 +526,9 @@ public class MeterDataHandler extends DeviceDataHandler
          * {
          * pdeh.setValue(mve.getValue());
          * }
-         * pdeh.setPerson_id((int)m_da.getCurrentUserId());
+         * pdeh.setPerson_id((int)dataAccess.getCurrentUserId());
          * pdeh.setComment("");
-         * pdeh.setExtended("SOURCE=" + m_da.getSourceDevice());
+         * pdeh.setExtended("SOURCE=" + dataAccess.getSourceDevice());
          * pdeh.setChanged(System.currentTimeMillis());
          * db.addHibernate(pdeh);
          * }
@@ -609,9 +609,9 @@ public class MeterDataHandler extends DeviceDataHandler
          * {
          * pdeh.setValue(mve.getValue());
          * }
-         * pdeh.setPerson_id((int)m_da.getCurrentUserId());
+         * pdeh.setPerson_id((int)dataAccess.getCurrentUserId());
          * pdeh.setComment("");
-         * pdeh.setExtended("SOURCE=" + m_da.getSourceDevice());
+         * pdeh.setExtended("SOURCE=" + dataAccess.getSourceDevice());
          * pdeh.setChanged(System.currentTimeMillis());
          * db.addHibernate(pdeh);
          * }

@@ -63,11 +63,11 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
         {
             ExportNutritionDb end = new ExportNutritionDb(brr);
 
-            // System.out.println(brr.isBackupObjectSelected(ic.getMessage("USER_FOOD_GROUPS")));
-            // System.out.println(brr.isBackupObjectSelected(ic.getMessage("FOODS"))
-            // + ic.getMessage("FOODS"));
-            // System.out.println(brr.isBackupObjectSelected(ic.getMessage("MEAL_GROUPS")));
-            // System.out.println(brr.isBackupObjectSelected(ic.getMessage("MEALS")));
+            // System.out.println(brr.isBackupObjectSelected(i18nControlAbstract.getMessage("USER_FOOD_GROUPS")));
+            // System.out.println(brr.isBackupObjectSelected(i18nControlAbstract.getMessage("FOODS"))
+            // + i18nControlAbstract.getMessage("FOODS"));
+            // System.out.println(brr.isBackupObjectSelected(i18nControlAbstract.getMessage("MEAL_GROUPS")));
+            // System.out.println(brr.isBackupObjectSelected(i18nControlAbstract.getMessage("MEALS")));
 
             if (brr.isBackupObjectSelected(ic.getMessage("USER_FOOD_GROUPS")))
             {

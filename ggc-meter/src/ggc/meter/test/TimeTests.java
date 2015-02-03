@@ -98,11 +98,11 @@ public class TimeTests
      * public Vector<String> getTimeZoneDescs()
      * {
      * Vector<String> vec = new Vector<String>();
-     * for(Enumeration<String> en = m_da.timeZones.keys(); en.hasMoreElements();
+     * for(Enumeration<String> en = dataAccess.timeZones.keys(); en.hasMoreElements();
      * )
      * {
      * String key = en.nextElement();
-     * System.out.println("Key: " + key + " Value: " + m_da.timeZones.get(key));
+     * System.out.println("Key: " + key + " Value: " + dataAccess.timeZones.get(key));
      * vec.add(key);
      * }
      * Collections.sort(vec, new TimeZoneComparator());
@@ -110,12 +110,12 @@ public class TimeTests
      * }
      * public String getTimeZoneKeyFromValue(String value)
      * {
-     * for(Enumeration<String> en = m_da.timeZones.keys(); en.hasMoreElements();
+     * for(Enumeration<String> en = dataAccess.timeZones.keys(); en.hasMoreElements();
      * )
      * {
      * String key = en.nextElement();
-     * System.out.println(m_da.timeZones.get(key) + " = " + value);
-     * if (m_da.timeZones.get(key).contains(value))
+     * System.out.println(dataAccess.timeZones.get(key) + " = " + value);
+     * if (dataAccess.timeZones.get(key).contains(value))
      * {
      * return key;
      * }

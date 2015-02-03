@@ -84,7 +84,7 @@ public class GGCMeterDb extends PluginDb
                 Restrictions.or(Restrictions.gt("bg", 0), Restrictions.like("extended", "%URINE%")),
                 Restrictions.gt("ch", 0.0f)));
             // criteria.createCriteria("person_id",
-            // (int)m_da.getCurrentUserId());
+            // (int)dataAccess.getCurrentUserId());
             criteria.setProjection(Projections.rowCount());
             in = (Integer) criteria.list().get(0);
             sum_all = in.intValue();

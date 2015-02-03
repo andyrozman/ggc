@@ -317,7 +317,7 @@ public class StockAmounts extends JDialog implements ActionListener
      * JPanel a = new JPanel(new GridLayout(0, 1));
      * a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
      * a.add(new JLabel(m_ic.getMessage("BG") + ":", SwingConstants.RIGHT));
-     * a.add(new JLabel(m_da.getSettings().getIns1Abbr() + ":",
+     * a.add(new JLabel(dataAccess.getSettings().getIns1Abbr() + ":",
      * SwingConstants.RIGHT));
      * a.add(new JLabel(m_ic.getMessage("ACT") + ":", SwingConstants.RIGHT));
      * JPanel b = new JPanel(new GridLayout(0, 1));
@@ -340,7 +340,7 @@ public class StockAmounts extends JDialog implements ActionListener
      * JPanel c = new JPanel(new GridLayout(0, 1));
      * c.add(new JLabel(m_ic.getMessage("TIME") + ":", SwingConstants.RIGHT));
      * c.add(new JLabel(m_ic.getMessage("BU") + ":", SwingConstants.RIGHT));
-     * c.add(new JLabel(m_da.getSettings().getIns2Abbr() + ":",
+     * c.add(new JLabel(dataAccess.getSettings().getIns2Abbr() + ":",
      * SwingConstants.RIGHT));
      * c.add(new JLabel(m_ic.getMessage("COMMENT") + ":",
      * SwingConstants.RIGHT));
