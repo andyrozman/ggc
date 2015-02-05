@@ -138,7 +138,7 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }

@@ -5,6 +5,7 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.data.EGVRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePage;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabaseRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
+import ggc.plugin.device.PlugInBaseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class DataPageToEGVDataConverter extends BytesConverterAbstract
     // private static final Log log =
     // LogFactory.getLog(DataPageToEGVDataConverter.class);
 
-    public List<EGVRecord> convert(List<DatabasePage> pages) throws DexcomException
+    public List<EGVRecord> convert(List<DatabasePage> pages) throws PlugInBaseException
     {
         ArrayList<DatabaseRecord> rawRecords = this.getRawRecords(pages, new EGVRecord());
 

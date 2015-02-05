@@ -153,9 +153,9 @@ public class PrecisionXtra extends OptiumXceed
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
     @Override
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
+        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
 
 }

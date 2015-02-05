@@ -139,6 +139,7 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
 
     }
 
+
     private int determineWhichProfileItIs(BasalLogDay basalLogDay)
     {
         boolean isSame = this.pumpSettings.basalProfiles.get(this.pumpSettings.activeBasalProfile) //

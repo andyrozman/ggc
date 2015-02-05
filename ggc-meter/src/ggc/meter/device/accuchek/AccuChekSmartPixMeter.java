@@ -8,6 +8,7 @@ import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.impl.accuchek.AccuChekSmartPix;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
@@ -428,6 +429,18 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         }
 
         this.deviceSourceName = group + " " + device;
+    }
+
+
+    /**
+     * getImplementationStatus - Get Implementation Status
+     *
+     * @return implementation status as number
+     * @see ggc.plugin.manager.DeviceImplementationStatus
+     */
+    public DeviceImplementationStatus getImplementationStatus()
+    {
+        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }
 
 }

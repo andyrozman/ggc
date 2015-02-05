@@ -6,6 +6,7 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.enums.UserEvent;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePage;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabaseRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
+import ggc.plugin.device.PlugInBaseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class DataPageToUserEventDataConverter extends BytesConverterAbstract
 {
 
-    public List<UserEventDataRecord> convert(List<DatabasePage> pages) throws DexcomException
+    public List<UserEventDataRecord> convert(List<DatabasePage> pages) throws PlugInBaseException
     {
         ArrayList<DatabaseRecord> rawRecords = this.getRawRecords(pages, new UserEventDataRecord());
 

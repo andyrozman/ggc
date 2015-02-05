@@ -7,6 +7,7 @@ import ggc.meter.manager.company.AscensiaBayer;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputUtil;
@@ -670,5 +671,18 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     {
         return MeterDevicesIds.COMPANY_ASCENSIA;
     }
+
+
+    /**
+     * getImplementationStatus - Get implementation status
+     *
+     * @return implementation status as number
+     * @see ggc.plugin.manager.DeviceImplementationStatus
+     */
+    public DeviceImplementationStatus getImplementationStatus()
+    {
+        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
+    }
+
 
 }

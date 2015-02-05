@@ -131,16 +131,6 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
         return null;
     }
 
-    /**
-     * getImplementationStatus - Get implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
-    }
 
     /** 
      * Get Device ClassName

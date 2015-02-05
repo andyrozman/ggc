@@ -5,6 +5,7 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.data.XmlRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePage;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabaseRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
+import ggc.plugin.device.PlugInBaseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class DataPagesToXmlRecordConverter extends BytesConverterAbstract
 {
 
-    public List<XmlRecord> convert(List<DatabasePage> pages, XmlRecord template) throws DexcomException
+    public List<XmlRecord> convert(List<DatabasePage> pages, XmlRecord template) throws PlugInBaseException
     {
         ArrayList<DatabaseRecord> rawRecords = this.getRawRecords(pages, template);
 

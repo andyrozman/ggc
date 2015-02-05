@@ -646,7 +646,7 @@ public class OptiumXceed extends AbstractSerialMeter
     /** 
      * getImplementationStatus
      */
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }

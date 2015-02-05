@@ -143,16 +143,6 @@ public class AscensiaDEX extends AscensiaMeter
         return null;
     }
 
-    /**
-     * getImplementationStatus - Get implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
-    }
 
     /** 
      * Get Device ClassName

@@ -6,6 +6,7 @@ import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
@@ -789,10 +790,10 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         return null;
     }
 
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
         // TODO Auto-generated method stub
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
 
     public int getConnectionProtocol()

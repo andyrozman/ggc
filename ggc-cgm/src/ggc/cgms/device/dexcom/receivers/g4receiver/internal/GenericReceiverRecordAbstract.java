@@ -2,6 +2,7 @@ package ggc.cgms.device.dexcom.receivers.g4receiver.internal;
 
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
+import ggc.plugin.device.PlugInBaseException;
 
 import java.util.Date;
 
@@ -61,12 +62,12 @@ public abstract class GenericReceiverRecordAbstract implements IGenericReceiverR
         return this.crc;
     }
 
-    public int getCurrentRecordSize() throws DexcomException
+    public int getCurrentRecordSize() throws PlugInBaseException
     {
         return DexcomUtils.getPartition(this.getRecordType()).getRecordLength();
     }
 
-    public int getCurrentRecordVersion() throws DexcomException
+    public int getCurrentRecordVersion() throws PlugInBaseException
     {
         return DexcomUtils.getPartition(this.getRecordType()).getRecordRevision();
     }

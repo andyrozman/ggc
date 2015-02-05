@@ -1,6 +1,7 @@
 package ggc.meter.device;
 
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.protocol.ConnectionProtocols;
 
 /**
@@ -160,16 +161,19 @@ public class DummyMeter extends AbstractMeter // implements MeterInterface
         return null;
     }
 
+
     /**
-     * getImplementationStatus - Get Company Id 
-     * 
+     * getImplementationStatus - Get Implementation Status
+     *
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
+
+
 
     /**
      * Get Device ClassName

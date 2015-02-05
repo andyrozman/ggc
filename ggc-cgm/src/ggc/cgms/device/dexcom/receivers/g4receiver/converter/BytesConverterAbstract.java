@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.atech.utils.data.ShortUtils;
+import ggc.plugin.device.PlugInBaseException;
 
 public class BytesConverterAbstract
 {
@@ -49,7 +50,7 @@ public class BytesConverterAbstract
     }
 
     public ArrayList<DatabaseRecord> getRawRecords(List<DatabasePage> pages, IGenericReceiverRecord template)
-            throws DexcomException
+            throws PlugInBaseException
     {
         ArrayList<DatabaseRecord> rawRecords = new ArrayList<DatabaseRecord>();
 

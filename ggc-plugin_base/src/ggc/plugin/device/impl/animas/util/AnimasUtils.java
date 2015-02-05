@@ -207,7 +207,7 @@ public class AnimasUtils
 
     public static boolean checkIfUserRelevantExceptionIsThrown(AnimasException ex, boolean rethrow) throws AnimasException
     {
-        if (ex.getExceptionType() != AnimasExceptionType.CommunicationPortClosed)
+        if (ex.getAnimasExceptionType() != AnimasExceptionType.CommunicationPortClosed)
         {
             if (rethrow)
             {

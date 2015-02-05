@@ -157,7 +157,7 @@ public class FreestyleLite extends FreestyleMeter
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
     @Override
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }

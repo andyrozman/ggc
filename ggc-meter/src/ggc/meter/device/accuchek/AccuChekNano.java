@@ -125,17 +125,6 @@ public class AccuChekNano extends AccuChekSmartPixMeter
     }
 
     /**
-     * getImplementationStatus - Get Implementation Status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
-    }
-
-    /**
      * getDeviceClassName() - get name of this class
      */
     public String getDeviceClassName()

@@ -50,25 +50,25 @@ public class AnimasException extends PlugInBaseException
     public AnimasException(AnimasExceptionType exceptionType)
     {
         super(AnimasException.createMessage(exceptionType, null));
-        this.setExceptionType(exceptionType);
+        this.setAnimasExceptionType(exceptionType);
     }
 
     public AnimasException(AnimasExceptionType exceptionType, Exception ex)
     {
         super(AnimasException.createMessage(exceptionType, null), ex);
-        this.setExceptionType(exceptionType);
+        this.setAnimasExceptionType(exceptionType);
     }
 
     public AnimasException(AnimasExceptionType exceptionType, Object[] parameters)
     {
         super(AnimasException.createMessage(exceptionType, parameters));
-        this.setExceptionType(exceptionType);
+        this.setAnimasExceptionType(exceptionType);
     }
 
     public AnimasException(AnimasExceptionType exceptionType, Object[] parameters, Exception ex)
     {
         super(AnimasException.createMessage(exceptionType, parameters));
-        this.setExceptionType(exceptionType);
+        this.setAnimasExceptionType(exceptionType);
     }
 
     public static String createMessage(AnimasExceptionType exceptionType, Object[] parameters)
@@ -80,12 +80,12 @@ public class AnimasException extends PlugInBaseException
             return exceptionType.errorMessage;
     }
 
-    public AnimasExceptionType getExceptionType()
+    public AnimasExceptionType getAnimasExceptionType()
     {
         return exceptionType;
     }
 
-    public void setExceptionType(AnimasExceptionType exceptionType)
+    public void setAnimasExceptionType(AnimasExceptionType exceptionType)
     {
         this.exceptionType = exceptionType;
     }

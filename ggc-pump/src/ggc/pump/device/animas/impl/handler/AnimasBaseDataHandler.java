@@ -67,7 +67,7 @@ public class AnimasBaseDataHandler extends AbstractDeviceDataHandler
     @Override
     public void initLocal()
     {
-        this.data = new AnimasPumpDeviceData(new ggc.pump.device.animas.impl.data.AnimasPumpDataWriter(this.outputWriter));
+        this.data = new AnimasPumpDeviceData(new AnimasPumpDataWriter(this.outputWriter));
         this.setBaseData(data);
         baseDataConverter = new AnimasBaseDataConverter(deviceReader, data);
         this.dataConverter = this.baseDataConverter;

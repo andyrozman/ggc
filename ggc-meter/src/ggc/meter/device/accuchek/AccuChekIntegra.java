@@ -123,16 +123,6 @@ public class AccuChekIntegra extends AccuChekSmartPixMeter
         return null;
     }
 
-    /**
-     * getImplementationStatus - Get Implementation Status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
-    }
 
     /**
      * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory

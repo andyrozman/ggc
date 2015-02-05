@@ -138,16 +138,6 @@ public class AscensiaBreeze extends AscensiaMeter
         return null;
     }
 
-    /**
-     * getImplementationStatus - Get implementation status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
-    }
 
     /**
      * Maximum of records that device can store

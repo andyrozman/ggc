@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
+import ggc.plugin.device.PlugInBaseException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.Document;
@@ -229,7 +230,7 @@ public class DexcomUtils
         DexcomUtils.dexcomG4Api = dexcomG4Api;
     }
 
-    public static PartitionInfo getPartitionInfo() throws DexcomException
+    public static PartitionInfo getPartitionInfo() throws PlugInBaseException
     {
         return dexcomG4Api.readDatabasePartitionInfo();
 
@@ -241,7 +242,7 @@ public class DexcomUtils
         // return partitionInfo;
     }
 
-    public static Partition getPartition(ReceiverRecordType recordType) throws DexcomException
+    public static Partition getPartition(ReceiverRecordType recordType) throws PlugInBaseException
     {
         return dexcomG4Api.getPartition(recordType);
         // if (partitionInfo == null)
@@ -293,7 +294,7 @@ public class DexcomUtils
 
             return displayTimeOffset;
         }
-        catch (DexcomException ex)
+        catch (PlugInBaseException ex)
         {
             log.warn("Error reading DisplayTimeOffset: " + ex, ex);
             return 0;

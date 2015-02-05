@@ -32,6 +32,7 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils.BitConversion;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils.DexcomDateParsing;
 import ggc.plugin.data.progress.ProgressType;
+import ggc.plugin.device.PlugInBaseException;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NRSerialPort;
 import gnu.io.PortInUseException;
@@ -90,7 +91,7 @@ public class DexcomG4Api
         }
     }
 
-    public Element readFirmwareHeader() throws DexcomException
+    public Element readFirmwareHeader() throws PlugInBaseException
     {
         Element result = (Element) this.writeCommandAndReadParsedResponse(DexcomG4Commands.ReadFirmwareHeader);
         this.addToProgressAndCheckIfCanceled(1);
@@ -98,7 +99,7 @@ public class DexcomG4Api
         return result;
     }
 
-    public String readReceiverSerialNumber() throws DexcomException
+    public String readReceiverSerialNumber() throws PlugInBaseException
     {
         HashMap<String, String> map = readAllRecordsForManufacturingData();
         return map.get("SerialNumber");
@@ -135,7 +136,7 @@ public class DexcomG4Api
 
     }
 
-    public DatabasePageRange readDatabasePageRange(ReceiverRecordType recordType) throws DexcomException
+    public DatabasePageRange readDatabasePageRange(ReceiverRecordType recordType) throws PlugInBaseException
     {
         if (!databasePagesRanges.containsKey(recordType))
         {
@@ -150,7 +151,7 @@ public class DexcomG4Api
         return databasePagesRanges.containsKey(recordType);
     }
 
-    public DatabasePageRange readDatabasePageRangeReal(ReceiverRecordType recordType) throws DexcomException
+    public DatabasePageRange readDatabasePageRangeReal(ReceiverRecordType recordType) throws PlugInBaseException
     {
         short[] data = this.writeCommandAndReadRawResponse(DexcomG4Commands.ReadDatabasePageRange, null,
             new Object[] { (long) recordType.getValue() });
@@ -168,7 +169,7 @@ public class DexcomG4Api
         return dpr;
     }
 
-    public List<InsertionTimeRecord> readAllRecordsForInsertionTime() throws DexcomException
+    public List<InsertionTimeRecord> readAllRecordsForInsertionTime() throws PlugInBaseException
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.InsertionTime);
 
@@ -185,7 +186,7 @@ public class DexcomG4Api
         return records;
     }
 
-    public List<MeterDataRecord> readAllRecordsForMeterData() throws DexcomException
+    public List<MeterDataRecord> readAllRecordsForMeterData() throws PlugInBaseException
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.MeterData);
 
@@ -202,7 +203,7 @@ public class DexcomG4Api
         return records;
     }
 
-    public List<UserEventDataRecord> readAllRecordsForEvents() throws DexcomException
+    public List<UserEventDataRecord> readAllRecordsForEvents() throws PlugInBaseException
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.UserEventData);
 
@@ -219,7 +220,7 @@ public class DexcomG4Api
         return records;
     }
 
-    public List<EGVRecord> readAllRecordsForEGVData() throws DexcomException
+    public List<EGVRecord> readAllRecordsForEGVData() throws PlugInBaseException
     {
 
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.EGVData);
@@ -236,7 +237,7 @@ public class DexcomG4Api
         return records;
     }
 
-    public void saveDatabasePages(ReceiverRecordType recordType) throws DexcomException
+    public void saveDatabasePages(ReceiverRecordType recordType) throws PlugInBaseException
     {
         List<DatabasePage> pages = readDatabasePagesAll(recordType);
 
@@ -253,7 +254,7 @@ public class DexcomG4Api
 
     }
 
-    public HashMap<String, String> readAllRecordsForManufacturingData() throws DexcomException
+    public HashMap<String, String> readAllRecordsForManufacturingData() throws PlugInBaseException
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.ManufacturingData);
 
@@ -293,7 +294,7 @@ public class DexcomG4Api
         return paramMap;
     }
 
-    public List<DatabasePage> readDatabasePagesAll(ReceiverRecordType recordType) throws DexcomException
+    public List<DatabasePage> readDatabasePagesAll(ReceiverRecordType recordType) throws PlugInBaseException
     {
         DatabasePageRange dpr = readDatabasePageRange(recordType);
 
@@ -325,7 +326,7 @@ public class DexcomG4Api
     }
 
     public List<DatabasePage> readDatabasePages(ReceiverRecordType recordType, int pageNumber, int numberOfPages)
-            throws DexcomException
+            throws PlugInBaseException
     {
 
         if (numberOfPages == 1 && pageNumber == 0)
@@ -351,7 +352,7 @@ public class DexcomG4Api
         return pages;
     }
 
-    public int readSystemTime() throws DexcomException
+    public int readSystemTime() throws PlugInBaseException
     {
         Integer result = (Integer) this.writeCommandAndReadParsedResponse(DexcomG4Commands.ReadSystemTime, null);
         this.addToProgressAndCheckIfCanceled(1);
@@ -359,23 +360,23 @@ public class DexcomG4Api
         return result;
     }
 
-    public int readDisplayTime() throws DexcomException
+    public int readDisplayTime() throws PlugInBaseException
     {
         return readSystemTime() + DexcomUtils.readDisplayTimeOffset();
     }
 
-    public Date readSystemTimeAsDate() throws DexcomException
+    public Date readSystemTimeAsDate() throws PlugInBaseException
     {
         int systemTime = readSystemTime();
         return DexcomUtils.getDateFromSeconds(systemTime);
     }
 
-    public Date readDisplayTimeAsDate() throws DexcomException
+    public Date readDisplayTimeAsDate() throws PlugInBaseException
     {
         return DexcomUtils.getDateFromSeconds(readSystemTime(), DexcomDateParsing.DateWithDifferenceWithTimeZoneFix);
     }
 
-    public PartitionInfo readDatabasePartitionInfo() throws DexcomException
+    public PartitionInfo readDatabasePartitionInfo() throws PlugInBaseException
     {
         if (this.partitionInfo == null)
         {
@@ -389,7 +390,7 @@ public class DexcomG4Api
         return this.partitionInfo;
     }
 
-    public Partition getPartition(ReceiverRecordType recordType) throws DexcomException
+    public Partition getPartition(ReceiverRecordType recordType) throws PlugInBaseException
     {
         if (this.partitionInfo == null)
         {
@@ -399,7 +400,7 @@ public class DexcomG4Api
         return this.partitionInfo.getPartitionByRecordType(recordType);
     }
 
-    public int readDisplayTimeOffset() throws DexcomException
+    public int readDisplayTimeOffset() throws PlugInBaseException
     {
         Integer value = (Integer) this.writeCommandAndReadParsedResponse(DexcomG4Commands.ReadDisplayTimeOffset);
 
@@ -408,7 +409,7 @@ public class DexcomG4Api
         return value;
     }
 
-    public LanguageType readLanguage() throws DexcomException
+    public LanguageType readLanguage() throws PlugInBaseException
     {
         Integer language = (Integer) this.writeCommandAndReadParsedResponse(DexcomG4Commands.ReadLanguage);
 
@@ -423,7 +424,7 @@ public class DexcomG4Api
         return lang;
     }
 
-    public GlucoseUnitType readGlucoseUnit() throws DexcomException
+    public GlucoseUnitType readGlucoseUnit() throws PlugInBaseException
     {
         Integer glu = (Integer) this.writeCommandAndReadParsedResponse(DexcomG4Commands.ReadGlucoseUnit);
 
@@ -438,7 +439,7 @@ public class DexcomG4Api
         return gluType;
     }
 
-    public ClockModeType readClockMode() throws DexcomException
+    public ClockModeType readClockMode() throws PlugInBaseException
     {
         Integer clock = (Integer) this.writeCommandAndReadParsedResponse(DexcomG4Commands.ReadClockMode);
 
@@ -736,7 +737,7 @@ public class DexcomG4Api
             packet.getResponseCommandId(), receiverCommandFromByte));
     }
 
-    public void addToProgressAndCheckIfCanceled(int numberOfPages) throws DexcomException
+    public void addToProgressAndCheckIfCanceled(int numberOfPages) throws PlugInBaseException
     {
         if (this.progressReport != null)
         {

@@ -87,7 +87,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      * 
      * @param comm_parameters
      * @param writer
-     * @param da 
+     *
      */
     public OneTouchMeter(String comm_parameters, OutputWriter writer)
     {
@@ -169,7 +169,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     /** 
      * getImplementationStatus
      */
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
     }
