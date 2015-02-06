@@ -5,6 +5,7 @@ import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.data.defs.PumpDeviceDefinition;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -68,45 +69,12 @@ public class AnimasIR1250 extends AnimasIR1200
 
 
     /**
-     * getName - Get Name of meter. 
-     * 
-     * @return name of meter
+     * {@inheritDoc}
      */
-    public String getName()
-    {
-        return "IR 1250";
-    }
-
-
-    
-    /**
-     * getIconName - Get Icon of meter
-     * 
-     * @return icon name
-     */
-    public String getIconName()
-    {
-        return "an_ir1250.jpg";
-    }
-    
-
-    /**
-     * getDeviceId - Get Device Id, within MgrCompany class 
-     * Should be implemented by device class.
-     * 
-     * @return id of device within company
-     */
-    public int getDeviceId()
-    {
-        return PumpDevicesIds.PUMP_ANIMAS_IR_1250;
-    }
-
-
-
     @Override
-    public AnimasDeviceType getAnimasDeviceType()
+    public PumpDeviceDefinition getPumpDeviceDefinition()
     {
-        return AnimasDeviceType.Animas_IR1250;
+        return PumpDeviceDefinition.Animas_IR1250;
     }
 
 

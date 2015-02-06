@@ -4,6 +4,7 @@ import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.device.PlugInBaseException;
 
 import com.atech.i18n.I18nControlAbstract;
+import ggc.plugin.manager.DeviceImplementationStatus;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -115,10 +116,9 @@ public class DummyCGMS extends AbstractCGMS // GenericCGMS //implements
         return null;
     }
 
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
 
     public String getInstructions()

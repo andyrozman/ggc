@@ -41,8 +41,8 @@ public abstract class AnimasPump extends AbstractSerialPump
 {
 
     protected String communicationPort;
-    protected OutputWriter output_writer;
-    protected AbstractDeviceCompany device_company;
+    //protected OutputWriter output_writer;
+    //protected AbstractDeviceCompany device_company;
     
     
     public AnimasPump()
@@ -61,7 +61,7 @@ public abstract class AnimasPump extends AbstractSerialPump
     {
         super();
         this.communicationPort = communicationPort;
-        this.output_writer = writer;
+        this.outputWriter = writer;
     }
     
     
@@ -73,7 +73,7 @@ public abstract class AnimasPump extends AbstractSerialPump
     public AnimasPump(AbstractDeviceCompany cmp)
     {
         super();
-        this.device_company = cmp;
+        this.deviceCompany = cmp;
     }
     
     

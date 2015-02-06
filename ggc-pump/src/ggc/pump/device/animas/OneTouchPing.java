@@ -5,6 +5,7 @@ import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.data.defs.PumpDeviceDefinition;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -68,40 +69,14 @@ public class OneTouchPing extends AnimasIR2020
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getName()
-    {
-        return "Ping (1285/1285i)";
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getIconName()
-    {
-        return "an_ping.jpg";
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    public int getDeviceId()
-    {
-        return PumpDevicesIds.PUMP_ANIMAS_PING;
-    }
-
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AnimasDeviceType getAnimasDeviceType()
+    public PumpDeviceDefinition getPumpDeviceDefinition()
     {
-        return AnimasDeviceType.Animas_Ping;
+        return PumpDeviceDefinition.OneTouchPing;
     }
 
 }

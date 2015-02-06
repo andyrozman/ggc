@@ -159,9 +159,9 @@ public class DexcomSeven extends DexcomCGMS
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
     @Override
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
     }
 
     /**

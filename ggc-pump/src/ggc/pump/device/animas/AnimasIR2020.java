@@ -5,6 +5,7 @@ import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.data.defs.PumpDeviceDefinition;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -67,34 +68,7 @@ public class AnimasIR2020 extends AnimasIR1200
         super(cmp);
     }
 
-    /**
-     * getName - Get Name of meter. 
-     * 
-     * @return name of meter
-     */
-    public String getName()
-    {
-        return "IR 2020 (1275/1275i)";
-    }
 
-
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getIconName()
-    {
-        return "an_ir2020.jpg";
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    public int getDeviceId()
-    {
-        return PumpDevicesIds.PUMP_ANIMAS_IR_2020;
-    }
 
 
     /**
@@ -127,10 +101,15 @@ public class AnimasIR2020 extends AnimasIR1200
         return true;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public AnimasDeviceType getAnimasDeviceType()
+    public PumpDeviceDefinition getPumpDeviceDefinition()
     {
-        return AnimasDeviceType.Animas_IR1285;
+        return PumpDeviceDefinition.Animas_2200;
     }
+
 }
 

@@ -1,5 +1,6 @@
 package ggc.plugin.device;
 
+import ggc.core.util.GGCI18nControl;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
 import ggc.plugin.manager.company.AbstractDeviceCompany;

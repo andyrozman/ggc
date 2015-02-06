@@ -141,7 +141,7 @@ public class MiniMedRealTime extends MiniMedCGMS
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
     @Override
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL;
     }

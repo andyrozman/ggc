@@ -156,7 +156,7 @@ public class DexcomG4 extends AbstractSerialCGMS
     /**
      * {@inheritDoc}
      */
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_DONE;
     }

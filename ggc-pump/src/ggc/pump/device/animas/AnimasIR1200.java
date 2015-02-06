@@ -6,6 +6,7 @@ import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.data.defs.PumpDeviceDefinition;
 import ggc.pump.device.animas.impl.AnimasPumpDeviceReader;
 import ggc.plugin.device.impl.animas.util.AnimasException;
 import ggc.pump.manager.PumpDevicesIds;
@@ -38,6 +39,7 @@ import ggc.pump.manager.PumpDevicesIds;
 
 public class AnimasIR1200 extends AnimasPump
 {
+    AnimasIR1200Handler handler = new AnimasIR1200Handler();
 
     /**
      * Constructor 
@@ -78,7 +80,7 @@ public class AnimasIR1200 extends AnimasPump
      */
     public String getName()
     {
-        return "IR 1200";
+        return this.getPumpDeviceDefinition().getDeviceName();
     }
 
 
@@ -90,7 +92,7 @@ public class AnimasIR1200 extends AnimasPump
      */
     public String getIconName()
     {
-        return "an_ir1200.jpg";
+        return this.getPumpDeviceDefinition().getIconName();
     }
     
 
@@ -102,7 +104,13 @@ public class AnimasIR1200 extends AnimasPump
      */
     public int getDeviceId()
     {
-        return PumpDevicesIds.PUMP_ANIMAS_IR_1200;
+        return this.getPumpDeviceDefinition().getDeviceId();
+    }
+
+
+    public PumpDeviceDefinition getPumpDeviceDefinition()
+    {
+        return PumpDeviceDefinition.Animas_IR1200;
     }
 
     
@@ -114,7 +122,7 @@ public class AnimasIR1200 extends AnimasPump
      */
     public String getInstructions()
     {
-        return "INSTRUCTIONS_ANIMAS_V2";
+        return this.getPumpDeviceDefinition().getInstructionsI18nKey();
     }
     
     /**
@@ -134,9 +142,9 @@ public class AnimasIR1200 extends AnimasPump
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus() 
+    public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
+        return this.getPumpDeviceDefinition().getDeviceImplementationStatus();
     }
     
     
@@ -167,7 +175,7 @@ public class AnimasIR1200 extends AnimasPump
     @Override
     public AnimasDeviceType getAnimasDeviceType()
     {
-        return AnimasDeviceType.Animas_IR1200;
+        return (AnimasDeviceType)this.getPumpDeviceDefinition().getInternalDefintion();
     }
 
 
@@ -243,6 +251,9 @@ public class AnimasIR1200 extends AnimasPump
     @Override
     public void readConfiguration() throws PlugInBaseException
     {
+        handler.readConfiguration(this.getPumpDeviceDefinition(), this.connectionParameters, this.outputWriter);
+
+
         try
         {
             AnimasPumpDeviceReader reader = new AnimasPumpDeviceReader(this.communicationPort, this.getAnimasDeviceType(), this.outputWriter);

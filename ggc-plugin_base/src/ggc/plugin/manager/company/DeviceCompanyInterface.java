@@ -1,5 +1,7 @@
 package ggc.plugin.manager.company;
 
+import ggc.plugin.manager.DeviceImplementationStatus;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -64,6 +66,6 @@ public interface DeviceCompanyInterface
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    int getImplementationStatus();
+    DeviceImplementationStatus getImplementationStatus();
 
 }

@@ -5,6 +5,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.MinimedDevice;
 import ggc.plugin.device.impl.minimed.MinimedDeviceUtil;
 import ggc.plugin.device.impl.minimed.cmd.MinimedCommand;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPortEvent;
 
@@ -1664,9 +1665,9 @@ public class MinimedComm_ComLink extends SerialProtocol implements MinimedComm_I
         return null;
     }
 
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
 
     public String getInstructions()

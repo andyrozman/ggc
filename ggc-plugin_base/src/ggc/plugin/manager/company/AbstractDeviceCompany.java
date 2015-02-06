@@ -1,6 +1,7 @@
 package ggc.plugin.manager.company;
 
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.EmptyMgrDevices;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -49,7 +50,7 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
     protected int company_id = 0;
     protected String company_name = "";
     protected String company_description = "";
-    protected int company_implementation_status = 0;
+    protected DeviceImplementationStatus company_implementation_status = DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     protected String company_short_name = "";
 
     /**
@@ -92,7 +93,7 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
      * @param da 
      */
     public AbstractDeviceCompany(boolean empty, int company_id_, String company_name, String short_company_name,
-            String company_desc, int implementation_status, DataAccessPlugInBase da)
+            String company_desc, DeviceImplementationStatus implementation_status, DataAccessPlugInBase da)
     {
         this(empty, da);
 
@@ -223,7 +224,7 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
         return this.company_implementation_status;
     }

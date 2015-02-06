@@ -4,6 +4,7 @@ package ggc.pump.device.animas;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.data.defs.PumpDeviceDefinition;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -66,40 +67,14 @@ public class OneTouchVibe extends AnimasIR2020
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getName()
-    {
-        return "Vibe";
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getIconName()
-    {
-        return "an_vibe.png";
-    }
-
-
-    /**
-     * {@inheritDoc}
-     */
-    public int getDeviceId()
-    {
-        return PumpDevicesIds.PUMP_ANIMAS_VIBE;
-    }
-
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AnimasDeviceType getAnimasDeviceType()
+    public PumpDeviceDefinition getPumpDeviceDefinition()
     {
-        return AnimasDeviceType.Animas_Vibe;
+        return PumpDeviceDefinition.OneTouchVibe;
     }
 
 }

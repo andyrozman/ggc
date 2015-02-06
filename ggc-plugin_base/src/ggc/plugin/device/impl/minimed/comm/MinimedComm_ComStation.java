@@ -4,6 +4,7 @@ import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.MinimedDevice;
 import ggc.plugin.device.impl.minimed.cmd.MinimedCommand;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.protocol.SerialProtocol;
 import gnu.io.SerialPortEvent;
 
@@ -161,10 +162,9 @@ public class MinimedComm_ComStation extends SerialProtocol implements MinimedCom
         return null;
     }
 
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
 
     public String getInstructions()
