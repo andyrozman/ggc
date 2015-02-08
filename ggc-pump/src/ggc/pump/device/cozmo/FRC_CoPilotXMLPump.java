@@ -1,6 +1,7 @@
 package ggc.pump.device.cozmo;
 
 import ggc.plugin.device.impl.abbott.CoPilot;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.File;
@@ -185,10 +186,9 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
         return null;
     }
 
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
 
     public String getInstructions()

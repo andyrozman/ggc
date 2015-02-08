@@ -1,6 +1,7 @@
 package ggc.pump.device.minimed;
 
 import ggc.plugin.device.impl.minimed.MinimedDevice;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -92,5 +93,8 @@ public abstract class MinimedPumpDevice extends MinimedDevice implements PumpInt
     {
     }
 
-
+    public DeviceImplementationStatus getImplementationStatus()
+    {
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+    }
 }

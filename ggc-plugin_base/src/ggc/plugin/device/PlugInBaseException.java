@@ -1,5 +1,7 @@
 package ggc.plugin.device;
 
+import ggc.plugin.data.enums.PlugInExceptionType;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -34,12 +36,15 @@ public class PlugInBaseException extends Exception
     /**
      * Error Code
      */
-    public int error_code = 0;
+    public int errorCode = 0;
 
     /**
      * Error Description
      */
-    public String error_description = "";
+    public String errorDescription = "";
+
+
+    public PlugInExceptionType exceptionType;
 
     /**
      * Constructor for ImportException.
@@ -77,7 +82,7 @@ public class PlugInBaseException extends Exception
     public PlugInBaseException(Throwable cause, int error_code_, String message)
     {
         super(message, cause);
-        this.error_code = error_code_;
+        this.errorCode = error_code_;
     }
 
     /**
@@ -92,12 +97,12 @@ public class PlugInBaseException extends Exception
     /**
      * Constructor for PlugInBaseException.
      * 
-     * @param error_code_ 
+     * @param errorCode
      */
-    public PlugInBaseException(int error_code_)
+    public PlugInBaseException(int errorCode)
     {
         super();
-        this.error_code = error_code_;
+        this.errorCode = errorCode;
     }
 
     /**
@@ -109,7 +114,51 @@ public class PlugInBaseException extends Exception
     public PlugInBaseException(String error_msg, int error_code_)
     {
         super(error_msg);
-        this.error_code = error_code_;
+        this.errorCode = error_code_;
     }
+
+    public PlugInBaseException(PlugInExceptionType exceptionType)
+    {
+        super(PlugInBaseException.createMessage(exceptionType, null));
+        this.setExceptionType(exceptionType);
+    }
+
+    public PlugInBaseException(PlugInExceptionType exceptionType, Exception ex)
+    {
+        super(PlugInBaseException.createMessage(exceptionType, null), ex);
+        this.setExceptionType(exceptionType);
+    }
+
+    public PlugInBaseException(PlugInExceptionType exceptionType, Object[] parameters)
+    {
+        super(PlugInBaseException.createMessage(exceptionType, parameters));
+        this.setExceptionType(exceptionType);
+    }
+
+    public PlugInBaseException(PlugInExceptionType exceptionType, Object[] parameters, Exception ex)
+    {
+        super(PlugInBaseException.createMessage(exceptionType, parameters));
+        this.setExceptionType(exceptionType);
+    }
+
+    public static String createMessage(PlugInExceptionType exceptionType, Object[] parameters)
+    {
+        if (parameters != null)
+            return String.format(exceptionType.getErrorMessage(), parameters);
+        else
+            return exceptionType.getErrorMessage();
+    }
+
+    public PlugInExceptionType getExceptionType()
+    {
+        return exceptionType;
+    }
+
+    public void setExceptionType(PlugInExceptionType exceptionType)
+    {
+        this.exceptionType = exceptionType;
+    }
+
+
 
 }

@@ -112,7 +112,6 @@ public class DummyCGMS extends AbstractCGMS // GenericCGMS //implements
 
     public String getIconName()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 

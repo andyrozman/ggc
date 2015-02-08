@@ -226,6 +226,7 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
+
         return this.company_implementation_status;
     }
 

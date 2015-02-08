@@ -210,7 +210,7 @@ public class MinimedComm_ComLink extends SerialProtocol implements MinimedComm_I
         // --- Command: Read Pump Error Status
         // ---
         /*
-         * //int error_code = -1;
+         * //int errorCode = -1;
          * int param_int = -1;
          * try
          * {
@@ -1156,9 +1156,9 @@ public class MinimedComm_ComLink extends SerialProtocol implements MinimedComm_I
         }
         catch (PlugInBaseException ex)
         {
-            if (ex.error_code > 0)
+            if (ex.errorCode > 0)
             {
-                if (ex.error_code == 12)
+                if (ex.errorCode == 12)
                     return true;
                 else
                     throw ex;
@@ -1669,6 +1669,7 @@ public class MinimedComm_ComLink extends SerialProtocol implements MinimedComm_I
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
+
 
     public String getInstructions()
     {

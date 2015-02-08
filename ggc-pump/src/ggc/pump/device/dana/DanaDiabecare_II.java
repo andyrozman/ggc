@@ -143,7 +143,7 @@ public class DanaDiabecare_II extends DanaPump
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
     @Override
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }

@@ -122,16 +122,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
         return null;
     }
 
-    /**
-     * getImplementationStatus - Get Implementation Status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS;
-    }
+
 
     /**
      * getMaxMemoryRecords - Get Maximum entries that can be stored in devices memory

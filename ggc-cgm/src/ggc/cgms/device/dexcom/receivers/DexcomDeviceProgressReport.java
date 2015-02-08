@@ -3,6 +3,7 @@ package ggc.cgms.device.dexcom.receivers;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import ggc.plugin.data.progress.ProgressReportInterface;
 import ggc.plugin.data.progress.ProgressType;
+import ggc.plugin.device.PlugInBaseException;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -33,7 +34,7 @@ import ggc.plugin.data.progress.ProgressType;
 public interface DexcomDeviceProgressReport extends ProgressReportInterface
 {
 
-    void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws DexcomException;
+    void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws PlugInBaseException;
 
     void setDownloadCancel(boolean cancel);
 

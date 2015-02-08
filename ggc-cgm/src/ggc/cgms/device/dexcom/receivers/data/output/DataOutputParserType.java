@@ -8,7 +8,8 @@ public enum DataOutputParserType
     G4_MeterData, //
     G4_UserEventData, //
 
-    G4_EGVData_SensorReading, G4_EGVData_SensorTrend,
+    G4_EGVData_SensorReading, //
+    G4_EGVData_SensorTrend,
 
     ;
 

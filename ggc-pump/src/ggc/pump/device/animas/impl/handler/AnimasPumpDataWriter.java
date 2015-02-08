@@ -1,11 +1,12 @@
-package ggc.pump.device.animas.impl.data;
+package ggc.pump.device.animas.impl.handler;
 
 import ggc.plugin.data.DeviceValuesWriter;
+import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.PumpTempValues;
 import ggc.pump.data.defs.*;
-import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
+
 
 /**
  *  Application:   GGC - GNU Gluco Control

@@ -3,6 +3,7 @@ package ggc.pump.manager.company;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.pump.device.AbstractPump;
@@ -214,13 +215,13 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
-    /** 
+    /**
      * getImplementationStatus
      */
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
         // TODO Auto-generated method stub
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
 
     /** 

@@ -1,5 +1,6 @@
 package ggc.pump.manager.company;
 
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.pump.util.DataAccessPump;
 
@@ -18,7 +19,6 @@ public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
     /**
      * Instantiates a new abstract pump device company
      * 
-     * @param ic the i18nControlAbstract
      * @param value the value
      */
     public AbstractPumpDeviceCompany(boolean value)
@@ -37,7 +37,7 @@ public abstract class AbstractPumpDeviceCompany extends AbstractDeviceCompany
      * @param implementation_status
      */
     public AbstractPumpDeviceCompany(int company_id_, String company_name, String short_company_name,
-            String company_desc, int implementation_status)
+            String company_desc, DeviceImplementationStatus implementation_status)
     {
         super(false, company_id_, company_name, short_company_name, company_desc, implementation_status, DataAccessPump
                 .getInstance());

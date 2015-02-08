@@ -2,6 +2,7 @@ package ggc.pump.device;
 
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.util.DataAccessPump;
 
@@ -288,9 +289,9 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     /** 
      * getImplementationStatus
      */
-    public int getImplementationStatus()
+    public DeviceImplementationStatus getImplementationStatus()
     {
-        return 0;
+        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
 
     /** 

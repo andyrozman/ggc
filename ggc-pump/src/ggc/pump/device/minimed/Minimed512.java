@@ -229,17 +229,7 @@ public class Minimed512 extends Minimed511
         return null;
     }
 
-    /**
-     * getImplementationStatus - Get Implementation Status 
-     * 
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
-    @Override
-    public int getImplementationStatus()
-    {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
-    }
+
 
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time

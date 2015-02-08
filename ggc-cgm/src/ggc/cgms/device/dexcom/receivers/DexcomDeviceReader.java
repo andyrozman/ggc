@@ -10,11 +10,11 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.data.UserEventDataRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePageRange;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.PartitionInfo;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomExceptionType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.data.progress.ProgressData;
 import ggc.plugin.data.progress.ProgressType;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 import gnu.io.CommPortIdentifier;
 
@@ -63,7 +63,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
     boolean downloadCanceled = false;
     OutputWriter outputWriter;
 
-    public DexcomDeviceReader(String portName, DexcomDevice dexcomDevice) throws DexcomException
+    public DexcomDeviceReader(String portName, DexcomDevice dexcomDevice) throws PlugInBaseException
     {
         this.portName = portName;
 
@@ -89,7 +89,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
             deviceFound));
 
         if (!deviceFound)
-            throw new DexcomException(DexcomExceptionType.DeviceNotFoundOnConfiguredPort,
+            throw new PlugInBaseException(PlugInExceptionType.DeviceNotFoundOnConfiguredPort,
                     new Object[] { this.portName });
 
         if (dexcomDevice.getApi() == ReceiverApiType.G4_Api)
@@ -98,7 +98,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
             DexcomUtils.setDexcomG4Api(api);
         }
         else
-            throw new DexcomException(DexcomExceptionType.UnsupportedReceiver);
+            throw new PlugInBaseException(PlugInExceptionType.UnsupportedReceiver);
 
     }
 
@@ -107,7 +107,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
         this.outputWriter = outputWriter;
     }
 
-    public void downloadSettings() throws DexcomException
+    public void downloadSettings() throws PlugInBaseException
     {
         try
         {
@@ -141,10 +141,10 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
             parseData(DataOutputParserType.Configuration, data);
 
         }
-        catch (DexcomException ex)
+        catch (PlugInBaseException ex)
         {
 
-            if (ex.getExceptionType() != null && ex.getExceptionType() == DexcomExceptionType.DownloadCanceledByUser)
+            if (ex.getExceptionType() != null && ex.getExceptionType() == PlugInExceptionType.DownloadCanceledByUser)
                 return;
 
             throw ex;
@@ -152,13 +152,13 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 
     }
 
-    private void parseData(DataOutputParserType parserType, ReceiverDownloadData data) throws DexcomException
+    private void parseData(DataOutputParserType parserType, ReceiverDownloadData data) throws PlugInBaseException
     {
         this.dataOutputParser.parse(parserType, data);
         this.addToProgressAndCheckIfCanceled(ProgressType.Dynamic, 1);
     }
 
-    public void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws DexcomException
+    public void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws PlugInBaseException
     {
 
         this.progressData.addToProgressAndCheckIfCanceled(progressType, progressAdd);
@@ -171,11 +171,11 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
         }
 
         if (this.isDownloadCanceled())
-            throw new DexcomException(DexcomExceptionType.DownloadCanceledByUser);
+            throw new PlugInBaseException(PlugInExceptionType.DownloadCanceledByUser);
 
     }
 
-    public void downloadData() throws DexcomException
+    public void downloadData() throws PlugInBaseException
     {
         try
         {
@@ -237,9 +237,9 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
             parseData(DataOutputParserType.G4_MeterData, data);
 
         }
-        catch (DexcomException ex)
+        catch (PlugInBaseException ex)
         {
-            if (ex.getExceptionType() != null && ex.getExceptionType() == DexcomExceptionType.DownloadCanceledByUser)
+            if (ex.getExceptionType() != null && ex.getExceptionType() == PlugInExceptionType.DownloadCanceledByUser)
                 return;
 
             throw ex;
@@ -317,7 +317,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
         return data;
     }
 
-    public void saveAllPages() throws DexcomException
+    public void saveAllPages() throws PlugInBaseException
     {
         for (ReceiverRecordType recordType : ReceiverRecordType.values())
         {

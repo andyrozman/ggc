@@ -128,6 +128,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
         return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
     }
 
+
     /**
      * @throws PlugInBaseException
      */

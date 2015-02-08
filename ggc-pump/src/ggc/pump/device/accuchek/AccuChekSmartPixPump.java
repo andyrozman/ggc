@@ -4,6 +4,7 @@ import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.impl.accuchek.AccuChekSmartPix;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
@@ -1212,6 +1213,19 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         this.basal_mappings.put("TBR End", PumpBasalSubType.TemporaryBasalRateEnded);
 
     }
+
+
+    /**
+     * getImplementationStatus - Get Implementation Status
+     *
+     * @return implementation status as number
+     * @see ggc.plugin.manager.DeviceImplementationStatus
+     */
+    public DeviceImplementationStatus getImplementationStatus()
+    {
+        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
+    }
+
 
     /**
      * Map pump specific alarms to PumpTool specific alarm codes

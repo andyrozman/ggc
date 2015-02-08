@@ -1,5 +1,6 @@
 package ggc.cgms.device.dexcom.receivers.data.output;
 
+import ggc.cgms.data.CGMSValueConfig;
 import ggc.cgms.data.CGMSValuesExtendedEntry;
 import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.CGMSValuesTableModel;
@@ -11,10 +12,12 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.data.EGVRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.InsertionTimeRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.MeterDataRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.UserEventDataRecord;
+import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.output.OutputWriter;
 
+import ggc.plugin.output.OutputWriterConfigData;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -231,11 +234,41 @@ public class GGCOutputParser implements DataOutputParserInterface
             }
         }
 
+        writeConfiguration(data);
+
         this.outputWriter.setDeviceIdentification(di);
         this.outputWriter.writeDeviceIdentification();
 
         this.isIdentificationWriten = true;
     }
+
+    private void writeConfiguration(ReceiverDownloadData data)
+    {
+        String[] cfgs = { "API_VERSION", "PRODUCT_ID", "PRODUCT_NAME", "SOFTWARE_NUMBER",
+                "FIRMWARE_VERSION", "PORT_VERSION", "RF_VERSION", "SYSTEM_TIME", "DISPLAY_TIME",
+                "LANGUAGE", "GLUCOSE_UNIT", "CLOCK_MODE" };
+
+        for(String cfgKey : cfgs)
+        {
+            String value = data.getConfigValueByKey(cfgKey);
+
+            if (value!=null)
+            {
+                this.outputWriter.writeConfigurationData( //
+                        getConfigurationData("CFG_BASE_" + cfgKey, value));
+            }
+
+        }
+
+        this.outputWriter.writeConfigurationData( //
+                getConfigurationData("CFG_BASE_SERIAL_NUMBER", data.getSerialNumber()));
+    }
+
+    private CGMSValueConfig getConfigurationData(String key, String value)
+    {
+        return new CGMSValueConfig(key, value);
+    }
+
 
     private void addEntry(CGMSValuesSubEntry entry)
     {
