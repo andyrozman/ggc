@@ -48,6 +48,12 @@ public enum PumpBasalSubType implements CodeEnumWithTranslation
     ;
 
 
+    public static boolean isTemporaryBasalType(PumpBasalSubType type)
+    {
+        return (type==TemporaryBasalRate || type==TemporaryBasalRateProfile || type==TemporaryBasalRateCanceled || type==TemporaryBasalRateEnded);
+    }
+
+
 
     /**
      * Basal Descriptions

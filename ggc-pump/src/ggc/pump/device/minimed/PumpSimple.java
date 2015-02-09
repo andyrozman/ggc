@@ -108,7 +108,7 @@ public class PumpSimple
             // this.outputWriter.writeLog(LogEntryType.INFO,
             // "AbstractSerialMeter::open()");
             // System.out.println("SerialProtocol: open() - open");
-            serialPort = portIdentifier.open("ggc", (int) timeOut);
+            serialPort = (SerialPort)portIdentifier.open("ggc", (int) timeOut);
 
             // this.outputWriter.writeLog(LogEntryType.INFO,
             // "AbstractSerialMeter::open() - setting parameters");

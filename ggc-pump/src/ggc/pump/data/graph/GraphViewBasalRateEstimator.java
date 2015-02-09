@@ -60,8 +60,8 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
     // private GlucoValues gluco_values;
     // private GlucoValues gluco_values_prev;
     XYSeriesCollection dataset = new XYSeriesCollection();
-    // TimeSeriesCollection dataset = new TimeSeriesCollection();
-    // DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    // TimeSeriesCollection datasetBG = new TimeSeriesCollection();
+    // DefaultCategoryDataset datasetBG = new DefaultCategoryDataset();
 
     NumberAxis BGAxis;
     // private TimeSeriesCollection BGDataset = new TimeSeriesCollection();
@@ -159,7 +159,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
          * if (dv.getBG()>0)
          * ts.addOrUpdate(new Minute(dv.getDateTimeAsDate()), dv.getBG());
          * }
-         * dataset.addSeries(ts);
+         * datasetBG.addSeries(ts);
          * ts = new TimeSeries("CH");
          * for(int i=0; i<count; i++)
          * {
@@ -170,24 +170,24 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
          * // xs.add(dv.getDateT(), dv.getCH());
          * }
          * //org.jfree.data.time.
-         * dataset.addSeries(ts);
+         * datasetBG.addSeries(ts);
          * /*
-         * dataset.clear();
+         * datasetBG.clear();
          * System.out.println("Read HbA1c data:\n" +
          * hbValues.getPercentOfDaysInClass(0) + "\n" +
          * hbValues.getPercentOfDaysInClass(1) + "\n"
          * + hbValues.getPercentOfDaysInClass(2) + "\n" +
          * hbValues.getPercentOfDaysInClass(3) + "\n"
          * + hbValues.getPercentOfDaysInClass(4));
-         * dataset.insertValue(0, m_ic.getMessage("DAYS_WITH_READINGS_0_1"),
+         * datasetBG.insertValue(0, m_ic.getMessage("DAYS_WITH_READINGS_0_1"),
          * hbValues.getPercentOfDaysInClass(0));
-         * dataset.insertValue(1, m_ic.getMessage("DAYS_WITH_READINGS_2_3"),
+         * datasetBG.insertValue(1, m_ic.getMessage("DAYS_WITH_READINGS_2_3"),
          * hbValues.getPercentOfDaysInClass(1));
-         * dataset.insertValue(2, m_ic.getMessage("DAYS_WITH_READINGS_4_5"),
+         * datasetBG.insertValue(2, m_ic.getMessage("DAYS_WITH_READINGS_4_5"),
          * hbValues.getPercentOfDaysInClass(2));
-         * dataset.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"),
+         * datasetBG.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"),
          * hbValues.getPercentOfDaysInClass(3));
-         * dataset.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"),
+         * datasetBG.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"),
          * hbValues.getPercentOfDaysInClass(4));
          */
 
@@ -305,7 +305,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
         /*
          * }
          * }
-         * dataset.addSeries(BGSeries);
+         * datasetBG.addSeries(BGSeries);
          * insBUDataset.addSeries(CHSeries);
          * insBUDataset.addSeries(ins1Series);
          * insBUDataset.addSeries(ins2Series);

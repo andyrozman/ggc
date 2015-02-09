@@ -46,8 +46,11 @@ public class DailyValues implements Serializable
     private boolean debug = false;
     private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
 
-    private String[] column_names = { m_ic.getMessage("DATE_TIME"), m_ic.getMessage("BG"),
-                                     m_ic.getMessage("BOLUS_INSULIN_SHORT"), m_ic.getMessage("BASAL_INSULIN_SHORT"),
+    private String[] column_names = {
+            m_ic.getMessage("DATE_TIME"), //
+            m_ic.getMessage("BG"), //
+            m_ic.getMessage("BOLUS_INSULIN_SHORT"), //
+            m_ic.getMessage("BASAL_INSULIN_SHORT"), //
                                      m_ic.getMessage("CH"), m_ic.getMessage("ACTIVITY"), m_ic.getMessage("URINE"),
                                      m_ic.getMessage("COMMENT") };
 

@@ -638,7 +638,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         // String selected_language =
         // dataAccess.getLanguageManager().getSelectedLanguage();
-        // String default_help = dataAccess.getLanguageManager().getDefaultHelp();
+        // String defaultHelp = dataAccess.getLanguageManager().getDefaultHelp();
 
         HelpContext hc = m_da.getHelpContext();
 

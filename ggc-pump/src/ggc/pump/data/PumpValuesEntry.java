@@ -421,7 +421,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
         else if (this.baseType == PumpBaseType.Report)
         {
-            return m_da.getPumpReportTypes().getDescriptions()[this.sub_type];
+            return PumpReport.getByCode(this.sub_type).getTranslation();
+            //return m_da.getPumpReportTypes().getDescriptions()[this.sub_type];
         }
         else if (this.baseType == PumpBaseType.Alarm)
         {

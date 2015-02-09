@@ -90,8 +90,8 @@ public class PrefLanguagePane extends AbstractPrefOptionsPanel implements HelpCa
          * panel.add(label);
          */
         /*
-         * label = new JLabel("v" + langInfo.lp_version + " (" +
-         * langInfo.lp_release + ")");
+         * label = new JLabel("v" + langInfo.languagePackVersion + " (" +
+         * langInfo.languagePackRelease + ")");
          * label.setFont(font_normal);
          * label.setBounds(180, 50, 360, 25);
          * panel.add(label);
@@ -107,7 +107,7 @@ public class PrefLanguagePane extends AbstractPrefOptionsPanel implements HelpCa
          * panel.add(label);
          */
         /*
-         * label = new JLabel("" + langInfo.lp_langs_with_help);
+         * label = new JLabel("" + langInfo.languagePackLanguagesWithHelp);
          * label.setFont(font_normal);
          * label.setBounds(200, 70, 360, 25);
          * panel.add(label);
@@ -123,7 +123,7 @@ public class PrefLanguagePane extends AbstractPrefOptionsPanel implements HelpCa
          * panel.add(label);
          */
         /*
-         * label = new JLabel("" + langInfo.lp_langs_without_help);
+         * label = new JLabel("" + langInfo.languagePackLanguagesWithoutHelp);
          * label.setFont(font_normal);
          * label.setBounds(200, 90, 360, 25);
          * panel.add(label);
