@@ -1,9 +1,12 @@
 package ggc.pump.data.defs;
 
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccess;
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.pump.util.DataAccessPump;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
 /**
@@ -77,8 +80,8 @@ public enum PumpEvents implements CodeEnumWithTranslation
 
     static String[] descriptions;
 
-    static Hashtable<String, PumpEvents> translationMapping = new Hashtable<String, PumpEvents>();
-    static Hashtable<Integer, PumpEvents> codeMapping = new Hashtable<Integer, PumpEvents>();
+    static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
+    static HashMap<Integer, PumpEvents> codeMapping = new HashMap<Integer, PumpEvents>();
 
     static
     {
@@ -174,16 +177,9 @@ public enum PumpEvents implements CodeEnumWithTranslation
      *            type as string
      * @return type as int
      */
-    public int getTypeFromDescription(String str)
+    public static int getTypeFromDescription(String str)
     {
-        if (translationMapping.containsKey(str))
-        {
-            return translationMapping.get(str).getCode();
-        }
-        else
-        {
-            return 0;
-        }
+        return ATDataAccessAbstract.getTypeFromDescription(str, translationMapping);
     }
 
     public static PumpEvents getByCode(int code)

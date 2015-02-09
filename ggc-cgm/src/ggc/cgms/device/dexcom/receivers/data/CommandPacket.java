@@ -4,10 +4,10 @@ import ggc.cgms.device.dexcom.receivers.DexcomCommand;
 import ggc.cgms.device.dexcom.receivers.ReceiverApiType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.DexcomG4Commands;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.parsers.ParserType;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomExceptionType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 
+import ggc.plugin.data.enums.PlugInExceptionType;
+import ggc.plugin.device.PlugInBaseException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -56,7 +56,7 @@ public class CommandPacket
     // Long commandParameter = null;
     Object[] commandParameters = null;
 
-    private DexcomException exception;
+    private PlugInBaseException exception;
     private static Log log = LogFactory.getLog(CommandPacket.class);
 
     // refacotirng dexcom command, G4 R2... no store of G4 command
@@ -87,7 +87,7 @@ public class CommandPacket
         }
     }
 
-    private void prepareCommand() throws DexcomException
+    private void prepareCommand() throws PlugInBaseException
     {
         this.command = new short[1590];
 
@@ -114,7 +114,7 @@ public class CommandPacket
 
     }
 
-    private void createCommand() throws DexcomException
+    private void createCommand() throws PlugInBaseException
     {
 
         short[] cmd = new short[1590];
@@ -148,7 +148,7 @@ public class CommandPacket
                 storeValueAsBytes(p, cmd, 9, CommandParameter.Byte);
             }
             else
-                throw new DexcomException(DexcomExceptionType.UnsupportedTypeOfParametersForCommand);
+                throw new PlugInBaseException(PlugInExceptionType.UnsupportedTypeOfParametersForCommand);
         } // for Command
 
         storeValueAsBytes((long) DexcomUtils.calculateCRC16(cmd, 0, packetLength - 2), cmd, packetLength - 2,
@@ -162,7 +162,7 @@ public class CommandPacket
     }
 
     private void storeValueAsBytes(Long parameter, short[] packet, int index, CommandParameter commandParameter)
-            throws DexcomException
+            throws PlugInBaseException
     {
 
         switch (commandParameter)
@@ -196,7 +196,7 @@ public class CommandPacket
                 break;
 
             default:
-                throw new DexcomException(DexcomExceptionType.UnsupportedTypeOfParametersForCommand);
+                throw new PlugInBaseException(PlugInExceptionType.UnsupportedTypeOfParametersForCommand);
 
         }
 
@@ -295,12 +295,12 @@ public class CommandPacket
         this.responseCommandId = commandIdReturned;
     }
 
-    public DexcomException getException()
+    public PlugInBaseException getException()
     {
         return exception;
     }
 
-    public void setException(DexcomException exception)
+    public void setException(PlugInBaseException exception)
     {
         this.exception = exception;
     }

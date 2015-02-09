@@ -3,8 +3,9 @@ package ggc.cgms.device.dexcom.receivers.g4receiver.converter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.Partition;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.PartitionInfo;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 
+import ggc.plugin.data.enums.PlugInExceptionType;
+import ggc.plugin.device.PlugInBaseException;
 import org.jdom.Element;
 
 public class ElementToPartitionInfoConverter
@@ -38,11 +39,12 @@ public class ElementToPartitionInfoConverter
     // RecordLength="48" />
     // </PartitionInfo>
 
-    public PartitionInfo convert(Element xmlElement) throws DexcomException
+    public PartitionInfo convert(Element xmlElement) throws PlugInBaseException
     {
 
         if (xmlElement == null)
-            throw new DexcomException("No data found for converting PartitionInfo.");
+            throw new PlugInBaseException(PlugInExceptionType.NoDataFoundForConversion,
+                    new Object[] { "PartitionInfo" });
 
         try
         {
@@ -69,7 +71,9 @@ public class ElementToPartitionInfoConverter
         }
         catch (NumberFormatException ex)
         {
-            throw new DexcomException("Error parsing PartitionInfo Xml: " + ex, ex);
+            throw new PlugInBaseException(PlugInExceptionType.Parsing_BytesParsingError,
+                    new Object[] { "PartitionInfo", ex.getLocalizedMessage() }, ex);
+
         }
 
     }

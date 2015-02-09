@@ -1,6 +1,6 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver.internal;
 
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
+
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.plugin.device.PlugInBaseException;
 

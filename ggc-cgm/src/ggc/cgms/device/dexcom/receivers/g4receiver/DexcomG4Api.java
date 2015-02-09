@@ -26,11 +26,10 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePage;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePageRange;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.Partition;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.PartitionInfo;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomExceptionType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils.BitConversion;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils.DexcomDateParsing;
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.PlugInBaseException;
 import gnu.io.CommPortIdentifier;
@@ -65,12 +64,7 @@ public class DexcomG4Api
     InputStream inputStream;
     HashMap<ReceiverRecordType, DatabasePageRange> databasePagesRanges = new HashMap<ReceiverRecordType, DatabasePageRange>();
 
-    public DexcomG4Api(String portName, /*
-                                         * CommPort serialPort,
-                                         * CommPortIdentifier
-                                         * commPortIdentifier,
-                                         */
-            DexcomDeviceProgressReport progressReport)
+    public DexcomG4Api(String portName, DexcomDeviceProgressReport progressReport)
     {
         serialDevice = new NRSerialPort(portName, 115200);
 
@@ -105,7 +99,7 @@ public class DexcomG4Api
         return map.get("SerialNumber");
     }
 
-    public void shutDownReceiver() throws DexcomException
+    public void shutDownReceiver() throws PlugInBaseException
     {
 
         try
@@ -127,11 +121,11 @@ public class DexcomG4Api
         catch (IOException ex)
         {
             log.error("Unable to write to serial device to shutdown.", ex);
-            throw new DexcomException(DexcomExceptionType.Receiver_ErrorWritingToReceiver, ex);
+            throw new PlugInBaseException(PlugInExceptionType.DeviceErrorWritingToDevice, ex);
         }
         catch (PortInUseException ex)
         {
-            throw new DexcomException(DexcomExceptionType.Receiver_ErrorWritingToReceiver, ex);
+            throw new PlugInBaseException(PlugInExceptionType.DeviceErrorWritingToDevice, ex);
         }
 
     }
@@ -454,7 +448,7 @@ public class DexcomG4Api
         return clockType;
     }
 
-    private Object writeCommandAndReadParsedResponse(DexcomG4Commands command) throws DexcomException
+    private Object writeCommandAndReadParsedResponse(DexcomG4Commands command) throws PlugInBaseException
     {
         CommandPacket cmdPacket = this.createCommandPacket(command, null);
         this.writeCommandAndReadRawResponse(null, cmdPacket, null);
@@ -465,7 +459,7 @@ public class DexcomG4Api
     }
 
     private Object writeCommandAndReadParsedResponse(DexcomG4Commands command, Object[] parameters)
-            throws DexcomException
+            throws PlugInBaseException
     {
         CommandPacket cmdPacket = this.createCommandPacket(command, parameters);
         this.writeCommandAndReadRawResponse(null, cmdPacket, parameters);
@@ -492,7 +486,7 @@ public class DexcomG4Api
     }
 
     private short[] writeCommandAndReadRawResponse(DexcomG4Commands command, CommandPacket cmdPacket,
-            Object[] parameters) throws DexcomException
+            Object[] parameters) throws PlugInBaseException
     {
         if (cmdPacket == null)
         {
@@ -503,7 +497,7 @@ public class DexcomG4Api
         // 0, 12)));
 
         int retries = 0;
-        DexcomException exception;
+        PlugInBaseException exception;
 
         do
         {
@@ -521,7 +515,7 @@ public class DexcomG4Api
                 }
                 catch (IOException ex)
                 {
-                    throw new DexcomException(DexcomExceptionType.Receiver_ErrorWritingToReceiver,
+                    throw new PlugInBaseException(PlugInExceptionType.DeviceErrorWritingToDevice,
                             new Object[] { ex.getLocalizedMessage() }, ex);
                 }
 
@@ -540,7 +534,7 @@ public class DexcomG4Api
                 else
                     return new short[0];
             }
-            catch (DexcomException ex)
+            catch (PlugInBaseException ex)
             {
                 exception = ex;
                 // e.printStackTrace();
@@ -555,17 +549,17 @@ public class DexcomG4Api
     }
 
     // FIXME
-    public short[] readGenericCommandPacket(int maxWaitMs, CommandPacket packet) throws DexcomException
+    public short[] readGenericCommandPacket(int maxWaitMs, CommandPacket packet) throws PlugInBaseException
     {
         if (this.serialDevice == null)
-            throw new DexcomException("Invalid port or port closed!");
+            throw new PlugInBaseException(PlugInExceptionType.InvalidPortOrPortClosed);
 
         short[] destinationArray = null;
         short[] buffer2 = new short[0x10005];
         int destinationIndex = 0;
         // long now = System.currentTimeMillis();
 
-        DexcomException exception = null;
+        PlugInBaseException exception = null;
         // maxWaitMs
         // while (System.currentTimeMillis() < (now + 20000))
 
@@ -612,7 +606,7 @@ public class DexcomG4Api
                 destinationIndex += 2;
                 if (num3 != num4)
                 {
-                    exception = new DexcomException("Failed CRC check in packet.");
+                    exception = new PlugInBaseException(PlugInExceptionType.FailedCRCCheckInPacket);
                     throw exception;
                 }
                 else
@@ -623,26 +617,21 @@ public class DexcomG4Api
             }
             else
             {
-                // log.error("SourceArray: " +
-                // this.byteUtils.getDebugByteArray(sourceArray));
-                exception = new DexcomException("Unknown data read. Failed to read start of packet.");
+                exception = new PlugInBaseException(PlugInExceptionType.UnknownDataReadWrongStartOfPacket);
                 throw exception;
             }
 
             // break;
 
         }
-        catch (DexcomException ex)
+        catch (PlugInBaseException ex)
         {
             exception = ex;
             // throw ex;
         }
         catch (Exception ex)
         {
-            exception = new DexcomException("Failed to read contents of generic packets.", ex);
-            // packet.setException(exception);
-            // throw exception;
-
+            exception = new PlugInBaseException(PlugInExceptionType.DeviceFailedToReadResponse, ex);
         }
 
         retries++;
@@ -672,7 +661,7 @@ public class DexcomG4Api
         {
 
             if (System.currentTimeMillis() > till)
-                throw new DexcomException("Timeout: ");
+                throw new PlugInBaseException(PlugInExceptionType.TimeoutReadingData);
 
             // log.warn("Waiting for data: " + is.available() + ", Req: " +
             // nrBytes);
@@ -697,15 +686,14 @@ public class DexcomG4Api
         return retData;
     }
 
-    private void verifyPayloadLength(CommandPacket cmdPacket) throws DexcomException
+    private void verifyPayloadLength(CommandPacket cmdPacket) throws PlugInBaseException
     {
-
         if (cmdPacket.getResponse().length != cmdPacket.getExpectedResponseLength())
-            throw new DexcomException(String.format("Receiver packet response length of %d != expected length of %d",
-                cmdPacket.getResponse().length, cmdPacket.getExpectedResponseLength()));
+            throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidResponseLength,
+                    new Object[] { cmdPacket.getResponse().length, cmdPacket.getExpectedResponseLength()});
     }
 
-    public void verifyResponseCommandByte(CommandPacket packet) throws DexcomException
+    public void verifyResponseCommandByte(CommandPacket packet) throws PlugInBaseException
     {
         DexcomG4Commands receiverCommandFromByte = DexcomG4Commands.getCommandById(packet.getResponseCommandId());
         // ReceiverCommands receiverCommandFromByte =
@@ -716,25 +704,27 @@ public class DexcomG4Api
                 return;
 
             case Nak:
-                throw new DexcomException("Receiver reported NAK or an invalid CRC error.");
+                throw new PlugInBaseException(PlugInExceptionType.DeviceNAKOrInvalidCRC);
 
             case InvalidCommand:
-                throw new DexcomException("Receiver reported an invalid command error.");
+                throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidCommand);
 
             case InvalidParam:
-                if (packet.getResponse() != null && packet.getResponse().length >= 1)
-                    throw new DexcomException(String.format(
-                        "Receiver reported an invalid parameter error for parameter {0}.", packet.getResponse()[0]));
-                throw new DexcomException("Receiver reported an invalid parameter error.");
+                if (packet.getResponse() != null && packet.getResponse().length >= 1) {
+                    throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidParameterDesc, new Object[]{packet.getResponse()[0]});
+                }
+                else {
+                    throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidParameter);
+                }
 
             case ReceiverError:
-                throw new DexcomException("Receiver reported an internal error.");
+                throw new PlugInBaseException(PlugInExceptionType.DeviceInternalError);
 
             default:
                 break;
         }
-        throw new DexcomException(String.format("Unknown or invalid receiver command %s=%s.",
-            packet.getResponseCommandId(), receiverCommandFromByte));
+        throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidResponseCommand,
+            new Object[] { receiverCommandFromByte, packet.getResponseCommandId() });
     }
 
     public void addToProgressAndCheckIfCanceled(int numberOfPages) throws PlugInBaseException

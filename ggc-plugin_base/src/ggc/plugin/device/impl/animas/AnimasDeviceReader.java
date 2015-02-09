@@ -1,13 +1,14 @@
 package ggc.plugin.device.impl.animas;
 
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.data.progress.ProgressData;
 import ggc.plugin.data.progress.ProgressReportInterface;
 import ggc.plugin.data.progress.ProgressType;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasImplementationType;
-import ggc.plugin.device.impl.animas.util.AnimasException;
-import ggc.plugin.device.impl.animas.util.AnimasExceptionType;
+
 import gnu.io.CommPortIdentifier;
 
 import java.util.Enumeration;
@@ -52,7 +53,7 @@ public class AnimasDeviceReader implements ProgressReportInterface
     protected AnimasDeviceType animasDevice;
     protected boolean downloadCanceled = false;
 
-    public AnimasDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter) throws AnimasException
+    public AnimasDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter) throws PlugInBaseException
     {
         this.portName = portName;
         this.animasDevice = animasDevice;
@@ -81,13 +82,13 @@ public class AnimasDeviceReader implements ProgressReportInterface
 
         if (!deviceFound)
         {
-            throw new AnimasException(AnimasExceptionType.DeviceNotFoundOnConfiguredPort,
+            throw new PlugInBaseException(PlugInExceptionType.DeviceNotFoundOnConfiguredPort,
                     new Object[] { this.portName });
         }
 
         if (animasDevice.getImplementationType() != AnimasImplementationType.AnimasImplementationV2)
         {
-            throw new AnimasException(AnimasExceptionType.UnsupportedDevice);
+            throw new PlugInBaseException(PlugInExceptionType.UnsupportedDevice, new Object[] { this.getClass().getSimpleName()  });
         }
     }
 
@@ -116,7 +117,7 @@ public class AnimasDeviceReader implements ProgressReportInterface
             return downloadCanceled;
     }
 
-    public void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws AnimasException
+    public void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws PlugInBaseException
     {
         this.progressData.addToProgressAndCheckIfCanceled(progressType, progressAdd);
 
@@ -129,7 +130,7 @@ public class AnimasDeviceReader implements ProgressReportInterface
 
         if (this.isDownloadCanceled())
         {
-            throw new AnimasException(AnimasExceptionType.DownloadCanceledByUser);
+            throw new PlugInBaseException(PlugInExceptionType.DownloadCanceledByUser);
         }
     }
 

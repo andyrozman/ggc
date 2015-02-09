@@ -1,13 +1,13 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver.data.parsers;
 
 import ggc.cgms.device.dexcom.receivers.data.CommandPacket;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomExceptionType;
+import ggc.plugin.data.enums.PlugInExceptionType;
+import ggc.plugin.device.PlugInBaseException;
 
 public class IntegerParser implements DexcomCommandParserInterface
 {
 
-    public Object parse(CommandPacket cmdPacket) throws DexcomException
+    public Object parse(CommandPacket cmdPacket) throws PlugInBaseException
     {
 
         short[] data = cmdPacket.getResponse();
@@ -27,7 +27,7 @@ public class IntegerParser implements DexcomCommandParserInterface
                     (data[2] & 0xFF) << 16 | //
                     (data[3] & 0xFF) << 24;
 
-        throw new DexcomException(DexcomExceptionType.ParsingErrorUnsupportedDataLenth, new Object[] { data.length,
+        throw new PlugInBaseException(PlugInExceptionType.ParsingErrorUnsupportedDataLenth, new Object[] { data.length,
                                                                                                       "1-4" });
 
     }

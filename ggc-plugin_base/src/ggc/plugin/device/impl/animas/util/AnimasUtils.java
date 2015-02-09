@@ -1,5 +1,7 @@
 package ggc.plugin.device.impl.animas.util;
 
+import ggc.plugin.data.enums.PlugInExceptionType;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 
 import java.math.BigDecimal;
@@ -193,21 +195,21 @@ public class AnimasUtils
     }
 
 
-    public static boolean checkIfUserRelevantExceptionIsThrownNoRethrow(AnimasException ex)
+    public static boolean checkIfUserRelevantExceptionIsThrownNoRethrow(PlugInBaseException ex)
     {
         try
         {
             return checkIfUserRelevantExceptionIsThrown(ex, false);
         }
-        catch (AnimasException ex1)
+        catch (PlugInBaseException ex1)
         {
             return false;
         }
     }
 
-    public static boolean checkIfUserRelevantExceptionIsThrown(AnimasException ex, boolean rethrow) throws AnimasException
+    public static boolean checkIfUserRelevantExceptionIsThrown(PlugInBaseException ex, boolean rethrow) throws PlugInBaseException
     {
-        if (ex.getAnimasExceptionType() != AnimasExceptionType.CommunicationPortClosed)
+        if (ex.getExceptionType() != PlugInExceptionType.CommunicationPortClosed)
         {
             if (rethrow)
             {

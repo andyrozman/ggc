@@ -326,7 +326,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         else if (this.type == PumpBaseType.Error)
         {
             this.label_1.setText(ic.getMessage("ERROR_TYPE") + ":");
-            addAllItems(this.combo_1, this.m_da.getPumpErrorTypes().getDescriptions());
+            addAllItems(this.combo_1, PumpErrors.getDescriptions());
+                    //this.m_da.getPumpErrorTypes().getDescriptions());
         }
         else
         {
@@ -378,7 +379,9 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         this.combo_1.setBounds(150, 20, 180, 25);
         this.combo_1.setVisible(true);
-        addAllItems(this.combo_1, m_da.getPumpReportTypes().getDescriptions());
+        addAllItems(this.combo_1, PumpReport.getDescriptions());
+
+                //PumpReportTypes().getDescriptions());
 
         this.label_2.setText(ic.getMessage("REPORT_TEXT") + ":");
         this.label_2.setBounds(0, 57, 150, 25);
@@ -413,7 +416,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.combo_1.setBounds(110, 15, 220, 25);
         this.combo_1.setVisible(true);
         this.combo_1.setActionCommand("basal");
-        addAllItems(this.combo_1, this.m_da.getBasalSubTypes().getDescriptions());
+        addAllItems(this.combo_1, PumpBasalSubType.basal_desc); //this.m_da.getBasalSubTypes().getDescriptions());
 
         this.label_2.setBounds(0, 57, 150, 25);
         this.label_2.setVisible(true);
@@ -441,7 +444,9 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             this.sub_type = stype;
         }
 
-        this.combo_1.setSelectedIndex(stype);
+        int index = m_da.getIndexOfElementInArray(PumpBasalSubType.getDescriptions(), PumpBasalSubType.getByCode(stype).getTranslation());
+
+        this.combo_1.setSelectedIndex(index);
 
         this.num_tf_1_d2.setVisible(false);
         this.num_tf_2_d2.setVisible(false);
@@ -591,6 +596,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.combo_1.setBounds(150, 20, 180, 25);
         this.combo_1.setVisible(true);
         this.combo_1.setActionCommand("bolus");
+
+        //System.out.println("Bolus: " +  PumpBolusType.getDescriptions());
         addAllItems(this.combo_1, PumpBolusType.getDescriptions());
         // this.combo_1.setSelectedIndex(1);
 
@@ -949,19 +956,27 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
             case Event:
                 {
-                    this.combo_1.setSelectedItem(data.getSubTypeString());
+                    int index = m_da.getIndexOfElementInArray(PumpEvents.getDescriptions(), PumpEvents.getByCode(data.getSubType()).getTranslation());
+                    this.combo_1.setSelectedIndex(index);
                 }
                 break;
             case Alarm:
+                {
+                    int index = m_da.getIndexOfElementInArray(PumpAlarms.getDescriptions(), PumpAlarms.getByCode(data.getSubType()).getTranslation());
+                    this.combo_1.setSelectedIndex(index);
+                }
+                break;
             case Error:
                 {
-                    this.combo_1.setSelectedIndex(data.getSubType());
+                    int index = m_da.getIndexOfElementInArray(PumpErrors.getDescriptions(), PumpErrors.getByCode(data.getSubType()).getTranslation());
+                    this.combo_1.setSelectedIndex(index);
                 }
                 break;
 
             case Report:
                 {
-                    this.combo_1.setSelectedIndex(data.getSubType());
+                    int index = m_da.getIndexOfElementInArray(PumpReport.getDescriptions(), PumpReport.getByCode(data.getSubType()).getTranslation());
+                    this.combo_1.setSelectedIndex(index);
                     this.text_2.setText(data.getValue());
                 }
                 break;
@@ -997,7 +1012,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         {
             case Basal:
                 {
-                    pve.setSubType(sub_type);
+                    pve.setSubType(PumpBasalSubType.getTypeFromDescription((String) this.combo_1.getSelectedItem()));
+                    //pve.setSubType(PumpEvents.getTypeFromDescription((String) this.combo_1.getSelectedItem()));
 
                     switch (PumpBasalSubType.getByCode(this.sub_type))
                     {
@@ -1055,7 +1071,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
             case Bolus:
                 {
-                    pve.setSubType(sub_type);
+                    pve.setSubType(PumpBolusType.getTypeFromDescription((String) this.combo_1.getSelectedItem()));
+                    //pve.setSubType(sub_type);
 
                     switch (PumpBolusType.getByCode(this.sub_type))
                     {
@@ -1111,21 +1128,26 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
             case Event:
                 {
-                    pve.setSubType(m_da.getPumpEventTypes().getTypeFromDescription(
-                        (String) this.combo_1.getSelectedItem()));
+                    pve.setSubType(PumpEvents.getTypeFromDescription((String) this.combo_1.getSelectedItem()));
                 }
                 break;
 
             case Alarm:
+                {
+                    pve.setSubType(PumpAlarms.getTypeFromDescription((String) this.combo_1.getSelectedItem()));
+                }
+                break;
             case Error:
                 {
-                    pve.setSubType(this.combo_1.getSelectedIndex());
+                    pve.setSubType(PumpErrors.getTypeFromDescription((String) this.combo_1.getSelectedItem()));
+
+                    //pve.setSubType(this.combo_1.getSelectedIndex());
                 }
                 break;
 
             case Report:
                 {
-                    pve.setSubType(this.combo_1.getSelectedIndex());
+                    pve.setSubType(PumpReport.getTypeFromDescription((String) this.combo_1.getSelectedItem()));
                     pve.setValue(this.text_2.getText());
                 }
                 break;
@@ -1170,6 +1192,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         for (String element : array)
         {
+            //System.out.println("e: " + element);
             cb.addItem(element);
         }
     }
@@ -1234,19 +1257,11 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         if (cmd.equals("bolus"))
         {
-            // System.out.println("Bolus event: " +
-            // this.combo_1.getSelectedIndex());
-
-            String s = (String) this.combo_1.getSelectedItem();
-            setBolusSubType(this.m_da.getBolusSubTypes().getTypeFromDescription(s));
-
-            // setBolusSubType(this.combo_1.getSelectedIndex());
+            setBolusSubType(PumpBolusType.getTypeFromDescription((String) this.combo_1.getSelectedItem()));
         }
         else if (cmd.equals("basal"))
         {
-            // System.out.println("Basal event: " +
-            // this.combo_1.getSelectedIndex());
-            setBasalSubType(this.combo_1.getSelectedIndex());
+            setBasalSubType(PumpBasalSubType.getTypeFromDescription((String)this.combo_1.getSelectedItem()));
         }
         else if (cmd.equals("bolus_helper"))
         {
@@ -1459,10 +1474,6 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             return String.format("AMOUNT_SQUARE=%s;DURATION=%s",
                 "" + m_da.getFormatedBolusValue(m_da.getFloatValue(this.spinner.getValue())),
                 this.cmp_time.getTimeString());
-
-            // System.out.println("getValue not implemented");
-            // return null;
-
         }
 
         public void setValue(String val)

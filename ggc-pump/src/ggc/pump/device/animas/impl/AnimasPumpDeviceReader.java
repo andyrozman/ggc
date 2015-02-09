@@ -2,7 +2,6 @@ package ggc.pump.device.animas.impl;
 
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
-import ggc.plugin.device.impl.animas.data.dto.SettingEntry;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.device.animas.impl.handler.AnimasBaseDataHandler;
@@ -12,10 +11,9 @@ import ggc.pump.util.DataAccessPump;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import ggc.plugin.device.impl.animas.comm.AnimasCommProtocolAbstract;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
-import ggc.plugin.device.impl.animas.util.AnimasException;
+
 
 import java.util.List;
 
@@ -50,7 +48,7 @@ public class AnimasPumpDeviceReader extends AnimasDeviceReader
     public static final Log LOG = LogFactory.getLog(AnimasPumpDeviceReader.class);
 
 
-    public AnimasPumpDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter) throws AnimasException
+    public AnimasPumpDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter) throws PlugInBaseException
     {
         super(portName, animasDevice, outputWriter);
 
@@ -60,34 +58,19 @@ public class AnimasPumpDeviceReader extends AnimasDeviceReader
 
     public void downloadPumpData() throws PlugInBaseException
     {
-        try
-        {
-            AnimasBaseDataHandler handler = new AnimasBaseDataHandler(portName, animasDevice, this, outputWriter);
-            handler.startAction(AnimasTransferType.DownloadPumpData);
-        }
-        catch(AnimasException ex)
-        {
-            throw new PlugInBaseException("Exception running downloadPumpData: " + ex, ex);
-        }
+        AnimasBaseDataHandler handler = new AnimasBaseDataHandler(portName, animasDevice, this, outputWriter);
+        handler.startAction(AnimasTransferType.DownloadPumpData);
     }
 
 
     public void downloadPumpSettings() throws PlugInBaseException
     {
-        try
-        {
-            AnimasBaseDataHandler handler = new AnimasBaseDataHandler(portName, animasDevice, this, outputWriter);
-            handler.startAction(AnimasTransferType.DownloadPumpSettings);
+        AnimasBaseDataHandler handler = new AnimasBaseDataHandler(portName, animasDevice, this, outputWriter);
+        handler.startAction(AnimasTransferType.DownloadPumpSettings);
 
-            AnimasPumpDeviceData data = (AnimasPumpDeviceData) handler.getData();
+        AnimasPumpDeviceData data = (AnimasPumpDeviceData) handler.getData();
 
-            data.writeSettings(outputWriter);
-        }
-        catch(AnimasException ex)
-        {
-            throw new PlugInBaseException("Exception running downloadPumpSettings: " + ex, ex);
-        }
-
+        data.writeSettings(outputWriter);
     }
 
 

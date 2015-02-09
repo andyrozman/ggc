@@ -3,9 +3,9 @@ package ggc.cgms.device.dexcom.receivers.g4receiver.data;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.SensorSessionState;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.GenericReceiverRecordAbstract;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils.DexcomDateParsing;
+import ggc.plugin.device.PlugInBaseException;
 
 import java.util.Date;
 
@@ -24,7 +24,7 @@ public class InsertionTimeRecord extends GenericReceiverRecordAbstract
     private int insertionTimeinSeconds;
     private SensorSessionState sensorSessionState = SensorSessionState.BadTransmitter;
 
-    public InsertionTimeRecord() throws DexcomException
+    public InsertionTimeRecord() throws PlugInBaseException
     {
         // FIXME
         // checkRecordVersionAndSize();

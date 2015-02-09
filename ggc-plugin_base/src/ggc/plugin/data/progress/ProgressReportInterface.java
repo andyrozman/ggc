@@ -27,4 +27,5 @@ public interface ProgressReportInterface
 
     boolean isDownloadCanceled();
 
+
 }

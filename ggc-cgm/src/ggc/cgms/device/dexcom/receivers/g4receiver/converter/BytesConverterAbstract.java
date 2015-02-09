@@ -3,8 +3,6 @@ package ggc.cgms.device.dexcom.receivers.g4receiver.converter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePage;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabaseRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.IGenericReceiverRecord;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomExceptionType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils.BitConversion;
 
@@ -12,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.atech.utils.data.ShortUtils;
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 
 public class BytesConverterAbstract
@@ -33,20 +32,20 @@ public class BytesConverterAbstract
         return DexcomUtils.toShort(shortUtils.getShortSubArray(array, start, 2), BitConversion.LITTLE_ENDIAN);
     }
 
-    public void checkCrc(byte[] data, short crc2) throws DexcomException
+    public void checkCrc(byte[] data, short crc2) throws PlugInBaseException
     {
         int newCrc = DexcomUtils.calculateCRC16(data, 0, data.length - 2);
 
         if (newCrc != crc2)
-            throw new DexcomException(DexcomExceptionType.FailedCRCCheck, new Object[] { "DatabasePage", crc2, newCrc });
+            throw new PlugInBaseException(PlugInExceptionType.FailedCRCCheck, new Object[] { "DatabasePage", crc2, newCrc });
     }
 
-    public void checkCrc(short[] data, int crc2) throws DexcomException
+    public void checkCrc(short[] data, int crc2) throws PlugInBaseException
     {
         int newCrc = DexcomUtils.calculateCRC16(data, 0, data.length - 2);
 
         if (newCrc != crc2)
-            throw new DexcomException(DexcomExceptionType.FailedCRCCheck, new Object[] { "DatabasePage", crc2, newCrc });
+            throw new PlugInBaseException(PlugInExceptionType.FailedCRCCheck, new Object[] { "DatabasePage", crc2, newCrc });
     }
 
     public ArrayList<DatabaseRecord> getRawRecords(List<DatabasePage> pages, IGenericReceiverRecord template)

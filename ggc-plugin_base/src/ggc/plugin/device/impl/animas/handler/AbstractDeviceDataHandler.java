@@ -1,12 +1,13 @@
 package ggc.plugin.device.impl.animas.handler;
 
+import ggc.plugin.data.enums.PlugInExceptionType;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
 import ggc.plugin.device.impl.animas.comm.AnimasCommProtocolV2;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
-import ggc.plugin.device.impl.animas.util.AnimasException;
-import ggc.plugin.device.impl.animas.util.AnimasExceptionType;
+
 
 import java.util.List;
 
@@ -58,23 +59,25 @@ public abstract class AbstractDeviceDataHandler extends AnimasCommProtocolV2
 
     public abstract List<AnimasTransferType> getSupportedActions();
 
-    public void checkIfActionAllowed(AnimasTransferType transferType) throws AnimasException
+    public void checkIfActionAllowed(AnimasTransferType transferType) throws PlugInBaseException
     {
         if (this.deviceType.getImplementationType() != this.getImplementationType())
         {
-            throw new AnimasException(AnimasExceptionType.WrongPumpConfigurationSelected);
+            throw new PlugInBaseException(PlugInExceptionType.WrongDeviceConfigurationSelected,
+                    new Object[] {this.deviceType.getImplementationType(), this.getImplementationType() });
         }
 
         if (!this.getSupportedActions().contains(transferType))
         {
-            LOG.error(String.format("Operation %s not supported for handler '%s'", this.getClass().getSimpleName()));
+            LOG.error(String.format("Operation %s not supported for handler '%s'", transferType.name(), this.getClass().getSimpleName()));
 
-            throw new AnimasException(AnimasExceptionType.OperationNotSupportedForThisHandler);
+            throw new PlugInBaseException(PlugInExceptionType.OperationNotSupportedForThisHandler,
+                new Object[] { transferType.name(), this.getClass().getSimpleName() });
         }
 
     }
 
 
-    public abstract void startAction(AnimasTransferType transferType) throws AnimasException;
+    public abstract void startAction(AnimasTransferType transferType) throws PlugInBaseException;
 
 }

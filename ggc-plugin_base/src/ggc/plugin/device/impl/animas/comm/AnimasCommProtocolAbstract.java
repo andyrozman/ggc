@@ -1,11 +1,11 @@
 package ggc.plugin.device.impl.animas.comm;
 
+import ggc.plugin.data.enums.PlugInExceptionType;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
 import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasImplementationType;
-import ggc.plugin.device.impl.animas.util.AnimasException;
-import ggc.plugin.device.impl.animas.util.AnimasExceptionType;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 import ggc.plugin.output.OutputWriter;
 import gnu.io.NRSerialPort;
@@ -63,7 +63,7 @@ public abstract class AnimasCommProtocolAbstract
     protected boolean debugCommunication = false;
 
 
-    protected AnimasException downloadProblem;
+    protected PlugInBaseException downloadProblem;
 
     protected AnimasDeviceData baseData;
     protected AnimasDeviceReader deviceReader;
@@ -170,7 +170,7 @@ public abstract class AnimasCommProtocolAbstract
     }
 
 
-    protected List<Short> readDataFromDeviceInternal() throws AnimasException
+    protected List<Short> readDataFromDeviceInternal() throws PlugInBaseException
     {
         List<Short> tempData = new ArrayList<Short>();
 
@@ -194,7 +194,7 @@ public abstract class AnimasCommProtocolAbstract
         catch (Exception e)
         {
             LOG.error("Error reading from device. Exception: " + e, e);
-            throw new AnimasException(AnimasExceptionType.ErrorCommunciationgWithDevice);
+            throw new PlugInBaseException(PlugInExceptionType.CommunicationError, new Object[] { e.getMessage() });
         }
     }
 

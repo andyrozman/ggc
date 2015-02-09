@@ -1,9 +1,11 @@
 package ggc.pump.data.defs;
 
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccess;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.pump.util.DataAccessPump;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
 /**
@@ -43,8 +45,8 @@ public enum PumpBolusType implements CodeEnumWithTranslation
     ;
 
     static String[] bolus_desc;
-    static Hashtable<String, PumpBolusType> translationMapping = new Hashtable<String, PumpBolusType>();
-    static Hashtable<Integer, PumpBolusType> codeMapping = new Hashtable<Integer, PumpBolusType>();
+    static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
+    static HashMap<Integer, PumpBolusType> codeMapping = new HashMap<Integer, PumpBolusType>();
 
     static
     {
@@ -55,6 +57,8 @@ public enum PumpBolusType implements CodeEnumWithTranslation
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
             translationMapping.put(pbt.getTranslation(), pbt);
             codeMapping.put(pbt.code, pbt);
+
+            //System.out.println("Tr: " + ic.getMessage(pbt.i18nKey));
         }
 
 
@@ -65,6 +69,12 @@ public enum PumpBolusType implements CodeEnumWithTranslation
                 ic.getMessage("BOLUS_MULTIWAVE"), };
 
         bolus_desc = bolus_desc_lcl;
+
+        for(String s : bolus_desc_lcl)
+        {
+            System.out.println("Tr: " + s);
+        }
+
     }
 
     int code;
@@ -117,16 +127,9 @@ public enum PumpBolusType implements CodeEnumWithTranslation
      *            type as string
      * @return type as int
      */
-    public int getTypeFromDescription(String str)
+    public static int getTypeFromDescription(String str)
     {
-        if (translationMapping.containsKey(str))
-        {
-            return translationMapping.get(str).getCode();
-        }
-        else
-        {
-            return 0;
-        }
+        return ATDataAccess.getTypeFromDescription(str, translationMapping);
     }
 
 

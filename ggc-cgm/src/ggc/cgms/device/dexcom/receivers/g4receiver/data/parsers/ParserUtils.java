@@ -1,7 +1,8 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver.data.parsers;
 
 import ggc.cgms.device.dexcom.receivers.data.CommandPacket;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
+
+import ggc.plugin.device.PlugInBaseException;
 
 import java.util.HashMap;
 
@@ -43,7 +44,7 @@ public class ParserUtils
         return parsers.get(cmdPacket.getParserType());
     }
 
-    public static Object parsePacketResponse(CommandPacket cmdPacket) throws DexcomException
+    public static Object parsePacketResponse(CommandPacket cmdPacket) throws PlugInBaseException
     {
         return getParser(cmdPacket).parse(cmdPacket);
     }

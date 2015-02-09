@@ -15,7 +15,7 @@ import ggc.plugin.device.impl.animas.comm.AnimasCommProtocolAbstract;
 import ggc.plugin.device.impl.animas.data.dto.SettingEntry;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
-import ggc.plugin.device.impl.animas.util.AnimasException;
+
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -48,7 +48,7 @@ public class AnimasCGMSDeviceReader extends AnimasDeviceReader
     public static final Log LOG = LogFactory.getLog(AnimasCGMSDeviceReader.class);
 
 
-    public AnimasCGMSDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter) throws AnimasException
+    public AnimasCGMSDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter) throws PlugInBaseException
     {
         super(portName, animasDevice, outputWriter);
     }
@@ -56,34 +56,19 @@ public class AnimasCGMSDeviceReader extends AnimasDeviceReader
 
     public void downloadCGMSData() throws PlugInBaseException
     {
-        try
-        {
-            AnimasDexcomDataHandler handler = new AnimasDexcomDataHandler(portName, animasDevice, this, outputWriter);
-            handler.startAction(AnimasTransferType.DownloadCGMSData);
-        }
-        catch(AnimasException ex)
-        {
-            throw new PlugInBaseException("Exception running downloadCGMSData: " + ex, ex);
-        }
+        AnimasDexcomDataHandler handler = new AnimasDexcomDataHandler(portName, animasDevice, this, outputWriter);
+        handler.startAction(AnimasTransferType.DownloadCGMSData);
     }
 
 
     public void downloadCGMSSettings() throws PlugInBaseException
     {
-        try
-        {
-            AnimasDexcomDataHandler handler = new AnimasDexcomDataHandler(portName, animasDevice, this, outputWriter);
-            handler.startAction(AnimasTransferType.DownloadCGMSSettings);
+        AnimasDexcomDataHandler handler = new AnimasDexcomDataHandler(portName, animasDevice, this, outputWriter);
+        handler.startAction(AnimasTransferType.DownloadCGMSSettings);
 
-            AnimasCGMSDeviceData data = (AnimasCGMSDeviceData) handler.getData();
+        AnimasCGMSDeviceData data = (AnimasCGMSDeviceData) handler.getData();
 
-            data.writeSettings(outputWriter);
-        }
-        catch(AnimasException ex)
-        {
-            throw new PlugInBaseException("Exception running downloadCGMSSettings: " + ex, ex);
-        }
-
+        data.writeSettings(outputWriter);
     }
 
 

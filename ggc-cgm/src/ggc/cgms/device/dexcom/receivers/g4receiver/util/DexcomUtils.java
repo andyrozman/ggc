@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -253,7 +254,7 @@ public class DexcomUtils
         // return partitionInfo.getPartitionByRecordType(recordType);
     }
 
-    public static Element createXmlTree(String xmlData) throws DexcomException
+    public static Element createXmlTree(String xmlData) throws PlugInBaseException
     {
         try
         {
@@ -264,7 +265,8 @@ public class DexcomUtils
         }
         catch (Exception ex)
         {
-            throw new DexcomException(DexcomExceptionType.ParsingError, new Object[] { ex.getLocalizedMessage() }, ex);
+            throw new PlugInBaseException(PlugInExceptionType.ParsingError,
+                    new Object[] { ex.getLocalizedMessage() }, ex);
         }
 
     }

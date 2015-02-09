@@ -1,10 +1,10 @@
 package ggc.plugin.device.impl.animas.comm;
 
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasImplementationType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
-import ggc.plugin.device.impl.animas.util.AnimasException;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 import ggc.plugin.output.OutputWriter;
 
@@ -296,7 +296,7 @@ public class AnimasCommProtocolV1 extends AnimasCommProtocolAbstract
     }
 
     private boolean downloadIR1000Data(String dldstr, int dldtype, int reclen, int nrrec, String errcode, String msg)
-            throws AnimasException
+            throws PlugInBaseException
     {
         int i = 0;
         int j = 0;
@@ -538,7 +538,7 @@ public class AnimasCommProtocolV1 extends AnimasCommProtocolAbstract
         System.out.println("Label: " + msg);
     }
 
-    private boolean downloadIR1000() throws AnimasException
+    private boolean downloadIR1000() throws PlugInBaseException
     {
         // int j = 0;
         int i = 0;
@@ -1026,7 +1026,7 @@ public class AnimasCommProtocolV1 extends AnimasCommProtocolAbstract
                 {
                     downloadIR1000();
                 }
-                catch (AnimasException e1)
+                catch (PlugInBaseException e1)
                 {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();

@@ -2,12 +2,12 @@ package ggc.cgms.device.dexcom.receivers.g4receiver.converter;
 
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePageHeader;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
+import ggc.plugin.device.PlugInBaseException;
 
 public class BytesToDatabasePageHeaderConverter extends BytesConverterAbstract
 {
 
-    public DatabasePageHeader convert(short[] headerBytes) throws DexcomException
+    public DatabasePageHeader convert(short[] headerBytes) throws PlugInBaseException
     {
         DatabasePageHeader dph = new DatabasePageHeader();
 

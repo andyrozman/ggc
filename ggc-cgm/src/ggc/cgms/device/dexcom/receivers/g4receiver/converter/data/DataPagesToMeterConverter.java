@@ -4,7 +4,6 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.converter.BytesConverterAbstr
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.MeterDataRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePage;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabaseRecord;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import ggc.plugin.device.PlugInBaseException;
 
 import java.util.ArrayList;

@@ -1,5 +1,6 @@
 package ggc.pump.data.defs;
 
+import com.atech.utils.ATDataAccess;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.HashMap;
@@ -40,7 +41,7 @@ public enum PumpAlarms implements CodeEnumWithTranslation
     UnknownAlarm(0, "ALARM_UNKNOWN"), //
     CartridgeLow(1, "ALARM_CARTRIDGE_LOW"), //
     BatteryLow(2, "ALARM_BATTERY_LOW"), //
-    BatteryReplace(11, ""), //
+    BatteryReplace(11, "ALARM_REPLACE_BATTERY"), //
     ReviewDatetime(3, "ALARM_REVIEW_DATETIME"), //
     AlarmClock(4, "ALARM_ALARM_CLOCK"), //
     PumpTimer(5, "ALARM_PUMP_TIMER"), //
@@ -48,9 +49,9 @@ public enum PumpAlarms implements CodeEnumWithTranslation
     TemporaryBasalRateOver(7, "ALARM_TEMPORARY_BASAL_RATE_OVER"), //
     BolusCanceled(8, "ALARM_BOLUS_CANCELED"), //
     NoDelivery(10, "ALARM_NO_DELIVERY"), //
-    EmptyCartridge(12, ""), //
-    AutoOff(13, ""), //
-    CallService(14, ""), //
+    EmptyCartridge(12, "ALARM_EMPTY_CARTRIDGE"), //
+    AutoOff(13, "ALARM_AUTO_OFF"), //
+    CallService(14, "ALARM_CALL_SERVICE"), //
     ;
 
     int code;
@@ -78,6 +79,8 @@ public enum PumpAlarms implements CodeEnumWithTranslation
     }
 
     static Map<Integer, PumpAlarms> alarmCodeMapping = new HashMap<Integer, PumpAlarms>();
+    static Map<String,CodeEnumWithTranslation> translationMap = new HashMap<String, CodeEnumWithTranslation>();
+    static String[] alarm_desc;
 
     static
     {
@@ -86,8 +89,30 @@ public enum PumpAlarms implements CodeEnumWithTranslation
         for (PumpAlarms pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMap.put(pbt.getTranslation(), pbt);
             alarmCodeMapping.put(pbt.code, pbt);
         }
+
+
+        String[] alarm_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), //
+                ic.getMessage("ALARM_CARTRIDGE_LOW"), //
+                ic.getMessage("ALARM_BATTERY_LOW"), //
+                ic.getMessage("ALARM_REPLACE_BATTERY"), //
+                ic.getMessage("ALARM_REVIEW_DATETIME"), //
+                ic.getMessage("ALARM_ALARM_CLOCK"),//
+                ic.getMessage("ALARM_PUMP_TIMER"),//
+                ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"),//
+                ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"),//
+                ic.getMessage("ALARM_BOLUS_CANCELED"),//
+                ic.getMessage("ALARM_NO_DELIVERY"),//
+                ic.getMessage("ALARM_EMPTY_CARTRIDGE"),//
+                ic.getMessage("ALARM_AUTO_OFF"),//
+                ic.getMessage("ALARM_CALL_SERVICE"),//
+        };
+
+        alarm_desc = alarm_desc_lcl;
+
+
     }
 
     private PumpAlarms(int code, String i18nKey)
@@ -108,11 +133,22 @@ public enum PumpAlarms implements CodeEnumWithTranslation
         }
     }
 
-    public static Map<Integer, PumpAlarms> getDescriptions()
+    public static String[] getDescriptions()
     {
-        return alarmCodeMapping;
+        return alarm_desc;
     }
 
+    /**
+     * Get Type from Description
+     *
+     * @param str
+     *            type as string
+     * @return type as int
+     */
+    public static int getTypeFromDescription(String str)
+    {
+        return ATDataAccess.getTypeFromDescription(str, translationMap);
+    }
     /*
      * Minimed No Delivery (4) Sensor Alert: High Glucose (101) Sensor Alert:
      * Low Glucose (102) Sensor Alert: Meter BG Now (104) Sensor Alarm (105)

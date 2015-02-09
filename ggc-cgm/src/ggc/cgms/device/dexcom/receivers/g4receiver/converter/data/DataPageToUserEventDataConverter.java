@@ -5,7 +5,6 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.data.UserEventDataRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.UserEvent;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePage;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabaseRecord;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import ggc.plugin.device.PlugInBaseException;
 
 import java.util.ArrayList;

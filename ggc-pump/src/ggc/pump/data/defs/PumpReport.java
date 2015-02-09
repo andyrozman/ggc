@@ -1,10 +1,12 @@
 package ggc.pump.data.defs;
 
+import com.atech.utils.ATDataAccess;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.pump.util.DataAccessPump;
 
 import com.atech.i18n.I18nControlAbstract;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
 /**
@@ -50,8 +52,8 @@ public enum PumpReport implements CodeEnumWithTranslation
      */
     public static String[] report_desc = null;
 
-    static Hashtable<String, PumpReport> translationMapping = new Hashtable<String, PumpReport>();
-    static Hashtable<Integer, PumpReport> codeMapping = new Hashtable<Integer, PumpReport>();
+    static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
+    static HashMap<Integer, PumpReport> codeMapping = new HashMap<Integer, PumpReport>();
 
     static
     {
@@ -64,8 +66,10 @@ public enum PumpReport implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
 
-        String[] report_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), ic.getMessage("REPORT_MISC"),
-                ic.getMessage("REPORT_BOLUS_TOTAL_DAY"), ic.getMessage("REPORT_BASAL_TOTAL_DAY"),
+        String[] report_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), //
+                ic.getMessage("REPORT_MISC"), //
+                ic.getMessage("REPORT_BOLUS_TOTAL_DAY"), //
+                ic.getMessage("REPORT_BASAL_TOTAL_DAY"), //
                 ic.getMessage("REPORT_INSULIN_TOTAL_DAY"), };
 
         report_desc = report_desc_lcl;
@@ -110,16 +114,9 @@ public enum PumpReport implements CodeEnumWithTranslation
      *            type as string
      * @return type as int
      */
-    public int getTypeFromDescription(String str)
+    public static int getTypeFromDescription(String str)
     {
-        if (translationMapping.containsKey(str))
-        {
-            return translationMapping.get(str).getCode();
-        }
-        else
-        {
-            return 0;
-        }
+        return ATDataAccess.getTypeFromDescription(str, translationMapping);
     }
 
     public static PumpReport getByCode(int code)
@@ -139,9 +136,9 @@ public enum PumpReport implements CodeEnumWithTranslation
      *
      * @return array of strings with description
      */
-    public String[] getDescriptions()
+    public static String[] getDescriptions()
     {
-        return this.report_desc;
+        return report_desc;
     }
 
     }

@@ -1,9 +1,9 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver.data.parsers;
 
 import ggc.cgms.device.dexcom.receivers.data.CommandPacket;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 
+import ggc.plugin.device.PlugInBaseException;
 import org.jdom.Element;
 
 import com.atech.utils.data.ShortUtils;
@@ -12,7 +12,7 @@ public class XmlParser implements DexcomCommandParserInterface
 {
     private ShortUtils utils = DexcomUtils.getShortUtils();
 
-    public Object parse(CommandPacket cmdPacket) throws DexcomException
+    public Object parse(CommandPacket cmdPacket) throws PlugInBaseException
     {
         short[] responseMessage = cmdPacket.getResponse();
 

@@ -1,8 +1,8 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver.converter;
 
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePage;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomExceptionType;
+import ggc.plugin.data.enums.PlugInExceptionType;
+import ggc.plugin.device.PlugInBaseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class BytesToDatabasePagesConverter
 
     static BytesToDatabasePageHeaderConverter databaseHeaderConverter = new BytesToDatabasePageHeaderConverter();
 
-    public List<DatabasePage> convert(short[] dataBytes) throws DexcomException
+    public List<DatabasePage> convert(short[] dataBytes) throws PlugInBaseException
     {
 
         int pagesCount = dataBytes.length / 528;
@@ -73,13 +73,13 @@ public class BytesToDatabasePagesConverter
 
             return pages;
         }
-        catch (DexcomException ex)
+        catch (PlugInBaseException ex)
         {
             throw ex;
         }
         catch (Exception ex)
         {
-            throw new DexcomException(DexcomExceptionType.Parsing_BytesParsingError,
+            throw new PlugInBaseException(PlugInExceptionType.Parsing_BytesParsingError,
                     new Object[] { "DatabasePage", ex.getLocalizedMessage() }, ex);
         }
 

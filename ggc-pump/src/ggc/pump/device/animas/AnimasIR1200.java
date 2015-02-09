@@ -7,9 +7,6 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.defs.PumpDeviceDefinition;
-import ggc.pump.device.animas.impl.AnimasPumpDeviceReader;
-import ggc.plugin.device.impl.animas.util.AnimasException;
-import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -252,33 +249,13 @@ public class AnimasIR1200 extends AnimasPump
     public void readConfiguration() throws PlugInBaseException
     {
         handler.readConfiguration(this.getPumpDeviceDefinition(), this.connectionParameters, this.outputWriter);
-
-
-        try
-        {
-            AnimasPumpDeviceReader reader = new AnimasPumpDeviceReader(this.communicationPort, this.getAnimasDeviceType(), this.outputWriter);
-            reader.downloadPumpSettings();
-        }
-        catch(AnimasException ex)
-        {
-            throw new PlugInBaseException(ex);
-        }
-
     }
 
 
     @Override
     public void readDeviceDataFull() throws PlugInBaseException
     {
-        try
-        {
-            AnimasPumpDeviceReader reader = new AnimasPumpDeviceReader(this.communicationPort, this.getAnimasDeviceType(), this.outputWriter);
-            reader.downloadPumpData();
-        }
-        catch(AnimasException ex)
-        {
-            throw new PlugInBaseException(ex);
-        }
+        handler.readDeviceData(this.getPumpDeviceDefinition(), this.connectionParameters, this.outputWriter);
     }
 
 

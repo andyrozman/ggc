@@ -4,12 +4,12 @@ import ggc.cgms.device.animas.impl.converter.AnimasDexcomDataConverter;
 import ggc.cgms.device.animas.impl.data.AnimasCGMSDataWriter;
 import ggc.cgms.device.animas.impl.data.AnimasCGMSDeviceData;
 import ggc.plugin.data.progress.ProgressType;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
 import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
 import ggc.plugin.device.impl.animas.handler.AbstractDeviceDataHandler;
-import ggc.plugin.device.impl.animas.util.AnimasException;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 import ggc.plugin.output.OutputWriter;
 
@@ -93,7 +93,7 @@ public class AnimasDexcomDataHandler extends AbstractDeviceDataHandler
 
 
     @Override
-    public void startAction(AnimasTransferType transferType) throws AnimasException
+    public void startAction(AnimasTransferType transferType) throws PlugInBaseException
     {
         data.setTransferType(transferType);
 
@@ -119,7 +119,7 @@ public class AnimasDexcomDataHandler extends AbstractDeviceDataHandler
             }
 
         }
-        catch (AnimasException ex)
+        catch (PlugInBaseException ex)
         {
 
             if (AnimasUtils.checkIfUserRelevantExceptionIsThrownNoRethrow(ex))
@@ -147,7 +147,7 @@ public class AnimasDexcomDataHandler extends AbstractDeviceDataHandler
 
     }
 
-    private void downloadData() throws AnimasException
+    private void downloadData() throws PlugInBaseException
     {
         // done no GGC
         //sendRequestAndWait(AnimasDataType.DexcomWarnings, 0, 33215, 56, 100); // 43
@@ -156,7 +156,7 @@ public class AnimasDexcomDataHandler extends AbstractDeviceDataHandler
     }
 
 
-    public void downloadAll() throws AnimasException
+    public void downloadAll() throws PlugInBaseException
     {
         // settings ?
         sendRequestAndWait(AnimasDataType.DexcomSettings, 0, 1, 100, 100); // 42

@@ -1,9 +1,12 @@
 package ggc.pump.data.defs;
 
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.pump.util.DataAccessPump;
 
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -36,14 +39,15 @@ import com.atech.i18n.I18nControlAbstract;
 public enum PumpBasalSubType implements CodeEnumWithTranslation
 {
 
-    None(0, "NONE"),
-    Value(1, "BASAL_VALUE"),
-    Profile(2, "BASAL_PROFILE"),
-    TemporaryBasalRate(3, "BASAL_TEMPORARY_BASAL_RATE"),
-    TemporaryBasalRateProfile(4, "BASAL_TEMPORARY_BASAL_RATE_PROFILE"),
-    PumpStatus(5, "BASAL_PUMP_STATUS"),
-    TemporaryBasalRateEnded(6, "BASAL_TEMPORARY_BASAL_RATE_ENDED"),
-    TemporaryBasalRateCanceled(7, "BASAL_TEMPORARY_BASAL_RATE_CANCELED"),
+    None(0, "NONE"), //
+    Value(1, "BASAL_VALUE"), //
+    Profile(2, "BASAL_PROFILE"), //
+    TemporaryBasalRate(3, "BASAL_TEMPORARY_BASAL_RATE"), //
+    TemporaryBasalRateProfile(4, "BASAL_TEMPORARY_BASAL_RATE_PROFILE"), //
+    PumpStatus(5, "BASAL_PUMP_STATUS"), //
+    TemporaryBasalRateEnded(6, "BASAL_TEMPORARY_BASAL_RATE_ENDED"), //
+    TemporaryBasalRateCanceled(7, "BASAL_TEMPORARY_BASAL_RATE_CANCELED"), //
+    ValueChange(8, "BASAL_VALUE_CHANGE"), //
 
     ;
 
@@ -63,8 +67,8 @@ public enum PumpBasalSubType implements CodeEnumWithTranslation
 
 
 
-    static Hashtable<String, PumpBasalSubType> translationMapping = new Hashtable<String, PumpBasalSubType>();
-    static Hashtable<Integer, PumpBasalSubType> codeMapping = new Hashtable<Integer, PumpBasalSubType>();
+    static Map<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
+    static Map<Integer, PumpBasalSubType> codeMapping = new HashMap<Integer, PumpBasalSubType>();
 
     static
     {
@@ -77,12 +81,16 @@ public enum PumpBasalSubType implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
 
-        String[] basal_desc_lcl = { ic.getMessage("SELECT_BASAL_TYPE"), ic.getMessage("BASAL_VALUE"),
-                ic.getMessage("BASAL_PROFILE"), ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"),
-                ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"),
-                ic.getMessage("BASAL_PUMP_STATUS"),
-                ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_ENDED"),
-                ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_CANCELED") };
+        String[] basal_desc_lcl = { ic.getMessage("SELECT_BASAL_TYPE"),
+                ic.getMessage("BASAL_VALUE"), //
+                ic.getMessage("BASAL_PROFILE"), //
+                ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"), //
+                ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"), //
+                ic.getMessage("BASAL_PUMP_STATUS"), //
+                ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_ENDED"), //
+                ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_CANCELED"),
+                ic.getMessage("BASAL_VALUE_CHANGE"), //
+         };
 
         basal_desc = basal_desc_lcl;
     }
@@ -126,16 +134,9 @@ public enum PumpBasalSubType implements CodeEnumWithTranslation
      *            type as string
      * @return type as int
      */
-    public int getTypeFromDescription(String str)
+    public static int getTypeFromDescription(String str)
     {
-        if (translationMapping.containsKey(str))
-        {
-            return translationMapping.get(str).getCode();
-        }
-        else
-        {
-            return 0;
-        }
+        return ATDataAccessAbstract.getTypeFromDescription(str, translationMapping);
     }
 
     public static PumpBasalSubType getByCode(int code)
@@ -156,9 +157,9 @@ public enum PumpBasalSubType implements CodeEnumWithTranslation
      *
      * @return array of strings with description
      */
-    public String[] getDescriptions()
+    public static String[] getDescriptions()
     {
-        return this.basal_desc;
+        return basal_desc;
     }
 
 

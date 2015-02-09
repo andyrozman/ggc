@@ -1,6 +1,8 @@
 package ggc.plugin.device.impl.animas.comm;
 
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.data.progress.ProgressType;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
 import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
 import ggc.plugin.device.impl.animas.handler.AnimasDataConverter;
@@ -9,8 +11,6 @@ import ggc.plugin.device.impl.animas.enums.AnimasDeviceCommand;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasImplementationType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
-import ggc.plugin.device.impl.animas.util.AnimasException;
-import ggc.plugin.device.impl.animas.util.AnimasExceptionType;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 
 import java.util.HashMap;
@@ -101,7 +101,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
 
     protected void sendRequestAndWait(AnimasDataType dataType, int startRecord, int numberOfRecords, int commandWaitTime)
-            throws AnimasException
+            throws PlugInBaseException
     {
         if (!this.baseData.isCommandAllowedForDeviceType(dataType))
         {
@@ -146,14 +146,14 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
 
     protected void sendRequestAndWait(AnimasDataType dataType, int startRecord, int numberOfRecords, int commandWaitTime,
-            int systemWaitTimeBefore) throws AnimasException
+            int systemWaitTimeBefore) throws PlugInBaseException
     {
         AnimasUtils.sleepInMs(systemWaitTimeBefore);
         sendRequestAndWait(dataType, startRecord, numberOfRecords, commandWaitTime);
     }
 
 
-    public void sendCharacterToDevice(char c) throws AnimasException
+    public void sendCharacterToDevice(char c) throws PlugInBaseException
     {
         try
         {
@@ -161,18 +161,18 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
         }
         catch (Exception ex)
         {
-            throw new AnimasException(AnimasExceptionType.CommunicationPortClosed);
+            throw new PlugInBaseException(PlugInExceptionType.CommunicationPortClosed);
         }
     }
 
 
-    protected void sendToDevice(short c) throws AnimasException
+    protected void sendToDevice(short c) throws PlugInBaseException
     {
         sendToDevice(c, false);
     }
 
 
-    protected void sendToDevice(short c, boolean debug) throws AnimasException
+    protected void sendToDevice(short c, boolean debug) throws PlugInBaseException
     {
         try
         {
@@ -184,12 +184,12 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
         }
         catch (Exception ex)
         {
-            throw new AnimasException(AnimasExceptionType.CommunicationPortClosed);
+            throw new PlugInBaseException(PlugInExceptionType.CommunicationPortClosed);
         }
     }
 
 
-    protected void sendMessageToDevice(char[] msgChars) throws AnimasException
+    protected void sendMessageToDevice(char[] msgChars) throws PlugInBaseException
     {
         sendToDevice(START_MESSAGE_DEVICE);
 
@@ -206,7 +206,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    private void calculateAndSendFletcher(char[] msgChars) throws AnimasException
+    private void calculateAndSendFletcher(char[] msgChars) throws PlugInBaseException
     {
         short[] fletch = AnimasUtils.calculateFletcher16(msgChars, msgChars.length);
 
@@ -231,7 +231,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void closeConnection() throws AnimasException
+    public void closeConnection() throws PlugInBaseException
     {
         if (!this.pumpConnected)
         {
@@ -253,11 +253,11 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
         this.disconnectDevice();
         this.pumpConnected = false;
-        throw new AnimasException(AnimasExceptionType.CommunicationPortClosed);
+        throw new PlugInBaseException(PlugInExceptionType.CommunicationPortClosed);
     }
 
 
-    public void sendInstructionsSignal(char[] txdata) throws AnimasException
+    public void sendInstructionsSignal(char[] txdata) throws PlugInBaseException
     {
         debugCommunication("sendInstructionsSignal");
 
@@ -294,7 +294,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
                 if (System.currentTimeMillis() > timeOut)
                 {
-                    throw new AnimasException(AnimasExceptionType.NoResponseFromDeviceForIssuedCommand,
+                    throw new PlugInBaseException(PlugInExceptionType.NoResponseFromDeviceForIssuedCommand,
                             new Object[] { this.animasDevicePacket.dataTypeObject.name() });
                 }
 
@@ -304,7 +304,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void sendResponseReceivedSignal() throws AnimasException
+    public void sendResponseReceivedSignal() throws PlugInBaseException
     {
         debugCommunication("sendResponseReceivedSignal");
 
@@ -318,7 +318,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void sendConnectSignal() throws AnimasException
+    public void sendConnectSignal() throws PlugInBaseException
     {
         debugCommunication("sendConnectSignal");
 
@@ -341,7 +341,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void sendForcedDisconnectSignal() throws AnimasException
+    public void sendForcedDisconnectSignal() throws PlugInBaseException
     {
         if (debugCommunication)
             LOG.debug("sendForcedDisconnectSignal");
@@ -354,7 +354,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void sendDisconnectSignal() throws AnimasException
+    public void sendDisconnectSignal() throws PlugInBaseException
     {
         debugCommunication("sendDisconnectSignal");
 
@@ -374,7 +374,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void sendHandshakeSignal() throws AnimasException
+    public void sendHandshakeSignal() throws PlugInBaseException
     {
         LOG.debug("sendHandshakeSignal");
 
@@ -399,7 +399,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void processAllOutboundData() throws AnimasException
+    public void processAllOutboundData() throws PlugInBaseException
     {
         while (this.commandToSend.size() > 0)
         {
@@ -408,7 +408,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void processOutboundData() throws AnimasException
+    public void processOutboundData() throws PlugInBaseException
     {
         AnimasUtils.sleepInMs(10L);
 
@@ -448,7 +448,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    private void sendSOSignal() throws AnimasException
+    private void sendSOSignal() throws PlugInBaseException
     {
         LOG.debug("sendSOSignal");
 
@@ -462,7 +462,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void openConnection() throws AnimasException
+    public void openConnection() throws PlugInBaseException
     {
         boolean maxRetriesReached = false;
         int retries = 0;
@@ -523,7 +523,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
         if (!this.pumpConnected)
         {
-            throw new AnimasException(AnimasExceptionType.DeviceCouldNotBeContacted);
+            throw new PlugInBaseException(PlugInExceptionType.DeviceCouldNotBeContacted);
         }
 
         deviceReader.addToProgressAndCheckIfCanceled(ProgressType.Static, 5);
@@ -531,7 +531,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    private void getBasePumpData() throws AnimasException
+    private void getBasePumpData() throws PlugInBaseException
     {
         if (this.baseData.isDownloaderSerialNumberSet())
         {
@@ -578,7 +578,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
                     if (this.baseData.pumpInfo.deviceType == AnimasDeviceType.Animas_Unknown_Pump)
                     {
-                        throw new AnimasException(AnimasExceptionType.PumpModelCouldNotBeIdentified);
+                        throw new PlugInBaseException(PlugInExceptionType.DeviceModelCouldNotBeIdentified);
                     }
                 }
             }
@@ -598,7 +598,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
 
     public void sendRequestToPump(AnimasDataType animasDataType, int startingRecord, int recordCount)
-            throws AnimasException
+            throws PlugInBaseException
     {
         char[] dataToSend = { 'R', 'I', //
                              (char) (animasDataType.getCode() & 0xFF), //
@@ -628,7 +628,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     private int ENTRY_READ_MAX_TIMEOUT_COUNT = 5;
 
 
-    public void waitForDownloadedQuantity(int qty) throws AnimasException
+    public void waitForDownloadedQuantity(int qty) throws PlugInBaseException
     {
 
         long readTimeout = System.currentTimeMillis() + ENTRY_READ_TIMEOUT;
@@ -682,7 +682,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 //                    retryData = true;
 //                    //throw new Ani
 //                }
-                throw new AnimasException(AnimasExceptionType.DownloadCanceledByDevice);
+                throw new PlugInBaseException(PlugInExceptionType.DownloadCanceledByDevice);
             }
         }
 
@@ -735,7 +735,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void processMessageFromDevice() throws AnimasException
+    public void processMessageFromDevice() throws PlugInBaseException
     {
         AnimasDevicePacket adp = this.animasDevicePacket;
 
@@ -827,7 +827,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
             {
                 debugCommunication("PM-7.1");
                 String dwlError = "E" + adp.getDataReceivedAsString(4);
-                throw new AnimasException(AnimasExceptionType.CommErrorWithCode, new Object[] { dwlError });
+                throw new PlugInBaseException(PlugInExceptionType.CommunicationErrorWithCode, new Object[] { dwlError });
             }
             else if (adp.isReceivedDataBitSetTo(2, 68))
             {
@@ -950,7 +950,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void addCommandToSend(AnimasDeviceCommand cmd, boolean processAtOnce) throws AnimasException
+    public void addCommandToSend(AnimasDeviceCommand cmd, boolean processAtOnce) throws PlugInBaseException
     {
         if (!this.commandToSend.containsKey(cmd))
         {
@@ -981,7 +981,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    public void readDataFromDevice() throws AnimasException
+    public void readDataFromDevice() throws PlugInBaseException
     {
         List<Short> tempData = null;
         if (isDataAvailable())

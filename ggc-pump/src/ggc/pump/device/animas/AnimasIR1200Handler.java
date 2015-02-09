@@ -4,7 +4,6 @@ import ggc.plugin.data.enums.DeviceDefinition;
 import ggc.plugin.device.DeviceHandler;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
-import ggc.plugin.device.impl.animas.util.AnimasException;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.defs.PumpDeviceDefinition;
 import ggc.pump.device.animas.impl.AnimasPumpDeviceReader;
@@ -23,7 +22,7 @@ public class AnimasIR1200Handler implements DeviceHandler
                                Object connectionParameters, //
                                OutputWriter outputWriter) throws PlugInBaseException
     {
-        try
+        //try
         {
             AnimasPumpDeviceReader reader = new AnimasPumpDeviceReader( //
                     getCommunicationPort(connectionParameters), //
@@ -31,26 +30,20 @@ public class AnimasIR1200Handler implements DeviceHandler
                     outputWriter);
             reader.downloadPumpData();
         }
-        catch(AnimasException ex)
-        {
-            throw new PlugInBaseException(ex);
-        }
+
     }
 
     public void readConfiguration(DeviceDefinition definition, //
                                   Object connectionParameters, //
                                   OutputWriter outputWriter) throws PlugInBaseException
     {
-        try
+        //try
         {
             AnimasPumpDeviceReader reader = new AnimasPumpDeviceReader( //
                     getCommunicationPort(connectionParameters), //
                     this.getAnimasDeviceType(definition), //
                     outputWriter);
             reader.downloadPumpSettings();
-        } catch (AnimasException ex)
-        {
-            throw new PlugInBaseException(ex);
         }
     }
 

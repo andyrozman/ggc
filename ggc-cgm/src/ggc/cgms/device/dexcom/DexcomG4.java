@@ -4,7 +4,6 @@ import ggc.cgms.device.AbstractSerialCGMS;
 import ggc.cgms.device.dexcom.receivers.DexcomDevice;
 import ggc.cgms.device.dexcom.receivers.DexcomDeviceReader;
 import ggc.cgms.device.dexcom.receivers.data.output.GGCOutputParser;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomException;
 import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.device.DeviceIdentification;
@@ -220,10 +219,10 @@ public class DexcomG4 extends AbstractSerialCGMS
 
             ddr.downloadSettings();
         }
-        catch (DexcomException ex)
-        {
-            throw new PlugInBaseException("Error reading Dexcom G4 device. Exception: " + ex, ex);
-        }
+//        catch (DexcomException ex)
+//        {
+//            throw new PlugInBaseException("Error reading Dexcom G4 device. Exception: " + ex, ex);
+//        }
         finally
         {
             if (ddr != null)
@@ -264,10 +263,10 @@ public class DexcomG4 extends AbstractSerialCGMS
 
             ddr.downloadData();
         }
-        catch (DexcomException ex)
-        {
-            throw new PlugInBaseException("Error reading Dexcom G4 device. Exception: " + ex, ex);
-        }
+//        catch (DexcomException ex)
+//        {
+//            throw new PlugInBaseException("Error reading Dexcom G4 device. Exception: " + ex, ex);
+//        }
         finally
         {
             if (ddr != null)

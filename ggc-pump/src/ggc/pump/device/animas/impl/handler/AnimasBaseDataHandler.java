@@ -1,6 +1,7 @@
 package ggc.pump.device.animas.impl.handler;
 
 import ggc.plugin.data.progress.ProgressType;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
@@ -9,8 +10,6 @@ import ggc.plugin.device.impl.animas.AnimasDeviceReader;
 import ggc.pump.device.animas.impl.data.*;
 import ggc.plugin.device.impl.animas.handler.AbstractDeviceDataHandler;
 import ggc.pump.device.animas.impl.converter.AnimasBaseDataConverter;
-import ggc.plugin.device.impl.animas.util.AnimasException;
-import ggc.plugin.device.impl.animas.util.AnimasExceptionType;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 
 import java.math.BigDecimal;
@@ -102,7 +101,7 @@ public class AnimasBaseDataHandler extends AbstractDeviceDataHandler
 
 
     @Override
-    public void startAction(AnimasTransferType transferType) throws AnimasException
+    public void startAction(AnimasTransferType transferType) throws PlugInBaseException
     {
         data.setTransferType(transferType);
 
@@ -130,29 +129,11 @@ public class AnimasBaseDataHandler extends AbstractDeviceDataHandler
             {
                 downloadSettings();
             }
-            else if ((this.data.getTransferType() == AnimasTransferType.DownloadCGMSData) || //
-                    (this.data.getTransferType() == AnimasTransferType.DownloadCGMSSettings))
-            {
-                //AnimasDexcomDataHandler dexcomProcessor = new AnimasDexcomDataHandler(this);
-                //dexcomProcessor.startOperation(this.data.getTransferType());
 
-                LOG.error(String.format("Operation %s not supported/implemented yet.", this.data.getTransferType()
-                        .name()));
-                throw new AnimasException(AnimasExceptionType.OperationNotSupported);
-            }
-            else
-            {
-                //AnimasExtendedDataHandler binaryProcessor = new AnimasExtendedDataHandler(this);
-                //binaryProcessor.startOperation(this.data.getTransferType());
-
-                LOG.error(String.format("Operation %s not supported/implemented yet.", this.data.getTransferType()
-                        .name()));
-                throw new AnimasException(AnimasExceptionType.OperationNotSupported);
-            }
 
             //this.deviceReader.returnFromOperation(this, null);
         }
-        catch (AnimasException ex)
+        catch (PlugInBaseException ex)
         {
             if (AnimasUtils.checkIfUserRelevantExceptionIsThrownNoRethrow(ex))
             {
@@ -175,7 +156,7 @@ public class AnimasBaseDataHandler extends AbstractDeviceDataHandler
     }
 
 
-    public void downloadBaseSettings() throws AnimasException
+    public void downloadBaseSettings() throws PlugInBaseException
     {
         sendRequestAndWait(AnimasDataType.ClockMode, 0, 1, 100, 100); // 28
 
@@ -190,7 +171,7 @@ public class AnimasBaseDataHandler extends AbstractDeviceDataHandler
     }
 
 
-    public void downloadSettings() throws AnimasException
+    public void downloadSettings() throws PlugInBaseException
     {
         LOG.debug("downloadSettings()");
 
@@ -237,7 +218,7 @@ public class AnimasBaseDataHandler extends AbstractDeviceDataHandler
 
     }
 
-    public void downloadData() throws AnimasException
+    public void downloadData() throws PlugInBaseException
     {
         LOG.debug("downloadData()");
 

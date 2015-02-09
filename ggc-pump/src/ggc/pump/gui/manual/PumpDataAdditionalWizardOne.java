@@ -1,6 +1,7 @@
 package ggc.pump.gui.manual;
 
 import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
 
 import java.awt.Component;
@@ -129,7 +130,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         label.setFont(f_bold);
         panel.add(label);
 
-        cb_type = new JComboBox(m_da.getAdditionalTypes().createItems(this.old_data));
+        cb_type = new JComboBox(PumpAdditionalDataType.createItems(this.old_data));
         cb_type.setBounds(startx + 10, 135, 240, 25);
         panel.add(cb_type);
 

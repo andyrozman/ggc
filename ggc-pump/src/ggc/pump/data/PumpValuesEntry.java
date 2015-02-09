@@ -426,6 +426,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
         else if (this.baseType == PumpBaseType.Alarm)
         {
+            System.out.println("Alaram: " + this.sub_type + "\n" +  PumpAlarms.getByCode(this.sub_type) + "\n" + PumpAlarms.getByCode(this.sub_type).getTranslation());
+
             return PumpAlarms.getByCode(this.sub_type).getTranslation();
         }
         else if (this.baseType == PumpBaseType.Error)

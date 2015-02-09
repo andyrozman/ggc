@@ -1,11 +1,14 @@
 package ggc.pump.data.defs;
 
+import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.util.DataAccessPump;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -80,8 +83,8 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
 
 
 
-    static Hashtable<String, PumpAdditionalDataType> translationMapping = new Hashtable<String, PumpAdditionalDataType>();
-    static Hashtable<Integer, PumpAdditionalDataType> codeMapping = new Hashtable<Integer, PumpAdditionalDataType>();
+    static Map<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
+    static Map<Integer, PumpAdditionalDataType> codeMapping = new HashMap<Integer, PumpAdditionalDataType>();
 
     static
     {
@@ -94,10 +97,17 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
 
-        String[] addata_desc_lcl = { ic.getMessage("SELECT_ADDITIONAL_DATA"), ic.getMessage("ADD_DATA_ACTIVITY"),
-                ic.getMessage("ADD_DATA_COMMENT"), ic.getMessage("ADD_DATA_BG"),
-                ic.getMessage("ADD_DATA_URINE"), ic.getMessage("ADD_DATA_CH"),
-                ic.getMessage("ADD_DATA_FOOD_DB"), ic.getMessage("ADD_DATA_FOOD_DESC"), };
+        String[] addata_desc_lcl = {
+                ic.getMessage("SELECT_ADDITIONAL_DATA"),
+                ic.getMessage("ADD_DATA_ACTIVITY"),
+                ic.getMessage("ADD_DATA_COMMENT"),
+                ic.getMessage("ADD_DATA_BG"),
+                ic.getMessage("ADD_DATA_URINE"),
+                ic.getMessage("ADD_DATA_CH"),
+                ic.getMessage("ADD_DATA_FOOD_DB"),
+                ic.getMessage("ADD_DATA_FOOD_DESC"), };
+
+        addata_desc = addata_desc_lcl;
     }
 
     int code;
@@ -132,31 +142,12 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
     }
 
 
-    /**
-     * Get Type from Description
-     *
-     * @param str
-     *            type as string
-     * @return type as int
-     */
-    public int getTypeFromDescription(String str)
-    {
-        if (translationMapping.containsKey(str))
-        {
-            return translationMapping.get(str).getCode();
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
 
     public static PumpAdditionalDataType getByDescription(String description)
     {
         if (translationMapping.containsKey(description))
         {
-            return translationMapping.get(description);
+            return (PumpAdditionalDataType)translationMapping.get(description);
         }
         else
         {
@@ -191,5 +182,17 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
         return items.toArray();
     }
 
+
+    /**
+     * Get Type from Description
+     *
+     * @param str
+     *            type as string
+     * @return type as int
+     */
+    public static int getTypeFromDescription(String str)
+    {
+        return ATDataAccessAbstract.getTypeFromDescription(str, translationMapping);
+    }
 
 }
