@@ -2,6 +2,7 @@ package ggc.pump.util;
 
 import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.cfg.DeviceConfiguration;
+import ggc.plugin.device.mgr.DeviceHandlerManager;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpDataHandler;
@@ -17,6 +18,7 @@ import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.defs.PumpEvents;
 import ggc.pump.data.defs.PumpReport;
+import ggc.pump.device.animas.AnimasIR1200Handler;
 import ggc.pump.graph.PumpGraphContext;
 import ggc.pump.manager.PumpManager;
 
@@ -340,6 +342,11 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
 
+    @Override
+    public void registerDeviceHandlers()
+    {
+        DeviceHandlerManager.getInstance().addDeviceHandler(new AnimasIR1200Handler()); // Handler for Animas Implementation V2 (IR1200 and higher)
+    }
 
     @Override
     public GGCPluginType getPluginType()

@@ -1,12 +1,15 @@
 package ggc.pump.manager;
 
+import ggc.plugin.device.DeviceDefinition;
+import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.DeviceManager;
-import ggc.pump.manager.company.Animas;
-import ggc.pump.manager.company.Deltec;
-import ggc.pump.manager.company.Insulet;
-import ggc.pump.manager.company.Minimed;
-import ggc.pump.manager.company.Roche;
-import ggc.pump.manager.company.Sooil;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.pump.data.defs.PumpDeviceDefinition;
+import ggc.pump.device.PumpDeviceInstanceWithHandler;
+import ggc.pump.manager.company.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,6 +39,7 @@ import ggc.pump.manager.company.Sooil;
 
 public class PumpManager extends DeviceManager
 {
+    private static Log LOG = LogFactory.getLog(PumpManager.class);
 
     /**
      * Singleton instance
@@ -49,6 +53,20 @@ public class PumpManager extends DeviceManager
     {
         super();
     }
+
+    @Override
+    protected void loadDeviceInstancesV2()
+    {
+        for(DeviceDefinition dd : PumpDeviceDefinition.getSupportedDevices())
+        {
+            PumpDeviceDefinition pdd = (PumpDeviceDefinition)dd;
+
+            PumpDeviceInstanceWithHandler di = new PumpDeviceInstanceWithHandler(pdd);
+
+            this.supportedDevicesV2.put(di.getCompany().getName() + "_"+ di.getName(), di);
+        }
+    }
+
 
     /**
      * Get PumpManager instance
@@ -71,26 +89,12 @@ public class PumpManager extends DeviceManager
     @Override
     public void loadDeviceCompanies()
     {
-        addDeviceCompany(new Animas());
+        //addDeviceCompany(new Animas());
         addDeviceCompany(new Deltec());
         addDeviceCompany(new Insulet());
         addDeviceCompany(new Minimed());
         addDeviceCompany(new Roche());
         addDeviceCompany(new Sooil());
-    }
-
-    /**
-     * Load Supported Devices
-     */
-    @Override
-    public void loadSupportedDevices()
-    {
-        this.supported_devices.addAll(new Animas().getDevices());
-        this.supported_devices.addAll(new Deltec().getDevices());
-        this.supported_devices.addAll(new Insulet().getDevices());
-        this.supported_devices.addAll(new Minimed().getDevices());
-        this.supported_devices.addAll(new Roche().getDevices());
-        this.supported_devices.addAll(new Sooil().getDevices());
     }
 
 }

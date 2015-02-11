@@ -1,7 +1,8 @@
 package ggc.pump.device.animas;
 
-import ggc.plugin.data.enums.DeviceDefinition;
-import ggc.plugin.device.DeviceHandler;
+import ggc.plugin.data.enums.DeviceHandlerType;
+import ggc.plugin.device.DeviceDefinition;
+import ggc.plugin.device.v2.DeviceHandler;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.output.OutputWriter;
@@ -17,6 +18,11 @@ public class AnimasIR1200Handler implements DeviceHandler
     {
     }
 
+
+    public DeviceHandlerType getDeviceHandlerKey()
+    {
+        return DeviceHandlerType.AnimasV2PumpHandler;
+    }
 
     public void readDeviceData(DeviceDefinition definition, //
                                Object connectionParameters, //

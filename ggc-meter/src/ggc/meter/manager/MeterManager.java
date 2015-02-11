@@ -13,6 +13,8 @@ import ggc.meter.manager.company.Sanvita;
 import ggc.meter.manager.company.USDiagnostic;
 import ggc.meter.manager.company.Wavesense;
 import ggc.plugin.manager.DeviceManager;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,6 +44,7 @@ import ggc.plugin.manager.DeviceManager;
 
 public class MeterManager extends DeviceManager
 {
+    private static Log LOG = LogFactory.getLog(MeterManager.class);
 
     /**
      * Singleton instance
@@ -54,6 +57,12 @@ public class MeterManager extends DeviceManager
     private MeterManager()
     {
         super();
+    }
+
+    @Override
+    protected void loadDeviceInstancesV2()
+    {
+        LOG.error("loadDeviceInstancesV2 not implemented !");
     }
 
     /**

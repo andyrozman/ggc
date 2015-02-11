@@ -1,8 +1,11 @@
 package ggc.cgms.manager;
 
+import ggc.cgms.data.defs.CGMSDeviceDefinition;
+import ggc.cgms.device.CGMSDeviceInstanceWithHandler;
 import ggc.cgms.manager.company.Abbott;
 import ggc.cgms.manager.company.Dexcom;
 import ggc.cgms.manager.company.Minimed;
+import ggc.plugin.device.DeviceDefinition;
 import ggc.plugin.manager.DeviceManager;
 
 /**
@@ -61,31 +64,32 @@ public class CGMSManager extends DeviceManager
         return CGMSManager.s_manager;
     }
 
-    /** 
-     * Load Supported Devices
-     */
-    @Override
-    public void loadSupportedDevices()
-    {
-        addDeviceCompany(new Abbott());
-        addDeviceCompany(new Dexcom());
-        addDeviceCompany(new Minimed());
-
-        // System.out.println("!!! CGMS Companies: " + this.companies.size());
-    }
-
-    /** 
+    /**
      * Load Device Companies
      */
     @Override
     public void loadDeviceCompanies()
     {
-        this.supported_devices.addAll(new Abbott().getDevices());
-        this.supported_devices.addAll(new Dexcom().getDevices());
-        this.supported_devices.addAll(new Minimed().getDevices());
-
-        // System.out.println("!!! CGMS Devices: " +
-        // this.supported_devices.size());
+        addDeviceCompany(new Abbott());
+        addDeviceCompany(new Dexcom());
+        addDeviceCompany(new Minimed());
     }
+
+
+    @Override
+    protected void loadDeviceInstancesV2()
+    {
+        for(DeviceDefinition dd : CGMSDeviceDefinition.getSupportedDevices())
+        {
+            CGMSDeviceDefinition pdd = (CGMSDeviceDefinition)dd;
+
+            CGMSDeviceInstanceWithHandler di = new CGMSDeviceInstanceWithHandler(pdd);
+
+            this.supportedDevicesV2.put(di.getCompany().getName() + "_"+ di.getName(), di);
+        }
+    }
+
+
+
 
 }

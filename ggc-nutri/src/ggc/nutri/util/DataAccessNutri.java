@@ -301,6 +301,11 @@ public class DataAccessNutri extends DataAccessPlugInBase
     // ********************************************************
 
     @Override
+    public void registerDeviceHandlers()
+    {
+    }
+
+    @Override
     public GGCPluginType getPluginType()
     {
         return GGCPluginType.NutritionToolPlugin;

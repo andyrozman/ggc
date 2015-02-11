@@ -9,6 +9,7 @@ import ggc.meter.data.db.GGCMeterDb;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
 import ggc.plugin.cfg.DeviceConfiguration;
+import ggc.plugin.device.mgr.DeviceHandlerManager;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -188,6 +189,12 @@ public class DataAccessMeter extends DataAccessPlugInBase
     // ****** About Methods *****
     // ********************************************************
 
+
+    @Override
+    public void registerDeviceHandlers()
+    {
+        //DeviceHandlerManager.getInstance().addDeviceHandler();
+    }
 
     @Override
     public GGCPluginType getPluginType()
