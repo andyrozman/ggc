@@ -122,8 +122,8 @@ public interface DeviceInterface extends SelectableInterface
      * @param can_read_device_info
      * @param can_read_device_configuration
      */
-    public void setDeviceAllowedActions(boolean can_read_data, boolean can_read_partitial_data,
-            boolean can_read_device_info, boolean can_read_device_configuration);
+    //public void setDeviceAllowedActions(boolean can_read_data, boolean can_read_partitial_data,
+    //        boolean can_read_device_info, boolean can_read_device_configuration);
 
     // ************************************************
     // *** Device Implemented methods ***
@@ -144,7 +144,7 @@ public interface DeviceInterface extends SelectableInterface
      * 
      * @throws PlugInBaseException 
      */
-    void readDeviceDataPartitial() throws PlugInBaseException;
+    //void readDeviceDataPartitial() throws PlugInBaseException;
 
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
@@ -159,7 +159,7 @@ public interface DeviceInterface extends SelectableInterface
      *  
      * @throws PlugInBaseException
      */
-    void readInfo() throws PlugInBaseException;
+    //void readInfo() throws PlugInBaseException;
 
     /**
      * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
@@ -207,7 +207,7 @@ public interface DeviceInterface extends SelectableInterface
      * 
      * @return true if action is allowed
      */
-    public boolean canReadDeviceInfo();
+    //public boolean canReadDeviceInfo();
 
     /**
      * canReadConfiguration - tells if we can read configuration from device
@@ -223,7 +223,7 @@ public interface DeviceInterface extends SelectableInterface
     /**
      * Test
      */
-    void test();
+    //void test();
 
     // ************************************************
     // *** Connection type/parameters ***
@@ -396,8 +396,6 @@ public interface DeviceInterface extends SelectableInterface
 
     /**
      * Pre Init Device - Does preinit
-     * 
-     * @see ggc.plugin.device.DeviceInterface.hasPreInit
      */
     public void preInitDevice();
 

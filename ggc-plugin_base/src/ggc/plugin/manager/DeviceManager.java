@@ -1,10 +1,10 @@
 package ggc.plugin.manager;
 
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
-import java.util.Hashtable;
-import java.util.Vector;
+import java.util.*;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,7 +37,10 @@ public abstract class DeviceManager
 
     protected Hashtable<String, AbstractDeviceCompany> companies_ht = new Hashtable<String, AbstractDeviceCompany>();
     protected Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>();
-    protected Vector<DeviceInterface> supported_devices = new Vector<DeviceInterface>();
+    protected List<DeviceInterface> supportedDevicesAll = new ArrayList<DeviceInterface>();
+
+    protected HashMap<String, DeviceInterface> supportedDevicesV1 = new HashMap<String, DeviceInterface>();
+    protected HashMap<String, DeviceInstanceWithHandler> supportedDevicesV2 = new HashMap<String, DeviceInstanceWithHandler>();
 
     /**
      * Constructor 
@@ -46,17 +49,32 @@ public abstract class DeviceManager
     {
         this.loadDeviceCompanies();
         this.loadSupportedDevices();
+        this.loadDeviceInstancesV2();
     }
+
+    protected abstract void loadDeviceInstancesV2();
 
     /**
      * Load devices companies
      */
     public abstract void loadDeviceCompanies();
 
-    /**
-     * Load Supported Devices
-     */
-    public abstract void loadSupportedDevices();
+
+    public void loadSupportedDevices()
+    {
+        for(AbstractDeviceCompany pdc : this.companies)
+        {
+            for(DeviceInterface di  : pdc.getDevices())
+            {
+                if (DeviceImplementationStatus.isSupportedDevice(pdc.getImplementationStatus()))
+                {
+                    this.supportedDevicesV1.put(pdc.getShortName() + "_" + di.getName(), di);
+                    this.supportedDevicesAll.add(di);
+                }
+            }
+        }
+    }
+
 
     /**
      * Get Companies
@@ -71,9 +89,9 @@ public abstract class DeviceManager
      * Get Supported Devices
      * @return
      */
-    public Vector<? extends DeviceInterface> getSupportedDevices()
+    public List<? extends DeviceInterface> getSupportedDevices()
     {
-        return this.supported_devices;
+        return this.supportedDevicesAll;
     }
 
     /**
@@ -87,21 +105,49 @@ public abstract class DeviceManager
 
     /**
      * Gets the name
-     * @param group 
+     * @param company
      * @param device 
      * @return Returns a String
      */
-    public DeviceInterface getDevice(String group, String device)
+    public DeviceInterface getDeviceV1(String company, String device)
     {
-        AbstractDeviceCompany cmp = getCompany(group);
+        String key = company + "_" + device;
 
-        if (cmp == null)
-            // System.out.println("Company not found !");
-            // System.out.println("companies_nt: " + this.companies_ht);
+        if (this.supportedDevicesV1.containsKey(key))
+        {
+            return this.supportedDevicesV1.get(key);
+        }
+        else
+        {
             return null;
+        }
 
-        return cmp.getDevice(device);
+
+//        AbstractDeviceCompany cmp = getCompany(group);
+//
+//        if (cmp == null)
+//            // System.out.println("Company not found !");
+//            // System.out.println("companies_nt: " + this.companies_ht);
+//            return null;
+//
+//        return cmp.getDevice(device);
     }
+
+
+    public DeviceInstanceWithHandler getDeviceV2(String company, String device)
+    {
+        String key = company + "_" + device;
+
+        if (this.supportedDevicesV2.containsKey(key))
+        {
+            return this.supportedDevicesV2.get(key);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
 
     /**
      * Get Device Class name
@@ -112,7 +158,7 @@ public abstract class DeviceManager
      */
     public String getDeviceClassName(String group, String device)
     {
-        return getDevice(group, device).getDeviceClassName();
+        return getDeviceV1(group, device).getDeviceClassName();
     }
 
     /**

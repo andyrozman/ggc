@@ -261,6 +261,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     protected GGCI18nControl i18n = null;
 
+
+
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
@@ -285,7 +287,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         loadIcons();
         initSpecial();
         this.help_enabled = true;
+        registerDeviceHandlers();
     }
+
+
+    public abstract void registerDeviceHandlers();
 
 
     public abstract GGCPluginType getPluginType();

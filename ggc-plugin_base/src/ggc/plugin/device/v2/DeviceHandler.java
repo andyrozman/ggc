@@ -1,6 +1,8 @@
-package ggc.plugin.device;
+package ggc.plugin.device.v2;
 
-import ggc.plugin.data.enums.DeviceDefinition;
+import ggc.plugin.data.enums.DeviceHandlerType;
+import ggc.plugin.device.DeviceDefinition;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -9,11 +11,12 @@ import ggc.plugin.output.OutputWriter;
 public interface DeviceHandler
 {
 
+    DeviceHandlerType getDeviceHandlerKey();
 
     /**
      * This is method for reading data from device.
      *
-     * @throws PlugInBaseException
+     * @throws ggc.plugin.device.PlugInBaseException
      */
     void readDeviceData(DeviceDefinition definition, //
                                Object connectionParameters, //
@@ -27,6 +30,8 @@ public interface DeviceHandler
     void readConfiguration(DeviceDefinition definition, //
                                   Object connectionParameters, //
                                   OutputWriter outputWriter) throws PlugInBaseException;
+
+
 
 
 }

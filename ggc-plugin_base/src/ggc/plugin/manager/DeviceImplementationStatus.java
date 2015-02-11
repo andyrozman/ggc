@@ -69,6 +69,11 @@ public enum DeviceImplementationStatus
      */
     IMPLEMENTATION_DONE, // = 7;
 
+
+
+
+
+
     /**
      * Functionality: Read Data Full
      */
@@ -90,5 +95,16 @@ public enum DeviceImplementationStatus
     FUNCTIONALITY_READ_CONFIG, // = 8;
 
     ;
+
+
+    public static boolean isSupportedDevice(DeviceImplementationStatus status)
+    {
+        return ((status==IMPLEMENTATION_PARTITIAL) || //
+                (status==IMPLEMENTATION_FULL) || //
+                (status==IMPLEMENTATION_IN_PROGRESS) || //
+                (status==IMPLEMENTATION_TESTING) || //
+                (status==IMPLEMENTATION_DONE));
+    }
+
 
 }
