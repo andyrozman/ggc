@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.sf.ggc</groupId>
+        <artifactId>ggc-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>./ggc-master-pom/pom.xml</relativePath>
+     </parent>
+
+
+    <groupId>com.infonova.hdplus.jtf</groupId>
+    <artifactId>ggc-root</artifactId>
+    <name>ggc-root</name>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>ggc-master-pom</module>
+        <module>ggc-help</module>
+        <module>ggc-core</module>
+        <module>ggc-plugin_base</module>
+        <module>ggc-nutri</module>
+        <module>ggc-meter</module>
+        <module>ggc-pump</module>
+        <module>ggc-cgm</module>
+        <module>ggc-desktop</module>
+    </modules>
+
+    <!-- Need to extend this for real deployment  -->
+
+<!--
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.2.1</version>
+                    <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <remoteTagging>false</remoteTagging>
+                        <suppressCommitBeforeBranch>true</suppressCommitBeforeBranch>
+                        <suppressCommitBeforeTag>true</suppressCommitBeforeTag>
+                        <!- - goals>deploy</goals -->
+<!--                    </configuration>
+                </plugin>
+
+                <plugin>
+        			<groupId>org.apache.maven.plugins</groupId>
+        			<artifactId>maven-surefire-plugin</artifactId>
+        			<configuration>
+          				<skipTests>${skipTests}</skipTests>
+        			</configuration>
+      			</plugin>
+
+
+
+            </plugins>
+        </pluginManagement>
+    </build>
+-->
+<!--
+    <dependencyManagement>
+        <dependencies>
+			
+            
+            
+            
+            
+        </dependencies>
+    </dependencyManagement>
+-->
+
+<!--
+    <profiles>
+        <profile>
+            <id>skipJtfTests</id>
+            <activation>
+                <property>
+                    <name>skipJtfTests</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>SmokeTests</id>
+            <activation>
+                <property>
+                    <name>skipJtfTests</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <groups>ggc.test.SmokeTests</groups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+-->
+
+</project>
+
+
+
+
