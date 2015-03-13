@@ -34,6 +34,8 @@ public interface AnimasDataWriter
 
     DeviceValuesWriter getDeviceValuesWriter();
 
+    OutputWriter getOutputWriter();
+
     void createDeviceValuesWriter(OutputWriter ow);
 
 }

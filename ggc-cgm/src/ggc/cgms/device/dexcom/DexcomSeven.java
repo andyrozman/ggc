@@ -161,7 +161,7 @@ public class DexcomSeven extends DexcomCGMS
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return DeviceImplementationStatus.NotPlanned;
     }
 
     /**
@@ -190,9 +190,9 @@ public class DexcomSeven extends DexcomCGMS
      * @return
      */
     @Override
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+        return DownloadSupportType.DownloadDataFile;
     }
 
     /**

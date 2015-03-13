@@ -1,5 +1,6 @@
 package ggc.gui.dialogs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.data.MonthlyValues;
 import ggc.core.print.PrintExtendedMonthlyReport;
 import ggc.core.print.PrintSimpleMonthlyReport;
@@ -98,8 +99,10 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         super(DataAccess.getInstance(), "printing");
         this.setLayout(null);
 
-        fontNormal = dataAccess.getFont(ATDataAccessAbstract.FONT_NORMAL);
-        fontNormalBold = dataAccess.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        ATSwingUtils.initLibrary();
+
+        fontNormal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
+        fontNormalBold = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
 
         gc = new GregorianCalendar();
         setTitle(i18nControl.getMessage("PRINTING"));
@@ -120,6 +123,8 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
 
     private void init()
     {
+        ATSwingUtils.initLibrary();
+
         setSize(350, 320);
         this.dataAccess.centerJDialog(this);
 
@@ -130,7 +135,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         this.getContentPane().add(panel);
 
         JLabel label = new JLabel(i18nControl.getMessage("PRINTING"));
-        label.setFont(dataAccess.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBounds(0, 20, 350, 35);
         panel.add(label);
@@ -172,18 +177,18 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         JButton button = new JButton("   " + i18nControl.getMessage("OK"));
         button.setActionCommand("ok");
         button.addActionListener(this);
-        button.setIcon(dataAccess.getImageIcon_22x22("ok.png", this));
+        button.setIcon(ATSwingUtils.getImageIcon_22x22("ok.png", this, dataAccess));
         button.setBounds(40, 240, 125, 25);
         panel.add(button);
 
         button = new JButton("   " + i18nControl.getMessage("CANCEL"));
         button.setActionCommand("cancel");
-        button.setIcon(dataAccess.getImageIcon_22x22("cancel.png", this));
+        button.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, dataAccess));
         button.addActionListener(this);
         button.setBounds(175, 240, 125, 25);
         panel.add(button);
 
-        helpButton = dataAccess.createHelpButtonByBounds(185, 210, 115, 25, this);
+        helpButton = ATSwingUtils.createHelpButtonByBounds(185, 210, 115, 25, this, ATSwingUtils.FONT_NORMAL, dataAccess);
         panel.add(helpButton);
 
         dataAccess.enableHelp(this);

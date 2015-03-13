@@ -44,7 +44,7 @@ public class Deltec extends AbstractPumpDeviceCompany
                 "Deltec", // company name (full)
                 "Deltec", // short company name
                 "DELTEC_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE); // implementation
+                DeviceImplementationStatus.NotAvailable); // implementation
                                                                           // status
 
         this.addDevice(new DeltecCosmo1700(this));

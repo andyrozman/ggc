@@ -2,9 +2,11 @@ package ggc.cgms.device.dexcom.file;
 
 import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.CGMSValuesTableModel;
+import ggc.cgms.data.defs.CGMSBaseDataType;
 import ggc.cgms.device.dexcom.DexcomCGMS;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocolFile;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -102,8 +104,10 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             DeviceIdentification di = this.output_writer.getDeviceIdentification();
             di.is_file_import = true;
             di.fi_file_name = new File(filename).getName();
-            di.company = this.m_da.getSelectedDeviceInstance().getDeviceCompany().getName();
-            di.device_selected = this.m_da.getSelectedDeviceInstance().getName();
+
+            DeviceInterface deviceInterface = (DeviceInterface)this.m_da.getSelectedDeviceInstance();
+            di.company = deviceInterface.getDeviceCompany().getName();
+            di.device_selected = deviceInterface.getName();
 
             this.output_writer.setDeviceIdentification(di);
             this.output_writer.writeDeviceIdentification();
@@ -199,7 +203,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             // sub.datetime = DexcomCGMS.getDateFromString(tmp_time);
             // sub.time = DexcomCGMS.getTimeFromString(tmp_time);
             sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
-            sub.setType(CGMSValuesSubEntry.CGMS_BG_READING);
+            sub.setType(CGMSBaseDataType.SensorReading);
             strtok.nextToken();
             sub.value = Integer.parseInt(strtok.nextToken());
             addEntry(sub);
@@ -211,7 +215,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
                 sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
                 // sub.datetime = DexcomCGMS.getDateFromString(tmp_time);
                 // sub.time = DexcomCGMS.getTimeFromString(tmp_time);
-                sub.setType(CGMSValuesSubEntry.METER_CALIBRATION_READING);
+                sub.setType(CGMSBaseDataType.SensorCalibration);
                 strtok.nextToken();
                 sub.value = Integer.parseInt(strtok.nextToken());
                 addEntry(sub);

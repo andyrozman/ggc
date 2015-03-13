@@ -188,7 +188,7 @@ public class RatioBaseDialog extends JDialog implements ActionListener, KeyListe
         ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 150, 260, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
 
-        help_button = m_da.createHelpButtonByBounds(150, 230, 110, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(150, 230, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
 
         panel.add(help_button);
 

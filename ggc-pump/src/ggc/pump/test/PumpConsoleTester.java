@@ -98,16 +98,16 @@ public class PumpConsoleTester // extends JFrame
     /**
      * Test
      */
-    public void test()
-    {
-        int num = 56;
-
-        if ((num & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
-        {
-            System.out.println("DOWNLOAD_DEVICE");
-        }
-
-    }
+//    public void test()
+//    {
+//        int num = 56;
+//
+//        if ((num & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
+//        {
+//            System.out.println("DOWNLOAD_DEVICE");
+//        }
+//
+//    }
 
     /**
      * Start Dana - For testing implementation of Dana Pump

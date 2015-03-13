@@ -4,7 +4,7 @@ import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
-import ggc.plugin.device.DeviceDefinition;
+import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.PlugInBaseException;
@@ -15,19 +15,20 @@ import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.pump.data.defs.*;
+import ggc.pump.util.DataAccessPump;
 
 import java.util.Hashtable;
 
 /**
  * Created by andy on 10.02.15.
  */
-public class PumpDeviceInstanceWithHandler extends DeviceInstanceWithHandler implements PumpInterface
+public class PumpDeviceInstanceWithHandler extends DeviceInstanceWithHandler implements PumpInterfaceV2
 {
     PumpDeviceDefinition pumpDeviceDefinition;
 
     public PumpDeviceInstanceWithHandler(DeviceDefinition deviceDefinition)
     {
-        super(deviceDefinition);
+        super(deviceDefinition, DataAccessPump.getInstance());
         pumpDeviceDefinition = (PumpDeviceDefinition)deviceDefinition;
     }
 
@@ -40,31 +41,6 @@ public class PumpDeviceInstanceWithHandler extends DeviceInstanceWithHandler imp
     public void loadPumpSpecificValues()
     {
 
-    }
-
-    public Hashtable<String, PumpAlarms> getAlarmMappings()
-    {
-        return null;
-    }
-
-    public Hashtable<String, PumpEvents> getEventMappings()
-    {
-        return null;
-    }
-
-    public Hashtable<String, PumpErrors> getErrorMappings()
-    {
-        return null;
-    }
-
-    public Hashtable<String, PumpBolusType> getBolusMappings()
-    {
-        return null;
-    }
-
-    public Hashtable<String, PumpReport> getReportMappings()
-    {
-        return null;
     }
 
     public DeviceIdentification getDeviceInfo()
@@ -94,6 +70,6 @@ public class PumpDeviceInstanceWithHandler extends DeviceInstanceWithHandler imp
 
     public int howManyMonthsOfDataStored()
     {
-        return 0;
+        return -1;
     }
 }

@@ -1,6 +1,5 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver;
 
-import ggc.cgms.device.dexcom.receivers.DexcomDeviceProgressReport;
 import ggc.cgms.device.dexcom.receivers.data.CommandPacket;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.BytesToDatabasePagesConverter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ConverterType;
@@ -30,6 +29,7 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils.BitConversion;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils.DexcomDateParsing;
 import ggc.plugin.data.enums.PlugInExceptionType;
+import ggc.plugin.data.progress.ProgressReportInterface;
 import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.PlugInBaseException;
 import gnu.io.CommPortIdentifier;
@@ -59,12 +59,12 @@ public class DexcomG4Api
     private ShortUtils shortUtils = DexcomUtils.getShortUtils();
     private PartitionInfo partitionInfo;
     private CommPortIdentifier commPortIdentifier;
-    private DexcomDeviceProgressReport progressReport;
+    private ProgressReportInterface progressReport;
     NRSerialPort serialDevice;
     InputStream inputStream;
     HashMap<ReceiverRecordType, DatabasePageRange> databasePagesRanges = new HashMap<ReceiverRecordType, DatabasePageRange>();
 
-    public DexcomG4Api(String portName, DexcomDeviceProgressReport progressReport)
+    public DexcomG4Api(String portName, ProgressReportInterface progressReport)
     {
         serialDevice = new NRSerialPort(portName, 115200);
 

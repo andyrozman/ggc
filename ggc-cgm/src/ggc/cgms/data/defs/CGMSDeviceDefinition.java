@@ -5,9 +5,13 @@ import java.util.List;
 
 import ggc.plugin.data.enums.DeviceCompanyDefinition;
 import ggc.plugin.data.enums.DeviceHandlerType;
-import ggc.plugin.device.DeviceDefinition;
+import ggc.plugin.data.enums.DevicePortParameterType;
+import ggc.plugin.data.enums.DeviceProgressStatus;
+import ggc.plugin.device.v2.DeviceDefinition;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 
 /**
  * Created by andy on 06.02.15.
@@ -16,8 +20,8 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
 {
 
     OneTouchVibe(40006, "OneTouch Vibe", "an_vibe_cgms.jpg", "INSTRUCTIONS_ANIMAS_V2", AnimasDeviceType.Animas_Vibe,
-            DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS, DeviceCompanyDefinition.Animas, DeviceHandlerType.AnimasV2PumpHandler),
-
+            DeviceImplementationStatus.InProgress, DeviceCompanyDefinition.Animas, DeviceHandlerType.AnimasV2CGMSHandler,
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, ""),
     ;
 
 
@@ -39,6 +43,9 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
                 supportedDevices.add(cdd);
             }
         }
+
+        System.out.println("CGMS Devices V2 (registered: " + allDevices.size() + ", supported: " + supportedDevices.size() + ")");
+
     }
 
 
@@ -53,10 +60,18 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
     DeviceImplementationStatus implementationStatus;
     DeviceCompanyDefinition companyDefinition;
     DeviceHandlerType deviceHandlerType;
+    DevicePortParameterType devicePortParameterType;
+    DeviceConnectionProtocol deviceConnectionProtocol;
+    DeviceProgressStatus deviceProgressStatus;
+    String specialComment;
 
 
 
-    private CGMSDeviceDefinition(int id, String name, String iconName, String instructions, Object internalDefinition, DeviceImplementationStatus implementationStatus, DeviceCompanyDefinition companyDefinition, DeviceHandlerType deviceHandlerType)
+    private CGMSDeviceDefinition(int id, String name, String iconName, String instructions, Object internalDefinition,
+                                 DeviceImplementationStatus implementationStatus, DeviceCompanyDefinition companyDefinition,
+                                 DeviceHandlerType deviceHandlerType,
+                                 DevicePortParameterType portParameterType, DeviceConnectionProtocol connectionProtocol,
+                                 DeviceProgressStatus progressStatus, String specialComment)
     {
         this.deviceId = id;
         this.deviceName = name;
@@ -65,6 +80,11 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
         this.internalDefintion = internalDefinition;
         this.implementationStatus = implementationStatus;
         this.companyDefinition = companyDefinition;
+        this.deviceHandlerType = deviceHandlerType;
+        this.devicePortParameterType = portParameterType;
+        this.deviceConnectionProtocol = connectionProtocol;
+        this.deviceProgressStatus = progressStatus;
+        this.specialComment = specialComment;
     }
 
     public int getDeviceId()
@@ -127,6 +147,52 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
     public static boolean isSupportedDevice(CGMSDeviceDefinition cgmsDeviceDefinition)
     {
         return DeviceImplementationStatus.isSupportedDevice(cgmsDeviceDefinition.getDeviceImplementationStatus());
+    }
+
+    /**
+     * Get Device handler key
+     * @return
+     */
+    public DeviceHandlerType getDeviceHandlerKey()
+    {
+        return this.deviceHandlerType;
+    }
+
+
+    /**
+     * Device Port Parameter Type
+     * @return
+     */
+    public DevicePortParameterType getDevicePortParameterType()
+    {
+        return this.devicePortParameterType;
+    }
+
+    /**
+     * Get Connection Protocol
+     *
+     * @return
+     */
+    public DeviceConnectionProtocol getConnectionProtocol()
+    {
+        return this.deviceConnectionProtocol;
+    }
+
+    /**
+     * Get Device Progress Status. It determines how device progress is determined. In most casess we use Special
+     * progress which is then implemented by Handler.
+     *
+     * @return
+     */
+    public DeviceProgressStatus getDeviceProgressStatus()
+    {
+        return this.deviceProgressStatus;
+    }
+
+
+    public String getSpecialComment()
+    {
+        return this.specialComment;
     }
 
 }

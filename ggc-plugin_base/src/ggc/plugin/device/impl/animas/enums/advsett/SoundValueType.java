@@ -1,8 +1,11 @@
 package ggc.plugin.device.impl.animas.enums.advsett;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnum;
+import com.atech.utils.data.CodeEnumWithTranslation;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -30,47 +33,82 @@ import com.atech.utils.data.CodeEnum;
  *  Author: Andy Rozman {andy@atech-software.com}
  */
 
-public enum SoundValueType implements CodeEnum
+public enum SoundValueType implements CodeEnumWithTranslation
 {
-    NotAvailable(0), //
-    Vibrate(1), //
-    Low(2), //
-    Medium(3), //
-    High(4), //
-    Unknown(-1), //
+    NotAvailable(0, "CFG_SOUND_VOLUME_NA"), //
+    Vibrate(1, "CFG_SOUND_VOLUME_VIBRATE"), //
+    Low(2, "CFG_SOUND_VOLUME_LOW"), //
+    Medium(3, "CFG_SOUND_VOLUME_MEDIUM"), //
+    High(4, "CFG_SOUND_VOLUME_HIGH"), //
+    Unknown(-1, "CFG_SOUND_VOLUME_UNKNOWN"), //
+
+    Enabled(1, "CFG_SOUND_VOLUME_ENABLED"), //
+    Disabled(0, "CFG_SOUND_VOLUME_DISABLED") //
     ;
 
+
     int code;
-    static Hashtable<Integer, SoundValueType> soundValueTypeCodeMapping = new Hashtable<Integer, SoundValueType>();
+    String i18nKey;
+    String translation;
+
+    static Hashtable<Integer, SoundValueType> codeMapping = new Hashtable<Integer, SoundValueType>();
+    static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
+
+
 
     static
     {
-        // I18nControlAbstract i18nControlAbstract =
-        // DataAccessPump.getInstance().getI18nControlInstance();
-
         for (SoundValueType pbt : values())
         {
-            // pbt.setTranslation(i18nControlAbstract.getMessage(pbt.i18nKey));
-            // basetypeTranslationMapping.put(pbt.getTranslation(), pbt);
-            soundValueTypeCodeMapping.put(pbt.code, pbt);
+            codeMapping.put(pbt.code, pbt);
         }
     }
 
-    private SoundValueType(int code)
+    private SoundValueType(int code, String i18nKey)
     {
         this.code = code;
+        this.i18nKey = i18nKey;
     }
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        for (SoundValueType pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+        }
+    }
+
+
+    public String getTranslation()
+    {
+        return translation;
+    }
+
+
+    public void setTranslation(String translation)
+    {
+        this.translation = translation;
+    }
+
 
     public int getCode()
     {
-        return this.getCode();
+        return code;
     }
 
-    public static SoundValueType getSoundValueTypeByCode(int code)
+
+    public String getI18nKey()
     {
-        if (soundValueTypeCodeMapping.containsKey(code))
+        return i18nKey;
+    }
+
+
+    public static SoundValueType getByCode(int code)
+    {
+        if (codeMapping.containsKey(code))
         {
-            return soundValueTypeCodeMapping.get(code);
+            return codeMapping.get(code);
         }
         else
         {

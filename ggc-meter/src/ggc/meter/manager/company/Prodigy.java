@@ -44,7 +44,7 @@ public class Prodigy extends AbstractDeviceCompany
                 "Prodigy", // company name (full)
                 "Prodigy", // short company name
                 "PRODIGY_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                DeviceImplementationStatus.NotPlanned, DataAccessMeter.getInstance()); // implementation
                                                                                                        // status
     }
 

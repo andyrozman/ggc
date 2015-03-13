@@ -1,17 +1,11 @@
 package ggc.plugin.device.impl.animas;
 
 import ggc.plugin.data.enums.PlugInExceptionType;
-import ggc.plugin.data.progress.ProgressData;
-import ggc.plugin.data.progress.ProgressReportInterface;
-import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasImplementationType;
-
-import gnu.io.CommPortIdentifier;
-
-import java.util.Enumeration;
+import ggc.plugin.protocol.reader.SerialDeviceReader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,48 +37,17 @@ import org.apache.commons.logging.LogFactory;
  *  Author: Andy Rozman {andy@atech-software.com}
  */
 
-public class AnimasDeviceReader implements ProgressReportInterface
+public abstract class AnimasDeviceReader extends SerialDeviceReader
 {
     public static final Log LOG = LogFactory.getLog(AnimasDeviceReader.class);
 
-    protected String portName;
-    protected ProgressData progressData = new ProgressData();
-    protected OutputWriter outputWriter;
     protected AnimasDeviceType animasDevice;
-    protected boolean downloadCanceled = false;
+
 
     public AnimasDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter) throws PlugInBaseException
     {
-        this.portName = portName;
+        super(portName, outputWriter);
         this.animasDevice = animasDevice;
-
-        @SuppressWarnings("rawtypes")
-        Enumeration ports = CommPortIdentifier.getPortIdentifiers();
-        StringBuilder sb = new StringBuilder();
-
-        boolean deviceFound = false;
-
-        while (ports.hasMoreElements())
-        // for(Object cpi : portList)
-        {
-            CommPortIdentifier comp = (CommPortIdentifier) ports.nextElement();
-
-            if (comp.getName().equals(this.portName))
-            {
-                deviceFound = true;
-            }
-
-            sb.append(comp.getName() + " ");
-        }
-
-        LOG.debug(String.format("Serial Ports found: %s, configured port (%s) found: %s", sb.toString(), portName,
-            deviceFound));
-
-        if (!deviceFound)
-        {
-            throw new PlugInBaseException(PlugInExceptionType.DeviceNotFoundOnConfiguredPort,
-                    new Object[] { this.portName });
-        }
 
         if (animasDevice.getImplementationType() != AnimasImplementationType.AnimasImplementationV2)
         {
@@ -93,45 +56,22 @@ public class AnimasDeviceReader implements ProgressReportInterface
     }
 
 
-    public void addToProgress(ProgressType progressType, int progressAdd)
+    /**
+     * This are custom checks if everything there is (or everything set is). When not exception must be thrown.
+     *
+     * @throws PlugInBaseException
+     */
+    public void customInitAndChecks() throws PlugInBaseException
     {
     }
 
-    public void configureProgressReporter(ProgressType baseProgressType, int staticProgressPercentage,
-            int staticMaxElements, int dynamicMaxElements)
+
+    /**
+     * Here we configure progress reporter. We can either call method configureProgressReporter() or
+     * we can directly change progressData instance.
+     */
+    public void configureProgressReporter()
     {
-        this.progressData.configureProgressReporter(baseProgressType, staticProgressPercentage, staticMaxElements,
-            dynamicMaxElements);
-    }
-
-    public void setDownloadCancel(boolean downloadCanceled)
-    {
-        this.downloadCanceled = downloadCanceled;
-    }
-
-    public boolean isDownloadCanceled()
-    {
-        if (this.outputWriter != null)
-            return this.outputWriter.isReadingStopped() || downloadCanceled;
-        else
-            return downloadCanceled;
-    }
-
-    public void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws PlugInBaseException
-    {
-        this.progressData.addToProgressAndCheckIfCanceled(progressType, progressAdd);
-
-        // log.debug("Progress: " + this.progressData.calculateProgress());
-
-        if (this.outputWriter != null)
-        {
-            this.outputWriter.setSpecialProgress(this.progressData.getCurrentProgress());
-        }
-
-        if (this.isDownloadCanceled())
-        {
-            throw new PlugInBaseException(PlugInExceptionType.DownloadCanceledByUser);
-        }
     }
 
 }

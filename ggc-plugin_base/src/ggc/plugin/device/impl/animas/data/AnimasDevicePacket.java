@@ -47,15 +47,18 @@ public class AnimasDevicePacket
     public boolean findHistoryRecordCount;
     List<AnimasPreparedDataEntry> preparedData = new ArrayList<AnimasPreparedDataEntry>();
 
+
     public short getReceivedDataBit(int bit)
     {
         return this.dataReceived.get(bit);
     }
 
+
     public boolean isReceivedDataBitSetTo(int bit, int expectedValue)
     {
         return (this.dataReceived.get(bit) == expectedValue);
     }
+
 
     public int getDataCheck()
     {
@@ -67,6 +70,7 @@ public class AnimasDevicePacket
         return dataCheck;
     }
 
+
     public String getDataReceivedAsString(int startIndex)
     {
         String outString = "";
@@ -77,6 +81,7 @@ public class AnimasDevicePacket
         }
         return outString;
     }
+
 
     public short[] getDataReceivedAsArray()
     {
@@ -90,26 +95,28 @@ public class AnimasDevicePacket
         return arr;
     }
 
+
     public void clearDataReceived()
     {
         this.dataReceived.clear();
     }
+
 
     public void addDataReceivedBit(short s)
     {
         this.dataReceived.add(s);
     }
 
+
     public void addPreparedData(String key, ATechDate dateTime)
     {
-        this.preparedData.add(new AnimasPreparedDataEntry(key, dateTime));
+        AnimasUtils.getAnimasData().writeData(key, dateTime, null);
     }
 
 
     public void addPreparedData(String key, ATechDate dateTime, String value)
     {
-        this.preparedData.add(new AnimasPreparedDataEntry(key, dateTime, value));
+        AnimasUtils.getAnimasData().writeData(key, dateTime, value);
     }
-
 
 }

@@ -185,7 +185,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
 
     }
 
-    @Override
+
     public abstract void initializeUsbSettings();
 
     // ************************************************
@@ -223,14 +223,14 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
              * foo.GetFeatureReportLength());
              */
 
-            this.device_running = true;
-            System.out.println("USB Reading --- Begin");
-            this.setUsbDebugLevel(4);
-
-            this.claimInterface(0);
-            // this.setRequiredEndpoint(0x81, 0x01);
-            this.setRequiredEndpoint(0x81, 0x01);
-            // this.setRequiredEndpoint(0x01, 0x81);
+//            this.device_running = true;
+//            System.out.println("USB Reading --- Begin");
+//            this.setUsbDebugLevel(4);
+//
+//            this.claimInterface(0);
+//            // this.setRequiredEndpoint(0x81, 0x01);
+//            this.setRequiredEndpoint(0x81, 0x01);
+//            // this.setRequiredEndpoint(0x01, 0x81);
 
             // this.claimInterface(1);
             // this.setRequiredEndpoint(0x82, 0x02);
@@ -241,14 +241,14 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
             buffer[3] = 1;
             buffer[4] = 4;
 
-            status = this.write(buffer); // foo.Write(buffer, 65);
-            System.out.println("Status:" + status);
+//            status = this.write(buffer); // foo.Write(buffer, 65);
+//            System.out.println("Status:" + status);
 
             while (true)
             {
-                this.waitTime(500);
-                status = this.read(buffer_out);
-                System.out.println("Status:" + status);
+//                this.waitTime(500);
+//                status = this.read(buffer_out);
+//                System.out.println("Status:" + status);
                 for (int i = 0; i < 64; i++)
                 {
                     System.out.print("." + buffer[i]);
@@ -264,7 +264,7 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
         }
         finally
         {
-            this.releaseInterface();
+ //           this.releaseInterface();
             super.close();
         }
 

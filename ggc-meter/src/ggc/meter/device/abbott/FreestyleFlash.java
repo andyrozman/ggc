@@ -159,7 +159,7 @@ public class FreestyleFlash extends FreestyleMeter
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
 }

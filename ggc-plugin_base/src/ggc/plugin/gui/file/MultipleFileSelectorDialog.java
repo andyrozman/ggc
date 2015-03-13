@@ -2,6 +2,7 @@ package ggc.plugin.gui.file;
 
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Color;
@@ -78,12 +79,12 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
         ATSwingUtils.getLabel(m_ic.getMessage("MULTIPLE_IMPORT_SELECTOR_DESC"), 50, 60, 300, 120, this,
             ATSwingUtils.FONT_NORMAL);
 
-        file_contexts = this.m_ddh.getDeviceInterface().getFileDownloadTypes();
+        file_contexts = this.deviceDataHandler.getFileDownloadTypes(DownloadSupportType.DownloadDataFile);
 
         cb_contexts = ATSwingUtils.getComboBox(file_contexts, 50, 180, 300, 25, this, ATSwingUtils.FONT_NORMAL);
 
-        this.help_button = m_da.createHelpIconByBounds(50, 230, 60, 25, this);
-        this.add(help_button); // 60, 25
+        this.helpButton = ATSwingUtils.createHelpIconByBounds(50, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
+        this.add(helpButton); // 60, 25
 
         ATSwingUtils.getButton("" /* m_ic.getMessage("CANCEL") */, 120, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
@@ -102,13 +103,13 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
 
         if (action.equals("cancel"))
         {
-            this.dialog_parent.dispose();
+            this.dialogParent.dispose();
         }
         else if (action.equals("next"))
         {
-            m_ddh.selected_file_context = file_contexts[this.cb_contexts.getSelectedIndex()];
+            deviceDataHandler.selected_file_context = file_contexts[this.cb_contexts.getSelectedIndex()];
             this.dispose();
-            new ImportFileSelectorDialog(m_da, this.dialog_parent, m_ddh);
+            new ImportFileSelectorDialog(m_da, this.dialogParent, deviceDataHandler);
         }
     }
 

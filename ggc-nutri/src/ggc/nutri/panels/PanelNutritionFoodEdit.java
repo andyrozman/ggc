@@ -1,5 +1,6 @@
 package ggc.nutri.panels;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.nutri.data.HomeWeightComparator;
 import ggc.nutri.data.NutritionsComparator;
 import ggc.nutri.db.datalayer.FoodDescription;
@@ -105,12 +106,14 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
 
         m_dialog = dia;
 
+        ATSwingUtils.initLibrary();
+
         this.hwd = new HomeWeightDataDisplay(ic);
         this.ndd = new NutritionDataDisplay(ic);
 
-        font_big = m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        font_big = ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD);
+        font_normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         createPanel();
 
@@ -118,7 +121,6 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
 
     private void createPanel()
     {
-
         this.setSize(520, 560);
         this.setLayout(new ZeroLayout(this.getSize()));
 
@@ -256,7 +258,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
 
         scroll_1.updateUI();
 
-        this.button = new JButton(m_da.getImageIcon("food_add.gif", 27, 27, this));
+        this.button = new JButton(ATSwingUtils.getImageIcon("food_add.gif", 27, 27, this, m_da));
         // new ImageIcon(dataAccess.getImage("/icons/food_add.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("add_nutrition");
@@ -264,7 +266,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         this.button.setBounds(370, 270, 32, 32);
         this.add(button, null);
 
-        this.button = new JButton(m_da.getImageIcon("food_edit.gif", 27, 27, this));
+        this.button = new JButton(ATSwingUtils.getImageIcon("food_edit.gif", 27, 27, this, m_da));
         // new ImageIcon(dataAccess.getImage("/icons/food_edit.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("edit_nutrition");
@@ -272,7 +274,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         this.button.setBounds(410, 270, 32, 32);
         this.add(button, null);
 
-        this.button = new JButton(m_da.getImageIcon("food_delete.gif", 27, 27, this));
+        this.button = new JButton(ATSwingUtils.getImageIcon("food_delete.gif", 27, 27, this, m_da));
         // new ImageIcon(dataAccess.getImage("/icons/food_delete.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("remove_nutrition");
@@ -302,7 +304,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         scroll_2.repaint();
         scroll_2.updateUI();
 
-        this.button = new JButton(m_da.getImageIcon("weight_add.png", 27, 27, this));
+        this.button = new JButton(ATSwingUtils.getImageIcon("weight_add.png", 27, 27, this, m_da));
         // new ImageIcon(dataAccess.get.getImage("/icons/food_add.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("add_home_weight");
@@ -310,7 +312,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         this.button.setBounds(370, 395, 32, 32);
         this.add(button, null);
 
-        this.button = new JButton(m_da.getImageIcon("weight_edit.png", 27, 27, this));
+        this.button = new JButton(ATSwingUtils.getImageIcon("weight_edit.png", 27, 27, this, m_da));
         // new ImageIcon(dataAccess.getImage("/icons/food_edit.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("edit_home_weight");
@@ -318,7 +320,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         this.button.setBounds(410, 395, 32, 32);
         this.add(button, null);
 
-        this.button = new JButton(m_da.getImageIcon("weight_delete.png", 27, 27, this));
+        this.button = new JButton(ATSwingUtils.getImageIcon("weight_delete.png", 27, 27, this, m_da));
         // new ImageIcon(dataAccess.getImage("/icons/food_delete.gif", this)));
         this.button.addActionListener(this);
         this.button.setActionCommand("remove_home_weight");
@@ -326,7 +328,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         this.button.setBounds(450, 395, 32, 32);
         this.add(button, null);
 
-        button = new JButton(m_da.getImageIcon("disk_blue.png", 27, 27, this));
+        button = new JButton(ATSwingUtils.getImageIcon("disk_blue.png", 27, 27, this, m_da));
         // button.setAlignmentX(JButton.CENTER_ALIGNMENT);
         // button.setAlignmentY(JButton.CENTER_ALIGNMENT);
         // button.setIcon(dataAccess.getImageIcon("disk_blue.png", 30, 30, this));
@@ -335,7 +337,7 @@ public class PanelNutritionFoodEdit extends GGCTreePanel implements ActionListen
         button.setActionCommand("save");
         this.add(button, null);
 
-        this.help_button = m_da.createHelpIconByBounds(480, 10, 32, 32, this);
+        this.help_button = ATSwingUtils.createHelpIconByBounds(480, 10, 32, 32, this, ATSwingUtils.FONT_NORMAL, m_da);
         this.add(help_button);
 
         m_da.enableHelp(this);

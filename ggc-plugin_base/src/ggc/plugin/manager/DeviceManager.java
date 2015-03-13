@@ -1,5 +1,6 @@
 package ggc.plugin.manager;
 
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -37,7 +38,7 @@ public abstract class DeviceManager
 
     protected Hashtable<String, AbstractDeviceCompany> companies_ht = new Hashtable<String, AbstractDeviceCompany>();
     protected Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>();
-    protected List<DeviceInterface> supportedDevicesAll = new ArrayList<DeviceInterface>();
+    protected List<SelectableInterface> supportedDevicesForSelector = new ArrayList<SelectableInterface>();
 
     protected HashMap<String, DeviceInterface> supportedDevicesV1 = new HashMap<String, DeviceInterface>();
     protected HashMap<String, DeviceInstanceWithHandler> supportedDevicesV2 = new HashMap<String, DeviceInstanceWithHandler>();
@@ -69,7 +70,7 @@ public abstract class DeviceManager
                 if (DeviceImplementationStatus.isSupportedDevice(pdc.getImplementationStatus()))
                 {
                     this.supportedDevicesV1.put(pdc.getShortName() + "_" + di.getName(), di);
-                    this.supportedDevicesAll.add(di);
+                    this.supportedDevicesForSelector.add(di);
                 }
             }
         }
@@ -89,9 +90,9 @@ public abstract class DeviceManager
      * Get Supported Devices
      * @return
      */
-    public List<? extends DeviceInterface> getSupportedDevices()
+    public List<SelectableInterface> getSupportedDevicesForSelector()
     {
-        return this.supportedDevicesAll;
+        return this.supportedDevicesForSelector;
     }
 
     /**

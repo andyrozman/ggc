@@ -201,6 +201,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
 
     private void init()
     {
+        ATSwingUtils.initLibrary();
 
         this.setLayout(null);
 
@@ -209,8 +210,8 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         type[1] = ic.getMessage("USER_NUTRITION");
         type[2] = ic.getMessage("MEAL");
 
-        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        font_normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -309,7 +310,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
         ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 135, 387, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
 
-        help_button = m_da.createHelpIconByBounds(250, 387, 25, 25, panel, ATSwingUtils.FONT_NORMAL);
+        help_button = ATSwingUtils.createHelpIconByBounds(250, 387, 25, 25, panel, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
 
         m_da.enableHelp(this);
@@ -353,26 +354,7 @@ public class MealSelectorDialog extends JDialog implements ActionListener, KeyLi
      */
     public float getAmountValue()
     {
-        // Object o = this.amountField.getValue();
-
-        return m_da.getJFormatedTextValueFloat(this.amountField);
-
-        /*
-         * if (o instanceof Long)
-         * {
-         * // System.out.println("Amount(long): " +
-         * // this.amountField.getValue());
-         * Long l = (Long) o;
-         * return l.floatValue();
-         * }
-         * else
-         * {
-         * // System.out.println("Amount(double): " +
-         * // this.amountField.getValue());
-         * Double d = (Double) this.amountField.getValue();
-         * return d.floatValue();
-         * }
-         */
+        return ATSwingUtils.getJFormatedTextValueFloat(this.amountField);
     }
 
     /**

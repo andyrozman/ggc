@@ -37,6 +37,9 @@ public enum AnimasTransferType
     DownloadCGMSSettingsBase, //
     DownloadCGMSSettings, //
 
+    DownloadCGMSSettingsL2,  // L2 will be done in phase 2 if needed
+    DownloadCGMSDataL2, //
+
     UploadSettings, //
     DownloadFoodDB, //
     UploadFoodDb, //

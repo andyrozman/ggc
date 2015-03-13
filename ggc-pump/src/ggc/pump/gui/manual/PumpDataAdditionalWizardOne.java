@@ -63,8 +63,8 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
     // JComponent components[] = new JComponent[9];
 
-    Font f_normal = m_da.getFont(DataAccessPump.FONT_NORMAL);
-    Font f_bold = m_da.getFont(DataAccessPump.FONT_NORMAL);
+    //Font f_normal = m_da.getFont(DataAccessPump.FONT_NORMAL);
+    //Font f_bold = m_da.getFont(DataAccessPump.FONT_NORMAL);
     boolean debug = true;
     JButton help_button = null;
     JPanel main_panel = null;
@@ -105,7 +105,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         ATSwingUtils.initLibrary();
 
         m_da.addComponent(this);
-        this.m_da.centerJDialog(this, this.m_parent);
+        ATSwingUtils.centerJDialog(this, this.m_parent);
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, width, height);
@@ -115,7 +115,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
         this.getContentPane().add(panel);
 
-        label_title.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label_title.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label_title.setHorizontalAlignment(SwingConstants.CENTER);
         label_title.setBounds(0, 35, width, 35);
         panel.add(label_title);
@@ -127,7 +127,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
         JLabel label = new JLabel(m_ic.getMessage("SELECT_ADDITONAL_DATA"));
         label.setBounds(startx + 10, 100, 250, 25);
-        label.setFont(f_bold);
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         panel.add(label);
 
         cb_type = new JComboBox(PumpAdditionalDataType.createItems(this.old_data));
@@ -185,7 +185,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
              */
         }
 
-        help_button = m_da.createHelpButtonByBounds(startx + 140, 195, 120, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(startx + 140, 195, 120, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
 
         m_da.enableHelp(this);

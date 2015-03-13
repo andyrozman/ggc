@@ -7,12 +7,14 @@ import ggc.cgms.device.dexcom.receivers.data.output.GGCOutputParser;
 import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -157,7 +159,7 @@ public class DexcomG4 extends AbstractSerialCGMS
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
+        return DeviceImplementationStatus.Done;
     }
 
 
@@ -183,10 +185,9 @@ public class DexcomG4 extends AbstractSerialCGMS
      * {@inheritDoc}
      */
     @Override
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE | DownloadSupportType.DOWNLOAD_FROM_DEVICE;
-        // DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+        return DownloadSupportType.Download_Data_Config;
     }
 
 
@@ -235,14 +236,7 @@ public class DexcomG4 extends AbstractSerialCGMS
 
     private void prepareBaseDeviceIdentification()
     {
-        DeviceIdentification di = this.outputWriter.getDeviceIdentification();
-        // di.is_file_import = true;
-        // di.fi_file_name = new File(filename).getName();
-        di.company = this.dataAccess.getSelectedDeviceInstance().getDeviceCompany().getName();
-        di.device_selected = this.dataAccess.getSelectedDeviceInstance().getName();
-        // di.device_serial_number = "";
-
-        this.outputWriter.setDeviceIdentification(di);
+        dataAccess.getPluginDeviceUtil().prepareDeviceIdentification(this.outputWriter);
     }
 
     /**
@@ -296,9 +290,9 @@ public class DexcomG4 extends AbstractSerialCGMS
      * @return id of connection protocol
      */
     @Override
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE;
+        return DeviceConnectionProtocol.Serial_USBBridge;
     }
 
     public String getInstructions()

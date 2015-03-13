@@ -1,5 +1,6 @@
 package ggc.gui.dialogs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.data.cfg.ConfigCellRenderer;
 import ggc.core.util.DataAccess;
 import ggc.gui.panels.prefs.AbstractPrefOptionsPanel;
@@ -111,9 +112,12 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
          */
         setSize(640, 480);
         setTitle(m_ic.getMessage("PREFERENCES"));
-        m_da.centerJDialog(this, da.getMainParent());
 
-        help_button = m_da.createHelpButtonBySize(120, 25, this);
+        ATSwingUtils.initLibrary();
+
+        ATSwingUtils.centerJDialog(this, da.getMainParent());
+
+        help_button = ATSwingUtils.createHelpButtonBySize(120, 25, this, m_da);
         createPanels();
 
         init();
@@ -191,19 +195,19 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         // set the buttons up...
         JButton okButton = new JButton("   " + m_ic.getMessage("OK"));
         okButton.setPreferredSize(dim);
-        okButton.setIcon(m_da.getImageIcon_22x22("ok.png", this));
+        okButton.setIcon(ATSwingUtils.getImageIcon_22x22("ok.png", this, m_da));
         okButton.setActionCommand("ok");
         okButton.addActionListener(this);
 
         JButton cancelButton = new JButton("   " + m_ic.getMessage("CANCEL"));
         cancelButton.setPreferredSize(dim);
-        cancelButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        cancelButton.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
         cancelButton.setActionCommand("cancel");
         cancelButton.addActionListener(this);
 
         JButton applyButton = new JButton("   " + m_ic.getMessage("APPLY"));
         applyButton.setPreferredSize(dim);
-        applyButton.setIcon(m_da.getImageIcon_22x22("flash.png", this));
+        applyButton.setIcon(ATSwingUtils.getImageIcon_22x22("flash.png", this, m_da));
         applyButton.setActionCommand("apply");
         applyButton.addActionListener(this);
 

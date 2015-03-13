@@ -2,6 +2,9 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.7.0 [19.2.2015]
+    * Device Implementation V2 Framework: Base, GUI Processing, DeviceHandlerManager
+
 0.6.4 [11.11.2014 - ]
     * DeviceTempValues, added isNumericValue parameter, and added several constructors with CodeEnumWithTranslation parameters as base and sub
       type

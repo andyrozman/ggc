@@ -1,5 +1,6 @@
 package ggc.plugin.graph;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.plugin.graph.panel.AxesEditorPanel;
 import ggc.plugin.graph.panel.DefinitionsPanel;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -84,7 +85,7 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
 
         setSize(800, 600);
         // this.setLayout(new ZeroLayout(800, 600));
-        m_da.centerJDialog(this, da.getMainParent());
+        ATSwingUtils.centerJDialog(this, da.getMainParent());
 
         main_panel = new JPanel();
         main_panel.setLayout(new ZeroLayout(800, 600));

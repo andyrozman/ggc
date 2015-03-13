@@ -8,6 +8,7 @@ import javax.swing.SwingConstants;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.db.hibernate.transfer.RestoreDialog;
 import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -74,10 +75,12 @@ public class RestoreGGCDialog extends RestoreDialog
     @Override
     public void initSpecial()
     {
+        ATSwingUtils.initLibrary();
+
         this.cb_daily = new JCheckBox(ic.getMessage("DAILY_VALUES_APPEND"));
         this.cb_daily.setBounds(25, 390, 380, 70);
         this.cb_daily.setVerticalTextPosition(SwingConstants.TOP);
-        this.cb_daily.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
+        this.cb_daily.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
         this.cb_daily.setEnabled(this.restore_files.containsKey("ggc.core.db.hibernate.DayValueH"));
         panel.add(this.cb_daily);
 

@@ -6,9 +6,12 @@ import ggc.cgms.data.CGMSValuesEntry;
 import ggc.cgms.data.ExtendedCGMSValuesExtendedEntry;
 import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
 import ggc.cgms.data.db.GGC_CGMSDb;
+import ggc.cgms.device.animas.AnimasCGMSHandler;
 import ggc.cgms.manager.CGMSManager;
 import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.cfg.DeviceConfiguration;
+import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
+import ggc.plugin.device.mgr.DeviceHandlerManager;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -111,6 +114,13 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         this.createOldDataReader();
         loadWebLister();
         this.loadConverters();
+
+        this.prepareTranslationForEnums();
+    }
+
+    private void prepareTranslationForEnums()
+    {
+        AnimasSoundType.translateKeywords(this.getI18nControlInstance(), this.getPluginType());
     }
 
     /**
@@ -154,6 +164,12 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     // ********************************************************
     // ****** Abstract Methods *****
     // ********************************************************
+
+    @Override
+    public void registerDeviceHandlers()
+    {
+        DeviceHandlerManager.getInstance().addDeviceHandler(new AnimasCGMSHandler()); // Handler for Animas CGMS - Dexcom (Vibe)
+    }
 
     @Override
     public GGCPluginType getPluginType()

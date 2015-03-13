@@ -179,10 +179,11 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
      * 
      * @return boolean - if connection established
      */
-    @Override
     public boolean open() throws PlugInBaseException
     {
-        return communication_established = super.open();
+        // FIXME
+        //return communication_established = super.open();
+        return false;
     }
 
     /**
@@ -198,7 +199,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
     /**
      * Will be called, when the import is ended and freeing resources.
      */
-    @Override
+
     public void close()
     {
         /*
@@ -224,9 +225,9 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
      * 
      * @return
      */
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_FROM_DEVICE;
+        return DownloadSupportType.DownloadData;
     }
 
     /**

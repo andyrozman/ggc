@@ -1,5 +1,6 @@
 package ggc.gui.dialogs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.util.DataAccess;
 
 import java.awt.Rectangle;
@@ -104,6 +105,7 @@ public class SchemeEDDialog extends JDialog implements ActionListener, ItemListe
 
     private void init()
     {
+        ATSwingUtils.initLibrary();
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 350, 250);
@@ -112,52 +114,52 @@ public class SchemeEDDialog extends JDialog implements ActionListener, ItemListe
         this.getContentPane().add(panel);
 
         JLabel label = new JLabel(m_ic.getMessage("EDIT_DELETE_SCHEME"));
-        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBounds(0, 20, 350, 35);
         panel.add(label);
 
         label = new JLabel(m_ic.getMessage("SELECTED_SCHEME") + ":");
-        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         label.setBounds(40, 90, 120, 25);
         panel.add(label);
 
         label = new JLabel(this.selected_scheme);
-        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
         label.setBounds(160, 90, 200, 25);
         panel.add(label);
 
         label = new JLabel(m_ic.getMessage("ACTION") + ":");
-        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         label.setBounds(40, 120, 280, 25);
         panel.add(label);
 
         cb_template = new JComboBox(this.actions);
-        cb_template.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
+        cb_template.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
         cb_template.addItemListener(this);
         cb_template.setBounds(160, 120, 90, 25);
         panel.add(cb_template);
 
         label = new JLabel(m_ic.getMessage("NEW_NAME") + ":");
-        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         label.setBounds(40, 170, 80, 25);
         panel.add(label);
 
         tf_name = new JTextField();
         tf_name.setBounds(140, 170, 160, 25);
-        tf_name.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
+        tf_name.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
         tf_name.setEnabled(false);
         panel.add(tf_name);
 
         JButton button = new JButton(m_ic.getMessage("OK"));
-        button.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
+        button.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
         button.setActionCommand("ok");
         button.addActionListener(this);
         button.setBounds(90, 220, 80, 25);
         panel.add(button);
 
         button = new JButton(m_ic.getMessage("CANCEL"));
-        button.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
+        button.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
         button.setActionCommand("cancel");
         button.addActionListener(this);
         button.setBounds(180, 220, 80, 25);

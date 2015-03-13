@@ -1,13 +1,17 @@
 package ggc.pump.test;
 
+import com.atech.utils.data.ATechDate;
 import ggc.core.util.DataAccess;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.pump.device.animas.impl.AnimasPumpDeviceReader;
+import ggc.pump.device.animas.impl.handler.AnimasPumpDataWriter;
 import ggc.pump.util.DataAccessPump;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import java.util.GregorianCalendar;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,10 +44,39 @@ public class TestAnimas
 
     private static final Log LOG = LogFactory.getLog(TestAnimas.class);
 
+    static DataAccessPump da;
+
+
+    public static void initMainData()
+    {
+        DataAccess daCore = DataAccess.getInstance();
+
+        da = DataAccessPump.createInstance(daCore.getLanguageManager());
+        da.initAllObjects();
+    }
+
+
+
     public static void main(String[] args)
     {
         try
         {
+            TestAnimas.initMainData();
+
+
+
+            AnimasPumpDataWriter d = new AnimasPumpDataWriter(new ConsoleOutputWriter());
+
+
+            ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MS, new GregorianCalendar());
+
+            d.getDeviceValuesWriter().writeObject("TDD_All_Insulin", atd, (String)null);
+
+
+            if (true)
+                return;
+
+
             // DbToolApplicationGGC m_configFile = new DbToolApplicationGGC();
             // m_configFile.loadConfig();
 
@@ -75,7 +108,7 @@ public class TestAnimas
 
 
             AnimasPumpDeviceReader adr = new AnimasPumpDeviceReader(portName, AnimasDeviceType.Animas_Vibe, new ConsoleOutputWriter());
-            adr.downloadPumpData();
+            adr.readData();
 
 
         }

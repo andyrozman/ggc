@@ -1,5 +1,8 @@
 package ggc.plugin.data.enums;
 
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.data.CodeEnumWithTranslation;
+
 import java.util.HashMap;
 
 /**
@@ -28,53 +31,76 @@ import java.util.HashMap;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public enum ClockModeType
+public enum ClockModeType implements CodeEnumWithTranslation
 {
     ClockMode12Hour(1, "CLOCK_MODE_24H"), //
     ClockMode24Hour(0, "CLOCK_MODE_12H"), //
     ;
 
-    private int value;
-    private String description;
-    private static HashMap<Integer, ClockModeType> map = new HashMap<Integer, ClockModeType>();
+    int code;
+    String i18nKey;
+    String translation;
+
+    private static HashMap<Integer, ClockModeType> codeMapping = new HashMap<Integer, ClockModeType>();
+
 
     static
     {
         for (ClockModeType el : values())
         {
-            map.put(el.getValue(), el);
+            codeMapping.put(el.getCode(), el);
         }
     }
 
-    ClockModeType(int value, String description)
+    ClockModeType(int code, String i18nKey)
     {
-        this.value = value;
-        this.description = description;
+        this.code = code;
+        this.i18nKey = i18nKey;
     }
 
-    public int getValue()
+    public static void translateKeywords(I18nControlAbstract ic)
     {
-        return value;
+        for (ClockModeType pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+        }
     }
 
-    public void setValue(int value)
+
+    public String getTranslation()
     {
-        this.value = value;
+        return translation;
     }
 
-    public static ClockModeType getEnum(int value)
+
+    public void setTranslation(String translation)
     {
-        return map.get(value);
+        this.translation = translation;
     }
 
-    public String getDescription()
+
+    public int getCode()
     {
-        return description;
+        return code;
     }
 
-    public void setDescription(String description)
+
+    public String getI18nKey()
     {
-        this.description = description;
+        return i18nKey;
     }
+
+    public static ClockModeType getByCode(int code)
+    {
+        if (codeMapping.containsKey(code))
+        {
+            return codeMapping.get(code);
+        }
+        else
+        {
+            return ClockModeType.ClockMode12Hour;
+        }
+    }
+
 
 }

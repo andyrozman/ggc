@@ -1,8 +1,9 @@
 package ggc.plugin.device.impl.animas.data;
 
-import ggc.plugin.data.DeviceValuesWriter;
+import com.atech.utils.data.ATechDate;
 import ggc.plugin.data.enums.ClockModeType;
 import ggc.plugin.data.enums.GlucoseUnitType;
+import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.impl.animas.comm.AnimasCommProtocolAbstract;
 import ggc.plugin.device.impl.animas.data.dto.PumpConnectorInfo;
 import ggc.plugin.device.impl.animas.data.dto.PumpInfo;
@@ -13,7 +14,6 @@ import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
 
 import java.util.HashMap;
 
-import ggc.plugin.output.OutputWriter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -54,8 +54,7 @@ public abstract class AnimasDeviceData
     protected AnimasTransferType transferType;
     protected HashMap<String, String> concurrentOperation = new HashMap<String, String>();
     public PumpInfo pumpInfo;
-    //protected DeviceValuesWriter dvw = null;
-    protected boolean debugDataSaving = true;
+    protected boolean debugDataSaving = false;
     protected AnimasDataWriter animasDeviceDataWriter;
     protected HashMap<AnimasDataType, AnimasDataType> dataReceived = new HashMap<AnimasDataType, AnimasDataType>();
 
@@ -65,14 +64,14 @@ public abstract class AnimasDeviceData
         pumpConnectorInfo = new PumpConnectorInfo();
         pumpInfo = new PumpInfo();
         animasDeviceDataWriter = writer;
-
-        //this.dvw = writer.getDeviceValuesWriter();
     }
+
 
     public AnimasCommProtocolAbstract getPumpCommunicationInterface()
     {
         return pumpCommunicationInterface;
     }
+
 
     public void setPumpCommunicationInterface(AnimasCommProtocolAbstract pumpCommunicationInterface)
     {
@@ -92,16 +91,22 @@ public abstract class AnimasDeviceData
     {
         this.pumpInfo.serialNumber = serialNumber;
         debug("Serial Number: " + serialNumber);
+        loadSerialNumberIntoLocalSettings();
     }
 
     public void setBgUnit(boolean isMmolL)
     {
         this.pumpInfo.glucoseUnitType = isMmolL ? GlucoseUnitType.mmol_L : GlucoseUnitType.mg_dL;
-        debug("bg Unit: " + this.pumpInfo.glucoseUnitType.getDescription());
+        debug("bg Unit: " + this.pumpInfo.glucoseUnitType.getTranslation());
         loadBgUnitIntoLocalSettings();
     }
 
     protected abstract void loadBgUnitIntoLocalSettings();
+
+    protected abstract void loadSerialNumberIntoLocalSettings();
+
+    protected abstract void loadClockModeIntoLocalSettings();
+
 
     public boolean isModel1200()
     {
@@ -223,27 +228,27 @@ public abstract class AnimasDeviceData
     {
         for (AnimasPreparedDataEntry apde : animasDevicePacket.preparedData)
         {
-            if (apde.value != null)
-            {
-                this.animasDeviceDataWriter.getDeviceValuesWriter().writeObject(apde.key, apde.dateTime, apde.value);
-            }
-            else
-            {
-                this.animasDeviceDataWriter.getDeviceValuesWriter().writeObject(apde.key, apde.dateTime, null);
-            }
+            writeData(apde.key, apde.dateTime, apde.value);
         }
     }
 
+    public void writeData(String key, ATechDate dateTime, String value)
+    {
+        this.animasDeviceDataWriter.getDeviceValuesWriter().writeObject(key, dateTime, value);
+    }
+
+    public AnimasDataWriter getDataWriter()
+    {
+        return this.animasDeviceDataWriter;
+    }
 
     public void setClockMode(short clockMode)
     {
-        // FIXME
-        LOG.error("clock mode: " + clockMode);
-
-        ClockModeType cmt = ClockModeType.getEnum(clockMode);
-        LOG.warn("setClockMode: " + cmt.name());
+        ClockModeType cmt = ClockModeType.getByCode(clockMode);
+        debug("setClockMode: " + cmt.name());
 
         this.pumpInfo.clockMode = cmt;
+        loadClockModeIntoLocalSettings();
     }
 
 
@@ -253,6 +258,33 @@ public abstract class AnimasDeviceData
     public abstract void postProcessReceivedData(AnimasDevicePacket adp);
 
 
-    public abstract void writeSettings(OutputWriter outputWritter);
+    public abstract void writeSettings(AnimasDataType outputWritter);
+
+
+    public void setSoftwareCode(String swCode)
+    {
+        this.pumpInfo.softwareCode = swCode;
+        loadSoftwareCodeIntoLocalSettings();
+    }
+
+
+    protected abstract void loadSoftwareCodeIntoLocalSettings();
+
+
+    public void writeIdentification()
+    {
+        DeviceIdentification di = this.animasDeviceDataWriter.getOutputWriter().getDeviceIdentification();
+
+        if (di==null)
+            return;
+
+        di.company = "Animas/One Touch";
+        di.device_selected = "Vibe";
+
+        di.device_serial_number = this.pumpInfo.serialNumber;
+        di.device_software_version = this.pumpInfo.softwareCode;
+
+        this.animasDeviceDataWriter.getOutputWriter().writeDeviceIdentification();
+    }
 
 }

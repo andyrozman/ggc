@@ -122,19 +122,21 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
      */
     public void init()
     {
+        ATSwingUtils.initLibrary();
+
         tbr_cmp = new TemporaryBasalRateComponent();
         this.add(tbr_cmp);
         label_1 = new JLabel();
-        label_1.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
+        label_1.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         this.add(label_1);
         label_2 = new JLabel();
-        label_2.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
+        label_2.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         this.add(label_2);
         label_3 = new JLabel();
-        label_3.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
+        label_3.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         this.add(label_3);
         label_4 = new JLabel();
-        label_4.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
+        label_4.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         this.add(label_4);
         text_1 = new JTextField();
         this.add(text_1);
@@ -1323,7 +1325,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         {
             label_1_1 = new JLabel(ic.getMessage("PROFILE") + ":");
             label_1_1.setBounds(0, 0, 140, 25);
-            label_1_1.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
+            label_1_1.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
             this.add(label_1_1);
 
             label_2_1 = new JLabel(ic.getMessage("NOT_SELECTED"));
@@ -1568,7 +1570,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         {
             label_1_1 = new JLabel(ic.getMessage("TEMPORARY_BASAL_RATE_SHORT") + ":");
             label_1_1.setBounds(0, 0, 140, 25);
-            label_1_1.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD));
+            label_1_1.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
             this.add(label_1_1);
 
             cb_sign = new JComboBox(vals);

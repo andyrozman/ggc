@@ -75,17 +75,13 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     private DataAccessPump m_da = DataAccessPump.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     JLabel label_title = new JLabel();
-    Font f_normal = m_da.getFont(DataAccessPump.FONT_NORMAL);
-    Font f_bold = m_da.getFont(DataAccessPump.FONT_NORMAL);
 
     boolean debug = true;
     JButton help_button = null;
     JPanel main_panel = null;
     private Container m_parent = null;
 
-    //private int pumpAdditionalDataTypeId = 0;
-
-    JLabel label_1, label_2;
+    JLabel label_1;
     JTextField text_1;
     JDecimalTextField num_1, num_2;
     JSpinner spin_1, spin_2;
@@ -259,13 +255,15 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     private void init()
     {
+        ATSwingUtils.initLibrary();
+
         width = 380;
         int height = 310;
 
         this.setSize(width, height);
 
         m_da.addComponent(this);
-        this.m_da.centerJDialog(this, this.m_parent);
+        ATSwingUtils.centerJDialog(this, this.m_parent);
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, width, height);
@@ -308,7 +306,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
             if (button_icon[k] != null)
             {
-                button.setIcon(m_da.getImageIcon_22x22(button_icon[k], this));
+                button.setIcon(ATSwingUtils.getImageIcon_22x22(button_icon[k], this, m_da));
             }
 
             if (button_coord[i + 3] == 0)
@@ -326,7 +324,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             }
         }
 
-        help_button = m_da.createHelpButtonByBounds(startx + 140, 195, 120, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(startx + 140, 195, 120, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
 
         m_da.enableHelp(this);
@@ -734,7 +732,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             }
 
             // System.out.println("focus lost: bg2");
-            int val = m_da.getJFormatedTextValueInt(this.num_1);
+            int val = ATSwingUtils.getJFormatedTextValueInt(this.num_1);
 
             // System.out.println("Bg Conv: ")
 
@@ -755,7 +753,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             }
 
             // System.out.println("focus lost: bg2");
-            float val = m_da.getJFormatedTextValueFloat(this.num_2);
+            float val = ATSwingUtils.getJFormatedTextValueFloat(this.num_2);
             int v_2 = (int) m_da.getBGConverter().getValueByType(DataAccessPlugInBase.BG_MMOL,
                 DataAccessPlugInBase.BG_MGDL, val);
             // int v_2 = (int) dataAccess.getBGValueDifferent(DataAccessPump.BG_MMOL,

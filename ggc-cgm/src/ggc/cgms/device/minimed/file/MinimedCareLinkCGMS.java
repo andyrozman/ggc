@@ -386,7 +386,7 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
             new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.DeviceAlarm));
 
         this.dvw.put("BGTherasense", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.MeterCalibration));
+                CGMSBaseDataType.SensorCalibration));
 
         this.dvw.put("SensorWeakSignal", new CGMSTempValues(CGMSObject.SubEntry,
                 CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorWeakSignal));

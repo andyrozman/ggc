@@ -106,7 +106,7 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
     protected InputStream portInputStream = null;
     protected String port_name = null;
 
-    protected long startTime = System.currentTimeMillis();
+    //protected long startTime = System.currentTimeMillis();
     protected long timeOut = 500000000;
 
     int baudrate;
@@ -991,9 +991,9 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
      * 
      * @return id of connection protocol (see ConnectionProtocols)
      */
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL;
+        return DeviceConnectionProtocol.BlueTooth_Serial;
     }
 
 }

@@ -7,7 +7,7 @@ import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.util.DataAccessPlugInBase;
-import ggc.pump.data.PumpDeviceValueType;
+import ggc.pump.data.defs.PumpDeviceValueType;
 import ggc.pump.data.PumpValuesHour;
 import ggc.pump.data.PumpValuesHourProcessor;
 import ggc.pump.data.db.GGCPumpDb;

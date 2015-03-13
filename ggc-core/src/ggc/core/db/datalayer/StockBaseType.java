@@ -1,6 +1,7 @@
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.StockTypeH;
+import ggc.core.db.hibernate.StockSubTypeH;
+
 
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
-public class StockBaseType extends StockTypeH implements SelectableInterface, DatabaseObjectHibernate,
+public class StockBaseType extends StockSubTypeH implements SelectableInterface, DatabaseObjectHibernate,
         BackupRestoreObject
 {
 
@@ -20,11 +21,11 @@ public class StockBaseType extends StockTypeH implements SelectableInterface, Da
     {
     }
 
-    public StockBaseType(StockTypeH sth)
+    public StockBaseType(StockSubTypeH sth)
     {
-        this.setId(sth.getId());
-        this.setName(sth.getName());
-        this.setName_i18n(sth.getName_i18n());
+//        this.setId(sth.getId());
+//        this.setName(sth.getName());
+//        this.setName_i18n(sth.getName_i18n());
     }
 
     public boolean isCollection()

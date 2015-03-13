@@ -148,9 +148,9 @@ public abstract class AbstractXmlMeter extends XmlProtocol implements MeterInter
      * 
      * @return
      */
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_FROM_DEVICE;
+        return DownloadSupportType.DownloadData;
     }
 
     /**

@@ -1,30 +1,6 @@
 package ggc.gui;
 
-import ggc.GGC;
-import ggc.core.data.graph.GraphViewCourse;
-import ggc.core.data.graph.GraphViewSpread;
-import ggc.core.db.GGCDbLoader;
-import ggc.core.db.tool.transfer.BackupDialog;
-import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
-import ggc.core.plugins.GGCPluginType;
-import ggc.core.util.DataAccess;
-import ggc.core.util.RefreshInfo;
-import ggc.gui.dialogs.AboutGGCDialog;
-import ggc.gui.dialogs.AppointmentsDialog;
-import ggc.gui.dialogs.DailyStatsDialog;
-import ggc.gui.dialogs.DoctorsDialog;
-import ggc.gui.dialogs.HbA1cDialog;
-import ggc.gui.dialogs.PrintingDialog;
-import ggc.gui.dialogs.PropertiesDialog;
-import ggc.gui.dialogs.defs.StockListDef;
-import ggc.gui.panels.info.InfoPanel;
-import ggc.shared.ratio.RatioBaseDialog;
-import ggc.shared.ratio.RatioExtendedDialog;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Event;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -40,20 +16,7 @@ import javax.help.CSH;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.help.HelpSetException;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -64,8 +27,24 @@ import com.atech.help.HelpContext;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.plugin.PlugInClient;
-import com.atech.update.client.UpdateDialog;
+import com.atech.update.client.v3.UpdateDialogV3;
+import com.atech.utils.ATSwingUtils;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
+
+import ggc.GGC;
+import ggc.core.data.graph.GraphViewCourse;
+import ggc.core.data.graph.GraphViewSpread;
+import ggc.core.db.GGCDbLoader;
+import ggc.core.db.tool.transfer.BackupDialog;
+import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
+import ggc.core.plugins.GGCPluginType;
+import ggc.core.util.DataAccess;
+import ggc.core.util.RefreshInfo;
+import ggc.gui.dialogs.*;
+import ggc.gui.dialogs.stock.def.StockListDef;
+import ggc.gui.panels.info.InfoPanel;
+import ggc.shared.ratio.RatioBaseDialog;
+import ggc.shared.ratio.RatioExtendedDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -155,6 +134,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         MainFrame.setLookAndFeel();
     }
 
+
     /**
      * Set Look & Feel
      */
@@ -192,6 +172,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         }
 
     }
+
 
     /**
      * Constructor
@@ -231,7 +212,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         setTitle(title_full);
 
-        this.setIconImage(m_da.getImageIcon_22x22("diabetesbluecircle.png", this).getImage());
+        this.setIconImage(ATSwingUtils.getImageIcon_22x22("diabetesbluecircle.png", this, m_da).getImage());
 
         setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -245,8 +226,6 @@ public class MainFrame extends JFrame implements EventObserverInterface
         // menu_tools, menu_help;
 
         // setTitle("");
-
-
 
         createMenus();
 
@@ -293,12 +272,13 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     }
 
+
     private void setSoftwareMode()
     {
         // System.out.println("SW: " + dataAccess.getSoftwareMode());
 
-        //if (dataAccess.getSoftwareMode() == -1)
-        //    return;
+        // if (dataAccess.getSoftwareMode() == -1)
+        // return;
 
         String title_full = "  GGC - GNU Gluco Control (" + GGC.full_version + ")";
 
@@ -333,6 +313,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     }
 
+
     /**
      * Get Software Mode
      * 
@@ -343,13 +324,16 @@ public class MainFrame extends JFrame implements EventObserverInterface
         return " [" + m_ic.getMessage(m_da.getSoftwareModeDescription()) + "]";
     }
 
+
     /*
      * private void initPlugIns()
      * {
      * // TODO: deprecated
-     * dataAccess.addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this, m_ic));
+     * dataAccess.addPlugIn(DataAccess.PLUGIN_METERS, new MetersPlugIn(this,
+     * m_ic));
      * // dataAccess.getPlugIn(DataAccess.PLUGIN_METERS).checkIfInstalled();
-     * dataAccess.addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this, m_ic));
+     * dataAccess.addPlugIn(DataAccess.PLUGIN_PUMPS, new PumpsPlugIn(this,
+     * m_ic));
      * // dataAccess.getPlugIn(DataAccess.PLUGIN_PUMPS).checkIfInstalled();
      * dataAccess.addPlugIn(DataAccess.PLUGIN_CGMS, new CGMSPlugIn(this, m_ic));
      * // dataAccess.getPlugIn(DataAccess.PLUGIN_CGMS).checkIfInstalled();
@@ -441,12 +425,14 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     }
 
+
     private void createToolBars()
     {
         this.toolbars = new Hashtable<String, JToolBar>();
         createToolBar_PenInjection();
         createToolBar_Pump();
     }
+
 
     private void createToolBar_PenInjection()
     {
@@ -496,6 +482,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.toolbars.put("TOOLBAR_PEN", toolbar);
 
     }
+
 
     private void createToolBar_Pump()
     {
@@ -557,7 +544,8 @@ public class MainFrame extends JFrame implements EventObserverInterface
     {
         log.debug("JavaHelp - START");
 
-        //System.out.println("Help. Selected language: " + dataAccess.getLanguageManager().getSelectedLanguage());
+        // System.out.println("Help. Selected language: " +
+        // dataAccess.getLanguageManager().getSelectedLanguage());
 
         HelpContext hc = m_da.getHelpContext();
 
@@ -567,7 +555,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         helpItem.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
         hc.setHelpItem(helpItem);
 
-        String mainHelpSetName = "/" +  m_da.getLanguageManager().getHelpSet();
+        String mainHelpSetName = "/" + m_da.getLanguageManager().getHelpSet();
 
         log.debug("JavaHelp - MainHelpSetName: " + mainHelpSetName);
 
@@ -601,7 +589,8 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
             if (main_help_broker != null)
             {
-                // CSH.DisplayHelpFromSource is a convenience class to display the helpset
+                // CSH.DisplayHelpFromSource is a convenience class to display
+                // the helpset
                 csh = new CSH.DisplayHelpFromSource(main_help_broker);
 
                 if (csh != null)
@@ -622,7 +611,6 @@ public class MainFrame extends JFrame implements EventObserverInterface
     }
 
 
-
     private void helpInit_Old()
     {
         // HelpContext hc = new HelpContext("../data/help/GGC.hs");
@@ -638,7 +626,8 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         // String selected_language =
         // dataAccess.getLanguageManager().getSelectedLanguage();
-        // String defaultHelp = dataAccess.getLanguageManager().getDefaultHelp();
+        // String defaultHelp =
+        // dataAccess.getLanguageManager().getDefaultHelp();
 
         HelpContext hc = m_da.getHelpContext();
 
@@ -727,6 +716,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     }
 
+
     /**
      * Get this as parent
      * 
@@ -737,6 +727,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         return this;
     }
 
+
     /**
      * Invalidate panels
      */
@@ -745,6 +736,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         this.informationPanel.invalidatePanelsConstants();
     }
 
+
     /**
      * Refresh panels
      */
@@ -752,6 +744,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
     {
         this.informationPanel.refreshPanels();
     }
+
 
     private JMenu createMenu(String name, String tool_tip)
     {
@@ -769,6 +762,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         return item;
     }
+
 
     private JMenu createMenu(JMenu parent, String name, String tool_tip)
     {
@@ -795,13 +789,14 @@ public class MainFrame extends JFrame implements EventObserverInterface
      */
     public static final int TOOLBAR_PUMP = 2;
 
+
     private void createToolbarAction(String name, String tip, String action_command, String icon_small, int toolbar_id)
     {
         GGCAction action = new GGCAction(name, tip, action_command);
 
         if (icon_small != null)
         {
-            action.putValue(Action.SMALL_ICON, m_da.getImageIcon(icon_small, 24, 24, this));
+            action.putValue(Action.SMALL_ICON, ATSwingUtils.getImageIcon(icon_small, 24, 24, this, m_da));
         }
 
         if (toolbar_id == MainFrame.TOOLBAR_PEN_INJECTION)
@@ -817,13 +812,14 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     }
 
+
     private void createAction(JMenu menu, String name, String tip, String action_command, String icon_small)
     {
         GGCAction action = new GGCAction(name, tip, action_command);
 
         if (icon_small != null)
         {
-            action.putValue(Action.SMALL_ICON, m_da.getImageIcon(icon_small, 15, 15, this));
+            action.putValue(Action.SMALL_ICON, ATSwingUtils.getImageIcon(icon_small, 15, 15, this, m_da));
             // new ImageIcon(getClass().getResource("/icons/" + icon_small)));
             // action.putValue(Action.LARGE_ICON_KEY, new
             // ImageIcon(getClass().getResource("/icons/" + icon_small)));
@@ -838,6 +834,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         // return action;
     }
+
 
     /**
      * Set menus by Db Loading status
@@ -938,6 +935,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         setToolbarByDbLoad(status);
     }
 
+
     /**
      * Set Toolbar by Db Load
      * 
@@ -986,6 +984,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     }
 
+
     private void setToolBarItemEnabled(String item_name, boolean enabled)
     {
         if (this.toolbar_pump_items.containsKey(item_name))
@@ -999,6 +998,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         }
 
     }
+
 
     /*
      * public void setDbActions(boolean opened) {
@@ -1043,12 +1043,13 @@ public class MainFrame extends JFrame implements EventObserverInterface
         System.exit(0);
     }
 
+
     /*
      * private JMenuItem addMenuItem(JMenu menu, Action action) { JMenuItem item
      * = menu.add(action);
-     * //System.out.println(action.getValue(Action.ACCELERATOR_KEY));
+     * //System.out.println(action.getCode(Action.ACCELERATOR_KEY));
      * KeyStroke keystroke = (KeyStroke)
-     * action.getValue(Action.ACCELERATOR_KEY); if (keystroke != null)
+     * action.getCode(Action.ACCELERATOR_KEY); if (keystroke != null)
      * item.setAccelerator(keystroke);
      * return item; }
      */
@@ -1090,6 +1091,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
          */
         private static final long serialVersionUID = -1022459758999093522L;
 
+
         GGCAction(String name, String command)
         {
             super();
@@ -1114,6 +1116,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
             command = name;
         }
+
 
         GGCAction(String name, String tooltip, String command)
         {
@@ -1151,12 +1154,14 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
         }
 
+
         public String getName()
         {
             return (String) getValue(Action.NAME);
         }
 
         String next_version = "0.6";
+
 
         public void actionPerformed(ActionEvent e)
         {
@@ -1220,7 +1225,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             }
             else if (command.equals("hlp_check_update"))
             {
-                UpdateDialog ud = new UpdateDialog(MainFrame.this, m_da);
+                UpdateDialogV3 ud = new UpdateDialogV3(MainFrame.this, m_da);
                 ud.enableHelp("GGC_Tools_Update");
                 ud.showDialog();
             }
@@ -1336,19 +1341,19 @@ public class MainFrame extends JFrame implements EventObserverInterface
                 }
                 else
                 {
-                    featureNotImplemented(command, "0.6");
+                    featureNotImplemented(command, "0.7");
                 }
 
             }
             else // if ((command.equals("report_pdf_extended")) ||
             if (command.equals("file_login") || command.equals("report_foodmenu_ext3") || command.equals("file_logout"))
             {
-                featureNotImplemented(command, "0.6");
+                featureNotImplemented(command, "0.7");
             }
             else if (command.equals("misc_synchronize")) // ||
             // (command.equals("doc_stocks")))
             {
-                featureNotImplemented(command, "0.6");
+                featureNotImplemented(command, "0.7");
             }
             else if (command.equals("doc_stocks"))
             {
@@ -1396,7 +1401,8 @@ public class MainFrame extends JFrame implements EventObserverInterface
                 // ImportDacioDb("../data/temp/zivila.csv", true); //args[
                 // idb.convertFoods();
                 /*
-                 * DayValuesData dvd = dataAccess.getDb().getDayValuesData(20081001,
+                 * DayValuesData dvd =
+                 * dataAccess.getDb().getDayValuesData(20081001,
                  * 20091007); // .getMonthlyValues(yr,
                  * // mnth);
                  * PrintFoodMenuExt2 psm = new PrintFoodMenuExt2(dvd);
@@ -1432,6 +1438,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
         }
     }
 
+
     private void featureNotImplemented(String cmd, String version)
     {
         String text = m_ic.getMessage("FEATURE");
@@ -1444,6 +1451,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
             JOptionPane.INFORMATION_MESSAGE);
 
     }
+
 
     private void featureNotImplementedDescription(String desc, String version)
     {
@@ -1460,12 +1468,14 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     private class CloseListener extends WindowAdapter
     {
+
         @Override
         public void windowClosing(WindowEvent e)
         {
             close();
         }
     }
+
 
     /**
      * To String
@@ -1479,6 +1489,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
     }
 
     boolean title_set = false;
+
 
     /**
      * Update
@@ -1516,10 +1527,12 @@ public class MainFrame extends JFrame implements EventObserverInterface
         }
     }
 
+
     private void refreshMenus()
     {
         refreshMenus(true);
     }
+
 
     private void refreshMenus(boolean refresh_init)
     {
@@ -1564,7 +1577,8 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
         this.menuBar.add(this.menus.get("MENU_PRINT"));
 
-        GGCPluginType[] keys = { GGCPluginType.MeterToolPlugin, GGCPluginType.PumpToolPlugin, GGCPluginType.CGMSToolPlugin, };
+        GGCPluginType[] keys = { GGCPluginType.MeterToolPlugin, GGCPluginType.PumpToolPlugin,
+                                GGCPluginType.CGMSToolPlugin, };
 
         for (GGCPluginType key : keys)
         {
@@ -1586,6 +1600,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
 
     }
 
+
     /**
      * This refresh is used when configuration of plugin changes
      */
@@ -1593,6 +1608,7 @@ public class MainFrame extends JFrame implements EventObserverInterface
     {
         this.refreshMenus(false);
     }
+
 
     private JMenu getPlugInMenu(GGCPluginType name)
     {

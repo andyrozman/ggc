@@ -1,5 +1,6 @@
 package ggc.cgms.data;
 
+import ggc.plugin.data.DeviceValueConfigEntry;
 import ggc.plugin.output.OutputWriterConfigData;
 
 /**
@@ -28,7 +29,7 @@ import ggc.plugin.output.OutputWriterConfigData;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class CGMSValueConfig implements OutputWriterConfigData
+public class CGMSValueConfig extends DeviceValueConfigEntry
 {
 
     String key;

@@ -112,6 +112,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
 
     private void init()
     {
+        ATSwingUtils.initLibrary();
 
         // FIXME
         // dataAccess.enableHelp(this);
@@ -137,7 +138,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
 
         this.getContentPane().add(panel);
 
-        label_title.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label_title.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label_title.setHorizontalAlignment(SwingConstants.CENTER);
         label_title.setBounds(0, 15, width, 35);
         label_title.setText(m_ic.getMessage("PROFILE_BASAL_ENTRY"));
@@ -172,7 +173,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 140, 200, 100, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
 
-        this.help_button = this.m_da.createHelpButtonByBounds(250, 200, 100, 25, this);
+        this.help_button = ATSwingUtils.createHelpButtonByBounds(250, 200, 100, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(this.help_button);
 
         m_da.enableHelp(this);

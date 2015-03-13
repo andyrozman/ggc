@@ -1,6 +1,10 @@
 package ggc.plugin.cfg;
 
+import com.atech.utils.data.TimeZoneUtil;
+import ggc.plugin.data.enums.DevicePortParameterType;
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.v2.DeviceInstanceWithHandler;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Component;
@@ -10,7 +14,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -25,11 +28,12 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -63,13 +67,14 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     private static final long serialVersionUID = -947278207985014744L;
 
+    private static final Log LOG = LogFactory.getLog(DeviceConfigurationDialog.class);
     private I18nControlAbstract m_ic = null; // I18nControl.getInstance();
     private DataAccessPlugInBase m_da; // = DataAccessMeter.getInstance();
 
     // private JPanel prefPane;
 
-    protected static Vector<String> time_zones_vector = null;
-    protected static Hashtable<String, String> time_zones = null;
+    //protected static Vector<String> time_zones_vector = null;
+    //protected static Hashtable<String, String> time_zones = null;
     JComboBox cb_timezone, cb_winter_fix, cb_summer_fix;
     JComboBox cb_entry;
     JCheckBox chb_fix;
@@ -85,13 +90,21 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     // DeviceConfiguration dev_config = null;
 
     DeviceConfigurationDefinition dcd = null;
-    DeviceInterface current_device = null;
     Hashtable<String, DeviceConfigEntry> data;
     DeviceConfigEntry current_entry;
     int current_index = 0;
     String current_index_object = "";
     String first_selected = "";
     CommunicationSettingsPanel comm_settings;
+
+    DeviceInterface currentDeviceV1 = null;
+    DeviceInstanceWithHandler currentDeviceV2 = null;
+
+    TimeZoneUtil timeZoneUtil = TimeZoneUtil.getInstance();
+
+//    DeviceInterface current_device = null;
+
+
 
     /**
      * Constructor
@@ -110,12 +123,12 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         m_da.addComponent(this);
 
         setTitle(String.format(m_ic.getMessage("DEVICE_CONFIGURATION"), m_ic.getMessage("DEVICE_NAME_BIG")));
-        m_da.centerJDialog(this, m_da.getCurrentComponentParent());
+        ATSwingUtils.centerJDialog(this, m_da.getCurrentComponentParent());
 
-        if (DeviceConfigurationDialog.time_zones_vector == null)
-        {
-            this.loadTimeZones();
-        }
+//        if (DeviceConfigurationDialog.time_zones_vector == null)
+//        {
+//            this.loadTimeZones();
+//        }
 
         ATSwingUtils.initLibrary();
 
@@ -124,7 +137,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         init();
 
         this.setResizable(false);
-        this.m_da.centerJDialog(this, parent);
+        ATSwingUtils.centerJDialog(this, parent);
 
         this.setVisible(true);
     }
@@ -174,7 +187,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     private void resetEntry()
     {
-        this.current_device = null;
+        this.currentDeviceV1 = null;
+        this.currentDeviceV2 = null;
 
         showDevice();
 
@@ -295,6 +309,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         if (this.dcd.doesDeviceSupportTimeFix())
         {
 
+
+
             // timezone fix panel
             pan_tzfix = ATSwingUtils.getPanel(20, start_y, 410, 200, null,
                 new TitledBorder(m_ic.getMessage("TIMEZONE_CONFIGURATION")), main_panel);
@@ -302,7 +318,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             ATSwingUtils.getLabel(m_ic.getMessage("SELECT_TIMEZONE_LIST") + ":", 25, 25, 450, 25, pan_tzfix,
                 ATSwingUtils.FONT_NORMAL_BOLD);
 
-            cb_timezone = ATSwingUtils.getComboBox(DeviceConfigurationDialog.time_zones_vector, 25, 50, 370, 25,
+            cb_timezone = ATSwingUtils.getComboBox(this.timeZoneUtil.getTimezonesAsVector(), 25, 50, 370, 25,
                 pan_tzfix, ATSwingUtils.FONT_NORMAL);
 
             chb_fix = ATSwingUtils.getCheckBox("  " + m_ic.getMessage("NEED_DAYLIGHTSAVING_FIX"), 25, 90, 380, 25,
@@ -340,13 +356,13 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         buttons[1] = ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 170, start_y + 10, 110, 25, main_panel,
             ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
 
-        help_button = m_da.createHelpButtonByBounds(290, start_y + 10, 110, 25, this, ATSwingUtils.FONT_NORMAL); // ATDataAccessAbstract.FONT_NORMAL);
+        help_button = ATSwingUtils.createHelpButtonByBounds(290, start_y + 10, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da.getImagesRoot(), m_ic); // ATDataAccessAbstract.FONT_NORMAL);
         main_panel.add(help_button);
         buttons[2] = help_button;
 
         // this.cb_entry.setSelectedItem(this.first_selected);
 
-        this.comm_settings.setProtocol(0);
+        this.comm_settings.setProtocol(DeviceConnectionProtocol.None);
         // comm_port_comp.setProtocol(0);
         current_index = this.cb_entry.getSelectedIndex();
         this.current_index_object = (String) this.cb_entry.getSelectedItem();
@@ -374,12 +390,19 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     {
         int start_y = 275;
 
-        System.out.println("this.current_device: " + this.current_device);
+        //System.out.println("this.current_device: " + this.current_device);
 
-        if (this.current_device != null
-                && (this.current_device.hasDefaultParameter() || this.current_device.hasSpecialConfig()))
+        if (this.currentDeviceV1 != null
+                && (this.currentDeviceV1.hasDefaultParameter() || this.currentDeviceV1.hasSpecialConfig()))
         {
-            this.comm_settings.setCurrentDevice(this.current_device);
+            this.comm_settings.setCurrentDevice(this.currentDeviceV1);
+            start_y += comm_settings.getHeight(); // .getBounds().height;
+            this.comm_settings.setVisible(true);
+        }
+        else if (this.currentDeviceV2 != null
+                && (this.currentDeviceV2.getDevicePortParameterType()== DevicePortParameterType.SimpleParameter || this.currentDeviceV2.hasSpecialConfig()))
+        {
+            this.comm_settings.setCurrentDevice(this.currentDeviceV2);
             start_y += comm_settings.getHeight(); // .getBounds().height;
             this.comm_settings.setVisible(true);
         }
@@ -406,21 +429,21 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     private void showDevice()
     {
-        if (this.current_device == null)
+        if ((this.currentDeviceV1 == null) && (this.currentDeviceV2==null))
         {
             // System.out.println("current device: " + this.current_device);
             this.lbl_company.setText(m_ic.getMessage("NO_COMPANY_SELECTED"));
             this.lbl_device.setText(m_ic.getMessage("NO_DEVICE_SELECTED"));
             // this.comm_port_comp.setProtocol(0);
-            this.comm_settings.setProtocol(0);
+            this.comm_settings.setProtocol(DeviceConnectionProtocol.None);
             this.comm_settings.setParameters(null);
 
             this.refreshCommunicationSettings();
         }
         else
         {
-            this.lbl_company.setText(this.current_device.getColumnValue(1));
-            this.lbl_device.setText(this.current_device.getColumnValue(2));
+            this.lbl_company.setText(getParameterValue(1));
+            this.lbl_device.setText(getParameterValue(2));
             // this.comm_port_comp.setProtocol(this.current_device.getConnectionProtocol());
             // System.out.println("current device: " + this.current_device);
 
@@ -428,7 +451,15 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
             if (this.comm_settings != null)
             {
-                this.comm_settings.setCurrentDevice(this.current_device);
+
+                if (this.currentDeviceV1!=null)
+                {
+                    this.comm_settings.setCurrentDevice(this.currentDeviceV1);
+                }
+                else
+                {
+                    this.comm_settings.setCurrentDevice(this.currentDeviceV2);
+                }
 
                 if (this.current_entry != null)
                 {
@@ -445,7 +476,24 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
         }
 
+
     }
+
+    private static final int PARAMETER_COMPANY = 1;
+    private static final int PARAMETER_DEVICE_NAME = 2;
+
+    private String getParameterValue(int parameter)
+    {
+        if (this.currentDeviceV2!=null)
+        {
+            return this.currentDeviceV2.getColumnValue(parameter);
+        }
+        else
+        {
+            return this.currentDeviceV1.getColumnValue(parameter);
+        }
+    }
+
 
     // ---
     // --- End
@@ -473,7 +521,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         if (action.equals("ok"))
         {
 
-            if (this.current_device == null || !this.comm_settings.areParametersSet())
+            if ((this.currentDeviceV1 == null && this.currentDeviceV2 == null) || !this.comm_settings.areParametersSet())
             {
                 JOptionPane.showMessageDialog(this, m_ic.getMessage("CONFIG_ERROR_NO_DEVICE_OR_PARAMETERS"),
                     m_ic.getMessage("WARNING"), JOptionPane.ERROR_MESSAGE);
@@ -499,19 +547,36 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
             if (dsd.wasAction())
             {
-                this.current_device = (DeviceInterface) dsd.getSelectedObject();
+                setSelectedDeviceFromObject(dsd.getSelectedObject());
+
+                //this.current_device = (DeviceInterface) dsd.getSelectedObject();
                 this.current_entry = new DeviceConfigEntry(m_ic);
                 this.refreshCommunicationSettings();
                 this.comm_settings.setParameters(null);
+
+                System.out.println("Device V1 " + currentDeviceV1 + ", Device V2 " + currentDeviceV2);
+
                 showDevice();
             }
 
         }
         else
         {
-            System.out.println("DeviceConfigurationDialog: Unknown command: " + action);
+            LOG.error("DeviceConfigurationDialog: Unknown command: " + action);
         }
 
+    }
+
+    private void setSelectedDeviceFromObject(Object selected)
+    {
+        if (selected instanceof DeviceInstanceWithHandler)
+        {
+            this.currentDeviceV2 = (DeviceInstanceWithHandler)selected;
+        }
+        else
+        {
+            this.currentDeviceV1 = (DeviceInterface)selected;
+        }
     }
 
     /*
@@ -547,113 +612,13 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         enableDisableFix(this.chb_fix.isSelected());
     }
 
-    /**
-     * Load Time Zones
-     */
-    public void loadTimeZones()
-    {
-        DeviceConfigurationDialog.time_zones = new Hashtable<String, String>();
-        DeviceConfigurationDialog.time_zones_vector = new Vector<String>();
-
-        // Posible needed enchancment. We should probably list all ID's as
-        // values. On windows default ID can be different
-        // as in this table. We should add this names, if we encounter problems.
-
-        addTimeZoneEntry("(GMT+13:00) Nuku'alofa", "Pacific/Tongatapu");
-        addTimeZoneEntry("(GMT+12:00) Fiji, Kamchatka, Marshall Is.", "Pacific/Fiji");
-        addTimeZoneEntry("(GMT+12:00) Auckland, Wellington", "Pacific/Auckland");
-        addTimeZoneEntry("(GMT+11:00) Magadan, Solomon Is., New Caledonia", "Asia/Magadan");
-        addTimeZoneEntry("(GMT+10:00) Vladivostok", "Asia/Vladivostok");
-        addTimeZoneEntry("(GMT+10:00) Hobart", "Australia/Hobart");
-        addTimeZoneEntry("(GMT+10:00) Guam, Port Moresby", "Pacific/Guam");
-        addTimeZoneEntry("(GMT+10:00) Canberra, Melbourne, Sydney", "Australia/Sydney");
-        addTimeZoneEntry("(GMT+10:00) Brisbane", "Australia/Brisbane");
-        addTimeZoneEntry("(GMT+09:30) Adelaide", "Australia/Adelaide");
-        addTimeZoneEntry("(GMT+09:00) Yakutsk", "Asia/Yakutsk");
-        addTimeZoneEntry("(GMT+09:00) Seoul", "Asia/Seoul");
-        addTimeZoneEntry("(GMT+09:00) Osaka, Sapporo, Tokyo", "Asia/Tokyo");
-        addTimeZoneEntry("(GMT+08:00) Taipei", "Asia/Taipei");
-        addTimeZoneEntry("(GMT+08:00) Perth", "Australia/Perth");
-        addTimeZoneEntry("(GMT+08:00) Kuala Lumpur, Singapore", "Asia/Kuala_Lumpur");
-        addTimeZoneEntry("(GMT+08:00) Irkutsk, Ulaan Bataar", "Asia/Irkutsk");
-        addTimeZoneEntry("(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi", "Asia/Hong_Kong");
-        addTimeZoneEntry("(GMT+07:00) Krasnoyarsk", "Asia/Krasnoyarsk");
-        addTimeZoneEntry("(GMT+07:00) Bangkok, Hanoi, Jakarta", "Asia/Bangkok");
-        addTimeZoneEntry("(GMT+06:30) Rangoon", "Asia/Rangoon");
-        addTimeZoneEntry("(GMT+06:00) Sri Jayawardenepura", "Asia/Colombo");
-        addTimeZoneEntry("(GMT+06:00) Astana, Dhaka", "Asia/Dhaka");
-        addTimeZoneEntry("(GMT+06:00) Almaty, Novosibirsk", "Asia/Almaty");
-        addTimeZoneEntry("(GMT+05:45) Kathmandu", "Asia/Katmandu");
-        addTimeZoneEntry("(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi", "Asia/Calcutta");
-        addTimeZoneEntry("(GMT+05:00) Islamabad, Karachi, Tashkent", "Asia/Karachi");
-        addTimeZoneEntry("(GMT+05:00) Ekaterinburg", "Asia/Yekaterinburg");
-        addTimeZoneEntry("(GMT+04:30) Kabul", "Asia/Kabul");
-        addTimeZoneEntry("(GMT+04:00) Baku, Tbilisi, Yerevan", "Asia/Baku");
-        addTimeZoneEntry("(GMT+04:00) Abu Dhabi, Muscat", "Asia/Dubai");
-        addTimeZoneEntry("(GMT+03:30) Tehran", "Asia/Tehran");
-        addTimeZoneEntry("(GMT+03:00) Nairobi", "Africa/Nairobi");
-        addTimeZoneEntry("(GMT+03:00) Moscow, St. Petersburg, Volgograd", "Europe/Moscow");
-        addTimeZoneEntry("(GMT+03:00) Kuwait, Riyadh", "Asia/Kuwait");
-        addTimeZoneEntry("(GMT+03:00) Baghdad", "Asia/Baghdad");
-        addTimeZoneEntry("(GMT+02:00) Jerusalem", "Asia/Jerusalem");
-        addTimeZoneEntry("(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Europe/Helsinki");
-        addTimeZoneEntry("(GMT+02:00) Harare, Pretoria", "Africa/Harare");
-        addTimeZoneEntry("(GMT+02:00) Cairo", "Africa/Cairo");
-        addTimeZoneEntry("(GMT+02:00) Bucharest", "Europe/Bucharest");
-        addTimeZoneEntry("(GMT+02:00) Athens, Istanbul, Minsk", "Europe/Athens");
-        addTimeZoneEntry("(GMT+01:00) West Central Africa", "Africa/Lagos");
-        addTimeZoneEntry("(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb", "Europe/Warsaw");
-        addTimeZoneEntry("(GMT+01:00) Brussels, Copenhagen, Madrid, Paris", "Europe/Brussels");
-        addTimeZoneEntry("(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague", "Europe/Prague");
-        addTimeZoneEntry("(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna", "Europe/Amsterdam");
-        addTimeZoneEntry("(GMT) Casablanca, Monrovia", "Africa/Casablanca");
-        addTimeZoneEntry("(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London", "Europe/Dublin");
-        addTimeZoneEntry("(GMT-01:00) Azores", "Atlantic/Azores");
-        addTimeZoneEntry("(GMT-01:00) Cape Verde Is.", "Atlantic/Cape_Verde");
-        addTimeZoneEntry("(GMT-02:00) Mid-Atlantic", "Atlantic/South_Georgia");
-        addTimeZoneEntry("(GMT-03:00) Brasilia", "America/Sao_Paulo");
-        addTimeZoneEntry("(GMT-03:00) Buenos Aires, Georgetown", "America/Buenos_Aires");
-        addTimeZoneEntry("(GMT-03:00) Greenland", "America/Thule");
-        addTimeZoneEntry("(GMT-03:30) Newfoundland", "America/St_Johns");
-        addTimeZoneEntry("(GMT-04:00) Atlantic Time (Canada)", "America/Halifax");
-        addTimeZoneEntry("(GMT-04:00) Caracas, La Paz", "America/Caracas");
-        addTimeZoneEntry("(GMT-04:00) Santiago", "America/Santiago");
-        addTimeZoneEntry("(GMT-05:00) Bogota, Lima, Quito", "America/Bogota");
-        addTimeZoneEntry("(GMT-05:00) Eastern Time (US & Canada)", " America/New_York");
-        addTimeZoneEntry("(GMT-05:00) Indiana (East)", "America/Indianapolis");
-        addTimeZoneEntry("(GMT-06:00) Central America", "America/Costa_Rica");
-        addTimeZoneEntry("(GMT-06:00) Central Time (US & Canada)", "America/Chicago");
-        addTimeZoneEntry("(GMT-06:00) Guadalajara, Mexico City, Monterrey", "America/Mexico_City");
-        addTimeZoneEntry("(GMT-06:00) Saskatchewan", "America/Winnipeg");
-        addTimeZoneEntry("(GMT-07:00) Arizona", "America/Phoenix");
-        addTimeZoneEntry("(GMT-07:00) Chihuahua, La Paz, Mazatlan", "America/Tegucigalpa");
-        addTimeZoneEntry("(GMT-07:00) Mountain Time (US & Canada)", "America/Denver");
-        addTimeZoneEntry("(GMT-08:00) Pacific Time (US & Canada); Tijuana", "America/Los_Angeles");
-        addTimeZoneEntry("(GMT-09:00) Alaska", "America/Anchorage");
-        addTimeZoneEntry("(GMT-10:00) Hawaii", "Pacific/Honolulu");
-        addTimeZoneEntry("(GMT-11:00) Midway Island, Samoa", "Pacific/Apia");
-        addTimeZoneEntry("(GMT-12:00) International Date Line West", "MIT");
-
-    }
-
-    /**
-     * Add Time Zone Entry
-     * 
-     * @param long_desc
-     * @param keycode
-     */
-    public void addTimeZoneEntry(String long_desc, String keycode)
-    {
-        DeviceConfigurationDialog.time_zones.put(long_desc, keycode);
-        DeviceConfigurationDialog.time_zones_vector.add(long_desc);
-    }
 
     private void loadItemData()
     {
         if (this.current_entry == null)
             return;
 
-        this.current_device = findDevice();
+        findAndSetDevice();
         // this.current_entry = this.data.get(en);
         // loadItemData();
 
@@ -704,7 +669,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         if (dcd.doesDeviceSupportTimeFix())
         {
             dce.ds_area_long = (String) this.cb_timezone.getSelectedItem();
-            dce.ds_area = DeviceConfigurationDialog.time_zones.get(this.cb_timezone.getSelectedItem());
+            dce.ds_area = this.timeZoneUtil.getTimezoneDescription(dce.ds_area_long);
             dce.ds_fix = this.chb_fix.isSelected();
 
             dce.ds_summer_change = getNumber((String) this.cb_summer_fix.getSelectedItem());
@@ -742,26 +707,23 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             return -1;
     }
 
-    @SuppressWarnings("unchecked")
-    private DeviceInterface findDevice()
+
+    private void findAndSetDevice()
     {
         if (this.current_entry == null)
-            return null;
+            return;
 
-        Vector<SelectableInterface> vct = (Vector<SelectableInterface>) this.m_da.getDeviceConfigurationDefinition()
-                .getSupportedDevices();
+        Object selectedObject = this.m_da.getDeviceConfigurationDefinition().getSpecificDeviceInstance(this.current_entry.device_company, this.current_entry.device_device);
 
-        for (int i = 0; i < vct.size(); i++)
+        if (selectedObject!=null)
         {
-            SelectableInterface si = vct.get(i);
-            if (si.getColumnValue(1).equals(this.current_entry.device_company)
-                    && si.getColumnValue(2).equals(this.current_entry.device_device))
-                return (DeviceInterface) si;
+            setSelectedDeviceFromObject(selectedObject);
         }
-
-        System.out.println("Device not found: " + this.current_entry.device_company + " "
-                + this.current_entry.device_device);
-        return null;
+        else
+        {
+            LOG.error("Configured device not found: " + this.current_entry.device_company + " "
+                    + this.current_entry.device_device);
+        }
     }
 
     boolean act = false;

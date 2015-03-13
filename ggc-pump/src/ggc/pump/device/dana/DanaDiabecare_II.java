@@ -145,7 +145,7 @@ public class DanaDiabecare_II extends DanaPump
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
     /**
@@ -173,9 +173,9 @@ public class DanaDiabecare_II extends DanaPump
      * @return
      */
     @Override
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE;
+        return DownloadSupportType.NoDownloadSupport;
     }
 
     /**

@@ -1,0 +1,104 @@
+
+
+STOCKS Feature:
+===============
+  - stock types
+  - last stocktaking - calculate time till used
+  - backup objects
+  - display stocks on main screen
+  - new stocktaking... (empty, import)
+  - edit stocktaking with history (edit of stock and edit of stock value)
+
+
+UPGRADE FEATURE
+===============
+
+How to do:
+  1. GUI Open
+  2. Check on server, if newer version present, download manifest and display (all libraries should be displayed and also
+     Database)
+  3a) If download canceled, close GUI
+  3b) Download:
+              - Download zip file from server
+              - unpack in temporary directory with version number (data\update\upgrade_<new_version>
+              - backup all files into temporary directory (data\update\last_update_backup_<current_version>)
+              - backup database
+              - new package: - both GGC_Update files (one that will overwrite current, and one with version
+                               number which can be used by restore)
+                             - StartupStatus with rebuild
+              - overwrite all files from new package
+              - if new db version prepare script which will be executed at end of process (this will run ggc-core with
+                parameter to update database hibernate way)
+
+   4.) Show display where there is specified where old version of software is and how to undo upgrade
+          - Copy all bin files
+          - delete StartupStatus
+          - rename GGC_Update
+
+
+
+    Database:  - very simple
+                       id
+                       version_id
+                       version_name
+                       xml_definition
+                       updateFile
+
+    Servlet: - check new version : - NO: end
+                                   - YES: getXml
+
+             - download file: progress ?
+
+
+
+MULTIPLE PERSON Feature
+=======================
+  - setting if active
+  - not active, default user = 1, like now
+  - active login screen
+  - default GGC admin user user=0 just for admin of people
+  - person management
+  - remove all other panels
+
+
+
+GUI Rework
+==========
+
+RULES:
+- use ATSwingUtils for components
+- resize posssible (use ZeroLayout if possible)
+- font setting possible
+
+CORE:
+- configuration for fonts
+- default font for java in GGC
+
+
+Modules to change (resize):
+  - main screen : - hba1c
+                  - plugins
+                  - device used
+
+  - Pen/Injection: - daily overview
+                   - entry change
+                   - base ratio
+                   - extended ratio
+
+  - Printing:
+
+  - Plugin: - List
+            - Read data / Configuratiomn
+            - Read File
+            - Configuration
+            - Seletor
+            - Show device window
+
+  - Pump:  - Data entry main
+           - entry
+           - specific stuff
+
+Fonts: (everywhere where not ATSwingUtils used)
+
+
+

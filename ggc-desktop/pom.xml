@@ -44,21 +44,21 @@
 			<artifactId>atech-tools</artifactId>
 		</dependency>
 
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-help</artifactId>
+        </dependency>
+
 		<dependency>
 			<groupId>net.sf.ggc</groupId>
 			<artifactId>ggc-core</artifactId>
 		</dependency>
 
-		<!--  REQUIRED
-		<dependency>
-			<groupId>net.sf.ggc</groupId>
-			<artifactId>ggc-help</artifactId>
-		</dependency>
--->
 		<dependency>
 			<groupId>net.sf.ggc</groupId>
 			<artifactId>ggc-plugin-base</artifactId>
 		</dependency>
+
 
 		<dependency>
 			<groupId>net.sf.ggc</groupId>
@@ -69,17 +69,18 @@
 			<groupId>net.sf.ggc</groupId>
 			<artifactId>ggc-pump-tool</artifactId>
 		</dependency>
-<!--
+
 		<dependency>
 			<groupId>net.sf.ggc</groupId>
 			<artifactId>ggc-cgms-tool</artifactId>
 		</dependency>
--->
+
+<!--
 		<dependency>
 			<groupId>net.sf.ggc</groupId>
 			<artifactId>ggc-nutri-tool</artifactId>
 		</dependency>
-
+-->
 		<dependency>
 			<groupId>javax.help</groupId>
 			<artifactId>javahelp</artifactId>

@@ -1,8 +1,8 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver.data;
 
+import ggc.cgms.data.defs.CGMSTransmiterEvents;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.NoiseMode;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
-import ggc.cgms.device.dexcom.receivers.g4receiver.enums.SpecialGlucoseValues;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.TrendArrow;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.GenericReceiverRecordAbstract;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
@@ -44,7 +44,7 @@ public class EGVRecord extends GenericReceiverRecordAbstract // implements
 
     public String getSpecialValue()
     {
-        SpecialGlucoseValues sgv = SpecialGlucoseValues.getEnum(this.getGlucoseValue());
+        CGMSTransmiterEvents sgv = CGMSTransmiterEvents.getByCode(this.getGlucoseValue());
 
         if (sgv == null)
             return "";

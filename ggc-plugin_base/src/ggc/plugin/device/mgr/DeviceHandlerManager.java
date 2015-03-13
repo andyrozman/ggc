@@ -2,6 +2,8 @@ package ggc.plugin.device.mgr;
 
 import ggc.plugin.data.enums.DeviceHandlerType;
 import ggc.plugin.device.v2.DeviceHandler;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.HashMap;
 
@@ -11,9 +13,10 @@ import java.util.HashMap;
 public class DeviceHandlerManager
 {
     private static DeviceHandlerManager deviceHandlerManager = null;
+    Log LOG = LogFactory.getLog(DeviceHandlerManager.class);
 
 
-    HashMap<String,DeviceHandler> deviceHandlers = new HashMap<String, DeviceHandler>();
+    HashMap<DeviceHandlerType,DeviceHandler> deviceHandlers = new HashMap<DeviceHandlerType, DeviceHandler>();
 
 
     public static DeviceHandlerManager getInstance()
@@ -35,12 +38,21 @@ public class DeviceHandlerManager
 
     public void addDeviceHandler(DeviceHandler handler)
     {
+        this.deviceHandlers.put(handler.getDeviceHandlerKey(), handler);
     }
 
 
     public DeviceHandler getDeviceHandler(DeviceHandlerType deviceHandlerType)
     {
-        return null;
+        if (this.deviceHandlers.containsKey(deviceHandlerType))
+        {
+            return this.deviceHandlers.get(deviceHandlerType);
+        }
+        else
+        {
+            LOG.error("Handler " + deviceHandlerType.name() + " could not be found.");
+            return null;
+        }
     }
 
 }

@@ -2,8 +2,10 @@ package ggc.plugin.gui;
 
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.enums.DeviceProgressStatus;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.output.*;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.plugin.util.LogEntryType;
@@ -48,10 +50,7 @@ import com.atech.i18n.I18nControlAbstract;
 
 // Try to assess possibility of super-classing
 
-public class DeviceReaderRunner extends Thread implements OutputWriter // extends
-                                                                       // JDialog
-                                                                       // implements
-                                                                       // ActionListener
+public class DeviceReaderRunner extends Thread implements OutputWriter
 {
 
     private static Log log = LogFactory.getLog(DeviceReaderRunner.class);
@@ -76,9 +75,9 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
 
     /**
      * Constructor
-     * 
-     * @param da 
-     * @param _ddh 
+     *
+     * @param da
+     * @param _ddh
      */
     public DeviceReaderRunner(DataAccessPlugInBase da, DeviceDataHandler _ddh)
     {
@@ -96,179 +95,272 @@ public class DeviceReaderRunner extends Thread implements OutputWriter // extend
         }
     }
 
+
+    public void readDataFromDeviceV1()
+    {
+        String lg = "";
+        try
+        {
+            readOldData();
+
+            lg = "Creating instance [name=" + this.configured_device.name + ",company="
+                    + this.configured_device.device_company + ",device=" + this.configured_device.device_device
+                    + ",comm_port=" + this.configured_device.communication_port + "]";
+            log.debug(lg);
+            writeLog(LogEntryType.DEBUG, lg);
+
+            String className = m_da.getManager().getDeviceClassName(this.configured_device.device_company,
+                    this.configured_device.device_device);
+
+            Class<?> c = Class.forName(className);
+
+            Constructor<?> cnst = c.getDeclaredConstructor(String.class, OutputWriter.class,
+                    DataAccessPlugInBase.class);
+            this.m_mi = (DeviceInterface) cnst.newInstance(this.configured_device.communication_port_raw, this,
+                    m_da);
+            this.setDeviceComment(this.m_mi.getDeviceSpecialComment());
+            this.setStatus(AbstractOutputWriter.STATUS_DOWNLOADING);
+
+            lg = "Device instance created and initied";
+            log.debug(lg);
+            writeLog(LogEntryType.DEBUG, lg);
+
+            this.special_status = this.m_mi.hasSpecialProgressStatus();
+
+            if (this.m_mi.hasIndeterminateProgressStatus())
+            {
+                setIndeterminateProgress();
+            }
+
+            // check if device online (open succesful)
+            if (this.m_ddh.getTransferType() != DeviceDataHandler.TRANSFER_READ_FILE
+                    && !this.m_mi.isDeviceCommunicating())
+            {
+                this.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+
+                JOptionPane.showMessageDialog(this.getDialog(),
+                        m_da.getI18nControlInstance().getMessage("ERROR_CONTACTING_DEVICE"), m_da
+                                .getI18nControlInstance().getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+
+
+            if (this.m_ddh.isDataTransfer())
+            {
+                lg = "Start reading of data";
+                log.debug(lg);
+                writeLog(LogEntryType.DEBUG, lg);
+
+                if (this.m_ddh.getTransferType() == DeviceDataHandler.TRANSFER_READ_DATA)
+                {
+                    this.m_mi.readDeviceDataFull();
+                }
+                else
+                {
+                    this.m_ddh.selected_file_context.setOutputWriter(this);
+                    this.m_ddh.selected_file_context.readFile(m_ddh.selected_file);
+                }
+
+            }
+            else
+            {
+                lg = "Start reading of configuration";
+                log.debug(lg);
+                writeLog(LogEntryType.DEBUG, lg);
+
+                this.m_mi.readConfiguration();
+            }
+
+            running = false;
+
+            this.setStatus(AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED);
+            this.setSpecialProgress(100);
+            this.endOutput();
+
+            lg = "Reading finished";
+            log.debug(lg);
+            writeLog(LogEntryType.DEBUG, lg);
+
+        }
+        catch (Exception ex)
+        {
+            this.setStatus(AbstractOutputWriter.STATUS_READER_ERROR);
+            lg = "DeviceReaderRunner:Exception:" + ex;
+            log.error(lg, ex);
+            writeLog(LogEntryType.ERROR, lg, ex);
+            running = false;
+
+            if (m_da.checkUnsatisfiedLink(ex))
+            {
+                I18nControlAbstract ic = this.m_da.getI18nControlInstance();
+
+                String[] dta = m_da.getUnsatisfiedLinkData(ex);
+
+                JOptionPane.showMessageDialog(this.getDialog(),
+                        String.format(ic.getMessage("NO_BINARY_PART_FOUND"), dta[0], dta[2], dta[1]),
+                        ic.getMessage("ERROR") + ": " + dta[0], JOptionPane.ERROR_MESSAGE, null);
+            }
+        }
+        finally
+        {
+            if (this.m_mi != null)
+            {
+                this.m_mi.dispose();
+            }
+        }
+
+    }
+
+    private void readOldData()
+    {
+        String lg;
+        if (this.m_ddh.isDataTransfer())
+        {
+            lg = "Trying to reading old data from GGC...";
+            log.debug(lg);
+            writeLog(LogEntryType.DEBUG, lg);
+
+            OldDataReaderAbstract odra = m_da.getOldDataReader();
+
+            if (odra != null)
+            {
+
+                odra.setDeviceReadRunner(this);
+                m_da.getDeviceDataHandler().setDeviceData(odra.readOldEntries());
+                lg = "Reading of old data finished !";
+                log.debug(lg);
+                writeLog(LogEntryType.DEBUG, lg);
+            }
+            else
+            {
+                lg = "Reading unsucessful !";
+                this.canOldDataReadingBeInitiated(false);
+                log.warn(lg);
+                writeLog(LogEntryType.WARNING, lg);
+            }
+        }
+    }
+
+
+    public void readDataFromDeviceV2()
+    {
+        // FIXME
+
+        String lg = "";
+        try
+        {
+            readOldData();
+
+            DeviceInstanceWithHandler di = this.m_ddh.getDeviceInterfaceV2();
+
+            this.setDeviceComment(di.getDeviceSpecialComment());
+            this.setStatus(AbstractOutputWriter.STATUS_DOWNLOADING);
+
+            lg = "Device instance (v2) prepared for reading";
+            log.debug(lg);
+            writeLog(LogEntryType.DEBUG, lg);
+
+            this.special_status = (di.getDeviceProgressStatus()== DeviceProgressStatus.Special);
+
+            if (di.getDeviceProgressStatus()== DeviceProgressStatus.Indeterminate)
+            {
+                setIndeterminateProgress();
+            }
+
+
+//            // check if device online (open succesful)
+//            if (this.deviceDataHandler.getTransferType() != DeviceDataHandler.TRANSFER_READ_FILE
+//                    && !this.m_mi.isDeviceCommunicating())
+//            {
+//                this.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
+//
+//                JOptionPane.showMessageDialog(this.getDialog(),
+//                        m_da.getI18nControlInstance().getMessage("ERROR_CONTACTING_DEVICE"), m_da
+//                                .getI18nControlInstance().getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
+//
+//                return;
+//            }
+
+
+            if (this.m_ddh.isDataTransfer())
+            {
+                lg = "Start reading of data";
+                log.debug(lg);
+                writeLog(LogEntryType.DEBUG, lg);
+
+                if (this.m_ddh.getTransferType() == DeviceDataHandler.TRANSFER_READ_DATA)
+                {
+                    di.readDeviceData(this.configured_device.communication_port_raw, this);
+                }
+                else
+                {
+                    this.m_ddh.selected_file_context.setOutputWriter(this);
+                    this.m_ddh.selected_file_context.readFile(m_ddh.selected_file);
+                }
+            }
+            else
+            {
+                lg = "Start reading of configuration";
+                log.debug(lg);
+                writeLog(LogEntryType.DEBUG, lg);
+
+                di.readConfiguration(this.configured_device.communication_port_raw, this);
+            }
+
+            running = false;
+
+            this.setStatus(AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED);
+            this.setSpecialProgress(100);
+            this.endOutput();
+
+            lg = "Reading finished";
+            log.debug(lg);
+            writeLog(LogEntryType.DEBUG, lg);
+
+        }
+        catch (Exception ex)
+        {
+            this.setStatus(AbstractOutputWriter.STATUS_READER_ERROR);
+            lg = "DeviceReaderRunner:Exception:" + ex;
+            log.error(lg, ex);
+            writeLog(LogEntryType.ERROR, lg, ex);
+            running = false;
+
+            if (m_da.checkUnsatisfiedLink(ex))
+            {
+                I18nControlAbstract ic = this.m_da.getI18nControlInstance();
+
+                String[] dta = m_da.getUnsatisfiedLinkData(ex);
+
+                JOptionPane.showMessageDialog(this.getDialog(),
+                        String.format(ic.getMessage("NO_BINARY_PART_FOUND"), dta[0], dta[2], dta[1]),
+                        ic.getMessage("ERROR") + ": " + dta[0], JOptionPane.ERROR_MESSAGE, null);
+            }
+        }
+
+    }
+
+
     /** 
      * Thread running method
      */
     @Override
     public void run()
     {
-
         while (running)
         {
+            m_da.sleepMS(2000);
 
-            try
+            if (this.m_ddh.getDeviceInterfaceV2()!=null)
             {
-                Thread.sleep(2000);
+                readDataFromDeviceV2();
             }
-            catch (Exception ex)
-            {}
-
-            String lg = "";
-            try
+            else if (this.m_ddh.getDeviceInterfaceV1()!=null)
             {
-
-                if (this.m_ddh.isDataTransfer())
-                {
-                    lg = "Trying to reading old data from GGC...";
-                    log.debug(lg);
-                    writeLog(LogEntryType.DEBUG, lg);
-
-                    OldDataReaderAbstract odra = m_da.getOldDataReader();
-
-                    if (odra != null)
-                    {
-
-                        odra.setDeviceReadRunner(this);
-                        m_da.getDeviceDataHandler().setDeviceData(odra.readOldEntries());
-                        lg = "Reading of old data finished !";
-                        log.debug(lg);
-                        writeLog(LogEntryType.DEBUG, lg);
-                    }
-                    else
-                    {
-                        lg = "Reading unsucessful !";
-                        this.canOldDataReadingBeInitiated(false);
-                        log.warn(lg);
-                        writeLog(LogEntryType.WARNING, lg);
-                    }
-                }
-
-                lg = "Creating instance [name=" + this.configured_device.name + ",company="
-                        + this.configured_device.device_company + ",device=" + this.configured_device.device_device
-                        + ",comm_port=" + this.configured_device.communication_port + "]";
-                log.debug(lg);
-                writeLog(LogEntryType.DEBUG, lg);
-
-                String className = m_da.getManager().getDeviceClassName(this.configured_device.device_company,
-                    this.configured_device.device_device);
-
-                Class<?> c = Class.forName(className);
-
-                Constructor<?> cnst = c.getDeclaredConstructor(String.class, OutputWriter.class,
-                    DataAccessPlugInBase.class);
-                this.m_mi = (DeviceInterface) cnst.newInstance(this.configured_device.communication_port_raw, this,
-                    m_da);
-                this.setDeviceComment(this.m_mi.getDeviceSpecialComment());
-                this.setStatus(AbstractOutputWriter.STATUS_DOWNLOADING);
-
-                lg = "Device instance created and initied";
-                log.debug(lg);
-                writeLog(LogEntryType.DEBUG, lg);
-
-                this.special_status = this.m_mi.hasSpecialProgressStatus();
-
-                if (this.m_mi.hasIndeterminateProgressStatus())
-                {
-                    setIndeterminateProgress();
-                }
-
-                // check if device online (open succesful)
-                if (this.m_ddh.getTransferType() != DeviceDataHandler.TRANSFER_READ_FILE
-                        && !this.m_mi.isDeviceCommunicating())
-                {
-                    this.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
-
-                    JOptionPane.showMessageDialog(this.getDialog(),
-                        m_da.getI18nControlInstance().getMessage("ERROR_CONTACTING_DEVICE"), m_da
-                                .getI18nControlInstance().getMessage("ERROR"), JOptionPane.ERROR_MESSAGE);
-
-                    return;
-                }
-
-                // if
-                // (this.continuing_type==DeviceInstructionsDialog.CONTINUING_TYPE_READ_DATA)
-
-                if (this.m_ddh.isDataTransfer())
-                {
-                    lg = "Start reading of data";
-                    log.debug(lg);
-                    writeLog(LogEntryType.DEBUG, lg);
-
-                    // System.out.println("Transfer type: " +
-                    // this.m_ddh.getTransferType());
-
-                    if (this.m_ddh.getTransferType() == DeviceDataHandler.TRANSFER_READ_DATA)
-                    {
-                        this.m_mi.readDeviceDataFull();
-                    }
-                    else
-                    {
-                        // System.out.println("Selected file context: " +
-                        // this.m_ddh.selected_file_context);
-                        // System.out.println("Selected file: " +
-                        // m_ddh.selected_file);
-                        this.m_ddh.selected_file_context.setOutputWriter(this);
-                        this.m_ddh.selected_file_context.readFile(m_ddh.selected_file);
-                    }
-
-                }
-                else
-                {
-                    lg = "Start reading of configuration";
-                    log.debug(lg);
-                    writeLog(LogEntryType.DEBUG, lg);
-
-                    this.m_mi.readConfiguration();
-                }
-
-                running = false;
-
-                // this.getOutputWriter().endOutput();
-                // this.m_mi.dispose();
-
-                this.setStatus(AbstractOutputWriter.STATUS_DOWNLOAD_FINISHED);
-                this.setSpecialProgress(100);
-                this.endOutput();
-
-                lg = "Reading finished";
-                log.debug(lg);
-                writeLog(LogEntryType.DEBUG, lg);
-
+                readDataFromDeviceV1();
             }
-            catch (Exception ex)
-            {
-                this.setStatus(AbstractOutputWriter.STATUS_READER_ERROR);
-                // System.out.println("Exception: " + ex);
-                ex.printStackTrace();
-                // log.error("MeterReaderRunner:Exception:" + ex, ex);
-                lg = "DeviceReaderRunner:Exception:" + ex;
-                log.error(lg, ex);
-                writeLog(LogEntryType.ERROR, lg, ex);
-                running = false;
-
-                if (m_da.checkUnsatisfiedLink(ex))
-                {
-                    I18nControlAbstract ic = this.m_da.getI18nControlInstance();
-
-                    String[] dta = m_da.getUnsatisfiedLinkData(ex);
-
-                    JOptionPane.showMessageDialog(this.getDialog(),
-                        String.format(ic.getMessage("NO_BINARY_PART_FOUND"), dta[0], dta[2], dta[1]),
-                        ic.getMessage("ERROR") + ": " + dta[0], JOptionPane.ERROR_MESSAGE, null);
-
-                }
-
-            }
-            finally
-            {
-                if (this.m_mi != null)
-                {
-                    this.m_mi.dispose();
-                }
-            }
-
-        } // while
-
+        }
     }
 
     /**

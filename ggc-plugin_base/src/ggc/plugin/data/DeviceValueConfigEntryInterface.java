@@ -88,4 +88,7 @@ public interface DeviceValueConfigEntryInterface extends OutputWriterConfigData,
      */
     int getMultiLineTooltipType();
 
+
+    Integer getIndex();
+
 }

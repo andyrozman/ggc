@@ -133,8 +133,16 @@ public class DeviceIdentification
         if (this.device_hardware_version != null || this.device_software_version != null)
         {
             sb.append(prefix + " ");
-            appendParameter(this.device_software_version, "Sw version", sb);
-            appendParameter(this.device_hardware_version, "Hw version", sb);
+
+            if (this.device_software_version != null)
+            {
+                appendParameter(this.device_software_version, "Sw version", sb);
+            }
+
+            if (this.device_hardware_version != null)
+            {
+                appendParameter(this.device_hardware_version, "Hw version", sb);
+            }
             sb.append("\n");
         }
         return sb.toString();
@@ -171,8 +179,17 @@ public class DeviceIdentification
         if (this.device_hardware_version != null || this.device_software_version != null)
         {
             // sb.append(prefix + " ");
-            appendParameter(this.device_software_version, m_ic.getMessage("SW_VERSION"), sb);
-            appendParameter(this.device_hardware_version, m_ic.getMessage("HW_VERSION"), sb);
+
+            if (this.device_software_version != null)
+            {
+                appendParameter(this.device_software_version, m_ic.getMessage("SW_VERSION"), sb);
+            }
+
+            if (this.device_hardware_version != null)
+            {
+                appendParameter(this.device_hardware_version, m_ic.getMessage("HW_VERSION"), sb);
+            }
+
             sb.append("\n");
         }
         return sb.toString();

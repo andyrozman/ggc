@@ -171,7 +171,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
+        return DeviceImplementationStatus.Testing;
     }
 
     /** 

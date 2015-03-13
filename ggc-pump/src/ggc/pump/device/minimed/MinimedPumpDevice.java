@@ -95,6 +95,6 @@ public abstract class MinimedPumpDevice extends MinimedDevice implements PumpInt
 
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 }

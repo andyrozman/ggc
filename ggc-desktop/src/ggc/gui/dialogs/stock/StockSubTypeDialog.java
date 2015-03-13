@@ -1,177 +1,281 @@
 package ggc.gui.dialogs.stock;
 
-import java.awt.Color;
-import java.awt.Font;
+import com.atech.graphics.components.JDecimalTextField;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import com.atech.graphics.dialogs.StandardDialogForObject;
+import com.atech.utils.ATSwingUtils;
+import ggc.core.data.defs.StockTypeBase;
+import ggc.core.data.defs.StockUsageUnit;
+import ggc.core.db.hibernate.StockSubTypeH;
+import ggc.core.util.DataAccess;
+
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.*;
 
 /**
- * 
+ * This dialog is in use by StockTypeListDef
+ *
  * @author andy
  *
  */
-public class StockSubTypeDialog extends JDialog
+public class StockSubTypeDialog extends StandardDialogForObject
 {
 
-    private JTextField jTextField0;
     private JPanel panel;
-    private JLabel lblId;
-    private JLabel lblIdValue;
-    private JLabel lblName;
-    private JLabel lblDescription;
-    private JLabel lblTitle;
-    private JTextField txtNamelocdata;
-    private JButton btnOk;
-    private JButton btnCancel;
-    private JButton btnHelp;
-    private JLabel lblStockType;
-    private JLabel lblStockTypeId;
-    private JLabel lblContentamount;
-    private JFormattedTextField ftf_content;
-    private JButton btnSelstocktype;
-    private JLabel label;
-    private JLabel label_1;
-    private JTextField textField;
-    private JLabel label_2;
-    private JTextField textField_1;
 
-    public StockSubTypeDialog()
+    StockSubTypeH subTypeObject;
+
+    private JLabel lblIdValue;
+    private JComboBox comboStockType;
+    private JTextField txtName;
+    private JTextField txtDescription;
+    private JDecimalTextField dectxtContent;
+    private JTextField txtContentUnit;
+    private JComboBox comboUsageType;
+    private JDecimalTextField dectxtUsageMin;
+    private JDecimalTextField dectxtUsageMax;
+    private JCheckBox cbActive;
+    private JButton helpButton;
+
+
+    public StockSubTypeDialog(JDialog dialog)
     {
-        initGUI();
+        super(dialog, DataAccess.getInstance());
     }
 
-    private void initGUI()
+
+
+    public StockSubTypeDialog(JDialog dialog, StockSubTypeH subTypeObject)
     {
-        setFont(new Font("Dialog", Font.PLAIN, 12));
-        setBackground(Color.white);
-        setForeground(Color.black);
+        super(dialog, DataAccess.getInstance(), subTypeObject);
+    }
+
+
+    @Override
+    public void loadData(Object dataObject)
+    {
+        this.subTypeObject = (StockSubTypeH)dataObject;
+
+        this.lblIdValue.setText("" + this.subTypeObject.getId());
+        this.comboStockType.setSelectedItem(StockTypeBase.getByCode((int)this.subTypeObject.getStockTypeId()).getTranslation());
+        this.txtName.setText(this.subTypeObject.getName());
+        this.txtDescription.setText(this.subTypeObject.getDescription());
+        this.txtContentUnit.setText(subTypeObject.getPackageContentUnit());
+        this.dectxtContent.setValue(subTypeObject.getPackageContent());
+
+        this.dectxtUsageMin.setValue(subTypeObject.getUsageMin());
+        this.dectxtUsageMax.setValue(subTypeObject.getUsageMax());
+        this.comboUsageType.setSelectedItem(StockUsageUnit.getByCode(subTypeObject.getUsageUnit()).getTranslation());
+        this.cbActive.setSelected(subTypeObject.isActive());
+    }
+
+
+    public boolean saveData()
+    {
+        if (this.subTypeObject == null)
+        {
+            subTypeObject = new StockSubTypeH();
+        }
+
+        List<String> listFailed = new ArrayList();
+
+        StockTypeBase stb = StockTypeBase.getByDescription((String)comboStockType.getSelectedItem());
+
+        if (stb==StockTypeBase.None)
+        {
+            listFailed.add("STOCK_GROUP");
+        }
+        else
+        {
+            subTypeObject.setStockTypeId(stb.getCode());
+        }
+
+
+        if (checkIfTextFieldSet(txtName, "NAME", listFailed))
+        {
+            subTypeObject.setName(txtName.getText());
+        }
+
+
+        if (checkIfTextFieldSet(txtDescription, "DESCRIPTION", listFailed))
+        {
+            subTypeObject.setDescription(txtDescription.getText());
+        }
+
+
+        if (checkIfTextFieldSet(txtContentUnit, "PACKAGE_CONTENT_UNIT", listFailed))
+        {
+            subTypeObject.setPackageContentUnit(txtContentUnit.getText());
+        }
+
+
+        if (checkIfJDecimalTextFieldIsGreaterThanZero(dectxtContent, "PACKAGE_CONTENT", listFailed))
+        {
+            subTypeObject.setPackageContent(ATSwingUtils.getJDecimalTextValueInt(dectxtContent));
+        }
+
+
+        if (checkIfJDecimalTextFieldIsGreaterThanZero(dectxtUsageMin, "USAGE_MIN", listFailed))
+        {
+            subTypeObject.setUsageMin(ATSwingUtils.getJDecimalTextValueInt(dectxtUsageMin));
+        }
+
+
+        if (checkIfJDecimalTextFieldIsGreaterThanZero(dectxtUsageMax, "USAGE_MAX", listFailed))
+        {
+            subTypeObject.setUsageMax(ATSwingUtils.getJDecimalTextValueInt(dectxtUsageMax));
+        }
+
+
+        StockUsageUnit sut = StockUsageUnit.getByDescription((String) comboUsageType.getSelectedItem());
+
+        if (sut== StockUsageUnit.None)
+        {
+            listFailed.add("USAGE_UNIT");
+        }
+        else
+        {
+            subTypeObject.setUsageUnit(sut.getCode());
+        }
+
+
+        subTypeObject.setActive(cbActive.isSelected());
+        subTypeObject.setPersonId((int) dataAccess.getCurrentUserId());
+
+
+        if (listFailed.size()!=0)
+        {
+            displayErrorWhenSavingObject(listFailed);
+            return false;
+        }
+        else
+        {
+            if (subTypeObject.getId()==0)
+            {
+                Long id = dataAccess.getHibernateDb().addHibernate(subTypeObject);
+
+                System.out.println("ID: " + id);
+
+                if ((id==null) || (id<=0))
+                {
+                    System.out.println("id null");
+                    return false;
+                }
+                else
+                {
+                    System.out.println("id ok");
+                    subTypeObject.setId(id);
+                    return true;
+                }
+            }
+            else
+            {
+                return dataAccess.getHibernateDb().editHibernate(subTypeObject);
+            }
+        }
+    }
+
+
+    public void initGUI()
+    {
+        ATSwingUtils.initLibrary();
 
         getContentPane().setLayout(null);
 
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBounds(0, 0, 403, 370);
+        panel.setBounds(0, 0, 500, 400);
+
+        this.setBounds(0, 0, 500, 400);
 
         this.getContentPane().add(panel, null);
 
-        jTextField0 = new JTextField();
-        this.jTextField0.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        jTextField0.setText("jTextField0");
-        jTextField0.setBounds(160, 143, 205, 20);
+        ATSwingUtils.centerJDialog(this, this.parent);
 
-        panel.add(jTextField0);
+        //setSize(480, 400);
 
-        setSize(411, 404);
+        ATSwingUtils.getTitleLabel(i18nControl.getMessage("STOCK_TYPE"), 0, 22, 480, 40, panel, ATSwingUtils.FONT_BIG_BOLD);
+        this.setTitle(i18nControl.getMessage("STOCK_TYPE"));
 
-        this.lblId = new JLabel("ID");
-        this.lblId.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblId.setBounds(38, 76, 78, 14);
-        this.panel.add(this.lblId);
+        // Labels
+        String[] labelKeys = { "ID", "STOCK_GROUP", "NAME", "DESCRIPTION", "PACKAGE_CONTENT",
+                "STOCK_USAGE", "ACTIVE"};
+        int pos_y = 70;
 
-        this.lblIdValue = new JLabel("ID Value");
-        this.lblIdValue.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        this.lblIdValue.setBounds(160, 76, 46, 14);
-        this.panel.add(this.lblIdValue);
+        for(String labelKey : labelKeys)
+        {
+            ATSwingUtils.getLabel(this.i18nControl.getMessage(labelKey) + ":", 40, pos_y, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+            pos_y += 35;
+        }
 
-        this.lblName = new JLabel("NAME");
-        this.lblName.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblName.setBounds(38, 146, 101, 14);
-        this.panel.add(this.lblName);
+        // ID
+        this.lblIdValue = ATSwingUtils.getLabel("-", 200, 70, 46, 25, panel, ATSwingUtils.FONT_NORMAL);
 
-        this.lblDescription = new JLabel("DESCRIPTION");
-        this.lblDescription.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblDescription.setBounds(38, 181, 101, 14);
-        this.panel.add(this.lblDescription);
+        // Base Type
+        comboStockType = ATSwingUtils.getComboBox(StockTypeBase.getDescriptions(), 200, 105, 170, 25, panel, ATSwingUtils.FONT_NORMAL);
 
-        this.lblTitle = new JLabel("Stock Type");
-        this.lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-        this.lblTitle.setFont(new Font("SansSerif", Font.BOLD, 22));
-        this.lblTitle.setBounds(10, 22, 383, 27);
-        this.panel.add(this.lblTitle);
+        // Name
+        txtName = ATSwingUtils.getTextField("", 200, 140, 240, 25, panel, ATSwingUtils.FONT_NORMAL);
 
-        this.txtNamelocdata = new JTextField();
-        this.txtNamelocdata.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        this.txtNamelocdata.setText("nameLocData");
-        this.txtNamelocdata.setBounds(161, 178, 204, 20);
-        this.panel.add(this.txtNamelocdata);
+        // Description
+        txtDescription = ATSwingUtils.getTextField("", 200, 175, 240, 25, panel, ATSwingUtils.FONT_NORMAL);
 
-        this.btnOk = new JButton("OK");
-        this.btnOk.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        this.btnOk.setBounds(62, 323, 89, 23);
-        this.panel.add(this.btnOk);
+        // Package Content
+        dectxtContent = ATSwingUtils.getNumericTextField(4, 0, 0, 200, 210, 80, 25, panel, ATSwingUtils.FONT_NORMAL);
+        ATSwingUtils.getLabel(i18nControl.getMessage("UNIT_UNIT") + ":", 300, 210, 40, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
 
-        this.btnCancel = new JButton("Cancel");
-        this.btnCancel.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        this.btnCancel.setBounds(177, 323, 89, 23);
-        this.panel.add(this.btnCancel);
+        txtContentUnit = ATSwingUtils.getTextField("", 340, 210, 100, 25, panel, ATSwingUtils.FONT_NORMAL);
 
-        this.btnHelp = new JButton("Help");
-        this.btnHelp.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        this.btnHelp.setBounds(276, 323, 89, 23);
-        this.panel.add(this.btnHelp);
+        // Usage Min / Max / Type
+        dectxtUsageMin = ATSwingUtils.getNumericTextField(4, 0, 0, 200, 245, 40, 25, panel, ATSwingUtils.FONT_NORMAL);
+        dectxtUsageMax = ATSwingUtils.getNumericTextField(4, 0, 0, 260, 245, 40, 25, panel, ATSwingUtils.FONT_NORMAL);
+        comboUsageType = ATSwingUtils.getComboBox(StockUsageUnit.getDescriptions(), 330, 245, 110, 25, panel, ATSwingUtils.FONT_NORMAL);
+        ATSwingUtils.getLabel("-", 240, 245, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel("/", 310, 245, 150, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
 
-        this.lblStockType = new JLabel("Stock Type");
-        this.lblStockType.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblStockType.setBounds(38, 111, 101, 14);
-        this.panel.add(this.lblStockType);
+        // Active
+        cbActive = ATSwingUtils.getCheckBox("", 200, 280, 500, 25, panel, ATSwingUtils.FONT_NORMAL);
+        cbActive.setSelected(true);
 
-        this.lblStockTypeId = new JLabel("Stock Type ID");
-        this.lblStockTypeId.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        this.lblStockTypeId.setBounds(160, 111, 158, 14);
-        this.panel.add(this.lblStockTypeId);
+        // buttons
+        ATSwingUtils.getButton("   " + i18nControl.getMessage("OK"), 50, 320, 125, 25, panel,
+                ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, dataAccess);
 
-        this.lblContentamount = new JLabel("Content / Pckg");
-        this.lblContentamount.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.lblContentamount.setBounds(38, 216, 101, 14);
-        this.panel.add(this.lblContentamount);
+        ATSwingUtils.getButton("   " + i18nControl.getMessage("CANCEL"), 180, 320, 125, 25, panel,
+                ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, dataAccess);
 
-        this.ftf_content = new JFormattedTextField();
-        this.ftf_content.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        this.ftf_content.setBounds(160, 213, 89, 20);
-        this.panel.add(this.ftf_content);
+        helpButton = ATSwingUtils.createHelpButtonByBounds(310, 320, 125, 25, this, ATSwingUtils.FONT_NORMAL, dataAccess);
+        panel.add(helpButton);
 
-        this.btnSelstocktype = new JButton("?");
-        this.btnSelstocktype.setBounds(328, 107, 37, 23);
-        this.panel.add(this.btnSelstocktype);
+        //dataAccess.enableHelp(this);
 
-        this.label = new JLabel("Usage per day:");
-        this.label.setFont(new Font("SansSerif", Font.BOLD, 12));
-        this.label.setBounds(38, 257, 91, 14);
-        this.panel.add(this.label);
-
-        this.label_1 = new JLabel("Min:");
-        this.label_1.setBounds(160, 260, 35, 14);
-        this.panel.add(this.label_1);
-
-        this.textField = new JTextField();
-        this.textField.setColumns(10);
-        this.textField.setBounds(205, 255, 56, 20);
-        this.panel.add(this.textField);
-
-        this.label_2 = new JLabel("Max:");
-        this.label_2.setBounds(160, 286, 35, 14);
-        this.panel.add(this.label_2);
-
-        this.textField_1 = new JTextField();
-        this.textField_1.setColumns(10);
-        this.textField_1.setBounds(205, 283, 56, 20);
-        this.panel.add(this.textField_1);
-        // getContentPane().add(this.lblId);
     }
 
-    /**
-     * Was Action Successful
-     * 
-     * @return true if action was successful (dialog closed with OK)
-     */
-    public boolean actionSuccessful()
+
+
+    @Override
+    public String getHelpId()
     {
-        return false; // m_actionDone;
+        return "StockSubType";
     }
+
+
+    @Override
+    public JButton getHelpButton()
+    {
+        return this.helpButton;
+    }
+
+
+    @Override
+    public Component getComponent()
+    {
+        return this.panel;
+    }
+
+
 }

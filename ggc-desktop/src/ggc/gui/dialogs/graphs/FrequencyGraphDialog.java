@@ -27,6 +27,7 @@
 
 package ggc.gui.dialogs.graphs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.data.GlucoValues;
 import ggc.core.data.graph.DataPlotSelectorPanel;
 import ggc.core.util.DataAccess;
@@ -137,19 +138,19 @@ public class FrequencyGraphDialog extends JDialog implements ActionListener, Hel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         Dimension dim = new Dimension(120, 25);
 
-        help_button = m_da.createHelpButtonBySize(120, 25, this);
+        help_button = ATSwingUtils.createHelpButtonBySize(120, 25, this, m_da);
         buttonPanel.add(help_button);
 
         JButton drawButton = new JButton(m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
         drawButton.setActionCommand("draw");
-        drawButton.setIcon(m_da.getImageIcon_22x22("paint.png", this));
+        drawButton.setIcon(ATSwingUtils.getImageIcon_22x22("paint.png", this, m_da));
         drawButton.addActionListener(this);
 
         JButton closeButton = new JButton(m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
         closeButton.setActionCommand("close");
-        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        closeButton.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
         closeButton.addActionListener(this);
 
         buttonPanel.add(drawButton);

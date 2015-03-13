@@ -25,8 +25,8 @@ import com.atech.utils.data.CodeEnumWithTranslation;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- *  Filename:     DeviceValues
- *  Description:  Collection of DeviceValuesDay.
+ *  Filename:     DeviceTempValues
+ *  Description:  DeviceTempValues for Device Writer.
  *
  *  Author: Andy {andy@atech-software.com}
  */
@@ -78,7 +78,7 @@ public abstract class DeviceTempValues
     /**
      * @param _object_type
      * @param _base_type
-     * @param _sub_type
+     *
      */
     public DeviceTempValues(int _object_type, int _base_type)
     {
@@ -137,7 +137,7 @@ public abstract class DeviceTempValues
      */
     public OutputWriterData getData(ATechDate dt, String _value)
     {
-        return getData(dt, -1, _value);
+        return getData(dt, null, _value);
     }
 
     /**
@@ -148,7 +148,7 @@ public abstract class DeviceTempValues
      * @param _value
      * @return
      */
-    public abstract OutputWriterData getData(ATechDate dt, int _sub_type, String _value);
+    public abstract OutputWriterData getData(ATechDate dt, Integer _sub_type, String _value);
 
     public Boolean getIsNumericValue()
     {
@@ -160,4 +160,24 @@ public abstract class DeviceTempValues
         this.isNumericValue = isNumericValue;
     }
 
+
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getClass().getSimpleName() + " [");
+        sb.append("base_type=" + this.base_type);
+
+        if (sub_type>0)
+            sb.append(", sub_type=" + this.sub_type);
+
+        sb.append(", object_type=" + this.object_type);
+
+        if (value_template!=null)
+            sb.append(", value_template=" + value_template);
+
+        if (isNumericValue==null)
+            sb.append(", is_numeric_value=" + isNumericValue);
+
+        return sb.toString();
+    }
 }

@@ -238,7 +238,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
 
         this.setBounds(0, 0, 500, 500);
 
-        m_da.centerJDialog(this, m_parent);
+        ATSwingUtils.centerJDialog(this, m_parent);
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 500, 500);
@@ -352,7 +352,7 @@ public class RatioExtendedDialog extends JDialog implements ActionListener, Help
         ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 360, 115, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
 
-        help_button = m_da.createHelpButtonByBounds(360, 150, 110, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(360, 150, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
         m_da.enableHelp(this);
 

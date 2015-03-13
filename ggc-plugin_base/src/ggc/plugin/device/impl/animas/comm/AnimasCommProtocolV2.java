@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.LogEntryType;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -41,7 +42,7 @@ import org.apache.commons.logging.LogFactory;
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
  *  Filename:     AnimasCommProtocolV2
- *  Description:  Communication class for all devices 1200 and after.
+ *  Description:  Communication class for all devices 1200 and after (till Vibe)
  *
  *  Author: Andy Rozman {andy@atech-software.com}
  */
@@ -61,10 +62,6 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     private boolean reconnectToDevice;
     private boolean pumpConnected; //
 
-    // messages
-    private final short START_MESSAGE_DEVICE = 192;
-    private final short END_MESSAGE_DEVICE = 193;
-    private final short CTL_MESSAGE_DEVICE = 125;
 
     public boolean controlMode;
     public int nr;
@@ -79,6 +76,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     public AnimasCommProtocolV2(String portName, AnimasDeviceType deviceType, AnimasDeviceReader deviceReader, OutputWriter outputWriter)
     {
         super(portName, deviceType, deviceReader, outputWriter);
+        this.setDebugMode(false, false);
     }
 
 
@@ -100,10 +98,11 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
+
     protected void sendRequestAndWait(AnimasDataType dataType, int startRecord, int numberOfRecords, int commandWaitTime)
             throws PlugInBaseException
     {
-        if (!this.baseData.isCommandAllowedForDeviceType(dataType))
+        if  ((dataType.getBaseTransferType()!= AnimasTransferType.All) && (!this.baseData.isCommandAllowedForDeviceType(dataType)))
         {
             return;
         }
@@ -120,18 +119,24 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
                 retryString = " [retry " + retryCount + "]";
             }
 
+            String logMsg;
+
             if (startRecord == 0)
             {
-                LOG.debug("Downloading - " + dataType.getDebugDescription() + retryString);
+                logMsg = "Downloading - " + dataType.getDebugDescription() + retryString;
+                LOG.debug(logMsg);
+                outputWriter.writeLog(LogEntryType.INFO, logMsg);
             }
             else
             {
-                LOG.debug("Downloading - " + dataType.getDebugDescription() + " #" + startRecord + retryString);
+                logMsg ="Downloading - " + dataType.getDebugDescription() + " #" + startRecord + retryString;
+                LOG.debug(logMsg);
+                outputWriter.writeLog(LogEntryType.INFO, logMsg);
             }
 
             if (reconnectToDevice)
             {
-                LOG.error("Reconnect to device, N/A");
+                LOG.error("Reconnect to device, not implemented yet.");
             }
 
             sendRequestToPump(dataType, startRecord, numberOfRecords);
@@ -150,84 +155,6 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     {
         AnimasUtils.sleepInMs(systemWaitTimeBefore);
         sendRequestAndWait(dataType, startRecord, numberOfRecords, commandWaitTime);
-    }
-
-
-    public void sendCharacterToDevice(char c) throws PlugInBaseException
-    {
-        try
-        {
-            this.outStream.write(c);
-        }
-        catch (Exception ex)
-        {
-            throw new PlugInBaseException(PlugInExceptionType.CommunicationPortClosed);
-        }
-    }
-
-
-    protected void sendToDevice(short c) throws PlugInBaseException
-    {
-        sendToDevice(c, false);
-    }
-
-
-    protected void sendToDevice(short c, boolean debug) throws PlugInBaseException
-    {
-        try
-        {
-            this.outStream.write(c);
-            if (debug)
-            {
-                LOG.debug("sendToDevice: " + c + " [" + (short)c + "]");
-            }
-        }
-        catch (Exception ex)
-        {
-            throw new PlugInBaseException(PlugInExceptionType.CommunicationPortClosed);
-        }
-    }
-
-
-    protected void sendMessageToDevice(char[] msgChars) throws PlugInBaseException
-    {
-        sendToDevice(START_MESSAGE_DEVICE);
-
-        for (char character : msgChars)
-        {
-            sendToDevice((short) character);
-        }
-
-        calculateAndSendFletcher(msgChars);
-
-        sendToDevice(END_MESSAGE_DEVICE);
-
-        AnimasUtils.debugHexData(this.debugCommunication, msgChars, msgChars.length, "Sending: [%s]", LOG);
-    }
-
-
-    private void calculateAndSendFletcher(char[] msgChars) throws PlugInBaseException
-    {
-        short[] fletch = AnimasUtils.calculateFletcher16(msgChars, msgChars.length);
-
-        for(short sh : fletch)
-        {
-            if (isSpecialCharacter(sh))
-            {
-                sendCharacterToDevice('}');
-                sh = (short)(sh ^ 0x20);
-            }
-
-            sendToDevice(sh);
-        }
-    }
-
-
-    private boolean isSpecialCharacter(short character)
-    {
-        return ((character == CTL_MESSAGE_DEVICE) || //
-                (character == START_MESSAGE_DEVICE) || //
-                (character == END_MESSAGE_DEVICE));
     }
 
 
@@ -492,6 +419,10 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
                     this.pumpConnected = this.baseData.isDownloaderSerialNumberSet();
                     intAttempt++;
                     retriesComm++;
+                    if (deviceReader.isDownloadCanceled())
+                    {
+                        throw new PlugInBaseException(PlugInExceptionType.DownloadCanceledByUser);
+                    }
                 }
 
                 if (this.pumpConnected)
@@ -686,17 +617,18 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
             }
         }
 
-
-        if (this.animasDevicePacket.allDataReceived)
-        {
-            this.baseData.addAllDataReceived(this.animasDevicePacket.dataTypeObject);
-            this.baseData.processReceivedData(this.animasDevicePacket);
-
-            if (animasDevicePacket.dataTypeObject.hasPostProcessing())
-            {
-                getData().postProcessReceivedData(animasDevicePacket);
-            }
-        }
+//        Data is written directly - not at end
+//
+//        if (this.animasDevicePacket.allDataReceived)
+//        {
+//            this.baseData.addAllDataReceived(this.animasDevicePacket.dataTypeObject);
+//            this.baseData.processReceivedData(this.animasDevicePacket);
+//
+//            if (animasDevicePacket.dataTypeObject.hasPostProcessing())
+//            {
+//                getData().postProcessReceivedData(animasDevicePacket);
+//            }
+//        }
 
 
         // FIXME remove

@@ -9,6 +9,7 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 
 
 /**
@@ -134,7 +135,7 @@ public class OneTouchVibe extends AnimasCGMS
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL;
+        return DeviceImplementationStatus.Partitial;
     }
 
 
@@ -164,9 +165,9 @@ public class OneTouchVibe extends AnimasCGMS
      *
      * @return
      */
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE | DownloadSupportType.DOWNLOAD_FROM_DEVICE;
+        return DownloadSupportType.Download_Data_Config;
     }
 
 
@@ -181,9 +182,9 @@ public class OneTouchVibe extends AnimasCGMS
     }
 
 
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE;
+        return DeviceConnectionProtocol.Serial_USBBridge;
     }
 
     public String getConnectionPort()
@@ -196,7 +197,7 @@ public class OneTouchVibe extends AnimasCGMS
     public void readConfiguration() throws PlugInBaseException
     {
         AnimasCGMSDeviceReader reader = new AnimasCGMSDeviceReader(this.communicationPort, this.getAnimasDeviceType(), this.outputWriter);
-        reader.downloadCGMSSettings();
+        reader.readConfiguration();
     }
 
 
@@ -205,7 +206,7 @@ public class OneTouchVibe extends AnimasCGMS
     public void readDeviceDataFull() throws PlugInBaseException
     {
         AnimasCGMSDeviceReader reader = new AnimasCGMSDeviceReader(this.communicationPort, this.getAnimasDeviceType(), this.outputWriter);
-        reader.downloadCGMSData();
+        reader.readData();
     }
 
 

@@ -3,6 +3,7 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.util.DataAccessPump;
 
 import java.util.Hashtable;
 
@@ -76,7 +77,7 @@ public class PumpDataHandler extends DeviceDataHandler
     @Override
     public void createDeviceValuesTableModel()
     {
-        this.m_model = new PumpValuesTableModel(this, m_da.getSourceDevice());
+        this.m_model = new PumpValuesTableModel(this, DataAccessPump.getInstance().getSourceDevice());
     }
 
     /**

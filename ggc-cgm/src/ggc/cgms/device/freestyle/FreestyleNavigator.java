@@ -144,7 +144,7 @@ public class FreestyleNavigator extends FreestyleCGMS
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return DeviceImplementationStatus.NotPlanned;
     }
 
     /**
@@ -173,9 +173,9 @@ public class FreestyleNavigator extends FreestyleCGMS
      * @return
      */
     @Override
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+        return DownloadSupportType.NoDownloadSupport;
     }
 
     /**

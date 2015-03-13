@@ -188,7 +188,7 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
 
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
     public String getInstructions()

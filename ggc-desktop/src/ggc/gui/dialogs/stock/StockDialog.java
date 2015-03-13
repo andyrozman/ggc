@@ -1,13 +1,16 @@
 package ggc.gui.dialogs.stock;
 
+import com.atech.graphics.dialogs.StandardDialogForObject;
+import com.atech.utils.ATSwingUtils;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
+import ggc.core.db.hibernate.StockH;
+import ggc.core.db.hibernate.StockSubTypeH;
+
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -53,10 +56,33 @@ import com.atech.i18n.I18nControlAbstract;
 // fix this
 // for defining stock entry
 
-public class StockDialog extends JDialog implements ActionListener
+
+// REUSED
+
+/**
+ * This dialog is in use by StocktakingListDef and StockListDef
+ *
+ * @author andy
+ *
+ */
+
+public class StockDialog extends StandardDialogForObject
 {
 
-    private static final long serialVersionUID = -8276157027834968535L;
+    // TO DO
+    // object gui
+    // load
+    // save
+
+    // edit value
+    // edit stock
+
+
+    boolean editValue;
+
+
+
+    // OLD
     private DataAccess m_da = DataAccess.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     private GGCProperties props = m_da.getSettings();
@@ -67,41 +93,10 @@ public class StockDialog extends JDialog implements ActionListener
 
     // static AddRowFrame singleton = null;
 
-    JTextField DateField, TimeField, BGField, Ins1Field, Ins2Field, BUField, ActField, CommentField, UrineField;
-
-    JComboBox cob_bg_type; // = new JComboBox();
 
     JLabel label_title = new JLabel();
-    JLabel label_food;
-    JCheckBox cb_food_set;
 
-    DateTimeComponent dtc;
 
-    JButton AddButton;
-
-    String sDate = null;
-
-    DailyValues dV = null;
-    DailyValuesRow m_dailyValuesRow = null;
-
-    // AbstractTableModel mod = null;
-
-    // GGCProperties props = GGCProperties.getInstance();
-    JComponent components[] = new JComponent[9];
-    /*
-     * public AddRowFrame(AbstractTableModel m, DailyValues ndV, DailyStatsFrame
-     * dialog)
-     * {
-     * super(dialog, "", true);
-     * setTitle(m_ic.getMessage("ADD_NEW_ROW"));
-     * dV = ndV;
-     * mod = m;
-     * init();
-     * }
-     */
-
-    Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-    Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
     boolean debug = false;
 
@@ -121,84 +116,40 @@ public class StockDialog extends JDialog implements ActionListener
     private JButton btnSelectstocktype;
     private JButton btnHelp;
 
-    /**
-     * Constructor 
-     * 
-     * @param ndV
-     * @param nDate
-     * @param dialog
-     */
-    public StockDialog(DailyValues ndV, String nDate, JDialog dialog)
+
+    public StockDialog(JDialog dialog)
     {
-        super(dialog, "", true);
-        m_parent = dialog;
-        // initParameters(ndV,nDate);
-        initGUI();
+        super(dialog, DataAccess.getInstance());
     }
 
-    @SuppressWarnings("unused")
-    private void load()
+
+
+    public StockDialog(JDialog dialog, StockH subTypeObject, boolean editValue)
     {
-        this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
+        super(dialog, DataAccess.getInstance(), subTypeObject, false);
 
-        System.out.println(props.getBG_unit());
+        this.editValue = editValue;
 
-        // which format
-        this.cob_bg_type.setSelectedIndex(props.getBG_unit() - 1);
-        this.BGField.setText("" + this.m_dailyValuesRow.getBGAsString());
-
-        if (debug)
-        {
-            System.out.println("Db value (cuurent): " + this.m_dailyValuesRow.getBG());
-            System.out.println("Db value (mg/dL): " + this.m_dailyValuesRow.getBG(1));
-            System.out.println("Display value (" + props.getBG_unitString() + "): "
-                    + this.m_dailyValuesRow.getBG(props.getBG_unit()));
-        }
-
-        Ins1Field.setText("" + this.m_dailyValuesRow.getIns1AsString());
-        Ins2Field.setText("" + this.m_dailyValuesRow.getIns2AsString());
-        BUField.setText("" + this.m_dailyValuesRow.getCHAsString());
-
-        ActField.setText(this.m_dailyValuesRow.getActivity());
-        UrineField.setText(this.m_dailyValuesRow.getUrine());
-
-        this.cb_food_set.setEnabled(false);
-        this.cb_food_set.setSelected(this.m_dailyValuesRow.areMealsSet());
-        this.cb_food_set.setEnabled(true);
-
-        CommentField.setText(this.m_dailyValuesRow.getComment());
-
-        /*
-         * addComponent(cb_food_set = new JCheckBox(" " +
-         * m_ic.getMessage("FOOD_SET")), 110, 240, 200, panel);
-         * addComponent(UrineField = new JTextField(), 110, 268, 220, panel);
-         * addComponent(ActField = new JTextField(), 110, 298, 220, panel);
-         */
-
-        /*
-         * this.dtc = new DateTimeComponent(this.m_ic,
-         * DateTimeComponent.ALIGN_VERTICAL, 5);
-         * dtc.setBounds(160, 55, 100, 35);
-         * panel.add(dtc);
-         * addComponent(BGField = new JTextField(), 160, 118, 35, panel);
-         * addComponent(Ins2Field = new JTextField(), 160, 148, 35, panel);
-         * addComponent(Ins2Field = new JTextField(), 160, 178, 35, panel);
-         * addComponent(BUField = new JTextField(), 160, 208, 35, panel);
-         * addComponent(cb_food_set = new JCheckBox(" " +
-         * m_ic.getMessage("FOOD_SET")), 110, 240, 200, panel);
-         * addComponent(UrineField = new JTextField(), 110, 268, 220, panel);
-         * addComponent(ActField = new JTextField(), 110, 298, 220, panel);
-         * addComponent(CommentField = new JTextField(), 110, 328, 220, panel);
-         */
+        init(subTypeObject);
     }
 
-    /*
-     * private void save()
-     * {
-     * }
-     */
 
-    private void initGUI()
+
+    @Override
+    public void loadData(Object dataObject)
+    {
+        // editing (changes value only)
+    }
+
+    @Override
+    public boolean saveData()
+    {
+        // versioning
+
+        return false;
+    }
+
+    public void initGUI()
     {
         int x = 0;
         int y = 0;
@@ -285,201 +236,26 @@ public class StockDialog extends JDialog implements ActionListener
         this.btnHelp.setBounds(272, 280, 89, 23);
         panel.add(this.btnHelp);
 
-        /*
-         * addLabel(m_ic.getMessage("DATE") + ":", 78, panel);
-         * addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
-         * addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
-         * addLabel(props.getIns1Name() + " (" + props.getIns1Abbr() + ") :",
-         * 168, panel);
-         * addLabel(props.getIns2Name() + " (" + props.getIns2Abbr() + "):",
-         * 198, panel);
-         * addLabel(m_ic.getMessage("CH_LONG") + ":", 228, panel);
-         * addLabel(m_ic.getMessage("FOOD") + ":", 258, panel);
-         * addLabel(m_ic.getMessage("URINE") + ":", 288, panel);
-         * addLabel(m_ic.getMessage("ACTIVITY") + ":", 318, panel);
-         * addLabel(m_ic.getMessage("COMMENT") + ":", 348, panel);
-         * this.dtc = new DateTimeComponent(this.dataAccess,
-         * DateTimeComponent.ALIGN_VERTICAL, 5);
-         * dtc.setBounds(140, 75, 100, 35);
-         * panel.add(dtc);
-         * addComponent(cob_bg_type = new JComboBox(this.dataAccess.bg_units), 220,
-         * 138, 80, panel);
-         * addComponent(BGField = new JTextField(), 140, 138, 55, panel);
-         * addComponent(Ins1Field = new JTextField(), 140, 168, 55, panel);
-         * addComponent(Ins2Field = new JTextField(), 140, 198, 55, panel);
-         * addComponent(BUField = new JTextField(), 140, 228, 55, panel);
-         * addComponent(cb_food_set = new JCheckBox(" " +
-         * m_ic.getMessage("FOOD_SET")), 110, 260, 200, panel);
-         * addComponent(UrineField = new JTextField(), 110, 288, 220, panel);
-         * addComponent(ActField = new JTextField(), 110, 318, 220, panel);
-         * addComponent(CommentField = new JTextField(), 110, 348, 220, panel);
-         * this.cob_bg_type.setSelectedIndex(props.getBG_unit()-1);
-         * cb_food_set.setMultiClickThreshhold(500);
-         * //System.out.println(cb_food_set.get
-         * //cb_food_set.setEnabled(false);
-         * cb_food_set.addChangeListener(new ChangeListener(){
-         * /**
-         * Invoked when the target of the listener has changed its state.
-         * @param e a ChangeEvent object
-         */
-        /*
-         * public void stateChanged(ChangeEvent e)
-         * {
-         * if (in_process)
-         * return;
-         * in_process = true;
-         * System.out.println("State: " + cb_food_set.isSelected());
-         * cb_food_set.setSelected(!cb_food_set.isSelected());
-         * in_process = false;
-         * }
-         * });
-         * String button_command[] = { "update_ch",
-         * m_ic.getMessage("UPDATE_FROM_FOOD"),
-         * "edit", m_ic.getMessage("EDIT"),
-         * "ok", m_ic.getMessage("OK"),
-         * "cancel", m_ic.getMessage("CANCEL"),
-         * "help", m_ic.getMessage("HELP")
-         * };
-         * int button_coord[] = { 210, 228, 120, 0,
-         * 230, 258, 100, 0,
-         * 50, 390, 80, 1,
-         * 140, 390, 80, 1,
-         * 250, 390, 80, 0
-         * };
-         * JButton button;
-         * //int j=0;
-         * for (int i=0, j=0; i<button_coord.length; i+=4, j+=2)
-         * {
-         * button = new JButton(button_command[j+1]);
-         * button.setActionCommand(button_command[j]);
-         * button.addActionListener(this);
-         * if (button_coord[i+3]==0)
-         * {
-         * button.setEnabled(false);
-         * }
-         * addComponent(button, button_coord[i], button_coord[i+1],
-         * button_coord[i+2], panel);
-         * }
-         */
     }
 
-    private void addLabel(String text, int posY, JPanel parent)
+
+
+    @Override
+    public String getHelpId()
     {
-        JLabel label = new JLabel(text);
-        label.setBounds(30, posY, 100, 25);
-        label.setFont(f_bold);
-        parent.add(label);
-        // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
-        // SwingConstants.RIGHT));
-
+        return null;
     }
 
-    private void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
+    @Override
+    public JButton getHelpButton()
     {
-        // JLabel label = new JLabel(text);
-        comp.setBounds(posX, posY, width, 23);
-        comp.setFont(f_normal);
-        parent.add(comp);
+        return null;
     }
 
-    /*
-     * private void init_old()
-     * {
-     * this.setBounds(150, 150, 300, 150);
-     * JPanel a = new JPanel(new GridLayout(0, 1));
-     * a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
-     * a.add(new JLabel(m_ic.getMessage("BG") + ":", SwingConstants.RIGHT));
-     * a.add(new JLabel(dataAccess.getSettings().getIns1Abbr() + ":",
-     * SwingConstants.RIGHT));
-     * a.add(new JLabel(m_ic.getMessage("ACT") + ":", SwingConstants.RIGHT));
-     * JPanel b = new JPanel(new GridLayout(0, 1));
-     * DateField = new JTextField(10);
-     * if (sDate != null)
-     * {
-     * DateField.setText(sDate);
-     * DateField.setEditable(false);
-     * }
-     * b.add(DateField);
-     * b.add(BGField = new JTextField());
-     * components[1] = BGField;
-     * BGField.addKeyListener(this);
-     * b.add(Ins1Field = new JTextField());
-     * components[3] = Ins1Field;
-     * Ins1Field.addKeyListener(this);
-     * b.add(ActField = new JTextField());
-     * components[5] = ActField;
-     * ActField.addKeyListener(this);
-     * JPanel c = new JPanel(new GridLayout(0, 1));
-     * c.add(new JLabel(m_ic.getMessage("TIME") + ":", SwingConstants.RIGHT));
-     * c.add(new JLabel(m_ic.getMessage("BU") + ":", SwingConstants.RIGHT));
-     * c.add(new JLabel(dataAccess.getSettings().getIns2Abbr() + ":",
-     * SwingConstants.RIGHT));
-     * c.add(new JLabel(m_ic.getMessage("COMMENT") + ":",
-     * SwingConstants.RIGHT));
-     * JPanel d = new JPanel(new GridLayout(0, 1));
-     * d.add(TimeField = new JTextField(10));
-     * components[0] = TimeField;
-     * TimeField.addKeyListener(this);
-     * d.add(BUField = new JTextField());
-     * components[2] = BUField;
-     * BUField.addKeyListener(this);
-     * d.add(Ins2Field = new JTextField());
-     * components[4] = Ins2Field;
-     * Ins2Field.addKeyListener(this);
-     * d.add(CommentField = new JTextField());
-     * components[6] = CommentField;
-     * CommentField.addKeyListener(this);
-     * Box e = Box.createHorizontalBox();
-     * e.add(a);
-     * e.add(b);
-     * e.add(c);
-     * e.add(d);
-     * Box g = Box.createHorizontalBox();
-     * AddButton = new JButton(m_ic.getMessage("OK"));
-     * components[7] = AddButton;
-     * AddButton.addKeyListener(this);
-     * AddButton.setActionCommand("ok");
-     * AddButton.addActionListener(this);
-     * g.add(Box.createHorizontalGlue());
-     * getRootPane().setDefaultButton(AddButton);
-     * g.add(AddButton);
-     * JButton CloseButton = new JButton(m_ic.getMessage("CANCEL"));
-     * components[8] = CloseButton;
-     * CloseButton.addKeyListener(this);
-     * CloseButton.setActionCommand("close");
-     * CloseButton.addActionListener(this);
-     * g.add(Box.createHorizontalStrut(10));
-     * g.add(CloseButton);
-     * g.add(Box.createHorizontalGlue());
-     * this.getContentPane().add(g, BorderLayout.SOUTH);
-     * getContentPane().add(e, BorderLayout.NORTH);
-     * getContentPane().add(g, BorderLayout.SOUTH);
-     * }
-     */
-
-    /**
-     * Invoked when an action occurs.
-     */
-    public void actionPerformed(ActionEvent e)
+    @Override
+    public Component getComponent()
     {
-        String action = e.getActionCommand();
-
-        if (action.equals("cancel"))
-        {
-            this.dispose();
-        }
-        else if (action.equals("ok"))
-        {}
-
+        return null;
     }
 
-    /**
-     * Was Action Successful
-     * 
-     * @return true if action was succesful (dialog closed with OK)
-     */
-    public boolean actionSuccessful()
-    {
-        return m_actionDone;
-    }
 }

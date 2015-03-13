@@ -9,8 +9,6 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.device.AbstractPump;
 
-import java.util.Hashtable;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -105,7 +103,7 @@ public abstract class InsuletPump extends AbstractPump
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
     /**
@@ -194,15 +192,7 @@ public abstract class InsuletPump extends AbstractPump
         return null;
     }
 
-    /**
-     * getConnectionProtocol - returns id of connection protocol
-     * 
-     * @return id of connection protocol
-     */
-    public int getConnectionProtocol()
-    {
-        return 0;
-    }
+
 
     /**
      * Is Device Communicating
@@ -233,9 +223,9 @@ public abstract class InsuletPump extends AbstractPump
      * @return
      */
     @Override
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+        return DownloadSupportType.NoDownloadSupport;
     }
 
 }

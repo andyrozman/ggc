@@ -64,7 +64,25 @@ II. SORTED BY VERSION  (Updated 2.5.2012)
 ===========================================
 
 
-Version 0.6 [4.6.2013]
+Version 0.6 [4.4.2015]
+------------
+
+* Plugin base:   - Device V2 Framework integration and tests
+
+
+* Pumps:  + Animas Pump
+
+* CGMS:   - Animas Pump/Dexcom
+          + Dexcom
+
+* Core:  - Stocks
+         - Db Update (via Hibernate method)
+
+
+
+
+
+Version 0.7 [25.12.2015]
 ------------
 
 * Core:   
@@ -104,7 +122,9 @@ Version 0.6 [4.6.2013]
 * External foods database
 
 * Java Help - Write help pages II. (finish EN) [1.0] 
-            - Load from language jar  [1.0] 
+            - Load from language jar  [1.0]
+
+* Update for Database IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 Bugs:
@@ -117,7 +137,7 @@ Bugs:
 We plan to change version to 1.0, when all entries specified with [1.0] are finished.
 
 
-Version 0.7
+Version 0.8
 -------------
 * GGC Little
 * Server Error Resolution (exceptions thrown by application, that help can be found on internet).
@@ -140,6 +160,12 @@ Version 0.7
 * Import of data from SiDiary Desktop application. SiDiary has its sister 
     applications running on many small devices (PocketPC, Palms, SmartPhones, 
     Java Phones), and it has import for a lot of Meters and also some pumps...
+
+----
+
+
+
+
 
 
 1.0 Milestones
@@ -226,15 +252,27 @@ Level 6 (IN NEAR FUTURE):
 * I18n Language: Slovenian (work in progress 74% done)
 
 
-* I18n Language: French 
 * I18n Language: Italian
 
 
-
+SUPPORTED:
+* I18n Language: French
 
 
 
       
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -479,6 +517,7 @@ STOPED SUB-TASKS
     o File
     o MySQL
     o HSQL
+
 
 
 

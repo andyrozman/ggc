@@ -27,6 +27,7 @@
 
 package ggc.gui.dialogs.graphs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.data.GlucoValues;
 import ggc.core.data.graph.DataPlotSelectorPanel;
 import ggc.core.util.DataAccess;
@@ -102,7 +103,7 @@ public class CourseGraphDialog extends JDialog implements ActionListener, HelpCa
         this.m_ic = da.getI18nControlInstance();
 
         setSize(700, 550);
-        m_da.centerJDialog(this, da.getMainParent());
+        ATSwingUtils.centerJDialog(this, da.getMainParent());
 
         cGV = new CourseGraphView();
         getContentPane().add(cGV, BorderLayout.CENTER);
@@ -129,21 +130,21 @@ public class CourseGraphDialog extends JDialog implements ActionListener, HelpCa
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        help_button = m_da.createHelpButtonBySize(120, 25, this);
+        help_button = ATSwingUtils.createHelpButtonBySize(120, 25, this, m_da);
         buttonPanel.add(help_button);
 
         // Dimension dim = new Dimension(80, 20);
         Dimension dim = new Dimension(120, 25);
         JButton drawButton = new JButton("    " + m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
-        drawButton.setIcon(m_da.getImageIcon_22x22("paint.png", this));
+        drawButton.setIcon(ATSwingUtils.getImageIcon_22x22("paint.png", this, m_da));
         drawButton.setActionCommand("draw");
         drawButton.addActionListener(this);
 
         JButton closeButton = new JButton("    " + m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
         closeButton.setActionCommand("close");
-        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        closeButton.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
         closeButton.addActionListener(this);
         buttonPanel.add(drawButton);
         buttonPanel.add(closeButton);

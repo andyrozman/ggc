@@ -44,7 +44,7 @@ public class HomeDiagnostic extends AbstractDeviceCompany
                 "Home Diagnostic", // company name (full)
                 "Home Diagnostic", // short company name
                 "HOMEDIAGNOSTIC_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                DeviceImplementationStatus.NotPlanned, DataAccessMeter.getInstance()); // implementation
                                                                                                        // status
     }
 

@@ -1,5 +1,6 @@
 package ggc.gui.little;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
@@ -319,7 +320,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
         if (icon_small != null)
         {
-            action.putValue(Action.SMALL_ICON, m_da.getImageIcon(icon_small, 24, 24, this));
+            action.putValue(Action.SMALL_ICON, ATSwingUtils.getImageIcon(icon_small, 24, 24, this, m_da));
         }
 
         // this.toolBar.add(action);
@@ -362,7 +363,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     /*
      * private JMenuItem addMenuItem(JMenu menu, Action action) { JMenuItem item
      * = menu.add(action);
-     * KeyStroke keystroke = (KeyStroke)action.getValue(Action.ACCELERATOR_KEY);
+     * KeyStroke keystroke = (KeyStroke)action.getCode(Action.ACCELERATOR_KEY);
      * if (keystroke != null) item.setAccelerator(keystroke); return item; }
      */
     /*
@@ -378,7 +379,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
         button.setPreferredSize(new Dimension(28, 28));
 
-        // button.setIcon((ImageIcon)action.getValue(Action.SMALL_ICON));
+        // button.setIcon((ImageIcon)action.getCode(Action.SMALL_ICON));
         /*
          * button.addMouseListener(new MouseListener() { public void
          * mouseEntered(MouseEvent e) { if (button.isEnabled()) {

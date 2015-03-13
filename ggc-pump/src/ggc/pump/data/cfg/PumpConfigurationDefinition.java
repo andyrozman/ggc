@@ -4,6 +4,7 @@ import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.pump.device.DummyPump;
 import ggc.pump.manager.PumpManager;
 
+import java.util.List;
 import java.util.Vector;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -83,9 +84,9 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
      * 
      * @return
      */
-    public Vector<? extends SelectableInterface> getSupportedDevices()
+    public List<SelectableInterface> getSupportedDevices()
     {
-        return PumpManager.getInstance().getSupportedDevices();
+        return PumpManager.getInstance().getSupportedDevicesForSelector(); //.getSupportedDevices();
     }
 
     /**
@@ -96,6 +97,18 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
     public String getHelpPrefix()
     {
         return "PumpTool_";
+    }
+
+    public Object getSpecificDeviceInstance(String company, String deviceName)
+    {
+        Object device = PumpManager.getInstance().getDeviceV2(company, deviceName);
+
+        if (device==null)
+        {
+            device = PumpManager.getInstance().getDeviceV1(company, deviceName);
+        }
+
+        return device;
     }
 
 }

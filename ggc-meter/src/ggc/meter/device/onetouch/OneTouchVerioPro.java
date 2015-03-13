@@ -10,6 +10,7 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.IOException;
@@ -344,7 +345,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
             System.out.println("PC-> read record 501 to receive nr");
 
-            write(hex_utils.reconvert(rec_bef + "F5" + "01" + rec_af));
+//            write(hex_utils.reconvert(rec_bef + "F5" + "01" + rec_af));
 
             reta = this.readLineBytes();
             reta = hex_utils.getByteSubArray(reta, 6 + 5, 3, 2);
@@ -407,7 +408,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
         this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_SW_VERSION"));
 
-        write(hex_utils.reconvert(read_sw_ver_create));
+//        write(hex_utils.reconvert(read_sw_ver_create));
 
         String sw_dd = tryToConvert(this.readLineBytes(), 6 + 6, 3, false);
 
@@ -438,7 +439,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
          * "03" + "9B" + "EA"; // ETX CRC-L CRC-H
          */
 
-        write(hex_utils.reconvert(read_serial_nr));
+//        write(hex_utils.reconvert(read_serial_nr));
 
         String sn = tryToConvert(this.readLineBytes(), 6 + 5, 3, false);
 
@@ -476,15 +477,15 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         System.out.println("PC-> Disconnect");
         String disconect = "02" + "06" + "08" + "03" + "C2" + "62";
 
-        write(hex_utils.reconvert(disconect));
+//        write(hex_utils.reconvert(disconect));
 
-        System.out.println("Disconected and acknowledged: " + this.readLine());
+//        System.out.println("Disconected and acknowledged: " + this.readLine());
     }
 
     private void cmdAcknowledge() throws IOException
     {
         // System.out.println("PC-> Acknowledge");
-        write(hex_utils.reconvert(ack_pc));
+//        write(hex_utils.reconvert(ack_pc));
 
     }
 
@@ -583,7 +584,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         create_question += crc_ret.substring(0, 2).toUpperCase();
 
         // System.out.println("PC-> Req: " + create_question);
-        write(hex_utils.reconvert(create_question));
+//        write(hex_utils.reconvert(create_question));
 
         /*
          * if (number==1)
@@ -793,16 +794,15 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     public DeviceImplementationStatus getImplementationStatus()
     {
         // TODO Auto-generated method stub
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return DeviceConnectionProtocol.USB_Hid;
     }
 
-    @Override
+
     public void initializeUsbSettings()
     {
         // TODO Auto-generated method stub

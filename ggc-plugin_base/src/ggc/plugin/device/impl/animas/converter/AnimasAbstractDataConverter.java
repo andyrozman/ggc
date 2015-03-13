@@ -46,7 +46,7 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
     private boolean inDataProcessingPacket = false;
 
 
-    public AnimasAbstractDataConverter(AnimasDeviceReader deviceReader, AnimasDeviceData data)
+    public AnimasAbstractDataConverter(AnimasDeviceReader deviceReader)
     {
         this.deviceReader = deviceReader;
     }
@@ -255,23 +255,11 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
 
     private void decodeSerialNumber(AnimasDevicePacket packet)
     {
-        String serialRaw = "";
+        String rawData = getStringFromPacket(packet, 6, 16);
 
-        for (int j = 6; j <= 16; j++)
-        {
-            short ch = packet.getReceivedDataBit(j);
+        String serialNumber = rawData.substring(8, 10) + "-" + rawData.substring(0, 8);
 
-            if ((ch >= 32) && (ch <= 126))
-            {
-                serialRaw += ch;
-            }
-            else
-            {
-                serialRaw += "?";
-            }
-        }
-
-        getData().pumpInfo.serialNumber = serialRaw.substring(8, 10) + "-" + serialRaw.substring(0, 8);
+        getData().setSerialNumber(serialNumber);
     }
 
 
@@ -347,18 +335,8 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
 
     private void decodeSoftwareCode(AnimasDevicePacket packet)
     {
-        String swCode = "";
-
-        for (int j = 6; j <= (packet.dataReceivedLength); j++)
-        {
-            short ch = packet.getReceivedDataBit(j);
-            if ((ch != 0) && (ch >= 32) && (ch <= 126))
-            {
-                swCode += (char) ch;
-            }
-        }
-
-        this.getData().pumpInfo.softwareCode = swCode;
+        String swCode = getStringFromPacket(packet, 6, packet.dataReceivedLength-6);
+        this.getData().setSoftwareCode(swCode);
     }
 
 
@@ -370,9 +348,9 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
 
     // UTILS
 
-    protected boolean getBooleanValue(short s)
+    protected Boolean getBooleanValue(short s)
     {
-        return (s == 1);
+        return (s == 1) ? Boolean.TRUE : Boolean.FALSE;
     }
 
 
@@ -382,7 +360,7 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
 
         for (int j = startBit; j <= (startBit + length); j++)
         {
-            if (adp.getReceivedDataBit(j) != 0)
+            if ((adp.getReceivedDataBit(j) != 0) && (adp.getReceivedDataBit(j) >= 32) && (adp.getReceivedDataBit(j) <= 126))
             {
                 receivedString += (char) adp.getReceivedDataBit(j);
             }
@@ -394,13 +372,7 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
 
     protected ATechDate calculateTimeFromTimeSet(int timeSet)
     {
-        int timeMin = timeSet * 30;
-
-        int hour = timeMin / 60;
-
-        long timeFull = hour * 100L + timeMin % 60;
-
-        return new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, timeFull);
+        return AnimasUtils.calculateTimeFromTimeSet(timeSet);
     }
 
 

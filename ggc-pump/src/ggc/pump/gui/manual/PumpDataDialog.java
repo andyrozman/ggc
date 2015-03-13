@@ -1,5 +1,6 @@
 package ggc.pump.gui.manual;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -211,6 +212,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     private void init()
     {
+        ATSwingUtils.initLibrary();
 
         setTitle(new GregorianCalendar());
         this.m_db = m_da.getDb();
@@ -218,7 +220,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         m_da.addComponent(this);
 
         setSize(700, 470);
-        m_da.centerJDialog(this, parent);
+        ATSwingUtils.centerJDialog(this, parent);
 
         // setBounds(150, 150, 550, 500);
 
@@ -383,14 +385,14 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
         JButton tButton = new JButton("  " + m_ic.getMessage("GRAPH"));
         tButton.setPreferredSize(dim);
-        tButton.setIcon(m_da.getImageIcon_22x22("course.png", this));
+        tButton.setIcon(ATSwingUtils.getImageIcon_22x22("course.png", this, m_da));
         // tButton.setMaximumSize(dim);
         tButton.setActionCommand("show_daily_graph");
         tButton.addActionListener(this);
 
         EntryBox1.add(tButton);
 
-        help_button = m_da.createHelpButtonBySize(110, 25, this);
+        help_button = ATSwingUtils.createHelpButtonBySize(110, 25, this, m_da);
 
         EntryBox1.add(help_button);
 
@@ -401,28 +403,28 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
         JButton addButton = new JButton("  " + m_ic.getMessage("ADD"));
         addButton.setPreferredSize(dim);
-        addButton.setIcon(m_da.getImageIcon_22x22("table_add.png", this));
+        addButton.setIcon(ATSwingUtils.getImageIcon_22x22("table_add.png", this, m_da));
         addButton.setActionCommand("add_row");
         addButton.addActionListener(this);
         EntryBox.add(addButton);
 
         JButton editButton = new JButton("  " + m_ic.getMessage("EDIT"));
         editButton.setPreferredSize(dim);
-        editButton.setIcon(m_da.getImageIcon_22x22("table_edit.png", this));
+        editButton.setIcon(ATSwingUtils.getImageIcon_22x22("table_edit.png", this, m_da));
         editButton.setActionCommand("edit_row");
         editButton.addActionListener(this);
         EntryBox.add(editButton);
 
         JButton delButton = new JButton("  " + m_ic.getMessage("DELETE"));
         delButton.setPreferredSize(dim);
-        delButton.setIcon(m_da.getImageIcon_22x22("table_delete.png", this));
+        delButton.setIcon(ATSwingUtils.getImageIcon_22x22("table_delete.png", this, m_da));
         delButton.setActionCommand("delete_row");
         delButton.addActionListener(this);
         EntryBox.add(delButton);
 
         saveButton = new JButton("  " + m_ic.getMessage("CLOSE"));
         saveButton.setPreferredSize(dim);
-        saveButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        saveButton.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
         saveButton.setActionCommand("close");
         saveButton.addActionListener(this);
         EntryBox.add(saveButton);

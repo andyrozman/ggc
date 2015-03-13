@@ -47,7 +47,7 @@ public class Dexcom extends AbstractDeviceCompany
                 "Dexcom", // company name (full)
                 "Dexcom", // short company name
                 "DEXCOM_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL, DataAccessCGMS.getInstance()); // implementation
+                DeviceImplementationStatus.Partitial, DataAccessCGMS.getInstance()); // implementation
                                                                                                     // status
 
         this.addDevice(new DexcomSeven(this));

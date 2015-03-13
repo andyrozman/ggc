@@ -47,7 +47,7 @@ public enum AnimasDataType implements CodeEnum
             Arrays.asList(AnimasDeviceType.Animas_Family_Pre2200)),
 
     // 21 - 26
-    BolusHistory(21, "Bolus History", true, 600, AnimasTransferType.DownloadPumpData), //
+    BolusHistory(21, "Bolus History", true, 500, AnimasTransferType.DownloadPumpData), // 500?
     TotalDailyDoseHistory(22, "Total Daily Dose History", true, 120, AnimasTransferType.DownloadPumpData), //
     AlarmHistory(23, "Alarm History", true, 30, AnimasTransferType.DownloadPumpData), //
     PrimeHistory(24, "Prime History", true, 60, AnimasTransferType.DownloadPumpData), //
@@ -65,9 +65,7 @@ public enum AnimasDataType implements CodeEnum
     DosingSettings(37, "Dosing Settings (pre 2020)", false, 1, AnimasTransferType.DownloadPumpSettings, //
             Arrays.asList(AnimasDeviceType.Animas_Family_Pre2200)), // pre 2002
 
-    // Before2020 - Animas_IR1200, Animas_IR1200p, Animas_IR1250
-
-    BolusHistoryExt(38, "BolusHistoryExt", false, 1, AnimasTransferType.DownloadPumpData, Arrays.asList(//
+    BolusHistoryExt(38, "BolusHistoryExt", false, 500, AnimasTransferType.DownloadPumpData, Arrays.asList(//
             AnimasDeviceType.Animas_Family_2200, //
             AnimasDeviceType.Animas_Family_Ping, //
             AnimasDeviceType.Animas_Family_Vibe)), //
@@ -98,36 +96,52 @@ public enum AnimasDataType implements CodeEnum
         AnimasDeviceType.Animas_Family_Vibe)),
 
 
+    // *****   CGMS   *****
 
-
-    DexcomSettings(42, "Dexcom Setup", false, 1, AnimasTransferType.DownloadCGMSData, //
+    // ** OK **
+    DexcomSettings(42, "Dexcom Settings", false, 1, AnimasTransferType.DownloadCGMSSettings, //
             Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 2a
 
+
+
+    // ***  Prepared
+
+    // NO GGC
     DexcomWarnings(43, "Dexcom CGMS Warnings", false, 33215, AnimasTransferType.DownloadCGMSData, //
             Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 2b
 
-    Dexcom_C3(44, "Dexcom C3", false, 1, AnimasTransferType.DownloadCGMSData, //
-            Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 2c
-
-    DexcomBgHistory(45, "Dexcom CGMS Bg History", false, 48640, AnimasTransferType.DownloadCGMSData, //
+    // NO GGC : BgHistory, BgTransmiterWarnings
+    DexcomBgHistory(45, "Dexcom CGMS Bg History", false, 800, AnimasTransferType.DownloadCGMSData, //
             Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 2d
 
-    // ??
-    Dexcom_C6(46, "Dexcom C6 - 46", false, 33215, AnimasTransferType.DownloadCGMSData, //
-            Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false),
 
-    // ??
-    Dexcom_C7(47, "Dexcom C7 - 46", false, 33215, AnimasTransferType.DownloadCGMSData, //
-            Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false),
+    // *** Not ready (Level 2)
 
-    Dexcom_C5(48, "Dexcom C5 - ?", true, 1, AnimasTransferType.DownloadCGMSData, //
+    // FIXME this is still beeing worked on
+
+
+    // Settings
+
+    Dexcom_C3(44, "Dexcom C3 - ?", false, 1, AnimasTransferType.DownloadCGMSSettingsL2, //
+            Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 2c
+
+    Dexcom_C5(48, "Dexcom C5 - ?", false, 1, AnimasTransferType.DownloadCGMSSettingsL2, //
             Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 30
+
+
+    // Data
+
+    // ??
+    Dexcom_C6(46, "Dexcom C6 - 46", false, 33215, AnimasTransferType.DownloadCGMSSettingsL2, //
+            Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false),
+
+    // ??
+    Dexcom_C7(47, "Dexcom C7 - 47", false, 33215, AnimasTransferType.DownloadCGMSData, //
+            Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false),
+
 
     ;
 
-
-//    private AnimasDataType(int code, String debugDescription, boolean isDateInDataType, int entriesCount,
-//                           AnimasTransferType baseTransferType, List<AnimasDeviceType> allowedDevices, boolean postProcessing)
 
     static HashMap<Integer, AnimasDataType> mappingWithId = new HashMap<Integer, AnimasDataType>();
 
@@ -166,7 +180,7 @@ public enum AnimasDataType implements CodeEnum
     private AnimasDataType(int code, String debugDescription, boolean isDateInDataType, int entriesCount,
                            AnimasTransferType baseTransferType, List<AnimasDeviceType> allowedDevices)
     {
-        this(code, debugDescription, isDateInDataType, entriesCount, baseTransferType, null, false);
+        this(code, debugDescription, isDateInDataType, entriesCount, baseTransferType, allowedDevices, false);
     }
 
 

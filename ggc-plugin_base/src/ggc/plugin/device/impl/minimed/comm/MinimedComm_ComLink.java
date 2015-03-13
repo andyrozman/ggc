@@ -1,6 +1,6 @@
 package ggc.plugin.device.impl.minimed.comm;
 
-import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.MinimedDevice;
 import ggc.plugin.device.impl.minimed.MinimedDeviceUtil;
@@ -1649,16 +1649,12 @@ public class MinimedComm_ComLink extends SerialProtocol implements MinimedComm_I
         return null;
     }
 
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return 0;
+        return DownloadSupportType.NoDownloadSupport;
     }
 
-    @Override
-    public GGCPlugInFileReaderContext[] getFileDownloadTypes()
-    {
-        return null;
-    }
+
 
     public String getIconName()
     {
@@ -1667,7 +1663,7 @@ public class MinimedComm_ComLink extends SerialProtocol implements MinimedComm_I
 
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
 

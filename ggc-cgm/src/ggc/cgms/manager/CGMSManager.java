@@ -5,7 +5,7 @@ import ggc.cgms.device.CGMSDeviceInstanceWithHandler;
 import ggc.cgms.manager.company.Abbott;
 import ggc.cgms.manager.company.Dexcom;
 import ggc.cgms.manager.company.Minimed;
-import ggc.plugin.device.DeviceDefinition;
+import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.manager.DeviceManager;
 
 /**
@@ -86,10 +86,9 @@ public class CGMSManager extends DeviceManager
             CGMSDeviceInstanceWithHandler di = new CGMSDeviceInstanceWithHandler(pdd);
 
             this.supportedDevicesV2.put(di.getCompany().getName() + "_"+ di.getName(), di);
+            this.supportedDevicesForSelector.add(di);
         }
     }
-
-
 
 
 }

@@ -6,6 +6,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.Hashtable;
@@ -104,7 +105,7 @@ public abstract class FreestyleCGMS extends AbstractCGMS
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
     /**
@@ -260,9 +261,9 @@ public abstract class FreestyleCGMS extends AbstractCGMS
      * 
      * @return id of connection protocol
      */
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return 0;
+        return DeviceConnectionProtocol.None;
     }
 
     /**

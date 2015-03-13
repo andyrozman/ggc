@@ -4,6 +4,7 @@ import ggc.meter.device.DummyMeter;
 import ggc.meter.manager.MeterManager;
 import ggc.plugin.cfg.DeviceConfigurationDefinition;
 
+import java.util.List;
 import java.util.Vector;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -83,9 +84,9 @@ public class MeterConfigurationDefinition implements DeviceConfigurationDefiniti
      * 
      * @return
      */
-    public Vector<? extends SelectableInterface> getSupportedDevices()
+    public List<SelectableInterface> getSupportedDevices()
     {
-        return MeterManager.getInstance().getSupportedDevices();
+        return MeterManager.getInstance().getSupportedDevicesForSelector();
     }
 
     /**
@@ -98,4 +99,16 @@ public class MeterConfigurationDefinition implements DeviceConfigurationDefiniti
         return "MeterTool_";
     }
 
+
+    public Object getSpecificDeviceInstance(String company, String deviceName)
+    {
+        Object device = MeterManager.getInstance().getDeviceV2(company, deviceName);
+
+        if (device==null)
+        {
+            device = MeterManager.getInstance().getDeviceV1(company, deviceName);
+        }
+
+        return device;
+    }
 }

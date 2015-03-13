@@ -49,7 +49,6 @@ public class MeterValuesTableModel extends DeviceValuesTableModel // extends
      * Constructor
      * 
      * @param ddh DeviceDataHandler instance
-     * @param source 
      */
     public MeterValuesTableModel(DeviceDataHandler ddh, String source)
     {
@@ -195,14 +194,14 @@ public class MeterValuesTableModel extends DeviceValuesTableModel // extends
             /*
              * if (!ddee)
              * {
-             * //System.out.println("Old data: " + this.m_ddh.getOldData());
-             * log.debug("Old data: " + this.m_ddh.getOldData());
+             * //System.out.println("Old data: " + this.deviceDataHandler.getOldData());
+             * log.debug("Old data: " + this.deviceDataHandler.getOldData());
              * ddee = true;
              * }
              */
 
             // System.out.println("Old data found !  Size: " +
-            // this.m_ddh.getOldData().size());
+            // this.deviceDataHandler.getOldData().size());
             System.out.println("MVE: " + mve.getSpecialId());
 
             if (!this.m_ddh.getOldData().containsKey("" + mve.getSpecialId()))
@@ -220,7 +219,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel // extends
 
                 MeterValuesEntry mve_old = (MeterValuesEntry) this.m_ddh.getOldData().get(mve.getSpecialId());
 
-                // DayValueH gvh = (DayValueH)this.m_ddh.getOldData().get("" +
+                // DayValueH gvh = (DayValueH)this.deviceDataHandler.getOldData().get("" +
                 // dt);
 
                 // int vl =
@@ -255,14 +254,14 @@ public class MeterValuesTableModel extends DeviceValuesTableModel // extends
         }
 
         /*
-         * if (this.m_ddh.hasOldData())
+         * if (this.deviceDataHandler.hasOldData())
          * {
          * // System.out.println("oldData != null");
          * long dt = mve.getDateTime(); //.getATDateTimeAsLong();
          * // System.out.println("Dt='" + dt + "'");
          * // System.out.println("Found: " +
-         * this.m_ddh.getOldData().containsKey("" + dt));
-         * if (!this.m_ddh.getOldData().containsKey("" + dt))
+         * this.deviceDataHandler.getOldData().containsKey("" + dt));
+         * if (!this.deviceDataHandler.getOldData().containsKey("" + dt))
          * {
          * // System.out.println("not Contains");
          * mve.setStatus(DeviceValuesEntry.STATUS_NEW);
@@ -272,7 +271,7 @@ public class MeterValuesTableModel extends DeviceValuesTableModel // extends
          * {
          * MeterValuesEntry mve2 = (MeterValuesEntry)mve;
          * // System.out.println("Found !!!");
-         * DayValueH gvh = (DayValueH)this.m_ddh.getOldData().get("" + dt);
+         * DayValueH gvh = (DayValueH)this.deviceDataHandler.getOldData().get("" + dt);
          * int vl = Integer.parseInt(mve2.getBGValue(OutputUtil.BG_MGDL));
          * //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
          * if (gvh.getBg()==vl)

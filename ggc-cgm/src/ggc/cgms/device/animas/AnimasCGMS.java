@@ -89,12 +89,6 @@ public abstract class AnimasCGMS extends AbstractCGMS
     }
 
 
-    public int getDownloadSupportType()
-    {
-        return 0;
-    }
-
-
     public GGCPlugInFileReaderContext[] getFileDownloadTypes()
     {
         return null;

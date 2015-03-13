@@ -58,13 +58,16 @@ public enum CGMSBaseDataType implements CodeEnumWithTranslation
 
     None(0, "NONE"), //
     SensorReading(1, "CGMS_READING"), //
-    MeterCalibration(2, "CALIBRATION_READINGS"), //
+    SensorCalibration(2, "CALIBRATION_READINGS"), //
     DeviceAlarm(3, "CGMS_DATA_ALARM"), //
     DeviceEvent(4, "CGMS_DATA_EVENT"), //
     DeviceError(5, "CGMS_DATA_ERROR"), //
     SensorReadingTrend(6, "CGMS_READING_TREND"), //
+    TransmiterEvent(7, "CGMS_TRANSMITER_EVENT")
 
     ;
+
+            ;
 
 
     static Hashtable<String, CGMSBaseDataType> translationMapping = new Hashtable<String, CGMSBaseDataType>();

@@ -224,15 +224,13 @@ public class Minimed515 extends Minimed512
     }
 
     /**
-     * Get Download Support Type
-     * 
-     * @return
+     * @{InheritDocs}
      */
-    @Override
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+        return DownloadSupportType.NoDownloadSupport; // .DOWNLOAD_FROM_DEVICE_FILE;
     }
+
 
     /**
      * How Many Months Of Data Stored

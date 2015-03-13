@@ -1,6 +1,5 @@
 package ggc.pump.device.deltec;
 
-import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -140,7 +139,7 @@ public class DeltecCosmo1800 extends DeltecPump
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return DeviceImplementationStatus.NotPlanned;
     }
 
     /**
@@ -159,17 +158,6 @@ public class DeltecCosmo1800 extends DeltecPump
     public int getMaxMemoryRecords()
     {
         return 0;
-    }
-
-    /**
-     * Get Download Support Type
-     * 
-     * @return
-     */
-    @Override
-    public int getDownloadSupportType()
-    {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
     }
 
     /**

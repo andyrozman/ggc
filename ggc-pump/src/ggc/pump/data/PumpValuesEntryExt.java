@@ -50,7 +50,6 @@ import com.atech.utils.data.ATechDate;
 public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesEntryInterface,
         DatabaseObjectHibernate, GraphValuesCapable
 {
-
     private static final long serialVersionUID = 2300422547257308019L;
 
     DataAccessPump da = DataAccessPump.getInstance();
@@ -61,28 +60,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     private boolean checked = false;
     private int output_type = 0;
 
-    // public boolean checked = false;
-    // public int status = 1; //MeterValuesEntry.
 
-    // pump
-    // long datetime;
-    // .. int base_type;
-    // int sub_type;
-    // String value;
-    // String profile;
-
-    // old
-    /*
-     * public String bg_str;
-     * public int bg_unit;
-     * public boolean checked = false;
-     * //public
-     * public Hashtable<String,String> params;
-     * public int status = 1; //MeterValuesEntry.
-     * public static I18nControl i18nControlAbstract = I18nControl.getInstance();
-     * public String bg_original = null;
-     * public OutputUtil util = new OutputUtil();
-     */
 
     PumpAdditionalDataType pumpAdditionalDataType;
 
@@ -114,8 +92,8 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      */
     public PumpValuesEntryExt(String src)
     {
-        this.source = src;
-        // pumpAdditionalDataType = new PumpAdditionalDataType();
+        this.source = (src==null) ? da.getSourceDevice() : src;
+        this.setPerson_id(da.getCurrentUserIdAsInt());
     }
 
     /**
@@ -130,6 +108,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         this.setId(pd.getId());
         this.setDt_info(pd.getDt_info());
         this.setType(pd.getType());
+
         this.setValue(pd.getValue());
         this.setExtended(pd.getExtended());
         this.setPerson_id(pd.getPerson_id());
@@ -137,6 +116,16 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         this.setChanged(pd.getChanged());
 
     }
+
+    public void setType(int type)
+    {
+        super.setType(type);
+        this.pumpAdditionalDataType = PumpAdditionalDataType.getByCode(type);
+    }
+
+
+
+
 
     /**
      * Has Changed - This is method which is tied only to changes of value or datetime
@@ -151,7 +140,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     /*
      * public void setDateTime(long dt)
      * {
-     * this.datetime = dt;
+     * this.datetime = dt;99999
      * }
      * public long getDateTime()
      * {
@@ -174,31 +163,6 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      */
     public void prepareEntry()
     {
-        /*
-         * if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD)
-         * return;
-         * else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT)
-         * {
-         * //
-         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil
-         * .BG_MGDL)));
-         * this.entry_object.setChanged(System.currentTimeMillis());
-         * // this.entry_object.setComment(createComment());
-         * }
-         * else
-         * {
-         * this.entry_object = new DayValueH();
-         * this.entry_object.setIns1(0);
-         * this.entry_object.setIns2(0);
-         * this.entry_object.setCh(0.0f);
-         * //
-         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil
-         * .BG_MGDL)));
-         * // this.entry_object.setDt_info(this.datetime);
-         * this.entry_object.setChanged(System.currentTimeMillis());
-         * // this.entry_object.setComment(createComment());
-         * }
-         */
     }
 
 
@@ -322,7 +286,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     {
         Transaction tx = sess.beginTransaction();
 
-        PumpDataExtendedH ch = (PumpDataExtendedH) sess.get(PumpDataExtendedH.class, new Long(this.getId()));
+        PumpDataExtendedH ch = (PumpDataExtendedH) sess.get(PumpDataExtendedH.class, this.getId());
         sess.delete(ch);
         tx.commit();
 
@@ -339,7 +303,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
 
         Transaction tx = sess.beginTransaction();
 
-        PumpDataExtendedH ch = (PumpDataExtendedH) sess.get(PumpDataExtendedH.class, new Long(this.getId()));
+        PumpDataExtendedH ch = (PumpDataExtendedH) sess.get(PumpDataExtendedH.class, this.getId());
 
         // TODO: changed check
         // ch.setId(id);
@@ -513,7 +477,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
                 return ic.getMessage("EXT_TYPE_SH");
 
             case 2:
-                return da.getAdditionalTypes().getTypeDescription(this.getType());
+                return PumpAdditionalDataType.getByCode(this.getType());
 
             case 3:
                 return "";
@@ -720,7 +684,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      */
     public String getTypeDesc()
     {
-        return DataAccessPump.getInstance().getAdditionalTypes().getTypeDescription(this.getType());
+        return PumpAdditionalDataType.getByCode(this.getType()).getTranslation();
     }
 
     /**

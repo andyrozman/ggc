@@ -1,5 +1,6 @@
 package ggc.plugin.gui;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.BorderLayout;
@@ -107,7 +108,7 @@ public class AboutBaseDialog extends AboutDialog
 
         int[] sz = m_da.getAboutImageSize();
 
-        JLabel l = new JLabel(new ImageIcon(m_da.getImage(m_da.getAboutImageName(), this).getScaledInstance(sz[0],
+        JLabel l = new JLabel(new ImageIcon(ATSwingUtils.getImage(m_da.getAboutImageName(), this).getScaledInstance(sz[0],
             sz[1] /* 500,125 */, java.awt.Image.SCALE_SMOOTH)));
         p1.add(l, BorderLayout.CENTER);
 

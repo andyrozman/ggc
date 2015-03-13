@@ -2,7 +2,10 @@ package ggc.plugin.data;
 
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
+import ggc.plugin.data.enums.DeviceInterfaceVersion;
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.gui.DeviceDisplayConfigDialog;
 import ggc.plugin.gui.DeviceDisplayDataDialog;
 import ggc.plugin.output.OutputWriter;
@@ -56,8 +59,12 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     protected StatusReporterInterface export_dialog;
     DbDataReadingFinishedInterface m_reading_inst = null;
     protected DeviceValuesTableModel m_model;
-    protected DeviceInterface device_interface;
+    //protected DeviceInterface device_interface;
     protected DeviceValuesTableModel m_dvtm;
+
+    private DeviceInterfaceVersion deviceInterfaceVersion;
+    private DeviceInterface deviceInterfaceV1;
+    private DeviceInstanceWithHandler deviceInterfaceV2;
 
     /**
      * Dialog: Config
@@ -359,25 +366,6 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
 
     // public abstract
 
-    /**
-     * Set Device Interface 
-     * 
-     * @param di
-     */
-    public void setDeviceInterface(DeviceInterface di)
-    {
-        this.device_interface = di;
-    }
-
-    /**
-     * Get Device Interface
-     * 
-     * @return
-     */
-    public DeviceInterface getDeviceInterface()
-    {
-        return this.device_interface;
-    }
 
     /**
      * Set Transfer Type
@@ -438,6 +426,51 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     public void setDeviceValuesTableModel(DeviceValuesTableModel dvtm)
     {
         this.m_dvtm = dvtm;
+    }
+
+    public DeviceInterfaceVersion getDeviceInterfaceVersion()
+    {
+        return deviceInterfaceVersion;
+    }
+
+    public void setDeviceInterfaceVersion(DeviceInterfaceVersion deviceInterfaceVersion)
+    {
+        this.deviceInterfaceVersion = deviceInterfaceVersion;
+    }
+
+    public DeviceInterface getDeviceInterfaceV1()
+    {
+        return deviceInterfaceV1;
+    }
+
+    public void setDeviceInterfaceV1(DeviceInterface deviceInterfaceV1)
+    {
+        this.deviceInterfaceV1 = deviceInterfaceV1;
+    }
+
+    public DeviceInstanceWithHandler getDeviceInterfaceV2()
+    {
+        return deviceInterfaceV2;
+    }
+
+    public void setDeviceInterfaceV2(DeviceInstanceWithHandler deviceInterfaceV2)
+    {
+        this.deviceInterfaceV2 = deviceInterfaceV2;
+    }
+
+
+    public GGCPlugInFileReaderContext[] getFileDownloadTypes(DownloadSupportType downloadSupportType)
+    {
+        if (getDeviceInterfaceV2()!=null)
+        {
+            return getDeviceInterfaceV2().getFileDownloadContext(downloadSupportType);
+        }
+        else if (getDeviceInterfaceV1()!=null)
+        {
+            return getDeviceInterfaceV1().getFileDownloadTypes(downloadSupportType);
+        }
+
+        return null;
     }
 
 }

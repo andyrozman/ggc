@@ -96,8 +96,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
     NumberFormat bg_displayFormat, bg_editFormat;
 
     JComponent components[] = new JComponent[9];
-    Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-    Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
+    //Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+    //Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
     boolean debug = true;
     JButton help_button = null;
@@ -325,7 +325,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         // this was added much later, so GUI won't be rewritten if not necessary
         ATSwingUtils.initLibrary();
 
-        label_title.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label_title.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label_title.setHorizontalAlignment(SwingConstants.CENTER);
         label_title.setBounds(0, 15, 400, 35);
         panel.add(label_title);
@@ -532,7 +532,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
             if (button_icon[k] != null)
             {
-                button.setIcon(m_da.getImageIcon_22x22(button_icon[k], this));
+                button.setIcon(ATSwingUtils.getImageIcon_22x22(button_icon[k], this, m_da));
             }
 
             if (button_coord[i + 3] == 0)
@@ -548,7 +548,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         }
 
-        help_button = m_da.createHelpButtonByBounds(260, next_bottom_y + 102, 110, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(260, next_bottom_y + 102, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
         m_da.enableHelp(this);
 
@@ -574,17 +574,14 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private void addLabel(String text, int posY, JPanel parent)
     {
-        JLabel label = new JLabel(text);
-        label.setBounds(30, posY, 100, 25);
-        label.setFont(f_bold);
-        parent.add(label);
+        addLabel(text, 30, posY, parent);
     }
 
     private void addLabel(String text, int posX, int posY, JPanel parent)
     {
         JLabel label = new JLabel(text);
         label.setBounds(posX, posY, 100, 25);
-        label.setFont(f_bold);
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         parent.add(label);
     }
 
@@ -958,14 +955,14 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         in_action = true;
 
-        // dataAccess.getFloatValue(this.spinner_arr[5].getValue()),
+        // dataAccess.getFloatValue(this.spinner_arr[5].getCode()),
 
         // System.out.println("change event - in action");
 
         if (src.equals(this.spinner_arr[4]))
         {
             // System.out.println("spinner 4: " +
-            // this.spinner_arr[4].getValue());
+            // this.spinner_arr[4].getCode());
 
             // .ftf_bg1.getText().trim().length()
             if (this.m_da.getFloatValue(this.spinner_arr[4].getValue()) == 0.0f)
@@ -977,7 +974,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             }
 
             // System.out.println("focus lost: bg1 (spinner[4]). mg/dL: " +
-            // this.spinner_arr[4].getValue());
+            // this.spinner_arr[4].getCode());
             float val = this.m_da.getFloatValue(this.spinner_arr[4].getValue());
             // dataAccess.getJFormatedTextValueInt(ftf_bg1);
             // float v_2 = dataAccess.getBGValueDifferent(DataAccess.BG_MGDL, val);

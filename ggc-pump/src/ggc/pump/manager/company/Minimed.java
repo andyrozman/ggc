@@ -41,7 +41,7 @@ public class Minimed extends AbstractPumpDeviceCompany
                 "Minimed", // company name (full)
                 "Minimed", // short company name
                 "MINIMED_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE); // implementation
+                DeviceImplementationStatus.NotAvailable); // implementation
                                                                           // status
         /*
          * this.addDevice(new Minimed508(this));

@@ -1,5 +1,6 @@
 package ggc.plugin.list;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.BorderLayout;
@@ -68,9 +69,11 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
         m_dialog = dia;
         m_da = dia.m_da;
 
-        font_big = m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        ATSwingUtils.initLibrary();
+
+        font_big = ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD);
+        font_normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         // createPanel();
         // init();

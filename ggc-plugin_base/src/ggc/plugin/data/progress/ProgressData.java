@@ -7,7 +7,7 @@ public class ProgressData
 {
     private static final Log log = LogFactory.getLog(ProgressData.class);
 
-    private ProgressType currentProgressType;
+    //private ProgressType currentProgressType;
     private int progressStatic;
     private int progressDynamic;
     private int progressStaticPercentage;
@@ -15,16 +15,17 @@ public class ProgressData
     private int progressDynamicMax;
     private int currentProgress;
     private ProgressType baseProgressType;
+    private boolean calculated = false;
 
-    public ProgressType getCurrentProgressType()
-    {
-        return currentProgressType;
-    }
-
-    public void setCurrentProgressType(ProgressType currentProgressType)
-    {
-        this.currentProgressType = currentProgressType;
-    }
+//    public ProgressType getCurrentProgressType()
+//    {
+//        return currentProgressType;
+//    }
+//
+//    public void setCurrentProgressType(ProgressType currentProgressType)
+//    {
+//        this.currentProgressType = currentProgressType;
+//    }
 
     public int getProgressStatic()
     {
@@ -98,7 +99,9 @@ public class ProgressData
 
     public void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd)
     {
-        if (currentProgressType == ProgressType.Static)
+        calculated = false;
+
+        if (progressType == ProgressType.Static)
         {
             progressStatic += progressAdd;
         }
@@ -106,6 +109,8 @@ public class ProgressData
         {
             progressDynamic += progressAdd;
         }
+
+        calculateProgress();
     }
 
     public void configureProgressReporter(ProgressType baseProgressType, int staticProgressPercentage,
@@ -119,12 +124,17 @@ public class ProgressData
 
     public int calculateProgress()
     {
+        if (calculated)
+            return this.currentProgress;
+
         if (baseProgressType == ProgressType.Static)
         {
             double p = this.progressStatic / (this.progressStaticMax * 1.0);
             p *= 100.0;
 
             this.currentProgress = (int) p;
+
+            //System.out.println("Calculate Progress Static: " + p + ", current=" + this.currentProgress);
         }
         else if (baseProgressType == ProgressType.Dynamic)
         {
@@ -159,6 +169,8 @@ public class ProgressData
             // stFull, dyFull, currentProgress));
 
         }
+
+        calculated = true;
 
         return this.currentProgress;
     }

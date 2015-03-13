@@ -405,8 +405,33 @@ public class DeviceConfigEntry
     @Override
     public String toString()
     {
-        return "ds_fix=" + this.ds_fix + ",area=" + this.ds_area + ",winter=" + this.ds_winter_change + ",summer="
-                + this.ds_summer_change;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("DeviceConfigEntry [");
+        sb.append("name=" + this.name + ", ");
+        sb.append("company=" + this.device_company + ", ");
+        sb.append("device=" + this.device_device + ", ");
+
+        sb.append("connection_parameters=" + this.communication_port_raw);
+
+        if (this.dcd.doesDeviceSupportTimeFix())
+        {
+            sb.append(", timezone=" + this.ds_area + ", ");
+            sb.append("timezone_long=" + this.ds_area_long +", ");
+            sb.append("daylightsaving_fix=" + getBoolean(this.ds_fix) + ", ");
+            sb.append("winter_fix=" + getTimeChange(this.ds_winter_change) +", ");
+            sb.append("summer_fix=" + getTimeChange(this.ds_summer_change) );
+        }
+
+
+
+        sb.append("]");
+
+        return sb.toString();
+
+
+        //return "ds_fix=" + this.ds_fix + ",area=" + this.ds_area + ",winter=" + this.ds_winter_change + ",summer="
+        //        + this.ds_summer_change;
     }
 
 }

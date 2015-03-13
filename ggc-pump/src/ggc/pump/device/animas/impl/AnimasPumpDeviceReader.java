@@ -4,7 +4,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.output.OutputWriter;
-import ggc.pump.device.animas.impl.handler.AnimasBaseDataHandler;
+import ggc.pump.device.animas.impl.handler.AnimasBaseDataV2Handler;
 import ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 import ggc.pump.util.DataAccessPump;
@@ -13,9 +13,6 @@ import org.apache.commons.logging.LogFactory;
 
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
-
-
-import java.util.List;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,62 +42,26 @@ import java.util.List;
 
 public class AnimasPumpDeviceReader extends AnimasDeviceReader
 {
-    public static final Log LOG = LogFactory.getLog(AnimasPumpDeviceReader.class);
 
 
     public AnimasPumpDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter) throws PlugInBaseException
     {
         super(portName, animasDevice, outputWriter);
-
         AnimasUtils.setDataAccessInstance(DataAccessPump.getInstance());
     }
 
 
-    public void downloadPumpData() throws PlugInBaseException
+    public void readData() throws PlugInBaseException
     {
-        AnimasBaseDataHandler handler = new AnimasBaseDataHandler(portName, animasDevice, this, outputWriter);
+        AnimasBaseDataV2Handler handler = new AnimasBaseDataV2Handler(portName, animasDevice, this, outputWriter);
         handler.startAction(AnimasTransferType.DownloadPumpData);
     }
 
 
-    public void downloadPumpSettings() throws PlugInBaseException
+    public void readConfiguration() throws PlugInBaseException
     {
-        AnimasBaseDataHandler handler = new AnimasBaseDataHandler(portName, animasDevice, this, outputWriter);
+        AnimasBaseDataV2Handler handler = new AnimasBaseDataV2Handler(portName, animasDevice, this, outputWriter);
         handler.startAction(AnimasTransferType.DownloadPumpSettings);
-
-        AnimasPumpDeviceData data = (AnimasPumpDeviceData) handler.getData();
-
-        data.writeSettings(outputWriter);
     }
-
-
-    public static final void main(String[] args)
-    {
-        // -- PORT Set here
-        String windowsPort = "COM9";
-        String linuxPort = "/dev/ttyUSB0";
-        // --
-
-        String port = windowsPort;
-
-        if (System.getProperty("os.name").toLowerCase().contains("linux"))
-        {
-            port = linuxPort;
-        }
-
-        try
-        {
-            AnimasPumpDeviceReader adr = new AnimasPumpDeviceReader(port, AnimasDeviceType.Animas_Vibe, new ConsoleOutputWriter());
-            adr.downloadPumpData();
-        }
-        catch (Exception ex)
-        {
-
-            System.out.println("Error running AnimasDeviceReader: " + ex.getMessage());
-            ex.printStackTrace();
-        }
-
-    }
-
 
 }

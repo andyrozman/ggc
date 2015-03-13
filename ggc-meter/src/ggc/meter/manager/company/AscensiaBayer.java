@@ -51,7 +51,7 @@ public class AscensiaBayer extends AbstractDeviceCompany
                 "Ascensia/Bayer", // company name (full)
                 "Ascensia", // short company name
                 "ASCENSIA_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_DONE, DataAccessMeter.getInstance()); // implementation
+                DeviceImplementationStatus.Done, DataAccessMeter.getInstance()); // implementation
                                                                                                 // status
 
         this.addDevice(new AscensiaEliteXL(this));

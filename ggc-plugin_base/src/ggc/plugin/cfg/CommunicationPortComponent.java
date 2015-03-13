@@ -1,6 +1,8 @@
 package ggc.plugin.cfg;
 
+import ggc.plugin.data.enums.DeviceInterfaceVersion;
 import ggc.plugin.protocol.ConnectionProtocols;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.event.ActionEvent;
@@ -56,9 +58,14 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
     JTextField tf_port;
     JButton bt_select;
 
-    int m_type = 0;
+    //int m_type = 0;
     JDialog parent;
     DataAccessPlugInBase m_da;
+
+    DeviceInterfaceVersion version;
+
+    //int protocolTypeV1;
+    DeviceConnectionProtocol protocolType;
 
     /**
      * Constructor
@@ -132,11 +139,11 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
          * }
          * else
          */
-        if (m_type == ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE
-                || m_type == ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML
-                || m_type == ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL)
+        if (protocolType == DeviceConnectionProtocol.Serial_USBBridge
+                || protocolType == DeviceConnectionProtocol.MassStorageXML
+                || protocolType == DeviceConnectionProtocol.BlueTooth_Serial)
         {
-            CommunicationPortSelector cps = new CommunicationPortSelector(this.parent, m_da, this.m_type);
+            CommunicationPortSelector cps = new CommunicationPortSelector(this.parent, m_da, this.protocolType);
             if (cps.wasAction())
             {
                 this.tf_port.setText(cps.getSelectedItem());
@@ -146,34 +153,23 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
 
     }
 
+
+
+
     /**
      * Set Protocol
-     * 
+     *
      * @param protocol
      */
-    public void setProtocol(int protocol)
+    public void setProtocol(DeviceConnectionProtocol protocol)
     {
+        this.version = DeviceInterfaceVersion.DeviceInterfaceVersion2;
+
         // New_Item_Edit
-        this.m_type = protocol;
+        this.protocolType = protocol;
         switch (protocol)
         {
-            case ConnectionProtocols.PROTOCOL_NONE:
-                {
-                    label.setText(m_ic.getMessage("COMMUNICATION_PORT") + ":");
-                    setCommunicationPort("");
-                    this.bt_select.setEnabled(false);
-                }
-                break;
-
-            case ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE:
-                {
-                    label.setText(m_ic.getMessage("SERIAL_PORT") + ":");
-                    setCommunicationPort("");
-                    this.bt_select.setEnabled(true);
-                }
-                break;
-
-            case ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML:
+            case MassStorageXML:
                 {
                     label.setText(m_ic.getMessage("MASS_STORAGE_DRIVE") + ":");
                     setCommunicationPort("");
@@ -181,7 +177,8 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
                 }
                 break;
 
-            case ConnectionProtocols.PROTOCOL_BLUETOOTH_SERIAL:
+            case Serial_USBBridge:
+            case BlueTooth_Serial:
                 {
                     label.setText(m_ic.getMessage("SERIAL_PORT") + ":");
                     setCommunicationPort("");
@@ -189,6 +186,7 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
                 }
                 break;
 
+            case None:
             default:
                 {
                     label.setText(m_ic.getMessage("COMMUNICATION_PORT") + ":");
@@ -199,5 +197,6 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
         }
 
     }
+
 
 }

@@ -54,50 +54,21 @@ public class AnimasCGMSDeviceReader extends AnimasDeviceReader
     }
 
 
-    public void downloadCGMSData() throws PlugInBaseException
+    public void readData() throws PlugInBaseException
     {
         AnimasDexcomDataHandler handler = new AnimasDexcomDataHandler(portName, animasDevice, this, outputWriter);
         handler.startAction(AnimasTransferType.DownloadCGMSData);
     }
 
 
-    public void downloadCGMSSettings() throws PlugInBaseException
+    public void readConfiguration() throws PlugInBaseException
     {
         AnimasDexcomDataHandler handler = new AnimasDexcomDataHandler(portName, animasDevice, this, outputWriter);
         handler.startAction(AnimasTransferType.DownloadCGMSSettings);
 
         AnimasCGMSDeviceData data = (AnimasCGMSDeviceData) handler.getData();
 
-        data.writeSettings(outputWriter);
-    }
-
-
-    public static final void main(String[] args)
-    {
-        // -- PORT Set here
-        String windowsPort = "COM9";
-        String linuxPort = "/dev/ttyUSB0";
-        // --
-
-        String port = windowsPort;
-
-        if (System.getProperty("os.name").toLowerCase().contains("linux"))
-        {
-            port = linuxPort;
-        }
-
-        try
-        {
-            AnimasCGMSDeviceReader adr = new AnimasCGMSDeviceReader(port, AnimasDeviceType.Animas_Vibe, new ConsoleOutputWriter());
-            adr.downloadCGMSData();
-        }
-        catch (Exception ex)
-        {
-
-            System.out.println("Error running AnimasDeviceReader: " + ex.getMessage());
-            ex.printStackTrace();
-        }
-
+        //data.writeSettings(outputWriter);
     }
 
 

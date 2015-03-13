@@ -1,11 +1,7 @@
 package ggc.plugin.data;
 
-import com.atech.utils.data.ATechDate;
-import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.util.DataAccess;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.util.ArrayList;
+import ggc.plugin.data.enums.DeviceConfigurationGroup;
 
 /**
  * Created by andy on 29.12.14.
@@ -16,6 +12,21 @@ public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
     String key;
     String value;
     boolean isBg = false;
+    DeviceConfigurationGroup group;
+    int index = 2;
+
+
+    public DeviceValueConfigEntry()
+    {
+    }
+
+    public DeviceValueConfigEntry(DeviceConfigurationGroup group)
+    {
+        this.key = group.getTranslation();
+        this.group = group;
+        this.value = "";
+        this.index = 1;
+    }
 
     public DeviceValueConfigEntry(String key, String value)
     {
@@ -30,6 +41,12 @@ public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
         this.isBg = isBg;
     }
 
+    public DeviceValueConfigEntry(String key, String value, DeviceConfigurationGroup group)
+    {
+        this.key = key;
+        this.value = value;
+        this.group = group;
+    }
 
     public Object getColumnValue(int index)
     {
@@ -37,6 +54,9 @@ public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
         {
             case 1:
                 return this.getDataValue();
+
+            case 2:
+                return this.getIndex();
 
             default:
                 return this.getDataKey();
@@ -51,7 +71,32 @@ public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
 
     public int compare(DeviceValueConfigEntryInterface d1, DeviceValueConfigEntryInterface d2)
     {
-        return (d1.getDataKey().compareTo(d2.getDataKey()));
+        //if (true)
+        //    return 0;
+
+
+        if (d2.getGroup()==d1.getGroup())
+        {
+
+            if (d1.getIndex()==d2.getIndex())
+            {
+                return (d1.getDataKey().compareTo(d2.getDataKey()));
+            }
+            else
+            {
+                return d1.getIndex() - d2.getIndex();
+                //return 0;
+            }
+        }
+        else
+        {
+            //return 0;
+            return d1.getGroup().getCode() - d2.getGroup().getCode();
+        }
+
+
+
+        //return (d1.getDataKey().compareTo(d2.getDataKey()));
     }
 
 
@@ -125,5 +170,20 @@ public class DeviceValueConfigEntry implements DeviceValueConfigEntryInterface
         return this.isBg;
     }
 
+    public DeviceConfigurationGroup getGroup()
+    {
+        return group;
+    }
+
+
+    public void setGroup(DeviceConfigurationGroup group)
+    {
+        this.group = group;
+    }
+
+    public Integer getIndex()
+    {
+        return this.index;
+    }
 
 }

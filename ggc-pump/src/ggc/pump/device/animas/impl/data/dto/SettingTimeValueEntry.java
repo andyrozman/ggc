@@ -1,7 +1,9 @@
 package ggc.pump.device.animas.impl.data.dto;
 
-import ggc.plugin.device.impl.animas.enums.AnimasSettingSubType;
 
+import com.atech.i18n.I18nControlAbstract;
+import ggc.pump.device.animas.impl.data.enums.AnimasBolusSettingSubType;
+import ggc.pump.util.DataAccessPump;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -37,7 +39,7 @@ public class SettingTimeValueEntry
 {
     Log LOG = LogFactory.getLog(SettingTimeValueEntry.class);
 
-    AnimasSettingSubType type;
+    AnimasBolusSettingSubType type;
     ATechDate time;
     int index;
 
@@ -49,31 +51,31 @@ public class SettingTimeValueEntry
     boolean valueTypeShort = true;
     boolean deltaSet = false;
 
-    public SettingTimeValueEntry(AnimasSettingSubType type, int index, ATechDate time, short value)
+    public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, short value)
     {
         this.setBaseData(type, index, time);
         setValuesShort(value, null);
     }
 
-    public SettingTimeValueEntry(AnimasSettingSubType type, int index, ATechDate time, float value)
+    public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, float value)
     {
         this.setBaseData(type, index, time);
         setValuesFloat(value, null);
     }
 
-    public SettingTimeValueEntry(AnimasSettingSubType type, int index, ATechDate time, short value, short delta)
+    public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, short value, short delta)
     {
         this.setBaseData(type, index, time);
         setValuesShort(value, delta);
     }
 
-    public SettingTimeValueEntry(AnimasSettingSubType type, int index, ATechDate time, float value, float delta)
+    public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, float value, float delta)
     {
         this.setBaseData(type, index, time);
         setValuesFloat(value, delta);
     }
 
-    private void setBaseData(AnimasSettingSubType type, int index, ATechDate time)
+    private void setBaseData(AnimasBolusSettingSubType type, int index, ATechDate time)
     {
         this.type = type;
         this.index = index;
@@ -96,18 +98,39 @@ public class SettingTimeValueEntry
         this.deltaSet = (this.valueDeltaFloat != null);
     }
 
+    static String templateNoDeltaMain; // = "From=%s,Amount=<ValueFormat>";
+    static String templateDeltaMain; // = "From=%s,Amount=<ValueFormat>,Delta=<ValueFormat>";
+
+    private void setTranslations()
+    {
+        if (templateNoDeltaMain==null)
+        {
+            I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+
+            templateNoDeltaMain = ic.getMessage("CFG_BASE_FROM") + "=%s, " + ic.getMessage("CFG_BASE_AMOUNT") + "=<ValueFormat>";
+            templateDeltaMain = ic.getMessage("CFG_BASE_FROM") + "=%s, " + ic.getMessage("CFG_BASE_AMOUNT")
+                    + "=<ValueFormat>, " + ic.getMessage("CFG_BASE_DELTA") + "=<ValueFormat>";
+
+
+        }
+    }
+
+
+
     // FIXME use i18nControl
     public String getSettingValue()
     {
-        String templateNoDelta = "From=%s,Amount=<ValueFormat>";
-        String templateDelta = "From=%s,Amount=<ValueFormat>,Delta=<ValueFormat>";
+        setTranslations();
 
-        String template = this.deltaSet ? templateDelta : templateNoDelta;
+        //String templateNoDelta = "From=%s,Amount=<ValueFormat>";
+        //String templateDelta = "From=%s,Amount=<ValueFormat>,Delta=<ValueFormat>";
+
+        String template = this.deltaSet ? templateDeltaMain : templateNoDeltaMain;
 
         if (this.valueTypeShort)
         {
             template = template.replace("<ValueFormat>", "%d");
-            LOG.debug("Template: " + template);
+            //LOG.debug("Template: " + template);
 
             if (valueDeltaShort == null)
             {
@@ -121,7 +144,7 @@ public class SettingTimeValueEntry
         else
         {
             template = template.replace("<ValueFormat>", "%6.4f");
-            LOG.debug("Template: " + template);
+            //LOG.debug("Template: " + template);
 
             if (valueDeltaShort == null)
             {

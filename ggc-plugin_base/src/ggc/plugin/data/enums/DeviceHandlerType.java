@@ -1,57 +1,37 @@
 package ggc.plugin.data.enums;
 
+import ggc.plugin.device.DownloadSupportType;
+
 /**
  * Created by andy on 10.02.15.
  */
 public enum DeviceHandlerType
 {
-    NoHandler(false, false, false, false),
+    NoHandler(DownloadSupportType.NoDownloadSupport),
 
     // Meters
-    AscensiaUsbHandler(true, false, false, false),
+    AscensiaUsbHandler(DownloadSupportType.DownloadData),
 
     // Pumps
-    AnimasV2CGMSHandler(true, true, false, false),
-    AnimasV2PumpHandler(true, true, false, false),
+    AnimasV2PumpHandler(DownloadSupportType.Download_Data_Config),
 
     // CGMSes
+    AnimasV2CGMSHandler(DownloadSupportType.Download_Data_Config),
 
     ;
 
-    boolean downloadData;
-    boolean downloadConfiguration;
-    boolean importDataFile;
-    boolean importConfigFile;
+
+    DownloadSupportType downloadSupportType;
 
 
-    DeviceHandlerType(boolean downloadData, boolean downloadConfiguration, boolean importDataFile, boolean importConfigFile)
+    DeviceHandlerType(DownloadSupportType downloadSupportType)
     {
-        this.downloadData = downloadData;
-        this.downloadConfiguration = downloadConfiguration;
-        this.importDataFile = importDataFile;
-        this.importConfigFile = importConfigFile;
+        this.downloadSupportType = downloadSupportType;
     }
 
-
-
-    public boolean canDownloadData()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return this.downloadData;
-    }
-
-    public boolean canDownloadConfiguration()
-    {
-        return this.downloadConfiguration;
-    }
-
-    public boolean canImportDataFile()
-    {
-        return this.importDataFile;
-    }
-
-    public boolean canImportConfigFile()
-    {
-        return this.importConfigFile;
+        return downloadSupportType;
     }
 
 }

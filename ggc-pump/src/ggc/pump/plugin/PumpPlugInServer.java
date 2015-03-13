@@ -36,6 +36,7 @@ import com.atech.plugin.BackupRestorePlugin;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
+import org.apache.commons.lang.NotImplementedException;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -146,7 +147,6 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
      * Constructor
      * 
      * @param cont
-     * @param selected_lang
      * @param da
      */
     public PumpPlugInServer(Container cont, ATDataAccessLMAbstract da)
@@ -165,53 +165,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public void executeCommand(int command, Object obj_data)
     {
-        switch (command)
-        {
-        /*
-         * case PumpPlugInServer.COMMAND_CONFIGURATION:
-         * {
-         * new DeviceConfigurationDialog((JFrame)this.parent,
-         * DataAccessPump.getInstance());
-         * //new SimpleConfigurationDialog(this.dataAccess);
-         * return;
-         * }
-         * case PumpPlugInServer.COMMAND_PUMPS_LIST:
-         * {
-         * new BaseListDialog((JFrame)this.parent,
-         * DataAccessPump.getInstance());
-         * return;
-         * }
-         * case PumpPlugInServer.COMMAND_ABOUT:
-         * {
-         * new AboutBaseDialog((JFrame)this.parent,
-         * DataAccessPump.getInstance());
-         * return;
-         * }
-         * case PumpPlugInServer.COMMAND_PROFILES:
-         * {
-         * //System.out.println("parent: " + this.parent);
-         * new ProfileSelector(DataAccessPump.getInstance(), this.parent);
-         * return;
-         * }
-         * case PumpPlugInServer.COMMAND_READ_PUMP_DATA:
-         * {
-         * new DeviceInstructionsDialog(DataAccessPump.getInstance(), this);
-         * return;
-         * }
-         * case PumpPlugInServer.COMMAND_MANUAL_ENTRY:
-         * case PumpPlugInServer.COMMAND_ADDITIONAL_DATA:
-         * {
-         * new PumpDataDialog(DataAccessPump.getInstance(), this.parent);
-         * return;
-         * }
-         */
-            default:
-                {
-                    this.featureNotImplemented(commands[command]);
-                    return;
-                }
-        }
-
+        throw new NotImplementedException("This method is no longer used, so it shouldn't be called.");
     }
 
     /**
@@ -254,41 +208,13 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     public void initPlugIn()
     {
         ic = m_da.getI18nControlInstance();
-        // I18nControl.getInstance().setLanguage(this.selected_lang);
-
-        // System.out.println("initPlugIn");
 
         if (da_local == null)
         {
             da_local = DataAccessPump.createInstance(((ATDataAccessLMAbstract) m_da).getLanguageManager());
-            // da_local =
-            // DataAccessPump.createInstance(da_parent..getL).getInstance();
         }
 
         this.initPlugInServer((DataAccess) m_da, da_local);
-
-        /*
-         * da_local.loadManager();
-         * ic_local = da_local.getI18nControlInstance();
-         * da_local.setParentI18nControlInstance(i18nControlAbstract);
-         * //System.out.println(da_local.getI18nControlInstance().toString());
-         * da_local.addComponent(this.parent);
-         * da_local.setHelpContext(this.dataAccess.getHelpContext());
-         * da_local.setPlugInServerInstance(this);
-         * da_local.createDb(dataAccess.getHibernateDb());
-         * da_local.initAllObjects();
-         * da_local.loadSpecialParameters();
-         * da_local.setCurrentUserId(((DataAccess)dataAccess).current_user_id);
-         * da_local.setConfigurationManager(((DataAccess)dataAccess).
-         * getConfigurationManager());
-         * this.backup_restore_enabled = true;
-         * dataAccess.loadSpecialParameters();
-         * //System.out.println("PumpServer: " +
-         * dataAccess.getSpecialParameters().get("BG"));
-         * da_local.setBGMeasurmentType(dataAccess.getIntValueFromString(dataAccess.
-         * getSpecialParameters().get("BG")));
-         * da_local.setGraphConfigProperties(dataAccess.getGraphConfigProperties());
-         */
     }
 
     /**
@@ -302,13 +228,8 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     {
         if (ret_obj_id == PumpPlugInServer.RETURN_OBJECT_DEVICE_WITH_PARAMS)
         {
-            // System.out.println("dataAccess: " + DataAccessPump.getInstance());
-            // System.out.println("dataAccess: getDeviceConfiguration: " +
-            // DataAccessPump.getInstance().getDeviceConfiguration());
-            // System.out.println("dataAccess: getSelectedDevice: " +
-            // DataAccessPump.getInstance().getDeviceConfiguration().getSelectedDeviceInstance());
-
             DataAccessPump da = DataAccessPump.getInstance();
+
             DeviceConfigEntry de = da.getDeviceConfiguration().getSelectedDeviceInstance();
 
             if (de == null)
@@ -416,47 +337,20 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         JMenuItem menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_DATA", "MN_PUMPS_READ_DATA_DESC",
             "pumps_read", this, null, ic_local, DataAccessPump.getInstance(), parent);
 
-        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
-        {
-            menu.setEnabled(true);
-        }
-        else
-        {
-            menu.setEnabled(false);
-        }
-
         menus[0] = menu;
+        menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadData));
 
         menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_CONFIG", "MN_PUMPS_READ_CONFIG_DESC",
             "pumps_read_config", this, null, ic_local, DataAccessPump.getInstance(), parent);
 
-        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE)
-        {
-            menu.setEnabled(true);
-        }
-        else
-        {
-            menu.setEnabled(false);
-        }
-
         menus[1] = menu;
+        menus[1].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadConfig));
 
         menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_FILE", "MN_PUMPS_READ_FILE_DESC",
             "pumps_read_file", this, null, ic_local, DataAccessPump.getInstance(), parent);
 
-        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
-        {
-            menu.setEnabled(true);
-        }
-        else
-        {
-            menu.setEnabled(false);
-        }
-
         menus[2] = menu;
-
-        // TODO remove when enabled
-        // menu.setEnabled(false);
+        menus[2].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
 
         menu_pump.addSeparator();
 
@@ -501,35 +395,9 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
 
     private void refreshMenusAfterConfig()
     {
-        // System.out.println("Dl Status: " + da_local.getDownloadStatus());
-
-        menus[0].setEnabled(ATDataAccessAbstract.isBitwiseSet(da_local.getDownloadStatus(),
-            DownloadSupportType.DOWNLOAD_FROM_DEVICE));
-        menus[1].setEnabled(ATDataAccessAbstract.isBitwiseSet(da_local.getDownloadStatus(),
-            DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE));
-        menus[2].setEnabled(ATDataAccessAbstract.isBitwiseSet(da_local.getDownloadStatus(),
-            DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE));
-
-        /*
-         * if ((da_local.getDownloadStatus() &
-         * DownloadSupportType.DOWNLOAD_FROM_DEVICE) ==
-         * DownloadSupportType.DOWNLOAD_FROM_DEVICE)
-         * menus[0].setEnabled(true);
-         * else
-         * menus[0].setEnabled(false);
-         * if ((da_local.getDownloadStatus() &
-         * DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE) ==
-         * DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE)
-         * menus[1].setEnabled(true);
-         * else
-         * menus[1].setEnabled(false);
-         * if ((da_local.getDownloadStatus() &
-         * DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) ==
-         * DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
-         * menus[2].setEnabled(true);
-         * else
-         * menus[2].setEnabled(false);
-         */
+        menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadData));
+        menus[1].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadConfig));
+        menus[2].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
     }
 
     /**

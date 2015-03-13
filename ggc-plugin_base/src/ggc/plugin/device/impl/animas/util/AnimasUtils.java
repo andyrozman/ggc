@@ -1,7 +1,9 @@
 package ggc.plugin.device.impl.animas.util;
 
+import com.atech.utils.data.ATechDate;
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
 import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 
 import java.math.BigDecimal;
@@ -47,6 +49,7 @@ public class AnimasUtils
     private static ShortUtils shortUtils = new ShortUtils();
     static public HashMap<AnimasDataType, Integer> dataTypeProcessed = new HashMap<AnimasDataType, Integer>();
     static DataAccessPlugInBase dataAccessPlugInBase;
+    static AnimasDeviceData deviceData;
 
 
     public static void sleepInMs(long ms)
@@ -78,6 +81,7 @@ public class AnimasUtils
         return ms;
     }
 
+
     public static String short2decimal(short c, int len)
     {
         String ms = String.format("%" + String.valueOf(len) + "d", new Object[] { Short.valueOf(c) });
@@ -85,10 +89,12 @@ public class AnimasUtils
         return ms;
     }
 
+
     public static void clearDataTypesProcessed()
     {
         dataTypeProcessed.clear();
     }
+
 
     public static void addDataTypeProcessed(AnimasDataType dataType)
     {
@@ -98,10 +104,12 @@ public class AnimasUtils
         }
     }
 
+
     public static boolean wasDataTypeProcessed(AnimasDataType dataType)
     {
         return dataTypeProcessed.containsKey(dataType);
     }
+
 
     public static short getUnsignedShort(short data)
     {
@@ -113,6 +121,7 @@ public class AnimasUtils
         return data;
     }
 
+
     public static short getUnsignedShort(int data)
     {
         if (data < 0)
@@ -122,8 +131,6 @@ public class AnimasUtils
 
         return (short) data;
     }
-
-
 
 
     public static void debugHexData(boolean debugFlag, short[] data, int dataLength, String logFormater, Log log)
@@ -207,6 +214,7 @@ public class AnimasUtils
         }
     }
 
+
     public static boolean checkIfUserRelevantExceptionIsThrown(PlugInBaseException ex, boolean rethrow) throws PlugInBaseException
     {
         if (ex.getExceptionType() != PlugInExceptionType.CommunicationPortClosed)
@@ -223,6 +231,7 @@ public class AnimasUtils
 
         return false;
     }
+
 
     public static short[] calculateFletcher16(char[] chars, int length)
     {
@@ -257,10 +266,12 @@ public class AnimasUtils
         return value;
     }
 
+
     public static int createIntValueThroughMoreBits(short... bits)
     {
         return (int) createLongValueThroughMoreBits(bits);
     }
+
 
     public static BigDecimal createBigDecimalValueThroughMoreBits(short... bits)
     {
@@ -274,5 +285,28 @@ public class AnimasUtils
                 getDecimalNumberFormatedWithDot(value, places, decimalPlaces);
     }
 
+
+    public static ATechDate calculateTimeFromTimeSet(int timeSet)
+    {
+        int timeMin = timeSet * 30;
+
+        int hour = timeMin / 60;
+
+        long timeFull = hour * 100L + timeMin % 60;
+
+        return new ATechDate(ATechDate.FORMAT_TIME_ONLY_MIN, timeFull);
+    }
+
+
+    public static void setAnimasData(AnimasDeviceData deviceData_)
+    {
+        deviceData = deviceData_;
+    }
+
+
+    public static AnimasDeviceData getAnimasData()
+    {
+        return deviceData;
+    }
 
 }

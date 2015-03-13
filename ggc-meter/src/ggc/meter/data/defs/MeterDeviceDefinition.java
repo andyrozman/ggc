@@ -2,9 +2,12 @@ package ggc.meter.data.defs;
 
 import ggc.plugin.data.enums.DeviceCompanyDefinition;
 import ggc.plugin.data.enums.DeviceHandlerType;
-import ggc.plugin.device.DeviceDefinition;
-import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
+import ggc.plugin.data.enums.DevicePortParameterType;
+import ggc.plugin.data.enums.DeviceProgressStatus;
+import ggc.plugin.device.v2.DeviceDefinition;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +19,9 @@ public enum MeterDeviceDefinition implements DeviceDefinition
 {
 
     AscensiaNextUsb(10009, "Ascensia Next USB", "pict", "instr", null,
-            DeviceImplementationStatus.IMPLEMENTATION_IN_PROGRESS, DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler),
-
-
-
-
+            DeviceImplementationStatus.InProgress, DeviceCompanyDefinition.Ascensia,
+            DeviceHandlerType.AscensiaUsbHandler, DevicePortParameterType.SimpleParameter,
+            DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, ""),
 
     ;
 
@@ -53,10 +54,17 @@ public enum MeterDeviceDefinition implements DeviceDefinition
     DeviceImplementationStatus implementationStatus;
     DeviceCompanyDefinition companyDefinition;
     DeviceHandlerType deviceHandlerType;
+    DevicePortParameterType devicePortParameterType;
+    DeviceConnectionProtocol deviceConnectionProtocol;
+    DeviceProgressStatus deviceProgressStatus;
+    String specialComment;
 
 
-
-    private MeterDeviceDefinition(int id, String name, String iconName, String instructions, Object internalDefinition, DeviceImplementationStatus implementationStatus, DeviceCompanyDefinition companyDefinition, DeviceHandlerType deviceHandlerType)
+    private MeterDeviceDefinition(int id, String name, String iconName, String instructions, Object internalDefinition,
+                                  DeviceImplementationStatus implementationStatus, DeviceCompanyDefinition companyDefinition,
+                                  DeviceHandlerType deviceHandlerType,
+                                  DevicePortParameterType portParameterType, DeviceConnectionProtocol connectionProtocol,
+                                  DeviceProgressStatus progressStatus, String specialComment)
     {
         this.deviceId = id;
         this.deviceName = name;
@@ -66,6 +74,11 @@ public enum MeterDeviceDefinition implements DeviceDefinition
         this.implementationStatus = implementationStatus;
         this.companyDefinition = companyDefinition;
         this.deviceHandlerType = deviceHandlerType;
+        this.devicePortParameterType = portParameterType;
+        this.deviceConnectionProtocol = connectionProtocol;
+        this.deviceProgressStatus = progressStatus;
+        this.specialComment = specialComment;
+
     }
 
     public int getDeviceId()
@@ -124,10 +137,55 @@ public enum MeterDeviceDefinition implements DeviceDefinition
         return isSupportedDevice(this);
     }
 
-
     public static boolean isSupportedDevice(MeterDeviceDefinition meterDeviceDefinition)
     {
         return DeviceImplementationStatus.isSupportedDevice(meterDeviceDefinition.getDeviceImplementationStatus());
+    }
+
+    /**
+     * Get Device handler key
+     * @return
+     */
+    public DeviceHandlerType getDeviceHandlerKey()
+    {
+        return this.deviceHandlerType;
+    }
+
+
+    /**
+     * Device Port Parameter Type
+     * @return
+     */
+    public DevicePortParameterType getDevicePortParameterType()
+    {
+        return this.devicePortParameterType;
+    }
+
+    /**
+     * Get Connection Protocol
+     *
+     * @return
+     */
+    public DeviceConnectionProtocol getConnectionProtocol()
+    {
+        return this.deviceConnectionProtocol;
+    }
+
+    /**
+     * Get Device Progress Status. It determines how device progress is determined. In most casess we use Special
+     * progress which is then implemented by Handler.
+     *
+     * @return
+     */
+    public DeviceProgressStatus getDeviceProgressStatus()
+    {
+        return this.deviceProgressStatus;
+    }
+
+
+    public String getSpecialComment()
+    {
+        return this.specialComment;
     }
 
 

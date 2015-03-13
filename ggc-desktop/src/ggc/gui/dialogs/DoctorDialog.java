@@ -187,6 +187,7 @@ public class DoctorDialog extends JDialog implements ActionListener
     private void init()
     {
         ATSwingUtils.initLibrary();
+
         this.f_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
         this.f_bold = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD); // FONT_NORMAL
 
@@ -208,7 +209,7 @@ public class DoctorDialog extends JDialog implements ActionListener
 
         this.getContentPane().add(panel);
 
-        label_title.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label_title.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label_title.setHorizontalAlignment(SwingConstants.CENTER);
         label_title.setBounds(0, 15, 400, 35);
         panel.add(label_title);

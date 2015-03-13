@@ -1,7 +1,8 @@
 package ggc.plugin.device.v2;
 
+import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.data.enums.DeviceHandlerType;
-import ggc.plugin.device.DeviceDefinition;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 
@@ -32,6 +33,8 @@ public interface DeviceHandler
                                   OutputWriter outputWriter) throws PlugInBaseException;
 
 
+
+    GGCPlugInFileReaderContext[] getFileDownloadContext(DownloadSupportType downloadSupportType);
 
 
 }

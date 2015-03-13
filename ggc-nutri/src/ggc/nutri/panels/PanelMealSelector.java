@@ -1,5 +1,6 @@
 package ggc.nutri.panels;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 import ggc.nutri.db.datalayer.MealNutrition;
@@ -70,11 +71,11 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
     DataAccessNutri m_da = null;
 
     Font font_big, font_normal, font_normal_b;
-    JLabel label, label_refuse, label_name, label_name_i18n;
+    JLabel label; //, label_refuse, label_name, label_name_i18n;
     JLabel label_title;
     JButton button, button_select, help_button;
-    JTextField tf_name, tf_name_i18n, tf_name_i18n_key, tf_group;
-    JTextArea jta_desc;
+    //JTextField tf_name, tf_name_i18n, tf_name_i18n_key, tf_group;
+    //JTextArea jta_desc;
     JTable table_1, table_2 = null;
     JScrollPane scroll_1, scroll_2 = null;
     JDialog m_dialog;
@@ -110,13 +111,15 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         m_da = DataAccessNutri.getInstance();
         ic = m_da.getI18nControlInstance();
 
+        ATSwingUtils.initLibrary();
+
         // this.mpd = new MealFoodDisplay(i18nControlAbstract);
         this.dfed = new DailyFoodEntryDisplay(ic);
         this.mnd = new MealNutritionsDisplay(ic);
 
-        font_big = m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        font_big = ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD);
+        font_normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         this.meals_ids = meals_ids;
 
@@ -255,7 +258,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
         scroll_1.updateUI();
 
-        this.button = new JButton(new ImageIcon(m_da.getImage("/icons/food_add.gif", this)));
+        this.button = new JButton(new ImageIcon(ATSwingUtils.getImage("/icons/food_add.gif", this)));
         // this.button.addActionListener(this);
         this.button.addActionListener(this);
         this.button.setActionCommand("add_food");
@@ -263,7 +266,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         this.button.setBounds(370, 95, 32, 32);
         this.add(button, null);
 
-        this.button = new JButton(new ImageIcon(m_da.getImage("/icons/food_edit.gif", this)));
+        this.button = new JButton(new ImageIcon(ATSwingUtils.getImage("/icons/food_edit.gif", this)));
         this.button.addActionListener(this);
         // this.button.addActionListener(this);
         this.button.setActionCommand("edit_food");
@@ -271,7 +274,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         this.button.setBounds(410, 95, 32, 32);
         this.add(button, null);
 
-        this.button = new JButton(new ImageIcon(m_da.getImage("/icons/food_delete.gif", this)));
+        this.button = new JButton(new ImageIcon(ATSwingUtils.getImage("/icons/food_delete.gif", this)));
         this.button.addActionListener(this);
         // this.button.addActionListener(this);
         this.button.setActionCommand("remove_food");
@@ -303,19 +306,19 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
         JButton button1 = new JButton("  " + ic.getMessage("OK"));
         button1.setActionCommand("ok");
-        button1.setIcon(m_da.getImageIcon_22x22("ok.png", this));
+        button1.setIcon(ATSwingUtils.getImageIcon_22x22("ok.png", this, m_da));
         button1.setBounds(55, 410, 120, 25);
         button1.addActionListener(this.action_listener);
         this.add(button1, null);
 
         button1 = new JButton("  " + ic.getMessage("CANCEL"));
         button1.setActionCommand("cancel");
-        button1.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        button1.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
         button1.setBounds(190, 410, 120, 25);
         button1.addActionListener(this.action_listener);
         this.add(button1);
 
-        this.help_button = m_da.createHelpButtonByBounds(380, 410, 110, 25, this);
+        this.help_button = ATSwingUtils.createHelpButtonByBounds(380, 410, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         this.add(this.help_button);
 
         m_da.enableHelp(this);
@@ -518,7 +521,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
      * this.list_food_entries.get(i).getDailyFoodEntry().getMultiplier();
      * System.out.println("Multiplier: " + amount);
      * for(int j=0; j<lst.size(); j++) { MealNutrition mn = lst.get(j);
-     * if ((mn.getId()>=4000)) { // TODO: Fix this with usage of new
+     * if ((mn.getId()>=4000)) {
      * GlycemicIndexLoad class
      * // GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, GL_MIN = 4004,
      * GL_MAX = 4005

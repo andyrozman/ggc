@@ -253,7 +253,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         m_da.addComponent(this);
 
         this.setSize(width, height);
-        m_da.centerJDialog(this, this.m_parent);
+        ATSwingUtils.centerJDialog(this, this.m_parent);
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, width, height);
@@ -263,7 +263,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
         this.getContentPane().add(panel);
 
-        label_title.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label_title.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label_title.setHorizontalAlignment(SwingConstants.CENTER);
         label_title.setBounds(0, 15, 400, 35);
         panel.add(label_title);
@@ -312,37 +312,37 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         this.scr_list.setBounds(30, sy + 25, 290, 150);
         panel.add(this.scr_list);
 
-        bt_item_1 = new JButton(m_da.getImageIcon_22x22("folder_add.png", this));
+        bt_item_1 = new JButton(ATSwingUtils.getImageIcon_22x22("folder_add.png", this, m_da));
         bt_item_1.setActionCommand("item_add");
         bt_item_1.addActionListener(this);
         bt_item_1.setBounds(340, sy + 25, 30, 30);
         panel.add(bt_item_1);
 
-        bt_item_2 = new JButton(m_da.getImageIcon_22x22("folder_edit.png", this));
+        bt_item_2 = new JButton(ATSwingUtils.getImageIcon_22x22("folder_edit.png", this, m_da));
         bt_item_2.setActionCommand("item_edit");
         bt_item_2.addActionListener(this);
         bt_item_2.setBounds(340, sy + 65, 30, 30);
         panel.add(bt_item_2);
 
-        bt_item_3 = new JButton(m_da.getImageIcon_22x22("folder_delete.png", this));
+        bt_item_3 = new JButton(ATSwingUtils.getImageIcon_22x22("folder_delete.png", this, m_da));
         bt_item_3.setActionCommand("item_delete");
         bt_item_3.addActionListener(this);
         bt_item_3.setBounds(340, sy + 105, 30, 30);
         panel.add(bt_item_3);
 
-        bt_ok = new JButton(m_ic.getMessage("OK"), m_da.getImageIcon_22x22("ok.png", this));
+        bt_ok = new JButton(m_ic.getMessage("OK"), ATSwingUtils.getImageIcon_22x22("ok.png", this, m_da));
         bt_ok.setActionCommand("ok");
         bt_ok.addActionListener(this);
         bt_ok.setBounds(30, sy + 205, 110, 25);
         panel.add(bt_ok);
 
-        bt_cancel = new JButton(m_ic.getMessage("CANCEL"), m_da.getImageIcon_22x22("cancel.png", this));
+        bt_cancel = new JButton(m_ic.getMessage("CANCEL"), ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
         bt_cancel.setActionCommand("cancel");
         bt_cancel.addActionListener(this);
         bt_cancel.setBounds(145, sy + 205, 110, 25);
         panel.add(bt_cancel);
 
-        help_button = m_da.createHelpButtonByBounds(260, sy + 205, 110, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(260, sy + 205, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
 
         m_da.enableHelp(this);
@@ -574,10 +574,10 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
         for (PumpValuesEntryExt obj : objs)
         {
-            if (this.ht_data.containsKey(this.m_da.getAdditionalTypes().getTypeDescription(obj.getType())))
+            String key = PumpAdditionalDataType.getByCode(obj.getType()).getTranslation();
+            if (this.ht_data.containsKey(key))
             {
-                PumpValuesEntryExt o1 = this.ht_data.get(this.m_da.getAdditionalTypes().getTypeDescription(
-                    obj.getType()));
+                PumpValuesEntryExt o1 = this.ht_data.get(key);
                 o1.setValue(obj.getValue());
 
                 if (o1.getId() == 0)
@@ -641,7 +641,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
     private void addAddItem(PumpValuesEntryExt obj)
     {
         this.list_data.add(obj);
-        this.ht_data.put(this.m_da.getAdditionalTypes().getTypeDescription(obj.getType()), obj);
+        this.ht_data.put(PumpAdditionalDataType.getByCode(obj.getType()).getTranslation(), obj);
     }
 
     @SuppressWarnings("unused")
@@ -661,7 +661,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
     {
         m_da.getDb().delete(oe); // .add(this.m_dailyValuesRow);
         this.list_data.remove(oe);
-        this.ht_data.remove(m_da.getAdditionalTypes().getTypeDescription(oe.getType()));
+        this.ht_data.remove(PumpAdditionalDataType.getByCode(oe.getType()).getTranslation());
     }
 
     /*

@@ -1,5 +1,6 @@
 package ggc.nutri.panels;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.db.datalayer.MealGroup;
@@ -84,9 +85,11 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
         m_dialog = dia;
 
-        font_big = m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        ATSwingUtils.initLibrary();
+
+        font_big = ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD);
+        font_normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         createPanel();
 
@@ -189,7 +192,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         button.setBounds(440, 10, 35, 35);
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setAlignmentY(Component.CENTER_ALIGNMENT);
-        button.setIcon(m_da.getImageIcon("disk_blue.png", 26, 26, this));
+        button.setIcon(ATSwingUtils.getImageIcon("disk_blue.png", 26, 26, this, m_da));
         button.addActionListener(this);
         button.setActionCommand("save");
         this.add(button, null);
@@ -202,7 +205,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
         createKeyWord();
 
-        this.help_button = m_da.createHelpIconByBounds(480, 10, 35, 35, this);
+        this.help_button = ATSwingUtils.createHelpIconByBounds(480, 10, 35, 35, this, ATSwingUtils.FONT_NORMAL, m_da);
         this.add(help_button);
 
         m_da.enableHelp(this);

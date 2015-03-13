@@ -7,7 +7,6 @@ import ggc.plugin.device.impl.accuchek.AccuChekSmartPix;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryProfile;
@@ -1139,14 +1138,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         return at.getATDateTimeAsLong();
     }
 
-    /**
-     * Get Connection Protocol
-     */
-    @Override
-    public int getConnectionProtocol()
-    {
-        return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
-    }
+
 
     /**
      * loadPumpSpecificValues - should be called from constructor of any
@@ -1223,7 +1215,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
+        return DeviceImplementationStatus.Done;
     }
 
 
@@ -1297,9 +1289,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * @return
      */
     @Override
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+        return DownloadSupportType.Download_Data_DataFile;
     }
 
     /**

@@ -142,7 +142,7 @@ public class MiniMedCGMSGold extends MiniMedCGMS
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL;
+        return DeviceImplementationStatus.Partitial;
     }
 
     /**

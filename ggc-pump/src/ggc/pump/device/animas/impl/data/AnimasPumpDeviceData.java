@@ -4,10 +4,10 @@ import com.atech.utils.data.ATechDate;
 import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
 import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
 import ggc.plugin.device.impl.animas.data.dto.*;
+import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
-import ggc.plugin.output.OutputWriter;
 import ggc.pump.device.animas.impl.data.dto.*;
 import org.apache.commons.logging.Log;
 
@@ -48,21 +48,39 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
     //public PumpData pumpData;
     List<BasalLogEntry> basalLogEntries = new ArrayList<BasalLogEntry>();
     public int basalProgramNum;
+    HashMap<Short, BolusEntry> bolusEntriesBySyncRecordId = new HashMap<Short, BolusEntry>();
+    HashMap<Integer, BolusEntry> bolusEntriesByIndex = new HashMap<Integer, BolusEntry>();
+
 
     public AnimasPumpDeviceData(AnimasDataWriter writer)
     {
         super(writer);
 
         pumpSettings = new PumpSettings();
-        //pumpData = new PumpData();
 
     }
+
 
     @Override
     protected void loadBgUnitIntoLocalSettings()
     {
         this.pumpSettings.glucoseUnitType = this.pumpInfo.glucoseUnitType;
     }
+
+
+    @Override
+    protected void loadSerialNumberIntoLocalSettings()
+    {
+        this.pumpSettings.serialNumber = this.pumpInfo.serialNumber;
+    }
+
+
+    @Override
+    protected void loadClockModeIntoLocalSettings()
+    {
+        this.pumpSettings.clockMode = this.pumpInfo.clockMode;
+    }
+
 
     @Override
     public void debugAllSettings(Log log)
@@ -74,96 +92,21 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
     @Override
     public void postProcessReceivedData(AnimasDevicePacket adp)
     {
-        if (!adp.dataTypeObject.hasPostProcessing())
-        {
-            return;
-        }
-
-        switch(adp.dataTypeObject)
-        {
-            case BasalRateHistory:
-                processBasalLogs();
-
-            default:
-                LOG.warn("postProcessReceivedData [objectType=" + adp.dataTypeObject.name() + "] should have postprocessing implemented, but it's not !!!");
-        }
     }
 
 
-
-    public void writeSettings(OutputWriter outputWritter)
+    public void writeSettings(AnimasDataType dataType)
     {
-
+        this.pumpSettings.setOutputForSetting(this.getDataWriter().getOutputWriter());
+        this.pumpSettings.writeSettingsToGGC(dataType);
     }
 
 
-    private void processBasalLogs()
+    @Override
+    protected void loadSoftwareCodeIntoLocalSettings()
     {
-        // FIXME process basals
-
-        HashMap<String,BasalLogDay> basals = new HashMap<String, BasalLogDay>();
-
-        for(BasalLogEntry ble : basalLogEntries)
-        {
-            if (ble.getRate() <= 0)
-            {
-                continue;
-            }
-
-            String dt = ble.getDateTime().getDateString();
-
-            if (basals.containsKey(dt))
-            {
-                basals.get(dt).add(ble);
-            }
-            else
-            {
-                BasalLogDay bld = new BasalLogDay();
-                bld.add(ble);
-
-                bld.setDateString(dt);
-
-                basals.put(dt, bld);
-            }
-        }
-
-
-        for(Map.Entry e : basals.entrySet())
-        {
-
-
-        }
-
-
-
-
+        this.pumpSettings.softwareCode = this.pumpInfo.softwareCode;
     }
-
-
-    private int determineWhichProfileItIs(BasalLogDay basalLogDay)
-    {
-        boolean isSame = this.pumpSettings.basalProfiles.get(this.pumpSettings.activeBasalProfile) //
-                .checkIfProfileIsSame(basalLogDay);
-
-        System.out.println("Same profile: " + this.pumpSettings.activeBasalProfile);
-
-        if (!isSame)
-        {
-
-            for(int i=0; i<5; i++)
-            {
-
-            }
-
-
-
-        }
-
-
-
-        return -1;
-    }
-
 
 
     public void setBasalName(int basalNr, String basalName)
@@ -179,6 +122,7 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
         debug("Basal: " + basalProfileEntry.time.getTimeString() + ", value=" + basalProfileEntry.amount);
     }
 
+
     public void setActiveBasalProfile(int activeBasalProfile)
     {
         this.pumpSettings.activeBasalProfile = activeBasalProfile;
@@ -186,11 +130,11 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
     }
 
 
-
     public List<SettingEntry> getAllSettings()
     {
         return this.pumpSettings.getAllSettings();
     }
+
 
     public void addBasalLog(ATechDate dateTime, float rate, int flag)
     {
@@ -222,12 +166,24 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
         return bolusEntriesBySyncRecordId.get(syncRecord);
     }
 
+    public BolusEntry getBolusLogByIndex(int index)
+    {
+        return bolusEntriesByIndex.get(index);
+    }
 
-    HashMap<Short, BolusEntry> bolusEntriesBySyncRecordId = new HashMap<Short, BolusEntry>();
 
+    int bolusIndex = 1;
 
     public void addBolusLogEntry(BolusEntry bolusEntry)
     {
+        // NEW
+        bolusEntriesByIndex.put(bolusIndex, bolusEntry);
+        bolusIndex++;
+
+        // OLD, should be removed if new is functioning correctly
         bolusEntriesBySyncRecordId.put(bolusEntry.syncCounter, bolusEntry);
     }
+
+
+
 }

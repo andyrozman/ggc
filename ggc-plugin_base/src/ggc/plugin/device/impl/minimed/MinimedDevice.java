@@ -2,6 +2,7 @@ package ggc.plugin.device.impl.minimed;
 
 import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.cmd.MinimedCommand;
 import ggc.plugin.device.impl.minimed.comm.MinimedComm_ComLink;
@@ -10,9 +11,11 @@ import ggc.plugin.device.impl.minimed.comm.MinimedComm_Interface;
 import ggc.plugin.device.impl.minimed.comm.MinimedComm_USBLink;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.util.Hashtable;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -284,10 +287,11 @@ public abstract class MinimedDevice extends DeviceAbstract // implements
         return null;
     }
 
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return 0;
+        return DownloadSupportType.NoDownloadSupport;
     }
+
 
     @Override
     public boolean hasSpecialProgressStatus()
@@ -423,11 +427,11 @@ public abstract class MinimedDevice extends DeviceAbstract // implements
         return null;
     }
 
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return DeviceConnectionProtocol.None;
     }
+
 
     @Override
     public String getDeviceSpecialComment()

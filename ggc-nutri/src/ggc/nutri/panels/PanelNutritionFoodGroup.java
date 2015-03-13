@@ -1,5 +1,6 @@
 package ggc.nutri.panels;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.db.datalayer.MealGroup;
@@ -65,9 +66,11 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
 
         m_dialog = dia;
 
-        font_big = m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        ATSwingUtils.initLibrary();
+
+        font_big = ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD);
+        font_normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         createPanel();
 
@@ -130,7 +133,7 @@ public class PanelNutritionFoodGroup extends GGCTreePanel
         label_parent.setFont(fnt_14);
         this.add(label_parent, null);
 
-        this.help_button = m_da.createHelpIconByBounds(470, 10, 35, 35, this);
+        this.help_button = ATSwingUtils.createHelpIconByBounds(470, 10, 35, 35, this, ATSwingUtils.FONT_NORMAL, m_da);
         this.add(help_button);
 
         m_da.enableHelp(this);

@@ -100,17 +100,17 @@ public class MeterManager extends DeviceManager
         addDeviceCompany(new Wavesense());
     }
 
-    /**
-     * Load Supported Devices
-     */
-    @Override
-    public void loadSupportedDevices()
-    {
-        this.supported_devices.addAll(new AscensiaBayer().getDevices());
-        this.supported_devices.addAll(new Roche().getDevices());
-        this.supported_devices.addAll(new LifeScan().getDevices());
-        this.supported_devices.addAll(new Abbott().getDevices());
-        this.supported_devices.addAll(new Menarini().getDevices());
-    }
+//    /**
+//     * Load Supported Devices
+//     */
+//    @Override
+//    public void loadSupportedDevices()
+//    {
+//        this.supported_devices.addAll(new AscensiaBayer().getDevices());
+//        this.supported_devices.addAll(new Roche().getDevices());
+//        this.supported_devices.addAll(new LifeScan().getDevices());
+//        this.supported_devices.addAll(new Abbott().getDevices());
+//        this.supported_devices.addAll(new Menarini().getDevices());
+//    }
 
 }

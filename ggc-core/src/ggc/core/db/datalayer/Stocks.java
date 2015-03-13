@@ -1,6 +1,6 @@
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.StocksH;
+import ggc.core.db.hibernate.StockH;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
-public class Stocks extends StocksH implements SelectableInterface, DatabaseObjectHibernate, BackupRestoreObject
+public class Stocks extends StockH implements SelectableInterface, DatabaseObjectHibernate, BackupRestoreObject
 {
     boolean selected = false;
 

@@ -44,7 +44,7 @@ public class Sooil extends AbstractPumpDeviceCompany
                 "Sooil (Dana)", // company name (full)
                 "Dana", // short company name
                 "SOOIL_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_DONE); // implementation
+                DeviceImplementationStatus.Done); // implementation
                                                                  // status
 
         this.addDevice(new DanaDiabecare_II(this));

@@ -28,6 +28,7 @@
  */
 package ggc.gui.dialogs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.db.hibernate.DoctorH;
 import ggc.core.util.DataAccess;
 
@@ -127,8 +128,10 @@ public class AppointmentsDialog extends JDialog implements ActionListener
         setBounds(x - 175, y - 150, 450, 380);
         this.setLayout(null);
 
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
-        font_normal_bold = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        ATSwingUtils.initLibrary();
+
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
+        font_normal_bold = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
 
         gc = new GregorianCalendar();
 
@@ -152,7 +155,7 @@ public class AppointmentsDialog extends JDialog implements ActionListener
         this.getContentPane().add(panel);
 
         JLabel label = new JLabel(m_ic.getMessage("APPOINTMENTS"));
-        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBounds(0, 20, 450, 35);
         panel.add(label);
@@ -219,7 +222,7 @@ public class AppointmentsDialog extends JDialog implements ActionListener
         for (int i = 0; i < coords.length; i++)
         {
             button = new JButton(names[i]);
-            button.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
+            button.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
             button.setActionCommand(cmds[i]);
             button.addActionListener(this);
             button.setBounds(340, coords[i], 80, 25);

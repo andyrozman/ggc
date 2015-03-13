@@ -44,7 +44,7 @@ public class Wavesense extends AbstractDeviceCompany
                 "Wave Sense", // company name (full)
                 "Wave Sense", // short company name
                 "WAVESENSE_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                DeviceImplementationStatus.NotPlanned, DataAccessMeter.getInstance()); // implementation
                                                                                                        // status
     }
 
@@ -94,7 +94,7 @@ public class Wavesense extends AbstractDeviceCompany
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return DeviceImplementationStatus.NotPlanned;
     }
 
 }

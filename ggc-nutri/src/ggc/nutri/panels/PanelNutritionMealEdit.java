@@ -110,9 +110,11 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
         this.mpd = new MealPartsDisplay(ic);
         this.mnd = new MealNutritionsDisplay(ic);
 
-        font_big = m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        ATSwingUtils.initLibrary();
+
+        font_big = ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD);
+        font_normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         createPanel();
     }
@@ -293,7 +295,7 @@ public class PanelNutritionMealEdit extends GGCTreePanel /* JPanel */implements 
 
         ATSwingUtils.getIconButton(445, 10, 32, 32, "", "disk_blue.png", 27, 27, "save", this, this, m_da);
 
-        this.help_button = m_da.createHelpIconByBounds(480, 10, 32, 32, this);
+        this.help_button = ATSwingUtils.createHelpIconByBounds(480, 10, 32, 32, this, ATSwingUtils.FONT_NORMAL, m_da);
         this.add(help_button);
 
         m_da.enableHelp(this);

@@ -8,13 +8,11 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 public enum DeviceCompanyDefinition
 {
 
-    Minimed(1, "Minimed", "", DeviceImplementationStatus.IMPLEMENTATION_PLANNED),
+    Minimed(1, "Minimed", "", DeviceImplementationStatus.Planned),
 
-    Roche(2),
+    Roche(2, "Roche", "", DeviceImplementationStatus.Partitial),  //Disetronic(2),
 
-    Disetronic(2),
-
-    Animas(3),
+    Animas(3, "Animas", "", DeviceImplementationStatus.Testing),
 
     Deltec(5),
 

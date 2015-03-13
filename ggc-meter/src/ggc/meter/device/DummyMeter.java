@@ -3,6 +3,7 @@ package ggc.meter.device;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.protocol.ConnectionProtocols;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -170,7 +171,7 @@ public class DummyMeter extends AbstractMeter // implements MeterInterface
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
 
@@ -198,9 +199,9 @@ public class DummyMeter extends AbstractMeter // implements MeterInterface
     /** 
      * Get Connection Protocol
      */
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return ConnectionProtocols.PROTOCOL_NONE;
+        return DeviceConnectionProtocol.None;
     }
 
     /** 

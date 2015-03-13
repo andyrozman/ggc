@@ -1,5 +1,6 @@
 package ggc.gui.dialogs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.util.DataAccess;
 
 import java.awt.Font;
@@ -86,8 +87,10 @@ public class AppointmentDialog extends JDialog implements ActionListener
         setBounds(x - 175, y - 150, 350, 320);
         this.setLayout(null);
 
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
-        font_normal_bold = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        ATSwingUtils.initLibrary();
+
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
+        font_normal_bold = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
 
         gc = new GregorianCalendar();
 
@@ -108,7 +111,7 @@ public class AppointmentDialog extends JDialog implements ActionListener
         this.getContentPane().add(panel);
 
         JLabel label = new JLabel(m_ic.getMessage("PRINTING"));
-        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBounds(0, 20, 350, 35);
         panel.add(label);
@@ -166,14 +169,14 @@ public class AppointmentDialog extends JDialog implements ActionListener
         panel.add(sl_month);
 
         JButton button = new JButton(m_ic.getMessage("OK"));
-        button.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
+        button.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
         button.setActionCommand("ok");
         button.addActionListener(this);
         button.setBounds(100, 240, 80, 25);
         panel.add(button);
 
         button = new JButton(m_ic.getMessage("CANCEL"));
-        button.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
+        button.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
         button.setActionCommand("cancel");
         button.addActionListener(this);
         button.setBounds(190, 240, 80, 25);

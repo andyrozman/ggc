@@ -12,6 +12,8 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 import com.atech.utils.ATDataAccessAbstract;
 
+// DEPRECATED ??
+
 public class StockSelectorDialog extends SelectorAbstractDialog
 {
 
@@ -66,7 +68,7 @@ public class StockSelectorDialog extends SelectorAbstractDialog
 
         if (this.m_data_type == 1)
         {
-            this.full.addAll(da_local.getDb().getStockBaseTypes());
+            //this.full.addAll(da_local.getDb().getStockBaseTypes());
         }
 
     }
@@ -76,14 +78,14 @@ public class StockSelectorDialog extends SelectorAbstractDialog
     {
         if (this.m_data_type == 1)
         {
-            StockTypeDialog std = new StockTypeDialog(this);
-            std.setVisible(true);
-
-            if (std.actionSuccessful())
-            {
-                this.getFullData();
-                this.filterEntries();
-            }
+//            StockTypeDialog std = new StockTypeDialog(this);
+//            std.setVisible(true);
+//
+//            if (std.actionSuccessful())
+//            {
+//                this.getFullData();
+//                this.filterEntries();
+//            }
         }
         // TODO Auto-generated method stub
 
@@ -94,14 +96,14 @@ public class StockSelectorDialog extends SelectorAbstractDialog
     {
         if (this.m_data_type == 1)
         {
-            StockTypeDialog std = new StockTypeDialog(this, (StockBaseType) si);
-            std.setVisible(true);
-
-            if (std.actionSuccessful())
-            {
-                // this.getFullData();
-                this.filterEntries();
-            }
+//            StockTypeDialog std = new StockTypeDialog(this, (StockBaseType) si);
+//            std.setVisible(true);
+//
+//            if (std.actionSuccessful())
+//            {
+//                // this.getFullData();
+//                this.filterEntries();
+//            }
         }
 
     }

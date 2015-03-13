@@ -1,5 +1,6 @@
 package ggc.plugin.gui;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -79,7 +80,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         this.m_ic = da.getI18nControlInstance();
 
         this.m_ddh = ddh;
-        this.m_da.centerJDialog(this, parent);
+        ATSwingUtils.centerJDialog(this, parent);
 
         dialogPreInit(!ddh.isOutputWriterSet());
     }
@@ -107,7 +108,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         this.bt_close.setEnabled(false);
 
         // Andy [6.3.2010] - we do this in thread now
-        // this.m_ddh.executeExport(this);
+        // this.deviceDataHandler.executeExport(this);
 
         DeviceWriterRunner dwr = new DeviceWriterRunner(this, this.m_ddh);
         dwr.start();
@@ -124,6 +125,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
 
     protected void init()
     {
+        ATSwingUtils.initLibrary();
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -137,13 +139,13 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         getContentPane().add(panel, BorderLayout.CENTER);
 
         label = new JLabel(String.format(m_ic.getMessage("EXPORT_DEVICE_DATA"), m_ic.getMessage("DEVICE_NAME_BIG")));
-        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label.setBounds(0, 15, 320, 35);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(label);
 
-        Font normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
-        Font bold = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        Font normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
+        Font bold = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
 
         label = new JLabel(m_ic.getMessage("EXPORT_OUTPUT") + ":");
         label.setBounds(30, 70, 310, 25);
@@ -184,7 +186,7 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         bt_start.addActionListener(this);
         panel.add(bt_start);
 
-        help_button = m_da.createHelpButtonByBounds(30, 310, 110, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(30, 310, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
 
         bt_close = new JButton(m_ic.getMessage("CLOSE"));
@@ -308,14 +310,5 @@ public class DeviceExportDialog extends JDialog implements ActionListener, Statu
         // "Export_Data";
         return "DeviceTool_Export_Data";
     }
-
-    /*
-     * public static void main(String[] args)
-     * {
-     * // MeterReadDialog mrd =
-     * new DeviceExportDialog(); // new AscensiaContour("COM12", new
-     * // ConsoleOutputWriter()));
-     * }
-     */
 
 }

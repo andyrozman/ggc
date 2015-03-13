@@ -3,6 +3,7 @@ package ggc.pump.device.animas;
 import java.util.Hashtable;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -126,9 +127,9 @@ public abstract class AnimasPump extends AbstractSerialPump
     }
 
 
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return 0;
+        return DownloadSupportType.Download_Data_Config;
     }
 
 

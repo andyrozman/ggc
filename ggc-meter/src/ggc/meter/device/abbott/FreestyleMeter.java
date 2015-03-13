@@ -181,7 +181,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
+        return DeviceImplementationStatus.Testing;
     }
 
     /**

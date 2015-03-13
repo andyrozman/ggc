@@ -1,5 +1,6 @@
 package ggc.pump.gui.profile;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
@@ -41,7 +42,7 @@ public class ProfileSelector extends SelectorAbstractDialog
         super(da.getMainParent(), da, 0, null, true);
         da_local = da;
 
-        m_da.centerJDialog(this, parent);
+        ATSwingUtils.centerJDialog(this, parent);
         this.setResizable(false);
 
         this.showDialog();
@@ -63,7 +64,7 @@ public class ProfileSelector extends SelectorAbstractDialog
         da_local = da;
         init();
 
-        m_da.centerJDialog(this, parent);
+        ATSwingUtils.centerJDialog(this, parent);
         this.setResizable(false);
 
         this.showDialog();

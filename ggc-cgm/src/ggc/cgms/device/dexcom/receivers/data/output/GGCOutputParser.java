@@ -4,6 +4,7 @@ import ggc.cgms.data.CGMSValueConfig;
 import ggc.cgms.data.CGMSValuesExtendedEntry;
 import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.CGMSValuesTableModel;
+import ggc.cgms.data.defs.CGMSBaseDataType;
 import ggc.cgms.data.defs.CGMSEvents;
 import ggc.cgms.data.defs.extended.CGMSExtendedDataType;
 import ggc.cgms.device.dexcom.receivers.DexcomDevice;
@@ -162,7 +163,7 @@ public class GGCOutputParser implements DataOutputParserInterface
 
         CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
         sub.setDateTime(ATechDate.getATDateTimeFromDate(record.getDisplayDate(), ATechDate.FORMAT_DATE_AND_TIME_S));
-        sub.setType(CGMSValuesSubEntry.METER_CALIBRATION_READING);
+        sub.setType(CGMSBaseDataType.SensorCalibration);
         sub.value = record.getMeterValue();
         sub.setSource(source);
 
@@ -175,7 +176,7 @@ public class GGCOutputParser implements DataOutputParserInterface
         {
             CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
             sub.setDateTime(ATechDate.getATDateTimeFromDate(record.getDisplayDate(), ATechDate.FORMAT_DATE_AND_TIME_S));
-            sub.setType(CGMSValuesSubEntry.CGMS_BG_READING);
+            sub.setType(CGMSBaseDataType.SensorReading);
             sub.value = record.getGlucoseValue();
             sub.setSource(source);
 
@@ -186,7 +187,7 @@ public class GGCOutputParser implements DataOutputParserInterface
         {
             CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
             sub.setDateTime(ATechDate.getATDateTimeFromDate(record.getDisplayDate(), ATechDate.FORMAT_DATE_AND_TIME_S));
-            sub.setType(CGMSValuesSubEntry.CGMS_TREND);
+            sub.setType(CGMSBaseDataType.SensorReadingTrend);
             sub.value = record.getTrendArrow().getValue();
             sub.setSource(source);
 
@@ -198,7 +199,7 @@ public class GGCOutputParser implements DataOutputParserInterface
     {
         CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
         sub.setDateTime(ATechDate.getATDateTimeFromDate(record.getDisplayDate(), ATechDate.FORMAT_DATE_AND_TIME_S));
-        sub.setType(CGMSValuesSubEntry.CGMS_EVENT);
+        sub.setType(CGMSBaseDataType.DeviceEvent);
         sub.setSource(source);
 
         if (record.getIsInserted())

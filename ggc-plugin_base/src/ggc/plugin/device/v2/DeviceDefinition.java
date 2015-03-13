@@ -1,10 +1,11 @@
-package ggc.plugin.device;
+package ggc.plugin.device.v2;
 
 import ggc.plugin.data.enums.DeviceCompanyDefinition;
 import ggc.plugin.data.enums.DeviceHandlerType;
+import ggc.plugin.data.enums.DevicePortParameterType;
+import ggc.plugin.data.enums.DeviceProgressStatus;
 import ggc.plugin.manager.DeviceImplementationStatus;
-
-import java.util.List;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 
 /**
  * Created by andy on 06.02.15.
@@ -12,21 +13,84 @@ import java.util.List;
 public interface DeviceDefinition
 {
 
-    public int getDeviceId();
+    /**
+     * Get Device Id.
+     *
+     * @return device Id
+     */
+    int getDeviceId();
 
-    public String getDeviceName();
+    /**
+     * Get Device Name.
+     *
+     * @return
+     */
+    String getDeviceName();
 
-    public String getIconName();
+    /**
+     * Get Icon Name for Device
+     *
+     * @return
+     */
+    String getIconName();
 
-    public String getInstructionsI18nKey();
+    /**
+     * Get Instructions I18n Key
+     *
+     * @return
+     */
+    String getInstructionsI18nKey();
 
-    public DeviceImplementationStatus getDeviceImplementationStatus();
+    /**
+     * Get Device Implementation status
+     *
+     * @return
+     */
+    DeviceImplementationStatus getDeviceImplementationStatus();
 
-    public Object getInternalDefintion();
+    /**
+     * Get Internal Definition (some devices have Internal definitions, which can in turn provide special data).
+     *
+     * @return
+     */
+    Object getInternalDefintion();
 
-    public DeviceCompanyDefinition getDeviceCompany();
+    /**
+     * Get Device Company
+     *
+     * @return
+     */
+    DeviceCompanyDefinition getDeviceCompany();
 
-    public DeviceHandlerType getDeviceHandler();
+    /**
+     * Get Device handler key
+     * @return
+     */
+    DeviceHandlerType getDeviceHandlerKey();
+
+    /**
+     * Device Port Parameter Type
+     * @return
+     */
+    DevicePortParameterType getDevicePortParameterType();
+
+    /**
+     * Get Connection Protocol
+     *
+     * @return
+     */
+    DeviceConnectionProtocol getConnectionProtocol();
+
+    /**
+     * Get Device Progress Status. It determines how device progress is determined. In most casess we use Special
+     * progress which is then implemented by Handler.
+     *
+     * @return
+     */
+    DeviceProgressStatus getDeviceProgressStatus();
+
+
+    String getSpecialComment();
 
 
 }

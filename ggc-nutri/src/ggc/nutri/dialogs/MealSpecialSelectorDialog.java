@@ -1,5 +1,6 @@
 package ggc.nutri.dialogs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.HomeWeightSpecial;
@@ -222,6 +223,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
     private void init()
     {
+        ATSwingUtils.initLibrary();
 
         this.setLayout(null);
         this.setBounds(160, 100, 300, 540);
@@ -238,8 +240,8 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
         wt_types_2 = new String[1];
         wt_types_2[0] = ic.getMessage("AMOUNT_LBL");
 
-        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        font_normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -379,7 +381,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
         JButton button = new JButton("   " + ic.getMessage("OK"));
         button.setActionCommand("ok");
-        button.setIcon(m_da.getImageIcon_22x22("ok.png", this));
+        button.setIcon(ATSwingUtils.getImageIcon_22x22("ok.png", this, m_da));
         button.setBounds(25, 460, 115, 25);
         button.addActionListener(this);
         panel.add(button, null);
@@ -388,14 +390,14 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
 
         button = new JButton("   " + ic.getMessage("CANCEL"));
         button.setActionCommand("cancel");
-        button.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        button.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
         button.setBounds(150, 460, 115, 25);
         button.addActionListener(this);
         panel.add(button);
 
         this.buttons.put("cancel", button);
 
-        help_button = m_da.createHelpButtonByBounds(150, 430, 115, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(150, 430, 115, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
 
         this.buttons.put("help", button);
@@ -541,22 +543,7 @@ public class MealSpecialSelectorDialog extends JDialog implements ActionListener
      */
     public float getAmountValue()
     {
-
-        return m_da.getJFormatedTextValueFloat(this.amountField);
-
-        // Object o = this.amountField.getValue();
-
-        // return dataAccess.getFloatValue(o);
-
-        /*
-         * if (o instanceof Long) { //System.out.println("Amount(long): " +
-         * this.amountField.getValue()); Long l = (Long)o; return
-         * l.floatValue(); } else {
-         * //System.out.println("Amount(double): " +
-         * this.amountField.getValue());
-         * Double d = (Double)this.amountField.getValue(); return
-         * d.floatValue(); }
-         */
+        return ATSwingUtils.getJFormatedTextValueFloat(this.amountField);
     }
 
     private boolean action_done = false;

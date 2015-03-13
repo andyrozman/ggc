@@ -2,51 +2,32 @@ package ggc.core.db.hibernate;
 
 import java.io.Serializable;
 
+import ggc.core.data.defs.StockTypeBase;
+import ggc.core.data.defs.StockUsageUnit;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-/** @author Hibernate CodeGenerator */
+
 public class StockSubTypeH implements Serializable
 {
+    private static final long serialVersionUID = -7076410510425754609L;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 2088376312790478773L;
-
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
-    private long stock_type_id;
-
-    /** nullable persistent field */
+    private long stockTypeId;
     private String name;
-
-    /** nullable persistent field */
     private String description;
-
-    /** nullable persistent field */
-    private float content;
-
-    /** nullable persistent field */
+    private long packageContent;
+    private String packageContentUnit;
+    private int usageUnit;
+    private int usageMin;
+    private int usageMax;
+    private boolean active;
+    private int personId;
+    private String extended;
     private String comment;
 
-    /** full constructor 
-     * @param stock_type_id 
-     * @param name 
-     * @param description 
-     * @param content 
-     * @param comment */
-    public StockSubTypeH(long stock_type_id, String name, String description, float content, String comment)
-    {
-        this.stock_type_id = stock_type_id;
-        this.name = name;
-        this.description = description;
-        this.content = content;
-        this.comment = comment;
-    }
+
 
     /** default constructor */
     public StockSubTypeH()
@@ -73,25 +54,6 @@ public class StockSubTypeH implements Serializable
         this.id = id;
     }
 
-    /**
-     * Get Stock Type Id
-     * 
-     * @return stock_type_id value
-     */
-    public long getStock_type_id()
-    {
-        return this.stock_type_id;
-    }
-
-    /**
-     * Set Stock Type Id
-     * 
-     * @param stock_type_id value
-     */
-    public void setStock_type_id(long stock_type_id)
-    {
-        this.stock_type_id = stock_type_id;
-    }
 
     /**
      * Get Name
@@ -133,24 +95,99 @@ public class StockSubTypeH implements Serializable
         this.description = description;
     }
 
-    /**
-     * Get Content
-     * 
-     * @return content parameter
-     */
-    public float getContent()
+
+    public long getStockTypeId()
     {
-        return this.content;
+        return stockTypeId;
     }
 
-    /**
-     * Get Content
-     * 
-     * @param content parameter
-     */
-    public void setContent(float content)
+    public StockTypeBase getStockType()
     {
-        this.content = content;
+        return StockTypeBase.getByCode((int)this.stockTypeId);
+    }
+
+
+
+    public void setStockTypeId(long stockTypeId)
+    {
+        this.stockTypeId = stockTypeId;
+    }
+
+    public long getPackageContent()
+    {
+        return packageContent;
+    }
+
+    public void setPackageContent(long packageContent)
+    {
+        this.packageContent = packageContent;
+    }
+
+    public String getPackageContentUnit()
+    {
+        return packageContentUnit;
+    }
+
+    public void setPackageContentUnit(String packageContentUnit)
+    {
+        this.packageContentUnit = packageContentUnit;
+    }
+
+
+
+    public int getUsageMin()
+    {
+        return usageMin;
+    }
+
+    public void setUsageMin(int usageMin)
+    {
+        this.usageMin = usageMin;
+    }
+
+    public int getUsageMax()
+    {
+        return usageMax;
+    }
+
+    public void setUsageMax(int usageMax)
+    {
+        this.usageMax = usageMax;
+    }
+
+    public boolean isActive()
+    {
+        return active;
+    }
+
+    public void setActive(boolean active)
+    {
+        this.active = active;
+    }
+
+    public int getPersonId()
+    {
+        return personId;
+    }
+
+    public void setPersonId(int personId)
+    {
+        this.personId = personId;
+    }
+
+    public String getExtended()
+    {
+        return extended;
+    }
+
+    public void setExtended(String extended)
+    {
+        this.extended = extended;
+    }
+
+    public String getUsageDescription()
+    {
+        return "" + this.usageMin + " - " + this.usageMax + " / " + StockUsageUnit.getByCode(this.getUsageUnit()).getTranslation();
     }
 
     /**
@@ -209,4 +246,14 @@ public class StockSubTypeH implements Serializable
         return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
+
+    public int getUsageUnit()
+    {
+        return usageUnit;
+    }
+
+    public void setUsageUnit(int usageUnit)
+    {
+        this.usageUnit = usageUnit;
+    }
 }

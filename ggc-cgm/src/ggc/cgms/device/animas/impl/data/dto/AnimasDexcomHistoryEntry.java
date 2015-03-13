@@ -1,11 +1,8 @@
 package ggc.cgms.device.animas.impl.data.dto;
 
 import com.atech.utils.data.ATechDate;
-import ggc.cgms.device.dexcom.receivers.g4receiver.enums.NoiseMode;
-import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
-import ggc.cgms.device.dexcom.receivers.g4receiver.enums.SpecialGlucoseValues;
-import ggc.cgms.device.dexcom.receivers.g4receiver.enums.TrendArrow;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
+import ggc.cgms.data.defs.CGMSTransmiterEvents;
+
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,14 +38,35 @@ public class AnimasDexcomHistoryEntry
     public static int TrendArrowMask = 15;
     public static int NoiseMask = 0x70;
 
+    public static int SpecialValueLimit = 12;
+
     public short glucoseValueWithFlags;
     //public byte trendArrowAndNoise;
 
 
-    public short getGlucoseValue()
+    public short getGlucoseValueWithoutFlags()
     {
         return (short) (this.glucoseValueWithFlags & EgvValueMask);
     }
+
+    public boolean hasGlucoseValue()
+    {
+        return (getGlucoseValueWithoutFlags() > SpecialValueLimit);
+    }
+
+    public Short getGlucoseValue()
+    {
+        if (hasGlucoseValue())
+        {
+            return getGlucoseValueWithoutFlags();
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+
 
     public boolean getIsDisplayOnly()
     {
@@ -62,29 +80,30 @@ public class AnimasDexcomHistoryEntry
 //
 //    public NoiseMode getNoiseMode()
 //    {
-//        return NoiseMode.getEnum((this.trendArrowAndNoise & NoiseMask) >> 4);
+//        return NoiseMode.getByCode((this.trendArrowAndNoise & NoiseMask) >> 4);
 //    }
 
 
-    public boolean isSpecialValue()
+    public boolean hasSpecialValue()
     {
-        return (getSpecialValue()!=null);
+        return (!hasGlucoseValue());
+        //return (getSpecialValue()!=null);
     }
 
 
-    public String getSpecialValue()
+    public CGMSTransmiterEvents getSpecialValue()
     {
-        SpecialGlucoseValues sgv = SpecialGlucoseValues.getEnum(this.getGlucoseValue());
+        CGMSTransmiterEvents sgv = CGMSTransmiterEvents.getByCode(this.getGlucoseValueWithoutFlags());
 
         if (sgv == null)
             return null;
         else
-            return sgv.name();
+            return sgv;
     }
 
 //    public TrendArrow getTrendArrow()
 //    {
-//        return TrendArrow.getEnum(this.trendArrowAndNoise & TrendArrowMask);
+//        return TrendArrow.getByCode(this.trendArrowAndNoise & TrendArrowMask);
 //    }
 
 
@@ -94,18 +113,18 @@ public class AnimasDexcomHistoryEntry
     public String toString()
     {
         StringBuffer sb = new StringBuffer();
-        sb.append("AnimasDexcomHistoryEntry [dateTime=" + dateTime.getDateTimeString() + ", bg=" + getGlucoseValue());
+        sb.append("AnimasDexcomHistoryEntry [dateTime=" + dateTime.getDateTimeString() + ", bg=" + getGlucoseValueWithoutFlags());
 
         if (getIsDisplayOnly())
         {
             sb.append(", displayOnly=true");
         }
 
-        String spValue = getSpecialValue();
+        CGMSTransmiterEvents spValue = getSpecialValue();
 
         if (spValue!=null)
         {
-            sb.append(", specialValue=" + spValue);
+            sb.append(", specialValue=" + spValue.name());
         }
 
         sb.append("]");

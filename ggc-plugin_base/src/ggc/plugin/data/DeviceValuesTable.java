@@ -155,6 +155,12 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
         });
     }
 
+
+
+
+
+
+
     /** 
      * Get ToolTip Text
      */

@@ -1,6 +1,6 @@
 package ggc.pump.manager;
 
-import ggc.plugin.device.DeviceDefinition;
+import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.DeviceManager;
@@ -64,6 +64,7 @@ public class PumpManager extends DeviceManager
             PumpDeviceInstanceWithHandler di = new PumpDeviceInstanceWithHandler(pdd);
 
             this.supportedDevicesV2.put(di.getCompany().getName() + "_"+ di.getName(), di);
+            this.supportedDevicesForSelector.add(di);
         }
     }
 

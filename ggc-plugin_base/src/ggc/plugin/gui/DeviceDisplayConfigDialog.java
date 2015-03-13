@@ -1,6 +1,8 @@
 package ggc.plugin.gui;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.plugin.data.*;
+import ggc.plugin.data.enums.DeviceConfigurationGroup;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.output.*;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -12,6 +14,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -55,6 +59,10 @@ import com.atech.utils.ATDataAccessAbstract;
  * 
  *  Author: Andy {andy@atech-software.com}
  */
+
+// FIXME
+// This needs to work with new configuration type thing and groups (Animas Pump/CGMS for testing)
+
 
 public class DeviceDisplayConfigDialog extends JDialog implements ActionListener, OutputWriter, HelpCapable
 {
@@ -122,7 +130,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
         this.m_ddh = ddh;
         // this.mrr = new DeviceReaderRunner(dataAccess,
-        // this.m_ddh.getConfiguredDevice(), this);
+        // this.deviceDataHandler.getConfiguredDevice(), this);
 
         dialogPreInit();
     }
@@ -165,7 +173,10 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     protected void init()
     {
-        model = new DeviceValuesConfigTableModel(m_da, m_da.getSourceDevice());
+        ATSwingUtils.initLibrary();
+
+        model = new DeviceValuesConfigTableModel(m_da) ; //, m_da.getSourceDevice());
+
         model.clearData();
 
         JPanel panel = new JPanel();
@@ -181,8 +192,8 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
             wide_add = 100;
         }
 
-        Font normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
-        Font normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        Font normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
+        Font normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
 
         setBounds(0, 0, 480 + wide_add, 460);
 
@@ -255,7 +266,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         bt_break.addActionListener(this);
         panel.add(bt_break);
 
-        help_button = m_da.createHelpButtonByBounds(30, 380, 110, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(30, 380, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
 
         bt_close = new JButton(m_ic.getMessage("CLOSE"));
@@ -311,7 +322,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     private JButton createButton(String command_text, String tooltip, String image_d)
     {
         JButton b = new JButton();
-        b.setIcon(m_da.getImageIcon(image_d, 15, 15, this));
+        b.setIcon(ATSwingUtils.getImageIcon(image_d, 15, 15, this, m_da));
         b.addActionListener(this);
         b.setActionCommand(command_text);
         b.setToolTipText(tooltip);
@@ -623,10 +634,22 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     }
 
 
+    private Map<DeviceConfigurationGroup, Integer> groupCounter = new HashMap<DeviceConfigurationGroup, Integer>();
+
+
     public void writeConfigurationData(OutputWriterConfigData configData)
     {
         count++;
-        this.model.addEntry((DeviceValueConfigEntryInterface) configData);
+
+        DeviceValueConfigEntry dta = (DeviceValueConfigEntry) configData;
+
+        if (!groupCounter.containsKey(dta.getGroup()))
+        {
+            groupCounter.put(dta.getGroup(), 0);
+            this.model.addEntry(new DeviceValueConfigEntry(dta.getGroup()));
+        }
+
+        this.model.addEntry(dta);
     }
 
     public void setPluginName(String pluginName)

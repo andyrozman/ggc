@@ -4,9 +4,8 @@ import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.pump.util.DataAccessPump;
-
-import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -248,10 +247,11 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     /** 
      * getConnectionProtocol
      */
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return 0;
+        return DeviceConnectionProtocol.None;
     }
+
 
     /** 
      * getDeviceClassName
@@ -291,7 +291,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
     /** 

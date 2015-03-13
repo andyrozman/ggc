@@ -9,6 +9,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -101,7 +102,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL;
+        return DeviceImplementationStatus.Partitial;
     }
 
     /**
@@ -200,9 +201,9 @@ public abstract class DexcomCGMS extends AbstractCGMS
      *
      * @return id of connection protocol
      */
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return 0;
+        return DeviceConnectionProtocol.None;
     }
 
     /**

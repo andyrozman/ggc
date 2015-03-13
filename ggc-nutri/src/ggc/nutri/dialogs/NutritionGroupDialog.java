@@ -153,7 +153,7 @@ public class NutritionGroupDialog extends JDialog implements TreeSelectionListen
         ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 150, 40, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
 
-        help_button = m_da.createHelpButtonByBounds(150, 70, 110, 25, panel, ATSwingUtils.FONT_NORMAL);
+        help_button = ATSwingUtils.createHelpButtonByBounds(150, 70, 110, 25, panel, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
 
         /*

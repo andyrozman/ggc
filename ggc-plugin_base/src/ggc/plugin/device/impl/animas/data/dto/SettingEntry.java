@@ -31,6 +31,7 @@ public class SettingEntry
     public String key;
     public String value;
 
+
     public SettingEntry(String key, String value)
     {
         this.key = key;

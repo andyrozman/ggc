@@ -73,11 +73,6 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
             this.dcd = ((DataAccessPlugInBase) m_da).getDeviceConfigurationDefinition();
         }
 
-        // System.out.println("CGMS DeviceConfigurationDefinition:");
-        // System.out.println("dcd: " + this.dcd);
-        // System.out.println("supported devices: " +
-        // this.dcd.getSupportedDevices());
-
         return this.dcd;
     }
 

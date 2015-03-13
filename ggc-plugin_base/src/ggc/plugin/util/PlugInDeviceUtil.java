@@ -1,7 +1,11 @@
 package ggc.plugin.util;
 
+import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.v2.DeviceInstanceWithHandler;
+import ggc.plugin.device.v2.DeviceInterfaceV2;
+import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
 
 import com.atech.i18n.I18nControlAbstract;
@@ -63,21 +67,18 @@ public class PlugInDeviceUtil
     public String getColumnValue(int num, DeviceInterface di)
     {
         // System.out.println("Num: " + num);
-        System.out.println("DeviceInterface: " + di);
+        // System.out.println("DeviceInterface: " + di);
         switch (num)
         {
             case 1:
-                System.out.println("Di:" + di + ", company: " + di.getDeviceCompany() + ", shortName: ");
+                //System.out.println("Di:" + di + ", company: " + di.getDeviceCompany() + ", shortName: ");
                 return di.getDeviceCompany().getShortName();
 
             case 2:
                 return di.getName();
 
             case 3:
-                return this.m_ic.getMessage(ConnectionProtocols.connectionProtocolDescription[di
-                        .getConnectionProtocol()]);
-                // return
-                // this.m_ic_core.getMessage(ConnectionProtocols.connectionProtocolDescription[di.getConnectionProtocol()]);
+                return this.m_ic.getMessage(di.getConnectionProtocol().getI18nKey());
 
             case 4:
 
@@ -85,17 +86,22 @@ public class PlugInDeviceUtil
 
                 // System.out.println("DST: " + di.getDownloadSupportType());
 
-                if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
+                DownloadSupportType dst = di.getDownloadSupportType();
+
+                //if DownloadSupportType.isOptionSet(dst, DownloadSupportType.DownloadData)
+
+
+                if (DownloadSupportType.isOptionSet(dst, DownloadSupportType.DownloadData))
                 {
                     dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_DEVICE"), "/");
                 }
 
-                if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
+                if (DownloadSupportType.isOptionSet(dst, DownloadSupportType.DownloadDataFile))
                 {
                     dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_FILE"), "/");
                 }
 
-                if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE)
+                if (DownloadSupportType.isOptionSet(dst, DownloadSupportType.DownloadConfig))
                 {
                     dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_CONFIG"), "/");
                 }
@@ -103,14 +109,14 @@ public class PlugInDeviceUtil
                 if (dd.length() == 0)
                 {
 
-                    if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_SUPPORT_NO) == DownloadSupportType.DOWNLOAD_SUPPORT_NO)
+                    if (DownloadSupportType.isOptionSet(dst, DownloadSupportType.NoDownloadSupport))
                     {
                         dd = this.m_ic.getMessage("DOWNLOAD_NOT_SUPPORTED_GGC");
                     }
-                    else if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE) == DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE)
-                    {
-                        dd = this.m_ic.getMessage("DOWNLOAD_NOT_SUPPORTED_BY_DEVICE");
-                    }
+//                    else if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE) == DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE)
+//                    {
+//                        dd = this.m_ic.getMessage("DOWNLOAD_NOT_SUPPORTED_BY_DEVICE");
+//                    }
                     else
                     {
                         dd = "";
@@ -135,6 +141,92 @@ public class PlugInDeviceUtil
                 return "N/A: " + num;
         }
     }
+
+
+    /**
+     * Get Column Value
+     *
+     * @param num
+     * @param di
+     * @return
+     */
+    public String getColumnValue(int num, DeviceInterfaceV2 di)
+    {
+        // System.out.println("Num: " + num);
+        //System.out.println("DeviceInterface: " + di);
+        switch (num)
+        {
+            case 1:
+                return di.getCompany().getName();
+
+            case 2:
+                return di.getName();
+
+            case 3:
+                return m_ic.getMessage(di.getConnectionProtocol().getI18nKey());
+
+            case 4:
+
+                String dd = "";
+
+                // System.out.println("DST: " + di.getDownloadSupportType());
+
+                DownloadSupportType dst = di.getDownloadSupportType();
+
+                //if DownloadSupportType.isOptionSet(dst, DownloadSupportType.DownloadData)
+
+
+                if (DownloadSupportType.isOptionSet(dst, DownloadSupportType.DownloadData))
+                {
+                    dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_DEVICE"), "/");
+                }
+
+                if (DownloadSupportType.isOptionSet(dst, DownloadSupportType.DownloadDataFile))
+                {
+                    dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_FILE"), "/");
+                }
+
+                if (DownloadSupportType.isOptionSet(dst, DownloadSupportType.DownloadConfig))
+                {
+                    dd = appendToString(dd, this.m_ic.getMessage("DOWNLOAD_CONFIG"), "/");
+                }
+
+                if (dd.length() == 0)
+                {
+
+                    if (DownloadSupportType.isOptionSet(dst, DownloadSupportType.NoDownloadSupport))
+                    {
+                        dd = this.m_ic.getMessage("DOWNLOAD_NOT_SUPPORTED_GGC");
+                    }
+//                    else if ((di.getDownloadSupportType() & DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE) == DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE)
+//                    {
+//                        dd = this.m_ic.getMessage("DOWNLOAD_NOT_SUPPORTED_BY_DEVICE");
+//                    }
+                    else
+                    {
+                        dd = "";
+                    }
+                }
+
+                return dd;
+                /*
+                 * if
+                 * (this.getDownloadSupportType()==DownloadSupportType.DOWNLOAD_YES
+                 * )
+                 * return DataAccessPump.getInstance().getYesNoOption(true);
+                 * else
+                 * return DataAccessPump.getInstance().getYesNoOption(false);
+                 */
+
+            // case 5:
+            // return "Bo/Ba/Tbr";
+            // return this.dataAccess.getYesNoOption(false);
+
+            default:
+                return "N/A: " + num;
+        }
+    }
+
 
     /**
      * Append To String
@@ -201,5 +293,33 @@ public class PlugInDeviceUtil
     }
 
     // public abstract static DataAccessPlugInBase getPlugInDataAccess();
+
+
+    public void prepareDeviceIdentification(OutputWriter outputWriter)
+    {
+        DeviceIdentification di = outputWriter.getDeviceIdentification();
+
+        setDeviceToDeviceIdentification(di);
+
+        outputWriter.setDeviceIdentification(di);
+    }
+
+    public void setDeviceToDeviceIdentification(DeviceIdentification di)
+    {
+        Object deviceInterfaceObject = this.m_da.getSelectedDeviceInstance();
+
+        if (deviceInterfaceObject instanceof DeviceInstanceWithHandler)
+        {
+            DeviceInstanceWithHandler deviceInterfaceV2 = (DeviceInstanceWithHandler)deviceInterfaceObject;
+            di.company = deviceInterfaceV2.getCompany().getName();
+            di.device_selected = deviceInterfaceV2.getName();
+        }
+        else
+        {
+            DeviceInterface deviceInterfaceV1 = (DeviceInterface)deviceInterfaceObject;
+            di.company = deviceInterfaceV1.getDeviceCompany().getName();
+            di.device_selected = deviceInterfaceV1.getName();
+        }
+    }
 
 }

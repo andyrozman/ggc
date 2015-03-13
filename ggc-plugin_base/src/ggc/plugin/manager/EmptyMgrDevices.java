@@ -3,6 +3,7 @@ package ggc.plugin.manager;
 import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import javax.swing.ImageIcon;
@@ -125,7 +126,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
 
@@ -139,9 +140,9 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
     /**
      * @see ggc.plugin.device.DeviceInterface#getConnectionProtocol()
      */
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return 0;
+        return DeviceConnectionProtocol.None;
     }
 
     /**
@@ -185,13 +186,6 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
     {
     }
 
-    /**
-     * @see ggc.plugin.device.DeviceInterface#readInfo()
-     */
-    @Override
-    public void readInfo() throws PlugInBaseException
-    {
-    }
 
     /**
      * @see ggc.plugin.device.DeviceInterface#getDeviceClassName()
@@ -243,9 +237,9 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
      * 
      * @return
      */
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+        return DownloadSupportType.NoDownloadSupport;
     }
 
 }

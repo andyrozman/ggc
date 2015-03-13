@@ -1,8 +1,13 @@
 package ggc.cgms.device.animas.impl.data.dto;
 
+import com.atech.i18n.I18nControlAbstract;
+import ggc.cgms.data.defs.CGMSConfigurationGroup;
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.plugin.data.DeviceValueConfigEntry;
 import ggc.plugin.data.enums.ClockModeType;
 import ggc.plugin.data.enums.GlucoseUnitType;
 import ggc.plugin.device.impl.animas.data.dto.SettingEntry;
+import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
 import ggc.plugin.output.OutputWriter;
@@ -10,6 +15,7 @@ import org.apache.commons.logging.Log;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,27 +45,34 @@ import java.util.List;
 
 public class CGMSSettings
 {
+
+    public OutputWriter outputWriter;
+    public I18nControlAbstract i18nControl = DataAccessCGMS.getInstance().getI18nControlInstance();
+
     private List<SettingEntry> allSettings;
     public GlucoseUnitType glucoseUnitType;
 
     public HashMap<AnimasSoundType, SoundValueType> soundVolumes = new HashMap<AnimasSoundType, SoundValueType>();
 
-    public int highAlertWarnAbove;
-    public int lowAlertWarnBelow;
-    public int riseRateWarnAbove;
-    public int fallRateWarnAbove;
-    public int highAlertSnoozeTime;
-    public int lowAlertSnoozeTime;
-    public int transmiterOutOfRangeSnoozeTime;
+    public Integer highAlertWarnAbove;
+    public Integer lowAlertWarnBelow;
+    public Short riseRateWarnAbove;
+    public Short fallRateWarnAbove;
+    public Integer highAlertSnoozeTime;
+    public Integer lowAlertSnoozeTime;
+    public Short transmiterOutOfRangeSnoozeTime;
 
-    public boolean highAlertWarningEnabled;
-    public boolean lowAlertWarningEnabled;
-    public boolean riseRateWarningEnabled;
-    public boolean fallRateWarningEnabled;
-    public boolean transmiterOutOfRangeWarningEnabled;
+    public Boolean highAlertWarningEnabled;
+    public Boolean lowAlertWarningEnabled;
+    public Boolean riseRateWarningEnabled;
+    public Boolean fallRateWarningEnabled;
+    public Boolean transmiterOutOfRangeWarningEnabled;
 
     public String transmiterSerialNumber;
     public ClockModeType clockMode;
+
+    public String softwareCode;
+    public String serialNumber;
 
 
     public List<SettingEntry> getAllSettings()
@@ -72,8 +85,68 @@ public class CGMSSettings
 
     }
 
-    public void writeSettings(OutputWriter outputWritter)
+
+
+    public void writeSettingsToGGC(AnimasDataType dataType)
     {
+        switch(dataType)
+        {
+
+            case DexcomSettings:
+                {
+                    //writeSetting("CFG_BASE_CLOCK_MODE", clockMode.getTranslation(), clockMode, CGMSConfigurationGroup.General);
+                    writeSetting("CFG_BASE_GLUCOSE_UNIT", glucoseUnitType.getTranslation(), glucoseUnitType, CGMSConfigurationGroup.General);
+                    writeSetting("CFG_BASE_SERIAL_NUMBER", serialNumber, serialNumber, CGMSConfigurationGroup.General);
+                    writeSetting("CFG_BASE_FIRMWARE_VERSION", softwareCode, softwareCode, CGMSConfigurationGroup.General);
+
+                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_ABOVE", AnimasSoundType.CGMS_HighAlert), "" + highAlertWarnAbove, highAlertWarnAbove, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_BELOW", AnimasSoundType.CGMS_LowAlert), "" + lowAlertWarnBelow, lowAlertWarnBelow, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_ABOVE", AnimasSoundType.CGMS_RiseRate), "" + riseRateWarnAbove, riseRateWarnAbove, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_ABOVE", AnimasSoundType.CGMS_FallRate), "" + fallRateWarnAbove, fallRateWarnAbove, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_SNOOZE_TIME", AnimasSoundType.CGMS_HighAlert), "" + highAlertSnoozeTime, highAlertSnoozeTime, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_SNOOZE_TIME", AnimasSoundType.CGMS_LowAlert), "" + lowAlertSnoozeTime, lowAlertSnoozeTime, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_SNOOZE_TIME", AnimasSoundType.CGMS_TransmiterOutOfRange), "" + transmiterOutOfRangeSnoozeTime, transmiterOutOfRangeSnoozeTime, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_ENABLED", AnimasSoundType.CGMS_HighAlert), getBooleanValue(highAlertWarningEnabled), highAlertWarningEnabled, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_ENABLED", AnimasSoundType.CGMS_LowAlert), getBooleanValue(lowAlertWarningEnabled), lowAlertWarningEnabled, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_ENABLED", AnimasSoundType.CGMS_RiseRate), getBooleanValue(riseRateWarningEnabled), riseRateWarningEnabled, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_ENABLED", AnimasSoundType.CGMS_FallRate), getBooleanValue(fallRateWarningEnabled), fallRateWarningEnabled, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_ENABLED", AnimasSoundType.CGMS_TransmiterOutOfRange), getBooleanValue(transmiterOutOfRangeWarningEnabled), transmiterOutOfRangeWarningEnabled, CGMSConfigurationGroup.Warnings);
+
+                    writeSetting("CFG_BASE_SERIAL_NUMBER", transmiterSerialNumber, transmiterSerialNumber, CGMSConfigurationGroup.Transmiter);
+                }  break;
+
+
+
+            default:
+                System.out.println("writeSettingsToGGC::Type not supported: " + dataType.name());
+
+        }
+
     }
 
+    private String getCombinedKeyword(String keyword, AnimasSoundType soundtype)
+    {
+        return String.format(i18nControl.getMessage(keyword), soundtype.getTranslation());
+    }
+
+
+    private String getBooleanValue(Boolean val)
+    {
+        return val ? i18nControl.getMessage("YES") : i18nControl.getMessage("NO");
+    }
+
+
+    private void writeSetting(String key, String value, Object rawValue, CGMSConfigurationGroup group)
+    {
+        if (rawValue!=null)
+        {
+            outputWriter.writeConfigurationData(new DeviceValueConfigEntry(i18nControl.getMessage(key), value, group));
+        }
+    }
+
+
+    public void setOutputForSetting(OutputWriter outputWriter)
+    {
+        this.outputWriter = outputWriter;
+    }
 }

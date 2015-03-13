@@ -102,6 +102,13 @@
 
 	<dependencyManagement>
 		<dependencies>
+
+            <dependency>
+                <groupId>net.sf.ggc</groupId>
+                <artifactId>ggc-help</artifactId>
+                <version>${ggc-help.version}</version>
+            </dependency>
+
 			<dependency>
 				<groupId>net.sf.ggc</groupId>
 				<artifactId>ggc-core</artifactId>
@@ -255,23 +262,20 @@
 				for USB communication. For USB devices that have HID interfaces (most of
 				them), we will use other library, but for legacy support we use this for
 				now. -->
+
+            <!--
 			<dependency>
 				<groupId>net.sf.ggc.libusb4j</groupId>
 				<artifactId>libusb4jwo</artifactId>
 				<version>${libusb4jwo.version}</version>
 			</dependency>
+			-->
 
+            <!--
 			<dependency>
 				<groupId>com.codeminders</groupId>
 				<artifactId>hidapi</artifactId>
 				<version>${hidapi.version}</version>
-			</dependency>
-
-			<!--
-			<dependency>
-				<groupId>org.scream3r</groupId>
-				<artifactId>jssc</artifactId>
-				<version>${jssc.version}</version>
 			</dependency>
             -->
 
@@ -280,28 +284,33 @@
 				<artifactId>nrjavaserial</artifactId>
 				<version>${nrjavaserial.version}</version>
 			</dependency>
-		</dependencies>
+
+            <dependency>
+                <groupId>jaxen</groupId>
+                <artifactId>jaxen</artifactId>
+                <version>${jaxen.version}</version>
+            </dependency>
+
+        </dependencies>
 	</dependencyManagement>
 
 	<properties>
 
 		<!-- Modules versions -->
-		<ggc-core.version>0.5.1-SNAPSHOT</ggc-core.version>
-		<ggc-plugin-base.version>0.6.3-SNAPSHOT</ggc-plugin-base.version>
-		<ggc-meter-tool.version>2.0.4-SNAPSHOT</ggc-meter-tool.version>
-		<ggc-pump-tool.version>1.4.0-SNAPSHOT</ggc-pump-tool.version>
-		<ggc-cgms-tool.version>1.1-SNAPSHOT</ggc-cgms-tool.version>
+		<ggc-core.version>0.6.0-SNAPSHOT</ggc-core.version>
+		<ggc-plugin-base.version>0.7.0-SNAPSHOT</ggc-plugin-base.version>
+		<ggc-meter-tool.version>2.2.0-SNAPSHOT</ggc-meter-tool.version>
+		<ggc-pump-tool.version>1.5.0-SNAPSHOT</ggc-pump-tool.version>
+		<ggc-cgms-tool.version>1.3.0-SNAPSHOT</ggc-cgms-tool.version>
 		<ggc-nutri-tool.version>1.3.5-SNAPSHOT</ggc-nutri-tool.version>
 
-		<ggc-desktop.version>0.5.1-SNAPSHOT</ggc-desktop.version>
+		<ggc-desktop.version>0.6.0-SNAPSHOT</ggc-desktop.version>
 		<ggc-help.version>0.2-SNAPSHOT</ggc-help.version>
 
 		<!-- NON MAVEN -->
 		<ggc-little.version>0.2.4-SNAPSHOT</ggc-little.version>
 
 		<!-- Dependencies versions -->
-		<atech-tools.version>0.7.10-SNAPSHOT</atech-tools.version>
-		<jna.version>3.3.0</jna.version>
 		<libusb4jwo.version>0.2</libusb4jwo.version>
 		<ibm-compapi.version>1.3</ibm-compapi.version>
 		<skinlf.version>6.7</skinlf.version>
@@ -314,17 +323,22 @@
 		<junit.version>4.10</junit.version>
 		<servlet-api.version>2.5</servlet-api.version>
 		<itextpdf.version>5.1.2</itextpdf.version>
-		<commons-lang.version>2.0</commons-lang.version>
+		<commons-lang.version>2.6</commons-lang.version>
 		<javahelp.version>2.0.05</javahelp.version>
 
 		<!-- NEW THIS VERSION -->
-		<hidapi.version>1.1</hidapi.version>
-		<!-- <jssc.version>2.8.0</jssc.version> -->
+		<hidapi.version>1.1</hidapi.version> <!-- remove ?? use hid4java perhaps -->
 		<nrjavaserial.version>3.9.3</nrjavaserial.version>
 		<icepdf-core.version>5.0.7</icepdf-core.version>
 		<icepdf-viewer.version>5.0.7</icepdf-viewer.version>
+        <jaxen.version>1.1.6</jaxen.version>
 
-		<maven.compiler.source>1.5</maven.compiler.source>
+        <!-- NEW VERSION IN THIS VERSION -->
+        <jna.version>3.3.0</jna.version> <!-- 3.5.3 -->
+        <atech-tools.version>0.7.11-SNAPSHOT</atech-tools.version>
+
+
+        <maven.compiler.source>1.5</maven.compiler.source>
 		<maven.compiler.target>1.5</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

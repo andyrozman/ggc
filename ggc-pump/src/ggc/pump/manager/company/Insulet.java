@@ -42,7 +42,7 @@ public class Insulet extends AbstractPumpDeviceCompany
                 "Insulet", // company name (full)
                 "Insulet", // short company name
                 "INSULET_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE); // implementation
+                DeviceImplementationStatus.NotAvailable); // implementation
                                                                           // status
 
         this.addDevice(new InsuletOmniPod(this));

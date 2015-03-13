@@ -265,7 +265,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
+        return DeviceImplementationStatus.Testing;
     }
 
     /** 

@@ -45,7 +45,7 @@ public class Menarini extends AbstractDeviceCompany
                 "Menarini", // company name (full)
                 "Menarini", // short company name
                 "MENARINI_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_TESTING, DataAccessMeter.getInstance()); // implementation
+                DeviceImplementationStatus.Testing, DataAccessMeter.getInstance()); // implementation
                                                                                                    // status
 
         this.addDevice(new GlucofixMio(this));

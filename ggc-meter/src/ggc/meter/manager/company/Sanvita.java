@@ -44,7 +44,7 @@ public class Sanvita extends AbstractDeviceCompany
                 "Sanvita", // company name (full)
                 "Sanvita", // short company name
                 "SANVITA_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                DeviceImplementationStatus.NotPlanned, DataAccessMeter.getInstance()); // implementation
                                                                                                        // status
     }
 
@@ -94,7 +94,7 @@ public class Sanvita extends AbstractDeviceCompany
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return DeviceImplementationStatus.NotPlanned;
     }
 
 }

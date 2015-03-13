@@ -3,6 +3,7 @@ package ggc.pump.data;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpDeviceValueType;
 import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
 

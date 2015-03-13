@@ -160,7 +160,7 @@ public class Freestyle extends FreestyleMeter
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
+        return DeviceImplementationStatus.Testing;
     }
 
 }

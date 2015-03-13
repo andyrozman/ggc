@@ -48,32 +48,37 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
 
     private static final Log log = LogFactory.getLog(CGMSValuesSubEntry.class);
 
-    /**
-     * Sub Entry Type: CGMS BG Reading 
-     */
-    public static final int CGMS_BG_READING = 1;
+//    /**
+//     * Sub Entry Type: CGMS BG Reading
+//     */
+//    public static final int CGMS_BG_READING = 1;
+//
+//    /**
+//     * Sub Entry Type: Meter Calibration Reading
+//     */
+//    public static final int METER_CALIBRATION_READING = 2;
+//
+//    /**
+//     *
+//     */
+//    public static final int CGMS_ALARM = 3;
+//
+//    /**
+//     *
+//     */
+//    public static final int CGMS_EVENT = 4;
+//
+//    /**
+//     *
+//     */
+//    public static final int CGMS_ERROR = 5;
+//
+//    public static final int CGMS_TREND = 6;
 
-    /**
-     * Sub Entry Type: Meter Calibration Reading 
-     */
-    public static final int METER_CALIBRATION_READING = 2;
 
-    /**
-     * 
-     */
-    public static final int CGMS_ALARM = 3;
 
-    /**
-     * 
-     */
-    public static final int CGMS_EVENT = 4;
 
-    /**
-     * 
-     */
-    public static final int CGMS_ERROR = 5;
 
-    public static final int CGMS_TREND = 6;
 
     /**
      * DateTime
@@ -123,6 +128,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
      */
     public CGMSValuesSubEntry()
     {
+        this.source = DataAccessCGMS.getInstance().getSourceDevice();
     }
 
     /**
@@ -137,6 +143,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         this.time = Integer.parseInt(entry.substring(0, entry.indexOf("=")));
         this.value = Integer.parseInt(entry.substring(entry.indexOf("=") + 1));
         this.setType(type);
+        this.source = DataAccessCGMS.getInstance().getSourceDevice();
 
         this.datetime = time * 10 + type;
         // time_only = true;
@@ -163,6 +170,8 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         this.datetime = dt;
         date = (int) (dt / 1000000);
         time = (int) (dt - date * 1000000);
+
+        System.out.println("Date:  " + date + ", Time: " + time);
     }
 
     @Override
@@ -203,7 +212,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
             case DeviceEvent:
                 return "?? " + this.value;
 
-            case MeterCalibration:
+            case SensorCalibration:
             case SensorReading:
                 return DataAccessCGMS.getInstance().getDisplayedBGString("" + this.value);
 
@@ -245,6 +254,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     @Override
     public void setDateTimeObject(ATechDate dt)
     {
+        this.setDateTime(dt.getATDateTimeAsLong());
     }
 
     public String getDVEName()

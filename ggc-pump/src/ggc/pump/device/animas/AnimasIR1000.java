@@ -5,7 +5,6 @@ import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
-import ggc.pump.device.AbstractPump;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -134,7 +133,7 @@ public class AnimasIR1000 extends AnimasPump
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return DeviceImplementationStatus.NotPlanned;
     }
     
     
@@ -175,9 +174,9 @@ public class AnimasIR1000 extends AnimasPump
      * 
      * @return
      */
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+        return DownloadSupportType.NoDownloadSupport;
     }
     
     

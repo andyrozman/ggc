@@ -1,14 +1,15 @@
 package ggc.pump.device.animas;
 
+import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.data.enums.DeviceHandlerType;
-import ggc.plugin.device.DeviceDefinition;
+import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.v2.DeviceHandler;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.defs.PumpDeviceDefinition;
 import ggc.pump.device.animas.impl.AnimasPumpDeviceReader;
-
 
 
 public class AnimasIR1200Handler implements DeviceHandler
@@ -24,18 +25,17 @@ public class AnimasIR1200Handler implements DeviceHandler
         return DeviceHandlerType.AnimasV2PumpHandler;
     }
 
+
+
     public void readDeviceData(DeviceDefinition definition, //
                                Object connectionParameters, //
                                OutputWriter outputWriter) throws PlugInBaseException
     {
-        //try
-        {
-            AnimasPumpDeviceReader reader = new AnimasPumpDeviceReader( //
-                    getCommunicationPort(connectionParameters), //
-                    this.getAnimasDeviceType(definition), //
-                    outputWriter);
-            reader.downloadPumpData();
-        }
+        AnimasPumpDeviceReader reader = new AnimasPumpDeviceReader( //
+                getCommunicationPort(connectionParameters), //
+                this.getAnimasDeviceType(definition), //
+                outputWriter);
+        reader.readData();
 
     }
 
@@ -49,8 +49,13 @@ public class AnimasIR1200Handler implements DeviceHandler
                     getCommunicationPort(connectionParameters), //
                     this.getAnimasDeviceType(definition), //
                     outputWriter);
-            reader.downloadPumpSettings();
+            reader.readConfiguration();
         }
+    }
+
+    public GGCPlugInFileReaderContext[] getFileDownloadContext(DownloadSupportType downloadSupportType)
+    {
+        return null;
     }
 
     private String getCommunicationPort(Object connectionParameters)

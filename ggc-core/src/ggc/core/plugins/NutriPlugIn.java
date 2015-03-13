@@ -31,7 +31,7 @@ import com.atech.plugin.PlugInServer;
  * Author: andyrozman {andy@atech-software.com}
  */
 
-public class NutriPlugIn extends PlugInClient
+public class NutriPlugIn extends GGCPluginClient
 {
 
     /**
@@ -80,12 +80,18 @@ public class NutriPlugIn extends PlugInClient
      * "MN_RECALCULATE_CH};
      */
 
+
+    private static final String PLUGIN_SERVER_CLASS_NAME = "ggc.nutri.plugin.NutriPlugInServer";
+
+    private static final String PLUGIN_SERVER_SHORT_NAME = "NutritionPlugIn";
+
+
     /**
      * Return Object: Selected Device with parameters
      */
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
 
-    DataAccess m_da = DataAccess.getInstance();
+
 
     /**
      * Constructor
@@ -109,27 +115,27 @@ public class NutriPlugIn extends PlugInClient
     /**
      * Check If Installed
      */
-    @Override
-    public void checkIfInstalled()
-    {
-        try
-        {
-            Class<?> c = Class.forName("ggc.nutri.plugin.NutriPlugInServer");
-
-            this.m_server = (PlugInServer) c.newInstance();
-            installed = true;
-
-            this.m_server.init(this.parent, DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(),
-                DataAccess.getInstance(), this, DataAccess.getInstance().getDb());
-
-            // System.out.println("Class done");
-        }
-        catch (Exception ex)
-        {
-            this.installed = false;
-            // System.out.println("Ex:" + ex);
-        }
-    }
+//    @Override
+//    public void checkIfInstalled()
+//    {
+//        try
+//        {
+//            Class<?> c = Class.forName("ggc.nutri.plugin.NutriPlugInServer");
+//
+//            this.m_server = (PlugInServer) c.newInstance();
+//            installed = true;
+//
+//            this.m_server.init(this.parent, DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(),
+//                DataAccess.getInstance(), this, DataAccess.getInstance().getDb());
+//
+//            // System.out.println("Class done");
+//        }
+//        catch (Exception ex)
+//        {
+//            this.installed = false;
+//            // System.out.println("Ex:" + ex);
+//        }
+//    }
 
     /**
      * Get Name Base (untranslated)
@@ -145,91 +151,102 @@ public class NutriPlugIn extends PlugInClient
     /**
      * Init Plugin
      */
-    @Override
-    public void initPlugin()
+//    @Override
+//    public void initPlugin()
+//    {
+//        this.commands = new String[7];
+//        this.commands[0] = "MN_NUTRI_DB_USDA";
+//        this.commands[1] = "MN_NUTRI_DB_USER";
+//        this.commands[2] = "MN_NUTRI_DB_MEAL";
+//        this.commands[3] = "MN_LOAD_DATABASE_DESC";
+//        this.commands[4] = "MN_NUTRI_ABOUT";
+//        this.commands[5] = "MN_OPEN_DB_SELECTOR";
+//        this.commands[6] = "MN_RECALCULATE_CH";
+//
+//        this.commands_implemented = new boolean[7];
+//        this.commands_implemented[0] = true;
+//        this.commands_implemented[1] = true;
+//        this.commands_implemented[2] = true;
+//        this.commands_implemented[3] = true;
+//        this.commands_implemented[4] = true;
+//        this.commands_implemented[5] = true;
+//        this.commands_implemented[6] = true;
+//
+//        this.commands_will_be_done = new String[7];
+//        this.commands_will_be_done[0] = null;
+//        this.commands_will_be_done[1] = null;
+//        this.commands_will_be_done[2] = null;
+//        this.commands_will_be_done[3] = null;
+//        this.commands_will_be_done[4] = null;
+//        this.commands_will_be_done[5] = null;
+//        this.commands_will_be_done[6] = null;
+//
+//    }
+
+//    /**
+//     * actionPerformed
+//     */
+//    @Override
+//    public void actionPerformed(ActionEvent e)
+//    {
+//        this.m_server.actionPerformed(e);
+//        // String command = e.getActionCommand();
+//        // System.out.println("Wrong command for this plug-in [Nutri]: " +
+//        // command);
+//    }
+
+//    /**
+//     * Get When Will Be Implemented
+//     *
+//     * @return
+//     */
+//    @Override
+//    public String getWhenWillBeImplemented()
+//    {
+//        return "0.5";
+//    }
+
+//    /**
+//     * Get Short Status
+//     *
+//     * @return
+//     */
+//    @Override
+//    public String getShortStatus()
+//    {
+//        if (this.m_server != null)
+//            return String.format(ic.getMessage("STATUS_INSTALLED"), this.m_server.getVersion());
+//        else
+//            return ic.getMessage("STATUS_NOT_INSTALLED");
+//    }
+
+
+
+//    /**
+//     * Set Return Data (for getting data from plugin - async)
+//     *
+//     * @param return_data
+//     * @param stat_rep_int
+//     */
+//    @Override
+//    public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
+//    {
+//    }
+
+
+
+
+
+    public String getServerClassName()
     {
-        this.commands = new String[7];
-        this.commands[0] = "MN_NUTRI_DB_USDA";
-        this.commands[1] = "MN_NUTRI_DB_USER";
-        this.commands[2] = "MN_NUTRI_DB_MEAL";
-        this.commands[3] = "MN_LOAD_DATABASE_DESC";
-        this.commands[4] = "MN_NUTRI_ABOUT";
-        this.commands[5] = "MN_OPEN_DB_SELECTOR";
-        this.commands[6] = "MN_RECALCULATE_CH";
-
-        this.commands_implemented = new boolean[7];
-        this.commands_implemented[0] = true;
-        this.commands_implemented[1] = true;
-        this.commands_implemented[2] = true;
-        this.commands_implemented[3] = true;
-        this.commands_implemented[4] = true;
-        this.commands_implemented[5] = true;
-        this.commands_implemented[6] = true;
-
-        this.commands_will_be_done = new String[7];
-        this.commands_will_be_done[0] = null;
-        this.commands_will_be_done[1] = null;
-        this.commands_will_be_done[2] = null;
-        this.commands_will_be_done[3] = null;
-        this.commands_will_be_done[4] = null;
-        this.commands_will_be_done[5] = null;
-        this.commands_will_be_done[6] = null;
-
+        return PLUGIN_SERVER_CLASS_NAME;
     }
 
-    /**
-     * actionPerformed
-     */
-    @Override
-    public void actionPerformed(ActionEvent e)
+
+    public String getServerShortName()
     {
-        this.m_server.actionPerformed(e);
-        // String command = e.getActionCommand();
-        // System.out.println("Wrong command for this plug-in [Nutri]: " +
-        // command);
+        return PLUGIN_SERVER_SHORT_NAME;
     }
 
-    /**
-     * Get When Will Be Implemented
-     * 
-     * @return
-     */
-    @Override
-    public String getWhenWillBeImplemented()
-    {
-        return "0.5";
-    }
-
-    /**
-     * Get Short Status
-     * 
-     * @return
-     */
-    @Override
-    public String getShortStatus()
-    {
-        if (this.m_server != null)
-            return String.format(ic.getMessage("STATUS_INSTALLED"), this.m_server.getVersion());
-        else
-            return ic.getMessage("STATUS_NOT_INSTALLED");
-    }
-
-    @SuppressWarnings("unused")
-    private void refreshPanels(int mask)
-    {
-        // MainFrame mf = (MainFrame)parent;
-        // mf.informationPanel.refreshGroup(mask);
-    }
-
-    /**
-     * Set Return Data (for getting data from plugin - async)
-     * 
-     * @param return_data
-     * @param stat_rep_int
-     */
-    @Override
-    public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
-    {
-    }
 
 }

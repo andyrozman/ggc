@@ -727,7 +727,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
+        return DeviceImplementationStatus.Done;
     }
 
     /** 

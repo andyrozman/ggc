@@ -140,7 +140,6 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
     /**
      * Constructor
      * 
-     * @param dialog
      */
     public RatioCalculatorDialog()
     {
@@ -198,7 +197,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
         this.getContentPane().add(panel);
 
-        label_title.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label_title.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label_title.setHorizontalAlignment(SwingConstants.CENTER);
         label_title.setBounds(0, 15, width, 35);
         panel.add(label_title);
@@ -299,7 +298,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         buttons[1] = ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 180, startx + 255, 130, 25, panel,
             ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
 
-        help_button = m_da.createHelpButtonByBounds(320, startx + 255, 130, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(320, startx + 255, 130, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         buttons[2] = help_button;
         panel.add(help_button);
 

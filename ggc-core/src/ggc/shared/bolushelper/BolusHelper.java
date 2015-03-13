@@ -252,7 +252,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         ATSwingUtils.getButton(m_ic.getMessage("CANCEL"), 145, 375, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
 
-        help_button = m_da.createHelpButtonByBounds(260, 375, 110, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(260, 375, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
         m_da.enableHelp(this);
 
@@ -360,7 +360,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
             float cu = this.curr_bg - tg_bg;
             // System.out.println("difference: " + cu);
 
-            float cu_fix = cu / m_da.getJFormatedTextValueFloat(this.ftf_bg_ins);
+            float cu_fix = cu / ATSwingUtils.getJFormatedTextValueFloat(this.ftf_bg_ins);
             this.lbl_correction
                     .setText(DataAccess.Decimal2Format.format(cu_fix) + "  " + m_ic.getMessage("UNIT_SHORT"));
 
@@ -374,7 +374,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         // ch dose
         if (this.curr_ch > 0)
         {
-            float ch_fix = this.curr_ch / m_da.getJFormatedTextValueFloat(this.ftf_ch_ins);
+            float ch_fix = this.curr_ch / ATSwingUtils.getJFormatedTextValueFloat(this.ftf_ch_ins);
             this.lbl_carb_dose.setText(DataAccess.Decimal2Format.format(ch_fix) + "  " + m_ic.getMessage("UNIT_SHORT"));
 
             sum += ch_fix;

@@ -60,25 +60,23 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
     String old_key = null;
     CGMSValuesEntry current_main = null;
 
-    int i = 0;
 
     /**
      * Add Entry
-     * 
+     *
      * @param mve DeviceValuesEntry instance
      */
     @Override
     public void addEntry(DeviceValuesEntryInterface mve)
     {
-        // if (i>5)
-        // return;
-
         if (mve instanceof CGMSValuesSubEntry)
         {
 
             CGMSValuesSubEntry se = (CGMSValuesSubEntry) mve;
 
             String key = se.date + "_" + se.getType();
+
+            //System.out.println("SE: " + key);
 
             if (old_key == null)
             {
@@ -88,19 +86,26 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
 
             if (!old_key.equals(key))
             {
-                processDeviceValueEntry(this.current_main);
-                this.dl_data.add(this.current_main);
+                addEntryAndProcess(this.current_main);
 
-                if (this.shouldBeDisplayed(this.current_main.getStatus()))
-                {
-                    this.displayed_dl_data.add(this.current_main);
-                    Collections.sort(displayed_dl_data);
-                }
-                this.fireTableDataChanged();
+//                processDeviceValueEntry(this.current_main);
+//                this.dl_data.add(this.current_main);
+//
+//                if (this.shouldBeDisplayed(this.current_main.getStatus()))
+//                {
+//                    //System.out.println("Should be displayed: " );
+//                    this.displayed_dl_data.add(this.current_main);
+//                    Collections.sort(displayed_dl_data);
+//                }
+////                else
+////                {
+////                    System.out.println("Should NOT be displayed: " );
+////                }
+//                this.fireTableDataChanged();
 
                 this.current_main = new CGMSValuesEntry();
 
-                i++;
+                //i++;
             }
 
             if (current_main.isEmpty())
@@ -128,51 +133,37 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
 
             CGMSValuesExtendedEntry ext = (CGMSValuesExtendedEntry) mve;
 
-            processDeviceValueEntry(ext);
-            this.dl_data.add(ext);
+            addEntryAndProcess(ext);
 
-            if (this.shouldBeDisplayed(ext.getStatus()))
-            {
-                this.displayed_dl_data.add(ext);
-                Collections.sort(displayed_dl_data);
-            }
-            this.fireTableDataChanged();
+//            processDeviceValueEntry(ext);
+//            this.dl_data.add(ext);
+//
+//            if (this.shouldBeDisplayed(ext.getStatus()))
+//            {
+//                this.displayed_dl_data.add(ext);
+//                Collections.sort(displayed_dl_data);
+//            }
+//            this.fireTableDataChanged();
 
         }
 
-        /*
-         * if (this.htable.containsKey(key))
-         * {
-         * this.htable.get(key).addSubEntry(se);
-         * }
-         * else
-         * {
-         * CGMSValuesEntry cve = new CGMSValuesEntry();
-         * cve.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S,
-         * se.datetime));
-         * cve.addSubEntry(se);
-         * this.htable.put(key, cve);
-         * }
-         */
-
-        // if se.
-
-        // getDate(se.datetime);
-
-        // System.out.println("HTable: " + htable.size());
-
-        /*
-         * System.out.println(".");
-         * processDeviceValueEntry(mve);
-         * this.dl_data.add(mve);
-         * if (this.shouldBeDisplayed(mve.getStatus()))
-         * {
-         * this.displayed_dl_data.add(mve);
-         * Collections.sort(displayed_dl_data);
-         * }
-         * this.fireTableDataChanged();
-         */
     }
+
+
+    private void addEntryAndProcess(DeviceValuesEntryInterface mve)
+    {
+        processDeviceValueEntry(mve);
+        this.dl_data.add(mve);
+
+        if (this.shouldBeDisplayed(mve.getStatus()))
+        {
+            this.displayed_dl_data.add(mve);
+            Collections.sort(displayed_dl_data);
+        }
+        this.fireTableDataChanged();
+
+    }
+
 
     /**
      * Finish Reading

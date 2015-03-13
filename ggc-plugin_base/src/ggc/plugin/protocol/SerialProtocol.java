@@ -1058,9 +1058,9 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
      * 
      * @return id of connection protocol (see ConnectionProtocols)
      */
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return ConnectionProtocols.PROTOCOL_SERIAL_USBBRIDGE;
+        return DeviceConnectionProtocol.Serial_USBBridge;
     }
 
     /**
@@ -1083,5 +1083,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
         this.serialPort.enableReceiveTimeout(timeout);
     }
+
+
 
 }

@@ -2,6 +2,11 @@
 Changes file for GGC CGM Tool
 ==============================
 
+1.3.0 [19.2.2015]
+    * Device Interface V2 Framework
+
+    * Animas CGMS implementation V1
+
 1.2.0 [4.1.2015]
     * some minor changes all around
     * updated Lists

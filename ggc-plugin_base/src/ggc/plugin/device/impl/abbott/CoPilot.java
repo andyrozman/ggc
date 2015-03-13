@@ -1,8 +1,10 @@
 package ggc.plugin.device.impl.abbott;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -11,6 +13,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Set;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -484,18 +487,16 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         return null;
     }
 
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return DeviceConnectionProtocol.None;
     }
 
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return 0;
+        return DownloadSupportType.NoDownloadSupport;
     }
 
-    @Override
     public GGCPlugInFileReaderContext[] getFileDownloadTypes()
     {
         return null;

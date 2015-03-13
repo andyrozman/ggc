@@ -1,5 +1,7 @@
 package ggc.plugin.output;
 
+import ggc.plugin.data.enums.DeviceConfigurationGroup;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -39,5 +41,8 @@ public interface OutputWriterConfigData
 
 
     boolean isDataValueBG();
+
+
+    DeviceConfigurationGroup getGroup();
 
 }

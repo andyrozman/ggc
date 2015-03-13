@@ -1,5 +1,6 @@
 package ggc.gui.dialogs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.util.DataAccess;
 
 import java.awt.BorderLayout;
@@ -121,7 +122,7 @@ public class AboutGGCDialog extends AboutDialog
         JPanel p1 = new JPanel();
         p1.setLayout(new BorderLayout());
 
-        JLabel l = new JLabel(new ImageIcon(DataAccess.getInstance().getImage("/icons/about_logo.gif", this)
+        JLabel l = new JLabel(new ImageIcon(ATSwingUtils.getImage("/icons/about_logo.gif", this)
                 .getScaledInstance(500, 125, java.awt.Image.SCALE_SMOOTH)));
         p1.add(l, BorderLayout.CENTER);
 

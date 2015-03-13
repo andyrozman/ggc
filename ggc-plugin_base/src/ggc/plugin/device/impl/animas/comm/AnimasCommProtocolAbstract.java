@@ -1,5 +1,6 @@
 package ggc.plugin.device.impl.animas.comm;
 
+import ggc.plugin.comm.NRSerialCommunicationHandler;
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
@@ -51,12 +52,11 @@ public abstract class AnimasCommProtocolAbstract
 {
     public static final Log LOG = LogFactory.getLog(AnimasCommProtocolAbstract.class);
 
-    protected NRSerialPort serialDevice;
-    protected String portName;
-    //public boolean cancelDownload = false;
-    //public boolean downloadCompleted = false;
-    protected InputStream inStream;
-    protected OutputStream outStream;
+    //protected NRSerialPort serialDevice;
+    //protected String portName;
+
+    //protected InputStream inStream;
+    //protected OutputStream outStream;
     protected AnimasDeviceType deviceType;
 
     protected boolean DEBUG = true;
@@ -70,72 +70,92 @@ public abstract class AnimasCommProtocolAbstract
     private boolean deviceConnected;
     protected OutputWriter outputWriter;
 
+    // messages
+    public static final short START_MESSAGE_DEVICE = 192;
+    public static final short END_MESSAGE_DEVICE = 193;
+    public static final short CTL_MESSAGE_DEVICE = 125;
+
+
+    NRSerialCommunicationHandler commHandler;
+
 
     public AnimasCommProtocolAbstract(String portName, AnimasDeviceType deviceType,
             AnimasDeviceReader deviceReader, OutputWriter outputWriter)
     {
-        this.portName = portName;
+        //this.portName = portName;
         this.deviceType = deviceType;
         // this.transferType = transferType;
         this.deviceReader = deviceReader;
         this.outputWriter = outputWriter;
 
+        commHandler = new NRSerialCommunicationHandler(portName);
+
         //data.setPumpCommunicationInterface(this);
     }
 
 
+    public void setDebugMode(boolean debugMode, boolean debugCommunication)
+    {
+        this.DEBUG = debugMode;
+        this.debugCommunication = debugCommunication;
+    }
+
     public boolean initSerialDevice()
     {
-        if ((this.serialDevice != null) && (this.serialDevice.isConnected()))
-        {
-            return true;
-        }
 
-        this.serialDevice = new NRSerialPort(portName, 9600); // 9600
-
-        this.deviceConnected = this.serialDevice.connect();
-
-        LOG.debug("Connect: " + this.deviceConnected);
-
-        if (!this.deviceConnected)
-        {
-            LOG.debug("Could not connect to port " + portName);
-
-            return false;
-        }
-
-
-        try
-        {
-            SerialPort sport = this.serialDevice.getSerialPortInstance();
-            sport.setDTR(false);
-            sport.setRTS(true);
-
-            inStream = this.serialDevice.getInputStream();
-            outStream = this.serialDevice.getOutputStream();
-        }
-        catch (Exception ex)
-        {
-            LOG.error("Error setting streams: " + ex, ex);
-            this.serialDevice = null;
-            return false;
-        }
-        return true;
+        return this.commHandler.connectAndInitDevice();
+//        if ((this.serialDevice != null) && (this.serialDevice.isConnected()))
+//        {
+//            return true;
+//        }
+//
+//        this.serialDevice = new NRSerialPort(portName, 115200); // 9600
+//
+//        this.deviceConnected = this.serialDevice.connect();
+//
+//        LOG.debug("Connect: " + this.deviceConnected);
+//
+//        if (!this.deviceConnected)
+//        {
+//            LOG.debug("Could not connect to port " + portName);
+//
+//            return false;
+//        }
+//
+//
+//        try
+//        {
+//            SerialPort sport = this.serialDevice.getSerialPortInstance();
+//            sport.setDTR(false);
+//            sport.setRTS(true);
+//
+//            inStream = this.serialDevice.getInputStream();
+//            outStream = this.serialDevice.getOutputStream();
+//        }
+//        catch (Exception ex)
+//        {
+//            LOG.error("Error setting streams: " + ex, ex);
+//            this.serialDevice = null;
+//            return false;
+//        }
+//        return true;
     }
 
 
     public void disconnectDevice()
     {
-        if (serialDevice != null)
-        {
-            if (this.serialDevice.isConnected())
-            {
-                this.serialDevice.disconnect();
-                this.serialDevice = null;
-            }
-        }
+        this.commHandler.disconnectDevice();
 
-        this.deviceConnected = false;
+//        if (serialDevice != null)
+//        {
+//            if (this.serialDevice.isConnected())
+//            {
+//                this.serialDevice.disconnect();
+//                this.serialDevice = null;
+//            }
+//        }
+//
+//        this.deviceConnected = false;
     }
 
 
@@ -144,15 +164,6 @@ public abstract class AnimasCommProtocolAbstract
 
     public abstract AnimasImplementationType getImplementationType();
 
-//    public boolean isDownloadCanceled()
-//    {
-//        return cancelDownload;
-//    }
-//
-//    public boolean isDownloadCompleted()
-//    {
-//        return downloadCompleted;
-//    }
 
     public boolean hasDownloadErrors()
     {
@@ -180,9 +191,9 @@ public abstract class AnimasCommProtocolAbstract
         try
         {
 
-            while (this.inStream.available() > 0)
+            while (this.commHandler.available() > 0)
             {
-                len = this.inStream.read(buffer);
+                len = this.commHandler.read(buffer);
                 for (int i = 0; i < len; i++)
                 {
                     tempData.add(AnimasUtils.getUnsignedShort(buffer[i]));
@@ -201,15 +212,92 @@ public abstract class AnimasCommProtocolAbstract
 
     protected boolean isDataAvailable()
     {
+        return this.commHandler.isDataAvailable();
+//        try
+//        {
+//            return (this.inStream.available() > 0);
+//        }
+//        catch (IOException e)
+//        {
+//            return false;
+//        }
+    }
+
+
+    protected void sendToDevice(short c, boolean debug) throws PlugInBaseException
+    {
         try
         {
-            return (this.inStream.available() > 0);
+            this.commHandler.write(c);
+            if (debug)
+            {
+                LOG.debug("sendToDevice: " + c + " [" + (short)c + "]");
+            }
         }
-        catch (IOException e)
+        catch (Exception ex)
         {
-            return false;
+            throw new PlugInBaseException(PlugInExceptionType.CommunicationPortClosed);
         }
     }
 
+    protected void sendMessageToDevice(char[] msgChars) throws PlugInBaseException
+    {
+        sendToDevice(START_MESSAGE_DEVICE);
+
+        for (char character : msgChars)
+        {
+            sendToDevice((short) character);
+        }
+
+        calculateAndSendFletcher(msgChars);
+
+        sendToDevice(END_MESSAGE_DEVICE);
+
+        AnimasUtils.debugHexData(this.debugCommunication, msgChars, msgChars.length, "Sending: [%s]", LOG);
+    }
+
+
+    public void sendCharacterToDevice(char c) throws PlugInBaseException
+    {
+        try
+        {
+            this.commHandler.write(c);
+        }
+        catch (Exception ex)
+        {
+            throw new PlugInBaseException(PlugInExceptionType.CommunicationPortClosed);
+        }
+    }
+
+
+    protected void sendToDevice(short c) throws PlugInBaseException
+    {
+        sendToDevice(c, false);
+    }
+
+
+    private void calculateAndSendFletcher(char[] msgChars) throws PlugInBaseException
+    {
+        short[] fletch = AnimasUtils.calculateFletcher16(msgChars, msgChars.length);
+
+        for(short sh : fletch)
+        {
+            if (isSpecialCharacter(sh))
+            {
+                sendCharacterToDevice('}');
+                sh = (short)(sh ^ 0x20);
+            }
+
+            sendToDevice(sh);
+        }
+    }
+
+
+    private boolean isSpecialCharacter(short character)
+    {
+        return ((character == CTL_MESSAGE_DEVICE) || //
+                (character == START_MESSAGE_DEVICE) || //
+                (character == END_MESSAGE_DEVICE));
+    }
 
 }

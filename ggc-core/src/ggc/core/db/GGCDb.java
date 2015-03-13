@@ -10,26 +10,23 @@ import ggc.core.data.WeeklyValues;
 import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.db.datalayer.Settings;
 import ggc.core.db.datalayer.StockBaseType;
-import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.db.hibernate.DayValueH;
-import ggc.core.db.hibernate.SettingsH;
-import ggc.core.db.hibernate.StockTypeH;
-import ggc.core.db.hibernate.StocksH;
+import ggc.core.db.dto.StocktakingDTO;
+import ggc.core.db.hibernate.*;
 import ggc.core.util.DataAccess;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 import com.atech.db.hibernate.HibernateConfiguration;
@@ -1248,6 +1245,297 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     }
 
     // *************************************************************
+    // **** S t o c k s  ****
+    // *************************************************************
+
+    public List<StockSubTypeH> getStockTypes()
+    {
+        List<StockSubTypeH> list = new ArrayList<StockSubTypeH>();
+
+        if (isDbNotRunning())
+            return list;
+
+        try
+        {
+            Query q = getSession().createQuery(
+                    "SELECT dv from ggc.core.db.hibernate.StockSubTypeH as dv");
+
+            Iterator it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+                list.add((StockSubTypeH) it.next());
+            }
+
+        }
+        catch (Exception ex)
+        {
+            log.error("getStockTypes()::Exception: " + ex.getMessage(), ex);
+        }
+
+        return list;
+    }
+
+
+    public StocktakingDTO getLatestStocktakingDTO()
+    {
+        StocktakingDTO dto = new StocktakingDTO();
+
+        StocktakingH sth = getLastStocktaking();
+
+
+
+        dto.setStocktakingH(sth);
+
+        log.debug("Last stocktaking : " + sth);
+
+        // FIXME
+
+        if (sth!=null)
+        {
+
+
+
+
+
+        }
+
+
+
+        return dto;
+
+
+
+    }
+
+
+    private StocktakingH getLastStocktaking()
+    {
+        try
+        {
+            Integer in = null;
+            int sum_all = 0;
+
+
+            Criteria criteria = this.getSession().createCriteria(StocktakingH.class);
+            criteria.add(Restrictions.eq("personId", (int) m_da.getCurrentUserId()));
+            criteria.setProjection(Projections.max("datetime"));
+
+            Object o = criteria.uniqueResult();
+
+            System.out.println("Object: " + o);
+
+            if (o!=null)
+            {
+                try
+                {
+                    Query q = getSession().createQuery(
+                            "SELECT dv from ggc.core.db.hibernate.StocktakingH as dv " +
+                            "where datetime=" + m_da.getLongValue(o));
+
+                    Iterator it = q.list().iterator();
+
+                    if (it.hasNext())
+                    {
+                        return (StocktakingH)it.next();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    log.error("getLastStocktaking()::Exception: " + ex.getMessage(), ex);
+                }
+            }
+
+            return null;
+
+
+//            if (criteria.list() == null)
+//            {
+//                System.out.println("Not found.");
+//            }
+//            else
+//            {
+//                System.out.println("Not found." + criteria.list().size());
+//                Integer maxAge = (Integer)criteria.uniqueResult();
+//                System.out.println("MaxAge: " + maxAge);
+//            }
+//
+//            return null;
+
+            //Integer maxAge = (Integer)criteria.uniqueResult();
+
+//
+//
+//            Query q = getSession().createQuery(
+//                    "SELECT stt from ggc.core.db.hibernate.StocktakingH as stt " +
+//                            "WHERE datetime = " +
+//                            "( SELECT max(datetime) FROM ggc.core.db.hibernate.StocktakingH )");
+//
+//            Iterator it = q.list().iterator();
+//
+//            if (it.hasNext())
+//            {
+//                return (StocktakingH)it.next();
+//            }
+//            else
+//            {
+//                return null;
+//            }
+
+
+//
+//
+//
+//            Criteria criteria = this.getSession().createCriteria(StocktakingH.class);
+//            criteria.add(Restrictions.eq("personId", (int) m_da.getCurrentUserId()));
+//            criteria.setProjection(Projections.max(""));
+//
+//
+//
+//            criteria.add(Restrictions.or(
+//                    Restrictions.or(Restrictions.gt("bg", 0), Restrictions.like("extended", "%URINE%")),
+//                    Restrictions.gt("ch", 0.0f)));
+//            // criteria.createCriteria("person_id",
+//            // (int)dataAccess.getCurrentUserId());
+//            criteria.setProjection(Projections.rowCount());
+//            in = (Integer) criteria.list().get(0);
+//            sum_all = in.intValue();
+//
+//            log.debug("Old Meter Data in Db: " + in.intValue());
+//
+//            return sum_all;
+        }
+        catch (Exception ex)
+        {
+            log.error("getAllElementsCount: " + ex, ex);
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+    public boolean isStockSubTypeUsed(StockSubTypeH stockType)
+    {
+        Criteria criteria = this.getSession().createCriteria(StockH.class);
+        criteria.add(Restrictions.eq("personId", stockType.getPersonId()));
+        criteria.add(Restrictions.eq("stockSubtype", stockType));
+        criteria.setProjection(Projections.rowCount());
+
+        Object o = criteria.uniqueResult();
+
+        System.out.println("Stoc Tyoe: " + stockType.getName());
+        System.out.println("o: " + o);
+
+        if (o!=null)
+        {
+            long count = m_da.getLongValue(o);
+
+            System.out.println("Count: " + count);
+
+            return count>0;
+        }
+
+        return false;
+    }
+
+
+
+
+
+//    // OLD ONE
+//    public ArrayList<StocksH> getStocks(int type, int history)
+//    {
+//
+//        // FIXME
+//        if (m_loadStatus == DB_CONFIG_LOADED)
+//            return null;
+//
+//        log.info("getStocks() - Process");
+//
+//        ArrayList<StocksH> list = new ArrayList<StocksH>();
+//        String sql = "";
+//
+//        try
+//        {
+//            sql = "SELECT sv FROM ggc.core.db.hibernate.StocksH as sv ";
+//
+//            if (type != -1 || history != -1)
+//            {
+//                sql += " WHERE ";
+//            }
+//
+//            sql += " ORDER BY sv.dt_stock";
+//
+//            Query q = getSession().createQuery(sql);
+//
+//            Iterator<StocksH> it = q.list().iterator();
+//
+//            while (it.hasNext())
+//            {
+//                StocksH sv = it.next();
+//                // hbVal.addDayValueRow(new DailyValuesRow(dv));
+//                list.add(sv);
+//            }
+//
+//            // hbVal.processDayValues();
+//
+//            // logDebug("getHbA1c()", "Readings: " + hbVal.getDayCount() + " " +
+//            // hbVal.getReadings());
+//
+//            // System.out.println("Avg BG: " + hbVal.getAvgBGForMethod3());
+//
+//        }
+//        catch (Exception ex)
+//        {
+//            logException("getHbA1c()", ex);
+//        }
+//
+//        return list;
+//    }
+
+
+
+//    // OLD ONE
+//    public ArrayList<StockBaseType> getStockBaseTypes()
+//    {
+//
+//        if (m_loadStatus == DB_CONFIG_LOADED)
+//            return null;
+//
+//        log.info("getStockBaseTypes() - Process");
+//
+//        ArrayList<StockBaseType> list = new ArrayList<StockBaseType>();
+//        String sql = "";
+//
+//        try
+//        {
+//            sql = "SELECT sv FROM ggc.core.db.hibernate.StockTypeH as sv ";
+//            sql += " ORDER BY sv.id";
+//
+//            Query q = getSession().createQuery(sql);
+//
+//            Iterator<StockTypeH> it = q.list().iterator();
+//
+//            while (it.hasNext())
+//            {
+//                StockTypeH sv = it.next();
+//                list.add(new StockBaseType(sv));
+//            }
+//
+//        }
+//        catch (Exception ex)
+//        {
+//            log.error("getStockBaseTypes()::Exception: " + ex.getMessage(), ex);
+//        }
+//
+//        return list;
+//
+//    }
+
+
+    // *************************************************************
     // **** TOOLS Db METHODS ****
     // *************************************************************
 
@@ -1304,94 +1592,23 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return ht;
     }
 
+    private boolean isDbRunning()
+    {
+        System.out.println("Is running: " + m_loadStatus);
+        return (m_loadStatus == DB_STARTED);
+    }
+
+
+    private boolean isDbNotRunning()
+    {
+        return !(m_loadStatus == DB_STARTED);
+    }
+
+
     // *************************************************************
     // **** S T O C K S ****
     // *************************************************************
 
-    public ArrayList<StocksH> getStocks(int type, int history)
-    {
-
-        if (m_loadStatus == DB_CONFIG_LOADED)
-            return null;
-
-        log.info("getStocks() - Process");
-
-        ArrayList<StocksH> list = new ArrayList<StocksH>();
-        String sql = "";
-
-        try
-        {
-            sql = "SELECT sv FROM ggc.core.db.hibernate.StocksH as sv ";
-
-            if (type != -1 || history != -1)
-            {
-                sql += " WHERE ";
-            }
-
-            sql += " ORDER BY sv.dt_stock";
-
-            Query q = getSession().createQuery(sql);
-
-            Iterator<StocksH> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                StocksH sv = it.next();
-                // hbVal.addDayValueRow(new DailyValuesRow(dv));
-                list.add(sv);
-            }
-
-            // hbVal.processDayValues();
-
-            // logDebug("getHbA1c()", "Readings: " + hbVal.getDayCount() + " " +
-            // hbVal.getReadings());
-
-            // System.out.println("Avg BG: " + hbVal.getAvgBGForMethod3());
-
-        }
-        catch (Exception ex)
-        {
-            logException("getHbA1c()", ex);
-        }
-
-        return list;
-    }
-
-    public ArrayList<StockBaseType> getStockBaseTypes()
-    {
-
-        if (m_loadStatus == DB_CONFIG_LOADED)
-            return null;
-
-        log.info("getStockBaseTypes() - Process");
-
-        ArrayList<StockBaseType> list = new ArrayList<StockBaseType>();
-        String sql = "";
-
-        try
-        {
-            sql = "SELECT sv FROM ggc.core.db.hibernate.StockTypeH as sv ";
-            sql += " ORDER BY sv.id";
-
-            Query q = getSession().createQuery(sql);
-
-            Iterator<StockTypeH> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                StockTypeH sv = it.next();
-                list.add(new StockBaseType(sv));
-            }
-
-        }
-        catch (Exception ex)
-        {
-            log.error("getStockBaseTypes()::Exception: " + ex.getMessage(), ex);
-        }
-
-        return list;
-
-    }
 
     // *************************************************************
     // **** U T I L S ****

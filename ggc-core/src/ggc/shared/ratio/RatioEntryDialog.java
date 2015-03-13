@@ -215,8 +215,8 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
 
         this.ratio_entry.procent = (Integer) this.procents.getValue();
 
-        this.ratio_entry.bg_insulin = m_da.getJFormatedTextValueFloat(this.rep.dtf_ins_bg);
-        this.ratio_entry.ch_insulin = m_da.getJFormatedTextValueFloat(this.rep.dtf_ch_ins);
+        this.ratio_entry.bg_insulin = ATSwingUtils.getJFormatedTextValueFloat(this.rep.dtf_ins_bg);
+        this.ratio_entry.ch_insulin = ATSwingUtils.getJFormatedTextValueFloat(this.rep.dtf_ch_ins);
 
         // this.m_da.getSettings().setRatio_CH_Insulin(m_da.getFloatValue(this.dtf_ch_ins.getCurrentValue()));
         // this.m_da.getSettings().setRatio_BG_Insulin(m_da.getFloatValue(this.dtf_ins_bg.getCurrentValue()));
@@ -305,7 +305,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 135, 320, 105, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
 
-        help_button = m_da.createHelpButtonByBounds(245, 320, 105, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(245, 320, 105, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
 
         panel.add(help_button);
 

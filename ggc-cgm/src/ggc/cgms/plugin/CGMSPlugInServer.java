@@ -1,5 +1,17 @@
 package ggc.cgms.plugin;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+import com.atech.db.hibernate.transfer.BackupRestoreCollection;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.BackupRestorePlugin;
+import com.atech.utils.ATDataAccessLMAbstract;
+import com.atech.utils.ATSwingUtils;
+
 import ggc.cgms.data.db.CGMSData;
 import ggc.cgms.data.db.CGMSDataExtended;
 import ggc.cgms.gui.viewer.CGMSDataDialog;
@@ -13,20 +25,6 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
-
-import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
-import com.atech.db.hibernate.transfer.BackupRestoreCollection;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.plugin.BackupRestorePlugin;
-import com.atech.utils.ATDataAccessLMAbstract;
-import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -57,29 +55,26 @@ import com.atech.utils.ATSwingUtils;
 public class CGMSPlugInServer extends DevicePlugInServer implements ActionListener
 {
 
-    // private String cgm_tool_version = "0.1.1";
 
-    // I18nControlAbstract ic_local = null;
-
-    /**
-     *  Command: Read CGMS data 
-     */
-    public static final int COMMAND_READ_CGMS_DATA = 0;
-
-    /**
-     *  Command: Get List of devices
-     */
-    public static final int COMMAND_CGMS_LIST = 1;
-
-    /**
-     *  Command: Configuration 
-     */
-    public static final int COMMAND_CGMS_CONFIGURATION = 2;
-
-    /**
-     *  Command: About  
-     */
-    public static final int COMMAND_CGMS_ABOUT = 3;
+//    /**
+//     *  Command: Read CGMS data
+//     */
+//    public static final int COMMAND_READ_CGMS_DATA = 0;
+//
+//    /**
+//     *  Command: Get List of devices
+//     */
+//    public static final int COMMAND_CGMS_LIST = 1;
+//
+//    /**
+//     *  Command: Configuration
+//     */
+//    public static final int COMMAND_CGMS_CONFIGURATION = 2;
+//
+//    /**
+//     *  Command: About
+//     */
+//    public static final int COMMAND_CGMS_ABOUT = 3;
 
     /**
      * Return Object: Selected Device with parameters
@@ -96,10 +91,11 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
      */
     public static final int RETURN_ACTION_CONFIG = 2;
 
-    private String commands[] = { "MN_CGMS_READ_DESC", "MN_CGMS_LIST_DESC", "MN_CGMS_CONFIG_DESC", "MN_CGMS_ABOUT_DESC" };
+    //private String commands[] = { "MN_CGMS_READ_DESC", "MN_CGMS_LIST_DESC", "MN_CGMS_CONFIG_DESC", "MN_CGMS_ABOUT_DESC" };
 
     DataAccessCGMS da_local;
     private JMenuItem[] menus = new JMenuItem[3];
+
 
     /**
      * Constructor
@@ -109,11 +105,11 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         super();
     }
 
+
     /**
      * Constructor
      * 
      * @param cont
-     * @param selected_lang
      * @param da
      */
     public CGMSPlugInServer(Container cont, ATDataAccessLMAbstract da)
@@ -124,6 +120,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         da_local.addComponent(cont);
     }
 
+
     /**
      * Execute Command on Server Side
      * 
@@ -132,39 +129,40 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public void executeCommand(int command, Object obj_data)
     {
-        switch (command)
-        {
-            case CGMSPlugInServer.COMMAND_READ_CGMS_DATA:
-                {
-                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_READ_CGMS_DATA]);
-                    // DbDataReaderAbstract reader =
-                    // (DbDataReaderAbstract)obj_data;
-                    // new MeterInstructionsDialog(reader, this);
-                    return;
-                }
-
-            case CGMSPlugInServer.COMMAND_CGMS_LIST:
-                {
-                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_CGMS_LIST]);
-                    return;
-                }
-
-            case CGMSPlugInServer.COMMAND_CGMS_ABOUT:
-                {
-                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_CGMS_ABOUT]);
-                    return;
-                }
-
-            default:
-            case CGMSPlugInServer.COMMAND_CGMS_CONFIGURATION:
-                {
-                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_CGMS_CONFIGURATION]);
-                    return;
-                }
-
-        }
+//        switch (command)
+//        {
+//            case CGMSPlugInServer.COMMAND_READ_CGMS_DATA:
+//                {
+//                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_READ_CGMS_DATA]);
+//                    // DbDataReaderAbstract reader =
+//                    // (DbDataReaderAbstract)obj_data;
+//                    // new MeterInstructionsDialog(reader, this);
+//                    return;
+//                }
+//
+//            case CGMSPlugInServer.COMMAND_CGMS_LIST:
+//                {
+//                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_CGMS_LIST]);
+//                    return;
+//                }
+//
+//            case CGMSPlugInServer.COMMAND_CGMS_ABOUT:
+//                {
+//                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_CGMS_ABOUT]);
+//                    return;
+//                }
+//
+//            default:
+//            case CGMSPlugInServer.COMMAND_CGMS_CONFIGURATION:
+//                {
+//                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_CGMS_CONFIGURATION]);
+//                    return;
+//                }
+//
+//        }
 
     }
+
 
     /**
      * Get Name of plugin
@@ -177,6 +175,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         return ic.getMessage("CGMS_PLUGIN");
     }
 
+
     /**
      * Get Version of plugin
      * 
@@ -188,6 +187,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         return DataAccessCGMS.PLUGIN_VERSION;
     }
 
+
     /**
      * Get Information When will it be implemented
      * 
@@ -196,8 +196,9 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public String getWhenWillBeImplemented()
     {
-        return "0.6";
+        return null;
     }
+
 
     /**
      * Init PlugIn which needs to be implemented 
@@ -213,30 +214,8 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         }
 
         this.initPlugInServer((DataAccess) m_da, da_local);
-
-        /*
-         * da_local.loadManager();
-         * ic_local = da_local.getI18nControlInstance();
-         * da_local.addComponent(this.parent);
-         * da_local.setParentI18nControlInstance(i18nControlAbstract);
-         * da_local.setHelpContext(this.dataAccess.getHelpContext());
-         * da_local.setPlugInServerInstance(this);
-         * da_local.createDb(dataAccess.getHibernateDb());
-         * //da_local.initAllObjects();
-         * da_local.loadSpecialParameters();
-         * da_local.setCurrentUserId(((DataAccess)dataAccess).current_user_id);
-         * da_local.setConfigurationManager(((DataAccess)dataAccess).
-         * getConfigurationManager());
-         * //this.backup_restore_enabled = true;
-         * this.backup_restore_enabled = false;
-         * dataAccess.loadSpecialParameters();
-         * //System.out.println("PumpServer: " +
-         * dataAccess.getSpecialParameters().get("BG"));
-         * da_local.setBGMeasurmentType(dataAccess.getIntValueFromString(dataAccess.
-         * getSpecialParameters().get("BG")));
-         * da_local.setGraphConfigProperties(dataAccess.getGraphConfigProperties());
-         */
     }
+
 
     /**
      * Get Return Object
@@ -277,6 +256,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
     }
 
+
     /**
      * Get Return Object
      * 
@@ -289,6 +269,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     {
         return null;
     }
+
 
     /**
      * Get Backup Objects (if available)
@@ -305,6 +286,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
         return brc;
     }
+
 
     /**
      * Get PlugIn Main Menu 
@@ -324,29 +306,23 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         JMenuItem menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ", "MN_CGMS_READ_DESC", "cgms_read", this,
             null, ic_local, DataAccessCGMS.getInstance(), parent);
 
-        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
-        {
-            menu.setEnabled(true);
-        }
-        else
-        {
-            menu.setEnabled(false);
-        }
-
         menus[0] = menu;
+        menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadData));
+
+        menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_CONFIG", "MN_CGMS_READ_CONFIG_DESC",
+            "cgms_read_config", this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+
+        menus[1] = menu;
+        menus[1].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.Download_Data_Config));
 
         menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_FILE", "MN_CGMS_READ_FILE_DESC", "cgms_read_file",
             this, null, ic_local, DataAccessCGMS.getInstance(), parent);
 
-        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
-        {
-            menu.setEnabled(true);
-        }
-        else
-        {
-            menu.setEnabled(false);
-        }
-        menus[1] = menu;
+        menus[2] = menu;
+        menus[2].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadDataFile));
 
         menu_cgms.addSeparator();
 
@@ -371,26 +347,17 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         return menu_cgms;
     }
 
+
     private void refreshMenusAfterConfig()
     {
-        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
-        {
-            menus[0].setEnabled(true);
-        }
-        else
-        {
-            menus[0].setEnabled(false);
-        }
-
-        if ((da_local.getDownloadStatus() & DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE)
-        {
-            menus[1].setEnabled(true);
-        }
-        else
-        {
-            menus[1].setEnabled(false);
-        }
+        menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadData));
+        menus[1].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadConfig));
+        menus[2].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadDataFile));
     }
+
 
     /**
      * Get PlugIn Print Menus 
@@ -402,9 +369,9 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public JMenu[] getPlugInPrintMenus()
     {
-        // TODO Auto-generated method stub
         return null;
     }
+
 
     /** 
      * actionPerformed
@@ -418,13 +385,19 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         {
             new DeviceInstructionsDialog(this.parent, DataAccessCGMS.getInstance(), this,
                     DeviceDataHandler.TRANSFER_READ_DATA);
-            this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
+            // this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
+        }
+        else if (command.equals("cgms_read_config"))
+        {
+            new DeviceInstructionsDialog(this.parent, DataAccessCGMS.getInstance(), this,
+                    DeviceDataHandler.TRANSFER_READ_CONFIGURATION);
+            // this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("cgms_read_file"))
         {
             new DeviceInstructionsDialog(this.parent, DataAccessCGMS.getInstance(), this,
                     DeviceDataHandler.TRANSFER_READ_FILE);
-            this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
+            // this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("cgms_list"))
         {
@@ -450,6 +423,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         }
 
     }
+
 
     /**
      * Get Backup Restore Handler

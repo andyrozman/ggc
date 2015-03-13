@@ -91,6 +91,7 @@ public class PluginDb
             {
                 String id = doh.DbAdd(getSession()); // getSession());
                 this.m_addId = id;
+                System.out.println("Add:" + doh);
                 return true;
             }
             catch (SQLException ex)
@@ -190,6 +191,7 @@ public class PluginDb
             try
             {
                 doh.DbEdit(getSession());
+                System.out.println("Edit:" + doh);
                 return true;
             }
             catch (SQLException ex)

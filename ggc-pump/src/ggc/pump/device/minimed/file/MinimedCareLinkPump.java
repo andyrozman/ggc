@@ -4,7 +4,7 @@ import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-import ggc.pump.data.PumpTempValues;
+import ggc.pump.data.PumpWriterValues;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpAlarms;
 import ggc.pump.data.defs.PumpBasalSubType;
@@ -277,67 +277,66 @@ public class MinimedCareLinkPump extends MinimedCareLink
 
         // FIXME
 
-        this.dvw.put("Prime", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+        this.dvw.put("Prime", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
                 PumpEvents.PrimeInfusionSet, true));
 
-        this.dvw.put("Rewind", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+        this.dvw.put("Rewind", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
                 PumpEvents.CartridgeRewind, false));
 
         this.dvw.put("AlarmPump",
-            new PumpTempValues(PumpTempValues.OBJECT_BASE_SET_SUBTYPE, PumpBaseType.Alarm.getCode(), false));
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(), false));
 
-        this.dvw.put("BolusNormal", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus,
+        this.dvw.put("BolusNormal", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus,
                 PumpBolusType.Normal, true));
 
-        this.dvw.put("BolusSquare", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus,
+        this.dvw.put("BolusSquare", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus,
                 PumpBolusType.Extended, false)); // ?
 
-        this.dvw.put("BolusMultiwave", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Bolus,
+        this.dvw.put("BolusMultiwave", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus,
                 PumpBolusType.Multiwave, false));
 
         this.dvw.put("BolusWizardBolusEstimate",
-            new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
                     PumpEvents.BolusWizard, false));
 
-        this.dvw.put("BGReceived", new PumpTempValues(PumpTempValues.OBJECT_EXT,
+        this.dvw.put("BGReceived", new PumpWriterValues(PumpWriterValues.OBJECT_EXT,
                 PumpAdditionalDataType.BloodGlucose, true));
 
         // ChangeTempBasalPercent
         this.dvw.put("ChangeTempBasalPercent",
-            new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Basal,
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Basal,
                     PumpBasalSubType.TemporaryBasalRate, false));
 
-        this.dvw.put("TBROver", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Basal,
+        this.dvw.put("TBROver", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Basal,
                 PumpBasalSubType.TemporaryBasalRateEnded, false));
 
-        this.dvw.put("ChangeActiveBasalProfilePattern", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+        this.dvw.put("ChangeActiveBasalProfilePattern", new PumpWriterValues(PumpWriterValues.OBJECT_BASE,
                 PumpBaseType.Basal, PumpBasalSubType.Profile, false));
 
-        this.dvw.put("ChangeSuspendEnable", new PumpTempValues(PumpTempValues.OBJECT_BASE,
+        this.dvw.put("ChangeSuspendEnable", new PumpWriterValues(PumpWriterValues.OBJECT_BASE,
                 PumpBaseType.Event, PumpEvents.BasalStop, false));
 
         this.dvw.put("ChangeSuspendEnableNot",
-            new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
                     PumpEvents.BasalRun, false));
 
-        this.dvw.put("ResultDailyTotal", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Report,
+        this.dvw.put("ResultDailyTotal", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Report,
                 PumpReport.InsulinTotalDay, true));
 
-        this.dvw.put("SelfTest", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+        this.dvw.put("SelfTest", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
                 PumpEvents.SelfTest, false));
 
-        this.dvw.put("ChangeTime", new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Event,
+        this.dvw.put("ChangeTime", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
                 PumpEvents.DateTimeCorrect, false));
 
         this.dvw.put(
             "JournalEntryPumpLowBattery",
-            new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(), PumpAlarms.BatteryLow
-                    .getCode(), false));
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Alarm, PumpAlarms.BatteryLow, false));
 
         this.dvw.put(
             "JournalEntryPumpLowReservoir",
-            new PumpTempValues(PumpTempValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(), PumpAlarms.CartridgeLow
-                    .getCode(), false));
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Alarm, PumpAlarms.CartridgeLow
+                    , false));
 
     }
 

@@ -7,11 +7,10 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.device.AbstractPump;
 import ggc.pump.device.minimed.file.FRC_MinimedCarelink;
-
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -107,7 +106,7 @@ public abstract class MinimedPump extends AbstractPump
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
     /**
@@ -204,15 +203,11 @@ public abstract class MinimedPump extends AbstractPump
         return null;
     }
 
-    /**
-     * getConnectionProtocol - returns id of connection protocol
-     * 
-     * @return id of connection protocol
-     */
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return 0;
+        return DeviceConnectionProtocol.None;
     }
+
 
     /**
      * Is Device Communicating
@@ -238,15 +233,11 @@ public abstract class MinimedPump extends AbstractPump
     }
 
     /**
-     * Get Download Support Type
-     * 
-     * @return
+     * @{InheritDocs}
      */
-    @Override
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        // return DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE; // .DOWNLOAD_FROM_DEVICE_FILE;
+        return DownloadSupportType.NoDownloadSupport; // .DOWNLOAD_FROM_DEVICE_FILE;
     }
 
     /**

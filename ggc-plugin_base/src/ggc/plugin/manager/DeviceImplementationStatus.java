@@ -32,78 +32,60 @@ public enum DeviceImplementationStatus
     /**
      * Implementation: Not Available
      */
-    IMPLEMENTATION_NOT_AVAILABLE, // 0
+    NotAvailable, // 0
 
     /**
      * Implementation: Not Planned
      */
-    IMPLEMENTATION_NOT_PLANNED, // 1
+    NotPlanned, // 1
 
     /**
      * Implementation: Planned
      */
-    IMPLEMENTATION_PLANNED, // 2;
+    Planned, // 2;
 
     /**
      * Implementation: Partitial
      */
-    IMPLEMENTATION_PARTITIAL, //3;
+    Partitial, //3;
 
     /**
      * Implementation: Full
      */
-    IMPLEMENTATION_FULL, // = 4;
+    Full, // = 4;
 
     /**
      * Implementation: In Progress
      */
-    IMPLEMENTATION_IN_PROGRESS, // = 5;
+    InProgress, // = 5;
 
     /**
      * Implementation: Testing
      */
-    IMPLEMENTATION_TESTING, // = 6;
+    Testing, // = 6;
 
     /**
      * Implementation: Done
      */
-    IMPLEMENTATION_DONE, // = 7;
+    Done, // = 7;
 
 
 
 
 
 
-    /**
-     * Functionality: Read Data Full
-     */
-    FUNCTIONALITY_READ_DATA_FULL, // = 1;
 
-    /**
-     * Functionality: Read Data Partitial
-     */
-    FUNCTIONALITY_READ_DATA_PARTITIAL, // = 2;
-
-    /**
-     * Functionality: Read Info
-     */
-    FUNCTIONALITY_READ_INFO, // = 4;
-
-    /**
-     * Functionality: Read Config
-     */
-    FUNCTIONALITY_READ_CONFIG, // = 8;
 
     ;
 
 
     public static boolean isSupportedDevice(DeviceImplementationStatus status)
     {
-        return ((status==IMPLEMENTATION_PARTITIAL) || //
-                (status==IMPLEMENTATION_FULL) || //
-                (status==IMPLEMENTATION_IN_PROGRESS) || //
-                (status==IMPLEMENTATION_TESTING) || //
-                (status==IMPLEMENTATION_DONE));
+        return ((status== Partitial) || //
+                (status== Full) || //
+                (status== InProgress) || //
+                (status== Testing) || //
+                (status== Done));
     }
 
 

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+
+
+    <!-- ****************************************** -->
+    <!-- ***                  Stocks               **** -->
+    <!-- ****************************************** -->
+
+    <!--  Stock types -->
+    <!--
+    <class name="ggc.core.db.hibernate.StockTypeH" table="stock_types">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>
+        <property name="name"  type="string" length="1000" />
+        <property name="name_i18n"  type="string" length="1000" />
+    </class>
+    -->
+
+
+    <class name="ggc.core.db.hibernate.StockSubTypeH" table="stock_subtypes">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>
+        <property name="stockTypeId" column="stock_type_id"  type="java.lang.Long"  />
+        <property name="name"  type="java.lang.String" length="512" />
+        <property name="description"  type="java.lang.String" length="2000" />
+        <property name="packageContent" column="package_content"  type="java.lang.Long" />
+        <property name="packageContentUnit" column="package_content_unit"  type="java.lang.String" length="100" />
+        <property name="usageUnit" column="usage_unit" type="java.lang.Integer" />
+        <property name="usageMin" column="usage_min" type="java.lang.Integer" />
+        <property name="usageMax" column="usage_max" type="java.lang.Integer" />
+        <property name="active" type="java.lang.Boolean" />
+        <property name="personId" column="person_id" type="java.lang.Integer" not-null="true" />
+        <property name="extended"  type="text" />
+        <property name="comment" type="java.lang.String" length="2000" />
+    </class>
+
+    <class name="ggc.core.db.hibernate.StockH" table="stock_stocks">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>
+
+<!--        <property name="stockSubtypeId" column="stock_subtype_id"  type="java.lang.Long"  /> -->
+
+        <many-to-one name="stockSubtype" class="ggc.core.db.hibernate.StockSubTypeH" fetch="select">
+            <column name="stock_subtype_id" not-null="true" />
+        </many-to-one>
+
+        <property name="stocktakingId" column="stocktaking_id" type="java.lang.Long" />
+        <property name="amount"  type="java.lang.Long" />
+        <property name="location"  type="java.lang.String" length="1000" />
+        <property name="validFrom" column="valid_from" type="java.lang.Long" />
+        <property name="validTill" column="valid_till" type="java.lang.Long" />
+
+        <property name="personId" column="person_id" type="java.lang.Integer" not-null="true" />
+        <property name="extended"  type="text" />
+        <property name="comment"  type="java.lang.String" length="2000" />
+    </class>
+
+
+    <class name="ggc.core.db.hibernate.StocktakingH" table="stock_stocktaking">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>
+        <property name="datetime" column="dt_stocktaking"  type="java.lang.Long"  />
+        <property name="description"  type="java.lang.String" length="2000" />
+
+        <property name="personId" column="person_id" type="java.lang.Integer" not-null="true" />
+        <property name="extended"  type="text" />
+        <property name="comment"  type="java.lang.String" length="2000" />
+        <property name="changed"  type="java.lang.Long"  />
+    </class>
+
+
+</hibernate-mapping>

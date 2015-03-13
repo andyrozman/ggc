@@ -36,26 +36,25 @@ import com.atech.graphics.components.MultiLineTooltipModel;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class DeviceValuesConfigTableModel extends AbstractTableModel implements MultiLineTooltipModel
+public class DeviceValuesConfigTableModel extends AbstractTableModel //implements MultiLineTooltipModel
 {
 
     private static final long serialVersionUID = -896566044265728328L;
     protected DeviceDataHandler m_ddh = null;
     protected DataAccessPlugInBase m_da;
-    protected String device_source;
+    //protected String device_source;
     protected ArrayList<DeviceValueConfigEntryInterface> data = null;
 
     /**
      * Constructor
      * 
      * @param da
-     * @param source 
      */
-    public DeviceValuesConfigTableModel(DataAccessPlugInBase da, String source)
+    public DeviceValuesConfigTableModel(DataAccessPlugInBase da) //, String source)
     {
-        // this.m_ddh = ddh;
+        // this.deviceDataHandler = ddh;
         this.m_da = da;
-        this.device_source = source;
+        //this.device_source = source;
         this.data = new ArrayList<DeviceValueConfigEntryInterface>();
         fireTableChanged(null);
     }
@@ -199,14 +198,14 @@ public class DeviceValuesConfigTableModel extends AbstractTableModel implements 
      * @param column 
      * @return 
      */
-    public String getToolTipValue(int row, int column)
-    {
-        DeviceValueConfigEntryInterface o = data.get(row);
-
-        if (o.hasMultiLineToolTip())
-            return ((MultiLineTooltip) o).getMultiLineToolTip(column);
-        else
-            return (String) o.getColumnValue(column);
-    }
+//    public String getToolTipValue(int row, int column)
+//    {
+//        DeviceValueConfigEntryInterface o = data.get(row);
+//
+//        if (o.hasMultiLineToolTip())
+//            return ((MultiLineTooltip) o).getMultiLineToolTip(column);
+//        else
+//            return (String) o.getColumnValue(column);
+//    }
 
 }

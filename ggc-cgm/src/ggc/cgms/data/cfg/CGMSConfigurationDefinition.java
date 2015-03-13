@@ -4,6 +4,7 @@ import ggc.cgms.device.DummyCGMS;
 import ggc.cgms.manager.CGMSManager;
 import ggc.plugin.cfg.DeviceConfigurationDefinition;
 
+import java.util.List;
 import java.util.Vector;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -83,9 +84,9 @@ public class CGMSConfigurationDefinition implements DeviceConfigurationDefinitio
      * 
      * @return
      */
-    public Vector<? extends SelectableInterface> getSupportedDevices()
+    public List<SelectableInterface> getSupportedDevices()
     {
-        return CGMSManager.getInstance().getSupportedDevices();
+        return CGMSManager.getInstance().getSupportedDevicesForSelector();
     }
 
     /**
@@ -98,4 +99,15 @@ public class CGMSConfigurationDefinition implements DeviceConfigurationDefinitio
         return "CGMSTool_";
     }
 
+    public Object getSpecificDeviceInstance(String company, String deviceName)
+    {
+        Object device = CGMSManager.getInstance().getDeviceV2(company, deviceName);
+
+        if (device==null)
+        {
+            device = CGMSManager.getInstance().getDeviceV1(company, deviceName);
+        }
+
+        return device;
+    }
 }

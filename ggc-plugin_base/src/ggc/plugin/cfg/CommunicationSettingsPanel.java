@@ -1,7 +1,10 @@
 package ggc.plugin.cfg;
 
+import ggc.plugin.data.enums.DevicePortParameterType;
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import javax.swing.JDialog;
@@ -40,14 +43,19 @@ public class CommunicationSettingsPanel extends JPanel
 {
 
     private static final long serialVersionUID = 9197820657243699214L;
+
     int x_pos, y_pos;
     DataAccessPlugInBase m_da;
     I18nControlAbstract m_ic;
     CommunicationPortComponent comm_port_comp;
     JDialog parent;
-    DeviceInterface current_device = null;
     DeviceSpecialConfigPanelInterface special_config = null;
     int element_size = 65;
+
+    DeviceInterface currentDeviceV1 = null;
+    DeviceInstanceWithHandler currentDeviceV2 = null;
+
+
 
     /**
      * Constructor
@@ -91,19 +99,42 @@ public class CommunicationSettingsPanel extends JPanel
      */
     public void setCurrentDevice(DeviceInterface dev_interface)
     {
-        this.current_device = dev_interface;
+        this.currentDeviceV1 = dev_interface;
 
-        if (this.current_device == null)
+        if (this.currentDeviceV1 == null)
         {
-            this.comm_port_comp.setProtocol(0);
+            this.comm_port_comp.setProtocol(DeviceConnectionProtocol.None);
         }
         else
         {
-            this.comm_port_comp.setProtocol(this.current_device.getConnectionProtocol());
+            this.comm_port_comp.setProtocol(this.currentDeviceV1.getConnectionProtocol());
         }
 
         resetLayout();
     }
+
+
+    /**
+     * Set Current Device
+     *
+     * @param dev_interface
+     */
+    public void setCurrentDevice(DeviceInstanceWithHandler dev_interface)
+    {
+        this.currentDeviceV2 = dev_interface;
+
+        if (this.currentDeviceV2 == null)
+        {
+            this.comm_port_comp.setProtocol(DeviceConnectionProtocol.None);
+        }
+        else
+        {
+            this.comm_port_comp.setProtocol(this.currentDeviceV2.getConnectionProtocol());
+        }
+
+        resetLayout();
+    }
+
 
     /**
      * Reset Layout
@@ -112,9 +143,13 @@ public class CommunicationSettingsPanel extends JPanel
     {
         this.special_config = null;
 
-        if (this.current_device != null && this.current_device.hasSpecialConfig())
+        if (this.currentDeviceV2 != null && this.currentDeviceV2.hasSpecialConfig())
         {
-            this.special_config = this.current_device.getSpecialConfigPanel();
+            this.special_config = this.currentDeviceV2.getSpecialConfigPanel();
+        }
+        else if (this.currentDeviceV1 != null && this.currentDeviceV1.hasSpecialConfig())
+        {
+            this.special_config = this.currentDeviceV1.getSpecialConfigPanel();
         }
 
         this.removeAll();
@@ -147,7 +182,7 @@ public class CommunicationSettingsPanel extends JPanel
      * 
      * @param protocol
      */
-    public void setProtocol(int protocol)
+    public void setProtocol(DeviceConnectionProtocol protocol)
     {
         this.comm_port_comp.setProtocol(protocol);
     }
@@ -208,24 +243,16 @@ public class CommunicationSettingsPanel extends JPanel
     {
         if (this.special_config == null)
         {
-            if (this.current_device.hasDefaultParameter())
+            if (hasDefaultParameter())
+            {
                 return checkIfDefaultParameterSet();
-            /*
-             * if (m_ic.getMessage("NOT_SET").equals(this.comm_port_comp.
-             * getCommunicationPort()))
-             * return false;
-             * if
-             * (this.comm_port_comp.getCommunicationPort().trim().length()==0)
-             * return false;
-             * else
-             * return true;
-             */
+            }
             else
                 return true;
         }
         else
         {
-            if (this.current_device.hasDefaultParameter())
+            if (hasDefaultParameter())
             {
                 if (checkIfDefaultParameterSet())
                 {
@@ -240,6 +267,13 @@ public class CommunicationSettingsPanel extends JPanel
 
         }
 
+    }
+
+
+    private boolean hasDefaultParameter()
+    {
+        return (((this.currentDeviceV2!=null) && (this.currentDeviceV2.getDevicePortParameterType()==DevicePortParameterType.DefaultParameter)) ||
+                ((this.currentDeviceV1!=null) && (this.currentDeviceV1.hasDefaultParameter())));
     }
 
     private boolean checkIfDefaultParameterSet()

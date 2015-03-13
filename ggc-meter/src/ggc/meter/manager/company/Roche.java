@@ -56,7 +56,7 @@ public class Roche extends AbstractDeviceCompany
                 "Accu-Chek/Roche", // company name (full)
                 "Roche", // short company name
                 "ROCHE_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_DONE, DataAccessMeter.getInstance()); // implementation
+                DeviceImplementationStatus.Done, DataAccessMeter.getInstance()); // implementation
                                                                                                 // status
 
         // this.addDevice(new AccuChekSmartPix());

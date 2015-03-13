@@ -45,7 +45,7 @@ public class Roche extends AbstractPumpDeviceCompany
                 "Accu-Chek/Roche", // company name (full)
                 "Roche", // short company name
                 "ROCHE_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_TESTING); // implementation
+                DeviceImplementationStatus.Testing); // implementation
                                                                     // status
 
         this.addDevice(new DisetronicDTron(this));

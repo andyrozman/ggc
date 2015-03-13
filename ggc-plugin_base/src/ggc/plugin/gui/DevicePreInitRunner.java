@@ -1,6 +1,8 @@
 package ggc.plugin.gui;
 
+import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.device.DeviceAbstract;
+import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -37,27 +39,24 @@ import org.apache.commons.logging.LogFactory;
 
 // Try to assess possibility of super-classing
 
-public class DevicePreInitRunner extends Thread // extends JDialog implements
-                                                // ActionListener
+public class DevicePreInitRunner extends Thread
 {
 
     private static Log log = LogFactory.getLog(DevicePreInitRunner.class);
 
-    DataAccessPlugInBase m_da;
-    DeviceAbstract device_instance;
     DeviceInstructionsDialog device_instruction_dialog;
+    DeviceDataHandler deviceDataHandler;
 
     /**
      * Constructor
      * 
-     * @param da 
-     * @param dev_inst 
+     * @param deviceDataHandler
      * @param did 
      */
-    public DevicePreInitRunner(DataAccessPlugInBase da, DeviceAbstract dev_inst, DeviceInstructionsDialog did)
+    // FIXME
+    public DevicePreInitRunner( DeviceDataHandler deviceDataHandler, DeviceInstructionsDialog did)
     {
-        this.m_da = da;
-        this.device_instance = dev_inst;
+        this.deviceDataHandler = deviceDataHandler;
         this.device_instruction_dialog = did;
     }
 
@@ -67,13 +66,19 @@ public class DevicePreInitRunner extends Thread // extends JDialog implements
     @Override
     public void run()
     {
-
-        // dataAccess.sleepMS(1000);
-
         try
         {
             log.debug("preInit Device - Start");
-            this.device_instance.preInitDevice();
+
+            if (deviceDataHandler.getDeviceInterfaceV2()!=null)
+            {
+                deviceDataHandler.getDeviceInterfaceV2().preInitDevice();
+            }
+            else if (deviceDataHandler.getDeviceInterfaceV1()!=null)
+            {
+                deviceDataHandler.getDeviceInterfaceV1().preInitDevice();
+            }
+
             log.debug("preInit Device - End");
         }
         catch (Exception ex)
@@ -84,50 +89,7 @@ public class DevicePreInitRunner extends Thread // extends JDialog implements
         {
             this.device_instruction_dialog.preInitDone(true);
         }
-
     }
 
-    /**
-     * Write log entry
-     * 
-     * @param entry_type
-     * @param message
-     */
-    public void writeLog(int entry_type, String message)
-    {
-        getOutputWriter().writeLog(entry_type, message);
-    }
-
-    /**
-     * Write log entry
-     * 
-     * @param entry_type
-     * @param message
-     * @param ex
-     */
-    public void writeLog(int entry_type, String message, Exception ex)
-    {
-        getOutputWriter().writeLog(entry_type, message, ex);
-    }
-
-    /** 
-     * Get Output Writer
-     * 
-     * @return 
-     */
-    public OutputWriter getOutputWriter()
-    {
-        return this.device_instance.getOutputWriter();
-    }
-
-    /** 
-     * Get Output Util
-     * 
-     * @return 
-     */
-    public OutputUtil getOutputUtil()
-    {
-        return getOutputWriter().getOutputUtil();
-    }
 
 }

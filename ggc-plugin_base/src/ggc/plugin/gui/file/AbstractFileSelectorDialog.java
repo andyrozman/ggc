@@ -1,5 +1,6 @@
 package ggc.plugin.gui.file;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -43,11 +44,11 @@ public abstract class AbstractFileSelectorDialog extends JDialog implements Acti
 {
 
     private static final long serialVersionUID = -7597376030031612506L;
-    JButton help_button = null;
+    JButton helpButton = null;
     protected DataAccessPlugInBase m_da = null;
     protected I18nControlAbstract m_ic = null;
-    protected JDialog dialog_parent = null;
-    protected DeviceDataHandler m_ddh = null;
+    protected JDialog dialogParent = null;
+    protected DeviceDataHandler deviceDataHandler = null;
 
     // public abstract int[] getPanelSizes();
 
@@ -61,13 +62,13 @@ public abstract class AbstractFileSelectorDialog extends JDialog implements Acti
     public AbstractFileSelectorDialog(DataAccessPlugInBase da, DeviceDataHandler ddh, JDialog parent)
     {
         super(parent);
-        this.dialog_parent = parent;
-        this.m_ddh = ddh;
+        this.dialogParent = parent;
+        this.deviceDataHandler = ddh;
         this.m_da = da;
         m_ic = da.getI18nControlInstance();
         init();
         setSize(getSize());
-        m_da.centerJDialog(this, this.dialog_parent);
+        ATSwingUtils.centerJDialog(this, this.dialogParent);
         this.setVisible(true);
     }
 
@@ -86,7 +87,7 @@ public abstract class AbstractFileSelectorDialog extends JDialog implements Acti
 
     public JButton getHelpButton()
     {
-        return this.help_button;
+        return this.helpButton;
     }
 
 }

@@ -47,7 +47,7 @@ public class Minimed extends AbstractDeviceCompany
                 "MiniMed", // company name (full)
                 "MiniMed", // short company name
                 "MINIMED_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_PLANNED, DataAccessCGMS.getInstance()); // implementation
+                DeviceImplementationStatus.Planned, DataAccessCGMS.getInstance()); // implementation
                                                                                                   // status
 
         this.addDevice(new MiniMedCGMSGold(this));

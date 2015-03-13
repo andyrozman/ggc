@@ -1,12 +1,15 @@
 package ggc.cgms.data;
 
 import com.atech.utils.data.CodeEnum;
+import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.cgms.data.defs.CGMSBaseDataType;
 import ggc.cgms.data.defs.CGMSObject;
+import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.data.DeviceTempValues;
 import ggc.plugin.output.OutputWriterData;
 
 import com.atech.utils.data.ATechDate;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,34 +40,60 @@ import com.atech.utils.data.ATechDate;
 public class CGMSTempValues extends DeviceTempValues
 {
 
-    /**
-     * @param objectType
-     * @param baseType
-     * @param subType
-     */
-    public CGMSTempValues(int objectType, int baseType, int subType)
-    {
 
-        super(objectType, baseType, subType, null);
+
+    public CGMSTempValues(int _object_type, int _base_type, Boolean isNumericValue)
+    {
+        this(_object_type, _base_type, 0, null, isNumericValue);
     }
 
+    public CGMSTempValues(int _object_type, CodeEnumWithTranslation _base_type, Boolean isNumericValue)
+    {
+        this(_object_type, _base_type.getCode(), 0, null, isNumericValue);
+    }
+
+//    public CGMSTempValues(int _object_type, CodeEnumWithTranslation _base_type,
+//                          Boolean isNumericValue)
+//    {
+//        this(_object_type, _base_type.getCode(), _sub_type.getCode(), null, isNumericValue);
+//    }
+
+//    public CGMSTempValues(int _object_type, int _base_type, Boolean isNumericValue)
+//    {
+//        this(_object_type, _base_type, 0, null, isNumericValue);
+//    }
+
+//    public CGMSTempValues(int _object_type, CodeEnumWithTranslation _base_type, Boolean isNumericValue)
+//    {
+//        this(_object_type, _base_type.getCode(), 0, null, isNumericValue);
+//    }
+
+
+
+    public CGMSTempValues(CGMSObject objectType, CGMSBaseDataType baseType)
+    {
+        this(objectType.getCode(), baseType.getCode(), 0, null, true);
+    }
 
     /**
+     * IMPORTANT: Sub type is written as value and not as real subType.
+     *
      * @param objectType
      * @param baseType
      * @param subType
      */
     public CGMSTempValues(CGMSObject objectType, CGMSBaseDataType baseType, CodeEnum subType)
     {
-        super(objectType.getCode(), baseType.getCode(), subType.getCode(), null);
+        this(objectType.getCode(), baseType.getCode(), 0, "" + subType.getCode(), true);
     }
 
-    /**
-     * @param objectType
-     * @param baseType
-     * @param subType
-     * @param _value_template
-     */
+    // not used here
+    public CGMSTempValues(CGMSObject objectType, CGMSBaseDataType baseType, Boolean isNumericValue)
+    {
+        this(objectType.getCode(), baseType.getCode(), 0, null, isNumericValue);
+    }
+
+    // not used here
     public CGMSTempValues(int objectType, int baseType, int subType, String _value_template, Boolean isNumericValue)
     {
         super(objectType, baseType, subType, _value_template, isNumericValue);
@@ -74,12 +103,12 @@ public class CGMSTempValues extends DeviceTempValues
     /**
      * @param objectType
      * @param baseType
-     * @param subType
+     *
      * @param _value_template
      */
-    public CGMSTempValues(CGMSObject objectType,  CGMSBaseDataType baseType, int subType, String _value_template, Boolean isNumericValue)
+    public CGMSTempValues(CGMSObject objectType,  CGMSBaseDataType baseType, String _value_template, Boolean isNumericValue)
     {
-        super(objectType.getCode(), baseType.getCode(), subType, _value_template, isNumericValue);
+        super(objectType.getCode(), baseType.getCode(), 0, _value_template, isNumericValue);
     }
 
 
@@ -98,10 +127,10 @@ public class CGMSTempValues extends DeviceTempValues
      * @param objectType
      * @param baseType
      */
-    public CGMSTempValues(CGMSObject objectType,  CGMSBaseDataType baseType)
-    {
-        super(objectType.getCode(), baseType.getCode());
-    }
+//    public CGMSTempValues(CGMSObject objectType,  CGMSBaseDataType baseType)
+//    {
+//        super(objectType.getCode(), baseType.getCode());
+//    }
 
 
 
@@ -115,71 +144,140 @@ public class CGMSTempValues extends DeviceTempValues
      * getData
      */
     @Override
-    public OutputWriterData getData(ATechDate dt, int subType, String _value)
+    public OutputWriterData getData(ATechDate dt, Integer subType, String _value)
     {
         String val = _value;
-        int stype = subType;
+        Integer stype = subType;
 
-        if (stype == -1)
+        if (stype == null)
         {
             stype = this.sub_type;
         }
 
-        if (val == null)
-        {
-            val = "";
-        }
+//        if (val == null)
+//        {
+//            val = "";
+//        }
 
         if (this.object_type == CGMSObject.Base.getCode())
         {
-            CGMSValuesEntry pve = new CGMSValuesEntry();
-            /*
-             * pve.se.setBaseType(this.base_type);
-             * pve.setSubType(stype);
-             * pve.setDateTimeObject(dt);
-             * if (this.value_template==null)
-             * {
-             * pve.setValue(val);
-             * }
-             * else
-             * {
-             * pve.setValue(this.value_template + "=" + val);
-             * }
-             */
-            return pve;
+            new NotImplementedException();
+//            CGMSValuesEntry cve = new CGMSValuesEntry();
+//
+//            cve.setType(this.base_type);
+//            //cve.set.setSubType(stype);
+//            cve.setDateTimeObject(dt);
+//
+//            cve.va
+//
+//            if (this.value_template==null)
+//            {
+//              cve.set.setValue(val);
+//              }
+//              else
+//              {
+//              pve.setValue(this.value_template + "=" + val);
+//              }
+//
+//            return pve;
         }
-        /*
-         * else if (this.object_type == CGMSTempValues.OBJECT_BASE_SET_SUBTYPE)
-         * {
-         * PumpValuesEntry pve = new PumpValuesEntry();
-         * pve.setBaseType(this.base_type);
-         * pve.setSubType(Integer.parseInt(val));
-         * pve.setDateTimeObject(dt);
-         * return pve;
-         * }
-         */
         else if (this.object_type == CGMSObject.SubEntry.getCode())
         {
+            CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
+            sub.setDateTimeObject(dt);
+            sub.setType(this.base_type);
+            sub.setSource(DataAccessCGMS.getInstance().getSourceDevice());
 
-            // SUB_TYPE= ; VALUE=; ISIG=
+            if (val==null)
+            {
+                if (subType!=null)
+                    sub.value = subType;
+                else
+                    sub.value = 0;
+            }
+            else
+            {
+                sub.value = Integer.parseInt(val);
+            }
 
-            /*
-             * CGMSValuesSubEntry pvex = new CGMSValuesSubEntry();
-             * pvex.setType(this.base_type);
-             * pvex.setDateTimeObject(dt);
-             * if (this.value_template==null)
-             * {
-             * pvex.setValue(val);
-             * }
-             * else
-             * {
-             * pvex.setValue(this.value_template + "=" + val);
-             * }
-             * return pvex;
-             */
+//            if (this.value_template==null)
+//            {
+//
+//            }
+//            else
+//            {
+//                sub.setValue(this.value_template + "=" + val);
+//            }
+
+            return sub;
+
         }
 
         return null;
+    }
+
+    private void test()
+    {
+//        String val = _value;
+//        int stype = _sub_type;
+//
+//        if (stype == -1)
+//        {
+//            stype = this.sub_type;
+//        }
+//
+//        if (val == null)
+//        {
+//            val = "";
+//        }
+//
+//        if (this.object_type == PumpTempValues.OBJECT_BASE)
+//        {
+//            PumpValuesEntry pve = new PumpValuesEntry();
+//            pve.setBaseType(this.base_type);
+//            pve.setSubType(stype);
+//            pve.setDateTimeObject(dt);
+//
+//            if (this.value_template == null)
+//            {
+//                pve.setValue(val);
+//            }
+//            else
+//            {
+//                pve.setValue(this.value_template + "=" + val);
+//            }
+//
+//            return pve;
+//        }
+//        else if (this.object_type == PumpTempValues.OBJECT_BASE_SET_SUBTYPE)
+//        {
+//            PumpValuesEntry pve = new PumpValuesEntry();
+//            pve.setBaseType(this.base_type);
+//            pve.setSubType(Integer.parseInt(val));
+//            pve.setDateTimeObject(dt);
+//
+//            return pve;
+//        }
+//        else if (this.object_type == PumpTempValues.OBJECT_EXT)
+//        {
+//            PumpValuesEntryExt pvex = new PumpValuesEntryExt();
+//            pvex.setType(this.base_type);
+//            pvex.setDateTimeObject(dt);
+//
+//            if (this.value_template == null)
+//            {
+//                pvex.setValue(val);
+//            }
+//            else
+//            {
+//                pvex.setValue(this.value_template + "=" + val);
+//            }
+//
+//            return pvex;
+//        }
+//
+//        return null;
+
     }
 
 }

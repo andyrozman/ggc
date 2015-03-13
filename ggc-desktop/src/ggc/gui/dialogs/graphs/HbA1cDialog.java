@@ -1,5 +1,6 @@
 package ggc.gui.dialogs.graphs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.data.HbA1cValues;
 import ggc.core.util.DataAccess;
 import ggc.gui.graphs.HbA1cView;
@@ -105,6 +106,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
 
     private void init()
     {
+        ATSwingUtils.initLibrary();
 
         getContentPane().setLayout(new BorderLayout());
         setSize(700, 460);
@@ -189,23 +191,17 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         JButton closeButton = new JButton("   " + m_ic.getMessage("CLOSE"));
         // closeButton.setPreferredSize(new Dimension(100, 25));
         closeButton.setBounds(5, 395, 110, 25);
-        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        closeButton.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
         closeButton.addActionListener(this);
         closeButton.setActionCommand("close");
         bottomRightPanel.add(closeButton);
 
-        this.help_button = this.m_da.createHelpButtonByBounds(125, 395, 110, 25, this);
+        this.help_button = ATSwingUtils.createHelpButtonByBounds(125, 395, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         bottomRightPanel.add(this.help_button);
         // buttonPanel.add(help_button);
 
         rightPanel.add(infoPanel, BorderLayout.CENTER);
         rightPanel.add(bottomRightPanel, BorderLayout.SOUTH);
-
-        // hbView.redraw();
-        // hbView.redraw();
-        // hbView.redraw();
-        // hbView.redraw();
-        // hbView.redraw();
 
     }
 

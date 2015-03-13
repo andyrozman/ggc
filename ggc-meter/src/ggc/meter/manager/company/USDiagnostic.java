@@ -44,7 +44,7 @@ public class USDiagnostic extends AbstractDeviceCompany
                 "US Diagnostic", // company name (full)
                 "US Diagnostic", // short company name
                 "USDIAGNOSTIC_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED, DataAccessMeter.getInstance()); // implementation
+                DeviceImplementationStatus.NotPlanned, DataAccessMeter.getInstance()); // implementation
                                                                                                        // status
     }
 

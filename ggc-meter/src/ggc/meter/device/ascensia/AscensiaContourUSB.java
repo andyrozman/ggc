@@ -4,9 +4,8 @@ import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -140,7 +139,7 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
+        return DeviceImplementationStatus.Done;
     }
 
     /** 
@@ -159,17 +158,16 @@ public class AscensiaContourUSB extends AscensiaMeterUsb
         return 480;
     }
 
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        // TODO Auto-generated method stub
-        return 0;
+        return DeviceConnectionProtocol.USB_Hid;
     }
 
     @Override
     public void initializeUsbSettings()
     {
-        this.supported_devices = new Hashtable<String, String>();
-        this.supported_devices.put("1A79:6002", "1A79:6002");
+        //this.supported_devices = new Hashtable<String, String>();
+        //this.supported_devices.put("1A79:6002", "1A79:6002");
     }
 
 }

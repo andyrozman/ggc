@@ -148,7 +148,7 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
     /**
@@ -178,9 +178,9 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
      * @return
      */
     @Override
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE;
+        return DownloadSupportType.DummyDevice;
     }
 
     /**

@@ -25,9 +25,13 @@
  *
  *  Author:   andyrozman {andy@atech-software.com}
  *
+ *
+ * DEPRECATED ??
+ *
  */
 package ggc.gui.dialogs.stock;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.db.hibernate.DoctorH;
 import ggc.core.util.DataAccess;
 
@@ -145,11 +149,12 @@ public class StockListDialog extends JDialog implements ActionListener
 
     private void initComponents()
     {
+        ATSwingUtils.initLibrary();
 
         getContentPane().setLayout(null);
 
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
-        font_normal_bold = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
+        font_normal_bold = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
 
         gc = new GregorianCalendar();
 
@@ -160,7 +165,7 @@ public class StockListDialog extends JDialog implements ActionListener
         this.getContentPane().add(panel);
 
         JLabel label = new JLabel(m_ic.getMessage("STOCKS_LIST"));
-        label.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBounds(0, 20, 450, 35);
         panel.add(label);
@@ -229,7 +234,7 @@ public class StockListDialog extends JDialog implements ActionListener
         for (int i = 0; i < coords.length; i++)
         {
             button = new JButton(names[i]);
-            button.setFont(m_da.getFont(ATDataAccessAbstract.FONT_NORMAL));
+            button.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
             button.setActionCommand(cmds[i]);
             button.addActionListener(this);
             button.setBounds(340, coords[i], 80, 25);
@@ -267,4 +272,80 @@ public class StockListDialog extends JDialog implements ActionListener
         }
 
     }
+
+
+
+//    DROP TABLE stock_subtypes;
+//
+//    CREATE TABLE stock_subtypes
+//        (
+//                id bigint NOT NULL,
+//                stock_type_id bigint,
+//                name character varying(512),
+//    description character varying(2000),
+//    content_pkg bigint,
+//    usage_type int,
+//    usage_min int,
+//    usage_max int,
+//    active boolean,
+//    extended text,
+//    comment character varying(2000),
+//    CONSTRAINT stock_subtypes_pkey PRIMARY KEY (id)
+//    )
+//    WITH (
+//            OIDS=FALSE
+//    );
+//    ALTER TABLE stock_subtypes
+//    OWNER TO ggc;
+
+
+
+//    -- Table: stock_stocks
+//
+//    DROP TABLE stock_stocks;
+//
+//    CREATE TABLE stock_stocks
+//        (
+//                id bigint NOT NULL,
+//                stock_subtype_id bigint,
+//                stocktaking_id bigint,
+//                amount bigint,
+//                "location" character varying(1000),
+//
+//    extended text,
+//    person_id integer NOT NULL,
+//    comment character varying(2000),
+//    CONSTRAINT stock_stocks_pkey PRIMARY KEY (id)
+//    )
+//    WITH (
+//            OIDS=FALSE
+//    );
+//    ALTER TABLE stock_stocks
+//    OWNER TO ggc;
+
+
+//    -- Table: stock_stocktaking
+
+//    --DROP TABLE stock_stocktaking;
+//
+//    CREATE TABLE stock_stocktaking
+//        (
+//                id bigint NOT NULL,
+//                dt_stocktaking bigint,
+//                description character varying(2000),
+//    amount bigint,
+//
+//
+//    extended text,
+//    person_id integer NOT NULL,
+//    comment character varying(2000),
+//    CONSTRAINT stock_stocktaking_pkey PRIMARY KEY (id)
+//    )
+//    WITH (
+//            OIDS=FALSE
+//    );
+//    ALTER TABLE stock_stocks
+//    OWNER TO ggc;
+
+
 }

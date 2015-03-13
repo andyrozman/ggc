@@ -181,9 +181,9 @@ public class AnimasIR1200 extends AnimasPump
      * 
      * @return
      */
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_CONFIG_FROM_DEVICE | DownloadSupportType.DOWNLOAD_FROM_DEVICE;
+        return DownloadSupportType.Download_Data_Config;
     }
     
     

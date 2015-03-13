@@ -4,6 +4,9 @@ import com.atech.utils.data.ATechDate;
 import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
 import ggc.plugin.device.impl.animas.data.AnimasPreparedDataEntry;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
+import ggc.plugin.output.OutputWriter;
+import ggc.pump.device.animas.impl.converter.AnimasBaseDataV2Converter;
+import ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
 
 import java.math.BigDecimal;
 
@@ -220,23 +223,53 @@ public class BolusEntry
             sb.append(String.format(", Duration=%s min", duration.intValue()));
         }
 
+        if (syncCounter > 0)
+        {
+            sb.append(", SyncCounter=" + syncCounter);
+        }
+
+        sb.append("]");
+
         return sb.toString();
 
     }
 
 
-    public void createPreparedData(AnimasDevicePacket packet)
+    public void writeData(AnimasPumpDeviceData data)
+    {
+        data.writeData(this.bolusGGC, this.dateTime, getValueForPreparedDataEntry());
+    }
+
+    public void createPreparedData(AnimasDevicePacket packet, AnimasBaseDataV2Converter conv)
     {
         float value = getValue();
 
         if ((value>0) && (isCorrectEntryValue()))
         {
-            packet.addPreparedData(this.bolusGGC, this.dateTime, getValueForPreparedDataEntry());
+            conv.writeDataInternal(packet, this.bolusGGC, this.dateTime, getValueForPreparedDataEntry());
         }
     }
 
     public boolean isCorrectEntryValue()
     {
-        return bolusRecordType == 0;
+        return bolusRecordType != 0;
+    }
+
+    public static String decodeBolusAnimasV1(int bolusType)
+    {
+
+        switch (bolusType)
+        {
+            case 2:
+                return "Bolus_Audio";
+
+            case 3:
+                return "Bolus_Extended";
+
+            case 1:
+            default:
+                return "Bolus_Normal";
+
+        }
     }
 }

@@ -1,5 +1,6 @@
 package ggc.plugin.list;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.awt.Component;
@@ -65,9 +66,11 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
         m_da = dia.m_da;
         m_ic = m_da.getI18nControlInstance();
 
-        font_big = m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD);
-        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        ATSwingUtils.initLibrary();
+
+        font_big = ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD);
+        font_normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         createPanel();
 
@@ -78,6 +81,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
      */
     public void createPanel()
     {
+        ATSwingUtils.initLibrary();
 
         this.setSize(460, 520);
         this.setLayout(null);
@@ -102,7 +106,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
         label.setFont(fnt_18);
         this.add(label, null);
 
-        help_button = m_da.createHelpButtonByBounds(430, 10, 30, 30, this, ATDataAccessAbstract.FONT_NORMAL);
+        help_button = ATSwingUtils.createHelpButtonByBounds(430, 10, 30, 30, this, ATSwingUtils.FONT_NORMAL, m_da);
         help_button.setText("");
         this.add(help_button, null);
 

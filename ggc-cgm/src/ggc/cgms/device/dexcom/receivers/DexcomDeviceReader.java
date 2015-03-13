@@ -13,6 +13,7 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.internal.PartitionInfo;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.data.progress.ProgressData;
+import ggc.plugin.data.progress.ProgressReportInterface;
 import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
@@ -51,7 +52,7 @@ import org.jdom.Element;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class DexcomDeviceReader implements DexcomDeviceProgressReport
+public class DexcomDeviceReader implements ProgressReportInterface
 {
     private Log log = LogFactory.getLog(DexcomDeviceReader.class);
 
@@ -191,7 +192,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
 
             this.configureProgressReporter(ProgressType.Dynamic_Static, 10, staticProgressMax, 200);
 
-            this.progressData.setCurrentProgressType(ProgressType.Static);
+            //this.progressData.setCurrentProgressType(ProgressType.Static);
             int countDynamicElements = ReceiverRecordType.getDownloadSupported().size(); // parsing
             countDynamicElements++; // EGV has two parsing passes
 
@@ -221,7 +222,7 @@ public class DexcomDeviceReader implements DexcomDeviceProgressReport
             data.addConfigurationEntry("FIRMWARE_VERSION", header.getAttributeValue("FirmwareVersion"), false);
 
             // set dynamic
-            this.progressData.setCurrentProgressType(ProgressType.Dynamic);
+            //this.progressData.setCurrentProgressType(ProgressType.Dynamic);
 
             data.addData(DataOutputParserType.G4_UserEventData, api.readAllRecordsForEvents());
             parseData(DataOutputParserType.G4_UserEventData, data);

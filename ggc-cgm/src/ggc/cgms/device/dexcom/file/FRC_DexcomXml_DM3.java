@@ -2,6 +2,7 @@ package ggc.cgms.device.dexcom.file;
 
 import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.CGMSValuesTableModel;
+import ggc.cgms.data.defs.CGMSBaseDataType;
 import ggc.cgms.device.dexcom.DexcomCGMS;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DeviceIdentification;
@@ -106,8 +107,8 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             DeviceIdentification di = this.output_writer.getDeviceIdentification();
             di.is_file_import = true;
             di.fi_file_name = new File(filename).getName();
-            di.company = this.m_da.getSelectedDeviceInstance().getDeviceCompany().getName();
-            di.device_selected = this.m_da.getSelectedDeviceInstance().getName();
+
+            m_da.getPluginDeviceUtil().setDeviceToDeviceIdentification(di);
 
             this.output_writer.setDeviceIdentification(di);
             this.output_writer.writeDeviceIdentification();
@@ -270,7 +271,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
                 CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
                 String tmp_time = atts.getValue(0);
                 sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
-                sub.setType(CGMSValuesSubEntry.CGMS_BG_READING);
+                sub.setType(CGMSBaseDataType.SensorReading);
                 sub.value = Integer.parseInt(atts.getValue(2));
 
                 this.addEntry(sub);
@@ -280,7 +281,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
                 CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
                 String tmp_time = atts.getValue(0);
                 sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
-                sub.setType(CGMSValuesSubEntry.METER_CALIBRATION_READING);
+                sub.setType(CGMSBaseDataType.SensorCalibration); //  CGMSValuesSubEntry.METER_CALIBRATION_READING);
                 sub.value = Integer.parseInt(atts.getValue(2));
 
                 this.addEntry(sub);

@@ -30,6 +30,7 @@ package ggc.core.db;
  * Author: andyrozman {andy@atech-software.com}
  */
 
+import ggc.core.util.DataAccess;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -70,6 +71,9 @@ public class GGCDbConfig extends HibernateConfiguration
     private String[] db_files = { "GGC_Main.hbm.xml", "GGC_Nutrition.hbm.xml", "GGC_Other.hbm.xml", "GGC_Pump.hbm.xml",
                                  "GGC_CGMS.hbm.xml" };
 
+    private String[] db_files_debug = { "GGC_Main.hbm.xml", "GGC_Nutrition.hbm.xml", "GGC_Other.hbm.xml", "GGC_Pump.hbm.xml",
+            "GGC_CGMS.hbm.xml", "GGC_New.hbm.xml" };
+
     /**
      * Constructor
      * 
@@ -105,7 +109,7 @@ public class GGCDbConfig extends HibernateConfiguration
     @Override
     public String[] getResourceFiles()
     {
-        return db_files;
+        return (DataAccess.getInstance().getDeveloperMode()) ? db_files_debug : db_files;
     }
 
     /**

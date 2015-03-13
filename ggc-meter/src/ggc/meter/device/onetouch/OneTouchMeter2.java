@@ -164,7 +164,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_TESTING;
+        return DeviceImplementationStatus.Testing;
     }
 
     HexUtils hex_utils = new HexUtils();

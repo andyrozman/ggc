@@ -146,7 +146,7 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
         button_panel.setBounds(0, 130, 750, 40);
         // button_panel.setBackground(Color.blue);
 
-        help_button = m_da.createHelpButtonByBounds(450, 7, 120, 25, button_panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        help_button = ATSwingUtils.createHelpButtonByBounds(450, 7, 120, 25, button_panel, ATSwingUtils.FONT_NORMAL_BOLD, m_da.getImagesRoot(), m_ic);
         button_panel.add(help_button);
 
         draw_button = ATSwingUtils.getButton("    " + m_ic.getMessage("DRAW"), 180, 7, 120, 25, button_panel,

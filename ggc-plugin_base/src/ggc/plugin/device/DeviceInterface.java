@@ -6,6 +6,10 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -200,7 +204,7 @@ public interface DeviceInterface extends SelectableInterface
      * 
      * @return true if action is allowed
      */
-    public boolean canReadData();
+    //public boolean canReadData();
 
     /**
      * canReadDeviceInfo - tells if we can read info about device
@@ -214,7 +218,7 @@ public interface DeviceInterface extends SelectableInterface
      * 
      * @return true if action is allowed
      */
-    public boolean canReadConfiguration();
+    //public boolean canReadConfiguration();
 
     // ************************************************
     // *** Test ***
@@ -234,7 +238,7 @@ public interface DeviceInterface extends SelectableInterface
      * 
      * @return id of connection protocol
      */
-    public int getConnectionProtocol();
+    public DeviceConnectionProtocol getConnectionProtocol();
 
     /**
      * getConnectionPort - connection port data
@@ -311,14 +315,14 @@ public interface DeviceInterface extends SelectableInterface
      * 
      * @return
      */
-    public boolean isReadableDevice();
+    //public boolean isReadableDevice();
 
     /**
      * Get Download Support Type
      * 
      * @return
      */
-    public int getDownloadSupportType();
+    public DownloadSupportType getDownloadSupportType();
 
     /**
      * Get Download Support Type
@@ -341,14 +345,14 @@ public interface DeviceInterface extends SelectableInterface
      *  
      * @return
      */
-    public boolean isFileDownloadSupported();
+    //public boolean isFileDownloadSupported();
 
     /**
      * Get File Download Types as FileReaderContext. 
      * 
      * @return
      */
-    public GGCPlugInFileReaderContext[] getFileDownloadTypes();
+    public GGCPlugInFileReaderContext[] getFileDownloadTypes(DownloadSupportType downloadSupportType);
 
     // ************************************************
     // *** Special Config ***

@@ -1,5 +1,6 @@
 package ggc.gui;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.util.DataAccess;
 
 import java.awt.BorderLayout;
@@ -65,9 +66,11 @@ public class StatusBar extends JPanel implements EventObserverInterface
         this.m_frame = frame;
         statusIcons = new ImageIcon[4];
 
+        ATSwingUtils.initLibrary();
+
         statusIcons[0] = new ImageIcon(getClass().getResource("/icons/led_red.gif"));
         statusIcons[1] = new ImageIcon(getClass().getResource("/icons/led_yellow.gif"));
-        statusIcons[2] = da.getImageIcon("led_blue.gif", 14, 14, this);
+        statusIcons[2] = ATSwingUtils.getImageIcon("led_blue.gif", 14, 14, this, da);
 
         // new ImageIcon(getClass().getResource("/icons/led_blue.gif"));
         statusIcons[3] = new ImageIcon(getClass().getResource("/icons/led_green.gif"));

@@ -295,7 +295,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
          * }
          * case 3: // value
          * {
-         * //return this.getValue();
+         * //return this.getCode();
          * return getValuePrint();
          * }
          * case 4: // additional
@@ -514,6 +514,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         pdh.setExtended(extended = this.saveExtended());
         pdh.setPerson_id(this.person_id);
         pdh.setChanged(System.currentTimeMillis());
+
 
         Long _id = (Long) sess.save(pdh);
         tx.commit();

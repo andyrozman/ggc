@@ -2,6 +2,7 @@ package ggc.cgms.data;
 
 import ggc.cgms.data.defs.extended.CGMSExtendedDataType;
 import ggc.cgms.util.CGMSUtil;
+import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.cgms.CGMSDataExtendedH;
 import ggc.plugin.data.DeviceValuesEntry;
@@ -36,6 +37,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     public CGMSValuesExtendedEntry()
     {
         super();
+        this.source = DataAccessCGMS.getInstance().getSourceDevice();
     }
 
     /**
@@ -229,8 +231,6 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
         CGMSDataExtendedH ext = new CGMSDataExtendedH();
 
-        ext.setId(this.id);
-
         this.saveDbData(ext);
 
         Long _id = (Long) sess.save(ext);
@@ -259,9 +259,9 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     {
         Transaction tx = sess.beginTransaction();
         // System.out.println("id: " + old_id);
-        CGMSDataExtendedH ext = (CGMSDataExtendedH) sess.get(CGMSDataExtendedH.class, new Long(this.id));
+        CGMSDataExtendedH ext = (CGMSDataExtendedH) sess.get(CGMSDataExtendedH.class, this.id);
 
-        ext.setId(this.id);
+        //ext.setId(this.id);
 
         this.saveDbData(ext);
 
@@ -275,7 +275,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     {
         Transaction tx = sess.beginTransaction();
 
-        CGMSDataExtendedH ch = (CGMSDataExtendedH) sess.get(CGMSDataExtendedH.class, new Long(this.getId()));
+        CGMSDataExtendedH ch = (CGMSDataExtendedH) sess.get(CGMSDataExtendedH.class, this.getId());
 
         sess.delete(ch);
         tx.commit();
@@ -290,7 +290,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
     public boolean DbGet(Session sess) throws Exception
     {
-        CGMSDataExtendedH ch = (CGMSDataExtendedH) sess.get(CGMSDataExtendedH.class, new Long(this.getId()));
+        CGMSDataExtendedH ch = (CGMSDataExtendedH) sess.get(CGMSDataExtendedH.class, this.getId());
 
         loadDbData(ch);
 

@@ -11,7 +11,7 @@ public interface DexcomCommandParserInterface
 
     Object parse(CommandPacket cmdPacket) throws PlugInBaseException;
 
-    // Object getValue();
+    // Object getCode();
 
     // Date getValueAsDate();
     //

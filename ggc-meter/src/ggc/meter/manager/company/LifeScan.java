@@ -51,7 +51,7 @@ public class LifeScan extends AbstractDeviceCompany
                 "LifeScan/One Touch/J&J", // company name (full)
                 "LifeScan", // short company name
                 "LIFESCAN_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_PARTITIAL, DataAccessMeter.getInstance()); // implementation
+                DeviceImplementationStatus.Partitial, DataAccessMeter.getInstance()); // implementation
                                                                                                      // status
 
         this.addDevice(new OneTouchUltra(this));

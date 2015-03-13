@@ -1,5 +1,6 @@
 package ggc.gui.dialogs.stock;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
@@ -55,6 +56,8 @@ import com.atech.utils.ATDataAccessAbstract;
 // fix this
 // for defining stock entry
 
+//  DEPRECATED ???
+
 public class StockAmounts extends JDialog implements ActionListener
 {
 
@@ -105,8 +108,8 @@ public class StockAmounts extends JDialog implements ActionListener
      * }
      */
 
-    Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-    Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
+    //Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+    //Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
     boolean debug = false;
 
@@ -192,6 +195,8 @@ public class StockAmounts extends JDialog implements ActionListener
 
     private void init()
     {
+        ATSwingUtils.initLibrary();
+
         int x = 0;
         int y = 0;
         int width = 400;
@@ -210,7 +215,7 @@ public class StockAmounts extends JDialog implements ActionListener
 
         this.getContentPane().add(panel);
 
-        label_title.setFont(m_da.getFont(ATDataAccessAbstract.FONT_BIG_BOLD));
+        label_title.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_BIG_BOLD));
         label_title.setHorizontalAlignment(SwingConstants.CENTER);
         label_title.setBounds(0, 15, 400, 35);
         panel.add(label_title);
@@ -295,7 +300,7 @@ public class StockAmounts extends JDialog implements ActionListener
     {
         JLabel label = new JLabel(text);
         label.setBounds(30, posY, 100, 25);
-        label.setFont(f_bold);
+        label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         parent.add(label);
         // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
         // SwingConstants.RIGHT));
@@ -306,7 +311,7 @@ public class StockAmounts extends JDialog implements ActionListener
     {
         // JLabel label = new JLabel(text);
         comp.setBounds(posX, posY, width, 23);
-        comp.setFont(f_normal);
+        comp.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
         parent.add(comp);
     }
 

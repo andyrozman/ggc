@@ -681,7 +681,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
+        return DeviceImplementationStatus.Done;
     }
 
 

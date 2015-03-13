@@ -45,7 +45,7 @@ public class Abbott extends AbstractDeviceCompany
                 "Abbott", // company name (full)
                 "Abbott", // short company name
                 "ABBOTT_DESC", // company description
-                DeviceImplementationStatus.IMPLEMENTATION_PLANNED, DataAccessCGMS.getInstance()); // implementation
+                DeviceImplementationStatus.Planned, DataAccessCGMS.getInstance()); // implementation
                                                                                                   // status
 
         this.addDevice(new FreestyleNavigator(this));

@@ -1,5 +1,6 @@
 package ggc.plugin.cfg;
 
+import java.util.List;
 import java.util.Vector;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -68,7 +69,7 @@ public interface DeviceConfigurationDefinition
      * 
      * @return
      */
-    public Vector<? extends SelectableInterface> getSupportedDevices();
+    public List<SelectableInterface> getSupportedDevices();
 
     /**
      * Returns prefix for help context
@@ -76,5 +77,13 @@ public interface DeviceConfigurationDefinition
      * @return help context prefix
      */
     public String getHelpPrefix();
+
+    /**
+     * Get Specific Device Instance with Company and Device Name (either V1 or V2)
+     * @param company
+     * @param deviceName
+     * @return
+     */
+    public Object getSpecificDeviceInstance(String company, String deviceName);
 
 }

@@ -52,12 +52,12 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
     protected String device_source;
     protected boolean debug = false;
 
+
     /**
      * Constructor
      * 
      * @param da
      * @param ddh
-     * @param source 
      */
     public DeviceValuesTableModel(DataAccessPlugInBase da, DeviceDataHandler ddh, String source)
     {
@@ -312,7 +312,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         if (this.m_ddh.hasOldData())
         {
 
-            // if (debug)
+            if (debug)
             {
                 System.out.println("DVE: " + dve.getSpecialId());
             }
@@ -344,7 +344,11 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
                     dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_EDIT);
                     // dve.entry_object = mve_old.getHibernateObject();
 
-                    System.out.println("!!! OLD ID: " + dve.getId());
+                    if (debug)
+                    {
+                        System.out.println("!!! OLD ID: " + dve_old.getId());
+                        System.out.println("DD: " + dve.getValue() + ", " + dve_old.getValue());
+                    }
 
                     dve.setId(dve_old.getId());
                 }
@@ -518,28 +522,38 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
 
                 if (dvei.getObjectStatus() == DeviceValuesEntry.OBJECT_STATUS_NEW)
                 {
-                    System.out.println("Checked[add]: " + dvei);
+                    debug("Checked[add]: " + dvei);
+
                     list_add.add(dvei);
                 }
                 else if (dvei.getObjectStatus() == DeviceValuesEntry.OBJECT_STATUS_EDIT)
                 {
-                    System.out.println("Checked[edit]: " + dvei);
+                    debug("Checked[edit]: " + dvei);
                     list_edit.add(dvei);
                 }
                 else
                 {
-                    System.out.println("Checked[" + dvei.getObjectStatus() + "]: " + dvei);
+                    debug("Checked[" + dvei.getObjectStatus() + "]: " + dvei);
                 }
 
             }
         }
 
-        System.out.println("To: Add: " + list_add.size() + ", Edit: " + list_edit.size());
+        debug("To: Add: " + list_add.size() + ", Edit: " + list_edit.size());
 
         table.put("ADD", list_add);
         table.put("EDIT", list_edit);
 
         return table;
+    }
+
+
+    public void debug(String message)
+    {
+        if (debug)
+        {
+            System.out.println(message);
+        }
     }
 
     /**
@@ -600,5 +614,6 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
                 return o.getTableColumnValue(column).toString();
         }
     }
+
 
 }

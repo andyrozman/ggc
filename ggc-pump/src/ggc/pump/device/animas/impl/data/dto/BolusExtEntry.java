@@ -2,6 +2,7 @@ package ggc.pump.device.animas.impl.data.dto;
 
 import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
+import ggc.pump.device.animas.impl.converter.AnimasBaseDataV2Converter;
 import ggc.pump.util.DataAccessPump;
 
 /**
@@ -48,17 +49,17 @@ public class BolusExtEntry
     static DataAccessPump dataAccessPump = DataAccessPump.getInstance();
 
 
-    public void createPreparedData(AnimasDevicePacket packet)
+    public void createPreparedData(AnimasDevicePacket packet, AnimasBaseDataV2Converter conv)
     {
         if (this.bg >0)
         {
-            packet.addPreparedData("Additional_BG", bolusEntry.dateTime, //
+            conv.writeDataInternal(packet, "AdditionalData_BG", bolusEntry.dateTime, //
                     AnimasUtils.getDecimalValueString(this.bg, 4, 2));
         }
 
         if (this.carbs >0)
         {
-            packet.addPreparedData("Additional_CH", bolusEntry.dateTime, //
+            conv.writeDataInternal(packet, "AdditionalData_CH", bolusEntry.dateTime, //
                     "" + this.carbs);
         }
 
@@ -66,7 +67,7 @@ public class BolusExtEntry
         float bolus = this.bolusEntry.getValue();
         float bgCorrIns = calculateBGCorrectionInsulin();
 
-        String bolusWizard = "bg=" + this.bg +
+        String bolusWizard = "BG=" + this.bg +
                 ";CH=" + this.carbs +
                 ";CH_UNIT=g" +
                 ";CH_INS_RATIO=" + this.i2C +
@@ -78,7 +79,7 @@ public class BolusExtEntry
                 ";BOLUS_FOOD=" + AnimasUtils.getDecimalValueString(bolus-bgCorrIns, 4, 2) +
                 ";UNABSORBED_INSULIN=" + AnimasUtils.getDecimalValueString(this.iobValue, 4, 3);
 
-        packet.addPreparedData("BolusWizard", bolusEntry.dateTime, bolusWizard);
+        conv.writeDataInternal(packet, "Event_BolusWizard", bolusEntry.dateTime, bolusWizard);
 
     }
 
@@ -107,13 +108,23 @@ public class BolusExtEntry
     }
 
 
+    public String toStringFull()
+    {
+        return String.format(
+                "BolusExtEntry [syncRecordId=%s, i2C=%s, carbs=%s, bg=%s, isf=%s" +
+                        ", bgTarget=%s, bgDelta=%s, iobEnabled=%s, iobValue=%s, bgCorrection=%s, IOBDuaration=%s," +
+                        "BolusEntry=%s]",
+                syncRecordId, i2C, carbs, bg, isf, bgTarget, bgDelta, iobEnabled, iobValue, bgCorrection, iobDuration, bolusEntry.toString());
+    }
+
+
     public String toString()
     {
         return String.format(
                 "BolusExtEntry [syncRecordId=%s, i2C=%s, carbs=%s, bg=%s, isf=%s" +
-                ", bgTarget=%s, bgDelta=%s, iobEnabled=%s, iobValue=%s, bgCorrection=%s, IOBDuaration=%s," +
-                "BolusEntry=%s]",
-                syncRecordId, i2C, carbs, bg, isf, bgTarget, bgDelta, iobEnabled, iobValue, bgCorrection, iobDuration, bolusEntry.toString());
+                ", bgTarget=%s, bgDelta=%s, iobEnabled=%s, iobValue=%s, bgCorrection=%s, IOBDuaration=%s" +
+                "]",
+                syncRecordId, i2C, carbs, bg, isf, bgTarget, bgDelta, iobEnabled, iobValue, bgCorrection, iobDuration);
     }
 
 

@@ -58,7 +58,6 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel // extends
      * Constructor
      * 
      * @param ddh DeviceDataHandler instance
-     * @param source 
      */
     public MeterValuesExtTableModel(DeviceDataHandler ddh, String source)
     {
@@ -141,7 +140,7 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel // extends
     @SuppressWarnings("deprecation")
     public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
     {
-        // System.out.println("Old data: " + this.m_ddh.getOldData());
+        // System.out.println("Old data: " + this.deviceDataHandler.getOldData());
 
         if (this.m_ddh.hasOldData())
         {
@@ -159,7 +158,7 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel // extends
                 MeterValuesEntry mve2 = (MeterValuesEntry) mve;
                 MeterValuesEntry mve_old = (MeterValuesEntry) this.m_ddh.getOldData().get(mve.getSpecialId());
 
-                // DayValueH gvh = (DayValueH)this.m_ddh.getOldData().get("" +
+                // DayValueH gvh = (DayValueH)this.deviceDataHandler.getOldData().get("" +
                 // dt);
                 // int vl =
                 // Integer.parseInt(mve2.getBGValue(OutputUtil.BG_MGDL));

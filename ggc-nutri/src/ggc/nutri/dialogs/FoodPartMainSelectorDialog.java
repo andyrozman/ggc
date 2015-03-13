@@ -285,6 +285,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
     private void init()
     {
         ATSwingUtils.initLibrary();
+
         int button_y;
         int panel_height;
         String panel_title;
@@ -313,8 +314,8 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
          * i18nControlAbstract.getMessage("MEAL");
          */
 
-        font_normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
-        font_normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
+        font_normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
+        font_normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -322,25 +323,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
 
         // sub panel - selector
 
-        /*
-         * JPanel panel1 = new JPanel(); panel1.setBorder(new
-         * TitledBorder(i18nControlAbstract.getMessage("SELECTOR"))); panel1.setLayout(null);
-         * panel1.setBounds(10, 10, 270, 140); panel.add(panel1, null);
-         * //new javax.swing.border.TitledBorder("Some");
-         * //javax.swing.border.
-         * JLabel label = new
-         * JLabel(i18nControlAbstract.getMessage("NUTRITION_TYPE_FOR_SELECTOR"));
-         * label.setBounds(30, 20, 220, 25); label.setFont(font_normal_b);
-         * panel1.add(label, null);
-         * cb_type = new JComboBox(type); cb_type.setBounds(30, 50, 210, 25);
-         * panel1.add(cb_type);
-         * button_select = new JButton(i18nControlAbstract.getMessage("SELECT_ITEM"));
-         * button_select.setActionCommand("select_item");
-         * button_select.setBounds(30, 95, 210, 25);
-         * button_select.addActionListener(this); panel1.add(button_select,
-         * null);
-         * //if (meal_part!=null) // button.setEnabled(false);
-         */
 
         // sub panel - selected item
 
@@ -386,24 +368,6 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         label.setBounds(20, 25, 100, 25);
         panel3.add(label, null);
 
-        // JFormattedTextField jftf = JFormattedTextField(percentFormat);
-        /*
-         * amountDisplayFormat = NumberFormat.getNumberInstance();
-         * amountDisplayFormat.setMinimumFractionDigits(1);
-         * amountDisplayFormat.setMaximumFractionDigits(2); amountEditFormat =
-         * NumberFormat.getNumberInstance();
-         * amountEditFormat.setMinimumFractionDigits(1);
-         * amountEditFormat.setMaximumFractionDigits(2);
-         * amountField = new JFormattedTextField( new DefaultFormatterFactory(
-         * new NumberFormatter(amountDisplayFormat), new
-         * NumberFormatter(amountDisplayFormat), new
-         * NumberFormatter(amountEditFormat))); amountField.setValue(new
-         * Double(1.0d)); amountField.setColumns(4); amountField.setBounds(140,
-         * 25, 100, 25);
-         * amountField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT
-         * ); amountField.addKeyListener(this); panel3.add(amountField);
-         */
-
         amountField = new JDecimalTextField(new Double(1.0d), 2);
         amountField.setBounds(140, 25, 100, 25);
         amountField.addKeyListener(this);
@@ -442,7 +406,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
         ATSwingUtils.getButton("   " + ic.getMessage("CANCEL"), 135, button_y, 110, 25, panel,
             ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
 
-        help_button = m_da.createHelpIconByBounds(250, button_y, 25, 25, panel, ATSwingUtils.FONT_NORMAL);
+        help_button = ATSwingUtils.createHelpIconByBounds(250, button_y, 25, 25, panel, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
 
         /*
@@ -519,40 +483,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
      */
     public float getAmountValue()
     {
-        return m_da.getJFormatedTextValueFloat(this.amountField);
-
-        /*
-         * try
-         * {
-         * this.amountField.commitEdit();
-         * }
-         * catch (Exception ex)
-         * {
-         * System.out.println("Exception on commit value:" + ex);
-         * }
-         * Object o = this.amountField.getValue();
-         * if (o instanceof Long)
-         * {
-         * // System.out.println("Amount(long): " +
-         * // this.amountField.getValue());
-         * Long l = (Long) o;
-         * return l.floatValue();
-         * }
-         * else if (o instanceof Integer)
-         * {
-         * // System.out.println("Amount(long): " +
-         * // this.amountField.getValue());
-         * Integer l = (Integer) o;
-         * return l.floatValue();
-         * }
-         * else
-         * {
-         * // System.out.println("Amount(double): " +
-         * // this.amountField.getValue());
-         * Double d = (Double) o;
-         * return d.floatValue();
-         * }
-         */
+        return ATSwingUtils.getJFormatedTextValueFloat(this.amountField);
     }
 
     /**
@@ -562,38 +493,7 @@ public class FoodPartMainSelectorDialog extends JDialog implements ActionListene
      */
     public float getWeightValue()
     {
-        try
-        {
-            this.weightField.commitEdit();
-        }
-        catch (Exception ex)
-        {
-            System.out.println("Exception on commit value:" + ex);
-        }
-
-        Object o = this.weightField.getValue();
-
-        if (o instanceof Long)
-        {
-            // System.out.println("Amount(long): " +
-            // this.amountField.getValue());
-            Long l = (Long) o;
-            return l.floatValue();
-        }
-        else if (o instanceof Integer)
-        {
-            // System.out.println("Amount(long): " +
-            // this.amountField.getValue());
-            Integer l = (Integer) o;
-            return l.floatValue();
-        }
-        else
-        {
-            // System.out.println("Amount(double): " +
-            // this.amountField.getValue());
-            Double d = (Double) o;
-            return d.floatValue();
-        }
+        return ATSwingUtils.getJFormatedTextValueFloat(this.weightField);
     }
 
     /**

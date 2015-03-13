@@ -7,11 +7,13 @@ import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.ConnectionProtocols;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -68,8 +70,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      * Constructor
      * 
      * @param params 
-     * 
-     * @param drive_letter
      * @param writer
      * @param da 
      * @param max_records_ 
@@ -85,11 +85,8 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      * Constructor
      * 
      * @param params 
-     * 
-     * @param drive_letter
      * @param writer
      * @param da 
-     * @param max_records 
      */
     public AccuChekSmartPix(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
@@ -311,9 +308,9 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      * 
      * @return 
      */
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
+        return DeviceConnectionProtocol.MassStorageXML;
     }
 
     /**
@@ -334,9 +331,9 @@ public abstract class AccuChekSmartPix extends XmlProtocol
      * 
      * @return
      */
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+        return DownloadSupportType.Download_Data_DataFile;
     }
 
     /**
@@ -462,8 +459,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
 
     /**
      * Pre Init Device - Does preinit
-     * 
-     * @see hasPreInit
      */
     @Override
     public void preInitDevice()

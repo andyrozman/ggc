@@ -155,7 +155,7 @@ public class PrecisionXtra extends OptiumXceed
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
+        return DeviceImplementationStatus.Done;
     }
 
 }

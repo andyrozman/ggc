@@ -1,5 +1,6 @@
 package ggc.plugin.gui;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTable;
@@ -127,7 +128,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
         this.m_ddh = ddh;
         this.m_ddh.dialog_data = this;
-        // this.m_ddh.setTransferType(DeviceDataHandler.TRANSFER_READ_DATA);
+        // this.deviceDataHandler.setTransferType(DeviceDataHandler.TRANSFER_READ_DATA);
         this.mrr = new DeviceReaderRunner(m_da, this.m_ddh);
 
         dialogPreInit();
@@ -148,10 +149,10 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * this.dataAccess = da;
      * this.m_ic = da.getI18nControlInstance();
      * //this.m_parent_d = parent;
-     * this.m_ddh = ddh;
-     * this.m_ddh.dialog_data = this;
-     * // this.m_ddh.setTransferType(DeviceDataHandler.TRANSFER_READ_DATA);
-     * this.mrr = new DeviceReaderRunner(dataAccess, this.m_ddh);
+     * this.deviceDataHandler = ddh;
+     * this.deviceDataHandler.dialog_data = this;
+     * // this.deviceDataHandler.setTransferType(DeviceDataHandler.TRANSFER_READ_DATA);
+     * this.mrr = new DeviceReaderRunner(dataAccess, this.deviceDataHandler);
      * dialogPreInit();
      * }
      */
@@ -172,7 +173,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
         this.m_ddh = ddh;
         // this.mrr = new DeviceReaderRunner(dataAccess,
-        // this.m_ddh.getConfiguredDevice(), this);
+        // this.deviceDataHandler.getConfiguredDevice(), this);
 
         dialogPreInit();
     }
@@ -238,6 +239,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
     protected void init()
     {
+        ATSwingUtils.initLibrary();
+
         model = this.m_ddh.getDeviceValuesTableModel();
         model.clearData();
 
@@ -256,8 +259,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
             wide_add = 200;
         }
 
-        Font normal = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL);
-        Font normal_b = m_da.getFont(ATDataAccessAbstract.FONT_NORMAL_BOLD);
+        Font normal = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL);
+        Font normal_b = ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD);
 
         setBounds(0, 0, 480 + wide_add, 660);
 
@@ -340,7 +343,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         bt_break.addActionListener(this);
         panel.add(bt_break);
 
-        help_button = m_da.createHelpButtonByBounds(30, 570, 110, 25, this);
+        help_button = ATSwingUtils.createHelpButtonByBounds(30, 570, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(help_button);
 
         bt_close = new JButton(m_ic.getMessage("CLOSE"));
@@ -475,7 +478,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     private JButton createButton(String command_text, String tooltip, String image_d)
     {
         JButton b = new JButton();
-        b.setIcon(m_da.getImageIcon(image_d, 15, 15, this));
+        b.setIcon(ATSwingUtils.getImageIcon(image_d, 15, 15, this, m_da));
         b.addActionListener(this);
         b.setActionCommand(command_text);
         b.setToolTipText(tooltip);

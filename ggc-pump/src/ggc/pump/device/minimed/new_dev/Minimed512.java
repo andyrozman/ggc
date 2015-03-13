@@ -233,7 +233,7 @@ public class Minimed512 // extends MinimedDevice
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
     /**
@@ -255,14 +255,13 @@ public class Minimed512 // extends MinimedDevice
     }
 
     /**
-     * Get Download Support Type
-     * 
-     * @return
+     * @{InheritDocs}
      */
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+        return DownloadSupportType.NoDownloadSupport; // .DOWNLOAD_FROM_DEVICE_FILE;
     }
+
 
     /**
      * How Many Months Of Data Stored

@@ -167,6 +167,83 @@ run them):
 
 
 D.) Development
+=================
+
+In start of 2014 we started transitioning our projects to maven framework... If you don't know what maven is,
+then you will have to look it up and get acquinted with it, since it's now required tool. 
+
+Now this step was in end meant to be plus for you developers, since now we are not anymore dependent on Eclipse
+which was till this point offical editor for GGC, but this opens you to whole new world of Java editors. 
+
+Most editors support Maven, or have a at least have plugins which help you to support it. Maven tools use so called
+POM.xml file, which contains all info about specific project and all its dependencies. Maven creates project and 
+classpath files specific for your editor and you can start working without (manually) installing any external 
+libraries. On this creation all dependencies will be downloaded to your local repository and you are fit to go.
+
+
+Here are steps to create your development environment:
+
+1.) Install your favorite Java Editor (Eclipse, IntelliJ, NetBeans, ...). 
+- install plugin for Maven (use 3.x version), if it's not installed already
+- install SVN plugin, if it's not installed already
+
+2.) From SVN download projects from two repositories (how to do that depends on your editor, but mostly you need to 
+    set repository root and then select from where to download, and what to download)...
+
+  a.) atech-tools repository
+      Repository Root: 
+      Directory to download from: 
+      Projects to download: atech-tools
+
+  a.) atech-tools repository
+      Repository Root: 
+      Directory to download from: 
+      Projects to download: atech-tools
+
+ggc-support
+....
+
+3.) Projects hierarchy... while maven works great with dependendencies, it can sometimes also be a pain in the a**... 
+    For example if you are developing in ggc-pump and change something in atech-tools, you will probably need to 
+    build and deploy, all projects on which ggc-pump is dependend on (atech-tools, ggc-core, ggc-plugin-base and of 
+    course ggc-pump). So hierarchy is as follows:
+
+
+    atech-tools
+           |
+	ggc-core
+           |
+           |- ggc-desktop-app
+           |
+           |- ggc-plugin-base
+                   |
+                   |- ggc-meter
+                   |
+                   |- ggc-pump
+                   |
+                   |- ggc-nutri
+                   |
+                   |- ggc-cgms
+                   
+
+
+4.) Now you are almost ready to go.
+
+
+
+
+(we have at this time 6 ggc project and atech-tools 
+project, which work together, but this projects use quite a lot of different libraries, which had to be setup
+by hand) 
+
+
+
+
+
+APPENDIX A:
+
+
+D.) Development
 ==================
 
 NOTE: For development we use Eclipse environment. We have several ant build files through all 

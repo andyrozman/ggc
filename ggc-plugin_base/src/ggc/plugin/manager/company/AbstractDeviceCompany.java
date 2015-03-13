@@ -50,7 +50,7 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
     protected int company_id = 0;
     protected String company_name = "";
     protected String company_description = "";
-    protected DeviceImplementationStatus company_implementation_status = DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+    protected DeviceImplementationStatus company_implementation_status = DeviceImplementationStatus.NotAvailable;
     protected String company_short_name = "";
 
     /**

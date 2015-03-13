@@ -70,10 +70,10 @@ public enum PumpBolusType implements CodeEnumWithTranslation
 
         bolus_desc = bolus_desc_lcl;
 
-        for(String s : bolus_desc_lcl)
-        {
-            System.out.println("Tr: " + s);
-        }
+//        for(String s : bolus_desc_lcl)
+//        {
+//            System.out.println("Tr: " + s);
+//        }
 
     }
 

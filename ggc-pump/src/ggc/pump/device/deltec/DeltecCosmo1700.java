@@ -1,6 +1,5 @@
 package ggc.pump.device.deltec;
 
-import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -140,7 +139,7 @@ public class DeltecCosmo1700 extends DeltecPump
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_PLANNED;
+        return DeviceImplementationStatus.NotPlanned;
     }
 
     /**
@@ -161,16 +160,6 @@ public class DeltecCosmo1700 extends DeltecPump
         return 0;
     }
 
-    /**
-     * Get Download Support Type
-     * 
-     * @return
-     */
-    @Override
-    public int getDownloadSupportType()
-    {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
-    }
 
     /**
      * How Many Months Of Data Stored

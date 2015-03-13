@@ -42,6 +42,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     private static final long serialVersionUID = -1649768167774901903L;
     OutputWriter output_writer = null;
     private static Log log = LogFactory.getLog(DeviceValuesWriter.class);
+    boolean debug = false;
     /**
      * Is Silent Mode
      */
@@ -83,6 +84,12 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
     {
         this.output_writer = ow;
     }
+
+    public void setDebug(boolean dbg)
+    {
+        this.debug = dbg;
+    }
+
 
     /**
      * Write Object
@@ -128,7 +135,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
                 }
             }
 
-            if (!this.is_silent_mode)
+            //if (!this.is_silent_mode)
             {
                 output_writer.writeData(dtv.getData(_datetime, _value));
             }
@@ -140,6 +147,34 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
             return false;
         }
     }
+
+
+    /**
+     * Write Object
+     * @param _type
+     * @param _datetime
+     * @param _value
+     * @return
+     */
+    public boolean writeObject(String _type, ATechDate _datetime, Number _value)
+    {
+        if (this.containsKey(_type))
+        {
+            DeviceTempValues dtv = this.get(_type);
+
+                        //if (!this.is_silent_mode)
+            {
+                output_writer.writeData(dtv.getData(_datetime, "" + _value));
+            }
+            return true;
+        }
+        else
+        {
+            log.warn("Unknown key:" + _type);
+            return false;
+        }
+    }
+
 
     /**
      * Write Object
@@ -160,7 +195,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
             }
             DeviceTempValues dtv = this.get(_type);
 
-            if (!this.is_silent_mode)
+            //if (!this.is_silent_mode)
             {
                 output_writer.writeData(dtv.getData(_datetime, code_type, _value));
             }
@@ -172,5 +207,17 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
             return false;
         }
     }
+
+
+    public void addConfiguration(String key, DeviceTempValues deviceTempValues)
+    {
+        if (debug)
+        {
+            System.out.println("Config [key=" + key + ", DeviceTempValues=" + deviceTempValues.toString() + "]");
+        }
+
+        put(key, deviceTempValues);
+    }
+
 
 }

@@ -5,6 +5,7 @@ import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.defs.*;
 import ggc.pump.util.DataAccessPump;
@@ -159,9 +160,9 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
      * 
      * @return
      */
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NO;
+        return DownloadSupportType.NoDownloadSupport;
     }
 
     /**
@@ -276,5 +277,9 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     }
 
 
+    public DeviceConnectionProtocol getConnectionProtocol()
+    {
+        return DeviceConnectionProtocol.None;
+    }
 
 }

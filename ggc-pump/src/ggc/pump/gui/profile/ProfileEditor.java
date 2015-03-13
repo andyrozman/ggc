@@ -377,7 +377,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         ATSwingUtils.getButton("   " + m_ic.getMessage("CANCEL"), 610, 110, 120, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
 
-        this.help_button = this.m_da.createHelpButtonByBounds(610, 145, 120, 25, this);
+        this.help_button = ATSwingUtils.createHelpButtonByBounds(610, 145, 120, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         panel.add(this.help_button);
 
         m_da.enableHelp(this);

@@ -505,9 +505,16 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      * 
      * @return
      */
-    public GGCPlugInFileReaderContext[] getFileDownloadTypes()
+    public GGCPlugInFileReaderContext[] getFileDownloadTypes(DownloadSupportType downloadSupportType)
     {
-        return this.fileContexts;
+        if (downloadSupportType == DownloadSupportType.DownloadConfigFile)
+        {
+            return null;
+        }
+        else
+        {
+            return this.fileContexts;
+        }
     }
 
     /**
@@ -690,8 +697,6 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
 
     /**
      * Pre Init Device - Does preinit
-     * 
-     * @see hasPreInit()
      */
     public void preInitDevice()
     {

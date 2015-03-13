@@ -27,6 +27,7 @@
 
 package ggc.gui.dialogs.graphs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.data.GlucoValues;
 import ggc.core.data.graph.DataPlotSelectorPanel;
 import ggc.core.util.DataAccess;
@@ -105,7 +106,7 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
         setTitle(m_ic.getMessage("SPREAD_GRAPH"));
 
         setSize(800, 520);
-        m_da.centerJDialog(this, da.getMainParent());
+        ATSwingUtils.centerJDialog(this, da.getMainParent());
 
         sGV = new SpreadGraphView();
         getContentPane().add(sGV, BorderLayout.CENTER);
@@ -134,19 +135,19 @@ public class SpreadGraphDialog extends JDialog implements ActionListener, HelpCa
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         Dimension dim = new Dimension(120, 25);
 
-        help_button = m_da.createHelpButtonBySize(120, 25, this);
+        help_button = ATSwingUtils.createHelpButtonBySize(120, 25, this, m_da);
         buttonPanel.add(help_button);
 
         JButton drawButton = new JButton("    " + m_ic.getMessage("DRAW"));
         drawButton.setPreferredSize(dim);
-        drawButton.setIcon(m_da.getImageIcon_22x22("paint.png", this));
+        drawButton.setIcon(ATSwingUtils.getImageIcon_22x22("paint.png", this, m_da));
         drawButton.setActionCommand("draw");
         drawButton.addActionListener(this);
 
         JButton closeButton = new JButton("    " + m_ic.getMessage("CLOSE"));
         closeButton.setPreferredSize(dim);
         closeButton.setActionCommand("close");
-        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        closeButton.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
         closeButton.addActionListener(this);
         buttonPanel.add(drawButton);
         buttonPanel.add(closeButton);

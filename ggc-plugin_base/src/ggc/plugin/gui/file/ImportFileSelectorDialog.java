@@ -1,6 +1,8 @@
 package ggc.plugin.gui.file;
 
 import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.gui.DeviceDisplayDataDialog;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -48,7 +50,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
     private static final long serialVersionUID = -4620972246237384499L;
     // DataAccessPlugInBase dataAccess = null;
     // I18nControlAbstract m_ic = null;
-    // JDialog dialog_parent = null;
+    // JDialog dialogParent = null;
     // JPanel previous = null;
 
     JLabel label_type;
@@ -69,7 +71,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
         super(da, ddh, previous_parent);
         // dataAccess = da;
         // m_ic = da.getI18nControlInstance();
-        // this.dialog_parent = dialog;
+        // this.dialogParent = dialog;
         // this.previous = previous_panel;
         // this.m_frc = frc;
         // init();
@@ -91,7 +93,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
 
         ATSwingUtils.getLabel("Selected type:", 50, 95, 300, 60, this, ATSwingUtils.FONT_NORMAL_BOLD);
 
-        label_type = ATSwingUtils.getLabel(this.m_ddh.selected_file_context.getFullFileDescription(), 50, 115, 300, 60,
+        label_type = ATSwingUtils.getLabel(this.deviceDataHandler.selected_file_context.getFullFileDescription(), 50, 115, 300, 60,
             this, ATSwingUtils.FONT_NORMAL);
 
         ATSwingUtils.getLabel(this.m_ic.getMessage("SELECT_FILE"), 50, 150, 300, 60, this,
@@ -104,9 +106,9 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
         ATSwingUtils.getButton(m_ic.getMessage("BROWSE"), 250, 170, 100, 20, this, ATSwingUtils.FONT_NORMAL, null,
             "browse", this, m_da);
 
-        this.help_button = m_da.createHelpIconByBounds(50, 250, 60, 25, this);
-        // help_button.setFont(normal);
-        this.add(help_button);
+        this.helpButton = ATSwingUtils.createHelpIconByBounds(50, 250, 60, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
+        // helpButton.setFont(normal);
+        this.add(helpButton);
 
         ATSwingUtils
                 .getButton("", 115, 250, 60, 25, this, ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
@@ -122,7 +124,9 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
 
         this.setBounds(0, 0, 400, 320);
 
-        if (this.m_ddh.getDeviceInterface().getFileDownloadTypes().length > 1)
+        GGCPlugInFileReaderContext[] downloadTypes = this.deviceDataHandler.getFileDownloadTypes(DownloadSupportType.DownloadDataFile);
+
+        if (downloadTypes.length > 1)
         {
             b_prev.setEnabled(true);
             b_prev.setVisible(true);
@@ -138,7 +142,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
 
         if (action.equals("cancel"))
         {
-            this.dialog_parent.dispose();
+            this.dialogParent.dispose();
         }
         else if (action.equals("browse"))
         {
@@ -149,7 +153,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
             file_chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             file_chooser.setMultiSelectionEnabled(false);
             file_chooser.setCurrentDirectory(new File("."));
-            file_chooser.setFileFilter(this.m_ddh.selected_file_context.getFileFilter());
+            file_chooser.setFileFilter(this.deviceDataHandler.selected_file_context.getFileFilter());
 
             int returnVal = file_chooser.showOpenDialog(this);
 
@@ -157,29 +161,29 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
             {
                 File file = file_chooser.getSelectedFile();
                 this.tf_file.setText(file.getAbsolutePath());
-                this.m_ddh.selected_file = file.getAbsolutePath();
+                this.deviceDataHandler.selected_file = file.getAbsolutePath();
                 this.b_next.setEnabled(true);
             }
 
         }
         else if (action.equals("next"))
         {
-            if (this.m_ddh.selected_file_context.hasSpecialSelectorDialog())
+            if (this.deviceDataHandler.selected_file_context.hasSpecialSelectorDialog())
             {
-                this.m_ddh.selected_file_context.goToNextDialog(this);
+                this.deviceDataHandler.selected_file_context.goToNextDialog(this);
             }
             else
             {
                 this.dispose();
                 m_da.removeComponent(this);
-                new DeviceDisplayDataDialog(m_da.getMainParent(), m_da, m_ddh);
+                new DeviceDisplayDataDialog(m_da.getMainParent(), m_da, deviceDataHandler);
             }
         }
         else if (action.equals("prev"))
         {
             m_da.removeComponent(this);
             this.dispose();
-            new MultipleFileSelectorDialog(m_da, this.dialog_parent, m_ddh);
+            new MultipleFileSelectorDialog(m_da, this.dialogParent, deviceDataHandler);
         }
     }
 

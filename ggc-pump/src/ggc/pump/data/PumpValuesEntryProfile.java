@@ -103,6 +103,9 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      */
     public PumpValuesEntryProfile()
     {
+
+        this.source = da.getSourceDevice();
+
         // pumpAdditionalDataType = new PumpAdditionalDataType();
     }
 

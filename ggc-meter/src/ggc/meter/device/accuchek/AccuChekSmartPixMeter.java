@@ -12,7 +12,7 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.ConnectionProtocols;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 import java.io.File;
@@ -375,24 +375,15 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
     }
 
-    /** 
-     * Get Connection Protocol
-     */
-    @Override
-    public int getConnectionProtocol()
-    {
-        return ConnectionProtocols.PROTOCOL_MASS_STORAGE_XML;
-    }
-
     /**
      * Get Download Support Type
      * 
      * @return
      */
     @Override
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_FROM_DEVICE + DownloadSupportType.DOWNLOAD_FROM_DEVICE_FILE;
+        return DownloadSupportType.Download_Data_DataFile;
     }
 
     /**
@@ -440,7 +431,13 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.IMPLEMENTATION_DONE;
+        return DeviceImplementationStatus.Done;
     }
+
+
+//    public DeviceConnectionProtocol getConnectionProtocol()
+//    {
+//        return DeviceConnectionProtocol.MassStorageXML;
+//    }
 
 }

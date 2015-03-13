@@ -1,5 +1,6 @@
 package ggc.gui.dialogs;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.data.HbA1cValues;
 import ggc.core.data.graph.GraphViewHbA1c;
 import ggc.core.util.DataAccess;
@@ -81,6 +82,8 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         super(da.getMainParent(), "HbA1c", true);
         this.m_da = da;
         this.m_ic = da.getI18nControlInstance();
+
+        ATSwingUtils.initLibrary();
 
         gv = new GraphViewHbA1c();
         this.hbValues = gv.getDataObject();
@@ -198,12 +201,12 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable
         JButton closeButton = new JButton("   " + m_ic.getMessage("CLOSE"));
         // closeButton.setPreferredSize(new Dimension(100, 25));
         closeButton.setBounds(5, 395, 110, 25);
-        closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", this));
+        closeButton.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
         closeButton.addActionListener(this);
         closeButton.setActionCommand("close");
         bottomRightPanel.add(closeButton);
 
-        this.help_button = this.m_da.createHelpButtonByBounds(125, 395, 110, 25, this);
+        this.help_button = ATSwingUtils.createHelpButtonByBounds(125, 395, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         bottomRightPanel.add(this.help_button);
         // buttonPanel.add(help_button);
 

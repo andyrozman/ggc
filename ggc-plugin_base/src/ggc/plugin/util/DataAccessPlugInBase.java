@@ -1,5 +1,6 @@
 package ggc.plugin.util;
 
+import com.atech.utils.ATSwingUtils;
 import ggc.core.data.Converter_mgdL_mmolL;
 import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.plugins.GGCPluginType;
@@ -11,6 +12,8 @@ import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.graph.util.PlugInGraphContext;
 import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 import ggc.plugin.gui.OldDataReaderAbstract;
@@ -247,7 +250,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public static ImageIcon entry_status_iconimage[] = null;
 
     /**
-     * The m_ddh.
+     * The deviceDataHandler.
      */
     protected DeviceDataHandler m_ddh;
 
@@ -261,6 +264,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     protected GGCI18nControl i18n = null;
 
+    protected static GGCI18nControl i18nStatic = null;
+
+    protected DeviceInstanceWithHandler selectedDeviceInstanceV2;
+    protected DeviceInterface selectedDeviceInstanceV1;
+    private String deviceSource;
 
 
     // ********************************************************
@@ -1016,7 +1024,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      * @param ex1
      * @return
      */
-    public boolean checkUnsatisfiedLink(Exception ex1)
+    public static boolean checkUnsatisfiedLink(Exception ex1)
     {
         Throwable ex = ex1.getCause();
 
@@ -1154,7 +1162,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.m_old_data_reader;
     }
 
-    /**
+        /**
      * Get Current User Id
      *
      * @return
@@ -1164,6 +1172,20 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.current_user_id;
     }
+
+
+    /**
+     * Get Current User Id
+     *
+     * @return
+     */
+
+    public int getCurrentUserIdAsInt()
+    {
+        return (int)this.current_user_id;
+    }
+
+
 
     /**
      * Set Current User Id
@@ -1213,38 +1235,61 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      *
      * @return
      */
-    public int getDownloadStatus()
+    public DownloadSupportType getDownloadStatus()
     {
-
-        DeviceInterface pi = getSelectedDeviceInstance();
+        Object pi = getSelectedDeviceInstance();
 
         if (pi == null)
-            return 1;
+        {
+            return DownloadSupportType.NoDownloadSupport;
+        }
         else
-            return pi.getDownloadSupportType();
+        {
+            return this.selectedDeviceInstanceV2!=null ? this.selectedDeviceInstanceV2.getDownloadSupportType() :
+                    this.selectedDeviceInstanceV1.getDownloadSupportType();
+        }
 
     }
+
+
 
     /**
      * Get Selected Device Instance
      *
      * @return
      */
-    public DeviceInterface getSelectedDeviceInstance()
+    public Object getSelectedDeviceInstance()
     {
-        DeviceConfigEntry dce = getDeviceConfiguration().getSelectedDeviceInstance();
+        if (this.selectedDeviceInstanceV1==null && this.selectedDeviceInstanceV2==null)
+        {
+            DeviceConfigEntry dce = getDeviceConfiguration().getSelectedDeviceInstance();
 
-        if (dce == null)
+            //System.out.println("DeviceConfigEntry [" + this.getPluginName() + "]: " + dce);
+
+            if (dce == null)
+                return null;
+            else
+            {
+                this.selectedDeviceInstanceV2 = this.getManager().getDeviceV2(dce.device_company, dce.device_device);
+
+                if (this.selectedDeviceInstanceV2==null)
+                {
+                    this.selectedDeviceInstanceV1 = this.getManager().getDeviceV1(dce.device_company, dce.device_device);
+                }
+
+                this.deviceSource = dce.device_company + " " + dce.device_device;
+            }
+        }
+
+        if (this.selectedDeviceInstanceV1==null && this.selectedDeviceInstanceV2==null)
+        {
             return null;
+        }
         else
         {
-            AbstractDeviceCompany adc = this.getManager().getCompany(dce.device_company);
-
-            if (adc == null)
-                return null;
-
-            return adc.getDevice(dce.device_device);
+            return this.selectedDeviceInstanceV2!=null ? this.selectedDeviceInstanceV2 : this.selectedDeviceInstanceV1;
         }
+
     }
 
     /**
@@ -1254,7 +1299,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public String getSourceDevice()
     {
-        return getSelectedDeviceInstance().getDeviceSourceName();
+        return deviceSource;
     }
 
     /**
@@ -1464,7 +1509,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
         for (int i = 0; i < entry_status_icons.length; i++)
         {
-            entry_status_iconimage[i] = getImageIcon(entry_status_icons[i], 8, 8, d);
+            entry_status_iconimage[i] = ATSwingUtils.getImageIcon(entry_status_icons[i], 8, 8, d, this);
         }
     }
 

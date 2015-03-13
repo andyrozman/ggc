@@ -17,11 +17,13 @@ Development of CGMS Tools runs totally independent on GGC project
 	          - Statistics
 
     * Communication framework for CGM (interface that all CGMs will use) (later)
-    * Graphs (0.6)
+    * Graphs (0.6): - Daily Graph
+                    - DailyGraph for DailySheet Pump Report
     * Specific CGM models implementations:
           o Abbott - no support at this time
-          o Dexcom - Dexcom 7 not supported
+          o Dexcom - Dexcom 7 not supported (probably won't be done)
           o MiniMed (2015-16)  - protocol not public (use Carelink export file)
+          o Animas - Dexcom integration (2015)
 
 
 ===============================================================================

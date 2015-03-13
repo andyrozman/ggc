@@ -2,6 +2,10 @@ package ggc.pump.util;
 
 import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.cfg.DeviceConfiguration;
+import ggc.plugin.data.enums.ClockModeType;
+import ggc.plugin.data.enums.GlucoseUnitType;
+import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
+import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
 import ggc.plugin.device.mgr.DeviceHandlerManager;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -66,7 +70,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.4.0";
+    public static final String PLUGIN_VERSION = "1.5.0";
 
     private static DataAccessPump s_da = null; // This is handle to unique
 
@@ -165,6 +169,16 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.loadConverters();
         this.loadSorters();
         this.loadGraphContext();
+
+        this.prepareTranslationForEnums();
+    }
+
+    private void prepareTranslationForEnums()
+    {
+        SoundValueType.translateKeywords(this.getI18nControlInstance());
+        GlucoseUnitType.translateKeywords(this.getI18nControlInstance());
+        ClockModeType.translateKeywords(this.getI18nControlInstance());
+        AnimasSoundType.translateKeywords(this.getI18nControlInstance(), this.getPluginType());
     }
 
     // Method: getInstance
@@ -205,80 +219,24 @@ public class DataAccessPump extends DataAccessPlugInBase
      *
      * @return
      */
-    public PumpBaseType getPumpBaseTypes()
-    {
-        return this.m_pump_base_type;
-    }
+//    public PumpBaseType getPumpBaseTypes()
+//    {
+//        return this.m_pump_base_type;
+//    }
 
     /**
      * Get Bolus Sub Types
      *
      * @return
      */
-    public PumpBolusType getBolusSubTypes()
-    {
-        return m_pump_bolus_type;
-    }
+//    public PumpBolusType getBolusSubTypes()
+//    {
+//        return m_pump_bolus_type;
+//    }
 
-    /**
-     * Get Basal Sub Types
-     *
-     * @return
-     */
-    public PumpBasalSubType getBasalSubTypes()
-    {
-        return m_pump_basal_type;
-    }
 
-    /**
-     * Get Pump Report Types
-     *
-     * @return
-     */
-    public PumpReport getPumpReportTypes()
-    {
-        return this.m_pump_report;
-    }
 
-    /**
-     * Get Pump Alarm Types
-     *
-     * @return
-     */
-    public PumpAlarms getPumpAlarmTypes()
-    {
-        return this.m_pump_alarms;
-    }
 
-    /**
-     * Get Pump Error Types
-     *
-     * @return
-     */
-    public PumpErrors getPumpErrorTypes()
-    {
-        return this.m_pump_errors;
-    }
-
-    /**
-     * Get Pump Events Types
-     *
-     * @return
-     */
-    public PumpEvents getPumpEventTypes()
-    {
-        return this.m_pump_events;
-    }
-
-    /**
-     * Get Additional Types
-     *
-     * @return
-     */
-    public PumpAdditionalDataType getAdditionalTypes()
-    {
-        return this.m_pump_add_type;
-    }
 
     /*
      * static public DataAccess getInstance() { return dataAccess; }

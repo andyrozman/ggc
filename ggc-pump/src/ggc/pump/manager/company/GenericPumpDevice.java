@@ -5,10 +5,8 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.plugin.protocol.ConnectionProtocols;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.pump.device.AbstractPump;
-
-import java.util.Hashtable;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -67,15 +65,11 @@ public class GenericPumpDevice extends AbstractPump
         return apdc;
     }
 
-    /**
-     * getConnectionProtocol - returns id of connection protocol
-     * 
-     * @return id of connection protocol
-     */
-    public int getConnectionProtocol()
+    public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return ConnectionProtocols.PROTOCOL_NONE;
+        return DeviceConnectionProtocol.None;
     }
+
 
     /**
      * getConnectionPort - connection port data
@@ -221,7 +215,7 @@ public class GenericPumpDevice extends AbstractPump
     public DeviceImplementationStatus getImplementationStatus()
     {
         // TODO Auto-generated method stub
-        return DeviceImplementationStatus.IMPLEMENTATION_NOT_AVAILABLE;
+        return DeviceImplementationStatus.NotAvailable;
     }
 
     /** 
@@ -297,9 +291,9 @@ public class GenericPumpDevice extends AbstractPump
      * @return
      */
     @Override
-    public int getDownloadSupportType()
+    public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DOWNLOAD_SUPPORT_NA_GENERIC_DEVICE;
+        return DownloadSupportType.DummyDevice;
     }
 
     /**
