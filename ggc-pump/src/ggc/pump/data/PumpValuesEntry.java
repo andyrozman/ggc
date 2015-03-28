@@ -1,14 +1,5 @@
 package ggc.pump.data;
 
-import ggc.core.db.hibernate.GGCHibernateObject;
-import ggc.core.db.hibernate.pump.PumpDataH;
-import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.graph.data.GraphValue;
-import ggc.plugin.graph.data.GraphValuesCapable;
-import ggc.plugin.output.OutputWriterType;
-import ggc.pump.data.defs.*;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
@@ -24,6 +15,16 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.misc.statistics.StatisticsObject;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.CodeEnum;
+
+import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.core.db.hibernate.pump.PumpDataH;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.graph.data.GraphValue;
+import ggc.plugin.graph.data.GraphValuesCapable;
+import ggc.plugin.output.OutputWriterType;
+import ggc.pump.data.defs.*;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
@@ -82,6 +83,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     private PumpDataH entry_object = null;
     private Hashtable<String, PumpValuesEntryExt> additional_data = new Hashtable<String, PumpValuesEntryExt>();
 
+
     /**
      * Constructor
      *
@@ -89,17 +91,19 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public PumpValuesEntry(boolean tr)
     {
-        //dataAccess = DataAccessPump.getInstance();
+        // dataAccess = DataAccessPump.getInstance();
         // m_ic = dataAccess.getI18nControlInstance();
     }
+
 
     /**
      * Constructor
      */
     public PumpValuesEntry()
     {
-        this((String)null);
+        this((String) null);
     }
+
 
     /**
      * Constructor
@@ -119,9 +123,10 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.extended = null;
         this.comment = null;
 
-        this.source = (src==null) ? dataAccess.getSourceDevice() : src;
+        this.source = (src == null) ? dataAccess.getSourceDevice() : src;
         this.person_id = dataAccess.getCurrentUserIdAsInt();
-   }
+    }
+
 
     /**
      * Constructor
@@ -145,6 +150,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.person_id = dataAccess.getCurrentUserIdAsInt();
     }
 
+
     /**
      * Constructor
      *
@@ -163,11 +169,12 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.sub_type = pdh.getSub_type();
         this.value = pdh.getValue();
         this.extended = pdh.getExtended();
-        //loadExtended(pdh.getExtended());
+        // loadExtended(pdh.getExtended());
         this.person_id = pdh.getPerson_id();
         this.comment = pdh.getComment();
 
     }
+
 
     /**
      * Add Additional Data
@@ -179,6 +186,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.additional_data.put(PumpAdditionalDataType.getByCode(adv.getType()).getTranslation(), adv);
     }
 
+
     /**
      * Get Additional Data
      *
@@ -188,6 +196,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.additional_data;
     }
+
 
     /*
      * public void setDateTime(long dt) { this.datetime = dt; } public long
@@ -213,6 +222,13 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.sub_type = sub_type;
     }
 
+
+    public void setSubType(CodeEnum codeEnum)
+    {
+        this.sub_type = codeEnum.getCode();
+    }
+
+
     /**
      * Set Value
      *
@@ -222,6 +238,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         this.value = val;
     }
+
 
     /**
      * Set Value
@@ -236,6 +253,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
          */
         return this.value;
     }
+
 
     // added - End
 
@@ -261,6 +279,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     }
 
+
     // int base_type;
 
     /**
@@ -272,6 +291,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.baseType;
     }
+
 
     /**
      * Set Base Type
@@ -293,6 +313,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         this.baseType = type;
     }
+
 
     /**
      * Get Column Value
@@ -331,6 +352,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return "";
     }
 
+
     /**
      * Get Parameters As String
      *
@@ -356,6 +378,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     }
 
+
     /**
      * Get Sub Type
      *
@@ -366,6 +389,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return this.sub_type;
     }
 
+
     /**
      * Get Sub Type
      *
@@ -375,6 +399,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return baseType.getTranslation();
     }
+
 
     /**
      * Get Sub Type
@@ -392,7 +417,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         if (this.baseType == PumpBaseType.Basal)
         {
-            return PumpBasalSubType.getByCode(this.sub_type).getTranslation();
+            return PumpBasalType.getByCode(this.sub_type).getTranslation();
         }
         else if (this.baseType == PumpBaseType.Bolus)
         {
@@ -423,6 +448,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             return "";
         }
     }
+
 
     /**
      * Get Additional Display
@@ -464,6 +490,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
     }
 
+
     /**
      * Is Food Set
      *
@@ -471,8 +498,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String isFoodSet()
     {
-        if (this.additional_data.containsKey(PumpAdditionalDataType.FoodDescription.getTranslation()) ||
-            this.additional_data.containsKey(PumpAdditionalDataType.FoodDb.getTranslation()))
+        if (this.additional_data.containsKey(PumpAdditionalDataType.FoodDescription.getTranslation())
+                || this.additional_data.containsKey(PumpAdditionalDataType.FoodDb.getTranslation()))
         {
             return dataAccess.getI18nControlInstance().getMessage("YES");
         }
@@ -481,6 +508,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             return dataAccess.getI18nControlInstance().getMessage("NO");
         }
     }
+
 
     /**
      * Get Additional Display
@@ -503,8 +531,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             {
                 String key = en.nextElement();
 
-                if (key.equals(PumpAdditionalDataType.FoodDb.getTranslation()) ||
-                    key.equals(PumpAdditionalDataType.FoodDescription.getTranslation()))
+                if (key.equals(PumpAdditionalDataType.FoodDb.getTranslation())
+                        || key.equals(PumpAdditionalDataType.FoodDescription.getTranslation()))
                 {
                     continue;
                 }
@@ -528,6 +556,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
     }
 
+
     /**
      * Get Value HTML
      *
@@ -541,7 +570,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         if (this.baseType == PumpBaseType.Basal)
         {
-            if (this.sub_type == PumpBasalSubType.TemporaryBasalRate.getCode())
+            if (this.sub_type == PumpBasalType.TemporaryBasalRate.getCode())
             {
                 String s[] = dataAccess.getParsedValues(this.value);
                 sb.append(String.format("%s: %s<br>%s: %s", m_ic.getMessage("DURATION"), s[0],
@@ -600,6 +629,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return sb.toString();
     }
 
+
     /**
      * Get Value Print
      *
@@ -611,7 +641,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         if (this.baseType == PumpBaseType.Basal)
         {
-            if (this.sub_type == PumpBasalSubType.TemporaryBasalRate.getCode())
+            if (this.sub_type == PumpBasalType.TemporaryBasalRate.getCode())
             {
                 String s[] = dataAccess.getParsedValues(this.value);
                 sb.append(String.format("%s: %s, %s: %s", m_ic.getMessage("DURATION"), s[0], m_ic.getMessage("AMOUNT"),
@@ -690,6 +720,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public static final int PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD = 2;
 
+
     /**
      * Get Additional Display
      *
@@ -721,7 +752,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
                 if (type == PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD)
                 {
                     if (key.equals(PumpAdditionalDataType.FoodDescription.getTranslation()) || //
-                        key.equals(PumpAdditionalDataType.FoodDb.getTranslation()))
+                            key.equals(PumpAdditionalDataType.FoodDb.getTranslation()))
                     {
                         food_key = key;
                     }
@@ -761,6 +792,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
     }
 
+
     /**
      * Prepare Entry [PlugIn Framework v1]
      */
@@ -784,6 +816,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
          */
     }
 
+
     /**
      * Get Db Objects [PlugIn Framework v1]
      *
@@ -802,6 +835,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         return lst;
     }
+
 
     /**
      * Create Comment
@@ -822,6 +856,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
 
     }
+
 
     /**
      * To String
@@ -851,6 +886,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         return sb.toString();
     }
+
 
     /**
      * DbAdd - Add this object to database
@@ -886,6 +922,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return "" + _id.longValue();
     }
 
+
     /**
      * DbDelete - Delete this object in database
      *
@@ -905,6 +942,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         return true;
     }
+
 
     /**
      * DbEdit - Edit this object in database
@@ -939,6 +977,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return true;
     }
 
+
     /**
      * DbGet - Loads this object. Id must be set.
      *
@@ -964,6 +1003,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return true;
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
@@ -979,6 +1019,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return false;
     }
 
+
     /**
      * getAction - returns action that should be done on object 0 = no action 1
      * = add action 2 = edit action 3 = delete action This is used mainly for
@@ -992,6 +1033,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return 0;
     }
 
+
     /**
      * getObjectName - returns name of DatabaseObject
      *
@@ -1001,6 +1043,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return "PumpDataH";
     }
+
 
     /**
      * isDebugMode - returns debug mode of object
@@ -1012,6 +1055,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return false;
     }
 
+
     /**
      * getObjectUniqueId - get id of object
      *
@@ -1021,6 +1065,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return "" + this.entry_object.getId();
     }
+
 
     /**
      * Get DateTime (long)
@@ -1033,6 +1078,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return this.datetime.getATDateTimeAsLong();
     }
 
+
     /**
      * Get DateTime format
      *
@@ -1043,6 +1089,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return ATechDate.FORMAT_DATE_AND_TIME_S;
     }
+
 
     /**
      * Set DateTime Object (ATechDate)
@@ -1055,6 +1102,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         this.datetime = dt;
     }
+
 
     /**
      * Get Data As String
@@ -1108,6 +1156,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
     }
 
+
     /**
      * Get DateTime Object (ATechDate)
      *
@@ -1118,6 +1167,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.datetime;
     }
+
 
     /**
      * Get Id
@@ -1137,6 +1187,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.comment;
     }
+
 
     /**
      * Set Comment
@@ -1237,6 +1288,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public static final int BG_STD_DEV = 17;
 
+
     /**
      * Get Max Statistics Object - we can have several Statistic types defined
      * here
@@ -1247,6 +1299,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return 18;
     }
+
 
     /**
      * Get Statistics Action - we define how statistic is done (we have several
@@ -1296,6 +1349,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
                 return 0;
         }
     }
+
 
     /**
      * Get Value For Item
@@ -1347,12 +1401,11 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             case PumpValuesEntry.CH_AVG:
             case PumpValuesEntry.MEALS:
                 {
-                    if (this.additional_data
-                            .containsKey(PumpAdditionalDataType.Carbohydrates.getTranslation()))
+                    if (this.additional_data.containsKey(PumpAdditionalDataType.Carbohydrates.getTranslation()))
                     {
                         return dataAccess.getFloatValueFromString(
-                            this.additional_data.get(PumpAdditionalDataType.Carbohydrates.getTranslation())
-                                    .getValue(), 0.0f);
+                            this.additional_data.get(PumpAdditionalDataType.Carbohydrates.getTranslation()).getValue(),
+                            0.0f);
                     }
                     else
                     {
@@ -1368,8 +1421,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
                     if (this.additional_data.containsKey(PumpAdditionalDataType.BloodGlucose.getTranslation()))
                     {
                         return dataAccess.getFloatValueFromString(
-                            this.additional_data.get(PumpAdditionalDataType.BloodGlucose.getTranslation())
-                                    .getValue(), 0.0f);
+                            this.additional_data.get(PumpAdditionalDataType.BloodGlucose.getTranslation()).getValue(),
+                            0.0f);
                     }
                     else
                     {
@@ -1391,6 +1444,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
                 return 0.0f;
         }
     }
+
 
     /**
      * Is Special Action - tells if selected statistics item has special actions
@@ -1426,6 +1480,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
     }
 
+
     /**
      * If we have any special actions for any of objects
      *
@@ -1436,6 +1491,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return true;
     }
 
+
     /**
      * Get MultiLine ToolTip
      */
@@ -1444,6 +1500,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return null;
     }
+
 
     /**
      * Get MultiLine ToolTip
@@ -1485,6 +1542,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     }
 
+
     /*
      * public String getValue() { return null; }
      */
@@ -1517,6 +1575,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     }
 
+
     /**
      * Is Indexed (multiline tooltip)
      */
@@ -1525,6 +1584,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return true;
     }
+
 
     /**
      * Get Table Column Value (in case that we need special display values for
@@ -1565,6 +1625,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     }
 
+
     /**
      * Get Special Id
      *
@@ -1574,6 +1635,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return "PD_" + this.datetime.getATDateTimeAsLong() + "_" + this.baseType + "_" + this.sub_type;
     }
+
 
     /**
      * Get DeviceValuesEntry Name
@@ -1596,6 +1658,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     long old_id;
 
+
     /**
      * Set Id (this is used for changing old objects in framework v2)
      *
@@ -1606,6 +1669,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.old_id = id_in;
     }
 
+
     /**
      * Get Id (this is used for changing old objects in framework v2)
      *
@@ -1615,6 +1679,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.old_id;
     }
+
 
     /**
      * Set Source
@@ -1627,6 +1692,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     }
 
+
     /**
      * Get Source
      *
@@ -1637,6 +1703,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return this.source;
     }
 
+
     /**
      * Get Additional Data Count
      *
@@ -1646,6 +1713,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.additional_data.size();
     }
+
 
     public ArrayList<GraphValue> getGraphValues()
     {
@@ -1669,6 +1737,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         // TODO Auto-generated method stub
         return list;
     }
+
 
     public GraphValue getGraphValue()
     {

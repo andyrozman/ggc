@@ -1,20 +1,5 @@
 package ggc.pump.data.graph;
 
-import com.atech.utils.data.TimeZoneUtil;
-import ggc.core.data.graph.GGCGraphUtil;
-import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.util.DataAccess;
-import ggc.plugin.data.DeviceValuesDay;
-import ggc.plugin.util.DataAccessPlugInBase;
-import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.db.GGCPumpDb;
-import ggc.pump.data.defs.PumpAdditionalDataType;
-import ggc.pump.data.defs.PumpBasalSubType;
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.data.defs.PumpBolusType;
-import ggc.pump.util.DataAccessPump;
-
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,10 +15,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.xy.XYBarPainter;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.Range;
@@ -43,6 +25,21 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
+import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.data.graph.GGCGraphUtil;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.util.DataAccess;
+import ggc.plugin.data.DeviceValuesDay;
+import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.db.GGCPumpDb;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBasalType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -72,19 +69,14 @@ import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
  */
 
 public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // implements
-                                                                      // GraphViewInterface,
-                                                                      // GraphViewDataProcessorInterface
+// GraphViewInterface,
+// GraphViewDataProcessorInterface
 {
 
     Log LOG = LogFactory.getLog(GraphViewDailyPump.class);
 
-
     private XYSeriesCollection datasetBG = new XYSeriesCollection();
     private XYSeriesCollection datasetInsCH = new XYSeriesCollection();
-
-
-
-
 
     GregorianCalendar gc;
     // private GlucoValues gluco_values;
@@ -99,7 +91,6 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
     NumberAxis insBUAxis;
     // private TimeSeriesCollection datasetInsCH = new TimeSeriesCollection();
 
-
     DataAccessPump da_local = DataAccessPump.getInstance();
     GGCGraphUtil graph_util = GGCGraphUtil.getInstance(da_local);
 
@@ -112,6 +103,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
 
     DeviceValuesDay dvd_data;
 
+
     /**
      * Constructor
      * 
@@ -123,6 +115,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
         this.gc = gc;
     }
 
+
     /**
      * Get Help Id
      * 
@@ -132,6 +125,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
     {
         return null;
     }
+
 
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
@@ -143,6 +137,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
     {
         return new Rectangle(100, 100, 600, 400);
     }
+
 
     /**
      * Load Data
@@ -156,6 +151,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
         }
     }
 
+
     /**
      * Get Data Set
      * 
@@ -165,6 +161,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
     {
         return this.datasetBG;
     }
+
 
     /**
      * Preprocess Data
@@ -181,8 +178,6 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
         // CH
 
         // CGMS
-
-
 
         /*
          * //XYSeries xs = new XYSeries("BG");
@@ -225,7 +220,8 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
          * hbValues.getPercentOfDaysInClass(2));
          * datasetBG.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"),
          * hbValues.getPercentOfDaysInClass(3));
-         * datasetBG.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"),
+         * datasetBG.insertValue(4,
+         * m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"),
          * hbValues.getPercentOfDaysInClass(4));
          */
 
@@ -243,11 +239,17 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
          * TimeSeries(da_local.getSettings().getIns2Name(), Hour.class);
          */
 
-        XYSeries BGSeries = new XYSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), true, true); //, Hour.class);
+        XYSeries BGSeries = new XYSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), true, true); // ,
+                                                                                             // Hour.class);
 
-        XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"),true, true); //, Hour.class);
-        XYSeries basalInsulinSeries = new XYSeries("Basal insulin", true, true); //, // Hour.class);
-        XYSeries bolusInsulinSeries = new XYSeries("Bolus insulin", true, true); //, // Hour.class);
+        XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true); // ,
+                                                                                       // Hour.class);
+        XYSeries basalInsulinSeries = new XYSeries("Basal insulin", true, true); // ,
+                                                                                 // //
+                                                                                 // Hour.class);
+        XYSeries bolusInsulinSeries = new XYSeries("Bolus insulin", true, true); // ,
+                                                                                 // //
+                                                                                 // Hour.class);
 
         // int BGUnit = da_local.m_BG_unit;
 
@@ -258,10 +260,8 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
 
         // DeviceValuesDay dvd = dvd_data..getRowAt(0);
 
-        //BGSeries.add(0, 0.0f);
-        //BGSeries.add(2400, 0.0f);
-
-
+        // BGSeries.add(0, 0.0f);
+        // BGSeries.add(2400, 0.0f);
 
         PumpValuesEntry pve = null;
 
@@ -274,17 +274,16 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
             pve = (PumpValuesEntry) this.dvd_data.getRowAt(i);
 
             long time = pve.getDateTimeObject().getGregorianCalendar().getTimeInMillis();
-            //long time = pve.getDateTimeObject().getGregorianCalendar();
+            // long time = pve.getDateTimeObject().getGregorianCalendar();
 
-            //System.out.println("Time: " + time);
-
+            // System.out.println("Time: " + time);
 
             // Bolus
-            if (pve.getBaseType()== PumpBaseType.Bolus)
+            if (pve.getBaseType() == PumpBaseType.Bolus)
             {
                 PumpBolusType bolusType = PumpBolusType.getByCode(pve.getSubType());
 
-                if (bolusType==PumpBolusType.Normal || bolusType==PumpBolusType.Audio)
+                if (bolusType == PumpBolusType.Normal || bolusType == PumpBolusType.Audio)
                 {
                     bolusInsulinSeries.add(time, da_local.getFloatValueFromString(pve.getValue()));
                 }
@@ -296,27 +295,28 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
 
             // Basal
             // FIXME Basal two-passes check
-            if (pve.getBaseType()== PumpBaseType.Basal)
+            if (pve.getBaseType() == PumpBaseType.Basal)
             {
                 // this might be problematic ?
 
-                PumpBasalSubType basalType = PumpBasalSubType.getByCode(pve.getSubType());
+                PumpBasalType basalType = PumpBasalType.getByCode(pve.getSubType());
 
-                if (basalType==PumpBasalSubType.Value)
+                if (basalType == PumpBasalType.Value)
                 {
                     bolusInsulinSeries.add(time, da_local.getFloatValueFromString(pve.getValue()));
                     basalEntryFound = true;
                 }
-                else if (basalType==PumpBasalSubType.Value)
+                else if (basalType == PumpBasalType.Value)
                 {
                     // CHANGE
                     LOG.warn("Basal Type: " + basalType.name() + " not supported yet.");
                 }
-                else if (PumpBasalSubType.isTemporaryBasalType(basalType))
+                else if (PumpBasalType.isTemporaryBasalType(basalType))
                 {
                     if (basalEntryFound)
                     {
-                        // FIXME if basal - value or valueChange we plot TBR at once
+                        // FIXME if basal - value or valueChange we plot TBR at
+                        // once
                         LOG.warn("Basal Type: " + basalType.name() + " not supported yet.");
                     }
                     else
@@ -325,8 +325,6 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
                     }
                 }
             }
-
-
 
             // Blood Glucose
             String additionalKeyWord = PumpAdditionalDataType.BloodGlucose.getTranslation();
@@ -348,35 +346,26 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
 
         }
 
-
-        if (tbrs.size()>0)
+        if (tbrs.size() > 0)
         {
             LOG.warn("Basal Type: TBR not supported yet.");
         }
 
-
-
-
-
-
-//        {
-//            GregorianCalendar gc1 = (GregorianCalendar)gc.clone();
-//            gc.set(Calendar.HOUR_OF_DAY, 0);
-//            gc.set(Calendar.MINUTE, 0);
-//            gc.set(Calendar.SECOND, 0);
-//
-//            BGSeries.add(gc.getTimeInMillis(), 0.0f);
-//
-//            gc.set(Calendar.HOUR_OF_DAY, 23);
-//            gc.set(Calendar.MINUTE, 59);
-//            gc.set(Calendar.SECOND, 59);
-//
-//            BGSeries.add(gc.getTimeInMillis(), 0.0f);
-//
-//        }
-
-
-
+        // {
+        // GregorianCalendar gc1 = (GregorianCalendar)gc.clone();
+        // gc.set(Calendar.HOUR_OF_DAY, 0);
+        // gc.set(Calendar.MINUTE, 0);
+        // gc.set(Calendar.SECOND, 0);
+        //
+        // BGSeries.add(gc.getTimeInMillis(), 0.0f);
+        //
+        // gc.set(Calendar.HOUR_OF_DAY, 23);
+        // gc.set(Calendar.MINUTE, 59);
+        // gc.set(Calendar.SECOND, 59);
+        //
+        // BGSeries.add(gc.getTimeInMillis(), 0.0f);
+        //
+        // }
 
         datasetBG.addSeries(BGSeries);
 
@@ -384,10 +373,6 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
         datasetInsCH.addSeries(bolusInsulinSeries);
         datasetInsCH.addSeries(basalInsulinSeries);
         // basal
-
-
-
-
 
         /*
          * datasetInsCH.addSeries(CHSeries);
@@ -400,7 +385,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
 
     private GregorianCalendar getGCRange(boolean start)
     {
-        GregorianCalendar gc1 = (GregorianCalendar)gc.clone();
+        GregorianCalendar gc1 = (GregorianCalendar) gc.clone();
 
         if (start)
         {
@@ -421,7 +406,6 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
     }
 
 
-
     /**
      * Get Title (used by GraphViewer)
      * 
@@ -433,6 +417,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
         return m_ic.getMessage("DAILYGRAPHFRAME");
     }
 
+
     /**
      * Set Plot
      * 
@@ -441,10 +426,9 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
     public void setPlot(JFreeChart chart)
     {
 
-        //chart.
+        // chart.
 
         XYPlot plot = chart.getXYPlot();
-
 
         XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
         XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
@@ -454,20 +438,14 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
         BGAxis = (NumberAxis) plot.getRangeAxis();
         insBUAxis = new NumberAxis();
 
-
-
         // Bars test
-        //CategoryPlot cp = chart.getCategoryPlot();
+        // CategoryPlot cp = chart.getCategoryPlot();
         XYBarRenderer barRenderer = new XYBarRenderer();
 
-        //cp.setRangeAxis(1, insBUAxis);
-        //cp.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
-        //cp.setDataset(1, datasetInsCH);
-        //cp.mapDatasetToRangeAxis(1, 1);
-
-
-
-
+        // cp.setRangeAxis(1, insBUAxis);
+        // cp.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
+        // cp.setDataset(1, datasetInsCH);
+        // cp.mapDatasetToRangeAxis(1, 1);
 
         ColorSchemeH colorScheme = graph_util.getColorScheme();
 
@@ -501,23 +479,16 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
         barRenderer.setSeriesShape(0, XYBarRenderer.DEFAULT_SHAPE);
         barRenderer.setSeriesShape(1, XYBarRenderer.DEFAULT_SHAPE);
         barRenderer.setSeriesShape(2, XYBarRenderer.DEFAULT_SHAPE);
-        //barRenderer.setSeriesShapesVisible(1, true);
-        //insBURenderer.setSeriesShapesVisible(2, true);
-
+        // barRenderer.setSeriesShapesVisible(1, true);
+        // insBURenderer.setSeriesShapesVisible(2, true);
 
         insBURenderer.setSeriesLinesVisible(0, false);
         insBURenderer.setSeriesLinesVisible(1, false);
         insBURenderer.setSeriesLinesVisible(2, false);
 
-
-//        datasetInsCH.addSeries(CHSeries);
-//        datasetInsCH.addSeries(bolusInsulinSeries);
-//        datasetInsCH.addSeries(basalInsulinSeries);
-
-
-
-
-
+        // datasetInsCH.addSeries(CHSeries);
+        // datasetInsCH.addSeries(bolusInsulinSeries);
+        // datasetInsCH.addSeries(basalInsulinSeries);
 
         // Date Axis
         SimpleDateFormat sdf = new SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS"));
@@ -537,13 +508,8 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
         insBUAxis.setLabel(m_ic.getMessage("CH_LONG") + " / " + m_ic.getMessage("INSULIN"));
         insBUAxis.setAutoRangeIncludesZero(true);
 
-
-
-
-
-
-
     }
+
 
     /**
      * Create Chart
@@ -557,6 +523,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor // impleme
 
         this.setPlot(chart);
     }
+
 
     /**
      * Create Chart Panel

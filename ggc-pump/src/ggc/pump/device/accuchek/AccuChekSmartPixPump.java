@@ -1,5 +1,17 @@
 package ggc.pump.device.accuchek;
 
+import java.io.File;
+import java.util.*;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.Node;
+
+import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.data.ATechDate;
+
 import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
@@ -10,13 +22,7 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryProfile;
-import ggc.pump.data.defs.PumpAlarms;
-import ggc.pump.data.defs.PumpBasalSubType;
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.data.defs.PumpBolusType;
-import ggc.pump.data.defs.PumpErrors;
-import ggc.pump.data.defs.PumpEvents;
-import ggc.pump.data.defs.PumpReport;
+import ggc.pump.data.defs.*;
 import ggc.pump.data.profile.Profile;
 import ggc.pump.data.profile.ProfileSubEntry;
 import ggc.pump.data.profile.ProfileSubOther;
@@ -24,23 +30,6 @@ import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.device.PumpInterface;
 import ggc.pump.manager.PumpDevicesIds;
 import ggc.pump.util.DataAccessPump;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.Node;
-
-import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.data.ATechDate;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
@@ -82,7 +71,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     private Hashtable<String, PumpErrors> error_mappings = null;
     private Hashtable<String, PumpBolusType> bolus_mappings = null;
     private Hashtable<String, PumpReport> report_mappings = null;
-    private Hashtable<String, PumpBasalSubType> basal_mappings = null;
+    private Hashtable<String, PumpBasalType> basal_mappings = null;
+
 
     /**
      * Constructor
@@ -96,6 +86,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         this.setDeviceType(cmp.getName(), getName(), DeviceAbstract.DEVICE_TYPE_PUMP);
     }
 
+
     /**
      * Constructor
      * 
@@ -106,6 +97,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         this(conn_parameter, writer, DataAccessPump.getInstance());
     }
+
 
     /**
      * Constructor
@@ -121,6 +113,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         this.setDeviceType("Accu-Chek/Roche", getName(), DeviceAbstract.DEVICE_TYPE_PUMP);
     }
 
+
     /**
      * getDeviceId - Get Device Id
      * 
@@ -130,6 +123,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         return PumpDevicesIds.ROCHE_SMARTPIX_DEVICE;
     }
+
 
     /**
      * getCompanyId - Get Company Id
@@ -142,6 +136,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     }
 
     Document document;
+
 
     /**
      * Process Xml
@@ -168,6 +163,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         }
     }
 
+
     /**
      * Letter with which report starts (I for insulin pumps, G for glucose
      * meters)
@@ -179,6 +175,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         return "I";
     }
+
 
     /**
      * Get Pix Device Info
@@ -209,6 +206,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     }
 
+
     private void getPumpDeviceInfo()
     {
         DeviceIdentification di = this.outputWriter.getDeviceIdentification();
@@ -225,47 +223,49 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     }
 
+
     private void readPumpData()
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();
 
-        // log.info(" -- Basals --");
+        log.info(" -- Basals --");
         list.addAll(getBasals());
         // System.out.println("Basals: " + list.size());
 
-        // log.info(" -- Boluses --");
+        log.info(" -- Boluses --");
         list.addAll(getBoluses());
         // System.out.println("Boluses: " + list.size());
 
-        // log.info(" -- Events --");
+        log.info(" -- Events --");
         list.addAll(getEvents());
         // System.out.println("Events: " + list.size());
-
-        // log.info(" -- Profiles --");
-        // list.addAll(this.getPumpProfiles());
-        ArrayList<PumpValuesEntryProfile> list_profiles = this.getPumpProfiles();
-
-        /*
-         * System.out.println(" -- Basals (run 2) --");
-         * list.addAll(getSpecificElements2("BASAL"));
-         * System.out.println("Basals2: " + list.size());
-         */
-        if (first_basal != null)
-        {
-            list.add(first_basal);
-        }
 
         for (int i = 0; i < list.size(); i++)
         {
             this.outputWriter.writeData(list.get(i));
         }
-
-        for (int i = 0; i < list_profiles.size(); i++)
-        {
-            this.outputWriter.writeData(list_profiles.get(i));
-        }
-
     }
+
+
+    private void profileProcess()
+    {
+        // this code is discarded. We read basals with basal_value_change type
+        // used, which makes Profiles redundant
+        // log.info(" -- Profiles --");
+        // list.addAll(this.getPumpProfiles());
+        //
+        // ArrayList<PumpValuesEntryProfile> list_profiles =
+        // this.getPumpProfiles();
+        // if (first_basal != null)
+        // {
+        // list.add(first_basal);
+        // }
+        // for (int i = 0; i < list_profiles.size(); i++)
+        // {
+        // this.outputWriter.writeData(list_profiles.get(i));
+        // }
+    }
+
 
     /**
      * Main method for reading Profile Pattern/Event entries
@@ -536,6 +536,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     }
 
+
     /*
      * private void readPumpDataTest() { ArrayList<PumpValuesEntry> list = new
      * ArrayList<PumpValuesEntry>(); //System.out.println(" -- Basals --");
@@ -548,15 +549,18 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         return getSpecificElements("BOLUS", AccuChekSmartPixPump.TAG_BOLUS);
     }
 
+
     private ArrayList<PumpValuesEntry> getBasals()
     {
         return getSpecificElements("BASAL", AccuChekSmartPixPump.TAG_BASAL);
     }
 
+
     private ArrayList<PumpValuesEntry> getEvents()
     {
         return getSpecificElements("EVENT", AccuChekSmartPixPump.TAG_EVENT);
     }
+
 
     /**
      * test
@@ -584,6 +588,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     public static final int TAG_EVENT = 3;
 
     String[] type_desc = { "", "Basal", "Bolus", "Events" };
+
 
     private ArrayList<PumpValuesEntry> getSpecificElements(String element, int type)
     {
@@ -661,6 +666,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     private static String PUMP_STOP = "Stop";
 
+
     private boolean resolveBasalBase(PumpValuesEntry pve, Element el)
     {
         String remark = el.attributeValue("remark");
@@ -681,7 +687,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             // System.out.println(el);
 
             pve.setBaseType(PumpBaseType.Basal);
-            pve.setSubType(PumpBasalSubType.TemporaryBasalRate.getCode());
+            pve.setSubType(PumpBasalType.TemporaryBasalRate);
 
             String v = "";
 
@@ -698,7 +704,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
             if (PUMP_STOP.equals(remark))
             {
-                pve.setSubType(PumpBasalSubType.TemporaryBasalRateCanceled.getCode());
+                pve.setSubType(PumpBasalType.TemporaryBasalRateCanceled);
             }
             else
             {
@@ -737,7 +743,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 }
                 else if (this.getBasalMappings().containsKey(remark))
                 {
-                    pve.setBaseType(PumpBaseType.Basal.getCode());
+                    pve.setBaseType(PumpBaseType.Basal);
                     pve.setSubType(this.getBasalMappings().get(remark).getCode());
                     // System.out.println("Basal Event Unknown [remark=" +
                     // remark + "]");
@@ -763,12 +769,25 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             if (!isSet(profile))
             {
                 if (!isSet(tbrdec) && !isSet(tbrinc) && cbrf.equals("0.00"))
-                {
-                }
+                {}
                 else
                 {
                     log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
                 }
+            }
+            else
+            {
+                if (isSet(cbrf))
+                {
+                    pve.setBaseType(PumpBaseType.Basal);
+                    pve.setSubType(PumpBasalType.ValueChange);
+                    pve.setValue(cbrf);
+                    // log.warn("Basal Entry N/A [dt=" +
+                    // pve.getDateTimeObject().getDateTimeString() + ", amount="
+                    // + cbrf);
+                    return true;
+                }
+
             }
             return false;
 
@@ -777,6 +796,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     }
 
     PumpValuesEntry first_basal = null;
+
 
     private ProfileSubEntry resolveBasalProfilePatterns(/* PumpValuesEntry pve, */Element el)
     {
@@ -906,6 +926,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     }
 
+
     /**
      * Resolve Bolus Data
      * 
@@ -934,8 +955,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
                 pve.setSubType(bolusType.getCode());
 
-                if ((bolusType == PumpBolusType.Normal)
-                        || (bolusType == PumpBolusType.Audio))
+                if ((bolusType == PumpBolusType.Normal) || (bolusType == PumpBolusType.Audio))
                 {
                     pve.setValue(amount);
                 }
@@ -988,6 +1008,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
         return true;
     }
+
 
     /**
      * Resolve Events
@@ -1076,6 +1097,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
     }
 
+
     private boolean isSet(String str)
     {
         if ((str == null) || (str.trim().length() == 0))
@@ -1088,10 +1110,12 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         }
     }
 
+
     private List<Node> getSpecificDataChildren(String child_path)
     {
         return getNodes(child_path); // /BOLUS
     }
+
 
     /**
      * Pump tool, requires dates to be in seconds, so we need to return value is
@@ -1119,6 +1143,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, Long.parseLong(o));
     }
 
+
     /**
      * Get Date from AtechDate long format
      * 
@@ -1130,6 +1155,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         return inp / 1000000;
     }
 
+
     @SuppressWarnings("unused")
     private long getDate(String date)
     {
@@ -1137,7 +1163,6 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         ATechDate at = new ATechDate(ATechDate.FORMAT_DATE_ONLY, Long.parseLong(o));
         return at.getATDateTimeAsLong();
     }
-
 
 
     /**
@@ -1200,9 +1225,9 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         this.report_mappings.put("Bolus Total", PumpReport.BolusTotalDay);
         this.report_mappings.put("Bolus+Basal Total", PumpReport.InsulinTotalDay);
 
-        this.basal_mappings = new Hashtable<String, PumpBasalSubType>();
-        this.basal_mappings.put("TBR End (cancelled)", PumpBasalSubType.TemporaryBasalRateCanceled);
-        this.basal_mappings.put("TBR End", PumpBasalSubType.TemporaryBasalRateEnded);
+        this.basal_mappings = new Hashtable<String, PumpBasalType>();
+        this.basal_mappings.put("TBR End (cancelled)", PumpBasalType.TemporaryBasalRateCanceled);
+        this.basal_mappings.put("TBR End", PumpBasalType.TemporaryBasalRateEnded);
 
     }
 
@@ -1229,6 +1254,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         return this.alarm_mappings;
     }
 
+
     /**
      * Map pump specific events to PumpTool specific event codes
      * 
@@ -1239,27 +1265,30 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         return this.event_mappings;
     }
 
+
     /**
      * Get Error Mappings - Map pump specific errors to Pump Tool specific event
      * codes
      * 
-     * @return
+     * @return error mappings
      */
     public Hashtable<String, PumpErrors> getErrorMappings()
     {
         return this.error_mappings;
     }
 
+
     /**
      * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific event
      * codes
      * 
-     * @return
+     * @return bolus mappings
      */
     public Hashtable<String, PumpBolusType> getBolusMappings()
     {
         return this.bolus_mappings;
     }
+
 
     /**
      * Get Basal Mappings - Map pump specific basal to Pump Tool specific event
@@ -1267,10 +1296,11 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * 
      * @return
      */
-    public Hashtable<String, PumpBasalSubType> getBasalMappings()
+    public Hashtable<String, PumpBasalType> getBasalMappings()
     {
         return this.basal_mappings;
     }
+
 
     /**
      * Get Report Mappings - Map pump specific reports to Pump Tool specific
@@ -1283,6 +1313,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         return this.report_mappings;
     }
 
+
     /**
      * Get Download Support Type
      * 
@@ -1294,6 +1325,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         return DownloadSupportType.Download_Data_DataFile;
     }
 
+
     /**
      * Are Pump Settings Set
      * 
@@ -1303,6 +1335,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         return false;
     }
+
 
     /**
      * How Many Months Of Data Stored

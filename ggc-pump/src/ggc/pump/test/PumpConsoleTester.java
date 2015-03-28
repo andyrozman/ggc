@@ -1,10 +1,16 @@
 package ggc.pump.test;
 
+import java.io.File;
+import java.util.Vector;
+
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.i18n.mgr.LanguageManager;
+import com.atech.utils.TimerThread;
+import com.atech.utils.data.TimeZoneUtil;
+
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCLanguageManagerRunner;
-import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
@@ -13,13 +19,6 @@ import ggc.pump.device.animas.FRC_EZManager_v2;
 import ggc.pump.device.dana.DanaDiabecare_III_R;
 import ggc.pump.device.minimed.file.MinimedCareLinkPump;
 import ggc.pump.util.DataAccessPump;
-
-import java.io.File;
-import java.util.Vector;
-
-import com.atech.i18n.mgr.LanguageManager;
-import com.atech.utils.TimerThread;
-import com.atech.utils.data.TimeZoneUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -57,6 +56,7 @@ public class PumpConsoleTester // extends JFrame
      */
     TimerThread thread;
 
+
     /**
      * Constructor
      * 
@@ -89,6 +89,7 @@ public class PumpConsoleTester // extends JFrame
 
     }
 
+
     public PumpConsoleTester()
     {
 
@@ -98,16 +99,17 @@ public class PumpConsoleTester // extends JFrame
     /**
      * Test
      */
-//    public void test()
-//    {
-//        int num = 56;
-//
-//        if ((num & DownloadSupportType.DOWNLOAD_FROM_DEVICE) == DownloadSupportType.DOWNLOAD_FROM_DEVICE)
-//        {
-//            System.out.println("DOWNLOAD_DEVICE");
-//        }
-//
-//    }
+    // public void test()
+    // {
+    // int num = 56;
+    //
+    // if ((num & DownloadSupportType.DOWNLOAD_FROM_DEVICE) ==
+    // DownloadSupportType.DOWNLOAD_FROM_DEVICE)
+    // {
+    // System.out.println("DOWNLOAD_DEVICE");
+    // }
+    //
+    // }
 
     /**
      * Start Dana - For testing implementation of Dana Pump
@@ -121,6 +123,7 @@ public class PumpConsoleTester // extends JFrame
         dana.readDeviceDataFull();
     }
 
+
     /**
      * Start Roche
      * 
@@ -129,12 +132,18 @@ public class PumpConsoleTester // extends JFrame
      */
     public void startRoche(String portName) throws Exception
     {
-        DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
+        DataAccess daCore = DataAccess.getInstance();
+
+        DataAccessPump dap = DataAccessPump.createInstance(daCore.getLanguageManager());
+        dap.initAllObjects();
+
+        // DataAccessPump dap = DataAccessPump.createInstance(new
+        // LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
         // dap.setHelpContext(da.getHelpContext());
         // dap.setPlugInServerInstance(this);
         // dap.createDb(da.getHibernateDb());
-        dap.initAllObjects();
-        dap.loadSpecialParameters();
+        // dap.dap.initAllObjects();
+        // dap.loadSpecialParameters();
         // this.backup_restore_enabled = true;
 
         // da.loadSpecialParameters();
@@ -144,10 +153,12 @@ public class PumpConsoleTester // extends JFrame
         // acs.processXml(new File("../test/I0014072.XML"));
         // acs.processXml(new File("../test/I0026117_2303_2010.XML"));
 
-        path_to_test_files = "d:\\";
+        // path_to_test_files = "d:\\";
+
+        path_to_test_files = "/home/andy/Dropbox/GGC/bugs/";
 
         AccuChekCombo acc = new AccuChekCombo("", new ConsoleOutputWriter());
-        acc.processXml(new File(path_to_test_files + "I0122425_2014_0706-0918.XML"));
+        acc.processXml(new File(path_to_test_files + "I1026739.XML"));
         // I0122425_1112_2010.XML, I0122425_1510_2010.XML ,
         // I0122425_2808_2010.XML
 
@@ -158,6 +169,7 @@ public class PumpConsoleTester // extends JFrame
         // pp.test();
 
     }
+
 
     /**
      * Start Minimed
@@ -209,13 +221,12 @@ public class PumpConsoleTester // extends JFrame
     {
 
         DataAccess da = DataAccess.getInstance();
-        //da.initSpecial();
+        // da.initSpecial();
 
-
-        //GGCDb db = new GGCDb(da);
+        // GGCDb db = new GGCDb(da);
         // db.initDb();
 
-        //da.setDb(db);
+        // da.setDb(db);
 
         DataAccessPump dap = DataAccessPump.createInstance(da.getLanguageManager());
         // dap.setHelpContext(da.getHelpContext());
@@ -238,7 +249,6 @@ public class PumpConsoleTester // extends JFrame
         System.out.println("January: " + ic.getMessage("JANUARY"));
 
         System.out.println("Report Type: " + ic.getMessage("REPORT_TYPE"));
-
 
     }
 
@@ -276,6 +286,7 @@ public class PumpConsoleTester // extends JFrame
 
     }
 
+
     /**
      * Start Cosmo
      */
@@ -312,6 +323,7 @@ public class PumpConsoleTester // extends JFrame
 
     }
 
+
     /**
      * Display Serial Ports
      */
@@ -336,6 +348,7 @@ public class PumpConsoleTester // extends JFrame
 
     }
 
+
     /**
      * Something.
      */
@@ -346,6 +359,7 @@ public class PumpConsoleTester // extends JFrame
 
     }
 
+
     /**
      * Main startup method
      * 
@@ -355,15 +369,17 @@ public class PumpConsoleTester // extends JFrame
     {
         try
         {
-            if (args.length == 0)
-            {
-                PumpConsoleTester pct = new PumpConsoleTester();
-                pct.checkTranslation();
-            }
-            else
-            {
-                new PumpConsoleTester(args[0]);
-            }
+            // if (args.length == 0)
+            // {
+            // PumpConsoleTester pct = new PumpConsoleTester();
+            // pct.checkTranslation();
+            // }
+            // else
+            // {
+            // new PumpConsoleTester(args[0]);
+            // }
+
+            new PumpConsoleTester(args[0]);
 
         }
         catch (Exception ex)

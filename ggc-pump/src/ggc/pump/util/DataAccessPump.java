@@ -1,5 +1,13 @@
 package ggc.pump.util;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
+
+import com.atech.graphics.components.about.*;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.i18n.mgr.LanguageManager;
+
 import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.data.enums.ClockModeType;
@@ -14,29 +22,10 @@ import ggc.pump.data.PumpDataReader;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.cfg.PumpConfigurationDefinition;
 import ggc.pump.data.db.GGCPumpDb;
-import ggc.pump.data.defs.PumpAdditionalDataType;
-import ggc.pump.data.defs.PumpAlarms;
-import ggc.pump.data.defs.PumpBasalSubType;
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.data.defs.PumpBolusType;
-import ggc.pump.data.defs.PumpErrors;
-import ggc.pump.data.defs.PumpEvents;
-import ggc.pump.data.defs.PumpReport;
+import ggc.pump.data.defs.*;
 import ggc.pump.device.animas.AnimasIR1200Handler;
 import ggc.pump.graph.PumpGraphContext;
 import ggc.pump.manager.PumpManager;
-
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.StringTokenizer;
-
-import com.atech.graphics.components.about.CreditsEntry;
-import com.atech.graphics.components.about.CreditsGroup;
-import com.atech.graphics.components.about.FeaturesEntry;
-import com.atech.graphics.components.about.FeaturesGroup;
-import com.atech.graphics.components.about.LibraryInfoEntry;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.i18n.mgr.LanguageManager;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
@@ -89,7 +78,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * The m_pump_basal_type.
      */
-    PumpBasalSubType m_pump_basal_type = null;
+    PumpBasalType m_pump_basal_type = null;
 
     /**
      * The m_pump_report.
@@ -115,6 +104,7 @@ public class DataAccessPump extends DataAccessPlugInBase
      * The m_pump_errors.
      */
     PumpErrors m_pump_errors = null;
+
 
     // GGCPumpDb m_db = null;
 
@@ -145,6 +135,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         super(lm, new GGCPumpICRunner());
     }
 
+
     /**
      * Init Special
      */
@@ -173,6 +164,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.prepareTranslationForEnums();
     }
 
+
     private void prepareTranslationForEnums()
     {
         SoundValueType.translateKeywords(this.getI18nControlInstance());
@@ -180,6 +172,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         ClockModeType.translateKeywords(this.getI18nControlInstance());
         AnimasSoundType.translateKeywords(this.getI18nControlInstance(), this.getPluginType());
     }
+
 
     // Method: getInstance
     // Author: Andy
@@ -199,6 +192,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return s_da;
     }
 
+
     /**
      * Create Instance
      *
@@ -214,29 +208,26 @@ public class DataAccessPump extends DataAccessPlugInBase
         return s_da;
     }
 
+
     /**
      * Get Pump Base Types
      *
      * @return
      */
-//    public PumpBaseType getPumpBaseTypes()
-//    {
-//        return this.m_pump_base_type;
-//    }
+    // public PumpBaseType getPumpBaseTypes()
+    // {
+    // return this.m_pump_base_type;
+    // }
 
     /**
      * Get Bolus Sub Types
      *
      * @return
      */
-//    public PumpBolusType getBolusSubTypes()
-//    {
-//        return m_pump_bolus_type;
-//    }
-
-
-
-
+    // public PumpBolusType getBolusSubTypes()
+    // {
+    // return m_pump_bolus_type;
+    // }
 
     /*
      * static public DataAccess getInstance() { return dataAccess; }
@@ -252,6 +243,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         m_i18n = null;
         i18n_plugin = null;
     }
+
 
     /*
      * public void loadPumpsTable() { metersUrl = new
@@ -288,14 +280,14 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void initAllObjects()
     {
-        //this.m_pump_base_type = new PumpBaseType();
-        //this.m_pump_bolus_type = new PumpBolusType();
-        //this.m_pump_basal_type = new PumpBasalSubType();
-        //this.m_pump_report = new PumpReport();
+        // this.m_pump_base_type = new PumpBaseType();
+        // this.m_pump_bolus_type = new PumpBolusType();
+        // this.m_pump_basal_type = new PumpBasalSubType();
+        // this.m_pump_report = new PumpReport();
         // this.m_pump_alarms = new PumpAlarms();
-        //this.m_pump_events = new PumpEvents();
-        //this.m_pump_add_type = new PumpAdditionalDataType();
-        //this.m_pump_errors = new PumpErrors();
+        // this.m_pump_events = new PumpEvents();
+        // this.m_pump_add_type = new PumpAdditionalDataType();
+        // this.m_pump_errors = new PumpErrors();
 
     }
 
@@ -303,14 +295,23 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void registerDeviceHandlers()
     {
-        DeviceHandlerManager.getInstance().addDeviceHandler(new AnimasIR1200Handler()); // Handler for Animas Implementation V2 (IR1200 and higher)
+        DeviceHandlerManager.getInstance().addDeviceHandler(new AnimasIR1200Handler()); // Handler
+                                                                                        // for
+                                                                                        // Animas
+                                                                                        // Implementation
+                                                                                        // V2
+                                                                                        // (IR1200
+                                                                                        // and
+                                                                                        // higher)
     }
+
 
     @Override
     public GGCPluginType getPluginType()
     {
         return GGCPluginType.PumpToolPlugin;
     }
+
 
     /**
      * Get Application Name
@@ -321,6 +322,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return "GGC_PumpTool";
     }
 
+
     /**
      * Create About Context for plugin
      */
@@ -329,11 +331,13 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
 
         I18nControlAbstract ic = this.getI18nControlInstance();
-        // this.about_title = i18nControlAbstract.getMessage("PUMP_PLUGIN_ABOUT");
+        // this.about_title =
+        // i18nControlAbstract.getMessage("PUMP_PLUGIN_ABOUT");
         this.about_image_name = "/icons/pumps_about.jpg";
 
         this.about_plugin_copyright_from = 2008;
-        // this.about_plugin_name = i18nControlAbstract.getMessage("PUMP_PLUGIN");
+        // this.about_plugin_name =
+        // i18nControlAbstract.getMessage("PUMP_PLUGIN");
 
         // libraries
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
@@ -356,7 +360,8 @@ public class DataAccessPump extends DataAccessPlugInBase
                                                // Roche devices"));
         lst_credits.add(cg);
 
-        // cg = new CreditsGroup(i18nControlAbstract.getMessage("HELPERS_DESC"));
+        // cg = new
+        // CreditsGroup(i18nControlAbstract.getMessage("HELPERS_DESC"));
         // cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "",
         // "Supplied hardware for Roche development"));
         // lst_credits.add(cg);
@@ -402,13 +407,12 @@ public class DataAccessPump extends DataAccessPlugInBase
         fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
         fg.addFeaturesEntry(new FeaturesEntry("Minimed (in 2015)"));
 
-
-
         lst_features.add(fg);
 
         this.plugin_features = lst_features;
 
     }
+
 
     /**
      * Create WebLister (for List) Context for plugin
@@ -419,7 +423,8 @@ public class DataAccessPump extends DataAccessPlugInBase
 
         this.weblister_items = new ArrayList<BaseListEntry>();
 
-        this.weblister_items.add(new BaseListEntry("Animas", "/pumps/animas.html", BaseListEntry.STATUS_PART_IMPLEMENTED));
+        this.weblister_items.add(new BaseListEntry("Animas", "/pumps/animas.html",
+                BaseListEntry.STATUS_PART_IMPLEMENTED));
         this.weblister_items.add(new BaseListEntry("Deltec", "/pumps/deltec.html", BaseListEntry.STATUS_NOTPLANNED));
         this.weblister_items.add(new BaseListEntry("Insulet", "/pumps/insulet.html", BaseListEntry.STATUS_NOTPLANNED));
         this.weblister_items
@@ -430,8 +435,8 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.weblister_title = this.m_i18n.getMessage("DEVICE_LIST_WEB");
         this.weblister_desc = this.m_i18n.getMessage("DEVICE_LIST_WEB_DESC");
 
-
     }
+
 
     // ********************************************************
     // ****** Pumps *****
@@ -452,6 +457,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
         this.plugin_version = DataAccessPump.PLUGIN_VERSION;
     }
+
 
     // ********************************************************
     // ****** Dates and Times Handling *****
@@ -475,6 +481,7 @@ public class DataAccessPump extends DataAccessPlugInBase
      */
     GGCPumpDb m_db;
 
+
     /**
      * Create Custom Db
      *
@@ -486,6 +493,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.m_db = new GGCPumpDb(this.hdb);
     }
 
+
     /**
      * Get Db
      *
@@ -496,6 +504,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return this.m_db;
     }
 
+
     /**
      * Create Configuration Context for plugin
      */
@@ -505,6 +514,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.device_config_def = new PumpConfigurationDefinition();
     }
 
+
     /**
      * Create Device Configuration for plugin
      */
@@ -513,6 +523,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
         this.device_config = new DeviceConfiguration(this);
     }
+
 
     /**
      * Create About Context for plugin
@@ -547,6 +558,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         // 25, 10, 20
     }
 
+
     /**
      * Load Manager instance
      */
@@ -557,6 +569,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.m_manager = this.m_pumpManager;
     }
 
+
     /**
      * Load Device Data Handler
      */
@@ -565,6 +578,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
         this.m_ddh = new PumpDataHandler(this);
     }
+
 
     /**
      * Get Images for Devices (must end with backslash)
@@ -577,6 +591,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return "/icons/pumps/";
     }
 
+
     /**
      * Get Selected Persons Id
      *
@@ -585,7 +600,6 @@ public class DataAccessPump extends DataAccessPlugInBase
     /*
      * public long getSelectedPersonId() { return this.selected_person_id; } /**
      * Set Selected Persons Id
-     * 
      * @param id
      */
     /*
@@ -605,6 +619,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.special_parameters.put("BG", "" + this.getBGMeasurmentType());
     }
 
+
     /**
      * Load PlugIns
      */
@@ -614,6 +629,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         // TODO Auto-generated method stub
 
     }
+
 
     /**
      * Get About Image Size - Define about image size
@@ -628,6 +644,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return sz;
     }
 
+
     // configuration settings
 
     /**
@@ -641,6 +658,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return 8.0f;
     }
 
+
     /**
      * Gets the max bolus value.
      *
@@ -651,6 +669,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         // TODO read from pump
         return 25.0f;
     }
+
 
     /**
      * Gets the basal step.
@@ -663,6 +682,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return 0.05f;
     }
 
+
     /**
      * Gets the bolus step.
      *
@@ -674,6 +694,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return 0.1f;
     }
 
+
     /**
      * Get Bolus Precision
      *
@@ -683,6 +704,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
         return 1;
     }
+
 
     /**
      * Get Basal Precision
@@ -694,6 +716,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return 2;
     }
 
+
     /**
      * Create Old Data Reader
      */
@@ -702,6 +725,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
         this.m_old_data_reader = new PumpDataReader(this);
     }
+
 
     /**
      * Get Formated Bolus Value
@@ -714,6 +738,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return this.getDecimalHandler().getDecimalNumberAsString(val, this.getBolusPrecision());
     }
 
+
     /**
      * Get Formated Bolus Value
      *
@@ -724,6 +749,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
         return this.getDecimalHandler().getDecimalNumberAsString(val, this.getBasalPrecision());
     }
+
 
     /**
      * Get Decimal Handler
@@ -756,6 +782,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return lst.toArray(ia);
     }
 
+
     /**
      * Sleep MS
      *
@@ -768,15 +795,16 @@ public class DataAccessPump extends DataAccessPlugInBase
             Thread.sleep(ms);
         }
         catch (Exception ex)
-        {
-        }
+        {}
     }
+
 
     @Override
     public void loadSorters()
     {
         sorters.put("Profile", "DESC");
     }
+
 
     /**
      * Get Max Decimals that will be used by DecimalHandler
@@ -789,6 +817,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         return 3;
     }
 
+
     /**
      * Get Name of Plugin (for internal use)
      * 
@@ -799,6 +828,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     {
         return "GGC Pump Plugin";
     }
+
 
     /**
      * Load Graph Context

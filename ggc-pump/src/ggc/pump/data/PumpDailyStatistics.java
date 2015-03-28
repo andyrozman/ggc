@@ -1,13 +1,13 @@
 package ggc.pump.data;
 
-import ggc.plugin.util.DataAccessPlugInBase;
-import ggc.pump.data.defs.PumpBasalSubType;
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.ArrayList;
 
 import com.atech.misc.statistics.StatisticsCollection;
+
+import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.defs.PumpBasalType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,8 +37,10 @@ import com.atech.misc.statistics.StatisticsCollection;
 
 public class PumpDailyStatistics extends StatisticsCollection
 {
+
     // public int bg_type = -1;
     DataAccessPump da_pump = DataAccessPump.getInstance();
+
 
     /**
      * Constructor
@@ -47,6 +49,7 @@ public class PumpDailyStatistics extends StatisticsCollection
     {
         super(DataAccessPump.getInstance(), new PumpValuesEntry());
     }
+
 
     /**
      * Process Special Statistics
@@ -176,13 +179,15 @@ public class PumpDailyStatistics extends StatisticsCollection
         this.special_processed = true;
     }
 
+
     private boolean isCurrentlyIgnoredEntry(PumpValuesEntry pve)
     {
         if (pve.baseType == PumpBaseType.Basal)
-            return pve.sub_type != PumpBasalSubType.Value.getCode();
+            return pve.sub_type != PumpBasalType.Value.getCode();
         else
             return false;
     }
+
 
     private float getStandardDeviation()
     {
@@ -197,6 +202,7 @@ public class PumpDailyStatistics extends StatisticsCollection
             return f;
     }
 
+
     private void setBGValue(int index)
     {
         float v = this.stat_objects.get(index - 1).sum;
@@ -205,10 +211,12 @@ public class PumpDailyStatistics extends StatisticsCollection
         setValue(index, new_val);
     }
 
+
     private float getValueInternal(int index)
     {
         return this.stat_objects.get(index - 1).getStatistics();
     }
+
 
     private void setValue(int index, float val)
     {

@@ -1,22 +1,16 @@
 package ggc.pump.device.minimed.file;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpWriterValues;
-import ggc.pump.data.defs.PumpAdditionalDataType;
-import ggc.pump.data.defs.PumpAlarms;
-import ggc.pump.data.defs.PumpBasalSubType;
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.data.defs.PumpBolusType;
-import ggc.pump.data.defs.PumpEvents;
-import ggc.pump.data.defs.PumpReport;
+import ggc.pump.data.defs.*;
 import ggc.pump.util.DataAccessPump;
-
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
@@ -45,6 +39,7 @@ import java.util.Hashtable;
 
 public class MinimedCareLinkPump extends MinimedCareLink
 {
+
     DataAccessPump m_dap;
     /**
      * Profile names
@@ -64,6 +59,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
     private Hashtable<String, MinimedCareLinkPumpData> config = null;
     boolean m_read_config = false;
 
+
     /**
      * Constructor
      *
@@ -81,6 +77,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
         setDefinitions();
     }
 
+
     @Override
     public void setMappingData()
     {
@@ -94,6 +91,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
 
         profiles = new ArrayList<MinimedCareLinkPumpData>();
     }
+
 
     private void setDefinitions()
     {
@@ -143,6 +141,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
 
     long debug = 0L;
     MinimedCareLinkPumpData BGTargetRange = null;
+
 
     @Override
     public void readLineData(String line, int count)
@@ -265,6 +264,7 @@ public class MinimedCareLinkPump extends MinimedCareLink
 
     }
 
+
     private void createDeviceValuesWriter()
     {
         // <<this.dvw = new DeviceValuesWriter(false);
@@ -283,8 +283,8 @@ public class MinimedCareLinkPump extends MinimedCareLink
         this.dvw.put("Rewind", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
                 PumpEvents.CartridgeRewind, false));
 
-        this.dvw.put("AlarmPump",
-            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(), false));
+        this.dvw.put("AlarmPump", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(),
+                false));
 
         this.dvw.put("BolusNormal", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus,
                 PumpBolusType.Normal, true));
@@ -295,30 +295,27 @@ public class MinimedCareLinkPump extends MinimedCareLink
         this.dvw.put("BolusMultiwave", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus,
                 PumpBolusType.Multiwave, false));
 
-        this.dvw.put("BolusWizardBolusEstimate",
-            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
-                    PumpEvents.BolusWizard, false));
+        this.dvw.put("BolusWizardBolusEstimate", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
+                PumpEvents.BolusWizard, false));
 
         this.dvw.put("BGReceived", new PumpWriterValues(PumpWriterValues.OBJECT_EXT,
                 PumpAdditionalDataType.BloodGlucose, true));
 
         // ChangeTempBasalPercent
-        this.dvw.put("ChangeTempBasalPercent",
-            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Basal,
-                    PumpBasalSubType.TemporaryBasalRate, false));
+        this.dvw.put("ChangeTempBasalPercent", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Basal,
+                PumpBasalType.TemporaryBasalRate, false));
 
         this.dvw.put("TBROver", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Basal,
-                PumpBasalSubType.TemporaryBasalRateEnded, false));
+                PumpBasalType.TemporaryBasalRateEnded, false));
 
         this.dvw.put("ChangeActiveBasalProfilePattern", new PumpWriterValues(PumpWriterValues.OBJECT_BASE,
-                PumpBaseType.Basal, PumpBasalSubType.Profile, false));
+                PumpBaseType.Basal, PumpBasalType.Profile, false));
 
-        this.dvw.put("ChangeSuspendEnable", new PumpWriterValues(PumpWriterValues.OBJECT_BASE,
-                PumpBaseType.Event, PumpEvents.BasalStop, false));
+        this.dvw.put("ChangeSuspendEnable", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
+                PumpEvents.BasalStop, false));
 
-        this.dvw.put("ChangeSuspendEnableNot",
-            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
-                    PumpEvents.BasalRun, false));
+        this.dvw.put("ChangeSuspendEnableNot", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
+                PumpEvents.BasalRun, false));
 
         this.dvw.put("ResultDailyTotal", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Report,
                 PumpReport.InsulinTotalDay, true));
@@ -329,16 +326,14 @@ public class MinimedCareLinkPump extends MinimedCareLink
         this.dvw.put("ChangeTime", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
                 PumpEvents.DateTimeCorrect, false));
 
-        this.dvw.put(
-            "JournalEntryPumpLowBattery",
-            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Alarm, PumpAlarms.BatteryLow, false));
+        this.dvw.put("JournalEntryPumpLowBattery", new PumpWriterValues(PumpWriterValues.OBJECT_BASE,
+                PumpBaseType.Alarm, PumpAlarms.BatteryLow, false));
 
-        this.dvw.put(
-            "JournalEntryPumpLowReservoir",
-            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Alarm, PumpAlarms.CartridgeLow
-                    , false));
+        this.dvw.put("JournalEntryPumpLowReservoir", new PumpWriterValues(PumpWriterValues.OBJECT_BASE,
+                PumpBaseType.Alarm, PumpAlarms.CartridgeLow, false));
 
     }
+
 
     @Override
     public void postProcessing()

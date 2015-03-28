@@ -1,18 +1,8 @@
 package ggc.pump.device.animas;
 
-import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.DatabaseProtocol;
-import ggc.plugin.util.DataAccessPlugInBase;
-import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.data.defs.PumpAdditionalDataType;
-import ggc.pump.data.defs.PumpBasalSubType;
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.data.defs.PumpReport;
-import ggc.pump.util.DataAccessPump;
-
 import java.sql.ResultSet;
 
-import javax.swing.JDialog;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.logging.Log;
@@ -20,6 +10,16 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.file.FileReaderContext;
+
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.DatabaseProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBasalType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpReport;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -63,6 +63,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
     OutputWriter output_writer = null;
 
+
     /**
      * Constructor
      *
@@ -74,6 +75,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         output_writer = ow;
         m_da = DataAccessPump.getInstance();
     }
+
 
     /*
      * public PluginInfo GetPluginInfo() { boolean hasPrefs = false; hasPrefs =
@@ -97,6 +99,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
     private void callBack(int progress)
     {
     }
+
 
     public void readFile(String filename)
     {
@@ -332,11 +335,9 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
 
                         }
                         else if (note.startsWith("Cannula filled"))
-                        {
-                        }
+                        {}
                         else if (note.startsWith("Pump suspended.  Resume time:"))
-                        {
-                        }
+                        {}
                         else
                         {
                             System.out.println("Note: " + note);
@@ -519,7 +520,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                         pve.setDateTimeObject(atd);
 
                         pve.setBaseType(PumpBaseType.Basal);
-                        pve.setSubType(PumpBasalSubType.Value.getCode());
+                        pve.setSubType(PumpBasalType.Value.getCode());
 
                         double rate = rs.getInt("rate") / 1000.0d; // units per
                                                                    // hour
@@ -560,15 +561,18 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         // return entries;
     }
 
+
     private int getInt(String val)
     {
         return m_da.getIntValueFromString(val, 0);
     }
 
+
     private float getFloat(String val)
     {
         return m_da.getFloatValueFromString(val, 0.0f);
     }
+
 
     /**
      * Get ATech Date from int's
@@ -593,6 +597,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         return atd;
     }
 
+
     /**
      * Get ATech Date from int's
      *
@@ -616,11 +621,13 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         return atd;
     }
 
+
     public String getFileDescription()
     {
         // TODO Auto-generated method stub
         return null;
     }
+
 
     public String getFileExtension()
     {
@@ -628,11 +635,13 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         return null;
     }
 
+
     public FileFilter getFileFilter()
     {
         // TODO Auto-generated method stub
         return null;
     }
+
 
     public String getFullFileDescription()
     {
@@ -640,9 +649,11 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
         return null;
     }
 
+
     public void goToNextDialog(JDialog currentDialog)
     {
     }
+
 
     public boolean hasSpecialSelectorDialog()
     {
