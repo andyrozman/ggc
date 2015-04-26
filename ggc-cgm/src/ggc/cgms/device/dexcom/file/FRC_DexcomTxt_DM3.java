@@ -1,5 +1,15 @@
 package ggc.cgms.device.dexcom.file;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+
 import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.CGMSValuesTableModel;
 import ggc.cgms.data.defs.CGMSBaseDataType;
@@ -11,41 +21,30 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocolFile;
 import ggc.plugin.util.DataAccessPlugInBase;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.filechooser.FileFilter;
-
 /**
- * Application: GGC - GNU Gluco Control
- * Plug-in: CGMS Tool (support for Pump devices)
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
- * See AUTHORS for copyright information.
+ *  See AUTHORS for copyright information.
  *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * Filename: Dexcom 7 Plus
- * Description: Dexcom 7 Plus implementation (just settings)
+ *  Filename:     Dexcom 7  
+ *  Description:  Dexcom 7 implementation (just settings)
  *
- * Author: Andy {andy@atech-software.com}
+ *  Author: Andy {andy@atech-software.com}
  */
 
 public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileReaderContext
@@ -53,6 +52,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
 
     ArrayList<CGMSValuesSubEntry> list = new ArrayList<CGMSValuesSubEntry>();
     CGMSValuesTableModel cvtm = null;
+
 
     /**
      * Constructor
@@ -65,10 +65,12 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
         super(da, ow);
     }
 
+
     public String getFileDescription()
     {
         return "DM3 Dexcom Software Export";
     }
+
 
     /**
      * Get File Download Panel
@@ -80,20 +82,24 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
         return null;
     }
 
+
     public String getFileExtension()
     {
         return ".txt";
     }
+
 
     public String getFullFileDescription()
     {
         return "DM3 Dexcom Software Export (TXT)";
     }
 
+
     public boolean hasSpecialSelectorDialog()
     {
         return false;
     }
+
 
     public void readFile(String filename)
     {
@@ -105,7 +111,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             di.is_file_import = true;
             di.fi_file_name = new File(filename).getName();
 
-            DeviceInterface deviceInterface = (DeviceInterface)this.m_da.getSelectedDeviceInstance();
+            DeviceInterface deviceInterface = (DeviceInterface) this.m_da.getSelectedDeviceInstance();
             di.company = deviceInterface.getDeviceCompany().getName();
             di.device_selected = deviceInterface.getName();
 
@@ -147,11 +153,13 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
     int i = 0;
     String tmp_time;
 
+
     private void addEntry(CGMSValuesSubEntry entry)
     {
         this.list.add(entry);
         this.cvtm.addEntry(entry);
     }
+
 
     private void processLine(String line)
     {
@@ -229,6 +237,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
 
     }
 
+
     public FileFilter getFileFilter()
     {
 
@@ -244,6 +253,7 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
                 return f.getName().toLowerCase().endsWith(getFileExtension());
             }
 
+
             @Override
             public String getDescription()
             {
@@ -254,15 +264,18 @@ public class FRC_DexcomTxt_DM3 extends XmlProtocolFile implements GGCPlugInFileR
 
     }
 
+
     public void goToNextDialog(JDialog currentDialog)
     {
     }
+
 
     @Override
     public String toString()
     {
         return this.getFullFileDescription();
     }
+
 
     public void setOutputWriter(OutputWriter ow)
     {

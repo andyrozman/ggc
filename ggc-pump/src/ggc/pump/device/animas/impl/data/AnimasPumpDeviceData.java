@@ -1,20 +1,21 @@
 package ggc.pump.device.animas.impl.data;
 
-import com.atech.utils.data.ATechDate;
-import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
-import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
-import ggc.plugin.device.impl.animas.data.dto.*;
-import ggc.plugin.device.impl.animas.enums.AnimasDataType;
-import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
-import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
-import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
-import ggc.pump.device.animas.impl.data.dto.*;
-import org.apache.commons.logging.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import org.apache.commons.logging.Log;
+
+import com.atech.utils.data.ATechDate;
+
+import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
+import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
+import ggc.plugin.device.impl.animas.data.dto.SettingEntry;
+import ggc.plugin.device.impl.animas.enums.AnimasDataType;
+import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
+import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
+import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
+import ggc.pump.device.animas.impl.data.dto.*;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,8 +45,9 @@ import java.util.Map;
 
 public class AnimasPumpDeviceData extends AnimasDeviceData
 {
+
     public PumpSettings pumpSettings;
-    //public PumpData pumpData;
+    // public PumpData pumpData;
     List<BasalLogEntry> basalLogEntries = new ArrayList<BasalLogEntry>();
     public int basalProgramNum;
     HashMap<Short, BolusEntry> bolusEntriesBySyncRecordId = new HashMap<Short, BolusEntry>();
@@ -166,13 +168,14 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
         return bolusEntriesBySyncRecordId.get(syncRecord);
     }
 
+
     public BolusEntry getBolusLogByIndex(int index)
     {
         return bolusEntriesByIndex.get(index);
     }
 
-
     int bolusIndex = 1;
+
 
     public void addBolusLogEntry(BolusEntry bolusEntry)
     {
@@ -181,9 +184,7 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
         bolusIndex++;
 
         // OLD, should be removed if new is functioning correctly
-        bolusEntriesBySyncRecordId.put(bolusEntry.syncCounter, bolusEntry);
+        // bolusEntriesBySyncRecordId.put(bolusEntry.syncCounter, bolusEntry);
     }
-
-
 
 }

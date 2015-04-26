@@ -1,7 +1,5 @@
 package ggc.plugin.protocol.reader;
 
-import java.util.Enumeration;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -11,7 +9,6 @@ import ggc.plugin.data.progress.ProgressReportInterface;
 import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
-import gnu.io.CommPortIdentifier;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -33,8 +30,8 @@ import gnu.io.CommPortIdentifier;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- *  Filename:     SerialDeviceReader
- *  Description:  This is reader for Serial Devices. It makes additional check that selected
+ *  Filename:     AbstractDeviceReader
+ *  Description:  This is abstract reader. It makes additional check that selected
  *        device is present.
  *
  *  Author: Andy {andy@atech-software.com}
@@ -42,11 +39,13 @@ import gnu.io.CommPortIdentifier;
 
 public abstract class AbstractDeviceReader implements ProgressReportInterface
 {
+
     public static final Log LOG = LogFactory.getLog(AbstractDeviceReader.class);
 
     protected ProgressData progressData;
     protected OutputWriter outputWriter;
     protected boolean downloadCanceled = false;
+
 
     public AbstractDeviceReader(OutputWriter outputWriter, boolean init) throws PlugInBaseException
     {
@@ -65,12 +64,14 @@ public abstract class AbstractDeviceReader implements ProgressReportInterface
     {
     }
 
+
     public void configureProgressReporter(ProgressType baseProgressType, int staticProgressPercentage,
-                                          int staticMaxElements, int dynamicMaxElements)
+            int staticMaxElements, int dynamicMaxElements)
     {
         this.progressData.configureProgressReporter(baseProgressType, staticProgressPercentage, staticMaxElements,
-                dynamicMaxElements);
+            dynamicMaxElements);
     }
+
 
     public ProgressData getProgressDataInstance()
     {
@@ -83,6 +84,7 @@ public abstract class AbstractDeviceReader implements ProgressReportInterface
         this.downloadCanceled = downloadCanceled;
     }
 
+
     public boolean isDownloadCanceled()
     {
         if (this.outputWriter != null)
@@ -91,13 +93,12 @@ public abstract class AbstractDeviceReader implements ProgressReportInterface
             return downloadCanceled;
     }
 
+
     public void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws PlugInBaseException
     {
-        //System.out.println("ProgressType: " + progressType.name() + ", Add: " + progressAdd);
         this.progressData.addToProgressAndCheckIfCanceled(progressType, progressAdd);
 
-        //LOG.debug("Progress: " + this.progressData.calculateProgress());
-        this.progressData.calculateProgress();
+        // LOG.debug("Progress: " + this.progressData.calculateProgress());
 
         if (this.outputWriter != null)
         {
@@ -113,7 +114,9 @@ public abstract class AbstractDeviceReader implements ProgressReportInterface
 
     public abstract void readData() throws PlugInBaseException;
 
+
     public abstract void readConfiguration() throws PlugInBaseException;
+
 
     /**
      * This are custom checks if everything there is (or everything set is). When not exception must be thrown.
@@ -122,11 +125,11 @@ public abstract class AbstractDeviceReader implements ProgressReportInterface
      */
     public abstract void customInitAndChecks() throws PlugInBaseException;
 
+
     /**
      * Here we configure progress reporter. We can either call method configureProgressReporter() or
      * we can directly change progressData instance.
      */
     public abstract void configureProgressReporter();
-
 
 }

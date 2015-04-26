@@ -1,47 +1,48 @@
 package ggc.plugin.device.impl.animas.data;
 
-import com.atech.utils.data.ATechDate;
-import ggc.plugin.data.enums.ClockModeType;
-import ggc.plugin.data.enums.GlucoseUnitType;
-import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.device.impl.animas.comm.AnimasCommProtocolAbstract;
-import ggc.plugin.device.impl.animas.data.dto.PumpConnectorInfo;
-import ggc.plugin.device.impl.animas.data.dto.PumpInfo;
-import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
-import ggc.plugin.device.impl.animas.enums.AnimasDataType;
-import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
-import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
-
 import java.util.HashMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.atech.utils.data.ATechDate;
+
+import ggc.plugin.data.enums.ClockModeType;
+import ggc.plugin.data.enums.GlucoseUnitType;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.impl.animas.comm.AnimasCommProtocolAbstract;
+import ggc.plugin.device.impl.animas.data.dto.PumpConnectorInfo;
+import ggc.plugin.device.impl.animas.data.dto.PumpInfo;
+import ggc.plugin.device.impl.animas.enums.AnimasDataType;
+import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
+import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
+import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
+
 /**
- *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       GGC PlugIn Base (base class for all plugins)
- *
- *  See AUTHORS for copyright information.
- *
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 2 of the License, or (at your option) any later
- *  version.
- *
- *  This program is distributed in the hope that it will be useful, but WITHOUT
- *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- *  details.
- *
- *  You should have received a copy of the GNU General Public License along with
- *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- *  Place, Suite 330, Boston, MA 02111-1307 USA
- *
- *  Filename:     AnimasDeviceData
- *  Description:  Abstract class for Animas Device Data
- *
- *  Author: Andy Rozman {andy@atech-software.com}
+ * Application:   GGC - GNU Gluco Control
+ * Plug-in:       GGC PlugIn Base (base class for all plugins)
+ * <p/>
+ * See AUTHORS for copyright information.
+ * <p/>
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ * <p/>
+ * Filename:     AnimasDeviceData
+ * Description:  Abstract class for Animas Device Data
+ * <p/>
+ * Author: Andy Rozman {andy@atech-software.com}
  */
 
 public abstract class AnimasDeviceData
@@ -87,12 +88,14 @@ public abstract class AnimasDeviceData
         }
     }
 
+
     public void setSerialNumber(String serialNumber)
     {
         this.pumpInfo.serialNumber = serialNumber;
         debug("Serial Number: " + serialNumber);
         loadSerialNumberIntoLocalSettings();
     }
+
 
     public void setBgUnit(boolean isMmolL)
     {
@@ -101,9 +104,12 @@ public abstract class AnimasDeviceData
         loadBgUnitIntoLocalSettings();
     }
 
+
     protected abstract void loadBgUnitIntoLocalSettings();
 
+
     protected abstract void loadSerialNumberIntoLocalSettings();
+
 
     protected abstract void loadClockModeIntoLocalSettings();
 
@@ -113,35 +119,42 @@ public abstract class AnimasDeviceData
         return (this.pumpInfo.deviceType == AnimasDeviceType.Animas_IR1200);
     }
 
+
     public boolean isModel1200p()
     {
         return (this.pumpInfo.deviceType == AnimasDeviceType.Animas_IR1200p);
     }
+
 
     public boolean isModel1250()
     {
         return (this.pumpInfo.deviceType == AnimasDeviceType.Animas_IR1250);
     }
 
+
     public boolean isModelBefore2020()
     {
         return (!isModel2020OrHigher());
     }
+
 
     public boolean isModelPing()
     {
         return AnimasDeviceType.isAnimasPingFamily(this.pumpInfo.deviceType);
     }
 
+
     public boolean isModel2020OrHigher()
     {
         return (AnimasDeviceType.isAnimas2020Family(this.pumpInfo.deviceType) || isModelPingOrHigher());
     }
 
+
     public boolean isModelPingOrHigher()
     {
         return (AnimasDeviceType.isAnimasPingFamily(this.pumpInfo.deviceType) || isModelVibe());
     }
+
 
     public boolean isModelVibe()
     {
@@ -173,6 +186,7 @@ public abstract class AnimasDeviceData
         return this.concurrentOperation.containsKey(operation);
     }
 
+
     public void removeConcurrentOperation(String operation)
     {
         if (this.concurrentOperation.containsKey(operation))
@@ -203,9 +217,13 @@ public abstract class AnimasDeviceData
     public boolean isCommandAllowedForDeviceType(AnimasDataType dataType)
     {
         if (this.pumpInfo.deviceType == null)
+        {
             return true;
+        }
         else
+        {
             return (dataType.isCommandAllowedForDeviceType(this.pumpInfo.deviceType));
+        }
     }
 
 
@@ -232,15 +250,18 @@ public abstract class AnimasDeviceData
         }
     }
 
+
     public void writeData(String key, ATechDate dateTime, String value)
     {
         this.animasDeviceDataWriter.getDeviceValuesWriter().writeObject(key, dateTime, value);
     }
 
+
     public AnimasDataWriter getDataWriter()
     {
         return this.animasDeviceDataWriter;
     }
+
 
     public void setClockMode(short clockMode)
     {
@@ -275,8 +296,10 @@ public abstract class AnimasDeviceData
     {
         DeviceIdentification di = this.animasDeviceDataWriter.getOutputWriter().getDeviceIdentification();
 
-        if (di==null)
+        if (di == null)
+        {
             return;
+        }
 
         di.company = "Animas/One Touch";
         di.device_selected = "Vibe";
@@ -285,6 +308,15 @@ public abstract class AnimasDeviceData
         di.device_software_version = this.pumpInfo.softwareCode;
 
         this.animasDeviceDataWriter.getOutputWriter().writeDeviceIdentification();
+    }
+
+
+    public void resetRawSerialData()
+    {
+        // if (this.pumpConnectorInfo != null)
+        {
+            this.pumpConnectorInfo.rawSerialNumber = null;
+        }
     }
 
 }

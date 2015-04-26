@@ -1,20 +1,16 @@
 package ggc.core.print;
 
+import com.atech.print.engine.ITextDocumentPrintSettings;
+import com.atech.print.engine.PrintAbstractIText;
+import com.atech.utils.ATDataAccessAbstract;
+import com.itextpdf.text.*;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.pdf.PdfPTable;
+
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.MonthlyValues;
 import ggc.core.util.DataAccess;
-
-import com.atech.print.engine.ITextDocumentPrintSettings;
-import com.atech.print.engine.PrintAbstractIText;
-import com.atech.utils.ATDataAccessAbstract;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPTable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -47,6 +43,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
     MonthlyValues monthlyValues;
     DataAccess dataAccessLocal;
 
+
     /**
      * Constructor
      *
@@ -54,13 +51,17 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
      */
     public PrintExtendedMonthlyReport(MonthlyValues mv)
     {
-        super(DataAccess.getInstance().getI18nControlInstance(), false);
+        super(DataAccess.getInstance(), false);
 
         dataAccessLocal = (DataAccess) this.dataAccess;
+
+        this.i18nControl = dataAccessLocal.getI18nControlInstance();
+
         this.monthlyValues = mv;
 
         this.init();
     }
+
 
     /**
      * {@inheritDoc}
@@ -85,10 +86,12 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
         return p;
     }
 
+
     public String getTitleText()
     {
         return "EXTENDED_MONTHLY_REPORT";
     }
+
 
     private void setComment(String text, PdfPTable table)
     {
@@ -96,6 +99,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
         table.addCell(new Phrase(text, this.textFontNormal));
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
     }
+
 
     private void addEmptyValues(int day, PdfPTable table)
     {
@@ -108,6 +112,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
         table.addCell("");
         table.addCell("");
     }
+
 
     private void addValues(int entry, int day, DailyValuesRow dvr, PdfPTable table)
     {
@@ -139,6 +144,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
 
         setComment(dvr.getComment(), table);
     }
+
 
     /**
      * {@inheritDoc}
@@ -226,6 +232,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
 
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -234,6 +241,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
     {
         return "ReportExt";
     }
+
 
     /**
      * {@inheritDoc}
@@ -244,6 +252,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
         return "" + monthlyValues.getYear() + "_" + ATDataAccessAbstract.getLeadingZero(monthlyValues.getMonth(), 2);
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -252,6 +261,7 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
     {
         return 12;
     }
+
 
     @Override
     public ITextDocumentPrintSettings getCustomDocumentSettings()

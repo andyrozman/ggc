@@ -3,11 +3,7 @@ package ggc.plugin.data.enums;
 public enum PlugInExceptionType
 {
 
-
-
     UnsupportedReceiver("XX"), //
-
-
 
     // Device
     InvalidPortOrPortClosed("Invalid port or port closed!"), //
@@ -34,8 +30,9 @@ public enum PlugInExceptionType
     // Download
     DownloadCanceledByUser("STATUS_STOPPED_USER"), //
     DownloadCanceledByDevice("Download Canceled by Device."), //
+    DeviceUnreachableRetry("Device unreachangle, trying to retry."), //
 
-    // Data -  Commands
+    // Data - Commands
     UnknownDataReadWrongStartOfPacket("Unknown data read. Failed to read start of packet."), //
     NoDataFoundForConversion("No data found for converting %s."), //
     NoResponseFromDeviceForIssuedCommand("No response from device for Issued Command (%s)."), //
@@ -67,10 +64,12 @@ public enum PlugInExceptionType
 
     String errorMessage;
 
+
     private PlugInExceptionType(String errorMessage)
     {
         this.errorMessage = errorMessage;
     }
+
 
     public String getErrorMessage()
     {

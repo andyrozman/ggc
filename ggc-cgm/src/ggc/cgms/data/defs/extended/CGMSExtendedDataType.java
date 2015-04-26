@@ -1,7 +1,35 @@
 package ggc.cgms.data.defs.extended;
 
 import java.util.HashMap;
+import java.util.Map;
 
+/**
+ *  Application: GGC - GNU Gluco Control
+ *  Plug-in: CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename: CGMDataType
+ *  Description: CGMS Data types, as used in database (undefined at this time)
+ *
+ *  Author: Andy {andy@atech-software.com}
+ */
+
+// TODO refactor
 public enum CGMSExtendedDataType
 {
 
@@ -14,7 +42,7 @@ public enum CGMSExtendedDataType
 
     private int value;
     private String description;
-    private static HashMap<Integer, CGMSExtendedDataType> map = new HashMap<Integer, CGMSExtendedDataType>();
+    private static Map<Integer, CGMSExtendedDataType> map = new HashMap<Integer, CGMSExtendedDataType>();
 
     static
     {
@@ -24,21 +52,25 @@ public enum CGMSExtendedDataType
         }
     }
 
+
     CGMSExtendedDataType(int value, String description)
     {
         this.value = value;
         this.description = description;
     }
 
+
     public int getValue()
     {
         return value;
     }
 
+
     public void setValue(int value)
     {
         this.value = value;
     }
+
 
     public static CGMSExtendedDataType getEnum(int value)
     {
@@ -48,10 +80,12 @@ public enum CGMSExtendedDataType
             return CGMSExtendedDataType.None;
     }
 
+
     public String getDescription()
     {
         return description;
     }
+
 
     public void setDescription(String description)
     {

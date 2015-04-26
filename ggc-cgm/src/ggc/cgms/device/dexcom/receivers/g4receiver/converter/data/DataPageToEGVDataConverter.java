@@ -1,16 +1,17 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver.converter.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.BytesConverterAbstract;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.EGVRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePage;
 import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabaseRecord;
 import ggc.plugin.device.PlugInBaseException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DataPageToEGVDataConverter extends BytesConverterAbstract
 {
+
     // private static final Log log =
     // LogFactory.getLog(DataPageToEGVDataConverter.class);
 

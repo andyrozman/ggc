@@ -66,9 +66,9 @@ public enum AnimasDataType implements CodeEnum
             Arrays.asList(AnimasDeviceType.Animas_Family_Pre2200)), // pre 2002
 
     BolusHistoryExt(38, "BolusHistoryExt", false, 500, AnimasTransferType.DownloadPumpData, Arrays.asList(//
-            AnimasDeviceType.Animas_Family_2200, //
-            AnimasDeviceType.Animas_Family_Ping, //
-            AnimasDeviceType.Animas_Family_Vibe)), //
+        AnimasDeviceType.Animas_Family_2200, //
+        AnimasDeviceType.Animas_Family_Ping, //
+        AnimasDeviceType.Animas_Family_Vibe)), //
 
     // SETTINGS_ALL(39), //
     InsulinCarbRatio(39, "Insulin/Carb Ratio", false, 1, AnimasTransferType.DownloadPumpSettings, Arrays.asList(//
@@ -87,61 +87,42 @@ public enum AnimasDataType implements CodeEnum
         AnimasDeviceType.Animas_Family_Vibe)), // 6
 
     BGMHistory(40, "BGMHistory", false, 1, AnimasTransferType.None, Arrays.asList(//
-            AnimasDeviceType.Animas_Family_2200, //
-            AnimasDeviceType.Animas_Family_Ping, //
-            AnimasDeviceType.Animas_Family_Vibe)), //
+        AnimasDeviceType.Animas_Family_2200, //
+        AnimasDeviceType.Animas_Family_Ping, //
+        AnimasDeviceType.Animas_Family_Vibe)), //
 
     FriendlyName(41, "FriendlyName", false, 1, AnimasTransferType.DownloadPumpSettings, Arrays.asList(//
         AnimasDeviceType.Animas_Family_Ping, //
         AnimasDeviceType.Animas_Family_Vibe)),
 
+    // ***** CGMS *****
 
-    // *****   CGMS   *****
-
-    // ** OK **
     DexcomSettings(42, "Dexcom Settings", false, 1, AnimasTransferType.DownloadCGMSSettings, //
             Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 2a
 
-
-
-    // ***  Prepared
-
-    // NO GGC
-    DexcomWarnings(43, "Dexcom CGMS Warnings", false, 33215, AnimasTransferType.DownloadCGMSData, //
-            Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 2b
-
-    // NO GGC : BgHistory, BgTransmiterWarnings
     DexcomBgHistory(45, "Dexcom CGMS Bg History", false, 800, AnimasTransferType.DownloadCGMSData, //
-            Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 2d
+            Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), true), // 2d
 
+    DexcomWarnings(43, "Dexcom CGMS Warnings", false, 56, AnimasTransferType.DownloadCGMSData, //
+            Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 2b
+                                                                        // 33215
 
     // *** Not ready (Level 2)
 
-    // FIXME this is still beeing worked on
-
-
     // Settings
-
     Dexcom_C3(44, "Dexcom C3 - ?", false, 1, AnimasTransferType.DownloadCGMSSettingsL2, //
             Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 2c
-
     Dexcom_C5(48, "Dexcom C5 - ?", false, 1, AnimasTransferType.DownloadCGMSSettingsL2, //
             Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false), // 30
 
-
     // Data
-
-    // ??
     Dexcom_C6(46, "Dexcom C6 - 46", false, 33215, AnimasTransferType.DownloadCGMSSettingsL2, //
             Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false),
 
-    // ??
-    Dexcom_C7(47, "Dexcom C7 - 47", false, 33215, AnimasTransferType.DownloadCGMSData, //
+    Dexcom_C7(47, "Dexcom C7 - 47", false, 33215, AnimasTransferType.DownloadCGMSDataL2, //
             Arrays.asList(AnimasDeviceType.Animas_Family_Vibe), false),
 
-
     ;
-
 
     static HashMap<Integer, AnimasDataType> mappingWithId = new HashMap<Integer, AnimasDataType>();
 
@@ -166,10 +147,12 @@ public enum AnimasDataType implements CodeEnum
      */
     private HashMap<AnimasDeviceType, Object> allowedDeviceTypes = null;
 
+
     private AnimasDataType(int code)
     {
         this.code = code;
     }
+
 
     private AnimasDataType(int code, String debugDescription, boolean isDateInDataType, int entriesCount,
             AnimasTransferType baseTransferType)
@@ -177,8 +160,9 @@ public enum AnimasDataType implements CodeEnum
         this(code, debugDescription, isDateInDataType, entriesCount, baseTransferType, null);
     }
 
+
     private AnimasDataType(int code, String debugDescription, boolean isDateInDataType, int entriesCount,
-                           AnimasTransferType baseTransferType, List<AnimasDeviceType> allowedDevices)
+            AnimasTransferType baseTransferType, List<AnimasDeviceType> allowedDevices)
     {
         this(code, debugDescription, isDateInDataType, entriesCount, baseTransferType, allowedDevices, false);
     }
@@ -196,6 +180,7 @@ public enum AnimasDataType implements CodeEnum
 
         processDevices(allowedDevices);
     }
+
 
     private void processDevices(List<AnimasDeviceType> allowedDevices)
     {
@@ -287,7 +272,6 @@ public enum AnimasDataType implements CodeEnum
     {
         return this.postProcessing;
     }
-
 
     // (dataType >= 21) && (dataType <= 26)
 

@@ -1,16 +1,10 @@
 package ggc.plugin.test;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import com.atech.utils.ATSwingUtils;
@@ -22,8 +16,10 @@ import com.atech.utils.ATSwingUtils;
  */
 public class TestDeviceInstructions implements ActionListener
 {
+
     JTextArea ta_html;
     JLabel label_ins;
+
 
     /**
      * Constructor
@@ -41,7 +37,7 @@ public class TestDeviceInstructions implements ActionListener
 
         mainFrame.add(ta_html, null);
 
-        JButton button1 = new JButton("<html><font color='#FF0000'>JButton Text</font></html>");
+        JButton button1 = new JButton("Refresh");
         /*
          * JLabel label1 = new
          * JLabel("<html><font color='#FF0000'>Red Text</font>"
@@ -57,13 +53,20 @@ public class TestDeviceInstructions implements ActionListener
 
         // ATSwingUtils.getPanel(300, 190, 330, 200, (plugin instructions)
 
-        JPanel panel_instruct = ATSwingUtils.getPanel(200, 190, 470, 200, new FlowLayout(), new TitledBorder(
+        JPanel panel_instruct = ATSwingUtils.getPanel(200, 220, 330, 200, new FlowLayout(), new TitledBorder(
                 "INSTRUCTIONS"), mainFrame.getContentPane());
 
         label_ins = ATSwingUtils.getLabel("", 5, 0, 280, 180, panel_instruct, ATSwingUtils.FONT_NORMAL_SMALLER);
         label_ins.setVerticalAlignment(SwingConstants.TOP);
         label_ins.setHorizontalAlignment(SwingConstants.LEFT);
         label_ins.setBackground(Color.green);
+
+        // label =
+        // ATSwingUtils.getLabel(m_ic.getMessage(getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_INSTRUCTIONS)),
+        // 5, 0, 280, 180,
+        // panel_instruct, ATSwingUtils.FONT_NORMAL_SMALLER);
+        // label.setVerticalAlignment(SwingConstants.TOP);
+        // label.setHorizontalAlignment(SwingConstants.LEFT);
 
         // mainFrame.add(button1);
         mainFrame.add(panel_instruct);
@@ -73,6 +76,7 @@ public class TestDeviceInstructions implements ActionListener
         // mainFrame.pack();
     }
 
+
     /**
      * @param args
      */
@@ -80,6 +84,7 @@ public class TestDeviceInstructions implements ActionListener
     {
         new TestDeviceInstructions();
     }
+
 
     public void actionPerformed(ActionEvent e)
     {

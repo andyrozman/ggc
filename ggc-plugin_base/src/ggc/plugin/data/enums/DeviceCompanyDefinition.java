@@ -23,9 +23,9 @@ public enum DeviceCompanyDefinition
 
     // Meter
 
-    Ascensia(1)
+    Ascensia(1),
 
-    ;
+    Dexcom(301, "Dexcom", "", DeviceImplementationStatus.Partitial);
 
     int id;
     String companyName;

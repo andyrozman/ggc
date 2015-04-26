@@ -1,20 +1,19 @@
 package ggc.gui.panels.prefs;
 
-import ggc.core.util.DataAccess;
-import ggc.core.util.GGCProperties;
-import ggc.gui.dialogs.PropertiesDialog;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
+import ggc.gui.dialogs.PropertiesDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,6 +52,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
     protected boolean changed = false;
     PropertiesDialog parent;
 
+
     /**
      * Constructor
      * 
@@ -62,6 +62,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
     {
         this.parent = dialog;
     }
+
 
     /**
      * Set Changed
@@ -73,6 +74,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
         changed = change;
     }
 
+
     /**
      * Has Changed
      * 
@@ -82,6 +84,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
     {
         return changed;
     }
+
 
     /**
      * Insert Update
@@ -93,6 +96,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
         changed = true;
     }
 
+
     /**
      * Remove Update
      * 
@@ -103,6 +107,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
         changed = true;
     }
 
+
     /**
      * Changed Update
      * 
@@ -111,6 +116,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
     public void changedUpdate(DocumentEvent e)
     {
     }
+
 
     /**
      * Action Performed
@@ -122,6 +128,7 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
         changed = true;
     }
 
+
     /**
      * Item State Changed
      * 
@@ -132,10 +139,12 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
         changed = true;
     }
 
+
     /**
      * Save Properties
      */
     public abstract void saveProps();
+
 
     /**
      * Kill - If changed, it asks if values should be changed
@@ -151,6 +160,24 @@ public abstract class AbstractPrefOptionsPanel extends JPanel implements Documen
                 saveProps();
             }
         }
+    }
+
+
+    protected String getI18nText(String key)
+    {
+        return m_ic.getMessage(key);
+    }
+
+
+    protected String getI18nTextWithColon(String key)
+    {
+        return getI18nText(key) + ":";
+    }
+
+
+    protected JLabel getLabelWithColon(String key)
+    {
+        return new JLabel(getI18nTextWithColon(key));
     }
 
 }

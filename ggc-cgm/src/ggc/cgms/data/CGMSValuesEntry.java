@@ -1,15 +1,6 @@
 package ggc.cgms.data;
 
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.db.hibernate.GGCHibernateObject;
-import ggc.core.db.hibernate.cgms.CGMSDataH;
-import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.output.OutputWriterType;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.StringTokenizer;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,6 +9,13 @@ import org.hibernate.Transaction;
 
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.data.ATechDate;
+
+import ggc.cgms.data.defs.CGMSBaseDataType;
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.core.db.hibernate.cgms.CGMSDataH;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.output.OutputWriterType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,20 +37,15 @@ import com.atech.utils.data.ATechDate;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     CGMValuesEntry.java
- *  Description:  Collection of CGMValuesEntry, which contains all daily values.
+ *  Filename:     CGMSValuesEntry
+ *  Description:  Collection of CGMSValuesEntry, which contains all daily values.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
-// IMPORTANT NOTICE:
-// This class is not implemented yet, all existing methods should be rechecked
-// (they were copied from similar
-// class, with different type of data. Trying to find a way to use super class
-// instead of this.
-
 public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 {
+
     DataAccessCGMS da = DataAccessCGMS.getInstance();
     private static Log log = LogFactory.getLog(CGMSValuesEntry.class);
 
@@ -72,6 +65,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     int person_id = 0;
     String item_data = null;
 
+
     /**
      * Constructor
      */
@@ -81,6 +75,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         list = new ArrayList<CGMSValuesSubEntry>();
         // this.person_id = (int)this.da.getCurrentUserId();
     }
+
 
     /**
      * Constructor
@@ -98,6 +93,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.person_id = pdh.getPerson_id();
     }
 
+
     /**
      * Set Date 
      * 
@@ -110,6 +106,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.datetime = dt;
     }
 
+
     /**
      * Get DateTime (long)
      * 
@@ -120,6 +117,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.datetime;
     }
+
 
     /**
      * Get DateTime Object (ATechDate)
@@ -132,6 +130,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.datetime);
     }
 
+
     /**
      * Add Sub Entry
      * 
@@ -141,6 +140,13 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         this.list.add(subentry);
     }
+
+
+    public void addSubEntries(List<CGMSValuesSubEntry> entries)
+    {
+        this.list.addAll(entries);
+    }
+
 
     /**
      * Get Sub Entry List
@@ -152,6 +158,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return this.list;
     }
 
+
     /**
      * Set Empty
      * 
@@ -162,6 +169,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.empty = empty_;
     }
 
+
     /**
      * Is Empty
      * 
@@ -171,6 +179,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.empty;
     }
+
 
     /**
      * Add Parameter
@@ -191,6 +200,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.params.put(key, value_in);
 
     }
+
 
     /**
      * @return
@@ -213,6 +223,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     }
 
+
     /**
      * Prepare Entry [Framework v2]
      */
@@ -221,6 +232,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         this.saveExtended();
     }
+
 
     /**
      * Set Type 
@@ -232,6 +244,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.type = type_;
     }
 
+
     /**
      * Get Type
      * 
@@ -241,6 +254,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.type;
     }
+
 
     /**
      * Create Comment
@@ -259,6 +273,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     }
 
+
     /**
      * To String
      * @see java.lang.Object#toString()
@@ -268,6 +283,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return "CGMSValuesEntry [date/time=" + this.datetime + ",readings=" + this.list.size() + "type=" + type + "]";
     }
+
 
     /**
      * Get Column Value
@@ -311,6 +327,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return "N/A";
     }
 
+
     /**
      * Get DateTime format
      * 
@@ -321,6 +338,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return ATechDate.FORMAT_DATE_AND_TIME_S;
     }
+
 
     /**
      * Get Db Objects
@@ -334,6 +352,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return null;
     }
+
 
     /**
      * Get Data As String
@@ -377,6 +396,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
     }
 
+
     /**
      * Set DateTime Object (ATechDate)
      * 
@@ -388,6 +408,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         this.datetime = dt.getATDateTimeAsLong();
     }
 
+
     /**
      * Get Value For Item
      * 
@@ -398,6 +419,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return 0;
     }
+
 
     /**
      * Get Statistics Action - we define how statistic is done (we have several predefined 
@@ -411,6 +433,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return 0;
     }
 
+
     /**
      * Is Special Action - tells if selected statistics item has special actions
      * 
@@ -422,6 +445,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return false;
     }
 
+
     /**
      * Get Max Statistics Object - we can have several Statistic types defined here
      * 
@@ -432,6 +456,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return 0;
     }
 
+
     /**
      * If we have any special actions for any of objects
      * 
@@ -441,6 +466,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return false;
     }
+
 
     /**
      * Get Table Column Value (in case that we need special display values for download data table, this method 
@@ -457,22 +483,23 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
                 return this.date_obj.getDateString();
 
             case 1:
-                return DataAccessCGMS.value_type[this.type]; // m_ic.getMessage("BASE_TYPE_SH");
+                return CGMSBaseDataType.getByCode(this.type).getTranslation();
 
             case 2:
-                return "" + this.list.size(); // this.getBaseTypeString();
+                return this.list.size();
 
             case 3:
-                return new Boolean(getChecked());
+                return this.getStatusType();
 
             case 4:
-                return this.getStatus();
+                return getChecked();
 
             default:
                 return "";
         }
 
     }
+
 
     /**
      * Get Special Id
@@ -484,6 +511,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return "CD_" + this.datetime + "_" + this.type;
     }
 
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -492,6 +520,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return "" + this.datetime;
     }
+
 
     /**
      * DbAdd - Add this object to database
@@ -515,7 +544,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         pdh.setPerson_id(this.person_id);
         pdh.setChanged(System.currentTimeMillis());
 
-
         Long _id = (Long) sess.save(pdh);
         tx.commit();
 
@@ -524,6 +552,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         return "" + _id.longValue();
     }
+
 
     /**
      * DbEdit - Edit this object in database
@@ -555,6 +584,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return true;
     }
 
+
     /**
      * DbDelete - Delete this object in database
      * 
@@ -573,6 +603,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return true;
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
      * 
@@ -584,6 +615,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return false;
     }
+
 
     /**
      * DbGet - Loads this object. Id must be set.
@@ -606,6 +638,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return true;
     }
 
+
     /**
      * getObjectName - returns name of DatabaseObject
      * 
@@ -616,6 +649,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return "CGMSValuesEntry";
     }
 
+
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -625,6 +659,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return false;
     }
+
 
     /**
      * getAction - returns action that should be done on object
@@ -642,6 +677,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return 0;
     }
 
+
     /**
      * Get DeviceValuesEntry Name
      * 
@@ -651,6 +687,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return "CGMSValuesEntry";
     }
+
 
     /**
      * Get Value of object
@@ -664,6 +701,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     long old_id;
 
+
     /**
      * Set Old Id (this is used for changing old objects in framework v2)
      * 
@@ -673,6 +711,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         this.id = id_in;
     }
+
 
     /**
      * Get Old Id (this is used for changing old objects in framework v2)
@@ -684,6 +723,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         return this.id;
     }
 
+
     /**
      * Set Old Id (this is used for changing old objects in framework v2)
      * THIS IS JUST COPY, IT MIGHT NOT BE USED, OR PERHAPS NOW FUNCTIONALITY WILL BE BROKEN.
@@ -694,6 +734,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         this.old_id = id_in;
     }
+
 
     /**
      * Get Old Id (this is used for changing old objects in framework v2)
@@ -707,6 +748,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     String source;
 
+
     /**
      * Set Source
      * 
@@ -718,6 +760,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     }
 
+
     /**
      * Get Source 
      * 
@@ -727,6 +770,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         return this.source;
     }
+
 
     private String saveExtended()
     {
@@ -752,6 +796,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
         return sb1.toString();
     }
+
 
     private void loadExtended(String entry)
     {
@@ -793,4 +838,22 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
     }
 
+
+    public void sortSubs()
+    {
+        Collections.sort(this.list);
+    }
+
+
+    public boolean equals(Object element)
+    {
+        if (element instanceof CGMSValuesEntry)
+        {
+            CGMSValuesEntry other = (CGMSValuesEntry) element;
+
+            return ((this.datetime == other.datetime) && (this.type == other.type));
+        }
+        else
+            return false;
+    }
 }

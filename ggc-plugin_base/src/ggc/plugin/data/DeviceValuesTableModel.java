@@ -1,18 +1,19 @@
 package ggc.plugin.data;
 
-import ggc.core.db.hibernate.GGCHibernateObject;
-import ggc.plugin.gui.DeviceDisplayDataDialog;
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.components.MultiLineTooltip;
 import com.atech.graphics.components.MultiLineTooltipModel;
+
+import ggc.plugin.data.enums.DeviceEntryStatus;
+import ggc.plugin.gui.DeviceDisplayDataDialog;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -46,11 +47,13 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
     private static final long serialVersionUID = -6542265335372702616L;
     protected ArrayList<DeviceValuesEntryInterface> dl_data;
     protected ArrayList<DeviceValuesEntryInterface> displayed_dl_data;
-    protected DeviceDataHandler m_ddh = null;
+    protected DeviceDataHandler deviceDataHandler = null;
     protected int current_filter = DeviceDisplayDataDialog.FILTER_NEW_CHANGED;
     protected DataAccessPlugInBase m_da;
     protected String device_source;
     protected boolean debug = false;
+    protected List<ColumnSettings> columns;
+    protected int checkableColumn;
 
 
     /**
@@ -61,16 +64,22 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
      */
     public DeviceValuesTableModel(DataAccessPlugInBase da, DeviceDataHandler ddh, String source)
     {
-        this.m_ddh = ddh;
-        this.m_ddh.setDeviceValuesTableModel(this);
+        this.deviceDataHandler = ddh;
+        this.deviceDataHandler.setDeviceValuesTableModel(this);
         this.m_da = da;
         this.displayed_dl_data = new ArrayList<DeviceValuesEntryInterface>();
         this.dl_data = new ArrayList<DeviceValuesEntryInterface>();
         this.device_source = source;
+        initColumns();
+        determineCheckableColumn();
         // this.dayData = dayData;
         fireTableChanged(null);
         // dayData.addGlucoValueEventListener(this);
     }
+
+
+    protected abstract void initColumns();
+
 
     /**
      * Clear Data
@@ -82,43 +91,6 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         fireTableChanged(null);
     }
 
-    /**
-     * Get Column Count
-     * 
-     * @see javax.swing.table.TableModel#getColumnCount()
-     */
-    public int getColumnCount()
-    {
-        return m_da.getColumnsWidthTable().length;
-    }
-
-    /**
-     * Is Boolean
-     * 
-     * @param column column index
-     * @return true if column type is boolean
-     */
-    public boolean isBoolean(int column)
-    {
-        if (column == this.getCheckableColumn())
-            return true;
-        else
-            return false;
-    }
-
-    /**
-     * Is Editable Column
-     * 
-     * @param column column index
-     * @return true if column is editable
-     */
-    public boolean isEditableColumn(int column)
-    {
-        if (column == this.getCheckableColumn())
-            return true;
-        else
-            return false;
-    }
 
     /** 
      * Set Value At
@@ -126,16 +98,13 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
     @Override
     public void setValueAt(Object aValue, int row, int column)
     {
-        if (this.getCheckableColumn() == column)
+        if (checkableColumn == column)
         {
             Boolean b = (Boolean) aValue;
             this.displayed_dl_data.get(row).setChecked(b.booleanValue());
         }
-        // System.out.println("set Value: rw=" + row + ",column=" + column +
-        // ",value=" + aValue);
-        // dayData.setValueAt(aValue, row, column);
-        // fireTableChanged(null);
     }
+
 
     /**
      * Get Column Width
@@ -146,8 +115,9 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
      */
     public int getColumnWidth(int column, int width)
     {
-        return m_da.getColumnsWidthTable()[column] * width;
+        return columns.get(column).columnWidth * width;
     }
+
 
     /**
      * Select All
@@ -157,6 +127,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         setSelectors(true);
     }
 
+
     /**
      * Deselect All
      */
@@ -164,6 +135,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
     {
         setSelectors(false);
     }
+
 
     private void setSelectors(boolean select)
     {
@@ -175,6 +147,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         this.fireTableDataChanged();
     }
 
+
     /**
      * set Filter
      * 
@@ -184,6 +157,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
     {
         this.setFilter(filter, false);
     }
+
 
     /**
      * Set Filter
@@ -206,7 +180,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         {
             DeviceValuesEntryInterface mve = this.dl_data.get(i);
 
-            if (shouldBeDisplayed(mve.getStatus()))
+            if (shouldBeDisplayed(mve.getStatusType()))
             {
                 this.displayed_dl_data.add(mve);
             }
@@ -218,13 +192,45 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
 
     }
 
+
     /**
      * Should be displayed filter
      * 
      * @param status
      * @return
      */
-    public boolean shouldBeDisplayed(int status)
+//    public boolean shouldBeDisplayed(int status)
+//    {
+//        switch (this.current_filter)
+//        {
+//            case DeviceDisplayDataDialog.FILTER_ALL:
+//                return true;
+//
+//            case DeviceDisplayDataDialog.FILTER_NEW:
+//                return status == DeviceValuesEntryInterface.STATUS_NEW;
+//
+//            case DeviceDisplayDataDialog.FILTER_CHANGED:
+//                return status == DeviceValuesEntryInterface.STATUS_CHANGED;
+//
+//            case DeviceDisplayDataDialog.FILTER_EXISTING:
+//                return status == DeviceValuesEntryInterface.STATUS_OLD;
+//
+//            case DeviceDisplayDataDialog.FILTER_UNKNOWN:
+//                return status == DeviceValuesEntryInterface.STATUS_UNKNOWN;
+//
+//            case DeviceDisplayDataDialog.FILTER_NEW_CHANGED:
+//                return status == DeviceValuesEntryInterface.STATUS_NEW
+//                        || status == DeviceValuesEntryInterface.STATUS_CHANGED;
+//
+//            case DeviceDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
+//                return status != DeviceValuesEntryInterface.STATUS_OLD;
+//        }
+//        return false;
+//
+//    }
+
+
+    public boolean shouldBeDisplayed(DeviceEntryStatus status)
     {
         switch (this.current_filter)
         {
@@ -232,27 +238,28 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
                 return true;
 
             case DeviceDisplayDataDialog.FILTER_NEW:
-                return status == DeviceValuesEntryInterface.STATUS_NEW;
+                return status == DeviceEntryStatus.New;
 
             case DeviceDisplayDataDialog.FILTER_CHANGED:
-                return status == DeviceValuesEntryInterface.STATUS_CHANGED;
+                return status == DeviceEntryStatus.Changed;
 
             case DeviceDisplayDataDialog.FILTER_EXISTING:
-                return status == DeviceValuesEntryInterface.STATUS_OLD;
+                return status == DeviceEntryStatus.Old;
 
             case DeviceDisplayDataDialog.FILTER_UNKNOWN:
-                return status == DeviceValuesEntryInterface.STATUS_UNKNOWN;
+                return status == DeviceEntryStatus.Unknown;
 
             case DeviceDisplayDataDialog.FILTER_NEW_CHANGED:
-                return status == DeviceValuesEntryInterface.STATUS_NEW
-                        || status == DeviceValuesEntryInterface.STATUS_CHANGED;
+                return status == DeviceEntryStatus.New || status == DeviceEntryStatus.Changed;
 
             case DeviceDisplayDataDialog.FILTER_ALL_BUT_EXISTING:
-                return status != DeviceValuesEntryInterface.STATUS_OLD;
+                return status != DeviceEntryStatus.Old;
         }
         return false;
 
     }
+
+
 
     /**
      * Get Row Count
@@ -267,6 +274,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
             return this.displayed_dl_data.size();
     }
 
+
     /**
      * Get Value At
      * @see javax.swing.table.TableModel#getValueAt(int, int)
@@ -276,12 +284,6 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         return this.displayed_dl_data.get(row).getTableColumnValue(column);
     }
 
-    /**
-     * Get Checkable Column (one column if checkable, all others are non-editable)
-     * 
-     * @return
-     */
-    public abstract int getCheckableColumn();
 
     /**
      * Add Entry
@@ -293,13 +295,14 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         processDeviceValueEntry(mve);
         this.dl_data.add(mve);
 
-        if (this.shouldBeDisplayed(mve.getStatus()))
+        if (this.shouldBeDisplayed(mve.getStatusType()))
         {
             this.displayed_dl_data.add(mve);
             Collections.sort(displayed_dl_data);
         }
         this.fireTableDataChanged();
     }
+
 
     /**
      * Process Device Value Entry
@@ -309,7 +312,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
     public void processDeviceValueEntry(DeviceValuesEntryInterface dve)
     {
 
-        if (this.m_ddh.hasOldData())
+        if (this.deviceDataHandler.hasOldData())
         {
 
             if (debug)
@@ -317,16 +320,16 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
                 System.out.println("DVE: " + dve.getSpecialId());
             }
 
-            if (!this.m_ddh.getOldData().containsKey("" + dve.getSpecialId()))
+            if (!this.deviceDataHandler.getOldData().containsKey("" + dve.getSpecialId()))
             {
-                dve.setStatus(DeviceValuesEntryInterface.STATUS_NEW);
+                dve.setStatusType(DeviceEntryStatus.New); //DeviceValuesEntryInterface.STATUS_NEW);
                 dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_NEW);
             }
             else
             {
 
-                DeviceValuesEntryInterface dve_old = (DeviceValuesEntryInterface) this.m_ddh.getOldData().get(
-                    dve.getSpecialId());
+                DeviceValuesEntryInterface dve_old = (DeviceValuesEntryInterface) this.deviceDataHandler.getOldData()
+                        .get(dve.getSpecialId());
 
                 // System.out.println("Old: " + dve_old.getValue());
                 dve.prepareEntry_v2();
@@ -334,20 +337,20 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
 
                 if (dve_old.getValue().equals(dve.getValue()))
                 {
-                    dve.setStatus(DeviceValuesEntryInterface.STATUS_OLD);
+                    dve.setStatusType(DeviceEntryStatus.Old); // DeviceValuesEntryInterface.STATUS_OLD);
                     dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_OLD);
                     dve.setId(dve_old.getId());
                 }
                 else
                 {
-                    dve.setStatus(DeviceValuesEntryInterface.STATUS_CHANGED);
+                    dve.setStatusType(DeviceEntryStatus.Changed); //DeviceValuesEntryInterface.STATUS_CHANGED);
                     dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_EDIT);
                     // dve.entry_object = mve_old.getHibernateObject();
 
-                    if (debug)
+                    //if (debug)
                     {
                         System.out.println("!!! OLD ID: " + dve_old.getId());
-                        System.out.println("DD: " + dve.getValue() + ", " + dve_old.getValue());
+                        System.out.println("Data: \nnew_value=" + dve.getValue() + "\nold_value=" + dve_old.getValue());
                     }
 
                     dve.setId(dve_old.getId());
@@ -356,114 +359,12 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         }
         else
         {
-            dve.setStatus(DeviceValuesEntryInterface.STATUS_NEW);
+            dve.setStatusType(DeviceEntryStatus.New); // DeviceValuesEntryInterface.STATUS_NEW);
             dve.setObjectStatus(DeviceValuesEntryInterface.OBJECT_STATUS_NEW);
         }
 
     }
 
-    /**
-     * Get Checked Entries
-     * 
-     * @deprecated this was used by framework v1
-     * @return Hashtable<String,ArrayList<?>>
-     */
-    @Deprecated
-    public Hashtable<String, ArrayList<?>> getCheckedEntries()
-    {
-
-        Hashtable<String, ArrayList<?>> ht = new Hashtable<String, ArrayList<?>>();
-
-        ht.put("ADD", getEmptyArrayList());
-        ht.put("EDIT", getEmptyArrayList());
-
-        for (int i = 0; i < this.dl_data.size(); i++)
-        {
-            DeviceValuesEntryInterface mve = this.dl_data.get(i);
-
-            if (!mve.getChecked())
-            {
-                continue;
-            }
-
-            mve.prepareEntry();
-
-            if (mve.getObjectStatus() == DeviceValuesEntry.OBJECT_STATUS_NEW)
-            {
-                addToArray(ht.get("ADD"), mve.getDbObjects());
-            }
-            else if (mve.getObjectStatus() == DeviceValuesEntry.OBJECT_STATUS_EDIT)
-            {
-                addToArray(ht.get("EDIT"), mve.getDbObjects());
-            }
-        }
-
-        return ht;
-    }
-
-    /**
-     * Export Checked Data
-     * @deprecated this was used by framework v1
-     */
-    @Deprecated
-    public void exportCheckedData()
-    {
-
-        for (int i = 0; i < this.dl_data.size(); i++)
-        {
-            DeviceValuesEntryInterface mve = this.dl_data.get(i);
-
-            if (!mve.getChecked())
-            {
-                continue;
-            }
-
-            // TODO
-
-            mve.prepareEntry();
-
-            if (mve.getObjectStatus() == DeviceValuesEntry.OBJECT_STATUS_NEW)
-            {
-                // addToArray(ht.get("ADD"), mve.getDbObjects());
-            }
-            else if (mve.getObjectStatus() == DeviceValuesEntry.OBJECT_STATUS_EDIT)
-            {
-                // addToArray(ht.get("EDIT"), mve.getDbObjects());
-            }
-        }
-
-        // return ht;
-    }
-
-    /**
-     * Get Empty ArrayList
-     * 
-     * @deprecated this was used by framework v1
-     * @return
-     */
-    @Deprecated
-    public abstract ArrayList<? extends GGCHibernateObject> getEmptyArrayList();
-
-    /**
-     * Add To Array 
-     * 
-     * @deprecated this was used by framework v1
-     * @param lst
-     * @param source
-     */
-    @Deprecated
-    public abstract void addToArray(ArrayList<?> lst, ArrayList<?> source);
-
-    /**
-     * Get Column Name
-     * 
-     * @see javax.swing.table.AbstractTableModel#getColumnName(int)
-     */
-    @Override
-    public String getColumnName(int column)
-    {
-        return this.m_da.getColumnsTable()[column];
-    }
 
     /**
      * Get Column Class
@@ -481,6 +382,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         // return getValueAt(0,c).getClass();
     }
 
+
     /**
      * Is Cell Editable
      * 
@@ -489,11 +391,9 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
     @Override
     public boolean isCellEditable(int row, int col)
     {
-        if (col == this.getCheckableColumn())
-            return true;
-        else
-            return false;
+        return (col == checkableColumn);
     }
+
 
     /**
      * Get Checked DOH (DatabaseObjectHibernate) objects. This are packed in Hashtable, with keys ADD and EDIT
@@ -556,6 +456,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         }
     }
 
+
     /**
      * Get Checked DeviceValuesEntries [V2]
      * 
@@ -593,6 +494,7 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         return ht;
     }
 
+
     /** 
      * get ToolTip Value
      * 
@@ -615,5 +517,88 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
         }
     }
 
+
+    /**
+     * Get Column Count
+     *
+     * @see javax.swing.table.TableModel#getColumnCount()
+     */
+    public int getColumnCount()
+    {
+        return this.columns.size();
+    }
+
+
+    /**
+     * Get Column Name
+     *
+     * @see javax.swing.table.AbstractTableModel#getColumnName(int)
+     */
+    @Override
+    public String getColumnName(int index)
+    {
+        return this.columns.get(index).columnName;
+    }
+
+
+    public int getColumnWidth(int index)
+    {
+        return this.columns.get(index).columnWidth;
+    }
+
+
+    public int getCheckableColumn()
+    {
+        return this.checkableColumn;
+    }
+
+
+    private void determineCheckableColumn()
+    {
+        for (ColumnSettings cs : this.columns)
+        {
+            if (cs.checkableColumn)
+            {
+                this.checkableColumn = cs.index;
+                break;
+            }
+        }
+    }
+
+
+    protected void addColumn(int index, String columnName, int columnWidth, boolean checkableColumn)
+    {
+        if (columns == null)
+        {
+            columns = new ArrayList<ColumnSettings>();
+        }
+
+        columns.add(new ColumnSettings(index, this.m_da.getI18nControlInstance().getMessage(columnName), columnWidth,
+                checkableColumn));
+    }
+
+    protected class ColumnSettings
+    {
+
+        int index;
+        String columnName;
+        int columnWidth;
+        boolean checkableColumn;
+
+
+        public ColumnSettings(int index, String columnName, int columnWidth)
+        {
+            this(index, columnName, columnWidth, false);
+        }
+
+
+        public ColumnSettings(int index, String columnName, int columnWidth, boolean checkableColumn)
+        {
+            this.index = index;
+            this.columnName = columnName;
+            this.columnWidth = columnWidth;
+            this.checkableColumn = checkableColumn;
+        }
+    }
 
 }

@@ -1,26 +1,19 @@
 package ggc.gui.panels.prefs;
 
-import ggc.gui.dialogs.PropertiesDialog;
-
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileView;
 
 import com.atech.help.HelpCapable;
 import com.atech.utils.ATDataAccessAbstract;
+import ggc.gui.dialogs.PropertiesDialog;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -53,6 +46,8 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
     private static final long serialVersionUID = 50092067007913327L;
     private JTextField fieldEmpty, fieldPDFViewer, fieldLunchST, fieldDinnerST, fieldNightST;
     private JButton buttonBrowse;
+    private JCheckBox checkUseExternalPdfViewer;
+
 
     /**
      * Constructor
@@ -66,6 +61,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
         // dataAccess.enableHelp(this);
     }
 
+
     private void init()
     {
 
@@ -78,12 +74,24 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
 
         JPanel a = new JPanel(new GridLayout(0, 2));
         a.setBorder(new TitledBorder(m_ic.getMessage("PDF_VIEWER_SETTINGS")));
+        a.add(getLabelWithColon("USE_EXTERNAL_PDF_VIEWER"));
+        a.add(checkUseExternalPdfViewer = new JCheckBox());
+
         a.add(new JLabel(m_ic.getMessage("PDF_VIEWER") + ":"));
         a.add(fieldPDFViewer = new JTextField(m_da.getSettings().getIns1Name(), 27));
         a.add(new JLabel(""));
         a.add(buttonBrowse = new JButton(m_ic.getMessage("BROWSE")));
 
         buttonBrowse.addActionListener(this);
+
+        checkUseExternalPdfViewer.addItemListener(new ItemListener()
+        {
+
+            public void itemStateChanged(ItemEvent e)
+            {
+                setUseExternalStatus();
+            }
+        });
 
         // bg 1
         JPanel c1 = new JPanel(new GridLayout(0, 1));
@@ -93,7 +101,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
         // c.setBorder(new
         // TitledBorder(m_ic.getMessage("SIMPLE_MONTHLY_REPORT")));
 
-        c.add(new JLabel(m_ic.getMessage("LUNCH_START_TIME") + ":"));
+        c.add(getLabelWithColon("LUNCH_START_TIME"));
         c.add(new JLabel());
         c.add(this.fieldLunchST = new JTextField("", 6));
 
@@ -124,7 +132,17 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
         fieldDinnerST.setText(ATDataAccessAbstract.getTimeString(settings.getPrintDinnerStartTime()));
         fieldNightST.setText(ATDataAccessAbstract.getTimeString(settings.getPrintNightStartTime()));
 
+        this.checkUseExternalPdfViewer.setSelected(settings.getUseExternalPdfViewer());
+        setUseExternalStatus();
     }
+
+
+    private void setUseExternalStatus()
+    {
+        this.fieldPDFViewer.setEnabled(this.checkUseExternalPdfViewer.isSelected());
+        this.buttonBrowse.setEnabled(this.checkUseExternalPdfViewer.isSelected());
+    }
+
 
     /**
      * Create Little Panel
@@ -141,6 +159,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
 
         _parent.add(pp);
     }
+
 
     /**
      * Create Little Panel
@@ -160,6 +179,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
         _parent.add(pp);
     }
 
+
     private int getTimeValue(JTextField field, int default_value)
     {
         try
@@ -174,6 +194,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
             return default_value;
         }
     }
+
 
     /**
      * Action Performed
@@ -190,6 +211,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
         jfc.setDialogType(JFileChooser.OPEN_DIALOG);
         jfc.setFileFilter(new FileFilter()
         {
+
             /**
              * Whether the given file is accepted by this filter.
              */
@@ -215,6 +237,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
 
             }
 
+
             /**
              * The description of this filter. For example: "JPG and GIF Images"
              * 
@@ -239,6 +262,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
 
     }
 
+
     /**
      * Save Properties
      * 
@@ -253,7 +277,9 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
         settings.setPrintLunchStartTime(getTimeValue(fieldLunchST, 1100));
         settings.setPrintDinnerStartTime(getTimeValue(fieldDinnerST, 1800));
         settings.setPrintNightStartTime(getTimeValue(fieldNightST, 2100));
+        settings.setUseExternalPdfViewer(this.checkUseExternalPdfViewer.isSelected());
     }
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
@@ -267,6 +293,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      */
@@ -274,6 +301,7 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
     {
         return this.parent.getHelpButton();
     }
+
 
     /**
      * getHelpId - get id for Help

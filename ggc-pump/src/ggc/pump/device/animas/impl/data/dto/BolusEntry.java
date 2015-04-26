@@ -1,14 +1,13 @@
 package ggc.pump.device.animas.impl.data.dto;
 
+import java.math.BigDecimal;
+
 import com.atech.utils.data.ATechDate;
-import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
-import ggc.plugin.device.impl.animas.data.AnimasPreparedDataEntry;
+
+import ggc.plugin.device.impl.animas.data.AnimasDeviceReplyPacket;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
-import ggc.plugin.output.OutputWriter;
 import ggc.pump.device.animas.impl.converter.AnimasBaseDataV2Converter;
 import ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
-
-import java.math.BigDecimal;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -64,7 +63,7 @@ public class BolusEntry
         switch (bolusType)
         {
 
-            // types> Noraml, ezCarb, ezBg, Combo Bolus
+        // types> Noraml, ezCarb, ezBg, Combo Bolus
             case 0: // Normal
                 switch (bolusSubType)
                 {
@@ -151,7 +150,7 @@ public class BolusEntry
 
     public float getValue()
     {
-        if (amount.floatValue()==requestedAmount.floatValue())
+        if (amount.floatValue() == requestedAmount.floatValue())
         {
             return amount.floatValue();
         }
@@ -168,7 +167,6 @@ public class BolusEntry
 
         return AnimasUtils.getDecimalValueString(val, 5, 3);
     }
-
 
 
     public String getValueForPreparedDataEntry()
@@ -190,7 +188,7 @@ public class BolusEntry
 
         int h = minutes / 60;
 
-        minutes -= (h*60);
+        minutes -= (h * 60);
 
         return (h * 100) + minutes;
     }
@@ -203,10 +201,10 @@ public class BolusEntry
         sb.append("BolusEntry [dateTime=" + this.dateTime.getDateTimeString());
 
         sb.append(String.format(", bolusType=%s, bolusTypeDescription=%s, bolusTypeAnimas=%s, bolusSubType=%s",
-                bolusType, bolusTypeDescription, bolusTypeAnimas, bolusSubType));
+            bolusType, bolusTypeDescription, bolusTypeAnimas, bolusSubType));
 
-        sb.append(String.format(", bolusRecordType=%s, bolusRecordTypeDescription=%s",
-                bolusRecordType, bolusRecordTypeDescription));
+        sb.append(String.format(", bolusRecordType=%s, bolusRecordTypeDescription=%s", bolusRecordType,
+            bolusRecordTypeDescription));
 
         if (requestedAmount.floatValue() == amount.floatValue())
         {
@@ -214,12 +212,14 @@ public class BolusEntry
         }
         else
         {
-            sb.append(String.format(", Requested_Amount=%6.4f U, Amount=%6.4f U", requestedAmount.floatValue(), amount.floatValue()));
+            sb.append(String.format(", Requested_Amount=%6.4f U, Amount=%6.4f U", requestedAmount.floatValue(),
+                amount.floatValue()));
         }
 
         if (duration.intValue() > 0)
         {
-            //sb.append(String.format(", Duration=%6.4f min", duration.intValue()));
+            // sb.append(String.format(", Duration=%6.4f min",
+            // duration.intValue()));
             sb.append(String.format(", Duration=%s min", duration.intValue()));
         }
 
@@ -240,20 +240,23 @@ public class BolusEntry
         data.writeData(this.bolusGGC, this.dateTime, getValueForPreparedDataEntry());
     }
 
-    public void createPreparedData(AnimasDevicePacket packet, AnimasBaseDataV2Converter conv)
+
+    public void createPreparedData(AnimasDeviceReplyPacket packet, AnimasBaseDataV2Converter conv)
     {
         float value = getValue();
 
-        if ((value>0) && (isCorrectEntryValue()))
+        if ((value > 0) && (isCorrectEntryValue()))
         {
-            conv.writeDataInternal(packet, this.bolusGGC, this.dateTime, getValueForPreparedDataEntry());
+            conv.writeDataInternal(this.bolusGGC, this.dateTime, getValueForPreparedDataEntry());
         }
     }
+
 
     public boolean isCorrectEntryValue()
     {
         return bolusRecordType != 0;
     }
+
 
     public static String decodeBolusAnimasV1(int bolusType)
     {

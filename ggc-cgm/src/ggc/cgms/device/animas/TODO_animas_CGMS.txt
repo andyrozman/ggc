@@ -10,22 +10,6 @@
 
 Phase 2.1:
 
-  Animas Dexcom
-  ==============
-   - 2015... TO BE DETERMINED
-
-   - decode settings
-   - get all settings together to display
-
-   - data collect
-   - write data after downloaded (5.12)
-
-   - download progress
-   - import into GGC
-   - test data in GGC + progress
-   - test settings in GGC + progress
-
-   - when no data available (timeout) connection recovery and retry [Phase 1]
 
 
   Animas Dexcom Data Convert
@@ -52,4 +36,22 @@ FINISHED
 
 Phase 1: 
 
+Phase 2.1:
 
+  Animas Dexcom
+  ==============
+
+   - 2015... TO BE DETERMINED
+
+   - decode settings
+   - get all settings together to display
+
+   - data collect
+   - write data after downloaded (5.12)
+
+   - download progress
+   - import into GGC
+   - test data in GGC + progress
+   - test settings in GGC + progress
+
+   - when no data available (timeout) connection recovery and retry [Phase 1]

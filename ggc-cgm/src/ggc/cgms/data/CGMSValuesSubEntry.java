@@ -1,12 +1,5 @@
 package ggc.cgms.data;
 
-import ggc.cgms.data.defs.CGMSBaseDataType;
-import ggc.cgms.data.defs.CGMSTrendArrow;
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.db.hibernate.GGCHibernateObject;
-import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.output.OutputWriterType;
-
 import java.util.ArrayList;
 
 import org.apache.commons.logging.Log;
@@ -16,6 +9,13 @@ import org.hibernate.Session;
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.misc.statistics.StatisticsObject;
 import com.atech.utils.data.ATechDate;
+
+import ggc.cgms.data.defs.CGMSBaseDataType;
+import ggc.cgms.data.defs.CGMSTrendArrow;
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.output.OutputWriterType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -47,38 +47,6 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
 {
 
     private static final Log log = LogFactory.getLog(CGMSValuesSubEntry.class);
-
-//    /**
-//     * Sub Entry Type: CGMS BG Reading
-//     */
-//    public static final int CGMS_BG_READING = 1;
-//
-//    /**
-//     * Sub Entry Type: Meter Calibration Reading
-//     */
-//    public static final int METER_CALIBRATION_READING = 2;
-//
-//    /**
-//     *
-//     */
-//    public static final int CGMS_ALARM = 3;
-//
-//    /**
-//     *
-//     */
-//    public static final int CGMS_EVENT = 4;
-//
-//    /**
-//     *
-//     */
-//    public static final int CGMS_ERROR = 5;
-//
-//    public static final int CGMS_TREND = 6;
-
-
-
-
-
 
     /**
      * DateTime
@@ -123,6 +91,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
 
     private CGMSBaseDataType typeObject;
 
+
     /**
      * Constructor
      */
@@ -130,6 +99,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
     {
         this.source = DataAccessCGMS.getInstance().getSourceDevice();
     }
+
 
     /**
      * Constructor
@@ -149,6 +119,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         // time_only = true;
     }
 
+
     /**
      * Get Sub Entry Value
      * 
@@ -159,6 +130,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         // return getColumnValue(0) + "=" + this.value;
         return this.time + "=" + this.value;
     }
+
 
     /**
      * Set Date Time
@@ -171,14 +143,16 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         date = (int) (dt / 1000000);
         time = (int) (dt - date * 1000000);
 
-        System.out.println("Date:  " + date + ", Time: " + time);
+        // System.out.println("Date:  " + date + ", Time: " + time);
     }
+
 
     @Override
     public String toString()
     {
         return datetime + " = " + value;
     }
+
 
     // FIXME This is problem, when we will have other types of data
 
@@ -191,7 +165,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
                 return ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_S, time);
 
             case 1:
-                return DataAccessCGMS.value_type[type];
+                return CGMSBaseDataType.getByCode(this.type).getTranslation(); // DataAccessCGMS.value_type[type];
 
             case 2:
                 return getDisplayValue();
@@ -204,12 +178,14 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         }
     }
 
+
     private Object getDisplayValue()
     {
+        // FIXME
         switch (this.typeObject)
         {
-            case DeviceAlarm:
-            case DeviceEvent:
+            case Alarm:
+            case Event:
                 return "?? " + this.value;
 
             case SensorCalibration:
@@ -227,11 +203,13 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
 
     }
 
+
     @Override
     public long getDateTime()
     {
         return this.datetime;
     }
+
 
     @Override
     public int getDateTimeFormat()
@@ -239,11 +217,13 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         return ATechDate.FORMAT_DATE_AND_TIME_S;
     }
 
+
     @Override
     public ATechDate getDateTimeObject()
     {
         return null;
     }
+
 
     @Override
     public ArrayList<? extends GGCHibernateObject> getDbObjects()
@@ -251,50 +231,60 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         return null;
     }
 
+
     @Override
     public void setDateTimeObject(ATechDate dt)
     {
         this.setDateTime(dt.getATDateTimeAsLong());
     }
 
+
     public String getDVEName()
     {
         return "CGMSValuesSubEntry";
     }
+
 
     public long getId()
     {
         return 100000000000000L * type + this.datetime;
     }
 
+
     public String getSource()
     {
         return this.source;
     }
+
 
     public String getSpecialId()
     {
         return "CDS_" + this.datetime + "_" + this.type;
     }
 
+
     public Object getTableColumnValue(int index)
     {
         return null;
     }
+
 
     public String getValue()
     {
         return "" + this.value;
     }
 
+
     public void setId(long idIn)
     {
     }
+
 
     public void setSource(String src)
     {
         this.source = src;
     }
+
 
     public String getDataAsString()
     {
@@ -333,45 +323,54 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         }
     }
 
+
     public String DbAdd(Session sess) throws Exception
     {
         return null;
     }
+
 
     public boolean DbDelete(Session sess) throws Exception
     {
         return false;
     }
 
+
     public boolean DbEdit(Session sess) throws Exception
     {
         return false;
     }
+
 
     public boolean DbGet(Session sess) throws Exception
     {
         return false;
     }
 
+
     public boolean DbHasChildren(Session sess) throws Exception
     {
         return false;
     }
+
 
     public int getAction()
     {
         return 0;
     }
 
+
     public String getObjectName()
     {
         return this.getDVEName();
     }
 
+
     public String getObjectUniqueId()
     {
         return this.getSpecialId();
     }
+
 
     public boolean isDebugMode()
     {
@@ -428,10 +427,12 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
      */
     public static final int STAT_STD_DEV_BG2 = 10;
 
+
     public int getMaxStatisticsObject()
     {
         return 11;
     }
+
 
     /**
      * Get Statistics Action - we define how statistic is done (we have several predefined 
@@ -469,6 +470,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
                 return 0;
         }
     }
+
 
     public float getValueForItem(int index)
     {
@@ -509,6 +511,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
 
     }
 
+
     public boolean isSpecialAction(int index)
     {
         switch (index)
@@ -524,15 +527,18 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
 
     }
 
+
     public boolean weHaveSpecialActions()
     {
         return true;
     }
 
+
     public int getType()
     {
         return type;
     }
+
 
     public void setType(int type)
     {
@@ -540,10 +546,29 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         this.typeObject = CGMSBaseDataType.getByCode(type);
     }
 
+
     public void setType(CGMSBaseDataType type)
     {
         this.type = type.getCode();
         this.typeObject = type;
+    }
+
+
+    public CGMSBaseDataType getTypeObject()
+    {
+        return typeObject;
+    }
+
+
+    public int compare(CGMSValuesSubEntry d1, CGMSValuesSubEntry d2)
+    {
+        return d1.time - d2.time;
+    }
+
+
+    public int compareTo(CGMSValuesSubEntry d2)
+    {
+        return this.time - d2.time;
     }
 
     /**

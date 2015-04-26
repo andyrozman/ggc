@@ -1,10 +1,9 @@
 package ggc.plugin.data.enums;
 
+import java.util.Hashtable;
+
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
-
-import java.util.HashMap;
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,7 +44,6 @@ public enum GlucoseUnitType implements CodeEnumWithTranslation
 
     static Hashtable<Integer, GlucoseUnitType> codeMapping = new Hashtable<Integer, GlucoseUnitType>();
 
-
     static
     {
         for (GlucoseUnitType el : values())
@@ -54,6 +52,7 @@ public enum GlucoseUnitType implements CodeEnumWithTranslation
         }
     }
 
+
     public static void translateKeywords(I18nControlAbstract ic)
     {
         for (GlucoseUnitType pbt : values())
@@ -61,6 +60,7 @@ public enum GlucoseUnitType implements CodeEnumWithTranslation
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
         }
     }
+
 
     private GlucoseUnitType(int code, String i18nKey)
     {
@@ -93,6 +93,12 @@ public enum GlucoseUnitType implements CodeEnumWithTranslation
     }
 
 
+    public String getName()
+    {
+        return this.name();
+    }
+
+
     public static GlucoseUnitType getByCode(int code)
     {
         if (codeMapping.containsKey(code))
@@ -104,6 +110,5 @@ public enum GlucoseUnitType implements CodeEnumWithTranslation
             return GlucoseUnitType.None;
         }
     }
-
 
 }

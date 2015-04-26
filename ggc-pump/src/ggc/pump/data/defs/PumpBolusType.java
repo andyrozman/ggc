@@ -1,12 +1,11 @@
 package ggc.pump.data.defs;
 
+import java.util.HashMap;
+
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccess;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.pump.util.DataAccessPump;
-
-import java.util.HashMap;
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,10 +36,8 @@ import java.util.Hashtable;
 public enum PumpBolusType implements CodeEnumWithTranslation
 {
     None(0, "NONE"), //
-    Normal(1, "BOLUS_STANDARD"),
-    Audio(2, "BOLUS_AUDIO"),
-    Extended(3, "BOLUS_SQUARE", "AMOUNT_SQUARE=%s;DURATION=%s"),
-    Multiwave(4, "BOLUS_MULTIWAVE", "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s")
+    Normal(1, "BOLUS_STANDARD"), Audio(2, "BOLUS_AUDIO"), Extended(3, "BOLUS_SQUARE", "AMOUNT_SQUARE=%s;DURATION=%s"), Multiwave(
+            4, "BOLUS_MULTIWAVE", "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s")
 
     ;
 
@@ -58,22 +55,20 @@ public enum PumpBolusType implements CodeEnumWithTranslation
             translationMapping.put(pbt.getTranslation(), pbt);
             codeMapping.put(pbt.code, pbt);
 
-            //System.out.println("Tr: " + ic.getMessage(pbt.i18nKey));
+            // System.out.println("Tr: " + ic.getMessage(pbt.i18nKey));
         }
 
-
-        String[] bolus_desc_lcl = { ic.getMessage("SELECT_BOLUS_TYPE"),
-                ic.getMessage("BOLUS_STANDARD"), //
-                ic.getMessage("BOLUS_AUDIO"), //
-                ic.getMessage("BOLUS_SQUARE"), //
-                ic.getMessage("BOLUS_MULTIWAVE"), };
+        String[] bolus_desc_lcl = { ic.getMessage("SELECT_BOLUS_TYPE"), ic.getMessage("BOLUS_STANDARD"), //
+                                   ic.getMessage("BOLUS_AUDIO"), //
+                                   ic.getMessage("BOLUS_SQUARE"), //
+                                   ic.getMessage("BOLUS_MULTIWAVE"), };
 
         bolus_desc = bolus_desc_lcl;
 
-//        for(String s : bolus_desc_lcl)
-//        {
-//            System.out.println("Tr: " + s);
-//        }
+        // for(String s : bolus_desc_lcl)
+        // {
+        // System.out.println("Tr: " + s);
+        // }
 
     }
 
@@ -82,11 +77,13 @@ public enum PumpBolusType implements CodeEnumWithTranslation
     String translation;
     String valueTemplate;
 
+
     private PumpBolusType(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;
     }
+
 
     private PumpBolusType(int code, String i18nKey, String valueTemplate)
     {
@@ -117,6 +114,12 @@ public enum PumpBolusType implements CodeEnumWithTranslation
     public String getI18nKey()
     {
         return i18nKey;
+    }
+
+
+    public String getName()
+    {
+        return this.name();
     }
 
 

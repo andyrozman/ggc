@@ -1,10 +1,16 @@
 package ggc.cgms.device.dexcom.receivers.data.output;
 
-import ggc.cgms.data.CGMSValueConfig;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.data.ATechDate;
+
 import ggc.cgms.data.CGMSValuesExtendedEntry;
 import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.CGMSValuesTableModel;
 import ggc.cgms.data.defs.CGMSBaseDataType;
+import ggc.cgms.data.defs.CGMSConfigurationGroup;
 import ggc.cgms.data.defs.CGMSEvents;
 import ggc.cgms.data.defs.extended.CGMSExtendedDataType;
 import ggc.cgms.device.dexcom.receivers.DexcomDevice;
@@ -13,19 +19,40 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.data.EGVRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.InsertionTimeRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.MeterDataRecord;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.UserEventDataRecord;
-import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.cgms.util.DataAccessCGMS;
+import ggc.plugin.data.DeviceValueConfigEntry;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.output.OutputWriter;
 
-import ggc.plugin.output.OutputWriterConfigData;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.atech.utils.data.ATechDate;
+/**
+ *  Application: GGC - GNU Gluco Control
+ *  Plug-in: CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename: CGMDataType
+ *  Description: CGMS Data types, as used in database (undefined at this time)
+ *
+ *  Author: Andy {andy@atech-software.com}
+ */
 
 public class GGCOutputParser implements DataOutputParserInterface
 {
+
     private static Log log = LogFactory.getLog(GGCOutputParser.class);
     OutputWriter outputWriter;
     CGMSValuesTableModel valuesModel;
@@ -33,6 +60,8 @@ public class GGCOutputParser implements DataOutputParserInterface
     private boolean isIdentificationWriten = false;
     String source = "";
     DexcomDevice dexcomDevice;
+    I18nControlAbstract i18nControl = DataAccessCGMS.getInstance().getI18nControlInstance();
+
 
     public GGCOutputParser(OutputWriter outputWriter, DexcomDevice dexcomDevice)
     {
@@ -41,6 +70,7 @@ public class GGCOutputParser implements DataOutputParserInterface
 
         valuesModel = (CGMSValuesTableModel) dataAccess.getDeviceDataHandler().getDeviceValuesTableModel();
     }
+
 
     public void parse(DataOutputParserType parserType, ReceiverDownloadData data)
     {
@@ -55,7 +85,8 @@ public class GGCOutputParser implements DataOutputParserInterface
         {
             case Configuration:
                 {
-                    writeDeviceIdentification(parserType, data);
+                    // writeDeviceIdentification(parserType, data);
+                    writeConfiguration(data);
                 }
                 break;
 
@@ -81,6 +112,7 @@ public class GGCOutputParser implements DataOutputParserInterface
 
     }
 
+
     private void writeElements(DataOutputParserType dataType, DataOutputParserType parserType, ReceiverDownloadData data)
     {
         for (Object element : data.getDataByType(dataType))
@@ -88,6 +120,7 @@ public class GGCOutputParser implements DataOutputParserInterface
             writeElement(parserType, element);
         }
     }
+
 
     private void writeElement(DataOutputParserType parserType, Object element)
     {
@@ -114,6 +147,7 @@ public class GGCOutputParser implements DataOutputParserInterface
         }
 
     }
+
 
     private void writeUserEventData(UserEventDataRecord record)
     {
@@ -157,6 +191,7 @@ public class GGCOutputParser implements DataOutputParserInterface
 
     }
 
+
     private void writeMeterData(MeterDataRecord record)
     {
         // log.debug("DateTime meterdata device: " + record.getDisplayDate());
@@ -169,6 +204,7 @@ public class GGCOutputParser implements DataOutputParserInterface
 
         addEntry(sub);
     }
+
 
     private void writeEGVData(EGVRecord record, DataOutputParserType parserType)
     {
@@ -195,11 +231,12 @@ public class GGCOutputParser implements DataOutputParserInterface
         }
     }
 
+
     private void writeInsertionTime(InsertionTimeRecord record)
     {
         CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
         sub.setDateTime(ATechDate.getATDateTimeFromDate(record.getDisplayDate(), ATechDate.FORMAT_DATE_AND_TIME_S));
-        sub.setType(CGMSBaseDataType.DeviceEvent);
+        sub.setType(CGMSBaseDataType.Event);
         sub.setSource(source);
 
         if (record.getIsInserted())
@@ -213,6 +250,7 @@ public class GGCOutputParser implements DataOutputParserInterface
 
         addEntry(sub);
     }
+
 
     private void writeDeviceIdentification(DataOutputParserType parserType, ReceiverDownloadData data)
     {
@@ -243,31 +281,42 @@ public class GGCOutputParser implements DataOutputParserInterface
         this.isIdentificationWriten = true;
     }
 
+
     private void writeConfiguration(ReceiverDownloadData data)
     {
-        String[] cfgs = { "API_VERSION", "PRODUCT_ID", "PRODUCT_NAME", "SOFTWARE_NUMBER",
-                "FIRMWARE_VERSION", "PORT_VERSION", "RF_VERSION", "SYSTEM_TIME", "DISPLAY_TIME",
-                "LANGUAGE", "GLUCOSE_UNIT", "CLOCK_MODE" };
+        String[] cfgs = { "API_VERSION", "PRODUCT_ID", //
+                         "PRODUCT_NAME", "SOFTWARE_NUMBER", //
+                         "FIRMWARE_VERSION", "PORT_VERSION", //
+                         "RF_VERSION", "SYSTEM_TIME", //
+                         "DISPLAY_TIME", "LANGUAGE", //
+                         "GLUCOSE_UNIT", "CLOCK_MODE" };
 
-        for(String cfgKey : cfgs)
+        CGMSConfigurationGroup[] configGroup = { CGMSConfigurationGroup.Device, CGMSConfigurationGroup.Device,
+                                                CGMSConfigurationGroup.Device, CGMSConfigurationGroup.Device,
+                                                CGMSConfigurationGroup.Device, CGMSConfigurationGroup.Device,
+                                                CGMSConfigurationGroup.Device, CGMSConfigurationGroup.General,
+                                                CGMSConfigurationGroup.General, CGMSConfigurationGroup.General,
+                                                CGMSConfigurationGroup.General, CGMSConfigurationGroup.General };
+
+        for (int i = 0; i < cfgs.length; i++)
         {
+            String cfgKey = cfgs[i];
             String value = data.getConfigValueByKey(cfgKey);
 
-            if (value!=null)
+            if (value != null)
             {
-                this.outputWriter.writeConfigurationData( //
-                        getConfigurationData("CFG_BASE_" + cfgKey, value));
+                writeConfigurationData("CFG_BASE_" + cfgKey, value, configGroup[i]);
             }
-
         }
 
-        this.outputWriter.writeConfigurationData( //
-                getConfigurationData("CFG_BASE_SERIAL_NUMBER", data.getSerialNumber()));
+        writeConfigurationData("CFG_BASE_SERIAL_NUMBER", data.getSerialNumber(), CGMSConfigurationGroup.General);
     }
 
-    private CGMSValueConfig getConfigurationData(String key, String value)
+
+    private void writeConfigurationData(String key, String value, CGMSConfigurationGroup group)
     {
-        return new CGMSValueConfig(key, value);
+        outputWriter.writeConfigurationData(new DeviceValueConfigEntry(this.i18nControl.getMessage(key), value, group));
+
     }
 
 

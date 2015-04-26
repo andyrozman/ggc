@@ -1,13 +1,11 @@
 package ggc.pump.data.defs;
 
+import java.util.HashMap;
+
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccess;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.pump.util.DataAccessPump;
-
-import java.util.HashMap;
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,7 +43,10 @@ public enum PumpEvents implements CodeEnumWithTranslation
     ReservoirLow(4, "EVENT_RESERVOIR_LOW"), //
     ReservoirLowDesc(5, "EVENT_RESERVOIR_LOW_DESC"), //
     FillCannula(6, "EVENT_FILL_CANNULA"), //
-    SetTemporaryBasalRateType(10, "EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"), //  Unit setting (1=%, 0=U)
+    SetTemporaryBasalRateType(10, "EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"), // Unit
+                                                                          // setting
+                                                                          // (1=%,
+                                                                          // 0=U)
     SetBasalPattern(15, "EVENT_SET_BASAL_PATTERN"), //
 
     BasalRun(20, "EVENT_BASAL_RUN"), //
@@ -70,13 +71,11 @@ public enum PumpEvents implements CodeEnumWithTranslation
     BgFromMeter(70, "EVENT_BG_FROM_METER"), //
     BolusCancelled(80, "ALARM_BOLUS_CANCELED"), //
 
-    BolusWizard(81, "EVENT_BOLUS_WIZARD", "BG=%s;CH=%s;CH_UNIT=%s;" +
-            "CH_INS_RATIO=%s;BG_INS_RATIO=%s;BG_TARGET_LOW=%s;BG_TARGET_HIGH=%s;BOLUS_TOTAL=%s;" +
-            "BOLUS_CORRECTION=%s;BOLUS_FOOD=%s;UNABSORBED_INSULIN=%s"), //
+    BolusWizard(81, "EVENT_BOLUS_WIZARD", "BG=%s;CH=%s;CH_UNIT=%s;"
+            + "CH_INS_RATIO=%s;BG_INS_RATIO=%s;BG_TARGET_LOW=%s;BG_TARGET_HIGH=%s;BOLUS_TOTAL=%s;"
+            + "BOLUS_CORRECTION=%s;BOLUS_FOOD=%s;UNABSORBED_INSULIN=%s"), //
 
     ;
-
-
 
     static String[] descriptions;
 
@@ -94,46 +93,33 @@ public enum PumpEvents implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
 
-        String[] descriptions_lcl = {
-                ic.getMessage("SELECT_SUBTYPE"),
-                ic.getMessage("EVENT_PRIME_INFUSION_SET"),
-                ic.getMessage("EVENT_CARTRIDGE_CHANGED"),
-                ic.getMessage("EVENT_REWIND_INFUSION_SET"),
-                ic.getMessage("EVENT_RESERVOIR_LOW"),
-                ic.getMessage("EVENT_RESERVOIR_LOW_DESC"),
-                ic.getMessage("EVENT_FILL_CANNULA"),
-                ic.getMessage("EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"),
-                ic.getMessage("EVENT_SET_BASAL_PATTERN"),
-                ic.getMessage("EVENT_BASAL_RUN"),
+        String[] descriptions_lcl = { ic.getMessage("SELECT_SUBTYPE"), ic.getMessage("EVENT_PRIME_INFUSION_SET"),
+                                     ic.getMessage("EVENT_CARTRIDGE_CHANGED"),
+                                     ic.getMessage("EVENT_REWIND_INFUSION_SET"), ic.getMessage("EVENT_RESERVOIR_LOW"),
+                                     ic.getMessage("EVENT_RESERVOIR_LOW_DESC"), ic.getMessage("EVENT_FILL_CANNULA"),
+                                     ic.getMessage("EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"),
+                                     ic.getMessage("EVENT_SET_BASAL_PATTERN"), ic.getMessage("EVENT_BASAL_RUN"),
 
-                ic.getMessage("EVENT_BASAL_STOP"),
-                ic.getMessage("EVENT_POWER_DOWN"),
-                ic.getMessage("EVENT_POWER_UP"),
-                ic.getMessage("EVENT_SELF_TEST"),
-                ic.getMessage("EVENT_DOWNLOAD"),
-                ic.getMessage("EVENT_DATETIME_SET"),
-                ic.getMessage("EVENT_DATETIME_CORRECT"),
+                                     ic.getMessage("EVENT_BASAL_STOP"), ic.getMessage("EVENT_POWER_DOWN"),
+                                     ic.getMessage("EVENT_POWER_UP"), ic.getMessage("EVENT_SELF_TEST"),
+                                     ic.getMessage("EVENT_DOWNLOAD"), ic.getMessage("EVENT_DATETIME_SET"),
+                                     ic.getMessage("EVENT_DATETIME_CORRECT"),
 
-                ic.getMessage("EVENT_SET_MAX_BASAL"),
-                ic.getMessage("EVENT_SET_MAX_BOLUS"),
-                ic.getMessage("EVENT_BATERRY_REMOVED"),
+                                     ic.getMessage("EVENT_SET_MAX_BASAL"), ic.getMessage("EVENT_SET_MAX_BOLUS"),
+                                     ic.getMessage("EVENT_BATERRY_REMOVED"),
 
-                ic.getMessage("EVENT_BATERRY_REPLACED"),
-                ic.getMessage("EVENT_BATERRY_LOW"),
-                ic.getMessage("EVENT_BATERRY_LOW_DESC"),
-                ic.getMessage("EVENT_BG_FROM_METER"),
-                ic.getMessage("ALARM_BOLUS_CANCELED"),
-                ic.getMessage("EVENT_BOLUS_WIZARD")
-        };
+                                     ic.getMessage("EVENT_BATERRY_REPLACED"), ic.getMessage("EVENT_BATERRY_LOW"),
+                                     ic.getMessage("EVENT_BATERRY_LOW_DESC"), ic.getMessage("EVENT_BG_FROM_METER"),
+                                     ic.getMessage("ALARM_BOLUS_CANCELED"), ic.getMessage("EVENT_BOLUS_WIZARD") };
 
         descriptions = descriptions_lcl;
     }
-
 
     int code;
     String i18nKey;
     String translation;
     private String valueTemplate;
+
 
     private PumpEvents(int code, String i18nKey)
     {
@@ -149,24 +135,34 @@ public enum PumpEvents implements CodeEnumWithTranslation
         this.setValueTemplate(valueTemplate);
     }
 
+
     public String getTranslation()
     {
         return translation;
     }
+
 
     public void setTranslation(String translation)
     {
         this.translation = translation;
     }
 
+
     public int getCode()
     {
         return code;
     }
 
+
     public String getI18nKey()
     {
         return i18nKey;
+    }
+
+
+    public String getName()
+    {
+        return this.name();
     }
 
 
@@ -181,6 +177,7 @@ public enum PumpEvents implements CodeEnumWithTranslation
     {
         return ATDataAccessAbstract.getTypeFromDescription(str, translationMapping);
     }
+
 
     public static PumpEvents getByCode(int code)
     {
@@ -214,15 +211,18 @@ public enum PumpEvents implements CodeEnumWithTranslation
         }
     }
 
+
     public String getValueTemplate()
     {
         return valueTemplate;
     }
 
+
     public void setValueTemplate(String valueTemplate)
     {
         this.valueTemplate = valueTemplate;
     }
+
 
     public static String[] getDescriptions()
     {

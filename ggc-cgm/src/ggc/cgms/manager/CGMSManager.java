@@ -42,6 +42,7 @@ public class CGMSManager extends DeviceManager
      */
     public static CGMSManager s_manager = null;
 
+
     /**
      * Constructor
      */
@@ -49,6 +50,7 @@ public class CGMSManager extends DeviceManager
     {
         super();
     }
+
 
     /**
      * Return singelton instance
@@ -63,6 +65,7 @@ public class CGMSManager extends DeviceManager
 
         return CGMSManager.s_manager;
     }
+
 
     /**
      * Load Device Companies
@@ -79,16 +82,15 @@ public class CGMSManager extends DeviceManager
     @Override
     protected void loadDeviceInstancesV2()
     {
-        for(DeviceDefinition dd : CGMSDeviceDefinition.getSupportedDevices())
+        for (DeviceDefinition dd : CGMSDeviceDefinition.getSupportedDevices())
         {
-            CGMSDeviceDefinition pdd = (CGMSDeviceDefinition)dd;
+            CGMSDeviceDefinition pdd = (CGMSDeviceDefinition) dd;
 
             CGMSDeviceInstanceWithHandler di = new CGMSDeviceInstanceWithHandler(pdd);
 
-            this.supportedDevicesV2.put(di.getCompany().getName() + "_"+ di.getName(), di);
+            this.supportedDevicesV2.put(di.getCompany().getName() + "_" + di.getName(), di);
             this.supportedDevicesForSelector.add(di);
         }
     }
-
 
 }

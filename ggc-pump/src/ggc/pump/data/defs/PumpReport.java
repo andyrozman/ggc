@@ -1,13 +1,11 @@
 package ggc.pump.data.defs;
 
+import java.util.HashMap;
+
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccess;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.pump.util.DataAccessPump;
-
-import com.atech.i18n.I18nControlAbstract;
-
-import java.util.HashMap;
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,14 +36,10 @@ import java.util.Hashtable;
 public enum PumpReport implements CodeEnumWithTranslation
 {
 
-    None(0, "NONE"),
-    Misc(1, "REPORT_MISC"),
-    BolusTotalDay(2, "REPORT_BOLUS_TOTAL_DAY"),
-    BasalTotalDay(3, "REPORT_BASAL_TOTAL_DAY"),
-    InsulinTotalDay(4, "REPORT_INSULIN_TOTAL_DAY"),
+    None(0, "NONE"), Misc(1, "REPORT_MISC"), BolusTotalDay(2, "REPORT_BOLUS_TOTAL_DAY"), BasalTotalDay(3,
+            "REPORT_BASAL_TOTAL_DAY"), InsulinTotalDay(4, "REPORT_INSULIN_TOTAL_DAY"),
 
     ;
-
 
     /**
      * Report Descriptions
@@ -67,10 +61,10 @@ public enum PumpReport implements CodeEnumWithTranslation
         }
 
         String[] report_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), //
-                ic.getMessage("REPORT_MISC"), //
-                ic.getMessage("REPORT_BOLUS_TOTAL_DAY"), //
-                ic.getMessage("REPORT_BASAL_TOTAL_DAY"), //
-                ic.getMessage("REPORT_INSULIN_TOTAL_DAY"), };
+                                    ic.getMessage("REPORT_MISC"), //
+                                    ic.getMessage("REPORT_BOLUS_TOTAL_DAY"), //
+                                    ic.getMessage("REPORT_BASAL_TOTAL_DAY"), //
+                                    ic.getMessage("REPORT_INSULIN_TOTAL_DAY"), };
 
         report_desc = report_desc_lcl;
     }
@@ -78,6 +72,7 @@ public enum PumpReport implements CodeEnumWithTranslation
     int code;
     String i18nKey;
     String translation;
+
 
     private PumpReport(int code, String i18nKey)
     {
@@ -91,19 +86,28 @@ public enum PumpReport implements CodeEnumWithTranslation
         return translation;
     }
 
+
     public void setTranslation(String translation)
     {
         this.translation = translation;
     }
+
 
     public int getCode()
     {
         return code;
     }
 
+
     public String getI18nKey()
     {
         return i18nKey;
+    }
+
+
+    public String getName()
+    {
+        return this.name();
     }
 
 
@@ -119,6 +123,7 @@ public enum PumpReport implements CodeEnumWithTranslation
         return ATDataAccess.getTypeFromDescription(str, translationMapping);
     }
 
+
     public static PumpReport getByCode(int code)
     {
         if (codeMapping.containsKey(code))
@@ -131,6 +136,7 @@ public enum PumpReport implements CodeEnumWithTranslation
         }
     }
 
+
     /**
      * Get Descriptions (array)
      *
@@ -141,4 +147,4 @@ public enum PumpReport implements CodeEnumWithTranslation
         return report_desc;
     }
 
-    }
+}

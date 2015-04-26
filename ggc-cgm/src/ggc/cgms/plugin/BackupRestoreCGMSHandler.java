@@ -1,5 +1,10 @@
 package ggc.cgms.plugin;
 
+import com.atech.db.hibernate.transfer.BackupRestoreObject;
+import com.atech.db.hibernate.transfer.BackupRestoreRunner;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.BackupRestorePlugin;
+
 import ggc.cgms.data.db.CGMSData;
 import ggc.cgms.data.db.CGMSDataExtended;
 import ggc.cgms.util.DataAccessCGMS;
@@ -8,14 +13,9 @@ import ggc.core.db.hibernate.cgms.CGMSDataH;
 import ggc.core.db.tool.transfer.GGCExporter;
 import ggc.core.db.tool.transfer.GGCImporter;
 
-import com.atech.db.hibernate.transfer.BackupRestoreObject;
-import com.atech.db.hibernate.transfer.BackupRestoreRunner;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.plugin.BackupRestorePlugin;
-
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       GGC PlugIn Base (base class for all plugins)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -51,6 +51,7 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
     private String[] object_name = { "ggc.core.db.hibernate.cgms.CGMSDataH",
                                     "ggc.core.db.hibernate.cgms.CGMSDataExtendedH", };
 
+
     /**
      * Constructor
      */
@@ -58,6 +59,7 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
     {
         // i18nControlAbstract = I18nControl.getInstance();
     }
+
 
     /**
      * Do Backup
@@ -85,6 +87,7 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
 
     }
 
+
     /**
      * Do Restore
      */
@@ -105,6 +108,7 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
 
     }
 
+
     /** 
      * Get Backup Restore Object
      */
@@ -118,6 +122,7 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
         else
             return null;
     }
+
 
     /** 
      * Get Backup Restore Object
@@ -139,6 +144,7 @@ public class BackupRestoreCGMSHandler extends BackupRestorePlugin
             return null;
 
     }
+
 
     /** 
      * Does Contain Backup Restore Object

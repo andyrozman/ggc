@@ -12,11 +12,9 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
-import java.util.Hashtable;
-
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -53,6 +51,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         super();
     }
 
+
     /**
      * Constructor 
      * 
@@ -63,6 +62,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         super(params, writer);
     }
+
 
     /**
      * Constructor
@@ -76,6 +76,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         super(params, writer, da);
     }
 
+
     /**
      * Constructor
      * 
@@ -85,6 +86,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         super(cmp);
     }
+
 
     // ************************************************
     // *** Meter Identification Methods ***
@@ -100,6 +102,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return null;
     }
 
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
@@ -110,6 +113,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         return DeviceImplementationStatus.NotAvailable;
     }
+
 
     /**
      * Open
@@ -122,6 +126,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return true;
     }
 
+
     /**
      * Close
      * 
@@ -130,6 +135,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     public void close() throws PlugInBaseException
     {
     }
+
 
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
@@ -140,6 +146,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
@@ -152,6 +159,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
     }
 
+
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy 
      * (from some date to another)
@@ -162,6 +170,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
+
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -174,6 +183,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
     }
 
+
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      * @return 
@@ -184,55 +194,6 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return null;
     }
 
-    /**
-     * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific 
-     *     alarm codes
-     * @return
-     */
-    public Hashtable<String, Integer> getAlarmMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getBolusMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Error Mappings - Map pump specific errors to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getErrorMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Event Mappings - Map pump specific events to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getEventMappings()
-    {
-        return null;
-    }
-
-    /**
-     * Get Report Mappings - Map pump specific reports to Pump Tool specific 
-     *     event codes
-     * @return
-     */
-    public Hashtable<String, Integer> getReportMappings()
-    {
-        return null;
-    }
 
     /**
      * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
@@ -242,12 +203,14 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
     }
 
+
     /** 
      * Dispose
      */
     public void dispose()
     {
     }
+
 
     /**
      * getConnectionPort - connection port data
@@ -259,6 +222,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return null;
     }
 
+
     /**
      * getConnectionProtocol - returns id of connection protocol
      * 
@@ -268,6 +232,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         return DeviceConnectionProtocol.None;
     }
+
 
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
@@ -281,6 +246,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return false;
     }
 
+
     /**
      * Is Device Communicating
      * 
@@ -290,6 +256,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     {
         return false;
     }
+
 
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -304,6 +271,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return false;
     }
 
+
     /**
      * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
      *     left to right side, without displaying progress.
@@ -315,11 +283,13 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         return true;
     }
 
+
     @Override
     public boolean hasDefaultParameter()
     {
         return false;
     }
+
 
     /**
      * Load File Contexts - Load file contexts that device supports
@@ -331,6 +301,7 @@ public abstract class MiniMedCGMS extends AbstractCGMS
         this.fileContexts = new GGCPlugInFileReaderContext[1];
         this.fileContexts[0] = new FRC_MinimedCarelink(dataAccess, this.outputWriter);
     }
+
 
     /**
      * Get Download Support Type

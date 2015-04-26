@@ -15,6 +15,7 @@ import ggc.plugin.device.impl.animas.AnimasDeviceReader;
 import ggc.plugin.device.impl.animas.converter.AnimasAbstractDataConverter;
 import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
 import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
+import ggc.plugin.device.impl.animas.data.AnimasDeviceReplyPacket;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.*;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
@@ -62,7 +63,6 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     public AnimasBaseDataV2Converter(AnimasDeviceReader deviceReader, AnimasDeviceData data)
     {
         super(deviceReader);
-        // super(portName, deviceType, deviceReader);
 
         AnimasUtils.setAnimasData(data);
 
@@ -89,11 +89,10 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
         bigDecimals.put("BIG_DECIMAL_1000", new BigDecimal(1000));
         bigDecimals.put("BIG_DECIMAL_10000f", new BigDecimal(10000.0f));
         bigDecimals.put("BIG_DECIMAL_1000f", new BigDecimal(1000.0f));
-
     }
 
 
-    public void processCustomReturnedRawData(AnimasDevicePacket animasDevicePacket, ATechDate dt)
+    public void processCustomReturnedRawData(AnimasDeviceReplyPacket animasDevicePacket, ATechDate dt)
     {
         switch (animasDevicePacket.dataTypeObject)
         {
@@ -176,7 +175,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
             default:
                 LOG.warn(String.format("This type (code=%s) is not available/supported.",
-                        animasDevicePacket.dataTypeObject.getCode()));
+                    animasDevicePacket.dataTypeObject.getCode()));
         }
 
     }
@@ -186,7 +185,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
     // DATA METHODS
 
-    private void decodeAlarmLog(AnimasDevicePacket packet, ATechDate dateTime)
+    private void decodeAlarmLog(AnimasDeviceReplyPacket packet, ATechDate dateTime)
     {
         int code = AnimasUtils.createIntValueThroughMoreBits(packet.getReceivedDataBit(10),
             packet.getReceivedDataBit(11));
@@ -196,42 +195,43 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
         if (code <= 127)
         {
-            packet.addPreparedData("Alarm_Call_Service", dateTime);
+
+            writeDataInternal("Alarm_Call_Service", dateTime);
             LOG.warn("Alarm Call Service, with Code: " + code);
         }
         else
         {
             if ((code >= 145) && (code <= 149))
             {
-                packet.addPreparedData("Alarm_Occlusion_Detected", dateTime, codes);
+                writeDataInternal("Alarm_Occlusion_Detected", dateTime, codes);
             }
             else
             {
                 switch (code)
                 {
                     case 128:
-                        packet.addPreparedData("Alarm_Replace_Battery", dateTime, codes);
+                        writeDataInternal("Alarm_Replace_Battery", dateTime, codes);
                         break;
 
                     case 144:
-                        packet.addPreparedData("Alarm_Empty_Cartridge", dateTime, codes);
+                        writeDataInternal("Alarm_Empty_Cartridge", dateTime, codes);
                         break;
 
                     case 150:
-                        packet.addPreparedData("Alarm_Auto_Off", dateTime, codes);
+                        writeDataInternal("Alarm_Auto_Off", dateTime, codes);
                         break;
 
                     case 177:
-                        packet.addPreparedData("Alarm_Low_Battery", dateTime, codes);
+                        writeDataInternal("Alarm_Low_Battery", dateTime, codes);
                         break;
 
                     case 178:
-                        packet.addPreparedData("Alarm_Low_Cartridge", dateTime, codes);
+                        writeDataInternal("Alarm_Low_Cartridge", dateTime, codes);
                         break;
 
                     default:
                         {
-                            packet.addPreparedData("Alarm_Unknown", dateTime, codes);
+                            writeDataInternal("Alarm_Unknown", dateTime, codes);
                             LOG.warn("Unknown Alarm Code: " + codes);
                         }
                         break;
@@ -241,7 +241,19 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     }
 
 
-    private void decodeBolusLog(AnimasDevicePacket packet, ATechDate dateTime)
+    public void addPreparedData(String key, ATechDate dateTime)
+    {
+        this.getData().writeData(key, dateTime, null);
+    }
+
+
+    public void addPreparedData(String key, ATechDate dateTime, String value)
+    {
+        AnimasUtils.getAnimasData().writeData(key, dateTime, value);
+    }
+
+
+    private void decodeBolusLog(AnimasDeviceReplyPacket packet, ATechDate dateTime)
     {
         BolusEntry bolusEntry = new BolusEntry();
 
@@ -271,13 +283,19 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     }
 
 
-    public void writeDataInternal(AnimasDevicePacket packet, String key, ATechDate dateTime, String value)
+    public void writeDataInternal(String key, ATechDate dateTime)
+    {
+        this.data.writeData(key, dateTime, null);
+    }
+
+
+    public void writeDataInternal(String key, ATechDate dateTime, String value)
     {
         this.data.writeData(key, dateTime, value);
     }
 
 
-    private void decodeExtendedBolus(AnimasDevicePacket packet)
+    private void decodeExtendedBolus(AnimasDeviceReplyPacket packet)
     {
         BolusExtEntry ebs = new BolusExtEntry();
         ebs.syncRecordId = packet.getReceivedDataBit(6);
@@ -331,32 +349,32 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     }
 
 
-    private void decodeBasalLog(AnimasDevicePacket packet, ATechDate dateTime)
+    private void decodeBasalLog(AnimasDeviceReplyPacket packet, ATechDate dateTime)
     {
         BigDecimal rate = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(10),
             packet.getReceivedDataBit(11)). //
                 divide(bigDecimals.get("BIG_DECIMAL_1000"), 3, BigDecimal.ROUND_CEILING);
         int flag = (short) (packet.getReceivedDataBit(12) & 0x1);
 
-        writeDataInternal(packet, "Basal_Value_Change", dateTime, String.format("%6.3f", rate.floatValue()).trim());
+        writeDataInternal("Basal_Value_Change", dateTime, String.format("%6.3f", rate.floatValue()).trim());
     }
 
 
-    private void decodeSuspendHistory(AnimasDevicePacket packet, ATechDate dateTime)
+    private void decodeSuspendHistory(AnimasDeviceReplyPacket packet, ATechDate dateTime)
     {
-        packet.addPreparedData("Event_Basal_Stop", dateTime);
+        writeDataInternal("Event_Basal_Stop", dateTime);
 
         ATechDate dt = decodeDateTimeFromRawComponents(packet.getReceivedDataBit(11), packet.getReceivedDataBit(10),
             packet.getReceivedDataBit(12), packet.getReceivedDataBit(13));
 
         if (dt != null)
         {
-            writeDataInternal(packet, "Event_Basal_Run", dt, null);
+            writeDataInternal("Event_Basal_Run", dt, null);
         }
     }
 
 
-    private void decodeTotalDailyDoseHistory(AnimasDevicePacket packet, ATechDate dateTime)
+    private void decodeTotalDailyDoseHistory(AnimasDeviceReplyPacket packet, ATechDate dateTime)
     {
         dateTime.hourOfDay = 0;
         dateTime.minute = 0;
@@ -366,17 +384,17 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
             packet.getReceivedDataBit(11), packet.getReceivedDataBit(12), packet.getReceivedDataBit(13)).divide(
             bigDecimals.get("BIG_DECIMAL_10000f"), 3, BigDecimal.ROUND_CEILING);
 
-        packet.addPreparedData("Report_All_Daily_Insulin", dateTime, String.format("%4.3f", tdd.floatValue()));
+        writeDataInternal("Report_All_Daily_Insulin", dateTime, String.format("%4.3f", tdd.floatValue()));
 
         BigDecimal basal = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(14),
             packet.getReceivedDataBit(15), packet.getReceivedDataBit(16), packet.getReceivedDataBit(17)).divide(
             bigDecimals.get("BIG_DECIMAL_10000f"), 3, BigDecimal.ROUND_CEILING);
 
-        writeDataInternal(packet, "Report_Daily_Basal_Insulin", dateTime, String.format("%4.3f", basal.floatValue()));
+        writeDataInternal("Report_Daily_Basal_Insulin", dateTime, String.format("%4.3f", basal.floatValue()));
     }
 
 
-    private void decodePrimeLog(AnimasDevicePacket packet, ATechDate dateTime)
+    private void decodePrimeLog(AnimasDeviceReplyPacket packet, ATechDate dateTime)
     {
         BigDecimal primeAmount = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(10),
             packet.getReceivedDataBit(11)).divide(bigDecimals.get("BIG_DECIMAL_100"), 2, BigDecimal.ROUND_CEILING);
@@ -387,12 +405,12 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
         if (flag == 2)
         {
-            writeDataInternal(packet, "Event_PrimeInfusionSet", dateTime, //
+            writeDataInternal("Event_PrimeInfusionSet", dateTime, //
                 String.format("%4.3f", primeAmount.floatValue()));
         }
         else if (flag == 3)
         {
-            writeDataInternal(packet, "Event_FillCannula", dateTime, //
+            writeDataInternal("Event_FillCannula", dateTime, //
                 String.format("%4.3f", primeAmount.floatValue()));
         }
         else
@@ -474,7 +492,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
     // SETTINGS
 
-    private void decodeSoundVolumeSettings(AnimasDevicePacket packet)
+    private void decodeSoundVolumeSettings(AnimasDeviceReplyPacket packet)
     {
         this.data.setSoundVolume(AnimasSoundType.Normal, SoundValueType.getByCode(packet.getReceivedDataBit(6)));
         this.data.setSoundVolume(AnimasSoundType.AudioBolus, SoundValueType.getByCode(packet.getReceivedDataBit(7)));
@@ -494,7 +512,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     }
 
 
-    private void decodeBasalProfileName(AnimasDevicePacket packet)
+    private void decodeBasalProfileName(AnimasDeviceReplyPacket packet)
     {
         String basalName = "";
         int cp = 0;
@@ -513,7 +531,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     }
 
 
-    private void decodeAdvancedSettings(AnimasDevicePacket packet)
+    private void decodeAdvancedSettings(AnimasDeviceReplyPacket packet)
     {
         PumpSettings pumpSettings = this.data.pumpSettings;
 
@@ -599,19 +617,19 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     }
 
 
-    private void decode19or20(AnimasDevicePacket adp)
+    private void decode19or20(AnimasDeviceReplyPacket adp)
     {
         data.pumpSettings.userInfo.put(this.data.basalProgramNum, getStringFromPacket(adp, 6, 12));
     }
 
 
-    private void decodeActiveBasal(AnimasDevicePacket adp)
+    private void decodeActiveBasal(AnimasDeviceReplyPacket adp)
     {
         data.setActiveBasalProfile(adp.getReceivedDataBit(6));
     }
 
 
-    private void decodeBasalProfile(AnimasDevicePacket adp)
+    private void decodeBasalProfile(AnimasDeviceReplyPacket adp)
     {
         int profileEntries = adp.getReceivedDataBit(7);
         int profileNumber = this.data.basalProgramNum + 1;
@@ -629,7 +647,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     }
 
 
-    private void decodeDosingSettings(AnimasDevicePacket adp)
+    private void decodeDosingSettings(AnimasDeviceReplyPacket adp)
     {
         for (int i = 0; i < 6; i++)
         {
@@ -642,7 +660,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
             this.data
                     .addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinBGRatio,
                             (i + 1), this.calculateTimeFromTimeSet(i * 8), this.data.isBGinMgDL() ? isf
-                            : (float) (isf / 18.0f)));
+                                    : (float) (isf / 18.0f)));
         }
 
         for (int i = 0; i < 12; i++)
@@ -653,13 +671,13 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
             this.data
                     .addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.BGTarget, (i + 1),
                             this.calculateTimeFromTimeSet(i * 8), this.data.isBGinMgDL() ? bgTarget
-                            : (float) (bgTarget / 18.0f), this.data.isBGinMgDL() ? bgDelta
-                            : (float) (bgDelta / 18.0f)));
+                                    : (float) (bgTarget / 18.0f), this.data.isBGinMgDL() ? bgDelta
+                                    : (float) (bgDelta / 18.0f)));
         }
     }
 
 
-    private void decodeInsulinCHRatio(AnimasDevicePacket adp)
+    private void decodeInsulinCHRatio(AnimasDeviceReplyPacket adp)
     {
         int maxEntry = adp.getReceivedDataBit(7);
         for (int i = 0; i < maxEntry; i++)
@@ -672,7 +690,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     }
 
 
-    private void decodeInsulinBGRatio(AnimasDevicePacket adp) // 39/5
+    private void decodeInsulinBGRatio(AnimasDeviceReplyPacket adp) // 39/5
     {
         int maxEntry = adp.getReceivedDataBit(7);
         for (int i = 0; i < maxEntry; i++)
@@ -694,7 +712,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     }
 
 
-    private void decodeBGTarget(AnimasDevicePacket adp) // 39/6
+    private void decodeBGTarget(AnimasDeviceReplyPacket adp) // 39/6
     {
         int maxEntry = adp.getReceivedDataBit(7);
         for (int i = 0; i < maxEntry; i++)
@@ -718,7 +736,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     }
 
 
-    private void decodeFriendlyName(AnimasDevicePacket adp)
+    private void decodeFriendlyName(AnimasDeviceReplyPacket adp)
     {
         this.data.pumpSettings.friendlyName = getStringFromPacket(adp, 6, 12).trim();
     }

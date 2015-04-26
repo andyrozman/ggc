@@ -17,8 +17,7 @@ public enum DeviceHandlerType
 
     // CGMSes
     AnimasV2CGMSHandler(DownloadSupportType.Download_Data_Config),
-
-    ;
+    DexcomHandler(DownloadSupportType.Download_Data_Config),;
 
 
     DownloadSupportType downloadSupportType;

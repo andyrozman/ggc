@@ -1,17 +1,17 @@
 package ggc.cgms.test;
 
-import ggc.cgms.device.animas.impl.AnimasCGMSDeviceReader;
-import ggc.cgms.util.DataAccessCGMS;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import ggc.cgms.device.animas.impl.AnimasCGMSDeviceReader;
+import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.util.DataAccess;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.output.ConsoleOutputWriter;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  *
@@ -29,16 +29,19 @@ import ggc.plugin.output.ConsoleOutputWriter;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- *  Filename:     TestAnimas
- *  Description:  Test Animas
+ *  Filename:     PluginDb
+ *  Description:  This is master class for using Db instance within plug-in. In most cases, we
+ *                would want data to be handled by outside authority (GGC), but in some cases
+ *                we wouldn't want that.
  *
- *  Author: Andy Rozman {andy@atech-software.com}
+ *  Author: Andy {andy@atech-software.com}
  */
 
 public class TestAnimasCGMS
 {
 
     private static final Log LOG = LogFactory.getLog(TestAnimasCGMS.class);
+
 
     public static void main(String[] args)
     {
@@ -64,8 +67,6 @@ public class TestAnimasCGMS
             //
             // da.createDb(daCore.getHibernateDb());
 
-
-
             String portName = "/dev/ttyUSB0"; // linux
 
             if (System.getProperty("os.name").toLowerCase().contains("win"))
@@ -73,10 +74,9 @@ public class TestAnimasCGMS
                 portName = "COM9";
             }
 
-
-            AnimasCGMSDeviceReader adr = new AnimasCGMSDeviceReader(portName, AnimasDeviceType.Animas_Vibe, new ConsoleOutputWriter());
+            AnimasCGMSDeviceReader adr = new AnimasCGMSDeviceReader(portName, AnimasDeviceType.Animas_Vibe,
+                    new ConsoleOutputWriter());
             adr.readData();
-
 
         }
         catch (Exception ex)

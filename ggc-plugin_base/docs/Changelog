@@ -2,15 +2,20 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+0.7.1 [28.3.2015]
+    * Added Communication Handler for different Communication Protocols (to be used instaed protocol.* classes, it contains
+      all relevant methods for handling specific communication library
+
+
 0.7.0 [19.2.2015]
     * Device Implementation V2 Framework: Base, GUI Processing, DeviceHandlerManager
+
 
 0.6.4 [11.11.2014 - ]
     * DeviceTempValues, added isNumericValue parameter, and added several constructors with CodeEnumWithTranslation parameters as base and sub
       type
     * DeviceValuesWriter, added numeric parameter and better handling for value (we parsed value to change , to ., now this is dependand on
       numericParameter in DeviceTempValues or by command.
-
 
 
 0.6.3 [21.9.2014]

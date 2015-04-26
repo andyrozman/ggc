@@ -1,5 +1,11 @@
 package ggc.cgms.test;
 
+import java.io.File;
+
+import com.atech.i18n.mgr.LanguageManager;
+import com.atech.utils.TimerThread;
+import com.atech.utils.data.TimeZoneUtil;
+
 import ggc.cgms.device.dexcom.file.FRC_DexcomXml_DM3;
 import ggc.cgms.device.minimed.file.MinimedCareLinkCGMS;
 import ggc.cgms.util.DataAccessCGMS;
@@ -9,36 +15,32 @@ import ggc.core.util.GGCLanguageManagerRunner;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.output.ConsoleOutputWriter;
 
-import java.io.File;
-
-import com.atech.i18n.mgr.LanguageManager;
-import com.atech.utils.TimerThread;
-import com.atech.utils.data.TimeZoneUtil;
-
 /**
- * Application: GGC - GNU Gluco Control
- * Plug-in: CGMS Tool (support for CGMS devices)
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
- * See AUTHORS for copyright information.
+ *  See AUTHORS for copyright information.
  *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * Filename: ###---###
- * Description:
+ *  Filename:     PluginDb
+ *  Description:  This is master class for using Db instance within plug-in. In most cases, we
+ *                would want data to be handled by outside authority (GGC), but in some cases
+ *                we wouldn't want that.
  *
- * Author: Andy {andy@atech-software.com}
+ *  Author: Andy {andy@atech-software.com}
  */
 
 public class CGMSConsoleTester // extends JFrame
@@ -46,6 +48,7 @@ public class CGMSConsoleTester // extends JFrame
 
     TimerThread thread;
     String path_to_test_files = "../../test/";
+
 
     /**
      * Constructor
@@ -97,6 +100,7 @@ public class CGMSConsoleTester // extends JFrame
 
     }
 
+
     @SuppressWarnings("unused")
     private void startDexcom()
     {
@@ -111,6 +115,7 @@ public class CGMSConsoleTester // extends JFrame
         dt1.readFile("../test/DexDM3SampleExport.xml");
 
     }
+
 
     /**
      * Start Minimed
@@ -159,6 +164,7 @@ public class CGMSConsoleTester // extends JFrame
 
     }
 
+
     /**
      * Start File Selector
      */
@@ -178,6 +184,7 @@ public class CGMSConsoleTester // extends JFrame
         // d.setBounds(20, 20, p.getMinSize()[0], p.getMinSize()[1]);
         // d.setVisible(true);
     }
+
 
     /**
      * Main method

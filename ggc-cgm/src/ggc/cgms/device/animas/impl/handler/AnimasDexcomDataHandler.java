@@ -1,20 +1,20 @@
 package ggc.cgms.device.animas.impl.handler;
 
+import java.util.Arrays;
+import java.util.List;
+
 import ggc.cgms.device.animas.impl.converter.AnimasDexcomDataConverter;
-import ggc.cgms.device.animas.impl.data.AnimasCGMSDataWriter;
 import ggc.cgms.device.animas.impl.data.AnimasCGMSDeviceData;
 import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
+import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
 import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
 import ggc.plugin.device.impl.animas.handler.AbstractDeviceDataV2Handler;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 import ggc.plugin.output.OutputWriter;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,11 +44,13 @@ import java.util.List;
 
 public class AnimasDexcomDataHandler extends AbstractDeviceDataV2Handler
 {
+
     AnimasCGMSDeviceData data;
     AnimasDexcomDataConverter dexcomDataConverter;
 
 
-    public AnimasDexcomDataHandler(String portName, AnimasDeviceType deviceType, AnimasDeviceReader deviceReader, OutputWriter outputWriter)
+    public AnimasDexcomDataHandler(String portName, AnimasDeviceType deviceType, AnimasDeviceReader deviceReader,
+            OutputWriter outputWriter)
     {
         super(portName, deviceType, deviceReader, outputWriter);
     }
@@ -60,25 +62,26 @@ public class AnimasDexcomDataHandler extends AbstractDeviceDataV2Handler
         this.data = new AnimasCGMSDeviceData(new AnimasCGMSDataWriter(this.outputWriter));
         this.setBaseData(data);
         dexcomDataConverter = new AnimasDexcomDataConverter(deviceReader, data);
+        new Thread(dexcomDataConverter).start();
         this.dataConverter = this.dexcomDataConverter;
+        this.setDebugMode(true, false);
     }
+
 
     @Override
     public List<AnimasTransferType> getSupportedActions()
     {
-        return Arrays.asList(AnimasTransferType.DownloadCGMSData,
-                AnimasTransferType.DownloadCGMSSettings);
+        return Arrays.asList(AnimasTransferType.DownloadCGMSData, AnimasTransferType.DownloadCGMSSettings);
     }
 
 
     protected void determineMaxProgressForTransferType(AnimasTransferType transferType)
     {
-        int maxProgress = 5; // opening is 10
+        int maxProgress = 5; // opening is 5
 
         if (this.data.getTransferType() == AnimasTransferType.DownloadCGMSData)
         {
             maxProgress += determineMaxProgressForOperation(AnimasTransferType.All);
-            //maxProgress += determineMaxProgressForOperation(AnimasTransferType.DownloadCGMSSettingsBase);
             maxProgress += determineMaxProgressForOperation(AnimasTransferType.DownloadCGMSData);
         }
         else if (this.data.getTransferType() == AnimasTransferType.DownloadCGMSSettings)
@@ -99,7 +102,7 @@ public class AnimasDexcomDataHandler extends AbstractDeviceDataV2Handler
 
         try
         {
-            LOG.debug("Running Animas Dexcom Data Handler (v2)");
+            LOG.debug("Running Animas Dexcom Data Handler");
 
             this.checkIfActionAllowed(transferType);
 
@@ -107,13 +110,11 @@ public class AnimasDexcomDataHandler extends AbstractDeviceDataV2Handler
 
             openConnection();
 
+            this.data.writeIdentification();
+
             if (this.data.getTransferType() == AnimasTransferType.DownloadCGMSData)
             {
-                //downloadAll();
-
-                downloadTestData();
-
-                //this.downloadCompleted = true;
+                downloadData();
             }
             else if (this.data.getTransferType() == AnimasTransferType.DownloadCGMSSettings)
             {
@@ -123,13 +124,10 @@ public class AnimasDexcomDataHandler extends AbstractDeviceDataV2Handler
         }
         catch (PlugInBaseException ex)
         {
-
             if (AnimasUtils.checkIfUserRelevantExceptionIsThrownNoRethrow(ex))
             {
-                LOG.error("Exception: " + ex, ex);
+                LOG.error("Exception reading CGMS Data: " + ex, ex);
                 throw ex;
-                //this.deviceReader.returnFromOperation(this, ex);
-
             }
         }
         finally
@@ -140,26 +138,28 @@ public class AnimasDexcomDataHandler extends AbstractDeviceDataV2Handler
             }
             catch (Exception ex2)
             {}
+
+            this.dataConverter.stopConverterThread();
         }
 
     }
 
-    private void downloadTestData() throws PlugInBaseException
-    {
-        sendRequestAndWait(AnimasDataType.DexcomBgHistory, 0, 48640, 800, 100); // 45
-    }
 
     private void downloadSettings() throws PlugInBaseException
     {
-        //downloadSettingsOK();
-        downloadSettingsTest();
+        sendRequestAndWait(AnimasDataType.DexcomSettings, 0, 1, 100, 100); // 42
+        this.data.writeSettings(AnimasDataType.DexcomSettings);
     }
+
 
     private void downloadData() throws PlugInBaseException
     {
-        // done no GGC
-        //sendRequestAndWait(AnimasDataType.DexcomWarnings, 0, 33215, 56, 100); // 43
 
+        sendRequestAndWait(AnimasDataType.DexcomWarnings, 0, 33215, 56, 100); // 43
+        // 43 was 56, 500
+
+        this.noReconnectMode = true;
+        sendRequestAndWait(AnimasDataType.DexcomBgHistory, 0, 48640, 800, 100); // 45
 
     }
 
@@ -169,41 +169,22 @@ public class AnimasDexcomDataHandler extends AbstractDeviceDataV2Handler
         sendRequestAndWait(AnimasDataType.Dexcom_C3, 0, 1, 100, 100); // 44
         sendRequestAndWait(AnimasDataType.Dexcom_C5, 0, 1, 100, 100); // 48
         sendRequestAndWait(AnimasDataType.Dexcom_C6, 0, 1, 100, 100); // 48
-
     }
 
 
-    public void downloadSettingsOK() throws PlugInBaseException
+    @Override
+    public boolean shouldWeRetryDownloadingData(AnimasDevicePacket devicePacket)
     {
-        sendRequestAndWait(AnimasDataType.DexcomSettings, 0, 1, 100, 100); // 42
-        this.data.writeSettings(AnimasDataType.DexcomSettings);
+        if (devicePacket.dataTypeObject == AnimasDataType.DexcomBgHistory)
+        {
+            if (devicePacket.downloadedQuantity > 750)
+            {
+                this.animasDevicePacket = devicePacket;
+                return false;
+            }
+        }
 
-        //this.data.writeSettings(AnimasDataType.BGTargetSetting);
-    }
-
-
-    public void downloadAll() throws PlugInBaseException
-    {
-        // settings ?
-        //sendRequestAndWait(AnimasDataType.DexcomSettings, 0, 1, 100, 100); // 42
-
-//        sendRequestAndWait(AnimasDataType.DexcomBgHistory, 0, 48640, 48640, 100); // 45
-
-
-
-        //sendRequestAndWait(AnimasDataType.Dexcom_C7, 0, 256, 100, 100); // 46
-
-        //testCommand(AnimasDataType.DexcomSettings, 0, 1, 1);
-
-        // data ?
-
-
-        // invalid
-//        sendRequestAndWait(AnimasDataType.Dexcom_C6, 0, 1, 100, 100); // 46
-
-
-
-
+        return true;
     }
 
 }

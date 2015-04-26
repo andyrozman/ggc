@@ -1,13 +1,5 @@
 package ggc.cgms.data;
 
-import ggc.cgms.data.defs.extended.CGMSExtendedDataType;
-import ggc.cgms.util.CGMSUtil;
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.db.hibernate.GGCHibernateObject;
-import ggc.core.db.hibernate.cgms.CGMSDataExtendedH;
-import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.output.OutputWriterType;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -18,6 +10,40 @@ import org.hibernate.Transaction;
 import com.atech.db.ext.ExtendedHandler;
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.data.ATechDate;
+
+import ggc.cgms.data.defs.extended.CGMSExtendedDataType;
+import ggc.cgms.util.CGMSUtil;
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.core.db.hibernate.cgms.CGMSDataExtendedH;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.output.OutputWriterType;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     CGMSValuesExtendedEntry
+ *  Description:  Collection of CGMSValuesExtendedEntry, which contains Extended data.
+ *
+ *  Author: Andy {andy@atech-software.com}
+ */
 
 public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements StatisticsItem
 {
@@ -32,6 +58,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     public String comment;
     public int subType = -1; // not stored directly
 
+
     // DataAccessCGMS dataAccess = DataAccessCGMS.getInstance();
 
     public CGMSValuesExtendedEntry()
@@ -39,6 +66,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         super();
         this.source = DataAccessCGMS.getInstance().getSourceDevice();
     }
+
 
     /**
      * Constructor
@@ -52,6 +80,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         loadDbData(pdh);
     }
 
+
     private void loadDbData(CGMSDataExtendedH pdh)
     {
         this.id = pdh.getId();
@@ -63,6 +92,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         this.personId = pdh.getPerson_id();
         this.comment = pdh.getComment();
     }
+
 
     public Object getTableColumnValue(int index)
     {
@@ -81,12 +111,13 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
                 return new Boolean(getChecked());
 
             case 4:
-                return this.getStatus();
+                return this.getStatusType();
 
             default:
                 return "";
         }
     }
+
 
     private Object getDisplayValue()
     {
@@ -115,6 +146,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         return "N/I";
     }
 
+
     /**
      * Prepare Entry [Framework v2]
      */
@@ -124,10 +156,12 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         this.saveExtended();
     }
 
+
     public String getDVEName()
     {
         return "CGMSValuesExtendedEntry";
     }
+
 
     public String getValue()
     {
@@ -135,6 +169,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     }
 
     long old_id;
+
 
     /**
      * Set Old Id (this is used for changing old objects in framework v2)
@@ -145,6 +180,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     {
         this.old_id = id_in;
     }
+
 
     /**
      * Get Old Id (this is used for changing old objects in framework v2)
@@ -158,6 +194,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
     String source;
 
+
     /**
      * Set Source
      * 
@@ -169,6 +206,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
     }
 
+
     /**
      * Get Source 
      * 
@@ -179,10 +217,12 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         return this.source;
     }
 
+
     public String getSpecialId()
     {
         return "CDE_" + this.datetime + "_" + this.type.getValue();
     }
+
 
     public String getDataAsString()
     {
@@ -220,10 +260,12 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         }
     }
 
+
     public String getObjectUniqueId()
     {
         return "" + this.datetime;
     }
+
 
     public String DbAdd(Session sess) throws Exception
     {
@@ -242,6 +284,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         return "" + _id.longValue();
     }
 
+
     private void saveDbData(CGMSDataExtendedH ch)
     {
         this.personId = CGMSUtil.getCurrentUserId();
@@ -255,13 +298,14 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         ch.setChanged(System.currentTimeMillis());
     }
 
+
     public boolean DbEdit(Session sess) throws Exception
     {
         Transaction tx = sess.beginTransaction();
         // System.out.println("id: " + old_id);
         CGMSDataExtendedH ext = (CGMSDataExtendedH) sess.get(CGMSDataExtendedH.class, this.id);
 
-        //ext.setId(this.id);
+        // ext.setId(this.id);
 
         this.saveDbData(ext);
 
@@ -270,6 +314,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
         return true;
     }
+
 
     public boolean DbDelete(Session sess) throws Exception
     {
@@ -283,10 +328,12 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         return true;
     }
 
+
     public boolean DbHasChildren(Session sess) throws Exception
     {
         return false;
     }
+
 
     public boolean DbGet(Session sess) throws Exception
     {
@@ -297,45 +344,54 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         return true;
     }
 
+
     public String getObjectName()
     {
         return "CGMSValuesExtendedEntry";
     }
+
 
     public boolean isDebugMode()
     {
         return false;
     }
 
+
     public int getAction()
     {
         return 0;
     }
+
 
     public float getValueForItem(int index)
     {
         return 0;
     }
 
+
     public int getStatisticsAction(int index)
     {
         return 0;
     }
+
 
     public boolean isSpecialAction(int index)
     {
         return false;
     }
 
+
     public int getMaxStatisticsObject()
     {
         return 0;
     }
 
+
     public boolean weHaveSpecialActions()
     {
         return false;
     }
+
 
     @Override
     public ArrayList<? extends GGCHibernateObject> getDbObjects()
@@ -343,11 +399,13 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         return null;
     }
 
+
     @Override
     public Object getColumnValue(int index)
     {
         return "N/A";
     }
+
 
     @Override
     public long getDateTime()
@@ -355,11 +413,13 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         return this.datetime;
     }
 
+
     @Override
     public void setDateTimeObject(ATechDate dt)
     {
         this.datetime = dt.getATDateTimeAsLong();
     }
+
 
     @Override
     public ATechDate getDateTimeObject()
@@ -367,11 +427,13 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
         return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.datetime);
     }
 
+
     @Override
     public int getDateTimeFormat()
     {
         return ATechDate.FORMAT_DATE_AND_TIME_S;
     }
+
 
     private void loadExtended(String extended2)
     {
@@ -389,6 +451,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
             this.source = handler.getExtendedValue(ExtendedCGMSValuesExtendedEntry.EXTENDED_SOURCE, data);
         }
     }
+
 
     private String saveExtended()
     {
@@ -411,10 +474,12 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
     }
 
+
     public CGMSExtendedDataType getType()
     {
         return type;
     }
+
 
     public void setType(CGMSExtendedDataType type)
     {

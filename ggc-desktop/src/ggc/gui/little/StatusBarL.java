@@ -1,21 +1,14 @@
 package ggc.gui.little;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.core.util.DataAccess;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.Observable;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SpringLayout;
+import javax.swing.*;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.refresh.EventObserverInterface;
+import com.atech.utils.ATSwingUtils;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,6 +37,7 @@ import com.atech.misc.refresh.EventObserverInterface;
 
 public class StatusBarL extends JPanel implements EventObserverInterface
 {
+
     private static final long serialVersionUID = -8864931592538137782L;
     DataAccess da = DataAccess.getInstance();
     private I18nControlAbstract m_ic = da.getI18nControlInstance();
@@ -55,6 +49,7 @@ public class StatusBarL extends JPanel implements EventObserverInterface
 
     private ImageIcon[] statusIcons = null;
     GGCLittle little;
+
 
     /**
      * Constructor
@@ -104,6 +99,7 @@ public class StatusBarL extends JPanel implements EventObserverInterface
         da.addObserver(DataAccess.OBSERVABLE_STATUS, this);
     }
 
+
     /**
      * Set Status Message
      * 
@@ -131,6 +127,7 @@ public class StatusBarL extends JPanel implements EventObserverInterface
      */
     public static final int DB_LOAD = 2;
 
+
     /**
      * Set Db Status
      * @param status
@@ -142,6 +139,7 @@ public class StatusBarL extends JPanel implements EventObserverInterface
         // ((MainFrame)dataAccess.getMainParent()).setMenusByDbLoad(status);
     }
 
+
     /**
      * Set Database Name
      * 
@@ -151,6 +149,7 @@ public class StatusBarL extends JPanel implements EventObserverInterface
     {
         lblName.setText(m_ic.getMessage("DATABASE") + " [" + dbName + "]:");
     }
+
 
     /**
      * update - Observer method

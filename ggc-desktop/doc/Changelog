@@ -6,11 +6,17 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
-0.5.0.3 [10.12.2012]
+0.6 [28.3.2015] [Andy]
+    * changes in AtechTools which required changes here
+    * started work on Stock tools
+    * added configuration for Internal PDF Viewer
+    * fixes on Graphs
+
+
+0.5.0.3 [10.12.2012] [Andy]
     * In Daily Row Dialog we replaced text boxes with JSpinner on edit of BG and CH. Also we set limits on both. BG max 
       value is 999 mg/dL (55.4 mmol/L) and CH cannot be negative
     * Minor change in configuration (just visual change)
-
 
 
 0.5.0.2 [2.5.2012] [Andy] 

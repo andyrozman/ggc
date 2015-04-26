@@ -1,5 +1,13 @@
 package ggc.nutri.util;
 
+import java.util.ArrayList;
+
+import javax.swing.*;
+
+import com.atech.graphics.components.about.*;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.i18n.mgr.LanguageManager;
+
 import ggc.core.db.GGCDb;
 import ggc.core.plugins.GGCPluginType;
 import ggc.nutri.db.GGCDbCache;
@@ -7,18 +15,6 @@ import ggc.nutri.db.GGCDbNutri;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.util.ArrayList;
-
-import javax.swing.JFrame;
-
-import com.atech.graphics.components.about.CreditsEntry;
-import com.atech.graphics.components.about.CreditsGroup;
-import com.atech.graphics.components.about.FeaturesEntry;
-import com.atech.graphics.components.about.FeaturesGroup;
-import com.atech.graphics.components.about.LibraryInfoEntry;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.i18n.mgr.LanguageManager;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,19 +37,20 @@ import com.atech.i18n.mgr.LanguageManager;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     DataAccessMeter  
- *  Description:  Static data class used by Meter Plugin.
+ *  Filename:     DataAccessNutri
+ *  Description:  Static data class used by Nutrition Plugin.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
+// FIXME needs little refactoring and deleting of stuff
 public class DataAccessNutri extends DataAccessPlugInBase
 {
 
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.3.3";
+    public static final String PLUGIN_VERSION = "1.3.5";
 
     private static DataAccessNutri s_da = null; // This is handle to unique
 
@@ -61,6 +58,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
      * The m_main.
      */
     JFrame m_main = null;
+
 
     // ********************************************************
     // ****** Constructors and Access methods *****
@@ -81,6 +79,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
         initSpecial();
     }
 
+
     /**
      * Set Values From Data Access
      */
@@ -89,6 +88,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
 
     }
 
+
     /** 
      * Init Special - All methods that we support should be called here
      */
@@ -96,17 +96,18 @@ public class DataAccessNutri extends DataAccessPlugInBase
     public void initSpecial()
     {
         // System.out.println("init special");
-        checkPrerequisites();
-        createWebListerContext();
-        createPlugInAboutContext();
-        createConfigurationContext();
+        //checkPrerequisites();
+        //createWebListerContext();
+        //createPlugInAboutContext();
+        //createConfigurationContext();
         createPlugInVersion();
-        loadDeviceDataHandler();
-        loadManager();
-        loadReadingStatuses();
-        createPlugInDataRetrievalContext();
-        loadWebLister();
+        //loadDeviceDataHandler();
+        //loadManager();
+        //loadReadingStatuses();
+        //createPlugInDataRetrievalContext();
+        //loadWebLister();
     }
+
 
     // Method: getInstance
     // Author: Andy
@@ -125,6 +126,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
         return s_da;
     }
 
+
     /**
      * Create Instance 
      * 
@@ -139,6 +141,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
         }
         return s_da;
     }
+
 
     /*
      * public void loadConfigIcons()
@@ -165,6 +168,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
         super.m_i18n = null;
     }
 
+
     // ********************************************************
     // ****** About Methods *****
     // ********************************************************
@@ -175,79 +179,81 @@ public class DataAccessNutri extends DataAccessPlugInBase
     @Override
     public void createPlugInAboutContext()
     {
-        I18nControlAbstract ic = getI18nControlInstance();
-
-        // about_title = i18nControlAbstract.getMessage("METER_PLUGIN_ABOUT");
-        about_image_name = "/icons/about_meter.jpg";
-        // about_image_name = "/icons/about_logo.gif";
-        about_plugin_copyright_from = 2006;
-        // about_plugin_name = i18nControlAbstract.getMessage("METER_PLUGIN");
-
-        ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
-        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.2.x", "www.atech-software.com", "LGPL",
-                "Helper Library for Swing/Hibernate/...",
-                "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
-        lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", "2.4", "commons.apache.org/lang/", "Apache",
-                "Helper methods for java.lang library"));
-        lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", "1.0.4", "commons.apache.org/logging/", "Apache",
-                "Logger and all around wrapper for logging utilities"));
-        lst_libs.add(new LibraryInfoEntry("dom4j", "1.6.1", "http://www.dom4j.org/", "BSD",
-                "Framework for Xml manipulation"));
-        lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.1.7", "www.rxtx.org", "LGPL", "Comm API"));
-        lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c",
-                "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License",
-                "Xml parser for processing xml document",
-                "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
-        plugin_libraries = lst_libs;
-
-        ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
-        CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
-        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com",
-                "Full framework and support for Ascensia, Roche, LifeScan devices"));
-        cg.addCreditsEntry(new CreditsEntry("Alexander Balaban", "abalaban1@yahoo.ca", "Support for OT UltraSmart"));
-        lst_credits.add(cg);
-        cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
-        cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "", "Supplied hardware for Roche development"));
-        lst_credits.add(cg);
-
-        plugin_developers = lst_credits;
-
-        // features
-        ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
-
-        FeaturesGroup fg = new FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Base Meter Tools Framework"));
-        fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
-        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
-        fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC integration)"));
-        fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
-        fg.addFeaturesEntry(new FeaturesEntry("List of meters"));
-        fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
-
-        lst_features.add(fg);
-
-        fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer"));
-        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
-        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Ultra2, Profile, Easy, UltraSmart"));
-
-        lst_features.add(fg);
-
-        // fg = new FeaturesGroup(i18nControlAbstract.getMessage("NOT_IMPLEMENTED_FEATURES"));
-        // fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
-
-        // lst_features.add(fg);
-
-        fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
-        // fg.addFeaturesEntry(new FeaturesEntry("LifeScan (end of 2008)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Abbott (in 2009)"));
-        fg.addFeaturesEntry(new FeaturesEntry("???"));
-
-        lst_features.add(fg);
-
-        this.plugin_features = lst_features;
+//        I18nControlAbstract ic = getI18nControlInstance();
+//
+//        // about_title = i18nControlAbstract.getMessage("METER_PLUGIN_ABOUT");
+//        about_image_name = "/icons/about_meter.jpg";
+//        // about_image_name = "/icons/about_logo.gif";
+//        about_plugin_copyright_from = 2010;
+//        // about_plugin_name = i18nControlAbstract.getMessage("METER_PLUGIN");
+//
+//        ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
+//        lst_libs.add(new LibraryInfoEntry("Atech-Tools", "0.2.x", "www.atech-software.com", "LGPL",
+//                "Helper Library for Swing/Hibernate/...",
+//                "Copyright (c) 2006-2008 Atech Software Ltd. All rights reserved."));
+//        lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", "2.4", "commons.apache.org/lang/", "Apache",
+//                "Helper methods for java.lang library"));
+//        lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", "1.0.4", "commons.apache.org/logging/", "Apache",
+//                "Logger and all around wrapper for logging utilities"));
+//        lst_libs.add(new LibraryInfoEntry("dom4j", "1.6.1", "http://www.dom4j.org/", "BSD",
+//                "Framework for Xml manipulation"));
+//        lst_libs.add(new LibraryInfoEntry("RXTXcomm", "2.1.7", "www.rxtx.org", "LGPL", "Comm API"));
+//        lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c",
+//                "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License",
+//                "Xml parser for processing xml document",
+//                "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
+//        plugin_libraries = lst_libs;
+//
+//        ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
+//        CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
+//        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com",
+//                "Full framework and support for Ascensia, Roche, LifeScan devices"));
+//        cg.addCreditsEntry(new CreditsEntry("Alexander Balaban", "abalaban1@yahoo.ca", "Support for OT UltraSmart"));
+//        lst_credits.add(cg);
+//        cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
+//        cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "", "Supplied hardware for Roche development"));
+//        lst_credits.add(cg);
+//
+//        plugin_developers = lst_credits;
+//
+//        // features
+//        ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
+//
+//        FeaturesGroup fg = new FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Base Meter Tools Framework"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC integration)"));
+//        fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
+//        fg.addFeaturesEntry(new FeaturesEntry("List of meters"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
+//
+//        lst_features.add(fg);
+//
+//        fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
+//        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Ultra2, Profile, Easy, UltraSmart"));
+//
+//        lst_features.add(fg);
+//
+//        // fg = new
+//        // FeaturesGroup(i18nControlAbstract.getMessage("NOT_IMPLEMENTED_FEATURES"));
+//        // fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
+//
+//        // lst_features.add(fg);
+//
+//        fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
+//        // fg.addFeaturesEntry(new FeaturesEntry("LifeScan (end of 2008)"));
+//        fg.addFeaturesEntry(new FeaturesEntry("Abbott (in 2009)"));
+//        fg.addFeaturesEntry(new FeaturesEntry("???"));
+//
+//        lst_features.add(fg);
+//
+//        this.plugin_features = lst_features;
 
     }
+
 
     /** 
      * Get About Image Size - Define about image size
@@ -262,6 +268,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
         return sz;
     }
 
+
     // ********************************************************
     // ****** Web Lister Methods *****
     // ********************************************************
@@ -272,29 +279,8 @@ public class DataAccessNutri extends DataAccessPlugInBase
     @Override
     public void createWebListerContext()
     {
-
-        this.loadWebLister();
-
-        I18nControlAbstract ic = getI18nControlInstance();
-
-        weblister_items = new ArrayList<BaseListEntry>();
-        weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/meters/abbott.html", 4));
-        weblister_items.add(new BaseListEntry("Arkray USA (formerly Hypoguard)", "/meters/arkray.html", 5));
-        weblister_items.add(new BaseListEntry("Bayer Diagnostics", "/meters/bayer.html", 1));
-        weblister_items.add(new BaseListEntry("Diabetic Supply of Suncoast", "/meters/dsos.html", 5));
-        weblister_items.add(new BaseListEntry("Diagnostic Devices", "/meters/prodigy.html", 5));
-        weblister_items.add(new BaseListEntry("HealthPia America", "/meters/healthpia.html", 5));
-        weblister_items.add(new BaseListEntry("Home Diagnostics", "/meters/home_diagnostics.html", 5));
-        weblister_items.add(new BaseListEntry("Lifescan", "/meters/lifescan.html", 4));
-        weblister_items.add(new BaseListEntry("Nova Biomedical", "/meters/nova_biomedical.html", 5));
-        weblister_items.add(new BaseListEntry("Roche Diagnostics", "/meters/roche.html", 2));
-        weblister_items.add(new BaseListEntry("Sanvita", "/meters/sanvita.html", 5));
-        weblister_items.add(new BaseListEntry("U.S. Diagnostics", "/meters/us_diagnostics.html", 5));
-        weblister_items.add(new BaseListEntry("WaveSense", "/meters/wavesense.html", 5));
-
-        // weblister_title = i18nControlAbstract.getMessage("METERS_LIST_WEB");
-        weblister_desc = ic.getMessage("METERS_LIST_WEB_DESC");
     }
+
 
     // ********************************************************
     // ****** Abstract Methods *****
@@ -305,11 +291,13 @@ public class DataAccessNutri extends DataAccessPlugInBase
     {
     }
 
+
     @Override
     public GGCPluginType getPluginType()
     {
         return GGCPluginType.NutritionToolPlugin;
     }
+
 
     /**
      * Get Application Name
@@ -317,8 +305,9 @@ public class DataAccessNutri extends DataAccessPlugInBase
     @Override
     public String getApplicationName()
     {
-        return "GGC_MeterTool";
+        return "GGC_NutriTool";
     }
+
 
     /** 
      * Check Prerequisites for Plugin
@@ -327,6 +316,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
     public void checkPrerequisites()
     {
     }
+
 
     // ********************************************************
     // ****** Version *****
@@ -340,6 +330,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
     {
         this.plugin_version = DataAccessNutri.PLUGIN_VERSION;
     }
+
 
     // ********************************************************
     // ****** Manager *****
@@ -357,6 +348,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
     {
     }
 
+
     /**
      * Create Device Configuration for plugin
      */
@@ -366,6 +358,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
         this.device_config = new DeviceConfiguration(this);
     }
 
+
     /**
      * Create Data Retrieval Context for Plug-in
      * 
@@ -374,12 +367,8 @@ public class DataAccessNutri extends DataAccessPlugInBase
     @Override
     public void createPlugInDataRetrievalContext()
     {
-        entry_statuses = new String[4];
-        entry_statuses[0] = m_i18n.getMessage("UNKNOWN");
-        entry_statuses[1] = m_i18n.getMessage("NEW");
-        entry_statuses[2] = m_i18n.getMessage("CHANGED");
-        entry_statuses[3] = m_i18n.getMessage("OLD");
     }
+
 
     /**
      * Load Device Manager
@@ -391,6 +380,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
     {
     }
 
+
     /**
      * Load Device Data Handler
      * 
@@ -400,6 +390,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
     public void loadDeviceDataHandler()
     {
     }
+
 
     /**
      * Get Images for Devices
@@ -411,6 +402,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
     {
         return "/icons/meters/";
     }
+
 
     /**
      * Gets the db.
@@ -428,6 +420,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
      */
     GGCDbNutri db_nutri = null;
 
+
     /**
      * Gets the nutri db.
      * 
@@ -437,6 +430,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
     {
         return db_nutri;
     }
+
 
     /**
      * Sets the nutri db
@@ -448,6 +442,7 @@ public class DataAccessNutri extends DataAccessPlugInBase
         db_nutri = db;
     }
 
+
     /**
      * Gets the db cache
      * 
@@ -458,15 +453,15 @@ public class DataAccessNutri extends DataAccessPlugInBase
         return db_nutri.getDbCache();
     }
 
+
     /** 
      * Load PlugIns
      */
     @Override
     public void loadPlugIns()
     {
-        // TODO Auto-generated method stub
-
     }
+
 
     /**
      * Create Custom Db
@@ -476,8 +471,8 @@ public class DataAccessNutri extends DataAccessPlugInBase
     @Override
     public void createCustomDb()
     {
-        // TODO Auto-generated method stub
     }
+
 
     /**
      * Create Old Data Reader
@@ -487,12 +482,12 @@ public class DataAccessNutri extends DataAccessPlugInBase
     {
     }
 
+
     @Override
     public void initAllObjects()
     {
-        // TODO Auto-generated method stub
-
     }
+
 
     /**
      * Get Name of Plugin (for internal use)

@@ -1,11 +1,11 @@
 package ggc.cgms.data.defs;
 
+import java.util.Collection;
+import java.util.Hashtable;
+
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.data.CodeEnum;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.cgms.util.DataAccessCGMS;
-
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -50,8 +50,8 @@ public enum CGMSEvents implements CodeEnumWithTranslation
 
     // sensor basic functions
 
-    //SensorPowerDown(40), // deprecated
-    //SensorPowerUp(41), // deprecated
+    // SensorPowerDown(40), // deprecated
+    // SensorPowerUp(41), // deprecated
     SensorConnectionLost(42, "EVENT_SENSOR_CONNECTION_LOST"), //
     SensorStart(43, "EVENT_START_SENSOR"), //
     SensorStop(44, "EVENT_STOP_SENSOR"), //
@@ -60,17 +60,13 @@ public enum CGMSEvents implements CodeEnumWithTranslation
     SensorSetCalibrationFactor(52, "EVENT_SET_CALIBRATION_FACTOR"), //
 
     // sensor init/operation
-    SensorPreInit(60, "EVENT_SENSOR_PRE_INIT"),
-    SensorInit(61, "EVENT_SENSOR_INIT"),
-    SensorBurst(62, "EVENT_SENSOR_BURST"),
-    SensorWeakSignal(63, "EVENT_SENSOR_WEAK_SIGNAL"), //
+    SensorPreInit(60, "EVENT_SENSOR_PRE_INIT"), SensorInit(61, "EVENT_SENSOR_INIT"), SensorBurst(62,
+            "EVENT_SENSOR_BURST"), SensorWeakSignal(63, "EVENT_SENSOR_WEAK_SIGNAL"), //
 
     SensorDataLowBg(64, "EVENT_SENSOR_LOW_BG"), // deprecated
     SensorCalibrationWithMeterNow(70, "EVENT_SENSOR_CALIBRATION_WITH_METER_NOW")
 
-
     ;
-
 
     static Hashtable<String, CGMSEvents> translationMapping = new Hashtable<String, CGMSEvents>();
     static Hashtable<Integer, CGMSEvents> codeMapping = new Hashtable<Integer, CGMSEvents>();
@@ -91,6 +87,7 @@ public enum CGMSEvents implements CodeEnumWithTranslation
     String i18nKey;
     String translation;
 
+
     private CGMSEvents(int code, String i18nKey)
     {
         this.code = code;
@@ -103,19 +100,28 @@ public enum CGMSEvents implements CodeEnumWithTranslation
         return translation;
     }
 
+
     public void setTranslation(String translation)
     {
         this.translation = translation;
     }
+
 
     public int getCode()
     {
         return code;
     }
 
+
     public String getI18nKey()
     {
         return i18nKey;
+    }
+
+
+    public String getName()
+    {
+        return this.name();
     }
 
 
@@ -138,6 +144,7 @@ public enum CGMSEvents implements CodeEnumWithTranslation
         }
     }
 
+
     public static CGMSEvents getByCode(int code)
     {
         if (codeMapping.containsKey(code))
@@ -150,32 +157,38 @@ public enum CGMSEvents implements CodeEnumWithTranslation
         }
     }
 
-//    // start / end
-//    public static final int CGMS_EVENT_CONTROLER_POWER_DOWN = 1;
-//    public static final int CGMS_EVENT_CONTROLER_POWER_UP = 2;
-//
-//    // date/time
-//    public static final int CGMS_EVENT_DATETIME_SET = 3;
-//    public static final int CGMS_EVENT_DATETIME_CHANGED = 4;
-//
-//    // SENSOR - basic functions
-//    public static final int CGMS_EVENT_SENSOR_POWER_DOWN = 40;
-//    public static final int CGMS_EVENT_SENSOR_POWER_UP = 41;
-//    public static final int CGMS_EVENT_SENSOR_LOST = 42;
-//    public static final int CGMS_EVENT_SENSOR_START = 43;
-//    public static final int CGMS_EVENT_SENSOR_STOP = 44;
-//    public static final int CGMS_EVENT_SENSOR_CALIBRATION_METER_BG_NOW = 50;
-//    public static final int CGMS_EVENT_SENSOR_CALIBRATION_WAITING = 51;
-//    public static final int CGMS_EVENT_SENSOR_CALIBRATION_FACTOR = 52;
-//
-//    // sensor init/operation
-//
-//    public static final int CGMS_EVENT_SENSOR_PRE_INIT = 60;
-//    public static final int CGMS_EVENT_SENSOR_INIT = 61;
-//    public static final int CGMS_EVENT_SENSOR_BURST = 62;
-//    public static final int CGMS_EVENT_SENSOR_WEAK_SIGNAL = 63;
-//
-//    // Data
-//    public static final int CGMS_EVENT_DATA_LOW_BG = 64;
+
+    public static Collection<CGMSEvents> getAllValues()
+    {
+        return codeMapping.values();
+    }
+
+    // // start / end
+    // public static final int CGMS_EVENT_CONTROLER_POWER_DOWN = 1;
+    // public static final int CGMS_EVENT_CONTROLER_POWER_UP = 2;
+    //
+    // // date/time
+    // public static final int CGMS_EVENT_DATETIME_SET = 3;
+    // public static final int CGMS_EVENT_DATETIME_CHANGED = 4;
+    //
+    // // SENSOR - basic functions
+    // public static final int CGMS_EVENT_SENSOR_POWER_DOWN = 40;
+    // public static final int CGMS_EVENT_SENSOR_POWER_UP = 41;
+    // public static final int CGMS_EVENT_SENSOR_LOST = 42;
+    // public static final int CGMS_EVENT_SENSOR_START = 43;
+    // public static final int CGMS_EVENT_SENSOR_STOP = 44;
+    // public static final int CGMS_EVENT_SENSOR_CALIBRATION_METER_BG_NOW = 50;
+    // public static final int CGMS_EVENT_SENSOR_CALIBRATION_WAITING = 51;
+    // public static final int CGMS_EVENT_SENSOR_CALIBRATION_FACTOR = 52;
+    //
+    // // sensor init/operation
+    //
+    // public static final int CGMS_EVENT_SENSOR_PRE_INIT = 60;
+    // public static final int CGMS_EVENT_SENSOR_INIT = 61;
+    // public static final int CGMS_EVENT_SENSOR_BURST = 62;
+    // public static final int CGMS_EVENT_SENSOR_WEAK_SIGNAL = 63;
+    //
+    // // Data
+    // public static final int CGMS_EVENT_DATA_LOW_BG = 64;
 
 }

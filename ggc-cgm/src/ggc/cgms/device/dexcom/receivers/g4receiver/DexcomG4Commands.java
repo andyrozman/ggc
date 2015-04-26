@@ -1,10 +1,36 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver;
 
+import java.util.HashMap;
+
 import ggc.cgms.device.dexcom.receivers.DexcomCommand;
 import ggc.cgms.device.dexcom.receivers.data.CommandParameter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.parsers.ParserType;
 
-import java.util.HashMap;
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     Dexcom 7
+ *  Description:  Dexcom 7 implementation (just settings)
+ *
+ *  Author: Andy {andy@atech-software.com}
+ */
 
 public enum DexcomG4Commands implements DexcomCommand
 {
@@ -102,10 +128,12 @@ public enum DexcomG4Commands implements DexcomCommand
         }
     }
 
+
     private DexcomG4Commands(int commandId)
     {
         this.commandId = commandId;
     }
+
 
     private DexcomG4Commands(int commandId, ParserType parserType)
     {
@@ -113,11 +141,13 @@ public enum DexcomG4Commands implements DexcomCommand
         this.parserType = parserType;
     }
 
+
     private DexcomG4Commands(int commandId, int expectedResponseLength)
     {
         this.commandId = commandId;
         this.expectedResponseLength = expectedResponseLength;
     }
+
 
     private DexcomG4Commands(int commandId, int expectedResultLength, ParserType parserType,
             CommandParameter commandParameter)
@@ -125,11 +155,13 @@ public enum DexcomG4Commands implements DexcomCommand
         this(commandId, null, expectedResultLength, parserType, commandParameter);
     }
 
+
     private DexcomG4Commands(short command[], int expectedResultLength, ParserType parserType,
             CommandParameter commandParameter)
     {
         this(null, command, expectedResultLength, parserType, commandParameter);
     }
+
 
     private DexcomG4Commands(Integer commandId, short command[], int expectedResultLength, ParserType parserType,
             CommandParameter commandParameter)
@@ -141,30 +173,36 @@ public enum DexcomG4Commands implements DexcomCommand
         this.commandParameter = commandParameter;
     }
 
+
     public short[] getCommandAsBytes()
     {
         return commandAsBytes;
     }
+
 
     public static DexcomG4Commands getCommandById(int id)
     {
         return map.get(id);
     }
 
+
     public int getExpectedResponseLength()
     {
         return expectedResponseLength;
     }
+
 
     public ParserType getParserType()
     {
         return parserType;
     }
 
+
     public int getCommandId()
     {
         return commandId;
     }
+
 
     public CommandParameter getCommandParameter()
     {

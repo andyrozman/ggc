@@ -1,18 +1,18 @@
 package ggc.cgms.data;
 
-import ggc.cgms.data.db.GGC_CGMSDb;
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.plugin.data.DeviceValuesEntryInterface;
-import ggc.plugin.gui.OldDataReaderAbstract;
-
 import java.util.Hashtable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import ggc.cgms.data.db.GGC_CGMSDb;
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.gui.OldDataReaderAbstract;
+
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -30,18 +30,20 @@ import org.apache.commons.logging.LogFactory;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     PumpDataReader
- *  Description:  Pump Data Reader for old data
+ *  Filename:     CGMSDataReader
+ *  Description:  CGMS Data Reader for old data
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
 public class CGMSDataReader extends OldDataReaderAbstract
 {
+
     private static Log log = LogFactory.getLog(CGMSDataReader.class);
 
     GGC_CGMSDb db = null;
     DataAccessCGMS m_da = null;
+
 
     /**
      * Constructor
@@ -54,6 +56,7 @@ public class CGMSDataReader extends OldDataReaderAbstract
         m_da = da;
     }
 
+
     /**
      * Get Max Entries
      */
@@ -64,6 +67,7 @@ public class CGMSDataReader extends OldDataReaderAbstract
         db = m_da.getDb();
         this.all_entries = db.getAllElementsCount();
     }
+
 
     /**
      * Read Old entries
@@ -79,6 +83,7 @@ public class CGMSDataReader extends OldDataReaderAbstract
 
     float db_reading = 0.0f;
     int current_entry = 0;
+
 
     /**
      * Write status of reading

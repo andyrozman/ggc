@@ -1,4 +1,4 @@
-package ggc.pump.data.graph.writer;
+package ggc.pump.data.writer;
 
 import ggc.pump.data.PumpWriterValues;
 
@@ -7,5 +7,6 @@ import ggc.pump.data.PumpWriterValues;
  */
 public interface PumpWriterDefInterface
 {
+
     PumpWriterValues getPumpWriterValue();
 }

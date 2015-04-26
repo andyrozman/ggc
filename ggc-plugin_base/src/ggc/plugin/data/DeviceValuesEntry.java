@@ -1,6 +1,7 @@
 package ggc.plugin.data;
 
 import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.output.OutputWriterData;
 import ggc.plugin.util.DeviceValuesEntryUtil;
 
@@ -41,38 +42,14 @@ import com.atech.utils.data.ATechDate;
 // class, with different type of data. Trying to find a way to use super class
 // instead of this.
 
-public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, OutputWriterData, StatisticsItem // extends
-                                                                                                                // OutputWriterData
-                                                                                                                // implements
-                                                                                                                // Comparator<DeviceValuesEntry>,
-                                                                                                                // Comparable<DeviceValuesEntry>,
-                                                                                                                // StatisticsItem
+public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, OutputWriterData, StatisticsItem
 {
     protected boolean checked = false;
-    protected int status = 1;
+    private DeviceEntryStatus status = DeviceEntryStatus.New;
     protected int output_type = 0;
     protected boolean is_bg = false;
     private int multiline_tooltip_type = 1;
 
-    /**
-     * Status: Unknown
-     */
-    public static final int STATUS_UNKNOWN = 0;
-
-    /**
-     * Status: New
-     */
-    public static final int STATUS_NEW = 1;
-
-    /**
-     * Status: Changed
-     */
-    public static final int STATUS_CHANGED = 2;
-
-    /**
-     * Status: Old
-     */
-    public static final int STATUS_OLD = 3;
 
     /**
      *  Object Status: New
@@ -94,20 +71,6 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
      */
     public int object_status = 0;
 
-    /*
-     * private static String entry_statuses[] =
-     * {
-     * "UNKNOWN",
-     * "NEW",
-     * "CHANGED",
-     * "OLD"
-     * };
-     */
-
-    /**
-     * Entry Status Icons 
-     */
-    public static String entry_status_icons[] = { "led_gray.gif", "led_green.gif", "led_yellow.gif", "led_red.gif" };
 
     /**
      * Constructor
@@ -193,25 +156,24 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
         this.checked = check;
     }
 
+
+
     /**
-     * Get Status
-     * 
-     * @return status
+     * {@inheritDoc}
      */
-    public int getStatus()
+    public DeviceEntryStatus getStatusType()
     {
         return this.status;
     }
 
     /**
-     * Set Status
-     * 
-     * @param status_in
+     * {@inheritDoc}
      */
-    public void setStatus(int status_in)
+    public void setStatusType(DeviceEntryStatus stat)
     {
-        this.status = status_in;
+        this.status = stat;
     }
+
 
     /**
      * Set Output Type

@@ -1,21 +1,21 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jdom.Element;
+
+import com.atech.utils.data.ShortUtils;
+
 import ggc.cgms.device.dexcom.receivers.data.CommandPacket;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.BytesToDatabasePagesConverter;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ConverterType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ElementToPartitionInfoConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToEGVDataConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToFileConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToUserEventDataConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPagesToInsertionTimeConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPagesToMeterConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPagesToXmlRecordConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.data.EGVRecord;
-import ggc.cgms.device.dexcom.receivers.g4receiver.data.InsertionTimeRecord;
-import ggc.cgms.device.dexcom.receivers.g4receiver.data.ManufacturingDataRecord;
-import ggc.cgms.device.dexcom.receivers.g4receiver.data.MeterDataRecord;
-import ggc.cgms.device.dexcom.receivers.g4receiver.data.UserEventDataRecord;
-import ggc.cgms.device.dexcom.receivers.g4receiver.data.XmlRecord;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.*;
+import ggc.cgms.device.dexcom.receivers.g4receiver.data.*;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.parsers.ParserUtils;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ClockModeType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.GlucoseUnitType;
@@ -37,19 +37,31 @@ import gnu.io.NRSerialPort;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jdom.Element;
-
-import com.atech.utils.data.ShortUtils;
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     Dexcom 7
+ *  Description:  Dexcom 7 implementation (just settings)
+ *
+ *  Author: Andy {andy@atech-software.com}
+ */
 
 public class DexcomG4Api
 {
@@ -64,6 +76,7 @@ public class DexcomG4Api
     InputStream inputStream;
     HashMap<ReceiverRecordType, DatabasePageRange> databasePagesRanges = new HashMap<ReceiverRecordType, DatabasePageRange>();
 
+
     public DexcomG4Api(String portName, ProgressReportInterface progressReport)
     {
         serialDevice = new NRSerialPort(portName, 115200);
@@ -77,6 +90,7 @@ public class DexcomG4Api
         inputStream = this.serialDevice.getInputStream();
     }
 
+
     public void disconnectDevice()
     {
         if (this.serialDevice.isConnected())
@@ -84,6 +98,7 @@ public class DexcomG4Api
             this.serialDevice.disconnect();
         }
     }
+
 
     public Element readFirmwareHeader() throws PlugInBaseException
     {
@@ -93,11 +108,13 @@ public class DexcomG4Api
         return result;
     }
 
+
     public String readReceiverSerialNumber() throws PlugInBaseException
     {
         HashMap<String, String> map = readAllRecordsForManufacturingData();
         return map.get("SerialNumber");
     }
+
 
     public void shutDownReceiver() throws PlugInBaseException
     {
@@ -130,6 +147,7 @@ public class DexcomG4Api
 
     }
 
+
     public DatabasePageRange readDatabasePageRange(ReceiverRecordType recordType) throws PlugInBaseException
     {
         if (!databasePagesRanges.containsKey(recordType))
@@ -140,10 +158,12 @@ public class DexcomG4Api
         return databasePagesRanges.get(recordType);
     }
 
+
     public boolean isDatabasePageRangeCached(ReceiverRecordType recordType)
     {
         return databasePagesRanges.containsKey(recordType);
     }
+
 
     public DatabasePageRange readDatabasePageRangeReal(ReceiverRecordType recordType) throws PlugInBaseException
     {
@@ -163,6 +183,7 @@ public class DexcomG4Api
         return dpr;
     }
 
+
     public List<InsertionTimeRecord> readAllRecordsForInsertionTime() throws PlugInBaseException
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.InsertionTime);
@@ -179,6 +200,7 @@ public class DexcomG4Api
 
         return records;
     }
+
 
     public List<MeterDataRecord> readAllRecordsForMeterData() throws PlugInBaseException
     {
@@ -197,6 +219,7 @@ public class DexcomG4Api
         return records;
     }
 
+
     public List<UserEventDataRecord> readAllRecordsForEvents() throws PlugInBaseException
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.UserEventData);
@@ -213,6 +236,7 @@ public class DexcomG4Api
 
         return records;
     }
+
 
     public List<EGVRecord> readAllRecordsForEGVData() throws PlugInBaseException
     {
@@ -231,6 +255,7 @@ public class DexcomG4Api
         return records;
     }
 
+
     public void saveDatabasePages(ReceiverRecordType recordType) throws PlugInBaseException
     {
         List<DatabasePage> pages = readDatabasePagesAll(recordType);
@@ -247,6 +272,7 @@ public class DexcomG4Api
         }
 
     }
+
 
     public HashMap<String, String> readAllRecordsForManufacturingData() throws PlugInBaseException
     {
@@ -288,6 +314,7 @@ public class DexcomG4Api
         return paramMap;
     }
 
+
     public List<DatabasePage> readDatabasePagesAll(ReceiverRecordType recordType) throws PlugInBaseException
     {
         DatabasePageRange dpr = readDatabasePageRange(recordType);
@@ -319,6 +346,7 @@ public class DexcomG4Api
         return pages;
     }
 
+
     public List<DatabasePage> readDatabasePages(ReceiverRecordType recordType, int pageNumber, int numberOfPages)
             throws PlugInBaseException
     {
@@ -346,6 +374,7 @@ public class DexcomG4Api
         return pages;
     }
 
+
     public int readSystemTime() throws PlugInBaseException
     {
         Integer result = (Integer) this.writeCommandAndReadParsedResponse(DexcomG4Commands.ReadSystemTime, null);
@@ -354,10 +383,12 @@ public class DexcomG4Api
         return result;
     }
 
+
     public int readDisplayTime() throws PlugInBaseException
     {
         return readSystemTime() + DexcomUtils.readDisplayTimeOffset();
     }
+
 
     public Date readSystemTimeAsDate() throws PlugInBaseException
     {
@@ -365,10 +396,12 @@ public class DexcomG4Api
         return DexcomUtils.getDateFromSeconds(systemTime);
     }
 
+
     public Date readDisplayTimeAsDate() throws PlugInBaseException
     {
         return DexcomUtils.getDateFromSeconds(readSystemTime(), DexcomDateParsing.DateWithDifferenceWithTimeZoneFix);
     }
+
 
     public PartitionInfo readDatabasePartitionInfo() throws PlugInBaseException
     {
@@ -384,6 +417,7 @@ public class DexcomG4Api
         return this.partitionInfo;
     }
 
+
     public Partition getPartition(ReceiverRecordType recordType) throws PlugInBaseException
     {
         if (this.partitionInfo == null)
@@ -394,6 +428,7 @@ public class DexcomG4Api
         return this.partitionInfo.getPartitionByRecordType(recordType);
     }
 
+
     public int readDisplayTimeOffset() throws PlugInBaseException
     {
         Integer value = (Integer) this.writeCommandAndReadParsedResponse(DexcomG4Commands.ReadDisplayTimeOffset);
@@ -402,6 +437,7 @@ public class DexcomG4Api
 
         return value;
     }
+
 
     public LanguageType readLanguage() throws PlugInBaseException
     {
@@ -418,6 +454,7 @@ public class DexcomG4Api
         return lang;
     }
 
+
     public GlucoseUnitType readGlucoseUnit() throws PlugInBaseException
     {
         Integer glu = (Integer) this.writeCommandAndReadParsedResponse(DexcomG4Commands.ReadGlucoseUnit);
@@ -432,6 +469,7 @@ public class DexcomG4Api
         this.addToProgressAndCheckIfCanceled(1);
         return gluType;
     }
+
 
     public ClockModeType readClockMode() throws PlugInBaseException
     {
@@ -448,6 +486,7 @@ public class DexcomG4Api
         return clockType;
     }
 
+
     private Object writeCommandAndReadParsedResponse(DexcomG4Commands command) throws PlugInBaseException
     {
         CommandPacket cmdPacket = this.createCommandPacket(command, null);
@@ -457,6 +496,7 @@ public class DexcomG4Api
 
         return ParserUtils.parsePacketResponse(cmdPacket);
     }
+
 
     private Object writeCommandAndReadParsedResponse(DexcomG4Commands command, Object[] parameters)
             throws PlugInBaseException
@@ -469,6 +509,7 @@ public class DexcomG4Api
 
         return ParserUtils.parsePacketResponse(cmdPacket);
     }
+
 
     private CommandPacket createCommandPacket(DexcomG4Commands command, Object[] parameters)
     {
@@ -484,6 +525,7 @@ public class DexcomG4Api
         }
         return cmdPacket;
     }
+
 
     private short[] writeCommandAndReadRawResponse(DexcomG4Commands command, CommandPacket cmdPacket,
             Object[] parameters) throws PlugInBaseException
@@ -547,6 +589,7 @@ public class DexcomG4Api
         return new short[0];
 
     }
+
 
     // FIXME
     public short[] readGenericCommandPacket(int maxWaitMs, CommandPacket packet) throws PlugInBaseException
@@ -648,6 +691,7 @@ public class DexcomG4Api
         return destinationArray;
     }
 
+
     // FIXME DexcomException
 
     public short[] readSpecifiedBytes(int nrBytes) throws Exception
@@ -686,12 +730,14 @@ public class DexcomG4Api
         return retData;
     }
 
+
     private void verifyPayloadLength(CommandPacket cmdPacket) throws PlugInBaseException
     {
         if (cmdPacket.getResponse().length != cmdPacket.getExpectedResponseLength())
             throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidResponseLength,
-                    new Object[] { cmdPacket.getResponse().length, cmdPacket.getExpectedResponseLength()});
+                    new Object[] { cmdPacket.getResponse().length, cmdPacket.getExpectedResponseLength() });
     }
+
 
     public void verifyResponseCommandByte(CommandPacket packet) throws PlugInBaseException
     {
@@ -710,10 +756,13 @@ public class DexcomG4Api
                 throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidCommand);
 
             case InvalidParam:
-                if (packet.getResponse() != null && packet.getResponse().length >= 1) {
-                    throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidParameterDesc, new Object[]{packet.getResponse()[0]});
+                if (packet.getResponse() != null && packet.getResponse().length >= 1)
+                {
+                    throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidParameterDesc,
+                            new Object[] { packet.getResponse()[0] });
                 }
-                else {
+                else
+                {
                     throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidParameter);
                 }
 
@@ -724,8 +773,9 @@ public class DexcomG4Api
                 break;
         }
         throw new PlugInBaseException(PlugInExceptionType.DeviceInvalidResponseCommand,
-            new Object[] { receiverCommandFromByte, packet.getResponseCommandId() });
+                new Object[] { receiverCommandFromByte, packet.getResponseCommandId() });
     }
+
 
     public void addToProgressAndCheckIfCanceled(int numberOfPages) throws PlugInBaseException
     {

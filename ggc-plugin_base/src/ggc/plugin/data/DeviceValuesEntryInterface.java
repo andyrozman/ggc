@@ -1,6 +1,7 @@
 package ggc.plugin.data;
 
 import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.output.OutputWriterData;
 
 import java.util.ArrayList;
@@ -36,25 +37,7 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
         DatabaseObjectHibernate, MultiLineTooltip
 {
 
-    /**
-     * Status: Unknown
-     */
-    public static final int STATUS_UNKNOWN = 0;
 
-    /**
-     * Status: New
-     */
-    public static final int STATUS_NEW = 1;
-
-    /**
-     * Status: Changed
-     */
-    public static final int STATUS_CHANGED = 2;
-
-    /**
-     * Status: Old
-     */
-    public static final int STATUS_OLD = 3;
 
     /**
      * Object Status: New
@@ -144,19 +127,33 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      *
      * @return status
      */
-    int getStatus();
+    //int getStatus();
+
+
+    /**
+     * Get status with Enum
+     *
+     * @return
+     */
+    DeviceEntryStatus getStatusType();
+
+
+    /**
+     * Set status with Enum
+     */
+    void setStatusType(DeviceEntryStatus status);
 
     /**
      * Set Status
      *
      * @param status_in
      */
-    void setStatus(int status_in);
+    //void setStatus(int status_in);
 
     /**
      * Prepare Entry [Framework v1]
      */
-    void prepareEntry();
+    //void prepareEntry();
 
     /**
      * Prepare Entry [Framework v2]
@@ -282,5 +279,6 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      * @return
      */
     int getMultiLineTooltipType();
+
 
 }

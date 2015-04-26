@@ -1,11 +1,12 @@
-package ggc.cgms.data;
+package ggc.cgms.device.animas.impl.handler;
 
-import ggc.plugin.data.DeviceValueConfigEntry;
-import ggc.plugin.output.OutputWriterConfigData;
+import ggc.plugin.data.DeviceValuesWriter;
+import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
+import ggc.plugin.output.OutputWriter;
 
 /**
- *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *  Application: GGC - GNU Gluco Control
+ *  Plug-in: CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  *
@@ -23,38 +24,38 @@ import ggc.plugin.output.OutputWriterConfigData;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- *  Filename:     CGMSValueConfig
- *  Description:  Class for Output Writer Config Data
+ *  Filename: CGMDataType
+ *  Description: CGMS Data types, as used in database (undefined at this time)
  *
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class CGMSValueConfig extends DeviceValueConfigEntry
+public class AnimasCGMSDataWriter implements AnimasDataWriter
 {
 
-    String key;
-    String value;
-    String valueRaw;
+    OutputWriter writer;
 
-    public CGMSValueConfig(String key, String value)
+
+    public AnimasCGMSDataWriter(OutputWriter writer)
     {
-        this.key = key;
-        this.value = value;
+        this.writer = writer;
     }
 
-    public String getDataKey() {
-        return key;
+
+    public DeviceValuesWriter getDeviceValuesWriter()
+    {
+        return null;
     }
 
-    public String getDataValue() {
-        return this.value;
+
+    public OutputWriter getOutputWriter()
+    {
+        return this.writer;
     }
 
-    public String getDataValueRaw() {
-        return this.value;
-    }
 
-    public boolean isDataValueBG() {
-        return false;
+    public void createDeviceValuesWriter(OutputWriter ow)
+    {
+
     }
 }

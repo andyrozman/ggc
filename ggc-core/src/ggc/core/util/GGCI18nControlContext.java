@@ -1,12 +1,13 @@
 package ggc.core.util;
 
+import java.util.HashMap;
+
 import com.atech.i18n.I18nControlAbstract;
 import ggc.core.plugins.GGCPluginType;
 
-import java.util.HashMap;
-
-public class GGCI18nControlContext extends HashMap<String,I18nControlAbstract>
+public class GGCI18nControlContext extends HashMap<String, I18nControlAbstract>
 {
+
     private static GGCI18nControlContext sGGCI18nControlContext;
 
     private boolean defaultLanguageRecognitionInitialized = false;
@@ -15,16 +16,18 @@ public class GGCI18nControlContext extends HashMap<String,I18nControlAbstract>
 
     private String[] languages;
 
-    private HashMap<GGCPluginType,String> loadedPluginTypes;
+    private HashMap<GGCPluginType, String> loadedPluginTypes;
+
 
     private GGCI18nControlContext()
     {
         loadedPluginTypes = new HashMap<GGCPluginType, String>();
     }
 
+
     public static GGCI18nControlContext getInstance()
     {
-        if (sGGCI18nControlContext==null)
+        if (sGGCI18nControlContext == null)
         {
             sGGCI18nControlContext = new GGCI18nControlContext();
         }
@@ -39,42 +42,41 @@ public class GGCI18nControlContext extends HashMap<String,I18nControlAbstract>
     }
 
 
-//    public String getTranslation(String key, GGCPluginType pluginType)
-//    {
-//        String translation = null;
-//
-//        translation = getTranslationFromContext(key, pluginType);
-//
-//        if (isNotNullAndSame(key, translation))
-//        {
-//            return translation;
-//        }
-//
-//
-//        if (pluginType.isPlugin())
-//        {
-//            translation = getTranslationFromContext(key, GGCPluginType.PluginBase);
-//
-//            if (isNotNullAndSame(key, translation))
-//            {
-//                return translation;
-//            }
-//
-//            translation = getTranslationFromContext(key, GGCPluginType.Core);
-//
-//            if (isNotNullAndSame(key, translation))
-//            {
-//                return translation;
-//            }
-//        }
-//
-//        return key;
-//    }
-
+    // public String getTranslation(String key, GGCPluginType pluginType)
+    // {
+    // String translation = null;
+    //
+    // translation = getTranslationFromContext(key, pluginType);
+    //
+    // if (isNotNullAndSame(key, translation))
+    // {
+    // return translation;
+    // }
+    //
+    //
+    // if (pluginType.isPlugin())
+    // {
+    // translation = getTranslationFromContext(key, GGCPluginType.PluginBase);
+    //
+    // if (isNotNullAndSame(key, translation))
+    // {
+    // return translation;
+    // }
+    //
+    // translation = getTranslationFromContext(key, GGCPluginType.Core);
+    //
+    // if (isNotNullAndSame(key, translation))
+    // {
+    // return translation;
+    // }
+    // }
+    //
+    // return key;
+    // }
 
     private boolean isNotNullAndSame(String key, String translation)
     {
-        if (translation==null)
+        if (translation == null)
         {
             return false;
         }
@@ -83,25 +85,25 @@ public class GGCI18nControlContext extends HashMap<String,I18nControlAbstract>
     }
 
 
-//    private String getTranslationFromContext(String key, GGCPluginType pluginType)
-//    {
-//        for(String lang : languages)
-//        {
-//            String fullKey = pluginType.getKey() + "_" + lang;
-//
-//            if (this.containsKey(fullKey))
-//            {
-//                String tr = this.get(fullKey).getMessage(key);
-//                if (isNotNullAndSame(key, tr))
-//                {
-//                    return tr;
-//                }
-//            }
-//        }
-//
-//        return null;
-//    }
-
+    // private String getTranslationFromContext(String key, GGCPluginType
+    // pluginType)
+    // {
+    // for(String lang : languages)
+    // {
+    // String fullKey = pluginType.getKey() + "_" + lang;
+    //
+    // if (this.containsKey(fullKey))
+    // {
+    // String tr = this.get(fullKey).getMessage(key);
+    // if (isNotNullAndSame(key, tr))
+    // {
+    // return tr;
+    // }
+    // }
+    // }
+    //
+    // return null;
+    // }
 
     public String getMessageFromCatalog(String key, GGCPluginType pluginType)
     {
@@ -113,7 +115,6 @@ public class GGCI18nControlContext extends HashMap<String,I18nControlAbstract>
         {
             return translation;
         }
-
 
         if (pluginType.isPlugin())
         {
@@ -135,18 +136,19 @@ public class GGCI18nControlContext extends HashMap<String,I18nControlAbstract>
         return key;
     }
 
+
     private String getMessageFromContext(String key, GGCPluginType pluginType)
     {
 
-        for(String lang : languages)
+        for (String lang : languages)
         {
             String fullKey = pluginType.getKey() + "_" + lang;
-            //System.out.println("fullKey: " + fullKey + ", key: " + key);
+            // System.out.println("fullKey: " + fullKey + ", key: " + key);
 
             if (this.containsKey(fullKey))
             {
                 String tr = this.get(fullKey).getMessageFromCatalogOrNull(key);
-                if (tr!=null)
+                if (tr != null)
                 {
                     return tr;
                 }
@@ -162,17 +164,18 @@ public class GGCI18nControlContext extends HashMap<String,I18nControlAbstract>
         return defaultLanguageRecognitionInitialized;
     }
 
+
     public void setDefaultLanguageRecognitionInitialized(boolean defaultLanguageRecognitionInitialized)
     {
         this.defaultLanguageRecognitionInitialized = defaultLanguageRecognitionInitialized;
     }
 
 
-
     public String getDefaultLanguage()
     {
         return defaultLanguage;
     }
+
 
     public void setDefaultLanguage(String defaultLanguage)
     {
@@ -185,10 +188,12 @@ public class GGCI18nControlContext extends HashMap<String,I18nControlAbstract>
         return selectedLanguage;
     }
 
+
     public void setSelectedLanguage(String selectedLanguage)
     {
         this.selectedLanguage = selectedLanguage;
     }
+
 
     public boolean isSelectedLanguageDefaultLanguage()
     {

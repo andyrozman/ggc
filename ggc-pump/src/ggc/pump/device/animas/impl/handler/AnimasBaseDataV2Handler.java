@@ -66,6 +66,7 @@ public class AnimasBaseDataV2Handler extends AbstractDeviceDataV2Handler
         this.data = new AnimasPumpDeviceData(new AnimasPumpDataWriter(this.outputWriter));
         this.setBaseData(data);
         baseDataConverter = new AnimasBaseDataV2Converter(deviceReader, data);
+        new Thread(baseDataConverter).start();
         this.dataConverter = this.baseDataConverter;
     }
 
@@ -109,11 +110,11 @@ public class AnimasBaseDataV2Handler extends AbstractDeviceDataV2Handler
         {
             LOG.debug("Running Animas Base Data Handler (v2)");
 
-            openConnection();
-
             this.checkIfActionAllowed(transferType);
 
             determineMaxProgressForTransferType(transferType);
+
+            openConnection();
 
             this.data.writeIdentification();
 

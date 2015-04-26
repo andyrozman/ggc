@@ -1,11 +1,8 @@
 package ggc.pump.data;
 
-import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesTableModel;
 import ggc.pump.util.DataAccessPump;
-
-import java.util.ArrayList;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -33,15 +30,11 @@ import java.util.ArrayList;
  *  Author: Andy {andy@atech-software.com}
  */
 
-// FIX: Remove unused methods...
-
 public class PumpValuesTableModel extends DeviceValuesTableModel
 {
 
     private static final long serialVersionUID = -3199123443953228082L;
 
-    // private I18nControl m_ic = I18nControl.getInstance();
-    // x private DataAccessMeter dataAccess = DataAccessMeter.getInstance();
 
     /**
      * Constructor
@@ -55,146 +48,17 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
 
     }
 
-    /**
-     * Get Checkable Column (one column if checkable, all others are non-editable)
-     * 
-     * @return
-     */
+
     @Override
-    public int getCheckableColumn()
+    protected void initColumns()
     {
-        return 6;
+        addColumn(0, "DATETIME", 100, false);
+        addColumn(1, "ENTRY_TYPE", 30, false);
+        addColumn(2, "BASE_TYPE", 50, false);
+        addColumn(3, "SUB_TYPE", 50, false);
+        addColumn(4, "VALUE", 105, false);
+        addColumn(5, "STATUS", 40, false);
+        addColumn(6, "", 25, true);
     }
-
-    /**
-     * Process Pump Values Entry
-     * 
-     * @param mve
-     */
-    public void processPumpValuesEntry(PumpValuesEntry mve)
-    {
-        // FIXME need to fix this...
-        /*
-         * //System.out.println("processMeterValuesEntry");
-         * if (old_data!=null)
-         * {
-         * //System.out.println("oldData != null");
-         * long dt = mve.getDt_info(); //.getDateTime();
-         * //System.out.println("Dt='" + dt + "'");
-         * //System.out.println("Found: " + old_data.containsKey("" + dt));
-         * if (!old_data.containsKey("" + dt))
-         * {
-         * // System.out.println("not Contains");
-         * mve.status = PumpValuesEntry.STATUS_NEW;
-         * mve.object_status = PumpValuesEntry.OBJECT_STATUS_NEW;
-         * }
-         * else
-         * {
-         * // System.out.println("Found !!!");
-         * DayValueH gvh = old_data.get("" + dt);
-         * // int vl = Integer.parseInt(mve.getBGValue(OutputUtil.BG_MGDL));
-         * int vl = 1;
-         * //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
-         * if (gvh.getBg()==vl)
-         * {
-         * mve.status = PumpValuesEntry.STATUS_OLD;
-         * mve.object_status = PumpValuesEntry.OBJECT_STATUS_OLD;
-         * }
-         * else
-         * {
-         * mve.status = PumpValuesEntry.STATUS_CHANGED;
-         * mve.object_status = PumpValuesEntry.OBJECT_STATUS_EDIT;
-         * mve.entry_object = gvh;
-         * //System.out.println("Changed: " + gvh.getId());
-         * }
-         * //gvh.getBg()
-         * }
-         * }
-         * else
-         * {
-         * System.out.println("oldData == null");
-         * mve.status = PumpValuesEntry.STATUS_NEW;
-         * }
-         */
-    }
-
-    /**
-     * Add To Array 
-     * 
-     * @param lst
-     * @param source
-     */
-    @Override
-    public void addToArray(ArrayList<?> lst, ArrayList<?> source)
-    {
-    }
-
-    /**
-     * Get Empty ArrayList
-     * 
-     * @return
-     */
-    @Override
-    public ArrayList<? extends GGCHibernateObject> getEmptyArrayList()
-    {
-        return new ArrayList<GGCHibernateObject>();
-    }
-
-    /**
-     * Process Device Value Entry
-     * 
-     * @param mve DeviceValuesEntry instance
-     */
-    /*
-     * @Override
-     * public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
-     * {
-     * System.out.println("processDeviceValuesEntry: Pump");
-     * //dvei.getObjectStatus()==DeviceValuesEntry.OBJECT_STATUS_NEW
-     * mve.setObjectStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
-     * /*
-     * //System.out.println("processMeterValuesEntry");
-     * if (old_data!=null)
-     * {
-     * //System.out.println("oldData != null");
-     * long dt = mve.getDt_info(); //.getDateTime();
-     * //System.out.println("Dt='" + dt + "'");
-     * //System.out.println("Found: " + old_data.containsKey("" + dt));
-     * if (!old_data.containsKey("" + dt))
-     * {
-     * // System.out.println("not Contains");
-     * mve.status = PumpValuesEntry.STATUS_NEW;
-     * mve.object_status = PumpValuesEntry.OBJECT_STATUS_NEW;
-     * }
-     * else
-     * {
-     * // System.out.println("Found !!!");
-     * DayValueH gvh = old_data.get("" + dt);
-     * // int vl = Integer.parseInt(mve.getBGValue(OutputUtil.BG_MGDL));
-     * int vl = 1;
-     * //if (((vl-1) >= gvh.getBg()) && (gvh.getBg() <= (vl+1)))
-     * if (gvh.getBg()==vl)
-     * {
-     * mve.status = PumpValuesEntry.STATUS_OLD;
-     * mve.object_status = PumpValuesEntry.OBJECT_STATUS_OLD;
-     * }
-     * else
-     * {
-     * mve.status = PumpValuesEntry.STATUS_CHANGED;
-     * mve.object_status = PumpValuesEntry.OBJECT_STATUS_EDIT;
-     * mve.entry_object = gvh;
-     * //System.out.println("Changed: " + gvh.getId());
-     * }
-     * //gvh.getBg()
-     * }
-     * }
-     * else
-     * {
-     * System.out.println("oldData == null");
-     * mve.status = PumpValuesEntry.STATUS_NEW;
-     * }
-     */
-
-    // }
 
 }

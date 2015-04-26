@@ -37,8 +37,6 @@ public enum AnimasBolusSettingSubType implements CodeEnumWithTranslation
     BGTarget(3, "PCFG_TARGET_BG"), //
     ;
 
-
-
     int code;
     String i18nKey;
     String translation;
@@ -52,6 +50,7 @@ public enum AnimasBolusSettingSubType implements CodeEnumWithTranslation
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
         }
     }
+
 
     private AnimasBolusSettingSubType(int code, String i18nKey)
     {
@@ -83,5 +82,10 @@ public enum AnimasBolusSettingSubType implements CodeEnumWithTranslation
         return i18nKey;
     }
 
+
+    public String getName()
+    {
+        return this.name();
+    }
 
 }

@@ -3,10 +3,7 @@ package ggc.pump.device.animas.impl.handler;
 import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
 import ggc.plugin.output.OutputWriter;
-import ggc.pump.data.PumpWriterValues;
-import ggc.pump.data.defs.*;
-import ggc.pump.data.graph.writer.PumpValuesWriter;
-
+import ggc.pump.data.writer.PumpValuesWriter;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,6 +33,7 @@ import ggc.pump.data.graph.writer.PumpValuesWriter;
 
 public class AnimasPumpDataWriter implements AnimasDataWriter
 {
+
     OutputWriter outputWriter;
     PumpValuesWriter writer;
 
@@ -59,9 +57,9 @@ public class AnimasPumpDataWriter implements AnimasDataWriter
         return this.outputWriter;
     }
 
+
     public void createDeviceValuesWriter(OutputWriter ow)
     {
     }
-
 
 }

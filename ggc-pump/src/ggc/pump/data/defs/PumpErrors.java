@@ -1,14 +1,12 @@
 package ggc.pump.data.defs;
 
-import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.data.CodeEnumWithTranslation;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.data.CodeEnumWithTranslation;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -58,13 +56,10 @@ public enum PumpErrors implements CodeEnumWithTranslation
 
     ;
 
-
-
     /**
      * Errors Description
      */
     private static String[] errors_desc = null;
-
 
     static Map<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static Map<Integer, PumpErrors> codeMapping = new HashMap<Integer, PumpErrors>();
@@ -80,21 +75,20 @@ public enum PumpErrors implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
 
-
         String[] errors_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), //
-                ic.getMessage("ERROR_CARTRIDGE_EMPTY"), //
-                ic.getMessage("ERROR_BATTERY_DEPLETED"), //
-                ic.getMessage("ERROR_AUTOMATIC_OFF"), //
-                ic.getMessage("ERROR_NO_DELIVERY"), //
-                ic.getMessage("ERROR_END_OF_OPERATION"), //
-                ic.getMessage("ERROR_MECHANICAL_ERROR"), //
-                ic.getMessage("ERROR_ELECTRONIC_ERROR"), //
-                ic.getMessage("ERROR_POWER_INTERRUPT"), //
-                ic.getMessage("ERROR_CARTRIDGE_ERROR"), //
-                ic.getMessage("ERROR_SET_NOT_PRIMED"), //
-                ic.getMessage("ERROR_DATA_INTERRUPTED"), //
-                ic.getMessage("ERROR_LANGUAGE_ERROR"), //
-                ic.getMessage("ERROR_INSULIN_CHANGED"), };
+                                    ic.getMessage("ERROR_CARTRIDGE_EMPTY"), //
+                                    ic.getMessage("ERROR_BATTERY_DEPLETED"), //
+                                    ic.getMessage("ERROR_AUTOMATIC_OFF"), //
+                                    ic.getMessage("ERROR_NO_DELIVERY"), //
+                                    ic.getMessage("ERROR_END_OF_OPERATION"), //
+                                    ic.getMessage("ERROR_MECHANICAL_ERROR"), //
+                                    ic.getMessage("ERROR_ELECTRONIC_ERROR"), //
+                                    ic.getMessage("ERROR_POWER_INTERRUPT"), //
+                                    ic.getMessage("ERROR_CARTRIDGE_ERROR"), //
+                                    ic.getMessage("ERROR_SET_NOT_PRIMED"), //
+                                    ic.getMessage("ERROR_DATA_INTERRUPTED"), //
+                                    ic.getMessage("ERROR_LANGUAGE_ERROR"), //
+                                    ic.getMessage("ERROR_INSULIN_CHANGED"), };
 
         errors_desc = errors_desc_lcl;
     }
@@ -102,6 +96,7 @@ public enum PumpErrors implements CodeEnumWithTranslation
     int code;
     String i18nKey;
     String translation;
+
 
     private PumpErrors(int code, String i18nKey)
     {
@@ -115,19 +110,28 @@ public enum PumpErrors implements CodeEnumWithTranslation
         return translation;
     }
 
+
     public void setTranslation(String translation)
     {
         this.translation = translation;
     }
+
 
     public int getCode()
     {
         return code;
     }
 
+
     public String getI18nKey()
     {
         return i18nKey;
+    }
+
+
+    public String getName()
+    {
+        return this.name();
     }
 
 
@@ -143,6 +147,7 @@ public enum PumpErrors implements CodeEnumWithTranslation
         return ATDataAccessAbstract.getTypeFromDescription(str, translationMapping);
     }
 
+
     public static PumpErrors getByCode(int code)
     {
         if (codeMapping.containsKey(code))
@@ -155,6 +160,7 @@ public enum PumpErrors implements CodeEnumWithTranslation
         }
     }
 
+
     /**
      * Get Descriptions (array)
      *
@@ -165,21 +171,33 @@ public enum PumpErrors implements CodeEnumWithTranslation
         return errors_desc;
     }
 
-
-
-//    public static final int PUMP_ERROR_UNKNOWN_ERROR = 0; // __________________________151
-//    public static final int PUMP_ERROR_CARTRIDGE_EMPTY = 1; // __________________________151
-//    public static final int PUMP_ERROR_BATTERY_DEPLETED = 2;// __________________________152
-//    public static final int PUMP_ERROR_AUTOMATIC_OFF = 3; // _____________________________152
-//    public static final int PUMP_ERROR_NO_DELIVERY = 4; // minimed 'No Delivery'=4, roche 'Occlusion'=4
-//    public static final int PUMP_ERROR_END_OF_OPERATION = 5; // __________________________154
-//    public static final int PUMP_ERROR_MECHANICAL_ERROR = 6; // _________________________155
-//    public static final int PUMP_ERROR_ELECTRONIC_ERROR = 7; // _________________________156
-//    public static final int PUMP_ERROR_POWER_INTERRUPT = 8; // __________________________157
-//    public static final int PUMP_ERROR_CARTRIDGE_ERROR = 10; // _________________________158
-//    public static final int PUMP_ERROR_SET_NOT_PRIMED = 11; // ___________________________158
-//    public static final int PUMP_ERROR_DATA_INTERRUPTED = 12; // _________________________159
-//    public static final int PUMP_ERROR_LANGUAGE_ERROR = 13; // __________________________160
-//    public static final int PUMP_ERROR_INSULIN_CHANGED = 14; // __________________________
+    // public static final int PUMP_ERROR_UNKNOWN_ERROR = 0; //
+    // __________________________151
+    // public static final int PUMP_ERROR_CARTRIDGE_EMPTY = 1; //
+    // __________________________151
+    // public static final int PUMP_ERROR_BATTERY_DEPLETED = 2;//
+    // __________________________152
+    // public static final int PUMP_ERROR_AUTOMATIC_OFF = 3; //
+    // _____________________________152
+    // public static final int PUMP_ERROR_NO_DELIVERY = 4; // minimed 'No
+    // Delivery'=4, roche 'Occlusion'=4
+    // public static final int PUMP_ERROR_END_OF_OPERATION = 5; //
+    // __________________________154
+    // public static final int PUMP_ERROR_MECHANICAL_ERROR = 6; //
+    // _________________________155
+    // public static final int PUMP_ERROR_ELECTRONIC_ERROR = 7; //
+    // _________________________156
+    // public static final int PUMP_ERROR_POWER_INTERRUPT = 8; //
+    // __________________________157
+    // public static final int PUMP_ERROR_CARTRIDGE_ERROR = 10; //
+    // _________________________158
+    // public static final int PUMP_ERROR_SET_NOT_PRIMED = 11; //
+    // ___________________________158
+    // public static final int PUMP_ERROR_DATA_INTERRUPTED = 12; //
+    // _________________________159
+    // public static final int PUMP_ERROR_LANGUAGE_ERROR = 13; //
+    // __________________________160
+    // public static final int PUMP_ERROR_INSULIN_CHANGED = 14; //
+    // __________________________
 
 }

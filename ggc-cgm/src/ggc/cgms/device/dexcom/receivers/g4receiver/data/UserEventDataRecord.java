@@ -4,6 +4,10 @@
 
 package ggc.cgms.device.dexcom.receivers.g4receiver.data;
 
+import java.util.Date;
+
+import org.apache.commons.lang.StringUtils;
+
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.Exercise;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.Health;
 import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
@@ -12,10 +16,31 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.internal.GenericReceiverRecor
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils.DexcomDateParsing;
 
-import java.util.Date;
-
-import org.apache.commons.lang.StringUtils;
-
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     Dexcom 7
+ *  Description:  Dexcom 7 implementation (just settings)
+ *
+ *  Author: Andy {andy@atech-software.com}
+ */
 public class UserEventDataRecord extends GenericReceiverRecordAbstract
 {
 
@@ -33,9 +58,11 @@ public class UserEventDataRecord extends GenericReceiverRecordAbstract
     public int eventTime;
     public int eventValue;
 
+
     public UserEventDataRecord()
     {
     }
+
 
     // public XmlElement toXml(XmlDocument xOwner) throws Exception
     // {
@@ -57,15 +84,18 @@ public class UserEventDataRecord extends GenericReceiverRecordAbstract
         return this.eventSubType;
     }
 
+
     public Date getEventTime()
     {
         return DexcomUtils.getDateFromSeconds(this.eventTime, DexcomDateParsing.DateWithDifference);
     }
 
+
     public UserEvent getEventType()
     {
         return this.eventType;
     }
+
 
     public String getEventTypeDescription()
     {
@@ -104,10 +134,12 @@ public class UserEventDataRecord extends GenericReceiverRecordAbstract
         return "Unknown";
     }
 
+
     public int getEventValue()
     {
         return this.eventValue;
     }
+
 
     public String getEventValueDescription()
     {
@@ -138,15 +170,18 @@ public class UserEventDataRecord extends GenericReceiverRecordAbstract
 
     }
 
+
     public ReceiverRecordType getRecordType()
     {
         return ReceiverRecordType.UserEventData;
     }
 
+
     public int getImplementedRecordSize()
     {
         return 20;
     }
+
 
     @Override
     public int getImplementedRecordVersion()
@@ -154,25 +189,30 @@ public class UserEventDataRecord extends GenericReceiverRecordAbstract
         return 1;
     }
 
+
     public void setEventType(UserEvent eventType)
     {
         this.eventType = eventType;
     }
+
 
     public void setEventSubType(byte eventSubType)
     {
         this.eventSubType = eventSubType;
     }
 
+
     public void setEventTime(int eventTime)
     {
         this.eventTime = eventTime;
     }
 
+
     public void setEventValue(int eventValue)
     {
         this.eventValue = eventValue;
     }
+
 
     @Override
     public String toString()

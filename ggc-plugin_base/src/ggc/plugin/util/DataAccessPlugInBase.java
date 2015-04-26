@@ -1,27 +1,5 @@
 package ggc.plugin.util;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.core.data.Converter_mgdL_mmolL;
-import ggc.core.data.cfg.ConfigurationManager;
-import ggc.core.plugins.GGCPluginType;
-import ggc.core.util.GGCI18nControl;
-import ggc.core.util.GGCI18nControlContext;
-import ggc.plugin.cfg.DeviceConfigEntry;
-import ggc.plugin.cfg.DeviceConfiguration;
-import ggc.plugin.cfg.DeviceConfigurationDefinition;
-import ggc.plugin.data.DeviceDataHandler;
-import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.device.DeviceInterface;
-import ggc.plugin.device.DownloadSupportType;
-import ggc.plugin.device.v2.DeviceInstanceWithHandler;
-import ggc.plugin.graph.util.PlugInGraphContext;
-import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
-import ggc.plugin.gui.OldDataReaderAbstract;
-import ggc.plugin.list.BaseListEntry;
-import ggc.plugin.manager.DeviceManager;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.plugin.output.OutputUtil;
-
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -29,9 +7,9 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
+import javax.swing.*;
 
+import ggc.plugin.data.enums.DeviceEntryStatus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -45,7 +23,27 @@ import com.atech.i18n.mgr.LanguageManager;
 import com.atech.plugin.PlugInServer;
 import com.atech.update.startup.os.OSUtil;
 import com.atech.utils.ATDataAccessLMAbstract;
+import com.atech.utils.ATSwingUtils;
 import com.sun.jna.NativeLibrary;
+
+import ggc.core.data.Converter_mgdL_mmolL;
+import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.plugins.GGCPluginType;
+import ggc.core.util.GGCI18nControl;
+import ggc.plugin.cfg.DeviceConfigEntry;
+import ggc.plugin.cfg.DeviceConfiguration;
+import ggc.plugin.cfg.DeviceConfigurationDefinition;
+import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.v2.DeviceInstanceWithHandler;
+import ggc.plugin.graph.util.PlugInGraphContext;
+import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
+import ggc.plugin.gui.OldDataReaderAbstract;
+import ggc.plugin.list.BaseListEntry;
+import ggc.plugin.manager.DeviceManager;
+import ggc.plugin.output.OutputUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -208,29 +206,19 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     protected int column_widths_manual[] = null;
 
     /**
-     * The columns_table.
-     */
-    protected String columns_table[] = null;
-
-    /**
-     * The column_widths_table.
-     */
-    protected int column_widths_table[] = null;
-
-    /**
      * The entry_statuses.
      */
-    protected String[] entry_statuses = null;
+    public static String[] entry_statuses = null;
 
     /**
      * The reading_statuses.
      */
-    protected String[] reading_statuses = null;
+    public static String[] reading_statuses = null;
 
     /**
      * The filtering_states.
      */
-    protected String[] filtering_states = null;
+    public static String[] filtering_states = null;
 
     protected boolean data_download_screen_wide = false;
 
@@ -305,7 +293,6 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public abstract GGCPluginType getPluginType();
 
 
-
     /**
      * Get PlugIn Server Instance
      *
@@ -315,6 +302,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         this.plugin_server = server;
     }
+
 
     /**
      * Set PlugIn Server Instance
@@ -326,6 +314,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.plugin_server;
     }
 
+
     // ********************************************************
     // ****** Init Methods *****
     // ********************************************************
@@ -336,6 +325,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     @Override
     public abstract String getApplicationName();
 
+
     /**
      * Check Prerequisites for Plugin
      */
@@ -343,6 +333,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public void checkPrerequisites()
     {
     }
+
 
     /**
      * Get Images Root
@@ -353,6 +344,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return "/icons/";
     }
 
+
     /**
      * Get Images for Devices
      *
@@ -361,6 +353,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public abstract String getDeviceImagesRoot();
 
+
     /**
      * loadBackupRestoreCollection
      */
@@ -368,6 +361,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public void loadBackupRestoreCollection()
     {
     }
+
 
     // ********************************************************
     // ****** About Methods *****
@@ -378,6 +372,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public abstract void createPlugInAboutContext();
 
+
     /**
      * Get About Dialog image name
      *
@@ -387,6 +382,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.about_image_name;
     }
+
 
     /**
      * Get About Image Size
@@ -401,6 +397,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
         return sz;
     }
+
 
     /**
      * Get About Plugin Copyright
@@ -418,6 +415,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * Get PlugIn Libraries
      *
@@ -427,6 +425,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.plugin_libraries;
     }
+
 
     /**
      * Get Plugin Developers
@@ -438,6 +437,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.plugin_developers;
     }
 
+
     /**
      * Get Plugin Features
      *
@@ -447,6 +447,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.plugin_features;
     }
+
 
     // ********************************************************
     // ****** Web Lister Methods *****
@@ -460,6 +461,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         this.web_lister_cfg = this.getConfiguration("../data/tools/WebLister.properties");
     }
 
+
     /**
      * Get WebLister Port, return poer on which WebLister is residing
      *
@@ -470,10 +472,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.getIntValueFromString(this.web_lister_cfg.get("http.port"), 4444);
     }
 
+
     /**
      * Create WebLister (for List) Context for plugin
      */
     public abstract void createWebListerContext();
+
 
     /**
      * Get Web Lister Title
@@ -485,6 +489,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.weblister_title;
     }
 
+
     /**
      * Get Web Lister Description
      *
@@ -494,6 +499,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.weblister_desc;
     }
+
 
     /**
      * Get Web Lister Items
@@ -505,6 +511,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return weblister_items;
     }
 
+
     // ********************************************************
     // ****** Configuration *****
     // ********************************************************
@@ -513,6 +520,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      * Create Configuration Context for plugin
      */
     public abstract void createConfigurationContext();
+
 
     /**
      * Get Device Configuration Definition
@@ -523,6 +531,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return device_config_def;
     }
+
 
     /**
      * Get Device COnfiguration
@@ -539,10 +548,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.device_config;
     }
 
+
     /**
      * Create Device Configuration for plugin
      */
     public abstract void createDeviceConfiguration();
+
 
     // ********************************************************
     // ****** Version *****
@@ -557,6 +568,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.plugin_version;
     }
+
 
     /**
      * Create Plugin Version
@@ -577,6 +589,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public static final int BG_MMOL = 2;
 
+
     /**
      * Get BG Measurment Type
      *
@@ -586,6 +599,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.m_BG_unit;
     }
+
 
     /**
      * Set BG Measurment Type
@@ -597,6 +611,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         this.m_BG_unit = type;
     }
 
+
     /**
      * Get BG Measurment Type Name
      *
@@ -606,6 +621,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return OutputUtil.unitsName[this.m_BG_unit];
     }
+
 
     /**
      * Get BG Measurment Type Name
@@ -617,6 +633,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return OutputUtil.unitsName[type];
     }
+
 
     /**
      * Get BG Type Name Static
@@ -632,6 +649,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
 
     private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
+
 
     /**
      * Depending on the return value of <code>getBGMeasurmentType()</code>, either
@@ -653,6 +671,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
                 return dbValue;
         }
     }
+
 
     /**
      * Get Displayed BG String
@@ -682,6 +701,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     }
 
+
     public String getDisplayedBGString(Float bgValue)
     {
         float val = 0.0f;
@@ -697,6 +717,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
             return DataAccessPlugInBase.Decimal1Format.format(val);
 
     }
+
 
     /**
      * Get BG Value (converted to current display type)
@@ -716,6 +737,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         }
     }
 
+
     /**
      * Get BG Value by type
      *
@@ -734,6 +756,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
                 return bg_value;
         }
     }
+
 
     /**
      * Get BG Value by type
@@ -764,6 +787,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * Get BG Value In Selected Format
      *
@@ -781,6 +805,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
                 return bg_value;
         }
     }
+
 
     /**
      * Get BG Value by Type
@@ -806,6 +831,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * Get BG Value Different
      *
@@ -822,6 +848,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
             return bg_value * MMOL_TO_MGDL_FACTOR;
     }
 
+
     // ********************************************************
     // ****** Database *****
     // ********************************************************
@@ -837,6 +864,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         createCustomDb();
     }
 
+
     /**
      * Get HibernateDb instance (for working with database in plugin)
      */
@@ -846,12 +874,14 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.hdb;
     }
 
+
     /**
      * Create Custom Db
      *
      * This is for plug-in specific database implementation
      */
     public abstract void createCustomDb();
+
 
     // ********************************************************
     // ****** Database *****
@@ -867,10 +897,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.m_manager;
     }
 
+
     /**
      * Load Manager instance
      */
     public abstract void loadManager();
+
 
     // ********************************************************
     // ****** Data Retrieval *****
@@ -881,6 +913,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public abstract void createPlugInDataRetrievalContext();
 
+
     /**
      * Get Columns for Manual Entry
      * @return
@@ -889,6 +922,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.columns_manual;
     }
+
 
     /**
      * Get Columns Width for Manual Entry
@@ -899,25 +933,6 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.column_widths_manual;
     }
 
-    /**
-     * Get Columns for Retrieval Entry
-     *
-     * @return
-     */
-    public String[] getColumnsTable()
-    {
-        return this.columns_table;
-    }
-
-    /**
-     * Get Columns Width for Retrieval Entry
-     *
-     * @return
-     */
-    public int[] getColumnsWidthTable()
-    {
-        return this.column_widths_table;
-    }
 
     /**
      * Get Entry Statuses
@@ -929,6 +944,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.entry_statuses;
     }
 
+
     /**
      * Get Data Entry Object
      *
@@ -939,10 +955,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return m_entry_type;
     }
 
+
     /**
      * Load Device Data Handler
      */
     public abstract void loadDeviceDataHandler();
+
 
     /**
      * Get Device Data Handler
@@ -954,6 +972,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.m_ddh;
     }
 
+
     /**
      * Get Reading Statuses
      *
@@ -963,6 +982,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return reading_statuses;
     }
+
 
     /**
      * Get Filtering States
@@ -974,13 +994,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.filtering_states;
     }
 
-    /**
-     * Load Reading Statuses
-     */
-    public void loadReadingStatuses()
-    {
 
-    }
+
+
 
     /**
      * Get Start Year
@@ -993,6 +1009,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return 1970;
     }
 
+
     /**
      * Load Graph Config Properties
      *
@@ -1002,6 +1019,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public void loadGraphConfigProperties()
     {
     }
+
 
     /**
      * Sleep MS
@@ -1017,6 +1035,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         catch (Exception ex)
         {}
     }
+
 
     /**
      * Check if specified exception was caused by UnsatisfiedLinkError
@@ -1038,6 +1057,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
         return false;
     }
+
 
     /**
      * Get Extended data for UnsatisfiedLinkError (if we add new libraries that need native
@@ -1068,6 +1088,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return ret;
 
     }
+
 
     /**
      * Check Native Library
@@ -1108,6 +1129,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         }
     }
 
+
     /**
      * Load Special Parameters
      *
@@ -1117,6 +1139,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public void loadSpecialParameters()
     {
     }
+
 
     /**
      * This method is intended to load additional Language info. Either special langauge configuration
@@ -1128,6 +1151,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         // TODO Auto-generated method stub
     }
 
+
     /**
      * Get Selected Lang Index
      */
@@ -1136,6 +1160,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return 0;
     }
+
 
     /**
      * Set Selected Lang Index
@@ -1146,10 +1171,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * Create Old Data Reader
      */
     public abstract void createOldDataReader();
+
 
     /**
      * Get Old Data Reader (instance of OldDataReaderAbstract which can read data already in database -
@@ -1162,11 +1189,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.m_old_data_reader;
     }
 
-        /**
-     * Get Current User Id
-     *
-     * @return
-     */
+
+    /**
+    * Get Current User Id
+    *
+    * @return
+    */
     @Override
     public long getCurrentUserId()
     {
@@ -1182,9 +1210,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     public int getCurrentUserIdAsInt()
     {
-        return (int)this.current_user_id;
+        return (int) this.current_user_id;
     }
-
 
 
     /**
@@ -1198,6 +1225,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         this.current_user_id = user_id;
     }
 
+
     /**
      * Is Data Download Screen Wide
      *
@@ -1207,6 +1235,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.data_download_screen_wide;
     }
+
 
     /**
      * Yes/No option
@@ -1222,6 +1251,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
             return DataAccessPlugInBase.yes_no_option[0];
 
     }
+
 
     /**
      * Get Download Status For Selected Device
@@ -1245,12 +1275,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         }
         else
         {
-            return this.selectedDeviceInstanceV2!=null ? this.selectedDeviceInstanceV2.getDownloadSupportType() :
-                    this.selectedDeviceInstanceV1.getDownloadSupportType();
+            return this.selectedDeviceInstanceV2 != null ? this.selectedDeviceInstanceV2.getDownloadSupportType()
+                    : this.selectedDeviceInstanceV1.getDownloadSupportType();
         }
 
     }
-
 
 
     /**
@@ -1260,11 +1289,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public Object getSelectedDeviceInstance()
     {
-        if (this.selectedDeviceInstanceV1==null && this.selectedDeviceInstanceV2==null)
+        if (this.selectedDeviceInstanceV1 == null && this.selectedDeviceInstanceV2 == null)
         {
             DeviceConfigEntry dce = getDeviceConfiguration().getSelectedDeviceInstance();
 
-            //System.out.println("DeviceConfigEntry [" + this.getPluginName() + "]: " + dce);
+            // System.out.println("DeviceConfigEntry [" + this.getPluginName() +
+            // "]: " + dce);
 
             if (dce == null)
                 return null;
@@ -1272,25 +1302,28 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
             {
                 this.selectedDeviceInstanceV2 = this.getManager().getDeviceV2(dce.device_company, dce.device_device);
 
-                if (this.selectedDeviceInstanceV2==null)
+                if (this.selectedDeviceInstanceV2 == null)
                 {
-                    this.selectedDeviceInstanceV1 = this.getManager().getDeviceV1(dce.device_company, dce.device_device);
+                    this.selectedDeviceInstanceV1 = this.getManager()
+                            .getDeviceV1(dce.device_company, dce.device_device);
                 }
 
                 this.deviceSource = dce.device_company + " " + dce.device_device;
             }
         }
 
-        if (this.selectedDeviceInstanceV1==null && this.selectedDeviceInstanceV2==null)
+        if (this.selectedDeviceInstanceV1 == null && this.selectedDeviceInstanceV2 == null)
         {
             return null;
         }
         else
         {
-            return this.selectedDeviceInstanceV2!=null ? this.selectedDeviceInstanceV2 : this.selectedDeviceInstanceV1;
+            return this.selectedDeviceInstanceV2 != null ? this.selectedDeviceInstanceV2
+                    : this.selectedDeviceInstanceV1;
         }
 
     }
+
 
     /**
      * Get Source Device
@@ -1302,6 +1335,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return deviceSource;
     }
 
+
     /**
      * Get Configuration Manager
      *
@@ -1312,6 +1346,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.config_manager;
     }
 
+
     /**
      * Set Configuration Manager
      *
@@ -1321,6 +1356,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         this.config_manager = conf_mgr;
     }
+
 
     /**
      * Get Max Decimals that will be used by DecimalHandler
@@ -1333,6 +1369,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return 2;
     }
 
+
     /**
      * Get Parent I18nControl Instance. This will be used where translation will be taken
      * from parent (Core). For example in printing.
@@ -1343,6 +1380,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.m_parent_i18n;
     }
+
 
     /**
      * Set Parent I18nControl Instance. This will be used where translation will be taken
@@ -1355,6 +1393,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         this.m_parent_i18n = ic;
     }
+
 
     /**
      * Get PlugIn Device Util
@@ -1389,7 +1428,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return this.i18n;
     }
 
-
+    private boolean baseTranslationsLoaded = false;
 
 
     /**
@@ -1397,70 +1436,76 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public void loadBasePluginTranslations()
     {
+        if (baseTranslationsLoaded)
+            return;
+
+        GGCI18nControl ic = this.getI18nControlInstance();
 
         yes_no_option = new String[2];
-        yes_no_option[0] = this.getI18nControlInstance().getMessage("NO");
-        yes_no_option[1] = this.i18n_plugin.getMessage("YES");
+        yes_no_option[0] = ic.getMessage("NO");
+        yes_no_option[1] = ic.getMessage("YES");
 
         entry_statuses = new String[4];
-        entry_statuses[0] = this.i18n_plugin.getMessage("UNKNOWN");
-        entry_statuses[1] = this.i18n_plugin.getMessage("NEW");
-        entry_statuses[2] = this.i18n_plugin.getMessage("CHANGED");
-        entry_statuses[3] = this.i18n_plugin.getMessage("OLD");
+        entry_statuses[0] = ic.getMessage("UNKNOWN");
+        entry_statuses[1] = ic.getMessage("NEW");
+        entry_statuses[2] = ic.getMessage("CHANGED");
+        entry_statuses[3] = ic.getMessage("OLD");
 
         // months
-        months[0] = i18n_plugin.getMessage("JANUARY");
-        months[1] = i18n_plugin.getMessage("FEBRUARY");
-        months[2] = i18n_plugin.getMessage("MARCH");
-        months[3] = i18n_plugin.getMessage("APRIL");
-        months[4] = i18n_plugin.getMessage("MAY");
-        months[5] = i18n_plugin.getMessage("JUNE");
-        months[6] = i18n_plugin.getMessage("JULY");
-        months[7] = i18n_plugin.getMessage("AUGUST");
-        months[8] = i18n_plugin.getMessage("SEPTEMBER");
-        months[9] = i18n_plugin.getMessage("OCTOBER");
-        months[10] = i18n_plugin.getMessage("NOVEMBER");
-        months[11] = i18n_plugin.getMessage("DECEMBER");
+        months[0] = ic.getMessage("JANUARY");
+        months[1] = ic.getMessage("FEBRUARY");
+        months[2] = ic.getMessage("MARCH");
+        months[3] = ic.getMessage("APRIL");
+        months[4] = ic.getMessage("MAY");
+        months[5] = ic.getMessage("JUNE");
+        months[6] = ic.getMessage("JULY");
+        months[7] = ic.getMessage("AUGUST");
+        months[8] = ic.getMessage("SEPTEMBER");
+        months[9] = ic.getMessage("OCTOBER");
+        months[10] = ic.getMessage("NOVEMBER");
+        months[11] = ic.getMessage("DECEMBER");
 
         // days
-        days[0] = i18n_plugin.getMessage("MONDAY");
-        days[1] = i18n_plugin.getMessage("TUESDAY");
-        days[2] = i18n_plugin.getMessage("WEDNESDAY");
-        days[3] = i18n_plugin.getMessage("THURSDAY");
-        days[4] = i18n_plugin.getMessage("FRIDAY");
-        days[5] = i18n_plugin.getMessage("SATURDAY");
-        days[6] = i18n_plugin.getMessage("SUNDAY");
+        days[0] = ic.getMessage("MONDAY");
+        days[1] = ic.getMessage("TUESDAY");
+        days[2] = ic.getMessage("WEDNESDAY");
+        days[3] = ic.getMessage("THURSDAY");
+        days[4] = ic.getMessage("FRIDAY");
+        days[5] = ic.getMessage("SATURDAY");
+        days[6] = ic.getMessage("SUNDAY");
 
-        gcDays[0] = m_i18n.getMessage("SUNDAY");
-        gcDays[1] = m_i18n.getMessage("MONDAY");
-        gcDays[2] = m_i18n.getMessage("TUESDAY");
-        gcDays[3] = m_i18n.getMessage("WEDNESDAY");
-        gcDays[4] = m_i18n.getMessage("THURSDAY");
-        gcDays[5] = m_i18n.getMessage("FRIDAY");
-        gcDays[6] = m_i18n.getMessage("SATURDAY");
+        gcDays[0] = ic.getMessage("SUNDAY");
+        gcDays[1] = ic.getMessage("MONDAY");
+        gcDays[2] = ic.getMessage("TUESDAY");
+        gcDays[3] = ic.getMessage("WEDNESDAY");
+        gcDays[4] = ic.getMessage("THURSDAY");
+        gcDays[5] = ic.getMessage("FRIDAY");
+        gcDays[6] = ic.getMessage("SATURDAY");
 
         reading_statuses = new String[7];
 
-        reading_statuses[0] = i18n_plugin.getMessage("STATUS_NONE");
-        reading_statuses[1] = i18n_plugin.getMessage("STATUS_READY");
-        reading_statuses[2] = i18n_plugin.getMessage("STATUS_DOWNLOADING");
-        reading_statuses[3] = i18n_plugin.getMessage("STATUS_STOPPED_DEVICE");
-        reading_statuses[4] = i18n_plugin.getMessage("STATUS_STOPPED_USER");
-        reading_statuses[5] = i18n_plugin.getMessage("STATUS_DOWNLOAD_FINISHED");
-        reading_statuses[6] = String.format(i18n_plugin.getMessage("STATUS_READER_ERROR"),
+        reading_statuses[0] = ic.getMessage("STATUS_NONE");
+        reading_statuses[1] = ic.getMessage("STATUS_READY");
+        reading_statuses[2] = ic.getMessage("STATUS_DOWNLOADING");
+        reading_statuses[3] = ic.getMessage("STATUS_STOPPED_DEVICE");
+        reading_statuses[4] = ic.getMessage("STATUS_STOPPED_USER");
+        reading_statuses[5] = ic.getMessage("STATUS_DOWNLOAD_FINISHED");
+        reading_statuses[6] = String.format(ic.getMessage("STATUS_READER_ERROR"),
             i18n_plugin.getMessage("DEVICE_NAME_BIG"));
 
         this.filtering_states = new String[7];
 
-        filtering_states[0] = i18n_plugin.getMessage("FILTER_ALL");
-        filtering_states[1] = i18n_plugin.getMessage("FILTER_NEW");
-        filtering_states[2] = i18n_plugin.getMessage("FILTER_CHANGED");
-        filtering_states[3] = i18n_plugin.getMessage("FILTER_EXISTING");
-        filtering_states[4] = i18n_plugin.getMessage("FILTER_UNKNOWN");
-        filtering_states[5] = i18n_plugin.getMessage("FILTER_NEW_CHANGED");
-        filtering_states[6] = i18n_plugin.getMessage("FILTER_ALL_BUT_EXISTING");
+        filtering_states[0] = ic.getMessage("FILTER_ALL");
+        filtering_states[1] = ic.getMessage("FILTER_NEW");
+        filtering_states[2] = ic.getMessage("FILTER_CHANGED");
+        filtering_states[3] = ic.getMessage("FILTER_EXISTING");
+        filtering_states[4] = ic.getMessage("FILTER_UNKNOWN");
+        filtering_states[5] = ic.getMessage("FILTER_NEW_CHANGED");
+        filtering_states[6] = ic.getMessage("FILTER_ALL_BUT_EXISTING");
 
+        baseTranslationsLoaded = true;
     }
+
 
     /**
      * Path Resolver
@@ -1473,11 +1518,13 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         return path.replace('\\', File.separatorChar);
     }
 
+
     @Override
     public void loadConverters()
     {
         this.converters.put("BG", new Converter_mgdL_mmolL());
     }
+
 
     /**
      * Get BG Converter
@@ -1490,34 +1537,42 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * Init all Objects
      */
     public abstract void initAllObjects();
+
 
     /**
      * Load Icons
      */
     public void loadIcons()
     {
-        if (entry_status_iconimage != null)
-            return;
-
-        entry_status_iconimage = new ImageIcon[4];
-
         JDialog d = new JDialog();
+        DeviceEntryStatus.loadIcons(d, this);
 
-        for (int i = 0; i < entry_status_icons.length; i++)
+        if (entry_status_iconimage == null)
         {
-            entry_status_iconimage[i] = ATSwingUtils.getImageIcon(entry_status_icons[i], 8, 8, d, this);
+
+            entry_status_iconimage = new ImageIcon[4];
+
+            for (int i = 0; i < entry_status_icons.length; i++)
+            {
+                entry_status_iconimage[i] = ATSwingUtils.getImageIcon(entry_status_icons[i], 8, 8, d, this);
+            }
         }
+
+        d = null;
     }
+
 
     /**
      * Get Name of Plugin (for internal use)
      * @return
      */
     public abstract String getPluginName();
+
 
     /**
      * Get Graph Context
@@ -1561,16 +1616,10 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
                 "BSD", //
                 "Framework for Xml manipulation"));
 
-        lst_libs.add(new LibraryInfoEntry("NRSerial",
-                "3.9.3",
-                "https://github.com/NeuronRobotics/nrjavaserial",
-                "LGPL",
-                "Comm API"));
+        lst_libs.add(new LibraryInfoEntry("NRSerial", "3.9.3", "https://github.com/NeuronRobotics/nrjavaserial",
+                "LGPL", "Comm API"));
 
-        lst_libs.add(new LibraryInfoEntry("IBM Com Api",
-                "1.3",
-                "https://www.ibm.com",
-                "LGPL",
+        lst_libs.add(new LibraryInfoEntry("IBM Com Api", "1.3", "https://www.ibm.com", "LGPL",
                 "Comm API (used for BT devices for now)"));
 
         lst_libs.add(new LibraryInfoEntry("Jaxen", //
@@ -1596,10 +1645,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
 
 
-
     public int getIndexOfElementInArray(String[] descriptions, String description)
     {
-        for(int i=0; i<descriptions.length; i++)
+        for (int i = 0; i < descriptions.length; i++)
         {
             if (descriptions[i].equals(description))
                 return i;
@@ -1607,6 +1655,5 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
         return 0;
     }
-
 
 }

@@ -1,5 +1,15 @@
 package ggc.plugin.data;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
+import com.atech.db.DbDataReaderAbstract;
+import com.atech.db.DbDataReadingFinishedInterface;
+import com.atech.db.hibernate.DatabaseObjectHibernate;
+import com.atech.db.hibernate.HibernateDb;
+import com.atech.graphics.components.StatusReporterInterface;
+
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.data.enums.DeviceInterfaceVersion;
@@ -10,16 +20,6 @@ import ggc.plugin.gui.DeviceDisplayConfigDialog;
 import ggc.plugin.gui.DeviceDisplayDataDialog;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-
-import com.atech.db.DbDataReaderAbstract;
-import com.atech.db.DbDataReadingFinishedInterface;
-import com.atech.db.hibernate.DatabaseObjectHibernate;
-import com.atech.db.hibernate.HibernateDb;
-import com.atech.graphics.components.StatusReporterInterface;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -59,7 +59,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     protected StatusReporterInterface export_dialog;
     DbDataReadingFinishedInterface m_reading_inst = null;
     protected DeviceValuesTableModel m_model;
-    //protected DeviceInterface device_interface;
+    // protected DeviceInterface device_interface;
     protected DeviceValuesTableModel m_dvtm;
 
     private DeviceInterfaceVersion deviceInterfaceVersion;
@@ -101,6 +101,8 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      * Transfer Type: Read File
      */
     public static final int TRANSFER_READ_FILE = 3;
+    private int downloaderCheckableColumn;
+
 
     /**
      * Constructor
@@ -112,6 +114,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         this.m_da = da;
     }
 
+
     /**
      * Set Device PlugIn Server
      * 
@@ -121,6 +124,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         this.m_server = server;
     }
+
 
     /**
      * Set Configured Device
@@ -132,6 +136,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         this.configured_device = _configured_device;
     }
 
+
     /**
      * Get Configured Device
      * 
@@ -141,6 +146,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         return this.configured_device;
     }
+
 
     /**
      * Set Db Data Reader
@@ -153,6 +159,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         this.m_reader.setReadingFinishedObject(this);
     }
 
+
     /**
      * Get Db Data Reader
      * 
@@ -162,6 +169,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         return this.m_reader;
     }
+
 
     /**
      * Execute Export
@@ -182,6 +190,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         }
     }
 
+
     /**
      * Is Output Writer Set
      *  
@@ -191,6 +200,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         return this.m_output_writer != null;
     }
+
 
     /**
      * Has Old Data for checking if old data exists
@@ -202,6 +212,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         return this.old_data != null;
     }
 
+
     /**
      * Get Old data
      * 
@@ -211,6 +222,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         return this.old_data;
     }
+
 
     /**
      * Execute export to Database
@@ -279,10 +291,16 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         // this.export_dialog.setStatus(100);
     }
 
+
     /**
-     * Execute export to Other stuff
+     * Execute export to Other Export Tool/Method
+     *
+     * Currently not supported. When supported this method needs to be overriden.
      */
-    public abstract void executeExportOther();
+    public void executeExportOther()
+    {
+    }
+
 
     /**
      * Is Old Data Reading Finished
@@ -294,6 +312,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         return true;
     }
 
+
     /**
      * Set Reading Finished Object
      * 
@@ -303,6 +322,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         this.m_reading_inst = ddrf;
     }
+
 
     /** 
      * readingFinished
@@ -327,12 +347,14 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         }
     }
 
+
     /**
      * Set Device Data
      * 
      * @param data data as Hashtable<String,?> data
      */
     public abstract void setDeviceData(Hashtable<String, ?> data);
+
 
     /**
      * Get Device Values Table Model
@@ -349,10 +371,12 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         return m_model;
     }
 
+
     /**
      * Create Device Values Table Model
      */
     public abstract void createDeviceValuesTableModel();
+
 
     /**
      * Set Status
@@ -364,8 +388,8 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         this.export_dialog.setStatus(status);
     }
 
-    // public abstract
 
+    // public abstract
 
     /**
      * Set Transfer Type
@@ -377,6 +401,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         this.transfer_type = _type;
     }
 
+
     /**
      * Get Transfer Type
      * 
@@ -386,6 +411,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         return this.transfer_type;
     }
+
 
     /**
      * Is Data Transfer
@@ -397,6 +423,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         return this.transfer_type != DeviceDataHandler.TRANSFER_READ_CONFIGURATION;
     }
 
+
     /**
      * Is Config Transfer
      * 
@@ -406,6 +433,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     {
         return this.transfer_type == DeviceDataHandler.TRANSFER_READ_CONFIGURATION;
     }
+
 
     /*
      * public void setCustomDialog(int type, JDialog dialog)
@@ -428,30 +456,36 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         this.m_dvtm = dvtm;
     }
 
+
     public DeviceInterfaceVersion getDeviceInterfaceVersion()
     {
         return deviceInterfaceVersion;
     }
+
 
     public void setDeviceInterfaceVersion(DeviceInterfaceVersion deviceInterfaceVersion)
     {
         this.deviceInterfaceVersion = deviceInterfaceVersion;
     }
 
+
     public DeviceInterface getDeviceInterfaceV1()
     {
         return deviceInterfaceV1;
     }
+
 
     public void setDeviceInterfaceV1(DeviceInterface deviceInterfaceV1)
     {
         this.deviceInterfaceV1 = deviceInterfaceV1;
     }
 
+
     public DeviceInstanceWithHandler getDeviceInterfaceV2()
     {
         return deviceInterfaceV2;
     }
+
 
     public void setDeviceInterfaceV2(DeviceInstanceWithHandler deviceInterfaceV2)
     {
@@ -461,11 +495,11 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
 
     public GGCPlugInFileReaderContext[] getFileDownloadTypes(DownloadSupportType downloadSupportType)
     {
-        if (getDeviceInterfaceV2()!=null)
+        if (getDeviceInterfaceV2() != null)
         {
             return getDeviceInterfaceV2().getFileDownloadContext(downloadSupportType);
         }
-        else if (getDeviceInterfaceV1()!=null)
+        else if (getDeviceInterfaceV1() != null)
         {
             return getDeviceInterfaceV1().getFileDownloadTypes(downloadSupportType);
         }

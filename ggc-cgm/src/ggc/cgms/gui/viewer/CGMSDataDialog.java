@@ -1,47 +1,36 @@
 package ggc.cgms.gui.viewer;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.cgms.data.CGMSDailyStatistics;
-import ggc.cgms.data.CGMSValuesSubEntry;
-import ggc.cgms.data.db.GGC_CGMSDb;
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.plugin.data.DeviceValuesDay;
-import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 
 import com.atech.graphics.calendar.CalendarEvent;
 import com.atech.graphics.calendar.CalendarListener;
 import com.atech.graphics.calendar.CalendarPane;
 import com.atech.graphics.components.MultiLineTooltipModel;
+import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.cgms.data.CGMSDailyStatistics;
+import ggc.cgms.data.CGMSValuesSubEntry;
+import ggc.cgms.data.db.GGC_CGMSDb;
+import ggc.cgms.data.graph.CGMSGraphViewDaily;
+import ggc.cgms.util.CGMSUtil;
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.plugin.data.DeviceValuesDay;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  *
@@ -59,8 +48,8 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- *  Filename:     PumpDataDialog
- *  Description:  Pump Data Dialog
+ *  Filename:     Dexcom 7
+ *  Description:  Dexcom 7 implementation (just settings)
  *
  *  Author: Andy {andy@atech-software.com}
  */
@@ -107,6 +96,8 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
     GregorianCalendar current_date;
 
     Component parent = null;
+    private ArrayList<CGMSValuesSubEntry> dayDataList;
+
 
     /**
      * Constructor
@@ -124,6 +115,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         init();
     }
 
+
     /**
      * Constructor
      *
@@ -140,6 +132,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         init();
     }
 
+
     /**
      * Set Title
      *
@@ -152,6 +145,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
                 + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR) + "]");
     }
 
+
     /**
      * Get Table Model
      *
@@ -162,31 +156,20 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         return model;
     }
 
+
     private void refreshData()
     {
         dayData = m_da.getDb().getDailyCGMSValues(this.current_date);
         dayData.sort();
-        model.setDailyValues(dayData); // setDailyValues(dayData);
-        // ArrayList al = new ArrayList();
-        // Collections.s
-        stats.processFullCollection(getDataList(dayData.getList()));
+        model.setDailyValues(dayData);
+
+        dayDataList = CGMSUtil.getDataList(dayData.getList());
+        stats.processFullCollection(dayDataList);
         updateLabels();
 
         this.model.fireTableChanged(null);
     }
 
-    private ArrayList<CGMSValuesSubEntry> getDataList(List<DeviceValuesEntry> list)
-    {
-        ArrayList<CGMSValuesSubEntry> lst = new ArrayList<CGMSValuesSubEntry>();
-
-        for (int i = 0; i < list.size(); i++)
-        {
-            lst.add((CGMSValuesSubEntry) list.get(i));
-        }
-
-        return lst;
-
-    }
 
     /**
      * Get This Parent
@@ -197,11 +180,13 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         return this;
     }
 
+
     protected void close()
     {
         this.dispose();
         m_da.getPlugInServerInstance().getParent().requestFocus();
     }
+
 
     private void init()
     {
@@ -323,6 +308,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         calPane = new CalendarPane(this.m_da);
         calPane.addCalendarListener(new CalendarListener()
         {
+
             public void dateHasChanged(CalendarEvent e)
             {
                 setTitle(e.getNewCalendar());
@@ -338,7 +324,9 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
 
         dayData = m_da.getDb().getDailyCGMSValues(this.current_date);
         dayData.sort();
-        stats.processFullCollection(this.getDataList(dayData.getList()));
+        dayDataList = CGMSUtil.getDataList(dayData.getList());
+        stats.processFullCollection(dayDataList);
+
         updateLabels();
 
         model = new CGMSDataTableModel(dayData);
@@ -350,6 +338,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
              *
              */
             private static final long serialVersionUID = -2174342213914259805L;
+
 
             // Implement table cell tool tips.
             @Override
@@ -427,19 +416,22 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         /*
          * JButton addButton = new JButton("  " + m_ic.getMessage("ADD"));
          * addButton.setPreferredSize(dim);
-         * addButton.setIcon(dataAccess.getImageIcon_22x22("table_add.png", this));
+         * addButton.setIcon(dataAccess.getImageIcon_22x22("table_add.png",
+         * this));
          * addButton.setActionCommand("add_row");
          * addButton.addActionListener(this);
          * EntryBox.add(addButton);
          * JButton editButton = new JButton("  " + m_ic.getMessage("EDIT"));
          * editButton.setPreferredSize(dim);
-         * editButton.setIcon(dataAccess.getImageIcon_22x22("table_edit.png", this));
+         * editButton.setIcon(dataAccess.getImageIcon_22x22("table_edit.png",
+         * this));
          * editButton.setActionCommand("edit_row");
          * editButton.addActionListener(this);
          * EntryBox.add(editButton);
          * JButton delButton = new JButton("  " + m_ic.getMessage("DELETE"));
          * delButton.setPreferredSize(dim);
-         * delButton.setIcon(dataAccess.getImageIcon_22x22("table_delete.png", this));
+         * delButton.setIcon(dataAccess.getImageIcon_22x22("table_delete.png",
+         * this));
          * delButton.setActionCommand("delete_row");
          * delButton.addActionListener(this);
          * EntryBox.add(delButton);
@@ -464,6 +456,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
 
         setVisible(true);
     }
+
 
     private void updateLabels()
     {
@@ -577,6 +570,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
          */
     }
 
+
     /*
      * public void processWindowEvent(WindowEvent e) { if (e.getID() ==
      * WindowEvent.WINDOW_CLOSING) { this.dispose(); }
@@ -676,9 +670,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         }
         else if (command.equals("show_daily_graph"))
         {
-            System.out.println("CGMSDataDialog:Unimplemented Action: show_daily_graph");
-            // new GraphViewer(new GraphViewDailyPump(this.current_date), dataAccess,
-            // this, true);
+            new GraphViewer(new CGMSGraphViewDaily(this.current_date, this.dayDataList), m_da, this, true);
         }
         else
         {
@@ -686,6 +678,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         }
 
     }
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
@@ -699,6 +692,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      */
@@ -706,6 +700,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
     {
         return this.help_button;
     }
+
 
     /**
      * getHelpId - get id for Help

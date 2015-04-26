@@ -1614,7 +1614,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
                 return this.getValuePrint();
 
             case 5:
-                return this.getStatus();
+                return this.getStatusType();
 
             case 6:
                 return new Boolean(getChecked());

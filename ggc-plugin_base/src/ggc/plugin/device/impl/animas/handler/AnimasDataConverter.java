@@ -1,6 +1,6 @@
 package ggc.plugin.device.impl.animas.handler;
 
-import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
+import ggc.plugin.device.impl.animas.data.AnimasDeviceReplyPacket;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -33,8 +33,16 @@ public interface AnimasDataConverter
 
     void decodePumpModel();
 
-    void decodeDownloaderSerialNumber(AnimasDevicePacket adp);
 
-    void processReturnedRawData(AnimasDevicePacket adp);
+    void decodeDownloaderSerialNumber(AnimasDeviceReplyPacket adp);
+
+
+    void processReturnedRawData(AnimasDeviceReplyPacket adp);
+
+
+    void addRawDataToProcess(AnimasDeviceReplyPacket adp);
+
+
+    void stopConverterThread();
 
 }

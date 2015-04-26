@@ -1,11 +1,10 @@
 package ggc.cgms.data.defs;
 
+import java.util.Hashtable;
+
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.data.CodeEnum;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.cgms.util.DataAccessCGMS;
-
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,8 +52,6 @@ public enum CGMSErrors implements CodeEnumWithTranslation
     SensorBad(42, "ERROR_SENSOR_BAD"), //
     ;
 
-
-
     static Hashtable<String, CGMSErrors> translationMapping = new Hashtable<String, CGMSErrors>();
     static Hashtable<Integer, CGMSErrors> codeMapping = new Hashtable<Integer, CGMSErrors>();
 
@@ -74,6 +71,7 @@ public enum CGMSErrors implements CodeEnumWithTranslation
     String i18nKey;
     String translation;
 
+
     private CGMSErrors(int code, String i18nKey)
     {
         this.code = code;
@@ -86,19 +84,28 @@ public enum CGMSErrors implements CodeEnumWithTranslation
         return translation;
     }
 
+
     public void setTranslation(String translation)
     {
         this.translation = translation;
     }
+
 
     public int getCode()
     {
         return code;
     }
 
+
     public String getI18nKey()
     {
         return i18nKey;
+    }
+
+
+    public String getName()
+    {
+        return this.name();
     }
 
 
@@ -121,6 +128,7 @@ public enum CGMSErrors implements CodeEnumWithTranslation
         }
     }
 
+
     public static CGMSErrors getByCode(int code)
     {
         if (codeMapping.containsKey(code))
@@ -133,26 +141,32 @@ public enum CGMSErrors implements CodeEnumWithTranslation
         }
     }
 
-
-
-
-
-//    public static final int CGM_ERROR_UNKNOWN_ERROR = -1; // __________________________151
-//    public static final int CGM_ERROR_BATTERY_DEPLETED = 2;// __________________________152
-//    public static final int CGM_ERROR_AUTOMATIC_OFF = 3; // _____________________________152
-//    public static final int CGM_ERROR_END_OF_OPERATION = 5; // __________________________154
-//    public static final int CGM_ERROR_MECHANICAL_ERROR = 6; // _________________________155
-//    public static final int CGM_ERROR_ELECTRONIC_ERROR = 7; // _________________________156
-//    public static final int CGM_ERROR_POWER_INTERRUPT = 8; // __________________________157
-//    public static final int CGM_ERROR_DATA_INTERRUPTED = 12; // _________________________159
-//    public static final int CGM_ERROR_LANGUAGE_ERROR = 13; // __________________________160
-//
-//    // sensor
-//
-//    public static final int CGMS_ERROR_SENSOR_CALIBRATION_ERROR = 40; // ___________________160
-//    public static final int CGMS_ERROR_SENSOR_END_OF_LIFE = 41; // ___________________160
-//    public static final int CGMS_ERROR_SENSOR_BAD = 42; // ___________________160
-
-
+    // public static final int CGM_ERROR_UNKNOWN_ERROR = -1; //
+    // __________________________151
+    // public static final int CGM_ERROR_BATTERY_DEPLETED = 2;//
+    // __________________________152
+    // public static final int CGM_ERROR_AUTOMATIC_OFF = 3; //
+    // _____________________________152
+    // public static final int CGM_ERROR_END_OF_OPERATION = 5; //
+    // __________________________154
+    // public static final int CGM_ERROR_MECHANICAL_ERROR = 6; //
+    // _________________________155
+    // public static final int CGM_ERROR_ELECTRONIC_ERROR = 7; //
+    // _________________________156
+    // public static final int CGM_ERROR_POWER_INTERRUPT = 8; //
+    // __________________________157
+    // public static final int CGM_ERROR_DATA_INTERRUPTED = 12; //
+    // _________________________159
+    // public static final int CGM_ERROR_LANGUAGE_ERROR = 13; //
+    // __________________________160
+    //
+    // // sensor
+    //
+    // public static final int CGMS_ERROR_SENSOR_CALIBRATION_ERROR = 40; //
+    // ___________________160
+    // public static final int CGMS_ERROR_SENSOR_END_OF_LIFE = 41; //
+    // ___________________160
+    // public static final int CGMS_ERROR_SENSOR_BAD = 42; //
+    // ___________________160
 
 }

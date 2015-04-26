@@ -1,5 +1,21 @@
 package ggc.meter.util;
 
+import java.util.ArrayList;
+
+import javax.swing.*;
+
+import ggc.plugin.data.enums.ClockModeType;
+import ggc.plugin.data.enums.DeviceEntryStatus;
+import ggc.plugin.data.enums.GlucoseUnitType;
+import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
+import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.atech.graphics.components.about.*;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.i18n.mgr.LanguageManager;
+
 import ggc.core.data.ExtendedDailyValue;
 import ggc.core.plugins.GGCPluginType;
 import ggc.meter.data.MeterDataHandler;
@@ -9,24 +25,8 @@ import ggc.meter.data.db.GGCMeterDb;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterManager;
 import ggc.plugin.cfg.DeviceConfiguration;
-import ggc.plugin.device.mgr.DeviceHandlerManager;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.util.ArrayList;
-
-import javax.swing.JFrame;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.atech.graphics.components.about.CreditsEntry;
-import com.atech.graphics.components.about.CreditsGroup;
-import com.atech.graphics.components.about.FeaturesEntry;
-import com.atech.graphics.components.about.FeaturesGroup;
-import com.atech.graphics.components.about.LibraryInfoEntry;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.i18n.mgr.LanguageManager;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -75,6 +75,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
      */
     public static final String EXTENDED_HANDLER_DAILY_VALUE = "dvh";
 
+
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
@@ -106,6 +107,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         }
     }
 
+
     /** 
      * Init Special - All methods that we support should be called here
      */
@@ -120,12 +122,19 @@ public class DataAccessMeter extends DataAccessPlugInBase
         createPlugInVersion();
         loadDeviceDataHandler();
         // loadManager();
-        loadReadingStatuses();
+        //loadReadingStatuses();
         createPlugInDataRetrievalContext();
         loadWebLister();
         createOldDataReader();
         this.loadConverters();
         this.loadExtendedHandlers();
+
+        prepareTranslationForEnums();
+    }
+
+    private void prepareTranslationForEnums()
+    {
+        DeviceEntryStatus.translateKeywords(this.getI18nControlInstance());
     }
 
     // Method: getInstance
@@ -145,6 +154,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         return s_da;
     }
 
+
     /**
      * Create Instance
      * 
@@ -160,22 +170,6 @@ public class DataAccessMeter extends DataAccessPlugInBase
         return s_da;
     }
 
-    /*
-     * public void loadConfigIcons()
-     * {
-     * config_icons = new ImageIcon[5];
-     * config_icons[0] = new ImageIcon(getImage("/icons/cfg_general.png",
-     * m_main));
-     * config_icons[1] = new ImageIcon(getImage("/icons/cfg_medical.png",
-     * m_main));
-     * config_icons[2] = new ImageIcon(getImage("/icons/cfg_print.png",
-     * m_main));
-     * config_icons[3] = new ImageIcon(getImage("/icons/cfg_meter.png",
-     * m_main));
-     * config_icons[4] = new ImageIcon(getImage("/icons/cfg_general.png",
-     * m_main));
-     * }
-     */
 
     /**
      *  This method sets handle to DataAccessMeter to null and deletes the instance. <br><br>
@@ -185,23 +179,23 @@ public class DataAccessMeter extends DataAccessPlugInBase
         super.m_i18n = null;
     }
 
+
     // ********************************************************
     // ****** About Methods *****
     // ********************************************************
 
-
     @Override
     public void registerDeviceHandlers()
     {
-        //DeviceHandlerManager.getInstance().addDeviceHandler();
+        // DeviceHandlerManager.getInstance().addDeviceHandler();
     }
+
 
     @Override
     public GGCPluginType getPluginType()
     {
         return GGCPluginType.MeterToolPlugin;
     }
-
 
 
     /**
@@ -263,7 +257,8 @@ public class DataAccessMeter extends DataAccessPlugInBase
         // FIXME
         lst_features.add(fg);
 
-        // fg = new FeaturesGroup(i18nControlAbstract.getMessage("NOT_IMPLEMENTED_FEATURES"));
+        // fg = new
+        // FeaturesGroup(i18nControlAbstract.getMessage("NOT_IMPLEMENTED_FEATURES"));
         // fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
 
         // lst_features.add(fg);
@@ -278,6 +273,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
 
     }
 
+
     /** 
      * Get About Image Size - Define about image size
      */
@@ -290,6 +286,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
 
         return sz;
     }
+
 
     // ********************************************************
     // ****** Web Lister Methods *****
@@ -325,6 +322,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         weblister_desc = i18n_plugin.getMessage("METERS_LIST_WEB_DESC");
     }
 
+
     // ********************************************************
     // ****** Abstract Methods *****
     // ********************************************************
@@ -338,6 +336,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         return "GGC_MeterTool";
     }
 
+
     /** 
      * Check Prerequisites for Plugin
      */
@@ -345,6 +344,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     public void checkPrerequisites()
     {
     }
+
 
     // ********************************************************
     // ****** Version *****
@@ -358,6 +358,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         this.plugin_version = DataAccessMeter.PLUGIN_VERSION;
     }
+
 
     // ********************************************************
     // ****** Manager *****
@@ -382,6 +383,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
      */
     GGCMeterDb m_db;
 
+
     /**
      * Create Custom Db
      * 
@@ -393,6 +395,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         this.m_db = new GGCMeterDb(this.hdb);
     }
 
+
     /**
      * Get Db
      * 
@@ -402,6 +405,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         return this.m_db;
     }
+
 
     // ********************************************************
     // ****** Configuration *****
@@ -416,6 +420,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         this.device_config_def = new MeterConfigurationDefinition();
     }
 
+
     /**
      * Create Device Configuration for plugin
      */
@@ -425,6 +430,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         this.device_config = new DeviceConfiguration(this);
     }
 
+
     /**
      * Create Data Retrieval Context for Plug-in
      * 
@@ -433,24 +439,9 @@ public class DataAccessMeter extends DataAccessPlugInBase
     @Override
     public void createPlugInDataRetrievalContext()
     {
-
         loadBasePluginTranslations();
-
-        this.columns_table = new String[5];
-        this.columns_table[0] = this.i18n_plugin.getMessage("DATETIME");
-        this.columns_table[1] = this.i18n_plugin.getMessage("BG_MMOLL");
-        this.columns_table[2] = this.i18n_plugin.getMessage("BG_MGDL");
-        this.columns_table[3] = this.i18n_plugin.getMessage("STATUS");
-        this.columns_table[4] = ""; // this.i18n_plugin.getMessage("");
-
-        this.column_widths_table = new int[5];
-        this.column_widths_table[0] = 100;
-        this.column_widths_table[1] = 50;
-        this.column_widths_table[2] = 50;
-        this.column_widths_table[3] = 50;
-        this.column_widths_table[4] = 50;
-
     }
+
 
     /**
      * Load Device Manager
@@ -463,6 +454,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         this.m_manager = MeterManager.getInstance();
     }
 
+
     /**
      * Load Device Data Handler
      * 
@@ -473,6 +465,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         this.m_ddh = new MeterDataHandler(this);
     }
+
 
     /**
      * Get Images for Devices
@@ -485,6 +478,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         return "/icons/meters/";
     }
 
+
     /**
      * Load PlugIns
      */
@@ -494,6 +488,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         // TODO Auto-generated method stub
     }
 
+
     /**
      * Create Old Data Reader
      */
@@ -502,6 +497,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         this.m_old_data_reader = new MeterDataReader(this);
     }
+
 
     /**
      * Is Data Download Screen Wide
@@ -519,12 +515,14 @@ public class DataAccessMeter extends DataAccessPlugInBase
             return true;
     }
 
+
     @Override
     public void initAllObjects()
     {
         // TODO Auto-generated method stub
 
     }
+
 
     /**
      * Get Name of Plugin (for internal use)
@@ -536,6 +534,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         return "GGC Meter Plugin";
     }
 
+
     // ExtendedDailyValue edv_handler = null;
 
     /**
@@ -546,6 +545,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         return (ExtendedDailyValue) this.getExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE);
     }
+
 
     /**
      * Load Extended Handlers. Database tables can contain extended field, which is of type text and can

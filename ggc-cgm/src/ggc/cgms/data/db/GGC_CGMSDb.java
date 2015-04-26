@@ -1,14 +1,5 @@
 package ggc.cgms.data.db;
 
-import ggc.cgms.data.CGMSDataReader;
-import ggc.cgms.data.CGMSValuesEntry;
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.db.hibernate.cgms.CGMSDataH;
-import ggc.plugin.data.DeviceValuesDay;
-import ggc.plugin.data.DeviceValuesEntryInterface;
-import ggc.plugin.data.DeviceValuesRange;
-import ggc.plugin.db.PluginDb;
-
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -24,9 +15,18 @@ import com.atech.db.hibernate.HibernateDb;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 
+import ggc.cgms.data.CGMSDataReader;
+import ggc.cgms.data.CGMSValuesEntry;
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.db.hibernate.cgms.CGMSDataH;
+import ggc.plugin.data.DeviceValuesDay;
+import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.data.DeviceValuesRange;
+import ggc.plugin.db.PluginDb;
+
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -52,8 +52,10 @@ import com.atech.utils.data.ATechDate;
 
 public class GGC_CGMSDb extends PluginDb
 {
+
     private static Log log = LogFactory.getLog(GGC_CGMSDb.class);
     DataAccessCGMS m_da = DataAccessCGMS.getInstance();
+
 
     /**
      * Constructor
@@ -66,6 +68,7 @@ public class GGC_CGMSDb extends PluginDb
         log.debug("Created CGMSDb");
         // getAllElementsCount();
     }
+
 
     /**
      * Get Daily Pump Values
@@ -121,6 +124,7 @@ public class GGC_CGMSDb extends PluginDb
         // return null;
     }
 
+
     /**
      * Get Pump Values Range
      * 
@@ -173,6 +177,7 @@ public class GGC_CGMSDb extends PluginDb
          */
     }
 
+
     /**
      * Get All Elements Count
      * 
@@ -191,6 +196,7 @@ public class GGC_CGMSDb extends PluginDb
 
         return sum_all;
     }
+
 
     /**
      * Get Pump Values

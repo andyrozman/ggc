@@ -11,6 +11,7 @@ import com.atech.i18n.mgr.LanguageManager;
 import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.data.enums.ClockModeType;
+import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.data.enums.GlucoseUnitType;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
@@ -106,12 +107,6 @@ public class DataAccessPump extends DataAccessPlugInBase
     PumpErrors m_pump_errors = null;
 
 
-    // GGCPumpDb m_db = null;
-
-    // DecimalHandler dec_handler = new DecimalHandler(3);
-
-    // Hashtable<String,String> sorters = new Hashtable<String,String>();
-
     /**
      * The selected_person_id.
      */
@@ -152,7 +147,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.createPlugInVersion();
         loadDeviceDataHandler();
         // loadManager();
-        loadReadingStatuses();
+        //loadReadingStatuses();
         this.createPlugInDataRetrievalContext();
         this.createDeviceConfiguration();
         this.createOldDataReader();
@@ -171,6 +166,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         GlucoseUnitType.translateKeywords(this.getI18nControlInstance());
         ClockModeType.translateKeywords(this.getI18nControlInstance());
         AnimasSoundType.translateKeywords(this.getI18nControlInstance(), this.getPluginType());
+        DeviceEntryStatus.translateKeywords(this.getI18nControlInstance());
     }
 
 
@@ -295,14 +291,9 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void registerDeviceHandlers()
     {
-        DeviceHandlerManager.getInstance().addDeviceHandler(new AnimasIR1200Handler()); // Handler
-                                                                                        // for
-                                                                                        // Animas
-                                                                                        // Implementation
-                                                                                        // V2
-                                                                                        // (IR1200
-                                                                                        // and
-                                                                                        // higher)
+        // Animas Implementation V2 (IR1200 and higher)
+        DeviceHandlerManager.getInstance().addDeviceHandler(new AnimasIR1200Handler());
+
     }
 
 
@@ -534,28 +525,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         loadBasePluginTranslations();
 
         m_entry_type = new PumpValuesEntry(true);
-
         this.data_download_screen_wide = true;
-
-        this.columns_table = new String[7];
-        this.columns_table[0] = i18n_plugin.getMessage("DATETIME");
-        this.columns_table[1] = i18n_plugin.getMessage("ENTRY_TYPE");
-        this.columns_table[2] = i18n_plugin.getMessage("BASE_TYPE");
-        this.columns_table[3] = i18n_plugin.getMessage("SUB_TYPE");
-        this.columns_table[4] = i18n_plugin.getMessage("VALUE");
-        this.columns_table[5] = i18n_plugin.getMessage("STATUS");
-        this.columns_table[6] = ""; // i18n_plugin.getMessage("");
-
-        this.column_widths_table = new int[7];
-        this.column_widths_table[0] = 100;
-        this.column_widths_table[1] = 30;
-        this.column_widths_table[2] = 50;
-        this.column_widths_table[3] = 50;
-        this.column_widths_table[4] = 105; // value
-        this.column_widths_table[5] = 40;
-        this.column_widths_table[6] = 25;
-
-        // 25, 10, 20
     }
 
 

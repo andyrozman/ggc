@@ -1,15 +1,15 @@
 package ggc.cgms.data;
 
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import java.util.ArrayList;
 
 import com.atech.misc.statistics.StatisticsCollection;
 
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.plugin.util.DataAccessPlugInBase;
+
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  *
@@ -27,16 +27,18 @@ import com.atech.misc.statistics.StatisticsCollection;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- *  Filename:  ###---###
- *  Description:
+ *  Filename:       CGMSDailyStatistics
+ *  Description:    Daily Statistic for CGMS
  *
  *  Author: Andy {andy@atech-software.com}
  */
 
 public class CGMSDailyStatistics extends StatisticsCollection
 {
+
     // public int bg_type = -1;
     DataAccessCGMS da_pump = DataAccessCGMS.getInstance();
+
 
     /**
      * Constructor
@@ -45,6 +47,7 @@ public class CGMSDailyStatistics extends StatisticsCollection
     {
         super(DataAccessCGMS.getInstance(), new CGMSValuesSubEntry());
     }
+
 
     /**
      * Process Special Statistics
@@ -158,10 +161,12 @@ public class CGMSDailyStatistics extends StatisticsCollection
 
     }
 
+
     private boolean isCurrentlyIgnoredEntry(CGMSValuesSubEntry pve)
     {
         return false;
     }
+
 
     private float getStandardDeviation(int type)
     {
@@ -195,6 +200,7 @@ public class CGMSDailyStatistics extends StatisticsCollection
 
     }
 
+
     private void setBGValue(int index)
     {
         float v = this.stat_objects.get(index - 1).sum;
@@ -203,10 +209,12 @@ public class CGMSDailyStatistics extends StatisticsCollection
         setValue(index, new_val);
     }
 
+
     private float getValueInternal(int index)
     {
         return this.stat_objects.get(index - 1).getStatistics();
     }
+
 
     private void setValue(int index, float val)
     {

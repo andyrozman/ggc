@@ -1,5 +1,9 @@
 package ggc.cgms.device.minimed.file;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
 import ggc.cgms.data.CGMSTempValues;
 import ggc.cgms.data.defs.*;
 import ggc.cgms.util.DataAccessCGMS;
@@ -7,10 +11,6 @@ import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -55,6 +55,7 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
 
     private Hashtable<String, MinimedCareLinkCGMSData> config = null;
 
+
     /**
      * @param da
      * @param ow
@@ -68,6 +69,7 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
         // setMappingData();
         setDefinitions();
     }
+
 
     @Override
     public void setMappingData()
@@ -128,6 +130,7 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
          */
 
     }
+
 
     private void setDefinitions()
     {
@@ -243,6 +246,7 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
     public static final int SPECIAL_DATA_MAX = 1;
 
     MinimedCareLinkCGMSData[] special_data = new MinimedCareLinkCGMSData[2];
+
 
     @Override
     public void readLineData(String line, int count)
@@ -367,6 +371,7 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
 
     }
 
+
     private void createDeviceValuesWriter()
     {
         this.dvw = new DeviceValuesWriter(false);
@@ -375,57 +380,54 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
         // this.dvw.writeObject(_type, _datetime, _value);
         // this.dvw.writeObject(_type, _datetime, code_type, _value)
 
-        // FIXME CGMSTempValue need value flag set and they need to be callled with Enum not Code
+        // FIXME CGMSTempValue need value flag set and they need to be callled
+        // with Enum not Code
 
         // CGMSTempValues
 
-        this.dvw.put("GlucoseSensorData", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.SensorReading));
+        this.dvw.put("GlucoseSensorData", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.SensorReading));
 
-        this.dvw.put("AlarmSensor",
-            new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.DeviceAlarm));
+        this.dvw.put("AlarmSensor", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Alarm));
 
-        this.dvw.put("BGTherasense", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.SensorCalibration));
+        this.dvw.put("BGTherasense", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.SensorCalibration));
 
-        this.dvw.put("SensorWeakSignal", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorWeakSignal));
+        this.dvw.put("SensorWeakSignal", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Event,
+                CGMSEvents.SensorWeakSignal));
 
-        this.dvw.put("SensorCal_meter_bg_now", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorCalibrationWithMeterNow));
+        this.dvw.put("SensorCal_meter_bg_now", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Event,
+                CGMSEvents.SensorCalibrationWithMeterNow));
 
-        this.dvw.put("SensorCal_waiting", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorWaitingForCalibration));
+        this.dvw.put("SensorCal_waiting", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Event,
+                CGMSEvents.SensorWaitingForCalibration));
 
-        this.dvw.put("SensorPacket_init", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorInit));
+        this.dvw.put("SensorPacket_init", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Event,
+                CGMSEvents.SensorInit));
 
-        this.dvw.put("SensorPacket_pre_init", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorPreInit));
+        this.dvw.put("SensorPacket_pre_init", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Event,
+                CGMSEvents.SensorPreInit));
 
-        this.dvw.put("SensorPacket_burst", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorBurst));
+        this.dvw.put("SensorPacket_burst", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Event,
+                CGMSEvents.SensorBurst));
 
-        this.dvw.put("SensorCal_cal_error", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceError, CGMSErrors.SensorCalibrationError));
+        this.dvw.put("SensorCal_cal_error", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Error,
+                CGMSErrors.SensorCalibrationError));
 
-        this.dvw.put("SensorStatus_off", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorStop));
+        this.dvw.put("SensorStatus_off", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Event,
+                CGMSEvents.SensorStop));
 
-        this.dvw.put("SensorStatus_on", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorStart));
+        this.dvw.put("SensorStatus_on", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Event,
+                CGMSEvents.SensorStart));
 
-        this.dvw.put("SensorCalFactor", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorSetCalibrationFactor));
+        this.dvw.put("SensorCalFactor", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Event,
+                CGMSEvents.SensorSetCalibrationFactor));
 
-        this.dvw.put("SensorStatus_lost", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorConnectionLost));
+        this.dvw.put("SensorStatus_lost", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Event,
+                CGMSEvents.SensorConnectionLost));
 
-        this.dvw.put("GlucoseSensorDataLow", new CGMSTempValues(CGMSObject.SubEntry,
-                CGMSBaseDataType.DeviceEvent, CGMSEvents.SensorDataLowBg));
+        this.dvw.put("GlucoseSensorDataLow", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Event,
+                CGMSEvents.SensorDataLowBg));
 
-        this.dvw.put("SensorError",
-            new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.DeviceError));
+        this.dvw.put("SensorError", new CGMSTempValues(CGMSObject.SubEntry, CGMSBaseDataType.Error));
 
         // SensorCal,"CAL_TYPE=meter_bg_now, ISIG=7.03"
 
@@ -502,6 +504,7 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
 
     }
 
+
     @Override
     public void postProcessing()
     {
@@ -532,6 +535,7 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
 
     }
 
+
     /**
      * @return
      */
@@ -539,6 +543,7 @@ public class MinimedCareLinkCGMS extends MinimedCareLink
     {
         return defs_cgms_config;
     }
+
 
     /**
      * @param defs_cgms_config

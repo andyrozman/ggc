@@ -1,13 +1,13 @@
 package ggc.pump.data.defs;
 
-import com.atech.utils.ATDataAccess;
-import ggc.pump.util.DataAccessPump;
-
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccess;
 import com.atech.utils.data.CodeEnumWithTranslation;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
@@ -58,28 +58,38 @@ public enum PumpAlarms implements CodeEnumWithTranslation
     String i18nKey;
     String translation;
 
+
     public int getCode()
     {
         return code;
     }
+
 
     public String getI18nKey()
     {
         return i18nKey;
     }
 
+
     public String getTranslation()
     {
         return translation;
     }
+
 
     public void setTranslation(String translation)
     {
         this.translation = translation;
     }
 
+
+    public String getName()
+    {
+        return this.name();
+    }
+
     static Map<Integer, PumpAlarms> alarmCodeMapping = new HashMap<Integer, PumpAlarms>();
-    static Map<String,CodeEnumWithTranslation> translationMap = new HashMap<String, CodeEnumWithTranslation>();
+    static Map<String, CodeEnumWithTranslation> translationMap = new HashMap<String, CodeEnumWithTranslation>();
     static String[] alarm_desc;
 
     static
@@ -93,33 +103,33 @@ public enum PumpAlarms implements CodeEnumWithTranslation
             alarmCodeMapping.put(pbt.code, pbt);
         }
 
-
         String[] alarm_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), //
-                ic.getMessage("ALARM_CARTRIDGE_LOW"), //
-                ic.getMessage("ALARM_BATTERY_LOW"), //
-                ic.getMessage("ALARM_REPLACE_BATTERY"), //
-                ic.getMessage("ALARM_REVIEW_DATETIME"), //
-                ic.getMessage("ALARM_ALARM_CLOCK"),//
-                ic.getMessage("ALARM_PUMP_TIMER"),//
-                ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"),//
-                ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"),//
-                ic.getMessage("ALARM_BOLUS_CANCELED"),//
-                ic.getMessage("ALARM_NO_DELIVERY"),//
-                ic.getMessage("ALARM_EMPTY_CARTRIDGE"),//
-                ic.getMessage("ALARM_AUTO_OFF"),//
-                ic.getMessage("ALARM_CALL_SERVICE"),//
+                                   ic.getMessage("ALARM_CARTRIDGE_LOW"), //
+                                   ic.getMessage("ALARM_BATTERY_LOW"), //
+                                   ic.getMessage("ALARM_REPLACE_BATTERY"), //
+                                   ic.getMessage("ALARM_REVIEW_DATETIME"), //
+                                   ic.getMessage("ALARM_ALARM_CLOCK"),//
+                                   ic.getMessage("ALARM_PUMP_TIMER"),//
+                                   ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"),//
+                                   ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"),//
+                                   ic.getMessage("ALARM_BOLUS_CANCELED"),//
+                                   ic.getMessage("ALARM_NO_DELIVERY"),//
+                                   ic.getMessage("ALARM_EMPTY_CARTRIDGE"),//
+                                   ic.getMessage("ALARM_AUTO_OFF"),//
+                                   ic.getMessage("ALARM_CALL_SERVICE"),//
         };
 
         alarm_desc = alarm_desc_lcl;
 
-
     }
+
 
     private PumpAlarms(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;
     }
+
 
     public static PumpAlarms getByCode(int code)
     {
@@ -133,10 +143,12 @@ public enum PumpAlarms implements CodeEnumWithTranslation
         }
     }
 
+
     public static String[] getDescriptions()
     {
         return alarm_desc;
     }
+
 
     /**
      * Get Type from Description
@@ -149,13 +161,11 @@ public enum PumpAlarms implements CodeEnumWithTranslation
     {
         return ATDataAccess.getTypeFromDescription(str, translationMap);
     }
-    /*
-     * Minimed No Delivery (4) Sensor Alert: High Glucose (101) Sensor Alert:
-     * Low Glucose (102) Sensor Alert: Meter BG Now (104) Sensor Alarm (105)
-     * Sensor Alert: Calibration Error (106) Sensor Alert: Sensor End (107)
-     * Sensor Alert: Change Sensor (108) Sensor Alert: Sensor Error (109) Sensor
-     * Alert: Weak Signal (112) Sensor Alert: Lost Sensor (113) Sensor Alert:
-     * High Glucose Predicted (114) Sensor Alert: Low Glucose Predicted (115)
-     */
+
+
+    public static Collection<PumpAlarms> getAllValues()
+    {
+        return alarmCodeMapping.values();
+    }
 
 }

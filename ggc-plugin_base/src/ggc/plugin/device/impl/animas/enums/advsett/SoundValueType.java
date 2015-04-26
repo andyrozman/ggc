@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.data.CodeEnum;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
 /**
@@ -46,15 +45,12 @@ public enum SoundValueType implements CodeEnumWithTranslation
     Disabled(0, "CFG_SOUND_VOLUME_DISABLED") //
     ;
 
-
     int code;
     String i18nKey;
     String translation;
 
     static Hashtable<Integer, SoundValueType> codeMapping = new Hashtable<Integer, SoundValueType>();
     static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
-
-
 
     static
     {
@@ -63,6 +59,7 @@ public enum SoundValueType implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
     }
+
 
     private SoundValueType(int code, String i18nKey)
     {
@@ -101,6 +98,12 @@ public enum SoundValueType implements CodeEnumWithTranslation
     public String getI18nKey()
     {
         return i18nKey;
+    }
+
+
+    public String getName()
+    {
+        return this.name();
     }
 
 

@@ -1,9 +1,9 @@
 package ggc.plugin.data.enums;
 
+import java.util.HashMap;
+
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
-
-import java.util.HashMap;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,7 +43,6 @@ public enum ClockModeType implements CodeEnumWithTranslation
 
     private static HashMap<Integer, ClockModeType> codeMapping = new HashMap<Integer, ClockModeType>();
 
-
     static
     {
         for (ClockModeType el : values())
@@ -52,11 +51,13 @@ public enum ClockModeType implements CodeEnumWithTranslation
         }
     }
 
+
     ClockModeType(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;
     }
+
 
     public static void translateKeywords(I18nControlAbstract ic)
     {
@@ -90,6 +91,13 @@ public enum ClockModeType implements CodeEnumWithTranslation
         return i18nKey;
     }
 
+
+    public String getName()
+    {
+        return this.name();
+    }
+
+
     public static ClockModeType getByCode(int code)
     {
         if (codeMapping.containsKey(code))
@@ -101,6 +109,5 @@ public enum ClockModeType implements CodeEnumWithTranslation
             return ClockModeType.ClockMode12Hour;
         }
     }
-
 
 }

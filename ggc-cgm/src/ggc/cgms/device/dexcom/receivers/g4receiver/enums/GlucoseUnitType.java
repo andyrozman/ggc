@@ -2,6 +2,7 @@ package ggc.cgms.device.dexcom.receivers.g4receiver.enums;
 
 import java.util.HashMap;
 
+/// FIXME remove
 public enum GlucoseUnitType
 {
 
@@ -21,31 +22,37 @@ public enum GlucoseUnitType
         }
     }
 
+
     GlucoseUnitType(int value, String description)
     {
         this.value = value;
         this.description = description;
     }
 
+
     public int getValue()
     {
         return value;
     }
+
 
     public void setValue(int value)
     {
         this.value = value;
     }
 
+
     public static GlucoseUnitType getEnum(int value)
     {
         return map.get(value);
     }
 
+
     public String getDescription()
     {
         return description;
     }
+
 
     public void setDescription(String description)
     {

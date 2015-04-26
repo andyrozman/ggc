@@ -1,16 +1,12 @@
 package ggc.meter.data;
 
-import ggc.core.db.hibernate.DayValueH;
-import ggc.core.db.hibernate.GGCHibernateObject;
+import com.atech.i18n.I18nControlAbstract;
+
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTableModel;
-
-import java.util.ArrayList;
-
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,21 +34,13 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class MeterValuesExtTableModel extends DeviceValuesTableModel // extends
-                                                                     // AbstractTableModel
+public class MeterValuesExtTableModel extends DeviceValuesTableModel
 {
 
     private I18nControlAbstract m_ic = DataAccessMeter.getInstance().getI18nControlInstance();
 
-    // private String[] column_names = { m_ic.getMessage("DATETIME"),
-    // m_ic.getMessage("BG_MMOLL"),
-    // m_ic.getMessage("BG_MGDL"), m_ic.getMessage("STATUS"),
-    // m_ic.getMessage(""), };
-
     private static final long serialVersionUID = -660580365600276458L;
-    private int column_width[] = { 120, 150, 200, 90, 50 };
-    private String column_names[] = { m_ic.getMessage("DATETIME"), m_ic.getMessage("ENTRY_TYPE"),
-                                     m_ic.getMessage("VALUE"), m_ic.getMessage("STATUS"), "" };
+
 
     /**
      * Constructor
@@ -64,40 +52,6 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel // extends
         super(DataAccessMeter.getInstance(), ddh, source);
     }
 
-    /**
-     * Get Column Count
-     * 
-     * @see javax.swing.table.TableModel#getColumnCount()
-     */
-    @Override
-    public int getColumnCount()
-    {
-        return 5;
-    }
-
-    /**
-     * Get Checkable Column (one column if checkable, all others are non-editable)
-     * 
-     * @return
-     */
-    @Override
-    public int getCheckableColumn()
-    {
-        return 4;
-    }
-
-    /**
-     * Get Column Width
-     * 
-     * @param column column index
-     * @param width width for column
-     * @return calculated size of column
-     */
-    @Override
-    public int getColumnWidth(int column, int width)
-    {
-        return this.column_width[column];
-    }
 
     /**
      * Get Value At
@@ -120,7 +74,7 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel // extends
                 return mve.getExtendedTypeValue(true);
 
             case 3:
-                return new Integer(mve.getStatus());
+                return mve.getStatusType();
 
             case 4:
                 return new Boolean(mve.getChecked());
@@ -131,153 +85,64 @@ public class MeterValuesExtTableModel extends DeviceValuesTableModel // extends
 
     }
 
-    /**
-     * Process Device Value Entry
-     * 
-     * @param mve DeviceValuesEntry instance
-     */
+
+//    /**
+//     * Process Device Value Entry
+//     *
+//     * @param mve DeviceValuesEntry instance
+//     */
+//    @Override
+//    @SuppressWarnings("deprecation")
+//    public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
+//    {
+//
+//        if (this.deviceDataHandler.hasOldData())
+//        {
+//            // System.out.println("OLD Data" );
+//            if (!this.deviceDataHandler.getOldData().containsKey("" + mve.getSpecialId()))
+//            {
+//
+//                mve.setStatus(DeviceValuesEntry.STATUS_NEW);
+//                mve.setObjectStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
+//            }
+//            else
+//            {
+//
+//                MeterValuesEntry mve2 = (MeterValuesEntry) mve;
+//                MeterValuesEntry mve_old = (MeterValuesEntry) this.deviceDataHandler.getOldData().get(
+//                    mve.getSpecialId());
+//
+//                mve_old.prepareEntry_v2();
+//
+//                if (mve_old.getValueFull().equals(mve2.getValueFull()))
+//                {
+//                    mve2.setStatus(DeviceValuesEntry.STATUS_OLD);
+//                    mve2.object_status = DeviceValuesEntry.OBJECT_STATUS_OLD;
+//                }
+//                else
+//                {
+//                    mve2.setStatus(DeviceValuesEntry.STATUS_CHANGED);
+//                    mve2.object_status = DeviceValuesEntry.OBJECT_STATUS_EDIT;
+//                    mve2.entry_object = mve_old.getHibernateObject();
+//                }
+//            }
+//        }
+//        else
+//        {
+//            mve.setStatus(DeviceValuesEntry.STATUS_NEW);
+//        }
+//
+//    }
+
+
     @Override
-    @SuppressWarnings("deprecation")
-    public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
+    protected void initColumns()
     {
-        // System.out.println("Old data: " + this.deviceDataHandler.getOldData());
-
-        if (this.m_ddh.hasOldData())
-        {
-            // System.out.println("OLD Data" );
-            if (!this.m_ddh.getOldData().containsKey("" + mve.getSpecialId()))
-            {
-
-                mve.setStatus(DeviceValuesEntry.STATUS_NEW);
-                mve.setObjectStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
-            }
-            else
-            {
-                // System.out.println("MVE: " + mve.getSpecialId());
-                // System.out.println("Found" );
-                MeterValuesEntry mve2 = (MeterValuesEntry) mve;
-                MeterValuesEntry mve_old = (MeterValuesEntry) this.m_ddh.getOldData().get(mve.getSpecialId());
-
-                // DayValueH gvh = (DayValueH)this.deviceDataHandler.getOldData().get("" +
-                // dt);
-                // int vl =
-                // Integer.parseInt(mve2.getBGValue(OutputUtil.BG_MGDL));
-                mve_old.prepareEntry_v2();
-
-                // System.out.println("MeterValuesExtTableModel: " +
-                // mve_old.getDateTimeObject());
-                // System.out.println("old=" + mve_old.getValueFull() + ", new="
-                // + mve2.getValueFull());
-
-                if (mve_old.getValueFull().equals(mve2.getValueFull()))
-                {
-                    mve2.setStatus(DeviceValuesEntry.STATUS_OLD);
-                    mve2.object_status = DeviceValuesEntry.OBJECT_STATUS_OLD;
-                }
-                else
-                {
-                    mve2.setStatus(DeviceValuesEntry.STATUS_CHANGED);
-                    mve2.object_status = DeviceValuesEntry.OBJECT_STATUS_EDIT;
-                    mve2.entry_object = mve_old.getHibernateObject();
-                }
-            }
-        }
-        else
-        {
-            // System.out.println("oldData == null");
-            mve.setStatus(DeviceValuesEntry.STATUS_NEW);
-        }
-
-    }
-
-    /**
-     * Get Column Name
-     * 
-     * @see javax.swing.table.AbstractTableModel#getColumnName(int)
-     */
-    @Override
-    public String getColumnName(int column)
-    {
-        return column_names[column];
-    }
-
-    /**
-     * Get Column Class
-     * 
-     * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
-     */
-    @Override
-    public Class<?> getColumnClass(int c)
-    {
-        Object o = getValueAt(0, c);
-        if (o != null)
-            return o.getClass();
-        else
-            return null;
-        // return getValueAt(0,c).getClass();
-    }
-
-    /**
-     * Is Cell Editable
-     * 
-     * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
-     */
-    @Override
-    public boolean isCellEditable(int row, int col)
-    {
-        if (col == 4)
-            return true;
-        else
-            return false;
-    }
-
-    /**
-     * Set Value At
-     * 
-     * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
-     */
-    @Override
-    public void setValueAt(Object aValue, int row, int column)
-    {
-        Boolean b = (Boolean) aValue;
-        this.displayed_dl_data.get(row).setChecked(b.booleanValue());
-        // System.out.println("set Value: rw=" + row + ",column=" + column +
-        // ",value=" + aValue);
-        // dayData.setValueAt(aValue, row, column);
-        // fireTableChanged(null);
-    }
-
-    /**
-     * Add To Array 
-     * 
-     * @param lst
-     * @param source
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void addToArray(ArrayList<?> lst, ArrayList<?> source)
-    {
-        if (source == null || source.size() == 0)
-            return;
-
-        ArrayList<DayValueH> lst2 = (ArrayList<DayValueH>) lst;
-        ArrayList<DayValueH> src2 = (ArrayList<DayValueH>) source;
-
-        for (int i = 0; i < source.size(); i++)
-        {
-            lst2.add(src2.get(i));
-        }
-    }
-
-    /**
-     * Get Empty ArrayList
-     * 
-     * @return
-     */
-    @Override
-    public ArrayList<? extends GGCHibernateObject> getEmptyArrayList()
-    {
-        return new ArrayList<DayValueH>();
+        addColumn(0, "DATETIME", 120, false);
+        addColumn(1, "ENTRY_TYPE", 150, false);
+        addColumn(2, "VALUE", 200, false);
+        addColumn(3, "STATUS", 90, false);
+        addColumn(4, "", 50, true);
     }
 
 }

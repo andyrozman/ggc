@@ -3,6 +3,7 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.graph.data.GraphValue;
 import ggc.plugin.graph.data.GraphValuesCapable;
 import ggc.plugin.output.OutputWriterType;
@@ -55,7 +56,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
     DataAccessPump da = DataAccessPump.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
 
-    private int status = 0;
+    private DeviceEntryStatus status = DeviceEntryStatus.Unknown;
     private int object_status = 0;
     private boolean checked = false;
     private int output_type = 0;
@@ -486,10 +487,10 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
                 return this.getValue();
 
             case 5:
-                return this.getStatus();
+                return this.getStatusType();
 
             case 6:
-                return new Boolean(getChecked());
+                return getChecked();
 
             default:
                 return "";
@@ -550,25 +551,24 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
         this.checked = check;
     }
 
+
     /**
-     * Get Status
-     * 
-     * @return status
+     * {@inheritDoc}
      */
-    public int getStatus()
+    public DeviceEntryStatus getStatusType()
     {
         return this.status;
     }
 
     /**
-     * Set Status
-     * 
-     * @param status_in
+     * {@inheritDoc}
      */
-    public void setStatus(int status_in)
+    public void setStatusType(DeviceEntryStatus stat)
     {
-        this.status = status_in;
+        this.status = stat;
     }
+
+
 
     /**
      * Set Output Type

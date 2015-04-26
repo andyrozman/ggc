@@ -2,14 +2,19 @@
 Changes file for GGC CGM Tool
 ==============================
 
+1.3.1 [28.3.2015]
+    * Added Graph for CGMS
+
+
 1.3.0 [19.2.2015]
     * Device Interface V2 Framework
-
     * Animas CGMS implementation V1
+
 
 1.2.0 [4.1.2015]
     * some minor changes all around
     * updated Lists
+
 
 1.1 [30.8.2014]
     * Added Dexcom G4 device
@@ -36,23 +41,29 @@ Changes file for GGC CGM Tool
 0.5 [2.3.2010]
     * View data for CGMS - finalized
 
+
 0.4.3
     * Dexcom mostly done
     * File import context testing
+
 
 0.4
     * Start working on Dexcom7
     * Changed I18n
     * PLUGIN_BASE: Required 0.4.5
 
+
 0.3.1 [24.1.2010] - Andy
     * DeviceDataRetrieval done
+
 
 0.3 (16.1.2010) - Andy
     * List implemented
 
+
 0.2
     * About Dialog implemented
+
 
 0.1
     * Framework implementation

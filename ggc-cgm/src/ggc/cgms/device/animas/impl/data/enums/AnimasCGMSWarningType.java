@@ -1,8 +1,8 @@
 package ggc.cgms.device.animas.impl.data.enums;
 
-import com.atech.utils.data.CodeEnum;
-
 import java.util.HashMap;
+
+import com.atech.utils.data.CodeEnum;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -33,31 +33,23 @@ import java.util.HashMap;
 public enum AnimasCGMSWarningType implements CodeEnum
 {
 
-    SensorFailure(203),
+    SensorFailure(203, "Alarm_SensorError"), //
+    TransmiterOutOfRange(206, "Alarm_SensorLost"), //
+    GlucoseBelowLimit(208, "Alarm_LowGlucose"), //
+    SessionExpiresIn30Minutes(211, "Alarm_SensorEndOfLifeAproaching"), //
+    SessionExpired(212, "Alarm_SessionExpired"), //
+    GlucoseAboveLimit(213, "Alarm_HighGlucose"), //
+    GlucoseBelow55(214, "Alarm_LowGlucose"), //
+    CGMSFailure(215, "Alarm_CGMSFailure"), //
+    SessionStopped(216, "Alarm_SessionStopped"), //
+    GlucoseRiseRate(217, "Alarm_GlucoseRiseRateTooHigh"), //
+    GlucoseFallRate(218, "Alarm_GlucoseFallRateTooHigh"), //
+    UseBGForTreatment(221, "Alarm_CalibrationRequired"), //
 
-
-    TransmiterOutOfRange(206),
-
-
-    GlucoseBelowLimit(208),
-
-    SessionExpiresIn30Minutes(211),
-    SessionExpired(212),
-    GlucoseAboveLimit(213),
-    GlucoseBelow55(214),
-    CGMFailure(215),
-    SessionStopped(216),
-    GlucoseRiseRate(217),
-    GlucoseFallRate(218),
-
-
-    UseBGForTreatment(221),
-
-    Unknown(-2),
-    None(0),
+    Unknown(-2, "Alarm_UnknownAlarm"), //
+    None(0, null), //
 
     ;
-
 
     static HashMap<Integer, AnimasCGMSWarningType> mappingWithId = new HashMap<Integer, AnimasCGMSWarningType>();
 
@@ -69,18 +61,14 @@ public enum AnimasCGMSWarningType implements CodeEnum
         }
     }
 
-
     int code;
-
-    public int getCode()
-    {
-        return this.code;
-    }
+    private String cgmsWriterKey;
 
 
-    private AnimasCGMSWarningType(int code)
+    private AnimasCGMSWarningType(int code, String cgmsWriterKey)
     {
         this.code = code;
+        this.cgmsWriterKey = cgmsWriterKey;
     }
 
 
@@ -97,5 +85,15 @@ public enum AnimasCGMSWarningType implements CodeEnum
     }
 
 
+    public String getCgmsWriterKey()
+    {
+        return cgmsWriterKey;
+    }
+
+
+    public int getCode()
+    {
+        return this.code;
+    }
 
 }

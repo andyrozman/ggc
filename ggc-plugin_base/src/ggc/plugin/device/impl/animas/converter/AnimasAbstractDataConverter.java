@@ -1,17 +1,20 @@
 package ggc.plugin.device.impl.animas.converter;
 
-import com.atech.utils.data.ATechDate;
-import ggc.plugin.device.impl.animas.AnimasDeviceReader;
-import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
-import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
-import ggc.plugin.device.impl.animas.data.dto.PumpConnectorInfo;
-import ggc.plugin.device.impl.animas.handler.AnimasDataConverter;
-import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
-import ggc.plugin.device.impl.animas.util.AnimasUtils;
+import java.util.Calendar;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.util.Calendar;
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.SynchronizedList;
+
+import ggc.plugin.device.impl.animas.AnimasDeviceReader;
+import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
+import ggc.plugin.device.impl.animas.data.AnimasDeviceReplyPacket;
+import ggc.plugin.device.impl.animas.data.dto.PumpConnectorInfo;
+import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
+import ggc.plugin.device.impl.animas.handler.AnimasDataConverter;
+import ggc.plugin.device.impl.animas.util.AnimasUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,24 +42,27 @@ import java.util.Calendar;
  *  Author: Andy Rozman {andy@atech-software.com}
  */
 
-public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
+public abstract class AnimasAbstractDataConverter implements AnimasDataConverter, Runnable
 {
+
     public static final Log LOG = LogFactory.getLog(AnimasAbstractDataConverter.class);
     AnimasDeviceReader deviceReader;
     private boolean inDataProcessingPacket = false;
+    private boolean threadRunning = true;
+    SynchronizedList<AnimasDeviceReplyPacket> listToProcess;
 
 
     public AnimasAbstractDataConverter(AnimasDeviceReader deviceReader)
     {
         this.deviceReader = deviceReader;
+        this.listToProcess = new SynchronizedList<AnimasDeviceReplyPacket>();
     }
 
 
     public abstract AnimasDeviceData getData();
 
 
-
-    public void processReturnedRawData(AnimasDevicePacket animasDevicePacket)
+    public void processReturnedRawData(AnimasDeviceReplyPacket animasDeviceReplyPacket)
     {
         while (this.inDataProcessingPacket)
         {
@@ -66,13 +72,13 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
 
         // FIXME change all processing to list
 
-        AnimasUtils.addDataTypeProcessed(animasDevicePacket.dataTypeObject);
+        AnimasUtils.addDataTypeProcessed(animasDeviceReplyPacket.dataTypeObject);
 
         ATechDate dt = null;
 
-        if (animasDevicePacket.dataTypeObject.isDateInDataType())
+        if (animasDeviceReplyPacket.dataTypeObject.isDateInDataType())
         {
-            dt = decodeDateTime(animasDevicePacket);
+            dt = decodeDateTime(animasDeviceReplyPacket);
 
             if (dt == null)
             {
@@ -83,46 +89,45 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
             }
         }
 
-        switch (animasDevicePacket.dataTypeObject)
+        switch (animasDeviceReplyPacket.dataTypeObject)
         {
             case SerialNumber: // 8
-                decodeSerialNumber(animasDevicePacket);
+                decodeSerialNumber(animasDeviceReplyPacket);
                 break;
 
             case ClockMode: // 28
-                decodeClockMode(animasDevicePacket);
+                decodeClockMode(animasDeviceReplyPacket);
                 break;
 
             case BGUnit: // 29
-                decodeBGUnit(animasDevicePacket);
+                decodeBGUnit(animasDeviceReplyPacket);
                 break;
 
             case SoftwareCode: // 30
-                decodeSoftwareCode(animasDevicePacket);
+                decodeSoftwareCode(animasDeviceReplyPacket);
                 break;
 
             case FontTableIndex: // 34
-                decodeFontTableIndex(animasDevicePacket);
+                decodeFontTableIndex(animasDeviceReplyPacket);
                 break;
 
             case LanguageIndex: // 35
-                decodeLanguageIndex(animasDevicePacket);
+                decodeLanguageIndex(animasDeviceReplyPacket);
                 break;
 
             case FoodDbSize: // 36
-                decodeFoodDb(animasDevicePacket);
+                decodeFoodDb(animasDeviceReplyPacket);
                 break;
 
             default:
-                processCustomReturnedRawData(animasDevicePacket, dt);
+                processCustomReturnedRawData(animasDeviceReplyPacket, dt);
         }
 
         inDataProcessingPacket = false;
     }
 
 
-    public abstract void processCustomReturnedRawData(AnimasDevicePacket adp, ATechDate dt);
-
+    public abstract void processCustomReturnedRawData(AnimasDeviceReplyPacket adp, ATechDate dt);
 
 
     public void decodePumpModel()
@@ -220,15 +225,15 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
     {
         LOG.debug(String
                 .format(
-                        "Software Code Prefix is %s, but Food Db Size (%s) is unknown, we default to Pump %s (supported Db sizes are %s)",
-                        softwareCodePrefix, getData().pumpInfo.foodDbSize, defPump, suppportedSizes));
+                    "Software Code Prefix is %s, but Food Db Size (%s) is unknown, we default to Pump %s (supported Db sizes are %s)",
+                    softwareCodePrefix, getData().pumpInfo.foodDbSize, defPump, suppportedSizes));
     }
 
 
-
-    public void decodeDownloaderSerialNumber(AnimasDevicePacket adp)
+    public void decodeDownloaderSerialNumber(AnimasDeviceReplyPacket adp)
     {
-        String serialNumber = (AnimasUtils.short2hex(adp.getReceivedDataBit(5)) + AnimasUtils.short2hex(adp.getReceivedDataBit(4)) //
+        String serialNumber = (AnimasUtils.short2hex(adp.getReceivedDataBit(5))
+                + AnimasUtils.short2hex(adp.getReceivedDataBit(4)) //
                 + AnimasUtils.short2hex(adp.getReceivedDataBit(3)) //
                 + AnimasUtils.short2hex(adp.getReceivedDataBit(2)) + " ");
 
@@ -253,25 +258,29 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
     }
 
 
-    private void decodeSerialNumber(AnimasDevicePacket packet)
+    private void decodeSerialNumber(AnimasDeviceReplyPacket packet)
     {
         String rawData = getStringFromPacket(packet, 6, 16);
 
         String serialNumber = rawData.substring(8, 10) + "-" + rawData.substring(0, 8);
 
+        System.out.println("Serial Number " + serialNumber);
+
         getData().setSerialNumber(serialNumber);
     }
 
 
-    private ATechDate decodeDateTime(AnimasDevicePacket adp)
+    private ATechDate decodeDateTime(AnimasDeviceReplyPacket adp)
     {
-        return this.decodeDateTimeFromRawComponents(adp.getReceivedDataBit(7), adp.getReceivedDataBit(6), adp.getReceivedDataBit(8), adp.getReceivedDataBit(9));
+        return this.decodeDateTimeFromRawComponents(adp.getReceivedDataBit(7), adp.getReceivedDataBit(6),
+            adp.getReceivedDataBit(8), adp.getReceivedDataBit(9));
     }
 
 
     protected String getDateTimeFromCalendar(Calendar c)
     {
-        return c.get(Calendar.DAY_OF_MONTH) + "." + (c.get(Calendar.MONTH)+1) + "." + c.get(Calendar.YEAR) + " " + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
+        return c.get(Calendar.DAY_OF_MONTH) + "." + (c.get(Calendar.MONTH) + 1) + "." + c.get(Calendar.YEAR) + " "
+                + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
     }
 
 
@@ -304,43 +313,42 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
     }
 
 
-
-    private void decodeClockMode(AnimasDevicePacket packet)
+    private void decodeClockMode(AnimasDeviceReplyPacket packet)
     {
         this.getData().setClockMode(packet.getReceivedDataBit(6));
     }
 
 
-    private void decodeFoodDb(AnimasDevicePacket packet)
+    private void decodeFoodDb(AnimasDeviceReplyPacket packet)
     {
         this.getData().pumpInfo.foodDbSize = (short) AnimasUtils.createIntValueThroughMoreBits(
-                AnimasUtils.getUnsignedShort(packet.getReceivedDataBit(7)), //
-                AnimasUtils.getUnsignedShort(packet.getReceivedDataBit(6)));
+            AnimasUtils.getUnsignedShort(packet.getReceivedDataBit(7)), //
+            AnimasUtils.getUnsignedShort(packet.getReceivedDataBit(6)));
     }
 
 
-    private void decodeLanguageIndex(AnimasDevicePacket packet)
+    private void decodeLanguageIndex(AnimasDeviceReplyPacket packet)
     {
         this.getData().pumpInfo.languageIndex1 = packet.getReceivedDataBit(6);
         this.getData().pumpInfo.languageIndex2 = packet.getReceivedDataBit(7);
     }
 
 
-    private void decodeBGUnit(AnimasDevicePacket adp)
+    private void decodeBGUnit(AnimasDeviceReplyPacket adp)
     {
         short unit = adp.getReceivedDataBit(6);
         this.getData().setBgUnit(unit == 1);
     }
 
 
-    private void decodeSoftwareCode(AnimasDevicePacket packet)
+    private void decodeSoftwareCode(AnimasDeviceReplyPacket packet)
     {
-        String swCode = getStringFromPacket(packet, 6, packet.dataReceivedLength-6);
+        String swCode = getStringFromPacket(packet, 6, packet.dataReceivedLength - 6);
         this.getData().setSoftwareCode(swCode);
     }
 
 
-    private void decodeFontTableIndex(AnimasDevicePacket packet)
+    private void decodeFontTableIndex(AnimasDeviceReplyPacket packet)
     {
         this.getData().pumpInfo.fontTableIndex = packet.getReceivedDataBit(13);
     }
@@ -354,13 +362,14 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
     }
 
 
-    protected String getStringFromPacket(AnimasDevicePacket adp, int startBit, int length)
+    protected String getStringFromPacket(AnimasDeviceReplyPacket adp, int startBit, int length)
     {
         String receivedString = "";
 
         for (int j = startBit; j <= (startBit + length); j++)
         {
-            if ((adp.getReceivedDataBit(j) != 0) && (adp.getReceivedDataBit(j) >= 32) && (adp.getReceivedDataBit(j) <= 126))
+            if ((adp.getReceivedDataBit(j) != 0) && (adp.getReceivedDataBit(j) >= 32)
+                    && (adp.getReceivedDataBit(j) <= 126))
             {
                 receivedString += (char) adp.getReceivedDataBit(j);
             }
@@ -375,5 +384,38 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
         return AnimasUtils.calculateTimeFromTimeSet(timeSet);
     }
 
+
+    public void addRawDataToProcess(AnimasDeviceReplyPacket adp)
+    {
+        this.listToProcess.addSynchronized(adp);
+    }
+
+
+    public void run()
+    {
+        while (threadRunning)
+        {
+
+            if (this.listToProcess.isNotEmpty())
+            {
+                AnimasDeviceReplyPacket adp = this.listToProcess.getFirst();
+                this.processReturnedRawData(adp);
+            }
+
+            AnimasUtils.sleepInMs(100L);
+        }
+
+    }
+
+
+    public void stopConverterThread()
+    {
+        while (this.listToProcess.isNotEmpty())
+        {
+            AnimasUtils.sleepInMs(200L);
+        }
+
+        this.threadRunning = false;
+    }
 
 }

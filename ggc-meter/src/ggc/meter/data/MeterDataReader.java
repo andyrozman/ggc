@@ -1,14 +1,14 @@
 package ggc.meter.data;
 
-import ggc.meter.data.db.GGCMeterDb;
-import ggc.meter.util.DataAccessMeter;
-import ggc.plugin.data.DeviceValuesEntryInterface;
-import ggc.plugin.gui.OldDataReaderAbstract;
-
 import java.util.Hashtable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import ggc.meter.data.db.GGCMeterDb;
+import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.gui.OldDataReaderAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,10 +38,12 @@ import org.apache.commons.logging.LogFactory;
 
 public class MeterDataReader extends OldDataReaderAbstract
 {
+
     private static Log log = LogFactory.getLog(MeterDataReader.class);
 
     GGCMeterDb db = null;
     DataAccessMeter m_da = null;
+
 
     /**
      * Constructor
@@ -57,6 +59,7 @@ public class MeterDataReader extends OldDataReaderAbstract
         // System.out.println("db: " )
     }
 
+
     /**
      * Get Max Entries
      */
@@ -67,6 +70,7 @@ public class MeterDataReader extends OldDataReaderAbstract
         this.all_entries = db.getAllElementsCount();
     }
 
+
     /**
      * Read Old entries
      */
@@ -76,6 +80,7 @@ public class MeterDataReader extends OldDataReaderAbstract
         return db.getMeterValues(this);
         // TODO Auto-generated method stub
     }
+
 
     /**
      * Write status of reading

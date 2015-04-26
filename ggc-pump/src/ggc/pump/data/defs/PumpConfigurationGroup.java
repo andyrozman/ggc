@@ -1,12 +1,13 @@
 package ggc.pump.data.defs;
 
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.data.CodeEnumWithTranslation;
-import ggc.plugin.data.enums.DeviceConfigurationGroup;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.data.CodeEnumWithTranslation;
+
+import ggc.plugin.data.enums.DeviceConfigurationGroup;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 27.02.15.
@@ -22,21 +23,14 @@ public enum PumpConfigurationGroup implements DeviceConfigurationGroup
     Bolus(5, "GROUP_BOLUS"), //
     Sound(6, "GROUP_SOUND"), //
 
-
-    Other(20, "GROUP_OTHER"),
-    ; //
-
-
-
+    Other(20, "GROUP_OTHER"), ; //
 
     static Map<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static Map<Integer, PumpConfigurationGroup> codeMapping = new HashMap<Integer, PumpConfigurationGroup>();
 
-
     int code;
     String i18nKey;
     String translation;
-
 
     static
     {
@@ -52,8 +46,6 @@ public enum PumpConfigurationGroup implements DeviceConfigurationGroup
     }
 
 
-
-
     PumpConfigurationGroup(int code, String i18nKey)
     {
         this.code = code;
@@ -66,15 +58,18 @@ public enum PumpConfigurationGroup implements DeviceConfigurationGroup
         return translation;
     }
 
+
     public void setTranslation(String translation)
     {
         this.translation = translation;
     }
 
+
     public int getCode()
     {
         return code;
     }
+
 
     public String getI18nKey()
     {
@@ -82,7 +77,9 @@ public enum PumpConfigurationGroup implements DeviceConfigurationGroup
     }
 
 
-
-
+    public String getName()
+    {
+        return this.name();
+    }
 
 }

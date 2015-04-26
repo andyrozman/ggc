@@ -3,8 +3,10 @@ package ggc.plugin.gui;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.enums.DeviceProgressStatus;
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.output.*;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -93,6 +95,9 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
         {
             this.dialog_config = this.m_ddh.dialog_config;
         }
+
+
+
     }
 
 
@@ -319,10 +324,24 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
             writeLog(LogEntryType.DEBUG, lg);
 
         }
+        catch(PlugInBaseException ex)
+        {
+            this.setStatus(AbstractOutputWriter.STATUS_READER_ERROR);
+
+            if (ex.getExceptionType() != PlugInExceptionType.DownloadCanceledByUser)
+            {
+                lg = "DeviceReaderRunner:Exception:" + ex;
+                log.error(lg, ex);
+                writeLog(LogEntryType.ERROR, lg, ex);
+            }
+
+            running = false;
+        }
         catch (Exception ex)
         {
             this.setStatus(AbstractOutputWriter.STATUS_READER_ERROR);
             lg = "DeviceReaderRunner:Exception:" + ex;
+
             log.error(lg, ex);
             writeLog(LogEntryType.ERROR, lg, ex);
             running = false;

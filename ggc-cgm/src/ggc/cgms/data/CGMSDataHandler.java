@@ -1,14 +1,14 @@
 package ggc.cgms.data;
 
+import java.util.Hashtable;
+
 import ggc.core.db.hibernate.DayValueH;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.util.DataAccessPlugInBase;
 
-import java.util.Hashtable;
-
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Meter Tool (support for Meter devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -26,8 +26,8 @@ import java.util.Hashtable;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     MeterDataHandler
- *  Description:  Data Handler for Meter Tool
+ *  Filename:     CGMSDataHandler
+ *  Description:  Data Handler for CGMSs Tool
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -45,30 +45,6 @@ public class CGMSDataHandler extends DeviceDataHandler
         super(da);
     }
 
-    /**
-     * Execute export Db
-     * 
-     * @see ggc.plugin.data.DeviceDataHandler#executeExportDb()
-     */
-    /*
-     * public void executeExportDb()
-     * {
-     * //System.out.println("Checked entries: " +
-     * this.getDeviceValuesTableModel().getCheckedEntries());
-     * this.m_server.setReturnData(this.getDeviceValuesTableModel().
-     * getCheckedEntries(), this);
-     * }
-     */
-
-    /**
-     * Execute Export Other (not supported for now)
-     * 
-     * @see ggc.plugin.data.DeviceDataHandler#executeExportOther()
-     */
-    @Override
-    public void executeExportOther()
-    {
-    }
 
     /**
      * Create Device Values Table Model
@@ -77,8 +53,9 @@ public class CGMSDataHandler extends DeviceDataHandler
     public void createDeviceValuesTableModel()
     {
         this.m_model = new CGMSValuesTableModel(this, m_da.getSourceDevice()); // dataAccess.getSourceDevice());
-        // System.out.println("Model");
+
     }
+
 
     /**
      * Set Device Data
@@ -101,14 +78,12 @@ public class CGMSDataHandler extends DeviceDataHandler
         }
     }
 
+
     /** 
      * Set Reading Finished
      */
     public void setReadingFinished()
     {
-
-        // TODO Auto-generated method stub
-
     }
 
 }

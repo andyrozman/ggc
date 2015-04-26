@@ -2,6 +2,7 @@ package ggc.cgms.device.dexcom.receivers.g4receiver.enums;
 
 import java.util.HashMap;
 
+// FIXME REMOVE
 public enum ClockModeType
 {
     ClockMode24Hour(0, "CLOCK_MODE_12H"), //
@@ -20,31 +21,37 @@ public enum ClockModeType
         }
     }
 
+
     ClockModeType(int value, String description)
     {
         this.value = value;
         this.description = description;
     }
 
+
     public int getValue()
     {
         return value;
     }
+
 
     public void setValue(int value)
     {
         this.value = value;
     }
 
+
     public static ClockModeType getEnum(int value)
     {
         return map.get(value);
     }
 
+
     public String getDescription()
     {
         return description;
     }
+
 
     public void setDescription(String description)
     {

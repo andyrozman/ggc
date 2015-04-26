@@ -1,19 +1,5 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver.util;
 
-import ggc.cgms.device.dexcom.receivers.g4receiver.DexcomG4Api;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.BytesToDatabasePagesConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ConverterType;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ElementToPartitionInfoConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToEGVDataConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToFileConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPageToUserEventDataConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPagesToInsertionTimeConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPagesToMeterConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.DataPagesToXmlRecordConverter;
-import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
-import ggc.cgms.device.dexcom.receivers.g4receiver.internal.Partition;
-import ggc.cgms.device.dexcom.receivers.g4receiver.internal.PartitionInfo;
-
 import java.io.StringReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,8 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
-import ggc.plugin.data.enums.PlugInExceptionType;
-import ggc.plugin.device.PlugInBaseException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jdom.Document;
@@ -33,8 +17,45 @@ import org.jdom.output.XMLOutputter;
 
 import com.atech.utils.data.ShortUtils;
 
+import ggc.cgms.device.dexcom.receivers.g4receiver.DexcomG4Api;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.BytesToDatabasePagesConverter;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ConverterType;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.ElementToPartitionInfoConverter;
+import ggc.cgms.device.dexcom.receivers.g4receiver.converter.data.*;
+import ggc.cgms.device.dexcom.receivers.g4receiver.enums.ReceiverRecordType;
+import ggc.cgms.device.dexcom.receivers.g4receiver.internal.Partition;
+import ggc.cgms.device.dexcom.receivers.g4receiver.internal.PartitionInfo;
+import ggc.plugin.data.enums.PlugInExceptionType;
+import ggc.plugin.device.PlugInBaseException;
+
+/**
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     Dexcom 7
+ *  Description:  Dexcom 7 implementation (just settings)
+ *
+ *  Author: Andy {andy@atech-software.com}
+ */
 public class DexcomUtils
 {
+
     private static Log log = LogFactory.getLog(DexcomUtils.class);
     public static int ImmediateMatchMask = 0x80;
     private static DexcomG4Api dexcomG4Api;
@@ -65,6 +86,7 @@ public class DexcomUtils
         BIG_ENDIAN // 0 0 0 20 = normal - java
     }
 
+
     // Convert the packet data
     public static int toInt(byte[] b, BitConversion flag)
     {
@@ -79,6 +101,7 @@ public class DexcomUtils
         }
     }
 
+
     public static int toInt(short[] b, BitConversion flag)
     {
         switch (flag)
@@ -91,6 +114,7 @@ public class DexcomUtils
                 throw new IllegalArgumentException("BitConverter: toInt");
         }
     }
+
 
     public static short toShort(byte[] b, BitConversion flag)
     {
@@ -105,6 +129,7 @@ public class DexcomUtils
         }
     }
 
+
     public static short toShort(short[] b, BitConversion flag)
     {
         switch (flag)
@@ -117,6 +142,7 @@ public class DexcomUtils
                 throw new IllegalArgumentException("BitConverter: toInt");
         }
     }
+
 
     public static int toIntShort(short[] b, BitConversion flag)
     {
@@ -131,6 +157,7 @@ public class DexcomUtils
         }
     }
 
+
     public static Date toDate(byte[] b, BitConversion flag)
     {
 
@@ -142,6 +169,7 @@ public class DexcomUtils
         return d;
     }
 
+
     public static Date toDate(int date)
     {
 
@@ -150,6 +178,7 @@ public class DexcomUtils
 
         return d;
     }
+
 
     public static byte[] getBytes(int i, int flag)
     {
@@ -174,6 +203,7 @@ public class DexcomUtils
         return b;
     }
 
+
     // TODO remove possibly see CrcUtil
     // CRC methods
     public static int calculateCRC16(byte[] buff, int start, int end)
@@ -191,6 +221,7 @@ public class DexcomUtils
         return crc;
     }
 
+
     public static int calculateCRC16(short[] buff, int start, int end)
     {
         int crc = 0;
@@ -205,6 +236,7 @@ public class DexcomUtils
         crc &= 0xffff;
         return crc;
     }
+
 
     public static int calculateCRC16(int[] buff, int start, int end)
     {
@@ -221,15 +253,18 @@ public class DexcomUtils
         return (int) crc;
     }
 
+
     public static DexcomG4Api getDexcomG4Api()
     {
         return dexcomG4Api;
     }
 
+
     public static void setDexcomG4Api(DexcomG4Api dexcomG4Api)
     {
         DexcomUtils.dexcomG4Api = dexcomG4Api;
     }
+
 
     public static PartitionInfo getPartitionInfo() throws PlugInBaseException
     {
@@ -243,6 +278,7 @@ public class DexcomUtils
         // return partitionInfo;
     }
 
+
     public static Partition getPartition(ReceiverRecordType recordType) throws PlugInBaseException
     {
         return dexcomG4Api.getPartition(recordType);
@@ -253,6 +289,7 @@ public class DexcomUtils
         //
         // return partitionInfo.getPartitionByRecordType(recordType);
     }
+
 
     public static Element createXmlTree(String xmlData) throws PlugInBaseException
     {
@@ -265,11 +302,12 @@ public class DexcomUtils
         }
         catch (Exception ex)
         {
-            throw new PlugInBaseException(PlugInExceptionType.ParsingError,
-                    new Object[] { ex.getLocalizedMessage() }, ex);
+            throw new PlugInBaseException(PlugInExceptionType.ParsingError, new Object[] { ex.getLocalizedMessage() },
+                    ex);
         }
 
     }
+
 
     public static String getXmlStringFromElement(Element element)
     {
@@ -278,12 +316,14 @@ public class DexcomUtils
         return outp.outputString(element);
     }
 
+
     public static void debugXmlTree(Element element)
     {
         String s = getXmlStringFromElement(element);
 
         log.debug(s);
     }
+
 
     public static int readDisplayTimeOffset()
     {
@@ -303,6 +343,7 @@ public class DexcomUtils
         }
     }
 
+
     public static Date getDateFromSeconds(int timeSeconds)
     {
 
@@ -313,6 +354,7 @@ public class DexcomUtils
     {
         RawDate, DateWithDifference, DateWithDifferenceWithTimeZoneFix,
     }
+
 
     public static Date getDateFromSeconds(int timeSeconds, DexcomDateParsing parsing)
     {
@@ -357,15 +399,18 @@ public class DexcomUtils
         return new Date(timeAdd);
     }
 
+
     public static String getDateTimeString(Date dateTime)
     {
         return dateTimeFormater.format(dateTime);
     }
 
+
     public static ShortUtils getShortUtils()
     {
         return shortUtils;
     }
+
 
     public static Object getConverter(ConverterType converterType)
     {

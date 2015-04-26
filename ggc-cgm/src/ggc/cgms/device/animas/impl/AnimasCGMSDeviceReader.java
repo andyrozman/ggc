@@ -1,21 +1,14 @@
 package ggc.cgms.device.animas.impl;
 
-import java.util.List;
-
-import ggc.cgms.device.animas.impl.data.AnimasCGMSDeviceData;
-import ggc.cgms.device.animas.impl.handler.AnimasDexcomDataHandler;
-import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.output.ConsoleOutputWriter;
-import ggc.plugin.output.OutputWriter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import ggc.cgms.device.animas.impl.handler.AnimasDexcomDataHandler;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
-import ggc.plugin.device.impl.animas.comm.AnimasCommProtocolAbstract;
-import ggc.plugin.device.impl.animas.data.dto.SettingEntry;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
-
+import ggc.plugin.output.OutputWriter;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,10 +38,12 @@ import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
 
 public class AnimasCGMSDeviceReader extends AnimasDeviceReader
 {
+
     public static final Log LOG = LogFactory.getLog(AnimasCGMSDeviceReader.class);
 
 
-    public AnimasCGMSDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter) throws PlugInBaseException
+    public AnimasCGMSDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter)
+            throws PlugInBaseException
     {
         super(portName, animasDevice, outputWriter);
     }
@@ -66,10 +61,9 @@ public class AnimasCGMSDeviceReader extends AnimasDeviceReader
         AnimasDexcomDataHandler handler = new AnimasDexcomDataHandler(portName, animasDevice, this, outputWriter);
         handler.startAction(AnimasTransferType.DownloadCGMSSettings);
 
-        AnimasCGMSDeviceData data = (AnimasCGMSDeviceData) handler.getData();
+        // AnimasCGMSDeviceData data = (AnimasCGMSDeviceData) handler.getData();
 
-        //data.writeSettings(outputWriter);
+        // data.writeSettings(outputWriter);
     }
-
 
 }

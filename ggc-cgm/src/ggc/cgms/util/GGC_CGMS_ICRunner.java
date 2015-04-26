@@ -4,7 +4,7 @@ import com.atech.i18n.I18nControlRunner;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Meter Tool (support for Meter devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  * 

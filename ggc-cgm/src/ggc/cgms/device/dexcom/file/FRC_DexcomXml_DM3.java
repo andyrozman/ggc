@@ -1,5 +1,18 @@
 package ggc.cgms.device.dexcom.file;
 
+import java.io.File;
+import java.util.ArrayList;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.xml.sax.*;
+import org.xml.sax.ext.DeclHandler;
+import org.xml.sax.ext.LexicalHandler;
+import org.xml.sax.helpers.XMLReaderFactory;
+
 import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.CGMSValuesTableModel;
 import ggc.cgms.data.defs.CGMSBaseDataType;
@@ -10,54 +23,37 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocolFile;
 import ggc.plugin.util.DataAccessPlugInBase;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.filechooser.FileFilter;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.ext.DeclHandler;
-import org.xml.sax.ext.LexicalHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
-
 /**
- * Application: GGC - GNU Gluco Control
- * Plug-in: CGMS Tool (support for Pump devices)
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
- * See AUTHORS for copyright information.
+ *  See AUTHORS for copyright information.
  *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * Filename: Dexcom 7 Plus
- * Description: Dexcom 7 Plus implementation (just settings)
+ *  Filename:     Dexcom 7
+ *  Description:  Dexcom 7 implementation (just settings)
  *
- * Author: Andy {andy@atech-software.com}
+ *  Author: Andy {andy@atech-software.com}
  */
 
 public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileReaderContext
 {
 
     private static Log log = LogFactory.getLog(FRC_DexcomXml_DM3.class);
+
 
     /**
      * Constructor
@@ -70,15 +66,18 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
         super(da, ow);
     }
 
+
     public String getFileDescription()
     {
         return "DM3 Dexcom Software Export";
     }
 
+
     public String getFullFileDescription()
     {
         return "DM3 Dexcom Software Export (XML)";
     }
+
 
     /**
      * Get File Download Panel
@@ -90,15 +89,18 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
         return null;
     }
 
+
     public String getFileExtension()
     {
         return ".xml";
     }
 
+
     public boolean hasSpecialSelectorDialog()
     {
         return false;
     }
+
 
     public void readFile(String filename)
     {
@@ -133,6 +135,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
 
     }
 
+
     @Override
     public String toString()
     {
@@ -153,6 +156,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
         private ArrayList<CGMSValuesSubEntry> list_subs = new ArrayList<CGMSValuesSubEntry>();
         CGMSValuesTableModel cvtm = null;
 
+
         // DataAccessPlugInBase dataAccess;
 
         public MyContentHandler(DataAccessPlugInBase da)
@@ -160,10 +164,12 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             cvtm = (CGMSValuesTableModel) da.getDeviceDataHandler().getDeviceValuesTableModel();
         }
 
+
         public void finishReading()
         {
             this.cvtm.finishReading();
         }
+
 
         /*
          * public ArrayList<CGMSValuesSubEntry> getData()
@@ -178,90 +184,112 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
             this.cvtm.addEntry(entry);
         }
 
+
         public void startPrefixMapping(String prefix, String uri) throws SAXException
         {
         }
+
 
         public void attributeDecl(String eName, String aName, String type, String mode, String value)
                 throws SAXException
         {
         }
 
+
         public void elementDecl(String name, String model) throws SAXException
         {
         }
+
 
         public void externalEntityDecl(String name, String publicId, String systemId) throws SAXException
         {
         }
 
+
         public void internalEntityDecl(String name, String value) throws SAXException
         {
         }
+
 
         public void comment(char[] ch, int start, int length) throws SAXException
         {
         }
 
+
         public void endCDATA() throws SAXException
         {
         }
+
 
         public void endDTD() throws SAXException
         {
         }
 
+
         public void endEntity(String name) throws SAXException
         {
         }
+
 
         public void startCDATA() throws SAXException
         {
         }
 
+
         public void startDTD(String name, String publicId, String systemId) throws SAXException
         {
         }
+
 
         public void startEntity(String name) throws SAXException
         {
         }
 
+
         public void characters(char[] ch, int start, int length) throws SAXException
         {
         }
+
 
         public void endDocument() throws SAXException
         {
         }
 
+
         public void endElement(String uri, String localName, String qName) throws SAXException
         {
         }
+
 
         public void endPrefixMapping(String prefix) throws SAXException
         {
         }
 
+
         public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException
         {
         }
+
 
         public void processingInstruction(String target, String data) throws SAXException
         {
         }
 
+
         public void setDocumentLocator(Locator locator)
         {
         }
+
 
         public void skippedEntity(String name) throws SAXException
         {
         }
 
+
         public void startDocument() throws SAXException
         {
         }
+
 
         public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException
         {
@@ -281,7 +309,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
                 CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
                 String tmp_time = atts.getValue(0);
                 sub.setDateTime(DexcomCGMS.getDateTimeFromString(tmp_time));
-                sub.setType(CGMSBaseDataType.SensorCalibration); //  CGMSValuesSubEntry.METER_CALIBRATION_READING);
+                sub.setType(CGMSBaseDataType.SensorCalibration); // CGMSValuesSubEntry.METER_CALIBRATION_READING);
                 sub.value = Integer.parseInt(atts.getValue(2));
 
                 this.addEntry(sub);
@@ -294,6 +322,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
         }
 
     }
+
 
     public FileFilter getFileFilter()
     {
@@ -310,6 +339,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
                 return f.getName().toLowerCase().endsWith(getFileExtension());
             }
 
+
             @Override
             public String getDescription()
             {
@@ -320,9 +350,11 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
 
     }
 
+
     public void goToNextDialog(JDialog currentDialog)
     {
     }
+
 
     public void setOutputWriter(OutputWriter ow)
     {

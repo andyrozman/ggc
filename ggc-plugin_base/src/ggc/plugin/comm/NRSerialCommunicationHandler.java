@@ -7,6 +7,9 @@ import java.io.OutputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.atech.utils.data.BitUtils;
+
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import gnu.io.NRSerialPort;
 import gnu.io.SerialPort;
@@ -25,6 +28,7 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
     boolean deviceConnected;
     private InputStream inputStream;
     private OutputStream outputStream;
+    private BitUtils bitUtils = new BitUtils();
 
 
     public NRSerialCommunicationHandler(String portName)
@@ -45,6 +49,7 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
         this.serialSettings = serialSettings;
     }
 
+
     public SerialSettings createDefaultSerialSettings()
     {
         // 9600, 8,n,1, no flow control
@@ -54,11 +59,9 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
         ss.parity = 0; // none
         ss.stopbits = 1;
 
-
-
-
         return null;
     }
+
 
     // FIXME we need to use SerialSettings when creating device
     public boolean connectAndInitDevice()
@@ -68,7 +71,8 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
             return true;
         }
 
-        this.serialDevice = new NRSerialPort(portName, 9600); // 9600
+        this.serialDevice = new NRSerialPort(portName, 9600); // 9600 , -
+                                                              // 115200
 
         this.deviceConnected = this.serialDevice.connect();
 
@@ -168,6 +172,7 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
         }
     }
 
+
     public int read(byte[] b, int off, int len) throws PlugInBaseException
     {
         // fixme
@@ -188,6 +193,33 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
     }
 
 
+    public byte[] readAvailableData() throws PlugInBaseException
+    {
+        byte[] outBuffer = null;
+        byte[] buffer = null;
+
+        // int len = -1;
+        try
+        {
+            int available = 0;
+            while ((available = available()) > 0)
+            {
+                buffer = new byte[available];
+                read(buffer);
+
+                outBuffer = bitUtils.concat(outBuffer, buffer);
+            }
+
+            return outBuffer;
+        }
+        catch (Exception e)
+        {
+            LOG.error("Error reading from device. Exception: " + e, e);
+            throw new PlugInBaseException(PlugInExceptionType.CommunicationError, new Object[] { e.getMessage() });
+        }
+    }
+
+
     public void write(byte[] buffer) throws PlugInBaseException
     {
         try
@@ -200,10 +232,12 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
         }
     }
 
+
     public void write(byte[] b, int off, int len) throws PlugInBaseException
     {
-// fixme
+        // fixme
     }
+
 
     public byte[] readLineBytes() throws PlugInBaseException
     {
@@ -211,17 +245,20 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
         return new byte[0];
     }
 
+
     public String readLine() throws PlugInBaseException
     {
         // fixme
         return null;
     }
 
+
     public int readByteTimed() throws PlugInBaseException
     {
         // fixme
         return 0;
     }
+
 
     public void setDelayForTimedReading(int ms)
     {

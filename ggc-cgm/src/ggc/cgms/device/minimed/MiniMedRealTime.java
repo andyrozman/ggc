@@ -8,7 +8,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -43,6 +43,7 @@ public class MiniMedRealTime extends MiniMedCGMS
         super();
     }
 
+
     /**
      * Constructor 
      * 
@@ -53,6 +54,7 @@ public class MiniMedRealTime extends MiniMedCGMS
     {
         super(drive_letter, writer);
     }
+
 
     /**
      * Constructor
@@ -66,6 +68,7 @@ public class MiniMedRealTime extends MiniMedCGMS
         super(params, writer, da);
     }
 
+
     /**
      * Constructor
      * 
@@ -75,6 +78,7 @@ public class MiniMedRealTime extends MiniMedCGMS
     {
         super(cmp);
     }
+
 
     // ************************************************
     // *** Device Identification Methods ***
@@ -91,6 +95,7 @@ public class MiniMedRealTime extends MiniMedCGMS
         return "MiniMed (Pump) RealTime";
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -100,6 +105,7 @@ public class MiniMedRealTime extends MiniMedCGMS
     {
         return "mm_pump_rt.jpg";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -112,6 +118,7 @@ public class MiniMedRealTime extends MiniMedCGMS
         return CGMSDevicesIds.CGMS_MINIMED_REALTIME;
     }
 
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -123,6 +130,7 @@ public class MiniMedRealTime extends MiniMedCGMS
         return "INSTRUCTIONS_NO_INFO";
     }
 
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -133,6 +141,7 @@ public class MiniMedRealTime extends MiniMedCGMS
     {
         return null;
     }
+
 
     /**
      * getImplementationStatus - Get Implementation Status 
@@ -146,6 +155,7 @@ public class MiniMedRealTime extends MiniMedCGMS
         return DeviceImplementationStatus.Partitial;
     }
 
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -156,6 +166,7 @@ public class MiniMedRealTime extends MiniMedCGMS
         return "ggc.cgms.device.minimed.MiniMedRealTime";
     }
 
+
     /** 
      * Get Max Memory Records
      * 
@@ -165,6 +176,7 @@ public class MiniMedRealTime extends MiniMedCGMS
     {
         return 0;
     }
+
 
     /**
      * Get Download Support Type

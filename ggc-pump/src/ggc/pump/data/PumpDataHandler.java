@@ -1,11 +1,11 @@
 package ggc.pump.data;
 
+import java.util.Hashtable;
+
 import ggc.core.db.hibernate.DayValueH;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.util.DataAccessPump;
-
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -46,30 +46,6 @@ public class PumpDataHandler extends DeviceDataHandler
         super(da);
     }
 
-    /**
-     * Execute export Db
-     * 
-     * @see ggc.plugin.data.DeviceDataHandler#executeExportDb()
-     */
-    /*
-     * public void executeExportDb()
-     * {
-     * //System.out.println("Checked entries: " +
-     * this.getDeviceValuesTableModel().getCheckedEntries());
-     * this.m_server.setReturnData(this.getDeviceValuesTableModel().
-     * getCheckedEntries(), this);
-     * }
-     */
-
-    /**
-     * Execute Export Other (not supported for now)
-     * 
-     * @see ggc.plugin.data.DeviceDataHandler#executeExportOther()
-     */
-    @Override
-    public void executeExportOther()
-    {
-    }
 
     /**
      * Create Device Values Table Model
@@ -79,6 +55,7 @@ public class PumpDataHandler extends DeviceDataHandler
     {
         this.m_model = new PumpValuesTableModel(this, DataAccessPump.getInstance().getSourceDevice());
     }
+
 
     /**
      * Set Device Data
@@ -101,14 +78,12 @@ public class PumpDataHandler extends DeviceDataHandler
         }
     }
 
+
     /** 
      * Set Reading Finished
      */
     public void setReadingFinished()
     {
-
-        // TODO Auto-generated method stub
-
     }
 
 }

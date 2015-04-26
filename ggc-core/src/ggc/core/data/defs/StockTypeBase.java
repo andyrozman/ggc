@@ -1,26 +1,20 @@
 package ggc.core.data.defs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.core.util.DataAccess;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by andy on 27.02.15.
  */
 public enum StockTypeBase implements CodeEnumWithTranslation
 {
-    None(0, "NONE"),
-    Insulin(1, "STOCKTYPE_INSULIN"),
-    BG(2, "STOCKTYPE_BG"),
-    Pen(3, "STOCKTYPE_PEN"),
-    Pump(4, "STOCKTYPE_PUMP"),
-    CGMS(5, "STOCKTYPE_CGMS")
-    ;
-
+    None(0, "NONE"), Insulin(1, "STOCKTYPE_INSULIN"), BG(2, "STOCKTYPE_BG"), Pen(3, "STOCKTYPE_PEN"), Pump(4,
+            "STOCKTYPE_PUMP"), CGMS(5, "STOCKTYPE_CGMS");
 
     static String[] descriptions;
 
@@ -38,22 +32,20 @@ public enum StockTypeBase implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
 
-        String[] basal_desc_lcl = { ic.getMessage("SELECT_STOCK_TYPE"),
-                ic.getMessage("STOCKTYPE_INSULIN"), //
-                ic.getMessage("STOCKTYPE_BG"), //
-                ic.getMessage("STOCKTYPE_PEN"), //
-                ic.getMessage("STOCKTYPE_PUMP"), //
-                ic.getMessage("STOCKTYPE_CGMS"), //
+        String[] basal_desc_lcl = { ic.getMessage("SELECT_STOCK_TYPE"), ic.getMessage("STOCKTYPE_INSULIN"), //
+                                   ic.getMessage("STOCKTYPE_BG"), //
+                                   ic.getMessage("STOCKTYPE_PEN"), //
+                                   ic.getMessage("STOCKTYPE_PUMP"), //
+                                   ic.getMessage("STOCKTYPE_CGMS"), //
         };
 
         descriptions = basal_desc_lcl;
     }
 
-
-
     int code;
     String i18nKey;
     String translation;
+
 
     private StockTypeBase(int code, String i18nKey)
     {
@@ -67,19 +59,28 @@ public enum StockTypeBase implements CodeEnumWithTranslation
         return translation;
     }
 
+
     public void setTranslation(String translation)
     {
         this.translation = translation;
     }
+
 
     public int getCode()
     {
         return code;
     }
 
+
     public String getI18nKey()
     {
         return i18nKey;
+    }
+
+
+    public String getName()
+    {
+        return this.name();
     }
 
 
@@ -95,6 +96,7 @@ public enum StockTypeBase implements CodeEnumWithTranslation
         return ATDataAccessAbstract.getTypeFromDescription(str, translationMapping);
     }
 
+
     public static StockTypeBase getByCode(int code)
     {
         if (codeMapping.containsKey(code))
@@ -106,6 +108,7 @@ public enum StockTypeBase implements CodeEnumWithTranslation
             return StockTypeBase.None;
         }
     }
+
 
     /**
      * Get Type from Description
@@ -119,6 +122,7 @@ public enum StockTypeBase implements CodeEnumWithTranslation
         return getByCode(ATDataAccessAbstract.getTypeFromDescription(str, translationMapping));
     }
 
+
     /**
      * Get Descriptions (array)
      *
@@ -128,9 +132,5 @@ public enum StockTypeBase implements CodeEnumWithTranslation
     {
         return descriptions;
     }
-
-
-
-
 
 }

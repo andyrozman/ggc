@@ -3,6 +3,7 @@ package ggc.pump.data;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.output.OutputWriterType;
 import ggc.plugin.util.DeviceValuesEntryUtil;
 import ggc.pump.data.profile.ProfileSubEntry;
@@ -54,7 +55,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
     ArrayList<ProfileSubEntry> sub_entries = new ArrayList<ProfileSubEntry>();
 
-    private int status = 0;
+    private DeviceEntryStatus status = DeviceEntryStatus.Unknown;
     private int object_status = 0;
     private boolean checked = false;
     private int output_type = 0;
@@ -506,7 +507,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
                 return this.getValue();
 
             case 5:
-                return this.getStatus();
+                return this.getStatusType();
 
             case 6:
                 return new Boolean(getChecked());
@@ -637,24 +638,22 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         this.checked = check;
     }
 
+
+
     /**
-     * Get Status
-     * 
-     * @return status
+     * {@inheritDoc}
      */
-    public int getStatus()
+    public DeviceEntryStatus getStatusType()
     {
         return this.status;
     }
 
     /**
-     * Set Status
-     * 
-     * @param status_in
+     * {@inheritDoc}
      */
-    public void setStatus(int status_in)
+    public void setStatusType(DeviceEntryStatus stat)
     {
-        this.status = status_in;
+        this.status = stat;
     }
 
     /**

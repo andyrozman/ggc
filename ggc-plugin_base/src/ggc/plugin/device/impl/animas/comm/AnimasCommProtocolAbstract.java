@@ -1,5 +1,11 @@
 package ggc.plugin.device.impl.animas.comm;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import ggc.plugin.comm.NRSerialCommunicationHandler;
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
@@ -9,17 +15,6 @@ import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasImplementationType;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 import ggc.plugin.output.OutputWriter;
-import gnu.io.NRSerialPort;
-import gnu.io.SerialPort;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -50,24 +45,24 @@ import org.apache.commons.logging.LogFactory;
 
 public abstract class AnimasCommProtocolAbstract
 {
+
     public static final Log LOG = LogFactory.getLog(AnimasCommProtocolAbstract.class);
 
-    //protected NRSerialPort serialDevice;
-    //protected String portName;
+    // protected NRSerialPort serialDevice;
+    // protected String portName;
 
-    //protected InputStream inStream;
-    //protected OutputStream outStream;
+    // protected InputStream inStream;
+    // protected OutputStream outStream;
     protected AnimasDeviceType deviceType;
 
     protected boolean DEBUG = true;
     protected boolean debugCommunication = false;
 
-
     protected PlugInBaseException downloadProblem;
 
     protected AnimasDeviceData baseData;
     protected AnimasDeviceReader deviceReader;
-    private boolean deviceConnected;
+    // private boolean deviceConnected;
     protected OutputWriter outputWriter;
 
     // messages
@@ -75,14 +70,13 @@ public abstract class AnimasCommProtocolAbstract
     public static final short END_MESSAGE_DEVICE = 193;
     public static final short CTL_MESSAGE_DEVICE = 125;
 
-
     NRSerialCommunicationHandler commHandler;
 
 
-    public AnimasCommProtocolAbstract(String portName, AnimasDeviceType deviceType,
-            AnimasDeviceReader deviceReader, OutputWriter outputWriter)
+    public AnimasCommProtocolAbstract(String portName, AnimasDeviceType deviceType, AnimasDeviceReader deviceReader,
+            OutputWriter outputWriter)
     {
-        //this.portName = portName;
+        // this.portName = portName;
         this.deviceType = deviceType;
         // this.transferType = transferType;
         this.deviceReader = deviceReader;
@@ -90,7 +84,7 @@ public abstract class AnimasCommProtocolAbstract
 
         commHandler = new NRSerialCommunicationHandler(portName);
 
-        //data.setPumpCommunicationInterface(this);
+        // data.setPumpCommunicationInterface(this);
     }
 
 
@@ -100,45 +94,46 @@ public abstract class AnimasCommProtocolAbstract
         this.debugCommunication = debugCommunication;
     }
 
+
     public boolean initSerialDevice()
     {
 
         return this.commHandler.connectAndInitDevice();
-//        if ((this.serialDevice != null) && (this.serialDevice.isConnected()))
-//        {
-//            return true;
-//        }
-//
-//        this.serialDevice = new NRSerialPort(portName, 115200); // 9600
-//
-//        this.deviceConnected = this.serialDevice.connect();
-//
-//        LOG.debug("Connect: " + this.deviceConnected);
-//
-//        if (!this.deviceConnected)
-//        {
-//            LOG.debug("Could not connect to port " + portName);
-//
-//            return false;
-//        }
-//
-//
-//        try
-//        {
-//            SerialPort sport = this.serialDevice.getSerialPortInstance();
-//            sport.setDTR(false);
-//            sport.setRTS(true);
-//
-//            inStream = this.serialDevice.getInputStream();
-//            outStream = this.serialDevice.getOutputStream();
-//        }
-//        catch (Exception ex)
-//        {
-//            LOG.error("Error setting streams: " + ex, ex);
-//            this.serialDevice = null;
-//            return false;
-//        }
-//        return true;
+        // if ((this.serialDevice != null) && (this.serialDevice.isConnected()))
+        // {
+        // return true;
+        // }
+        //
+        // this.serialDevice = new NRSerialPort(portName, 115200); // 9600
+        //
+        // this.deviceConnected = this.serialDevice.connect();
+        //
+        // LOG.debug("Connect: " + this.deviceConnected);
+        //
+        // if (!this.deviceConnected)
+        // {
+        // LOG.debug("Could not connect to port " + portName);
+        //
+        // return false;
+        // }
+        //
+        //
+        // try
+        // {
+        // SerialPort sport = this.serialDevice.getSerialPortInstance();
+        // sport.setDTR(false);
+        // sport.setRTS(true);
+        //
+        // inStream = this.serialDevice.getInputStream();
+        // outStream = this.serialDevice.getOutputStream();
+        // }
+        // catch (Exception ex)
+        // {
+        // LOG.error("Error setting streams: " + ex, ex);
+        // this.serialDevice = null;
+        // return false;
+        // }
+        // return true;
     }
 
 
@@ -146,20 +141,17 @@ public abstract class AnimasCommProtocolAbstract
     {
         this.commHandler.disconnectDevice();
 
-//        if (serialDevice != null)
-//        {
-//            if (this.serialDevice.isConnected())
-//            {
-//                this.serialDevice.disconnect();
-//                this.serialDevice = null;
-//            }
-//        }
-//
-//        this.deviceConnected = false;
+        // if (serialDevice != null)
+        // {
+        // if (this.serialDevice.isConnected())
+        // {
+        // this.serialDevice.disconnect();
+        // this.serialDevice = null;
+        // }
+        // }
+        //
+        // this.deviceConnected = false;
     }
-
-
-
 
 
     public abstract AnimasImplementationType getImplementationType();
@@ -170,10 +162,12 @@ public abstract class AnimasCommProtocolAbstract
         return downloadProblem != null;
     }
 
+
     public AnimasDeviceData getData()
     {
         return baseData;
     }
+
 
     public void setBaseData(AnimasDeviceData data)
     {
@@ -181,7 +175,7 @@ public abstract class AnimasCommProtocolAbstract
     }
 
 
-    protected List<Short> readDataFromDeviceInternal() throws PlugInBaseException
+    protected List<Short> readDataFromDeviceInternal_Old() throws PlugInBaseException
     {
         List<Short> tempData = new ArrayList<Short>();
 
@@ -210,17 +204,62 @@ public abstract class AnimasCommProtocolAbstract
     }
 
 
+    protected byte[] readDataFromDeviceInternal() throws PlugInBaseException
+    {
+        return this.commHandler.readAvailableData();
+
+        // // List<Short> tempData = new ArrayList<Short>();
+        //
+        // byte[] outBuffer = null;
+        // byte[] buffer = null;
+        //
+        // // int len = -1;
+        // try
+        // {
+        // int available = 0;
+        // while ((available = this.commHandler.available()) > 0)
+        // {
+        // buffer = new byte[available];
+        // this.commHandler.read(buffer);
+        //
+        // outBuffer = concat(outBuffer, buffer);
+        //
+        // // for (int i = 0; i < len; i++)
+        // // {
+        // // tempData.add(AnimasUtils.getUnsignedShort(buffer[i]));
+        // // }
+        // }
+        //
+        // return outBuffer;
+        // }
+        // catch (Exception e)
+        // {
+        // LOG.error("Error reading from device. Exception: " + e, e);
+        // throw new PlugInBaseException(PlugInExceptionType.CommunicationError,
+        // new Object[] { e.getMessage() });
+        // }
+    }
+
+
+    public byte[] concat(byte[] a, byte[] b)
+    {
+        if ((a == null) || (a.length == 0))
+        {
+            return b;
+        }
+
+        int aLen = a.length;
+        int bLen = b.length;
+        byte[] c = new byte[aLen + bLen];
+        System.arraycopy(a, 0, c, 0, aLen);
+        System.arraycopy(b, 0, c, aLen, bLen);
+        return c;
+    }
+
+
     protected boolean isDataAvailable()
     {
         return this.commHandler.isDataAvailable();
-//        try
-//        {
-//            return (this.inStream.available() > 0);
-//        }
-//        catch (IOException e)
-//        {
-//            return false;
-//        }
     }
 
 
@@ -231,7 +270,7 @@ public abstract class AnimasCommProtocolAbstract
             this.commHandler.write(c);
             if (debug)
             {
-                LOG.debug("sendToDevice: " + c + " [" + (short)c + "]");
+                LOG.debug("sendToDevice: " + c + " [" + (short) c + "]");
             }
         }
         catch (Exception ex)
@@ -239,6 +278,7 @@ public abstract class AnimasCommProtocolAbstract
             throw new PlugInBaseException(PlugInExceptionType.CommunicationPortClosed);
         }
     }
+
 
     protected void sendMessageToDevice(char[] msgChars) throws PlugInBaseException
     {
@@ -280,12 +320,12 @@ public abstract class AnimasCommProtocolAbstract
     {
         short[] fletch = AnimasUtils.calculateFletcher16(msgChars, msgChars.length);
 
-        for(short sh : fletch)
+        for (short sh : fletch)
         {
             if (isSpecialCharacter(sh))
             {
                 sendCharacterToDevice('}');
-                sh = (short)(sh ^ 0x20);
+                sh = (short) (sh ^ 0x20);
             }
 
             sendToDevice(sh);
@@ -297,7 +337,7 @@ public abstract class AnimasCommProtocolAbstract
     {
         return ((character == CTL_MESSAGE_DEVICE) || //
                 (character == START_MESSAGE_DEVICE) || //
-                (character == END_MESSAGE_DEVICE));
+        (character == END_MESSAGE_DEVICE));
     }
 
 }

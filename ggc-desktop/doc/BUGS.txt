@@ -1,3 +1,12 @@
+NEW BUGS/PROBLEMS:
+- Animas CGMS Reading has problems (on second reading some entries are found that werent there before)
+- Meter reading - Switch to Download Framework v2
+- Retire Download Framework v2
+
+
+
+
+
 Known Bugs:
 
     - [sf] changes made to "medical data" don't get applied to "Colors & Fonts" until dialog is re-opened
@@ -21,7 +30,8 @@ Known Bugs:
     - Plugins. When opening mounted drives root, we don't see drives mounted under /media/<user> on linux, just what is under 
       media. This is java bug, but we need to get this working
     - Translation tool integration
-       
+
+
 
 
 

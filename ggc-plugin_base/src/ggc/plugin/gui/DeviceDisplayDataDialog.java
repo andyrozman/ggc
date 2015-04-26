@@ -418,6 +418,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
+
+
         // final AddRowAction addRowAction = new AddRowAction(table);
         // final DeleteRowAction deleteRowAction = new DeleteRowAction(table);
 

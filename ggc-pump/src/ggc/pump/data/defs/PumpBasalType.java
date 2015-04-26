@@ -123,6 +123,12 @@ public enum PumpBasalType implements CodeEnumWithTranslation
     }
 
 
+    public String getName()
+    {
+        return this.name();
+    }
+
+
     /**
      * Get Type from Description
      *

@@ -5,24 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
 
 import com.atech.utils.data.ATechDate;
+
 import ggc.cgms.data.defs.CGMSTransmiterEvents;
+import ggc.cgms.data.writer.CGMSValuesWriter;
 import ggc.cgms.device.animas.impl.data.dto.AnimasDexcomHistoryEntry;
 import ggc.cgms.device.animas.impl.data.dto.AnimasDexcomWarning;
 import ggc.cgms.device.animas.impl.data.dto.CGMSSettings;
-
-import ggc.plugin.device.impl.animas.enums.AnimasDataType;
-import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
-import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
-import org.apache.commons.logging.Log;
-
+import ggc.cgms.device.animas.impl.handler.AnimasCGMSDataWriter;
 import ggc.plugin.data.enums.ClockModeType;
 import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
 import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
 import ggc.plugin.device.impl.animas.data.dto.SettingEntry;
+import ggc.plugin.device.impl.animas.enums.AnimasDataType;
+import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
+import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
 import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
-
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -52,12 +53,13 @@ import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
 
 public class AnimasCGMSDeviceData extends AnimasDeviceData
 {
+
     public CGMSSettings cgmsSettings;
-    AnimasCGMSDataWriter animasCGMSDataWriter;
+    // AnimasCGMSDataWriter animasCGMSDataWriter;
+    CGMSValuesWriter cgmsDataWriter;
 
-    //List<BasalLogEntry> basalLogEntries = new ArrayList<BasalLogEntry>();
+    // List<BasalLogEntry> basalLogEntries = new ArrayList<BasalLogEntry>();
     List<AnimasDexcomHistoryEntry> transmiterEvents = new ArrayList<AnimasDexcomHistoryEntry>();
-
 
 
     public AnimasCGMSDeviceData(AnimasDataWriter writer)
@@ -65,10 +67,24 @@ public class AnimasCGMSDeviceData extends AnimasDeviceData
         super(writer);
 
         cgmsSettings = new CGMSSettings();
-        animasCGMSDataWriter = (AnimasCGMSDataWriter)writer;
-        //pumpData = new PumpData();
+
+        cgmsDataWriter = CGMSValuesWriter.getInstance(writer.getOutputWriter());
+        // animasCGMSDataWriter = (AnimasCGMSDataWriter) writer;
+        // pumpData = new PumpData();
 
     }
+
+
+    public AnimasCGMSDeviceData(AnimasCGMSDataWriter animasCGMSDataWriter)
+    {
+        super(animasCGMSDataWriter);
+        cgmsSettings = new CGMSSettings();
+
+        // System.out.println("CGSMSet " + cgmsSettings);
+
+        cgmsDataWriter = CGMSValuesWriter.getInstance(animasCGMSDataWriter.getOutputWriter());
+    }
+
 
     @Override
     protected void loadBgUnitIntoLocalSettings()
@@ -76,11 +92,13 @@ public class AnimasCGMSDeviceData extends AnimasDeviceData
         this.cgmsSettings.glucoseUnitType = this.pumpInfo.glucoseUnitType;
     }
 
+
     @Override
     protected void loadSerialNumberIntoLocalSettings()
     {
         this.cgmsSettings.serialNumber = this.pumpInfo.serialNumber;
     }
+
 
     @Override
     protected void loadClockModeIntoLocalSettings()
@@ -88,49 +106,56 @@ public class AnimasCGMSDeviceData extends AnimasDeviceData
         this.cgmsSettings.clockMode = this.pumpInfo.clockMode;
     }
 
+
     @Override
     public void debugAllSettings(Log log)
     {
         this.cgmsSettings.debugAllSettings(log);
     }
 
+
     @Override
     public void postProcessReceivedData(AnimasDevicePacket adp)
     {
-        switch(adp.dataTypeObject)
+        switch (adp.dataTypeObject)
         {
             case DexcomBgHistory:
                 processEventsFromBgHistory();
+                break;
 
             default:
-                LOG.warn("postProcessReceivedData [objectType=" + adp.dataTypeObject.name() + "] should have postprocessing implemented, but it's not !!!");
+                LOG.warn("postProcessReceivedData [objectType=" + adp.dataTypeObject.name()
+                        + "] should have postprocessing implemented, but it's not !!!");
         }
 
     }
 
+    Map<Integer, Integer> mapOfUnknownSpecialValues = new HashMap<Integer, Integer>();
 
-    Map<Integer,Integer> mapOfUnknownSpecialValues = new HashMap<Integer,Integer>();
 
     private void processEventsFromBgHistory()
     {
-        for(AnimasDexcomHistoryEntry adhe : transmiterEvents)
+        for (AnimasDexcomHistoryEntry adhe : transmiterEvents)
         {
 
             CGMSTransmiterEvents sgv = adhe.getSpecialValue();
 
-            if (sgv==null)
+            if (sgv == null)
             {
                 if (mapOfUnknownSpecialValues.containsKey(adhe.getGlucoseValueWithoutFlags()))
                 {
-                    LOG.warn("Unknown Special Value: " + adhe.getGlucoseValueWithoutFlags());
+                    LOG.warn("Unknown Special (Transmiter) Value: " + adhe.getGlucoseValueWithoutFlags());
                 }
             }
             else
             {
-                writeData("EventTransmiter_" + sgv.getCode(), adhe.dateTime, (String)null);
+                writeData("TransmiterEvent_" + sgv.name(), adhe.dateTime);
             }
         }
+
+        this.transmiterEvents.clear();
     }
+
 
     @Override
     public void writeSettings(AnimasDataType dataType)
@@ -138,6 +163,7 @@ public class AnimasCGMSDeviceData extends AnimasDeviceData
         this.cgmsSettings.setOutputForSetting(this.getDataWriter().getOutputWriter());
         this.cgmsSettings.writeSettingsToGGC(dataType);
     }
+
 
     @Override
     protected void loadSoftwareCodeIntoLocalSettings()
@@ -149,14 +175,10 @@ public class AnimasCGMSDeviceData extends AnimasDeviceData
 
     public void setClockMode(int clockMode)
     {
-        // FIXME
-        LOG.error("clock mode: " + clockMode);
-
         ClockModeType cmt = ClockModeType.getByCode(clockMode);
-        LOG.warn("setClockMode: " + cmt.name());
-
         this.cgmsSettings.clockMode = cmt;
     }
+
 
     public List<SettingEntry> getAllSettings()
     {
@@ -164,22 +186,22 @@ public class AnimasCGMSDeviceData extends AnimasDeviceData
     }
 
 
-
-
-    // FIXME not implemneted
     public void addDexcomWarning(AnimasDexcomWarning warning)
     {
-        // decode
-        LOG.debug(warning.toString());
+        String cgmsWriterKey = warning.warningType.getCgmsWriterKey();
+
+        if (StringUtils.isNotBlank(cgmsWriterKey))
+        {
+            writeData(cgmsWriterKey, warning.dateTime);
+        }
     }
+
 
     public void addDexcomHistory(AnimasDexcomHistoryEntry entry)
     {
         writeData("SensorReading", entry.dateTime, entry.getGlucoseValue());
-
-//        LOG.debug(entry.toString());
-//        System.out.println(entry.dateTime.getDateString() + "\t" + entry.dateTime.getTimeString() + "\t" + entry.getGlucoseValueWithoutFlags());
     }
+
 
     public void setSoundVolume(AnimasSoundType animasSoundType, SoundValueType soundValueType)
     {
@@ -187,27 +209,27 @@ public class AnimasCGMSDeviceData extends AnimasDeviceData
     }
 
 
-
     public void addDexcomTransmiterEvent(AnimasDexcomHistoryEntry entry)
     {
-        if (entry.getSpecialValue() != null)
-        {
-            transmiterEvents.add(entry);
-        }
-
-        // FIXME
-        //LOG.debug("Event: " + entry.toString());
+        transmiterEvents.add(entry);
     }
+
 
     public void writeData(String key, ATechDate dateTime, Number value)
     {
-        this.animasCGMSDataWriter.getCGMSDataWriter().writeObject(key, dateTime, value);
+        cgmsDataWriter.writeObject(key, dateTime, value);
     }
+
 
     public void writeData(String key, ATechDate dateTime, String value)
     {
-        this.animasCGMSDataWriter.getCGMSDataWriter().writeObject(key, dateTime, value);
+        cgmsDataWriter.writeObject(key, dateTime, value);
     }
 
+
+    public void writeData(String key, ATechDate dateTime)
+    {
+        cgmsDataWriter.writeObject(key, dateTime);
+    }
 
 }

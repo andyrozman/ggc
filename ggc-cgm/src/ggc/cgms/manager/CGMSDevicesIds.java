@@ -2,7 +2,7 @@ package ggc.cgms.manager;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Meter Tool (support for Meter devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -45,12 +45,10 @@ public class CGMSDevicesIds
      */
     public static final int COMPANY_MINIMED = 3;
 
-
     /**
      * CGMS Company: Animas (integration only)
      */
     public static final int COMPANY_ANIMAS = 4;
-
 
     /**
      * CGMS (Abbott) - Freestyle Navigator
@@ -86,7 +84,6 @@ public class CGMSDevicesIds
      * CGMS (Minimed) - Minimed RealTime
      */
     public static final int CGMS_MINIMED_REALTIME = 30003;
-
 
     /**
      * CGMS (Minimed) - Minimed RealTime

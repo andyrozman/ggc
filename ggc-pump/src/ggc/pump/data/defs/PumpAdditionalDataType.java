@@ -1,16 +1,16 @@
 package ggc.pump.data.defs;
 
-import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.data.CodeEnumWithTranslation;
-import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.data.CodeEnumWithTranslation;
+
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -47,16 +47,12 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
     Urine(4, "ADD_DATA_URINE"), //
     Carbohydrates(5, "ADD_DATA_CH"), //
     FoodDb(6, "ADD_DATA_FOOD_DB"), //
-    FoodDescription(7, "ADD_DATA_FOOD_DESC")
-    ;
-
-
+    FoodDescription(7, "ADD_DATA_FOOD_DESC");
 
     /**
      * Additional data description
      */
     public static String[] addata_desc = null;
-
 
 
     /**
@@ -70,6 +66,7 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
         return this.addata_desc[idx];
     }
 
+
     /**
      * Get Descriptions (array)
      * 
@@ -79,9 +76,6 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
     {
         return this.addata_desc;
     }
-
-
-
 
     static Map<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static Map<Integer, PumpAdditionalDataType> codeMapping = new HashMap<Integer, PumpAdditionalDataType>();
@@ -97,15 +91,10 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
 
-        String[] addata_desc_lcl = {
-                ic.getMessage("SELECT_ADDITIONAL_DATA"),
-                ic.getMessage("ADD_DATA_ACTIVITY"),
-                ic.getMessage("ADD_DATA_COMMENT"),
-                ic.getMessage("ADD_DATA_BG"),
-                ic.getMessage("ADD_DATA_URINE"),
-                ic.getMessage("ADD_DATA_CH"),
-                ic.getMessage("ADD_DATA_FOOD_DB"),
-                ic.getMessage("ADD_DATA_FOOD_DESC"), };
+        String[] addata_desc_lcl = { ic.getMessage("SELECT_ADDITIONAL_DATA"), ic.getMessage("ADD_DATA_ACTIVITY"),
+                                    ic.getMessage("ADD_DATA_COMMENT"), ic.getMessage("ADD_DATA_BG"),
+                                    ic.getMessage("ADD_DATA_URINE"), ic.getMessage("ADD_DATA_CH"),
+                                    ic.getMessage("ADD_DATA_FOOD_DB"), ic.getMessage("ADD_DATA_FOOD_DESC"), };
 
         addata_desc = addata_desc_lcl;
     }
@@ -113,6 +102,7 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
     int code;
     String i18nKey;
     String translation;
+
 
     private PumpAdditionalDataType(int code, String i18nKey)
     {
@@ -126,15 +116,18 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
         return translation;
     }
 
+
     public void setTranslation(String translation)
     {
         this.translation = translation;
     }
 
+
     public int getCode()
     {
         return code;
     }
+
 
     public String getI18nKey()
     {
@@ -142,18 +135,24 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
     }
 
 
+    public String getName()
+    {
+        return this.name();
+    }
+
 
     public static PumpAdditionalDataType getByDescription(String description)
     {
         if (translationMapping.containsKey(description))
         {
-            return (PumpAdditionalDataType)translationMapping.get(description);
+            return (PumpAdditionalDataType) translationMapping.get(description);
         }
         else
         {
             return PumpAdditionalDataType.Comment;
         }
     }
+
 
     public static PumpAdditionalDataType getByCode(int code)
     {
@@ -166,6 +165,7 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
             return PumpAdditionalDataType.Comment;
         }
     }
+
 
     public static Object[] createItems(Hashtable<String, PumpValuesEntryExt> old_data)
     {

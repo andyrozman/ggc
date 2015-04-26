@@ -1,11 +1,11 @@
 package ggc.plugin.device.impl.animas.enums;
 
+import java.util.HashMap;
+import java.util.Hashtable;
+
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.core.plugins.GGCPluginType;
-
-import java.util.HashMap;
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -51,10 +51,9 @@ public enum AnimasSoundType implements CodeEnumWithTranslation
     CGMS_FallRate(43, "PCFG_SOUND_FALL_RATE", GGCPluginType.CGMSToolPlugin), //
     CGMS_Range(44, "PCFG_SOUND_RANGE", GGCPluginType.CGMSToolPlugin), //
     CGMS_Others(45, "PCFG_SOUND_OTHER", GGCPluginType.CGMSToolPlugin), //
-    CGMS_TransmiterOutOfRange(46, "PCFG_SOUND_TRANSMITEROUT_OF_RANGE", GGCPluginType.CGMSToolPlugin ) //
+    CGMS_TransmiterOutOfRange(46, "PCFG_SOUND_TRANSMITEROUT_OF_RANGE", GGCPluginType.CGMSToolPlugin) //
 
     ;
-
 
     int code;
     String i18nKey;
@@ -64,8 +63,6 @@ public enum AnimasSoundType implements CodeEnumWithTranslation
     static Hashtable<Integer, AnimasSoundType> codeMapping = new Hashtable<Integer, AnimasSoundType>();
     static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
 
-
-
     static
     {
         for (AnimasSoundType pbt : values())
@@ -73,6 +70,7 @@ public enum AnimasSoundType implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
     }
+
 
     private AnimasSoundType(int code, String i18nKey, GGCPluginType pluginType)
     {
@@ -86,13 +84,12 @@ public enum AnimasSoundType implements CodeEnumWithTranslation
     {
         for (AnimasSoundType pbt : values())
         {
-            if ((pbt.pluginType == pluginType) || (pbt.pluginType==GGCPluginType.Core))
+            if ((pbt.pluginType == pluginType) || (pbt.pluginType == GGCPluginType.Core))
             {
                 pbt.setTranslation(ic.getMessage(pbt.i18nKey));
             }
         }
     }
-
 
 
     public String getTranslation()
@@ -119,8 +116,10 @@ public enum AnimasSoundType implements CodeEnumWithTranslation
     }
 
 
-
-
+    public String getName()
+    {
+        return this.name();
+    }
 
 
     public static AnimasSoundType getByCode(int code)

@@ -1,11 +1,10 @@
 package ggc.pump.data.defs;
 
-import ggc.pump.util.DataAccessPump;
-
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
@@ -68,31 +67,43 @@ public enum PumpBaseType implements CodeEnumWithTranslation
     String i18nKey;
     String translation;
 
+
     public String getTranslation()
     {
         return translation;
     }
+
 
     public void setTranslation(String translation)
     {
         this.translation = translation;
     }
 
+
     public int getCode()
     {
         return code;
     }
+
 
     public String getI18nKey()
     {
         return i18nKey;
     }
 
+
+    public String getName()
+    {
+        return this.name();
+    }
+
+
     private PumpBaseType(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;
     }
+
 
     /**
      * Get Type from Description
@@ -112,6 +123,7 @@ public enum PumpBaseType implements CodeEnumWithTranslation
             return 0;
         }
     }
+
 
     public static PumpBaseType getByCode(int code)
     {

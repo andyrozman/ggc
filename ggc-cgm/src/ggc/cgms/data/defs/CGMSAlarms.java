@@ -1,11 +1,11 @@
 package ggc.cgms.data.defs;
 
+import java.util.Collection;
+import java.util.Hashtable;
+
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.data.CodeEnum;
 import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.cgms.util.DataAccessCGMS;
-
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -33,20 +33,14 @@ import java.util.Hashtable;
  *  Author: Andy {andy@atech-software.com}
  */
 
-// IMPORTANT NOTICE:
-// This class is not implemented yet, all existing methods should be rechecked
-// (they were copied from similar
-// class, with different type of data.
-
 public enum CGMSAlarms implements CodeEnumWithTranslation
 {
-    UnknownAlarm(0, ""),
+    UnknownAlarm(0, "ALARM_UNKNOWN"), //
 
-    BatteryLow(50, "ALARM_BATTERY_LOW"),
-    ReviewDateTime(51, "ALARM_REVIEW_DATETIME"),
-    AlarmClock(52, "ALARM_ALARM_CLOCK"),
-
-    CalibrationRequired(104, "ALARM_CALIBRATION_REQUIRED"), // deprecated , MeterBgNow
+    BatteryLow(50, "ALARM_BATTERY_LOW"), //
+    ReviewDateTime(51, "ALARM_REVIEW_DATETIME"), //
+    AlarmClock(52, "ALARM_ALARM_CLOCK"), //
+    CalibrationRequired(104, "ALARM_CALIBRATION_REQUIRED"), //
     WeakSignal(112, "ALARM_WEAK_SIGNAL"), //
     SensorAlarm(105, "ALARM_SENSOR_ALARM"), //
     CalibrationError(106, "ALARM_CALIBRATION_ERROR"), //
@@ -59,8 +53,14 @@ public enum CGMSAlarms implements CodeEnumWithTranslation
     LowGlucosePredicted(115, "ALARM_LOW_GLUCOSE_PREDICTED"), //
     HighGlucose(101, "ALARM_HIGH_GLUCOSE"), //
     LowGlucose(102, "ALARM_LOW_GLUCOSE"), //
-    ;
 
+    SessionExpired(120, ""), //
+    CGMSFailure(121, ""), //
+    SessionStopped(122, ""), //
+    GlucoseRiseRateTooHigh(123, ""), //
+    GlucoseFallRateTooHigh(124, ""), //
+
+    ;
 
     static Hashtable<String, CGMSAlarms> translationMapping = new Hashtable<String, CGMSAlarms>();
     static Hashtable<Integer, CGMSAlarms> codeMapping = new Hashtable<Integer, CGMSAlarms>();
@@ -80,6 +80,7 @@ public enum CGMSAlarms implements CodeEnumWithTranslation
     int code;
     String i18nKey;
     String translation;
+
 
     private CGMSAlarms(int code, String i18nKey)
     {
@@ -112,6 +113,12 @@ public enum CGMSAlarms implements CodeEnumWithTranslation
     }
 
 
+    public String getName()
+    {
+        return this.name();
+    }
+
+
     public static CGMSAlarms getByCode(int code)
     {
         if (codeMapping.containsKey(code))
@@ -125,27 +132,9 @@ public enum CGMSAlarms implements CodeEnumWithTranslation
     }
 
 
-
-
-    // Device
-
-//    // Meter BG Now (104)
-//    // Weak Signal (112)
-//
-//    // SENSOR
-//
-//    // Sensor Alarm (105)
-//    // Calibration Error (106)
-//    // Sensor End (107)
-//    // Change Sensor (108)
-//    // Sensor Error (109)
-//    // Lost Sensor (113)
-//
-//    // BG
-//
-//    // High Glucose Predicted (114)
-//    // Low Glucose Predicted (115)
-//    // High Glucose (101)
-//    // Low Glucose (102)
+    public static Collection<CGMSAlarms> getAllValues()
+    {
+        return codeMapping.values();
+    }
 
 }

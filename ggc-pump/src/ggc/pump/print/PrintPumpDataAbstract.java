@@ -1,10 +1,5 @@
 package ggc.pump.print;
 
-import ggc.core.data.DailyValuesRow;
-import ggc.core.util.DataAccess;
-import ggc.plugin.data.DeviceValuesRange;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -17,6 +12,11 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
+
+import ggc.core.data.DailyValuesRow;
+import ggc.core.util.DataAccess;
+import ggc.plugin.data.DeviceValuesRange;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -43,6 +43,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
     protected DeviceValuesRange deviceValuesRange;
     protected DataAccessPump da_local = null;
 
+
     /**
      * Constructor
      *
@@ -50,7 +51,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
      */
     public PrintPumpDataAbstract(DeviceValuesRange dvr)
     {
-        super(DataAccessPump.getInstance().getI18nControlInstance(), false);
+        super(DataAccessPump.getInstance(), false);
 
         deviceValuesRange = dvr;
         da_local = DataAccessPump.getInstance();
@@ -58,14 +59,15 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
         init();
     }
 
+
     /**
      * Constructor
      */
     public PrintPumpDataAbstract()
     {
-        super(DataAccessPump.getInstance().getI18nControlInstance(), false);
-
+        super(DataAccessPump.getInstance(), false);
     }
+
 
     /**
      * {@inheritDoc}
@@ -91,10 +93,12 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
         return p;
     }
 
+
     protected String getDateString(GregorianCalendar gc)
     {
         return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
     }
+
 
     /**
      * Get Text Size
@@ -105,6 +109,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
         return 8;
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -114,11 +119,13 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
         return new ITextDocumentPrintSettings(30, 30, 10, 30);
     }
 
+
     /**
      * {@inheritDoc}
      */
     @Override
     public abstract void fillDocumentBody(Document document) throws Exception;
+
 
     /**
      * {@inheritDoc}
@@ -133,12 +140,14 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
         return atd1.getDateFilenameString() + "-" + atd2.getDateFilenameString();
     }
 
+
     /**
      * Get text for title
      *
      * @return title
      */
     public abstract String getTitleText();
+
 
     /**
      * Return count of table columns
@@ -147,12 +156,14 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
      */
     public abstract int getTableColumnsCount();
 
+
     /**
      * Return columns widths for table
      *
      * @return
      */
     public abstract int[] getTableColumnWidths();
+
 
     /**
      * Write additional header to documents
@@ -161,6 +172,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
      * @throws Exception
      */
     public abstract void writeAdditionalHeader(PdfPTable table) throws Exception;
+
 
     /**
      * Write together data (all data of certain type summed)
@@ -171,6 +183,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
      */
     public abstract void writeTogetherData(PdfPTable table, DailyValuesRow rw) throws Exception;
 
+
     /**
      * Write data in column
      *
@@ -179,6 +192,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
      * @throws Exception
      */
     public abstract void writeColumnData(PdfPTable table, Object /* DailyFoodEntry */mp) throws Exception;
+
 
     /**
      * Write empty column data. If there is no data, this is used, to fill empty

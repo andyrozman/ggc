@@ -1,40 +1,12 @@
 package ggc.core.util;
 
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.i18n.I18nControlLangMgr;
-import com.atech.i18n.I18nControlLangMgrDual;
-import com.atech.utils.ATSwingUtils;
-import ggc.core.data.Converter_mgdL_mmolL;
-import ggc.core.data.DailyValues;
-import ggc.core.data.ExtendedDailyValue;
-import ggc.core.data.HbA1cValues;
-import ggc.core.data.WeeklyValues;
-import ggc.core.data.cfg.ConfigurationManager;
-import ggc.core.db.GGCDb;
-import ggc.core.db.GGCDbLoader;
-import ggc.core.db.datalayer.DailyValue;
-import ggc.core.db.datalayer.Settings;
-import ggc.core.db.datalayer.SettingsColorScheme;
-import ggc.core.db.tool.DbToolApplicationGGC;
-import ggc.core.plugins.CGMSPlugIn;
-import ggc.core.plugins.GGCPluginType;
-import ggc.core.plugins.MetersPlugIn;
-import ggc.core.plugins.NutriPlugIn;
-import ggc.core.plugins.PumpsPlugIn;
-
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.DecimalFormat;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Properties;
+import java.util.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,13 +16,27 @@ import pygmy.core.Server;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.help.HelpContext;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.i18n.I18nControlLangMgr;
+import com.atech.i18n.I18nControlLangMgrDual;
 import com.atech.i18n.mgr.LanguageManager;
 import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.misc.refresh.EventSource;
 import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATDataAccessLMAbstract;
+import com.atech.utils.ATSwingUtils;
 import com.atech.utils.data.Rounding;
 import com.atech.utils.logs.RedirectScreen;
+
+import ggc.core.data.*;
+import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.db.GGCDb;
+import ggc.core.db.GGCDbLoader;
+import ggc.core.db.datalayer.DailyValue;
+import ggc.core.db.datalayer.Settings;
+import ggc.core.db.datalayer.SettingsColorScheme;
+import ggc.core.db.tool.DbToolApplicationGGC;
+import ggc.core.plugins.*;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -85,7 +71,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.5.0.3";
+    public static String CORE_VERSION = "0.6.0";
 
     /**
      * Current Db Version
@@ -163,17 +149,12 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public String[] bg_units_config = { "mg/dl", "mmol/l" };
 
-
     /**
      * Config Icons 
      */
     public ImageIcon config_icons[] = null;
 
-
     GGCI18nControl ggci18nControl;
-
-
-
 
     /**
      * Converter: BG     
@@ -184,6 +165,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      * Extended Handler: Daily Values Row
      */
     public static final String EXTENDED_HANDLER_DailyValuesRow = "DailyValuesRow";
+
 
     // private int current_person_id = 1;
     // NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
@@ -212,6 +194,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         initSpecial();
     }
 
+
     /**
      * Init Special
      */
@@ -223,9 +206,8 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         loadLanguageIntoContext();
 
-
-                // System.out.println("init Special");
-                // this.tree_roots = new Hashtable<String, GGCTreeRoot>();
+        // System.out.println("init Special");
+        // this.tree_roots = new Hashtable<String, GGCTreeRoot>();
 
         // Help Context Init
         // HelpContext hc = new HelpContext("../data/help/en/GGC.hs");
@@ -269,9 +251,10 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
     private void loadLanguageIntoContext()
     {
-        I18nControlAbstract ic =  this.getI18nControlInstanceBase();
+        I18nControlAbstract ic = this.getI18nControlInstanceBase();
 
         GGCI18nControlContext ctx = GGCI18nControlContext.getInstance();
 
@@ -288,7 +271,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
             if (mgr instanceof I18nControlLangMgrDual)
             {
-                I18nControlLangMgrDual mgrd = (I18nControlLangMgrDual)mgr;
+                I18nControlLangMgrDual mgrd = (I18nControlLangMgrDual) mgr;
                 mgrd.getDefaultLanguageInstance();
 
                 ctx.addLanguageInstance(GGCPluginType.Core, ctx.getDefaultLanguage(), this.getI18nControlInstanceBase());
@@ -306,16 +289,17 @@ public class DataAccess extends ATDataAccessLMAbstract
     }
 
 
-    public I18nControlAbstract getI18nControlInstanceBase() {
+    public I18nControlAbstract getI18nControlInstanceBase()
+    {
         return this.m_i18n;
     }
+
 
     @Override
     public I18nControlAbstract getI18nControlInstance()
     {
         return this.ggci18nControl;
     }
-
 
 
     /**
@@ -325,6 +309,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         loadSpecialParameters();
     }
+
 
     // Method: getInstance
     // Author: Andy
@@ -345,6 +330,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         }
         return s_da;
     }
+
 
     /**
      * Create Instance
@@ -374,6 +360,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         return s_da;
     }
+
 
     /**
      * Create Instance
@@ -409,6 +396,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         DataAccess.s_da = null;
     }
 
+
     /**
      * Start Db
      */
@@ -417,6 +405,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         GGCDbLoader loader = new GGCDbLoader(this);
         loader.start();
     }
+
 
     /**
      * Start Db
@@ -439,6 +428,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         return m_db;
     }
 
+
     /**
      * Set Db
      * 
@@ -448,6 +438,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         this.m_db = db;
     }
+
 
     /**
      * Is Pen/Injection Mode
@@ -459,6 +450,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         return getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE;
     }
 
+
     /**
      * Is Pump Mode
      * 
@@ -469,6 +461,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         return getSoftwareMode() == GGCSoftwareMode.PUMP_MODE;
     }
 
+
     /**
      * Get Software Mode
      * 
@@ -478,6 +471,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return GGCSoftwareMode.getEnum(this.m_cfgMgr.getIntValue("SW_MODE"));
     }
+
 
     /**
      * Get Software Mode Description
@@ -491,6 +485,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         return this.m_cfgMgr.getStringValue("SW_MODE_DESC");
     }
+
 
     // ********************************************************
     // ****** Static Methods *****
@@ -507,6 +502,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return DataAccess.getFloatAsString(f, Integer.parseInt(decimal_places));
     }
+
 
     /**
      * Get Float As String
@@ -533,6 +529,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         }
     }
 
+
     // ********************************************************
     // ****** Abstract Methods *****
     // ********************************************************
@@ -547,6 +544,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return "GGC";
     }
+
 
     /**
      * Check Prerequisites
@@ -563,6 +561,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         }
     }
 
+
     /**
      * Get Images Root (Must have ending back-slash)
      * 
@@ -573,6 +572,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return "/icons/";
     }
+
 
     /**
      * Load Backup Restore Collection
@@ -621,6 +621,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         this.backup_restore_collection = brc_full;
     }
 
+
     /** 
      * Get BackupRestoreCollection
      */
@@ -658,6 +659,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         // return null;
     }
 
+
     /**
      * Load Graph Config Properties
      */
@@ -666,6 +668,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         this.graph_config = this.m_settings;
     }
+
 
     // ********************************************************
     // ****** Icons *****
@@ -686,6 +689,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
     // ********************************************************
     // ****** Db *****
     // ********************************************************
@@ -699,6 +703,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return this.m_configFile;
     }
+
 
     // ********************************************************
     // ****** Settings *****
@@ -714,6 +719,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         return this.m_settings;
     }
 
+
     /**
      * Load Settings from Db
      */
@@ -721,6 +727,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         this.m_settings.load();
     }
+
 
     /**
      * Get Color
@@ -733,6 +740,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         return new Color(color);
     }
 
+
     /**
      * Get Configuration Manager (Db)
      * 
@@ -742,6 +750,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return this.m_cfgMgr;
     }
+
 
     /**
      * Init PlugIns
@@ -767,15 +776,18 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
     public PlugInClient getPlugIn(GGCPluginType pluginType)
     {
         return this.getPlugIn(pluginType.getKey());
     }
 
+
     public boolean isPluginAvailable(GGCPluginType pluginType)
     {
         return isPluginAvailable(pluginType.getKey());
     }
+
 
     /**
      * Get Hibernate Db
@@ -800,6 +812,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static final int OBSERVABLE_STATUS = 2;
 
+
     /**
      * Init Observable
      */
@@ -810,6 +823,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         observables.put("" + OBSERVABLE_PANELS, new EventSource());
         observables.put("" + OBSERVABLE_STATUS, new EventSource());
     }
+
 
     /**
      * Start To Observe
@@ -826,6 +840,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * Add Observer 
      * 
@@ -836,6 +851,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         observables.get("" + observable_id).addObserver(inst);
     }
+
 
     /**
      * Set Change On Event Source
@@ -848,6 +864,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         observables.get("" + type).sendChangeNotification(value);
     }
 
+
     /**
      * Set Change On Event Source
      * 
@@ -858,6 +875,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         observables.get("" + type).sendChangeNotification(value);
     }
+
 
     // ********************************************************
     // ****** Language *****
@@ -873,6 +891,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         return this.availableLanguages;
     }
 
+
     /**
      * Get Selected Language Index
      * 
@@ -882,6 +901,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return this.getLanguageIndex(this.getSettings().getLanguage());
     }
+
 
     /**
      * Get Language Index
@@ -902,6 +922,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         return 0;
     }
+
 
     /**
      * Get Language Index By Name
@@ -936,6 +957,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static final int BG_MMOL = 2;
 
+
     /**
      * Get Measurment Type
      * 
@@ -945,6 +967,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return this.m_settings.getBG_unit();
     }
+
 
     // String[] bg_types = { "", "mg/dL", "mmol/L"};
 
@@ -957,6 +980,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return this.bg_units[getBGMeasurmentType()];
     }
+
 
     /**
      * Set Measurment Type
@@ -972,6 +996,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
 
     private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
+
 
     /**
      * Depending on the return value of <code>getBGMeasurmentType()</code>,
@@ -998,6 +1023,7 @@ public class DataAccess extends ATDataAccessLMAbstract
                 return dbValue;
         }
     }
+
 
     /**
      * Get BG Value
@@ -1073,6 +1099,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * Get BG Value By Type
      * 
@@ -1096,6 +1123,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * Get BG Value Different
      * 
@@ -1113,6 +1141,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
     // ********************************************************
     // ****** Parent handling (for UIs) *****
     // ********************************************************
@@ -1127,6 +1156,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         m_main = main;
         loadIcons();
     }
+
 
     /**
      * Set Parent
@@ -1148,6 +1178,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return m_main;
     }
+
 
     /**
      * Get Parent Little
@@ -1206,6 +1237,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return this.current_user_id;
     }
+
 
     // ********************************************************
     // ****** I18n Utils *****
@@ -1287,6 +1319,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     private long component_id_last;
 
+
     /**
      * Get New Component Id
      * 
@@ -1298,6 +1331,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         component_id_last++;
         return "" + this.component_id_last;
     }
+
 
     // ********************************************************
     // ****** Options *****
@@ -1313,6 +1347,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         this.options_yes_no[1] = m_i18n.getMessage("NO");
     }
 
+
     // ********************************************************
     // ****** Dates and Times Handling *****
     // ********************************************************
@@ -1325,6 +1360,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return 1800;
     }
+
 
     /**
      * Load Daily Settings
@@ -1352,6 +1388,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
     }
+
 
     /**
      * Load Daily Settings (Little)
@@ -1382,6 +1419,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         // m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
     }
 
+
     /**
      * Get HbA1c
      * 
@@ -1400,6 +1438,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         return m_HbA1c;
     }
 
+
     /**
      * Get Day Stats
      * 
@@ -1415,6 +1454,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         return m_dvalues;
     }
+
 
     /**
      * Get Day Stats Range
@@ -1441,6 +1481,7 @@ public class DataAccess extends ATDataAccessLMAbstract
             return m_db.getDayStatsRange(start, end);
     }
 
+
     /**
      * Is Same Day (if we compare current day with day we got stats for main display from)
      * 
@@ -1451,6 +1492,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return isSameDay(m_date, gc);
     }
+
 
     /**
      * Is Database Initialized
@@ -1464,6 +1506,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         else
             return true;
     }
+
 
     /**
      * Is Same Day (GregorianCalendars)
@@ -1489,6 +1532,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         }
     }
+
 
     /**
      * Start Internal Web Server
@@ -1537,6 +1581,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * Console message Not Implemented
      * @param source
@@ -1545,6 +1590,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         System.out.println("Not Implemented: " + source);
     }
+
 
     /**
      * Load Special Parameters
@@ -1559,6 +1605,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         // this.m_BG_unit = this.m_settings.getBG_unit();
     }
 
+
     /**
      * This method is intended to load additional Language info. Either special langauge configuration
      * or special data required for real Locale handling.
@@ -1569,6 +1616,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         // TODO Auto-generated method stub
     }
 
+
     /**
      * Get Selected Lang Index (will be deprecated) ??!!
      */
@@ -1577,6 +1625,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return 0;
     }
+
 
     /**
      * Set Selected Lang Index (will be deprecated) ??!!
@@ -1597,6 +1646,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static final int INSULIN_PUMP = 1;
 
+
     /**
      * @param mode
      * @param value
@@ -1609,6 +1659,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         return value;
     }
 
+
     /**
      * @param mode
      * @param value
@@ -1620,6 +1671,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         // return value;
         return null;
     }
+
 
     /** 
      * Load PlugIns
@@ -1638,6 +1690,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      * Insulin Dose: Bolus
      */
     public static final int INSULIN_DOSE_BOLUS = 2;
+
 
     /**
      * Get Insulin Precision
@@ -1665,6 +1718,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * Get Insulin Precision String
      * 
@@ -1691,6 +1745,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * Reformat Insulin Amount To CorrectValue
      * 
@@ -1708,6 +1763,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         return Rounding.specialRounding(input_val, prec);
     }
 
+
     /**
      * Reformat Insulin Amount To CorrectValue String
      * 
@@ -1721,6 +1777,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         String prec = getInsulinPrecisionString(mode, type);
         return Rounding.specialRoundingString(input_val, prec);
     }
+
 
     /**
      * Get Max Values
@@ -1748,6 +1805,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
     /**
      * For misc tests
      */
@@ -1771,6 +1829,7 @@ public class DataAccess extends ATDataAccessLMAbstract
          */
     }
 
+
     /**
      * Get Max Decimals that will be used by DecimalHandler
      * 
@@ -1782,17 +1841,20 @@ public class DataAccess extends ATDataAccessLMAbstract
         return 3;
     }
 
+
     @Override
     public void loadExtendedHandlers()
     {
         this.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValue(this));
     }
 
+
     @Override
     public void loadConverters()
     {
         this.converters.put("BG", new Converter_mgdL_mmolL());
     }
+
 
     /**
      * Get BG Converter

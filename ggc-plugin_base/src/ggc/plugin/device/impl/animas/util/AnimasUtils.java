@@ -1,21 +1,20 @@
 package ggc.plugin.device.impl.animas.util;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ShortUtils;
+
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
 import ggc.plugin.device.impl.animas.enums.AnimasDataType;
-
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-
 import ggc.plugin.util.DataAccessPlugInBase;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.atech.utils.data.ShortUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,6 +44,7 @@ import com.atech.utils.data.ShortUtils;
 
 public class AnimasUtils
 {
+
     private static Log log = LogFactory.getLog(AnimasUtils.class);
     private static ShortUtils shortUtils = new ShortUtils();
     static public HashMap<AnimasDataType, Integer> dataTypeProcessed = new HashMap<AnimasDataType, Integer>();
@@ -215,9 +215,11 @@ public class AnimasUtils
     }
 
 
-    public static boolean checkIfUserRelevantExceptionIsThrown(PlugInBaseException ex, boolean rethrow) throws PlugInBaseException
+    public static boolean checkIfUserRelevantExceptionIsThrown(PlugInBaseException ex, boolean rethrow)
+            throws PlugInBaseException
     {
-        if (ex.getExceptionType() != PlugInExceptionType.CommunicationPortClosed)
+        if ((ex.getExceptionType() != PlugInExceptionType.CommunicationPortClosed)
+                && (ex.getExceptionType() != PlugInExceptionType.DownloadCanceledByUser))
         {
             if (rethrow)
             {
