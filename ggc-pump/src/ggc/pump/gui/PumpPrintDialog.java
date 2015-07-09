@@ -1,15 +1,15 @@
 package ggc.pump.gui;
 
-import ggc.core.util.DataAccess;
-import ggc.plugin.data.DeviceValuesRange;
-import ggc.pump.print.*;
-import ggc.pump.util.DataAccessPump;
-
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import com.atech.print.engine.PrintAbstractIText;
 import com.atech.print.engine.PrintParameters;
 import com.atech.print.gui.PrintDialogRange;
+
+import ggc.core.util.DataAccess;
+import ggc.plugin.data.DeviceValuesRange;
+import ggc.pump.print.*;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,6 +42,23 @@ public class PumpPrintDialog extends PrintDialogRange
 
     private static final long serialVersionUID = 8767665433469855349L;
 
+    public static enum PumpReportType
+    {
+        Simple(1), //
+        Extended(2), //
+        Profiles(3), //
+        BasalCheck(4), //
+        DailyTimesheet_1(5);
+
+        int type;
+
+
+        PumpReportType(int type)
+        {
+            this.type = type;
+        }
+    }
+
     /**
      * Pump Report: Simple
      */
@@ -51,6 +68,7 @@ public class PumpPrintDialog extends PrintDialogRange
      * Pump Report: Extended
      */
     public static final int PUMP_REPORT_EXTENDED = 2;
+
 
     /**
      * Constructor
@@ -63,6 +81,13 @@ public class PumpPrintDialog extends PrintDialogRange
         super(frame, type, DataAccessPump.getInstance(), true);
     }
 
+
+    public PumpPrintDialog(JFrame frame, PumpReportType type)
+    {
+        super(frame, type.type, DataAccessPump.getInstance(), true);
+    }
+
+
     /**
      * getHelpId - get id for Help
      */
@@ -71,6 +96,7 @@ public class PumpPrintDialog extends PrintDialogRange
     {
         return "PumpTool_Print";
     }
+
 
     /**
      * Get Pdf Viewer (path to software)
@@ -83,6 +109,7 @@ public class PumpPrintDialog extends PrintDialogRange
         return DataAccess.getInstance().getSettings().getExternalPdfVieverPath().replace('\\', '/');
     }
 
+
     /**
      * Get Report Types
      *
@@ -94,13 +121,14 @@ public class PumpPrintDialog extends PrintDialogRange
         // FIXME
 
         return new String[] { this.i18nControl.getMessage("PUMP_DATA_BASE"),
-                              this.i18nControl.getMessage("PUMP_DATA_EXT"), //
-                              this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
-                              this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
-                              this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
-                //"Daily Table Report II (Events,Color)", //
-                 };
+                             this.i18nControl.getMessage("PUMP_DATA_EXT"), //
+                             this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
+                             this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
+                             this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
+        // "Daily Table Report II (Events,Color)", //
+        };
     }
+
 
     /**
      * Start Printing Action
@@ -154,17 +182,20 @@ public class PumpPrintDialog extends PrintDialogRange
 
     }
 
+
     @Override
     public String getExternalPdfViewerParameters()
     {
         return DataAccess.getInstance().getSettings().getExternalPdfVieverParameters();
     }
 
+
     @Override
     public boolean isExternalPdfViewerActivated()
     {
         return DataAccess.getInstance().getSettings().getUseExternalPdfViewer();
     }
+
 
     @Override
     public boolean disableLookAndFeelSettingForInternalPdfViewer()

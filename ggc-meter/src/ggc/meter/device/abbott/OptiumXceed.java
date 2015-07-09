@@ -1,5 +1,7 @@
 package ggc.meter.device.abbott;
 
+import ggc.core.data.defs.DailyValuesExtendedType;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.data.MeterValuesEntrySpecial;
 import ggc.meter.device.AbstractSerialMeter;
@@ -457,8 +459,8 @@ public class OptiumXceed extends AbstractSerialMeter
     /**
      * Add BG Data
      * 
-     * @param data 
-     * @param adt 
+     * @param data data to add
+     * @param adt atech date
      */
     public void addBGData(String data, ATechDate adt)
     {
@@ -466,9 +468,9 @@ public class OptiumXceed extends AbstractSerialMeter
             return;
 
         MeterValuesEntry mve = new MeterValuesEntry();
-        mve.setBgUnit(OutputUtil.BG_MGDL);
+        //mve.setBgUnit(OutputUtil.BG_MGDL);
 
-        mve.setBgValue("" + dataAccess.getIntValueFromString(data));
+        mve.setBgValue(data, GlucoseUnitType.mg_dL);
         mve.setDateTimeObject(adt);
 
         this.outputWriter.writeData(mve);
@@ -491,10 +493,12 @@ public class OptiumXceed extends AbstractSerialMeter
         MeterValuesEntry mve = new MeterValuesEntry();
 
         mve.setDateTimeObject(adt);
-        mve.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MMOLL, DataAccessPlugInBase.Decimal1Format
-                .format(dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MGDL, DataAccessPlugInBase.BG_MMOL, data)));
+//        mve.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MMOLL, DataAccessPlugInBase.Decimal1Format
+//                .format(dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MGDL, DataAccessPlugInBase.BG_MMOL, data)));
 
-        // mve.setBgValue("" + dataAccess.getIntValueFromString(data));
+        mve.setUrine(DailyValuesExtendedType.Urine_mmolL, dataAccess.getFormatedValue(
+                dataAccess.getBGValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, Float.parseFloat(data)),1)
+        );
 
         this.outputWriter.writeData(mve);
         this.entries_current++;

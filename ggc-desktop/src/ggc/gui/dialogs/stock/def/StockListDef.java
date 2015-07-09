@@ -1,13 +1,5 @@
 package ggc.gui.dialogs.stock.def;
 
-import com.atech.graphics.dialogs.guilist.*;
-import com.atech.utils.ATSwingUtils;
-import ggc.core.db.GGCDb;
-import ggc.core.db.dto.StocktakingDTO;
-
-import ggc.core.db.hibernate.StockH;
-import ggc.core.util.DataAccess;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -15,9 +7,13 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumnModel;
 
-import ggc.gui.dialogs.stock.def.StockTypeListDef;
-import ggc.gui.dialogs.stock.def.StocktakingListDef;
+import com.atech.graphics.dialogs.guilist.*;
+import com.atech.utils.ATSwingUtils;
 
+import ggc.core.db.GGCDb;
+import ggc.core.db.dto.StocktakingDTO;
+import ggc.core.db.hibernate.StockH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -46,6 +42,7 @@ import ggc.gui.dialogs.stock.def.StocktakingListDef;
 
 public class StockListDef extends GUIListDefAbstract
 {
+
     DataAccess m_da = DataAccess.getInstance();
 
     // private ArrayList<DoctorH> active_list= null;
@@ -53,6 +50,7 @@ public class StockListDef extends GUIListDefAbstract
     private ArrayList<StockH> active_list = null;
 
     private GGCDb database;
+
 
     /**
      * Constructor 
@@ -63,29 +61,33 @@ public class StockListDef extends GUIListDefAbstract
         init();
     }
 
+
     @Override
     public void doTableAction(String action)
     {
-//        if (action.equals("add"))
-//        {
-//            StockSelectorDialog ssd = new StockSelectorDialog(this.getParentDialog(), m_da, 1);
-//            ssd.showDialog();
-//        }
-//        else if (action.equals("add_type"))
-//        {
-//            //StockTypeDialog std = new StockTypeDialog(this.getParentDialog());
-//            //std.showDialog();
-//        }
-//        else if (action.equals("edit_type"))
-//        {
-//            StockSubTypeDialog sstd = new StockSubTypeDialog(this.getParentDialog());
-//            sstd.setVisible(true);
-//        }
-//        else
+        // if (action.equals("add"))
+        // {
+        // StockSelectorDialog ssd = new
+        // StockSelectorDialog(this.getParentDialog(), dataAccess, 1);
+        // ssd.showDialog();
+        // }
+        // else if (action.equals("add_type"))
+        // {
+        // //StockTypeDialog std = new StockTypeDialog(this.getParentDialog());
+        // //std.showDialog();
+        // }
+        // else if (action.equals("edit_type"))
+        // {
+        // StockSubTypeDialog sstd = new
+        // StockSubTypeDialog(this.getParentDialog());
+        // sstd.setVisible(true);
+        // }
+        // else
         if (action.equals("add_stocktaking"))
         {
-            //StockAmounts sa = new StockAmounts(null, null, this.getParentDialog());
-            //sa.setVisible(true);
+            // StockAmounts sa = new StockAmounts(null, null,
+            // this.getParentDialog());
+            // sa.setVisible(true);
             System.out.println(this.getDefName() + " has not implemented action " + action);
         }
         else if (action.equals("edit_stocktaking"))
@@ -107,6 +109,7 @@ public class StockListDef extends GUIListDefAbstract
         }
     }
 
+
     @Override
     public JTable getJTable()
     {
@@ -117,16 +120,19 @@ public class StockListDef extends GUIListDefAbstract
 
                 private static final long serialVersionUID = -9188128586566579737L;
 
+
                 public int getColumnCount()
                 {
 
                     return 4;
                 }
 
+
                 public int getRowCount()
                 {
                     return active_list.size();
                 }
+
 
                 public Object getValueAt(int row, int column)
                 {
@@ -149,13 +155,13 @@ public class StockListDef extends GUIListDefAbstract
 
             });
 
-            String[] columns = { "Name", "Amount", "Calculated Till", "Location"};
+            String[] columns = { "Name", "Amount", "Calculated Till", "Location" };
             int[] cwidths = { 100, 100, 100, 180 }; // 480
             int cwidth = 0;
 
             TableColumnModel cm = table.getColumnModel();
 
-            for(int i = 0; i<columns.length; i++)
+            for (int i = 0; i < columns.length; i++)
             {
                 cm.getColumn(i).setHeaderValue(ic.getMessage(columns[i]));
 
@@ -168,20 +174,19 @@ public class StockListDef extends GUIListDefAbstract
 
             }
 
-
-
-
         }
 
         return this.table;
 
     }
 
+
     @Override
     public String getTitle()
     {
         return "STOCKS_LIST";
     }
+
 
     @Override
     public void init()
@@ -193,7 +198,7 @@ public class StockListDef extends GUIListDefAbstract
         this.filter_type = FILTER_NONE;
         // this.filter_enabled = true;
 
-        //this.filter_type = GUIListDefAbstract.FILTER_COMBO_AND_TEXT;
+        // this.filter_type = GUIListDefAbstract.FILTER_COMBO_AND_TEXT;
         // this.filter_text = i18nControlAbstract.getMessage("FILTER") + ":";
 
         String s1[] = { ic.getMessage("STATUS_USED") + ":", ic.getMessage("DESCRIPTION") + ":" };
@@ -210,9 +215,11 @@ public class StockListDef extends GUIListDefAbstract
         this.button_defs.add(new LabelDef(this.ic.getMessage("STOCK_SUBTYPES"), LabelDef.FONT_BOLD));
         this.button_defs.add(new ButtonDef(this.ic.getMessage("MANAGE"), "manage_types", "manage_types desc",
                 "table_sql_check.png"));
-//        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_type", "STOCKS_TABLE_EDIT_DESC",
-//                "table_edit.png"));
-        // this.button_defs.add(new ButtonDef(this.i18nControlAbstract.getMessage("VIEW_TYPE"),
+        // this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"),
+        // "edit_type", "STOCKS_TABLE_EDIT_DESC",
+        // "table_edit.png"));
+        // this.button_defs.add(new
+        // ButtonDef(this.i18nControlAbstract.getMessage("VIEW_TYPE"),
         // "view", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
         this.button_defs.add(new DividerDef());
         this.button_defs.add(new LabelDef(this.ic.getMessage("STOCKTAKING"), LabelDef.FONT_BOLD));
@@ -221,9 +228,10 @@ public class StockListDef extends GUIListDefAbstract
                 "table_add.png"));
         this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_stocktaking", "STOCKS_TABLE_VIEW_DESC",
                 "table_edit.png"));
-//        this.button_defs.add(new DividerDef());
-//        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_LIST"), "edit_list", "STOCKS_TABLE_VIEW_DESC",
-//                "table_view.png"));
+        // this.button_defs.add(new DividerDef());
+        // this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_LIST"),
+        // "edit_list", "STOCKS_TABLE_VIEW_DESC",
+        // "table_view.png"));
 
         this.def_parameters = new String[2];
         this.def_parameters[0] = "Test 1";
@@ -233,14 +241,16 @@ public class StockListDef extends GUIListDefAbstract
 
     }
 
+
     public void loadData()
     {
         StocktakingDTO std = database.getLatestStocktakingDTO();
 
         this.active_list = new ArrayList<StockH>();
 
-        //this.active_list = dataAccess.getDb().getStocks(-1, -1);
+        // this.active_list = dataAccess.getDb().getStocks(-1, -1);
     }
+
 
     @Override
     public String getDefName()
@@ -248,17 +258,20 @@ public class StockListDef extends GUIListDefAbstract
         return "StockListDef";
     }
 
+
     @Override
     public Rectangle getTableSize(int pos_y)
     {
         return new Rectangle(40, pos_y, 480, 250);
     }
 
+
     @Override
     public Dimension getWindowSize()
     {
         return new Dimension(700, 500);
     }
+
 
     @Override
     public void setFilterCombo(String val)
@@ -268,6 +281,7 @@ public class StockListDef extends GUIListDefAbstract
 
     }
 
+
     @Override
     public void setFilterText(String val)
     {
@@ -275,6 +289,7 @@ public class StockListDef extends GUIListDefAbstract
         System.out.println("Text Box changed to: " + val);
 
     }
+
 
     @Override
     public void setFilterCombo_2(String val)
@@ -303,6 +318,7 @@ public class StockListDef extends GUIListDefAbstract
         return panel;
     }
 
+
     @Override
     public void editTableRow()
     {
@@ -310,6 +326,5 @@ public class StockListDef extends GUIListDefAbstract
 
         // Edit operation of Stocktaking element
     }
-
 
 }

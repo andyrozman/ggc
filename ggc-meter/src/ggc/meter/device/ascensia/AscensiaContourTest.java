@@ -1,5 +1,6 @@
 package ggc.meter.device.ascensia;
 
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.manager.MeterDevicesIds;
@@ -580,15 +581,15 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
 
             if (unit.startsWith("mg/dL"))
             {
-                mve.setBgUnit(OutputUtil.BG_MGDL);
-                mve.setBgValue(val);
+                //mve.setBgUnit(OutputUtil.BG_MGDL);
+                mve.setBgValue(val, GlucoseUnitType.mg_dL);
                 // this.m_output.writeBGData(atd, bg_value, OutputUtil.BG_MGDL);
                 // dv.setBG(DailyValuesRow.BG_MGDL, value);
             }
             else
             {
-                mve.setBgUnit(OutputUtil.BG_MMOL);
-                mve.setBgValue(getCorrectDecimal(val));
+                //mve.setBgUnit(OutputUtil.BG_MMOL);
+                mve.setBgValue(getCorrectDecimal(val), GlucoseUnitType.mmol_L);
                 // this.m_output.writeBGData(atd, bg_value, OutputUtil.BG_MMOL);
                 // dv.setBG(DailyValuesRow.BG_MMOLL, value);
             }

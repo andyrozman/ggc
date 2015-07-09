@@ -1,13 +1,10 @@
 package ggc.pump.device.minimed;
 
 import ggc.plugin.device.DownloadSupportType;
-import ggc.plugin.device.impl.minimed.MinimedDevicesIds;
-import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.manager.PumpDevicesIds;
-import gnu.io.SerialPort;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -51,6 +48,7 @@ public class Minimed554_Veo extends Minimed553
         super(da, device_type, full_port, writer);
     }
 
+
     /**
      * Constructor
      *  
@@ -63,6 +61,7 @@ public class Minimed554_Veo extends Minimed553
         this(da, PumpDevicesIds.PUMP_MINIMED_554, full_port, writer);
     }
 
+
     /**
      * Constructor
      * 
@@ -73,83 +72,6 @@ public class Minimed554_Veo extends Minimed553
         super(cmp);
     }
 
-    @Override
-    public void initDeviceSpecific()
-    {
-        super.initDeviceSpecific();
-
-        util.config.comm_delay_io = 4; // 250;
-        util.config.comm_baudrate = 57600;
-
-        util.config.comm_data_bits = SerialPort.DATABITS_8;
-        util.config.comm_flowcontrol = SerialPort.FLOWCONTROL_NONE;
-        util.config.comm_parity = SerialPort.PARITY_NONE;
-        util.config.comm_stop_bits = SerialPort.STOPBITS_1;
-
-        // new CommPort("");
-        // m_baudRate = 10;
-        // m_ioDelayMS = 4;
-        /*
-         * setReceiveBufferSize(16384);
-         * setTransmitBufferSize(2048);
-         * setBaudRate(i);
-         * m_serialConfig.setDataBits(3);
-         * m_serialConfig.setStopBits(0);
-         * m_serialConfig.setParity(0);
-         * m_serialConfig.setHandshake(0);
-         * Contract.pre(i == 7 || i == 8 || i == 9 || i == 10,
-         * "bad baudRate value of " + i + "; must be " + 7 + ", " + 8 + ", " + 9
-         * + " or " + 10);
-         * m_serialConfig.setBitRate(i);
-         * public static final int HS_NONE = 0;
-         * public static final int HS_XONXOFF = 1;
-         * public static final int HS_CTSRTS = 2;
-         * public static final int HS_CTSDTR = 2;
-         * public static final int HS_DSRDTR = 3;
-         * public static final int HS_HARD_IN = 16;
-         * public static final int HS_HARD_OUT = 32;
-         * public static final int HS_SOFT_IN = 64;
-         * public static final int HS_SOFT_OUT = 128;
-         * public static final int HS_SPLIT_MASK = 240;
-         * private static final String handshakeNames[] = {
-         * "NONE", "XON-XOFF", "CTS-RTS", "DSR-DTR"
-         * };
-         * public static final int BR_110 = 0;
-         * public static final int BR_150 = 1;
-         * public static final int BR_300 = 2;
-         * public static final int BR_600 = 3;
-         * public static final int BR_1200 = 4;
-         * public static final int BR_2400 = 5;
-         * public static final int BR_4800 = 6;
-         * public static final int BR_9600 = 7;
-         * public static final int BR_19200 = 8;
-         * public static final int BR_38400 = 9;
-         * public static final int BR_57600 = 10;
-         * public static final int BR_115200 = 11;
-         * public static final int BR_230400 = 12;
-         * public static final int BR_460800 = 13;
-         * private static final int bitRateNumbers[] = {
-         * 110, 150, 300, 600, 1200, 2400, 4800, 9600, 19200, 38400,
-         * 57600, 0x1c200, 0x38400, 0x70800
-         * };
-         * public static final int PY_NONE = 0;
-         * public static final int PY_ODD = 1;
-         * public static final int PY_EVEN = 2;
-         * public static final int PY_MARK = 3;
-         * public static final int PY_SPACE = 4;
-         * private static final String parityNames[] = {
-         * "NONE", "ODD", "EVEN", "MARK", "SPACE"
-         * };
-         * public static final int LN_5BITS = 0;
-         * public static final int LN_6BITS = 1;
-         * public static final int LN_7BITS = 2;
-         * public static final int LN_8BITS = 3;
-         * public static final int ST_1BITS = 0;
-         * public static final int ST_2BITS = 1;
-         * public static final int PWR_STANDBY = 0;
-         * public static final int PWR_ACTIVE = 1;
-         */
-    }
 
     /**
      * getName - Get Name of meter. 
@@ -162,6 +84,7 @@ public class Minimed554_Veo extends Minimed553
         return "Minimed 554/754 Veo";
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -172,6 +95,7 @@ public class Minimed554_Veo extends Minimed553
     {
         return "mm_554_veo.jpg";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -185,6 +109,7 @@ public class Minimed554_Veo extends Minimed553
         return PumpDevicesIds.PUMP_MINIMED_554;
     }
 
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -196,6 +121,7 @@ public class Minimed554_Veo extends Minimed553
     {
         return "INSTRUCTIONS_MINIMED_554";
     }
+
 
     /**
      * getComment - Get Comment for device 
@@ -209,7 +135,6 @@ public class Minimed554_Veo extends Minimed553
     }
 
 
-
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -221,6 +146,7 @@ public class Minimed554_Veo extends Minimed553
         return "ggc.pump.device.minimed.Minimed554_Veo";
     }
 
+
     /** 
      * Get Max Memory Records
      */
@@ -229,6 +155,7 @@ public class Minimed554_Veo extends Minimed553
     {
         return 0;
     }
+
 
     /**
      * @{InheritDocs}
@@ -250,6 +177,7 @@ public class Minimed554_Veo extends Minimed553
         return -1;
     }
 
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -265,6 +193,7 @@ public class Minimed554_Veo extends Minimed553
         return null;
     }
 
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -275,6 +204,7 @@ public class Minimed554_Veo extends Minimed553
     {
         return 0.1f;
     }
+
 
     /**
      * Get Basal Step (precission)
@@ -287,6 +217,7 @@ public class Minimed554_Veo extends Minimed553
         return 0.1f;
     }
 
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
@@ -297,26 +228,5 @@ public class Minimed554_Veo extends Minimed553
     {
         return false;
     }
-
-    @Override
-    public int getMinimedDeviceId()
-    {
-        return MinimedDevicesIds.PUMP_MINIMED_554;
-    }
-
-    /*
-     * public void createCommands()
-     * {
-     * super.createCommands();
-     * }
-     * public Object decodeDeviceReply(MinimedCommand mc)
-     * {
-     * switch(mc.command_code)
-     * {
-     * default:
-     * return super.decodeDeviceReply(mc);
-     * }
-     * }
-     */
 
 }

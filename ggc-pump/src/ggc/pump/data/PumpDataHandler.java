@@ -1,8 +1,5 @@
 package ggc.pump.data;
 
-import java.util.Hashtable;
-
-import ggc.core.db.hibernate.DayValueH;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.util.DataAccessPump;
@@ -27,8 +24,8 @@ import ggc.pump.util.DataAccessPump;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     MeterDataHandler
- *  Description:  Data Handler for Meter Tool
+ *  Filename:     PumpDataHandler
+ *  Description:  Data Handler for Pump Tool
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -54,28 +51,6 @@ public class PumpDataHandler extends DeviceDataHandler
     public void createDeviceValuesTableModel()
     {
         this.m_model = new PumpValuesTableModel(this, DataAccessPump.getInstance().getSourceDevice());
-    }
-
-
-    /**
-     * Set Device Data
-     * 
-     * @param data data as Hashtable<String,?> data
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void setDeviceData(Hashtable<String, ?> data)
-    {
-        if (data == null || data.size() == 0)
-        {
-            // System.out.println("NO Old data: " + old_data);
-            old_data = new Hashtable<String, DayValueH>();
-        }
-        else
-        {
-            old_data = data;
-            // System.out.println("Old data: " + old_data);
-        }
     }
 
 

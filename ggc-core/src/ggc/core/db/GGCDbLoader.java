@@ -1,15 +1,15 @@
 package ggc.core.db;
 
-import ggc.core.plugins.GGCPluginType;
-import ggc.core.plugins.NutriPlugIn;
-import ggc.core.util.DataAccess;
-import ggc.core.util.RefreshInfo;
-
 import java.io.File;
 import java.util.GregorianCalendar;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import ggc.core.plugins.GGCPluginType;
+import ggc.core.plugins.NutriPlugIn;
+import ggc.core.util.DataAccess;
+import ggc.core.util.RefreshInfo;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -95,6 +95,7 @@ public class GGCDbLoader extends Thread
      */
     public static final int DB_INIT_FINISHED = 4;
 
+
     /**
      * Constructor
      * 
@@ -104,6 +105,7 @@ public class GGCDbLoader extends Thread
     {
         m_da = da;
     }
+
 
     /**
      * Run (Thread)
@@ -174,34 +176,37 @@ public class GGCDbLoader extends Thread
             m_da.loadDailySettingsLittle(new GregorianCalendar(), true);
         }
 
-        // m_da.loadSettingsFromDb();
+        // dataAccess.loadSettingsFromDb();
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, m_da.getI18nControlInstance().getMessage("READY"));
 
         // mf.informationPanel.refreshPanels();
-        // mf.statusPanel.setStatusMessage(m_da.getI18nControlInstance().getMessage("READY"));
+        // mf.statusPanel.setStatusMessage(dataAccess.getI18nControlInstance().getMessage("READY"));
 
         /*
-         * if (m_da.getParent()!=null)
+         * if (dataAccess.getParent()!=null)
          * {
          * // GGC
-         * MainFrame mf = m_da.getParent();
+         * MainFrame mf = dataAccess.getParent();
          * //mf.setDbActions(true);
-         * m_da.loadSettingsFromDb();
+         * dataAccess.loadSettingsFromDb();
          * mf.informationPanel.refreshPanels();
-         * mf.statusPanel.setStatusMessage(m_da.getI18nControlInstance().getMessage
+         * mf.statusPanel.setStatusMessage(dataAccess.getI18nControlInstance().
+         * getMessage
          * ("READY"));
          * }
          * else
          * {
          * /// GGC Little
-         * !! mf = m_da.getParentLittle();
+         * !! mf = dataAccess.getParentLittle();
          * //mf.setDbActions(true);
-         * m_da.loadSettingsFromDb();
-         * mf.getInformationPanel().dailyStats.getTableModel().setDailyValues(m_da
+         * dataAccess.loadSettingsFromDb();
+         * mf.getInformationPanel().dailyStats.getTableModel().setDailyValues(
+         * dataAccess
          * .getDayStats(new GregorianCalendar()));
          * mf.getInformationPanel().refreshPanels();
-         * mf.getStatusPanel().setStatusMessage(m_da.getI18nControlInstance().
+         * mf.getStatusPanel().setStatusMessage(dataAccess.getI18nControlInstance
+         * ().
          * getMessage("READY"));
          * }
          */
@@ -265,7 +270,10 @@ public class GGCDbLoader extends Thread
         // System.out.println("We needed " + (dif/1000) +
         // " seconds to startup.");
         log.debug("We needed " + dif / 1000 + " seconds to startup.");
+
+        m_da.getMainParent()
     }
+
 
     /**
      * Set Db Status
@@ -276,7 +284,7 @@ public class GGCDbLoader extends Thread
     {
         // if (part_start)
         // return;
-        // m_da.setDbLoadingStatus(status);
+        // dataAccess.setDbLoadingStatus(status);
 
         m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, status);
     }

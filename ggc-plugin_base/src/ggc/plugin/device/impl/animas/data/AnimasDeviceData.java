@@ -8,8 +8,8 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.utils.data.ATechDate;
 
-import ggc.plugin.data.enums.ClockModeType;
-import ggc.plugin.data.enums.GlucoseUnitType;
+import ggc.core.data.defs.ClockModeType;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.impl.animas.comm.AnimasCommProtocolAbstract;
 import ggc.plugin.device.impl.animas.data.dto.PumpConnectorInfo;

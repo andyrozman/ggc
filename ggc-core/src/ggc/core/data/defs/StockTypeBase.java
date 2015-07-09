@@ -9,12 +9,38 @@ import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.core.util.DataAccess;
 
 /**
- * Created by andy on 27.02.15.
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     StockTypeBase
+ *  Description:  Stock Type Base
+ *
+ *  Author:    Andy {andy@atech-software.com}
  */
+
 public enum StockTypeBase implements CodeEnumWithTranslation
 {
-    None(0, "NONE"), Insulin(1, "STOCKTYPE_INSULIN"), BG(2, "STOCKTYPE_BG"), Pen(3, "STOCKTYPE_PEN"), Pump(4,
-            "STOCKTYPE_PUMP"), CGMS(5, "STOCKTYPE_CGMS");
+    None(0, "NONE"), //
+    Insulin(1, "STOCKTYPE_INSULIN"), //
+    BG(2, "STOCKTYPE_BG"), //
+    Pen(3, "STOCKTYPE_PEN"), //
+    Pump(4, "STOCKTYPE_PUMP"), //
+    CGMS(5, "STOCKTYPE_CGMS");
 
     static String[] descriptions;
 
@@ -32,7 +58,8 @@ public enum StockTypeBase implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
 
-        String[] basal_desc_lcl = { ic.getMessage("SELECT_STOCK_TYPE"), ic.getMessage("STOCKTYPE_INSULIN"), //
+        String[] basal_desc_lcl = { ic.getMessage("SELECT_STOCK_TYPE"), //
+                                   ic.getMessage("STOCKTYPE_INSULIN"), //
                                    ic.getMessage("STOCKTYPE_BG"), //
                                    ic.getMessage("STOCKTYPE_PEN"), //
                                    ic.getMessage("STOCKTYPE_PUMP"), //

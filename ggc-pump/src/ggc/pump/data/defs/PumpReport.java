@@ -36,8 +36,11 @@ import ggc.pump.util.DataAccessPump;
 public enum PumpReport implements CodeEnumWithTranslation
 {
 
-    None(0, "NONE"), Misc(1, "REPORT_MISC"), BolusTotalDay(2, "REPORT_BOLUS_TOTAL_DAY"), BasalTotalDay(3,
-            "REPORT_BASAL_TOTAL_DAY"), InsulinTotalDay(4, "REPORT_INSULIN_TOTAL_DAY"),
+    None(0, "NONE"), //
+    Misc(1, "REPORT_MISC"), //
+    BolusTotalDay(2, "REPORT_BOLUS_TOTAL_DAY"), //
+    BasalTotalDay(3, "REPORT_BASAL_TOTAL_DAY"), //
+    InsulinTotalDay(4, "REPORT_INSULIN_TOTAL_DAY"), //
 
     ;
 

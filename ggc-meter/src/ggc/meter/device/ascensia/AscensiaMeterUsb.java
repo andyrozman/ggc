@@ -1,19 +1,5 @@
 package ggc.meter.device.ascensia;
 
-import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.device.AbstractUsbMeter;
-import ggc.meter.manager.MeterDevicesIds;
-import ggc.meter.manager.company.AscensiaBayer;
-import ggc.meter.util.DataAccessMeter;
-import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.plugin.output.AbstractOutputWriter;
-import ggc.plugin.output.OutputUtil;
-import ggc.plugin.output.OutputWriter;
-import ggc.plugin.util.DataAccessPlugInBase;
-import gnu.io.SerialPortEvent;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
@@ -24,6 +10,20 @@ import org.apache.commons.logging.LogFactory;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.device.AbstractUsbMeter;
+import ggc.meter.manager.MeterDevicesIds;
+import ggc.meter.manager.company.AscensiaBayer;
+import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
+import gnu.io.SerialPortEvent;
 
 /**
  * This class can be used as example on how to implement USB meter driver
@@ -700,17 +700,11 @@ public abstract class AscensiaMeterUsb extends AbstractUsbMeter
 
             if (unit.startsWith("mg/dL"))
             {
-                mve.setBgUnit(OutputUtil.BG_MGDL);
-                mve.setBgValue(val);
-                // this.m_output.writeBGData(atd, bg_value, OutputUtil.BG_MGDL);
-                // dv.setBG(DailyValuesRow.BG_MGDL, value);
+                mve.setBgValue(val, GlucoseUnitType.mg_dL);
             }
             else
             {
-                mve.setBgUnit(OutputUtil.BG_MMOL);
-                mve.setBgValue(getCorrectDecimal(val));
-                // this.m_output.writeBGData(atd, bg_value, OutputUtil.BG_MMOL);
-                // dv.setBG(DailyValuesRow.BG_MMOLL, value);
+                mve.setBgValue(getCorrectDecimal(val), GlucoseUnitType.mmol_L);
             }
 
             this.outputWriter.writeData(mve);

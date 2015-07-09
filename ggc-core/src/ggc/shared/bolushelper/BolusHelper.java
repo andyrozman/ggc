@@ -1,27 +1,20 @@
 package ggc.shared.bolushelper;
 
-import ggc.core.util.DataAccess;
-import ggc.shared.ratio.RatioEntry;
-import ggc.shared.ratio.RatioExtendedDialog;
-
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.util.DataAccess;
+import ggc.shared.ratio.RatioEntry;
+import ggc.shared.ratio.RatioExtendedDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -85,8 +78,8 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
 
     // JComponent components[] = new JComponent[9];
 
-    // Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-    // Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL_BOLD);
+    // Font f_normal = dataAccess.getFont(DataAccess.FONT_NORMAL);
+    // Font f_bold = dataAccess.getFont(DataAccess.FONT_NORMAL_BOLD);
     boolean in_process;
     boolean debug = true;
     JButton help_button = null;
@@ -94,6 +87,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
     int insulin_type;
 
     String ratio_mode = null;
+
 
     // private Container m_parent = null;
 
@@ -128,6 +122,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         this.setVisible(true);
     }
 
+
     /**
      * Constructor
      * 
@@ -144,6 +139,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         this.readRatios();
         this.setVisible(true);
     }
+
 
     private void init()
     {
@@ -169,7 +165,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         this.getContentPane().add(panel);
 
         /*
-         * label_title.setFont(m_da.getFont(DataAccess.FONT_BIG_BOLD));
+         * label_title.setFont(dataAccess.getFont(DataAccess.FONT_BIG_BOLD));
          * label_title.setHorizontalAlignment(JLabel.CENTER);
          * label_title.setBounds(0, 15, 400, 35);
          * panel.add(label_title);
@@ -275,11 +271,11 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
          * {
          * button = new JButton("   " + button_command[j + 1]);
          * button.setActionCommand(button_command[j]);
-         * // button.setFont(m_da.getFont(DataAccess.FONT_NORMAL));
+         * // button.setFont(dataAccess.getFont(DataAccess.FONT_NORMAL));
          * button.addActionListener(this);
          * if (button_icon[k] != null)
          * {
-         * button.setIcon(m_da.getImageIcon_22x22(button_icon[k], this));
+         * button.setIcon(dataAccess.getImageIcon_22x22(button_icon[k], this));
          * }
          * if (button_coord[i + 3] == 0)
          * {
@@ -295,6 +291,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
          */
 
     }
+
 
     private void readRatios()
     {
@@ -345,6 +342,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         }
 
     }
+
 
     private void calculateInsulin()
     {
@@ -399,6 +397,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
 
     boolean res = false;
 
+
     /**
      * Has Result
      * 
@@ -409,6 +408,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         return res;
     }
 
+
     /**
      * Get Result
      * 
@@ -418,6 +418,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
     {
         return this.calc_insulin_rnd;
     }
+
 
     /**
      * Invoked when an action occurs.
@@ -446,6 +447,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
 
     }
 
+
     /*
      * public boolean isFieldSet(String text)
      * {
@@ -466,6 +468,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         return m_actionDone;
     }
 
+
     /*
      * public String checkDecimalFields(String field)
      * {
@@ -485,6 +488,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      */
@@ -492,6 +496,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
     {
         return this.help_button;
     }
+
 
     /**
      * getHelpId - get id for Help

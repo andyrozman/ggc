@@ -30,6 +30,7 @@ import com.atech.utils.logs.RedirectScreen;
 
 import ggc.core.data.*;
 import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.data.graph.v2.GGCGraphContext;
 import ggc.core.db.GGCDb;
 import ggc.core.db.GGCDbLoader;
 import ggc.core.db.datalayer.DailyValue;
@@ -166,6 +167,8 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static final String EXTENDED_HANDLER_DailyValuesRow = "DailyValuesRow";
 
+    private GGCGraphContext graphContext;
+
 
     // private int current_person_id = 1;
     // NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
@@ -226,6 +229,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
 
         // System.out.println("m_set: " + this.m_settings);
+        // this.m_settings.load();
 
         loadOptions();
 
@@ -238,6 +242,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         this.startWebServer();
         this.loadSpecialParameters();
         this.loadConverters();
+        loadGraphContext();
 
         /*
          * System.out.println(Locale.getAvailableLocales());
@@ -252,10 +257,14 @@ public class DataAccess extends ATDataAccessLMAbstract
     }
 
 
+    private void loadGraphContext()
+    {
+        this.graphContext = new GGCGraphContext();
+    }
+
+
     private void loadLanguageIntoContext()
     {
-        I18nControlAbstract ic = this.getI18nControlInstanceBase();
-
         GGCI18nControlContext ctx = GGCI18nControlContext.getInstance();
 
         ctx.setDefaultLanguage(this.getLanguageManager().getDefaultLanguage());
@@ -286,6 +295,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         ctx.prepareContext();
 
         ggci18nControl = new GGCI18nControl(GGCPluginType.Core);
+
     }
 
 
@@ -382,7 +392,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      * }
      */
     /*
-     * static public DataAccess getInstance() { return m_da; }
+     * static public DataAccess getInstance() { return dataAccess; }
      */
 
     // Method: deleteInstance
@@ -1845,7 +1855,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     @Override
     public void loadExtendedHandlers()
     {
-        this.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValue(this));
+        this.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValueHandler(this));
     }
 
 
@@ -1867,4 +1877,9 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     }
 
+
+    public GGCGraphContext getGraphContext()
+    {
+        return graphContext;
+    }
 }

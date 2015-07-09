@@ -69,7 +69,7 @@ public abstract class DeviceManager
             {
                 if (DeviceImplementationStatus.isSupportedDevice(pdc.getImplementationStatus()))
                 {
-                    this.supportedDevicesV1.put(pdc.getShortName() + "_" + di.getName(), di);
+                    this.supportedDevicesV1.put(pdc.getName() + "_" + di.getName(), di);
                     this.supportedDevicesForSelector.add(di);
                 }
             }
@@ -112,6 +112,8 @@ public abstract class DeviceManager
      */
     public DeviceInterface getDeviceV1(String company, String device)
     {
+        //System.out.println("Company: " + company + ", device=" + device);
+
         String key = company + "_" + device;
 
         if (this.supportedDevicesV1.containsKey(key))
@@ -127,7 +129,7 @@ public abstract class DeviceManager
 //        AbstractDeviceCompany cmp = getCompany(group);
 //
 //        if (cmp == null)
-//            // System.out.println("Company not found !");
+//            // System.out.println("Company not found !");h
 //            // System.out.println("companies_nt: " + this.companies_ht);
 //            return null;
 //
@@ -137,6 +139,8 @@ public abstract class DeviceManager
 
     public DeviceInstanceWithHandler getDeviceV2(String company, String device)
     {
+        //System.out.println("Company: " + company + ", device=" + device);
+
         String key = company + "_" + device;
 
         if (this.supportedDevicesV2.containsKey(key))

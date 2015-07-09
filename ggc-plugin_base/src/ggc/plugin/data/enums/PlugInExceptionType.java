@@ -48,7 +48,13 @@ public enum PlugInExceptionType
     OperationNotSupportedForThisHandler("Operation '%s' not supported for handler '%s'"), //
     UnsupportedDevice("Unsupported device for this reader: %s"), //
 
-    ;
+    DeviceInvalidResponse("Device returned invalid response. Expected: %s, Received: %s"), DeviceCommandInvalidResponse(
+            "Device was sent command [%s], but it responded with [%s], instead of [%s]"), //
+
+    DeviceReturnedError("Device returned error [command=%s, errorCode=%s, errorDescription=%s, returnedData=%s]"), //
+
+    ImportFileNotFound("Import file (name=%s) not found."), //
+    ImportFileCouldNotBeRead("Import file (name=%s) could not be read (%s)");
 
     // DXC_PARSING_ERROR = Error parsing. Exception: %s
     // DXC_PARSING_ERROR_UNSUPP_DATA_LENGTH = Error parsing. Unsupported data

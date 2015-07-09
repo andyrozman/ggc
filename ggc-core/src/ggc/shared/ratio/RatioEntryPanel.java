@@ -1,21 +1,13 @@
 package ggc.shared.ratio;
 
-import ggc.core.util.DataAccess;
+import java.awt.event.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -61,10 +53,12 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
     int space_between_lines = 40;
     int space_between_text_el = 0;
 
+
     public RatioEntryPanel(DataAccess da, int left_pos, int space_elements)
     {
         this(da, left_pos, space_elements, 0);
     }
+
 
     /**
      * Constructor
@@ -85,6 +79,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         init();
     }
 
+
     /**
      * Constructor
      * 
@@ -97,6 +92,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         ratio_entry = re;
         setRatios(re.ch_insulin, re.bg_insulin, 0.0f);
     }
+
 
     /**
      * Constructor
@@ -113,6 +109,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         setRatios(re.ch_insulin, re.bg_insulin, 0.0f);
     }
 
+
     /**
      * Set Editable
      * 
@@ -124,6 +121,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         this.dtf_ch_ins.setEditable(can_edit);
         this.dtf_ins_bg.setEditable(can_edit);
     }
+
 
     /**
      * Set Ratio's
@@ -139,12 +137,14 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         calculateRatio(RATIO_BG_CH);
     }
 
+
     public void setRatioEntry(RatioEntry re)
     {
         this.dtf_ch_ins.setValue(re.ch_insulin);
         this.dtf_ins_bg.setValue(re.bg_insulin);
         calculateRatio(RATIO_BG_CH);
     }
+
 
     /**
      * Get Ratio's
@@ -160,6 +160,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
 
         return f;
     }
+
 
     /**
      * Calculate Ratio
@@ -177,6 +178,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         // (float)(res[1]*(procent/100.0)), 0.0f);
     }
 
+
     /**
      * Set Position
      * 
@@ -188,14 +190,17 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         this.setBounds(x, y, 300, 400);
     }
 
+
     /**
      * Load data
      */
     /*
      * private void load()
      * {
-     * this.dtf_ch_ins.setValue(this.m_da.getSettings().getRatio_CH_Insulin());
-     * this.dtf_ins_bg.setValue(this.m_da.getSettings().getRatio_BG_Insulin());
+     * this.dtf_ch_ins.setValue(this.dataAccess.getSettings().getRatio_CH_Insulin
+     * ());
+     * this.dtf_ins_bg.setValue(this.dataAccess.getSettings().getRatio_BG_Insulin
+     * ());
      * calculateRatio(RATIO_BG_CH);
      * }
      */
@@ -211,6 +216,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
 
         this.m_da.getSettings().save();
     }
+
 
     private void init()
     {
@@ -266,6 +272,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
     private static final int RATIO_BG_INSULIN = 2;
     private static final int RATIO_BG_CH = 3;
 
+
     private void calculateRatio(Object obj)
     {
         if (obj.equals(this.dtf_ch_ins))
@@ -281,6 +288,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
             calculateRatio(RATIO_BG_CH);
         }
     }
+
 
     private void calculateRatio(int type)
     {
@@ -356,6 +364,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
 
     }
 
+
     private boolean checkSet(float v1, float v2)
     {
         // System.out.println("checkSet [v1=" + v1 + ",v2=" + v2 + "]");
@@ -364,6 +373,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         else
             return false;
     }
+
 
     /**
      * Invoked when an action occurs.
@@ -377,12 +387,12 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
          * else if (action.equals("ok"))
          * {
          * float v1 =
-         * this.m_da.getFloatValue(this.dtf_ch_ins.getCurrentValue());
+         * this.dataAccess.getFloatValue(this.dtf_ch_ins.getCurrentValue());
          * float v2 =
-         * this.m_da.getFloatValue(this.dtf_ins_bg.getCurrentValue());
+         * this.dataAccess.getFloatValue(this.dtf_ins_bg.getCurrentValue());
          * if (this.checkSet(v1, v2))
          * {
-         * m_da.removeComponent(this);
+         * dataAccess.removeComponent(this);
          * cmdOk();
          * this.dispose();
          * }
@@ -412,6 +422,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
          */
     }
 
+
     /*
      * String button_command[] = { "update_ch",
      * m_ic.getMessage("UPDATE_FROM_FOOD"),
@@ -431,6 +442,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         this.dtf_ch_ins.setValue(val);
     }
 
+
     /**
      * Set Ratio BG/Ins
      * 
@@ -441,6 +453,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         this.dtf_ins_bg.setValue(val);
     }
 
+
     /**
      * Set Ratio CH/BG
      * 
@@ -450,6 +463,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
     {
         this.dtf_bg_ch.setValue(val);
     }
+
 
     /*
      * private void cmdOk()
@@ -475,12 +489,14 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
     {
     }
 
+
     /**
      * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
      */
     public void keyPressed(KeyEvent e)
     {
     }
+
 
     /**
      * Invoked when a key has been released.
@@ -513,6 +529,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
 
     }
 
+
     /** 
      * Focus Lost
      */
@@ -525,6 +542,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         calculateRatio(fe.getSource());
         in_action = false;
     }
+
 
     /** 
      * Focus Gained

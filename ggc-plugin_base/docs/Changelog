@@ -2,9 +2,12 @@
 Changes file for GGC Plug-In Base
 ==================================
 
-0.7.1 [28.3.2015]
-    * Added Communication Handler for different Communication Protocols (to be used instaed protocol.* classes, it contains
+0.7.1 [26.4.2015]
+    * Added Communication Handler for different Communication Protocols (to be used instead protocol.* classes, it contains
       all relevant methods for handling specific communication library
+    * Enums change
+    * Ports interface and prepared for refactoring
+    * Animas implementation changed
 
 
 0.7.0 [19.2.2015]

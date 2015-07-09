@@ -1,5 +1,7 @@
 package ggc.cgms.device.minimed;
 
+import java.util.ArrayList;
+
 import ggc.cgms.device.AbstractCGMS;
 import ggc.cgms.device.minimed.file.FRC_MinimedCarelink;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
@@ -297,9 +299,8 @@ public abstract class MiniMedCGMS extends AbstractCGMS
     @Override
     public void loadFileContexts()
     {
-        // System.out.println("loadFileContexts");
-        this.fileContexts = new GGCPlugInFileReaderContext[1];
-        this.fileContexts[0] = new FRC_MinimedCarelink(dataAccess, this.outputWriter);
+        this.fileContexts = new ArrayList<GGCPlugInFileReaderContext>();
+        this.fileContexts.add(new FRC_MinimedCarelink(dataAccess, this.outputWriter));
     }
 
 

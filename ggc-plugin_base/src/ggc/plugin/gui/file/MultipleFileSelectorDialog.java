@@ -1,21 +1,18 @@
 package ggc.plugin.gui.file;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.List;
+import java.util.Vector;
+
+import javax.swing.*;
+
+import com.atech.utils.ATSwingUtils;
+
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
-import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,9 +42,12 @@ import com.atech.utils.ATSwingUtils;
 
 public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
 {
+
     private static final long serialVersionUID = -876338378352653634L;
-    GGCPlugInFileReaderContext[] file_contexts;
+
+    List<GGCPlugInFileReaderContext> fileReaderContexts;
     JComboBox cb_contexts;
+
 
     /**
      * Constructor
@@ -56,10 +56,12 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
      * @param dialog
      * @param ddh
      */
-    public MultipleFileSelectorDialog(DataAccessPlugInBase da, JDialog dialog, DeviceDataHandler ddh)
+    public MultipleFileSelectorDialog(DataAccessPlugInBase da, JDialog dialog, DeviceDataHandler ddh,
+            DownloadSupportType downloadSupportType)
     {
-        super(da, ddh, dialog);
+        super(da, ddh, dialog, downloadSupportType);
     }
+
 
     @Override
     public void init()
@@ -79,9 +81,10 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
         ATSwingUtils.getLabel(m_ic.getMessage("MULTIPLE_IMPORT_SELECTOR_DESC"), 50, 60, 300, 120, this,
             ATSwingUtils.FONT_NORMAL);
 
-        file_contexts = this.deviceDataHandler.getFileDownloadTypes(DownloadSupportType.DownloadDataFile);
+        fileReaderContexts = this.deviceDataHandler.getFileDownloadTypes(downloadSupportType);
 
-        cb_contexts = ATSwingUtils.getComboBox(file_contexts, 50, 180, 300, 25, this, ATSwingUtils.FONT_NORMAL);
+        cb_contexts = ATSwingUtils.getComboBox(getFileReaderContexts(), 50, 180, 300, 25, this,
+            ATSwingUtils.FONT_NORMAL);
 
         this.helpButton = ATSwingUtils.createHelpIconByBounds(50, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         this.add(helpButton); // 60, 25
@@ -97,6 +100,20 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
         this.m_da.enableHelp(this);
     }
 
+
+    public Vector<?> getFileReaderContexts()
+    {
+        Vector<GGCPlugInFileReaderContext> vector = new Vector<GGCPlugInFileReaderContext>();
+
+        for (GGCPlugInFileReaderContext ctx : fileReaderContexts)
+        {
+            vector.add(ctx);
+        }
+
+        return vector;
+    }
+
+
     public void actionPerformed(ActionEvent ae)
     {
         String action = ae.getActionCommand();
@@ -107,16 +124,18 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
         }
         else if (action.equals("next"))
         {
-            deviceDataHandler.selected_file_context = file_contexts[this.cb_contexts.getSelectedIndex()];
+            deviceDataHandler.selected_file_context = fileReaderContexts.get(this.cb_contexts.getSelectedIndex());
             this.dispose();
-            new ImportFileSelectorDialog(m_da, this.dialogParent, deviceDataHandler);
+            new ImportFileSelectorDialog(m_da, this.dialogParent, deviceDataHandler, downloadSupportType);
         }
     }
+
 
     public String getHelpId()
     {
         return "DeviceTool_File_Import_Type";
     }
+
 
     @Override
     public Dimension getSize()

@@ -16,7 +16,7 @@ import ggc.cgms.device.animas.impl.data.dto.AnimasDexcomHistoryEntry;
 import ggc.cgms.device.animas.impl.data.dto.AnimasDexcomWarning;
 import ggc.cgms.device.animas.impl.data.dto.CGMSSettings;
 import ggc.cgms.device.animas.impl.handler.AnimasCGMSDataWriter;
-import ggc.plugin.data.enums.ClockModeType;
+import ggc.core.data.defs.ClockModeType;
 import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
 import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
 import ggc.plugin.device.impl.animas.data.dto.SettingEntry;

@@ -51,17 +51,13 @@ import ggc.pump.util.DataAccessPump;
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- * Filename: AccuChekSmartPixPump Description: Accu-Chek SmartPix Processor for
- * Pumps
+ * Filename: AccuChekSmartPixPump
+ * Description: Accu-Chek SmartPix Processor for Pumps
  * 
  * Author: Andy {andy@atech-software.com}
  */
 
-public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements PumpInterface // extends
-// AbstractXmlMeter
-// //mlProtocol
-// //implements
-// SelectableInterface
+public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements PumpInterface
 {
 
     private static Log log = LogFactory.getLog(AccuChekSmartPixPump.class);

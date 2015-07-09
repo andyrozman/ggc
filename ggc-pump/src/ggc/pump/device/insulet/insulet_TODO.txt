@@ -1,0 +1,27 @@
+INSULET TO-DO
+==============
+
+
+
+
+- Integration:  config
+                data
+- Test with more data (from different sources)
+
+
+
+DONE:
++ read config
++ decode config: ...
++ profile
++ log record:  - termination basal
+               - time change
+               - date change
+
+- read data
+- decode data:
+- history record: ???
+- log record: - bolus wizard
+              - remote hazard rate
+              - alarm
+              - basal

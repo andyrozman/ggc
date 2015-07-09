@@ -28,7 +28,7 @@ C.) CGMS
 A.) METERS
 ===========
 
- Name of company  |               Plans                    | Supported devices                           | Developer
+ Name of company  |               Status                   | Supported devices                           | Developer
 ---------------------------------------------------------------------------------------------------------------------------------
 Bayer/Ascensia    | Done                                   | Dex2, Contour, Breeze, EliteXl, ContourLink | Andy
 Roche             | Done                                   | All supported through Pix device            | Andy
@@ -43,11 +43,11 @@ Menarini          | Done                                   | Glucofix Mio       
 B.) PUMPS
 ===========
 
- Name of company  |               Plans                   | Supported devices                          | Developer 
+ Name of company  |               Status                  | Supported devices                          | Developer
 ----------------------------------------------------------------------------------------------------------------------
 Roche             | Done                                  | Spirit, Combo (through SmartPix)           | Andy
-Minimed           | Planned -> 2Q 2009                    | Support with import of CareLink export     | Andy
-Animas            | Planned  ???                          | Through EZM db                             | Nate, ? 
+Minimed           | Planned -> 4Q 2015                    | Reading of all devices (?)                 | Andy
+Animas            | Done                                  | 1200 and greater, direct reading           | Andy
 Dana              | Done                                  | Dana Diabecare III/R (Win/Linux only)*     | Andy
 
 
@@ -59,10 +59,11 @@ Dana              | Done                                  | Dana Diabecare III/R
 C.) CGMS
 ==========
 
- Name of company  |               Plans                    | Supported devices                         | Developer 
+ Name of company  |               Status                   | Supported devices                         | Developer
 ----------------------------------------------------------------------------------------------------------------------
 Minimed           | Planned, ?                             | Support with import of CareLink export    | Andy
-Dexcom            | L3
+Dexcom            | Done (only G4)                         | Dexcom G4 via USB                         | Andy
+Animas/Dexcom     | Done                                   | Animas Vibe Dexcom integration            | Andy
 
 
 

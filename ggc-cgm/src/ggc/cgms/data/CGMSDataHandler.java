@@ -1,8 +1,5 @@
 package ggc.cgms.data;
 
-import java.util.Hashtable;
-
-import ggc.core.db.hibernate.DayValueH;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -58,28 +55,6 @@ public class CGMSDataHandler extends DeviceDataHandler
 
 
     /**
-     * Set Device Data
-     * 
-     * @param data data as Hashtable<String,?> data
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void setDeviceData(Hashtable<String, ?> data)
-    {
-        if (data == null || data.size() == 0)
-        {
-            // System.out.println("NO Old data: " + old_data);
-            old_data = new Hashtable<String, DayValueH>();
-        }
-        else
-        {
-            old_data = data;
-            // System.out.println("Old data: " + old_data);
-        }
-    }
-
-
-    /** 
      * Set Reading Finished
      */
     public void setReadingFinished()

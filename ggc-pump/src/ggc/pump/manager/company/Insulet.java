@@ -1,7 +1,6 @@
 package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
-import ggc.pump.device.insulet.InsuletOmniPod;
 import ggc.pump.manager.PumpDevicesIds;
 
 /**
@@ -43,10 +42,11 @@ public class Insulet extends AbstractPumpDeviceCompany
                 "Insulet", // short company name
                 "INSULET_DESC", // company description
                 DeviceImplementationStatus.NotAvailable); // implementation
-                                                                          // status
+                                                          // status
 
-        this.addDevice(new InsuletOmniPod(this));
+        // this.addDevice(new InsuletOmniPod(this));
     }
+
 
     /**
      * Init Profile Names (for Profile Editor)

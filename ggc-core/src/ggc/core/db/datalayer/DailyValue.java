@@ -1,7 +1,5 @@
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.DayValueH;
-
 import java.util.ArrayList;
 
 import org.hibernate.Session;
@@ -10,6 +8,7 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
+import ggc.core.db.hibernate.DayValueH;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -30,12 +29,11 @@ import com.atech.i18n.I18nControlAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     FoodDescription
+ *  Filename:     DailyValue
  *  Description:  This is DataLayer file (data file, with methods to work with database or in 
- *                this case Hibernate). This one is used for FoodDescriptionH and FoodUserDescriptionH. 
+ *                this case Hibernate). This one is used for DailyValue.
  *                This one is also BackupRestoreObject. 
- *                File is not YET DataLayer File at least not active
- * 
+ *
  *  Author: andyrozman {andy@atech-software.com}  
  */
 

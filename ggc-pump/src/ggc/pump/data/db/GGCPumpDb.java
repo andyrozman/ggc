@@ -1,33 +1,6 @@
 package ggc.pump.data.db;
 
-import ggc.core.db.hibernate.pump.PumpDataExtendedH;
-import ggc.core.db.hibernate.pump.PumpDataH;
-import ggc.core.db.hibernate.pump.PumpProfileH;
-import ggc.plugin.data.DeviceValuesDay;
-import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.data.DeviceValuesEntryInterface;
-import ggc.plugin.data.DeviceValuesRange;
-import ggc.plugin.db.PluginDb;
-import ggc.plugin.device.v2.DeviceInstanceWithHandler;
-import ggc.plugin.graph.data.GraphValuesCapable;
-import ggc.plugin.graph.data.GraphValuesCollection;
-import ggc.plugin.graph.data.PlugInGraphDb;
-import ggc.pump.data.PumpDataReader;
-import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.PumpValuesEntryProfile;
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.db.PumpProfile;
-import ggc.pump.device.PumpDeviceInstanceWithHandler;
-import ggc.pump.device.PumpInterface;
-import ggc.pump.util.DataAccessPump;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,6 +11,25 @@ import org.hibernate.criterion.Restrictions;
 
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.db.hibernate.pump.PumpDataExtendedH;
+import ggc.core.db.hibernate.pump.PumpDataH;
+import ggc.core.db.hibernate.pump.PumpProfileH;
+import ggc.plugin.data.DeviceValuesDay;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.data.DeviceValuesRange;
+import ggc.plugin.db.PluginDb;
+import ggc.plugin.graph.data.GraphValuesCapable;
+import ggc.plugin.graph.data.GraphValuesCollection;
+import ggc.plugin.graph.data.PlugInGraphDb;
+import ggc.pump.data.PumpDataReader;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.PumpValuesEntryProfile;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
@@ -66,8 +58,10 @@ import com.atech.utils.data.ATechDate;
 
 public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 {
+
     private static Log log = LogFactory.getLog(GGCPumpDb.class);
     DataAccessPump m_da = DataAccessPump.getInstance();
+
 
     /**
      * Constructor
@@ -80,6 +74,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
         // getAllElementsCount();
     }
+
 
     /**
      * Get Daily Pump Values
@@ -129,6 +124,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         // return null;
     }
 
+
     /**
      * Get Pump Values Range
      *
@@ -155,6 +151,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
         return dvr;
     }
+
 
     /**
      * Get Pump Values Range
@@ -202,6 +199,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
         return listPumpData;
     }
+
 
     /**
      * Get Daily Pump Values Extended
@@ -251,6 +249,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     }
 
+
     /**
      * Get Daily Pump Values Extended
      *
@@ -295,6 +294,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     }
 
+
     /**
      * Merge Daily Pump Data
      *
@@ -328,6 +328,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
             }
         }
     }
+
 
     /**
      * Merge Daily Pump Data
@@ -378,6 +379,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     }
 
+
     /**
      * Get Profiles
      *
@@ -413,6 +415,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
         return lst;
     }
+
 
     /**
      * Get Profiles
@@ -457,6 +460,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         return null;
 
     }
+
 
     /**
      * Get Profiles
@@ -513,6 +517,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     }
 
+
     /**
      * Get All Elements Count. This will count all elements in database that are from same device (source).
      *
@@ -523,22 +528,19 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         Integer in = null;
         int sum_all = 0;
 
+        // PumpInterface pe = (PumpInterface)
+        // dataAccess.getSelectedDeviceInstance();
+        // GregorianCalendar gc = new GregorianCalendar();
 
+        // gc.add(Calendar.MONTH, -1 * howManyMonthsOfDataStored());
 
-
-        //PumpInterface pe = (PumpInterface) m_da.getSelectedDeviceInstance();
-        //GregorianCalendar gc = new GregorianCalendar();
-
-
-
-        //gc.add(Calendar.MONTH, -1 * howManyMonthsOfDataStored());
-
-        //long dt_from = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY) * 10000;
+        // long dt_from = ATechDate.getATDateTimeFromGC(gc,
+        // ATechDate.FORMAT_DATE_ONLY) * 10000;
 
         Criteria criteria = this.getSession().createCriteria(PumpDataH.class);
         criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
         criteria.add(Restrictions.like("extended", "%" + m_da.getSourceDevice() + "%"));
-        //criteria.add(Restrictions.ge("dt_info", dt_from));
+        // criteria.add(Restrictions.ge("dt_info", dt_from));
         criteria.setProjection(Projections.rowCount());
         in = (Integer) criteria.list().get(0);
         sum_all = in.intValue();
@@ -559,7 +561,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         criteria = this.getSession().createCriteria(PumpProfileH.class);
         criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
         criteria.add(Restrictions.like("extended", "%" + m_da.getSourceDevice() + "%"));
-        //criteria.add(Restrictions.ge("active_from", dt_from));
+        // criteria.add(Restrictions.ge("active_from", dt_from));
         criteria.setProjection(Projections.rowCount());
         in = (Integer) criteria.list().get(0);
         sum_all += in.intValue();
@@ -570,30 +572,6 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
     }
 
 
-    private int howManyMonthsOfDataStored()
-    {
-        Object o = m_da.getSelectedDeviceInstance();
-        int howManyMonthsStored = -1;
-
-        if (o instanceof PumpInterface)
-        {
-            PumpInterface pe = (PumpInterface) m_da.getSelectedDeviceInstance();
-            howManyMonthsStored = pe.howManyMonthsOfDataStored();
-        }
-        else
-        {
-            PumpDeviceInstanceWithHandler dih = (PumpDeviceInstanceWithHandler)o;
-            howManyMonthsStored = dih.howManyMonthsOfDataStored();
-        }
-
-        if (howManyMonthsStored==-1)
-        {
-            howManyMonthsStored = 12;
-        }
-
-        return howManyMonthsStored;
-    }
-
     /**
      * Get Pump Values
      *
@@ -602,23 +580,15 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public Hashtable<String, DeviceValuesEntryInterface> getPumpValues(PumpDataReader pdr)
     {
-
         String sql = "";
 
-        GregorianCalendar gc = new GregorianCalendar();
-        gc.add(Calendar.MONTH, -1 * howManyMonthsOfDataStored());
-
         Hashtable<String, DeviceValuesEntryInterface> dt = new Hashtable<String, DeviceValuesEntryInterface>();
-
-        long dt_from = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
-
-        // String id = "";
 
         try
         {
             int counter = 0;
 
-            sql = "SELECT dv  "  //
+            sql = "SELECT dv  " //
                     + "from ggc.core.db.hibernate.pump.PumpDataH as dv " //
                     + "WHERE dv.extended like '%" + m_da.getSourceDevice() + "%' " //
                     + "and dv.person_id=" + m_da.getCurrentUserId() //
@@ -642,13 +612,17 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
                 pdr.writeStatus(counter);
             }
 
-//            sql = "SELECT dv from " + "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + "WHERE dv.dt_info >=  "
-//                    + dt_from + "000000 and dv.person_id=" + m_da.getCurrentUserId() + " ORDER BY dv.dt_info ";
+            // sql = "SELECT dv from " +
+            // "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " +
+            // "WHERE dv.dt_info >=  "
+            // + dt_from + "000000 and dv.person_id=" +
+            // dataAccess.getCurrentUserId() + " ORDER BY dv.dt_info ";
 
             sql = "SELECT dv from " //
                     + "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv "
-                    + "WHERE dv.extended like '%" + m_da.getSourceDevice() + "%' "
-                    + "and dv.person_id=" + m_da.getCurrentUserId()
+                    + "WHERE dv.extended like '%"
+                    + m_da.getSourceDevice() + "%' " + "and dv.person_id="
+                    + m_da.getCurrentUserId()
                     + " ORDER BY dv.dt_info ";
 
             q = this.db.getSession().createQuery(sql);
@@ -668,13 +642,17 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
                 pdr.writeStatus(counter);
             }
 
-//            sql = "SELECT dv from ggc.core.db.hibernate.pump.PumpProfileH as dv " + "WHERE dv.active_from >= "
-//                    + dt_from + " and dv.person_id=" + m_da.getCurrentUserId() + " ORDER BY dv.active_from ";
+            // sql =
+            // "SELECT dv from ggc.core.db.hibernate.pump.PumpProfileH as dv " +
+            // "WHERE dv.active_from >= "
+            // + dt_from + " and dv.person_id=" + dataAccess.getCurrentUserId()
+            // + " ORDER BY dv.active_from ";
 
             sql = "SELECT dv " //
                     + "from ggc.core.db.hibernate.pump.PumpProfileH as dv "
-                    + "WHERE dv.extended like '%" + m_da.getSourceDevice() + "%' "
-                    + " and dv.person_id=" + m_da.getCurrentUserId()
+                    + "WHERE dv.extended like '%"
+                    + m_da.getSourceDevice() + "%' " + " and dv.person_id="
+                    + m_da.getCurrentUserId()
                     + " ORDER BY dv.active_from ";
 
             q = this.db.getSession().createQuery(sql);
@@ -712,6 +690,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
         return dt;
     }
+
 
     public GraphValuesCollection getGraphData(GregorianCalendar gc_from, GregorianCalendar gc_to, int filter)
     {

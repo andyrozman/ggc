@@ -532,6 +532,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
             this.saveData();
 
+            this.m_da.resetSelectedDeviceInstance();
+
             this.dispose();
             m_da.removeComponent(this);
         }
@@ -567,15 +569,21 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     }
 
+
+
+
     private void setSelectedDeviceFromObject(Object selected)
     {
+
         if (selected instanceof DeviceInstanceWithHandler)
         {
             this.currentDeviceV2 = (DeviceInstanceWithHandler)selected;
+            this.currentDeviceV1 = null;
         }
         else
         {
             this.currentDeviceV1 = (DeviceInterface)selected;
+            this.currentDeviceV2 = null;
         }
     }
 

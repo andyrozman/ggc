@@ -27,9 +27,6 @@
 
 package ggc.core.test;
 
-import ggc.core.db.hibernate.FoodUserDescriptionH;
-import ggc.core.util.DataAccess;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +40,9 @@ import org.hibernate.Transaction;
 
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.core.db.hibernate.FoodUserDescriptionH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -78,6 +78,7 @@ public class ImportDacioDb extends ImportTool
 
     DataAccess m_da = DataAccess.getInstance();
 
+
     /**
      * @param file_name
      */
@@ -89,6 +90,7 @@ public class ImportDacioDb extends ImportTool
         this.restore_file = new File(file_name);
     }
 
+
     /**
      * @param file_name
      * @param ff
@@ -99,6 +101,7 @@ public class ImportDacioDb extends ImportTool
         this.restore_file = new File(file_name);
     }
 
+
     /**
      * @see com.atech.db.hibernate.transfer.ImportExportAbstract#getActiveSession()
      */
@@ -107,6 +110,7 @@ public class ImportDacioDb extends ImportTool
     {
         return 2;
     }
+
 
     /**
      * 
@@ -220,7 +224,7 @@ public class ImportDacioDb extends ImportTool
 
                 // System.out.println("C: " + this.getCollectionString(lst));
                 // String s = count + "|" + name + "|" +
-                // m_da.makeI18nKeyword(name) + "|" + grps_co.get(group) +
+                // dataAccess.makeI18nKeyword(name) + "|" + grps_co.get(group) +
                 // "|0.0|null|null|" + this.getCollectionString(lst) + "|" +
                 // System.currentTimeMillis();
 
@@ -260,6 +264,7 @@ public class ImportDacioDb extends ImportTool
 
     }
 
+
     private String getKcal(String kj)
     {
         // 1 kilojoule = 0.239005736 kilocalories
@@ -276,6 +281,7 @@ public class ImportDacioDb extends ImportTool
         return DataAccess.Decimal1Format.format(f * 0.238845897f);
     }
 
+
     /**
      * @param lst
      * @param id
@@ -289,6 +295,7 @@ public class ImportDacioDb extends ImportTool
         lst.add(new DacioDbData(id, value));
 
     }
+
 
     /**
      * @param lst
@@ -316,6 +323,7 @@ public class ImportDacioDb extends ImportTool
         return sb.toString();
     }
 
+
     /**
      * @param s
      * @return
@@ -337,6 +345,7 @@ public class ImportDacioDb extends ImportTool
         return s1;
     }
 
+
     /**
      * 
      */
@@ -347,6 +356,7 @@ public class ImportDacioDb extends ImportTool
 
     private class DacioDbData implements Comparable<DacioDbData>
     {
+
         public DacioDbData(int id, String value)
         {
             this.id = id;
@@ -355,6 +365,7 @@ public class ImportDacioDb extends ImportTool
 
         public int id;
         public String value;
+
 
         @SuppressWarnings("unused")
         public int compare(DacioDbData ddd1, DacioDbData ddd2)
@@ -366,6 +377,7 @@ public class ImportDacioDb extends ImportTool
             else
                 return 1;
         }
+
 
         public int compareTo(DacioDbData din)
         {
@@ -379,6 +391,7 @@ public class ImportDacioDb extends ImportTool
 
         }
 
+
         @Override
         public String toString()
         {
@@ -386,6 +399,7 @@ public class ImportDacioDb extends ImportTool
         }
 
     }
+
 
     /**
      * @param args

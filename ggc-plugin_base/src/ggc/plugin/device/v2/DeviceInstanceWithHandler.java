@@ -1,8 +1,12 @@
 package ggc.plugin.device.v2;
 
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.data.enums.DeviceCompanyDefinition;
 import ggc.plugin.data.enums.DevicePortParameterType;
@@ -15,55 +19,57 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-import org.apache.commons.lang.StringUtils;
-
 
 /**
  * Created by andy on 10.02.15.
  */
 public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 {
+
     DataAccessPlugInBase dataAccessPlugInBase;
     DeviceDefinition deviceDefinitionBase;
     DeviceHandler deviceHandler;
     String deviceSourceName;
 
+
     public DeviceInstanceWithHandler(DeviceDefinition deviceDefinition, DataAccessPlugInBase dataAccessPlugInBase)
     {
         this.deviceDefinitionBase = deviceDefinition;
-        this.deviceHandler = DeviceHandlerManager.getInstance().getDeviceHandler(deviceDefinition.getDeviceHandlerKey());
+        this.deviceHandler = DeviceHandlerManager.getInstance()
+                .getDeviceHandler(deviceDefinition.getDeviceHandlerKey());
         this.deviceSourceName = this.getCompany().getName() + " / " + this.getName();
         this.dataAccessPlugInBase = dataAccessPlugInBase;
 
-        //System.out.println("Def key: " + deviceDefinition.getDeviceHandlerKey());
+        // System.out.println("Def key: " +
+        // deviceDefinition.getDeviceHandlerKey());
 
-        //DeviceHandlerManager.getInstance()
+        // DeviceHandlerManager.getInstance()
 
+        // System.out.println("Device Handler: " + this.deviceHandler);
 
-
-        //System.out.println("Device Handler: " + this.deviceHandler);
-
-//        initLocal();
+        // initLocal();
     }
 
 
-//    public abstract void initLocal();
-
+    // public abstract void initLocal();
 
     public String getName()
     {
         return this.deviceDefinitionBase.getDeviceName();
     }
 
+
     public String getIconName()
     {
         return this.deviceDefinitionBase.getIconName();
     }
 
+
     public int getDeviceId()
     {
         return this.deviceDefinitionBase.getDeviceId();
     }
+
 
     public String getInstructions()
     {
@@ -77,26 +83,29 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
     }
 
 
-
     public String getDeviceSpecialComment()
     {
         return this.deviceDefinitionBase.getSpecialComment();
     }
+
 
     public DeviceProgressStatus getDeviceProgressStatus()
     {
         return this.deviceDefinitionBase.getDeviceProgressStatus();
     }
 
+
     public DeviceConnectionProtocol getConnectionProtocol()
     {
         return this.deviceDefinitionBase.getConnectionProtocol();
     }
 
+
     public boolean validateConnectionParameters(String param)
     {
         return (!StringUtils.isBlank(param));
     }
+
 
     public DevicePortParameterType getDevicePortParameterType()
     {
@@ -109,10 +118,12 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
         // FIXME
     }
 
+
     public DownloadSupportType getDownloadSupportType()
     {
         return this.deviceDefinitionBase.getDeviceHandlerKey().getDownloadSupportType();
     }
+
 
     public String getDeviceSourceName()
     {
@@ -126,26 +137,27 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
     }
 
 
-
     // -------------------------------------------------------
-    // -----      Has Special Config  (Can be overriden if required )
+    // ----- Has Special Config (Can be overriden if required )
     // -------------------------------------------------------
-
 
     public boolean hasSpecialConfig()
     {
         return false;
     }
 
+
     public DeviceSpecialConfigPanelInterface getSpecialConfigPanel()
     {
         return null;
     }
 
+
     public void initSpecialConfig()
     {
 
     }
+
 
     public boolean hasDefaultParameter()
     {
@@ -154,7 +166,7 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 
 
     // -------------------------------------------------------
-    // -----             Handler Methods
+    // ----- Handler Methods
     // -------------------------------------------------------
 
     public void readDeviceData(Object connectionParameters, OutputWriter outputWriter) throws PlugInBaseException
@@ -170,23 +182,23 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
         this.deviceHandler.readConfiguration(deviceDefinitionBase, connectionParameters, outputWriter);
     }
 
-    public GGCPlugInFileReaderContext[] getFileDownloadContext(DownloadSupportType downloadSupportType)
-    {
-        //return this.deviceDefinitionBase.getDeviceHandlerKey().getDownloadSupportType();
 
-        return this.deviceHandler.getFileDownloadContext(downloadSupportType);
+    public List<GGCPlugInFileReaderContext> getFileDownloadContexts(DownloadSupportType downloadSupportType)
+    {
+        System.out.println("deviceHandler: " + this.deviceHandler);
+        return this.deviceHandler.getFileDownloadContexts(downloadSupportType);
     }
 
 
     // -------------------------------------------------------
-    // -----                Has Pre Init  (Can be overriden if required )
+    // ----- Has Pre Init (Can be overriden if required )
     // -------------------------------------------------------
-
 
     public boolean hasPreInit()
     {
         return false;
     }
+
 
     public void preInitDevice()
     {
@@ -194,14 +206,14 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 
 
     // -------------------------------------------------------
-    // -----             Selectable Interface
+    // ----- Selectable Interface
     // -------------------------------------------------------
-
 
     public long getItemId()
     {
         return 0;
     }
+
 
     /**
      * getShortDescription
@@ -210,6 +222,7 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
     {
         return this.getName();
     }
+
 
     /**
      * getColumnCount - return number of displayable columns
@@ -220,6 +233,7 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
     {
         return dataAccessPlugInBase.getPluginDeviceUtil().getColumnCount();
     }
+
 
     /**
      * getColumnName - return name of specified column
@@ -232,6 +246,7 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
         return dataAccessPlugInBase.getPluginDeviceUtil().getColumnName(num);
     }
 
+
     /**
      * getColumnValue - return value of specified column
      *
@@ -243,6 +258,7 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
         return dataAccessPlugInBase.getPluginDeviceUtil().getColumnValue(num, this);
     }
 
+
     /**
      * getColumnValueObject - return value of specified column
      *
@@ -253,6 +269,7 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
     {
         return this.getColumnValue(num);
     }
+
 
     /**
      * getColumnWidth - return width of specified column
@@ -267,55 +284,49 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
     }
 
 
-
     public boolean isFound(String text)
     {
-        //return this.deviceSourceName.contains(text);
+        // return this.deviceSourceName.contains(text);
         return true;
     }
+
 
     public boolean isFound(int value)
     {
         return true;
     }
 
+
     public boolean isFound(int from, int till, int state)
     {
         return true;
     }
+
 
     public void setSearchContext()
     {
 
     }
 
+
     public void setColumnSorter(ColumnSorter cs)
     {
 
     }
+
 
     public int compareTo(SelectableInterface o)
     {
         return 0;
     }
 
-
-
-
     // ----------
     // --- Add to DeviceDefintion
     // -----------
 
-
-
-
-
-
     // ----------
-    // --- Compliance with Device Interface , should be removed when we remove old device framework
+    // --- Compliance with Device Interface , should be removed when we remove
+    // old device framework
     // -----------
-
-
-
 
 }

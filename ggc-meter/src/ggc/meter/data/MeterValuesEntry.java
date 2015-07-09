@@ -1,19 +1,8 @@
 package ggc.meter.data;
 
-import ggc.core.data.ExtendedDailyValue;
-import ggc.core.db.hibernate.DayValueH;
-import ggc.core.db.hibernate.GGCHibernateObject;
-import ggc.core.util.DataAccess;
-import ggc.meter.util.DataAccessMeter;
-import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.data.enums.DeviceEntryStatus;
-import ggc.plugin.output.OutputUtil;
-import ggc.plugin.output.OutputWriterType;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,6 +12,14 @@ import org.hibernate.Transaction;
 import com.atech.db.ext.ExtendedHandler;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.data.defs.DailyValuesExtendedType;
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.db.hibernate.DayValueH;
+import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.data.enums.DeviceEntryStatus;
+import ggc.plugin.output.OutputWriterType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -50,46 +47,23 @@ import com.atech.utils.data.ATechDate;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class MeterValuesEntry extends DeviceValuesEntry // extends
-                                                        // OutputWriterData
+public class MeterValuesEntry extends DeviceValuesEntry
 {
-    DataAccessMeter da = DataAccessMeter.getInstance();
-    I18nControlAbstract m_ic = da.getI18nControlInstance();
+
+    private static final Log log = LogFactory.getLog(MeterValuesEntry.class);
+
+    private static DataAccessMeter da = DataAccessMeter.getInstance();
+    private static I18nControlAbstract ic = da.getI18nControlInstance();
+    private static ExtendedHandler extendedDailyValueHandler = da.getExtendedDailyValueHandler();
+
     private ATechDate datetime;
-    private String bg_str;
-    private int bg_unit = DataAccessMeter.BG_MGDL;
-
-    private static Log log = LogFactory.getLog(MeterValuesEntry.class);
-
-    // public boolean checked = false;
-    // public
+    private Integer bgOriginal = null;
+    private Float ch = null;
     private Hashtable<String, String> params;
-    // public int status = 1; //MeterValuesEntry.
-    // private static I18nControl i18nControlAbstract = I18nControl.getInstance();
-
-    private String bg_original = null;
-    private OutputUtil util = OutputUtil.getInstance();
-    private String value_db = null;
-
-    private static ExtendedHandler eh_dailyValue;
-
-    private float bg_mmolL;
-    private int bg_mgdL;
-
-    // private float ch;
-
-    Hashtable<Integer, MeterValuesEntrySpecial> special_entries = null;
-    // new Hashtable<Integer, MeterValuesEntrySpecial>();
-    int special_entry_first = -1;
-
-    @SuppressWarnings("unused")
-    private boolean entry_changed = false;
-
-    /**
-     * Entry object
-     */
+    private Float bgMmolL;
     public DayValueH entry_object = null;
-
+    private HashMap<String, String> extendedMap;
+    public MeterValuesEntryDataType extendedType = MeterValuesEntryDataType.None;
 
     /**
      * Constructor
@@ -98,6 +72,8 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
     {
         super();
         this.source = DataAccessMeter.getInstance().getSourceDevice();
+        this.loadExtendedEntries(null);
+        resetExtendedType();
     }
 
     /**
@@ -108,34 +84,18 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
     {
         super();
         this.datetime = new ATechDate(this.getDateTimeFormat(), dv.getDt_info());
-        this.value_db = "" + dv.getBg();
-        this.bg_original = "" + dv.getBg();
-        this.bg_unit = DataAccessPlugInBase.BG_MGDL;
+        this.setBgValue("" + dv.getBg(), GlucoseUnitType.mg_dL);
         this.entry_object = dv;
         this.object_status = DeviceValuesEntry.OBJECT_STATUS_OLD;
+        this.ch = dv.getCh();
 
-        if (dv.getCh() > 0.0)
-        {
-            this.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH, "" + dv.getCh());
-        }
+        this.loadExtendedEntries(dv.getExtended());
 
-        this.loadSpecialEntries(dv.getExtended());
+        // comments ?
+
+        resetExtendedType();
     }
 
-    /**
-     * Constructor
-     * 
-     * @param mves
-     */
-    public MeterValuesEntry(MeterValuesEntrySpecial mves)
-    {
-        this.datetime = new ATechDate(this.getDateTimeFormat(), mves.datetime_tag);
-        this.source = mves.source;
-
-        // System.out.println("Source:" + this.source);
-
-        this.addSpecialEntry(mves);
-    }
 
     /**
      * Set DateTime Object (ATechDate)
@@ -187,111 +147,39 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
         }
 
         this.params.put(key, value);
-
     }
 
-    /**
-     * Set Bg Unit
-     * 
-     * @param bg_type
-     */
-    public void setBgUnit(int bg_type)
+
+    public void setBgValue(String value, GlucoseUnitType unitType)
     {
-        this.bg_unit = bg_type;
+        this.setBgValue(value, unitType, true);
     }
 
-    /**
-     * Get Bg Unit
-     * 
-     * @return
-     */
-    public int getBgUnit()
-    {
-        return this.bg_unit;
-    }
 
     /**
      * Set Bg Value (String)
      * 
      * @param value as string
      */
-    public void setBgValue(String value)
+    public void setBgValue(String value, GlucoseUnitType unitType, boolean resetExtendedType)
     {
-        this.bg_str = value;
-
-        // set value_db for comparing values, v2
-        if (this.bg_unit == OutputUtil.BG_MGDL)
+        if (unitType == GlucoseUnitType.mg_dL)
         {
-            this.value_db = value;
-            bg_mgdL = Integer.parseInt(this.value_db);
-            bg_mmolL = this.util.getBGValueDifferent(OutputUtil.BG_MGDL, bg_mgdL);
+            this.bgOriginal = da.getIntValueFromString(value);
+            this.bgMmolL = da.getBGValueFromDefault(GlucoseUnitType.mmol_L, this.bgOriginal);
         }
         else
         {
-            this.value_db = "" + (int) this.util.getBGValueDifferent(OutputUtil.BG_MMOL, Float.parseFloat(value));
+            this.bgMmolL = da.getFloatValueFromString(value);
 
-            // DataAccess.getInstance().
-            bg_mmolL = Float.parseFloat(DataAccess.Decimal1Format.format(Float.parseFloat(value.replace(",", ".")))
-                    .replace(",", "."));
-            bg_mgdL = (int) this.util.getBGValueDifferent(OutputUtil.BG_MMOL, bg_mmolL);
-
+            Float f = da.getBGValueByType(GlucoseUnitType.mmol_L, GlucoseUnitType.mg_dL, this.bgMmolL);
+            this.bgOriginal = f.intValue();
         }
 
-        if (this.bg_original == null)
-        {
-            this.setDisplayableBGValue(value);
-        }
+        if (resetExtendedType)
+            resetExtendedType();
     }
 
-    /**
-     * Get Bg Value (String)
-     * @return
-     */
-    public String getBgValue()
-    {
-        return this.bg_str;
-    }
-
-    /**
-     * Set Displayable Bg Value
-     * @param value
-     */
-    public void setDisplayableBGValue(String value)
-    {
-        bg_original = value;
-    }
-
-    /**
-     * Get Bg Value by Type
-     * @param st
-     * @return
-     */
-    public String getBGValue(int st)
-    {
-
-        if (this.bg_original == null)
-            return null;
-        else
-        {
-            if (this.bg_unit == OutputUtil.BG_MMOL)
-            {
-                if (st == OutputUtil.BG_MMOL)
-                    return this.bg_original;
-                else
-                    return ""
-                            + (int) this.util.getBGValueDifferent(OutputUtil.BG_MMOL,
-                                Float.parseFloat(this.bg_original));
-            }
-            else
-            {
-                if (st == OutputUtil.BG_MGDL)
-                    return this.bg_original;
-                else
-                    return DataAccessPlugInBase.Decimal1Format.format(this.util.getBGValueDifferent(OutputUtil.BG_MGDL,
-                        Float.parseFloat(this.bg_original)));
-            }
-        }
-    }
 
     /**
      * Get Parameter as String
@@ -315,88 +203,6 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
 
     }
 
-    /**
-     * Prepare Entry
-     */
-    @Override
-    public void prepareEntry()
-    {
-        if (this.object_status == DeviceValuesEntry.OBJECT_STATUS_OLD)
-            return;
-        else if (this.object_status == DeviceValuesEntry.OBJECT_STATUS_EDIT)
-        {
-            if (this.bg_original != null)
-            {
-                this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-            }
-
-            // processSpecialEntries();
-            // this.loadSpecialEntries(this.entry_object.getExtended());
-            this.saveSpecialEntries();
-
-            this.entry_object.setChanged(System.currentTimeMillis());
-            this.entry_object.setComment(createComment());
-        }
-        else
-        {
-            this.entry_object = new DayValueH();
-            this.entry_object.setIns1(0);
-            this.entry_object.setIns2(0);
-            this.entry_object.setCh(0.0f);
-
-            if (this.bg_original != null)
-            {
-                this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-            }
-
-            // this.loadSpecialEntries(this.entry_object.getExtended());
-
-            // processSpecialEntries();
-            this.saveSpecialEntries();
-
-            /*
-             * if (this.special_entry)
-             * this.entry_object.setExtended(this.getSpecialEntryDbEntry()+";" +
-             * "SOURCE=" + DataAccessMeter.getInstance().getSourceDevice());
-             * else
-             * {
-             * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil
-             * .BG_MGDL)));
-             * this.entry_object.setExtended("SOURCE=" +
-             * DataAccessMeter.getInstance().getSourceDevice());
-             * }
-             */
-
-            // this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-            this.entry_object.setDt_info(this.getDateTime());
-            this.entry_object.setChanged(System.currentTimeMillis());
-            // this.entry_object.setExtended("SOURCE=" +
-            // DataAccessMeter.getInstance().getSourceDevice());
-            this.entry_object.setComment(createComment());
-        }
-    }
-
-    /**
-     * Entry: None
-     */
-    public static final int ENTRY_NONE = 0;
-
-    /**
-     * Entry: BG
-     */
-    public static final int ENTRY_BG = 1;
-
-    /**
-     * Entry: Special
-     */
-    public static final int ENTRY_SPECIAL = 2;
-
-    /**
-     * Entry: Combined
-     */
-    public static final int ENTRY_COMBINED = 3;
-
-
 
 
     /**
@@ -405,22 +211,6 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
     @Override
     public void prepareEntry_v2()
     {
-        // SPECIAL_METER_FLAGS
-        // we use this for old values, to correctly read extended flags, if you
-        // used special meters codes
-        // (non BG), then you will need to modify this
-
-        if (eh_dailyValue == null)
-        {
-            eh_dailyValue = DataAccessMeter.getInstance()
-                    .getExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow);
-        }
-
-        if (this.entry_object == null)
-            return;
-
-        this.loadSpecialEntries(this.entry_object.getExtended());
-
     }
 
     /**
@@ -436,12 +226,7 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
         return this.entry_object;
     }
 
-    /*
-     * public DayValueH getDbObject()
-     * {
-     * return this.entry_object;
-     * }
-     */
+
 
     /**
      * Create Comment
@@ -466,9 +251,10 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
     @Override
     public String toString()
     {
+        // FIXME
         // OutputUtil o= null;
-        return "MeterValuesEntry [date/time=" + this.datetime.getDateTimeString() + ",bg=" + this.bg_str + " "
-                + OutputUtil.getBGUnitName(this.bg_unit) + "]";
+        return "MeterValuesEntry [date/time=" + this.datetime.getDateTimeString() + ",bg=" + this.bgOriginal + " mg/dL"
+                + "]";
     }
 
     /**
@@ -490,56 +276,21 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
 
             case OutputWriterType.GGC_FILE_EXPORT:
                 {
-                    int val = 0;
-
-                    if (this.getBgUnit() == OutputUtil.BG_MMOL)
-                    {
-                        float fl = Float.parseFloat(this.getBgValue());
-                        val = (int) OutputUtil.getInstance().getBGValueDifferent(this.getBgUnit(), fl);
-
-                    }
-                    else
-                    {
-                        try
-                        {
-                            val = Integer.parseInt(this.getBgValue());
-                        }
-                        catch (Exception ex)
-                        {
-                            val = 0;
-                        }
-                    }
-
-                    String parameters = this.getParametersAsString();
-
-                    /*
-                     * if (parameters.equals(""))
-                     * System.out.println(mve.getDateTime().getDateTimeString()
-                     * + " = " + mve.getBgValue() + " " +
-                     * this.out_util.getBGTypeName(mve.getBgUnit()));
-                     * else
-                     * System.out.println(mve.getDateTime().getDateTimeString()
-                     * + " = " + mve.getBgValue() + " " +
-                     * this.out_util.getBGTypeName(mve.getBgUnit()) +
-                     * " Params: " + parameters );
-                     */
-
                     // Columns: id; dt_info; bg; ins1; ins2; ch; meals_ids;
                     // extended; person_id; comment; changed
 
-                    String v = "0|" + this.getDateTime() + "|" + val + "|0.0|0.0|";
+                    String v = "0|" + this.getDateTime() + "|" + this.bgOriginal + "|0.0|0.0|";
 
-                    if (this.special_entries.containsKey(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH))
+                    if (this.hasCHEntry())
                     {
-                        v += this.special_entries.get(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH).special_entry_value
-                                .replace(',', '.');
+                        v += this.da.getFormatedValueUS(this.ch, 1);
                     }
                     else
                     {
                         v += "0.0";
                     }
 
-                    v += "|null|" + this.createExtendedValueDailyValuesH() + "|1|" + parameters + "|"
+                    v += "|null|" + this.createExtendedValueDailyValuesH() + "|1|" + this.getParametersAsString() + "|"
                             + System.currentTimeMillis();
 
                     return v;
@@ -585,10 +336,10 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
                 return this.getDateTimeObject().getDateTimeString();
 
             case 1:
-                return this.bg_mgdL; // mve.getBGValue(DataAccessMeter.BG_MMOL);
+                return this.bgOriginal;
 
             case 2:
-                return this.bg_mmolL; // mve.getBGValue(DataAccessMeter.BG_MGDL);
+                return this.bgMmolL;
 
             case 3:
                 return this.getStatusType();
@@ -637,24 +388,6 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
         return ATechDate.FORMAT_DATE_AND_TIME_MIN;
     }
 
-    /**
-     * Get Db Objects
-     * 
-     * @return ArrayList of elements extending GGCHibernateObject
-     */
-    @Override
-    public ArrayList<? extends GGCHibernateObject> getDbObjects()
-    {
-        prepareEntry();
-        ArrayList<DayValueH> lst = new ArrayList<DayValueH>();
-
-        if (this.entry_object != null)
-        {
-            lst.add(this.entry_object);
-        }
-
-        return lst;
-    }
 
     /**
      * Get Value For Item
@@ -722,10 +455,6 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
         return this.getColumnValue(index);
     }
 
-    public void setStatusType(DeviceEntryStatus status)
-    {
-
-    }
 
     /**
      * Get Special Id
@@ -734,13 +463,7 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
      */
     public String getSpecialId()
     {
-        if (this.getEntryType() == MeterValuesEntry.ENTRY_BG)
-            return "MVE_" + this.datetime.getATDateTimeAsLong() + "_BG";
-        else if (this.getEntryType() == MeterValuesEntry.ENTRY_SPECIAL)
-            return "MVE_" + this.datetime.getATDateTimeAsLong() + "_SP_"
-                    + this.special_entries.get(this.special_entry_first).special_entry_id;
-        else
-            return "MVE_" + this.datetime.getATDateTimeAsLong() + "_CMB";
+        return "MVE_" + this.datetime.getATDateTimeAsLong();
     }
 
     /**
@@ -749,7 +472,7 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
      */
     public String getObjectUniqueId()
     {
-        return "";
+        return null;
     }
 
     /**
@@ -791,37 +514,16 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
         return false;
     }
 
-    private void processEntry(Session sess, String act)
+
+    private void processEntry(Session sess, String action)
     {
-        if (this.object_status == DeviceValuesEntry.OBJECT_STATUS_OLD)
-        {
-            log.debug("Exiting. Status was old. Action was: " + act);
-            return;
-        }
-        else if (this.object_status == DeviceValuesEntry.OBJECT_STATUS_EDIT)
+        if (action.equals("Edit")) // DeviceValuesEntry.OBJECT_STATUS_EDIT)
         {
             Transaction tx = sess.beginTransaction();
 
-            if (this.hasSpecialEntries())
-            {
-                if (this.special_entries.containsKey(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH))
-                {
-                    this.entry_object.setCh(Float.parseFloat(this.special_entries
-                            .get(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH).special_entry_value.replace(',', '.')));
-                }
-            }
+            prepareObjectForEdit();
 
-            this.entry_object.setExtended(this.createExtendedValueDailyValuesH());
-
-            if (this.hasBgEntry())
-            {
-                this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-            }
-
-            this.entry_object.setChanged(System.currentTimeMillis());
-            this.entry_object.setComment(createComment());
-            this.entry_object.setPerson_id((int) DataAccessMeter.getInstance().getCurrentUserId());
-            log.debug("Updated. Status was Edit. Action was: " + act);
+            // log.debug("Updated. Status was Edit. Action was: " + act);
 
             sess.update(this.entry_object);
 
@@ -831,49 +533,47 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
         {
             Transaction tx = sess.beginTransaction();
 
-            this.entry_object = new DayValueH();
-            this.entry_object.setIns1(0);
-            this.entry_object.setIns2(0);
-            this.entry_object.setCh(0.0f);
-            this.entry_object.setPerson_id((int) DataAccessMeter.getInstance().getCurrentUserId());
+            prepareObjectForAdd();
 
-            if (this.hasSpecialEntries())
-            {
-                if (this.special_entries.containsKey(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH))
-                {
-                    this.entry_object.setCh(Float.parseFloat(this.special_entries
-                            .get(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH).special_entry_value.replace(',', '.')));
-                }
-            }
+            prepareObjectForEdit();
 
-            this.entry_object.setExtended(this.createExtendedValueDailyValuesH());
-
-            if (this.hasBgEntry())
-            {
-                this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
-            }
-
-            this.entry_object.setDt_info(this.getDateTime());
-            this.entry_object.setChanged(System.currentTimeMillis());
-            this.entry_object.setComment(createComment());
-
-            log.debug("Added. Status was Add. Action was: " + act);
+            // log.debug("Added. Status was Add. Action was: " + act);
             Long id = (Long) sess.save(this.entry_object);
-
-            // System.out.println("Dt: " +
-            // this.getDateTimeObject().getDateTimeString() +
-            // this.getBgValue());
-            // System.out.println("Add: Id=" + id.longValue());
 
             tx.commit();
 
             this.setId(id.longValue());
-
-            // return "" + id.longValue();
-
         }
-
     }
+
+
+    public void prepareObjectForAdd()
+    {
+        this.entry_object = new DayValueH();
+        this.entry_object.setIns1(0);
+        this.entry_object.setIns2(0);
+        this.entry_object.setCh(0.0f);
+        this.entry_object.setPerson_id((int) DataAccessMeter.getInstance().getCurrentUserId());
+        this.entry_object.setDt_info(this.getDateTime());
+    }
+
+
+    public void prepareObjectForEdit()
+    {
+        if (this.bgOriginal != null)
+            this.entry_object.setBg(this.bgOriginal); // Integer.parseInt(this.getBGValue(OutputUtil.BG_MGDL)));
+
+        if (this.ch != null)
+            this.entry_object.setCh(this.ch);
+
+        this.entry_object.setExtended(this.createExtendedValueDailyValuesH());
+
+        this.entry_object.setChanged(System.currentTimeMillis());
+        this.entry_object.setComment(createComment());
+        this.entry_object.setPerson_id((int) DataAccessMeter.getInstance().getCurrentUserId());
+        // log.debug("Updated. Status was Edit. Action was: " + act);
+    }
+
 
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
@@ -952,7 +652,10 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
      */
     public String getValue()
     {
-        return this.value_db;
+        // if (this.value_db!=null)
+        // return this.value_db;
+        // else
+        return this.getValueFull();
     }
 
     /**
@@ -966,16 +669,14 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
 
         StringBuffer sb = new StringBuffer();
 
-        if (this.hasBgEntry())
+        if (this.hasBGEntry())
         {
-            sb.append("BG=" + this.getBGValue(DataAccessPlugInBase.BG_MGDL) + ";");
+            sb.append("BG=" + this.bgOriginal + ";");
         }
 
-        if (this.hasSpecialEntries() && this.special_entries.containsKey(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH))
+        if (this.hasCHEntry())
         {
-            sb.append("CH="
-                    + this.special_entries.get(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH).getValueValue()
-                            .replace(',', '.') + ";");
+            sb.append("CH=" + da.getFormatedValueUS(this.ch, 1));
         }
 
         sb.append(this.createExtendedValueDailyValuesH());
@@ -1032,158 +733,138 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
     // ---
 
     /**
-     * Special Entry: Urine - Ketones (mmol/L)
-     */
-    // public static final int SPECIAL_ENTRY_URINE_MMOLL = 1;
-
-    /**
-     * Special Entry: Urine - Ketones (mmol/L)
-     */
-    // public static final int SPECIAL_ENTRY_URINE_MGDL = 2;
-
-    /**
-     * Special Entry: CH
-     */
-    // public static final int SPECIAL_ENTRY_CH = 3;
-
-    /**
-     * Set Special Entry
-     * 
-     * @param type
-     * @param value
-     */
-    public void addSpecialEntry(int type, String value)
-    {
-        if (this.special_entries == null)
-        {
-            this.special_entries = new Hashtable<Integer, MeterValuesEntrySpecial>();
-            this.special_entry_first = type;
-        }
-
-        MeterValuesEntrySpecial sp = new MeterValuesEntrySpecial(type, value);
-        this.special_entries.put(type, sp);
-    }
-
-    /**
      * Has BG entry
      * 
      * @return
      */
-    public boolean hasBgEntry()
+    public boolean hasBGEntry()
     {
-        return this.bg_original != null;
+        return checkNotNulOrGreaterThanZero(this.bgOriginal);
     }
 
-    /**
-     * Has special entries
-     * 
-     * @return
-     */
-    public boolean hasSpecialEntries()
+
+    public boolean hasCHEntry()
     {
-        if (this.special_entries == null)
+        return checkNotNulOrGreaterThanZero(this.ch);
+    }
+
+
+    public boolean hasUrine()
+    {
+        if (extendedMap == null)
+        {
+            return false;
+        }
+        else
+            return extendedDailyValueHandler.isExtendedValueSet(DailyValuesExtendedType.Urine.getCode(), extendedMap);
+    }
+
+
+    public String getUrineValue()
+    {
+        return extendedDailyValueHandler.getExtendedValue(DailyValuesExtendedType.Urine.getCode(), extendedMap);
+    }
+
+
+    private boolean checkNotNulOrGreaterThanZero(Number number)
+    {
+        if (number == null)
             return false;
         else
-            return this.special_entries.size() != 0;
+            return number.floatValue() > 0;
     }
 
-    Hashtable<String, String> ht_ext = null;
 
-    private void loadSpecialEntries(String s)
+    private void loadExtendedEntries(String extEntry)
     {
-        // extend this method if you wish to extended this class to use other
-        // DailyValuesExtended entries
-        this.ht_ext = this.da.getExtendedDailyValueHandler().loadExtended(s);
-
-        // FIXME
-        // ExtendedDailyValue
-
-        // System.out.println("HtExt: " + ht_ext);
-
-        for (Enumeration<String> en = ht_ext.keys(); en.hasMoreElements();)
+        if (extEntry != null && extEntry.length() > 0)
         {
-            String key = en.nextElement();
-
-            if (key.equals(da.getExtendedDailyValueHandler().getExtendedTypeDescription(
-                ExtendedDailyValue.EXTENDED_URINE)))
-            {
-                // urine is only one that is not uniquely processed
-                String val = ht_ext.get(key);
-
-                this.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_COMBINED, val);
-
-                /*
-                 * if (val.toLowerCase().contains("mmol"))
-                 * {
-                 * this.special_entries.put(MeterValuesEntrySpecial.
-                 * SPECIAL_ENTRY_URINE_MMOLL,
-                 * new MeterValuesEntrySpecial(MeterValuesEntrySpecial.
-                 * SPECIAL_ENTRY_URINE_MMOLL, val));
-                 * }
-                 * else if (val.toLowerCase().contains("mg"))
-                 * {
-                 * this.special_entries.put(MeterValuesEntrySpecial.
-                 * SPECIAL_ENTRY_URINE_MGDL,
-                 * new MeterValuesEntrySpecial(MeterValuesEntrySpecial.
-                 * SPECIAL_ENTRY_URINE_MGDL, val));
-                 * }
-                 * else
-                 * {
-                 * this.special_entries.put(MeterValuesEntrySpecial.
-                 * SPECIAL_ENTRY_URINE_DESCRIPTIVE,
-                 * new MeterValuesEntrySpecial(MeterValuesEntrySpecial.
-                 * SPECIAL_ENTRY_URINE_MGDL, val));
-                 * }
-                 */
-            }
-            else if (key.equals(da.getExtendedDailyValueHandler().getExtendedTypeDescription(
-                ExtendedDailyValue.EXTENDED_SOURCE)))
-            {
-                this.source = ht_ext.get(key);
-                // System.out.println("SSSS: " + this.source);
-            }
-            /*
-             * else
-             * {
-             * We should do automatic processing here, but for now not
-             * neccesary, as we have only urine
-             * }
-             */
+            this.extendedMap = extendedDailyValueHandler.loadExtended(extEntry);
         }
+        else
+        {
+            this.extendedMap = new HashMap<String, String>();
+        }
+
+        this.extendedDailyValueHandler.setExtendedValue(DailyValuesExtendedType.Source.getCode(), //
+            DataAccessMeter.getInstance().getSourceDevice(), this.extendedMap);
     }
 
-    private void saveSpecialEntries()
+
+    public void setUrine(DailyValuesExtendedType entryType, String value)
     {
-        // this.da.getExtendedDailyValueHandler().setExtendedValue(type, val,
-        // ht)
-        // ExtendedDailyValue
+        String valueFull = null;
+        if (entryType == DailyValuesExtendedType.Urine)
+        {
+            valueFull = value;
+        }
+        else if (entryType == DailyValuesExtendedType.Urine_mgdL)
+        {
+            valueFull = value + " " + "mg/dL";
+        }
+        else
+        // if (entryType == DailyValuesExtendedType.Urine_mgdL)
+        {
+            valueFull = value + " " + "mmol/L";
+        }
 
-        // extend this method if you wish to extended this class to use other
-        // DailyValuesExtended entries
+        extendedDailyValueHandler.setExtendedValue(entryType.getCode(), valueFull, extendedMap);
 
-        // FIXME
+        resetExtendedType();
     }
+
+
+    public void resetExtendedType()
+    {
+        int countElements = 0;
+        extendedType = MeterValuesEntryDataType.None;
+
+        if (this.hasBGEntry())
+        {
+            extendedType = MeterValuesEntryDataType.BG;
+            countElements++;
+        }
+
+        if (this.hasCHEntry())
+        {
+            if (countElements == 0)
+            {
+                extendedType = MeterValuesEntryDataType.CH;
+            }
+
+            countElements++;
+        }
+
+        if (this.hasUrine())
+        {
+            if (countElements == 0)
+            {
+                extendedType = MeterValuesEntryDataType.Urine;
+            }
+
+            countElements++;
+        }
+
+        if (countElements == 0)
+        {
+            extendedType = MeterValuesEntryDataType.InvalidData;
+        }
+        else if (countElements > 1)
+        {
+            extendedType = MeterValuesEntryDataType.Multiple;
+        }
+
+    }
+
 
     /**
      * Get Extended Type Description (if we use extended interface, this is type description)
-     * 
+     *
      * @return
      */
     public String getExtendedTypeDescription()
     {
-
-        if (this.getEntryType() == MeterValuesEntry.ENTRY_NONE)
-            return DataAccessMeter.getInstance().getI18nControlInstance().getMessage("INVALID_DATA");
-        else if (this.getEntryType() == MeterValuesEntry.ENTRY_BG)
-            return DataAccessMeter.getInstance().getI18nControlInstance().getMessage("BG");
-        else if (this.getEntryType() == MeterValuesEntry.ENTRY_SPECIAL)
-        {
-            MeterValuesEntrySpecial mves = this.special_entries.elements().nextElement();
-            return DataAccessMeter.getInstance().getI18nControlInstance().getMessage(mves.getTypeDescription());
-        }
-        else
-            return DataAccessMeter.getInstance().getI18nControlInstance().getMessage("MULTIPLE");
-
+        return ic.getMessage(extendedType.getDescription()); // extendedTypeDescription;
     }
 
     /**
@@ -1195,89 +876,72 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
      */
     public String getExtendedTypeValue(boolean both_bg)
     {
-
-        if (this.getEntryType() == MeterValuesEntry.ENTRY_NONE)
-            return "No data";
-        else if (this.getEntryType() == MeterValuesEntry.ENTRY_BG)
+        switch (this.extendedType)
         {
-            if (both_bg)
-                return this.bg_mgdL + " mg/dL (" + DataAccessPlugInBase.Decimal1Format.format(this.bg_mmolL)
-                        + " mmol/L)";
-            else
-                return this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit());
-        }
-        else if (this.getEntryType() == MeterValuesEntry.ENTRY_SPECIAL)
-        {
-            MeterValuesEntrySpecial mves = this.special_entries.elements().nextElement();
-            return mves.getPackedValue(); // .getExtendedFreetypeDescription();
-        }
-        else
-        {
-            StringBuffer sb = new StringBuffer();
-            boolean first = true;
-
-            if (this.hasBgEntry())
-            {
-                sb.append("BG: " + this.getBgValue() + " " + OutputUtil.getBGTypeNameStatic(this.getBgUnit()));
-                first = false;
-            }
-
-            for (Enumeration<MeterValuesEntrySpecial> en = this.special_entries.elements(); en.hasMoreElements();)
-            {
-                MeterValuesEntrySpecial el = en.nextElement();
-
-                if (el.special_entry_id != MeterValuesEntrySpecial.SPECIAL_ENTRY_BG)
+            case BG:
                 {
-                    if (first)
-                    {
-                        first = false;
-                    }
+                    if (both_bg)
+                        return this.bgOriginal + " mg/dL (" + da.getFormatedValue(this.bgMmolL, 1) + " mmol/L)";
                     else
-                    {
-                        sb.append(", ");
-                    }
-
-                    sb.append(el.getExtendedFreetypeDescription());
+                        return getDisplayableBgValueWithUnit();
                 }
-            }
 
-            return sb.toString();
+            case CH:
+                return da.getFormatedValue(this.ch, 1);
+
+            case Urine:
+                return getUrineValue();
+
+            case Multiple:
+                return this.getExtendedValueMultiple();
+
+            default:
+            case InvalidData:
+            case None:
+                return ic.getMessage(MeterValuesEntryDataType.InvalidData.getDescription());
         }
+
     }
 
-    /**
-     * Get Allowed Pump Mapped Types
-     * 
-     * @return
-     */
-    public Hashtable<String, String> getAllowedPumpMappedTypes()
+
+    public String getDisplayableBgValueWithUnit()
     {
-        return MeterValuesEntrySpecial.getAllowedPumpMappedTypes();
+        return this.da.getDisplayedBGFromDefault(this.bgOriginal) + " " + da.getConfiguredBGUnit().getTranslation();
     }
+
+
+    public String getExtendedValueMultiple()
+    {
+        HashMap<String, String> values = new HashMap<String, String>();
+
+        if (this.hasBGEntry())
+        {
+            values.put(ic.getMessage("BG") + ": ", getDisplayableBgValueWithUnit());
+        }
+
+        if (this.hasCHEntry())
+        {
+            values.put(ic.getMessage("CH") + ": ", da.getFormatedValue(this.ch, 1));
+        }
+
+        if (this.hasUrine())
+        {
+            values.put(ic.getMessage("URINE") + ": ", //
+                getUrineValue());
+        }
+
+        return da.createKeyValueString(values, ";", true);
+    }
+
 
     /**
      * Get Entry Type
      * 
      * @return
      */
-    public int getEntryType()
+    public MeterValuesEntryDataType getEntryType()
     {
-        if (!this.hasBgEntry())
-        {
-            if (!this.hasSpecialEntries())
-                return ENTRY_NONE;
-            else if (this.special_entries.size() == 1)
-                return ENTRY_SPECIAL;
-            else
-                return ENTRY_COMBINED;
-        }
-        else
-        {
-            if (!this.hasSpecialEntries())
-                return ENTRY_BG;
-            else
-                return ENTRY_COMBINED;
-        }
+        return extendedType;
     }
 
     /**
@@ -1286,132 +950,203 @@ public class MeterValuesEntry extends DeviceValuesEntry // extends
      */
     public String createExtendedValueDailyValuesH()
     {
-        // we need to ignore ch, all others are transfered
+        return extendedDailyValueHandler.saveExtended(extendedMap);
+    }
 
-        // FIXME
 
-        String ext = "";
-
-        if (this.special_entries != null)
+    public DeviceEntryStatus getImportStatus(MeterValuesEntry mve)
+    {
+        for (MeterValuesEntryDataType mpe : MeterValuesEntryDataType.values())
         {
-            for (int i = 1; i <= MeterValuesEntrySpecial.SPECIAL_ENTRY_MAX; i++)
+            if (mve.hasImportData(mpe))
             {
-                int key = i;
-
-                if (key != MeterValuesEntrySpecial.SPECIAL_ENTRY_CH)
+                if (!this.hasImportData(mpe))
                 {
-                    if (this.special_entries.containsKey(key))
+                    return DeviceEntryStatus.Changed;
+                }
+                else
+                {
+                    if (!this.getImportData(mpe).equals(mve.getImportData(mpe)))
                     {
-                        ext += this.special_entries.get(key).getSpecialEntryDbEntry() + ";";
+                        return DeviceEntryStatus.Changed;
                     }
-
-                    /*
-                     * try
-                     * {
-                     * ext +=
-                     * this.special_entries.get(key).getSpecialEntryDbEntry() +
-                     * ";";
-                     * }
-                     * catch(Exception ex)
-                     * {
-                     * //System.out.println
-                     * System.exit(1);
-                     * return null;
-                     * }
-                     */
                 }
             }
         }
 
-        ext += "SOURCE=" + this.source;
+        return DeviceEntryStatus.Old;
+    }
 
-        return ext;
+
+    public HashMap<MeterValuesEntryDataType, Object> getChangedData(MeterValuesEntry mve)
+    {
+        HashMap<MeterValuesEntryDataType, Object> changedData = new HashMap<MeterValuesEntryDataType, Object>();
+
+        for (MeterValuesEntryDataType mpe : MeterValuesEntryDataType.getProcessorTypes().keySet())
+        {
+            if (mve.hasImportData(mpe))
+            {
+                if (this.hasImportData(mpe))
+                {
+                    if (!this.getImportData(mpe).equals(mve.getImportData(mpe)))
+                    {
+                        changedData.put(mpe, mve.getImportData(mpe));
+                    }
+                }
+                else
+                {
+                    changedData.put(mpe, mve.getImportData(mpe));
+                }
+            }
+        }
+
+        return changedData;
+    }
+
+
+    public HashMap<MeterValuesEntryDataType, Object> getChangedData()
+    {
+        HashMap<MeterValuesEntryDataType, Object> changedData = new HashMap<MeterValuesEntryDataType, Object>();
+
+        for (MeterValuesEntryDataType mpe : MeterValuesEntryDataType.getProcessorTypes().keySet())
+        {
+
+            // System.out.println(String.format(
+            // "getChangedData [DT=%s,Type=%s, mveImp=%s, thisImp=%s, mveData=%s,thisData=%s",
+            // this.getDateTime(),
+            // mpe.name(), mve.hasImportData(mpe), this.hasImportData(mpe),
+            // mve.getImportData(mpe),
+            // this.getImportData(mpe)));
+
+            if (this.hasImportData(mpe))
+            {
+                changedData.put(mpe, this.getImportData(mpe));
+            }
+
+        }
+
+        return changedData;
+    }
+
+
+    public boolean mergeNewData(MeterValuesEntry mve)
+    {
+        HashMap<MeterValuesEntryDataType, Object> data = getChangedData(mve);
+        boolean changed = false;
+
+        for (Map.Entry<MeterValuesEntryDataType, Object> entry : data.entrySet())
+        {
+            this.setImportData(entry.getKey(), entry.getValue());
+            changed = true;
+        }
+
+        return changed;
+    }
+
+
+    public boolean mergeNewData(HashMap<MeterValuesEntryDataType, Object> changedData)
+    {
+        boolean changed = false;
+
+        for (Map.Entry<MeterValuesEntryDataType, Object> entry : changedData.entrySet())
+        {
+            this.setImportData(entry.getKey(), entry.getValue());
+            changed = true;
+        }
+
+        return changed;
+    }
+
+
+    public boolean hasImportData(MeterValuesEntryDataType dataType)
+    {
+        switch (dataType)
+        {
+            case BG:
+                return this.hasBGEntry();
+
+            case CH:
+                return this.hasCHEntry();
+
+            case Urine:
+                return this.hasUrine();
+
+            default:
+                return false;
+        }
+    }
+
+
+    public Object getImportData(MeterValuesEntryDataType dataType)
+    {
+        switch (dataType)
+        {
+            case BG:
+                return this.bgOriginal;
+
+            case CH:
+                return this.ch;
+
+            case Urine:
+                return this.getUrineValue();
+
+            default:
+                return null;
+        }
 
     }
 
-    /**
-     * Add Special Entry All (we always append)
-     * 
-     * @param coll
-     */
-    public void addSpecialEntryAll(ArrayList<MeterValuesEntrySpecial> coll)
+
+    public void setImportData(MeterValuesEntryDataType dataType, Object value)
     {
-        for (int i = 0; i < coll.size(); i++)
+        switch (dataType)
         {
-            MeterValuesEntrySpecial mves = coll.get(i);
-            this.addSpecialEntry(mves);
+            case BG:
+                this.bgOriginal = (Integer) value;
+                break;
+
+            case CH:
+                this.ch = (Float) value;
+                break;
+
+            case Urine:
+                extendedDailyValueHandler.setExtendedValue(DailyValuesExtendedType.Urine.getCode(), (String) value,
+                    extendedMap);
+                break;
+
+            default:
+                break;
+
         }
+
+        this.resetExtendedType();
     }
 
-    /**
-     * Add Special Entry
-     * 
-     * @param mves
-     */
-    public void addSpecialEntry(MeterValuesEntrySpecial mves)
-    {
-        if (mves.special_entry_id == MeterValuesEntrySpecial.SPECIAL_ENTRY_BG)
-        {
-            this.setBgUnit(DataAccessPlugInBase.BG_MGDL);
-            this.setBgValue(mves.special_entry_value);
-        }
-        else
-        {
-            if (this.special_entries == null)
-            {
-                this.special_entries = new Hashtable<Integer, MeterValuesEntrySpecial>();
-                this.special_entry_first = mves.special_entry_id;
-            }
 
-            if (this.special_entries.containsKey(mves.special_entry_id))
-            {
-                this.special_entries.get(mves.special_entry_id).special_entry_value = mves.special_entry_value;
-            }
-            else
-            {
-                this.special_entries.put(mves.special_entry_id, mves);
-            }
+    public void setCh(Object ch)
+    {
+        if (ch instanceof String)
+        {
+            this.ch = da.getFloatValueFromString((String) ch);
         }
+        else if (ch instanceof Number)
+        {
+            this.ch = ((Number) ch).floatValue();
+        }
+
+        resetExtendedType();
     }
 
-    /**
-     * Get Data Entries as MVE Special
-     * 
-     * @return
-     */
-    public ArrayList<MeterValuesEntrySpecial> getDataEntriesAsMVESpecial()
+
+    public Integer getBgOriginal()
     {
+        return bgOriginal;
+    }
 
-        ArrayList<MeterValuesEntrySpecial> list = new ArrayList<MeterValuesEntrySpecial>();
 
-        // System.out.println("getDataEntriesAsMVESpecial::Source:" +
-        // this.source);
-
-        if (special_entries != null)
-        {
-            for (Enumeration<Integer> en = this.special_entries.keys(); en.hasMoreElements();)
-            {
-                int key = en.nextElement();
-
-                MeterValuesEntrySpecial mves = this.special_entries.get(key);
-                mves.datetime_tag = this.getDateTime();
-                mves.source = this.source;
-                list.add(mves);
-            }
-        }
-
-        if (this.hasBgEntry())
-        {
-            // System.out.println("BG: " +
-            // this.getBGValue(DataAccessMeter.BG_MGDL));
-            MeterValuesEntrySpecial mves = new MeterValuesEntrySpecial(MeterValuesEntrySpecial.SPECIAL_ENTRY_BG,
-                    this.getBGValue(DataAccessPlugInBase.BG_MGDL));
-            mves.datetime_tag = this.getDateTime();
-            mves.source = this.source;
-            list.add(mves);
-        }
-
-        return list;
+    public Float getBgMmolL()
+    {
+        return bgMmolL;
     }
 
 }

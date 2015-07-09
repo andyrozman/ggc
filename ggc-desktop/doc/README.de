@@ -1,3 +1,7 @@
+THIS DOCUMENT WAS NOT UPDATED FOR SOME TIME (SINCE VERSION 0.4)... SOME FUNCTIONALITIES MAY ALREADY BE
+WORKING AND SOME DON'T.
+
+
 GNU Gluco Control (GGC)
 =======================
 
@@ -22,7 +26,7 @@ Sie bitte das Begleitdokument 'How_I_Can_Help.txt' (Englisch). Dieses Dokument
 ist Pflichtlektüre für alle Entwickler.
 
 
-2. Aktuelle Version und Entwicklungsstatus
+2. Aktuelle Version und Entwicklungsstatus [NOT UPDATED]
 ==========================================
 
 Die aktuelle GGC-Version ist 0.4.
@@ -68,7 +72,7 @@ gekennzeichnet sind. Wenn diese Features implementiert sind, können wir Version
 1.0 herausgeben.
 
 
-3. Welche Funktionalität ist verfügbar?
+3. Welche Funktionalität ist verfügbar? [NOT UPDATED]
 =======================================
 
 - Täglich Daten über Insulin, BZ-Einträge, Aktivität, Urin und Kommentare
@@ -88,7 +92,7 @@ gekennzeichnet sind. Wenn diese Features implementiert sind, können wir Version
   Integration, keine Diagramme)
 
 
-4. Geplante Funktionalität
+4. Geplante Funktionalität  [NOT UPDATED]
 ==========================
 
 
@@ -124,7 +128,7 @@ Version 0.6
 - Lebensmitteldatenbank-Fernzugriff-Funktionalität
 
 
-5. Unterprojekte
+5. Unterprojekte [NOT UPDATED]
 ================
 
 Im Augenblick existieren zwei Unterprojekte.
@@ -163,7 +167,7 @@ in die Entwicklungsphase übergehen. Die ersten unterstützten CGMS werden die
 von Minimed sein (durch eine Exportdatei vom CareLink).
 
 
-6. Wie kann ich als regulärer Benutzer helfen?
+6. Wie kann ich als regulärer Benutzer helfen? [NOT UPDATED]
 ==============================================
 
 Es gibt viele Möglichkeiten zu helfen. Einige davon benötigen etwas Fachwissen,

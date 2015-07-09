@@ -3,7 +3,7 @@ package ggc.nutri.print;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
-import ggc.core.data.ExtendedDailyValue;
+import ggc.core.data.ExtendedDailyValueHandler;
 import ggc.core.util.DataAccess;
 import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
@@ -140,7 +140,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
                 if (!this.dataAccessCore.isValueSet(rw.getMealsIds())
                         && !this.dataAccessCore.isValueSet(rw
-                                .getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION)))
+                                .getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION)))
                 {
                     continue;
                 }
@@ -167,7 +167,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
                     }
                 }
 
-                if (this.dataAccessCore.isValueSet(rw.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION)))
+                if (this.dataAccessCore.isValueSet(rw.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION)))
                 {
                     writeFoodDescData(datatable, rw);
                 }

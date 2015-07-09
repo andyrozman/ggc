@@ -1,0 +1,59 @@
+
+DEPLOYMENT PROCESS (WITH MAVEN)
+
+
+1. Make full build:
+mvn clean install in root
+
+2. Make dependencies build:
+a.) mvn dependency:copy-dependencies
+b.) mvn dependency:copy-dependencies  "-Dmdep.useRepositoryLayout=true" "-DcopyPom=true"
+
+mvn dependency:copy-dependencies -Dmdep.useRepositoryLayout=true -DcopyPom=true
+
+
+3. Copy createFullDependencies.sh to ggc root and run it. It will copy all dependencies from all projects into
+   specified (in .sh) directory. This will also copy together all documentation.
+
+4. Compare new dependencies to old one (previous release) and copy them to target deployment directory and
+   prepare new GGCUpdate.properties configuration.
+
+5. Sort copied documentation from step 3
+
+6. Make final deployment artifacts:
+   - zip deployment of project (GGC-<version>.zip)
+   - copy all files to windows build environent and create Windows installer
+   - create update zip (update from 0.3.0 version)
+
+7. Send mail to all testers (GGC Testers list) with link to new version.
+
+--- WAIT 2 weeks and fix problems, start again with step 1 and then skip step 7 or give software for retest
+
+
+8. Prepare entries for Update Server (xml of GGCUpdate, copy update zip)
+
+9. Prepare Web page
+
+7. Release deployment files to sf.net and deploy web page
+
+
+a)
+
+b)
+sftp jsmith,fooproject@frs.sourceforge.net
+cd htdocs
+put <files>
+
+
+
+8. Deploy some documentation to Website if required
+
+
+
+
+--- Useful commands
+
+A) Create dependency tree
+
+   mvn dependency:tree > deps.txt
+

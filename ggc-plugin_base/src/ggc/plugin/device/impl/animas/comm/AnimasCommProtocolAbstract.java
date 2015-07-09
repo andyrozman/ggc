@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ggc.plugin.comm.NRSerialCommunicationHandler;
+import ggc.plugin.comm.SerialSettings;
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
@@ -82,7 +83,10 @@ public abstract class AnimasCommProtocolAbstract
         this.deviceReader = deviceReader;
         this.outputWriter = outputWriter;
 
-        commHandler = new NRSerialCommunicationHandler(portName);
+        SerialSettings settings = new SerialSettings();
+        settings.baudRate = 9600;
+
+        commHandler = new NRSerialCommunicationHandler(portName, settings);
 
         // data.setPumpCommunicationInterface(this);
     }

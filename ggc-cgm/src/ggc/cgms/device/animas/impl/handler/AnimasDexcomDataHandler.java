@@ -64,7 +64,7 @@ public class AnimasDexcomDataHandler extends AbstractDeviceDataV2Handler
         dexcomDataConverter = new AnimasDexcomDataConverter(deviceReader, data);
         new Thread(dexcomDataConverter).start();
         this.dataConverter = this.dexcomDataConverter;
-        this.setDebugMode(true, false);
+        this.setDebugMode(false, false);
     }
 
 

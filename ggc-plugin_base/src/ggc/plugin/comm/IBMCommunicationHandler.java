@@ -10,15 +10,10 @@ import java.util.Vector;
 
 import javax.comm.*;
 
-import ggc.core.util.DataAccess;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -726,6 +721,25 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
     {
 // fixme
     }
+
+
+    public void write(int[] cmd)
+    {
+
+    }
+
+
+    public int getReceiveTimeout()
+    {
+        return 0;
+    }
+
+
+    public void setReceiveTimeout(int timeout)
+    {
+
+    }
+
 
     /**
      * Wait for x ms

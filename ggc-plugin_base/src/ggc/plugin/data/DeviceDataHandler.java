@@ -3,6 +3,7 @@ package ggc.plugin.data;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 
 import com.atech.db.DbDataReaderAbstract;
 import com.atech.db.DbDataReadingFinishedInterface;
@@ -55,7 +56,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     protected OutputWriter m_output_writer;
     protected DeviceConfigEntry configured_device;
     protected DbDataReaderAbstract m_reader;
-    protected Hashtable<String, ?> old_data;
+    protected Hashtable<String, DeviceValuesEntryInterface> old_data;
     protected StatusReporterInterface export_dialog;
     DbDataReadingFinishedInterface m_reading_inst = null;
     protected DeviceValuesTableModel m_model;
@@ -100,8 +101,10 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     /**
      * Transfer Type: Read File
      */
-    public static final int TRANSFER_READ_FILE = 3;
+    public static final int TRANSFER_READ_DATA_FILE = 3;
     private int downloaderCheckableColumn;
+
+    public static final int TRANSFER_READ_CONFIGURATION_FILE = 4;
 
 
     /**
@@ -218,7 +221,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      * 
      * @return Hashtable with old data
      */
-    public Hashtable<String, ?> getOldData()
+    public Hashtable<String, DeviceValuesEntryInterface> getOldData()
     {
         return this.old_data;
     }
@@ -343,7 +346,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
         }
         else
         {
-            this.setDeviceData((Hashtable<String, ?>) this.m_reader.getData());
+            this.setDeviceData((Hashtable<String, DeviceValuesEntryInterface>) this.m_reader.getData());
         }
     }
 
@@ -353,7 +356,17 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      * 
      * @param data data as Hashtable<String,?> data
      */
-    public abstract void setDeviceData(Hashtable<String, ?> data);
+    public void setDeviceData(Hashtable<String, DeviceValuesEntryInterface> data)
+    {
+        if (data == null || data.size() == 0)
+        {
+            old_data = new Hashtable<String, DeviceValuesEntryInterface>();
+        }
+        else
+        {
+            old_data = data;
+        }
+    }
 
 
     /**
@@ -420,7 +433,8 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      */
     public boolean isDataTransfer()
     {
-        return this.transfer_type != DeviceDataHandler.TRANSFER_READ_CONFIGURATION;
+        return this.transfer_type != DeviceDataHandler.TRANSFER_READ_CONFIGURATION
+                && this.transfer_type != DeviceDataHandler.TRANSFER_READ_CONFIGURATION_FILE;
     }
 
 
@@ -439,7 +453,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      * public void setCustomDialog(int type, JDialog dialog)
      * {
      * if ((type==DeviceDataHandler.TRANSFER_READ_DATA) ||
-     * (type==DeviceDataHandler.TRANSFER_READ_FILE))
+     * (type==DeviceDataHandler.TRANSFER_READ_DATA_FILE))
      * this.dialog_data = (DeviceDisplayDataDialog)dialog;
      * else
      * this.dialog_config = (DeviceDisplayConfigDialog)dialog;
@@ -493,11 +507,11 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     }
 
 
-    public GGCPlugInFileReaderContext[] getFileDownloadTypes(DownloadSupportType downloadSupportType)
+    public List<GGCPlugInFileReaderContext> getFileDownloadTypes(DownloadSupportType downloadSupportType)
     {
         if (getDeviceInterfaceV2() != null)
         {
-            return getDeviceInterfaceV2().getFileDownloadContext(downloadSupportType);
+            return getDeviceInterfaceV2().getFileDownloadContexts(downloadSupportType);
         }
         else if (getDeviceInterfaceV1() != null)
         {

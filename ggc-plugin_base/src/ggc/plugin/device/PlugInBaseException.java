@@ -43,41 +43,48 @@ public class PlugInBaseException extends Exception
      */
     public String errorDescription = "";
 
-
     public PlugInExceptionType exceptionType;
 
+
     /**
-     * Constructor for ImportException.
+     * Constructor for Exception.
+     * @deprecated
      */
     public PlugInBaseException()
     {
         super();
     }
 
+
     /**
      * Constructor for PlugInBaseException.
      * @param message
+     * @deprecated
      */
     public PlugInBaseException(String message)
     {
         super(message);
     }
 
+
     /**
      * Constructor for PlugInBaseException.
      * @param message
      * @param cause
+     * @deprecated
      */
     public PlugInBaseException(String message, Throwable cause)
     {
         super(message, cause);
     }
 
+
     /**
      * Constructor for PlugInBaseException.
      * @param message
      * @param cause
-     * @param error_code_ 
+     * @param error_code_
+     * @deprecated
      */
     public PlugInBaseException(Throwable cause, int error_code_, String message)
     {
@@ -85,19 +92,23 @@ public class PlugInBaseException extends Exception
         this.errorCode = error_code_;
     }
 
+
     /**
      * Constructor for PlugInBaseException.
      * @param cause
+     * @deprecated
      */
     public PlugInBaseException(Throwable cause)
     {
         super(cause);
     }
 
+
     /**
      * Constructor for PlugInBaseException.
      * 
      * @param errorCode
+     * @deprecated
      */
     public PlugInBaseException(int errorCode)
     {
@@ -105,11 +116,13 @@ public class PlugInBaseException extends Exception
         this.errorCode = errorCode;
     }
 
+
     /**
      * Constructor for PlugInBaseException.
      *
      * @param error_msg 
-     * @param error_code_ 
+     * @param error_code_
+     * @deprecated
      */
     public PlugInBaseException(String error_msg, int error_code_)
     {
@@ -117,11 +130,13 @@ public class PlugInBaseException extends Exception
         this.errorCode = error_code_;
     }
 
+
     public PlugInBaseException(PlugInExceptionType exceptionType)
     {
         super(PlugInBaseException.createMessage(exceptionType, null));
         this.setExceptionType(exceptionType);
     }
+
 
     public PlugInBaseException(PlugInExceptionType exceptionType, Exception ex)
     {
@@ -129,17 +144,34 @@ public class PlugInBaseException extends Exception
         this.setExceptionType(exceptionType);
     }
 
+
     public PlugInBaseException(PlugInExceptionType exceptionType, Object[] parameters)
     {
         super(PlugInBaseException.createMessage(exceptionType, parameters));
         this.setExceptionType(exceptionType);
     }
 
+
+    // public PlugInBaseException(PlugInExceptionType exceptionType,
+    // Object...parameters)
+    // {
+    // super(PlugInBaseException.createMessage(exceptionType, parameters));
+    // this.setExceptionType(exceptionType);
+    // }
+
     public PlugInBaseException(PlugInExceptionType exceptionType, Object[] parameters, Exception ex)
     {
         super(PlugInBaseException.createMessage(exceptionType, parameters));
         this.setExceptionType(exceptionType);
     }
+
+
+    public PlugInBaseException(PlugInExceptionType exceptionType, Exception ex, Object... parameters)
+    {
+        super(PlugInBaseException.createMessage(exceptionType, parameters));
+        this.setExceptionType(exceptionType);
+    }
+
 
     public static String createMessage(PlugInExceptionType exceptionType, Object[] parameters)
     {
@@ -149,16 +181,16 @@ public class PlugInBaseException extends Exception
             return exceptionType.getErrorMessage();
     }
 
+
     public PlugInExceptionType getExceptionType()
     {
         return exceptionType;
     }
 
+
     public void setExceptionType(PlugInExceptionType exceptionType)
     {
         this.exceptionType = exceptionType;
     }
-
-
 
 }

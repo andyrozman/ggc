@@ -1,14 +1,14 @@
 package ggc.core.data.cfg;
 
-import ggc.core.db.GGCDb;
-import ggc.core.db.datalayer.Settings;
-import ggc.core.util.DataAccess;
-
 import java.util.Enumeration;
 import java.util.Hashtable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.datalayer.Settings;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -81,10 +81,12 @@ public class ConfigurationManager
     Hashtable<String, Settings> cfg_values = new Hashtable<String, Settings>();
     DataAccess m_da = null;
 
+
     public ConfigurationManager(DataAccess da)
     {
         this.m_da = da;
     }
+
 
     public void checkConfiguration(Hashtable<String, Settings> values, GGCDb db)
     {
@@ -121,10 +123,12 @@ public class ConfigurationManager
         }
     }
 
+
     public void addNewValue(String name, String def_value, int type, GGCDb db)
     {
         addNewValue(name, def_value, type, db, true);
     }
+
 
     /**
      * Add New configuration value
@@ -155,6 +159,7 @@ public class ConfigurationManager
         }
     }
 
+
     public boolean getBooleanValue(String key)
     {
         if (checkIfValueExists(key))
@@ -172,6 +177,7 @@ public class ConfigurationManager
         }
         return false;
     }
+
 
     public void setBooleanValue(String key, boolean value)
     {
@@ -198,6 +204,7 @@ public class ConfigurationManager
         }
     }
 
+
     public int getIntValue(String key)
     {
         if (checkIfValueExists(key))
@@ -217,6 +224,7 @@ public class ConfigurationManager
 
         return -1;
     }
+
 
     public void setIntValue(String key, int value)
     {
@@ -243,6 +251,7 @@ public class ConfigurationManager
         }
     }
 
+
     public float getFloatValue(String key)
     {
         if (checkIfValueExists(key))
@@ -254,6 +263,7 @@ public class ConfigurationManager
 
         return 0.0f;
     }
+
 
     public void setFloatValue(String key, float value)
     {
@@ -280,6 +290,7 @@ public class ConfigurationManager
         }
     }
 
+
     public String getStringValue(String key)
     {
         if (checkIfValueExists(key))
@@ -290,6 +301,7 @@ public class ConfigurationManager
         else
             return "";
     }
+
 
     public void setStringValue(String key, String value)
     {
@@ -306,6 +318,7 @@ public class ConfigurationManager
         }
     }
 
+
     private boolean checkIfValueExists(String key)
     {
         if (this.cfg_values.containsKey(key))
@@ -316,6 +329,7 @@ public class ConfigurationManager
             return false;
         }
     }
+
 
     public void saveConfig()
     {
@@ -342,10 +356,12 @@ public class ConfigurationManager
 
     }
 
+
     public Hashtable<String, String> loadExtendedRatioData()
     {
         return null;
     }
+
 
     public void saveExtendedRatioData(Hashtable<String, String> dta)
     {

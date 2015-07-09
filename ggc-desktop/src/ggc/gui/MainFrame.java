@@ -235,6 +235,12 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void setSoftwareMode()
     {
+        setSoftwareMode(false);
+    }
+
+
+    private void setSoftwareMode(boolean force)
+    {
         // System.out.println("SW: " + dataAccess.getSoftwareMode());
 
         // if (dataAccess.getSoftwareMode() == -1)
@@ -269,7 +275,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             }
         }
 
-        if (changed)
+        if ((changed) || (force))
         {
             getContentPane().remove(this.toolbars.get(GGCToolbarType.PenInjection));
             getContentPane().remove(this.toolbars.get(GGCToolbarType.Pump));
@@ -747,7 +753,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     // if (icon_small != null)
     // {
     // action.putValue(Action.SMALL_ICON, ATSwingUtils.getImageIcon(icon_small,
-    // 15, 15, this, m_da));
+    // 15, 15, this, dataAccess));
     // // new ImageIcon(getClass().getResource("/icons/" + icon_small)));
     // // action.putValue(Action.LARGE_ICON_KEY, new
     // // ImageIcon(getClass().getResource("/icons/" + icon_small)));
@@ -829,6 +835,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
              * this.actions.get("food_nutrition_2").setEnabled(true);
              * this.actions.get("food_meals").setEnabled(true);
              */
+            setSoftwareMode();
         }
 
         setToolbarByDbLoad(status);

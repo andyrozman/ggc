@@ -98,9 +98,12 @@ THIS FILES MUST NOT BE CHECKED IN INTO SVN. Only configuration files checked int
 Now how to start working in this new Maven enabled GGC Environment:
 
 
-1.) Install your favorite Java Editor (Eclipse, IntelliJ, NetBeans, ...). 
+1.) Installing software:
+- install Oracle/Sun JDK (we still use 1.5 java, but you can install any version, just be careful not to use any features that JDK 1.5 doesn't recognize)
+- install your favorite Java Editor (Eclipse, IntelliJ, NetBeans, ...). Each of this tools has it's own way of handling maven artifacts/projects. If you really wish to develop GGC I would advise you to install IntelliJ (Free version) since it doesn't require to always manually rebuild whole project tree (see 3.) when testing in editor.
 - install plugin for Maven (use 3.x version), if it's not installed already
 - install SVN plugin, if it's not installed already
+- install Maven 3.0.x (apache-maven)
 
 
 2.) From SVN download projects from two repositories (how to do that depends on your editor, but mostly you need to set repository root and then select from where to download, and what to download)...
@@ -122,14 +125,14 @@ Now how to start working in this new Maven enabled GGC Environment:
           - Subprojects not needed: ggc-usb, web_page, ggc-language_tool (this is needed only if you plan to do translation for another language)
 
 
-3.) Projects hierarchy... while maven works great with dependendencies, it can sometimes also be a pain in the a**... For example if you are developing in ggc-pump and change something in atech-tools, you will probably need to build and deploy, all projects on which ggc-pump is dependend on (atech-tools, ggc-core, ggc-plugin-base and of course ggc-pump). So hierarchy is as follows:
+3.) Projects hierarchy... while maven works great with dependendencies, it can sometimes also be a pain in the a**... For example if you are developing in ggc-pump and change something in atech-tools, you will (probably) need to build and deploy, all projects on which ggc-pump is dependent on (atech-tools, ggc-core, ggc-plugin-base and of course ggc-pump). So hierarchy is as follows:
    
 
     atech-tools
            |
         ggc-master-pom
            |
-	ggc-core
+	    ggc-core
            |
            |- ggc-desktop-app
            |
@@ -146,11 +149,11 @@ Now how to start working in this new Maven enabled GGC Environment:
         
     Now this REQUIRED rebuild depends on editor you use (and it's integration with maven)... In eclipse for example you need to rebuild all underlaying projects if you wish to test functionality you changed, but in Intellij IDEA (there is Free Community version which has all features that you need), all open projects are keept in sync so if you want to run and see new changes you don't need to rebuild all affected projects.
 
-4.) Now you are almost ready to go. You will need to build all projects before begining, this will retrieve all dependencies and create local versions of all modules. Easiest way to do this is to install Maven tools as standalone application (use 3.0.x version) and then build:
+4.) Now you are almost ready to go. You will need to build all projects before begining, this will retrieve all dependencies and create local versions of all modules. Easiest way to do this is to install Maven tools as standalone application and then build:
 
    4a) In atech-tools: mvn clean install
 
-   4b) In ggc root: mvn clean install (this will build all modules we have, so that you don't need to this manually).
+   4b) In ggc root: mvn clean install (this will build all modules we have, so that you don't need to this manually in editor).
 
 
 5.) Running application from your editor:
@@ -178,11 +181,11 @@ Now how to start working in this new Maven enabled GGC Environment:
 
 6.) Setting for Editor:
 
-   - Install JDK 1.5 and set it as Java development version (if you can)
-   - Set Java Compile Compatibility to 1.5 
+   - Use JDK 1.5 and set it as Java development version (if you can)
+   - Set Java Compile Compatibility to 1.5 (this is very important, especially if you don't use JDK 1.5)
    - Codepage for files is UTF-8. Don't write your own characters in files, always use english letters.
 
-NOTE: Officialy java 1.5 is not supported by Sun/Oracle anymore. Oracle has options to allow you to get older version of java. In worst case contact us at ggc@atech-software.com, and we will try to supply you with it. Sometimes setting target to 1.5 is not enough, but in most cases you can use whatever jdk you have, with compatibility setting.
+NOTE: Officially java 1.5 is not supported by Sun/Oracle anymore. Oracle has options to allow you to get older version of java. In worst case contact us at ggc@atech-software.com, and we will try to supply you with it. Sometimes setting target to 1.5 is not enough, but in most cases you can use whatever jdk you have, with compatibility setting.
 
     If you use Eclipse, please set Formatter for code and enable formatting on Save...
     Open Windows->Preferences. Go to group Java->Code style->Formatter. Use Import option and add xml file stored under ggc-support/eclipse.

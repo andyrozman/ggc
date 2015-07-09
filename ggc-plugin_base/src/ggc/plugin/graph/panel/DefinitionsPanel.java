@@ -1,20 +1,20 @@
 package ggc.plugin.graph.panel;
 
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.Color;
+import java.awt.*;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 public class DefinitionsPanel extends JPanel
 {
+
     DataAccessPlugInBase m_da = null;
     I18nControlAbstract m_ic = null;
+
 
     public DefinitionsPanel(DataAccessPlugInBase da)
     {
@@ -23,6 +23,7 @@ public class DefinitionsPanel extends JPanel
         this.m_ic = da.getI18nControlInstance();
         init();
     }
+
 
     private void init()
     {
@@ -41,8 +42,9 @@ public class DefinitionsPanel extends JPanel
 
         ATSwingUtils.getLabel("Graph Types:", 10, 90, 120, 25, this, ATSwingUtils.FONT_NORMAL_BOLD);
 
-        ATSwingUtils.getComboBox(m_da.getGraphContext().getGraphTypes().getGraphTypesVector(), 10, 110, 220, 25, this,
-            ATSwingUtils.FONT_NORMAL);
+        // ATSwingUtils.getComboBox(dataAccess.getGraphContext().getGraphTypes().getGraphTypesVector(),
+        // 10, 110, 220, 25, this,
+        // ATSwingUtils.FONT_NORMAL);
 
     }
 

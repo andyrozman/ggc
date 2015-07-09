@@ -1,16 +1,10 @@
 package ggc.core.data;
 
-import ggc.core.util.DataAccess;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Vector;
+import java.util.*;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.TimeZoneUtil;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,10 +39,11 @@ public class GlucoValues // extends DailyValues
     // private static final long serialVersionUID = 3904480643937213485L;
     Vector<DailyValues> dayValues = null;
     ArrayList<DailyValuesRow> dayValuesRows = null;
-    // private DataAccess m_da = DataAccess.getInstance();
+    // private DataAccess dataAccess = DataAccess.getInstance();
     GregorianCalendar from_date;
     GregorianCalendar to_date;
     DataAccess m_da = DataAccess.getInstance();
+
 
     /**
      * Constructor
@@ -59,6 +54,7 @@ public class GlucoValues // extends DailyValues
         // dayValues = new ArrayList();
         dayValuesRows = new ArrayList<DailyValuesRow>();
     }
+
 
     /**
      * Constructor
@@ -79,9 +75,9 @@ public class GlucoValues // extends DailyValues
         // System.out.println("GlucoValues: " + table.size());
 
         // System.out.println("Start: " +
-        // m_da.getDateTimeStringFromGregorianCalendar(sDate,2));
+        // dataAccess.getDateTimeStringFromGregorianCalendar(sDate,2));
         // System.out.println("End: " +
-        // m_da.getDateTimeStringFromGregorianCalendar(eDate,2));
+        // dataAccess.getDateTimeStringFromGregorianCalendar(eDate,2));
 
         for (Enumeration<String> en = table.keys(); en.hasMoreElements();)
         {
@@ -96,6 +92,7 @@ public class GlucoValues // extends DailyValues
          * dayValues.add(dv); gC.add(Calendar.DATE, 1); }
          */
     }
+
 
     /**
      * Constructor
@@ -123,6 +120,7 @@ public class GlucoValues // extends DailyValues
         fillDailyValues();
     }
 
+
     /**
      * Get Range From
      * 
@@ -132,6 +130,7 @@ public class GlucoValues // extends DailyValues
     {
         return from_date;
     }
+
 
     /**
      * Get Range To
@@ -143,6 +142,7 @@ public class GlucoValues // extends DailyValues
         return to_date;
     }
 
+
     private void addDayValues(DailyValues dv)
     {
         // System.out.println("DailyValues: " + dv);
@@ -153,6 +153,7 @@ public class GlucoValues // extends DailyValues
         }
 
     }
+
 
     private void fillDailyValues()
     {
@@ -166,6 +167,7 @@ public class GlucoValues // extends DailyValues
 
     }
 
+
     /**
      * Add Row
      * 
@@ -175,6 +177,7 @@ public class GlucoValues // extends DailyValues
     {
         addRow(dRow, true);
     }
+
 
     /**
      * Add Row
@@ -223,6 +226,7 @@ public class GlucoValues // extends DailyValues
         }
     }
 
+
     /**
      * Set New Row
      * 
@@ -231,7 +235,7 @@ public class GlucoValues // extends DailyValues
     /*
      * public void setNewRow(DailyValuesRow dRow)
      * {
-     * if (!m_da.getDb().dateTimeExists(dRow.getDateTime()))
+     * if (!dataAccess.getDb().dateTimeExists(dRow.getDateTime()))
      * {
      * addRow(dRow);
      * }
@@ -259,6 +263,7 @@ public class GlucoValues // extends DailyValues
         return this.dayValuesRows.size();
     }
 
+
     /**
      * Get Daily Values Row 
      * 
@@ -269,6 +274,7 @@ public class GlucoValues // extends DailyValues
     {
         return this.dayValuesRows.get(index);
     }
+
 
     /**
      * Get Row Count
@@ -285,6 +291,7 @@ public class GlucoValues // extends DailyValues
         }
         return c;
     }
+
 
     /**
      * Delete Row
@@ -315,6 +322,7 @@ public class GlucoValues // extends DailyValues
         }
     }
 
+
     /**
      * Get Value At
      * @param row 
@@ -340,6 +348,7 @@ public class GlucoValues // extends DailyValues
         return o;
     }
 
+
     /**
      * Get Daily Values For Day
      * 
@@ -353,6 +362,7 @@ public class GlucoValues // extends DailyValues
     {
         return dayValues.elementAt(day);
     }
+
 
     /**
      * Set Value At
@@ -388,6 +398,7 @@ public class GlucoValues // extends DailyValues
         return dayValues.elementAt(index);
     }
 
+
     /**
      * Get Daily Values Items Count
      * 
@@ -397,6 +408,7 @@ public class GlucoValues // extends DailyValues
     {
         return dayValues.size();
     }
+
 
     /**
      * @return The amount of days physically present in this
@@ -409,6 +421,7 @@ public class GlucoValues // extends DailyValues
     {
         return dayValues.size();
     }
+
 
     /**
      * @return The amount of days between the first and the last entry contained
@@ -436,8 +449,10 @@ public class GlucoValues // extends DailyValues
         if (firstDay == lastDay)
             return 1L;
 
-        // firstDay = m_da.getDateTimeAsDateObject(firstDay * 10000).getTime();
-        // lastDay = m_da.getDateTimeAsDateObject(lastDay * 10000).getTime();
+        // firstDay = dataAccess.getDateTimeAsDateObject(firstDay *
+        // 10000).getTime();
+        // lastDay = dataAccess.getDateTimeAsDateObject(lastDay *
+        // 10000).getTime();
 
         // FIXME This is experimental, untested
         firstDay = ATechDate.getGregorianCalendar(ATechDate.FORMAT_DATE_ONLY, firstDay).getTimeInMillis(); // getTime()).getTime();
@@ -457,6 +472,7 @@ public class GlucoValues // extends DailyValues
 
         return dayCount;
     }
+
 
     /**
      * Get Date For Day At

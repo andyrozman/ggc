@@ -1,7 +1,7 @@
 package ggc.plugin.device.impl.animas.data.dto;
 
-import ggc.plugin.data.enums.ClockModeType;
-import ggc.plugin.data.enums.GlucoseUnitType;
+import ggc.core.data.defs.ClockModeType;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 
 /**

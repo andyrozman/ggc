@@ -75,12 +75,11 @@
 			<artifactId>ggc-cgms-tool</artifactId>
 		</dependency>
 
-<!--
 		<dependency>
 			<groupId>net.sf.ggc</groupId>
 			<artifactId>ggc-nutri-tool</artifactId>
 		</dependency>
--->
+
 		<dependency>
 			<groupId>javax.help</groupId>
 			<artifactId>javahelp</artifactId>

@@ -7,18 +7,22 @@ import ggc.plugin.device.DownloadSupportType;
  */
 public enum DeviceHandlerType
 {
-    NoHandler(DownloadSupportType.NoDownloadSupport),
+    NoHandler(DownloadSupportType.NoDownloadSupport), //
 
     // Meters
-    AscensiaUsbHandler(DownloadSupportType.DownloadData),
+    AscensiaUsbHandler(DownloadSupportType.DownloadData), //
 
     // Pumps
-    AnimasV2PumpHandler(DownloadSupportType.Download_Data_Config),
+    AnimasV2PumpHandler(DownloadSupportType.Download_Data_Config), //
+    MinimedPumpHandler(DownloadSupportType.Download_Data_Config), //
+    InsuletOmnipodHandler(DownloadSupportType.Download_File_Data_Config), //
 
     // CGMSes
-    AnimasV2CGMSHandler(DownloadSupportType.Download_Data_Config),
-    DexcomHandler(DownloadSupportType.Download_Data_Config),;
+    AnimasV2CGMSHandler(DownloadSupportType.Download_Data_Config), //
+    DexcomHandler(DownloadSupportType.Download_Data_Config), //
+    MinimedCGMSHandler(DownloadSupportType.Download_Data_Config), //
 
+    ;
 
     DownloadSupportType downloadSupportType;
 
@@ -27,6 +31,7 @@ public enum DeviceHandlerType
     {
         this.downloadSupportType = downloadSupportType;
     }
+
 
     public DownloadSupportType getDownloadSupportType()
     {

@@ -1,16 +1,14 @@
 package ggc.core.data.graph;
 
-import ggc.core.util.DataAccess;
+import java.awt.*;
 
-import java.awt.Rectangle;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import com.atech.graphics.calendar.DateRangeSelectionPanel;
 import com.atech.graphics.graphs.AbstractGraphViewControler;
 import com.atech.graphics.graphs.GraphViewInterface;
 import com.atech.utils.ATSwingUtils;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -69,6 +67,7 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
      */
     public static final int GRAPH_FREQUENCY = 3;
 
+
     /**
      * Constructor
      * 
@@ -79,6 +78,7 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
     {
         super(DataAccess.getInstance(), _graph_view, new Integer(_graph_type));
     }
+
 
     /**
      * Init
@@ -146,7 +146,8 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
         button_panel.setBounds(0, 130, 750, 40);
         // button_panel.setBackground(Color.blue);
 
-        help_button = ATSwingUtils.createHelpButtonByBounds(450, 7, 120, 25, button_panel, ATSwingUtils.FONT_NORMAL_BOLD, m_da.getImagesRoot(), m_ic);
+        help_button = ATSwingUtils.createHelpButtonByBounds(450, 7, 120, 25, button_panel,
+            ATSwingUtils.FONT_NORMAL_BOLD, m_da.getImagesRoot(), m_ic);
         button_panel.add(help_button);
 
         draw_button = ATSwingUtils.getButton("    " + m_ic.getMessage("DRAW"), 180, 7, 120, 25, button_panel,
@@ -161,12 +162,13 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
         this.inited = true;
     }
 
+
     /*
      * public void init()
      * {
      * JPanel cPanel = new JPanel(new BorderLayout());
      * this.graph_type = ((Integer)this.parameters).intValue();
-     * dRS = new DateRangeSelectionPanel(m_da);
+     * dRS = new DateRangeSelectionPanel(dataAccess);
      * if (this.graph_type==GGCGraphViewControler.GRAPH_COURSE)
      * {
      * selectionPanel = new
@@ -210,19 +212,19 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
      * selectionPanel.setSelectionMode(PlotSelectorPanel.SELECTION_MODE_SINGLE);
      * }
      * JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-     * help_button = m_da.createHelpButtonBySize(120, 25, cPanel);
+     * help_button = dataAccess.createHelpButtonBySize(120, 25, cPanel);
      * buttonPanel.add(help_button);
      * // Dimension dim = new Dimension(80, 20);
      * Dimension dim = new Dimension(120, 25);
      * JButton drawButton = new JButton("    " + m_ic.getMessage("DRAW"));
      * drawButton.setPreferredSize(dim);
-     * drawButton.setIcon(m_da.getImageIcon_22x22("paint.png", cPanel));
+     * drawButton.setIcon(dataAccess.getImageIcon_22x22("paint.png", cPanel));
      * drawButton.setActionCommand("draw");
      * drawButton.addActionListener(this);
      * JButton closeButton = new JButton("    " + m_ic.getMessage("CLOSE"));
      * closeButton.setPreferredSize(dim);
      * closeButton.setActionCommand("close");
-     * closeButton.setIcon(m_da.getImageIcon_22x22("cancel.png", cPanel));
+     * closeButton.setIcon(dataAccess.getImageIcon_22x22("cancel.png", cPanel));
      * closeButton.addActionListener(this);
      * buttonPanel.add(drawButton);
      * buttonPanel.add(closeButton);
@@ -251,6 +253,7 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
         this.getGraphView().getProcessor().reloadData();
     }
 
+
     public Rectangle getControlerBounds()
     {
         return new Rectangle(0, 0, 750, 195);
@@ -260,6 +263,7 @@ public class GGCGraphViewControler extends AbstractGraphViewControler
 
         // return null;
     }
+
 
     public void resizeController(int width)
     {

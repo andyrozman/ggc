@@ -79,12 +79,6 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
     }
 
-    /**
-     * Prepare Entry [Framework v1]
-     */
-    public void prepareEntry()
-    {
-    }
 
     /**
      * Prepare Entry [Framework v2]
@@ -93,12 +87,6 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
     }
 
-    /**
-     * Get Db Objects
-     * 
-     * @return ArrayList of elements extending GGCHibernateObject
-     */
-    public abstract ArrayList<? extends GGCHibernateObject> getDbObjects();
 
     /**
      * Get Column Value

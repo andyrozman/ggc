@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import com.atech.utils.data.ATechDate;
 
+import ggc.core.util.DataAccess;
 import ggc.plugin.device.impl.animas.data.AnimasDeviceReplyPacket;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 import ggc.pump.device.animas.impl.converter.AnimasBaseDataV2Converter;
@@ -182,7 +183,7 @@ public class BolusEntry
     }
 
 
-    private int getTime()
+    private String getTime()
     {
         int minutes = this.duration.intValue();
 
@@ -190,7 +191,7 @@ public class BolusEntry
 
         minutes -= (h * 60);
 
-        return (h * 100) + minutes;
+        return DataAccess.getLeadingZero(h, 2) + ":" + DataAccess.getLeadingZero(minutes, 2);
     }
 
 

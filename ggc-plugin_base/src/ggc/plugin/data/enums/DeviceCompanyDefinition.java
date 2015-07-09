@@ -8,29 +8,35 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 public enum DeviceCompanyDefinition
 {
 
-    Minimed(1, "Minimed", "", DeviceImplementationStatus.Planned),
+    // 2xx = Pump
 
-    Roche(2, "Roche", "", DeviceImplementationStatus.Partitial),  //Disetronic(2),
+    // 4xx = Pump + CGMS
 
-    Animas(3, "Animas", "", DeviceImplementationStatus.Testing),
+    Roche(2, "Roche", "", DeviceImplementationStatus.Partitial), // Disetronic(2),
 
     Deltec(5),
 
-    Insulet(6),
+    Insulet(206, "Insulet", "", DeviceImplementationStatus.InProgress),
 
     Sooil(7),
 
-
-    // Meter
-
+    // 1xx = Meter
     Ascensia(1),
 
-    Dexcom(301, "Dexcom", "", DeviceImplementationStatus.Partitial);
+    // 3xx = CGMS
+    Dexcom(301, "Dexcom", "", DeviceImplementationStatus.Partitial),
+
+    // 4xx = Pump + CGMS
+    Animas(401, "Animas", "", DeviceImplementationStatus.Testing), Minimed(402, "Minimed", "",
+            DeviceImplementationStatus.Planned),
+
+    ;
 
     int id;
     String companyName;
     String companyDescription;
     DeviceImplementationStatus companyImplementationStatus;
+
 
     private DeviceCompanyDefinition(int code)
     {
@@ -38,7 +44,8 @@ public enum DeviceCompanyDefinition
     }
 
 
-    private DeviceCompanyDefinition(int id, String name, String description, DeviceImplementationStatus implementationStatus)
+    private DeviceCompanyDefinition(int id, String name, String description,
+            DeviceImplementationStatus implementationStatus)
     {
         this.id = id;
         this.companyName = name;
@@ -46,20 +53,24 @@ public enum DeviceCompanyDefinition
         this.companyImplementationStatus = implementationStatus;
     }
 
+
     public String getName()
     {
         return this.companyName;
     }
+
 
     public int getCompanyId()
     {
         return this.id;
     }
 
+
     public String getDescription()
     {
         return this.companyDescription;
     }
+
 
     public DeviceImplementationStatus getImplementationStatus()
     {

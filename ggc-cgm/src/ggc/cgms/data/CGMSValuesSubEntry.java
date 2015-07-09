@@ -226,13 +226,6 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
 
 
     @Override
-    public ArrayList<? extends GGCHibernateObject> getDbObjects()
-    {
-        return null;
-    }
-
-
-    @Override
     public void setDateTimeObject(ATechDate dt)
     {
         this.setDateTime(dt.getATDateTimeAsLong());

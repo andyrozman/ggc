@@ -49,6 +49,9 @@ public enum PumpBasalType implements CodeEnumWithTranslation
 
     ;
 
+    // tring.format("TBR_VALUE=%s%s;TBR_UNIT=%s;DURATION=%s", sign, val, unit
+    // [%,U], "00:00"
+
     public static boolean isTemporaryBasalType(PumpBasalType type)
     {
         return (type == TemporaryBasalRate || type == TemporaryBasalRateProfile || type == TemporaryBasalRateCanceled || type == TemporaryBasalRateEnded);

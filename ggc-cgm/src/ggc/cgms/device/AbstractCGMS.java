@@ -35,7 +35,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
  */
 
 public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
-                                                          // SelectableInterface
+// SelectableInterface
 {
 
     // AbstractDeviceCompany cgms_company;
@@ -55,8 +55,8 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
     // protected OutputWriter outputWriter;
     protected String parameter;
 
+
     // protected DataAccessCGMS dataAccess;
-    // protected GGCPlugInFileReaderContext[] fileContexts = null;
 
     /**
      * Constructor
@@ -65,6 +65,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
     {
         super(DataAccessCGMS.getInstance());
     }
+
 
     /**
      * Constructor
@@ -78,6 +79,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
         this.parameter = param;
     }
 
+
     /**
      * Constructor
      * 
@@ -87,6 +89,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
     {
         super(DataAccessCGMS.getInstance(), ow);
     }
+
 
     /**
      * Constructor (should be used)
@@ -101,6 +104,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
         this.setCGMSType(cmp.getName(), getName());
     }
 
+
     /**
      * Constructor
      * 
@@ -112,6 +116,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
     {
         super(params, writer, da);
     }
+
 
     /**
      * Set Pump Type
@@ -139,6 +144,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
 
     }
 
+
     /**
      * Get Name
      */
@@ -146,6 +152,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
     {
         return "Generic device";
     }
+
 
     /**
      * Get Download Support Type (if device supports downloading data from it)
@@ -157,6 +164,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
         return DownloadSupportType.NoDownloadSupport;
     }
 
+
     /**
      * How Many Months Of Data Stored
      * 
@@ -166,6 +174,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
     {
         return 6;
     }
+
 
     /**
      * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
@@ -177,6 +186,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
     {
         return false;
     }
+
 
     @Override
     public boolean hasDefaultParameter()
@@ -190,9 +200,11 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
      *    ... - OT Smart, etc), this devices require more extended data display.
      * @return
      */
-    /*public int getInterfaceTypeForMeter()
-    {
-        return 0;
-    }*/
+    /*
+     * public int getInterfaceTypeForMeter()
+     * {
+     * return 0;
+     * }
+     */
 
 }

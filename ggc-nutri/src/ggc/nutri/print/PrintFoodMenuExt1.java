@@ -2,7 +2,7 @@ package ggc.nutri.print;
 
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
-import ggc.core.data.ExtendedDailyValue;
+import ggc.core.data.ExtendedDailyValueHandler;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 
 import com.itextpdf.text.Phrase;
@@ -157,12 +157,12 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
     @Override
     public void writeFoodDescData(PdfPTable table, DailyValuesRow dvr) throws Exception
     {
-        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION),
+        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION),
                 this.textFontNormal));
         table.addCell(this.createNormalTextPhrase("DESCRIPTION"));
         table.addCell(this.createEmptyTextPhrase());
 
-        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_CH), this.textFontItalic));
+        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_CH), this.textFontItalic));
         table.addCell(new Phrase(dvr.getIns1AsString(), this.textFontItalic));
     }
 

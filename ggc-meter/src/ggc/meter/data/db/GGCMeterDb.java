@@ -1,16 +1,7 @@
 package ggc.meter.data.db;
 
-import ggc.core.db.hibernate.DayValueH;
-import ggc.core.db.hibernate.pump.PumpDataExtendedH;
-import ggc.meter.data.MeterDataReader;
-import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.data.MeterValuesEntrySpecial;
-import ggc.meter.util.DataAccessMeter;
-import ggc.plugin.data.DeviceValuesEntryInterface;
-import ggc.plugin.db.PluginDb;
-
-import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -22,6 +13,15 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.atech.db.hibernate.HibernateDb;
+
+import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pump.PumpDataExtendedH;
+import ggc.meter.data.MeterDataReader;
+import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.data.MeterValuesEntryDataType;
+import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.db.PluginDb;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -83,8 +83,7 @@ public class GGCMeterDb extends PluginDb
             criteria.add(Restrictions.or(
                 Restrictions.or(Restrictions.gt("bg", 0), Restrictions.like("extended", "%URINE%")),
                 Restrictions.gt("ch", 0.0f)));
-            // criteria.createCriteria("person_id",
-            // (int)dataAccess.getCurrentUserId());
+            criteria.add(Restrictions.like("extended", "%" + m_da.getSourceDevice() + "%"));
             criteria.setProjection(Projections.rowCount());
             in = (Integer) criteria.list().get(0);
             sum_all = in.intValue();
@@ -110,12 +109,9 @@ public class GGCMeterDb extends PluginDb
      */
     public Hashtable<String, DeviceValuesEntryInterface> getMeterValues(MeterDataReader mdr)
     {
-        // Hashtable<String,DayValueH>
         Hashtable<String, DeviceValuesEntryInterface> ht = new Hashtable<String, DeviceValuesEntryInterface>();
 
         log.info("getMeterValues()");
-
-        // mdr.se
 
         mdr.writeStatus(-1);
 
@@ -125,9 +121,11 @@ public class GGCMeterDb extends PluginDb
             log.debug("getMeterValues() - Process");
 
             Query q = this.getSession().createQuery(
-                " SELECT dv from ggc.core.db.hibernate.DayValueH as dv "
-                        + " WHERE ((dv.bg>0) OR (dv.extended LIKE '%URINE%') OR (dv.ch>0)) AND person_id="
-                        + m_da.getCurrentUserId() + " ORDER BY dv.dt_info ASC");
+" SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + //
+                    " WHERE ((dv.bg>0) OR (dv.extended LIKE '%URINE%') OR (dv.ch>0)) " + //
+                    " AND person_id=" + m_da.getCurrentUserId() + //
+                    " AND dv.extended like '%" + m_da.getSourceDevice() + "%' " + //
+                    " ORDER BY dv.dt_info ASC");
 
             // System.out.println("Found elements: " + q.list().size());
 
@@ -140,25 +138,10 @@ public class GGCMeterDb extends PluginDb
             while (it.hasNext())
             {
                 counter++;
-                // DayValueH gv = (DayValueH)it.next();
 
                 MeterValuesEntry mves = new MeterValuesEntry((DayValueH) it.next());
 
-                ArrayList<MeterValuesEntrySpecial> lst = mves.getDataEntriesAsMVESpecial();
-
-                for (int i = 0; i < lst.size(); i++)
-                {
-
-                    MeterValuesEntry mve = new MeterValuesEntry(lst.get(i));
-
-                    // System.out.println("MVEOLD: " + mve.getSpecialId());
-
-                    if (!ht.containsKey(mve.getSpecialId()))
-                    {
-                        ht.put("" + mve.getSpecialId(), mve);
-                    }
-
-                }
+                ht.put("" + mves.getSpecialId(), mves);
 
                 mdr.writeStatus(counter);
             }
@@ -171,23 +154,25 @@ public class GGCMeterDb extends PluginDb
             ex.printStackTrace();
         }
 
+        System.out.println("Old records: " + ht.size());
+
         return ht;
     }
+
 
     /**
      * Get Pump Data
      * 
-     * @param time_marks
+     * @param timeMarks
      * @return
      */
-    public Hashtable<String, PumpDataExtendedH> getPumpData(Hashtable<Long, String> time_marks)
+    public Hashtable<String, PumpDataExtendedH> getPumpData(
+            HashMap<Long, HashMap<MeterValuesEntryDataType, Object>> timeMarks)
     {
-        Hashtable<String, PumpDataExtendedH> pump_data = new Hashtable<String, PumpDataExtendedH>();
+        Hashtable<String, PumpDataExtendedH> pumpData = new Hashtable<String, PumpDataExtendedH>();
 
-        MeterValuesEntry mve = new MeterValuesEntry();
-
-        if (time_marks.size() == 0)
-            return pump_data;
+        if (timeMarks.size() == 0)
+            return pumpData;
 
         try
         {
@@ -195,8 +180,8 @@ public class GGCMeterDb extends PluginDb
 
             Query q = this.getSession().createQuery(
                 " SELECT dv FROM ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + " WHERE dv.person_id="
-                        + m_da.getCurrentUserId() + " AND dv.dt_info IN " + getDataListForSQL(time_marks)
-                        + " AND dv.type IN " + getDataListForSQL(mve.getAllowedPumpMappedTypes())
+                        + m_da.getCurrentUserId() + " AND dv.dt_info IN " + getDataListForSQL(timeMarks)
+                        + " AND dv.type IN " + getDataListForSQL(MeterValuesEntryDataType.getAllowedPumpTypes())
                         + " ORDER BY dv.dt_info");
 
             Iterator<?> it = q.list().iterator();
@@ -205,8 +190,9 @@ public class GGCMeterDb extends PluginDb
             {
                 PumpDataExtendedH pde = (PumpDataExtendedH) it.next();
 
-                int time = (int) (pde.getDt_info() / 100);
-                pump_data.put(time + "_" + pde.getType(), pde);
+                int time = (int) (pde.getDt_info() / 100); // same time as in
+                                                           // DailyValueH
+                pumpData.put(time + "_" + pde.getType(), pde);
             }
 
         }
@@ -215,31 +201,34 @@ public class GGCMeterDb extends PluginDb
             log.error("Error getting pump data: " + ex, ex);
         }
 
-        return pump_data;
+        return pumpData;
     }
+
 
     /**
      * Get Meter Data (with help of time marks)
      * 
-     * @param time_marks
+     * @param timeMarks
      * @return
+     * @deprecated 
      */
-    public Hashtable<Long, MeterValuesEntry> getMeterData(Hashtable<Long, String> time_marks)
+    public Hashtable<Long, MeterValuesEntry> getMeterData(Hashtable<Long, String> timeMarks)
     {
 
         Hashtable<Long, MeterValuesEntry> meter_data = new Hashtable<Long, MeterValuesEntry>();
 
-        if (time_marks.size() == 0)
+        if (timeMarks.size() == 0)
             return meter_data;
 
         try
         {
             log.debug("getMeterData() - Process");
 
-            Query q = this.getSession().createQuery(
-                " SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + " WHERE person_id="
-                        + m_da.getCurrentUserId() + " AND dv.dt_info IN " + getDataListForSQL(time_marks)
-                        + " ORDER BY dv.dt_info ASC");
+            Query q = this.getSession().createQuery( //
+                " SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + //
+                        " WHERE person_id=" + m_da.getCurrentUserId() + //
+                        " AND dv.dt_info IN " + getDataListForSQL(timeMarks) + //
+                        " ORDER BY dv.dt_info ASC");
 
             Iterator<?> it = q.list().iterator();
 
@@ -269,7 +258,19 @@ public class GGCMeterDb extends PluginDb
             sb.append(en.nextElement() + ", ");
         }
 
-        // sb.append(")");
+        return sb.substring(0, sb.length() - 2) + ")";
+    }
+
+
+    private String getDataListForSQL(HashMap<?, ?> ht)
+    {
+        StringBuffer sb = new StringBuffer();
+        sb.append(" (");
+
+        for (Object key : ht.keySet())
+        {
+            sb.append(key + ", ");
+        }
 
         return sb.substring(0, sb.length() - 2) + ")";
     }

@@ -1,5 +1,14 @@
 package ggc.meter.device.onetouch;
 
+import java.io.IOException;
+import java.util.GregorianCalendar;
+import java.util.SimpleTimeZone;
+
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.HexUtils;
+import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractUsbMeter;
 import ggc.meter.manager.MeterDevicesIds;
@@ -12,14 +21,6 @@ import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.io.IOException;
-import java.util.GregorianCalendar;
-import java.util.SimpleTimeZone;
-
-import com.atech.utils.data.ATechDate;
-import com.atech.utils.data.HexUtils;
-import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control<br>
@@ -649,8 +650,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         gc.setTimeZone(empty_tzi);
 
         MeterValuesEntry mve = new MeterValuesEntry();
-        mve.setBgUnit(OutputUtil.BG_MGDL);
-        mve.setBgValue("" + bg_val);
+        mve.setBgValue("" + bg_val, GlucoseUnitType.mg_dL);
         mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, gc)));
 
         this.outputWriter.writeData(mve);

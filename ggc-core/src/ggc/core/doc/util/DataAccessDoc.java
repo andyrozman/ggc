@@ -1,11 +1,29 @@
 package ggc.core.doc.util;
 
+import java.awt.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.text.DecimalFormat;
+import java.util.*;
+
+import javax.swing.*;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import pygmy.core.Server;
+
+import com.atech.db.hibernate.HibernateDb;
+import com.atech.db.hibernate.transfer.BackupRestoreCollection;
+import com.atech.help.HelpContext;
+import com.atech.misc.refresh.EventObserverInterface;
+import com.atech.misc.refresh.EventSource;
+import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATSwingUtils;
-import ggc.core.data.Converter_mgdL_mmolL;
-import ggc.core.data.DailyValues;
-import ggc.core.data.ExtendedDailyValue;
-import ggc.core.data.HbA1cValues;
-import ggc.core.data.WeeklyValues;
+import com.atech.utils.data.Rounding;
+import com.atech.utils.logs.RedirectScreen;
+
+import ggc.core.data.*;
 import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.db.GGCDb;
 import ggc.core.db.GGCDbLoader;
@@ -20,34 +38,6 @@ import ggc.core.plugins.PumpsPlugIn;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 import ggc.core.util.GGCSoftwareMode;
-
-import java.awt.Color;
-import java.awt.Component;
-import java.io.File;
-import java.io.FileInputStream;
-import java.text.DecimalFormat;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Properties;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import pygmy.core.Server;
-
-import com.atech.db.hibernate.HibernateDb;
-import com.atech.db.hibernate.transfer.BackupRestoreCollection;
-import com.atech.help.HelpContext;
-import com.atech.misc.refresh.EventObserverInterface;
-import com.atech.misc.refresh.EventSource;
-import com.atech.plugin.PlugInClient;
-import com.atech.utils.data.Rounding;
-import com.atech.utils.logs.RedirectScreen;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -211,6 +201,7 @@ public class DataAccessDoc extends DataAccess
 
     private int current_person_id = 1;
 
+
     // NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
 
     /**
@@ -238,6 +229,7 @@ public class DataAccessDoc extends DataAccess
         // GGCCoreICRunner());
         // initSpecial();
     }
+
 
     /**
      * Init Special
@@ -293,6 +285,7 @@ public class DataAccessDoc extends DataAccess
 
     }
 
+
     /**
      * Run After Db Load
      */
@@ -301,6 +294,7 @@ public class DataAccessDoc extends DataAccess
     {
         loadSpecialParameters();
     }
+
 
     // Method: getInstance
     // Author: Andy
@@ -321,6 +315,7 @@ public class DataAccessDoc extends DataAccess
         }
         return s_da;
     }
+
 
     /**
      * Create Instance
@@ -351,6 +346,7 @@ public class DataAccessDoc extends DataAccess
         return s_da;
     }
 
+
     /**
      * Create Instance
      * 
@@ -371,7 +367,7 @@ public class DataAccessDoc extends DataAccess
      * }
      */
     /*
-     * static public DataAccess getInstance() { return m_da; }
+     * static public DataAccess getInstance() { return dataAccess; }
      */
 
     // Method: deleteInstance
@@ -385,6 +381,7 @@ public class DataAccessDoc extends DataAccess
         DataAccessDoc.s_da = null;
     }
 
+
     /**
      * Start Db
      */
@@ -394,6 +391,7 @@ public class DataAccessDoc extends DataAccess
         GGCDbLoader loader = new GGCDbLoader(this);
         loader.start();
     }
+
 
     /**
      * Start Db
@@ -417,6 +415,7 @@ public class DataAccessDoc extends DataAccess
         return m_db;
     }
 
+
     /**
      * Set Db
      * 
@@ -428,6 +427,7 @@ public class DataAccessDoc extends DataAccess
         this.m_db = db;
     }
 
+
     /**
      * Is Pen/Injection Mode
      * 
@@ -437,6 +437,7 @@ public class DataAccessDoc extends DataAccess
     {
         return getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE;
     }
+
 
     /**
      * Is Pump Mode
@@ -448,6 +449,7 @@ public class DataAccessDoc extends DataAccess
         return getSoftwareMode() == GGCSoftwareMode.PUMP_MODE;
     }
 
+
     /**
      * Get Software Mode
      * 
@@ -457,6 +459,7 @@ public class DataAccessDoc extends DataAccess
     {
         return GGCSoftwareMode.getEnum(this.m_cfgMgr.getIntValue("SW_MODE"));
     }
+
 
     /**
      * Get Software Mode Description
@@ -471,6 +474,7 @@ public class DataAccessDoc extends DataAccess
 
         return this.m_cfgMgr.getStringValue("SW_MODE_DESC");
     }
+
 
     // ********************************************************
     // ****** Static Methods *****
@@ -487,6 +491,7 @@ public class DataAccessDoc extends DataAccess
     {
         return DataAccessDoc.getFloatAsString(f, Integer.parseInt(decimal_places));
     }
+
 
     /**
      * Get Float As String
@@ -513,6 +518,7 @@ public class DataAccessDoc extends DataAccess
         }
     }
 
+
     // ********************************************************
     // ****** Abstract Methods *****
     // ********************************************************
@@ -527,6 +533,7 @@ public class DataAccessDoc extends DataAccess
     {
         return "GGC";
     }
+
 
     /**
      * Check Prerequisites
@@ -543,6 +550,7 @@ public class DataAccessDoc extends DataAccess
         }
     }
 
+
     /**
      * Get Images Root (Must have ending back-slash)
      * 
@@ -553,6 +561,7 @@ public class DataAccessDoc extends DataAccess
     {
         return "/icons/";
     }
+
 
     /**
      * Load Backup Restore Collection
@@ -601,6 +610,7 @@ public class DataAccessDoc extends DataAccess
         this.backup_restore_collection = brc_full;
     }
 
+
     /** 
      * Get BackupRestoreCollection
      */
@@ -638,6 +648,7 @@ public class DataAccessDoc extends DataAccess
         // return null;
     }
 
+
     /**
      * Load Graph Config Properties
      */
@@ -646,6 +657,7 @@ public class DataAccessDoc extends DataAccess
     {
         this.graph_config = this.m_settings;
     }
+
 
     // ********************************************************
     // ****** Icons *****
@@ -667,6 +679,7 @@ public class DataAccessDoc extends DataAccess
 
     }
 
+
     // ********************************************************
     // ****** Db *****
     // ********************************************************
@@ -681,6 +694,7 @@ public class DataAccessDoc extends DataAccess
     {
         return this.m_configFile;
     }
+
 
     // ********************************************************
     // ****** Settings *****
@@ -697,6 +711,7 @@ public class DataAccessDoc extends DataAccess
         return this.m_settings;
     }
 
+
     /**
      * Load Settings from Db
      */
@@ -705,6 +720,7 @@ public class DataAccessDoc extends DataAccess
     {
         this.m_settings.load();
     }
+
 
     /**
      * Get Color
@@ -718,6 +734,7 @@ public class DataAccessDoc extends DataAccess
         return new Color(color);
     }
 
+
     /**
      * Get Configuration Manager (Db)
      * 
@@ -728,6 +745,7 @@ public class DataAccessDoc extends DataAccess
     {
         return this.m_cfgMgr;
     }
+
 
     /**
      * Init PlugIns
@@ -749,6 +767,7 @@ public class DataAccessDoc extends DataAccess
         addPlugIn(DataAccessDoc.PLUGIN_NUTRITION, new NutriPlugIn(this.m_main, this.m_i18n));
 
     }
+
 
     /**
      * Get Hibernate Db
@@ -773,6 +792,7 @@ public class DataAccessDoc extends DataAccess
      */
     public static final int OBSERVABLE_STATUS = 2;
 
+
     /**
      * Init Observable
      */
@@ -784,6 +804,7 @@ public class DataAccessDoc extends DataAccess
         observables.put("" + OBSERVABLE_PANELS, new EventSource());
         observables.put("" + OBSERVABLE_STATUS, new EventSource());
     }
+
 
     /**
      * Start To Observe
@@ -801,6 +822,7 @@ public class DataAccessDoc extends DataAccess
 
     }
 
+
     /**
      * Add Observer 
      * 
@@ -812,6 +834,7 @@ public class DataAccessDoc extends DataAccess
     {
         observables.get("" + observable_id).addObserver(inst);
     }
+
 
     /**
      * Set Change On Event Source
@@ -825,6 +848,7 @@ public class DataAccessDoc extends DataAccess
         observables.get("" + type).sendChangeNotification(value);
     }
 
+
     /**
      * Set Change On Event Source
      * 
@@ -836,6 +860,7 @@ public class DataAccessDoc extends DataAccess
     {
         observables.get("" + type).sendChangeNotification(value);
     }
+
 
     // ********************************************************
     // ****** Language *****
@@ -852,6 +877,7 @@ public class DataAccessDoc extends DataAccess
         return this.availableLanguages;
     }
 
+
     /**
      * Get Selected Language Index
      * 
@@ -862,6 +888,7 @@ public class DataAccessDoc extends DataAccess
     {
         return this.getLanguageIndex(this.getSettings().getLanguage());
     }
+
 
     /**
      * Get Language Index
@@ -883,6 +910,7 @@ public class DataAccessDoc extends DataAccess
 
         return 0;
     }
+
 
     /**
      * Get Language Index By Name
@@ -918,6 +946,7 @@ public class DataAccessDoc extends DataAccess
      */
     public static final int BG_MMOL = 2;
 
+
     /**
      * Get Measurment Type
      * 
@@ -928,6 +957,7 @@ public class DataAccessDoc extends DataAccess
     {
         return this.m_settings.getBG_unit();
     }
+
 
     // String[] bg_types = { "", "mg/dL", "mmol/L"};
 
@@ -941,6 +971,7 @@ public class DataAccessDoc extends DataAccess
     {
         return this.bg_units[getBGMeasurmentType()];
     }
+
 
     /**
      * Set Measurment Type
@@ -957,6 +988,7 @@ public class DataAccessDoc extends DataAccess
     private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
 
     private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
+
 
     /**
      * Depending on the return value of <code>getBGMeasurmentType()</code>,
@@ -985,6 +1017,7 @@ public class DataAccessDoc extends DataAccess
         }
     }
 
+
     /**
      * Get BG Value
      * 
@@ -1004,6 +1037,7 @@ public class DataAccessDoc extends DataAccess
         }
 
     }
+
 
     /**
      * Get BG Value By Type
@@ -1025,6 +1059,7 @@ public class DataAccessDoc extends DataAccess
         }
 
     }
+
 
     /**
      * Get BG Value By Type
@@ -1050,6 +1085,7 @@ public class DataAccessDoc extends DataAccess
 
     }
 
+
     /**
      * Get BG Value Different
      * 
@@ -1068,6 +1104,7 @@ public class DataAccessDoc extends DataAccess
 
     }
 
+
     // ********************************************************
     // ****** Parent handling (for UIs) *****
     // ********************************************************
@@ -1083,6 +1120,7 @@ public class DataAccessDoc extends DataAccess
         m_main = main;
         loadIcons();
     }
+
 
     /**
      * Set Parent
@@ -1104,6 +1142,7 @@ public class DataAccessDoc extends DataAccess
     {
         return m_main;
     }
+
 
     /**
      * Get Parent Little
@@ -1161,6 +1200,7 @@ public class DataAccessDoc extends DataAccess
     {
         return this.current_person_id;
     }
+
 
     // ********************************************************
     // ****** I18n Utils *****
@@ -1242,6 +1282,7 @@ public class DataAccessDoc extends DataAccess
 
     private long component_id_last;
 
+
     /**
      * Get New Component Id
      * 
@@ -1253,6 +1294,7 @@ public class DataAccessDoc extends DataAccess
         component_id_last++;
         return "" + this.component_id_last;
     }
+
 
     // ********************************************************
     // ****** Options *****
@@ -1269,6 +1311,7 @@ public class DataAccessDoc extends DataAccess
         this.options_yes_no[1] = m_i18n.getMessage("NO");
     }
 
+
     // ********************************************************
     // ****** Dates and Times Handling *****
     // ********************************************************
@@ -1281,6 +1324,7 @@ public class DataAccessDoc extends DataAccess
     {
         return 1800;
     }
+
 
     /**
      * Load Daily Settings
@@ -1309,6 +1353,7 @@ public class DataAccessDoc extends DataAccess
 
         m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
     }
+
 
     /**
      * Load Daily Settings (Little)
@@ -1340,6 +1385,7 @@ public class DataAccessDoc extends DataAccess
         // m_dRangeValues = m_db.getDayStatsRange(m_dateStart, m_date);
     }
 
+
     /**
      * Get HbA1c
      * 
@@ -1359,6 +1405,7 @@ public class DataAccessDoc extends DataAccess
         return m_HbA1c;
     }
 
+
     /**
      * Get Day Stats
      * 
@@ -1375,6 +1422,7 @@ public class DataAccessDoc extends DataAccess
 
         return m_dvalues;
     }
+
 
     /**
      * Get Day Stats Range
@@ -1402,6 +1450,7 @@ public class DataAccessDoc extends DataAccess
             return m_db.getDayStatsRange(start, end);
     }
 
+
     /**
      * Is Same Day (if we compare current day with day we got stats for main display from)
      * 
@@ -1413,6 +1462,7 @@ public class DataAccessDoc extends DataAccess
     {
         return isSameDay(m_date, gc);
     }
+
 
     /**
      * Is Database Initialized
@@ -1427,6 +1477,7 @@ public class DataAccessDoc extends DataAccess
         else
             return true;
     }
+
 
     /**
      * Is Same Day (GregorianCalendars)
@@ -1453,6 +1504,7 @@ public class DataAccessDoc extends DataAccess
 
         }
     }
+
 
     /**
      * Start Internal Web Server
@@ -1502,6 +1554,7 @@ public class DataAccessDoc extends DataAccess
 
     }
 
+
     /**
      * Console message Not Implemented
      * @param source
@@ -1510,6 +1563,7 @@ public class DataAccessDoc extends DataAccess
     {
         System.out.println("Not Implemented: " + source);
     }
+
 
     /**
      * Load Special Parameters
@@ -1524,6 +1578,7 @@ public class DataAccessDoc extends DataAccess
         // this.m_BG_unit = this.m_settings.getBG_unit();
     }
 
+
     /**
      * This method is intended to load additional Language info. Either special langauge configuration
      * or special data required for real Locale handling.
@@ -1534,6 +1589,7 @@ public class DataAccessDoc extends DataAccess
         // TODO Auto-generated method stub
     }
 
+
     /**
      * Get Selected Lang Index (will be deprecated) ??!!
      */
@@ -1542,6 +1598,7 @@ public class DataAccessDoc extends DataAccess
     {
         return 0;
     }
+
 
     /**
      * Set Selected Lang Index (will be deprecated) ??!!
@@ -1562,6 +1619,7 @@ public class DataAccessDoc extends DataAccess
      */
     public static final int INSULIN_PUMP = 1;
 
+
     /**
      * @param mode
      * @param value
@@ -1575,6 +1633,7 @@ public class DataAccessDoc extends DataAccess
         return value;
     }
 
+
     /**
      * @param mode
      * @param value
@@ -1587,6 +1646,7 @@ public class DataAccessDoc extends DataAccess
         // return value;
         return null;
     }
+
 
     /** 
      * Load PlugIns
@@ -1605,6 +1665,7 @@ public class DataAccessDoc extends DataAccess
      * Insulin Dose: Bolus
      */
     public static final int INSULIN_DOSE_BOLUS = 2;
+
 
     /**
      * Get Insulin Precision
@@ -1633,6 +1694,7 @@ public class DataAccessDoc extends DataAccess
 
     }
 
+
     /**
      * Get Insulin Precision String
      * 
@@ -1660,6 +1722,7 @@ public class DataAccessDoc extends DataAccess
 
     }
 
+
     /**
      * Reformat Insulin Amount To CorrectValue
      * 
@@ -1678,6 +1741,7 @@ public class DataAccessDoc extends DataAccess
         return Rounding.specialRounding(input_val, prec);
     }
 
+
     /**
      * Reformat Insulin Amount To CorrectValue String
      * 
@@ -1692,6 +1756,7 @@ public class DataAccessDoc extends DataAccess
         String prec = getInsulinPrecisionString(mode, type);
         return Rounding.specialRoundingString(input_val, prec);
     }
+
 
     /**
      * Get Max Values
@@ -1720,6 +1785,7 @@ public class DataAccessDoc extends DataAccess
 
     }
 
+
     /**
      * For misc tests
      */
@@ -1744,6 +1810,7 @@ public class DataAccessDoc extends DataAccess
          */
     }
 
+
     /**
      * Get Max Decimals that will be used by DecimalHandler
      * 
@@ -1755,17 +1822,20 @@ public class DataAccessDoc extends DataAccess
         return 3;
     }
 
+
     @Override
     public void loadExtendedHandlers()
     {
-        this.addExtendedHandler(DataAccessDoc.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValue(this));
+        this.addExtendedHandler(DataAccessDoc.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValueHandler(this));
     }
+
 
     @Override
     public void loadConverters()
     {
         this.converters.put("BG", new Converter_mgdL_mmolL());
     }
+
 
     /**
      * Get BG Converter

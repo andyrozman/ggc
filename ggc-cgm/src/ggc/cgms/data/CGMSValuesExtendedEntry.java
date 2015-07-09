@@ -1,7 +1,6 @@
 package ggc.cgms.data;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
@@ -14,7 +13,6 @@ import com.atech.utils.data.ATechDate;
 import ggc.cgms.data.defs.extended.CGMSExtendedDataType;
 import ggc.cgms.util.CGMSUtil;
 import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.cgms.CGMSDataExtendedH;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.output.OutputWriterType;
@@ -394,13 +392,6 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
 
     @Override
-    public ArrayList<? extends GGCHibernateObject> getDbObjects()
-    {
-        return null;
-    }
-
-
-    @Override
     public Object getColumnValue(int index)
     {
         return "N/A";
@@ -438,7 +429,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     private void loadExtended(String extended2)
     {
         ExtendedHandler handler = CGMSUtil.getExtendedHandler(this.getDVEName());
-        Hashtable<String, String> data = handler.loadExtended(extended2);
+        HashMap<String, String> data = handler.loadExtended(extended2);
 
         if (handler.isExtendedValueSet(ExtendedCGMSValuesExtendedEntry.EXTENDED_SUB_TYPE, data))
         {
@@ -456,7 +447,7 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     private String saveExtended()
     {
         ExtendedHandler handler = CGMSUtil.getExtendedHandler(this.getDVEName());
-        Hashtable<String, String> data = new Hashtable<String, String>();
+        HashMap<String, String> data = new HashMap<String, String>();
 
         if (this.subType > 0)
         {

@@ -1,13 +1,5 @@
 package ggc.pump.device.minimed;
 
-import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.protocol.SerialProtocol;
-import gnu.io.CommPortIdentifier;
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.UnsupportedCommOperationException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,8 +8,12 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.atech.utils.data.CRCUtils;
+import com.atech.utils.data.BitUtils;
 import com.atech.utils.data.HexUtils;
+
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.protocol.SerialProtocol;
+import gnu.io.*;
 
 public class PumpSimple
 {
@@ -28,9 +24,10 @@ public class PumpSimple
     long device_timeout = 500;
     // protected MinimedDeviceUtil util = null;
     // //MinimedDeviceUtil.getInstance();
-    CRCUtils hex_utils = new CRCUtils();
+    BitUtils hex_utils = new BitUtils();
 
     private static Log log = LogFactory.getLog(PumpSimple.class);
+
 
     public PumpSimple(String port, String serial_no)
     {
@@ -71,6 +68,7 @@ public class PumpSimple
 
     }
 
+
     public void closeSerialCommunication() throws Exception
     {
 
@@ -84,6 +82,7 @@ public class PumpSimple
     protected OutputStream portOutputStream = null;
     protected InputStream portInputStream = null;
     protected long timeOut = 50000;
+
 
     public void initSerialCommunication() throws Exception
     {
@@ -108,7 +107,7 @@ public class PumpSimple
             // this.outputWriter.writeLog(LogEntryType.INFO,
             // "AbstractSerialMeter::open()");
             // System.out.println("SerialProtocol: open() - open");
-            serialPort = (SerialPort)portIdentifier.open("ggc", (int) timeOut);
+            serialPort = (SerialPort) portIdentifier.open("ggc", (int) timeOut);
 
             // this.outputWriter.writeLog(LogEntryType.INFO,
             // "AbstractSerialMeter::open() - setting parameters");
@@ -220,6 +219,7 @@ public class PumpSimple
 
     }
 
+
     public void initCommunicationAdapter() throws Exception
     {
         log.debug("Init Communication Adapter - Start");
@@ -246,6 +246,7 @@ public class PumpSimple
         // log.debug("N/A");
 
     }
+
 
     private int readUntilEmpty()
     {
@@ -279,6 +280,7 @@ public class PumpSimple
         return i;
     }
 
+
     private boolean sendCommandCheckReply(byte cmd_byte, byte expected_return) throws IOException, PlugInBaseException
     {
         // Contract.pre(getRS232Port() != null, "serial port is null.");
@@ -307,6 +309,7 @@ public class PumpSimple
             return true;
     }
 
+
     public void initPumpForCommunication()
     {
         log.debug("Init Pump For Communication");
@@ -314,6 +317,7 @@ public class PumpSimple
         log.debug("N/A");
 
     }
+
 
     private int sendCommandGetReply(byte cmd_byte) throws IOException
     {
@@ -329,6 +333,7 @@ public class PumpSimple
         // this.util.sleepIO();
         return this.portInputStream.read();
     }
+
 
     public static void main(String[] args)
     {
@@ -373,10 +378,12 @@ public class PumpSimple
         // new PumpSimple("/dev/ttyUSB1", "904717");
     }
 
+
     public static double toBasalInsulin(int i)
     {
         return (double) i / (double) 40;
     }
+
 
     public void sleepMs(long ms)
     {
@@ -390,6 +397,7 @@ public class PumpSimple
             // e.printStackTrace();
         }
     }
+
 
     /**
      * Print All Available Serial Ports as vector of CommPortIdentifier
@@ -406,6 +414,7 @@ public class PumpSimple
         }
 
     }
+
 
     public int initializeCommunicationInterface() throws PlugInBaseException
     {
@@ -438,6 +447,7 @@ public class PumpSimple
         // TODO Auto-generated method stub
         return 0;
     }
+
 
     private void initCommunicationsIO() throws PlugInBaseException, IOException // ,
                                                                                 // SerialIOHaltedException
@@ -481,6 +491,7 @@ public class PumpSimple
         }
     }
 
+
     private int readStatus() throws PlugInBaseException, IOException
     {
         log.debug("readStatus");
@@ -503,35 +514,42 @@ public class PumpSimple
 
     }
 
+
     private boolean isStatusError(int status)
     {
         return (status & 0x10) != 0;
     }
+
 
     private boolean isStatusSelfTestError(int status)
     {
         return (status & 8) != 0;
     }
 
+
     private boolean isStatusReceivedData(int status)
     {
         return (status & 1) != 0;
     }
+
 
     private boolean isStatusFilterRepeat(int status)
     {
         return (status & 0x40) != 0;
     }
 
+
     private boolean isStatusAutoSleep(int status)
     {
         return (status & 0x20) != 0;
     }
 
+
     private boolean isStatusRS232Mode(int status)
     {
         return (status & 4) != 0;
     }
+
 
     private boolean readAckByte() throws PlugInBaseException, IOException
     {

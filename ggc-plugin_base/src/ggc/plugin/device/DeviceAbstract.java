@@ -1,15 +1,16 @@
 package ggc.plugin.device;
 
+import java.util.List;
+
+import com.atech.graphics.dialogs.selector.ColumnSorter;
+import com.atech.graphics.dialogs.selector.SelectableInterface;
+
 import ggc.core.util.GGCI18nControl;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import com.atech.graphics.dialogs.selector.ColumnSorter;
-import com.atech.graphics.dialogs.selector.SelectableInterface;
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,7 +54,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     protected boolean canReadDeviceConfiguration = false;
     protected GGCI18nControl i18nControlAbstract = null; // DataAccessMeter.getInstance().getI18nControlInstance();
     protected OutputWriter outputWriter;
-    protected GGCPlugInFileReaderContext[] fileContexts;
+    protected List<GGCPlugInFileReaderContext> fileContexts;
 
     /**
      * Device Type: Meter
@@ -75,6 +76,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public static final int DEVICE_TYPE_OTHER = 4;
 
+
     /**
      * Constructor
      * 
@@ -88,6 +90,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         loadFileContexts();
         this.initSpecialConfig();
     }
+
 
     /**
      * Constructor
@@ -116,6 +119,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         // this.initSpecialConfig();
     }
 
+
     /**
      * Constructor
      * 
@@ -130,6 +134,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         loadFileContexts();
         this.initSpecialConfig();
     }
+
 
     /**
      * Constructor
@@ -148,6 +153,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         this.setConnectionParameters(parameters);
     }
 
+
     /**
      * Pre Init Init
      * 
@@ -165,6 +171,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         this.setConnectionParameters(parameters);
     }
 
+
     // Device Interface
 
     /** 
@@ -173,6 +180,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     public void clearDeviceData()
     {
     }
+
 
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy 
@@ -184,6 +192,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
     }
 
+
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
      * 
@@ -192,6 +201,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -202,6 +212,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     public void readInfo() throws PlugInBaseException
     {
     }
+
 
     /** 
      * Set Device Allowed Actions
@@ -215,6 +226,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         this.canReadDeviceConfiguration = can_read_device_configuration;
     }
 
+
     /**
      * canReadData - Can Meter Class read data from device
      * 
@@ -224,6 +236,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return this.canReadData;
     }
+
 
     /**
      * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
@@ -235,6 +248,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return this.canReadPartitialData;
     }
 
+
     /**
      * canReadDeviceInfo - tells if we can read info about device
      * 
@@ -244,6 +258,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return this.canReadDeviceInfo;
     }
+
 
     /**
      * canReadConfiguration - tells if we can read configuration from device
@@ -255,6 +270,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return this.canReadDeviceConfiguration;
     }
 
+
     /**
      * setDeviceCompany - set Company for device
      * 
@@ -265,6 +281,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         this.deviceCompany = company;
     }
 
+
     /**
      * getDeviceCompany - get Company for device
      */
@@ -272,6 +289,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return this.deviceCompany;
     }
+
 
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
@@ -283,6 +301,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return this.outputWriter.getDeviceIdentification();
     }
 
+
     /**
      * Get Device Source Name
      * 
@@ -292,6 +311,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return deviceSourceName;
     }
+
 
     /**
      * Set DataAccess Instance
@@ -303,6 +323,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         this.i18nControlAbstract = da.getI18nControlInstance();
     }
 
+
     // SelectableInterface
 
     /** 
@@ -313,6 +334,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return this.getName();
     }
 
+
     /**
      * getColumnCount - return number of displayable columns
      * 
@@ -322,6 +344,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return dataAccess.getPluginDeviceUtil().getColumnCount();
     }
+
 
     /**
      * getColumnName - return name of specified column
@@ -334,6 +357,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return dataAccess.getPluginDeviceUtil().getColumnName(num);
     }
 
+
     /**
      * getColumnValue - return value of specified column
      * 
@@ -345,6 +369,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return dataAccess.getPluginDeviceUtil().getColumnValue(num, this);
     }
 
+
     /**
      * getColumnValueObject - return value of specified column
      * 
@@ -355,6 +380,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return this.getColumnValue(num);
     }
+
 
     /**
      * getColumnWidth - return width of specified column
@@ -368,6 +394,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return dataAccess.getPluginDeviceUtil().getColumnWidth(num, width);
     }
 
+
     /**
      * isFound(String) - if this object is filtered or not.
      * 
@@ -379,6 +406,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return true;
     }
 
+
     /**
      * isFound(int) - if this object is filtered or not.
      * 
@@ -389,6 +417,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return true;
     }
+
 
     /**
      * isFound(int,int,int) - if this object is filtered or not.
@@ -403,12 +432,14 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return true;
     }
 
+
     /**
      * setSearchContext - set context for searching
      */
     public void setSearchContext()
     {
     }
+
 
     /**
      * setColumnSorter - sets class that will help with column sorting
@@ -418,6 +449,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     public void setColumnSorter(ColumnSorter cs)
     {
     }
+
 
     /**
      * Compares this object with the specified object for order.  Returns a
@@ -462,12 +494,14 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return 0;
     }
 
+
     /** 
      * test
      */
     public void test()
     {
     }
+
 
     /** 
      * getItemId
@@ -476,6 +510,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return this.getDeviceId();
     }
+
 
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -487,6 +522,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return true;
     }
+
 
     /**
      * Does this device support file download. Some devices have their native software, which offers export 
@@ -500,12 +536,13 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return false;
     }
 
+
     /**
      * Get File Download Types as FileReaderContext. 
      * 
      * @return
      */
-    public GGCPlugInFileReaderContext[] getFileDownloadTypes(DownloadSupportType downloadSupportType)
+    public List<GGCPlugInFileReaderContext> getFileDownloadTypes(DownloadSupportType downloadSupportType)
     {
         if (downloadSupportType == DownloadSupportType.DownloadConfigFile)
         {
@@ -517,6 +554,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         }
     }
 
+
     /**
      * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
      *     left to right side, without displaying progress.
@@ -527,12 +565,14 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return false;
     }
 
+
     /**
      * Load File Contexts
      */
     public void loadFileContexts()
     {
     }
+
 
     /**
      * Device has special progress status (we use this functions mostly if we have progress,
@@ -542,6 +582,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return false;
     }
+
 
     /**
      * Set Device Type
@@ -564,6 +605,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         this.deviceSourceName = group + " " + device;
     }
 
+
     /**
      * Get Connection Parameters
      * 
@@ -574,6 +616,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return this.connectionParameters;
     }
 
+
     /**
      * Get Connection Parameters
      * 
@@ -583,6 +626,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return this.connectionParameters;
     }
+
 
     /**
      * Set Connection Parameters
@@ -612,6 +656,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
 
     }
 
+
     /**
      * Are Connection Parameters Valid - validate
      * 
@@ -621,6 +666,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return this.areConnectionParametersValid(this.connectionParameters);
     }
+
 
     /**
      * Are Connection Parameters Valid (String) - validate
@@ -644,6 +690,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         }
     }
 
+
     /**
      * Has No Connection Parameters - In rare cases we have no parameters for a device (for example if 
      * we support just import from non-permanent location)
@@ -655,6 +702,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return false;
     }
 
+
     /**
      * Has Special Config
      * 
@@ -664,6 +712,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     {
         return this.special_config != null;
     }
+
 
     /**
      * Get Special Config Panel
@@ -675,12 +724,14 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return this.special_config;
     }
 
+
     /**
      * Initialize Special Config
      */
     public void initSpecialConfig()
     {
     }
+
 
     /**
      * Has Pre Init - Some devices when started are in unusal state, this methods
@@ -695,12 +746,14 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         return false;
     }
 
+
     /**
      * Pre Init Device - Does preinit
      */
     public void preInitDevice()
     {
     }
+
 
     /**
      * Set Output Writer
@@ -712,15 +765,18 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         this.outputWriter = ow;
     }
 
+
     public boolean hasDefaultParameter()
     {
         return true;
     }
 
+
     public String getDeviceSpecialComment()
     {
         return "";
     }
+
 
     /**
      * Get Output Writer instance

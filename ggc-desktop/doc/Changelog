@@ -6,11 +6,13 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
-0.6 [28.3.2015] [Andy]
+0.6 [26.4.2015] [Andy]
     * changes in AtechTools which required changes here
     * started work on Stock tools
     * added configuration for Internal PDF Viewer
     * fixes on Graphs
+    * Main windows refactoring
+    * Docs (How to help, ...)
 
 
 0.5.0.3 [10.12.2012] [Andy]

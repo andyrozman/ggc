@@ -5,6 +5,88 @@
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
+<td width="150">2014-07-08</td>
+<td>Release 0.6</td>
+</tr>
+<tr>
+<td colspan="2">
+Finally release is here... It took my something longer than expected, but there is one additonal
+functionality added...<br>
+I am afraid to say that this release was only tested by me (nobody from testing team had time
+to check this) with my hardware. Because of this, I ask everyone of you who has hardware that was
+implemented to test this and let me know if something doesn't work. In all 3 implementation we
+work with dates, and in some cases this dates need to be converted (TimeZones and Daylight Saving time),
+so please take few minutes time and check it out.<br>
+New functionalites include:<br>
+- Dexcom G4<br>
+- Animas 1200 and higher, including Vibe (also Dexcom/CGMS support)<br>
+- Insulet Omnipod (importing of .ibf backup file)<br>
+- added few reports for Pumps (check Daily Timesheet)<br>
+- some fixes here and there...<br>
+<br>
+If you find some problems please report and I will try to make a fix release if needed (in august).<br>
+<br>
+Next release is planned for end of year 2015. If everything works OK, we should have some support for
+Minimed Pumps. I am working on it with full speed, so I hope it will be finished by end of year
+release (it should download at least Pump data, CGMS data download is planned for later time).
+<br>
+Any help from any of you is greatly appreciated... I try to reply to each mail I get...
+</tr>
+</table>
+
+<br><br>
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
+<td width="150">2014-04-29</td>
+<td>About next release 0.6 and Help Needed</td>
+</tr>
+<tr>
+<td colspan="2">
+I am sorry to say that as you can see, release in January didn't happen... I kept working on Animas integration, which started getting complicated in CGMS integration, but now there is finally working version there. 0.6 will be sent to Testers by end of week, and then after two weeks it should come out...<br>
+I have more free time now, which means that next version should be interesting... but now we come to reason for this message... <br>
+<br>
+<b>WE NEED HELP</b><br>
+1. TRANSLATION. Since we are gaining some new users from all around the world, it would be nice, if we could
+translate GGC into some more languages. We have currently just 3 additional languages (German, Slovene and French),
+it would be nice to have some more... I created Translation Tool, which will make translating very easy, you just
+need to put some time in... <br>
+2. GRAPHS. We have support for quite a few devices, now we just need to display (visualize) this data.
+We have Reports to print out this data, but Graphs are still our weak point. GGC has Graph Framework, which
+requires developer to implement each Graph separately, which can be quite a problem, which is reason why I started
+working on Graph Editor (it should be able to create Graph definition (as Xml), which would be displayed by
+special Viewer. This would give us option to make graphs very simply, but it would also give User option to
+define it's own), but other stuff was more important so it's still in beginning phase. I would need someone
+to either develop this, or help me with development (by testing mostly and doing research into library).
+We are using most widely used Graph library for Java called JFreeChart (currently version 1.0.13).<br><br>
+If you feel you could help us in either of this points (or even by testing), please contact me:
+<a href="mailto:andy.rozman@gmail.com">andy.rozman@gmail.com</a></td>
+</tr>
+</table>
+
+<br><br>
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
+<td width="150">2014-12-29</td>
+<td>About next release 0.6 (planned for Yule 2014)</td>
+</tr>
+<tr>
+<td colspan="2">
+Our next release will come out little late. It was planned for end of December, but Animas implementation
+is taking more time than planned... Release 0.6 will come out in start of 2015 (probably at end of January
+or start of February).<br>
+</td>
+</tr>
+</table>
+
+<br><br>
+
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
 <td width="150">2014-09-27</td>
 <td>GGC 0.5.0.3 (release 2)</td>
 </tr>

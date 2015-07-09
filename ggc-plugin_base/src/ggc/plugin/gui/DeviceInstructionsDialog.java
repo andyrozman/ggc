@@ -3,6 +3,7 @@ package ggc.plugin.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -182,7 +183,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
                 return;
             }
         }
-        else if (this.continuing_type == DeviceDataHandler.TRANSFER_READ_FILE)
+        else if (this.continuing_type == DeviceDataHandler.TRANSFER_READ_DATA_FILE)
         {
             // FIXME add read_file_config
             if (!DownloadSupportType.isOptionSet(downloadSupportTypes, DownloadSupportType.DownloadDataFile))
@@ -280,11 +281,11 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
 
     private boolean loadConfiguration()
     {
-        System.out.println("Load configuration");
+        // System.out.println("Load configuration");
 
-        this.configured_device = this.m_da.getDeviceConfiguration().getSelectedDeviceInstance(); // mc.getDefaultMeter();
+        this.configured_device = this.m_da.getDeviceConfiguration().getSelectedDeviceInstance();
 
-        System.out.println("Cfg: " + this.configured_device);
+        // System.out.println("Cfg: " + this.configured_device);
 
         if (this.configured_device == null)
             return false;
@@ -639,34 +640,44 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
                 m_da.removeComponent(this);
                 new DeviceDisplayConfigDialog(m_parent, m_da, deviceDataHandler);
             }
-            else if (this.continuing_type == DeviceDataHandler.TRANSFER_READ_FILE)
+            else if (this.continuing_type == DeviceDataHandler.TRANSFER_READ_DATA_FILE)
             {
-                GGCPlugInFileReaderContext[] downloadTypes = this.deviceDataHandler
-                        .getFileDownloadTypes(DownloadSupportType.DownloadDataFile);
-
-                if (downloadTypes == null)
-                {
-                    showWarningDialog(this.m_ic.getMessage("INTERNAL_CONFIGURATION_ERROR"));
-                    m_da.removeComponent(this);
-                }
-                else if (downloadTypes.length == 1)
-                {
-                    deviceDataHandler.selected_file_context = downloadTypes[0];
-                    m_da.removeComponent(this);
-                    new ImportFileSelectorDialog(m_da, this, deviceDataHandler);
-                }
-                else
-                {
-                    m_da.removeComponent(this);
-                    new MultipleFileSelectorDialog(m_da, this, deviceDataHandler);
-                }
-                // new DeviceDisplayConfigDialog(dataAccess, deviceDataHandler);
+                readFile(DownloadSupportType.DownloadDataFile);
+            }
+            else if (this.continuing_type == DeviceDataHandler.TRANSFER_READ_CONFIGURATION_FILE)
+            {
+                readFile(DownloadSupportType.DownloadConfigFile);
             }
 
         }
         else
         {
             System.out.println("DeviceInstructionsDialog::Unknown command: " + action);
+        }
+
+    }
+
+
+    private void readFile(DownloadSupportType downloadSupportType)
+    {
+        List<GGCPlugInFileReaderContext> downloadTypes = this.deviceDataHandler
+                .getFileDownloadTypes(downloadSupportType);
+
+        if (downloadTypes == null)
+        {
+            showWarningDialog(this.m_ic.getMessage("INTERNAL_CONFIGURATION_ERROR"));
+            m_da.removeComponent(this);
+        }
+        else if (downloadTypes.size() == 1)
+        {
+            deviceDataHandler.selected_file_context = downloadTypes.get(0);
+            m_da.removeComponent(this);
+            new ImportFileSelectorDialog(m_da, this, deviceDataHandler, downloadSupportType);
+        }
+        else
+        {
+            m_da.removeComponent(this);
+            new MultipleFileSelectorDialog(m_da, this, deviceDataHandler, downloadSupportType);
         }
 
     }

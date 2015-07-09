@@ -36,8 +36,10 @@ import ggc.pump.util.DataAccessPump;
 public enum PumpBolusType implements CodeEnumWithTranslation
 {
     None(0, "NONE"), //
-    Normal(1, "BOLUS_STANDARD"), Audio(2, "BOLUS_AUDIO"), Extended(3, "BOLUS_SQUARE", "AMOUNT_SQUARE=%s;DURATION=%s"), Multiwave(
-            4, "BOLUS_MULTIWAVE", "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s")
+    Normal(1, "BOLUS_STANDARD"), //
+    Audio(2, "BOLUS_AUDIO"), //
+    Extended(3, "BOLUS_SQUARE", "AMOUNT_SQUARE=%s;DURATION=%s"), //
+    Multiwave(4, "BOLUS_MULTIWAVE", "AMOUNT=%s;AMOUNT_SQUARE=%s;DURATION=%s")
 
     ;
 
@@ -58,7 +60,8 @@ public enum PumpBolusType implements CodeEnumWithTranslation
             // System.out.println("Tr: " + ic.getMessage(pbt.i18nKey));
         }
 
-        String[] bolus_desc_lcl = { ic.getMessage("SELECT_BOLUS_TYPE"), ic.getMessage("BOLUS_STANDARD"), //
+        String[] bolus_desc_lcl = { ic.getMessage("SELECT_BOLUS_TYPE"), //
+                                   ic.getMessage("BOLUS_STANDARD"), //
                                    ic.getMessage("BOLUS_AUDIO"), //
                                    ic.getMessage("BOLUS_SQUARE"), //
                                    ic.getMessage("BOLUS_MULTIWAVE"), };

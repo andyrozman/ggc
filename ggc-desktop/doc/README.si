@@ -1,4 +1,8 @@
 
+THIS DOCUMENT WAS NOT UPDATED FOR SOME TIME (SINCE VERSION 0.4)... SOME FUNCTIONALITIES MAY ALREADY BE
+WORKING AND SOME DON'T.
+
+
 GNU Gluco Control (GGC)
 =======================
 
@@ -23,7 +27,7 @@ novih naprav), prosim preberite dokument 'How_Can_I_Help.txt'. Vsak razvijalec
 mora nujno prebrati ta isti dokument.
 
 
-2. TRENUTNA RAZLIČICA IN STATUS
+2. TRENUTNA RAZLIČICA IN STATUS [Ta dokumentacija ni nadgrajena]
 ===============================
 
 
@@ -67,7 +71,7 @@ zvezdicama (**).
 
 
 
-3. KAJ TRENUTNO LAHKO DELAMO S APLIKACIJO
+3. KAJ TRENUTNO LAHKO DELAMO S APLIKACIJO [Ta dokumentacija ni nadgrajena]
 =========================================
 
 - Dodajanje podatkov o dozah insulina, vrednosti KS, aktivnosti, vrednosti urina in 
@@ -88,7 +92,7 @@ zvezdicama (**).
 
 
 
-4. NAČRTOVANE FUNKCIONALNOSTI
+4. NAČRTOVANE FUNKCIONALNOSTI [Ta dokumentacija ni nadgrajena]
 =============================
 
 Različica 0.5
@@ -119,7 +123,7 @@ Version 0.6
 
 
 
-5. DODATNI PROJEKTI
+5. DODATNI PROJEKTI [Ta dokumentacija ni nadgrajena]
 ====================
 
 V tem trenutku imamo tri dodatne (pod) projekte.
@@ -156,7 +160,7 @@ Prvi podprti CGMS bo Minimedov preko export datotek iz programa CareLink.
 
 
 
-6. KAKO LAHKO POMAGATE KOT 'NAVADNI' UPORABNIK
+6. KAKO LAHKO POMAGATE KOT 'NAVADNI' UPORABNIK [Ta dokumentacija ni nadgrajena]
 ===============================================
 
 Obstaja več načinov kako lahko pomagate. Nekateri zahtevajo, da imate določeno znanje, 

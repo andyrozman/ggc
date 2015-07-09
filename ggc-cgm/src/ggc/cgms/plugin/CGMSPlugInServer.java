@@ -55,26 +55,25 @@ import ggc.plugin.list.BaseListDialog;
 public class CGMSPlugInServer extends DevicePlugInServer implements ActionListener
 {
 
-
-//    /**
-//     *  Command: Read CGMS data
-//     */
-//    public static final int COMMAND_READ_CGMS_DATA = 0;
-//
-//    /**
-//     *  Command: Get List of devices
-//     */
-//    public static final int COMMAND_CGMS_LIST = 1;
-//
-//    /**
-//     *  Command: Configuration
-//     */
-//    public static final int COMMAND_CGMS_CONFIGURATION = 2;
-//
-//    /**
-//     *  Command: About
-//     */
-//    public static final int COMMAND_CGMS_ABOUT = 3;
+    // /**
+    // * Command: Read CGMS data
+    // */
+    // public static final int COMMAND_READ_CGMS_DATA = 0;
+    //
+    // /**
+    // * Command: Get List of devices
+    // */
+    // public static final int COMMAND_CGMS_LIST = 1;
+    //
+    // /**
+    // * Command: Configuration
+    // */
+    // public static final int COMMAND_CGMS_CONFIGURATION = 2;
+    //
+    // /**
+    // * Command: About
+    // */
+    // public static final int COMMAND_CGMS_ABOUT = 3;
 
     /**
      * Return Object: Selected Device with parameters
@@ -91,15 +90,16 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
      */
     public static final int RETURN_ACTION_CONFIG = 2;
 
-    //private String commands[] = { "MN_CGMS_READ_DESC", "MN_CGMS_LIST_DESC", "MN_CGMS_CONFIG_DESC", "MN_CGMS_ABOUT_DESC" };
+    // private String commands[] = { "MN_CGMS_READ_DESC", "MN_CGMS_LIST_DESC",
+    // "MN_CGMS_CONFIG_DESC", "MN_CGMS_ABOUT_DESC" };
 
     DataAccessCGMS da_local;
     private JMenuItem[] menus = new JMenuItem[3];
 
 
     /**
-     * Constructor
-     */
+    * Constructor
+    */
     public CGMSPlugInServer()
     {
         super();
@@ -118,49 +118,6 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
         da_local = DataAccessCGMS.createInstance(da.getLanguageManager());
         da_local.addComponent(cont);
-    }
-
-
-    /**
-     * Execute Command on Server Side
-     * 
-     * @param command
-     */
-    @Override
-    public void executeCommand(int command, Object obj_data)
-    {
-//        switch (command)
-//        {
-//            case CGMSPlugInServer.COMMAND_READ_CGMS_DATA:
-//                {
-//                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_READ_CGMS_DATA]);
-//                    // DbDataReaderAbstract reader =
-//                    // (DbDataReaderAbstract)obj_data;
-//                    // new MeterInstructionsDialog(reader, this);
-//                    return;
-//                }
-//
-//            case CGMSPlugInServer.COMMAND_CGMS_LIST:
-//                {
-//                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_CGMS_LIST]);
-//                    return;
-//                }
-//
-//            case CGMSPlugInServer.COMMAND_CGMS_ABOUT:
-//                {
-//                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_CGMS_ABOUT]);
-//                    return;
-//                }
-//
-//            default:
-//            case CGMSPlugInServer.COMMAND_CGMS_CONFIGURATION:
-//                {
-//                    this.featureNotImplemented(commands[CGMSPlugInServer.COMMAND_CGMS_CONFIGURATION]);
-//                    return;
-//                }
-//
-//        }
-
     }
 
 
@@ -206,14 +163,14 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public void initPlugIn()
     {
-        ic = m_da.getI18nControlInstance();
+        ic = dataAccess.getI18nControlInstance();
 
         if (da_local == null)
         {
-            da_local = DataAccessCGMS.createInstance(((ATDataAccessLMAbstract) m_da).getLanguageManager());
+            da_local = DataAccessCGMS.createInstance(((ATDataAccessLMAbstract) dataAccess).getLanguageManager());
         }
 
-        this.initPlugInServer((DataAccess) m_da, da_local);
+        this.initPlugInServer((DataAccess) dataAccess, da_local);
     }
 
 
@@ -241,7 +198,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
                     return da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
                 else
                 {
-                    if (m_da.isValueSet(de.communication_port)
+                    if (dataAccess.isValueSet(de.communication_port)
                             && !de.communication_port.equals(da.getI18nControlInstance().getMessage("NOT_SET")))
                         return String.format(da.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"),
                             de.device_device + " [" + de.device_company + "]", de.communication_port);
@@ -348,7 +305,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     }
 
 
-    private void refreshMenusAfterConfig()
+    public void refreshMenusAfterConfig()
     {
         menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
             DownloadSupportType.DownloadData));
@@ -396,7 +353,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         else if (command.equals("cgms_read_file"))
         {
             new DeviceInstructionsDialog(this.parent, DataAccessCGMS.getInstance(), this,
-                    DeviceDataHandler.TRANSFER_READ_FILE);
+                    DeviceDataHandler.TRANSFER_READ_DATA_FILE);
             // this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("cgms_list"))

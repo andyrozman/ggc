@@ -323,7 +323,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         {
             this.label_1.setText(ic.getMessage("ERROR_TYPE") + ":");
             addAllItems(this.combo_1, PumpErrors.getDescriptions());
-            // this.m_da.getPumpErrorTypes().getDescriptions());
+            // this.dataAccess.getPumpErrorTypes().getDescriptions());
         }
         else
         {
@@ -415,7 +415,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.combo_1.setBounds(110, 15, 220, 25);
         this.combo_1.setVisible(true);
         this.combo_1.setActionCommand("basal");
-        addAllItems(this.combo_1, PumpBasalType.basal_desc); // this.m_da.getBasalSubTypes().getDescriptions());
+        addAllItems(this.combo_1, PumpBasalType.basal_desc); // this.dataAccess.getBasalSubTypes().getDescriptions());
 
         this.label_2.setBounds(0, 57, 150, 25);
         this.label_2.setVisible(true);
@@ -640,7 +640,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         this.combo_1.setSelectedIndex(m_da.getIndexOfElementInArray(PumpBolusType.getDescriptions(), PumpBolusType
                 .getByCode(stype).getTranslation()));
-        // this.m_da.getBolusSubTypes().getIndexFromStaticDescriptionArrayWithID(stype));
+        // this.dataAccess.getBolusSubTypes().getIndexFromStaticDescriptionArrayWithID(stype));
 
         this.num_tf_1_d2.setVisible(false);
         this.num_tf_2_d2.setVisible(false);

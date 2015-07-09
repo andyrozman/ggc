@@ -4,24 +4,44 @@
 
 <h1>Diabetic devices and their status in GGC</h1>
 
-In year 2006 our project was back on track and restructured, so we started to think about inclusion/support of diabetics devices.
+In year 2006 our project was back on track, so we started to think about inclusion/support of diabetics devices.
 <br><br>
-In 2007 we started with support for Meter devices (GGC supported devices before, but support was little unorthodox and also 
-unusable). In August 2007 we finished most of our Meter Tool and added first devices (Ascensia), to which we later added others.
+In 2007 we started with support for Meter devices (GGC supported devices before, but support was little unorthodox
+and
+also
+unusable). In August 2007 we finished most of our Meter Tool and added first devices (Ascensia), to which we later
+added
+others.
 <br><br>
-At end of 2008 we started to work on Pump Tool, mainly on Manual adding of data, and later in next year we added our first pump
-device to our support list (we had it on testing from company). Work now continues on adding more and more devices. 
+At end of 2008 we started to work on Pump Tool, mainly on Manual adding of data, and later in next year we added our
+first pump
+device to our support list (we had it on testing from company). Work now continues on adding more and more devices.
 <br><br>
-At end of 2009 we started support for CGMS devices, though CGMS Tool. Tool is planned to be released in 1Q or 2Q of 2010 (most of 
-work was done at time of writing of this page (9th February 2010), but there is still some missing functionality). 
+At end of 2009 we started support for CGMS devices, though CGMS Tool. Tool is planned to be released in 1Q or 2Q of
+2010
+(most of
+work was done at time of writing of this page (9th February 2010), but there is still some missing functionality).
+
 
 <br><br><br>
 Legend:<br>
-<font color="green">Implementation finished</font><br>
-<font color="orange">Work in progress</font><br>
-<font color="red">Not done</font><br>
-<font color="magenta">Work will start soon</font><br>
+<font color="#3cb371">Implementation finished</font><br>
+<font color="#6495ed">Work in progress</font><br>
+<font color="#F2893E">Not planned for now</font><br>
+<font color="#9370db">Planned</font><br>
+<font color="#D2CB43">Won't be supported (Device so old, that support is not needed)</font><br>
 
+
+<br><br>
+
+What are levels? <br>
+We can support device through different means (we want to have all devices supported with Level 2, but this is not
+always possible):<br>
+Level 1 - We can import data, exported by 3rd Party Software (probably Original Manufacturer Software)<br>
+Level 2 - GGC can read data directly from device<br>
+Level 2.1 - Device has some internal file, which is then imported<br>
+<br>
+We try to make Level 2 support, which means that user doesn't need to use any other software (or webpage)<br>
 
 
 <br><br>
@@ -30,609 +50,887 @@ Legend:<br>
 <h2>A. Meter Tool</h2>
 
 <br>
-List of supported devices (21), work in progress (3).
+This is just list of devices which are supported, or are planned to be supported.<br><br>
 
-<br>
+
+List of supported devices (25), planned (5), partial (1), not tested (1).
+
+<br><br><br>
 
 <font size="6">
 
-<table border="1" width="800"> 
-<tr bgcolor="gray">
-	<td width="15%">Company</td>
-	<td width="15%">Device</td>
-	<td width="10%">Support Level*</td>
-	<td width="10%">Support in GGC</td>
-	<td width="10%">Developer</td>
-	<td>Comment</td>
-</tr>
+    <table border="1" width="80%">
+        <tr bgcolor="gray">
+            <td width="15%">Company</td>
+            <td width="15%">Device</td>
+            <td width="10%">Support Level*</td>
+            <td width="10%">Support in GGC</td>
+            <td width="10%">Since GGC Version</td>
+            <td width="10%">Planned Support</td>
+            <td width="10%">Developer</td>
+            <td>Comment</td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Ascensia/Bayer</td>
-	<td>Contour Link</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td></td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Ascensia/Bayer</td>
+            <td>Contour Link</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.3</td>
+            <td>&nbsp;</td>
+            <td>Andy</td>
+            <td>&nbsp;</td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Ascensia/Bayer</td>
-	<td>Contour</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td></td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Ascensia/Bayer</td>
+            <td>Contour</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.3</td>
+            <td>&nbsp;</td>
+            <td>Andy</td>
+            <td>&nbsp;</td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Ascensia/Bayer</td>
-	<td>Contour Link</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td></td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Ascensia/Bayer</td>
+            <td>Contour Link</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.3</td>
+            <td>&nbsp;</td>
+            <td>Andy</td>
+            <td>&nbsp;</td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Ascensia/Bayer</td>
-	<td>Dex2</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td></td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Ascensia/Bayer</td>
+            <td>Dex2</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.3</td>
+            <td>&nbsp;</td>
+            <td>Andy</td>
+            <td>&nbsp;</td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Ascensia/Bayer</td>
-	<td>Breeze</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td></td>
-</tr>
-<tr bgcolor="green">
-	<td>Ascensia/Bayer</td>
-	<td>Elite XL</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td></td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Ascensia/Bayer</td>
+            <td>Breeze</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.3</td>
+            <td>&nbsp;</td>
+            <td>Andy</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr bgcolor="#3cb371">
+            <td>Ascensia/Bayer</td>
+            <td>Elite XL</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.3</td>
+            <td>&nbsp;</td>
+            <td>Andy</td>
+            <td>&nbsp;</td>
+        </tr>
 
-<tr bgcolor="orange">
-	<td>Ascensia/Bayer</td>
-	<td>Didget</td>
-	<td>Level 2</td>
-	<td>Not planned for now</td>
-	<td></td>
-	<td></td>
-</tr>
+        <tr bgcolor="#F2893E">
+            <td>Ascensia/Bayer</td>
+            <td>Didget</td>
+            <td>Level 2</td>
+            <td>Not planned for now</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
-<tr bgcolor="orange">
-	<td>Ascensia/Bayer</td>
-	<td>Contour USB</td>
-	<td>Level 2</td>
-	<td>Not planned for now</td>
-	<td></td>
-	<td></td>
-</tr>
+        <tr bgcolor="#6495ed">
+            <td>Ascensia/Bayer</td>
+            <td>Contour USB</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>&nbsp;</td>
+            <td>2015/16</td>
+            <td>?</td>
+            <td>&nbsp;</td>
+        </tr>
 
+        <tr bgcolor="#6495ed">
+            <td>Ascensia/Bayer</td>
+            <td>Contour Next</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>&nbsp;</td>
+            <td>2015/16</td>
+            <td>?</td>
+            <td>&nbsp;</td>
+        </tr>
 
+        <tr bgcolor="#6495ed">
+            <td>Ascensia/Bayer</td>
+            <td>Contour Next USB</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>&nbsp;</td>
+            <td>2015/16</td>
+            <td>?</td>
+            <td>&nbsp;</td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Menarini</td>
-	<td>Glucofix Mio</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td></td>
-</tr>
+        <tr bgcolor="#6495ed">
+            <td>Ascensia/Bayer</td>
+            <td>Contour Next Link</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>&nbsp;</td>
+            <td>2015/16</td>
+            <td>?</td>
+            <td>&nbsp;</td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Lifescan</td>
-	<td>OneTouch Ultra</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td></td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Menarini</td>
+            <td>Glucofix Mio</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.5</td>
+            <td></td>
+            <td>Andy</td>
+            <td></td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Lifescan</td>
-	<td>OneTouch Ultra Easy/Mini</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td></td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Lifescan</td>
+            <td>OneTouch Ultra</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td></td>
+        </tr>
 
-
-<tr bgcolor="orange">
-	<td>Lifescan</td>
-	<td>OneTouch Ultra 2</td>
-	<td>Level 2</td>
-	<td>Waiting</td>
-	<td></td>
-	<td></td>
-</tr>
-
-
-<tr bgcolor="orange">
-	<td>Lifescan</td>
-	<td>OneTouch Smart</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Alex Balaban</td>
-	<td>This is partitially done (reading of BGs for now)</td>
-</tr>
-
-
-<tr bgcolor="green">
-	<td>Lifescan</td>
-	<td>OneTouch Select</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td></td>
-</tr>
-
-
-<tr bgcolor="green">
-	<td>Abbott</td>
-	<td>Precission Xtra</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>In version 0.4.20.</td>
-</tr>
-
-
-<tr bgcolor="green">
-	<td>Abbott</td>
-	<td>Optium Xceed</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>Andy</td>
-	<td>See: Precission Xtra</td>
-</tr>
-
-
-<tr bgcolor="orange">
-	<td>Abbott</td>
-	<td>FreeStyle</td>
-	<td>Level 2</td>
-	<td>Not tested</td>
-	<td></td>
-	<td></td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Lifescan</td>
+            <td>OneTouch Ultra Easy/Mini</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td></td>
+        </tr>
 
 
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Active</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>Through SmartPix (v2.1)</td>
-</tr>
+        <tr bgcolor="#6495ed">
+            <td>Lifescan</td>
+            <td>OneTouch Ultra 2</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
 
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Advantage</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>Through SmartPix (v2.1)</td>
-</tr>
+        <tr bgcolor="#6495ed">
+            <td>Lifescan</td>
+            <td>OneTouch Smart</td>
+            <td>Level 2</td>
+            <td>Planned/Partial</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Alex Balaban</td>
+            <td>This is partially done (reading of BGs for now)</td>
+        </tr>
 
 
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Aviva</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>Through SmartPix (v2.1)</td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Lifescan</td>
+            <td>OneTouch Select</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td></td>
+        </tr>
 
 
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Comfort</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>Through SmartPix (v2.1)</td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Abbott</td>
+            <td>Precission Xtra</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td></td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Compact</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>Through SmartPix (v2.1)</td>
-</tr>
 
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Compact Plus</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>Through SmartPix (v2.1)</td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Abbott</td>
+            <td>Optium Xceed</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>See: Precission Xtra</td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Go</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>Through SmartPix (v2.1)</td>
-</tr>
 
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Integra</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>Through SmartPix (v2.1)</td>
-</tr>
+        <tr bgcolor="#6495ed">
+            <td>Abbott</td>
+            <td>FreeStyle</td>
+            <td>Level 2</td>
+            <td>Not tested</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td></td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Performa</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>Through SmartPix (v2.1)</td>
-</tr>
 
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Sensor</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>Through SmartPix (v2.1)</td>
-</tr>
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Nano</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td></td>
-	<td>Through SmartPix (v3.0)</td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Active</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.1)</td>
+        </tr>
 
-</table>
+
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Advantage</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.1)</td>
+        </tr>
+
+
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Aviva</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.1)</td>
+        </tr>
+
+
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Comfort</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.1)</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Compact</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.1)</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Compact Plus</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.1)</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Go</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.1)</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Integra</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.1)</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Performa</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.1)</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Sensor</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.1)</td>
+        </tr>
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Nano</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.5</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v3.0)</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Combo</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.5</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v3.0)</td>
+        </tr>
+
+
+    </table>
 
 
 </font>
 
 
-
-<br><br>
+<br><br><br>
 
 
 <h2>B. Pump Tool</h2>
 
 <br>
-List of supported devices (1), work in progress (9), not supported (6).
+This should be complete list of all sold devices. Some of them are supported and some aren't.<br><br>
+List of supported devices (9), work in progress (1), not planned for now (3), won't be supported (5).
 
-<br><br>
+<br><br><br>
 
 <font size="6">
 
-<table border="1" width="800"> 
-<tr bgcolor="gray">
-	<td width="15%">Company</td>
-	<td width="15%">Device</td>
-	<td width="10%">Support Level*</td>
-	<td width="10%">Support in GGC</td>
-	<td width="10%">Planned Support</td>
-	<td width="10%">Developer</td>
-	<td>Comment</td>
-</tr>
-
-<tr bgcolor="green">
-	<td>Sooil</td>
-	<td>Dana Diabcare C/III</td>
-	<td>Level 2</td>
-	<td>Done</td>
-	<td>-</td>
-	<td>Andy</td>
-	<td>Uses BlueTooth technology. We had some problem with communication, so we resorted to alternate solution, 
-    which only had drivers for Windows and Linux platforms. We are trying to find sollution to use Dana through
-    rxtx library (serial API), or even through BlueCove project (if found suitable).</td>
-</tr>
-
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>D-Tron</td>
-	<td>Level 2.1</td>
-	<td>Done</td>
-	<td>-</td>
-	<td>Andy</td>
-	<td>Through SmartPix (v2.x)</td>
-</tr>
-
-<tr bgcolor="green">
-	<td>Accu-Chek/Roche</td>
-	<td>Spirit</td>
-	<td>Level 2.1</td>
-	<td>Done</td>
-	<td></td>
-	<td>Andy</td>
-	<td>Through SmartPix (v2.x)</td>
-</tr>
+    <table border="1" width="80%">
+        <tr bgcolor="gray">
+            <td width="15%">Company</td>
+            <td width="15%">Device</td>
+            <td width="10%">Support Level*</td>
+            <td width="10%">Support in GGC</td>
+            <td width="10%">Since GGC Version</td>
+            <td width="10%">Planned Support</td>
+            <td width="10%">Developer</td>
+            <td>Comment</td>
+        </tr>
 
 
-<tr bgcolor="orange">
-	<td>Accu-Chek/Roche</td>
-	<td>Combo</td>
-	<td>Level 2.1</td>
-	<td>Working on</td>
-	<td>1Q/2011</td>
-	<td>Andy</td>
-	<td>Through SmartPix (v3.x)<br>Partitial support.</td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>D-Tron</td>
+            <td>Level 2.1</td>
+            <td>Done</td>
+            <td>0.4</td>
+            <td>-</td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.x)</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Spirit</td>
+            <td>Level 2.1</td>
+            <td>Done</td>
+            <td>0.4</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v2.x)</td>
+        </tr>
 
 
-<tr bgcolor="red">
-	<td>Animas</td>
-	<td>IR 1200</td>
-	<td>Level 1</td>
-	<td>Not planned for now</td>
-	<td>??</td>
-	<td>&nbsp;</td>
-	<td>Support throgh EzDb</td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Accu-Chek/Roche</td>
+            <td>Combo</td>
+            <td>Level 2.1</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Through SmartPix (v3.x)</td>
+        </tr>
 
 
-<tr bgcolor="red">
-	<td>Animas</td>
-	<td>IR 1250</td>
-	<td>Level 1</td>
-	<td>Not planned for now</td>
-	<td>??</td>
-	<td>&nbsp;</td>
-	<td>Support throgh EzDb</td>
-</tr>
-
-<tr bgcolor="red">
-	<td>Animas</td>
-	<td>IR 2020</td>
-	<td>Level 1</td>
-	<td>Not planned for now</td>
-	<td>??</td>
-	<td>&nbsp;</td>
-	<td>Support throgh EzDb</td>
-</tr>
-
-<tr bgcolor="red">
-	<td>Animas</td>
-	<td>Ping</td>
-	<td>Level 1</td>
-	<td>Not planned for now</td>
-	<td>??</td>
-	<td>&nbsp;</td>
-	<td>Support throgh EzDb</td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Animas</td>
+            <td>IR 1200</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.6</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Direct download</td>
+        </tr>
 
 
-<tr bgcolor="orange">
-	<td>Insulet</td>
-	<td>OmniPod</td>
-	<td>?</td>
-	<td>Work in progress</td>
-	<td>??</td>
-	<td>&nbsp;</td>
-	<td>Unknown method for now.</td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Animas</td>
+            <td>IR 1250</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.6</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Direct download</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Animas</td>
+            <td>IR 2020</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.6</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Direct download</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Animas</td>
+            <td>Ping</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.6</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Direct download</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Animas</td>
+            <td>Vibe</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.6</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Direct download</td>
+        </tr>
+
+        <tr bgcolor="#D2CB43">
+            <td><a href="http://www.snappump.com/">Asante</a></td>
+            <td>Snap</td>
+            <td>&nbsp;</td>
+            <td>Won't be supported</td>
+            <td>-</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>Company is no longer selling device (2015)</td>
+        </tr>
 
 
-<tr bgcolor="red">
-	<td>Deltec</td>
-	<td>Cosmo 1700</td>
-	<td>Level 1</td>
-	<td>Not planned for now</td>
-	<td>??</td>
-	<td>&nbsp;</td>
-	<td>Support through CoPilot export files</td>
-</tr>
+        <tr bgcolor="#D2CB43">
+            <td>Deltec</td>
+            <td>Cosmo 1700</td>
+            <td>-</td>
+            <td>Won't be supported</td>
+            <td>-</td>
+            <td>-</td>
+            <td>&nbsp;</td>
+            <td>Not sold since 2009</td>
+        </tr>
 
 
-<tr bgcolor="red">
-	<td>Deltec</td>
-	<td>Cosmo 1800</td>
-	<td>Level 1</td>
-	<td>Not planned for now</td>
-	<td>??</td>
-	<td>&nbsp;</td>
-	<td>Support through CoPilot export files</td>
-</tr>
+        <tr bgcolor="#D2CB43">
+            <td>Deltec</td>
+            <td>Cosmo 1800</td>
+            <td>-</td>
+            <td>Won't be supported</td>
+            <td>-</td>
+            <td>-</td>
+            <td>&nbsp;</td>
+            <td>Not sold since 2009</td>
+        </tr>
+
+        <tr bgcolor="#6495ed">
+            <td>Insulet</td>
+            <td>OmniPod</td>
+            <td>Level 1</td>
+            <td>Work in progress</td>
+            <td>0.6</td>
+            <td>2015</td>
+            <td>&nbsp;</td>
+            <td>Reading backup .ibf file</td>
+        </tr>
+
+        <tr bgcolor="#D2CB43">
+            <td>Minimed</td>
+            <td>508/508c</td>
+            <td>-</td>
+            <td>Won't be supported</td>
+            <td>-</td>
+            <td></td>
+            <td>&nbsp;</td>
+            <td>Not sold since 2001/02</td>
+        </tr>
 
 
-<tr bgcolor="magenta">
-	<td>Minimed</td>
-	<td>508/508c</td>
-	<td>Level 1</td>
-	<td>Planned ???</td>
-	<td>?? 2011</td>
-	<td>&nbsp;</td>
-	<td>Support through: a.) Solution Pumps and Meters .mmp file<br>b.) Carelink file</td>
-</tr>
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>511</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>End of 2015</td>
+            <td>&nbsp;</td>
+            <td></td>
+        </tr>
+
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>512/712</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>End of 2015</td>
+            <td>&nbsp;</td>
+            <td>*1</td>
+        </tr>
+
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>515/715</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>End of 2015</td>
+            <td>&nbsp;</td>
+            <td>*1</td>
+        </tr>
+
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>522/722</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>End of 2015</td>
+            <td>&nbsp;</td>
+            <td>*1</td>
+        </tr>
 
 
-<tr bgcolor="magenta">
-	<td>Minimed</td>
-	<td>512/712</td>
-	<td>Level 1</td>
-	<td>Planned ???</td>
-	<td>?? 2011</td>
-	<td>&nbsp;</td>
-	<td>See: Minimed 508</td>
-</tr>
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>523/723 (Revel)</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>End of 2015</td>
+            <td>&nbsp;</td>
+            <td>*1</td>
+        </tr>
 
-<tr bgcolor="magenta">
-	<td>Minimed</td>
-	<td>512/712</td>
-	<td>Level 1</td>
-	<td>Planned ???</td>
-	<td>?? 2011</td>
-	<td>&nbsp;</td>
-	<td>See: Minimed 508</td>
-</tr>
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>553/753</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>End of 2015</td>
+            <td>&nbsp;</td>
+            <td>*1</td>
+        </tr>
 
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>554/754 (Veo)</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>End of 2015</td>
+            <td>&nbsp;</td>
+            <td>*1</td>
+        </tr>
 
-<tr bgcolor="magenta">
-	<td>Minimed</td>
-	<td>522/722</td>
-	<td>Level 1</td>
-	<td>Planned ???</td>
-	<td>?? 2011</td>
-	<td>&nbsp;</td>
-	<td>See: Minimed 508</td>
-</tr>
-
-
-
-
-<tr bgcolor="red">
-	<td><a href="http://www.niprodiabetes.com/">Medingo</a></td>
-	<td>Solo Mini Pump</td>
-	<td>&nbsp;</td>
-	<td>Not planned for now</td>
-	<td>&nbsp;</td>
-	<td>&nbsp;</td>
-	<td></td>
-</tr>
-
-
-
-<tr bgcolor="red">
-	<td><a href="http://www.niprodiabetes.com/">Nipro</a></td>
-	<td>Amigo</td>
-	<td>&nbsp;</td>
-	<td>Not planned for now</td>
-	<td>&nbsp;</td>
-	<td>&nbsp;</td>
-	<td></td>
-</tr>
+        <tr bgcolor="#F2893E">
+            <td>Minimed</td>
+            <td>640G</td>
+            <td>Level 1</td>
+            <td>Not planned for now</td>
+            <td>-</td>
+            <td>?</td>
+            <td>&nbsp;</td>
+            <td>*2. Perhaps export from Carelink</td>
+        </tr>
 
 
-<tr bgcolor="red">
-	<td><a href="http://www.rfornia.com/">Zhuhai Fornia</a></td>
-	<td>IP-101</td>
-	<td>&nbsp;</td>
-	<td>Not planned for now</td>
-	<td>&nbsp;</td>
-	<td>&nbsp;</td>
-	<td></td>
-</tr>
+        <tr bgcolor="#D2CB43">
+            <td><a href="http://www.niprodiagnostics.com/">Nipro</a></td>
+            <td>Amigo</td>
+            <td>&nbsp;</td>
+            <td>Won't be supported</td>
+            <td>-</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>Not sold anymore.</td>
+        </tr>
 
 
+        <tr bgcolor="#3cb371">
+            <td>Sooil</td>
+            <td>Dana Diabcare C/III</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.4</td>
+            <td>-</td>
+            <td>Andy</td>
+            <td>Uses BlueTooth technology. We had some problem with communication, so we resorted to alternate solution,
+                which only had drivers for Windows and Linux platforms. We are trying to find sollution to use Dana
+                through
+                rxtx library (serial API), or even through BlueCove project (if found suitable).
+            </td>
+        </tr>
 
 
+        <tr bgcolor="#F2893E">
+            <td><a href="http://www.tandemdiabetes.com/">Tandem Diabetes</a></td>
+            <td>t:slim</td>
+            <td>&nbsp;</td>
+            <td>Not planned for now</td>
+            <td>-</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>No support from company for now.</td>
+        </tr>
 
-</table>
+        <tr bgcolor="#F2893E">
+            <td><a href="http://www.tandemdiabetes.com/">Tandem Diabetes</a></td>
+            <td>t:flex</td>
+            <td>&nbsp;</td>
+            <td>Not planned for now</td>
+            <td>-</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>No support from company for now.</td>
+        </tr>
+
+
+    </table>
+
 
 </font>
 
+<br>
 
-<br><br>
+*1 - Minimed Pumps currently have 3 interfaces (devices) which can be used to read data from them. We are currently
+working on ComLink interface (Serial Cable with RF transmiter), but before release we will support at least Countour
+USB interface (USB Key with RF transmiter), which is currently most used method to connect to pump. Third method
+(Contour Next Link meter) will be probably implemented at later time (next year together with CGMS support).<br>
+*2 - New Minimed Pump uses different protocol (unknown at this time), which means that it won't be supported together
+with all other devices. We might make support for importing CareLink export file, to temporary support this type.
+
+
+<br><br><br>
 
 
 <h2>C. CGMS Tool</h2>
-<br><br>
+<br>
 
-List of supported devices (0), work in progress (2), planned (4).
+This should be complete list of all sold devices. Some of them are supported and some aren't.<br><br>
+List of supported devices (4), not planned for now (1), planned (6).
+<br><br><br>
 
 <font size="6">
 
-<table border="1" width="800"> 
-<tr bgcolor="gray">
-	<td width="15%">Company</td>
-	<td width="15%">Device</td>
-	<td width="10%">Support Level*</td>
-	<td width="10%">Support in GGC</td>
-	<td width="10%">Planned Support</td>
-	<td width="10%">Developer</td>
-	<td>Comment</td>
-</tr>
+    <table border="1" width="80%">
+        <tr bgcolor="gray">
+            <td width="15%">Company</td>
+            <td width="15%">Device</td>
+            <td width="10%">Support Level*</td>
+            <td width="10%">Support in GGC</td>
+            <td width="10%">Since GGC Version</td>
+            <td width="10%">Planned Support</td>
+            <td width="10%">Developer</td>
+            <td>Comment</td>
+        </tr>
 
-<tr bgcolor="green">
-	<td>Dexcom</td>
-	<td>Dexcom 3</td>
-	<td>Level 1</td>
-	<td>Done</td>
-	<td></td>
-	<td>Andy</td>
-	<td>Support through Dexcom DM3 export files</td>
-</tr>
+        <tr bgcolor="#F2893E">
+            <td>Abbott</td>
+            <td>Freestyle Navigator</td>
+            <td>Level 1</td>
+            <td>Not planned for now</td>
+            <td></td>
+            <td>?</td>
+            <td>&nbsp;</td>
+            <td>Support through export file from CoPilot</td>
+        </tr>
 
-
-<tr bgcolor="green">
-	<td>Dexcom</td>
-	<td>Dexcom 7/Plus</td>
-	<td>Level 1</td>
-	<td>Done</td>
-	<td></td>
-	<td>Andy</td>
-	<td>Support through Dexcom DM3 export files</td>
-</tr>
-
-
-
-<tr bgcolor="magenta">
-	<td>Guardian</td>
-	<td>RealTime</td>
-	<td>Level 1</td>
-	<td>Planned ???</td>
-	<td>3Q 2010</td>
-	<td>&nbsp;</td>
-	<td>Support can be made through: a.) Solution Pumps and Meters .mmp file<br>b.) Carelink file<br>At this time implementation type not decided</td>
-</tr>
-
-<tr bgcolor="magenta">
-	<td>Minimed</td>
-	<td>CGMS Gold</td>
-	<td>Level 1</td>
-	<td>Planned ???</td>
-	<td>??</td>
-	<td>&nbsp;</td>
-	<td>See: Guardian RealTime</td>
-</tr>
-
-<tr bgcolor="magenta">
-	<td>Minimed</td>
-	<td>RealTime</td>
-	<td>Level 1</td>
-	<td>Planned ???</td>
-	<td>??</td>
-	<td>&nbsp;</td>
-	<td>See: Guardian RealTime</td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Animas</td>
+            <td>Vibe</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.6</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Direct download</td>
+        </tr>
 
 
-<tr bgcolor="red">
-	<td>Abbott</td>
-	<td>Freestyle Navigator</td>
-	<td>Level 1</td>
-	<td>?</td>
-	<td>?</td>
-	<td>&nbsp;</td>
-	<td>Support through export file from CoPilot</td>
-</tr>
+        <tr bgcolor="#3cb371">
+            <td>Dexcom</td>
+            <td>Dexcom 3</td>
+            <td>Level 1</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Support through Dexcom DM3 export files</td>
+        </tr>
 
 
-</table>
+        <tr bgcolor="#3cb371">
+            <td>Dexcom</td>
+            <td>Dexcom 7/Plus</td>
+            <td>Level 1</td>
+            <td>Done</td>
+            <td>0.4.20</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Support through Dexcom DM3 export files</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
+            <td>Dexcom</td>
+            <td>Dexcom G4</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.6</td>
+            <td></td>
+            <td>Andy</td>
+            <td>Direct Download</td>
+        </tr>
+
+        <tr bgcolor="#9370db">
+            <td>Guardian</td>
+            <td>RealTime</td>
+            <td>Level 1</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>4Q/2016</td>
+            <td>&nbsp;</td>
+            <td>Support can be made through: a.) Solution Pumps and Meters .mmp file<br>b.) Carelink file<br>At this
+                time implementation type not decided
+            </td>
+        </tr>
+
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>CGMS Gold</td>
+            <td>Level 1</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>4Q/2016</td>
+            <td>&nbsp;</td>
+            <td>See: Guardian RealTime</td>
+        </tr>
+
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>RealTime</td>
+            <td>Level 1</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>4Q/2016</td>
+            <td>&nbsp;</td>
+            <td>See: Guardian RealTime</td>
+        </tr>
+
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>523/723 (Revel)</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>4Q/2016</td>
+            <td>&nbsp;</td>
+            <td></td>
+        </tr>
+
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>553/753</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>4Q/2016</td>
+            <td>&nbsp;</td>
+            <td></td>
+        </tr>
+
+        <tr bgcolor="#9370db">
+            <td>Minimed</td>
+            <td>554/754 (Veo)</td>
+            <td>Level 2</td>
+            <td>Planned</td>
+            <td>-</td>
+            <td>4Q/2016</td>
+            <td>&nbsp;</td>
+            <td></td>
+        </tr>
+
+
+    </table>
 
 </font>
+
+<br><br>
+
+<h2>Support Level</h2>
+
+There are two support levels. Level 1 means, that we support device by importing data from official software
+of application and Level 2 means direct reading from device. We want to make Level 2 support for all
+devices, but sometimes we can't make that (mostly problem with companies that don't want to give out protocols).
+
 
 <br><br>
 
@@ -641,12 +939,12 @@ List of supported devices (0), work in progress (2), planned (4).
 
 <h3>Appendix A: Drivers needed for cables for different hardware</h3>
 
-In most cases we need special drivers for cables (not diabetes devices). Drivers usually come on CD, but 
+In most cases we need special drivers for cables (not diabetes devices). Drivers usually come on CD, but
 not always, so here is little help. For some stuff, there can be more than one type of drivers, and cables
 can also come in several varieties (USB, Serial, ...). <br>
 <br>
 Serial2USB (this can be used in case that we have cable with serial port and need to attach it to USB):<br>
-   - FTDI<br>
+- FTDI<br>
 <br>
 Roche - Smart Pix is Mass Storage Device (it should work without drivers anywhere)
 <br>
@@ -655,6 +953,7 @@ Lifescan - PL2303
 
 
 <br>
+
 <h3>Appendix B: Special considerations with some OSes</h3>
 <br>
 1.) MAC<br>
@@ -663,18 +962,18 @@ For using hardware on Mac you will need to do following:
 <br><br>
 Login as root (you need to have root account enabled)
 <br><br>
-mkdir /var/spool/uucp<br> 
-chmod 755 /var/spool/uucp<br> 
+mkdir /var/spool/uucp<br>
+chmod 755 /var/spool/uucp<br>
 mkdir /var/lock <br>
 chmod 777 /var/lock <br>
 <br><br>
 Rxtx library uses different locks that are used on Mac, so this steps are necessary. In later version
-of Rxtx this is reported to be fixed (since there was no offical release so far, we will have to 
+of Rxtx this is reported to be fixed (since there was no offical release so far, we will have to
 wait and use upper work-around).<br>
 <br>
-If you get your binary file for Rxtx from some other source than from ours, there might be some 
+If you get your binary file for Rxtx from some other source than from ours, there might be some
 problems. You need to have librxtxSerial.jnilib and librxtxSerial.dylib present (they are both
-the same, if you have one, you can just make another copy of same file or link)<br> 
+the same, if you have one, you can just make another copy of same file or link)<br>
 <br>
 
 

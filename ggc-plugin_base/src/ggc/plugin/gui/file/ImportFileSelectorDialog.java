@@ -1,23 +1,20 @@
 package ggc.plugin.gui.file;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.List;
+
+import javax.swing.*;
+
+import com.atech.utils.ATSwingUtils;
+
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.gui.DeviceDisplayConfigDialog;
 import ggc.plugin.gui.DeviceDisplayDataDialog;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.io.File;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -47,6 +44,7 @@ import com.atech.utils.ATSwingUtils;
 
 public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
 {
+
     private static final long serialVersionUID = -4620972246237384499L;
     // DataAccessPlugInBase dataAccess = null;
     // I18nControlAbstract m_ic = null;
@@ -57,6 +55,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
     JButton b_prev, b_next;
     JTextField tf_file;
 
+
     // FileReaderContext m_frc;
 
     /**
@@ -66,9 +65,10 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
      * @param previous_parent
      * @param ddh
      */
-    public ImportFileSelectorDialog(DataAccessPlugInBase da, JDialog previous_parent, DeviceDataHandler ddh)
+    public ImportFileSelectorDialog(DataAccessPlugInBase da, JDialog previous_parent, DeviceDataHandler ddh,
+            DownloadSupportType downloadSupportType)
     {
-        super(da, ddh, previous_parent);
+        super(da, ddh, previous_parent, downloadSupportType);
         // dataAccess = da;
         // m_ic = da.getI18nControlInstance();
         // this.dialogParent = dialog;
@@ -76,6 +76,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
         // this.m_frc = frc;
         // init();
     }
+
 
     @Override
     public void init()
@@ -93,8 +94,8 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
 
         ATSwingUtils.getLabel("Selected type:", 50, 95, 300, 60, this, ATSwingUtils.FONT_NORMAL_BOLD);
 
-        label_type = ATSwingUtils.getLabel(this.deviceDataHandler.selected_file_context.getFullFileDescription(), 50, 115, 300, 60,
-            this, ATSwingUtils.FONT_NORMAL);
+        label_type = ATSwingUtils.getLabel(this.deviceDataHandler.selected_file_context.getFullFileDescription(), 50,
+            115, 300, 60, this, ATSwingUtils.FONT_NORMAL);
 
         ATSwingUtils.getLabel(this.m_ic.getMessage("SELECT_FILE"), 50, 150, 300, 60, this,
             ATSwingUtils.FONT_NORMAL_BOLD);
@@ -124,9 +125,10 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
 
         this.setBounds(0, 0, 400, 320);
 
-        GGCPlugInFileReaderContext[] downloadTypes = this.deviceDataHandler.getFileDownloadTypes(DownloadSupportType.DownloadDataFile);
+        List<GGCPlugInFileReaderContext> downloadTypes = this.deviceDataHandler
+                .getFileDownloadTypes(downloadSupportType);
 
-        if (downloadTypes.length > 1)
+        if (downloadTypes.size() > 1)
         {
             b_prev.setEnabled(true);
             b_prev.setVisible(true);
@@ -135,6 +137,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
         m_da.enableHelp(this);
 
     }
+
 
     public void actionPerformed(ActionEvent ae)
     {
@@ -176,21 +179,31 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
             {
                 this.dispose();
                 m_da.removeComponent(this);
-                new DeviceDisplayDataDialog(m_da.getMainParent(), m_da, deviceDataHandler);
+
+                if (downloadSupportType == DownloadSupportType.DownloadDataFile)
+                {
+                    new DeviceDisplayDataDialog(m_da.getMainParent(), m_da, deviceDataHandler);
+                }
+                else
+                {
+                    new DeviceDisplayConfigDialog(m_da.getMainParent(), m_da, deviceDataHandler);
+                }
             }
         }
         else if (action.equals("prev"))
         {
             m_da.removeComponent(this);
             this.dispose();
-            new MultipleFileSelectorDialog(m_da, this.dialogParent, deviceDataHandler);
+            new MultipleFileSelectorDialog(m_da, this.dialogParent, deviceDataHandler, downloadSupportType);
         }
     }
+
 
     public String getHelpId()
     {
         return "DeviceTool_File_Import";
     }
+
 
     @Override
     public Dimension getSize()

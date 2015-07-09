@@ -1,5 +1,7 @@
 package ggc.cgms.device.dexcom;
 
+import java.util.ArrayList;
+
 import ggc.cgms.device.AbstractCGMS;
 import ggc.cgms.device.dexcom.file.FRC_DexcomTxt_DM3;
 import ggc.cgms.device.dexcom.file.FRC_DexcomXml_DM3;
@@ -51,6 +53,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
         super();
     }
 
+
     /**
      * Constructor
      *
@@ -61,6 +64,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     {
         super(params, writer);
     }
+
 
     /**
      * Constructor
@@ -74,6 +78,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
         super(params, writer, da);
     }
 
+
     /**
      * Constructor
      *
@@ -84,6 +89,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
         super(cmp);
     }
 
+
     /**
      * getComment - Get Comment for device
      *
@@ -93,6 +99,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     {
         return "";
     }
+
 
     /**
      * getImplementationStatus - Get Implementation Status
@@ -105,6 +112,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
         return DeviceImplementationStatus.Partitial;
     }
 
+
     /**
      * Open
      *
@@ -116,6 +124,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
         return true;
     }
 
+
     /**
      * Close
      *
@@ -124,6 +133,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     public void close() throws PlugInBaseException
     {
     }
+
 
     /**
      * This is method for reading configuration, in case that dump doesn't give this information.
@@ -134,6 +144,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should
@@ -146,6 +157,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     {
     }
 
+
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy
      * (from some date to another)
@@ -156,6 +168,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
+
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -168,6 +181,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     {
     }
 
+
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      *
@@ -179,12 +193,14 @@ public abstract class DexcomCGMS extends AbstractCGMS
         return this.outputWriter.getDeviceIdentification();
     }
 
+
     /**
      * Dispose
      */
     public void dispose()
     {
     }
+
 
     /**
      * getConnectionPort - connection port data
@@ -196,6 +212,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
         return null;
     }
 
+
     /**
      * getConnectionProtocol - returns id of connection protocol
      *
@@ -205,6 +222,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     {
         return DeviceConnectionProtocol.None;
     }
+
 
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have
@@ -218,6 +236,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
         return false;
     }
 
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -229,6 +248,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
         return "INSTRUCTIONS_DEXCOM";
     }
 
+
     /**
      * Is Device Communicating
      *
@@ -238,6 +258,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     {
         return true;
     }
+
 
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -251,6 +272,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
     {
         return false;
     }
+
 
     /**
      * Get DateTime From String
@@ -272,6 +294,7 @@ public abstract class DexcomCGMS extends AbstractCGMS
         return Long.parseLong(val);
     }
 
+
     /**
      * Get Time From String
      *
@@ -288,16 +311,16 @@ public abstract class DexcomCGMS extends AbstractCGMS
         return Integer.parseInt(val);
     }
 
+
     /**
      * Load File Contexts - Load file contexts that device supports
      */
     @Override
     public void loadFileContexts()
     {
-        // System.out.println("loadFileContexts");
-        this.fileContexts = new GGCPlugInFileReaderContext[2];
-        this.fileContexts[0] = new FRC_DexcomXml_DM3(dataAccess, this.outputWriter);
-        this.fileContexts[1] = new FRC_DexcomTxt_DM3(dataAccess, this.outputWriter);
+        this.fileContexts = new ArrayList<GGCPlugInFileReaderContext>();
+        this.fileContexts.add(new FRC_DexcomXml_DM3(dataAccess, this.outputWriter));
+        this.fileContexts.add(new FRC_DexcomTxt_DM3(dataAccess, this.outputWriter));
     }
 
 }

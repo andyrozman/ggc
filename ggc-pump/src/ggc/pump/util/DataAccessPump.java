@@ -8,11 +8,11 @@ import com.atech.graphics.components.about.*;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.mgr.LanguageManager;
 
+import ggc.core.data.defs.ClockModeType;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.cfg.DeviceConfiguration;
-import ggc.plugin.data.enums.ClockModeType;
 import ggc.plugin.data.enums.DeviceEntryStatus;
-import ggc.plugin.data.enums.GlucoseUnitType;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
 import ggc.plugin.device.mgr.DeviceHandlerManager;
@@ -25,33 +25,34 @@ import ggc.pump.data.cfg.PumpConfigurationDefinition;
 import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.data.defs.*;
 import ggc.pump.device.animas.AnimasIR1200Handler;
+import ggc.pump.device.insulet.InsuletHandler;
 import ggc.pump.graph.PumpGraphContext;
 import ggc.pump.manager.PumpManager;
 
 /**
- * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
- * devices)
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Pump Tool (support for Pump devices)
  *
- * See AUTHORS for copyright information.
+ *  See AUTHORS for copyright information.
  *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
  *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * Filename: DataAccessPump Description: Contains instances of utilities,
- * private (plugin specific) data, help classes, ...
+ *  Filename:     DataAccessPump
+ *  Description:  Contains instances of utilities, private (plugin specific) data, help classes, ...
  *
- * Author: Andy {andy@atech-software.com}
+ *  Author: Andy {andy@atech-software.com}
  */
 
 public class DataAccessPump extends DataAccessPlugInBase
@@ -60,7 +61,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.5.0";
+    public static final String PLUGIN_VERSION = "1.5.1";
 
     private static DataAccessPump s_da = null; // This is handle to unique
 
@@ -147,7 +148,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.createPlugInVersion();
         loadDeviceDataHandler();
         // loadManager();
-        //loadReadingStatuses();
+        // loadReadingStatuses();
         this.createPlugInDataRetrievalContext();
         this.createDeviceConfiguration();
         this.createOldDataReader();
@@ -291,9 +292,11 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void registerDeviceHandlers()
     {
-        // Animas Implementation V2 (IR1200 and higher)
+        // Animas
         DeviceHandlerManager.getInstance().addDeviceHandler(new AnimasIR1200Handler());
 
+        // Insulet
+        DeviceHandlerManager.getInstance().addDeviceHandler(new InsuletHandler());
     }
 
 
@@ -349,6 +352,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com",
                 "Framework, About, Outputs")); // and support for Ascensia &
                                                // Roche devices"));
+        cg.addCreditsEntry(new CreditsEntry("Tidepool.org", "www.tidepool.org", "Supplied code for Insulet device"));
         lst_credits.add(cg);
 
         // cg = new
@@ -380,7 +384,7 @@ public class DataAccessPump extends DataAccessPlugInBase
         // FeaturesEntry("Roche (partitialy, Basal Pattern History is not fully supported due to incomplete export of SmartPix device)"));
         fg.addFeaturesEntry(new FeaturesEntry("Dana (only works on Windows and Linux)"));
         fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
-        fg.addFeaturesEntry(new FeaturesEntry("Animas/One Touch (partitialy implemented)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Animas/One Touch"));
         // fg.addFeaturesEntry(new
         // FeaturesEntry("LifeScan: Ultra, Ultra2, Profile, Easy, UltraSmart"));
 
@@ -396,7 +400,8 @@ public class DataAccessPump extends DataAccessPlugInBase
         lst_features.add(fg);
 
         fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Minimed (in 2015)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Minimed (end of 2015)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Omnipod (end of 2015)"));
 
         lst_features.add(fg);
 
@@ -414,12 +419,11 @@ public class DataAccessPump extends DataAccessPlugInBase
 
         this.weblister_items = new ArrayList<BaseListEntry>();
 
-        this.weblister_items.add(new BaseListEntry("Animas", "/pumps/animas.html",
-                BaseListEntry.STATUS_PART_IMPLEMENTED));
+        this.weblister_items.add(new BaseListEntry("Animas", "/pumps/animas.html", BaseListEntry.STATUS_DONE));
         this.weblister_items.add(new BaseListEntry("Deltec", "/pumps/deltec.html", BaseListEntry.STATUS_NOTPLANNED));
-        this.weblister_items.add(new BaseListEntry("Insulet", "/pumps/insulet.html", BaseListEntry.STATUS_NOTPLANNED));
         this.weblister_items
-                .add(new BaseListEntry("Minimed", "/pumps/minimed.html", BaseListEntry.STATUS_IMPLEMENTING));
+                .add(new BaseListEntry("Insulet", "/pumps/insulet.html", BaseListEntry.STATUS_IMPLEMENTING));
+        this.weblister_items.add(new BaseListEntry("Minimed", "/pumps/minimed.html", BaseListEntry.STATUS_PLANNED));
         this.weblister_items.add(new BaseListEntry("Roche", "/pumps/roche.html", BaseListEntry.STATUS_DONE));
         this.weblister_items.add(new BaseListEntry("Sooil", "/pumps/sooil.html", BaseListEntry.STATUS_DONE));
 
@@ -797,6 +801,13 @@ public class DataAccessPump extends DataAccessPlugInBase
     public String getPluginName()
     {
         return "GGC Pump Plugin";
+    }
+
+
+    @Override
+    public void prepareGraphContext()
+    {
+
     }
 
 

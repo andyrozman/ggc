@@ -1,5 +1,6 @@
 package ggc.meter.device.abbott;
 
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.manager.MeterDevicesIds;
@@ -345,19 +346,19 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         }
 
         MeterValuesEntry mve = new MeterValuesEntry();
-        mve.setBgUnit(OutputUtil.BG_MGDL);
+        //mve.setBgUnit(OutputUtil.BG_MGDL);
 
         // 227 Oct 11 2006 01:38 17 0x00
         String BGString = entry.substring(0, 5);
 
         if (BGString.contains("HI"))
         {
-            mve.setBgValue("500");
+            mve.setBgValue("500", GlucoseUnitType.mg_dL);
             mve.addParameter("RESULT", "High");
         }
         else
         {
-            mve.setBgValue("" + BGString.trim());
+            mve.setBgValue(BGString.trim(), GlucoseUnitType.mg_dL);
         }
 
         String timeString = entry.substring(5, 23);

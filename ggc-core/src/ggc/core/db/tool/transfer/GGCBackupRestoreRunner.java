@@ -1,7 +1,5 @@
 package ggc.core.db.tool.transfer;
 
-import ggc.core.util.DataAccess;
-
 import java.io.File;
 import java.util.Calendar;
 import java.util.Enumeration;
@@ -16,6 +14,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.file.PackFiles;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,6 +48,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
     I18nControlAbstract ic = da.getI18nControlInstance();
     boolean restore_with_append = true;
 
+
     /**
      * Constructor
      * 
@@ -60,6 +60,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         super(objects, giver);
         // this.ht_backup_objects = objects;
     }
+
 
     /**
      * Constructor
@@ -86,6 +87,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         }
 
     }
+
 
     /**
      * Execute Backup
@@ -182,6 +184,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
 
     }
 
+
     /*
      * private boolean isAnyNutritionBackupObjectSelected()
      * {
@@ -219,6 +222,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         removeBackupFiles(directory);
     }
 
+
     private void removeBackupFiles(File root)
     {
         File[] files = root.listFiles();
@@ -228,6 +232,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             file.delete();
         }
     }
+
 
     protected String getCurrentDate()
     {
@@ -249,6 +254,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
          * + da.getLeadingZero(gc.get(GregorianCalendar.SECOND), 2);
          */
     }
+
 
     /**
      * Execute Restore
@@ -302,7 +308,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             }
         }
 
-        // m_da.getPlugIn(DataAccess.PLUGIN_NUTRITION).getBackupRestoreHandler().doRestore(this);
+        // dataAccess.getPlugIn(DataAccess.PLUGIN_NUTRITION).getBackupRestoreHandler().doRestore(this);
 
         // if (isAnyNutritionRestoreObjectSelected())
         /*
@@ -358,6 +364,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
          */
 
     }
+
 
     /**
      * Run

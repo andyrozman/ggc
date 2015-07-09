@@ -2,8 +2,10 @@
 Changes file for GGC Meter Tool
 ===============================
 
-2.2.0 [20.2.2015]
+2.2.0 [26.4.2015]
     * Device Implementation V2 Framework integrated
+    * Data Handling changed
+    * Display of data
 
 2.0.3 [4.6.2011]
     * v3 finalized

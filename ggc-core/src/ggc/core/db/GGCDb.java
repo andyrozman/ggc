@@ -1,19 +1,5 @@
 package ggc.core.db;
 
-import ggc.core.data.DailyValues;
-import ggc.core.data.DailyValuesRow;
-import ggc.core.data.DayValuesData;
-import ggc.core.data.ExtendedRatioCollection;
-import ggc.core.data.HbA1cValues;
-import ggc.core.data.MonthlyValues;
-import ggc.core.data.WeeklyValues;
-import ggc.core.data.cfg.ConfigurationManager;
-import ggc.core.db.datalayer.Settings;
-import ggc.core.db.datalayer.StockBaseType;
-import ggc.core.db.dto.StocktakingDTO;
-import ggc.core.db.hibernate.*;
-import ggc.core.util.DataAccess;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -24,7 +10,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
@@ -33,6 +18,13 @@ import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.data.*;
+import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.db.datalayer.Settings;
+import ggc.core.db.dto.StocktakingDTO;
+import ggc.core.db.hibernate.*;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -60,8 +52,9 @@ import com.atech.utils.data.ATechDate;
  */
 
 public class GGCDb extends HibernateDb // implements DbCheckInterface
-                                       // HibernateDb
+// HibernateDb
 {
+
     // public static final int DB_CONFIG_LOADED = 1;
     // public static final int DB_INITIALIZED = 2;
     // public static final int DB_STARTED = 3;
@@ -83,6 +76,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     private DataAccess m_da;
 
     private int m_loadStatus = 0;
+
 
     /*
      * public ArrayList<MeterCompanyH> meter_companies = null; public
@@ -111,12 +105,14 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         m_da = da;
 
         // System.out.println("GGCDb");
-        // System.out.println("m_da: " + m_da);
-        // System.out.println("m_da.getSettings(): " + m_da.getSettings());
+        // System.out.println("dataAccess: " + dataAccess);
+        // System.out.println("dataAccess.getSettings(): " +
+        // dataAccess.getSettings());
 
         m_loadStatus = DB_CONFIG_LOADED;
         // debugConfig();
     }
+
 
     /**
      * Constructor
@@ -129,6 +125,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         // debugConfig();
     }
 
+
     /**
      * Get Configuration
      */
@@ -137,6 +134,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     {
         return this.m_cfg;
     }
+
 
     /*
      * private void debugConfig() { /
@@ -159,6 +157,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         openHibernateSimple();
     }
 
+
     /**
      * Is Db Started
      */
@@ -167,6 +166,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     {
         return this.m_loadStatus == DB_STARTED;
     }
+
 
     /** 
      * Close Db
@@ -178,6 +178,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         m_loadStatus = DB_CONFIG_LOADED;
     }
 
+
     /** 
      * Get Hibernate Configuration
      */
@@ -186,6 +187,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     {
         return this.hib_config;
     }
+
 
     /** 
      * Open Hibernate Simple
@@ -207,6 +209,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         m_loadStatus = DB_INITIALIZED;
     }
 
+
     /**
      * Get Load Status
      */
@@ -215,6 +218,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     {
         return m_loadStatus;
     }
+
 
     /** 
      * Display Error
@@ -234,25 +238,30 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
     }
 
+
     protected void logException(String source, Exception ex)
     {
         log.error(source + "::Exception: " + ex.getMessage(), ex);
     }
+
 
     protected void logDebug(String source, String action)
     {
         log.debug(source + " - " + action);
     }
 
+
     protected void logInfo(String source, String action)
     {
         log.info(source + " - " + action);
     }
 
+
     protected void logInfo(String source)
     {
         log.info(source + " - Process");
     }
+
 
     /**
      * Get Session
@@ -262,6 +271,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     {
         return getSession(1);
     }
+
 
     /**
      * Get Session
@@ -286,6 +296,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
          */
     }
 
+
     /**
      * Create Database
      */
@@ -295,6 +306,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         logInfo("createDatabase", "Process");
         new SchemaExport(this.getHibernateConfiguration().getConfiguration()).create(true, true);
     }
+
 
     // *************************************************************
     // **** SETTINGS ****
@@ -560,6 +572,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return this.hib_config;
     }
 
+
     /**
      * Get Db Cache
      * 
@@ -584,6 +597,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     {
         m_loadStatus = DB_STARTED;
     }
+
 
     // *************************************************************
     // **** SETTINGS ****
@@ -614,6 +628,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         }
     }
+
 
     private void loadConfigDataEntries()
     {
@@ -648,6 +663,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
     }
 
+
     @SuppressWarnings("unchecked")
     public Hashtable<String, String> getExtendedRationEntries()
     {
@@ -672,7 +688,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
                 table.put(eh.getKey(), eh.getValue());
             }
 
-            // m_da.getConfigurationManager().checkConfiguration(table, this);
+            // dataAccess.getConfigurationManager().checkConfiguration(table,
+            // this);
 
             return table;
         }
@@ -685,6 +702,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         }
 
     }
+
 
     /*
      * @SuppressWarnings("unchecked")
@@ -699,7 +717,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * {
      * sql =
      * "SELECT st FROM ggc.core.db.hibernate.SettingsH as st WHERE st.key LIKE 'EXTENDED_RATIO%' AND st.person_id="
-     * + m_da.current_user_id ;
+     * + dataAccess.current_user_id ;
      * sql += " ORDER BY st.key";
      * Query q = getSession().createQuery(sql);
      * Iterator<SettingsH> it = q.list().iterator();
@@ -748,6 +766,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return true;
     }
 
+
     /**
      * Save Config Data (without schemes)
      * We save just config, schemes save must be called separately
@@ -757,6 +776,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         logInfo("saveConfigDataEntries()");
         m_da.getConfigurationManager().saveConfig();
     }
+
 
     @SuppressWarnings("unchecked")
     private void loadColorSchemes(Session sess)
@@ -778,8 +798,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
                 table.put(eh.getName(), eh);
             }
 
-            // System.out.println("m_da: " + m_da);
-            // System.out.println("m_da.getSettings(): " + m_da.getSettings());
+            // System.out.println("dataAccess: " + dataAccess);
+            // System.out.println("dataAccess.getSettings(): " +
+            // dataAccess.getSettings());
 
             m_da.getSettings().setColorSchemes(table, false);
         }
@@ -808,6 +829,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
     HbA1cValues hba1c_object = null;
 
+
     /**
      * Get HbA1c
      * 
@@ -832,6 +854,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return this.hba1c_object;
 
     }
+
 
     /**
      * Load HbA1c
@@ -887,6 +910,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return hbVal;
     }
 
+
     /**
      * Get Day Stats
      * 
@@ -903,7 +927,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         logInfo("getDayStats()");
 
         DailyValues dV = new DailyValues();
-        // dV.setDate(m_da.getDateTimeFromDateObject(day.getTime()) / 10000);
+        // dV.setDate(dataAccess.getDateTimeFromDateObject(day.getTime()) /
+        // 10000);
 
         dV.setDate(ATechDate.getATDateTimeFromGC(day, ATechDate.FORMAT_DATE_ONLY));
 
@@ -935,6 +960,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return dV;
     }
 
+
     /**
      * Get Day Stats Range (WeeklyValues)
      * 
@@ -957,9 +983,11 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         {
             String sDay = "" + ATechDate.getATDateTimeFromGC(start, ATechDate.FORMAT_DATE_ONLY);
             String eDay = "" + ATechDate.getATDateTimeFromGC(end, ATechDate.FORMAT_DATE_ONLY);
-            // String sDay = m_da.getDateTimeStringFromGregorianCalendar(start,
+            // String sDay =
+            // dataAccess.getDateTimeStringFromGregorianCalendar(start,
             // 1);
-            // String eDay = m_da.getDateTimeStringFromGregorianCalendar(end,
+            // String eDay =
+            // dataAccess.getDateTimeStringFromGregorianCalendar(end,
             // 1);
 
             logDebug("getDayStatsRange()", sDay + " - " + eDay);
@@ -987,6 +1015,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return wv;
     }
 
+
     /**
      * Get Day Values Range (ArrayList<DailyValuesRow>)
      * 
@@ -1009,9 +1038,11 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
             String sDay = "" + ATechDate.getATDateTimeFromGC(start, ATechDate.FORMAT_DATE_ONLY);
             String eDay = "" + ATechDate.getATDateTimeFromGC(end, ATechDate.FORMAT_DATE_ONLY);
 
-            // String sDay = m_da.getDateTimeStringFromGregorianCalendar(start,
+            // String sDay =
+            // dataAccess.getDateTimeStringFromGregorianCalendar(start,
             // 1);
-            // String eDay = m_da.getDateTimeStringFromGregorianCalendar(end,
+            // String eDay =
+            // dataAccess.getDateTimeStringFromGregorianCalendar(end,
             // 1);
 
             logDebug("getDayStatsRange()", sDay + " - " + eDay);
@@ -1041,6 +1072,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         return lst;
     }
+
 
     /**
      * Get Monthly Values
@@ -1088,6 +1120,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
     }
 
+
     /**
      * Get DayValuesData
      * 
@@ -1131,6 +1164,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return dvd;
 
     }
+
 
     /**
      * Save Day Stats
@@ -1215,6 +1249,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
     }
 
+
     /**
      * DateTime Exists
      * 
@@ -1244,8 +1279,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
     }
 
+
     // *************************************************************
-    // **** S t o c k s  ****
+    // **** S t o c k s ****
     // *************************************************************
 
     public List<StockSubTypeH> getStockTypes()
@@ -1257,8 +1293,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         try
         {
-            Query q = getSession().createQuery(
-                    "SELECT dv from ggc.core.db.hibernate.StockSubTypeH as dv");
+            Query q = getSession().createQuery("SELECT dv from ggc.core.db.hibernate.StockSubTypeH as dv");
 
             Iterator it = q.list().iterator();
 
@@ -1283,28 +1318,18 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         StocktakingH sth = getLastStocktaking();
 
-
-
         dto.setStocktakingH(sth);
 
         log.debug("Last stocktaking : " + sth);
 
         // FIXME
 
-        if (sth!=null)
+        if (sth != null)
         {
-
-
-
-
 
         }
 
-
-
         return dto;
-
-
 
     }
 
@@ -1316,7 +1341,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
             Integer in = null;
             int sum_all = 0;
 
-
             Criteria criteria = this.getSession().createCriteria(StocktakingH.class);
             criteria.add(Restrictions.eq("personId", (int) m_da.getCurrentUserId()));
             criteria.setProjection(Projections.max("datetime"));
@@ -1325,19 +1349,19 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
             System.out.println("Object: " + o);
 
-            if (o!=null)
+            if (o != null)
             {
                 try
                 {
                     Query q = getSession().createQuery(
-                            "SELECT dv from ggc.core.db.hibernate.StocktakingH as dv " +
-                            "where datetime=" + m_da.getLongValue(o));
+                        "SELECT dv from ggc.core.db.hibernate.StocktakingH as dv " + "where datetime="
+                                + m_da.getLongValue(o));
 
                     Iterator it = q.list().iterator();
 
                     if (it.hasNext())
                     {
-                        return (StocktakingH)it.next();
+                        return (StocktakingH) it.next();
                     }
 
                 }
@@ -1349,62 +1373,63 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
             return null;
 
+            // if (criteria.list() == null)
+            // {
+            // System.out.println("Not found.");
+            // }
+            // else
+            // {
+            // System.out.println("Not found." + criteria.list().size());
+            // Integer maxAge = (Integer)criteria.uniqueResult();
+            // System.out.println("MaxAge: " + maxAge);
+            // }
+            //
+            // return null;
 
-//            if (criteria.list() == null)
-//            {
-//                System.out.println("Not found.");
-//            }
-//            else
-//            {
-//                System.out.println("Not found." + criteria.list().size());
-//                Integer maxAge = (Integer)criteria.uniqueResult();
-//                System.out.println("MaxAge: " + maxAge);
-//            }
-//
-//            return null;
+            // Integer maxAge = (Integer)criteria.uniqueResult();
 
-            //Integer maxAge = (Integer)criteria.uniqueResult();
+            //
+            //
+            // Query q = getSession().createQuery(
+            // "SELECT stt from ggc.core.db.hibernate.StocktakingH as stt " +
+            // "WHERE datetime = " +
+            // "( SELECT max(datetime) FROM ggc.core.db.hibernate.StocktakingH )");
+            //
+            // Iterator it = q.list().iterator();
+            //
+            // if (it.hasNext())
+            // {
+            // return (StocktakingH)it.next();
+            // }
+            // else
+            // {
+            // return null;
+            // }
 
-//
-//
-//            Query q = getSession().createQuery(
-//                    "SELECT stt from ggc.core.db.hibernate.StocktakingH as stt " +
-//                            "WHERE datetime = " +
-//                            "( SELECT max(datetime) FROM ggc.core.db.hibernate.StocktakingH )");
-//
-//            Iterator it = q.list().iterator();
-//
-//            if (it.hasNext())
-//            {
-//                return (StocktakingH)it.next();
-//            }
-//            else
-//            {
-//                return null;
-//            }
-
-
-//
-//
-//
-//            Criteria criteria = this.getSession().createCriteria(StocktakingH.class);
-//            criteria.add(Restrictions.eq("personId", (int) m_da.getCurrentUserId()));
-//            criteria.setProjection(Projections.max(""));
-//
-//
-//
-//            criteria.add(Restrictions.or(
-//                    Restrictions.or(Restrictions.gt("bg", 0), Restrictions.like("extended", "%URINE%")),
-//                    Restrictions.gt("ch", 0.0f)));
-//            // criteria.createCriteria("person_id",
-//            // (int)dataAccess.getCurrentUserId());
-//            criteria.setProjection(Projections.rowCount());
-//            in = (Integer) criteria.list().get(0);
-//            sum_all = in.intValue();
-//
-//            log.debug("Old Meter Data in Db: " + in.intValue());
-//
-//            return sum_all;
+            //
+            //
+            //
+            // Criteria criteria =
+            // this.getSession().createCriteria(StocktakingH.class);
+            // criteria.add(Restrictions.eq("personId", (int)
+            // dataAccess.getCurrentUserId()));
+            // criteria.setProjection(Projections.max(""));
+            //
+            //
+            //
+            // criteria.add(Restrictions.or(
+            // Restrictions.or(Restrictions.gt("bg", 0),
+            // Restrictions.like("extended", "%URINE%")),
+            // Restrictions.gt("ch", 0.0f)));
+            // // criteria.createCriteria("person_id",
+            // // (int)dataAccess.getCurrentUserId());
+            // criteria.setProjection(Projections.rowCount());
+            // in = (Integer) criteria.list().get(0);
+            // sum_all = in.intValue();
+            //
+            // log.debug("Old Meter Data in Db: " + in.intValue());
+            //
+            // return sum_all;
         }
         catch (Exception ex)
         {
@@ -1428,112 +1453,106 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         System.out.println("Stoc Tyoe: " + stockType.getName());
         System.out.println("o: " + o);
 
-        if (o!=null)
+        if (o != null)
         {
             long count = m_da.getLongValue(o);
 
             System.out.println("Count: " + count);
 
-            return count>0;
+            return count > 0;
         }
 
         return false;
     }
 
 
+    // // OLD ONE
+    // public ArrayList<StocksH> getStocks(int type, int history)
+    // {
+    //
+    // // FIXME
+    // if (m_loadStatus == DB_CONFIG_LOADED)
+    // return null;
+    //
+    // log.info("getStocks() - Process");
+    //
+    // ArrayList<StocksH> list = new ArrayList<StocksH>();
+    // String sql = "";
+    //
+    // try
+    // {
+    // sql = "SELECT sv FROM ggc.core.db.hibernate.StocksH as sv ";
+    //
+    // if (type != -1 || history != -1)
+    // {
+    // sql += " WHERE ";
+    // }
+    //
+    // sql += " ORDER BY sv.dt_stock";
+    //
+    // Query q = getSession().createQuery(sql);
+    //
+    // Iterator<StocksH> it = q.list().iterator();
+    //
+    // while (it.hasNext())
+    // {
+    // StocksH sv = it.next();
+    // // hbVal.addDayValueRow(new DailyValuesRow(dv));
+    // list.add(sv);
+    // }
+    //
+    // // hbVal.processDayValues();
+    //
+    // // logDebug("getHbA1c()", "Readings: " + hbVal.getDayCount() + " " +
+    // // hbVal.getReadings());
+    //
+    // // System.out.println("Avg BG: " + hbVal.getAvgBGForMethod3());
+    //
+    // }
+    // catch (Exception ex)
+    // {
+    // logException("getHbA1c()", ex);
+    // }
+    //
+    // return list;
+    // }
 
-
-
-//    // OLD ONE
-//    public ArrayList<StocksH> getStocks(int type, int history)
-//    {
-//
-//        // FIXME
-//        if (m_loadStatus == DB_CONFIG_LOADED)
-//            return null;
-//
-//        log.info("getStocks() - Process");
-//
-//        ArrayList<StocksH> list = new ArrayList<StocksH>();
-//        String sql = "";
-//
-//        try
-//        {
-//            sql = "SELECT sv FROM ggc.core.db.hibernate.StocksH as sv ";
-//
-//            if (type != -1 || history != -1)
-//            {
-//                sql += " WHERE ";
-//            }
-//
-//            sql += " ORDER BY sv.dt_stock";
-//
-//            Query q = getSession().createQuery(sql);
-//
-//            Iterator<StocksH> it = q.list().iterator();
-//
-//            while (it.hasNext())
-//            {
-//                StocksH sv = it.next();
-//                // hbVal.addDayValueRow(new DailyValuesRow(dv));
-//                list.add(sv);
-//            }
-//
-//            // hbVal.processDayValues();
-//
-//            // logDebug("getHbA1c()", "Readings: " + hbVal.getDayCount() + " " +
-//            // hbVal.getReadings());
-//
-//            // System.out.println("Avg BG: " + hbVal.getAvgBGForMethod3());
-//
-//        }
-//        catch (Exception ex)
-//        {
-//            logException("getHbA1c()", ex);
-//        }
-//
-//        return list;
-//    }
-
-
-
-//    // OLD ONE
-//    public ArrayList<StockBaseType> getStockBaseTypes()
-//    {
-//
-//        if (m_loadStatus == DB_CONFIG_LOADED)
-//            return null;
-//
-//        log.info("getStockBaseTypes() - Process");
-//
-//        ArrayList<StockBaseType> list = new ArrayList<StockBaseType>();
-//        String sql = "";
-//
-//        try
-//        {
-//            sql = "SELECT sv FROM ggc.core.db.hibernate.StockTypeH as sv ";
-//            sql += " ORDER BY sv.id";
-//
-//            Query q = getSession().createQuery(sql);
-//
-//            Iterator<StockTypeH> it = q.list().iterator();
-//
-//            while (it.hasNext())
-//            {
-//                StockTypeH sv = it.next();
-//                list.add(new StockBaseType(sv));
-//            }
-//
-//        }
-//        catch (Exception ex)
-//        {
-//            log.error("getStockBaseTypes()::Exception: " + ex.getMessage(), ex);
-//        }
-//
-//        return list;
-//
-//    }
-
+    // // OLD ONE
+    // public ArrayList<StockBaseType> getStockBaseTypes()
+    // {
+    //
+    // if (m_loadStatus == DB_CONFIG_LOADED)
+    // return null;
+    //
+    // log.info("getStockBaseTypes() - Process");
+    //
+    // ArrayList<StockBaseType> list = new ArrayList<StockBaseType>();
+    // String sql = "";
+    //
+    // try
+    // {
+    // sql = "SELECT sv FROM ggc.core.db.hibernate.StockTypeH as sv ";
+    // sql += " ORDER BY sv.id";
+    //
+    // Query q = getSession().createQuery(sql);
+    //
+    // Iterator<StockTypeH> it = q.list().iterator();
+    //
+    // while (it.hasNext())
+    // {
+    // StockTypeH sv = it.next();
+    // list.add(new StockBaseType(sv));
+    // }
+    //
+    // }
+    // catch (Exception ex)
+    // {
+    // log.error("getStockBaseTypes()::Exception: " + ex.getMessage(), ex);
+    // }
+    //
+    // return list;
+    //
+    // }
 
     // *************************************************************
     // **** TOOLS Db METHODS ****
@@ -1592,6 +1611,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return ht;
     }
 
+
     private boolean isDbRunning()
     {
         System.out.println("Is running: " + m_loadStatus);
@@ -1608,7 +1628,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     // *************************************************************
     // **** S T O C K S ****
     // *************************************************************
-
 
     // *************************************************************
     // **** U T I L S ****
@@ -1665,6 +1684,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         }
 
     }
+
 
     /**
      * Get Application Db Name

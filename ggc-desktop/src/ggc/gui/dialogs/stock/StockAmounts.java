@@ -1,32 +1,21 @@
 package ggc.gui.dialogs.stock;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.core.data.DailyValues;
-import ggc.core.data.DailyValuesRow;
-import ggc.core.util.DataAccess;
-import ggc.core.util.GGCProperties;
-
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.core.data.DailyValues;
+import ggc.core.data.DailyValuesRow;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -56,7 +45,7 @@ import com.atech.utils.ATDataAccessAbstract;
 // fix this
 // for defining stock entry
 
-//  DEPRECATED ???
+// DEPRECATED ???
 
 public class StockAmounts extends JDialog implements ActionListener
 {
@@ -108,13 +97,14 @@ public class StockAmounts extends JDialog implements ActionListener
      * }
      */
 
-    //Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-    //Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
+    // Font f_normal = dataAccess.getFont(DataAccess.FONT_NORMAL);
+    // Font f_bold = dataAccess.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
     boolean debug = false;
 
     // private boolean m_add_action = true;
     private Container m_parent = null;
+
 
     /**
      * Constructor 
@@ -130,6 +120,7 @@ public class StockAmounts extends JDialog implements ActionListener
         // initParameters(ndV,nDate);
         init();
     }
+
 
     @SuppressWarnings("unused")
     private void load()
@@ -186,6 +177,7 @@ public class StockAmounts extends JDialog implements ActionListener
          * addComponent(CommentField = new JTextField(), 110, 328, 220, panel);
          */
     }
+
 
     /*
      * private void save()
@@ -254,6 +246,7 @@ public class StockAmounts extends JDialog implements ActionListener
         // cb_food_set.setEnabled(false);
         cb_food_set.addChangeListener(new ChangeListener()
         {
+
             /**
              * Invoked when the target of the listener has changed its state.
              *
@@ -296,6 +289,7 @@ public class StockAmounts extends JDialog implements ActionListener
 
     }
 
+
     private void addLabel(String text, int posY, JPanel parent)
     {
         JLabel label = new JLabel(text);
@@ -307,6 +301,7 @@ public class StockAmounts extends JDialog implements ActionListener
 
     }
 
+
     private void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
     {
         // JLabel label = new JLabel(text);
@@ -314,6 +309,7 @@ public class StockAmounts extends JDialog implements ActionListener
         comp.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL));
         parent.add(comp);
     }
+
 
     /*
      * private void init_old()
@@ -405,6 +401,7 @@ public class StockAmounts extends JDialog implements ActionListener
         {}
 
     }
+
 
     /**
      * Was Action Successful

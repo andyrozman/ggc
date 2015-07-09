@@ -9,11 +9,36 @@ import com.atech.utils.data.CodeEnumWithTranslation;
 import ggc.core.util.DataAccess;
 
 /**
- * Created by andy on 28.02.15.
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     StockUsageUnit
+ *  Description:  Stock Usage Unit
+ *
+ *  Author:    Andy {andy@atech-software.com}
  */
+
 public enum StockUsageUnit implements CodeEnumWithTranslation
 {
-    None(0, "NONE"), Day(1, "TIME_DAY"), Week(2, "TIME_WEEK"), Month(3, "TIME_MONTH"),
+    None(0, "NONE"), //
+    Day(1, "TIME_DAY"), //
+    Week(2, "TIME_WEEK"), //
+    Month(3, "TIME_MONTH"), //
 
     ;
 
@@ -33,10 +58,10 @@ public enum StockUsageUnit implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
 
-        String[] basal_desc_lcl = { ic.getMessage("SELECT"), ic.getMessage("TIME_DAY"), //
+        String[] basal_desc_lcl = { ic.getMessage("SELECT"), //
+                                   ic.getMessage("TIME_DAY"), //
                                    ic.getMessage("TIME_WEEK"), //
                                    ic.getMessage("TIME_MONTH"), //
-
         };
 
         descriptions = basal_desc_lcl;

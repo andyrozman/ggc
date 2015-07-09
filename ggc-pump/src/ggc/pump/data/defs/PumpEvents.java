@@ -1,5 +1,6 @@
 package ggc.pump.data.defs;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 import com.atech.i18n.I18nControlAbstract;
@@ -56,9 +57,13 @@ public enum PumpEvents implements CodeEnumWithTranslation
 
     SelfTest(30, "EVENT_SELF_TEST"), //
     Download(31, "EVENT_DOWNLOAD"), //
+    Activate(32, "EVENT_ACTIVATE"), //
+    Deactivate(33, "EVENT_DEACTIVATE"), //
 
     DateTimeSet(40, "EVENT_DATETIME_SET"), //
     DateTimeCorrect(41, "EVENT_DATETIME_CORRECT"), //
+    TimeSet(42, "EVENT_TIME_SET"), //
+    DateSet(43, "EVENT_DATE_SET"), //
 
     SetMaxBasal(50, "EVENT_SET_MAX_BASAL"), //
     SetMaxBolus(51, "EVENT_SET_MAX_BOLUS"), //
@@ -74,6 +79,8 @@ public enum PumpEvents implements CodeEnumWithTranslation
     BolusWizard(81, "EVENT_BOLUS_WIZARD", "BG=%s;CH=%s;CH_UNIT=%s;"
             + "CH_INS_RATIO=%s;BG_INS_RATIO=%s;BG_TARGET_LOW=%s;BG_TARGET_HIGH=%s;BOLUS_TOTAL=%s;"
             + "BOLUS_CORRECTION=%s;BOLUS_FOOD=%s;UNABSORBED_INSULIN=%s"), //
+
+    ChangeRemoteId(90, "EVENT_CHANGE_REMOTE_ID"), //
 
     ;
 
@@ -105,12 +112,16 @@ public enum PumpEvents implements CodeEnumWithTranslation
                                      ic.getMessage("EVENT_DOWNLOAD"), ic.getMessage("EVENT_DATETIME_SET"),
                                      ic.getMessage("EVENT_DATETIME_CORRECT"),
 
-                                     ic.getMessage("EVENT_SET_MAX_BASAL"), ic.getMessage("EVENT_SET_MAX_BOLUS"),
-                                     ic.getMessage("EVENT_BATERRY_REMOVED"),
+                                     ic.getMessage("EVENT_SET_MAX_BASAL"), //
+                                     ic.getMessage("EVENT_SET_MAX_BOLUS"), //
+                                     ic.getMessage("EVENT_BATERRY_REMOVED"), //
 
-                                     ic.getMessage("EVENT_BATERRY_REPLACED"), ic.getMessage("EVENT_BATERRY_LOW"),
-                                     ic.getMessage("EVENT_BATERRY_LOW_DESC"), ic.getMessage("EVENT_BG_FROM_METER"),
-                                     ic.getMessage("ALARM_BOLUS_CANCELED"), ic.getMessage("EVENT_BOLUS_WIZARD") };
+                                     ic.getMessage("EVENT_BATERRY_REPLACED"), //
+                                     ic.getMessage("EVENT_BATERRY_LOW"), //
+                                     ic.getMessage("EVENT_BATERRY_LOW_DESC"), //
+                                     ic.getMessage("EVENT_BG_FROM_METER"), //
+                                     ic.getMessage("ALARM_BOLUS_CANCELED"), //
+                                     ic.getMessage("EVENT_BOLUS_WIZARD") };
 
         descriptions = descriptions_lcl;
     }
@@ -204,6 +215,7 @@ public enum PumpEvents implements CodeEnumWithTranslation
             case SetMaxBasal:
             case SetMaxBolus:
             case BatteryLowDesc:
+            case ReservoirLowDesc:
                 return true;
 
             default:
@@ -227,6 +239,12 @@ public enum PumpEvents implements CodeEnumWithTranslation
     public static String[] getDescriptions()
     {
         return descriptions;
+    }
+
+
+    public static Collection<PumpEvents> getAllValues()
+    {
+        return codeMapping.values();
     }
 
 }

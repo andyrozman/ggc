@@ -3,6 +3,7 @@ package ggc.plugin.comm;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,6 +14,7 @@ import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import gnu.io.NRSerialPort;
 import gnu.io.SerialPort;
+import gnu.io.UnsupportedCommOperationException;
 
 /**
  * Created by andy on 11.03.15.
@@ -29,6 +31,7 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
     private InputStream inputStream;
     private OutputStream outputStream;
     private BitUtils bitUtils = new BitUtils();
+    SerialPort serialPortRaw;
 
 
     public NRSerialCommunicationHandler(String portName)
@@ -52,14 +55,7 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
 
     public SerialSettings createDefaultSerialSettings()
     {
-        // 9600, 8,n,1, no flow control
-        SerialSettings ss = new SerialSettings();
-        ss.baudrate = 9600;
-        ss.databits = 8;
-        ss.parity = 0; // none
-        ss.stopbits = 1;
-
-        return null;
+        return new SerialSettings();
     }
 
 
@@ -71,8 +67,14 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
             return true;
         }
 
-        this.serialDevice = new NRSerialPort(portName, 9600); // 9600 , -
-                                                              // 115200
+        if (this.serialSettings == null)
+        {
+            this.serialSettings = createDefaultSerialSettings();
+        }
+
+        LOG.debug(serialSettings);
+
+        this.serialDevice = new NRSerialPort(portName, this.serialSettings.baudRate);
 
         this.deviceConnected = this.serialDevice.connect();
 
@@ -81,15 +83,20 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
         if (!this.deviceConnected)
         {
             LOG.debug("Could not connect to port " + portName);
-
             return false;
         }
 
         try
         {
-            SerialPort sport = this.serialDevice.getSerialPortInstance();
-            sport.setDTR(false);
-            sport.setRTS(true);
+            serialPortRaw = this.serialDevice.getSerialPortInstance();
+            serialPortRaw.setDTR(this.serialSettings.dtr);
+            serialPortRaw.setRTS(this.serialSettings.rts);
+
+            serialPortRaw.setSerialPortParams(this.serialSettings.baudRate,
+                getIntegerValue(this.serialSettings.dataBits), getIntegerValue(this.serialSettings.stopBits),
+                getIntegerValue(this.serialSettings.parity));
+
+            serialPortRaw.setFlowControlMode(getIntegerValue(this.serialSettings.flowControl));
 
             inputStream = this.serialDevice.getInputStream();
             outputStream = this.serialDevice.getOutputStream();
@@ -104,13 +111,106 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
     }
 
 
+    public boolean isDeviceConnected()
+    {
+
+        return (this.serialDevice != null && this.serialDevice.isConnected());
+    }
+
+
+    public Integer getIntegerValue(SerialSettingsType type)
+    {
+        switch (type)
+        {
+            case StopBits1:
+                return SerialPort.STOPBITS_1;
+
+            case StopBits1_5:
+                return SerialPort.STOPBITS_1_5;
+
+            case StopBits2:
+                return SerialPort.STOPBITS_2;
+
+            case ParityNone:
+                return SerialPort.PARITY_NONE;
+
+            case ParityOdd:
+                return SerialPort.PARITY_ODD;
+
+            case ParityEven:
+                return SerialPort.STOPBITS_1;
+
+            case ParityMark:
+                return SerialPort.PARITY_MARK;
+
+            case ParitySpace:
+                return SerialPort.PARITY_SPACE;
+
+            case DataBits5:
+                return SerialPort.DATABITS_5;
+
+            case DataBits6:
+                return SerialPort.DATABITS_6;
+
+            case DataBits7:
+                return SerialPort.DATABITS_7;
+
+            case DataBits8:
+                return SerialPort.DATABITS_8;
+
+            case FlowControlNone:
+                return SerialPort.FLOWCONTROL_NONE;
+
+            case FlowControlRtsCtsIn:
+                return SerialPort.FLOWCONTROL_RTSCTS_IN;
+
+            case FlowControlRtsCtsOut:
+                return SerialPort.FLOWCONTROL_RTSCTS_OUT;
+
+            case FlowControlXonXoffIn:
+                return SerialPort.FLOWCONTROL_XONXOFF_IN;
+
+            case FlowControlXonXoffOut:
+                return SerialPort.FLOWCONTROL_XONXOFF_OUT;
+
+            default:
+                return 0;
+        }
+    }
+
+
     public void disconnectDevice()
     {
+        try
+        {
+            if (this.inputStream != null)
+                this.inputStream.close();
+        }
+        catch (IOException e)
+        {
+            LOG.warn("error closing input stream");
+
+        }
+
+        try
+        {
+            if (this.outputStream != null)
+                this.outputStream.close();
+        }
+        catch (IOException e)
+        {
+            LOG.warn("error closing output stream");
+        }
+
         if (serialDevice != null)
         {
+
             if (this.serialDevice.isConnected())
             {
+
                 this.serialDevice.disconnect();
+                this.serialPortRaw.close();
+
                 this.serialDevice = null;
             }
         }
@@ -264,6 +364,52 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
     {
         // fixme
 
+    }
+
+
+    public void write(int[] cmd) throws PlugInBaseException
+    {
+
+        try
+        {
+            for (int bb : cmd)
+            {
+                System.out.println("OS: " + this.outputStream);
+                this.outputStream.write(bb);
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+            throw new PlugInBaseException(ex);
+        }
+
+    }
+
+
+    public int getReceiveTimeout()
+    {
+        return serialPortRaw.getReceiveTimeout();
+    }
+
+
+    public void setReceiveTimeout(int timeout) throws PlugInBaseException
+    {
+        try
+        {
+            serialPortRaw.enableReceiveTimeout(timeout);
+        }
+        catch (UnsupportedCommOperationException e)
+        {
+            e.printStackTrace();
+            throw new PlugInBaseException(e);
+        }
+    }
+
+
+    public static Set<String> getAvailablePorts()
+    {
+        return NRSerialPort.getAvailableSerialPorts();
     }
 
 }

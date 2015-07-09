@@ -1,22 +1,12 @@
 package ggc.shared.ratio;
 
-import ggc.core.data.cfg.ConfigurationManager;
-import ggc.core.util.DataAccess;
-
-import java.awt.Component;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import com.atech.graphics.components.JDecimalTextField;
@@ -24,6 +14,9 @@ import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
+
+import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -81,7 +74,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
     // boolean in_action = false;
 
-    // private GGCProperties props = m_da.getSettings();
+    // private GGCProperties props = dataAccess.getSettings();
 
     // private boolean m_action_done = false;
 
@@ -94,6 +87,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
     // private Container m_parent = null;
 
     ConfigurationManager config_manager = null;
+
 
     /**
      * Constructor
@@ -116,6 +110,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
     }
 
+
     /**
      * Constructor
      * 
@@ -137,6 +132,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
     }
 
+
     /**
      * Constructor
      * 
@@ -157,6 +153,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
     }
 
+
     /**
      * Get Ratios 
      * 
@@ -173,6 +170,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
         return this.result;
     }
+
 
     private void init()
     {
@@ -298,7 +296,8 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         buttons[1] = ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 180, startx + 255, 130, 25, panel,
             ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
 
-        help_button = ATSwingUtils.createHelpButtonByBounds(320, startx + 255, 130, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
+        help_button = ATSwingUtils.createHelpButtonByBounds(320, startx + 255, 130, 25, this, ATSwingUtils.FONT_NORMAL,
+            m_da);
         buttons[2] = help_button;
         panel.add(help_button);
 
@@ -315,6 +314,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         this.setBounds(0, 0, width, startx + 215 + 110);
         m_da.centerJDialog(this);
     }
+
 
     /**
      * Invoked when an action occurs.
@@ -357,6 +357,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
     }
 
+
     /**
      * Check Data Ready
      * 
@@ -382,6 +383,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         return false;
     }
 
+
     private void calculate()
     {
         if (checkDataReady())
@@ -397,6 +399,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
             }
         }
     }
+
 
     private void calculate(float tdd)
     {
@@ -439,6 +442,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         }
     }
 
+
     private String getBaseStringEntry(String[] array, String current, String default_value)
     {
         for (String element : array)
@@ -452,6 +456,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         return default_value;
 
     }
+
 
     /*
      * private boolean isFieldSet(String text)
@@ -472,6 +477,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         return this.m_action_done;
     }
 
+
     /**
      * Get Results
      * 
@@ -482,10 +488,11 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         return this.result;
     }
 
+
     /*
      * private void fixDecimals()
      * {
-     * if (m_da.isEmptyOrUnset(BGField.getText()))
+     * if (dataAccess.isEmptyOrUnset(BGField.getText()))
      * return;
      * String s = BGField.getText().trim().replace(",", ".");
      * if (this.cob_bg_type.getSelectedIndex()==1)
@@ -526,6 +533,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         return this.getRootPane();
     }
 
+
     /** 
      * getHelpButton - get Help button
      */
@@ -534,6 +542,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         return this.help_button;
     }
 
+
     /** 
      * getHelpId - get id for Help
      */
@@ -541,6 +550,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
     {
         return "GGC_Ratio_Calculator";
     }
+
 
     /** 
      * itemStateChanged
@@ -557,6 +567,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         // String source = ie.getSource();
 
     }
+
 
     private void setEntryType(int type)
     {

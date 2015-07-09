@@ -51,8 +51,9 @@ public enum PumpAlarms implements CodeEnumWithTranslation
     NoDelivery(10, "ALARM_NO_DELIVERY"), //
     EmptyCartridge(12, "ALARM_EMPTY_CARTRIDGE"), //
     AutoOff(13, "ALARM_AUTO_OFF"), //
+    AutoOffSoon(15, "ALARM_AUTO_OFF_SOON"), //
     CallService(14, "ALARM_CALL_SERVICE"), //
-    ;
+    ClockReset(16, "ALARM_CLOCK_RESET");
 
     int code;
     String i18nKey;

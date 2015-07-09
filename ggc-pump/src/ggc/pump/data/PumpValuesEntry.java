@@ -793,48 +793,28 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     }
 
 
-    /**
-     * Prepare Entry [PlugIn Framework v1]
-     */
-    @Override
-    public void prepareEntry()
-    {
-        System.out.println("prepareEntry not implemented!");
-
-        /*
-         * if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD) return;
-         * else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT) {
-         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.
-         * BG_MGDL))); this.entry_object.setChanged(System.currentTimeMillis());
-         * this.entry_object.setComment(createComment()); } else {
-         * this.entry_object = new DayValueH(); this.entry_object.setIns1(0);
-         * this.entry_object.setIns2(0); this.entry_object.setCh(0.0f);
-         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.
-         * BG_MGDL))); this.entry_object.setDt_info(this.datetime);
-         * this.entry_object.setChanged(System.currentTimeMillis());
-         * this.entry_object.setComment(createComment()); }
-         */
-    }
-
-
-    /**
-     * Get Db Objects [PlugIn Framework v1]
-     *
-     * @return ArrayList of elements extending GGCHibernateObject
-     */
-    @Override
-    public ArrayList<? extends GGCHibernateObject> getDbObjects()
-    {
-        prepareEntry();
-        ArrayList<GGCHibernateObject> lst = new ArrayList<GGCHibernateObject>();
-
-        if (this.entry_object != null)
-        {
-            lst.add(this.entry_object);
-        }
-
-        return lst;
-    }
+//    /**
+//     * Prepare Entry [PlugIn Framework v1]
+//     */
+//    @Override
+//    public void prepareEntry()
+//    {
+//        System.out.println("prepareEntry not implemented!");
+//
+//        /*
+//         * if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD) return;
+//         * else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT) {
+//         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.
+//         * BG_MGDL))); this.entry_object.setChanged(System.currentTimeMillis());
+//         * this.entry_object.setComment(createComment()); } else {
+//         * this.entry_object = new DayValueH(); this.entry_object.setIns1(0);
+//         * this.entry_object.setIns2(0); this.entry_object.setCh(0.0f);
+//         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.
+//         * BG_MGDL))); this.entry_object.setDt_info(this.datetime);
+//         * this.entry_object.setChanged(System.currentTimeMillis());
+//         * this.entry_object.setComment(createComment()); }
+//         */
+//    }
 
 
     /**

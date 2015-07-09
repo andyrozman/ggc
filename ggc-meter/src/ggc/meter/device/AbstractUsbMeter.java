@@ -1,5 +1,7 @@
 package ggc.meter.device;
 
+import com.atech.graphics.dialogs.selector.SelectableInterface;
+
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
@@ -9,8 +11,6 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.USBProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -48,6 +48,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
     protected int m_status = 0;
     protected boolean communication_established = false;
 
+
     /**
      * Constructor
      */
@@ -55,6 +56,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
     {
         super(DataAccessMeter.getInstance());
     }
+
 
     /**
      * Constructor
@@ -66,6 +68,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
+
 
     /**
      * Constructor
@@ -79,15 +82,16 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
         super(parameters, writer, da);
     }
 
+
     /** 
      * Set Communication Settings
      */
     /*
-     * public void setCommunicationSettings(int baudrate, int databits, int
-     * stopbits, int parity, int flow_control, int event_type)
+     * public void setCommunicationSettings(int baudRate, int databits, int
+     * stopbits, int parity, int flowControl, int event_type)
      * {
-     * //super.setCommunicationSettings(baudrate, databits, stopbits, parity,
-     * flow_control, event_type);
+     * //super.setCommunicationSettings(baudRate, databits, stopbits, parity,
+     * flowControl, event_type);
      * }
      */
 
@@ -101,6 +105,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
     {
         this.close();
     }
+
 
     /**
      * Set Meter type
@@ -129,6 +134,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
 
     String serial_port = null;
 
+
     /**
      * Set Serial Port used
      * 
@@ -153,6 +159,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
         return this.serial_port;
     }
 
+
     /**
      * Get Serial port
      * 
@@ -162,6 +169,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
     {
         return this.serial_port;
     }
+
 
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
@@ -174,6 +182,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
         return false;
     }
 
+
     /**
      * Used for opening connection with device.
      * 
@@ -182,9 +191,10 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
     public boolean open() throws PlugInBaseException
     {
         // FIXME
-        //return communication_established = super.open();
+        // return communication_established = super.open();
         return false;
     }
+
 
     /**
      * Is Device Communicating
@@ -195,6 +205,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
     {
         return this.communication_established;
     }
+
 
     /**
      * Will be called, when the import is ended and freeing resources.
@@ -210,6 +221,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
          */
     }
 
+
     // ************************************************
     // *** Device Implemented methods ***
     // ************************************************
@@ -220,6 +232,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
         this.outputWriter.endOutput();
     }
 
+
     /**
      * Get Download Support Type
      * 
@@ -229,6 +242,7 @@ public abstract class AbstractUsbMeter extends USBProtocol implements MeterInter
     {
         return DownloadSupportType.DownloadData;
     }
+
 
     /**
      * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 

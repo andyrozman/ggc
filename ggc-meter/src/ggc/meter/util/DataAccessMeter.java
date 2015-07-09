@@ -4,11 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import ggc.plugin.data.enums.ClockModeType;
 import ggc.plugin.data.enums.DeviceEntryStatus;
-import ggc.plugin.data.enums.GlucoseUnitType;
-import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
-import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -16,7 +12,7 @@ import com.atech.graphics.components.about.*;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.mgr.LanguageManager;
 
-import ggc.core.data.ExtendedDailyValue;
+import ggc.core.data.ExtendedDailyValueHandler;
 import ggc.core.plugins.GGCPluginType;
 import ggc.meter.data.MeterDataHandler;
 import ggc.meter.data.MeterDataReader;
@@ -534,6 +530,12 @@ public class DataAccessMeter extends DataAccessPlugInBase
         return "GGC Meter Plugin";
     }
 
+    @Override
+    public void prepareGraphContext()
+    {
+
+    }
+
 
     // ExtendedDailyValue edv_handler = null;
 
@@ -541,9 +543,9 @@ public class DataAccessMeter extends DataAccessPlugInBase
      * Get Extended Daily Value Handler
      * @return
      */
-    public ExtendedDailyValue getExtendedDailyValueHandler()
+    public ExtendedDailyValueHandler getExtendedDailyValueHandler()
     {
-        return (ExtendedDailyValue) this.getExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE);
+        return (ExtendedDailyValueHandler) this.getExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE);
     }
 
 
@@ -558,7 +560,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         // System.out.println("Load Extended Handler: " + new
         // ExtendedDailyValue(this));
 
-        this.addExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE, new ExtendedDailyValue(this));
+        this.addExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE, new ExtendedDailyValueHandler(this));
         // this.extended_handlers = new Hashtable<>();
         // this.extended_handlers.put(EXTENDED_HANDLER_DAILY_VALUE, new
         // ExtendedDailyValue(this));

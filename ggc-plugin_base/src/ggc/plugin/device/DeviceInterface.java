@@ -1,15 +1,14 @@
 package ggc.plugin.device;
 
+import java.util.List;
+
+import com.atech.graphics.dialogs.selector.SelectableInterface;
+
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
-
-import com.atech.graphics.dialogs.selector.SelectableInterface;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
-
-import java.util.Map;
-import java.util.Set;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -61,12 +60,14 @@ public interface DeviceInterface extends SelectableInterface
      */
     String getName();
 
+
     /**
      * getIcon - Get Icon of device
      * Should be implemented by device class.
      * @return 
      */
     String getIconName();
+
 
     /**
      * getDeviceId - Get Device Id, this are plugin specific and global (for example only one device 
@@ -77,6 +78,7 @@ public interface DeviceInterface extends SelectableInterface
      */
     int getDeviceId();
 
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -84,6 +86,7 @@ public interface DeviceInterface extends SelectableInterface
      * @return instructions for reading data 
      */
     String getInstructions();
+
 
     /**
      * getComment - Get Comment for device 
@@ -93,6 +96,7 @@ public interface DeviceInterface extends SelectableInterface
      */
     String getComment();
 
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
@@ -101,6 +105,7 @@ public interface DeviceInterface extends SelectableInterface
      */
     DeviceImplementationStatus getImplementationStatus();
 
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -108,10 +113,12 @@ public interface DeviceInterface extends SelectableInterface
      */
     String getDeviceClassName();
 
+
     /**
      * dispose this device interface
      */
     void dispose();
+
 
     // ************************************************
     // *** Device GUI Methods ***
@@ -126,8 +133,9 @@ public interface DeviceInterface extends SelectableInterface
      * @param can_read_device_info
      * @param can_read_device_configuration
      */
-    //public void setDeviceAllowedActions(boolean can_read_data, boolean can_read_partitial_data,
-    //        boolean can_read_device_info, boolean can_read_device_configuration);
+    // public void setDeviceAllowedActions(boolean can_read_data, boolean
+    // can_read_partitial_data,
+    // boolean can_read_device_info, boolean can_read_device_configuration);
 
     // ************************************************
     // *** Device Implemented methods ***
@@ -142,13 +150,14 @@ public interface DeviceInterface extends SelectableInterface
      */
     void readDeviceDataFull() throws PlugInBaseException;
 
+
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy 
      * (from some date to another)
      * 
      * @throws PlugInBaseException 
      */
-    //void readDeviceDataPartitial() throws PlugInBaseException;
+    // void readDeviceDataPartitial() throws PlugInBaseException;
 
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
@@ -157,13 +166,14 @@ public interface DeviceInterface extends SelectableInterface
      */
     void readConfiguration() throws PlugInBaseException;
 
+
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do).
      *  
      * @throws PlugInBaseException
      */
-    //void readInfo() throws PlugInBaseException;
+    // void readInfo() throws PlugInBaseException;
 
     /**
      * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
@@ -173,6 +183,7 @@ public interface DeviceInterface extends SelectableInterface
      */
     public String getDeviceSpecialComment();
 
+
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
      *    normal progress status, but with some special devices we calculate progress through other means.
@@ -181,6 +192,7 @@ public interface DeviceInterface extends SelectableInterface
      */
     public boolean hasSpecialProgressStatus();
 
+
     /**
      * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
      *     left to right side, without displaying progress.
@@ -188,12 +200,14 @@ public interface DeviceInterface extends SelectableInterface
      */
     public boolean hasIndeterminateProgressStatus();
 
+
     /**
      * Is Device Communicating
      * 
      * @return
      */
     public boolean isDeviceCommunicating();
+
 
     // ************************************************
     // *** Available Functionality ***
@@ -204,21 +218,21 @@ public interface DeviceInterface extends SelectableInterface
      * 
      * @return true if action is allowed
      */
-    //public boolean canReadData();
+    // public boolean canReadData();
 
     /**
      * canReadDeviceInfo - tells if we can read info about device
      * 
      * @return true if action is allowed
      */
-    //public boolean canReadDeviceInfo();
+    // public boolean canReadDeviceInfo();
 
     /**
      * canReadConfiguration - tells if we can read configuration from device
      * 
      * @return true if action is allowed
      */
-    //public boolean canReadConfiguration();
+    // public boolean canReadConfiguration();
 
     // ************************************************
     // *** Test ***
@@ -227,7 +241,7 @@ public interface DeviceInterface extends SelectableInterface
     /**
      * Test
      */
-    //void test();
+    // void test();
 
     // ************************************************
     // *** Connection type/parameters ***
@@ -240,6 +254,7 @@ public interface DeviceInterface extends SelectableInterface
      */
     public DeviceConnectionProtocol getConnectionProtocol();
 
+
     /**
      * getConnectionPort - connection port data
      *
@@ -249,12 +264,14 @@ public interface DeviceInterface extends SelectableInterface
      */
     public String getConnectionPort();
 
+
     /**
      * Get Connection Parameters
      * 
      * @return
      */
     public String getConnectionParameters();
+
 
     /**
      * Set Connection Parameters
@@ -263,12 +280,14 @@ public interface DeviceInterface extends SelectableInterface
      */
     public void setConnectionParameters(String param);
 
+
     /**
      * Are Connection Parameters Valid - validate
      * 
      * @return
      */
     public boolean areConnectionParametersValid();
+
 
     /**
      * Are Connection Parameters Valid (String) - validate
@@ -278,6 +297,7 @@ public interface DeviceInterface extends SelectableInterface
      */
     public boolean areConnectionParametersValid(String param);
 
+
     /**
      * Has No Connection Parameters - In rare cases we have no parameters for a device (for example if 
      * we support just import from non-permanent location)
@@ -285,6 +305,7 @@ public interface DeviceInterface extends SelectableInterface
      * @return
      */
     public boolean hasNoConnectionParameters();
+
 
     // ************************************************
     // *** Company Specific Settings ***
@@ -297,12 +318,14 @@ public interface DeviceInterface extends SelectableInterface
      */
     public void setDeviceCompany(AbstractDeviceCompany company);
 
+
     /**
      * getDeviceCompany - get Company for device
      * 
      * @return 
      */
     public AbstractDeviceCompany getDeviceCompany();
+
 
     // ************************************************
     // *** Download Support ***
@@ -315,7 +338,7 @@ public interface DeviceInterface extends SelectableInterface
      * 
      * @return
      */
-    //public boolean isReadableDevice();
+    // public boolean isReadableDevice();
 
     /**
      * Get Download Support Type
@@ -323,6 +346,7 @@ public interface DeviceInterface extends SelectableInterface
      * @return
      */
     public DownloadSupportType getDownloadSupportType();
+
 
     /**
      * Get Download Support Type
@@ -338,6 +362,7 @@ public interface DeviceInterface extends SelectableInterface
      */
     public String getDeviceSourceName();
 
+
     /**
      * Does this device support file download. Some devices have their native software, which offers export 
      * into some files (usually CSV files or even XML). We sometimes add support to download from such
@@ -345,14 +370,15 @@ public interface DeviceInterface extends SelectableInterface
      *  
      * @return
      */
-    //public boolean isFileDownloadSupported();
+    // public boolean isFileDownloadSupported();
 
     /**
      * Get File Download Types as FileReaderContext. 
      * 
      * @return
      */
-    public GGCPlugInFileReaderContext[] getFileDownloadTypes(DownloadSupportType downloadSupportType);
+    public List<GGCPlugInFileReaderContext> getFileDownloadTypes(DownloadSupportType downloadSupportType);
+
 
     // ************************************************
     // *** Special Config ***
@@ -365,6 +391,7 @@ public interface DeviceInterface extends SelectableInterface
      */
     public boolean hasSpecialConfig();
 
+
     /**
      * Get Special Config Panel
      * 
@@ -372,10 +399,12 @@ public interface DeviceInterface extends SelectableInterface
      */
     public DeviceSpecialConfigPanelInterface getSpecialConfigPanel();
 
+
     /**
      * Initialize Special Config
      */
     public void initSpecialConfig();
+
 
     /**
      * Has Default Parameter (if device has default parameter)
@@ -383,6 +412,7 @@ public interface DeviceInterface extends SelectableInterface
      * @return
      */
     public boolean hasDefaultParameter();
+
 
     // ************************************************
     // *** Pre-init ***
@@ -397,6 +427,7 @@ public interface DeviceInterface extends SelectableInterface
      * @return
      */
     public boolean hasPreInit();
+
 
     /**
      * Pre Init Device - Does preinit

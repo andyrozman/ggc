@@ -1,6 +1,6 @@
 package ggc.meter.data;
 
-import ggc.core.data.ExtendedDailyValue;
+import ggc.core.data.ExtendedDailyValueHandler;
 import ggc.meter.util.DataAccessMeter;
 
 import java.util.Hashtable;
@@ -29,6 +29,8 @@ import java.util.Hashtable;
  *  Description:   Special Meter Values Entries
  * 
  *  Author: Andy {andy@atech-software.com}
+ *
+ *  @deprecated This class should not be used anymore. Use DailyValuesExtendedHandler
  */
 
 public class MeterValuesEntrySpecial
@@ -177,7 +179,7 @@ public class MeterValuesEntrySpecial
     {
         switch (dv_type)
         {
-            case ExtendedDailyValue.EXTENDED_URINE:
+            case ExtendedDailyValueHandler.EXTENDED_URINE:
                 return SPECIAL_ENTRY_URINE_COMBINED;
 
             default:
@@ -253,11 +255,11 @@ public class MeterValuesEntrySpecial
         {
             special_entries = new Hashtable<String, SpecialEntryDefinition>();
             special_entries.put("1", new SpecialEntryDefinition(1, "URINE", "mmol/L", true, 4,
-                    ExtendedDailyValue.EXTENDED_URINE, SpecialEntryDefinition.TYPE_STRING));
+                    ExtendedDailyValueHandler.EXTENDED_URINE, SpecialEntryDefinition.TYPE_STRING));
             special_entries.put("2", new SpecialEntryDefinition(2, "URINE", "mg/dL", true, 4,
-                    ExtendedDailyValue.EXTENDED_URINE, SpecialEntryDefinition.TYPE_STRING));
+                    ExtendedDailyValueHandler.EXTENDED_URINE, SpecialEntryDefinition.TYPE_STRING));
             special_entries.put("3", new SpecialEntryDefinition(3, "URINE", "", false, 4,
-                    ExtendedDailyValue.EXTENDED_URINE, SpecialEntryDefinition.TYPE_STRING));
+                    ExtendedDailyValueHandler.EXTENDED_URINE, SpecialEntryDefinition.TYPE_STRING));
             special_entries.put("4", new SpecialEntryDefinition(4, "CH", "g", false, 5, -1,
                     SpecialEntryDefinition.TYPE_DECIMAL_1));
             special_entries.put("-2", new SpecialEntryDefinition(-2, "BG", "", false, 3, -1,

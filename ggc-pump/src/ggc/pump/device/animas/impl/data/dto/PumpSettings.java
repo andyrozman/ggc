@@ -1,30 +1,26 @@
 package ggc.pump.device.animas.impl.data.dto;
 
-import com.atech.i18n.I18nControlAbstract;
-import ggc.plugin.data.DeviceValueConfigEntry;
-import ggc.plugin.data.enums.ClockModeType;
-import ggc.plugin.data.enums.GlucoseUnitType;
-import ggc.plugin.device.impl.animas.data.dto.SettingEntry;
-import ggc.plugin.device.impl.animas.enums.AnimasDataType;
-
-import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
-import ggc.plugin.device.impl.animas.enums.advsett.BolusSpeed;
-import ggc.plugin.device.impl.animas.enums.advsett.BolusStepSize;
-import ggc.plugin.device.impl.animas.enums.advsett.Language;
-import ggc.plugin.device.impl.animas.enums.advsett.OcclusionSensitivity;
-import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.apache.commons.logging.Log;
+
+import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.data.defs.ClockModeType;
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.plugin.data.DeviceValueConfigEntry;
+import ggc.plugin.device.impl.animas.data.dto.SettingEntry;
+import ggc.plugin.device.impl.animas.enums.AnimasDataType;
+import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
+import ggc.plugin.device.impl.animas.enums.advsett.*;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.defs.PumpConfigurationGroup;
 import ggc.pump.device.animas.impl.data.enums.AnimasBolusSettingSubType;
 import ggc.pump.util.DataAccessPump;
-import org.apache.commons.logging.Log;
 
 /**
  *  Application:   GGC - GNU Gluco Control

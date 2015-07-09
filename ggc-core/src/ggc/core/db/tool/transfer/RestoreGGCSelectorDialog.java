@@ -1,7 +1,6 @@
 package ggc.core.db.tool.transfer;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import com.atech.db.hibernate.transfer.RestoreSelectorDialog;
 import com.atech.utils.ATDataAccessAbstract;
@@ -37,6 +36,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
 
     private static final long serialVersionUID = 3536165659702725457L;
 
+
     /**
      * Constructor
      * 
@@ -48,6 +48,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
         super(parent, da);
         this.enableHelp("GGC_Tools_Restore_File_Selector");
     }
+
 
     /**
      * Constructor
@@ -61,6 +62,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
         this.enableHelp("GGC_Tools_Restore_File_Selector");
     }
 
+
     /**
      * Get Browse Startup Directory
      * 
@@ -72,6 +74,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
         return "../data/export/";
     }
 
+
     /**
      * Command Next Step
      * 
@@ -81,7 +84,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
     public void cmdNextStep()
     {
         // System.out.println("Res Coll: " +
-        // this.m_da.getBackupRestoreCollection());
+        // this.dataAccess.getBackupRestoreCollection());
         RestoreGGCDialog rgd = new RestoreGGCDialog((JFrame) this.my_parent, this.m_da,
                 this.m_da.getBackupRestoreCollection(), this.tf_file.getText());
         rgd.enableHelp("GGC_Tools_Restore");

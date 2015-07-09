@@ -1,5 +1,7 @@
 package ggc.plugin.device.v2;
 
+import java.util.List;
+
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
@@ -75,12 +77,14 @@ public interface DeviceInterfaceV2 extends SelectableInterface
      */
     String getName();
 
+
     /**
      * getIcon - Get Icon of device
      * Should be implemented by device class.
      * @return
      */
     String getIconName();
+
 
     /**
      * getDeviceId - Get Device Id, this are plugin specific and global (for example only one device
@@ -91,6 +95,7 @@ public interface DeviceInterfaceV2 extends SelectableInterface
      */
     int getDeviceId();
 
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -99,13 +104,14 @@ public interface DeviceInterfaceV2 extends SelectableInterface
      */
     String getInstructions();
 
+
     /**
      * getComment - Get Comment for device
      * Should be implemented by device class.
      *
      * @return comment or null
      */
-    //String getComment();
+    // String getComment();
 
     /**
      * getImplementationStatus - Get Implementation Status
@@ -120,7 +126,6 @@ public interface DeviceInterfaceV2 extends SelectableInterface
     // *** Device Implemented methods ***
     // ************************************************
 
-
     /**
      * This method calls readDeviceData from Handler.
      *
@@ -130,7 +135,8 @@ public interface DeviceInterfaceV2 extends SelectableInterface
      * @throws PlugInBaseException
      */
     void readDeviceData(Object connectionParameters, //
-                        OutputWriter outputWriter) throws PlugInBaseException;
+            OutputWriter outputWriter) throws PlugInBaseException;
+
 
     /**
      * This is method for reading configuration of device.
@@ -138,7 +144,7 @@ public interface DeviceInterfaceV2 extends SelectableInterface
      * @throws PlugInBaseException
      */
     void readConfiguration(Object connectionParameters, //
-                           OutputWriter outputWriter) throws PlugInBaseException;
+            OutputWriter outputWriter) throws PlugInBaseException;
 
 
     /**
@@ -151,7 +157,6 @@ public interface DeviceInterfaceV2 extends SelectableInterface
 
 
     DeviceProgressStatus getDeviceProgressStatus();
-
 
 
     // ************************************************
@@ -189,13 +194,11 @@ public interface DeviceInterfaceV2 extends SelectableInterface
     DevicePortParameterType getDevicePortParameterType();
 
 
-
     // ************************************************
     // *** Company Specific Settings ***
     // ************************************************
 
     DeviceCompanyDefinition getCompany();
-
 
 
     // ************************************************
@@ -224,7 +227,7 @@ public interface DeviceInterfaceV2 extends SelectableInterface
      * 
      * @return
      */
-    GGCPlugInFileReaderContext[] getFileDownloadContext(DownloadSupportType downloadSupportType);
+    List<GGCPlugInFileReaderContext> getFileDownloadContexts(DownloadSupportType downloadSupportType);
 
 
     // ************************************************
@@ -238,6 +241,7 @@ public interface DeviceInterfaceV2 extends SelectableInterface
      */
     boolean hasSpecialConfig();
 
+
     /**
      * Get Special Config Panel
      * 
@@ -245,21 +249,19 @@ public interface DeviceInterfaceV2 extends SelectableInterface
      */
     DeviceSpecialConfigPanelInterface getSpecialConfigPanel();
 
+
     /**
      * Initialize Special Config
      */
     void initSpecialConfig();
+
 
     /**
      * Has Default Parameter (if device has default parameter)
      * 
      * @return
      */
-    //boolean hasDefaultParameter();
-
-
-
-
+    // boolean hasDefaultParameter();
 
     // ************************************************
     // *** Pre-init ***
@@ -274,6 +276,7 @@ public interface DeviceInterfaceV2 extends SelectableInterface
      * @return
      */
     boolean hasPreInit();
+
 
     /**
      * Pre Init Device - Does preinit

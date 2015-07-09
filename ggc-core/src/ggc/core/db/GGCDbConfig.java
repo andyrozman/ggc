@@ -30,11 +30,11 @@ package ggc.core.db;
  * Author: andyrozman {andy@atech-software.com}
  */
 
-import ggc.core.util.DataAccess;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -68,11 +68,18 @@ public class GGCDbConfig extends HibernateConfiguration
 
     private static Log log = LogFactory.getLog(GGCDbConfig.class);
 
-    private String[] db_files = { "GGC_Main.hbm.xml", "GGC_Nutrition.hbm.xml", "GGC_Other.hbm.xml", "GGC_Pump.hbm.xml",
+    private String[] db_files = { "GGC_Main.hbm.xml", //
+                                 "GGC_Nutrition.hbm.xml", //
+                                 "GGC_Other.hbm.xml", //
+                                 "GGC_Pump.hbm.xml", //
                                  "GGC_CGMS.hbm.xml" };
 
-    private String[] db_files_debug = { "GGC_Main.hbm.xml", "GGC_Nutrition.hbm.xml", "GGC_Other.hbm.xml", "GGC_Pump.hbm.xml",
-            "GGC_CGMS.hbm.xml", "GGC_New.hbm.xml" };
+    private String[] db_files_debug = { "GGC_Main.hbm.xml", //
+                                       "GGC_Nutrition.hbm.xml", //
+                                       "GGC_Other.hbm.xml", //
+                                       "GGC_Pump.hbm.xml", //
+                                       "GGC_CGMS.hbm.xml", //
+                                       "GGC_New.hbm.xml" };
 
     /**
      * Constructor
@@ -172,14 +179,12 @@ public class GGCDbConfig extends HibernateConfiguration
     @Override
     public boolean canShemaBeAutomaticallyChanged()
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public String getShemaChangeType()
     {
-        // TODO Auto-generated method stub
         return null;
     }
 

@@ -1,5 +1,14 @@
 package ggc.meter.device.onetouch;
 
+import java.util.*;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.manager.MeterDevicesIds;
@@ -14,18 +23,6 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.atech.utils.data.ATechDate;
-import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -100,7 +97,6 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
      * 
      * @param comm_parameters
      * @param writer
-     * @param da 
      */
     public OneTouchUltraSmart(String comm_parameters, OutputWriter writer)
     {
@@ -509,17 +505,8 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
 
         // create GGC internal entry record
         MeterValuesEntry mve = new MeterValuesEntry();
-        mve.setBgUnit(DataAccessPlugInBase.BG_MGDL);
-        // changed by andy
-        // ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN,
-        // dateTime);
-        // mve.setDateTimeObject(atd);
-        // changed by Alex
-        // mve.setDateTimeObject(tzu.getCorrectedDateTime(new
-        // ATechDate(dateTime.getTimeInMillis())));
         mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dateTime)));
-
-        mve.setBgValue(Integer.toString(bgMg));
+        mve.setBgValue(Integer.toString(bgMg), GlucoseUnitType.mg_dL);
 
         this.outputWriter.writeData(mve);
     }

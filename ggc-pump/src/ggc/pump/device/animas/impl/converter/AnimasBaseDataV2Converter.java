@@ -356,20 +356,20 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
                 divide(bigDecimals.get("BIG_DECIMAL_1000"), 3, BigDecimal.ROUND_CEILING);
         int flag = (short) (packet.getReceivedDataBit(12) & 0x1);
 
-        writeDataInternal("Basal_Value_Change", dateTime, String.format("%6.3f", rate.floatValue()).trim());
+        writeDataInternal("Basal_ValueChange", dateTime, String.format("%6.3f", rate.floatValue()).trim());
     }
 
 
     private void decodeSuspendHistory(AnimasDeviceReplyPacket packet, ATechDate dateTime)
     {
-        writeDataInternal("Event_Basal_Stop", dateTime);
+        writeDataInternal("Event_BasalStop", dateTime);
 
         ATechDate dt = decodeDateTimeFromRawComponents(packet.getReceivedDataBit(11), packet.getReceivedDataBit(10),
             packet.getReceivedDataBit(12), packet.getReceivedDataBit(13));
 
         if (dt != null)
         {
-            writeDataInternal("Event_Basal_Run", dt, null);
+            writeDataInternal("Event_BasalRun", dt, null);
         }
     }
 

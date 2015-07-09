@@ -1,28 +1,20 @@
 package ggc.pump.gui.manual;
 
-import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.defs.PumpAdditionalDataType;
-import ggc.pump.util.DataAccessPump;
-
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Hashtable;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
+
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -63,8 +55,8 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
     // JComponent components[] = new JComponent[9];
 
-    //Font f_normal = m_da.getFont(DataAccessPump.FONT_NORMAL);
-    //Font f_bold = m_da.getFont(DataAccessPump.FONT_NORMAL);
+    // Font f_normal = dataAccess.getFont(DataAccessPump.FONT_NORMAL);
+    // Font f_bold = dataAccess.getFont(DataAccessPump.FONT_NORMAL);
     boolean debug = true;
     JButton help_button = null;
     JPanel main_panel = null;
@@ -77,6 +69,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
     protected boolean was_action = false;
     protected PumpValuesEntryExt[] pump_objects_ext;
+
 
     /**
      * Constructor
@@ -95,6 +88,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         m_parent = parent;
         init();
     }
+
 
     private void init()
     {
@@ -166,7 +160,8 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
              * button.addActionListener(this);
              * if (button_icon[k] != null)
              * {
-             * button.setIcon(dataAccess.getImageIcon_22x22(button_icon[k], this));
+             * button.setIcon(dataAccess.getImageIcon_22x22(button_icon[k],
+             * this));
              * }
              */
 
@@ -185,12 +180,14 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
              */
         }
 
-        help_button = ATSwingUtils.createHelpButtonByBounds(startx + 140, 195, 120, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
+        help_button = ATSwingUtils.createHelpButtonByBounds(startx + 140, 195, 120, 25, this, ATSwingUtils.FONT_NORMAL,
+            m_da);
         panel.add(help_button);
 
         m_da.enableHelp(this);
 
     }
+
 
     /*
      * public JFormattedTextField getTextField(int columns, int decimal_places,
@@ -294,6 +291,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
     }
 
+
     /**
      * Was Action
      * 
@@ -303,6 +301,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     {
         return this.was_action;
     }
+
 
     /**
      * Get Objects
@@ -314,6 +313,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         return pump_objects_ext;
 
     }
+
 
     private void cmdOk()
     {
@@ -408,6 +408,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
          */
     }
 
+
     /**
      * Is Field Set
      * 
@@ -422,6 +423,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
             return true;
     }
 
+
     /**
      * @param e
      */
@@ -429,12 +431,14 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     {
     }
 
+
     /**
      * @param e
      */
     public void keyPressed(KeyEvent e)
     {
     }
+
 
     /**
      * Invoked when a key has been released. See the class description for
@@ -456,6 +460,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
          */
     }
 
+
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
@@ -468,6 +473,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      */
@@ -475,6 +481,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     {
         return this.help_button;
     }
+
 
     /**
      * getHelpId - get id for Help

@@ -1,10 +1,5 @@
 package ggc.core.db.tool.transfer;
 
-import ggc.core.db.GGCDb;
-import ggc.core.db.datalayer.DailyValue;
-import ggc.core.db.datalayer.SettingsColorScheme;
-import ggc.core.util.DataAccess;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -14,12 +9,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
-import com.atech.db.hibernate.transfer.BackupRestoreObject;
-import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
-import com.atech.db.hibernate.transfer.ImportExportAbstract;
-import com.atech.db.hibernate.transfer.ImportTool;
-import com.atech.db.hibernate.transfer.RestoreFileInfo;
+import com.atech.db.hibernate.transfer.*;
 import com.atech.plugin.PlugInClient;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.datalayer.DailyValue;
+import ggc.core.db.datalayer.SettingsColorScheme;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -56,6 +52,7 @@ public class GGCImporter extends ImportTool implements Runnable
     String selected_class = null;
     DataAccess m_da = DataAccess.getInstance();
 
+
     /**
      * Constructor
      * 
@@ -74,6 +71,7 @@ public class GGCImporter extends ImportTool implements Runnable
         // exportAll();
     }
 
+
     /**
      * Constructor
      * 
@@ -90,6 +88,7 @@ public class GGCImporter extends ImportTool implements Runnable
         // exportAll();
     }
 
+
     /**
      * Constructor
      * 
@@ -105,6 +104,7 @@ public class GGCImporter extends ImportTool implements Runnable
         this.setRootPath("../data/import/");
     }
 
+
     /**
      * Constructor
      * 
@@ -115,6 +115,7 @@ public class GGCImporter extends ImportTool implements Runnable
         this.file_name = file_name;
         this.identifyAndImport();
     }
+
 
     /**
      * Identify and Import
@@ -166,6 +167,7 @@ public class GGCImporter extends ImportTool implements Runnable
 
     }
 
+
     /**
      * Check File Target
      */
@@ -198,10 +200,12 @@ public class GGCImporter extends ImportTool implements Runnable
         }
     }
 
+
     private BackupRestoreObject getBackupRestoreObject(BackupRestoreObject bro)
     {
         return getBackupRestoreObject(bro.getBackupClassName());
     }
+
 
     private BackupRestoreObject getBackupRestoreObject(String class_name)
     {
@@ -225,6 +229,7 @@ public class GGCImporter extends ImportTool implements Runnable
 
     }
 
+
     /**
      * Import data (object name)
      * 
@@ -235,6 +240,7 @@ public class GGCImporter extends ImportTool implements Runnable
         importData(getBackupRestoreObject(object_class_name));
     }
 
+
     /**
      * Import data (object)
      * 
@@ -244,6 +250,7 @@ public class GGCImporter extends ImportTool implements Runnable
     {
         importData(bro, true);
     }
+
 
     /**
      * Import data (object)
@@ -305,7 +312,7 @@ public class GGCImporter extends ImportTool implements Runnable
 
                 /*
                  * // line = line.replaceAll("||", "| |");
-                 * line = m_da.replaceExpression(line, "||", "| |");
+                 * line = dataAccess.replaceExpression(line, "||", "| |");
                  * StringTokenizer strtok = new StringTokenizer(line, "|");
                  * DayValueH dvh = new DayValueH();
                  * // ; Columns:
@@ -365,6 +372,7 @@ public class GGCImporter extends ImportTool implements Runnable
 
     }
 
+
     /**
      * @param args
      */
@@ -379,6 +387,7 @@ public class GGCImporter extends ImportTool implements Runnable
         new GGCImporter(args[0]);
     }
 
+
     /**
      * Get Active Session
      */
@@ -387,6 +396,7 @@ public class GGCImporter extends ImportTool implements Runnable
     {
         return 2;
     }
+
 
     /**
      * Thread Run method

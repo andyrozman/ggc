@@ -27,22 +27,16 @@
 
 package ggc.core.db.tool;
 
-import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.db.hibernate.DbInfoH;
-import ggc.core.db.hibernate.DoctorTypeH;
-import ggc.core.db.hibernate.FoodDescriptionH;
-import ggc.core.db.hibernate.FoodGroupH;
-import ggc.core.db.hibernate.NutritionDefinitionH;
-import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
-import ggc.core.util.DataAccess;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Hashtable;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.hibernate.*;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -87,6 +81,7 @@ public class InitDb
      */
     public static String passWord = "I_Really_Want_To_Do_This";
 
+
     /**
      * Constructor
      */
@@ -94,6 +89,7 @@ public class InitDb
     {
         this(true);
     }
+
 
     /**
      * Constructor
@@ -128,6 +124,7 @@ public class InitDb
 
     }
 
+
     private void setDbInfo()
     {
         DbInfoH dbi = new DbInfoH();
@@ -139,6 +136,7 @@ public class InitDb
         m_db.addHibernate(dbi);
     }
 
+
     /**
      * Set Load Nutrition
      * 
@@ -149,6 +147,7 @@ public class InitDb
         this.load_nutrition = load_nutr;
     }
 
+
     private void loadSettings()
     {
 
@@ -158,7 +157,8 @@ public class InitDb
 
         /*
          * SettingsH seti = new
-         * SettingsH(m_da.getI18nControlInstance().getMessage("UNNAMED_USER"),
+         * SettingsH(dataAccess.getI18nControlInstance().getMessage("UNNAMED_USER"
+         * ),
          * "Insulin 1", "Ins1", "Insulin 2", "Ins2", 0, "No port available", 2,
          * 60.0f, 200.0f, 80.0f, 120.0f, 3.0f, 20.0f, 4.4f, 14.0f, 2,
          * "blueMetalthemepack.zip", 0, 0, 0, 0, 0, 0, 0, "", 1100, 1800, 2100,
@@ -176,6 +176,7 @@ public class InitDb
         System.out.println();
     }
 
+
     private boolean checkIfNutritionDbFilesExist()
     {
 
@@ -190,6 +191,7 @@ public class InitDb
 
         return true;
     }
+
 
     // load nutrition database
     private void loadNutritionDatabase()
@@ -214,6 +216,7 @@ public class InitDb
         this.insertNutritionDefintions();
         System.out.println();
     }
+
 
     private void insertFoodGroups()
     {
@@ -250,6 +253,7 @@ public class InitDb
         }
 
     }
+
 
     private void insertFoodDescription()
     {
@@ -318,6 +322,7 @@ public class InitDb
         }
 
     }
+
 
     private void insertNutritionData()
     {
@@ -412,6 +417,7 @@ public class InitDb
 
     }
 
+
     /**
      * Get Food Description
      * 
@@ -422,6 +428,7 @@ public class InitDb
     {
         return this.lst_food_desc.get(_id);
     }
+
 
     private void insertNutritionDefintions()
     {
@@ -472,6 +479,7 @@ public class InitDb
         }
 
     }
+
 
     private void insertHomeWeightTypes()
     {
@@ -542,6 +550,7 @@ public class InitDb
         home_weight_type_list = list;
 
     }
+
 
     private void insertHomeWeightData()
     {
@@ -635,6 +644,7 @@ public class InitDb
 
     }
 
+
     private void insertDoctorTypes()
     {
 
@@ -690,6 +700,7 @@ public class InitDb
 
     }
 
+
     private int getInt(String input)
     {
 
@@ -704,6 +715,7 @@ public class InitDb
             return Integer.parseInt(input);
 
     }
+
 
     /*
      * private short getShort(String input)
@@ -730,6 +742,7 @@ public class InitDb
             return Long.parseLong(input);
     }
 
+
     private float getFloat(String input)
     {
         if (input.startsWith("~"))
@@ -742,6 +755,7 @@ public class InitDb
         else
             return Float.parseFloat(input);
     }
+
 
     /**
      * Get String
@@ -758,6 +772,7 @@ public class InitDb
 
         return input;
     }
+
 
     /*
      * public String makeI18nKeyword(String input)
@@ -783,6 +798,7 @@ public class InitDb
                 + "again with right password as parameter. Press CTRL-C to abort.");
     }
 
+
     /**
      * Read Password
      * 
@@ -803,6 +819,7 @@ public class InitDb
 
         return pass;
     }
+
 
     /**
      * Startup Method

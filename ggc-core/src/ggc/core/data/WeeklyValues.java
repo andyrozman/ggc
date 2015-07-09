@@ -32,10 +32,12 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public class WeeklyValues implements Serializable
 {
+
     private static final long serialVersionUID = 7748966026356288165L;
     private Hashtable<String, DailyValues> m_dataTable = null;
 
-    // private DataAccess m_da = DataAccess.getInstance();
+
+    // private DataAccess dataAccess = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -44,6 +46,7 @@ public class WeeklyValues implements Serializable
     {
         m_dataTable = new Hashtable<String, DailyValues>();
     }
+
 
     /**
      * Add Day
@@ -55,6 +58,7 @@ public class WeeklyValues implements Serializable
         // System.out.println(dv.getDate());
         m_dataTable.put("" + dv.getDate(), dv);
     }
+
 
     /**
      * Add Day Value Row
@@ -80,6 +84,7 @@ public class WeeklyValues implements Serializable
         }
     }
 
+
     /**
      * Get Day Values
      * 
@@ -100,6 +105,7 @@ public class WeeklyValues implements Serializable
             return dv;
         }
     }
+
 
     /**
      * Get All Values (Hashtable)

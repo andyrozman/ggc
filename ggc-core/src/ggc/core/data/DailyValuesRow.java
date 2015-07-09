@@ -1,13 +1,9 @@
 package ggc.core.data;
 
-import ggc.core.db.hibernate.DayValueH;
-import ggc.core.util.DataAccess;
-import ggc.core.util.GGCProperties;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
@@ -17,6 +13,10 @@ import com.atech.db.ext.ExtendedCapable;
 import com.atech.db.ext.ExtendedHandler;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.db.hibernate.DayValueH;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -69,7 +69,8 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     DataAccess m_da = DataAccess.getInstance();
     GGCProperties props = m_da.getSettings();
     boolean debug = false;
-    Hashtable<String, String> ht_extended = new Hashtable<String, String>();
+    HashMap<String, String> ht_extended = new HashMap<String, String>();
+
 
     public DailyValuesRow()
     {
@@ -84,6 +85,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         this.ht_extended = this.getExtendedHandler().loadExtended(extended);
     }
 
+
     public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String extended, String comment)
     {
         this.datetime = datetime;
@@ -97,6 +99,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         this.ht_extended = this.getExtendedHandler().loadExtended(extended);
     }
 
+
     public DailyValuesRow(long datetime, int bg, int ins1, int ins2, float ch, String activity, String urine,
             String comment)
     {
@@ -106,12 +109,13 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         this.ins1 = ins1;
         this.ins2 = ins2;
         this.ch = ch;
-        this.setExtendedValue(ExtendedDailyValue.EXTENDED_ACTIVITY, activity, false);
-        this.setExtendedValue(ExtendedDailyValue.EXTENDED_URINE, urine, false);
+        this.setExtendedValue(ExtendedDailyValueHandler.EXTENDED_ACTIVITY, activity, false);
+        this.setExtendedValue(ExtendedDailyValueHandler.EXTENDED_URINE, urine, false);
         // this.activity = activity;
         // this.urine = urine;
         this.comment = comment;
     }
+
 
     public DailyValuesRow(DayValueH dv)
     {
@@ -128,6 +132,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         this.ht_extended = this.getExtendedHandler().loadExtended(extended);
     }
 
+
     public DailyValuesRow(long datetime, String BG, String Ins1, String Ins2, String CH, String act, String urine,
             String Comment, ArrayList<String> lst_meals)
     {
@@ -137,8 +142,8 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         this.ins2 = m_da.getIntValueFromString(Ins2, 0);
         this.ch = m_da.getIntValueFromString(CH, 0);
 
-        this.setExtendedValue(ExtendedDailyValue.EXTENDED_ACTIVITY, act, false);
-        this.setExtendedValue(ExtendedDailyValue.EXTENDED_URINE, urine, false);
+        this.setExtendedValue(ExtendedDailyValueHandler.EXTENDED_ACTIVITY, act, false);
+        this.setExtendedValue(ExtendedDailyValueHandler.EXTENDED_URINE, urine, false);
 
         // this.meals = dv.getMeals_ids();
         // this.extended = dv.getExtended();
@@ -146,13 +151,15 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     }
 
+
     public boolean areMealsSet()
     {
-        if (m_da.isValueSet(this.meals) || this.isExtendedValueSet(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION))
+        if (m_da.isValueSet(this.meals) || this.isExtendedValueSet(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION))
             return true;
         else
             return false;
     }
+
 
     /**
      * Are Meals Set
@@ -163,21 +170,24 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         if (m_da.isValueSet(this.meals))
             return 1;
-        else if (this.isExtendedValueSet(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION))
+        else if (this.isExtendedValueSet(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION))
             return 2;
         else
             return 0;
     }
+
 
     public String getMealsIds()
     {
         return this.meals;
     }
 
+
     public void setMealsIds(String val)
     {
         this.meals = val;
     }
+
 
     /**
      * Get DateTime Long
@@ -205,6 +215,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     }
 
+
     /**
      * To String
      * 
@@ -217,9 +228,10 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         // ";Ins2=" + Ins2 + ";BE=" + BE + ";Act=" + Act + ";Comment=" + Comment
         // + ";";
         return "DailyValuesRow [dt=" + getDateTime() + ";bg=" + bg + ";ins1=" + ins1 + ";ins2=" + ins2 + ";CH=" + ch
-                + ";activity=" + getExtendedValue(ExtendedDailyValue.EXTENDED_ACTIVITY) + ";urine="
-                + getExtendedValue(ExtendedDailyValue.EXTENDED_URINE) + ";comment=" + comment + "]";
+                + ";activity=" + getExtendedValue(ExtendedDailyValueHandler.EXTENDED_ACTIVITY) + ";urine="
+                + getExtendedValue(ExtendedDailyValueHandler.EXTENDED_URINE) + ";comment=" + comment + "]";
     }
+
 
     /**
      * Get DateTime
@@ -231,6 +243,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         // System.out.println(datetime);
         return datetime;
     }
+
 
     /**
      * Set DateTime
@@ -246,6 +259,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
+
     /**
      * Get Date
      * 
@@ -255,6 +269,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return datetime / 10000;
     }
+
 
     /**
      * Get Date As String
@@ -266,6 +281,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return ATDataAccessAbstract.getDateTimeAsDateString(datetime);
     }
 
+
     /**
      * Get Time As String
      * 
@@ -275,6 +291,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return ATDataAccessAbstract.getDateTimeAsTimeString(datetime);
     }
+
 
     /**
      * Get DateTime As Time
@@ -287,6 +304,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
                 + ATechDate.convertATDate(datetime, ATechDate.FORMAT_DATE_AND_TIME_MIN, ATechDate.FORMAT_TIME_ONLY_MIN);
     }
 
+
     /**
      * Get DateTime As ATDate
      * 
@@ -296,6 +314,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return new ATechDate(datetime);
     }
+
 
     /**
      * Get DateTime As Date
@@ -319,6 +338,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     }
 
+
     /**
      * Set DateTime
      * 
@@ -329,6 +349,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         datetime = getDateTimeLong(date, time);
     }
+
 
     /**
      * Get BG
@@ -354,7 +375,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
             return v;
 
-            // return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+            // return dataAccess.getBGValueByType(DataAccess.BG_MMOL, bg);
         }
         else
         {
@@ -367,6 +388,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
 
     }
+
 
     /**
      * Get BG As String
@@ -404,6 +426,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     }
 
+
     /**
      * Get BG Raw
      * 
@@ -413,6 +436,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return bg;
     }
+
 
     /**
      * Get BG
@@ -444,6 +468,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      * BG: mg/dL 
      */
     public static int BG_MGDL = 1;
+
 
     /**
      * Set BG
@@ -477,6 +502,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     }
 
+
     /**
      * Set BG
      * 
@@ -506,6 +532,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     }
 
+
     /**
      * Set BG
      * 
@@ -525,6 +552,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
+
     /**
      * Get Ins 1
      * @return
@@ -533,6 +561,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return ins1;
     }
+
 
     /**
      * Get Ins 1 As String
@@ -543,14 +572,16 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return getFloatAsIntString(ins1);
     }
 
+
     /**
      * Get Ins 1 As Decimal String
      * @return
      */
     public String getIns1AsStringDecimal()
     {
-        return getDecimalValue(this.ins1, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1));
+        return getDecimalValue(this.ins1, this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS1));
     }
+
 
     /**
      * Get Ins 2 As Decimal String
@@ -558,8 +589,9 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public String getIns2AsStringDecimal()
     {
-        return getDecimalValue(this.ins2, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2));
+        return getDecimalValue(this.ins2, this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS2));
     }
+
 
     private String getDecimalValue(int val, String decimal)
     {
@@ -581,6 +613,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     }
 
+
     private float getDecimalValueAsFloat(int value, String decimal_part)
     {
         float val = 0.0f;
@@ -590,6 +623,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
         return val;
     }
+
 
     /**
      * Set Ins 1
@@ -603,6 +637,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             setIns1(m_da.getIntValue(val));
         }
     }
+
 
     /**
      * Set Ins 1
@@ -618,6 +653,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
+
     /**
      * Get Ins 2
      * @return
@@ -627,6 +663,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return ins2;
     }
 
+
     /**
      * Get Ins 1 As String
      * @return
@@ -635,6 +672,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return getFloatAsIntString(ins2);
     }
+
 
     /**
      * Set Ins 2
@@ -653,6 +691,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
+
     /**
      * Set Ins 2
      * 
@@ -667,6 +706,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
+
     /**
      * Get CH
      * 
@@ -676,6 +716,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return ch;
     }
+
 
     /**
      * Get CH As String
@@ -687,6 +728,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return this.getFloatAsString(ch);
     }
 
+
     /**
      * Set CH
      * 
@@ -696,6 +738,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         setCH(m_da.getFloatValue(val));
     }
+
 
     /**
      * Set CH
@@ -711,6 +754,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
+
     /**
      * Get Activity
      * 
@@ -718,8 +762,9 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public String getActivity()
     {
-        return this.getExtendedValue(ExtendedDailyValue.EXTENDED_ACTIVITY);
+        return this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_ACTIVITY);
     }
+
 
     /**
      * Get Insulin 3
@@ -728,8 +773,9 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public float getIns3()
     {
-        return m_da.getFloatValueFromString(this.getExtendedValue(ExtendedDailyValue.EXTENDED_INSULIN_3), 0.0f);
+        return m_da.getFloatValueFromString(this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_INSULIN_3), 0.0f);
     }
+
 
     /**
      * Set Insulin 3
@@ -738,8 +784,9 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public void setIns3(float val)
     {
-        this.setExtendedValue(ExtendedDailyValue.EXTENDED_INSULIN_3, "" + val, true);
+        this.setExtendedValue(ExtendedDailyValueHandler.EXTENDED_INSULIN_3, "" + val, true);
     }
+
 
     /**
      * Set Insulin 3
@@ -748,8 +795,9 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public void setIns3(String val)
     {
-        this.setExtendedValue(ExtendedDailyValue.EXTENDED_INSULIN_3, val, true);
+        this.setExtendedValue(ExtendedDailyValueHandler.EXTENDED_INSULIN_3, val, true);
     }
+
 
     public float getBasalInsulin()
     {
@@ -759,13 +807,13 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BASAL)
         {
             sum += getDecimalValueAsFloat(this.ins1,
-                this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1));
+                this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS1));
         }
 
         if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BASAL)
         {
             sum += getDecimalValueAsFloat(this.ins2,
-                this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2));
+                this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS2));
         }
 
         if (gp.getIns3Type() == DataAccess.INSULIN_DOSE_BASAL)
@@ -775,6 +823,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
         return sum;
     }
+
 
     public float getBolusInsulin()
     {
@@ -784,13 +833,13 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BOLUS)
         {
             sum += getDecimalValueAsFloat(this.ins1,
-                this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1));
+                this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS1));
         }
 
         if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BOLUS)
         {
             sum += getDecimalValueAsFloat(this.ins2,
-                this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2));
+                this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS2));
         }
 
         if (gp.getIns3Type() == DataAccess.INSULIN_DOSE_BOLUS)
@@ -801,19 +850,22 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return sum;
     }
 
+
     public int getBasalInsulinCount()
     {
         GGCProperties gp = DataAccess.getInstance().getSettings();
         int count = 0;
 
         if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BASAL)
-            if (getDecimalValueAsFloat(this.ins1, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1)) > 0)
+            if (getDecimalValueAsFloat(this.ins1,
+                this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS1)) > 0)
             {
                 count++;
             }
 
         if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BASAL)
-            if (getDecimalValueAsFloat(this.ins2, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2)) > 0)
+            if (getDecimalValueAsFloat(this.ins2,
+                this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS2)) > 0)
             {
                 count++;
             }
@@ -827,19 +879,22 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return count;
     }
 
+
     public int getBolusInsulinCount()
     {
         GGCProperties gp = DataAccess.getInstance().getSettings();
         int count = 0;
 
         if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BOLUS)
-            if (getDecimalValueAsFloat(this.ins1, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS1)) > 0)
+            if (getDecimalValueAsFloat(this.ins1,
+                this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS1)) > 0)
             {
                 count++;
             }
 
         if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BOLUS)
-            if (getDecimalValueAsFloat(this.ins2, this.getExtendedValue(ExtendedDailyValue.EXTENDED_DECIMAL_PART_INS2)) > 0)
+            if (getDecimalValueAsFloat(this.ins2,
+                this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS2)) > 0)
             {
                 count++;
             }
@@ -853,40 +908,48 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return count;
     }
 
+
     public void setActivity(String val)
     {
-        setExtendedValue(ExtendedDailyValue.EXTENDED_ACTIVITY, val, true);
+        setExtendedValue(ExtendedDailyValueHandler.EXTENDED_ACTIVITY, val, true);
     }
+
 
     public String getFoodDescription()
     {
-        return this.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION);
+        return this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION);
     }
+
 
     public void setFoodDescription(String val)
     {
-        setExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_DESCRIPTION, val, true);
+        setExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION, val, true);
     }
+
 
     public String getFoodDescriptionCH()
     {
-        return this.getExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_CH);
+        return this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_CH);
     }
+
 
     public void setFoodDescriptionCH(String val)
     {
-        setExtendedValue(ExtendedDailyValue.EXTENDED_FOOD_CH, val, true);
+        setExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_CH, val, true);
     }
+
 
     public String getUrine()
     {
-        return this.getExtendedValue(ExtendedDailyValue.EXTENDED_URINE);
+        return this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_URINE);
     }
+
 
     public void setUrine(String val)
     {
-        setExtendedValue(ExtendedDailyValue.EXTENDED_URINE, val, true);
+        setExtendedValue(ExtendedDailyValueHandler.EXTENDED_URINE, val, true);
     }
+
 
     public void setExtended(String ext)
     {
@@ -897,10 +960,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
+
     public String getComment()
     {
         return comment;
     }
+
 
     public void setComment(String val)
     {
@@ -916,15 +981,18 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
+
     public boolean hasChanged()
     {
         return changed;
     }
 
+
     public boolean isNew()
     {
         return m_dv == null;
     }
+
 
     public DayValueH getHibernateObject()
     {
@@ -958,10 +1026,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     }
 
+
     public boolean hasHibernateObject()
     {
         return m_dv != null;
     }
+
 
     public String getFloatAsIntString(float fl)
     {
@@ -974,6 +1044,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
+
     public String getFloatAsString(float fl)
     {
         if (fl == 0.0)
@@ -982,6 +1053,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             return DataAccess.Decimal1Format.format(fl);
     }
 
+
     public String getFloat2AsString(float fl)
     {
         if (fl == 0.0)
@@ -989,6 +1061,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         else
             return DataAccess.Decimal2Format.format(fl);
     }
+
 
     /**
      * Get Float As Int
@@ -1001,6 +1074,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         Float f_i = new Float(f);
         return f_i.intValue();
     }
+
 
     // stupid but TableModel needs Objects...
     /**
@@ -1016,7 +1090,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         switch (column)
         {
             case 0:
-                return new Long(datetime); // m_da.getDateTimeAsTimeString(datetime);
+                return new Long(datetime); // dataAccess.getDateTimeAsTimeString(datetime);
             case 1:
                 if (this.getBG() == 0.0f)
                     // if (getBGAsString().equals("0"))
@@ -1042,6 +1116,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
+
     /**
      * Get DateD
      * @return
@@ -1050,6 +1125,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return Integer.parseInt(ATDataAccessAbstract.getDateTimeAsDateString(datetime));
     }
+
 
     /**
      * Get DateDString
@@ -1060,6 +1136,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return ATDataAccessAbstract.getDateTimeAsDateString(datetime);
     }
 
+
     /**
      * Get DateT
      * @return
@@ -1068,6 +1145,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return new ATechDate(datetime).getTime();
     }
+
 
     /**
      * Get DateTime Ms
@@ -1086,6 +1164,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     }
 
+
     // /
     // / Comparable<DailyValuesRow>
     // /
@@ -1098,10 +1177,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         return (int) (this.getDateTime() - dvr.getDateTime());
     }
 
+
     public ExtendedHandler getExtendedHandler()
     {
         return m_da.getExtendedHandler("DailyValuesRow");
     }
+
 
     /**
      * Get Extended Value
@@ -1113,6 +1194,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return this.getExtendedHandler().getExtendedValue(type, this.ht_extended);
     }
+
 
     /**
      * Set Extended Value
@@ -1131,6 +1213,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
     }
 
+
     /**
      * Is Extended Value Set 
      * 
@@ -1141,6 +1224,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         return this.getExtendedHandler().isExtendedValueSet(type, this.ht_extended);
     }
+
 
     /**
      * Create Extended

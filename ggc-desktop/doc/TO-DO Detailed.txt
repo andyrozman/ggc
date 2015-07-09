@@ -104,3 +104,21 @@ Fonts: (everywhere where not ATSwingUtils used)
 
 
 
+GRAPHS
+======
+
+
+<graph_definition>
+
+
+</graph_definition>
+
+
+
+
+
+
+
+
+
+

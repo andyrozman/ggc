@@ -341,20 +341,6 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 
 
     /**
-     * Get Db Objects
-     * 
-     * @return ArrayList of elements extending GGCHibernateObject
-     * @deprecated
-     */
-    @Deprecated
-    @Override
-    public ArrayList<? extends GGCHibernateObject> getDbObjects()
-    {
-        return null;
-    }
-
-
-    /**
      * Get Data As String
      * 
      * @see ggc.plugin.output.OutputWriterData#getDataAsString()

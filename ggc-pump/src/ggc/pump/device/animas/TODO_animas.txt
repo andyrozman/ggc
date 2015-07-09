@@ -8,6 +8,30 @@
 
 
 Phase 1: 
+  Animas Pump  - FINISHED
+
+Phase 2: 
+
+  Animas CGMS/Dexcom  - FINISHED
+
+
+Phase 3: (ON HOLD)
+
+  Animas Extended configuration
+  =============================
+    - edit configuration
+    - read food db
+    - write food db
+    - upload tune
+    - remove tune
+
+
+
+FINISHED
+==============================================================================
+
+Phase 1: 
+
 
   Animas Data Convert
   ===================
@@ -19,8 +43,8 @@ decode data (10.12)                         Read     Decode   Decode Pckt  WaitD
    PrimeLogHistory(24, true), //              OK        +          -           -         -
 +  SuspendLogHistory(25, true), //            OK        +          +           +         +
    BasalRateHistory(26, true), //             OK        +          -           -         -
-   
-   
+
+
 decode settings (4.12)                      Setting   Decode Pckt  Collect Setting
    BasalProfiles(11), //                      OK        OK             OK
    ActiveBasal(12), //                        OK        OK             OK
@@ -58,27 +82,14 @@ decode settings (4.12)                      Setting   Decode Pckt  Collect Setti
  +       - data collector (20.12)
    - download progress (25.12)
    - import into GGC
-   
+
    - when no data available (timeout) connection recovery and retry
 
+Phase 2:
 
-Phase 2: 
-
-  Animas Dexcom
+  Animas CGMS/Dexcom
   ==============
    - 2015... TO BE DETERMINED
-
-
-Phase 3: 
-
-  Animas Extended configuration
-  =============================
-    - edit configuration
-    - read food db
-    - write food db
-    - upload tune
-    - remove tune
-
 
 Pump Tools changes:
 --------------------
@@ -93,15 +104,5 @@ SPLIT INTO GGC
 ggc.pump.device.animas.impl (-cgms, -pump) -> PluginBase
 ggc.pump.device.animas.impl.cgms -> CGMS (in 0.7)
 ggc.pump.device.animas.impl.pump -> Pump
-
-
-
-
-
-
-FINISHED
-=========
-
-Phase 1: 
 
 

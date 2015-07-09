@@ -1,15 +1,16 @@
 package ggc.pump.manager;
 
-import ggc.plugin.device.v2.DeviceDefinition;
-import ggc.plugin.device.DeviceInterface;
-import ggc.plugin.manager.DeviceImplementationStatus;
-import ggc.plugin.manager.DeviceManager;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.pump.data.defs.PumpDeviceDefinition;
-import ggc.pump.device.PumpDeviceInstanceWithHandler;
-import ggc.pump.manager.company.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import ggc.plugin.device.v2.DeviceDefinition;
+import ggc.plugin.manager.DeviceManager;
+import ggc.pump.data.defs.PumpDeviceDefinition;
+import ggc.pump.device.PumpDeviceInstanceWithHandler;
+import ggc.pump.manager.company.Deltec;
+import ggc.pump.manager.company.Minimed;
+import ggc.pump.manager.company.Roche;
+import ggc.pump.manager.company.Sooil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,12 +40,14 @@ import org.apache.commons.logging.LogFactory;
 
 public class PumpManager extends DeviceManager
 {
+
     private static Log LOG = LogFactory.getLog(PumpManager.class);
 
     /**
      * Singleton instance
      */
     public static PumpManager s_manager = null;
+
 
     /**
      * Constructor
@@ -54,16 +57,17 @@ public class PumpManager extends DeviceManager
         super();
     }
 
+
     @Override
     protected void loadDeviceInstancesV2()
     {
-        for(DeviceDefinition dd : PumpDeviceDefinition.getSupportedDevices())
+        for (DeviceDefinition dd : PumpDeviceDefinition.getSupportedDevices())
         {
-            PumpDeviceDefinition pdd = (PumpDeviceDefinition)dd;
+            PumpDeviceDefinition pdd = (PumpDeviceDefinition) dd;
 
             PumpDeviceInstanceWithHandler di = new PumpDeviceInstanceWithHandler(pdd);
 
-            this.supportedDevicesV2.put(di.getCompany().getName() + "_"+ di.getName(), di);
+            this.supportedDevicesV2.put(di.getCompany().getName() + "_" + di.getName(), di);
             this.supportedDevicesForSelector.add(di);
         }
     }
@@ -84,15 +88,16 @@ public class PumpManager extends DeviceManager
         return PumpManager.s_manager;
     }
 
+
     /**
      * Load devices companies
      */
     @Override
     public void loadDeviceCompanies()
     {
-        //addDeviceCompany(new Animas());
+        // addDeviceCompany(new Animas()); v2
         addDeviceCompany(new Deltec());
-        addDeviceCompany(new Insulet());
+        // addDeviceCompany(new Insulet()); v2
         addDeviceCompany(new Minimed());
         addDeviceCompany(new Roche());
         addDeviceCompany(new Sooil());

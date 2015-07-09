@@ -1,5 +1,16 @@
 package ggc.meter.device.menarini;
 
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.manager.MeterDevicesIds;
@@ -10,21 +21,10 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
-import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
-
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.data.ATechDate;
-import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -78,7 +78,6 @@ public class GlucofixMio extends AbstractSerialMeter
      * 
      * @param comm_parameters 
      * @param writer
-     * @param da
      */
     public GlucofixMio(String comm_parameters, OutputWriter writer)
     {
@@ -405,27 +404,29 @@ public class GlucofixMio extends AbstractSerialMeter
 
         MeterValuesEntry mve = new MeterValuesEntry();
 
+        GlucoseUnitType glucoseUnitType;
+
         if (vals[2].equals("mmol/L"))
         {
-            mve.setBgUnit(OutputUtil.BG_MMOL);
+            glucoseUnitType = GlucoseUnitType.mmol_L;
         }
         else
         {
-            mve.setBgUnit(OutputUtil.BG_MGDL);
+            glucoseUnitType = GlucoseUnitType.mg_dL;
         }
 
         if (vals[1].contains("HI"))
         {
-            mve.setBgUnit(OutputUtil.BG_MMOL);
+            glucoseUnitType = GlucoseUnitType.mmol_L;
             vals[1] = "33.3";
         }
         else if (vals[1].contains("LO"))
         {
-            mve.setBgUnit(OutputUtil.BG_MMOL);
+            glucoseUnitType = GlucoseUnitType.mg_dL;
             vals[1] = "1.1";
         }
 
-        mve.setBgValue(vals[1]);
+        mve.setBgValue(vals[1], glucoseUnitType);
 
         if (vals[3].equals("01"))
         {

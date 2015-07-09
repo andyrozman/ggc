@@ -1,8 +1,6 @@
 package ggc.pump.device.minimed;
 
 import ggc.plugin.device.DownloadSupportType;
-import ggc.plugin.device.impl.minimed.MinimedDevicesIds;
-import ggc.plugin.device.impl.minimed.cmd.MinimedCommand;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -35,7 +33,7 @@ import ggc.pump.manager.PumpDevicesIds;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class Minimed508 extends MinimedPumpDevice
+public class Minimed508 extends MinimedPump
 {
 
     /**
@@ -63,8 +61,9 @@ public class Minimed508 extends MinimedPumpDevice
 
     public Minimed508(DataAccessPlugInBase da, int device_type, String full_port, OutputWriter writer)
     {
-        super(da, device_type, full_port, writer);
+        // super(da, device_type, full_port, writer);
     }
+
 
     /**
      * Constructor
@@ -76,6 +75,7 @@ public class Minimed508 extends MinimedPumpDevice
         super(cmp);
     }
 
+
     /**
      * getName - Get Name of meter. 
      * 
@@ -86,6 +86,7 @@ public class Minimed508 extends MinimedPumpDevice
         return "Minimed 508/507c";
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -95,6 +96,7 @@ public class Minimed508 extends MinimedPumpDevice
     {
         return "mm_508.jpg";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -107,11 +109,6 @@ public class Minimed508 extends MinimedPumpDevice
         return PumpDevicesIds.PUMP_MINIMED_508;
     }
 
-    @Override
-    public int getMinimedDeviceId()
-    {
-        return MinimedDevicesIds.PUMP_MINIMED_508c;
-    }
 
     /**
      * getInstructions - get instructions for device
@@ -124,6 +121,7 @@ public class Minimed508 extends MinimedPumpDevice
         return "INSTRUCTIONS_MINIMED_508";
     }
 
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -134,6 +132,7 @@ public class Minimed508 extends MinimedPumpDevice
     {
         return null;
     }
+
 
     /**
      * getImplementationStatus - Get Implementation Status 
@@ -146,6 +145,7 @@ public class Minimed508 extends MinimedPumpDevice
         return DeviceImplementationStatus.NotAvailable;
     }
 
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -156,14 +156,16 @@ public class Minimed508 extends MinimedPumpDevice
         return "ggc.pump.device.minimed.Minimed508";
     }
 
+
     /** 
      * Get Max Memory Records
      */
-    @Override
+
     public int getMaxMemoryRecords()
     {
         return 0;
     }
+
 
     /**
      * @{InheritDocs}
@@ -172,6 +174,7 @@ public class Minimed508 extends MinimedPumpDevice
     {
         return DownloadSupportType.NoDownloadSupport; // .DOWNLOAD_FROM_DEVICE_FILE;
     }
+
 
     /**
      * How Many Months Of Data Stored
@@ -183,6 +186,7 @@ public class Minimed508 extends MinimedPumpDevice
     {
         return -1;
     }
+
 
     /**
      * Get Temporary Basal Type Definition
@@ -198,16 +202,18 @@ public class Minimed508 extends MinimedPumpDevice
         return "TYPE=Unit;STEP=0.1";
     }
 
+
     /**
      * Get Bolus Step (precission)
      * 
      * @return
      */
-    @Override
+
     public float getBolusStep()
     {
         return 0.1f;
     }
+
 
     /**
      * Get Basal Step (precission)
@@ -220,6 +226,7 @@ public class Minimed508 extends MinimedPumpDevice
         return 0.1f;
     }
 
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
@@ -229,24 +236,6 @@ public class Minimed508 extends MinimedPumpDevice
     public boolean arePumpSettingsSet()
     {
         return true;
-    }
-
-    @Override
-    public void initDeviceSpecific()
-    {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void createCommands()
-    {
-    }
-
-    @Override
-    public Object convertDeviceReply(MinimedCommand mc)
-    {
-        return null;
     }
 
 }

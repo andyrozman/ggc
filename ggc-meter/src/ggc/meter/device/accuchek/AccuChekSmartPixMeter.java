@@ -1,7 +1,21 @@
 package ggc.meter.device.accuchek;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.Node;
+
+import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.data.MeterValuesEntrySpecial;
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.DataAccessMeter;
@@ -12,20 +26,7 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.Node;
-
-import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.data.ATechDate;
-import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,17 +54,16 @@ import com.atech.utils.data.TimeZoneUtil;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements MeterInterface // extends
-                                                                                               // AbstractXmlMeter
-                                                                                               // //mlProtocol
-                                                                                               // //implements
-                                                                                               // SelectableInterface
+public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements MeterInterface
 {
+
+    Log LOG = LogFactory.getLog(AccuChekSmartPixMeter.class);
 
     // DataAccessMeter dataAccess = DataAccessMeter.getInstance();
     // OutputWriter outputWriter = null;
 
     private int bg_unit = OutputUtil.BG_MGDL;
+    private GlucoseUnitType bgUnit = GlucoseUnitType.mg_dL;
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 
@@ -135,10 +135,10 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
             /* Document doc = */openXmlFile(file);
 
             getPixDeviceInfo();
-            System.out.println();
+            // System.out.println();
 
             getMeterDeviceInfo();
-            System.out.println();
+            // System.out.println();
 
             this.outputWriter.writeDeviceIdentification();
 
@@ -147,8 +147,8 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         }
         catch (Exception ex)
         {
-            System.out.println("Exception on testXml: " + ex);
-            ex.printStackTrace();
+            LOG.error("Exception on testXml: " + ex, ex);
+            // ex.printStackTrace();
 
         }
     }
@@ -216,6 +216,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         if (el.attributeValue("BGUnit").equals("mmol/L"))
         {
             this.bg_unit = OutputUtil.BG_MMOL;
+            bgUnit = GlucoseUnitType.mmol_L;
         }
 
         // <DEVICE Name="Performa" SN="50003006"
@@ -248,11 +249,11 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
         if (el.attributeValue("Val").toUpperCase().startsWith("HI"))
         {
-            mve.setBgValue("" + 600);
+            mve.setBgValue("600", GlucoseUnitType.mg_dL);
         }
         else if (el.attributeValue("Val").toUpperCase().startsWith("LO"))
         {
-            mve.setBgValue("" + 10);
+            mve.setBgValue("10", GlucoseUnitType.mg_dL);
         }
         else if (el.attributeValue("Val").toUpperCase().startsWith("---"))
         {
@@ -260,7 +261,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         }
         else
         {
-            mve.setBgValue(el.attributeValue("Val"));
+            mve.setBgValue(el.attributeValue("Val"), bgUnit);
         }
 
         if (!just_ch)
@@ -275,7 +276,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         if (element_attribute != null)
         {
             mve = getEmptyEntry(el);
-            mve.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH, element_attribute);
+            mve.setCh(element_attribute);
 
             this.outputWriter.writeData(mve);
             list.add(mve);
@@ -294,7 +295,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         MeterValuesEntry mve = new MeterValuesEntry();
         mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(this.getDateTime(el.attributeValue("Dt"),
             el.attributeValue("Tm")))));
-        mve.setBgUnit(this.bg_unit);
+        // mve.setBgUnit(this.bg_unit);
 
         return mve;
     }
@@ -305,18 +306,16 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         Element el = (Element) entry;
 
         MeterValuesEntry mve = new MeterValuesEntry();
-        // ATechDate at = null;
         mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(this.getDateTime(el.attributeValue("Dt"),
             el.attributeValue("Tm")))));
-        mve.setBgUnit(this.bg_unit);
 
         if (el.attributeValue("Val").toUpperCase().startsWith("HI"))
         {
-            mve.setBgValue("" + 600);
+            mve.setBgValue("600", GlucoseUnitType.mg_dL);
         }
         else if (el.attributeValue("Val").toUpperCase().startsWith("LO"))
         {
-            mve.setBgValue("" + 10);
+            mve.setBgValue("10", GlucoseUnitType.mg_dL);
         }
         else if (el.attributeValue("Val").toUpperCase().startsWith("---"))
         {
@@ -324,7 +323,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         }
         else
         {
-            mve.setBgValue(el.attributeValue("Val"));
+            mve.setBgValue(el.attributeValue("Val"), bgUnit);
         }
 
         // <BG Val="5.1" Dt="2005-06-07" Tm="18:01" D="1"/>
@@ -346,7 +345,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
         if (element_attribute != null)
         {
-            mve.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_CH, element_attribute);
+            mve.setCh(element_attribute);
         }
 
         // System.out.println(mve);
@@ -434,10 +433,5 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         return DeviceImplementationStatus.Done;
     }
 
-
-//    public DeviceConnectionProtocol getConnectionProtocol()
-//    {
-//        return DeviceConnectionProtocol.MassStorageXML;
-//    }
 
 }

@@ -1,7 +1,6 @@
 package ggc.plugin.device.impl.animas.comm;
 
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,25 +41,26 @@ import ggc.plugin.util.LogEntryType;
  *
  *  Author: Andy Rozman {andy@atech-software.com}
  */
-
-// - retry
 public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 {
 
     public static final Log LOG = LogFactory.getLog(AnimasCommProtocolV2.class);
     private static final int RETRIES_SERIAL_PORT_ON_INIT = 10;
     private static final int MAX_INIT_ATTEMPTS = 8;
+    private static final int ENTRY_READ_TIMEOUT = 2000;
+    private static final int ENTRY_READ_MAX_TIMEOUT_COUNT = 3;
 
     // command
     protected AnimasDevicePacket animasDevicePacket;
     public HashMap<AnimasDeviceCommand, Object> commandToSend = new HashMap<AnimasDeviceCommand, Object>();
+    protected AnimasDataConverter dataConverter;
 
     // retry
-    // private boolean allDataReceived = false;
     private boolean retryData;
     private boolean reconnectToDevice;
-    private boolean pumpConnected; //
+    protected boolean noReconnectMode = false;
 
+    // connection transfer flags
     public boolean controlMode;
     public int nr;
     public int ns;
@@ -68,9 +68,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     public boolean xmitRights;
     public boolean connectionState;
     public boolean disconnectSignalSent;
-    protected AnimasDataConverter dataConverter;
     private boolean foundSerial = false;
-    protected boolean noReconnectMode = false;
 
 
     public AnimasCommProtocolV2(String portName, AnimasDeviceType deviceType, AnimasDeviceReader deviceReader,
@@ -219,11 +217,6 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
     public void closeConnection() throws PlugInBaseException
     {
-        if (!this.pumpConnected)
-        {
-            return;
-        }
-
         if (this.baseData.doWeHaveConcurrentOperation("closeConnection"))
         {
             return;
@@ -238,7 +231,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
         LOG.debug("Pump is disconnected.");
 
         this.disconnectDevice();
-        this.pumpConnected = false;
+
         throw new PlugInBaseException(PlugInExceptionType.CommunicationPortClosed);
     }
 
@@ -458,6 +451,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
         boolean maxRetriesReached = false;
         int retries = 0;
         int retriesComm = 0;
+        boolean pumpConnected = false;
 
         while (!maxRetriesReached)
         {
@@ -473,27 +467,26 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
                 baseData.resetRawSerialData();
 
                 AnimasUtils.sleepInMs(1000L);
-
                 sendForcedDisconnectSignal();
-                this.pumpConnected = false;
-                int intAttempt = 1;
 
-                while ((!this.pumpConnected) && (intAttempt < MAX_INIT_ATTEMPTS)) // 5
+                int inItAttempt = 0;
+
+                do // 5
                 {
                     LOG.debug("Downloader connected, Trying to find pump [retry=" + retriesComm + "]");
                     sendHandshakeSignal();
                     // this.processAllOutboundData();
                     AnimasUtils.sleepInMs(300L);
-                    this.pumpConnected = this.baseData.isDownloaderSerialNumberSet();
-                    intAttempt++;
+                    pumpConnected = this.baseData.isDownloaderSerialNumberSet();
+                    inItAttempt++;
                     retriesComm++;
                     if (deviceReader.isDownloadCanceled())
                     {
                         throw new PlugInBaseException(PlugInExceptionType.DownloadCanceledByUser);
                     }
-                }
+                } while ((!pumpConnected) && (inItAttempt < MAX_INIT_ATTEMPTS));
 
-                if (this.pumpConnected)
+                if (pumpConnected)
                 {
                     break;
                 }
@@ -520,7 +513,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
         } // while
 
-        if (!this.pumpConnected)
+        if (!pumpConnected)
         {
             throw new PlugInBaseException(PlugInExceptionType.DeviceCouldNotBeContacted);
         }
@@ -594,10 +587,6 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
         this.connectionState = false;
         this.baseData.pumpConnectorInfo.connectionAddress = 0;
         this.commandToSend.clear();
-        // FIXME
-        // this.baseData.resetRawSerialData();
-        // this.baseData.clearData();
-
         this.xmitRights = false; //
     }
 
@@ -629,9 +618,6 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
         this.addCommandToSend(AnimasDeviceCommand.Instruction, true);
     }
-
-    private int ENTRY_READ_TIMEOUT = 2000;
-    private int ENTRY_READ_MAX_TIMEOUT_COUNT = 3;
 
 
     public void waitForDownloadedQuantity(int qty) throws PlugInBaseException
@@ -665,12 +651,10 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
             AnimasUtils.sleepInMs(100L);
 
-
             if (deviceReader.isDownloadCanceled())
             {
                 throw new PlugInBaseException(PlugInExceptionType.DownloadCanceledByUser);
             }
-
 
             if (timeoutCount > ENTRY_READ_MAX_TIMEOUT_COUNT)
             {
@@ -692,7 +676,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    private void reconnectToDevice() // int quantity)
+    private void reconnectToDevice()
     {
 
         try
@@ -715,215 +699,11 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
             this.openConnection(true);
 
-            // sendRequestAndWait();
-
-            // waitForDownloadedQuantity(quantity,
-            // this.animasDevicePacket.retryCount);
         }
         catch (PlugInBaseException ex)
         {
             LOG.debug("Reconnect mode: Opening connection failed. Ex.:" + ex);
         }
-    }
-
-
-    public void processMessageFromDevice_New() throws PlugInBaseException
-    {
-        AnimasDevicePacket adp = this.animasDevicePacket;
-
-        // AnimasUtils.debugHexData(debugCommunication,
-        // adp.getDataReceivedAsArray(), adp.dataReceivedLength, "%s", LOG);
-
-        // if (isConnectedAndPacketIsFromDevice() && //
-        // (((adp.getReceivedDataBit(1) & 0x1) == 0) || //
-        // ((adp.getReceivedDataBit(1) & 0xF) == 1)))
-        // {
-        // debugCommunication("PM-1");
-        //
-        // int madr = AnimasUtils.getUnsignedShort(adp.getReceivedDataBit(1));
-        //
-        // this.nr = ((((madr & 0xE) >> 1) + 1) & 0x7);
-        //
-        // debugCommunication("PM::NR: " + nr);
-        //
-        // if (!this.animasDevicePacket.isReceivedDataBitSetTo(2, 62))
-        // {
-        // this.addCommandToSend(AnimasDeviceCommand.ResponseReceivedRequired,
-        // true);
-        // debugCommunication("PM::NR: RREQ");
-        // }
-        // }
-
-        // receivedMessageDebugNew();
-
-        if ((!foundSerial) && (adp.dataReceivedLength >= 12) && //
-                adp.isReceivedDataBitSetTo(0, 254) && adp.isReceivedDataBitSetTo(1, 191))
-        {
-            debugCommunication("PM-2");
-            this.dataConverter.decodeDownloaderSerialNumber(adp.getReplyPacket());
-            debugCommunication("PM::FoundSerial");
-            foundSerial = true;
-        }
-
-        if ((adp.dataReceivedLength == 2) && (adp.isReceivedDataBitSetTo(1, 115)))
-        {
-            debugCommunication("PM-3");
-            this.xmitRights = true;
-            debugCommunication("PM::XmitRIghts");
-        }
-
-        if ((!this.connectionState) && (adp.dataReceivedLength == 10)
-                && (adp.isReceivedDataBitSetTo(0, this.baseData.pumpConnectorInfo.connectionAddress))
-                && (adp.isReceivedDataBitSetTo(1, 115)))
-        {
-            debugCommunication("PM-4");
-
-            if (adp.isReceivedDataBitSetTo(6, 1) && adp.isReceivedDataBitSetTo(7, 0)
-                    && adp.isReceivedDataBitSetTo(8, 0) && adp.isReceivedDataBitSetTo(9, 0))
-            {
-                debugCommunication("PM-4.1");
-                this.connectionState = true;
-                this.ns = 0;
-                this.nr = 0;
-                debugCommunication("PM::ConnectionState true and NS and NR Reset");
-            }
-            this.xmitRights = true;
-        }
-
-        if ((isConnectedAndPacketIsFromDevice()))
-        {
-
-            if (((adp.getReceivedDataBit(1) & 0xF) == 1) || ((adp.getReceivedDataBit(1) & 0x1) == 0))
-            {
-
-                debugCommunication("PM-1");
-
-                int madr = AnimasUtils.getUnsignedShort(adp.getReceivedDataBit(1));
-
-                this.nr = ((((madr & 0xE) >> 1) + 1) & 0x7);
-
-                debugCommunication("PM::NR: " + nr);
-
-                if (!this.animasDevicePacket.isReceivedDataBitSetTo(2, 62))
-                {
-                    this.addCommandToSend(AnimasDeviceCommand.ResponseReceivedRequired, true);
-                    debugCommunication("PM::NR: RREQ");
-                }
-
-                debugCommunication("PM-5");
-
-                if (((adp.getReceivedDataBit(1) & 0xE0) >> 5) == ns)
-                {
-                    debugCommunication("PM-5.1");
-
-                    if (this.acknowledgeRequired != 0)
-                    {
-                        debugCommunication("PM-5.1.1");
-                        this.acknowledgeRequired = 0;
-                    }
-                }
-                this.xmitRights = true;
-            }
-
-            // if (adp.isReceivedDataBitSetTo(0, 255) &&
-            // adp.isReceivedDataBitSetTo(1, 3) && adp.dataReceivedLength == 4
-            // && //
-            // adp.isReceivedDataBitSetTo(2, 68) &&
-            // adp.isReceivedDataBitSetTo(3, 76))
-            // {
-            // debugCommunication("PM-6");
-            // // this.downloadReceived = true;
-            // debugCommunication("PM::Download received.");
-            // }
-
-            if (((adp.getReceivedDataBit(1) & 0x1) == 0))
-            {
-                debugCommunication("PM-7");
-                this.xmitRights = true;
-
-                if (adp.isReceivedDataBitSetTo(2, 69))
-                {
-                    debugCommunication("PM-7.1");
-                    String dwlError = "E" + adp.getDataReceivedAsString(4);
-                    throw new PlugInBaseException(PlugInExceptionType.CommunicationErrorWithCode,
-                            new Object[] { dwlError });
-                }
-                else if (adp.isReceivedDataBitSetTo(2, 68))
-                {
-                    debugCommunication("PM-7.2");
-                    debugCommunication("PM::Processor");
-                    int checkIfData = adp.getDataCheck();
-
-                    // boolean processReturnedData = false;
-                    boolean isRetryRun = false;
-
-                    isRetryRun = adp.lastDownloadRunQuantity > adp.downloadedQuantity;
-
-                    // {
-
-                    if (checkIfData > 0)
-                    {
-                        // processReturnedData = true;
-
-                        if (!isRetryRun)
-                        {
-                            this.dataConverter.addRawDataToProcess(this.animasDevicePacket.getReplyPacket());
-                            this.deviceReader.addToProgressAndCheckIfCanceled(ProgressType.Static, 1);
-                        }
-                    }
-                    else
-                    {
-                        // FIXME remove
-                        // this.addCommandToSend(AnimasDeviceCommand.ResponseReceivedRequired,
-                        // false);
-                        this.animasDevicePacket.allDataReceived = true;
-                        // if (this.dldQuantity > this.numHistoryRecords)
-                        // {
-                        // dataTypeComplete = true;
-                        // this.addCommandToSend(AnimasDeviceCommand.ResponseReceivedRequired,
-                        // true);
-                        // // this.processAllOutboundData();
-                        // return;
-                        // }
-                    }
-
-                    // }
-
-                    this.animasDevicePacket.downloadedQuantity += 1;
-
-                    // if (DEBUG)
-                    {
-                        LOG.debug("DataType: " + adp.dataTypeObject.name() + ", quantity=" + adp.downloadedQuantity
-                                + ", dataPresent=" + (checkIfData > 0));
-                    }
-
-                }
-                else
-                {
-                    debugCommunication("PM-7.3");
-
-                    // LOG.debug("PM::RR_Required");
-                    this.addCommandToSend(AnimasDeviceCommand.ResponseReceivedRequired, false);
-                }
-
-            }
-        }
-
-        // 2 178 68 73 29 0 150 24 23 33 240 60 0 0 240 60 0 0 2 0 103 85
-        //
-        //
-        // 3 = Status (68 data, 69 Err)
-        //
-        // 5 = Counter
-        // 6 = Counter + 256
-        // 7 => Data
-
-        if (xmitRights)
-        {
-            debugCommunication("PM-8");
-            this.processAllOutboundData();
-        }
-
     }
 
 
@@ -933,35 +713,11 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
         boolean rrProcessed = false;
 
-        if (isConnectedAndPacketIsFromDevice() && //
-                (((adp.getReceivedDataBit(1) & 0x1) == 0) || //
-                ((adp.getReceivedDataBit(1) & 0xF) == 1)))
-        {
-            // debugCommunication("PM-1");
-
-            int madr = AnimasUtils.getUnsignedShort(adp.getReceivedDataBit(1));
-
-            this.nr = ((((madr & 0xE) >> 1) + 1) & 0x7);
-
-            // debugCommunication("PM::NR: " + nr);
-
-            if (!this.animasDevicePacket.isReceivedDataBitSetTo(2, 62))
-            {
-                // FIXME
-                this.addCommandToSend(AnimasDeviceCommand.ResponseReceivedRequired, true);
-                debugCommunication("ProcessMessage::RREQ");
-                rrProcessed = true;
-            }
-        }
-
-        // receivedMessageDebugNew();
-
         if (!foundSerial)
         {
             if ((adp.dataReceivedLength >= 12) && //
                     adp.isReceivedDataBitSetTo(0, 254) && adp.isReceivedDataBitSetTo(1, 191))
             {
-
                 // debugCommunication("PM-2");
                 this.dataConverter.decodeDownloaderSerialNumber(adp.getReplyPacket());
                 debugCommunication("ProcessMessage::FoundSerial");
@@ -971,140 +727,140 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
             }
         }
 
-        // if ((adp.dataReceivedLength == 2) && (adp.isReceivedDataBitSetTo(1,
-        // 115)))
-        // {
-        // // debugCommunication("PM-3");
-        // this.xmitRights = true;
-        // debugCommunication("ProcessMessage::XmitRIghts");
-        // LOG.debug("ProcessMessage::XmitRIghts");
-        // postprocessDataReceived();
-        // return;
-        // }
-
-        if ((!this.connectionState) && (adp.dataReceivedLength == 10)
-                && (adp.isReceivedDataBitSetTo(0, this.baseData.pumpConnectorInfo.connectionAddress))
-                && (adp.isReceivedDataBitSetTo(1, 115)))
+        if (isPacketFromDevice())
         {
-            // debugCommunication("PM-4");
 
-            if (adp.isReceivedDataBitSetTo(6, 1) && adp.isReceivedDataBitSetTo(7, 0)
-                    && adp.isReceivedDataBitSetTo(8, 0) && adp.isReceivedDataBitSetTo(9, 0))
+            if (this.connectionState && //
+                    (((adp.getReceivedDataBit(1) & 0x1) == 0) || //
+                    ((adp.getReceivedDataBit(1) & 0xF) == 1)))
             {
-                // debugCommunication("PM-4.1");
-                this.connectionState = true;
-                this.ns = 0;
-                this.nr = 0;
-                debugCommunication("ProcessMessage::ConnectionState true and NS and NR Reset");
-            }
-            this.xmitRights = true;
-        }
+                // debugCommunication("PM-1");
 
-        if (isConnectedAndPacketIsFromDevice())
-        {
-            if (((adp.getReceivedDataBit(1) & 0xF) == 1) || ((adp.getReceivedDataBit(1) & 0x1) == 0))
-            {
-
-                // ResponseReceivedRequired
                 int madr = AnimasUtils.getUnsignedShort(adp.getReceivedDataBit(1));
 
                 this.nr = ((((madr & 0xE) >> 1) + 1) & 0x7);
 
+                // debugCommunication("PM::NR: " + nr);
+
                 if (!this.animasDevicePacket.isReceivedDataBitSetTo(2, 62))
                 {
-                    // FIXME
                     this.addCommandToSend(AnimasDeviceCommand.ResponseReceivedRequired, true);
                     debugCommunication("ProcessMessage::RREQ");
                     rrProcessed = true;
                 }
+            }
 
-                // AcknowledgeNotRequired
-                if (((adp.getReceivedDataBit(1) & 0xE0) >> 5) == ns)
+            if ((!this.connectionState) && (adp.dataReceivedLength == 10) && (adp.isReceivedDataBitSetTo(1, 115)))
+            {
+                // debugCommunication("PM-4");
+
+                if (adp.isReceivedDataBitSetTo(6, 1) && adp.isReceivedDataBitSetTo(7, 0)
+                        && adp.isReceivedDataBitSetTo(8, 0) && adp.isReceivedDataBitSetTo(9, 0))
                 {
-                    // debugCommunication("PM-5.1");
-
-                    if (this.acknowledgeRequired != 0)
-                    {
-                        debugCommunication("ProcessMessage::AcknowledgeNotRequired");
-                        this.acknowledgeRequired = 0;
-                    }
+                    // debugCommunication("PM-4.1");
+                    this.connectionState = true;
+                    this.ns = 0;
+                    this.nr = 0;
+                    debugCommunication("ProcessMessage::ConnectionState true and NS and NR Reset");
                 }
                 this.xmitRights = true;
             }
 
-            // if (adp.isReceivedDataBitSetTo(0, 255) &&
-            // adp.isReceivedDataBitSetTo(1, 3) && adp.dataReceivedLength == 4
-            // && //
-            // adp.isReceivedDataBitSetTo(2, 68) &&
-            // adp.isReceivedDataBitSetTo(3, 76))
-            // {
-            // debugCommunication("PM-6");
-            // // this.downloadReceived = true;
-            // debugCommunication("PM::Download received.");
-            // }
-
-            if ((adp.getReceivedDataBit(1) & 0x1) == 0)
+            if (this.connectionState)
             {
-                // debugCommunication("PM-7");
-                this.xmitRights = true;
-
-                if (adp.isReceivedDataBitSetTo(2, 69))
+                if (((adp.getReceivedDataBit(1) & 0xF) == 1) || ((adp.getReceivedDataBit(1) & 0x1) == 0))
                 {
-                    debugCommunication("ProcessMessage::Error");
-                    String dwlError = "E" + adp.getDataReceivedAsString(4);
-                    throw new PlugInBaseException(PlugInExceptionType.CommunicationErrorWithCode,
-                            new Object[] { dwlError });
-                }
-                else if (adp.isReceivedDataBitSetTo(2, 68))
-                {
-                    debugCommunication("ProcessMessage::Data");
 
-                    int checkIfData = adp.getDataCheck();
+                    // ResponseReceivedRequired
+                    int madr = AnimasUtils.getUnsignedShort(adp.getReceivedDataBit(1));
 
-                    boolean isRetryRun = adp.lastDownloadRunQuantity > adp.downloadedQuantity;
+                    this.nr = ((((madr & 0xE) >> 1) + 1) & 0x7);
 
-                    if (checkIfData > 0)
+                    if (!this.animasDevicePacket.isReceivedDataBitSetTo(2, 62))
                     {
-                        if (!isRetryRun)
+                        this.addCommandToSend(AnimasDeviceCommand.ResponseReceivedRequired, true); // was
+                                                                                                   // false
+                        // debugCommunication("ProcessMessage::RREQ");
+                        rrProcessed = true;
+                    }
+
+                    // AcknowledgeNotRequired
+                    if (((adp.getReceivedDataBit(1) & 0xE0) >> 5) == ns)
+                    {
+                        // debugCommunication("PM-5.1");
+
+                        if (this.acknowledgeRequired != 0)
                         {
-                            this.dataConverter.addRawDataToProcess(this.animasDevicePacket.getReplyPacket());
-                            this.deviceReader.addToProgressAndCheckIfCanceled(ProgressType.Static, 1);
+                            // debugCommunication("ProcessMessage::AcknowledgeNotRequired");
+                            this.acknowledgeRequired = 0;
                         }
                     }
+                    this.xmitRights = true;
+                }
 
-                    this.animasDevicePacket.downloadedQuantity += 1;
+                if ((adp.getReceivedDataBit(1) & 0x1) == 0)
+                {
+                    // debugCommunication("PM-7");
+                    this.xmitRights = true;
 
-                    // if (DEBUG)
+                    if (adp.isReceivedDataBitSetTo(2, 69))
                     {
-                        LOG.debug("DataType: " + adp.dataTypeObject.name() + ", quantity=" + adp.downloadedQuantity
-                                + ", dataPresent=" + (checkIfData > 0));
+                        // debugCommunication("ProcessMessage::Error");
+                        String dwlError = "E" + adp.getDataReceivedAsString(4);
+                        throw new PlugInBaseException(PlugInExceptionType.CommunicationErrorWithCode,
+                                new Object[] { dwlError });
                     }
-
-                    if (!rrProcessed)
+                    else if (adp.isReceivedDataBitSetTo(2, 68))
                     {
+                        // debugCommunication("ProcessMessage::Data");
+
+                        int checkIfData = adp.getDataCheck();
+
+                        boolean isRetryRun = adp.lastDownloadRunQuantity > adp.downloadedQuantity;
+
+                        if (checkIfData > 0)
+                        {
+                            if (!isRetryRun)
+                            {
+                                this.dataConverter.addRawDataToProcess(this.animasDevicePacket.getReplyPacket());
+                                this.deviceReader.addToProgressAndCheckIfCanceled(ProgressType.Static, 1);
+                            }
+                        }
+
+                        this.animasDevicePacket.downloadedQuantity += 1;
+
+                        if (DEBUG)
+                        {
+                            LOG.debug("DataType: " + adp.dataTypeObject.name() + ", quantity=" + adp.downloadedQuantity
+                                    + ", dataPresent=" + (checkIfData > 0));
+                        }
+
+                        if (!rrProcessed)
+                        {
+                            this.addCommandToSend(AnimasDeviceCommand.ResponseReceivedRequired, false);
+                        }
+
+                    }
+                    else
+                    {
+                        // debugCommunication("ProcessMessage::ResponseReceivedRequired");
                         this.addCommandToSend(AnimasDeviceCommand.ResponseReceivedRequired, false);
                     }
 
                 }
-                else
-                {
-                    debugCommunication("ProcessMessage::ResponseReceivedRequired");
-                    this.addCommandToSend(AnimasDeviceCommand.ResponseReceivedRequired, false);
-                }
-
             }
+
+            // 2 178 68 73 29 0 150 24 23 33 240 60 0 0 240 60 0 0 2 0 103 85
+            //
+            //
+            // 3 = Status (68 data, 69 Err)
+            //
+            // 5 = Counter
+            // 6 = Counter + 256
+            // 7 => Data
+
+            postprocessDataReceived();
         }
-
-        // 2 178 68 73 29 0 150 24 23 33 240 60 0 0 240 60 0 0 2 0 103 85
-        //
-        //
-        // 3 = Status (68 data, 69 Err)
-        //
-        // 5 = Counter
-        // 6 = Counter + 256
-        // 7 => Data
-
-        postprocessDataReceived();
 
     }
 
@@ -1113,7 +869,6 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     {
         if (xmitRights)
         {
-            // debugCommunication("PM-8");
             this.processAllOutboundData();
         }
     }
@@ -1145,10 +900,9 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    private boolean isConnectedAndPacketIsFromDevice()
+    private boolean isPacketFromDevice()
     {
-        return ((this.connectionState) && //
-        (this.animasDevicePacket.isReceivedDataBitSetTo(0, this.baseData.pumpConnectorInfo.connectionAddress)));
+        return (this.animasDevicePacket.isReceivedDataBitSetTo(0, this.baseData.pumpConnectorInfo.connectionAddress));
     }
 
 
@@ -1213,58 +967,6 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
                             // this.animasDevicePacket.dataReceived,
                             // this.animasDevicePacket.dataReceivedLength + 2,
                             // "Proc msg [%s]", LOG);
-
-                            this.processMessageFromDevice();
-                        }
-                        break;
-
-                    case CTL_MESSAGE_DEVICE:
-                        this.controlMode = true;
-                        break;
-
-                    default:
-                        if (this.controlMode)
-                        {
-                            this.controlMode = false;
-                            this.animasDevicePacket.addDataReceivedBit((short) (bt ^ 0x20));
-                        }
-                        else
-                        {
-                            this.animasDevicePacket.addDataReceivedBit((short) (bt & 0xFF));
-                        }
-
-                }
-            }
-        }
-    }
-
-
-    public void readDataFromDevice_Old() throws PlugInBaseException
-    {
-        List<Short> tempData = null;
-        if (isDataAvailable())
-        {
-            tempData = readDataFromDeviceInternal_Old();
-        }
-
-        if ((tempData != null) && (tempData.size() > 0))
-        {
-            for (int j = 0; j < tempData.size(); j++)
-            {
-                short bt = tempData.get(j);
-
-                switch (bt)
-                {
-                    case START_MESSAGE_DEVICE:
-                        this.animasDevicePacket.clearDataReceived();
-                        break;
-
-                    case END_MESSAGE_DEVICE:
-                        {
-                            this.animasDevicePacket.dataReceivedLength = (this.animasDevicePacket.dataReceived.size() - 2);
-
-                            AnimasUtils.debugHexData(debugCommunication, this.animasDevicePacket.dataReceived,
-                                this.animasDevicePacket.dataReceivedLength + 2, "Proc msg [%s]", LOG);
 
                             this.processMessageFromDevice();
                         }

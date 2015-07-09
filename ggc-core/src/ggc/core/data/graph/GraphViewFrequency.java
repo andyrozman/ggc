@@ -1,10 +1,6 @@
 package ggc.core.data.graph;
 
-import ggc.core.data.HbA1cValues;
-import ggc.core.util.DataAccess;
-
-import java.awt.Color;
-import java.awt.Rectangle;
+import java.awt.*;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -15,6 +11,9 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.data.HbA1cValues;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,14 +41,15 @@ import com.atech.i18n.I18nControlAbstract;
  */
 
 public class GraphViewFrequency extends AbstractGraphViewAndProcessor // implements
-                                                                      // GraphViewInterface,
-                                                                      // GraphViewDataProcessorInterface
+// GraphViewInterface,
+// GraphViewDataProcessorInterface
 {
 
     DataAccess da_local = null;
     private HbA1cValues hbValues;
     private DefaultPieDataset dataset = new DefaultPieDataset();
     I18nControlAbstract m_ic = null;
+
 
     /**
      * Constructor
@@ -60,6 +60,7 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor // impleme
         da_local = DataAccess.getInstance();
     }
 
+
     /**
      * Get Help Id
      * 
@@ -69,6 +70,7 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor // impleme
     {
         return "GGC_BG_Graph_Frequency";
     }
+
 
     /**
      * Get Title (used by GraphViewer)
@@ -81,6 +83,7 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor // impleme
         return null;
     }
 
+
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      * 
@@ -92,14 +95,17 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor // impleme
         return null;
     }
 
+
     /**
      * Load Data
      */
     public void loadData()
     {
         // if (hbValues==null)
-        // hbValues = m_da.getDb().getHbA1c(new GregorianCalendar(), false);
+        // hbValues = dataAccess.getDb().getHbA1c(new GregorianCalendar(),
+        // false);
     }
+
 
     /**
      * Get Data Set
@@ -110,6 +116,7 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor // impleme
     {
         return this.dataset;
     }
+
 
     /**
      * Preprocess Data
@@ -128,6 +135,7 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor // impleme
         dataset.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"), hbValues.getPercentOfDaysInClass(4));
 
     }
+
 
     /**
      * Set Plot
@@ -153,6 +161,7 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor // impleme
 
     }
 
+
     /**
      * Create Chart
      */
@@ -161,6 +170,7 @@ public class GraphViewFrequency extends AbstractGraphViewAndProcessor // impleme
     {
         chart = ChartFactory.createPieChart3D(null, dataset, true, true, false);
     }
+
 
     /**
      * Create Chart Panel

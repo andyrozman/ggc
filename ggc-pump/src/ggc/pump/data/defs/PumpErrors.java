@@ -1,5 +1,6 @@
 package ggc.pump.data.defs;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,6 +55,11 @@ public enum PumpErrors implements CodeEnumWithTranslation
     LanguageError(13, "ERROR_LANGUAGE_ERROR"), //
     InsulinChanged(14, "ERROR_INSULIN_CHANGED"), //
 
+    // with description, used for pumps that are in two parts: PDM and Pod... so
+    // far only Omnipod
+    PodError(15, "ERROR_POD"), //
+    PDMError(16, "ERROR_PDM"), //
+
     ;
 
     /**
@@ -102,6 +108,12 @@ public enum PumpErrors implements CodeEnumWithTranslation
     {
         this.code = code;
         this.i18nKey = i18nKey;
+    }
+
+
+    public static Collection<PumpErrors> getAllValues()
+    {
+        return codeMapping.values();
     }
 
 

@@ -2,7 +2,13 @@
 Changes file for GGC Pump Tool
 ==============================
 
-1.5.0 [28.3.2015]
+1.5.1 [6.7.2015] - Andy
+    * added experimental (just developer tested) support for Insulet OmniPod
+    * added Config File download support
+    * Support for OmniPod, Animas and Dexcom G4 are EXPERMINTAL (tested just with my configuration, which
+      might produce date/time problems for people in other Timezones).
+
+1.5.0 [26.4.2015] - Andy
     * implementing DeviceInterfaceV2
     * added BasalType.ValueChange
     * Fixing DailyTable report to support BasalType.ValueChange
@@ -15,6 +21,9 @@ Changes file for GGC Pump Tool
     - Refactoring of AccuChek Pump Reader to use PumpBasalType.ValueChanged instead of Profiles, which are not natively supported by AC
     - Changes on Dana Pump (configuration), planned refactoring in future...
     - Added Enums to Pump, reworking most of code depending on that
+    - Data handling changed
+    - Data writter
+    - Animas code finalized
 
 1.4.0 [4.1.2015]
     * support for Animas pump

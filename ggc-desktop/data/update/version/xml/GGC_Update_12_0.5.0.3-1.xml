@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<update_file>
+<product>
+<id>ggc</id>
+<root_path>..</root_path>
+<version>
+<id>12</id>
+<name>0.5.0.3-2</name>
+<description>Core 0.5.0.3, Desktop 0.5.0.3, Meter Tool 2.0.3, Pump Tool 1.3.4, CGMS Tool 1.0.3</description>
+</version>
+</product>
+<custom_apps>
+<custom_app>
+<id>1</id>
+<id_name>ggc</id_name>
+<filename>run_ggc</filename>
+<main_class>ggc.GGC</main_class>
+<special_parameters/>
+<binary_needed>true</binary_needed>
+<jdbc_needed>true</jdbc_needed>
+</custom_app>
+</custom_apps>
+<db>
+<enabled>true</enabled>
+<required_version>7</required_version>
+<config_class>ggc.core.db.GGCDbConfig</config_class>
+<update_site/>
+<update_site_version>0</update_site_version>
+<db_apps>
+<db_app>
+<name>db_tool</name>
+<enabled>true</enabled>
+<class/>
+</db_app>
+<db_app>
+<name>db_import</name>
+<enabled>true</enabled>
+<class>ggc.core.db.tool.transfer.GGCImporter</class>
+</db_app>
+<db_app>
+<name>db_check</name>
+<enabled>true</enabled>
+<class/>
+</db_app>
+<db_app>
+<name>db_init</name>
+<enabled>true</enabled>
+<class>ggc.core.db.tool.InitDb</class>
+</db_app>
+<db_app>
+<name>db_application</name>
+<enabled>true</enabled>
+<class>org.h2.tools.Server</class>
+</db_app>
+</db_apps>
+</db>
+<component_groups>
+<group>
+<id>3</id>
+<name>GGC Support Libraries</name>
+</group>
+<group>
+<id>2</id>
+<name>GGC Plug-Ins</name>
+</group>
+<group>
+<id>1</id>
+<name>GGC Main</name>
+</group>
+</component_groups>
+<components>
+<component>
+<id>1</id>
+<group>1</group>
+<name>GGC Main</name>
+<version>0.5.0.3</version>
+<version_num>10</version_num>
+<root_dir>/lib/ggc</root_dir>
+<files>%ROOT%/ggc-main-0.5.0.3.jar</files>
+</component>
+<component>
+<id>2</id>
+<group>1</group>
+<name>GGC Core</name>
+<version>0.5.0.3</version>
+<version_num>11</version_num>
+<root_dir>/lib/ggc</root_dir>
+<files>%ROOT%/ggc-core-0.5.0.3.jar</files>
+</component>
+<component>
+<id>3</id>
+<group>1</group>
+<name>GGC Little</name>
+<version>0.2.3</version>
+<version_num>2</version_num>
+<root_dir>/lib/ggc</root_dir>
+<files>%ROOT%/ggc-little-0.2.3.jar</files>
+</component>
+<component>
+<id>4</id>
+<group>1</group>
+<name>GGC Lang</name>
+<version>0.4.2</version>
+<version_num>8</version_num>
+<root_dir>/lib/ggc</root_dir>
+<files>%ROOT%/ggc-lang-0.4.2.jar</files>
+</component>
+<component>
+<id>5</id>
+<group>2</group>
+<name>GGC Plugin Base</name>
+<version>0.6.2</version>
+<version_num>9</version_num>
+<root_dir>/lib/ggc</root_dir>
+<files>%ROOT%/ggc-plugin_base-0.6.2.jar</files>
+</component>
+<component>
+<id>6</id>
+<group>2</group>
+<name>Meter Tool</name>
+<version>2.0.3</version>
+<version_num>8</version_num>
+<root_dir>/lib/ggc</root_dir>
+<files>%ROOT%/ggc-meter_tool-2.0.3.jar</files>
+</component>
+<component>
+<id>7</id>
+<group>2</group>
+<name>Pump Tool</name>
+<version>1.3.4</version>
+<version_num>8</version_num>
+<root_dir>/lib/ggc</root_dir>
+<files>%ROOT%/ggc-pump_tool-1.3.4.jar</files>
+</component>
+<component>
+<id>8</id>
+<group>2</group>
+<name>CGMS Tool</name>
+<version>1.0.3</version>
+<version_num>1</version_num>
+<root_dir>/lib/ggc</root_dir>
+<files>%ROOT%/ggc-cgms_tool-1.0.3.jar</files>
+</component>
+<component>
+<id>9</id>
+<group>3</group>
+<name>Hibernate Framework</name>
+<version>3.1</version>
+<version_num>1</version_num>
+<root_dir>/lib/hibernate3</root_dir>
+<files>%ROOT%/antlr-2.7.6rc1.jar;%ROOT%/asm.jar;%ROOT%/asm-attrs.jar;%ROOT%/c3p0-0.9.0.jar;%ROOT%/cglib-2.1.3.jar;%ROOT%/commons-collections-2.1.1.jar;%ROOT%/commons-lang.jar;%ROOT%/commons-lang-2.0.jar;%ROOT%/commons-logging-1.0.4.jar;%ROOT%/dom4j-1.6.1.jar;%ROOT%/ehcache-1.1.jar;%ROOT%/hibernate3.jar;%ROOT%/jdbc2_0-stdext.jar;%ROOT%/jta.jar;%ROOT%/log4j-1.2.11.jar</files>
+</component>
+<component>
+<id>10</id>
+<group>3</group>
+<name>Internal Database [H2]</name>
+<version>1.0.69</version>
+<version_num>1</version_num>
+<root_dir>/lib/jdbc</root_dir>
+<files>%ROOT%/h2-1.0.69.jar</files>
+</component>
+<component>
+<id>11</id>
+<group>3</group>
+<name>Atech Tools</name>
+<version>0.7.7</version>
+<version_num>10</version_num>
+<root_dir>/lib/utils</root_dir>
+<files>%ROOT%/atech-tools-0.7.7.jar</files>
+</component>
+<component>
+<id>12</id>
+<group>3</group>
+<name>iText Pdf Library</name>
+<version>5.1.2</version>
+<version_num>2</version_num>
+<root_dir>/lib/utils</root_dir>
+<files>%ROOT%/itextpdf-5.1.2.jar;%ROOT%/itext-xtra-5.1.2.jar</files>
+</component>
+<component>
+<id>13</id>
+<group>3</group>
+<name>RxtxComm API</name>
+<version>2.2 p2</version>
+<version_num>3</version_num>
+<root_dir>/lib/utils</root_dir>
+<files>%ROOT%/RXTXcomm-2.2.p2.jar</files>
+<platform_specific>true</platform_specific>
+<platform_specific_type>2</platform_specific_type>
+<platform_supported>win linux mac solaris</platform_supported>
+</component>
+<component>
+<id>14</id>
+<group>3</group>
+<name>Skin L&amp;F</name>
+<version>6.7</version>
+<version_num>1</version_num>
+<root_dir>/lib/utils</root_dir>
+<files>%ROOT%/skinlf-6.7.jar</files>
+</component>
+<component>
+<id>15</id>
+<group>3</group>
+<name>JFreeChart</name>
+<version>1.0.13</version>
+<version_num>3</version_num>
+<root_dir>/lib/jfreechart</root_dir>
+<files>%ROOT%/jcommon-1.0.16.jar;%ROOT%/jfreechart-1.0.13.jar;%ROOT%/jfreechart-1.0.13-experimental.jar</files>
+</component>
+<component>
+<id>16</id>
+<group>3</group>
+<name>Java Help</name>
+<version>2.0.5</version>
+<version_num>1</version_num>
+<root_dir>/lib/utils</root_dir>
+<files>%ROOT%/jhall-2.0.5.jar</files>
+</component>
+<component>
+<id>17</id>
+<group>3</group>
+<name>Log4j</name>
+<version>1.2.15</version>
+<version_num>1</version_num>
+<root_dir>/lib/utils</root_dir>
+<files>%ROOT%/log4j-1.2.15.jar</files>
+</component>
+<component>
+<id>18</id>
+<group>3</group>
+<name>Pygmy Http Daemon</name>
+<version>0.2</version>
+<version_num>1</version_num>
+<root_dir>/lib/utils</root_dir>
+<files>%ROOT%/pygmy-core-0.2.jar;%ROOT%/pygmy-handlers-0.2.jar</files>
+</component>
+<component>
+<id>19</id>
+<group>3</group>
+<name>Java Native Access</name>
+<version>3.2.7</version>
+<version_num>2</version_num>
+<root_dir>/lib/utils</root_dir>
+<files>%ROOT%/jna-3.2.7.jar;%ROOT%/jna-platform-3.2.7.jar</files>
+</component>
+<component>
+<id>20</id>
+<group>2</group>
+<name>Nutrition Tool</name>
+<version>1.3.3</version>
+<version_num>5</version_num>
+<root_dir>/lib/ggc</root_dir>
+<files>%ROOT%/ggc-nutri_tool-1.3.3.jar</files>
+</component>
+<component>
+<id>21</id>
+<group>3</group>
+<name>XML (dom4j, jaxen)</name>
+<version>1.6.1</version>
+<version_num>1</version_num>
+<root_dir>/lib/utils</root_dir>
+<files>%ROOT%/dom4j-1.6.1.jar;%ROOT%/jaxen-1.1-beta-6.jar</files>
+</component>
+<component>
+<id>22</id>
+<group>3</group>
+<name>IBM Communication API (for BlueTooth)</name>
+<version>1.3</version>
+<version_num>1</version_num>
+<root_dir>/lib/utils</root_dir>
+<files/>
+<platform_specific>true</platform_specific>
+<platform_specific_type>3</platform_specific_type>
+<platform_supported>win linux</platform_supported>
+<platform_specific_oses>
+<platform_specific_os>
+<os_name>linux</os_name>
+<os_files>%ROOT%/IBMCommWin.jar</os_files>
+</platform_specific_os>
+<platform_specific_os>
+<os_name>win</os_name>
+<os_files>%ROOT%/IBMCommLin.jar</os_files>
+</platform_specific_os>
+</platform_specific_oses>
+</component>
+<component>
+<id>23</id>
+<group>3</group>
+<name>LibUSBj Windows/Other</name>
+<version>0.2.1</version>
+<version_num>1</version_num>
+<root_dir>/lib/utils</root_dir>
+<files>%ROOT%/LibUSB4jwo-0.2.1.jar</files>
+</component>
+</components>
+</update_file>

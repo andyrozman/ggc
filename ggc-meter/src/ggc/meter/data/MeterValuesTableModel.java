@@ -6,7 +6,7 @@ import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.DeviceValuesTableModel;
 import ggc.plugin.data.enums.DeviceEntryStatus;
-import ggc.plugin.util.DataAccessPlugInBase;
+
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -67,10 +67,10 @@ public class MeterValuesTableModel extends DeviceValuesTableModel
                 return mve.getDateTimeObject().getDateTimeString();
 
             case 1:
-                return mve.getBGValue(DataAccessPlugInBase.BG_MMOL);
+                return mve.getBgOriginal();
 
             case 2:
-                return mve.getBGValue(DataAccessPlugInBase.BG_MGDL);
+                return mve.getBgMmolL();
 
             case 3:
                 return mve.getStatusType();
@@ -85,56 +85,42 @@ public class MeterValuesTableModel extends DeviceValuesTableModel
     }
 
 
+    /**
+     * Process Device Value Entry
+     *
+     * @param dve DeviceValuesEntry instance
+     */
+    @Override
+    public void processDeviceValueEntry(DeviceValuesEntryInterface dve)
+    {
+        if (this.deviceDataHandler.hasOldData())
+        {
+            if (!this.deviceDataHandler.getOldData().containsKey("" + dve.getSpecialId()))
+            {
+                dve.setStatusType(DeviceEntryStatus.New);
+                dve.setObjectStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
+            }
+            else
+            {
 
-//    @Override
-//    @SuppressWarnings("deprecation")
-//    public void processDeviceValueEntry(DeviceValuesEntryInterface mve)
-//    {
-//
-//        // System.out.println("MVE: " + mve.getSpecialId());
-//
-//        if (this.deviceDataHandler.hasOldData())
-//        {
-//
-//            // System.out.println("MVE: " + mve.getSpecialId());
-//
-//            if (!this.deviceDataHandler.getOldData().containsKey("" + mve.getSpecialId()))
-//            {
-//                mve.setStatusType(DeviceEntryStatus.New); //.setStatus(DeviceValuesEntry.STATUS_NEW);
-//                mve.setObjectStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
-//            }
-//            else
-//            {
-//                MeterValuesEntry mve2 = (MeterValuesEntry) mve;
-//
-//                MeterValuesEntry mve_old = (MeterValuesEntry) this.deviceDataHandler.getOldData().get(
-//                    mve.getSpecialId());
-//
-//                // System.out.println(mve_old.getDateTimeObject() + "=" +
-//                // mve_old.getValue());
-//                // System.out.println(mve2.getDateTimeObject() + "=" +
-//                // mve2.getValue());
-//
-//                if (mve_old.getValue().equals(mve2.getValue()))
-//                {
-//                    mve2.setStatusType(DeviceEntryStatus.Old);
-//                    mve2.object_status = DeviceValuesEntry.OBJECT_STATUS_OLD;
-//                }
-//                else
-//                {
-//                    mve2.setStatusType(DeviceEntryStatus.Changed);
-//                    mve2.object_status = DeviceValuesEntry.OBJECT_STATUS_EDIT;
-//                    mve2.entry_object = mve_old.getHibernateObject();
-//                }
-//            }
-//        }
-//        else
-//        {
-//
-//            mve.setStatusType(DeviceEntryStatus.New);
-//        }
-//
-//    }
+                MeterValuesEntry mve_old = (MeterValuesEntry) this.deviceDataHandler.getOldData().get(
+                        dve.getSpecialId());
+
+                MeterValuesEntry mve2 = (MeterValuesEntry) dve;
+
+                DeviceEntryStatus status = mve_old.getImportStatus(mve2);
+
+                mve2.setStatusType(status);
+                mve2.object_status = (status == DeviceEntryStatus.Changed) ?
+                        DeviceValuesEntry.OBJECT_STATUS_EDIT : DeviceValuesEntry.OBJECT_STATUS_OLD;
+            }
+        }
+        else
+        {
+            dve.setStatusType(DeviceEntryStatus.New);
+            dve.setObjectStatus(DeviceValuesEntry.OBJECT_STATUS_NEW);
+        }
+    }
 
 
     @Override

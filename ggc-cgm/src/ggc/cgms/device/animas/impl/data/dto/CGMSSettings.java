@@ -10,9 +10,9 @@ import com.atech.i18n.I18nControlAbstract;
 
 import ggc.cgms.data.defs.CGMSConfigurationGroup;
 import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.data.defs.ClockModeType;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.data.DeviceValueConfigEntry;
-import ggc.plugin.data.enums.ClockModeType;
-import ggc.plugin.data.enums.GlucoseUnitType;
 import ggc.plugin.device.impl.animas.data.dto.SettingEntry;
 import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;

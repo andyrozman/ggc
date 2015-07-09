@@ -52,13 +52,12 @@ public class PumpValuesWriter extends DeviceValuesWriter
 
         // ========= Events =========
 
+        for (PumpEvents event : PumpEvents.getAllValues())
+        {
+            addConfigurationBase("Event_" + event.name(), PumpBaseType.Event, event, false);
+        }
+
         // FIXME missing
-        addConfiguration("Event_Basal_Stop", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
-                PumpBaseType.Event, PumpEvents.BasalStop, false));
-
-        addConfiguration("Event_Basal_Run", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
-                PumpBaseType.Event, PumpEvents.BasalRun, false));
-
         addConfiguration("Event_PrimeInfusionSet", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
                 PumpBaseType.Event, PumpEvents.PrimeInfusionSet, true));
 
@@ -71,36 +70,21 @@ public class PumpValuesWriter extends DeviceValuesWriter
         addConfiguration("Event_BatteryLow", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
                 PumpBaseType.Event, PumpEvents.BatteryLow, false));
 
-        // addConfiguration("Event_BolusWizard", new
-        // PumpTempValues(PumpTempValues.OBJECT_BASE, //
-        // PumpBaseType.Event, PumpEvents.BolusWizard, false));
-        // addConfiguration("Event_BolusWizard", new
-        // PumpTempValues(PumpTempValues.OBJECT_BASE, //
-        // PumpBaseType.Event, PumpEvents.BolusWizard, false));
+        addConfiguration("Event_BasalStop", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
+                PumpBaseType.Event, PumpEvents.BasalStop, false));
 
-        // CartridgeChange(2, "EVENT_CARTRIDGE_CHANGED"), //
-        // CartridgeRewind(3, "EVENT_REWIND_INFUSION_SET"), //
-        // ReservoirLow(4, "EVENT_RESERVOIR_LOW"), //
-        // ReservoirLowDesc(5, "EVENT_RESERVOIR_LOW_DESC"), //
-        // SetTemporaryBasalRateType(10, "EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"),
-        // // Unit setting (1=%, 0=U)
-        // SetBasalPattern(15, "EVENT_SET_BASAL_PATTERN"), //
-        // PowerDown(22, "EVENT_POWER_DOWN"), //
-        // PowerUp(23, "EVENT_POWER_UP"), //
-        // SelfTest(30, "EVENT_SELF_TEST"), //
-        // Download(31, "EVENT_DOWNLOAD"), //
-        // DateTimeSet(40, "EVENT_DATETIME_SET"), //
-        // DateTimeCorrect(41, "EVENT_DATETIME_CORRECT"), //
-        // SetMaxBasal(50, "EVENT_SET_MAX_BASAL"), //
-        // SetMaxBolus(51, "EVENT_SET_MAX_BOLUS"), //
-        // BatteryRemoved(55, "EVENT_BATERRY_REMOVED"), //
-        // BatteryReplaced(56, "EVENT_BATERRY_REPLACED"), //
-        // BatteryLow(57, "EVENT_BATERRY_LOW"), //
-        // BatteryLowDesc(58, "EVENT_BATERRY_LOW_DESC"), //
-        // BgFromMeter(70, "EVENT_BG_FROM_METER"), //
-        // BolusCancelled(80, "ALARM_BOLUS_CANCELED"), //
+        addConfiguration("Event_BasalRun", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
+                PumpBaseType.Event, PumpEvents.BasalRun, false));
+
+        addConfiguration("Event_ReservoirLowDesc", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
+                PumpBaseType.Event, PumpEvents.ReservoirLowDesc, true));
 
         // ========= Alarms =========
+
+        for (PumpAlarms alarm : PumpAlarms.getAllValues())
+        {
+            addConfigurationBase("Alarm_" + alarm.name(), PumpBaseType.Alarm, alarm, false);
+        }
 
         // FIXME rename in classes using it
         addConfiguration("Alarm_Call_Service", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
@@ -127,9 +111,11 @@ public class PumpValuesWriter extends DeviceValuesWriter
         addConfiguration("Alarm_Occlusion_Detected", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
                 PumpBaseType.Alarm, PumpAlarms.NoDelivery, false));
 
-        for (PumpAlarms alarm : PumpAlarms.getAllValues())
+        // ========= Error =========
+
+        for (PumpErrors error : PumpErrors.getAllValues())
         {
-            addConfigurationBase("Alarm_" + alarm.name(), PumpBaseType.Alarm, alarm, false);
+            addConfigurationBase("Error_" + error.name(), PumpBaseType.Error, error, false);
         }
 
         // ========= Report =========
@@ -156,8 +142,17 @@ public class PumpValuesWriter extends DeviceValuesWriter
 
         // ========= Basal =========
 
-        addConfiguration("Basal_Value_Change", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
+        addConfiguration("Basal_ValueChange", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
                 PumpBaseType.Basal, PumpBasalType.ValueChange, true));
+
+        addConfiguration("Basal_TemporaryBasalRate", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
+                PumpBaseType.Basal, PumpBasalType.TemporaryBasalRate, false));
+
+        addConfiguration("Basal_TemporaryBasalRateEnded", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
+                PumpBaseType.Basal, PumpBasalType.TemporaryBasalRateEnded, true));
+
+        addConfiguration("Basal_TemporaryBasalRateCanceled", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
+                PumpBaseType.Basal, PumpBasalType.TemporaryBasalRateCanceled, false));
 
         // ========= Additional Data =========
 
@@ -173,15 +168,26 @@ public class PumpValuesWriter extends DeviceValuesWriter
     public void addConfigurationBase(String key, PumpBaseType baseType, CodeEnumWithTranslation subType,
             boolean isNumericValue)
     {
-        if (!this.containsKey(key))
+
+        if (this.containsKey(key))
         {
-            addConfiguration(key, new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
-                    baseType, subType, isNumericValue));
+            remove(key);
         }
-        else
-        {
-            LOG.warn("Key " + key + " already added in PumpValuesWriter. Please check your configuration.");
-        }
+
+        addConfiguration(key, new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
+                baseType, subType, isNumericValue));
+
+        // if (!this.containsKey(key))
+        // {
+        // addConfiguration(key, new
+        // PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
+        // baseType, subType, isNumericValue));
+        // }
+        // else
+        // {
+        // LOG.warn("Key " + key +
+        // " already added in PumpValuesWriter. Please check your configuration.");
+        // }
     }
 
 }

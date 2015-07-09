@@ -72,7 +72,7 @@ public class PlugInDeviceUtil
         {
             case 1:
                 //System.out.println("Di:" + di + ", company: " + di.getDeviceCompany() + ", shortName: ");
-                return di.getDeviceCompany().getShortName();
+                return di.getDeviceCompany().getName();
 
             case 2:
                 return di.getName();

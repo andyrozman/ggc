@@ -1,5 +1,7 @@
 package ggc.pump.device.minimed;
 
+import java.util.ArrayList;
+
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
@@ -51,6 +53,7 @@ public abstract class MinimedPump extends AbstractPump
         super();
     }
 
+
     /**
      * Constructor 
      * 
@@ -61,6 +64,7 @@ public abstract class MinimedPump extends AbstractPump
     {
         super(); // params, writer);
     }
+
 
     /**
      * Constructor
@@ -74,6 +78,7 @@ public abstract class MinimedPump extends AbstractPump
         super(params, writer, da);
     }
 
+
     /**
      * Constructor
      * 
@@ -83,6 +88,7 @@ public abstract class MinimedPump extends AbstractPump
     {
         super(cmp);
     }
+
 
     // ************************************************
     // *** Meter Identification Methods ***
@@ -98,6 +104,7 @@ public abstract class MinimedPump extends AbstractPump
         return null;
     }
 
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
@@ -109,6 +116,7 @@ public abstract class MinimedPump extends AbstractPump
         return DeviceImplementationStatus.NotAvailable;
     }
 
+
     /**
      * Open
      */
@@ -117,12 +125,14 @@ public abstract class MinimedPump extends AbstractPump
         return true;
     }
 
+
     /**
      * Close
      */
     public void close() throws PlugInBaseException
     {
     }
+
 
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
@@ -133,6 +143,7 @@ public abstract class MinimedPump extends AbstractPump
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
@@ -145,6 +156,7 @@ public abstract class MinimedPump extends AbstractPump
     {
     }
 
+
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy 
      * (from some date to another)
@@ -156,6 +168,7 @@ public abstract class MinimedPump extends AbstractPump
     {
     }
 
+
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do).
@@ -166,6 +179,7 @@ public abstract class MinimedPump extends AbstractPump
     public void readInfo() throws PlugInBaseException
     {
     }
+
 
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
@@ -186,12 +200,14 @@ public abstract class MinimedPump extends AbstractPump
     {
     }
 
+
     /** 
      * Dispose
      */
     public void dispose()
     {
     }
+
 
     /**
      * getConnectionPort - connection port data
@@ -202,6 +218,7 @@ public abstract class MinimedPump extends AbstractPump
     {
         return null;
     }
+
 
     public DeviceConnectionProtocol getConnectionProtocol()
     {
@@ -219,6 +236,7 @@ public abstract class MinimedPump extends AbstractPump
         return false;
     }
 
+
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
      * sort of specific device data - in most cases we call them generics, and they don't have ability
@@ -232,6 +250,7 @@ public abstract class MinimedPump extends AbstractPump
         return false;
     }
 
+
     /**
      * @{InheritDocs}
      */
@@ -239,6 +258,7 @@ public abstract class MinimedPump extends AbstractPump
     {
         return DownloadSupportType.NoDownloadSupport; // .DOWNLOAD_FROM_DEVICE_FILE;
     }
+
 
     /**
      * How Many Months Of Data Stored
@@ -251,6 +271,7 @@ public abstract class MinimedPump extends AbstractPump
         return -1;
     }
 
+
     /**
      * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
      *     left to right side, without displaying progress.
@@ -262,11 +283,13 @@ public abstract class MinimedPump extends AbstractPump
         return true;
     }
 
+
     @Override
     public boolean hasDefaultParameter()
     {
         return false;
     }
+
 
     /**
      * Load File Contexts - Load file contexts that device supports
@@ -275,8 +298,39 @@ public abstract class MinimedPump extends AbstractPump
     public void loadFileContexts()
     {
         // System.out.println("loadFileContexts");
-        this.fileContexts = new GGCPlugInFileReaderContext[1];
-        this.fileContexts[0] = new FRC_MinimedCarelink(dataAccess, this.outputWriter);
+        this.fileContexts = new ArrayList<GGCPlugInFileReaderContext>();
+        this.fileContexts.add(new FRC_MinimedCarelink(dataAccess, this.outputWriter));
     }
 
+
+    /**
+     * Get Bolus Step (precission)
+     *
+     * @return
+     */
+    public float getBolusStep()
+    {
+        return 0.1f;
+    }
+
+
+    /**
+     * Get Basal Step (precission)
+     *
+     * @return
+     */
+    public float getBasalStep()
+    {
+        return 0.1f;
+    }
+
+
+    /**
+     * Get Max Memory Records
+     */
+
+    public int getMaxMemoryRecords()
+    {
+        return 0;
+    }
 }

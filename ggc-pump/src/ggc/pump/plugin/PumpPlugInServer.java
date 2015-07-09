@@ -1,16 +1,25 @@
 package ggc.pump.plugin;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.GregorianCalendar;
+
+import javax.swing.*;
+
+import com.atech.db.hibernate.transfer.BackupRestoreCollection;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.misc.statistics.StatisticsCollection;
+import com.atech.plugin.BackupRestorePlugin;
+import com.atech.utils.ATDataAccessLMAbstract;
+import com.atech.utils.ATSwingUtils;
+
 import ggc.core.util.DataAccess;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
-import ggc.plugin.cfg.DeviceConfigurationDialog;
-import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.graph.PlugInGraphDialog;
-import ggc.plugin.gui.AboutBaseDialog;
-import ggc.plugin.gui.DeviceInstructionsDialog;
-import ggc.plugin.list.BaseListDialog;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.db.PumpData;
 import ggc.pump.db.PumpDataExtended;
@@ -19,24 +28,6 @@ import ggc.pump.gui.PumpPrintDialog;
 import ggc.pump.gui.manual.PumpDataDialog;
 import ggc.pump.gui.profile.ProfileSelector;
 import ggc.pump.util.DataAccessPump;
-
-import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.GregorianCalendar;
-
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
-import com.atech.db.hibernate.transfer.BackupRestoreCollection;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.misc.statistics.StatisticsCollection;
-import com.atech.plugin.BackupRestorePlugin;
-import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.ATDataAccessLMAbstract;
-import com.atech.utils.ATSwingUtils;
-import org.apache.commons.lang.NotImplementedException;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -58,8 +49,8 @@ import org.apache.commons.lang.NotImplementedException;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      PumpPlugInServer
+ *  Description:   Plugin Server Instance
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -109,12 +100,12 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     /**
      * This is action that needs to be done, after read data.
      */
-    public static final int RETURN_ACTION_READ_DATA = 1;
+    // public static final int RETURN_ACTION_READ_DATA = 1;
 
     /**
      * This is action that needs to be done, after config
      */
-    public static final int RETURN_ACTION_CONFIG = 2;
+    // public static final int RETURN_ACTION_CONFIG = 2;
 
     /**
      * This is action that needs to be done, after config
@@ -127,21 +118,18 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
 
     private String commands[] = { "MN_PUMPS_READ_DESC", "MN_PUMPS_LIST_DESC", "MN_PUMPS_CONFIG_DESC",
-
-    "MN_PUMP_PROFILES_DESC", "MN_PUMPS_MANUAL_ENTRY_DESC", "MN_PUMPS_ADDITIONAL_DATA_DESC",
-
-    "MN_PUMPS_ABOUT" };
+                                 "MN_PUMP_PROFILES_DESC", "MN_PUMPS_MANUAL_ENTRY_DESC",
+                                 "MN_PUMPS_ADDITIONAL_DATA_DESC", "MN_PUMPS_ABOUT" };
 
     private DataAccessPump da_local = null;
-    private JMenuItem[] menus = new JMenuItem[3];
+    private JMenuItem[] menus = new JMenuItem[4];
 
-    /**
-     * Constructor
-     */
+
     public PumpPlugInServer()
     {
         super();
     }
+
 
     /**
      * Constructor
@@ -157,16 +145,6 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         da_local.addComponent(cont);
     }
 
-    /**
-     * Execute Command on Server Side
-     * 
-     * @param command
-     */
-    @Override
-    public void executeCommand(int command, Object obj_data)
-    {
-        throw new NotImplementedException("This method is no longer used, so it shouldn't be called.");
-    }
 
     /**
      * Get Name of plugin
@@ -179,6 +157,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         return ic.getMessage("PUMP_PLUGIN");
     }
 
+
     /**
      * Get Version of plugin
      * 
@@ -189,6 +168,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     {
         return DataAccessPump.PLUGIN_VERSION;
     }
+
 
     /**
      * Get Information When will it be implemented
@@ -201,21 +181,23 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         return "0.4";
     }
 
+
     /**
      * Init PlugIn which needs to be implemented 
      */
     @Override
     public void initPlugIn()
     {
-        ic = m_da.getI18nControlInstance();
+        ic = dataAccess.getI18nControlInstance();
 
         if (da_local == null)
         {
-            da_local = DataAccessPump.createInstance(((ATDataAccessLMAbstract) m_da).getLanguageManager());
+            da_local = DataAccessPump.createInstance(((ATDataAccessLMAbstract) dataAccess).getLanguageManager());
         }
 
-        this.initPlugInServer((DataAccess) m_da, da_local);
+        this.initPlugInServer((DataAccess) dataAccess, da_local);
     }
+
 
     /**
      * Get Return Object
@@ -241,7 +223,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
                     return da.getI18nControlInstance().getMessage("NO_DEVICE_SELECTED");
                 else
                 {
-                    if (m_da.isValueSet(de.communication_port)
+                    if (dataAccess.isValueSet(de.communication_port)
                             && !de.communication_port.equals(da.getI18nControlInstance().getMessage("NOT_SET")))
                         return String.format(da.getI18nControlInstance().getMessage("DEVICE_FULL_NAME_WITH_PORT"),
                             de.device_device + " [" + de.device_company + "]", de.communication_port);
@@ -255,6 +237,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         else
             return null;
     }
+
 
     /**
      * Get Return Object
@@ -287,6 +270,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
 
     }
 
+
     /*
      * private String getDT(GregorianCalendar gc)
      * {
@@ -314,6 +298,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         return brc;
     }
 
+
     /**
      * Get PlugIn Main Menu 
      * 
@@ -326,6 +311,7 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public JMenu getPlugInMainMenu()
     {
+        DataAccessPump dataAccessPump = DataAccessPump.getInstance();
 
         JMenu menu_pump = ATSwingUtils.createMenu("MN_PUMPS", null, ic_local);
 
@@ -334,38 +320,52 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
 
         // DataAccessPump.getInstance().getDe
 
+        // plugin_read_data, plugin_read_config, plugin_list, plugin_config,
+        // plugin_read_data_file, plugin_read_config_file
+        // plugin_about
+
         JMenuItem menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_DATA", "MN_PUMPS_READ_DATA_DESC",
-            "pumps_read", this, null, ic_local, DataAccessPump.getInstance(), parent);
+            "plugin_read_data", this, null, ic_local, dataAccessPump, parent);
 
         menus[0] = menu;
-        menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadData));
+        menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadData));
 
         menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_CONFIG", "MN_PUMPS_READ_CONFIG_DESC",
-            "pumps_read_config", this, null, ic_local, DataAccessPump.getInstance(), parent);
+            "plugin_read_config", this, null, ic_local, dataAccessPump, parent);
 
         menus[1] = menu;
-        menus[1].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadConfig));
+        menus[1].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadConfig));
 
         menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_FILE", "MN_PUMPS_READ_FILE_DESC",
-            "pumps_read_file", this, null, ic_local, DataAccessPump.getInstance(), parent);
+            "plugin_read_data_file", this, null, ic_local, dataAccessPump, parent);
 
         menus[2] = menu;
-        menus[2].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
+        menus[2].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadDataFile));
+
+        menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_CONFIG_FILE", "MN_PUMPS_READ_CONFIG_FILE_DESC",
+            "plugin_read_config_file", this, null, ic_local, dataAccessPump, parent);
+
+        menus[3] = menu;
+        menus[3].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadConfigFile));
 
         menu_pump.addSeparator();
 
         ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_MANUAL_ENTRY", "MN_PUMPS_MANUAL_ENTRY_DESC",
-            "pumps_manual_entry", this, null, ic_local, DataAccessPump.getInstance(), parent);
+            "pumps_manual_entry", this, null, ic_local, dataAccessPump, parent);
 
         ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_ADDITIONAL_DATA", "MN_PUMPS_ADDITIONAL_DATA_DESC",
-            "pumps_additional_data", this, null, ic_local, DataAccessPump.getInstance(), parent);
+            "pumps_additional_data", this, null, ic_local, dataAccessPump, parent);
 
         ATSwingUtils.createMenuItem(menu_pump, "MN_PUMP_PROFILES", "MN_PUMP_PROFILES_DESC", "pumps_profile", this,
             null, ic_local, DataAccessPump.getInstance(), parent);
 
         menu_pump.addSeparator();
 
-        ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "pumps_list", this, null,
+        ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_LIST", "MN_PUMPS_LIST_DESC", "plugin_list", this, null,
             ic_local, DataAccessPump.getInstance(), parent);
 
         menu_pump.addSeparator();
@@ -375,30 +375,37 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             JMenu m = ATSwingUtils.createMenu("MN_PUMPS_GRAPHS", "MN_PUMPS_GRAPHS_DESC", menu_pump, ic_local);
 
             ATSwingUtils.createMenuItem(m, "MN_PUMPS_GRAPH_CUSTOM", "MN_PUMPS_GRAPH_CUSTOM_DESC", "pumps_graph_custom",
-                this, null, ic_local, DataAccessPump.getInstance(), parent);
+                this, null, ic_local, dataAccessPump, parent);
 
             menu_pump.addSeparator();
         }
 
-        ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "pumps_config", this, null,
-            ic_local, DataAccessPump.getInstance(), parent);
+        ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_CONFIG", "MN_PUMPS_CONFIG_DESC", "plugin_config", this, null,
+            ic_local, dataAccessPump, parent);
 
         menu_pump.addSeparator();
 
-        ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_ABOUT", "MN_PUMPS_ABOUT_DESC", "pumps_about", this, null,
-            ic_local, DataAccessPump.getInstance(), parent);
+        ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_ABOUT", "MN_PUMPS_ABOUT_DESC", "plugin_about", this, null,
+            ic_local, dataAccessPump, parent);
 
         refreshMenusAfterConfig();
 
         return menu_pump;
     }
 
-    private void refreshMenusAfterConfig()
+
+    public void refreshMenusAfterConfig()
     {
-        menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadData));
-        menus[1].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadConfig));
-        menus[2].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
+        menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadData));
+        menus[1].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadConfig));
+        menus[2].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadDataFile));
+        menus[3].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+            DownloadSupportType.DownloadConfigFile));
     }
+
 
     /**
      * Get PlugIn Print Menus 
@@ -420,11 +427,22 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         ATSwingUtils.createMenuItem(menu_reports_pump, "MN_PUMP_PRINT_EXT", "MN_PUMP_PRINT_EXT_DESC",
             "report_print_pump_ext", this, "print.png", icp, DataAccessPump.getInstance(), parent);
 
+        ATSwingUtils.createMenuItem(menu_reports_pump, "MN_PUMP_PRINT_PROFILE", "MN_PUMP_PRINT_PROFILE_DESC",
+            "report_print_profile", this, "print.png", icp, DataAccessPump.getInstance(), parent);
+
+        ATSwingUtils.createMenuItem(menu_reports_pump, "MN_PUMP_PRINT_BASAL_CHECK", "MN_PUMP_PRINT_BASAL_CHECK_DESC",
+            "report_print_basal_check", this, "print.png", icp, DataAccessPump.getInstance(), parent);
+
+        ATSwingUtils.createMenuItem(menu_reports_pump, "MN_PUMP_PRINT_DAILY_TIMESHEET_1",
+            "MN_PUMP_PRINT_DAILY_TIMESHEET_1_DESC", "report_print_daily_timesheet_1", this, "print.png", icp,
+            DataAccessPump.getInstance(), parent);
+
         JMenu[] mns = new JMenu[1];
         mns[0] = menu_reports_pump;
 
         return mns;
     }
+
 
     /** 
      * Action Performed
@@ -434,6 +452,36 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
     {
         String command = ae.getActionCommand();
 
+        if (!executeBasePluginAction(command, DataAccessPump.getInstance()))
+        {
+            if (command.startsWith("report_"))
+            {
+                actionPumpReports(command);
+            }
+            else if (command.equals("pumps_manual_entry") || command.equals("pumps_additional_data"))
+            {
+                new PumpDataDialog(DataAccessPump.getInstance(), (JFrame) this.parent);
+                this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_READ_DATA);
+            }
+            else if (command.equals("pumps_profile"))
+            {
+                new ProfileSelector(DataAccessPump.getInstance(), this.parent);
+            }
+            else if (command.equals("pumps_graph_custom"))
+            {
+                new PlugInGraphDialog(DataAccessPump.getInstance(), null);
+            }
+            else
+            {
+                System.out.println("PumpPlugInServer::Unknown Command: " + command);
+            }
+        }
+
+    }
+
+
+    private void actionPumpReports(String command)
+    {
         if (command.equals("report_print_pump_simple"))
         {
             new PumpPrintDialog((JFrame) parent, PumpPrintDialog.PUMP_REPORT_SIMPLE);
@@ -442,56 +490,25 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
         {
             new PumpPrintDialog((JFrame) parent, PumpPrintDialog.PUMP_REPORT_EXTENDED);
         }
-        else if (command.equals("pumps_read"))
+        else if (command.equals("report_print_profile"))
         {
-            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this,
-                    DeviceDataHandler.TRANSFER_READ_DATA);
-            this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_READ_DATA);
+            new PumpPrintDialog((JFrame) parent, PumpPrintDialog.PumpReportType.Profiles);
         }
-        else if (command.equals("pumps_read_config"))
+        else if (command.equals("report_print_basal_check"))
         {
-            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this,
-                    DeviceDataHandler.TRANSFER_READ_CONFIGURATION);
+            new PumpPrintDialog((JFrame) parent, PumpPrintDialog.PumpReportType.BasalCheck);
         }
-        else if (command.equals("pumps_manual_entry") || command.equals("pumps_additional_data"))
+        else if (command.equals("report_print_daily_timesheet_1"))
         {
-            new PumpDataDialog(DataAccessPump.getInstance(), (JFrame) this.parent);
-            this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_READ_DATA);
-        }
-        else if (command.equals("pumps_profile"))
-        {
-            new ProfileSelector(DataAccessPump.getInstance(), this.parent);
-        }
-        else if (command.equals("pumps_list"))
-        {
-            new BaseListDialog((JFrame) this.parent, DataAccessPump.getInstance());
-        }
-        else if (command.equals("pumps_config"))
-        {
-            new DeviceConfigurationDialog((JFrame) this.parent, DataAccessPump.getInstance());
-            refreshMenusAfterConfig();
-            this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_CONFIG);
-        }
-        else if (command.equals("pumps_read_file"))
-        {
-            new DeviceInstructionsDialog(this.parent, DataAccessPump.getInstance(), this,
-                    DeviceDataHandler.TRANSFER_READ_FILE);
-            this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_READ_DATA);
-        }
-        else if (command.equals("pumps_graph_custom"))
-        {
-            new PlugInGraphDialog(DataAccessPump.getInstance(), null);
-        }
-        else if (command.equals("pumps_about"))
-        {
-            new AboutBaseDialog((JFrame) this.parent, DataAccessPump.getInstance());
+            new PumpPrintDialog((JFrame) parent, PumpPrintDialog.PumpReportType.DailyTimesheet_1);
         }
         else
         {
-            System.out.println("PumpPlugInServer::Unknown Command: " + command);
+            System.out.println("PumpPlugInServer::Unknown Report Command: " + command);
         }
 
     }
+
 
     /**
      * Get Backup Restore Handler

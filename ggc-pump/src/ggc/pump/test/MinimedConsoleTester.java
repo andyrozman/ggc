@@ -1,20 +1,19 @@
 package ggc.pump.test;
 
-import ggc.core.db.GGCDb;
-import ggc.core.util.DataAccess;
-import ggc.core.util.GGCLanguageManagerRunner;
-import ggc.plugin.device.impl.minimed.MinimedDevice;
-import ggc.plugin.output.ConsoleOutputWriter;
-import ggc.plugin.protocol.SerialProtocol;
-import ggc.pump.device.minimed.Minimed522;
-import ggc.pump.device.minimed.MinimedSPMPump;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.Vector;
 
 import com.atech.i18n.mgr.LanguageManager;
 import com.atech.utils.TimerThread;
 import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.db.GGCDb;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCLanguageManagerRunner;
+import ggc.plugin.output.ConsoleOutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
+import ggc.pump.device.minimed.Minimed522;
+import ggc.pump.device.minimed.MinimedSPMPump;
+import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -51,6 +50,7 @@ public class MinimedConsoleTester
      */
     TimerThread thread;
 
+
     /**
      * Constructor
      * 
@@ -82,6 +82,7 @@ public class MinimedConsoleTester
         }
 
     }
+
 
     /**
      * Start Minimed
@@ -121,10 +122,10 @@ public class MinimedConsoleTester
 
     }
 
+
     /**
      * Start Minimed
      * 
-     * @param file
      * @throws Exception
      */
     public void startMinimed_Device() throws Exception
@@ -161,7 +162,7 @@ public class MinimedConsoleTester
         System.out.println("String Buffer - Start ");
 
         StringBuffer sb = new StringBuffer();
-        sb.append(MinimedDevice.INTERFACE_COMLINK);
+        // sb.append(MinimedDevice.INTERFACE_COMLINK);
         sb.append(";");
         // sb.append("COM3"); // port
         sb.append("COM6");
@@ -195,6 +196,7 @@ public class MinimedConsoleTester
 
     }
 
+
     /**
      * Display Serial Ports
      */
@@ -219,6 +221,7 @@ public class MinimedConsoleTester
 
     }
 
+
     /**
      * Something.
      */
@@ -228,6 +231,7 @@ public class MinimedConsoleTester
         // String[] ss = input.split("[-=]");
 
     }
+
 
     /**
      * Main startup method

@@ -1,12 +1,6 @@
 package ggc.plugin.cfg;
 
-import ggc.plugin.protocol.BlueToothProtocol;
-import ggc.plugin.protocol.ConnectionProtocols;
-import ggc.plugin.protocol.DeviceConnectionProtocol;
-import ggc.plugin.protocol.SerialProtocol;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,15 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
+import javax.swing.*;
 import javax.swing.event.ListDataListener;
 
 import org.apache.commons.logging.Log;
@@ -30,8 +16,12 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
+
+import ggc.plugin.protocol.BlueToothProtocol;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
+import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -61,6 +51,7 @@ import com.atech.utils.ATSwingUtils;
 
 public class CommunicationPortSelector extends JDialog implements ActionListener, HelpCapable
 {
+
     /*
      * When adding new protocol search for 'New_Item_Edit' entries. There you
      * need to extend everything
@@ -80,10 +71,11 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     JList data_list;
     boolean was_action = false;
 
-    //int connection_protocol_type = 0;
+    // int connection_protocol_type = 0;
 
-    //Integer protocolTypeV1;
+    // Integer protocolTypeV1;
     DeviceConnectionProtocol protocolType;
+
 
     /**
      * Constructor 
@@ -92,21 +84,21 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
      * @param da
      * @param protocolType
      */
-//    public CommunicationPortSelector(JDialog parent, DataAccessPlugInBase da, int protocolType)
-//    {
-//        super(parent, true);
-//
-//        this.m_da = da;
-//        this.m_ic = da.getI18nControlInstance();
-//        this.protocolTypeV1 = protocolType;
-//
-//        this.m_da.addComponent(this);
-//        ATSwingUtils.initLibrary();
-//
-//        init();
-//        this.setVisible(true);
-//    }
-
+    // public CommunicationPortSelector(JDialog parent, DataAccessPlugInBase da,
+    // int protocolType)
+    // {
+    // super(parent, true);
+    //
+    // this.dataAccess = da;
+    // this.m_ic = da.getI18nControlInstance();
+    // this.protocolTypeV1 = protocolType;
+    //
+    // this.dataAccess.addComponent(this);
+    // ATSwingUtils.initLibrary();
+    //
+    // init();
+    // this.setVisible(true);
+    // }
 
     /**
      * Constructor
@@ -129,6 +121,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         init();
         this.setVisible(true);
     }
+
 
     /**
      * Init
@@ -189,6 +182,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         this.setBounds(25, 115, 320, st_y + 80);
     }
 
+
     /**
      * Init Type
      * 
@@ -210,6 +204,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         }
     }
 
+
     private int initList()
     {
         data_list = new JList();
@@ -218,19 +213,23 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
 
             List<String> elems = getDataForList();
 
+
             public void addListDataListener(ListDataListener arg0)
             {
             }
+
 
             public Object getElementAt(int index)
             {
                 return elems.get(index);
             }
 
+
             public int getSize()
             {
                 return elems.size();
             }
+
 
             public void removeListDataListener(ListDataListener arg0)
             {
@@ -248,8 +247,6 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     }
 
 
-
-
     private boolean checkIfItemSelected()
     {
         // New_Item_Edit
@@ -258,14 +255,13 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
             case MassStorageXML:
             case Serial_USBBridge:
             case BlueTooth_Serial:
-            {
-                return this.data_list.getSelectedIndex() > -1;
-            }
+                {
+                    return this.data_list.getSelectedIndex() > -1;
+                }
             default:
                 return false;
         }
     }
-
 
 
     /**
@@ -289,6 +285,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         }
 
     }
+
 
     /**
      * Get Protocol Parameter Name
@@ -315,6 +312,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
 
     }
 
+
     /**
      * Get Not Fillled Error
      * 
@@ -336,6 +334,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         }
 
     }
+
 
     protected List<String> getDataForList()
     {
@@ -431,6 +430,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         return portList;
     }
 
+
     /**
      * Was Action
      * 
@@ -440,6 +440,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
     {
         return was_action;
     }
+
 
     /**
      * Action Performed (for Action Listener)
@@ -475,6 +476,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
 
     }
 
+
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
@@ -487,6 +489,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         return this.getRootPane();
     }
 
+
     /** 
      * getHelpButton - get Help button
      */
@@ -495,12 +498,14 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
         return this.help_button;
     }
 
+
     /** 
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
-        // return dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // return dataAccess.getDeviceConfigurationDefinition().getHelpPrefix()
+        // +
         // "Configuration_PortSelector";
         return "DeviceTool_Configuration_PortSelector";
     }

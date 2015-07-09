@@ -37,6 +37,7 @@ public class ConsoleOutputWriter extends AbstractOutputWriter
         super();
     }
 
+
     /**
      * Write Data to OutputWriter
      * 
@@ -48,9 +49,11 @@ public class ConsoleOutputWriter extends AbstractOutputWriter
         System.out.println(data.getDataAsString());
     }
 
+
     public void writeConfigurationData(OutputWriterConfigData configData)
     {
-        System.out.println(configData.getDataKey() + "=" + configData.getDataValue());
+        System.out.println("[" + configData.getGroup().getName() + "]   " + configData.getDataKey() + " = "
+                + configData.getDataValue());
     }
 
 
@@ -66,6 +69,7 @@ public class ConsoleOutputWriter extends AbstractOutputWriter
         System.out.println("=======================================================");
     }
 
+
     /**
      * Write Device Identification
      */
@@ -73,6 +77,7 @@ public class ConsoleOutputWriter extends AbstractOutputWriter
     {
         System.out.println(this.getDeviceIdentification().getInformation("* "));
     }
+
 
     /**
      * End Output

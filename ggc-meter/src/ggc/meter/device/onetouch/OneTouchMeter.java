@@ -1,5 +1,12 @@
 package ggc.meter.device.onetouch;
 
+import java.util.StringTokenizer;
+
+import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.manager.MeterDevicesIds;
@@ -15,12 +22,6 @@ import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
-
-import java.util.StringTokenizer;
-
-import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.data.ATechDate;
-import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -470,12 +471,12 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                 this.entries_current++;
 
                 MeterValuesEntry mve = new MeterValuesEntry();
-                mve.setBgUnit(DataAccessPlugInBase.BG_MGDL);
+                // mve.setBgUnit(DataAccessPlugInBase.BG_MGDL);
                 mve.setDateTimeObject(getDateTime(date, time));
 
                 if (res.contains("HIGH"))
                 {
-                    mve.setBgValue("600");
+                    mve.setBgValue("600", GlucoseUnitType.mg_dL);
                     mve.addParameter("RESULT", "High");
                 }
                 else
@@ -496,7 +497,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                         {
                             mve.setBgValue(""
                                     + dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MMOL, DataAccessPlugInBase.BG_MGDL,
-                                        res));
+ res), GlucoseUnitType.mg_dL);
                         }
                         catch (Exception ex)
                         {}
@@ -504,7 +505,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                     }
                     else
                     {
-                        mve.setBgValue(res);
+                        mve.setBgValue(res, GlucoseUnitType.mg_dL);
                     }
                 }
 

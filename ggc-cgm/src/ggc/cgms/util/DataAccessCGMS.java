@@ -15,10 +15,12 @@ import ggc.cgms.data.CGMSValuesEntry;
 import ggc.cgms.data.ExtendedCGMSValuesExtendedEntry;
 import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
 import ggc.cgms.data.db.GGC_CGMSDb;
+import ggc.cgms.data.graph.v2.CGMSGraphContext;
 import ggc.cgms.device.animas.AnimasCGMSHandler;
 import ggc.cgms.device.dexcom.DexcomHandler;
 import ggc.cgms.manager.CGMSManager;
 import ggc.core.plugins.GGCPluginType;
+import ggc.core.util.DataAccess;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
@@ -58,7 +60,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.3.1"; // 1.0.2
+    public static final String PLUGIN_VERSION = "1.3.2"; // 1.0.2
 
     private static final String EXTENDED_HANDLER_CGMSValuesExtendedEntry = "CGMSValuesExtendedEntry";
 
@@ -108,7 +110,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         this.createPlugInVersion();
         loadDeviceDataHandler();
         // loadManager();
-        //loadReadingStatuses();
+        // loadReadingStatuses();
         this.createPlugInDataRetrievalContext();
         this.createDeviceConfiguration();
         this.createOldDataReader();
@@ -116,6 +118,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         this.loadConverters();
 
         this.prepareTranslationForEnums();
+        this.prepareGraphContext();
     }
 
 
@@ -561,6 +564,15 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     public String getPluginName()
     {
         return "GGC CGMS Plugin";
+    }
+
+
+    @Override
+    public void prepareGraphContext()
+    {
+        graphContext = new CGMSGraphContext();
+
+        DataAccess.getInstance().getGraphContext().addContext(graphContext);
     }
 
 }

@@ -1,9 +1,6 @@
 package ggc.plugin.data;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -331,9 +328,9 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
                 DeviceValuesEntryInterface dve_old = (DeviceValuesEntryInterface) this.deviceDataHandler.getOldData()
                         .get(dve.getSpecialId());
 
-                // System.out.println("Old: " + dve_old.getValue());
+                //System.out.println("Old: " + dve_old.getValue());
                 dve.prepareEntry_v2();
-                // System.out.println("New: " + dve.getValue());
+                //System.out.println("New: " + dve.getValue());
 
                 if (dve_old.getValue().equals(dve.getValue()))
                 {
@@ -462,13 +459,13 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
      * 
      * @return Hashtable<String,ArrayList<?>>
      */
-    public Hashtable<String, ArrayList<DeviceValuesEntry>> getCheckedDVE()
+    public HashMap<String, ArrayList<DeviceValuesEntry>> getCheckedDVE()
     {
 
-        Hashtable<String, ArrayList<DeviceValuesEntry>> ht = new Hashtable<String, ArrayList<DeviceValuesEntry>>();
+        HashMap<String, ArrayList<DeviceValuesEntry>> ht = new HashMap<String, ArrayList<DeviceValuesEntry>>();
 
-        ht.put("ADD", new ArrayList<DeviceValuesEntry>());
-        ht.put("EDIT", new ArrayList<DeviceValuesEntry>());
+        ArrayList<DeviceValuesEntry> listAdd = new ArrayList<DeviceValuesEntry>();
+        ArrayList<DeviceValuesEntry> listEdit = new ArrayList<DeviceValuesEntry>();
 
         for (int i = 0; i < this.dl_data.size(); i++)
         {
@@ -479,17 +476,21 @@ public abstract class DeviceValuesTableModel extends AbstractTableModel implemen
                 continue;
             }
 
-            dve.prepareEntry();
+            //dve.prepareEntry();
 
             if (dve.getObjectStatus() == DeviceValuesEntry.OBJECT_STATUS_NEW)
             {
-                ht.get("ADD").add(dve);
+                listAdd.add(dve);
             }
             else if (dve.getObjectStatus() == DeviceValuesEntry.OBJECT_STATUS_EDIT)
             {
-                ht.get("EDIT").add(dve);
+                listEdit.add(dve);
             }
         }
+
+
+        ht.put("ADD", listAdd);
+        ht.put("EDIT", listEdit);
 
         return ht;
     }

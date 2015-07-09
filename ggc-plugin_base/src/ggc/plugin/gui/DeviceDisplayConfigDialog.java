@@ -1,38 +1,27 @@
 package ggc.plugin.gui;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.plugin.data.*;
-import ggc.plugin.data.enums.DeviceConfigurationGroup;
-import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.output.*;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JToolBar;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 import javax.swing.table.TableColumn;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.data.DeviceValueConfigEntry;
+import ggc.plugin.data.DeviceValuesConfigTable;
+import ggc.plugin.data.DeviceValuesConfigTableModel;
+import ggc.plugin.data.enums.DeviceConfigurationGroup;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.output.*;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -61,8 +50,8 @@ import com.atech.utils.ATDataAccessAbstract;
  */
 
 // FIXME
-// This needs to work with new configuration type thing and groups (Animas Pump/CGMS for testing)
-
+// This needs to work with new configuration type thing and groups (Animas
+// Pump/CGMS for testing)
 
 public class DeviceDisplayConfigDialog extends JDialog implements ActionListener, OutputWriter, HelpCapable
 {
@@ -93,6 +82,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     DeviceDataHandler m_ddh;
     JFrame m_parent = null;
 
+
     /**
      * Constructor
      * 
@@ -113,6 +103,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
         dialogPreInit();
     }
+
 
     /**
      * Constructor (for testing GUI)
@@ -135,6 +126,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         dialogPreInit();
     }
 
+
     private void dialogPreInit()
     {
         if (m_ddh != null)
@@ -156,6 +148,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     }
 
+
     /**
      * If we have special status progress defined, by device, we need to set progress, by ourselves, this is 
      * done with this method.
@@ -166,16 +159,19 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         this.progress.setValue(value);
     }
 
+
     private void addLogText(String s)
     {
         logText.append(s + "\n");
     }
 
+
     protected void init()
     {
         ATSwingUtils.initLibrary();
 
-        model = new DeviceValuesConfigTableModel(m_da) ; //, m_da.getSourceDevice());
+        model = new DeviceValuesConfigTableModel(m_da); // ,
+                                                        // dataAccess.getSourceDevice());
 
         model.clearData();
 
@@ -288,6 +284,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     }
 
+
     private JPanel createTablePanel(DeviceValuesConfigTable table_in)
     {
 
@@ -318,6 +315,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     }
 
+
     @SuppressWarnings("unused")
     private JButton createButton(String command_text, String tooltip, String image_d)
     {
@@ -328,6 +326,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         b.setToolTipText(tooltip);
         return b;
     }
+
 
     /**
      * Invoked when an action occurs.
@@ -366,6 +365,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     }
 
+
     /**
      * endOutput
      */
@@ -375,6 +375,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     }
 
     DeviceIdentification device_ident;
+
 
     /**
      * getDeviceIdentification
@@ -386,6 +387,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     String sub_status = null;
 
+
     /**
      * Set Sub Status
      * 
@@ -396,6 +398,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         this.sub_status = sub_status;
         refreshStatus();
     }
+
 
     /**
      * Get Sub Status
@@ -409,6 +412,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     OutputUtil output_util = OutputUtil.getInstance(this);
 
+
     /**
      * getOutputUtil
      */
@@ -416,6 +420,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         return this.output_util;
     }
+
 
     /**
      * interruptCommunication
@@ -426,6 +431,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     }
 
+
     /**
      * setBGOutputType
      */
@@ -434,6 +440,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         // System.out.println("setBGOutput()");
         this.output_util.setBGMeasurmentType(bg_type);
     }
+
 
     /**
      * setDeviceIdentification
@@ -445,6 +452,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     int count = 0;
 
+
     /**
      * writeDeviceIdentification
      */
@@ -453,12 +461,14 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         this.ta_info.setText(this.device_ident.getShortInformation());
     }
 
+
     /**
      * writeHeader
      */
     public void writeHeader()
     {
     }
+
 
     /**
      * writeRawData
@@ -472,6 +482,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     boolean device_should_be_stopped = false;
 
+
     /**
      * User can stop readings from his side (if supported)
      */
@@ -479,6 +490,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         this.device_should_be_stopped = true;
     }
+
 
     /**
      * This should be queried by device implementation, to see if it must stop
@@ -490,6 +502,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     }
 
     int reading_status = AbstractOutputWriter.STATUS_READY;
+
 
     /**
      * This is status of device and also of GUI that is reading device (if we
@@ -508,6 +521,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         setGUIStatus(status);
     }
 
+
     /**
      * Get Status
      * 
@@ -518,6 +532,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         return this.reading_status;
     }
 
+
     /**
      * Refresh Status
      */
@@ -527,6 +542,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     }
 
     private int current_status = 0;
+
 
     /**
      * Set GUI Status
@@ -602,6 +618,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     }
 
+
     /**
      * Set Device Comment
      * 
@@ -611,6 +628,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         // this.lbl_comment.setText(m_ic.getMessage(text));
     }
+
 
     /*
      * public static void main(String[] args)
@@ -633,7 +651,6 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
     }
 
-
     private Map<DeviceConfigurationGroup, Integer> groupCounter = new HashMap<DeviceConfigurationGroup, Integer>();
 
 
@@ -652,10 +669,12 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         this.model.addEntry(dta);
     }
 
+
     public void setPluginName(String pluginName)
     {
 
     }
+
 
     public String getPluginName()
     {
@@ -674,6 +693,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         this.addLogText(message);
     }
 
+
     /**
      * Write log entry
      * 
@@ -685,6 +705,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         this.addLogText(message);
     }
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
@@ -698,6 +719,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         return this.getRootPane();
     }
 
+
     /** 
      * getHelpButton - get Help button
      */
@@ -706,15 +728,18 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         return this.help_button;
     }
 
+
     /** 
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
-        // return dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // return dataAccess.getDeviceConfigurationDefinition().getHelpPrefix()
+        // +
         // "Config_Reading_View";
         return "DeviceTool_Reading_Config_View";
     }
+
 
     /**
      * Set old data reading progress
@@ -725,6 +750,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         this.progress_old.setValue(value);
     }
+
 
     /**
      * Can old data reading be initiated (if module in current running mode supports this, this is
@@ -738,6 +764,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
     String device_source;
 
+
     /**
      * Set Device Source
      * 
@@ -747,6 +774,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
         this.device_source = dev;
     }
+
 
     /**
      * Set Device Source
@@ -758,6 +786,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         return this.device_source;
     }
 
+
     /**
      * setIndeterminateProgress - if we cannot trace progress, we set this and JProgressBar will go
      *    into indeterminate mode
@@ -766,17 +795,20 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     {
     }
 
+
     public void addErrorMessage(String msg)
     {
         // TODO Auto-generated method stub
 
     }
 
+
     public int getErrorMessageCount()
     {
         // TODO Auto-generated method stub
         return 0;
     }
+
 
     public ArrayList<String> getErrorMessages()
     {

@@ -499,4 +499,10 @@ public class DataAccessNutri extends DataAccessPlugInBase
         return "GGC Nutrition Plugin";
     }
 
+    @Override
+    public void prepareGraphContext()
+    {
+
+    }
+
 }

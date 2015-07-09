@@ -32,19 +32,19 @@ import java.util.Set;
 public enum DownloadSupportType
 {
 
-    NoDownloadSupport,
-    DummyDevice,
-    DownloadData,
-    DownloadConfig,
-    DownloadDataFile,
-    DownloadConfigFile,
+    NoDownloadSupport, //
 
-    Download_Data_DataFile(DownloadData, DownloadDataFile),
-    Download_Data_Config(DownloadData, DownloadConfig),
-    //DownloadDataDataFileConfig(),
-    //DownloadDataDataFileConfigConfigFile(),
+    DummyDevice, //
+    DownloadData, //
+    DownloadConfig, //
+    DownloadDataFile, //
+    DownloadConfigFile, //
 
-
+    Download_Data_DataFile(DownloadData, DownloadDataFile), //
+    Download_Data_Config(DownloadData, DownloadConfig), //
+    Download_File_Data_Config(DownloadConfigFile, DownloadDataFile)
+    // DownloadDataDataFileConfig(),
+    // DownloadDataDataFileConfigConfigFile(),
 
     ;
 
@@ -57,56 +57,54 @@ public enum DownloadSupportType
         this.description = desc;
     }
 
-    private DownloadSupportType(DownloadSupportType...childrenElements)
+
+    private DownloadSupportType(DownloadSupportType... childrenElements)
     {
         children = new HashSet<DownloadSupportType>();
 
-        for(DownloadSupportType dst : childrenElements)
+        for (DownloadSupportType dst : childrenElements)
         {
             children.add(dst);
         }
     }
 
 
-
-
-
-//
-//    /**
-//     * DownloadSupportType: Download possible
-//     */
-//    // public static final int DOWNLOAD_YES = 0;
-//
-//    /**
-//     * DownloadSupportType: Download not possible
-//     */
-//    public static final int DOWNLOAD_SUPPORT_NO = 1;
-//
-//    /**
-//     * DownloadSupportType: Download not supported by device
-//     */
-//    public static final int DOWNLOAD_SUPPORT_NA_DEVICE = 2;
-//
-//    /**
-//     * DownloadSupportType: Download not supported by device
-//     */
-//    public static final int DOWNLOAD_SUPPORT_NA_GENERIC_DEVICE = 4;
-//
-//    /**
-//     * DownloadSupportType: Download from device
-//     */
-//    public static final int DOWNLOAD_FROM_DEVICE = 8;
-//
-//    /**
-//     * DownloadSupportType: Download from device
-//     */
-//    public static final int DOWNLOAD_FROM_DEVICE_FILE = 16;
-//
-//    /**
-//     * DownloadSupportType: Download from device
-//     */
-//    public static final int DOWNLOAD_CONFIG_FROM_DEVICE = 32;
-//
+    //
+    // /**
+    // * DownloadSupportType: Download possible
+    // */
+    // // public static final int DOWNLOAD_YES = 0;
+    //
+    // /**
+    // * DownloadSupportType: Download not possible
+    // */
+    // public static final int DOWNLOAD_SUPPORT_NO = 1;
+    //
+    // /**
+    // * DownloadSupportType: Download not supported by device
+    // */
+    // public static final int DOWNLOAD_SUPPORT_NA_DEVICE = 2;
+    //
+    // /**
+    // * DownloadSupportType: Download not supported by device
+    // */
+    // public static final int DOWNLOAD_SUPPORT_NA_GENERIC_DEVICE = 4;
+    //
+    // /**
+    // * DownloadSupportType: Download from device
+    // */
+    // public static final int DOWNLOAD_FROM_DEVICE = 8;
+    //
+    // /**
+    // * DownloadSupportType: Download from device
+    // */
+    // public static final int DOWNLOAD_FROM_DEVICE_FILE = 16;
+    //
+    // /**
+    // * DownloadSupportType: Download from device
+    // */
+    // public static final int DOWNLOAD_CONFIG_FROM_DEVICE = 32;
+    //
 
     /**
      * Is Option Set - checks if bit option is set
@@ -115,15 +113,16 @@ public enum DownloadSupportType
      * @param selectedDownloadSupportType
      * @return
      */
-    public static boolean isOptionSet(DownloadSupportType downloadSupportTypes, DownloadSupportType selectedDownloadSupportType)
+    public static boolean isOptionSet(DownloadSupportType downloadSupportTypes,
+            DownloadSupportType selectedDownloadSupportType)
     {
         if (downloadSupportTypes == selectedDownloadSupportType)
         {
             return true;
         }
-        else if (downloadSupportTypes.children!=null)
+        else if (downloadSupportTypes.children != null)
         {
-            for(DownloadSupportType dst : downloadSupportTypes.children)
+            for (DownloadSupportType dst : downloadSupportTypes.children)
             {
                 if (DownloadSupportType.isOptionSet(dst, selectedDownloadSupportType))
                     return true;
@@ -133,27 +132,25 @@ public enum DownloadSupportType
         return false;
     }
 
+    // public static Set<DownloadSupportType>
+    // getDownloadSupportTypeSet(DownloadSupportType...supportTypes)
+    // {
+    // Set<DownloadSupportType> downloadSupportTypes = new
+    // HashSet<DownloadSupportType>();
+    //
+    // for(DownloadSupportType dst: supportTypes)
+    // {
+    // downloadSupportTypes.add(dst);
+    // }
+    //
+    // return downloadSupportTypes;
+    // }
 
-//    public static Set<DownloadSupportType> getDownloadSupportTypeSet(DownloadSupportType...supportTypes)
-//    {
-//        Set<DownloadSupportType> downloadSupportTypes = new HashSet<DownloadSupportType>();
-//
-//        for(DownloadSupportType dst: supportTypes)
-//        {
-//            downloadSupportTypes.add(dst);
-//        }
-//
-//        return downloadSupportTypes;
-//    }
-
-
-
-//    public static Set<DownloadSupportType> getEmptyDownloadSupportType()
-//    {
-//        Set<DownloadSupportType> dst = new HashSet<DownloadSupportType>();
-//        dst.add(DownloadSupportType.DummyDevice);
-//        return dst;
-//    }
-
+    // public static Set<DownloadSupportType> getEmptyDownloadSupportType()
+    // {
+    // Set<DownloadSupportType> dst = new HashSet<DownloadSupportType>();
+    // dst.add(DownloadSupportType.DummyDevice);
+    // return dst;
+    // }
 
 }

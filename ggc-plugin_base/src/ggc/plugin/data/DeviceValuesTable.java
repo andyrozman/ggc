@@ -1,31 +1,18 @@
 package ggc.plugin.data;
 
-import ggc.plugin.data.enums.DeviceEntryStatus;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JToolBar;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import com.atech.graphics.components.MultiLineTooltipModel;
+
+import ggc.plugin.data.enums.DeviceEntryStatus;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -66,6 +53,7 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
     protected DeviceValuesTableModel model = null;
     protected DataAccessPlugInBase m_da;
 
+
     /**
      * Constructor
      *  
@@ -78,12 +66,14 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
         this.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
         this.setDefaultRenderer(Boolean.class, new CheckCellRenderer_DVT());
-        //this.setDefaultRenderer(Integer.class, new StatusCellRenderer_DVT_Integer());
+        // this.setDefaultRenderer(Integer.class, new
+        // StatusCellRenderer_DVT_Integer());
 
         this.setColumnSelectionAllowed(false);
         this.setRowSelectionAllowed(false);
 
     }
+
 
     /**
      *  Constructor
@@ -101,9 +91,11 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
         setColumnsWidth(this);
 
         this.setDefaultRenderer(Boolean.class, new CheckCellRenderer_DVT());
-        //this.setDefaultRenderer(Integer.class, new StatusCellRenderer_DVT_Integer());
+        // this.setDefaultRenderer(Integer.class, new
+        // StatusCellRenderer_DVT_Integer());
         this.setDefaultRenderer(DeviceEntryStatus.class, new StatusCellRenderer_DVT());
     }
+
 
     /**
      * Create Default Table Header
@@ -133,11 +125,6 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
         super.setModel(model);
         this.model = model;
     }
-
-
-
-
-
 
 
     /** 
@@ -179,6 +166,7 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
         return tip;
     }
 
+
     /**
      * Set Columns Width
      * 
@@ -194,6 +182,7 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
         }
 
     }
+
 
     /**
      * Create Values Table
@@ -224,12 +213,12 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
         return container;
     }
 
-
-
     class CheckCellRenderer_DVT extends JCheckBox implements TableCellRenderer
     {
+
         private static final long serialVersionUID = 85335249214288876L;
         protected Border m_noFocusBorder;
+
 
         public CheckCellRenderer_DVT()
         {
@@ -241,13 +230,14 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
             // this.set
         }
 
+
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                 boolean hasFocus, int row, int column)
         {
             if (value instanceof Boolean)
             {
-                //Boolean b = (Boolean) value;
-                setSelected((Boolean)value);
+                // Boolean b = (Boolean) value;
+                setSelected((Boolean) value);
             }
 
             setBackground(isSelected && !hasFocus ? table.getSelectionBackground() : table.getBackground());
@@ -260,51 +250,59 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
         }
     }
 
-//    class StatusCellRenderer_DVT_Integer extends JLabel implements TableCellRenderer
-//    {
-//        private static final long serialVersionUID = 829555164320310454L;
-//        protected Border m_noFocusBorder;
-//
-//        public StatusCellRenderer_DVT_Integer()
-//        {
-//            super();
-//            m_noFocusBorder = new EmptyBorder(1, 2, 1, 2);
-//            setOpaque(true);
-//            setBorder(m_noFocusBorder);
-//        }
-//
-//        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-//                boolean hasFocus, int row, int column)
-//        {
-//
-//            int status;
-//            if (value instanceof Integer)
-//            {
-//                Integer i = (Integer) value;
-//                status = i.intValue();
-//
-//                System.out.println("Status: " + status);
-//
-//                setText(m_da.getEntryStatuses()[status]);
-//                // setIcon(dataAccess.getImageIcon(DeviceValuesEntry.entry_status_icons[status],
-//                // 8, 8, this));
-//                setIcon(DataAccessPlugInBase.entry_status_iconimage[status]);
-//            }
-//
-//            setBackground(isSelected && !hasFocus ? table.getSelectionBackground() : table.getBackground());
-//            setForeground(isSelected && !hasFocus ? table.getSelectionForeground() : table.getForeground());
-//
-//            setFont(table.getFont());
-//            setBorder(hasFocus ? UIManager.getBorder("Table.focusCellHighlightBorder") : m_noFocusBorder);
-//
-//            return this;
-//        }
-//    }
+    // class StatusCellRenderer_DVT_Integer extends JLabel implements
+    // TableCellRenderer
+    // {
+    // private static final long serialVersionUID = 829555164320310454L;
+    // protected Border m_noFocusBorder;
+    //
+    // public StatusCellRenderer_DVT_Integer()
+    // {
+    // super();
+    // m_noFocusBorder = new EmptyBorder(1, 2, 1, 2);
+    // setOpaque(true);
+    // setBorder(m_noFocusBorder);
+    // }
+    //
+    // public Component getTableCellRendererComponent(JTable table, Object
+    // value, boolean isSelected,
+    // boolean hasFocus, int row, int column)
+    // {
+    //
+    // int status;
+    // if (value instanceof Integer)
+    // {
+    // Integer i = (Integer) value;
+    // status = i.intValue();
+    //
+    // System.out.println("Status: " + status);
+    //
+    // setText(dataAccess.getEntryStatuses()[status]);
+    // //
+    // setIcon(dataAccess.getImageIcon(DeviceValuesEntry.entry_status_icons[status],
+    // // 8, 8, this));
+    // setIcon(DataAccessPlugInBase.entry_status_iconimage[status]);
+    // }
+    //
+    // setBackground(isSelected && !hasFocus ? table.getSelectionBackground() :
+    // table.getBackground());
+    // setForeground(isSelected && !hasFocus ? table.getSelectionForeground() :
+    // table.getForeground());
+    //
+    // setFont(table.getFont());
+    // setBorder(hasFocus ?
+    // UIManager.getBorder("Table.focusCellHighlightBorder") : m_noFocusBorder);
+    //
+    // return this;
+    // }
+    // }
 
     class StatusCellRenderer_DVT extends JLabel implements TableCellRenderer
     {
+
         private static final long serialVersionUID = 829555164320310454L;
         protected Border m_noFocusBorder;
+
 
         public StatusCellRenderer_DVT()
         {
@@ -314,17 +312,18 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
             setBorder(m_noFocusBorder);
         }
 
+
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                                                       boolean hasFocus, int row, int column)
+                boolean hasFocus, int row, int column)
         {
 
             DeviceEntryStatus status;
 
             if (value instanceof DeviceEntryStatus)
             {
-                status = (DeviceEntryStatus)value;
+                status = (DeviceEntryStatus) value;
 
-                //System.out.println("Status: " + status.name());
+                // System.out.println("Status: " + status.name());
 
                 setText(status.getTranslation());
                 setIcon(status.getIcon());
@@ -339,6 +338,5 @@ public class DeviceValuesTable extends JTable // implements TableModelListener
             return this;
         }
     }
-
 
 }

@@ -1,5 +1,18 @@
 package ggc.nutri.plugin;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+import com.atech.db.hibernate.transfer.BackupRestoreCollection;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.BackupRestorePlugin;
+import com.atech.plugin.PlugInServer;
+import com.atech.utils.ATDataAccessLMAbstract;
+import com.atech.utils.ATSwingUtils;
+
 import ggc.core.util.DataAccess;
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.db.GGCDbNutri;
@@ -12,21 +25,6 @@ import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.nutri.gui.print.PrintFoodDialog;
 import ggc.nutri.panels.PanelMealSelector;
 import ggc.nutri.util.DataAccessNutri;
-
-import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-
-import com.atech.db.hibernate.transfer.BackupRestoreCollection;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.plugin.BackupRestorePlugin;
-import com.atech.plugin.PlugInServer;
-import com.atech.utils.ATDataAccessLMAbstract;
-import com.atech.utils.ATSwingUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -96,6 +94,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
 
     private I18nControlAbstract ic_local = null;
 
+
     /*
      * private String commands[] = {
      * "MN_NUTRI_READ_DESC",
@@ -117,6 +116,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         DataAccessNutri.getInstance().addComponent(DataAccess.getInstance().getMainParent());
     }
 
+
     /**
      * Constructor
      * 
@@ -133,6 +133,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         // DataAccessPump.getInstance().setPlugInServerInstance(this);
         // DataAccessPump.getInstance().m
     }
+
 
     /**
      * Execute Command on Server Side
@@ -193,6 +194,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
 
     }
 
+
     /**
      * Get Name of plugin
      * 
@@ -203,6 +205,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     {
         return ic.getMessage("NUTRITION_PLUGIN");
     }
+
 
     /**
      * Get Version of plugin
@@ -215,6 +218,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         return DataAccessNutri.PLUGIN_VERSION;
     }
 
+
     /**
      * Get Information When will it be implemented
      * 
@@ -226,6 +230,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         return "0.4";
     }
 
+
     /**
      * Init PlugIn which needs to be implemented 
      */
@@ -233,11 +238,11 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     public void initPlugIn()
     {
 
-        ic = m_da.getI18nControlInstance();
+        ic = dataAccess.getI18nControlInstance();
 
         if (da_local == null)
         {
-            da_local = DataAccessNutri.createInstance(((ATDataAccessLMAbstract) m_da).getLanguageManager());
+            da_local = DataAccessNutri.createInstance(((ATDataAccessLMAbstract) dataAccess).getLanguageManager());
         }
 
         // this.initPlugInServer((DataAccess)dataAccess, da_local);
@@ -247,18 +252,18 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
 
         // DataAccessNutri da = DataAccessNutri.getInstance();
         da_local.addComponent(this.parent);
-        da_local.setHelpContext(this.m_da.getHelpContext());
+        da_local.setHelpContext(this.dataAccess.getHelpContext());
         da_local.setPlugInServerInstance(this);
         da_local.setParentI18nControlInstance(ic);
         // da.createDb(dataAccess.getHibernateDb());
         // da.initAllObjects();
         da_local.loadSpecialParameters();
 
-        GGCDbNutri _db = new GGCDbNutri(((DataAccess) m_da).getDb());
+        GGCDbNutri _db = new GGCDbNutri(((DataAccess) dataAccess).getDb());
         da_local.setNutriDb(_db);
 
         this.backup_restore_enabled = true;
-        m_da.loadSpecialParameters();
+        dataAccess.loadSpecialParameters();
         // System.out.println("PumpServer: " +
         // dataAccess.getSpecialParameters().get("BG"));
 
@@ -267,6 +272,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         // da.setBGMeasurmentType(dataAccess.getIntValueFromString(dataAccess.getSpecialParameters().get("BG")));
     }
 
+
     /**
      * Load Db
      */
@@ -274,6 +280,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     {
         DataAccessNutri.getInstance().getNutriDb().loadNutritionDbBase();
     }
+
 
     /**
      * Get Return Object
@@ -287,6 +294,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         return null;
     }
 
+
     /**
      * Get Return Object
      * 
@@ -299,6 +307,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     {
         return null;
     }
+
 
     /**
      * Get Backup Objects (if available)
@@ -317,6 +326,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
 
         return brc_nut;
     }
+
 
     /**
      * Get PlugIn Main Menu 
@@ -354,6 +364,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         return menu_food;
     }
 
+
     /**
      * Get PlugIn Print Menus 
      * 
@@ -380,6 +391,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
 
         return mns;
     }
+
 
     /** 
      * Action Performed
@@ -427,6 +439,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
 
     }
 
+
     /**
      * Execute Command Dialog Return - This one executes command that starts dialog, with
      *   dialog as parent, and supply of Object as input data. Input data can be anything
@@ -453,7 +466,8 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         {
             if (command == NutriPlugInServer.COMMAND_DB_FOOD_SELECTOR)
             {
-                DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(this.m_da, dialog, (String) data);
+                DailyValuesMealSelectorDialog dvms = new DailyValuesMealSelectorDialog(this.dataAccess, dialog,
+                        (String) data);
 
                 if (dvms.wasAction())
                 {
@@ -479,6 +493,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
                 return null;
         }
     }
+
 
     /**
      * Get Backup Restore Handler

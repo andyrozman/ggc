@@ -9,7 +9,6 @@ import java.util.*;
 
 import javax.swing.*;
 
-import ggc.plugin.data.enums.DeviceEntryStatus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -17,6 +16,7 @@ import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
+import com.atech.graphics.graphs.v2.data.GraphContext;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.I18nControlRunner;
 import com.atech.i18n.mgr.LanguageManager;
@@ -28,6 +28,7 @@ import com.sun.jna.NativeLibrary;
 
 import ggc.core.data.Converter_mgdL_mmolL;
 import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.plugins.GGCPluginType;
 import ggc.core.util.GGCI18nControl;
 import ggc.plugin.cfg.DeviceConfigEntry;
@@ -35,6 +36,7 @@ import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
@@ -103,10 +105,14 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public static DecimalFormat Decimal3Format = new DecimalFormat("#0.000");
 
+    public static DecimalFormat DecimalFormaters[] = { Decimal0Format, Decimal1Format, Decimal2Format, Decimal3Format };
+
     /**
-     * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
+     * Which BG unit is configured: BG_MGDL = mg/dl, BG_MMOL = mmol/l
      */
     public int m_BG_unit = BG_MMOL;
+
+    public GlucoseUnitType configuredBGUnit;
 
     /**
      * Special Configs Collection
@@ -257,6 +263,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     protected DeviceInstanceWithHandler selectedDeviceInstanceV2;
     protected DeviceInterface selectedDeviceInstanceV1;
     private String deviceSource;
+    protected GraphContext graphContext;
 
 
     // ********************************************************
@@ -284,6 +291,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         initSpecial();
         this.help_enabled = true;
         registerDeviceHandlers();
+        prepareGraphContext();
     }
 
 
@@ -579,6 +587,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     // ****** BG Measurement Type *****
     // ********************************************************
 
+    // THIS SECTION NEEDS TO BE REWRITEN FULLY
+
     /**
      * BG: mg/dL
      */
@@ -609,6 +619,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public void setBGMeasurmentType(int type)
     {
         this.m_BG_unit = type;
+        this.configuredBGUnit = (type == BG_MGDL) ? GlucoseUnitType.mg_dL : GlucoseUnitType.mmol_L;
     }
 
 
@@ -659,6 +670,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public float getDisplayedBG(float dbValue)
     {
+        // FIXME
         switch (this.m_BG_unit)
         {
             case BG_MMOL:
@@ -681,6 +693,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public String getDisplayedBGString(String bgValue)
     {
+        // FIXME
         float val = 0.0f;
 
         if (bgValue != null && bgValue.length() != 0)
@@ -704,6 +717,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     public String getDisplayedBGString(Float bgValue)
     {
+        // FIXME
         float val = 0.0f;
 
         if (bgValue != null)
@@ -727,6 +741,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public float getBGValue(float bg_value)
     {
+        // FIXME
         switch (this.m_BG_unit)
         {
             case BG_MMOL:
@@ -747,6 +762,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public float getBGValueByType(int type, float bg_value)
     {
+        // FIXME
         switch (type)
         {
             case BG_MMOL:
@@ -768,6 +784,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public float getBGValueByType(int input_type, int output_type, float bg_value)
     {
+        // FIXME
         // System.out.println("BG: " + bg_value);
         // System.out.println("input: " + input_type + ",output=" +
         // output_type);
@@ -785,6 +802,42 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
                 return bg_value * MGDL_TO_MMOL_FACTOR;
         }
 
+    }
+
+
+    public Float getBGValueFromDefault(GlucoseUnitType outputType, Number bgValue)
+    {
+        if (outputType == GlucoseUnitType.mg_dL)
+        {
+            return bgValue.floatValue();
+        }
+        else
+        {
+            return this.getBGConverter().getValueByType(GlucoseUnitType.mg_dL, outputType, bgValue);
+        }
+    }
+
+
+    public Float getBGValueByType(GlucoseUnitType inputType, GlucoseUnitType outputType, Number bgValue)
+    {
+        return this.getBGConverter().getValueByType(inputType, outputType, bgValue);
+    }
+
+
+    public String getDisplayedBGFromDefault(Number bgValue)
+    {
+        if (this.configuredBGUnit == GlucoseUnitType.mg_dL)
+            return DecimalFormaters[0].format(bgValue);
+        else
+        {
+            return DecimalFormaters[1].format(getBGValueFromDefault(GlucoseUnitType.mmol_L, bgValue));
+        }
+    }
+
+
+    public GlucoseUnitType getConfiguredBGUnit()
+    {
+        return this.configuredBGUnit;
     }
 
 
@@ -846,6 +899,18 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
             return bg_value * MGDL_TO_MMOL_FACTOR;
         else
             return bg_value * MMOL_TO_MGDL_FACTOR;
+    }
+
+
+    public String getFormatedValue(Number value, int decimals)
+    {
+        return DecimalFormaters[decimals].format(value);
+    }
+
+
+    public String getFormatedValueUS(Number value, int decimals)
+    {
+        return DecimalFormaters[decimals].format(value).replace(",", ".");
     }
 
 
@@ -993,9 +1058,6 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
         return this.filtering_states;
     }
-
-
-
 
 
     /**
@@ -1282,6 +1344,15 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
 
 
+    public void resetSelectedDeviceInstance()
+    {
+        this.selectedDeviceInstanceV1 = null;
+        this.selectedDeviceInstanceV2 = null;
+        this.device_config = null;
+        getSelectedDeviceInstance();
+    }
+
+
     /**
      * Get Selected Device Instance
      *
@@ -1309,6 +1380,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
                 }
 
                 this.deviceSource = dce.device_company + " " + dce.device_device;
+                // System.out.println("Source: " )
             }
         }
 
@@ -1574,17 +1646,6 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public abstract String getPluginName();
 
 
-    /**
-     * Get Graph Context
-     *
-     * @return
-     */
-    public PlugInGraphContext getGraphContext()
-    {
-        return this.graph_context;
-    }
-
-
     public List<LibraryInfoEntry> getBaseLibraries()
     {
 
@@ -1655,5 +1716,29 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
         return 0;
     }
+
+
+    public abstract void prepareGraphContext();
+
+
+    /**
+     * Get Graph Context
+     *
+     * @return
+     */
+    public GraphContext getGraphContext()
+    {
+        return this.graphContext;
+    }
+
+    /**
+     * Get Graph Context
+     *
+     * @return
+     */
+    // public PlugInGraphContext getGraphContext()
+    // {
+    // return this.graph_context;
+    // }
 
 }

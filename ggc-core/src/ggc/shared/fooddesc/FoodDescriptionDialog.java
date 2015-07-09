@@ -1,23 +1,11 @@
 package ggc.shared.fooddesc;
 
-import ggc.core.data.DailyValuesRow;
-import ggc.core.util.DataAccess;
-
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.StringTokenizer;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,6 +16,9 @@ import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
+
+import ggc.core.data.DailyValuesRow;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -61,8 +52,8 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
 
     private static Log log = LogFactory.getLog(FoodDescriptionDialog.class);
     private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
-    // private DataAccess m_da = DataAccess.getInstance();
-    // private GGCProperties props = m_da.getSettings();
+    // private DataAccess dataAccess = DataAccess.getInstance();
+    // private GGCProperties props = dataAccess.getSettings();
 
     JLabel label_title;
     JDecimalTextField ftf_ch;
@@ -78,8 +69,8 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
 
     JComponent components[] = new JComponent[9];
 
-    // Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-    // Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
+    // Font f_normal = dataAccess.getFont(DataAccess.FONT_NORMAL);
+    // Font f_bold = dataAccess.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
     boolean debug = true;
     JButton help_button = null;
@@ -91,6 +82,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
 
     boolean transfer_mode = false;
     Component parent;
+
 
     // private Container m_parent = null;
 
@@ -115,6 +107,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
 
         this.setVisible(true);
     }
+
 
     /**
      * Constructor
@@ -144,6 +137,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         this.setVisible(true);
     }
 
+
     /**
      * Constructor
      * 
@@ -159,9 +153,10 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         transfer_mode = true;
         init();
         // load();
-        // m_da.centerJDialog(this);
+        // dataAccess.centerJDialog(this);
 
     }
+
 
     /**
      * Constructor
@@ -178,9 +173,10 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         transfer_mode = true;
         // init();
         // load();
-        // m_da.centerJDialog(this);
+        // dataAccess.centerJDialog(this);
 
     }
+
 
     private void load()
     {
@@ -219,6 +215,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
 
     }
 
+
     private void save()
     {
 
@@ -252,6 +249,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         }
 
     }
+
 
     private void init()
     {
@@ -315,6 +313,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
 
     }
 
+
     private void calculateCH()
     {
         String txt = this.text_area.getText();
@@ -333,6 +332,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         }
 
     }
+
 
     private float calculationInternal(String text)
     {
@@ -399,6 +399,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
 
     boolean was_action = false;
 
+
     /**
      * Invoked when an action occurs.
      */
@@ -430,6 +431,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
 
     }
 
+
     private void removeAndClose()
     {
         m_da.removeComponent(this);
@@ -450,6 +452,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
          */
     }
 
+
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
@@ -462,6 +465,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      */
@@ -470,6 +474,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         return this.help_button;
     }
 
+
     /**
      * getHelpId - get id for Help
      */
@@ -477,6 +482,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
     {
         return "GGC_Tools_FoodDescription";
     }
+
 
     /**
      * Get Result Values
@@ -488,6 +494,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
     {
         return this.getResultValuesString();
     }
+
 
     /**
      * Get Result Values String
@@ -523,6 +530,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
      */
     public static final int PARAMETER_FOOD_CH = 3;
 
+
     /**
      * Set Input Parameters
      * 
@@ -539,12 +547,13 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         food_desc = (String) ip[2];
         food_ch = (String) ip[3];
 
-        // m_da.addComponent(this);
-        // m_da.centerJDialog(this, di);
+        // dataAccess.addComponent(this);
+        // dataAccess.centerJDialog(this, di);
 
         init();
         load();
     }
+
 
     /**
      * Show Dialog
@@ -557,6 +566,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         super.setVisible(visible);
     }
 
+
     /**
      * Was Action
      * 
@@ -567,6 +577,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
     {
         return was_action;
     }
+
 
     /**
      * Get Input Parameters Count

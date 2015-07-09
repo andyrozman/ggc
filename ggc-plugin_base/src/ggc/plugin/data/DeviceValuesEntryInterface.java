@@ -160,12 +160,12 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     void prepareEntry_v2();
 
-    /**
-     * Get Db Objects
-     *
-     * @return ArrayList of elements extending GGCHibernateObject
-     */
-    ArrayList<? extends GGCHibernateObject> getDbObjects();
+//    /**
+//     * Get Db Objects
+//     *
+//     * @return ArrayList of elements extending GGCHibernateObject
+//     */
+//    ArrayList<? extends GGCHibernateObject> getDbObjects();
 
     /**
      * Get DeviceValuesEntry Name

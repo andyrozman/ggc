@@ -2,7 +2,6 @@ package ggc.meter.device.accuchek;
 
 import ggc.meter.device.MeterInterface;
 import ggc.meter.manager.MeterDevicesIds;
-import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;

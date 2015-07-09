@@ -1,17 +1,19 @@
 package ggc.core.plugins;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+import javax.swing.*;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessLMAbstract;
 import ggc.core.util.DataAccess;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 
 /**
  * Created by andy on 22.02.15.
@@ -20,7 +22,6 @@ public abstract class GGCPluginClient extends PlugInClient
 {
 
     private static final Log LOG = LogFactory.getLog(GGCPluginClient.class);
-
 
 
     /**
@@ -34,6 +35,7 @@ public abstract class GGCPluginClient extends PlugInClient
         super((JFrame) parent, ic);
     }
 
+
     /**
      * Constructor
      *
@@ -44,6 +46,7 @@ public abstract class GGCPluginClient extends PlugInClient
     {
         super((JFrame) parent, da);
     }
+
 
     /**
      * Constructor
@@ -67,23 +70,25 @@ public abstract class GGCPluginClient extends PlugInClient
             this.m_server = (PlugInServer) c.newInstance();
 
             this.m_server.init(this.parent, DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(),
-                    DataAccess.getInstance(), this, DataAccess.getInstance().getDb());
+                DataAccess.getInstance(), this, DataAccess.getInstance().getDb());
 
             installed = true;
         }
-        catch(ClassNotFoundException ex)
+        catch (ClassNotFoundException ex)
         {
             LOG.debug(getServerShortName() + ":: Plugin Class could not be found.");
             this.installed = false;
         }
-        catch(InstantiationException ex)
+        catch (InstantiationException ex)
         {
             LOG.debug(getServerShortName() + ":: Plugin could not be found and/or loaded.");
+            LOG.error(ex);
             this.installed = false;
         }
-        catch(IllegalAccessException ex)
+        catch (IllegalAccessException ex)
         {
             LOG.debug(getServerShortName() + ":: Plugin could not be found and/or loaded.");
+            LOG.error(ex);
             this.installed = false;
         }
         catch (Exception ex)
@@ -113,7 +118,6 @@ public abstract class GGCPluginClient extends PlugInClient
     }
 
 
-
     /**
      * Get Short Status
      *
@@ -128,10 +132,12 @@ public abstract class GGCPluginClient extends PlugInClient
             return ic.getMessage("STATUS_NOT_INSTALLED");
     }
 
+
     protected void refreshPanels(int mask)
     {
         DataAccess.getInstance().setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, mask);
     }
+
 
     /**
      * Get When Will Be Implemented
@@ -161,6 +167,5 @@ public abstract class GGCPluginClient extends PlugInClient
 
 
     public abstract String getServerShortName();
-
 
 }

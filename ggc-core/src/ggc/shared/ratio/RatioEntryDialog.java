@@ -1,17 +1,10 @@
 package ggc.shared.ratio;
 
-import ggc.core.util.DataAccess;
-
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -20,6 +13,7 @@ import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -94,6 +88,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
      */
     public int action = ACTION_ADD;
 
+
     /**
      * Constructor
      * 
@@ -119,6 +114,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
 
         this.setVisible(true);
     }
+
 
     /**
      * Constructor
@@ -147,9 +143,11 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         this.setVisible(true);
     }
 
+
     public RatioEntryDialog()
     {
     }
+
 
     /**
      * Constructor
@@ -162,7 +160,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
      * {
      * super(dialog, "", true);
      * //m_parent = dialog;
-     * m_da.addComponent(this);
+     * dataAccess.addComponent(this);
      * init();
      * load();
      * this.setVisible(true);
@@ -191,6 +189,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
 
     }
 
+
     /**
      * Save data
      */
@@ -218,13 +217,14 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         this.ratio_entry.bg_insulin = ATSwingUtils.getJFormatedTextValueFloat(this.rep.dtf_ins_bg);
         this.ratio_entry.ch_insulin = ATSwingUtils.getJFormatedTextValueFloat(this.rep.dtf_ch_ins);
 
-        // this.m_da.getSettings().setRatio_CH_Insulin(m_da.getFloatValue(this.dtf_ch_ins.getCurrentValue()));
-        // this.m_da.getSettings().setRatio_BG_Insulin(m_da.getFloatValue(this.dtf_ins_bg.getCurrentValue()));
+        // this.dataAccess.getSettings().setRatio_CH_Insulin(dataAccess.getFloatValue(this.dtf_ch_ins.getCurrentValue()));
+        // this.dataAccess.getSettings().setRatio_BG_Insulin(dataAccess.getFloatValue(this.dtf_ins_bg.getCurrentValue()));
 
-        // this.m_da.getSettings().save();
+        // this.dataAccess.getSettings().save();
 
         return true;
     }
+
 
     private void setTitle()
     {
@@ -243,6 +243,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         label_title.setText(key);
 
     }
+
 
     private void initGUI()
     {
@@ -314,6 +315,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         rep.calculateRatio(tdd, m_da.getIntValue(this.procents.getValue()));
     }
 
+
     /**
      * Invoked when an action occurs.
      */
@@ -360,6 +362,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
 
     }
 
+
     /*
      * String button_command[] = { "update_ch",
      * m_ic.getMessage("UPDATE_FROM_FOOD"),
@@ -374,6 +377,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
     {
         this.save();
     }
+
 
     /*
      * public boolean isFieldSet(String text)
@@ -395,6 +399,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         return m_action_done;
     }
 
+
     /**
      * Get Result Object
      * 
@@ -405,6 +410,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
 
         return this.ratio_entry;
     }
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
@@ -418,6 +424,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         return this.getRootPane();
     }
 
+
     /** 
      * getHelpButton - get Help button
      */
@@ -426,6 +433,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
         return this.help_button;
     }
 
+
     /** 
      * getHelpId - get id for Help
      */
@@ -433,6 +441,7 @@ public class RatioEntryDialog extends JDialog implements HelpCapable, ChangeList
     {
         return "GGC_Ratio_Entry";
     }
+
 
     public void stateChanged(ChangeEvent e)
     {

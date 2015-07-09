@@ -1,14 +1,21 @@
 package ggc.plugin;
 
-import ggc.core.util.DataAccess;
-import ggc.plugin.util.DataAccessPlugInBase;
+import java.awt.*;
 
-import java.awt.Container;
+import javax.swing.*;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATDataAccessLMAbstract;
+
+import ggc.core.util.DataAccess;
+import ggc.plugin.cfg.DeviceConfigurationDialog;
+import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.gui.AboutBaseDialog;
+import ggc.plugin.gui.DeviceInstructionsDialog;
+import ggc.plugin.list.BaseListDialog;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,12 +49,21 @@ public abstract class DevicePlugInServer extends PlugInServer
     protected I18nControlAbstract ic_local = null;
 
     /**
-     * Constructor
+     * This is action that needs to be done, after read data.
      */
+    public static final int RETURN_ACTION_READ_DATA = 1;
+
+    /**
+     * This is action that needs to be done, after config
+     */
+    public static final int RETURN_ACTION_CONFIG = 2;
+
+
     public DevicePlugInServer()
     {
         super();
     }
+
 
     /**
      * Constructor
@@ -61,17 +77,18 @@ public abstract class DevicePlugInServer extends PlugInServer
         super(cont, selected_lang, da);
     }
 
+
     /**
      * Constructor
      * 
      * @param cont
-     * @param selected_lang
      * @param da
      */
     public DevicePlugInServer(Container cont, ATDataAccessLMAbstract da)
     {
         super(cont, da);
     }
+
 
     /**
      * Init PlugIn Server
@@ -90,23 +107,83 @@ public abstract class DevicePlugInServer extends PlugInServer
         da_plugin.setMainParent(da_ggc_core.getMainParent());
 
         da_plugin.addComponent(this.parent);
-        da_plugin.setHelpContext(this.m_da.getHelpContext());
+        da_plugin.setHelpContext(this.dataAccess.getHelpContext());
         da_plugin.setPlugInServerInstance(this);
-        da_plugin.createDb(m_da.getHibernateDb());
+        da_plugin.createDb(dataAccess.getHibernateDb());
         da_plugin.initAllObjects();
         da_plugin.loadSpecialParameters();
         da_plugin.setCurrentUserId(da_ggc_core.current_user_id);
-        da_plugin.setConfigurationManager(((DataAccess) m_da).getConfigurationManager());
+        da_plugin.setConfigurationManager(((DataAccess) dataAccess).getConfigurationManager());
         this.backup_restore_enabled = true;
 
         da_ggc_core.loadSpecialParameters();
         // System.out.println("PumpServer: " +
         // dataAccess.getSpecialParameters().get("BG"));
 
-        da_plugin.setBGMeasurmentType(m_da.getIntValueFromString(da_ggc_core.getSpecialParameters().get("BG")));
+        da_plugin.setBGMeasurmentType(dataAccess.getIntValueFromString(da_ggc_core.getSpecialParameters().get("BG")));
         da_plugin.setGraphConfigProperties(da_ggc_core.getGraphConfigProperties());
         da_plugin.setDeveloperMode(da_ggc_core.getDeveloperMode());
 
+    }
+
+
+    // plugin_read_data, plugin_read_config, plugin_list, plugin_config,
+    // plugin_read_data_file, plugin_read_config_file
+    // plugin_about
+
+    public boolean executeBasePluginAction(String command, DataAccessPlugInBase dataAccessPlugIn)
+    {
+        if (command.equals("plugin_read_data"))
+        {
+            new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this, DeviceDataHandler.TRANSFER_READ_DATA);
+            this.client.executeReturnAction(RETURN_ACTION_READ_DATA);
+            return true;
+        }
+        else if (command.equals("plugin_read_config"))
+        {
+            new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this,
+                    DeviceDataHandler.TRANSFER_READ_CONFIGURATION);
+        }
+        else if (command.equals("plugin_list"))
+        {
+            new BaseListDialog((JFrame) this.parent, dataAccessPlugIn);
+        }
+        else if (command.equals("plugin_config"))
+        {
+            new DeviceConfigurationDialog((JFrame) this.parent, dataAccessPlugIn);
+            refreshMenusAfterConfig();
+            this.client.executeReturnAction(RETURN_ACTION_CONFIG);
+        }
+        else if (command.equals("plugin_read_data_file"))
+        {
+            new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this, DeviceDataHandler.TRANSFER_READ_DATA_FILE);
+            this.client.executeReturnAction(RETURN_ACTION_READ_DATA);
+        }
+        else if (command.equals("plugin_read_config_file"))
+        {
+            new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this,
+                    DeviceDataHandler.TRANSFER_READ_CONFIGURATION_FILE);
+            this.client.executeReturnAction(RETURN_ACTION_READ_DATA);
+        }
+        else if (command.equals("plugin_about"))
+        {
+            new AboutBaseDialog((JFrame) this.parent, dataAccessPlugIn);
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public abstract void refreshMenusAfterConfig();
+
+
+    @Override
+    public void executeCommand(int commandId, Object data)
+    {
     }
 
 }

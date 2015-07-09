@@ -1,18 +1,17 @@
 package ggc.plugin.gui.file;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.plugin.data.DeviceDataHandler;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.*;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,6 +48,8 @@ public abstract class AbstractFileSelectorDialog extends JDialog implements Acti
     protected I18nControlAbstract m_ic = null;
     protected JDialog dialogParent = null;
     protected DeviceDataHandler deviceDataHandler = null;
+    protected DownloadSupportType downloadSupportType;
+
 
     // public abstract int[] getPanelSizes();
 
@@ -59,12 +60,14 @@ public abstract class AbstractFileSelectorDialog extends JDialog implements Acti
      * @param ddh
      * @param parent
      */
-    public AbstractFileSelectorDialog(DataAccessPlugInBase da, DeviceDataHandler ddh, JDialog parent)
+    public AbstractFileSelectorDialog(DataAccessPlugInBase da, DeviceDataHandler ddh, JDialog parent,
+            DownloadSupportType downloadSupportType)
     {
         super(parent);
         this.dialogParent = parent;
         this.deviceDataHandler = ddh;
         this.m_da = da;
+        this.downloadSupportType = downloadSupportType;
         m_ic = da.getI18nControlInstance();
         init();
         setSize(getSize());
@@ -72,18 +75,22 @@ public abstract class AbstractFileSelectorDialog extends JDialog implements Acti
         this.setVisible(true);
     }
 
+
     /**
      * Init
      */
     public abstract void init();
 
+
     @Override
     public abstract Dimension getSize();
+
 
     public Component getComponent()
     {
         return this;
     }
+
 
     public JButton getHelpButton()
     {

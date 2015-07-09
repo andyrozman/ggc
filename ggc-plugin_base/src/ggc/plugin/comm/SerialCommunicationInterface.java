@@ -2,12 +2,10 @@ package ggc.plugin.comm;
 
 import ggc.plugin.device.PlugInBaseException;
 
-import java.io.IOException;
-
 /**
  * Created by andy on 11.03.15.
  */
-public interface SerialCommunicationInterface
+public interface SerialCommunicationInterface extends CommunicationInterface
 {
 
     // connect and settings
@@ -51,4 +49,15 @@ public interface SerialCommunicationInterface
 
     void setDelayForTimedReading(int ms);
 
+
+    /**
+     * @deprecated
+     */
+    void write(int[] cmd) throws PlugInBaseException;
+
+
+    int getReceiveTimeout();
+
+
+    void setReceiveTimeout(int timeout) throws PlugInBaseException;
 }
