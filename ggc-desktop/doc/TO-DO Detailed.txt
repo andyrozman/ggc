@@ -1,4 +1,26 @@
 
+GGC 0.7
+=======
+- stocks feature
+- minimed support: There should be Pump Support available, to be used with ComLink (Serial cable) and ContourLink (USB)
+      NOT IN SCOPE: CGMS, CountourNextLink (Meter), Carelink file import (Pump or CGMS)
+- upgrade feature
+
+- graphs framework v2: read xml file and create graph in viewer
+      NOT IN SCOPE: editor, not all graph types will be supported (we will start with some simple graphs and then extends this in next versions)
+
+- report DailyTimesheet + CGMS data
+
+????
+
+
+
+
+
+
+
+
+
 
 STOCKS Feature:
 ===============

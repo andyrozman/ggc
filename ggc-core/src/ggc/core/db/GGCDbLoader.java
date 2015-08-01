@@ -270,8 +270,6 @@ public class GGCDbLoader extends Thread
         // System.out.println("We needed " + (dif/1000) +
         // " seconds to startup.");
         log.debug("We needed " + dif / 1000 + " seconds to startup.");
-
-        m_da.getMainParent()
     }
 
 
