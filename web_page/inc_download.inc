@@ -14,34 +14,34 @@
     <br><br><br>
     In each release there are 4 files:
     <ul>
-        <li>GGC_Setup_&lt;Version Number&gt;_jre.exe - This is Windows installer with Java. You should use this install
+        <li><b>GGC_Setup_&lt;Version Number&gt;_jre.exe - This is Windows installer with Java.</b> You should use this install
             file if you have no knowledge about Java. It contains JRE, so the file is much bigger, but you can just
             install it, out-of-the-box, without any special intervention (advised for most end-users).. [This is
             recomended option for Windows Users]
         </li>
 
-        <li>GGC_Setup_&lt;Version Number&gt;.exe - This is windows installer without Java. Download this if you have
+        <li><b>GGC_Setup_&lt;Version Number&gt;.exe - This is windows installer without Java.</b> Download this if you have
             Java already
             on computer and your knowledge of computers is above average (you might need to configure java to run with
             application).
         </li>
 
-        <li>GGC_&lt;Version Number&gt;.zip - (Full) Zip file< containing all the files - This is for all other
+        <li><b>GGC_&lt;Version Number&gt;.zip - (Full) Zip file containing all the files.</b> This is for all other
             platforms.
             You just extract it and then follow by reading Readme_1st to get it running. (in short you need to enter bin
             folder and run "run_
             <platform>" file, platform is either win, linux, mac or freebsd).
         </li>
 
-        <li>GGC_Upgrade_&lt;Version Number&gt;.zip - Upgrade Zip file. If you have installed previous version of GGC
-            (version 0.3
+        <li><b>GGC_Upgrade_&lt;Version Number&gt;.zip - Upgrade Zip file.</b> If you have installed previous version of GGC
+            (version 0.3.1
             and above) and already have data stored in it, this is the file you need to use. Read document
             'How_To_Upgrade.txt'
             in zip file. (This file should be used only by users who know basic of O.S. they are using. Please make
             backup
             first before you attempt any update. <br><b>NOTE:</b> If you are not sure if you can do upgrade, you can do
-            following:
-            backup all data from previous version, install new version and then do restore of data.
+            following: backup all data (Tools -> Database maintenance -> Backup) from previous version, install new version
+            and then do restore (Tools -> Database maintenance -> Restore) of data.
         </li>
     </ul>
 
@@ -49,41 +49,27 @@
     <h3>GGC Releases</h3>
 
 
-    <h4>Version 0.6.0 [July 2015]</h4>
+    <h4>Version 0.6.0 [August 2015]</h4>
 
     <ul>
         <li>
-            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.5.0.3-2/GGC_Setup_0.5.0.3-2_jre.exe/download">
-                GGC 0.5.0.3 (release 2) Windows Installer with Java [Preferred for Windows users]</a>
+            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.6.0/GGC_Setup_0.6.0_jre.exe/download">
+                GGC 0.6.0 - Windows Installer with Java [Preferred for Windows users]</a>
         </li>
 
         <li>
-            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.5.0.3-2/GGC_Setup_0.5.0.3-2.exe/download">
-                GGC 0.5.0.3 (release 2) Windows Installer without Java</a> - If you have Java
-            already on your computer, and your knowledge of computer is above average you can decide to take this file
-            and manually configure
-            application to run with your installed Java.
+            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.6.0/GGC_Setup_0.6.0.exe/download">
+                GGC 0.6.0 - Windows Installer without Java</a>
         </li>
 
         <li>
-            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.5.0.3-2/GGC_0.5.0.3-2.zip/download">GGC
-                0.5.0.3 (release 2) Zip file</a>, with all files -
-            For all other platforms you need to use this file. You just extract it and then follow by reading Readme_1st
-            to get it
-            running. (in short you need to enter bin folder and run "run_
-            <platform>" file, platform is either win, linux, mac or freebsd).
+            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.6.0/GGC_0.6.0.zip/download">GGC
+                0.6.0 (Full) Zip file</a>
         </li>
 
         <li>
-            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.5.0.3-2/GGC_Update_0.5.0.3-2.zip/download">GGC
-                Update 0.5.0.3 (release 2) Zip file</a>, this
-            file contains only files that were updates since 1st release (0.3). If you have installed previous version
-            of GGC and have data
-            in it, this would be file to use. Read document 'How_To_Upgrade.txt' in zip file. (This file should be used
-            only by users who know
-            basic of O.S. they are using. Please make backup first before you attempt any update. Safer way would be to
-            backup all data
-            from previous version, install new version and then do restore of data.
+            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.6.0/GGC_Update_0.6.0.zip/download">GGC
+                0.6.0 Update Zip file</a>
         </li>
 
     </ul>
@@ -94,39 +80,22 @@
     <ul>
         <li>
             <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.5.0.3-2/GGC_Setup_0.5.0.3-2_jre.exe/download">
-                GGC 0.5.0.3 (release 2) Windows Installer (with JRE)</a> - You should use this
-            install file if you have no knowledge about Java. It contains JRE, so the file is much bigger, but you can
-            just install it, out-of-the-box,
-            without any special intervention (advised for most end-users).
+                GGC 0.5.0.3 (release 2) Windows Installer with Java</a>
         </li>
 
         <li>
             <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.5.0.3-2/GGC_Setup_0.5.0.3-2.exe/download">
-                GGC 0.5.0.3 (release 2) Windows Installer (without JRE)</a> - If you have Java
-            already on your computer, and your knowledge of computer is above average you can decide to take this file
-            and manually configure
-            application to run with your installed Java.
+                GGC 0.5.0.3 (release 2) Windows Installer without Java</a>
         </li>
 
         <li>
             <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.5.0.3-2/GGC_0.5.0.3-2.zip/download">GGC
-                0.5.0.3 (release 2) Zip file</a>, with all files -
-            For all other platforms you need to use this file. You just extract it and then follow by reading Readme_1st
-            to get it
-            running. (in short you need to enter bin folder and run "run_
-            <platform>" file, platform is either win, linux, mac or freebsd).
+                0.5.0.3 (release 2) (Full) Zip file</a>
         </li>
 
         <li>
             <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.5.0.3-2/GGC_Update_0.5.0.3-2.zip/download">GGC
-                Update 0.5.0.3 (release 2) Zip file</a>, this
-            file contains only files that were updates since 1st release (0.3). If you have installed previous version
-            of GGC and have data
-            in it, this would be file to use. Read document 'How_To_Upgrade.txt' in zip file. (This file should be used
-            only by users who know
-            basic of O.S. they are using. Please make backup first before you attempt any update. Safer way would be to
-            backup all data
-            from previous version, install new version and then do restore of data.
+                Update 0.5.0.3 (release 2) Zip file</a>
         </li>
 
     </ul>
@@ -167,31 +136,20 @@
     <h4>Version 0.4</h4>
 
     <ul>
-        <li><a href="http://downloads.sourceforge.net/ggc/GGC_Setup_0.4_jre.exe?use_mirror=osdn">GGC 0.4 Windows
-            Installer (with JRE)</a> - You should use this
-            install file if you have no knowledge about Java. It contains JRE, so the file is much bigger, but you can
-            just install it, out-of-the-box,
-            without any special intervention (advised for most end-users).
+        <li><a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.4/GGC_Setup_0.4_jre.exe/download">
+            GGC 0.4 Windows Installer with Java</a>
         </li>
 
-        <li><a href="http://downloads.sourceforge.net/ggc/GGC_Setup_0.4.exe?use_mirror=osdn">GGC 0.4 Windows Installer
-            (without JRE)</a> - If you have Java
-            already on your computer, and your knowledge of computer is above average you can decide to take this file
-            and manually configure
-            application to run with your installed Java.
+        <li><a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.4/GGC_Setup_0.4.exe/download">
+            GGC 0.4 Windows Installer without Java</a>
         </li>
 
-        <li><a href="http://downloads.sourceforge.net/ggc/GGC_0.4.zip?use_mirror=osdn">GGC 0.4 Zip file</a>, with all
-            files - For all other platforms you need
-            to use this file. You just extract it and then follow by reading Readme_1st to get it running.
+        <li><a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.4/GGC_0.4.zip/download">
+        GGC 0.4 (Full) Zip file</a>
         </li>
 
-        <li><a href="http://downloads.sourceforge.net/ggc/GGC_Update_0.4.zip?use_mirror=osdn">GGC Update 0.4 Zip
-            file</a>, this file contains only files that were
-            updates since 1st release (0.3.1). If you have installed GGC 0.3.1 and have data in it, this would be file
-            to
-            use. Read document 'How_To_Upgrade.txt' in zip
-            file.
+        <li><a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.4/GGC_Update_0.4.zip/download">
+            GGC Update 0.4 Zip file</a>
         </li>
 
     </ul>

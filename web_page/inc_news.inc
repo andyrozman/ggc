@@ -5,7 +5,7 @@
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
-<td width="150">2014-07-08</td>
+<td width="150">2014-08-01</td>
 <td>Release 0.6</td>
 </tr>
 <tr>
@@ -24,7 +24,7 @@ New functionalites include:<br>
 - added few reports for Pumps (check Daily Timesheet)<br>
 - some fixes here and there...<br>
 <br>
-If you find some problems please report and I will try to make a fix release if needed (in august).<br>
+If you find some problems please report and I will try to make a fix release if needed.<br>
 <br>
 Next release is planned for end of year 2015. If everything works OK, we should have some support for
 Minimed Pumps. I am working on it with full speed, so I hope it will be finished by end of year

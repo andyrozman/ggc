@@ -822,6 +822,11 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static final int OBSERVABLE_STATUS = 2;
 
+    /**
+     * Observable: Db
+     */
+    public static final int OBSERVABLE_DB = 3;
+
 
     /**
      * Init Observable
@@ -832,6 +837,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         observables.put("" + OBSERVABLE_PANELS, new EventSource());
         observables.put("" + OBSERVABLE_STATUS, new EventSource());
+        observables.put("" + OBSERVABLE_DB, new EventSource());
     }
 
 
@@ -882,6 +888,18 @@ public class DataAccess extends ATDataAccessLMAbstract
      * @param value
      */
     public void setChangeOnEventSource(int type, String value)
+    {
+        observables.get("" + type).sendChangeNotification(value);
+    }
+
+
+    /**
+     * Set Change On Event Source
+     *
+     * @param type
+     * @param value
+     */
+    public void setChangeOnEventSource(int type, Object value)
     {
         observables.get("" + type).sendChangeNotification(value);
     }

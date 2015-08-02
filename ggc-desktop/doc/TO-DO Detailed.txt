@@ -1,24 +1,65 @@
 
 GGC 0.7
-=======
+========
+- Startup Feature
+
 - stocks feature
-- minimed support: There should be Pump Support available, to be used with ComLink (Serial cable) and ContourLink (USB)
+
+- minimed feature (1, 2, 5a): There should be Pump Support available, to be used with ComLink (Serial cable) and ContourLink (USB)
       NOT IN SCOPE: CGMS, CountourNextLink (Meter), Carelink file import (Pump or CGMS)
-- upgrade feature
+
+- Upgrade feature
 
 - graphs framework v2: read xml file and create graph in viewer
       NOT IN SCOPE: editor, not all graph types will be supported (we will start with some simple graphs and then extends this in next versions)
 
-- report DailyTimesheet + CGMS data
+- reports:
+      - DailyTimesheet add new basal type (Value change)
+      - DailyTimesheet II (colors, more pump data) [when finished remove DailyTimesheet I]
+      - DailyTimesheet IV (II + CGMS data)
 
-????
+- usb hid
+- contour usb support
+
+BUGS:
+- fix error when database can not be contacted
+- device selector sort
+- device config, switch from one type to another (SmartPix -> Some serial) leaves display wrong
+- daily graph pen/injection fix
+- daily graph pump fix: base new basal type
 
 
 
 
 
+GGC 0.7 - DONE
+==============
 
 
+GGC 0.8
+========
+
+- additional data to pump and P/I: weight, pills, blood preasure
+
+OTHER:
+- comments in CGMS, Pumps and others
+
+
+Startup 1.4 Feature
+===================
+Startup script need to be generated in bin\ext instead of bin. In bin there should really be files that we need to start the
+application. All additional startup file (db tool, db, import, etc) need to go into ext, as well as generated run_ggc files.
+In bin there will be only run_win, run_linux, run_mac, run_freebsd files
+
+
+DailyTimesheet Report Feature
+=============================
+There is only one Dailytimesheet but with several types of data... I will be removed when II is ready
+      - DailyTimesheet I add new basal type (Value change)
+      - DailyTimesheet II (colors, more pump data) [when finished remove DailyTimesheet I]
+      - DailyTimeshett III (II + food)
+      - DailyTimesheet IV (II + CGMS data)
+      - DailyTimesheet V (III + CGMS)
 
 
 
@@ -123,6 +164,22 @@ Modules to change (resize):
            - specific stuff
 
 Fonts: (everywhere where not ATSwingUtils used)
+
+
+MINIMED Feature
+===============
+1. Pump Support
+2. Pump History Decode
+2. CGMS Support
+4. CGMS History Decode
+5a. Carelink USB support: Pump
+5b. Carelink USB support: CGMS
+6a. Import Carelink file: Pump
+6b. Import Carelink file: CGMS
+7a. Contour Next Link: Pump
+7b. Contour Next Link: CGMS
+8. Minimed 530G (New One)
+
 
 
 

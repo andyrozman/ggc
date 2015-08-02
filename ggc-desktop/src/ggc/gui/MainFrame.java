@@ -20,6 +20,7 @@ import javax.swing.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.graphics.dialogs.guilist.GUIListDialog;
 import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpContext;
@@ -75,8 +76,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 {
 
     private static final long serialVersionUID = -8971779470148201332L;
-    private static Log log = LogFactory.getLog(MainFrame.class);
-
+    private static final String skinLFdir = "../data/skinlf_themes/";
     /**
      * Skin Look and Feel
      */
@@ -86,40 +86,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
      * Developer version 
      */
     public static boolean developer_version = false;
+    private static Log log = LogFactory.getLog(MainFrame.class);
 
-    /**
-     * Menu Bar
-     */
-    private JMenuBar menuBar = new JMenuBar();
-
-    /**
-     * Tool Bars
-     */
-    private Hashtable<GGCToolbarType, JToolBar> toolbars = null;
-
-    private DataAccess m_da = null;
-    private static final String skinLFdir = "../data/skinlf_themes/";
-    private I18nControlAbstract m_ic = null;
-
-    private Map<String, JMenu> menus = null;
-    private Map<String, JMenuItem> actions = null;
-
-    private Map<GGCToolbarType, Map<String, JButton>> toolbarItems = new HashMap<GGCToolbarType, Map<String, JButton>>();
-
-    // private Hashtable<String, JMenuItem> toolbar_pen_items = null;
-    // private Hashtable<String, JMenuItem> toolbar_pump_items = null;
-    private GGCToolbarType current_toolbar = GGCToolbarType.None;
-    private String next_version = "0.7";
-
-    /**
-     * Status panels
-     */
-    public StatusBar statusPanel;
-
-    /**
-     * Information panels
-     */
-    public InfoPanel informationPanel;
 
     /**
      * Static definitions (Look and Feel)
@@ -129,44 +97,32 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         MainFrame.setLookAndFeel();
     }
 
-
     /**
-     * Set Look & Feel
+     * Status panels
      */
-    public static void setLookAndFeel()
-    {
-
-        try
-        {
-
-            String data[] = DataAccess.getLFData();
-
-            if (data == null)
-                return;
-            else
-            {
-                if (data[0].equals("com.l2fprod.gui.plaf.skin.SkinLookAndFeel"))
-                {
-                    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir + data[1]));
-
-                    s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
-                    UIManager.setLookAndFeel(s_skinlf);
-                }
-                else
-                {
-                    UIManager.setLookAndFeel(data[0]);
-                }
-
-                JFrame.setDefaultLookAndFeelDecorated(true);
-                JDialog.setDefaultLookAndFeelDecorated(true);
-            }
-        }
-        catch (Exception ex)
-        {
-            System.err.println("Error loading L&F: " + ex);
-        }
-
-    }
+    public StatusBar statusPanel;
+    /**
+     * Information panels
+     */
+    public InfoPanel informationPanel;
+    boolean title_set = false;
+    /**
+     * Menu Bar
+     */
+    private JMenuBar menuBar = new JMenuBar();
+    /**
+     * Tool Bars
+     */
+    private Hashtable<GGCToolbarType, JToolBar> toolbars = null;
+    private DataAccess m_da = null;
+    private I18nControlAbstract m_ic = null;
+    private Map<String, JMenu> menus = null;
+    private Map<String, JMenuItem> actions = null;
+    private Map<GGCToolbarType, Map<String, JButton>> toolbarItems = new HashMap<GGCToolbarType, Map<String, JButton>>();
+    // private Hashtable<String, JMenuItem> toolbar_pen_items = null;
+    // private Hashtable<String, JMenuItem> toolbar_pump_items = null;
+    private GGCToolbarType current_toolbar = GGCToolbarType.None;
+    private String next_version = "0.7";
 
 
     /**
@@ -212,6 +168,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         createToolBars();
         this.setSoftwareMode();
         m_da.addObserver(DataAccess.OBSERVABLE_STATUS, this);
+        m_da.addObserver(DataAccess.OBSERVABLE_DB, this);
 
         // getContentPane().add(this.toolbars.get("TOOLBAR_PEN"),
         // BorderLayout.NORTH);
@@ -233,11 +190,65 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     }
 
 
+    /**
+     * Set Look & Feel
+     */
+    public static void setLookAndFeel()
+    {
+
+        try
+        {
+
+            String data[] = DataAccess.getLFData();
+
+            if (data == null)
+                return;
+            else
+            {
+                if (data[0].equals("com.l2fprod.gui.plaf.skin.SkinLookAndFeel"))
+                {
+                    SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir + data[1]));
+
+                    s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
+                    UIManager.setLookAndFeel(s_skinlf);
+                }
+                else
+                {
+                    UIManager.setLookAndFeel(data[0]);
+                }
+
+                JFrame.setDefaultLookAndFeelDecorated(true);
+                JDialog.setDefaultLookAndFeelDecorated(true);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.err.println("Error loading L&F: " + ex);
+        }
+
+    }
+
+
     private void setSoftwareMode()
     {
         setSoftwareMode(false);
     }
 
+
+    /**
+     * Get Software Mode
+     * 
+     * @return
+     */
+    public String getSoftwareMode()
+    {
+        return " [" + m_ic.getMessage(m_da.getSoftwareModeDescription()) + "]";
+    }
+
+
+    // ------------------------------------------------------
+    // -- Menus
+    // ------------------------------------------------------
 
     private void setSoftwareMode(boolean force)
     {
@@ -284,21 +295,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     }
 
-
-    /**
-     * Get Software Mode
-     * 
-     * @return
-     */
-    public String getSoftwareMode()
-    {
-        return " [" + m_ic.getMessage(m_da.getSoftwareModeDescription()) + "]";
-    }
-
-
-    // ------------------------------------------------------
-    // -- Menus
-    // ------------------------------------------------------
 
     private void createMenus()
     {
@@ -431,7 +427,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         this.menuBar.add(this.menus.get("MENU_PRINT"));
 
         GGCPluginType[] keys = { GGCPluginType.MeterToolPlugin, GGCPluginType.PumpToolPlugin,
-                                GGCPluginType.CGMSToolPlugin, };
+                                 GGCPluginType.CGMSToolPlugin, };
 
         for (GGCPluginType key : keys)
         {
@@ -486,6 +482,10 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     }
 
 
+    // ------------------------------------------------------
+    // -- Toolbars
+    // ------------------------------------------------------
+
     private JMenu createMenu(JMenu parent, String name, String tool_tip)
     {
         JMenu item = new JMenu(m_ic.getMessageWithoutMnemonic(name));
@@ -501,10 +501,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         return item;
     }
 
-
-    // ------------------------------------------------------
-    // -- Toolbars
-    // ------------------------------------------------------
 
     private void createToolBars()
     {
@@ -532,7 +528,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         this.createToolbarButton("MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png", GGCToolbarType.PenInjection);
         toolbar.addSeparator(d);
 
-        this.createToolbarButton("MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png", GGCToolbarType.PenInjection);
+        this.createToolbarButton("MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png",
+            GGCToolbarType.PenInjection);
         this.createToolbarButton("MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png",
             GGCToolbarType.PenInjection);
         this.createToolbarButton("MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png",
@@ -706,6 +703,30 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     }
 
 
+    // private void createAction_Old(JMenu menu, String name, String tip, String
+    // action_command, String icon_small)
+    // {
+    // GGCAction action = new GGCAction(name, tip, action_command);
+    //
+    // if (icon_small != null)
+    // {
+    // action.putValue(Action.SMALL_ICON, ATSwingUtils.getImageIcon(icon_small,
+    // 15, 15, this, dataAccess));
+    // // new ImageIcon(getClass().getResource("/icons/" + icon_small)));
+    // // action.putValue(Action.LARGE_ICON_KEY, new
+    // // ImageIcon(getClass().getResource("/icons/" + icon_small)));
+    // }
+    //
+    // if (menu != null)
+    // {
+    // menu.add(action);
+    // }
+    //
+    // // this.actions.put(action_command, item);
+    //
+    // // return action;
+    // }
+
     private void createMenuItem(JMenu menu, String name, String toolTip, String actionCommand, String iconSmall)
     {
         JMenuItem item = new JMenuItem(m_ic.getMessageWithoutMnemonic(name));
@@ -745,29 +766,9 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     }
 
 
-    // private void createAction_Old(JMenu menu, String name, String tip, String
-    // action_command, String icon_small)
-    // {
-    // GGCAction action = new GGCAction(name, tip, action_command);
-    //
-    // if (icon_small != null)
-    // {
-    // action.putValue(Action.SMALL_ICON, ATSwingUtils.getImageIcon(icon_small,
-    // 15, 15, this, dataAccess));
-    // // new ImageIcon(getClass().getResource("/icons/" + icon_small)));
-    // // action.putValue(Action.LARGE_ICON_KEY, new
-    // // ImageIcon(getClass().getResource("/icons/" + icon_small)));
-    // }
-    //
-    // if (menu != null)
-    // {
-    // menu.add(action);
-    // }
-    //
-    // // this.actions.put(action_command, item);
-    //
-    // // return action;
-    // }
+    // ------------------------------------------------------
+    // -- Help
+    // ------------------------------------------------------
 
     /**
      * Set menus by Db Loading status
@@ -841,10 +842,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         setToolbarByDbLoad(status);
     }
 
-
-    // ------------------------------------------------------
-    // -- Help
-    // ------------------------------------------------------
 
     private void helpInit()
     {
@@ -1022,26 +1019,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     }
 
-
-    private void close()
-    {
-        m_da.getSettings().save();
-
-        if (m_da != null)
-        {
-            if (m_da.getDb() != null)
-            {
-                m_da.getDb().closeDb();
-            }
-
-            DataAccess.deleteInstance();
-        }
-
-        dispose();
-        System.exit(0);
-    }
-
-
     /*
      * private JMenuItem addMenuItem(JMenu menu, Action action) { JMenuItem item
      * = menu.add(action);
@@ -1055,6 +1032,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     /*
      * private void addToolBarSpacer() { toolBar.addSeparator(); }
      */
+
 
     // private JButton addToolBarButton(Action action, GGCToolbarType
     // toolbarType)
@@ -1076,6 +1054,25 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     //
     // return button;
     // }
+
+    private void close()
+    {
+        m_da.getSettings().save();
+
+        if (m_da != null)
+        {
+            if (m_da.getDb() != null)
+            {
+                m_da.getDb().closeDb();
+            }
+
+            DataAccess.deleteInstance();
+        }
+
+        dispose();
+        System.exit(0);
+    }
+
 
     public void actionPerformed(ActionEvent e)
     {
@@ -1238,7 +1235,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         }
         else // if ((command.equals("report_pdf_extended")) ||
-        if (command.equals("file_login") || command.equals("report_foodmenu_ext3") || command.equals("file_logout"))
+            if (command.equals("file_login") || command.equals("report_foodmenu_ext3") || command.equals("file_logout"))
         {
             featureNotImplemented(command, "0.7");
         }
@@ -1338,20 +1335,11 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         this.informationPanel.invalidatePanelsConstants();
     }
 
-
-    /**
-     * Refresh panels
-     */
-    public void refreshPanels()
-    {
-        this.informationPanel.refreshPanels();
-    }
-
-
     /*
      * private JButton addToolBarButtonWithName(String cmd) { return
      * addToolBarButton(this.actions.get(cmd)); }
      */
+
 
     // class GGCAction extends AbstractAction
     // {
@@ -1435,6 +1423,15 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     //
     // }
 
+    /**
+     * Refresh panels
+     */
+    public void refreshPanels()
+    {
+        this.informationPanel.refreshPanels();
+    }
+
+
     private void featureNotImplemented(String cmd, String version)
     {
         String text = m_ic.getMessage("FEATURE");
@@ -1462,16 +1459,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     }
 
-    private class CloseListener extends WindowAdapter
-    {
-
-        @Override
-        public void windowClosing(WindowEvent e)
-        {
-            close();
-        }
-    }
-
 
     /**
      * To String
@@ -1483,8 +1470,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     {
         return "GGC::MainFrame";
     }
-
-    boolean title_set = false;
 
 
     /**
@@ -1521,6 +1506,52 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
                 refreshMenus();
             }
         }
+        else if (arg instanceof Exception)
+        {
+            Exception ex = (Exception) arg;
+            log.error("Error connecting to Database: " + ex.getMessage(), ex);
+
+            m_da.createErrorDialog("Main", "Opening Db", ex, getDbSettingsAndCause(false), //
+                getDbSettingsAndCause(true), //
+                m_ic.getMessage("DB_PROBLEM_NOT_CONNECTED_SOLUTION"), //
+                m_ic.getMessage("DB_PROBLEM_NOT_CONNECTED_SOLUTION_TOOLTIP"));
+
+            System.exit(1);
+        }
+    }
+
+
+    private String getDbSettingsAndCause(boolean forToolTip)
+    {
+        HibernateConfiguration hc = m_da.getDb().getHibernateConfiguration();
+
+        StringBuilder sb = new StringBuilder();
+
+        if (!forToolTip)
+        {
+            return String.format(m_ic.getMessage("DB_PROBLEM_NOT_CONNECTED"), hc.db_num, hc.db_conn_name,
+                hc.db_driver_class);
+        }
+        else
+        {
+            // sb.append(
+            // "There was problem connecting/getting metadata from you database.
+            // Likely cause of this might be misconfiguration of your database
+            // connection and/or missing database driver (JDBC).");
+            // sb.append("<br><b>Currently selected configuration is: </b>");
+            // sb.append(hc.db_num);
+            // sb.append(" - " + hc.db_conn_name);
+            // sb.append("<br><b>Driver Class:</b> " + hc.db_driver_class);
+            // sb.append("<br>Connection: " + hc.db_conn_url);
+            // sb.append("<br>Username: " + hc.db_conn_username);
+            // sb.append("<br>Password: " + hc.db_conn_password);
+            // sb.append("<br>Dialect: " + hc.db_hib_dialect);
+
+            return String.format(m_ic.getMessage("DB_PROBLEM_NOT_CONNECTED_TOOLTIP"), hc.db_num, hc.db_conn_name,
+                hc.db_driver_class, hc.db_conn_url, hc.db_conn_username, hc.db_conn_password, hc.db_hib_dialect);
+        }
+        //
+        // return sb.toString();
     }
 
 
@@ -1552,6 +1583,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         private static List<GGCToolbarType> activeValues;
 
+
         static
         {
             activeValues = new ArrayList<GGCToolbarType>();
@@ -1563,6 +1595,16 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         public static List<GGCToolbarType> getActiveValues()
         {
             return activeValues;
+        }
+    }
+
+    private class CloseListener extends WindowAdapter
+    {
+
+        @Override
+        public void windowClosing(WindowEvent e)
+        {
+            close();
         }
     }
 

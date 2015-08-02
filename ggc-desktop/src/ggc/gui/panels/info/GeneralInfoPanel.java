@@ -108,7 +108,11 @@ public class GeneralInfoPanel extends AbstractInfoPanel
 
     private void changeMode(GGCSoftwareMode newMode)
     {
-        if (newMode.equals(this.currentMode))
+        if (newMode==null)
+            return;
+
+
+        if ((this.currentMode!= null) && (newMode.equals(this.currentMode)))
             return;
 
         this.removeAll();

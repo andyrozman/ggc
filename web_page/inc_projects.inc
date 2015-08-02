@@ -29,7 +29,7 @@ supported.
 <h3 class="header">Meter Tool</h3>
 
 Meter Tool implementation is now finished. All that remains is adding support for more Meter Devices.<br>
-<b>Current version:</b> 2.0.3<br>
+<b>Current version:</b> 2.2<br>
 <br><br>
 <b><i>Tasks that are already done:</i></b>
 <ul>
@@ -47,17 +47,17 @@ Meter Tool implementation is now finished. All that remains is adding support fo
     <ul>
         <li>Ascensia/Bayer - Contour, Countour Link, Dex, Elite, Breeze </li>
         <li>Roche/Accu-Chek - All devices supported through Smart Pix device</li>
-        <li>Lifescan - OT Ultra, <strike>OT Ultra2</strike>, OT Ultra Smart (partitial), OT Easy/Mini </li>
+        <li>Lifescan - OT Ultra, OT Ultra Smart (partitial), OT Easy/Mini </li>
     </ul>
 </ul>
 <br>
 <b><i>Planned devices: </i></b>
 <ul>
     <li>Abbott - Some of them</li>
-    <li>Ascensia: Contour USB</li>
+    <li>Ascensia: Contour USB, Contour Next, Contour Next Link</li>
     <li>Arkray: Glucocard X-mini plus</li>
     <li>Calla Light</li>
-    <li>OT: Verio, Smart</li>
+    <li>Lifescan: Verio, Smart, OT Ultra2</li>
 </ul>
 
 
@@ -70,7 +70,7 @@ Meter Tool implementation is now finished. All that remains is adding support fo
 
 Pump Tool development is mostly finished. Some of functionalities still need to be completed, but most of stuff
 works. We still need to add support for more devices.<br> 
-<b>Current version:</b> 1.3.4<br>
+<b>Current version:</b> 1.5.1<br>
 <br><br>
 
 
@@ -92,22 +92,26 @@ works. We still need to add support for more devices.<br>
     <ul>
         <li>Roche/Disetronic: Spirit, Combo
         <li>Sooil: Dana III
+        <li>Omni Pod
+        <li>Animas 1200 and greater (including Vibe)
     </ul>
 </ul>
 
 
-<br><br>
+<br>
 <b><i>Tasks that need to be done:</i></b>
 <ul>
-    <li>Graphs (0.6) (waiting on Graphs v2 with Editor)</li>
+    <li>Graphs (0.7) (waiting on Graphs v2 with Editor)</li>
 </ul>
+
 <br>
+
 <b><i>Planned devices: </i></b>
 <ul>
-    <li>MiniMed (2015)
-    <li>Animas (unknown) [we have one developer working just on this]
-    <li>Smith's Cosmo (?)
-    <li>Omni Pod (?)
+    <li>MiniMed (end of 2015)
+    <li>MiniMed 530G (??)
+    <li>Tandem [no support from company yet, perhaps in future]
+
 </ul>
 
 <br>
@@ -116,7 +120,7 @@ works. We still need to add support for more devices.<br>
 
 CGMS tool is still in implementation phase. Base framework is finished, and some imports are already working,
 but we still need to do some implementation and also same analysis on the problem.<br>
-<b>Current version:</b> 1.0.3<br>
+<b>Current version:</b> 1.3.2<br>
 <br><br>
 
 <b><i>Tasks that are already done:</i></b>
@@ -124,24 +128,34 @@ but we still need to do some implementation and also same analysis on the proble
     <li>Base framework for CGMS</li>
     <li>Communication framework for CGMS (interface that all CGMS will use)</li>
     <li>Configuration and graphical interface for integration into GGC</li>
+    <li>List of CGMS</li>
     <li>Output types:</li>
     <ul>
         <li>Console and file output
         <li>GGC Db Output (for manual import)
         <li>GGC Output (GUI integration)
     </ul>
+    <li>Specific CGMS models implementations:</li>
+        <ul>
+            <li>Dexcom G4
+            <li>Animas Vibe (Dexcom Integration)
+        </ul>
 </ul>
+
+<br>
 
 <b><i>Tasks that need to be done:</i></b>
 <ul>
-    <li>List of CGMS (0.6)</li>
-    <li>Graphs (0.6) (waiting on Graphs v2 with Editor)</li>
-    <li>Specific CGMS models implementations:</li>
-    <ul>
-        <li>MiniMed (2015)
-        <li>Dexcom (?, we currently suppport only import through export file from DM3 app)
-        <li>Abbott (?)
-    </ul>
+    <li>Graphs (0.7) (waiting on Graphs v2 with Editor)</li>
+</ul>
+
+<br>
+
+<b><i>Planned devices: </i></b>
+<ul>
+    <li>MiniMed (2016)
+    <li>Dexcom 7 (?)
+    <li>Abbott (?)
 </ul>
 
 
