@@ -1,20 +1,13 @@
 package ggc.meter.manager;
 
-import ggc.meter.manager.company.Abbott;
-import ggc.meter.manager.company.AscensiaBayer;
-import ggc.meter.manager.company.DiabeticSupplyOfSunCoast;
-import ggc.meter.manager.company.HipoGuard;
-import ggc.meter.manager.company.HomeDiagnostic;
-import ggc.meter.manager.company.LifeScan;
-import ggc.meter.manager.company.Menarini;
-import ggc.meter.manager.company.Prodigy;
-import ggc.meter.manager.company.Roche;
-import ggc.meter.manager.company.Sanvita;
-import ggc.meter.manager.company.USDiagnostic;
-import ggc.meter.manager.company.Wavesense;
-import ggc.plugin.manager.DeviceManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import ggc.meter.data.defs.MeterDeviceDefinition;
+import ggc.meter.device.MeterDeviceInstanceWithHandler;
+import ggc.meter.manager.company.*;
+import ggc.plugin.device.v2.DeviceDefinition;
+import ggc.plugin.manager.DeviceManager;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,12 +37,14 @@ import org.apache.commons.logging.LogFactory;
 
 public class MeterManager extends DeviceManager
 {
+
     private static Log LOG = LogFactory.getLog(MeterManager.class);
 
     /**
      * Singleton instance
      */
     public static MeterManager s_manager = null;
+
 
     /**
      * Constructor
@@ -59,11 +54,21 @@ public class MeterManager extends DeviceManager
         super();
     }
 
+
     @Override
     protected void loadDeviceInstancesV2()
     {
-        LOG.error("loadDeviceInstancesV2 not implemented !");
+        for (DeviceDefinition dd : MeterDeviceDefinition.getAllDevices())
+        {
+            MeterDeviceDefinition pdd = (MeterDeviceDefinition) dd;
+
+            MeterDeviceInstanceWithHandler di = new MeterDeviceInstanceWithHandler(pdd);
+
+            this.supportedDevicesV2.put(di.getCompany().getName() + "_" + di.getName(), di);
+            this.supportedDevicesForSelector.add(di);
+        }
     }
+
 
     /**
      * Get MeterManager instance
@@ -79,6 +84,7 @@ public class MeterManager extends DeviceManager
 
         return MeterManager.s_manager;
     }
+
 
     /**
      * Load devices companies
@@ -100,17 +106,17 @@ public class MeterManager extends DeviceManager
         addDeviceCompany(new Wavesense());
     }
 
-//    /**
-//     * Load Supported Devices
-//     */
-//    @Override
-//    public void loadSupportedDevices()
-//    {
-//        this.supported_devices.addAll(new AscensiaBayer().getDevices());
-//        this.supported_devices.addAll(new Roche().getDevices());
-//        this.supported_devices.addAll(new LifeScan().getDevices());
-//        this.supported_devices.addAll(new Abbott().getDevices());
-//        this.supported_devices.addAll(new Menarini().getDevices());
-//    }
+    // /**
+    // * Load Supported Devices
+    // */
+    // @Override
+    // public void loadSupportedDevices()
+    // {
+    // this.supported_devices.addAll(new AscensiaBayer().getDevices());
+    // this.supported_devices.addAll(new Roche().getDevices());
+    // this.supported_devices.addAll(new LifeScan().getDevices());
+    // this.supported_devices.addAll(new Abbott().getDevices());
+    // this.supported_devices.addAll(new Menarini().getDevices());
+    // }
 
 }

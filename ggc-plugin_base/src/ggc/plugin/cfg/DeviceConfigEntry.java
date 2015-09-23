@@ -1,11 +1,11 @@
 package ggc.plugin.cfg;
 
-import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -96,6 +96,7 @@ public class DeviceConfigEntry
     DeviceConfigurationDefinition dcd;
     DataAccessPlugInBase m_da;
 
+
     /**
      * Constructor
      * 
@@ -110,6 +111,7 @@ public class DeviceConfigEntry
         this.m_da = da;
     }
 
+
     /**
      * Constructor
      * 
@@ -119,6 +121,7 @@ public class DeviceConfigEntry
     {
         this.ic = ic;
     }
+
 
     /**
      * Clone
@@ -146,6 +149,7 @@ public class DeviceConfigEntry
         return dce;
     }
 
+
     /**
      * Set Device Configuration Definition
      * 
@@ -156,6 +160,7 @@ public class DeviceConfigEntry
         this.dcd = dcd;
     }
 
+
     /**
      * Process Communication Settings
      */
@@ -163,11 +168,13 @@ public class DeviceConfigEntry
     {
         this.communication_port = DeviceSpecialConfigPanelAbstract.findDefaultParameter(this.communication_port_raw);
 
-        if (this.communication_port == null || this.communication_port.equals("null"))
+        if (this.communication_port == null || this.communication_port.equals("null")
+                || ic.getMessage("NOT_SET").equals(communication_port))
         {
             this.communication_port = "";
         }
     }
+
 
     /**
      * Set Id (int)
@@ -179,6 +186,7 @@ public class DeviceConfigEntry
         this.id = id;
     }
 
+
     /**
      * Set Id (String)
      * 
@@ -188,6 +196,7 @@ public class DeviceConfigEntry
     {
         this.id = Integer.parseInt(id);
     }
+
 
     /**
      * Get DayLight Fix
@@ -203,6 +212,7 @@ public class DeviceConfigEntry
 
     }
 
+
     /**
      * Get DayLight Fix Long
      * 
@@ -217,6 +227,7 @@ public class DeviceConfigEntry
 
     }
 
+
     /**
      * Is Valid
      * 
@@ -226,6 +237,7 @@ public class DeviceConfigEntry
     {
         return this.valid;
     }
+
 
     /**
      * Raed Configuration
@@ -287,6 +299,7 @@ public class DeviceConfigEntry
 
     }
 
+
     /**
      * Get File Entry
      * 
@@ -316,6 +329,7 @@ public class DeviceConfigEntry
         return sb.toString();
     }
 
+
     /**
      * Get Time Change
      * 
@@ -334,6 +348,7 @@ public class DeviceConfigEntry
 
     }
 
+
     private String getBoolean(boolean val)
     {
         if (val)
@@ -341,6 +356,7 @@ public class DeviceConfigEntry
         else
             return "NO";
     }
+
 
     private String getParameter(String tag, int selected, Hashtable<String, String> cfg, boolean validate)
     {
@@ -358,6 +374,7 @@ public class DeviceConfigEntry
         return null;
     }
 
+
     private boolean getParameterBoolean(String tag, int selected, Hashtable<String, String> cfg)
     {
         String par = getParameter(tag, selected, cfg, false);
@@ -371,6 +388,7 @@ public class DeviceConfigEntry
             return false;
 
     }
+
 
     private int getParameterInt(String tag, int selected, Hashtable<String, String> cfg)
     {
@@ -397,6 +415,7 @@ public class DeviceConfigEntry
         }
     }
 
+
     /**
      * To String
      * 
@@ -417,21 +436,19 @@ public class DeviceConfigEntry
         if (this.dcd.doesDeviceSupportTimeFix())
         {
             sb.append(", timezone=" + this.ds_area + ", ");
-            sb.append("timezone_long=" + this.ds_area_long +", ");
+            sb.append("timezone_long=" + this.ds_area_long + ", ");
             sb.append("daylightsaving_fix=" + getBoolean(this.ds_fix) + ", ");
-            sb.append("winter_fix=" + getTimeChange(this.ds_winter_change) +", ");
-            sb.append("summer_fix=" + getTimeChange(this.ds_summer_change) );
+            sb.append("winter_fix=" + getTimeChange(this.ds_winter_change) + ", ");
+            sb.append("summer_fix=" + getTimeChange(this.ds_summer_change));
         }
-
-
 
         sb.append("]");
 
         return sb.toString();
 
-
-        //return "ds_fix=" + this.ds_fix + ",area=" + this.ds_area + ",winter=" + this.ds_winter_change + ",summer="
-        //        + this.ds_summer_change;
+        // return "ds_fix=" + this.ds_fix + ",area=" + this.ds_area + ",winter="
+        // + this.ds_winter_change + ",summer="
+        // + this.ds_summer_change;
     }
 
 }

@@ -273,11 +273,6 @@
                 </exclusions>
             </dependency>
 
-            <dependency>
-                <groupId>net.java.dev.jna</groupId>
-                <artifactId>jna</artifactId>
-                <version>${jna.version}</version>
-            </dependency>
 
             <!--This is some outdated library which we use only for BlueTooth, it
                 needs to be removed or changed, but so far it's here and it's version is
@@ -289,37 +284,44 @@
                 <version>${ibm-compapi.version}</version>
             </dependency>
 
-            <!-- This library is created in parallel to GGC and it should be used
-                for USB communication. For USB devices that have HID interfaces (most of
-                them), we will use other library, but for legacy support we use this for
-                now. -->
-
             <!--
-			<dependency>
-				<groupId>net.sf.ggc.libusb4j</groupId>
-				<artifactId>libusb4jwo</artifactId>
-				<version>${libusb4jwo.version}</version>
-			</dependency>
-			-->
-
-            <!--
-			<dependency>
-				<groupId>com.codeminders</groupId>
-				<artifactId>hidapi</artifactId>
-				<version>${hidapi.version}</version>
-			</dependency>
-            -->
-
             <dependency>
-                <groupId>com.neuronrobotics</groupId>
-                <artifactId>nrjavaserial</artifactId>
-                <version>${nrjavaserial.version}</version>
+                 <groupId>com.neuronrobotics</groupId>
+                 <artifactId>nrjavaserial</artifactId>
+                 <version>${nrjavaserial.version}</version>
             </dependency>
-
+-->
             <dependency>
                 <groupId>jaxen</groupId>
                 <artifactId>jaxen</artifactId>
                 <version>${jaxen.version}</version>
+            </dependency>
+
+            <!--
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>${jna.version}</version>
+            </dependency>
+            -->
+
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna-j15</artifactId>
+                <version>${jna-j15.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hid4java</groupId>
+                <artifactId>hid4java-j15</artifactId>
+                <version>${hid4java-j15.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.neuronrobotics</groupId>
+                <artifactId>nrjavaserial-j15</artifactId>
+                <version>${nrjavaserial-j15.version}</version>
             </dependency>
 
         </dependencies>
@@ -358,17 +360,20 @@
         <javahelp.version>2.0.05</javahelp.version>
 
         <!-- NEW THIS VERSION -->
-        <hidapi.version>1.1</hidapi.version>
-        <!-- remove ?? use hid4java perhaps -->
-        <nrjavaserial.version>3.9.3-GGC</nrjavaserial.version>
+
         <icepdf-core.version>5.0.7</icepdf-core.version>
         <icepdf-viewer.version>5.0.7</icepdf-viewer.version>
         <jaxen.version>1.1.6</jaxen.version>
 
         <!-- NEW VERSION IN THIS VERSION -->
-        <jna.version>3.3.0</jna.version>
-        <!-- 3.5.3 -->
         <atech-tools.version>0.7.12-SNAPSHOT</atech-tools.version>
+        <jna-j15.version>4.1.0</jna-j15.version>
+        <hid4java-j15.version>0.3.1</hid4java-j15.version>
+        <nrjavaserial-j15.version>3.9.3.1</nrjavaserial-j15.version>
+
+        <!-- Removed -->
+        <jna.version>4.1.0-GGC</jna.version>
+        <nrjavaserial.version>3.9.3-GGC</nrjavaserial.version>
 
 
         <maven.compiler.source>1.5</maven.compiler.source>

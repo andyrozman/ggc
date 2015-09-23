@@ -3,8 +3,6 @@ package ggc.meter.device;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.device.DeviceInterface;
-import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.v2.DeviceInterfaceV2;
 
 /**
@@ -45,6 +43,7 @@ public interface MeterInterfaceV2 extends SelectableInterface, DeviceInterfaceV2
      */
     public int getMaxMemoryRecords();
 
+
     // ************************************************
     // *** Available Functionality for Meter ***
     // ************************************************
@@ -55,15 +54,6 @@ public interface MeterInterfaceV2 extends SelectableInterface, DeviceInterfaceV2
      */
     public DeviceIdentification getDeviceInfo();
 
-    /**
-     * Meter Interface - Simple (for normal meter devices, which store only BG data)
-     */
-    public static final int METER_INTERFACE_SIMPLE = 1;
-
-    /**
-     * Meter Interface - Extended (for meter devices, which store more then just BG data)
-     */
-    public static final int METER_INTERFACE_EXTENDED = 2;
 
     /**
      * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
@@ -71,6 +61,6 @@ public interface MeterInterfaceV2 extends SelectableInterface, DeviceInterfaceV2
      *    ... - OT Smart, etc), this devices require more extended data display. 
      * @return
      */
-    public int getInterfaceTypeForMeter();
+    MeterDisplayInterfaceType getInterfaceTypeForMeter();
 
 }

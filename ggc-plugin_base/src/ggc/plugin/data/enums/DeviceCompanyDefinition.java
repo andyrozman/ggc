@@ -21,14 +21,15 @@ public enum DeviceCompanyDefinition
     Sooil(7),
 
     // 1xx = Meter
-    Ascensia(1),
+    Ascensia(101, "Ascensia/Bayer", "", DeviceImplementationStatus.InProgress),
 
     // 3xx = CGMS
-    Dexcom(301, "Dexcom", "", DeviceImplementationStatus.Partitial),
+    Dexcom(301, "Dexcom", "", DeviceImplementationStatus.Partitial), //
 
     // 4xx = Pump + CGMS
-    Animas(401, "Animas", "", DeviceImplementationStatus.Testing), Minimed(402, "Minimed", "",
-            DeviceImplementationStatus.Planned),
+    Animas(401, "Animas", "", DeviceImplementationStatus.Testing), //
+
+    Minimed(402, "Minimed", "", DeviceImplementationStatus.Planned), //
 
     ;
 

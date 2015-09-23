@@ -183,7 +183,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
         int wide_add = 0;
 
-        if (m_da.isDataDownloadSceenWide())
+        if (m_da.isDataDownloadScreenWide())
         {
             wide_add = 100;
         }

@@ -8,16 +8,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.TimeZoneUtil;
 
-import ggc.core.data.defs.GlucoseUnitType;
-import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.manager.MeterDevicesIds;
+import ggc.meter.device.ascensia.impl.AscensiaDecoder;
 import ggc.meter.manager.company.AscensiaBayer;
 import ggc.meter.util.DataAccessMeter;
-import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -64,8 +60,6 @@ import gnu.io.SerialPortEvent;
 public abstract class AscensiaMeter extends AbstractSerialMeter
 {
 
-    // protected I18nControl i18nControlAbstract = I18nControl.getInstance();
-
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     private static Log log = LogFactory.getLog(AscensiaMeter.class);
 
@@ -76,6 +70,8 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     String end_strings[] = null;
     String text_def[] = null;
     boolean device_running;
+    private AscensiaDecoder decoder;
+
 
     /**
      * Constructor
@@ -84,15 +80,17 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     {
     }
 
+
     /**
      * Constructor
      * 
-     * @param cmp
+     * @param cmp abstract device company instance
      */
     public AscensiaMeter(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
+
 
     /**
      * Constructor
@@ -105,6 +103,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         this(portName, writer, DataAccessMeter.getInstance());
     }
 
+
     /**
      * Constructor
      * 
@@ -115,6 +114,8 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     public AscensiaMeter(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(comm_parameters, writer, da);
+
+        decoder = new AscensiaDecoder(writer);
 
         // communcation settings for this meter(s)
         this.setCommunicationSettings(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE,
@@ -144,41 +145,30 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
             this.outputWriter.writeHeader();
 
-            // this.serialPort.notifyOnOutputEmpty(true); // notify on empty for
-            // stopping
-            // this.serialPort.notifyOnBreakInterrupt(true); // notify on break
-            // interrupt for stopping
-
             // setting specific for this driver
             this.end_strings = new String[2];
-            end_strings[0] = new Character((char) 3).toString(); // ETX - End of
-                                                                 // Text
-            end_strings[1] = new Character((char) 4).toString(); // EOT - End of
-                                                                 // Transmission
-            // end_strings[2] = (new Character((char)23)).toString(); // ETB -
-            // End of Text
+
+            // ETX - End of Text
+            end_strings[0] = Character.toString((char) 3);
+            // EOT - End of Transmission
+            end_strings[1] = Character.toString((char) 4);
 
             this.text_def = new String[3];
-            this.text_def[0] = new Character((char) 2).toString(); // STX -
-                                                                   // Start of
-                                                                   // Text
-            this.text_def[1] = new Character((char) 3).toString(); // ETX -
-                                                                   // Start of
-                                                                   // Text
-            this.text_def[2] = new Character((char) 13).toString(); // EOL -
-                                                                    // Start of
-                                                                    // Text
+            // STX - Start of Text
+            this.text_def[0] = Character.toString((char) 2);
+            // ETX - Start of Text
+            this.text_def[1] = Character.toString((char) 3);
+            // EOL - Start of Text
+            this.text_def[2] = Character.toString((char) 13);
 
         }
         catch (Exception ex)
         {
             log.error("Exception on create:" + ex, ex);
-            // System.out.println("AscensiaMeter -> Exception on create: " +
-            // ex);
-            // ex.printStackTrace();
         }
 
     }
+
 
     // ************************************************
     // *** Device Implemented methods ***
@@ -222,14 +212,15 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     }
 
+
     private void sendToProcess(String text)
     {
         boolean stx = false;
-        int stx_idx = 0;
+        int stx_idx;
         boolean etx = false;
-        int etx_idx = 0;
+        int etx_idx;
         boolean eol = false;
-        int eol_idx = 0;
+        int eol_idx;
 
         // System.out.println("Send: " + text);
 
@@ -325,6 +316,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     }
 
+
     private boolean isDeviceStopped(String vals)
     {
         if (!this.device_running)
@@ -348,6 +340,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     }
 
+
     /**
      * Set Device Stopped
      */
@@ -356,6 +349,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         this.device_running = false;
         this.outputWriter.endOutput();
     }
+
 
     /**
      * We don't use serial event for reading data, because process takes too long, we use serial event just 
@@ -400,19 +394,21 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         }
     }
 
+
     protected void processData(String input)
     {
         input = ATDataAccessAbstract.replaceExpression(input, "||", "|_|");
 
         if (input.contains("|^^^Glucose|"))
         {
-            readData(input);
+            decoder.decodeResultNonUsbMeters(input);
         }
         else if (input.contains("|Bayer"))
         {
             readDeviceIdAndSettings(input);
         }
     }
+
 
     protected void readDeviceIdAndSettings(String input)
     {
@@ -435,76 +431,15 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         // System.out.println("Device:\n" + devId + "\nDate: " + date);
         // System.out.println("Data (" + strtok.countTokens() + "): " + input);
 
-        readDeviceId(devId);
+        decoder.decodeHeaderDeviceIdentification(devId);
+
+        // readDeviceId(devId);
         readDateInformation(date);
 
         this.outputWriter.writeDeviceIdentification();
 
     }
 
-    protected void readDeviceId(String input)
-    {
-
-        DeviceIdentification di = this.outputWriter.getDeviceIdentification();
-
-        // System.out.println("readDeviceId: " + input);
-        StringTokenizer strtok = new StringTokenizer(input, "^");
-
-        String inf = "";
-
-        String id = strtok.nextToken();
-        String versions = strtok.nextToken();
-        String serial = strtok.nextToken();
-
-        inf += i18nControlAbstract.getMessage("PRODUCT_CODE") + ": ";
-
-        String tmp;
-
-        if (id.equals("Bayer6115") || id.equals("Bayer6116"))
-        {
-            // inf += "BREEZE Meter Family (";
-            tmp = "Breeze Family (";
-        }
-        else if (id.equals("Bayer7150"))
-        {
-            tmp = "CONTOUR Meter Family (";
-        }
-        else if (id.equals("Bayer3950"))
-        {
-            tmp = "DEX Meter Family (";
-        }
-        else if (id.equals("Bayer3883"))
-        {
-            tmp = "ELITE XL Meter Family (";
-        }
-        else
-        {
-            tmp = "Unknown Meter Family (";
-        }
-
-        tmp += id;
-        tmp += ")";
-
-        di.device_identified = tmp;
-
-        inf += tmp;
-        inf += "\n";
-
-        StringTokenizer strtok2 = new StringTokenizer(versions, "\\");
-
-        di.device_software_version = strtok2.nextToken();
-        di.device_hardware_version = strtok2.nextToken();
-        di.device_serial_number = serial;
-
-        inf += i18nControlAbstract.getMessage("SOFTWARE_VERSION") + ": " + di.device_software_version;
-        inf += i18nControlAbstract.getMessage("\nEEPROM_VERSION") + ": " + di.device_hardware_version;
-
-        inf += i18nControlAbstract.getMessage("\nSERIAL_NUMBER") + ": " + serial;
-
-        // this.m_info = inf;
-        System.out.println("Info: " + inf);
-
-    }
 
     protected void readDateInformation(String dt)
     {
@@ -530,94 +465,6 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
     }
 
-    boolean header_set = false;
-
-    protected void readData(String input)
-    {
-        try
-        {
-
-            StringTokenizer strtok = new StringTokenizer(input, "|");
-
-            boolean found = false;
-
-            // we search for entry containing Glucose... (in case that data was
-            // not
-            // received entirely)
-            while (!found && strtok.hasMoreElements())
-            {
-                String s = strtok.nextToken();
-                if (s.equals("^^^Glucose"))
-                {
-                    found = true;
-                }
-            }
-
-            if (!found)
-                return;
-
-            // System.out.println(input);
-
-            MeterValuesEntry mve = new MeterValuesEntry();
-
-            String val = strtok.nextToken();
-
-            // System.out.println("val:" + val);
-
-            // mve.setBgValue(val); // bg_value
-            String unit = strtok.nextToken(); // unit mmol/L^x, mg/dL^x
-
-            mve.addParameter("REF_RANGES", strtok.nextToken()); // Reference
-                                                                // ranges (Dex
-                                                                // Only)
-            mve.addParameter("RES_ABNORMAL_FLAGS", strtok.nextToken()); // Result
-                                                                        // abnormal
-                                                                        // flags
-                                                                        // (7)
-            mve.addParameter("USER_MARKS", strtok.nextToken()); // User Marks
-                                                                // (8)
-            mve.addParameter("RES_STATUS_MARKER", strtok.nextToken()); // Result
-                                                                       // status
-                                                                       // marker
-            strtok.nextToken(); // N/A
-            strtok.nextToken(); // OperatorId (N/A)
-
-            String time = strtok.nextToken(); // datetime
-
-            mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(Long.parseLong(time))));
-
-            if (unit.startsWith("mg/dL"))
-            {
-                mve.setBgValue(val, GlucoseUnitType.mg_dL);
-                // this.m_output.writeBGData(atd, bg_value, OutputUtil.BG_MGDL);
-                // dv.setBG(DailyValuesRow.BG_MGDL, value);
-            }
-            else
-            {
-                mve.setBgValue(getCorrectDecimal(val), GlucoseUnitType.mmol_L);
-                // this.m_output.writeBGData(atd, bg_value, OutputUtil.BG_MMOL);
-                // dv.setBG(DailyValuesRow.BG_MMOLL, value);
-            }
-
-            this.outputWriter.writeData(mve);
-
-        }
-        catch (Exception ex)
-        {
-            System.out.println("Exception: " + ex);
-            System.out.println("Entry: " + input);
-            ex.printStackTrace();
-        }
-
-        // this.data.add(dv);
-
-    }
-
-    protected String getCorrectDecimal(String input)
-    {
-        float f = Float.parseFloat(input);
-        return DataAccessPlugInBase.Decimal1Format.format(f).replace(',', '.');
-    }
 
     // ************************************************
     // *** Test ***
@@ -631,6 +478,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     {
     }
 
+
     /**
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
@@ -639,6 +487,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
+
 
     /** 
      * This is method for reading configuration
@@ -650,6 +499,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     {
     }
 
+
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do). 
@@ -660,27 +510,10 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     {
     }
 
-    /**
-     * getCompanyId - Get Company Id 
-     * 
-     * @return id of company
-     */
-    public int getCompanyId()
-    {
-        return MeterDevicesIds.COMPANY_ASCENSIA;
-    }
 
-
-    /**
-     * getImplementationStatus - Get implementation status
-     *
-     * @return implementation status as number
-     * @see ggc.plugin.manager.DeviceImplementationStatus
-     */
     public DeviceImplementationStatus getImplementationStatus()
     {
         return DeviceImplementationStatus.Done;
     }
-
 
 }

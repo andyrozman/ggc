@@ -61,7 +61,7 @@ public class PumpManager extends DeviceManager
     @Override
     protected void loadDeviceInstancesV2()
     {
-        for (DeviceDefinition dd : PumpDeviceDefinition.getSupportedDevices())
+        for (DeviceDefinition dd : PumpDeviceDefinition.getAllDevices())
         {
             PumpDeviceDefinition pdd = (PumpDeviceDefinition) dd;
 

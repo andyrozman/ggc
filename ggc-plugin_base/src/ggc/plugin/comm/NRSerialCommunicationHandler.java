@@ -10,6 +10,8 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.utils.data.BitUtils;
 
+import ggc.plugin.comm.cfg.SerialSettings;
+import ggc.plugin.comm.cfg.SerialSettingsType;
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import gnu.io.NRSerialPort;

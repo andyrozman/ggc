@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import ggc.plugin.data.enums.DeviceEntryStatus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -18,9 +17,14 @@ import ggc.meter.data.MeterDataHandler;
 import ggc.meter.data.MeterDataReader;
 import ggc.meter.data.cfg.MeterConfigurationDefinition;
 import ggc.meter.data.db.GGCMeterDb;
+import ggc.meter.device.MeterDeviceInstanceWithHandler;
+import ggc.meter.device.MeterDisplayInterfaceType;
 import ggc.meter.device.MeterInterface;
+import ggc.meter.device.ascensia.AscensiaUsbMeterHandler;
 import ggc.meter.manager.MeterManager;
 import ggc.plugin.cfg.DeviceConfiguration;
+import ggc.plugin.data.enums.DeviceEntryStatus;
+import ggc.plugin.device.mgr.DeviceHandlerManager;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -118,7 +122,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         createPlugInVersion();
         loadDeviceDataHandler();
         // loadManager();
-        //loadReadingStatuses();
+        // loadReadingStatuses();
         createPlugInDataRetrievalContext();
         loadWebLister();
         createOldDataReader();
@@ -128,10 +132,12 @@ public class DataAccessMeter extends DataAccessPlugInBase
         prepareTranslationForEnums();
     }
 
-    private void prepareTranslationForEnums()
+
+    public void prepareTranslationForEnums()
     {
         DeviceEntryStatus.translateKeywords(this.getI18nControlInstance());
     }
+
 
     // Method: getInstance
     // Author: Andy
@@ -184,6 +190,9 @@ public class DataAccessMeter extends DataAccessPlugInBase
     public void registerDeviceHandlers()
     {
         // DeviceHandlerManager.getInstance().addDeviceHandler();
+
+        // Ascensia
+        DeviceHandlerManager.getInstance().addDeviceHandler(new AscensiaUsbMeterHandler());
     }
 
 
@@ -260,8 +269,8 @@ public class DataAccessMeter extends DataAccessPlugInBase
         // lst_features.add(fg);
 
         fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra2 (in 2011)"));
-        fg.addFeaturesEntry(new FeaturesEntry("???"));
+        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra2 (in 2015)"));
+        fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer: Usb devices"));
 
         lst_features.add(fg);
 
@@ -501,14 +510,28 @@ public class DataAccessMeter extends DataAccessPlugInBase
      * @return
      */
     @Override
-    public boolean isDataDownloadSceenWide()
+    public boolean isDataDownloadScreenWide()
     {
-        MeterInterface mi = (MeterInterface) this.getSelectedDeviceInstance();
 
-        if (mi.getInterfaceTypeForMeter() == MeterInterface.METER_INTERFACE_SIMPLE)
-            return false;
+        MeterDisplayInterfaceType displayInterfaceType = MeterDisplayInterfaceType.Simple;
+
+        if (getSelectedDeviceInstance() instanceof MeterInterface)
+        {
+            MeterInterface mi = (MeterInterface) getSelectedDeviceInstance();
+
+            if (mi.getInterfaceTypeForMeter() != MeterInterface.METER_INTERFACE_SIMPLE)
+            {
+                displayInterfaceType = MeterDisplayInterfaceType.Extended;
+            }
+        }
         else
-            return true;
+        {
+            MeterDeviceInstanceWithHandler deviceInstance = (MeterDeviceInstanceWithHandler) getSelectedDeviceInstance();
+
+            displayInterfaceType = deviceInstance.getInterfaceTypeForMeter();
+        }
+
+        return (displayInterfaceType == MeterDisplayInterfaceType.Extended);
     }
 
 
@@ -529,6 +552,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         return "GGC Meter Plugin";
     }
+
 
     @Override
     public void prepareGraphContext()

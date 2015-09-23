@@ -10,7 +10,7 @@
      </parent>
 
 
-    <groupId>com.infonova.hdplus.jtf</groupId>
+    <groupId>net.sf.ggc</groupId>
     <artifactId>ggc-root</artifactId>
     <name>ggc-root</name>
     <packaging>pom</packaging>

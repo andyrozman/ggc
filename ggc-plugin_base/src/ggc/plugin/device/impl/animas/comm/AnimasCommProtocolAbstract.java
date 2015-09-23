@@ -7,7 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import ggc.plugin.comm.NRSerialCommunicationHandler;
-import ggc.plugin.comm.SerialSettings;
+import ggc.plugin.comm.cfg.SerialSettings;
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;

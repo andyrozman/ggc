@@ -1293,7 +1293,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      *
      * @return
      */
-    public boolean isDataDownloadSceenWide()
+    public boolean isDataDownloadScreenWide()
     {
         return this.data_download_screen_wide;
     }
@@ -1394,6 +1394,38 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
                     : this.selectedDeviceInstanceV1;
         }
 
+    }
+
+
+    public boolean isSelectedDeviceOldType()
+    {
+        return (this.selectedDeviceInstanceV1 != null);
+    }
+
+
+    public String getCompanyNameForSelectedDevice()
+    {
+        if (isSelectedDeviceOldType())
+        {
+            return this.selectedDeviceInstanceV1.getDeviceCompany().getName();
+        }
+        else
+        {
+            return this.selectedDeviceInstanceV2.getCompany().getName();
+        }
+    }
+
+
+    public String getDeviceNameForSelectedDevice()
+    {
+        if (isSelectedDeviceOldType())
+        {
+            return this.selectedDeviceInstanceV1.getName();
+        }
+        else
+        {
+            return this.selectedDeviceInstanceV2.getName();
+        }
     }
 
 

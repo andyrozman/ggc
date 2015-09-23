@@ -10,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.meter.data.db.GGCMeterDb;
-import ggc.meter.device.MeterInterface;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
@@ -134,7 +133,6 @@ public class MeterDataHandler extends DeviceDataHandler
         Hashtable<String, PumpDataExtendedH> pumpData = db.getPumpData(timeMarksWithChangedData);
         this.setCustomStatus(1, 10);
 
-
         // 5. add/edit pump items
 
         for (Map.Entry<Long, HashMap<MeterValuesEntryDataType, Object>> timeData : timeMarksWithChangedData.entrySet())
@@ -206,7 +204,6 @@ public class MeterDataHandler extends DeviceDataHandler
         }
     }
 
-
     int current_static_stat = 0;
     int element_current = 0;
     int elementCountAll = 0;
@@ -270,9 +267,7 @@ public class MeterDataHandler extends DeviceDataHandler
             createDeviceValuesTableModel();
         }
 
-        MeterInterface mi = (MeterInterface) m_da.getSelectedDeviceInstance();
-
-        if (mi.getInterfaceTypeForMeter() == MeterInterface.METER_INTERFACE_SIMPLE)
+        if (!m_da.isDataDownloadScreenWide())
             return m_model;
         else
             return m_model2;

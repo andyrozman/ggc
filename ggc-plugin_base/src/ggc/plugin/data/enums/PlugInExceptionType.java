@@ -21,6 +21,7 @@ public enum PlugInExceptionType
     DeviceCouldNotBeContacted("Device could not be contacted."), //
     TimeoutReadingData("Timeout reading data from device."), //
     DeviceErrorWritingToDevice("EXC_RECEIVER_ERROR_WRITING"), //
+    DeviceNotFound("Device not found."), //
 
     // Communication Port
     CommunicationPortClosed("Communication Port is closed."), //

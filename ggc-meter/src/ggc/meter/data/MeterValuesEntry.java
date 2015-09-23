@@ -65,6 +65,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     private HashMap<String, String> extendedMap;
     public MeterValuesEntryDataType extendedType = MeterValuesEntryDataType.None;
 
+
     /**
      * Constructor
      */
@@ -75,6 +76,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         this.loadExtendedEntries(null);
         resetExtendedType();
     }
+
 
     /**
      * Constructor
@@ -108,6 +110,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         this.datetime = dt;
     }
 
+
     /**
      * Get DateTime Object (ATechDate)
      * 
@@ -118,6 +121,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         return this.datetime;
     }
+
 
     /**
      * Get DateTime (long)
@@ -130,6 +134,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return this.datetime.getATDateTimeAsLong();
     }
 
+
     /**
      * Add Parameter
      * 
@@ -138,7 +143,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
      */
     public void addParameter(String key, String value)
     {
-        if (value.equals("_") || value.trim().length() == 0)
+        if ((value == null) || (value.equals("_") || value.trim().length() == 0))
             return;
 
         if (params == null)
@@ -204,7 +209,6 @@ public class MeterValuesEntry extends DeviceValuesEntry
     }
 
 
-
     /**
      * Prepare Entry [Framework v2]
      */
@@ -212,6 +216,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     public void prepareEntry_v2()
     {
     }
+
 
     /**
      * This is used just for compliance with old Meter code. This method is deprecated, but since Meter Tool
@@ -225,7 +230,6 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         return this.entry_object;
     }
-
 
 
     /**
@@ -243,6 +247,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
             return p;
     }
 
+
     /**
      * To String
      * 
@@ -256,6 +261,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return "MeterValuesEntry [date/time=" + this.datetime.getDateTimeString() + ",bg=" + this.bgOriginal + " mg/dL"
                 + "]";
     }
+
 
     /**
      * Get Data As String (for non-db exports)
@@ -302,6 +308,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         }
     }
 
+
     /**
      * Is Data BG
      * 
@@ -313,6 +320,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return true;
     }
 
+
     /**
      * Get Column Value
      * 
@@ -322,11 +330,12 @@ public class MeterValuesEntry extends DeviceValuesEntry
     @Override
     public Object getColumnValue(int column)
     {
-        if (!da.isDataDownloadSceenWide())
+        if (!da.isDataDownloadScreenWide())
             return this.getColumnValueBase(column);
         else
             return this.getColumnValueExtended(column);
     }
+
 
     private Object getColumnValueBase(int column)
     {
@@ -351,6 +360,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
                 return "";
         }
     }
+
 
     private Object getColumnValueExtended(int column)
     {
@@ -377,6 +387,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         }
     }
 
+
     /**
      * Get DateTime format
      * 
@@ -400,6 +411,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return 0;
     }
 
+
     /**
      * Get Statistics Action - we define how statistic is done (we have several predefined 
      *    types of statistics
@@ -412,6 +424,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return 0;
     }
 
+
     /**
      * Is Special Action - tells if selected statistics item has special actions
      * 
@@ -423,6 +436,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return false;
     }
 
+
     /**
      * Get Max Statistics Object - we can have several Statistic types defined here
      * 
@@ -433,6 +447,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return 0;
     }
 
+
     /**
      * If we have any special actions for any of objects
      * 
@@ -442,6 +457,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         return false;
     }
+
 
     /**
      * Get Table Column Value (in case that we need special display values for download data table, this method 
@@ -466,6 +482,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return "MVE_" + this.datetime.getATDateTimeAsLong();
     }
 
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -474,6 +491,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         return null;
     }
+
 
     /**
      * DbAdd - Add this object to database
@@ -489,6 +507,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return "" + this.getId();
     }
 
+
     /**
      * DbEdit - Edit this object in database
      * 
@@ -501,6 +520,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         processEntry(sess, "Edit");
         return true;
     }
+
 
     /**
      * DbDelete - Delete this object in database
@@ -587,6 +607,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return false;
     }
 
+
     /**
      * DbGet - Loads this object. Id must be set.
      * 
@@ -599,6 +620,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return false;
     }
 
+
     /**
      * getObjectName - returns name of DatabaseObject
      * 
@@ -609,6 +631,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return getDVEName();
     }
 
+
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -618,6 +641,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         return false;
     }
+
 
     /**
      * getAction - returns action that should be done on object
@@ -635,6 +659,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return 0;
     }
 
+
     /**
      * Get DeviceValuesEntry Name
      * 
@@ -644,6 +669,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         return "MeterValuesEntry";
     }
+
 
     /**
      * Get Value of object
@@ -657,6 +683,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         // else
         return this.getValueFull();
     }
+
 
     /**
      * Get Value of object (for comparing two objects are the same)
@@ -685,6 +712,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
     long old_id;
 
+
     /**
      * Set Old Id (this is used for changing old objects in framework v2)
      * 
@@ -694,6 +722,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         this.old_id = id_in;
     }
+
 
     /**
      * Get Old Id (this is used for changing old objects in framework v2)
@@ -707,6 +736,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
     String source;
 
+
     /**
      * Set Source
      * 
@@ -718,6 +748,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
     }
 
+
     /**
      * Get Source 
      * 
@@ -727,6 +758,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         return this.source;
     }
+
 
     // ---
     // --- Special entries
@@ -867,6 +899,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
         return ic.getMessage(extendedType.getDescription()); // extendedTypeDescription;
     }
 
+
     /**
      * Get Extended Type Value (if we use extended interface, this is value)
      * 
@@ -943,6 +976,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         return extendedType;
     }
+
 
     /**
      * Create data for extended field in database (special entries without CH)

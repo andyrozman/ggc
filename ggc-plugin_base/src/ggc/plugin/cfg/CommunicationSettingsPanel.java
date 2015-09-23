@@ -1,17 +1,16 @@
 package ggc.plugin.cfg;
 
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+
+import com.atech.i18n.I18nControlAbstract;
+
 import ggc.plugin.data.enums.DevicePortParameterType;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -56,7 +55,6 @@ public class CommunicationSettingsPanel extends JPanel
     DeviceInstanceWithHandler currentDeviceV2 = null;
 
 
-
     /**
      * Constructor
      * 
@@ -82,6 +80,7 @@ public class CommunicationSettingsPanel extends JPanel
         this.setBounds(x, y, 410, element_size);
     }
 
+
     /**
      * Init
      */
@@ -91,6 +90,7 @@ public class CommunicationSettingsPanel extends JPanel
         this.comm_port_comp = new CommunicationPortComponent(m_da, this.parent);
         this.add(this.comm_port_comp);
     }
+
 
     /**
      * Set Current Device
@@ -132,6 +132,16 @@ public class CommunicationSettingsPanel extends JPanel
             this.comm_port_comp.setProtocol(this.currentDeviceV2.getConnectionProtocol());
         }
 
+        this.special_config = dev_interface.getSpecialConfigPanel();
+
+        resetLayout();
+    }
+
+
+    public void resetDevices()
+    {
+        this.currentDeviceV2 = null;
+        this.currentDeviceV1 = null;
         resetLayout();
     }
 
@@ -177,6 +187,7 @@ public class CommunicationSettingsPanel extends JPanel
         this.repaint();
     }
 
+
     /**
      * Set Protocol
      * 
@@ -186,6 +197,7 @@ public class CommunicationSettingsPanel extends JPanel
     {
         this.comm_port_comp.setProtocol(protocol);
     }
+
 
     /**
      * Set Parameters
@@ -218,6 +230,7 @@ public class CommunicationSettingsPanel extends JPanel
         // this.comm_port_comp
     }
 
+
     /**
      * Get Parameters
      * 
@@ -233,6 +246,7 @@ public class CommunicationSettingsPanel extends JPanel
             return this.special_config.saveConnectionParameters();
         }
     }
+
 
     /**
      * Are parameters set
@@ -272,9 +286,10 @@ public class CommunicationSettingsPanel extends JPanel
 
     private boolean hasDefaultParameter()
     {
-        return (((this.currentDeviceV2!=null) && (this.currentDeviceV2.getDevicePortParameterType()==DevicePortParameterType.DefaultParameter)) ||
-                ((this.currentDeviceV1!=null) && (this.currentDeviceV1.hasDefaultParameter())));
+        return (((this.currentDeviceV2 != null) && (this.currentDeviceV2.getDevicePortParameterType() == DevicePortParameterType.DefaultParameter)) || ((this.currentDeviceV1 != null) && (this.currentDeviceV1
+                .hasDefaultParameter())));
     }
+
 
     private boolean checkIfDefaultParameterSet()
     {
@@ -286,6 +301,7 @@ public class CommunicationSettingsPanel extends JPanel
         else
             return true;
     }
+
 
     @Override
     public int getHeight()

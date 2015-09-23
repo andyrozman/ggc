@@ -127,17 +127,13 @@ public class MeterDevicesIds
      */
     public static final int METER_ASCENSIA_CONTOUR_LINK = 10006;
 
-
     public static final int METER_ASCENSIA_USB = 10007;
-
 
     public static final int METER_ASCENSIA_NEXT = 10008;
 
-
     public static final int METER_ASCENSIA_NEXT_USB = 10009;
 
-
-
+    public static final int METER_ASCENSIA_NEXT_LINK = 10010;
 
     /**
      * Meter Device: SmartPix

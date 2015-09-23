@@ -1,13 +1,6 @@
 package ggc.plugin.cfg;
 
-import com.atech.utils.data.TimeZoneUtil;
-import ggc.plugin.data.enums.DevicePortParameterType;
-import ggc.plugin.device.DeviceInterface;
-import ggc.plugin.device.v2.DeviceInstanceWithHandler;
-import ggc.plugin.protocol.DeviceConnectionProtocol;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -15,25 +8,25 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.plugin.data.enums.DevicePortParameterType;
+import ggc.plugin.device.DeviceInterface;
+import ggc.plugin.device.v2.DeviceInstanceWithHandler;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -73,8 +66,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     // private JPanel prefPane;
 
-    //protected static Vector<String> time_zones_vector = null;
-    //protected static Hashtable<String, String> time_zones = null;
+    // protected static Vector<String> time_zones_vector = null;
+    // protected static Hashtable<String, String> time_zones = null;
     JComboBox cb_timezone, cb_winter_fix, cb_summer_fix;
     JComboBox cb_entry;
     JCheckBox chb_fix;
@@ -102,9 +95,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     TimeZoneUtil timeZoneUtil = TimeZoneUtil.getInstance();
 
-//    DeviceInterface current_device = null;
 
-
+    // DeviceInterface current_device = null;
 
     /**
      * Constructor
@@ -125,10 +117,10 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         setTitle(String.format(m_ic.getMessage("DEVICE_CONFIGURATION"), m_ic.getMessage("DEVICE_NAME_BIG")));
         ATSwingUtils.centerJDialog(this, m_da.getCurrentComponentParent());
 
-//        if (DeviceConfigurationDialog.time_zones_vector == null)
-//        {
-//            this.loadTimeZones();
-//        }
+        // if (DeviceConfigurationDialog.time_zones_vector == null)
+        // {
+        // this.loadTimeZones();
+        // }
 
         ATSwingUtils.initLibrary();
 
@@ -141,6 +133,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
         this.setVisible(true);
     }
+
 
     private void loadData()
     {
@@ -158,6 +151,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         }
     }
 
+
     private void saveData()
     {
         this.saveItemData();
@@ -172,6 +166,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         dc.writeConfigData();
     }
 
+
     private void resetComboBox()
     {
         this.cb_entry.removeAllItems();
@@ -184,6 +179,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         }
 
     }
+
 
     private void resetEntry()
     {
@@ -206,6 +202,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         this.cb_winter_fix.setSelectedItem("0");
 
     }
+
 
     private Object[] getComboEntriesFromConfiguration()
     {
@@ -233,6 +230,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         return lst.toArray();
 
     }
+
 
     private void init()
     {
@@ -300,7 +298,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
          * null,
          * new TitledBorder(m_ic.getMessage("COMMUNICATION_SETTINGS")),
          * main_panel);
-         * this.comm_port_comp = new CommunicationPortComponent(dataAccess, this);
+         * this.comm_port_comp = new CommunicationPortComponent(dataAccess,
+         * this);
          * pan_comm_settings.add(this.comm_port_comp);
          */
 
@@ -308,8 +307,6 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
         if (this.dcd.doesDeviceSupportTimeFix())
         {
-
-
 
             // timezone fix panel
             pan_tzfix = ATSwingUtils.getPanel(20, start_y, 410, 200, null,
@@ -356,7 +353,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         buttons[1] = ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 170, start_y + 10, 110, 25, main_panel,
             ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
 
-        help_button = ATSwingUtils.createHelpButtonByBounds(290, start_y + 10, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da.getImagesRoot(), m_ic); // ATDataAccessAbstract.FONT_NORMAL);
+        help_button = ATSwingUtils.createHelpButtonByBounds(290, start_y + 10, 110, 25, this, ATSwingUtils.FONT_NORMAL,
+            m_da.getImagesRoot(), m_ic); // ATDataAccessAbstract.FONT_NORMAL);
         main_panel.add(help_button);
         buttons[2] = help_button;
 
@@ -380,17 +378,19 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         showDevice();
     }
 
+
     private void enableDisableFix(boolean enable)
     {
         this.cb_summer_fix.setEnabled(enable);
         this.cb_winter_fix.setEnabled(enable);
     }
 
+
     private void refreshCommunicationSettings()
     {
         int start_y = 275;
 
-        //System.out.println("this.current_device: " + this.current_device);
+        // System.out.println("this.current_device: " + this.current_device);
 
         if (this.currentDeviceV1 != null
                 && (this.currentDeviceV1.hasDefaultParameter() || this.currentDeviceV1.hasSpecialConfig()))
@@ -400,15 +400,18 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             this.comm_settings.setVisible(true);
         }
         else if (this.currentDeviceV2 != null
-                && (this.currentDeviceV2.getDevicePortParameterType()== DevicePortParameterType.SimpleParameter || this.currentDeviceV2.hasSpecialConfig()))
+                && (this.currentDeviceV2.getDevicePortParameterType() == DevicePortParameterType.SimpleParameter || this.currentDeviceV2
+                        .hasSpecialConfig()))
         {
             this.comm_settings.setCurrentDevice(this.currentDeviceV2);
+
             start_y += comm_settings.getHeight(); // .getBounds().height;
             this.comm_settings.setVisible(true);
         }
         else
         {
-            // System.out.println("No pramaters used !");
+            // System.out.println("No parameters used !");
+            comm_settings.resetDevices();
             this.comm_settings.setVisible(false);
         }
 
@@ -427,9 +430,10 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     }
 
+
     private void showDevice()
     {
-        if ((this.currentDeviceV1 == null) && (this.currentDeviceV2==null))
+        if ((this.currentDeviceV1 == null) && (this.currentDeviceV2 == null))
         {
             // System.out.println("current device: " + this.current_device);
             this.lbl_company.setText(m_ic.getMessage("NO_COMPANY_SELECTED"));
@@ -452,7 +456,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             if (this.comm_settings != null)
             {
 
-                if (this.currentDeviceV1!=null)
+                if (this.currentDeviceV1 != null)
                 {
                     this.comm_settings.setCurrentDevice(this.currentDeviceV1);
                 }
@@ -476,15 +480,15 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
         }
 
-
     }
 
     private static final int PARAMETER_COMPANY = 1;
     private static final int PARAMETER_DEVICE_NAME = 2;
 
+
     private String getParameterValue(int parameter)
     {
-        if (this.currentDeviceV2!=null)
+        if (this.currentDeviceV2 != null)
         {
             return this.currentDeviceV2.getColumnValue(parameter);
         }
@@ -494,12 +498,12 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         }
     }
 
-
     // ---
     // --- End
     // ---
 
     private boolean action_was = false;
+
 
     /**
      * Was Action
@@ -511,6 +515,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         return action_was;
     }
 
+
     /**
      * Invoked when an action occurs.
      */
@@ -521,7 +526,14 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         if (action.equals("ok"))
         {
 
-            if ((this.currentDeviceV1 == null && this.currentDeviceV2 == null) || !this.comm_settings.areParametersSet())
+            if ((this.currentDeviceV1 == null && this.currentDeviceV2 == null))
+            {
+                JOptionPane.showMessageDialog(this, m_ic.getMessage("CONFIG_ERROR_NO_DEVICE_OR_PARAMETERS"),
+                    m_ic.getMessage("WARNING"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (!this.comm_settings.areParametersSet())
             {
                 JOptionPane.showMessageDialog(this, m_ic.getMessage("CONFIG_ERROR_NO_DEVICE_OR_PARAMETERS"),
                     m_ic.getMessage("WARNING"), JOptionPane.ERROR_MESSAGE);
@@ -551,7 +563,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             {
                 setSelectedDeviceFromObject(dsd.getSelectedObject());
 
-                //this.current_device = (DeviceInterface) dsd.getSelectedObject();
+                // this.current_device = (DeviceInterface)
+                // dsd.getSelectedObject();
                 this.current_entry = new DeviceConfigEntry(m_ic);
                 this.refreshCommunicationSettings();
                 this.comm_settings.setParameters(null);
@@ -570,22 +583,21 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     }
 
 
-
-
     private void setSelectedDeviceFromObject(Object selected)
     {
 
         if (selected instanceof DeviceInstanceWithHandler)
         {
-            this.currentDeviceV2 = (DeviceInstanceWithHandler)selected;
+            this.currentDeviceV2 = (DeviceInstanceWithHandler) selected;
             this.currentDeviceV1 = null;
         }
         else
         {
-            this.currentDeviceV1 = (DeviceInterface)selected;
+            this.currentDeviceV1 = (DeviceInterface) selected;
             this.currentDeviceV2 = null;
         }
     }
+
 
     /*
      * public String getData()
@@ -644,6 +656,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         this.cb_winter_fix.setSelectedItem(getTimeChange(this.current_entry.ds_winter_change));
     }
 
+
     private String getTimeChange(int change)
     {
         if (change == 0)
@@ -655,6 +668,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             return "+1";
 
     }
+
 
     /**
      * Save Item Data
@@ -705,6 +719,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
 
     }
 
+
     private int getNumber(String item)
     {
         if (item.equals("+1"))
@@ -721,9 +736,10 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         if (this.current_entry == null)
             return;
 
-        Object selectedObject = this.m_da.getDeviceConfigurationDefinition().getSpecificDeviceInstance(this.current_entry.device_company, this.current_entry.device_device);
+        Object selectedObject = this.m_da.getDeviceConfigurationDefinition().getSpecificDeviceInstance(
+            this.current_entry.device_company, this.current_entry.device_device);
 
-        if (selectedObject!=null)
+        if (selectedObject != null)
         {
             setSelectedDeviceFromObject(selectedObject);
         }
@@ -735,6 +751,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
     }
 
     boolean act = false;
+
 
     /**
      * Item State Changed
@@ -773,6 +790,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         act = false;
     }
 
+
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
@@ -785,6 +803,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         return this.getRootPane();
     }
 
+
     /** 
      * getHelpButton - get Help button
      */
@@ -793,12 +812,14 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         return this.help_button;
     }
 
+
     /** 
      * getHelpId - get id for Help
      */
     public String getHelpId()
     {
-        // return this.dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // return
+        // this.dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
         // "Configuration";
         return "DeviceTool_Configuration";
     }

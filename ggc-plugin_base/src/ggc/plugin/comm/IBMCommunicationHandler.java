@@ -13,6 +13,7 @@ import javax.comm.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import ggc.plugin.comm.cfg.SerialSettings;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -44,9 +45,9 @@ import ggc.plugin.util.DataAccessPlugInBase;
  */
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    This Handler is used only for BlueTooth Serial Communication
-//    we need to test of new version of Rxtx / NRSerial can now
-//    communicate with BT devices.
+// This Handler is used only for BlueTooth Serial Communication
+// we need to test of new version of Rxtx / NRSerial can now
+// communicate with BT devices.
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 public class IBMCommunicationHandler implements SerialPortEventListener, SerialCommunicationInterface
@@ -99,9 +100,9 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
     protected CommPortIdentifier portIdentifier = null;
     protected OutputStream portOutputStream = null;
     protected InputStream portInputStream = null;
-    //protected String port_name = null;
+    // protected String port_name = null;
 
-    //protected long startTime = System.currentTimeMillis();
+    // protected long startTime = System.currentTimeMillis();
     protected long timeOut = 500000000;
 
     int baudrate;
@@ -161,7 +162,6 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
     }
 
 
-
     /**
      * Constructor
      *
@@ -169,10 +169,11 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
      * @param writer
      * @param da
      */
-//    public IBMCommunicationHandler(String comm_parameters, OutputWriter writer, DataAccessPlugInBase da)
-//    {
-//        super(comm_parameters, writer, da);
-//    }
+    // public IBMCommunicationHandler(String comm_parameters, OutputWriter
+    // writer, DataAccessPlugInBase da)
+    // {
+    // super(comm_parameters, writer, da);
+    // }
 
     /**
      * Set Communication Settings
@@ -195,6 +196,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         this.event_type = event_type;
     }
 
+
     /**
      * Return the COM-Port from which will be read.
      * @return String
@@ -203,6 +205,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
     {
         return portIdentifier.getName();
     }
+
 
     /**
      * Set the COM-Port from which will be read.
@@ -216,7 +219,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         {
             // System.out.println("port: " + port);
             portIdentifier = CommPortIdentifier.getPortIdentifier(port);
-            //port_name = port;
+            // port_name = port;
         }
         /*
          * catch (NoSuchPortException ex)
@@ -229,14 +232,13 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
          */
     }
 
+
     /*
      * public String getPort()
      * {
      * return port_name;
      * }
      */
-
-
 
     /**
      * Open Serial Port
@@ -392,10 +394,12 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         return isPortOpen;
     }
 
+
     public void disconnectDevice()
     {
-// fixme
+        // fixme
     }
+
 
     public boolean isDataAvailable()
     {
@@ -403,11 +407,13 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         return false;
     }
 
+
     public int available() throws PlugInBaseException
     {
         // fixme
         return 0;
     }
+
 
     protected void setConnectionParameters()
     {
@@ -454,6 +460,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         }
     }
 
+
     /**
      */
     public void close()
@@ -470,6 +477,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         // portIdentifier));
     }
 
+
     /**
      * Read
      *
@@ -481,11 +489,13 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         try
         {
             return portInputStream.read();
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             throw new PlugInBaseException(e);
         }
     }
+
 
     /**
      * Read
@@ -499,11 +509,13 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         try
         {
             return portInputStream.read(b);
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             throw new PlugInBaseException(e);
         }
     }
+
 
     /**
      * Read
@@ -519,11 +531,13 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         try
         {
             return portInputStream.read(b, off, len);
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             throw new PlugInBaseException(e);
         }
     }
+
 
     /**
      * Read Line
@@ -531,7 +545,8 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
      * @return
      * @throws java.io.IOException
      */
-    public String readLine() throws PlugInBaseException // , SerialIOHaltedException
+    public String readLine() throws PlugInBaseException // ,
+                                                        // SerialIOHaltedException
     {
         char c = '\uFFFF';
         boolean flag = false;
@@ -539,30 +554,32 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
 
         try
         {
-        int j;
-        do
-        {
-            int i = c;
+            int j;
+            do
+            {
+                int i = c;
 
                 j = (byte) this.portInputStream.read();
 
-            c = (char) j;
-            if (j != -1)
-            {
-                stringbuffer.append(c);
-            }
-            if (i == 13 && c == '\n')
-            {
-                flag = true;
-            }
-        } while (j != -1 && !flag);
-        } catch (IOException e)
+                c = (char) j;
+                if (j != -1)
+                {
+                    stringbuffer.append(c);
+                }
+                if (i == 13 && c == '\n')
+                {
+                    flag = true;
+                }
+            } while (j != -1 && !flag);
+        }
+        catch (IOException e)
         {
             throw new PlugInBaseException(e);
         }
 
         return stringbuffer.toString();
     }
+
 
     /**
      * Read Line as array of bytes
@@ -577,29 +594,31 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
 
         ArrayList<Byte> lst = new ArrayList<Byte>();
 
-        try {
-
-        byte j;
-        do
+        try
         {
-            int i = c;
-            j = (byte) this.portInputStream.read();
 
-            // System.out.print(j + " ");
+            byte j;
+            do
+            {
+                int i = c;
+                j = (byte) this.portInputStream.read();
 
-            c = (char) j;
-            if (j != -1)
-            {
-                Byte b = new Byte(j);
-                lst.add(b);
-                // stringbuffer.append(c);
-            }
-            if (i == 13 && c == '\n')
-            {
-                flag = true;
-            }
-        } while (j != -1 && !flag);
-        } catch (IOException e)
+                // System.out.print(j + " ");
+
+                c = (char) j;
+                if (j != -1)
+                {
+                    Byte b = new Byte(j);
+                    lst.add(b);
+                    // stringbuffer.append(c);
+                }
+                if (i == 13 && c == '\n')
+                {
+                    flag = true;
+                }
+            } while (j != -1 && !flag);
+        }
+        catch (IOException e)
         {
             throw new PlugInBaseException(e);
         }
@@ -611,8 +630,6 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
             arr[i] = lst.get(i).byteValue();
         }
 
-
-
         return arr;
         // byte[] arr = lst.toArray(arr);
 
@@ -620,6 +637,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
 
         // return new String(stringbuffer);
     }
+
 
     /**
      * Write (byte[])
@@ -632,11 +650,13 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         try
         {
             portOutputStream.write(b);
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             throw new PlugInBaseException(e);
         }
     }
+
 
     /**
      * Write (int)
@@ -648,11 +668,13 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         try
         {
             portOutputStream.write(i);
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             throw new PlugInBaseException(e);
         }
     }
+
 
     /**
      * Write (byte[],int,int)
@@ -667,12 +689,14 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         try
         {
             portOutputStream.write(b, off, len);
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             throw new PlugInBaseException(e);
 
         }
     }
+
 
     // FIXME
 
@@ -687,6 +711,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         writeCommand(IBMCommunicationHandler.ASCII_ACK); // 0x06
     }
 
+
     @Deprecated
     protected String readMessageFromMeter() throws Exception
     {
@@ -695,6 +720,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
 
         return bt_line;
     }
+
 
     public int readByteTimed() throws PlugInBaseException
     {
@@ -717,9 +743,10 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         return -1;
     }
 
+
     public void setDelayForTimedReading(int ms)
     {
-// fixme
+        // fixme
     }
 
 
@@ -756,11 +783,13 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         {}
     }
 
+
     protected void writeCommand(int c) throws Exception
     {
         write(c);
         waitTime(character_pause);
     }
+
 
     protected void writeCommand(String line) throws PlugInBaseException
     {
@@ -772,6 +801,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
 
         waitTime(command_pause);
     }
+
 
     /*
      * public static final byte ASCII_ENQ = 0x05;
@@ -787,6 +817,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         writeCommand(IBMCommunicationHandler.ASCII_ENQ); // 0x05
         readByteTimed();
     }
+
 
     protected void commandAfterWrite() throws Exception
     {
@@ -807,6 +838,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
 
     }
 
+
     /**
      * Get Timeout
      * 
@@ -816,6 +848,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
     {
         return timeOut;
     }
+
 
     /*
      * public void stopImport()
@@ -839,6 +872,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         }
 
     }
+
 
     /**
      * Get All Available Serial Ports as vector of CommPortIdentifier
@@ -870,6 +904,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         return retVal;
 
     }
+
 
     /**
      * Get All Available Ports as Vector of Strings
@@ -905,6 +940,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         return retVal;
 
     }
+
 
     /**
      * Get All Available Ports as String (Internal)
@@ -961,6 +997,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
 
     }
 
+
     /**
      * Get All Available Ports as vector of CommPortIdentifier
      *  
@@ -995,10 +1032,12 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         return serialSettings;
     }
 
+
     public void setSerialSettings(SerialSettings serialSettings)
     {
         this.serialSettings = serialSettings;
     }
+
 
     public SerialSettings createDefaultSerialSettings()
     {

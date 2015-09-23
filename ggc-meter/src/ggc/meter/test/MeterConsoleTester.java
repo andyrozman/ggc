@@ -1,17 +1,5 @@
 package ggc.meter.test;
 
-import ggc.core.util.GGCLanguageManagerRunner;
-import ggc.meter.device.abbott.OptiumXceed;
-import ggc.meter.device.accuchek.AccuChekAvivaCombo;
-import ggc.meter.device.ascensia.AscensiaContour;
-import ggc.meter.device.ascensia.AscensiaContourUSB;
-import ggc.meter.device.menarini.GlucofixMio;
-import ggc.meter.device.onetouch.OneTouchUltra;
-import ggc.meter.device.onetouch.OneTouchUltraEasy;
-import ggc.meter.util.DataAccessMeter;
-import ggc.plugin.output.ConsoleOutputWriter;
-import ggc.plugin.protocol.SerialProtocol;
-
 import java.io.File;
 import java.util.Vector;
 
@@ -21,6 +9,21 @@ import org.apache.commons.logging.LogFactory;
 import com.atech.i18n.mgr.LanguageManager;
 import com.atech.utils.TimerThread;
 import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.db.GGCDb;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCLanguageManagerRunner;
+import ggc.meter.data.defs.MeterDeviceDefinition;
+import ggc.meter.device.abbott.OptiumXceed;
+import ggc.meter.device.accuchek.AccuChekAvivaCombo;
+import ggc.meter.device.ascensia.AscensiaContour;
+import ggc.meter.device.ascensia.AscensiaUsbMeterHandler;
+import ggc.meter.device.menarini.GlucofixMio;
+import ggc.meter.device.onetouch.OneTouchUltra;
+import ggc.meter.device.onetouch.OneTouchUltraEasy;
+import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.output.ConsoleOutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -57,6 +60,7 @@ public class MeterConsoleTester
     private static Log logDeviceCat = LogFactory.getLog("deviceLogger");
 
     TimerThread thread;
+
 
     /**
      * Constructor
@@ -113,6 +117,7 @@ public class MeterConsoleTester
 
     }
 
+
     /**
      * Ascensia Testing
      * 
@@ -140,6 +145,7 @@ public class MeterConsoleTester
 
     }
 
+
     /**
      * Ascensia Testing
      * 
@@ -156,23 +162,31 @@ public class MeterConsoleTester
 
         // displaySerialPorts();
 
-        DataAccessMeter dap = DataAccessMeter.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
-        // dap.setHelpContext(da.getHelpContext());
-        // dap.setPlugInServerInstance(this);
-        // dap.createDb(da.getHibernateDb());
-        dap.initAllObjects();
-        dap.loadSpecialParameters();
+        DataAccessMeter dap = preparePlugInContext();
 
-        AscensiaContourUSB asc_meter = new AscensiaContourUSB("", ow);
-        // asc_meter.setPort(portName);
+        // DataAccessMeter dap = DataAccessMeter.createInstance(new
+        // LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
+        // // dap.setHelpContext(da.getHelpContext());
+        // // dap.setPlugInServerInstance(this);
+        // // dap.createDb(da.getHibernateDb());
+        // dap.initAllObjects();
+        // dap.loadSpecialParameters();
+        //
+        // //AscensiaContourUSB asc_meter = new AscensiaContourUSB("", ow);
+        // // asc_meter.setPort(portName);
 
-        asc_meter.readDeviceDataFull();
+        AscensiaUsbMeterHandler handler = new AscensiaUsbMeterHandler();
+        handler.readDeviceData(MeterDeviceDefinition.AscensiaUsb, null, new ConsoleOutputWriter());
+
+        // AscensiaContourUsbReader reader = new AscensiaContourUsbReader()
+        // asc_meter.readDeviceDataFull();
 
         System.out.println("We are back in tester !!!!");
 
         System.exit(0);
 
     }
+
 
     /**
      * Roche Testing
@@ -210,6 +224,34 @@ public class MeterConsoleTester
         }
     }
 
+
+    private DataAccessMeter preparePlugInContext()
+    {
+        DataAccess da = DataAccess.getInstance();
+
+        GGCDb db = new GGCDb(da);
+        // db.initDb();
+
+        da.setDb(db);
+
+        DataAccessMeter dap = DataAccessMeter.createInstance(da.getLanguageManager());
+        // dap.setHelpContext(da.getHelpContext());
+        // dap.setPlugInServerInstance(this);
+        // dap.createDb(da.getHibernateDb());
+        dap.initAllObjects();
+        dap.loadSpecialParameters();
+        // this.backup_restore_enabled = true;
+
+        da.loadSpecialParameters();
+        // System.out.println("PumpServer: " +
+        // dataAccess.getSpecialParameters().get("BG"));
+
+        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+
+        return dap;
+    }
+
+
     /**
      * OT Ultra testing
      * 
@@ -232,6 +274,7 @@ public class MeterConsoleTester
 
     }
 
+
     /**
      * OT Easy Testing
      * @param portName
@@ -248,6 +291,7 @@ public class MeterConsoleTester
         otu.readDeviceDataFull();
     }
 
+
     /**
      * OT Easy Testing
      * @param portName
@@ -263,6 +307,7 @@ public class MeterConsoleTester
         OptiumXceed otu = new OptiumXceed(portName, cow);
         otu.readDeviceDataFull();
     }
+
 
     /**
      * OT Ultra testing
@@ -288,6 +333,7 @@ public class MeterConsoleTester
 
     }
 
+
     /**
      * Display Serial Ports
      */
@@ -310,6 +356,7 @@ public class MeterConsoleTester
             ex.printStackTrace();
         }
     }
+
 
     /**
      * Main method
@@ -353,6 +400,7 @@ public class MeterConsoleTester
             ex.printStackTrace();
         }
     }
+
 
     /**
      * test Logger

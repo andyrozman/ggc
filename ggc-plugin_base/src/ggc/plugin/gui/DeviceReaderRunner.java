@@ -532,9 +532,9 @@ public class DeviceReaderRunner extends Thread implements OutputWriter
     public DeviceIdentification getDeviceIdentification()
     {
         if (this.m_ddh.isDataTransfer())
-            return this.dialog_data.getDeviceIdentification(); // .device_ident;
+            return this.dialog_data.getDeviceIdentification(); // .deviceIdentification;
         else
-            return this.dialog_config.getDeviceIdentification(); // .device_ident;
+            return this.dialog_config.getDeviceIdentification(); // .deviceIdentification;
     }
 
 

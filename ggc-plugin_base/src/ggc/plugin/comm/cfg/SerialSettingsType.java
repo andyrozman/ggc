@@ -1,4 +1,4 @@
-package ggc.plugin.comm;
+package ggc.plugin.comm.cfg;
 
 /**
  * Created by andy on 14.05.15.
