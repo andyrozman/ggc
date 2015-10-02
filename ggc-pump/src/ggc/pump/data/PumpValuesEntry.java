@@ -1,9 +1,6 @@
 package ggc.pump.data;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
+import java.util.*;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -15,14 +12,15 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.misc.statistics.StatisticsObject;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 import com.atech.utils.data.CodeEnum;
 
-import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.graph.data.GraphValue;
 import ggc.plugin.graph.data.GraphValuesCapable;
 import ggc.plugin.output.OutputWriterType;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.defs.*;
 import ggc.pump.util.DataAccessPump;
 
@@ -46,7 +44,8 @@ import ggc.pump.util.DataAccessPump;
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  *
- * Filename: PumpValuesEntry Description: Pump Values Entry, with all data, also
+ * Filename: PumpValuesEntry
+ * Description: Pump Values Entry, with all data, also
  * statistics item.
  *
  * Author: Andy {andy@atech-software.com}
@@ -54,8 +53,6 @@ import ggc.pump.util.DataAccessPump;
 
 public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem, PumpValuesEntryInterface,
         GraphValuesCapable
-// extends PumpDataH implements DatabaseObjectHibernate // extends
-// PumpValuesEntryAbstract
 {
 
     private static Log log = LogFactory.getLog(PumpValuesEntry.class);
@@ -81,7 +78,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     private Hashtable<String, String> params;
 
     private PumpDataH entry_object = null;
-    private Hashtable<String, PumpValuesEntryExt> additional_data = new Hashtable<String, PumpValuesEntryExt>();
+    private Map<PumpAdditionalDataType, PumpValuesEntryExt> additional_data = new HashMap<PumpAdditionalDataType, PumpValuesEntryExt>();
 
 
     /**
@@ -164,7 +161,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         // this.entry_object = pdh;
         this.id = pdh.getId();
         this.old_id = pdh.getId();
-        this.datetime = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pdh.getDt_info());
+        this.datetime = new ATechDate(ATechDateType.DateAndTimeSec, pdh.getDt_info());
         this.baseType = PumpBaseType.getByCode(pdh.getBase_type());
         this.sub_type = pdh.getSub_type();
         this.value = pdh.getValue();
@@ -183,7 +180,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public void addAdditionalData(PumpValuesEntryExt adv)
     {
-        this.additional_data.put(PumpAdditionalDataType.getByCode(adv.getType()).getTranslation(), adv);
+        this.additional_data.put(adv.getTypeEnum(), adv);
     }
 
 
@@ -192,31 +189,19 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      *
      * @return
      */
-    public Hashtable<String, PumpValuesEntryExt> getAdditionalData()
+    public Map<PumpAdditionalDataType, PumpValuesEntryExt> getAdditionalData()
     {
         return this.additional_data;
     }
 
 
-    /*
-     * public void setDateTime(long dt) { this.datetime = dt; } public long
-     * getDateTime() { return this.datetime; }
-     */
-
-    /*
-     * public ATechDate getDateTimeObject() { return new
-     * ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.datetime); }
-     */
-
-    /*
-     * public void setBaseType(int base_type) { this.base_type = base_type; }
-     */
-
     /**
      * Set Sub Type
      *
      * @param sub_type
+     * @deprecated use setSubType(CodeEnum) instead.
      */
+    @Deprecated
     public void setSubType(int sub_type)
     {
         this.sub_type = sub_type;
@@ -467,25 +452,11 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             int i = 0;
             // sb.append("<html>");
 
-            for (Enumeration<String> en = this.additional_data.keys(); en.hasMoreElements(); i++)
+            for (PumpValuesEntryExt entry : this.additional_data.values())
             {
-                String key = en.nextElement();
-
-                if (i > 0)
-                {
-                    sb.append("; ");
-                }
-
-                // sb.append(key + "=" +
-                // this.additional_data.get(key).toString());
-                sb.append(this.additional_data.get(key).toString());
-
-                // if (i%3==0)
-                // sb.append("");
-
+                DataAccessPlugInBase.appendToStringBuilder(sb, entry.toString(), "; ");
             }
 
-            // sb.append("</html>");
             return sb.toString();
         }
     }
@@ -498,8 +469,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String isFoodSet()
     {
-        if (this.additional_data.containsKey(PumpAdditionalDataType.FoodDescription.getTranslation())
-                || this.additional_data.containsKey(PumpAdditionalDataType.FoodDb.getTranslation()))
+        if (this.additional_data.containsKey(PumpAdditionalDataType.FoodDescription)
+                || this.additional_data.containsKey(PumpAdditionalDataType.FoodDb))
         {
             return dataAccess.getI18nControlInstance().getMessage("YES");
         }
@@ -525,34 +496,22 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         {
             StringBuilder sb = new StringBuilder();
             int i = 0;
-            sb.append("<html>");
+            // sb.append("<html>");
 
-            for (Enumeration<String> en = this.additional_data.keys(); en.hasMoreElements(); i++)
+            for (PumpValuesEntryExt entry : this.additional_data.values())
             {
-                String key = en.nextElement();
 
-                if (key.equals(PumpAdditionalDataType.FoodDb.getTranslation())
-                        || key.equals(PumpAdditionalDataType.FoodDescription.getTranslation()))
+                if (entry.getTypeEnum() == PumpAdditionalDataType.FoodDb
+                        || entry.getTypeEnum() == PumpAdditionalDataType.FoodDescription)
                 {
                     continue;
                 }
 
-                if (i > 0)
-                {
-                    sb.append("<br>");
-                }
-
-                // sb.append(key + "=" +
-                // this.additional_data.get(key).toString());
-                sb.append(this.additional_data.get(key).toString());
-
-                // if (i%3==0)
-                // sb.append("");
-
+                DataAccessPump.appendToStringBuilder(sb, entry.toString(), "<br>");
             }
 
             sb.append("</html>");
-            return sb.toString();
+            return "<html>" + sb.toString();
         }
     }
 
@@ -736,55 +695,45 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         else
         {
             StringBuilder sb = new StringBuilder();
-            int i = 0;
 
-            String food_key = null;
+            PumpValuesEntryExt foodEntry = null;
 
-            for (Enumeration<String> en = this.additional_data.keys(); en.hasMoreElements(); i++)
+            for (PumpValuesEntryExt entry : this.additional_data.values())
             {
-                String key = en.nextElement();
-
-                if (i > 0)
-                {
-                    sb.append("; ");
-                }
 
                 if (type == PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD)
                 {
-                    if (key.equals(PumpAdditionalDataType.FoodDescription.getTranslation()) || //
-                            key.equals(PumpAdditionalDataType.FoodDb.getTranslation()))
+                    if (entry.getTypeEnum() == PumpAdditionalDataType.FoodDescription || //
+                            entry.getTypeEnum() == PumpAdditionalDataType.FoodDb)
                     {
-                        food_key = key;
+                        foodEntry = entry;
                     }
                     else
                     {
-                        sb.append(this.additional_data.get(key).toString());
+                        DataAccessPump.appendToStringBuilder(sb, entry.toString(), "; ");
                     }
 
                 }
                 else
                 {
-                    sb.append(this.additional_data.get(key).toString());
+                    DataAccessPump.appendToStringBuilder(sb, entry.toString(), "; ");
                 }
-
-                // if (i%3==0)
-                // sb.append("\n");
-
             }
 
-            if ((food_key != null) && (food_key.length() > 0))
+            if (foodEntry != null)
             {
-
-                if (food_key.equals(PumpAdditionalDataType.FoodDescription.getTranslation()))
+                if (foodEntry.getTypeEnum() == PumpAdditionalDataType.FoodDescription)
                 {
-                    PumpValuesEntryExt pvee = this.additional_data.get(food_key);
-                    sb.append("\n" + m_ic.getMessage("FOOD_DESC_PRINT") + ": " + pvee.getValue());
+                    DataAccessPump.appendToStringBuilder(sb,
+                        m_ic.getMessage("FOOD_DESC_PRINT") + ": " + foodEntry.getValue(), "\n");
                 }
-                else if (food_key.equals(PumpAdditionalDataType.FoodDb.getTranslation()))
+                else
+                // if
+                // (food_key.equals(PumpAdditionalDataType.FoodDb.getTranslation()))
                 {
                     // FIXME
-                    sb.append("\n" + m_ic.getMessage("FOOD_DB_PRINT") + ": "
-                            + m_ic.getMessage("FOOD_DESC_PRINT_NOT_YET"));
+                    DataAccessPump.appendToStringBuilder(sb,
+                        m_ic.getMessage("FOOD_DB_PRINT") + ": " + m_ic.getMessage("FOOD_DESC_PRINT_NOT_YET"), "\n");
                 }
             }
 
@@ -793,29 +742,28 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     }
 
 
-//    /**
-//     * Prepare Entry [PlugIn Framework v1]
-//     */
-//    @Override
-//    public void prepareEntry()
-//    {
-//        System.out.println("prepareEntry not implemented!");
-//
-//        /*
-//         * if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD) return;
-//         * else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT) {
-//         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.
-//         * BG_MGDL))); this.entry_object.setChanged(System.currentTimeMillis());
-//         * this.entry_object.setComment(createComment()); } else {
-//         * this.entry_object = new DayValueH(); this.entry_object.setIns1(0);
-//         * this.entry_object.setIns2(0); this.entry_object.setCh(0.0f);
-//         * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.
-//         * BG_MGDL))); this.entry_object.setDt_info(this.datetime);
-//         * this.entry_object.setChanged(System.currentTimeMillis());
-//         * this.entry_object.setComment(createComment()); }
-//         */
-//    }
-
+    // /**
+    // * Prepare Entry [PlugIn Framework v1]
+    // */
+    // @Override
+    // public void prepareEntry()
+    // {
+    // System.out.println("prepareEntry not implemented!");
+    //
+    // /*
+    // * if (this.object_status == PumpValuesEntry.OBJECT_STATUS_OLD) return;
+    // * else if (this.object_status == PumpValuesEntry.OBJECT_STATUS_EDIT) {
+    // * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.
+    // * BG_MGDL))); this.entry_object.setChanged(System.currentTimeMillis());
+    // * this.entry_object.setComment(createComment()); } else {
+    // * this.entry_object = new DayValueH(); this.entry_object.setIns1(0);
+    // * this.entry_object.setIns2(0); this.entry_object.setCh(0.0f);
+    // * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.
+    // * BG_MGDL))); this.entry_object.setDt_info(this.datetime);
+    // * this.entry_object.setChanged(System.currentTimeMillis());
+    // * this.entry_object.setComment(createComment()); }
+    // */
+    // }
 
     /**
      * Create Comment
@@ -1381,11 +1329,10 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             case PumpValuesEntry.CH_AVG:
             case PumpValuesEntry.MEALS:
                 {
-                    if (this.additional_data.containsKey(PumpAdditionalDataType.Carbohydrates.getTranslation()))
+                    if (this.additional_data.containsKey(PumpAdditionalDataType.Carbohydrates))
                     {
                         return dataAccess.getFloatValueFromString(
-                            this.additional_data.get(PumpAdditionalDataType.Carbohydrates.getTranslation()).getValue(),
-                            0.0f);
+                            this.additional_data.get(PumpAdditionalDataType.Carbohydrates).getValue(), 0.0f);
                     }
                     else
                     {
@@ -1398,11 +1345,10 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             case PumpValuesEntry.BG_MIN:
             case PumpValuesEntry.BG_COUNT:
                 {
-                    if (this.additional_data.containsKey(PumpAdditionalDataType.BloodGlucose.getTranslation()))
+                    if (this.additional_data.containsKey(PumpAdditionalDataType.BloodGlucose))
                     {
                         return dataAccess.getFloatValueFromString(
-                            this.additional_data.get(PumpAdditionalDataType.BloodGlucose.getTranslation()).getValue(),
-                            0.0f);
+                            this.additional_data.get(PumpAdditionalDataType.BloodGlucose).getValue(), 0.0f);
                     }
                     else
                     {
@@ -1534,16 +1480,16 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      */
     public String getFoodTip()
     {
-        if (this.additional_data.containsKey(PumpAdditionalDataType.FoodDescription.getTranslation()))
+        if (this.additional_data.containsKey(PumpAdditionalDataType.FoodDescription))
         {
-            String t = this.additional_data.get(PumpAdditionalDataType.FoodDescription.getTranslation()).getValue();
+            String t = this.additional_data.get(PumpAdditionalDataType.FoodDescription).getValue();
             t = t.replace("]", "]<br>");
             t = t.replace(",", "");
 
             return "<html>" + t + "</html>";
 
         }
-        else if (this.additional_data.containsKey(PumpAdditionalDataType.FoodDb.getTranslation()))
+        else if (this.additional_data.containsKey(PumpAdditionalDataType.FoodDb))
         {
             // TODO
             return "Not implemented yet !";
@@ -1597,7 +1543,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
                 return this.getStatusType();
 
             case 6:
-                return new Boolean(getChecked());
+                return getChecked();
 
             default:
                 return "";
@@ -1699,16 +1645,18 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         ArrayList<GraphValue> list = new ArrayList<GraphValue>();
 
-        for (Enumeration<PumpValuesEntryExt> en = this.additional_data.elements(); en.hasMoreElements();)
-        {
-            // PumpValuesEntryExt ex = en.nextElement();
-            GraphValue gv = en.nextElement().getGraphValue();
-
-            if (gv != null)
-            {
-                list.add(gv);
-            }
-        }
+        // FIXME
+        // for (Enumeration<PumpValuesEntryExt> en =
+        // this.additional_data.elements(); en.hasMoreElements();)
+        // {
+        // // PumpValuesEntryExt ex = en.nextElement();
+        // GraphValue gv = en.nextElement().getGraphValue();
+        //
+        // if (gv != null)
+        // {
+        // list.add(gv);
+        // }
+        // }
 
         // FIXME - Add also current object if necessary
 

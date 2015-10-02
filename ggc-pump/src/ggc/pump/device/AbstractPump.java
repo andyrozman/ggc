@@ -1,5 +1,7 @@
 package ggc.pump.device;
 
+import java.util.Hashtable;
+
 import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
@@ -9,8 +11,6 @@ import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.defs.*;
 import ggc.pump.util.DataAccessPump;
-
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,16 +39,16 @@ import java.util.Hashtable;
  */
 
 public abstract class AbstractPump extends DeviceAbstract implements PumpInterface // ,
-                                                                                   // SelectableInterface
+// SelectableInterface
 {
 
     protected int m_status = 0;
-
 
     protected String[] profile_names = null;
     protected String device_name;
     // protected OutputWriter outputWriter;
     protected String parameter;
+
 
     // protected DataAccessPump dataAccess;
 
@@ -59,6 +59,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         super(DataAccessPump.getInstance());
     }
+
 
     /**
      * Constructor
@@ -72,6 +73,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         this.parameter = param;
     }
 
+
     /**
      * Constructor
      * 
@@ -84,6 +86,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         super(comm_parameters, writer, da);
     }
 
+
     /**
      * Constructor
      * 
@@ -93,6 +96,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         super(DataAccessPump.getInstance(), ow);
     }
+
 
     /**
      * Constructor
@@ -106,6 +110,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         // this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }
+
 
     /**
      * Set Pump Type
@@ -133,6 +138,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
 
     }
 
+
     /**
      * Get Name
      */
@@ -140,6 +146,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         return "Generic device";
     }
+
 
     // ************************************************
     // *** Available Functionality ***
@@ -155,6 +162,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         return this.profile_names;
     }
 
+
     /**
      * Get Download Support Type (if device supports downloading data from it)
      * 
@@ -162,8 +170,9 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
      */
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.NoDownloadSupport;
+        return DownloadSupportType.NotSupportedByGGC;
     }
+
 
     /**
      * Get Temporary Basal Type Definition
@@ -177,6 +186,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         return "TYPE=Unit;STEP=0.1";
     }
 
+
     /**
      * Get Bolus Precission
      * 
@@ -186,6 +196,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         return 0.1f;
     }
+
 
     /**
      * Get Basal Precission
@@ -197,6 +208,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         return 0.1f;
     }
 
+
     /**
      * Are Pump Settings Set
      * 
@@ -206,6 +218,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         return false;
     }
+
 
     /**
      * How Many Months Of Data Stored
@@ -228,6 +241,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         return null;
     }
 
+
     /**
      * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific
      *     event codes
@@ -237,6 +251,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         return null;
     }
+
 
     /**
      * Get Error Mappings - Map pump specific errors to Pump Tool specific
@@ -248,6 +263,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         return null;
     }
 
+
     /**
      * Get Event Mappings - Map pump specific events to Pump Tool specific
      *     event codes
@@ -258,6 +274,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
         return null;
     }
 
+
     /**
      * Get Report Mappings - Map pump specific reports to Pump Tool specific
      *     event codes
@@ -267,6 +284,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
     {
         return null;
     }
+
 
     /**
      * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should

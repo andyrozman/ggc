@@ -34,10 +34,11 @@ import ggc.pump.util.DataAccessPump;
  */
 
 public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterface // ,
-                                                                                   // SelectableInterface
+// SelectableInterface
 {
 
     String connection_port = "";
+
 
     /**
      * Constructor
@@ -48,6 +49,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     {
         super(DataAccessPump.getInstance(), ow);
     }
+
 
     /**
      * Constructor
@@ -60,6 +62,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }
+
 
     /**
      * Set Pump Type
@@ -87,6 +90,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
 
     }
 
+
     /**
      * getConnectionPort - connection port data
      * 
@@ -96,6 +100,7 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
     {
         return this.connection_port;
     }
+
 
     /**
      * setConnectionPort - connection port data
@@ -107,12 +112,14 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         this.connection_port = con_port;
     }
 
+
     /**
      * Dispose
      */
     public void dispose()
     {
     }
+
 
     // ************************************************
     // *** Device Implemented methods ***
@@ -126,13 +133,15 @@ public abstract class AbstractXmlPump extends XmlProtocol implements PumpInterfa
         return true;
     }
 
+
     /** 
      * Get Download Support Type
      */
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.NoDownloadSupport;
+        return DownloadSupportType.NotSupportedByGGC;
     }
+
 
     /**
      * Get Temporary Basal Type Definition

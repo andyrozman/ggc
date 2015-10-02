@@ -1,10 +1,5 @@
 package ggc.pump.db;
 
-import ggc.core.db.hibernate.pump.PumpDataH;
-import ggc.core.util.DataAccess;
-import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.ArrayList;
 
 import org.hibernate.Session;
@@ -15,6 +10,11 @@ import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.core.db.hibernate.pump.PumpDataH;
+import ggc.core.util.DataAccess;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -35,23 +35,22 @@ import com.atech.utils.ATDataAccessAbstract;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- *  Filename:     FoodDescription
+ *  Filename:     PumpData
  *  Description:  This is DataLayer file (data file, with methods to work with database or in
- *                this case Hibernate). This one is used for FoodDescriptionH and FoodUserDescriptionH.
+ *                this case Hibernate). This one is used for PumpDataH .
  *                This one is also BackupRestoreObject.
- *                File is not YET DataLayer File at least not active
  *
  *  Author: andyrozman {andy@atech-software.com}
  */
-
-// TODO: DL
 
 public class PumpData extends PumpDataH implements BackupRestoreObject, DatabaseObjectHibernate
 {
 
     private static final long serialVersionUID = -2783864807987398195L;
+
     private boolean selected = false;
-    I18nControlAbstract ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
+    I18nControlAbstract ic = null;
+
 
     /**
      * Constructor
@@ -59,6 +58,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     public PumpData()
     {
     }
+
 
     /**
      * Constructor
@@ -78,6 +78,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         this.setChanged(ch.getChanged());
     }
 
+
     /**
      * Constructor
      *
@@ -96,6 +97,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         this.setChanged(System.currentTimeMillis());
     }
 
+
     /**
      * Constructor
      *
@@ -105,6 +107,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         this.ic = _ic;
     }
+
 
     // ---
     // --- BackupRestoreObject
@@ -120,6 +123,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return DataAccessPump.getInstance().getI18nControlInstance().getMessage("PUMP_DATA");
     }
 
+
     /**
      * Get Name
      * @return
@@ -128,6 +132,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return this.getTargetName();
     }
+
 
     /**
      * getBackupClassName - name of class which will be updated/restored
@@ -138,6 +143,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return "ggc.core.db.hibernate.pump.PumpDataH";
     }
+
 
     /**
      * To String
@@ -150,6 +156,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return this.getTargetName();
     }
 
+
     /**
      * getChildren
      */
@@ -157,6 +164,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return null;
     }
+
 
     /**
      * isSelected
@@ -166,6 +174,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return selected;
     }
 
+
     /**
      * setSelected
      */
@@ -173,6 +182,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         this.selected = newValue;
     }
+
 
     /**
      * Is Object Collection
@@ -184,6 +194,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return false;
     }
 
+
     /**
      * Has Children
      */
@@ -191,6 +202,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return false;
     }
+
 
     /**
      * DbAdd - Add this object to database
@@ -222,6 +234,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return "" + id.longValue();
     }
 
+
     /**
      * DbDelete - Delete this object in database
      *
@@ -240,6 +253,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
         return true;
     }
+
 
     /**
      * DbEdit - Edit this object in database
@@ -270,6 +284,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return true;
     }
 
+
     /**
      * DbGet - Loads this object. Id must be set.
      *
@@ -294,6 +309,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return true;
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
      *
@@ -305,6 +321,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return false;
     }
+
 
     /**
      * getAction
@@ -319,6 +336,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
      */
     public int TABLE_VERSION = 1;
 
+
     /**
      * Get Table Version - returns version of table
      *
@@ -328,6 +346,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return this.TABLE_VERSION;
     }
+
 
     /**
      * dbExport - returns export String, for current version
@@ -363,6 +382,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return sb.toString();
     }
 
+
     /**
      * dbExport - returns export String, for current version
      *
@@ -373,6 +393,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return dbExport(this.TABLE_VERSION);
     }
+
 
     /**
      * dbExportHeader - header for export file
@@ -386,6 +407,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
                 + "; Table version: " + getTableVersion() + "\n";
     }
 
+
     /**
      * dbExportHeader - header for export file
      *
@@ -395,6 +417,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return this.dbExportHeader(this.TABLE_VERSION);
     }
+
 
     /**
      * dbImport - processes input entry to right fields
@@ -407,6 +430,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         dbImport(table_version, value_entry, null);
     }
+
 
     /**
      * dbImport - processes input entry to right fields
@@ -435,6 +459,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
     }
 
+
     /**
      * getBackupFile - name of backup file (base part)
      *
@@ -444,6 +469,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return "PumpDataH";
     }
+
 
     /**
      * getBackupClassName - name of class which will be updated/restored
@@ -455,6 +481,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return "ggc.core.db.hibernate.pump.PumpDataH";
     }
 
+
     /**
      * getObjectName
      */
@@ -462,6 +489,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return "PumpData";
     }
+
 
     /**
      * isDebugMode
@@ -471,6 +499,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         return false;
     }
 
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -479,6 +508,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     {
         return "";
     }
+
 
     /**
      * Has To Be Clean - if table needs to be cleaned before import

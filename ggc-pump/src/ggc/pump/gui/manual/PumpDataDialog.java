@@ -1,45 +1,15 @@
 package ggc.pump.gui.manual;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.plugin.data.DeviceValuesDay;
-import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.util.DataAccessPlugInBase;
-import ggc.pump.data.PumpDailyStatistics;
-import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.db.GGCPumpDb;
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.data.graph.GraphViewDailyPump;
-import ggc.pump.util.DataAccessPump;
-
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
+import java.util.*;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import com.atech.graphics.calendar.CalendarEvent;
 import com.atech.graphics.calendar.CalendarListener;
@@ -48,6 +18,21 @@ import com.atech.graphics.components.MultiLineTooltipModel;
 import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.plugin.data.DeviceValuesDay;
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.PumpDailyStatistics;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.db.GGCPumpDb;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.dto.BasalStatistics;
+import ggc.pump.data.graph.GraphViewDailyPump;
+import ggc.pump.data.util.PumpBasalManager;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -80,9 +65,6 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     // private static Log log = LogFactory.getLog(PumpDataDialog.class);
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -4403053763073221824L;
     private DataAccessPump m_da = DataAccessPump.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
@@ -115,6 +97,9 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     Component parent = null;
 
+    PumpBasalManager basalManager;
+
+
     /**
      * Constructor
      *
@@ -130,6 +115,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
         init();
     }
+
 
     /**
      * Constructor
@@ -147,6 +133,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         init();
     }
 
+
     /**
      * Set Title
      *
@@ -159,6 +146,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
                 + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR) + "]");
     }
 
+
     /**
      * Get Table Model
      *
@@ -169,18 +157,18 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         return model;
     }
 
+
     private void refreshData()
     {
         dayData = m_da.getDb().getDailyPumpValues(this.current_date);
         dayData.sort();
-        model.setDailyValues(dayData); // setDailyValues(dayData);
-        // ArrayList al = new ArrayList();
-        // Collections.s
+        model.setDailyValues(dayData);
         stats.processFullCollection(getDataList(dayData.getList()));
-        updateLabels();
+        updateStatistics();
 
         this.model.fireTableChanged(null);
     }
+
 
     private ArrayList<PumpValuesEntry> getDataList(List<DeviceValuesEntry> list_in)
     {
@@ -192,17 +180,8 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         }
 
         return lst;
-
     }
 
-    /**
-     * Get This Parent
-     * @return
-     */
-    public PumpDataDialog getThisParent()
-    {
-        return this;
-    }
 
     protected void close()
     {
@@ -210,9 +189,12 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         m_da.getPlugInServerInstance().getParent().requestFocus();
     }
 
+
     private void init()
     {
         ATSwingUtils.initLibrary();
+
+        this.basalManager = new PumpBasalManager(this.m_da);
 
         setTitle(new GregorianCalendar());
         this.m_db = m_da.getDb();
@@ -222,33 +204,33 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         setSize(700, 470);
         ATSwingUtils.centerJDialog(this, parent);
 
-        // setBounds(150, 150, 550, 500);
-
         // Panel for Insulin Stats
 
-        JPanel InsPanel = new JPanel(new GridLayout(3, 6));
-        InsPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("INSULIN") + ":"));
+        JPanel insulinPanel = new JPanel(new GridLayout(3, 6));
+        insulinPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("INSULIN") + ":"));
 
-        InsPanel.add(new JLabel(getIns1Abbr() + ":"));
-        InsPanel.add(sumIns1 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("AVG") + " " + getIns1Abbr() + ":"));
-        InsPanel.add(avgIns1 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("DOSE") + " " + getIns1Abbr() + ":"));
-        InsPanel.add(doseIns1 = new JLabel());
+        insulinPanel.add(new JLabel(getIns1Abbr() + ":"));
+        insulinPanel.add(sumIns1 = new JLabel());
+        insulinPanel.add(new JLabel(m_ic.getMessage("AVG") + " " + getIns1Abbr() + ":"));
+        insulinPanel.add(avgIns1 = new JLabel());
+        insulinPanel.add(new JLabel(m_ic.getMessage("DOSE") + " " + getIns1Abbr() + ":"));
+        insulinPanel.add(doseIns1 = new JLabel());
 
-        InsPanel.add(new JLabel(getIns2Abbr() + ":"));
-        InsPanel.add(sumIns2 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("AVG") + " " + getIns2Abbr() + ":"));
-        InsPanel.add(avgIns2 = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("DOSE") + " " + getIns2Abbr() + ":"));
-        InsPanel.add(doseIns2 = new JLabel());
+        insulinPanel.add(new JLabel(getIns2Abbr() + ":"));
+        insulinPanel.add(sumIns2 = new JLabel());
+        insulinPanel.add(new JLabel(m_ic.getMessage("AVG") + " " + getIns2Abbr() + ":"));
+        insulinPanel.add(avgIns2 = new JLabel());
+        insulinPanel.add(new JLabel()); // m_ic.getMessage("DOSE") + " " +
+                                        // getIns2Abbr() + ":"
+        insulinPanel.add(doseIns2 = new JLabel());
+        doseIns2.setVisible(false);
 
-        InsPanel.add(new JLabel(m_ic.getMessage("TOTAL") + ":"));
-        InsPanel.add(sumIns = new JLabel());
-        InsPanel.add(new JLabel("")); // m_ic.getMessage("AVG_INS") + ":"));
-        InsPanel.add(avgIns = new JLabel());
-        InsPanel.add(new JLabel(m_ic.getMessage("DOSE_INS") + ":"));
-        InsPanel.add(doseIns = new JLabel());
+        insulinPanel.add(new JLabel(m_ic.getMessage("TOTAL") + ":"));
+        insulinPanel.add(sumIns = new JLabel());
+        insulinPanel.add(new JLabel("")); // m_ic.getMessage("AVG_INS") + ":"));
+        insulinPanel.add(avgIns = new JLabel());
+        insulinPanel.add(new JLabel(m_ic.getMessage("DOSE_INS") + ":"));
+        insulinPanel.add(doseIns = new JLabel());
 
         // Panel for BU Stats
         JPanel BUPanel = new JPanel(new GridLayout(1, 6));
@@ -277,7 +259,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         BGPanel.add(lowestBG = new JLabel());
 
         Box dayStats = Box.createVerticalBox();
-        dayStats.add(InsPanel);
+        dayStats.add(insulinPanel);
         dayStats.add(BUPanel);
         dayStats.add(BGPanel);
 
@@ -290,6 +272,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         calPane = new CalendarPane(this.m_da);
         calPane.addCalendarListener(new CalendarListener()
         {
+
             public void dateHasChanged(CalendarEvent e)
             {
                 setTitle(e.getNewCalendar());
@@ -306,14 +289,16 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         dayData = m_da.getDb().getDailyPumpValues(this.current_date);
         dayData.sort();
         stats.processFullCollection(this.getDataList(dayData.getList()));
-        updateLabels();
+        updateStatistics();
 
         model = new PumpDataTableModel(dayData);
 
+        // FIXME replace with new JTableWithToolstip
         table = new JTable(model)
         {
 
             private static final long serialVersionUID = 1613807277320213251L;
+
 
             // Implement table cell tool tips.
             @Override
@@ -348,6 +333,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
         table.addMouseListener(new MouseAdapter()
         {
+
             @Override
             public void mouseClicked(MouseEvent e)
             {
@@ -360,11 +346,6 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         });
 
         resultsPane = new JScrollPane(table);
-        // resultsPane.getViewport().addMouseListener(ma);
-        // resultsPane.getViewport().setBackground(table.getBackground());
-
-        // DeviceValuesDay pvd = new
-        // DeviceValuesDay(DataAccessPump.getInstance());
 
         m_da.getColumnsWidthManual();
 
@@ -441,27 +422,37 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         setVisible(true);
     }
 
-    private void updateLabels()
+
+    private void updateStatistics()
     {
         if (dayData == null)
             return;
 
-        sumIns1.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_SUM_BOLUS, 1)); // df.format(dayData.getSumIns1()));
-        sumIns2.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_SUM_BASAL, 1)); // df.format(dayData.getSumIns2()));
-        sumIns.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_SUM_TOGETHER, 1)); // df.format(dayData.getSumIns()));
+        BasalStatistics basalStatistics = basalManager.getBasalStatistics(this.current_date, dayData);
 
-        avgIns1.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_AVG_BOLUS, 1));
-        avgIns2.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_AVG_BASAL, 1)); // df.format(dayData.getAvgIns2()));
+        float tempValue = 0.0f;
+
+        // insulin - sum
+        sumIns1.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_SUM_BOLUS, 3));
+
+        tempValue = basalStatistics.getValueForItem(BasalStatistics.SUM_BASAL);
+        sumIns2.setText(getFloatAsString(tempValue, 3));
+
+        tempValue += this.stats.getItemStatisticsValue(PumpValuesEntry.INS_SUM_BOLUS);
+
+        sumIns.setText(getFloatAsString(tempValue, 3));
+
+        avgIns1.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_AVG_BOLUS, 3));
+        avgIns2.setText(getFloatAsString(basalStatistics.getValueForItem(BasalStatistics.AVG_BASAL_IN_DAY), 3)); // df.format(dayData.getAvgIns2()));
+
         // avgIns.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_SUM_TOGETHER,
         // 1)); //df.format(dayData.getAvgIns()));
 
-        doseIns1.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_DOSES_BOLUS, 0));
-        doseIns2.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_DOSES_BASAL, 0)); // dayData.getIns2Count()
-                                                                                                             // +
-                                                                                                             // "");
-        doseIns.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_DOSES_TOGETHER, 0)); // dayData.getInsCount()
-                                                                                                               // +
-                                                                                                               // "");
+        doseIns1.setText("     " + this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_DOSES_BOLUS, 0));
+        // doseIns2.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_DOSES_BASAL,
+        // 0));
+
+        doseIns.setText("     " + this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.INS_DOSES_TOGETHER, 0));
 
         sumBE.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.CH_SUM, 0));
         avgBE.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.CH_AVG, 0));
@@ -489,6 +480,10 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
             lowestBG.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.BG_MIN, dec_pls));
         }
 
+        // basalStatistics.
+
+        // df.format(dayData.getSumIns2()));
+
         /*
          * DecimalFormat df = new DecimalFormat("#0.0");
          * sumIns1.setText(df.format(dayData.getSumIns1()));
@@ -511,22 +506,24 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
          */
     }
 
-    /*
-     * public void processWindowEvent(WindowEvent e) { if (e.getID() ==
-     * WindowEvent.WINDOW_CLOSING) { this.dispose(); }
-     * super.processWindowEvent(e); }
-     */
+
+    private String getFloatAsString(float value, int decimalPlaces)
+    {
+        return m_da.getFormatedValue(value, decimalPlaces);
+    }
+
 
     private String getIns1Abbr()
     {
         return m_ic.getMessage("BOLUS"); // "Bolus Insulin";
     }
 
+
     private String getIns2Abbr()
     {
         return m_ic.getMessage("BASAL");
-        // return "Basal Insulin";
     }
+
 
     /**
      * Action Performed
@@ -630,6 +627,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     }
 
+
     private boolean deleteAdditionalDataCheck(PumpValuesEntry pve, int index) // ..,
                                                                               // boolean
                                                                               // delete)
@@ -666,17 +664,17 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     }
 
+
     private void deleteAdditionalData(PumpValuesEntry pve)
     {
-        Hashtable<String, PumpValuesEntryExt> add_data = pve.getAdditionalData();
+        Map<PumpAdditionalDataType, PumpValuesEntryExt> additionalData = pve.getAdditionalData();
 
-        for (Enumeration<String> en = add_data.keys(); en.hasMoreElements();)
+        for (PumpValuesEntryExt entry : additionalData.values())
         {
-            PumpValuesEntryExt pvee = add_data.get(en.nextElement());
-            m_db.delete(pvee);
+            m_db.delete(entry);
         }
-
     }
+
 
     private void editEntry(boolean check)
     {
@@ -700,6 +698,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
 
     }
 
+
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
@@ -712,6 +711,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      */
@@ -719,6 +719,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
     {
         return this.help_button;
     }
+
 
     /**
      * getHelpId - get id for Help

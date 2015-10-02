@@ -48,6 +48,7 @@ public abstract class DeltecPump extends AbstractPump
         super();
     }
 
+
     /**
      * Constructor
      *  
@@ -58,6 +59,7 @@ public abstract class DeltecPump extends AbstractPump
     {
         super(params, writer);
     }
+
 
     /**
      * Constructor
@@ -71,6 +73,7 @@ public abstract class DeltecPump extends AbstractPump
         super(params, writer, da);
     }
 
+
     /**
      * Constructor
      * 
@@ -81,6 +84,7 @@ public abstract class DeltecPump extends AbstractPump
         super(cmp);
     }
 
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -90,6 +94,7 @@ public abstract class DeltecPump extends AbstractPump
     {
         return null;
     }
+
 
     /**
      * getImplementationStatus - Get Implementation Status 
@@ -102,6 +107,7 @@ public abstract class DeltecPump extends AbstractPump
         return DeviceImplementationStatus.NotAvailable;
     }
 
+
     /**
      * Open
      */
@@ -110,12 +116,14 @@ public abstract class DeltecPump extends AbstractPump
         return true;
     }
 
+
     /**
      * Close
      */
     public void close() throws PlugInBaseException
     {
     }
+
 
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
@@ -126,6 +134,7 @@ public abstract class DeltecPump extends AbstractPump
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
@@ -138,6 +147,7 @@ public abstract class DeltecPump extends AbstractPump
     {
     }
 
+
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy 
      * (from some date to another)
@@ -148,6 +158,7 @@ public abstract class DeltecPump extends AbstractPump
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
+
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -160,6 +171,7 @@ public abstract class DeltecPump extends AbstractPump
     {
     }
 
+
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      * @return 
@@ -171,13 +183,13 @@ public abstract class DeltecPump extends AbstractPump
     }
 
 
-
     /** 
      * Dispose
      */
     public void dispose()
     {
     }
+
 
     /**
      * getConnectionPort - connection port data
@@ -190,7 +202,6 @@ public abstract class DeltecPump extends AbstractPump
     }
 
 
-
     /**
      * Is Device Communicating
      * 
@@ -200,6 +211,7 @@ public abstract class DeltecPump extends AbstractPump
     {
         return false;
     }
+
 
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -214,6 +226,7 @@ public abstract class DeltecPump extends AbstractPump
         return false;
     }
 
+
     /**
      * Get Download Support Type
      * 
@@ -222,7 +235,7 @@ public abstract class DeltecPump extends AbstractPump
     @Override
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.NoDownloadSupport;
+        return DownloadSupportType.NotSupportedByGGC;
     }
 
 }

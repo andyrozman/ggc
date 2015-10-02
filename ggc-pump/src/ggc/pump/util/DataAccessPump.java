@@ -24,6 +24,8 @@ import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.cfg.PumpConfigurationDefinition;
 import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.data.defs.*;
+import ggc.pump.data.util.PumpBasalManager;
+import ggc.pump.data.util.PumpBolusManager;
 import ggc.pump.device.animas.AnimasIR1200Handler;
 import ggc.pump.device.insulet.InsuletHandler;
 import ggc.pump.graph.PumpGraphContext;
@@ -61,7 +63,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.5.1";
+    public static final String PLUGIN_VERSION = "1.6.0";
 
     private static DataAccessPump s_da = null; // This is handle to unique
 
@@ -106,6 +108,9 @@ public class DataAccessPump extends DataAccessPlugInBase
      * The m_pump_errors.
      */
     PumpErrors m_pump_errors = null;
+
+    private PumpBasalManager pumpBasalManager;
+    private PumpBolusManager pumpBolusManager;
 
 
     /**
@@ -158,6 +163,29 @@ public class DataAccessPump extends DataAccessPlugInBase
         this.loadGraphContext();
 
         this.prepareTranslationForEnums();
+
+        // managers : basal manager
+        this.prepareManagers();
+
+    }
+
+
+    public void prepareManagers()
+    {
+        this.pumpBasalManager = new PumpBasalManager(this);
+        this.pumpBolusManager = new PumpBolusManager(this);
+    }
+
+
+    public PumpBasalManager getBasalManager()
+    {
+        return this.pumpBasalManager;
+    }
+
+
+    public PumpBolusManager getBolusManager()
+    {
+        return this.pumpBolusManager;
     }
 
 
@@ -817,6 +845,12 @@ public class DataAccessPump extends DataAccessPlugInBase
     public void loadGraphContext()
     {
         this.graph_context = new PumpGraphContext();
+    }
+
+
+    public PumpBasalManager getPumpBasalManager()
+    {
+        return pumpBasalManager;
     }
 
 }

@@ -162,7 +162,7 @@ public class Minimed553 extends Minimed523
      */
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.NoDownloadSupport; // .DOWNLOAD_FROM_DEVICE_FILE;
+        return DownloadSupportType.NotSupportedByGGC; // .DOWNLOAD_FROM_DEVICE_FILE;
     }
 
 

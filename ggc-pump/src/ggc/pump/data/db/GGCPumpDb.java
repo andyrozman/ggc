@@ -162,14 +162,18 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public List<PumpDataH> getRangePumpValuesRaw(GregorianCalendar from, GregorianCalendar to)
     {
-        log.info("getRangePumpValuesRaw()");
+        return getRangePumpValuesRaw(from, to, null);
+    }
+
+
+    public List<PumpDataH> getRangePumpValuesRaw(GregorianCalendar from, GregorianCalendar to, String filter)
+    {
+        log.info(String.format("getRangePumpValuesRaw(%s)", filter == null ? "" : filter));
 
         long dt_from = ATechDate.getATDateTimeFromGC(from, ATechDate.FORMAT_DATE_ONLY);
         long dt_to = ATechDate.getATDateTimeFromGC(to, ATechDate.FORMAT_DATE_ONLY);
 
         String sql = "";
-        // DeviceValuesRange dvr = new
-        // DeviceValuesRange(DataAccessPump.getInstance(), from, to);
 
         List<PumpDataH> listPumpData = new ArrayList<PumpDataH>();
 
@@ -178,7 +182,14 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
             sql = "SELECT dv from " + //
                     "ggc.core.db.hibernate.pump.PumpDataH as dv " + //
                     "WHERE dv.dt_info >=  " + dt_from + "000000 AND dv.dt_info <= " + //
-                    dt_to + "235959 ORDER BY dv.dt_info";
+                    dt_to + "235959 ";
+
+            if (filter != null)
+            {
+                sql += " AND " + filter;
+            }
+
+            sql += " ORDER BY dv.dt_info";
 
             Query q = this.db.getSession().createQuery(sql);
 
@@ -196,6 +207,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
             log.debug("Sql: " + sql);
             log.error("getDayStats(). Exception: " + ex, ex);
         }
+
+        log.debug("Found " + listPumpData.size() + " entries.");
 
         return listPumpData;
     }
@@ -247,6 +260,28 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
         return lst;
 
+    }
+
+
+    public List<PumpValuesEntry> getRangePumpBasalValues(GregorianCalendar from, GregorianCalendar to)
+    {
+        String filter = "dv.base_type=1";
+        return convertPumpDataRawEntries(getRangePumpValuesRaw(from, to, filter));
+    }
+
+
+    public List<PumpValuesEntry> convertPumpDataRawEntries(List<PumpDataH> dataList)
+    {
+        List<PumpValuesEntry> outList = new ArrayList<PumpValuesEntry>();
+
+        for (PumpDataH data : dataList)
+        {
+            outList.add(new PumpValuesEntry(data));
+        }
+
+        Collections.sort(outList);
+
+        return outList;
     }
 
 
@@ -434,11 +469,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
         try
         {
-            sql = "SELECT dv " + //
-                    "from ggc.core.db.hibernate.pump.PumpProfileH as dv " + //
-                    "where dv.active_from < " + dt + //
-                    " and (dv.active_till > " + dt + " or dv.active_till is null) " + //
-                    " and dv.person_id=" + m_da.getCurrentUserId();
+            sql = prepareSqlForProfiles(gc, gc);
 
             Query q = this.db.getSession().createQuery(sql);
 
@@ -467,7 +498,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      *
      * @return
      */
-    public List<PumpProfile> getProfilesForRange(GregorianCalendar gcFrom, GregorianCalendar gcTill)
+    @Deprecated
+    public List<PumpProfile> getProfilesForRangeOld(GregorianCalendar gcFrom, GregorianCalendar gcTill)
     {
         // FIXME this doesn't work like it should, we need to get active
         // profile, not all profiles active on specific day
@@ -515,6 +547,81 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
         return listProfiles;
 
+    }
+
+
+    /**
+     * Get Profiles
+     *
+     * @return
+     */
+    public List<PumpProfile> getProfilesForRange(GregorianCalendar gcFrom, GregorianCalendar gcTill)
+    {
+        log.info("getProfilesForRange() - Run");
+
+        String sql = "";
+
+        List<PumpProfile> listProfiles = new ArrayList<PumpProfile>();
+
+        try
+        {
+            sql = prepareSqlForProfiles(gcFrom, gcTill);
+
+            Query q = this.db.getSession().createQuery(sql);
+
+            Iterator<?> it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+                PumpProfileH pdh = (PumpProfileH) it.next();
+                listProfiles.add(new PumpProfile(pdh));
+            }
+
+        }
+        catch (Exception ex)
+        {
+            log.debug("Sql: " + sql);
+            log.error("getProfilesForRange(). Exception: " + ex, ex);
+        }
+
+        return listProfiles;
+
+    }
+
+
+    private String prepareSqlForProfiles(GregorianCalendar gcFrom, GregorianCalendar gcTill)
+    {
+        String sql = " SELECT dv " //
+                + " from ggc.core.db.hibernate.pump.PumpProfileH as dv "
+                + " where dv.person_id="
+                + m_da.getCurrentUserId() //
+                + " and dv.active_from <> 0 and dv.active_till <> 0" + //
+                " and ( ";
+
+        int days = m_da.getDaysInInterval(gcFrom, gcTill);
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < days; i++)
+        {
+            GregorianCalendar gc = (GregorianCalendar) gcFrom.clone();
+            gc.add(Calendar.DAY_OF_YEAR, i);
+
+            String date = DataAccessPump.getLeadingZero(gc.get(Calendar.YEAR), 2)
+                    + DataAccessPump.getLeadingZero(gc.get(Calendar.MONTH) + 1, 2)
+                    + DataAccessPump.getLeadingZero(gc.get(Calendar.DAY_OF_MONTH), 2);
+
+            for (int j = 0; j < 24; j++)
+            {
+                String dt = date + DataAccessPump.getLeadingZero(j, 2) + "0000";
+                sb.append("(dv.active_from <= " + dt + " and dv.active_till >=" + dt + ") or ");
+            }
+        }
+
+        sql += sb.substring(0, sb.length() - 3);
+        sql += " ) ";
+
+        return sql;
     }
 
 
@@ -667,11 +774,6 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
                 counter++;
 
                 PumpValuesEntryProfile pvep = new PumpValuesEntryProfile((PumpProfileH) it.next());
-
-                /*
-                 * PumpProfileH pdh = (PumpProfileH) it.next();
-                 * dt.put(String.format(id, pdh.getActive_from()) , pdh);
-                 */
 
                 dt.put(pvep.getSpecialId(), pvep);
 

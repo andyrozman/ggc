@@ -1,12 +1,5 @@
 package ggc.pump.data;
 
-import ggc.plugin.data.DeviceValuesEntry;
-import ggc.pump.data.defs.PumpAdditionalDataType;
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.data.defs.PumpDeviceValueType;
-import ggc.pump.db.PumpProfile;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -14,12 +7,20 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import ggc.plugin.data.DeviceValuesEntry;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpDeviceValueType;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.util.DataAccessPump;
+
 public class PumpValuesHourProcessor
 {
 
     DataAccessPump dataAccessPump = DataAccessPump.getInstance();
     HashMap<PumpDeviceValueType, List<String>> additionalData = null;
     HashMap<String, String> index = new HashMap<String, String>();
+
 
     public void clearComments()
     {
@@ -38,6 +39,7 @@ public class PumpValuesHourProcessor
         }
 
     }
+
 
     public PumpProfile getProfileForHour(List<PumpProfile> profiles, GregorianCalendar gregorianCalendar, int hour,
             String profileName)
@@ -60,13 +62,10 @@ public class PumpValuesHourProcessor
         return null;
     }
 
+
     public PumpValuesHour createPumpValuesHour(List<DeviceValuesEntry> deviceValues)
     {
         PumpValuesHour pumpValuesHour = new PumpValuesHour(this.dataAccessPump);
-
-        String keyBG = PumpAdditionalDataType.BloodGlucose.getTranslation();
-        String keyCH = PumpAdditionalDataType.Carbohydrates.getTranslation();
-        String keyComment = PumpAdditionalDataType.Comment.getTranslation();
 
         for (DeviceValuesEntry entry : deviceValues)
         {
@@ -79,19 +78,19 @@ public class PumpValuesHourProcessor
             // System.out.println("PVE Additional Data: " +
             // pve.getAdditionalData());
 
-            if (pve.getAdditionalData().containsKey(keyBG))
+            if (pve.getAdditionalData().containsKey(PumpAdditionalDataType.BloodGlucose))
             {
-                pumpValuesHour.addBGEntry(pve.getAdditionalData().get(keyBG));
+                pumpValuesHour.addBGEntry(pve.getAdditionalData().get(PumpAdditionalDataType.BloodGlucose));
             }
 
-            if (pve.getAdditionalData().containsKey(keyCH))
+            if (pve.getAdditionalData().containsKey(PumpAdditionalDataType.Carbohydrates))
             {
-                pumpValuesHour.addCHEntry(pve.getAdditionalData().get(keyCH).getValue());
+                pumpValuesHour.addCHEntry(pve.getAdditionalData().get(PumpAdditionalDataType.Carbohydrates).getValue());
             }
 
-            if (pve.getAdditionalData().containsKey(keyComment))
+            if (pve.getAdditionalData().containsKey(PumpAdditionalDataType.Comment))
             {
-                String com = pve.getAdditionalData().get(keyComment).getValue();
+                String com = pve.getAdditionalData().get(PumpAdditionalDataType.Comment).getValue();
 
                 if (StringUtils.isNotBlank(com))
                 {
@@ -126,15 +125,18 @@ public class PumpValuesHourProcessor
         return pumpValuesHour;
     }
 
+
     public void addAdditionalData(PumpDeviceValueType valueType, String partComment)
     {
         additionalData.get(valueType).add(partComment);
     }
 
+
     public boolean isAdditionalDataForPumpTypeSet(PumpDeviceValueType type)
     {
         return (this.additionalData.get(type).size() > 0);
     }
+
 
     public String getAdditionalDataForPumpTypeSet(PumpDeviceValueType type)
     {
@@ -156,6 +158,7 @@ public class PumpValuesHourProcessor
             return "";
 
     }
+
 
     public String getFullComment()
     {

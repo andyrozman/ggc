@@ -4,8 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 import javax.swing.*;
 
@@ -13,7 +15,6 @@ import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.components.TimeComponent;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
-import com.atech.utils.data.CodeEnumWithTranslation;
 
 import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.util.DataAccess;
@@ -1223,17 +1224,6 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     }
 
 
-    private void addAllItems(JComboBox cb, Map<Integer, ? extends CodeEnumWithTranslation> map)
-    {
-        cb.removeAllItems();
-
-        for (Entry<Integer, ? extends CodeEnumWithTranslation> en : map.entrySet())
-        {
-            cb.addItem(en.getValue().getTranslation());
-        }
-    }
-
-
     /**
      * Set Height
      *
@@ -1292,9 +1282,9 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             float _bg = 0.0f;
             float ch = 0.0f;
 
-            if (m_parent.ht_data.containsKey(PumpAdditionalDataType.BloodGlucose.getTranslation()))
+            if (m_parent.ht_data.containsKey(PumpAdditionalDataType.BloodGlucose))
             {
-                PumpValuesEntryExt pvex = m_parent.ht_data.get(PumpAdditionalDataType.BloodGlucose.getTranslation());
+                PumpValuesEntryExt pvex = m_parent.ht_data.get(PumpAdditionalDataType.BloodGlucose);
                 _bg = m_da.getFloatValueFromString(pvex.getValue());
 
                 if (m_da.getBGMeasurmentType() != DataAccess.BG_MGDL)
@@ -1303,9 +1293,9 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 }
             }
 
-            if (m_parent.ht_data.containsKey(PumpAdditionalDataType.Carbohydrates.getTranslation()))
+            if (m_parent.ht_data.containsKey(PumpAdditionalDataType.Carbohydrates))
             {
-                PumpValuesEntryExt pvex = m_parent.ht_data.get(PumpAdditionalDataType.Carbohydrates.getTranslation());
+                PumpValuesEntryExt pvex = m_parent.ht_data.get(PumpAdditionalDataType.Carbohydrates);
                 ch = m_da.getFloatValueFromString(pvex.getValue());
             }
 

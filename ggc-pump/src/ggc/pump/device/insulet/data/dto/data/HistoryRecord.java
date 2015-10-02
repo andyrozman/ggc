@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 
 import ggc.pump.device.insulet.data.dto.AbstractRecord;
 import ggc.pump.device.insulet.data.enums.LogType;
@@ -66,7 +67,7 @@ public class HistoryRecord extends AbstractRecord
         hours = getByte(data, 17);
         secs_since_powerup = getIntInverted(data, 19);
 
-        aTechDate = new ATechDate(day, month, year, hours, minutes, seconds, ATechDate.ATechDateType.DateAndTimeSec);
+        aTechDate = new ATechDate(day, month, year, hours, minutes, seconds, ATechDateType.DateAndTimeSec);
 
         if (logId == 5)
         {

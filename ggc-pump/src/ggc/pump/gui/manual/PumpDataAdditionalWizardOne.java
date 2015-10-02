@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.Hashtable;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -48,23 +48,19 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 {
 
     private static final long serialVersionUID = -5592188365225021329L;
-    private I18nControlAbstract m_ic = DataAccessPump.getInstance().getI18nControlInstance();
-    private DataAccessPump m_da = DataAccessPump.getInstance();
+
+    private DataAccessPump dataAccess = DataAccessPump.getInstance();
+    private I18nControlAbstract i18nControl = dataAccess.getI18nControlInstance();
 
     JLabel label_title = new JLabel();
 
-    // JComponent components[] = new JComponent[9];
-
-    // Font f_normal = dataAccess.getFont(DataAccessPump.FONT_NORMAL);
-    // Font f_bold = dataAccess.getFont(DataAccessPump.FONT_NORMAL);
     boolean debug = true;
     JButton help_button = null;
     JPanel main_panel = null;
     private Container m_parent = null;
 
-    private Hashtable<String, PumpValuesEntryExt> old_data = null;
+    private Map<PumpAdditionalDataType, PumpValuesEntryExt> old_data = null;
 
-    // PumpAdditionalDataType add_data;
     JComboBox cb_type;
 
     protected boolean was_action = false;
@@ -73,18 +69,13 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
     /**
      * Constructor
-     * 
-     * @param hashtable
-     * @param parent
      */
-    public PumpDataAdditionalWizardOne(Hashtable<String, PumpValuesEntryExt> hashtable, JDialog parent) // ,
-                                                                                                        // PumpAdditionalDataType
-                                                                                                        // pump_data)
+    public PumpDataAdditionalWizardOne(Map<PumpAdditionalDataType, PumpValuesEntryExt> data, JDialog parent)
     {
         super(parent, "", true);
 
         // add_data = pump_data;
-        this.old_data = hashtable;
+        this.old_data = data;
         m_parent = parent;
         init();
     }
@@ -98,7 +89,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         this.setSize(width, height);
         ATSwingUtils.initLibrary();
 
-        m_da.addComponent(this);
+        dataAccess.addComponent(this);
         ATSwingUtils.centerJDialog(this, this.m_parent);
 
         JPanel panel = new JPanel();
@@ -116,10 +107,10 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
 
         int startx = 60;
 
-        setTitle(m_ic.getMessage("ADD_PARAMETER"));
-        label_title.setText(m_ic.getMessage("ADD_PARAMETER"));
+        setTitle(i18nControl.getMessage("ADD_PARAMETER"));
+        label_title.setText(i18nControl.getMessage("ADD_PARAMETER"));
 
-        JLabel label = new JLabel(m_ic.getMessage("SELECT_ADDITONAL_DATA"));
+        JLabel label = new JLabel(i18nControl.getMessage("SELECT_ADDITONAL_DATA"));
         label.setBounds(startx + 10, 100, 250, 25);
         label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         panel.add(label);
@@ -128,8 +119,8 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         cb_type.setBounds(startx + 10, 135, 240, 25);
         panel.add(cb_type);
 
-        String button_command[] = { "cancel", m_ic.getMessage("CANCEL"), "next", m_ic.getMessage("NEXT"),
-        // "help", m_ic.getMessage("HELP")
+        String button_command[] = { "cancel", i18nControl.getMessage("CANCEL"), "next", i18nControl.getMessage("NEXT"),
+        // "help", i18nControl.getMessage("HELP")
         };
 
         // button
@@ -148,10 +139,9 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         for (int i = 0, j = 0, k = 0; i < button_coord.length; i += 4, j += 2, k++)
         {
 
-            button = ATSwingUtils
-                    .getButton("   " + button_command[j + 1], button_coord[i], button_coord[i + 1],
-                        button_coord[i + 2], 25, panel, ATSwingUtils.FONT_NORMAL, button_icon[k], button_command[j],
-                        this, m_da);
+            button = ATSwingUtils.getButton("   " + button_command[j + 1], button_coord[i], button_coord[i + 1],
+                    button_coord[i + 2], 25, panel, ATSwingUtils.FONT_NORMAL, button_icon[k], button_command[j], this,
+                    dataAccess);
 
             /*
              * button = new JButton("   " + button_command[j + 1]);
@@ -181,10 +171,10 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         }
 
         help_button = ATSwingUtils.createHelpButtonByBounds(startx + 140, 195, 120, 25, this, ATSwingUtils.FONT_NORMAL,
-            m_da);
+            dataAccess);
         panel.add(help_button);
 
-        m_da.enableHelp(this);
+        dataAccess.enableHelp(this);
 
     }
 
@@ -205,7 +195,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
      * label.setBounds(30, posY, 100, 25);
      * label.setFont(f_bold);
      * parent.add(label);
-     * // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
+     * // a.add(new JLabel(i18nControl.getMessage("DATE") + ":",
      * // SwingConstants.RIGHT));
      * }
      * public void addLabel(String text, int posX, int posY, JPanel parent)
@@ -214,7 +204,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
      * label.setBounds(posX, posY, 100, 25);
      * label.setFont(f_bold);
      * parent.add(label);
-     * // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
+     * // a.add(new JLabel(i18nControl.getMessage("DATE") + ":",
      * // SwingConstants.RIGHT));
      * }
      * public void addComponent(JComponent comp, int posX, int posY, int width,
@@ -241,7 +231,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
         if (action.equals("cancel"))
         {
             System.out.println("wizard_1 [cancel]");
-            m_da.removeComponent(this);
+            dataAccess.removeComponent(this);
             this.was_action = false;
             this.dispose();
         }
@@ -319,7 +309,7 @@ public class PumpDataAdditionalWizardOne extends JDialog implements ActionListen
     {
         // TODO:
         // System.out.println("wizard_1 [ok]");
-        m_da.removeComponent(this);
+        dataAccess.removeComponent(this);
 
         this.dispose();
 

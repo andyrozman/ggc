@@ -1,11 +1,6 @@
 package ggc.pump.data.graph;
 
-import ggc.core.data.graph.GGCGraphUtil;
-import ggc.pump.data.bre.BREData;
-import ggc.pump.data.bre.BREDataCollection;
-import ggc.pump.util.DataAccessPump;
-
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -23,6 +18,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.data.graph.GGCGraphUtil;
+import ggc.pump.data.bre.BREData;
+import ggc.pump.data.bre.BREDataCollection;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -76,6 +76,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
 
     BREDataCollection data_coll;
 
+
     /**
      * Constructor
      */
@@ -83,6 +84,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
     {
         super(DataAccessPump.getInstance());
     }
+
 
     /**
      * Get Help Id
@@ -94,6 +96,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
         return null;
     }
 
+
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      *
@@ -104,6 +107,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
     {
         return new Rectangle(100, 100, 500, 400);
     }
+
 
     /**
      * Load Data
@@ -127,6 +131,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
          */
     }
 
+
     /**
      * Get Data Set
      *
@@ -136,6 +141,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
     {
         return this.dataset;
     }
+
 
     /**
      * Preprocess Data
@@ -187,7 +193,8 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
          * hbValues.getPercentOfDaysInClass(2));
          * datasetBG.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"),
          * hbValues.getPercentOfDaysInClass(3));
-         * datasetBG.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"),
+         * datasetBG.insertValue(4,
+         * m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"),
          * hbValues.getPercentOfDaysInClass(4));
          */
 
@@ -200,9 +207,9 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
          * TimeSeries CHSeries = new TimeSeries(this.m_ic.getMessage("CH_LONG"),
          * Hour.class);
          * TimeSeries ins1Series = new
-         * TimeSeries(da_local.getSettings().getIns1Name(), Hour.class);
+         * TimeSeries(dataAccessPump.getSettings().getIns1Name(), Hour.class);
          * TimeSeries ins2Series = new
-         * TimeSeries(da_local.getSettings().getIns2Name(), Hour.class);
+         * TimeSeries(dataAccessPump.getSettings().getIns2Name(), Hour.class);
          */
 
         XYSeries bg = new XYSeries(this.m_ic.getMessage("MEASURED_BASAL_BG"), true, true); // ,
@@ -211,13 +218,13 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
         // XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"),
         // true, true); //, Hour.class);
         // XYSeries ins1Series = new
-        // XYSeries(da_local.getSettings().getIns1Name(), true, true); //,
+        // XYSeries(dataAccessPump.getSettings().getIns1Name(), true, true); //,
         // Hour.class);
         // XYSeries ins2Series = new
-        // XYSeries(da_local.getSettings().getIns2Name(), true, true); //,
+        // XYSeries(dataAccessPump.getSettings().getIns2Name(), true, true); //,
         // Hour.class);
 
-        // int BGUnit = 1; // AAA da_local.getSettings().getBG_unit();
+        // int BGUnit = 1; // AAA dataAccessPump.getSettings().getBG_unit();
 
         ArrayList<BREData> lst = this.data_coll.getDataByType(BREData.BRE_DATA_BG);
 
@@ -315,6 +322,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
 
     GregorianCalendar gcx = new GregorianCalendar();
 
+
     /**
      * Get Time in Ms
      *
@@ -336,6 +344,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
         return gcx.getTimeInMillis();
     }
 
+
     /**
      * Get Title (used by GraphViewer)
      *
@@ -346,6 +355,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
     {
         return m_ic.getMessage("DAILYGRAPHFRAME");
     }
+
 
     /**
      * Set Plot
@@ -387,13 +397,13 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
          * plot.setRangeGridlinesVisible(false);
          * plot.setDomainGridlinesVisible(false);
          * defaultRenderer.setSeriesPaint(0,
-         * da_local.getColor(colorScheme.getColor_bg()));
+         * dataAccessPump.getColor(colorScheme.getColor_bg()));
          * insBURenderer.setSeriesPaint(0,
-         * da_local.getColor(colorScheme.getColor_ch()));
+         * dataAccessPump.getColor(colorScheme.getColor_ch()));
          * insBURenderer.setSeriesPaint(1,
-         * da_local.getColor(colorScheme.getColor_ins1()));
+         * dataAccessPump.getColor(colorScheme.getColor_ins1()));
          * insBURenderer.setSeriesPaint(2,
-         * da_local.getColor(colorScheme.getColor_ins2()));
+         * dataAccessPump.getColor(colorScheme.getColor_ins2()));
          */
         defaultRenderer.setSeriesShapesVisible(0, true);
         insBURenderer.setSeriesShapesVisible(0, true);
@@ -418,6 +428,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
 
     }
 
+
     /**
      * Set Data
      *
@@ -432,6 +443,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
         this.setPlot(chart);
     }
 
+
     /**
      * Create Chart
      */
@@ -444,6 +456,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
 
         this.setPlot(chart);
     }
+
 
     /**
      * Create Chart Panel

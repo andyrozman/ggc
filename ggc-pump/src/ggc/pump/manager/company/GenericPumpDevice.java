@@ -44,6 +44,7 @@ public class GenericPumpDevice extends AbstractPump
      */
     AbstractPumpDeviceCompany apdc;
 
+
     /**
      * Instantiates a new generic pump device.
      * 
@@ -53,6 +54,7 @@ public class GenericPumpDevice extends AbstractPump
     {
         this.apdc = apdc;
     }
+
 
     /**
      * getDeviceCompany - get Company for device
@@ -64,6 +66,7 @@ public class GenericPumpDevice extends AbstractPump
     {
         return apdc;
     }
+
 
     public DeviceConnectionProtocol getConnectionProtocol()
     {
@@ -81,6 +84,7 @@ public class GenericPumpDevice extends AbstractPump
         return "NONE";
     }
 
+
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
      * sort of specific device data - in most cases we call them generics, and they don't have ability
@@ -92,6 +96,7 @@ public class GenericPumpDevice extends AbstractPump
     {
         return false;
     }
+
 
     /**
      * getName - Get Name of device. 
@@ -105,6 +110,7 @@ public class GenericPumpDevice extends AbstractPump
         return "Generic";
     }
 
+
     /** 
      * getProfileNames
      */
@@ -113,6 +119,7 @@ public class GenericPumpDevice extends AbstractPump
     {
         return this.apdc.getProfileNames();
     }
+
 
     /** 
      * close
@@ -154,6 +161,7 @@ public class GenericPumpDevice extends AbstractPump
         return false;
     }
 
+
     /** 
      * dispose
      */
@@ -162,6 +170,7 @@ public class GenericPumpDevice extends AbstractPump
         // TODO Auto-generated method stub
 
     }
+
 
     /** 
      * getComment
@@ -172,6 +181,7 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
+
     /** 
      * getDeviceClassName
      */
@@ -181,6 +191,7 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
+
     /** 
      * getDeviceId
      */
@@ -189,6 +200,7 @@ public class GenericPumpDevice extends AbstractPump
         // TODO Auto-generated method stub
         return 0;
     }
+
 
     /** 
      * getDeviceSpecialComment
@@ -200,6 +212,7 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
+
     /** 
      * getIconName
      */
@@ -208,6 +221,7 @@ public class GenericPumpDevice extends AbstractPump
         // TODO Auto-generated method stub
         return null;
     }
+
 
     /**
      * getImplementationStatus
@@ -218,6 +232,7 @@ public class GenericPumpDevice extends AbstractPump
         return DeviceImplementationStatus.NotAvailable;
     }
 
+
     /** 
      * getInstructions
      */
@@ -226,6 +241,7 @@ public class GenericPumpDevice extends AbstractPump
         // TODO Auto-generated method stub
         return null;
     }
+
 
     /** 
      * hasSpecialProgressStatus
@@ -237,6 +253,7 @@ public class GenericPumpDevice extends AbstractPump
         return false;
     }
 
+
     /** 
      * isDeviceCommunicating
      */
@@ -245,6 +262,7 @@ public class GenericPumpDevice extends AbstractPump
         // TODO Auto-generated method stub
         return false;
     }
+
 
     /** 
      * readConfiguration
@@ -256,6 +274,7 @@ public class GenericPumpDevice extends AbstractPump
 
     }
 
+
     /** 
      * readDeviceDataFull
      */
@@ -264,6 +283,7 @@ public class GenericPumpDevice extends AbstractPump
         // TODO Auto-generated method stub
 
     }
+
 
     /** 
      * readDeviceDataPartitial
@@ -275,6 +295,7 @@ public class GenericPumpDevice extends AbstractPump
 
     }
 
+
     /** 
      * readInfo
      */
@@ -285,6 +306,7 @@ public class GenericPumpDevice extends AbstractPump
 
     }
 
+
     /**
      * Get Download Support Type
      * 
@@ -293,8 +315,9 @@ public class GenericPumpDevice extends AbstractPump
     @Override
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.DummyDevice;
+        return DownloadSupportType.NotSupportedByDevice;
     }
+
 
     /**
      * How Many Months Of Data Stored
@@ -306,6 +329,7 @@ public class GenericPumpDevice extends AbstractPump
     {
         return -1;
     }
+
 
     /**
      * Get Temporary Basal Type Definition
@@ -322,6 +346,7 @@ public class GenericPumpDevice extends AbstractPump
         return null;
     }
 
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -332,6 +357,7 @@ public class GenericPumpDevice extends AbstractPump
         return 0.1f;
     }
 
+
     /**
      * Get Basal Step (precission)
      * 
@@ -341,6 +367,7 @@ public class GenericPumpDevice extends AbstractPump
     {
         return 0.1f;
     }
+
 
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)

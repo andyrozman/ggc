@@ -2,7 +2,6 @@ package ggc.pump.data.defs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 import com.atech.i18n.I18nControlAbstract;
@@ -167,7 +166,7 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
     }
 
 
-    public static Object[] createItems(Hashtable<String, PumpValuesEntryExt> old_data)
+    public static Object[] createItems(Map<PumpAdditionalDataType, PumpValuesEntryExt> old_data)
     {
         ArrayList<String> items = new ArrayList<String>();
 

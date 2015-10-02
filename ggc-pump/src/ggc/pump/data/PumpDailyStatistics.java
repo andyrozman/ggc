@@ -1,11 +1,8 @@
 package ggc.pump.data;
 
-import java.util.ArrayList;
-
 import com.atech.misc.statistics.StatisticsCollection;
 
 import ggc.plugin.util.DataAccessPlugInBase;
-import ggc.pump.data.defs.PumpBasalType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.util.DataAccessPump;
 
@@ -30,7 +27,7 @@ import ggc.pump.util.DataAccessPump;
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
  *  Filename:  PumpDailyStatistics
- *  Description: Pump Statistics
+ *  Description: Pump Statistics (excluding Basal, see BasalStatistics object for that)
  *
  *  Author: Andy {andy@atech-software.com}
  */
@@ -79,76 +76,78 @@ public class PumpDailyStatistics extends StatisticsCollection
 
         setValue(PumpValuesEntry.BG_STD_DEV, getStandardDeviation());
 
-        ArrayList<PumpValuesEntry> lst = new ArrayList<PumpValuesEntry>();
+        // ArrayList<PumpValuesEntry> lst = new ArrayList<PumpValuesEntry>();
 
-        for (int i = 0; i < this.items.size(); i++)
-        {
-            PumpValuesEntry pve = (PumpValuesEntry) this.items.get(i);
-
-            if (pve.baseType == PumpBaseType.Basal)
-            {
-                lst.add(pve);
-            }
-        }
+        // for (int i = 0; i < this.items.size(); i++)
+        // {
+        // PumpValuesEntry pve = (PumpValuesEntry) this.items.get(i);
+        //
+        // if (pve.baseType == PumpBaseType.Basal)
+        // {
+        // lst.add(pve);
+        // }
+        // }
 
         // float v = this.stat_objects.get(index-1).sum;
 
-        // int count = 0;
-        float sum = 0;
-
-        for (int i = 0; i < lst.size(); i++)
-        {
-            PumpValuesEntry pve = lst.get(i);
-
-            if (isCurrentlyIgnoredEntry(pve))
-            {
-                continue;
-            }
-
-            // if ((pve.base_type == PumpBaseType.PUMP_DATA_BASAL) &&
-            // (pve.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
-            // continue;
-
-            if (i + 1 == lst.size())
-            {
-                int s = 24 - pve.getDateTimeObject().getHourOfDay();
-                float val = m_da.getFloatValueFromString(pve.getValue());
-                sum += s * val;
-
-                // System.out.println("Time diff: " + s + ", val=" + val);
-            }
-            else
-            {
-                PumpValuesEntry pve2 = lst.get(i + 1);
-
-                if (isCurrentlyIgnoredEntry(pve2))
-                {
-                    continue;
-                }
-
-                // if ((pve2.base_type == PumpBaseType.PUMP_DATA_BASAL) &&
-                // (pve2.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
-                // continue;
-
-                // System.out.println("Hour: " +
-                // pve2.getDateTimeObject().hour_of_day + ", hour2=" +
-                // pve.getDateTimeObject().hour_of_day);
-
-                // System.out.println("pve2: " + pve2.getBaseTypeString() +
-                // pve2.getSubTypeString());
-
-                int s = pve2.getDateTimeObject().getHourOfDay() - pve.getDateTimeObject().getHourOfDay();
-                float val = da_pump.getFloatValueFromString(pve.getValue());
-                sum += s * val;
-
-                // System.out.println("Time diff: " + s + ", val=" + val);
-            }
-
-        }
-
-        this.stat_objects.get(PumpValuesEntry.INS_SUM_BASAL - 1).setSum(sum);
-        this.stat_objects.get(PumpValuesEntry.INS_AVG_BASAL - 1).setSum(sum / 24.0f);
-        this.stat_objects.get(PumpValuesEntry.INS_DOSES_BASAL - 1).setSum(lst.size());
+        // // int count = 0;
+        // float sum = 0;
+        //
+        // for (int i = 0; i < lst.size(); i++)
+        // {
+        // PumpValuesEntry pve = lst.get(i);
+        //
+        // if (isCurrentlyIgnoredEntry(pve))
+        // {
+        // continue;
+        // }
+        //
+        // // if ((pve.base_type == PumpBaseType.PUMP_DATA_BASAL) &&
+        // // (pve.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
+        // // continue;
+        //
+        // if (i + 1 == lst.size())
+        // {
+        // int s = 24 - pve.getDateTimeObject().getHourOfDay();
+        // float val = m_da.getFloatValueFromString(pve.getValue());
+        // sum += s * val;
+        //
+        // // System.out.println("Time diff: " + s + ", val=" + val);
+        // }
+        // else
+        // {
+        // PumpValuesEntry pve2 = lst.get(i + 1);
+        //
+        // if (isCurrentlyIgnoredEntry(pve2))
+        // {
+        // continue;
+        // }
+        //
+        // // if ((pve2.base_type == PumpBaseType.PUMP_DATA_BASAL) &&
+        // // (pve2.sub_type == PumpBasalSubType.PUMP_BASAL_PROFILE))
+        // // continue;
+        //
+        // // System.out.println("Hour: " +
+        // // pve2.getDateTimeObject().hour_of_day + ", hour2=" +
+        // // pve.getDateTimeObject().hour_of_day);
+        //
+        // // System.out.println("pve2: " + pve2.getBaseTypeString() +
+        // // pve2.getSubTypeString());
+        //
+        // int s = pve2.getDateTimeObject().getHourOfDay() -
+        // pve.getDateTimeObject().getHourOfDay();
+        // float val = da_pump.getFloatValueFromString(pve.getValue());
+        // sum += s * val;
+        //
+        // // System.out.println("Time diff: " + s + ", val=" + val);
+        // }
+        //
+        // }
+        //
+        // this.stat_objects.get(PumpValuesEntry.INS_SUM_BASAL - 1).setSum(sum);
+        // this.stat_objects.get(PumpValuesEntry.INS_AVG_BASAL - 1).setSum(sum /
+        // 24.0f);
+        // this.stat_objects.get(PumpValuesEntry.INS_DOSES_BASAL - 1).setSum(0);
 
         this.stat_objects.get(PumpValuesEntry.INS_SUM_TOGETHER - 1)
                 .setSum(
@@ -162,8 +161,7 @@ public class PumpDailyStatistics extends StatisticsCollection
         // this.stat_objects.get(PumpValuesEntry.INS_AVG_TOGETHER-1).setSum(this.getValueInternal(PumpValuesEntry.INS_AVG_BASAL)
         // + this.getValueInternal(PumpValuesEntry.INS_AVG_BOLUS));
         this.stat_objects.get(PumpValuesEntry.INS_DOSES_TOGETHER - 1).setSum(
-            this.getValueInternal(PumpValuesEntry.INS_DOSES_BASAL)
-                    + this.getValueInternal(PumpValuesEntry.INS_DOSES_BOLUS));
+            this.getValueInternal(PumpValuesEntry.INS_DOSES_BOLUS));
 
         // this.stat_objects.get(PumpValuesEntry.INS_SUM_BASAL-1).setCount(lst.size());
 
@@ -183,7 +181,10 @@ public class PumpDailyStatistics extends StatisticsCollection
     private boolean isCurrentlyIgnoredEntry(PumpValuesEntry pve)
     {
         if (pve.baseType == PumpBaseType.Basal)
-            return pve.sub_type != PumpBasalType.Value.getCode();
+        {
+            return true; // we ignore whole basals
+            // return pve.sub_type != PumpBasalType.Value.getCode();
+        }
         else
             return false;
     }

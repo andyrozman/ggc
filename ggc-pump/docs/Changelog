@@ -2,6 +2,12 @@
 Changes file for GGC Pump Tool
 ==============================
 
+1.6.0 [2.10.2015] - Andy
+    * changes because of Selector refactoring / fixing
+    * added BasalStatistic, BasalRatesDayDTO, PumpBasalManager, PumpBolusManager
+    * changed AdditionalData map (for PumpData to enum) which required some major refactorings on some classes
+    * fixes to Graph, fixed now...
+
 1.5.1 [6.7.2015] - Andy
     * added experimental (just developer tested) support for Insulet OmniPod
     * added Config File download support

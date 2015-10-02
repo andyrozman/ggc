@@ -12,7 +12,7 @@ import org.dom4j.Node;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 
-import ggc.plugin.device.DeviceAbstract;
+import ggc.plugin.data.enums.DeviceType;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.impl.accuchek.AccuChekSmartPix;
@@ -79,7 +79,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         super(cmp, DataAccessPump.getInstance());
         this.loadPumpSpecificValues();
-        this.setDeviceType(cmp.getName(), getName(), DeviceAbstract.DEVICE_TYPE_PUMP);
+        this.setDeviceType(cmp.getName(), getName(), DeviceType.Pump);
     }
 
 
@@ -106,7 +106,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         super(conn_parameter, writer, da);
         loadPumpSpecificValues();
-        this.setDeviceType("Accu-Chek/Roche", getName(), DeviceAbstract.DEVICE_TYPE_PUMP);
+        this.setDeviceType("Accu-Chek/Roche", getName(), DeviceType.Pump);
     }
 
 

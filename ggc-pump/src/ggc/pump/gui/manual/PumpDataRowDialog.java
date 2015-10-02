@@ -1,42 +1,26 @@
 package ggc.pump.gui.manual;
 
-import ggc.plugin.data.DeviceValuesDay;
-import ggc.pump.data.PumpValuesEntry;
-import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.defs.PumpAdditionalDataType;
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.util.DataAccessPump;
-
-import java.awt.Component;
-import java.awt.Container;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.StringTokenizer;
+import java.util.*;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
+
+import ggc.plugin.data.DeviceValuesDay;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -64,10 +48,7 @@ import com.atech.utils.ATSwingUtils;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class PumpDataRowDialog extends JDialog implements ActionListener, /*
-                                                                           * KeyListener
-                                                                           * ,
-                                                                           */HelpCapable
+public class PumpDataRowDialog extends JDialog implements ActionListener, HelpCapable
 {
 
     private static final long serialVersionUID = 8280477836138077888L;
@@ -104,7 +85,8 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
     /**
      * Data (Hashtable)
      */
-    public Hashtable<String, PumpValuesEntryExt> ht_data = new Hashtable<String, PumpValuesEntryExt>();
+    public Map<PumpAdditionalDataType, PumpValuesEntryExt> ht_data = new HashMap<PumpAdditionalDataType, PumpValuesEntryExt>();
+
 
     /**
      * Constructor
@@ -121,6 +103,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         initParameters(ndV, nDate);
     }
 
+
     /**
      * Constructor
      *
@@ -133,6 +116,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         m_parent = dialog;
         initParameters(ndr);
     }
+
 
     /**
      * Init Parameters
@@ -159,6 +143,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         this.setVisible(true);
     }
 
+
     /**
      * Init Parameters
      *
@@ -177,16 +162,16 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
         if (this.m_dailyValuesRow.getAdditionalData().size() > 0)
         {
-            for (Enumeration<String> en = this.m_dailyValuesRow.getAdditionalData().keys(); en.hasMoreElements();)
+            for (PumpValuesEntryExt entry : this.m_dailyValuesRow.getAdditionalData().values())
             {
-                String key = en.nextElement();
-                this.addAddItem(this.m_dailyValuesRow.getAdditionalData().get(key));
+                this.addAddItem(entry);
             }
             this.populateJListExtended(this.list_data);
         }
 
         this.setVisible(true);
     }
+
 
     /**
      * Set Date
@@ -220,6 +205,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     }
 
+
     /**
      *  Populates JList component
      * @param input
@@ -236,6 +222,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         this.m_list_data.setModel(newListModel);
     }
 
+
     /**
      * Load
      */
@@ -245,6 +232,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         this.cb_entry_type.setSelectedIndex(this.m_dailyValuesRow.getBaseType().getCode());
         this.pdtc.loadData(this.m_dailyValuesRow);
     }
+
 
     private void init()
     {
@@ -298,6 +286,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         this.m_list_data = new JList();
         this.m_list_data.addMouseListener(new MouseAdapter()
         {
+
             @Override
             public void mouseClicked(MouseEvent e)
             {
@@ -342,12 +331,14 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         bt_cancel.setBounds(145, sy + 205, 110, 25);
         panel.add(bt_cancel);
 
-        help_button = ATSwingUtils.createHelpButtonByBounds(260, sy + 205, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
+        help_button = ATSwingUtils.createHelpButtonByBounds(260, sy + 205, 110, 25, this, ATSwingUtils.FONT_NORMAL,
+            m_da);
         panel.add(help_button);
 
         m_da.enableHelp(this);
 
     }
+
 
     /**
      * Realign Components
@@ -374,6 +365,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
     }
 
     private boolean was_action = false;
+
 
     // Hashtable<String, PumpDataExtendedH> add_data = new Hashtable<String,
     // PumpDataExtendedH>();
@@ -517,6 +509,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     }
 
+
     private void itemEdit()
     {
         PumpValuesEntryExt pc = this.list_data.get(this.m_list_data.getSelectedIndex());
@@ -528,9 +521,9 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         {
             PumpValuesEntryExt pc2 = null;
 
-            if (this.ht_data.containsKey(PumpAdditionalDataType.Carbohydrates.getTranslation()))
+            if (this.ht_data.containsKey(PumpAdditionalDataType.Carbohydrates))
             {
-                pc2 = this.ht_data.get(PumpAdditionalDataType.Carbohydrates.getTranslation());
+                pc2 = this.ht_data.get(PumpAdditionalDataType.Carbohydrates);
             }
 
             pdawo = new PumpDataAdditionalWizardTwo(this, pc, pc2);
@@ -546,11 +539,13 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     }
 
+
     private void warningNotSet()
     {
         JOptionPane.showMessageDialog(this, m_ic.getMessage("NOT_ALL_REQUIRED_VALUES_SET"), m_ic.getMessage("ERROR"),
             JOptionPane.ERROR_MESSAGE);
     }
+
 
     private void processAdditionalData(PumpDataAdditionalWizardOne w1)
     {
@@ -561,6 +556,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     }
 
+
     private void processAdditionalData(PumpDataAdditionalWizardTwo w2)
     {
         if (w2.wasAction())
@@ -568,6 +564,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
             processAdditionalData(w2.getObjects());
         }
     }
+
 
     private void processAdditionalData(PumpValuesEntryExt[] objs)
     {
@@ -623,11 +620,13 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
          * //System.out.println("objs[]: " + objs);
          * //System.out.println("objs[].getType(): " + objs[i].getType());
          * //System.out.println("ht_data: " + ht_data);
-         * //System.out.println("add types: " + this.dataAccess.getAdditionalTypes());
+         * //System.out.println("add types: " +
+         * this.dataAccess.getAdditionalTypes());
          * if (this.ht_data.containsKey(this.dataAccess.getAdditionalTypes().
          * getTypeDescription(objs[i].getType())))
          * {
-         * deleteAddItem(this.dataAccess.getAdditionalTypes().getTypeDescription(objs[i
+         * deleteAddItem(this.dataAccess.getAdditionalTypes().getTypeDescription(
+         * objs[i
          * ].getType()));
          * }
          * addAddItem(objs[i]);
@@ -638,31 +637,34 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     }
 
+
     private void addAddItem(PumpValuesEntryExt obj)
     {
         this.list_data.add(obj);
-        this.ht_data.put(PumpAdditionalDataType.getByCode(obj.getType()).getTranslation(), obj);
+        this.ht_data.put(PumpAdditionalDataType.getByCode(obj.getType()), obj);
     }
 
-    @SuppressWarnings("unused")
-    private void deleteAddItem(String item_desc)
-    {
-        if (this.ht_data.containsKey(item_desc))
-        {
-            // PumpValuesEntryExt oe = this.ht_data.get(item_desc);
 
-            deleteAddItem(this.ht_data.get(item_desc));
-            // this.list_data.remove(oe);
-            // this.ht_data.remove(oe);
-        }
-    }
+    // @SuppressWarnings("unused")
+    // private void deleteAddItem(String item_desc)
+    // {
+    // if (this.ht_data.containsKey(item_desc))
+    // {
+    // // PumpValuesEntryExt oe = this.ht_data.get(item_desc);
+    //
+    // deleteAddItem(this.ht_data.get(item_desc));
+    // // this.list_data.remove(oe);
+    // // this.ht_data.remove(oe);
+    // }
+    // }
 
     private void deleteAddItem(PumpValuesEntryExt oe)
     {
         m_da.getDb().delete(oe); // .add(this.m_dailyValuesRow);
         this.list_data.remove(oe);
-        this.ht_data.remove(PumpAdditionalDataType.getByCode(oe.getType()).getTranslation());
+        this.ht_data.remove(PumpAdditionalDataType.getByCode(oe.getType()));
     }
+
 
     /*
      * String button_command[] = { "update_ch",
@@ -727,6 +729,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
 
     }
 
+
     /**
      * Was Action
      *
@@ -736,6 +739,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
     {
         return this.was_action;
     }
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
@@ -749,6 +753,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      */
@@ -756,6 +761,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, /*
     {
         return this.help_button;
     }
+
 
     /**
      * getHelpId - get id for Help

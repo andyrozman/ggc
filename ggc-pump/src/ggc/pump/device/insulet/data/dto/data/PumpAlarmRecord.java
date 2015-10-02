@@ -3,6 +3,7 @@ package ggc.pump.device.insulet.data.dto.data;
 // This is not real Abstract record (it's not directly processed by OmniPod), but just Dto for use for PumpAlarms (used by HistoryRecord and also by log record
 
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 
 import ggc.pump.device.insulet.data.dto.AbstractRecord;
 import ggc.pump.device.insulet.data.enums.AlarmType;
@@ -121,7 +122,7 @@ public class PumpAlarmRecord extends AbstractRecord
         this.minutes = getByte(offset + 5);
         this.hours = getByte(offset + 6);
 
-        aTechDate = new ATechDate(day, month, year, hours, minutes, seconds, ATechDate.ATechDateType.DateAndTimeSec);
+        aTechDate = new ATechDate(day, month, year, hours, minutes, seconds, ATechDateType.DateAndTimeSec);
 
         if (source == PumpAlarmRecordSource.LogRecord)
         {

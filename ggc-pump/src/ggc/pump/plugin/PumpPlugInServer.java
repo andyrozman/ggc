@@ -21,6 +21,7 @@ import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.graph.PlugInGraphDialog;
 import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.dto.BasalStatistics;
 import ggc.pump.db.PumpData;
 import ggc.pump.db.PumpDataExtended;
 import ggc.pump.db.PumpProfile;
@@ -111,6 +112,8 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
      * This is action that needs to be done, after config
      */
     public static final int RETURN_ACTION_STATISTICS = 100;
+
+    public static final int RETURN_ACTION_BASAL_STATISTICS = 101;
 
     /**
      * Return Object: Selected Device with parameters
@@ -252,7 +255,6 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
 
         if (ret_obj_id == PumpPlugInServer.RETURN_ACTION_STATISTICS)
         {
-
             GregorianCalendar gc_from = (GregorianCalendar) parameters[0];
             GregorianCalendar gc_to = (GregorianCalendar) parameters[1];
 
@@ -263,7 +265,16 @@ public class PumpPlugInServer extends DevicePlugInServer implements ActionListen
             sc.processFullCollection(dvre.getAllEntries());
 
             return sc;
+        }
+        else if (ret_obj_id == PumpPlugInServer.RETURN_ACTION_BASAL_STATISTICS)
+        {
+            GregorianCalendar gc_from = (GregorianCalendar) parameters[0];
+            GregorianCalendar gc_to = (GregorianCalendar) parameters[1];
 
+            BasalStatistics basalStatistics = DataAccessPump.getInstance().getPumpBasalManager()
+                    .getBasalStatistics(gc_from, gc_to);
+
+            return basalStatistics;
         }
         else
             return null;

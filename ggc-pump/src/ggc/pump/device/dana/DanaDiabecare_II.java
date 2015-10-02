@@ -44,6 +44,7 @@ public class DanaDiabecare_II extends DanaPump
         super();
     }
 
+
     /**
      * Constructor 
      * 
@@ -55,6 +56,7 @@ public class DanaDiabecare_II extends DanaPump
         super(params, writer);
         // super(params, writer);
     }
+
 
     /**
      * Constructor
@@ -68,6 +70,7 @@ public class DanaDiabecare_II extends DanaPump
         super(params, writer, da);
     }
 
+
     /**
      * Constructor
      * 
@@ -77,6 +80,7 @@ public class DanaDiabecare_II extends DanaPump
     {
         super(cmp);
     }
+
 
     // ************************************************
     // *** Meter Identification Methods ***
@@ -93,6 +97,7 @@ public class DanaDiabecare_II extends DanaPump
         return "Diabcare II";
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -102,6 +107,7 @@ public class DanaDiabecare_II extends DanaPump
     {
         return "so_danaII.jpg";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -114,6 +120,7 @@ public class DanaDiabecare_II extends DanaPump
         return PumpDevicesIds.PUMP_DANA_DIABECARE_II;
     }
 
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -124,6 +131,7 @@ public class DanaDiabecare_II extends DanaPump
     {
         return "INSTRUCTIONS_DANA_II";
     }
+
 
     /**
      * getComment - Get Comment for device 
@@ -136,6 +144,7 @@ public class DanaDiabecare_II extends DanaPump
         return null;
     }
 
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
@@ -145,8 +154,9 @@ public class DanaDiabecare_II extends DanaPump
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.NotAvailable;
+        return DeviceImplementationStatus.NotDoneButShouldBeDisplayed;
     }
+
 
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
@@ -158,6 +168,7 @@ public class DanaDiabecare_II extends DanaPump
         return "ggc.pump.device.dana.DanaDiabcare_IIS";
     }
 
+
     /** 
      * Get Max Memory Records
      */
@@ -167,6 +178,7 @@ public class DanaDiabecare_II extends DanaPump
         return 0;
     }
 
+
     /**
      * Get Download Support Type
      * 
@@ -175,8 +187,9 @@ public class DanaDiabecare_II extends DanaPump
     @Override
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.NoDownloadSupport;
+        return DownloadSupportType.NotSupportedByDevice;
     }
+
 
     /**
      * How Many Months Of Data Stored
@@ -188,6 +201,7 @@ public class DanaDiabecare_II extends DanaPump
     {
         return -1;
     }
+
 
     /**
      * Get Temporary Basal Type Definition
@@ -204,6 +218,7 @@ public class DanaDiabecare_II extends DanaPump
         return null;
     }
 
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -214,6 +229,7 @@ public class DanaDiabecare_II extends DanaPump
         return 0.1f;
     }
 
+
     /**
      * Get Basal Step (precission)
      * 
@@ -223,6 +239,7 @@ public class DanaDiabecare_II extends DanaPump
     {
         return 0.1f;
     }
+
 
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
