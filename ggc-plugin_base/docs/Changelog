@@ -2,6 +2,17 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+
+1.0.1 [2.10.2015]
+    * changes because of Selector refactoring / fixing
+    * refactoring DeviceV2, enums
+    * dependencies for new libs *-j15 (nrserialjava, jna, hid4java)
+
+1.0.0 [
+    * added HID device
+    * added Hid4JavaHandler
+    * handler configuration moved
+
 0.7.1 [26.4.2015]
     * Added Communication Handler for different Communication Protocols (to be used instead protocol.* classes, it contains
       all relevant methods for handling specific communication library

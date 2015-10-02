@@ -1,5 +1,17 @@
 package ggc.plugin.device.impl.abbott;
 
+import java.io.*;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+
+import org.xml.sax.*;
+import org.xml.sax.ext.DeclHandler;
+import org.xml.sax.ext.LexicalHandler;
+import org.xml.sax.helpers.XMLReaderFactory;
+
+import com.atech.utils.file.FileReaderContext;
+
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
@@ -7,28 +19,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.protocol.XmlProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.Set;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.filechooser.FileFilter;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.ext.DeclHandler;
-import org.xml.sax.ext.LexicalHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
-
-import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -67,6 +57,7 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         super(da);
     }
 
+
     /**
      * @param adc 
      * @param da
@@ -77,10 +68,12 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         // super(da);
     }
 
+
     public String getFileDescription()
     {
         return "DM3 Dexcom Software Export";
     }
+
 
     /**
      * Get File Download Panel
@@ -92,20 +85,24 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         return null;
     }
 
+
     public String getFileExtension()
     {
         return ".txt";
     }
+
 
     public String getFullFileDescription()
     {
         return "DM3 Dexcom Software Export (TXT)";
     }
 
+
     public boolean hasSpecialSelectorDialog()
     {
         return false;
     }
+
 
     public void readFile(String filename)
     {
@@ -159,6 +156,7 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
 
     }
 
+
     /**
      * Preproces File
      * 
@@ -209,6 +207,7 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
 
     int i = 0;
     String tmp_time;
+
 
     // private XmlStartTag stag;
     // private XmlEndTag etag;
@@ -299,6 +298,7 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
                 return f.getName().toLowerCase().endsWith(getFileExtension());
             }
 
+
             @Override
             public String getDescription()
             {
@@ -309,9 +309,11 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
 
     }
 
+
     public void goToNextDialog(JDialog currentDialog)
     {
     }
+
 
     @Override
     public String toString()
@@ -321,7 +323,9 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
 
     private class MyCoPilotHandler implements ContentHandler, DeclHandler, LexicalHandler // DefaultHandler,
     {
+
         long i = 0;
+
 
         // private int reading_element = 0;
 
@@ -335,15 +339,18 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         {
         }
 
+
         public void finishReading()
         {
             // this.cvtm.finishReading();
         }
 
+
         public long getCount()
         {
             return i;
         }
+
 
         /*
          * public ArrayList<> getData()
@@ -361,83 +368,103 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         {
         }
 
+
         public void attributeDecl(String eName, String aName, String type, String mode, String value)
                 throws SAXException
         {
         }
 
+
         public void elementDecl(String name, String model) throws SAXException
         {
         }
+
 
         public void externalEntityDecl(String name, String publicId, String systemId) throws SAXException
         {
         }
 
+
         public void internalEntityDecl(String name, String value) throws SAXException
         {
         }
+
 
         public void comment(char[] ch, int start, int length) throws SAXException
         {
         }
 
+
         public void endCDATA() throws SAXException
         {
         }
+
 
         public void endDTD() throws SAXException
         {
         }
 
+
         public void endEntity(String name) throws SAXException
         {
         }
+
 
         public void startCDATA() throws SAXException
         {
         }
 
+
         public void startDTD(String name, String publicId, String systemId) throws SAXException
         {
         }
+
 
         public void startEntity(String name) throws SAXException
         {
         }
 
+
         public void characters(char[] ch, int start, int length) throws SAXException
         {
         }
+
 
         public void endDocument() throws SAXException
         {
         }
 
+
         public void endElement(String uri, String localName, String qName) throws SAXException
         {
         }
+
 
         public void endPrefixMapping(String prefix) throws SAXException
         {
         }
 
+
         public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException
         {
         }
 
+
         public void processingInstruction(String target, String data) throws SAXException
         {
         }
+
 
         // public void setDocumentLocator(Locator locator) { }
         public void skippedEntity(String name) throws SAXException
         {
         }
 
+
         public void startDocument() throws SAXException
         {
         }
+
 
         public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException
         {
@@ -468,6 +495,7 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
 
         }
 
+
         public void setDocumentLocator(Locator locator)
         {
 
@@ -475,11 +503,13 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
 
     }
 
+
     public void dispose()
     {
         // TODO Auto-generated method stub
 
     }
+
 
     public String getConnectionPort()
     {
@@ -487,20 +517,24 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         return null;
     }
 
+
     public DeviceConnectionProtocol getConnectionProtocol()
     {
         return DeviceConnectionProtocol.None;
     }
 
+
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.NoDownloadSupport;
+        return DownloadSupportType.NotSupportedByGGC;
     }
+
 
     public GGCPlugInFileReaderContext[] getFileDownloadTypes()
     {
         return null;
     }
+
 
     @Override
     public boolean hasIndeterminateProgressStatus()
@@ -509,6 +543,7 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         return false;
     }
 
+
     @Override
     public boolean hasSpecialProgressStatus()
     {
@@ -516,18 +551,13 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         return false;
     }
 
+
     public boolean isDeviceCommunicating()
     {
         // TODO Auto-generated method stub
         return false;
     }
 
-    @Override
-    public boolean isFileDownloadSupported()
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
 
     @Override
     public boolean isReadableDevice()
@@ -536,16 +566,19 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
         return false;
     }
 
+
     @Override
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     public void readDeviceDataFull() throws PlugInBaseException
     {
         // TODO Auto-generated method stub
 
     }
+
 
     @Override
     public void readDeviceDataPartitial() throws PlugInBaseException
@@ -554,6 +587,7 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
 
     }
 
+
     @Override
     public void readInfo() throws PlugInBaseException
     {
@@ -561,12 +595,14 @@ public abstract class CoPilot extends XmlProtocol implements FileReaderContext
 
     }
 
+
     @Override
     public void test()
     {
         // TODO Auto-generated method stub
 
     }
+
 
     @Override
     public long getItemId()

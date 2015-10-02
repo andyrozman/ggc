@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.graphics.dialogs.selector.SelectableInterfaceV2;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.data.enums.DeviceCompanyDefinition;
@@ -259,6 +260,12 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
     }
 
 
+    public String getToolTipValue(int index)
+    {
+        return dataAccessPlugInBase.getPluginDeviceUtil().getTooltipValue(index, this);
+    }
+
+
     /**
      * getColumnValueObject - return value of specified column
      *
@@ -317,7 +324,13 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 
     public int compareTo(SelectableInterface o)
     {
-        return 0;
+        return this.dataAccessPlugInBase.getPluginDeviceUtil().compareTo(this, o);
+    }
+
+
+    public int compareTo(SelectableInterfaceV2 o)
+    {
+        return this.dataAccessPlugInBase.getPluginDeviceUtil().compareTo(this, o);
     }
 
     // ----------

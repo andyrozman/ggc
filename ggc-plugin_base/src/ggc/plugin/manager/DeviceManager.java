@@ -1,11 +1,12 @@
 package ggc.plugin.manager;
 
+import java.util.*;
+
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
-
-import java.util.*;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,6 +44,7 @@ public abstract class DeviceManager
     protected HashMap<String, DeviceInterface> supportedDevicesV1 = new HashMap<String, DeviceInterface>();
     protected HashMap<String, DeviceInstanceWithHandler> supportedDevicesV2 = new HashMap<String, DeviceInstanceWithHandler>();
 
+
     /**
      * Constructor 
      */
@@ -53,7 +55,9 @@ public abstract class DeviceManager
         this.loadDeviceInstancesV2();
     }
 
+
     protected abstract void loadDeviceInstancesV2();
+
 
     /**
      * Load devices companies
@@ -63,9 +67,9 @@ public abstract class DeviceManager
 
     public void loadSupportedDevices()
     {
-        for(AbstractDeviceCompany pdc : this.companies)
+        for (AbstractDeviceCompany pdc : this.companies)
         {
-            for(DeviceInterface di  : pdc.getDevices())
+            for (DeviceInterface di : pdc.getDevices())
             {
                 if (DeviceImplementationStatus.isSupportedDevice(pdc.getImplementationStatus()))
                 {
@@ -86,6 +90,7 @@ public abstract class DeviceManager
         return this.companies;
     }
 
+
     /**
      * Get Supported Devices
      * @return
@@ -94,6 +99,7 @@ public abstract class DeviceManager
     {
         return this.supportedDevicesForSelector;
     }
+
 
     /**
      * @param company
@@ -104,6 +110,7 @@ public abstract class DeviceManager
         this.companies_ht.put(company.getShortName(), company);
     }
 
+
     /**
      * Gets the name
      * @param company
@@ -112,7 +119,7 @@ public abstract class DeviceManager
      */
     public DeviceInterface getDeviceV1(String company, String device)
     {
-        //System.out.println("Company: " + company + ", device=" + device);
+        // System.out.println("Company: " + company + ", device=" + device);
 
         String key = company + "_" + device;
 
@@ -125,21 +132,20 @@ public abstract class DeviceManager
             return null;
         }
 
-
-//        AbstractDeviceCompany cmp = getCompany(group);
-//
-//        if (cmp == null)
-//            // System.out.println("Company not found !");h
-//            // System.out.println("companies_nt: " + this.companies_ht);
-//            return null;
-//
-//        return cmp.getDevice(device);
+        // AbstractDeviceCompany cmp = getCompany(group);
+        //
+        // if (cmp == null)
+        // // System.out.println("Company not found !");h
+        // // System.out.println("companies_nt: " + this.companies_ht);
+        // return null;
+        //
+        // return cmp.getDevice(device);
     }
 
 
     public DeviceInstanceWithHandler getDeviceV2(String company, String device)
     {
-        //System.out.println("Company: " + company + ", device=" + device);
+        // System.out.println("Company: " + company + ", device=" + device);
 
         String key = company + "_" + device;
 
@@ -165,6 +171,7 @@ public abstract class DeviceManager
     {
         return getDeviceV1(group, device).getDeviceClassName();
     }
+
 
     /**
      * Get Company

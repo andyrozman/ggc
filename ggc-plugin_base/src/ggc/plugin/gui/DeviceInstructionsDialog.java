@@ -245,7 +245,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         // return true;
         // }
         // else
-        if (DownloadSupportType.isOptionSet(status, DownloadSupportType.NoDownloadSupport))
+        if (DownloadSupportType.isOptionSet(status, DownloadSupportType.NotSupportedByGGC))
         {
             String msg = String.format(m_ic.getMessage("DEVICE_DOWNLOAD_NOT_SUPPORTED_BY_GGC"),
                 this.configured_device.device_device, this.configured_device.device_company);
@@ -372,7 +372,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         }
         else
         {
-            return DownloadSupportType.NoDownloadSupport;
+            return DownloadSupportType.NotSupportedByGGC;
         }
     }
 

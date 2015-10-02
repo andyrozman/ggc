@@ -2,7 +2,7 @@ package ggc.plugin.device;
 
 import java.util.List;
 
-import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.graphics.dialogs.selector.SelectableInterfaceV2;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
@@ -45,7 +45,7 @@ import ggc.plugin.protocol.DeviceConnectionProtocol;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public interface DeviceInterface extends SelectableInterface
+public interface DeviceInterface extends SelectableInterfaceV2
 {
 
     // ************************************************

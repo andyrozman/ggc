@@ -47,7 +47,7 @@ public enum DeviceImplementationStatus
     /**
      * Implementation: Partitial
      */
-    Partitial, //3;
+    Partitial, // 3;
 
     /**
      * Implementation: Full
@@ -69,24 +69,18 @@ public enum DeviceImplementationStatus
      */
     Done, // = 7;
 
-
-
-
-
-
-
+    NotDoneButShouldBeDisplayed, //
 
     ;
 
-
     public static boolean isSupportedDevice(DeviceImplementationStatus status)
     {
-        return ((status== Partitial) || //
-                (status== Full) || //
-                (status== InProgress) || //
-                (status== Testing) || //
-                (status== Done));
+        return ((status == Partitial) || //
+                (status == Full) || //
+                (status == InProgress) || //
+                (status == Testing) || //
+                (status == Done) || //
+        (status == NotDoneButShouldBeDisplayed) //
+        );
     }
-
-
 }

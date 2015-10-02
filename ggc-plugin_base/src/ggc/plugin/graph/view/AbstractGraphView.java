@@ -1,14 +1,11 @@
 package ggc.plugin.graph.view;
 
+import java.awt.*;
+
+import javax.swing.*;
+
+import com.atech.utils.data.ATechDate;
 import ggc.core.util.DataAccess;
-
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-
-import javax.swing.JComponent;
-
-import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,6 +40,7 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public abstract class AbstractGraphView extends JComponent
 {
+
     private static final long serialVersionUID = 1215044753220287075L;
 
     Object oAA, oCR, oTAA, oR, oD, oFM, oI;
@@ -71,6 +69,7 @@ public abstract class AbstractGraphView extends JComponent
 
     String unitLabel;
 
+
     /**
      * Constructor
      */
@@ -98,9 +97,12 @@ public abstract class AbstractGraphView extends JComponent
         getRenderingQuality();
     }
 
+
     protected abstract void drawFramework(Graphics2D g2D);
 
+
     protected abstract void drawValues(Graphics2D g2D);
+
 
     protected void calculateSizes()
     {
@@ -121,25 +123,30 @@ public abstract class AbstractGraphView extends JComponent
         minuteWidth = hourWidth / 60;
     }
 
+
     protected int BGtoCoord(float BG)
     {
         return (int) (drawableHeight + upperSpace - drawableHeight / BGDiff * BG);
     }
+
 
     protected int BUtoCoord(float BU)
     {
         return (int) (drawableHeight + upperSpace - drawableHeight / 60 * BU);
     }
 
+
     protected int InstoCoord(float Ins)
     {
         return (int) (drawableHeight + upperSpace - drawableHeight / 60 * Ins);
     }
 
+
     protected int InsPerBUtoCoord(float factor)
     {
         return (int) (drawableHeight + upperSpace - drawableHeight / 4 * factor);
     }
+
 
     /*
      * protected int DateTimetoCoord(java.util.Date time)
@@ -155,15 +162,17 @@ public abstract class AbstractGraphView extends JComponent
         return timeToCoordReal(datetime);
     }
 
+
     private int timeToCoordReal(long datetime)
     {
-        String dt = ATDataAccessAbstract.getDateTimeAsTimeString(datetime);
+        ATechDate dt = new ATechDate(datetime);
 
-        int timeH = Integer.parseInt(dt.substring(0, 2));
-        int timeM = Integer.parseInt(dt.substring(0, 2));
+        int timeH = dt.hourOfDay;
+        int timeM = dt.minute;
 
         return (int) (leftSpace + timeH * hourWidthC + timeM * minuteWidthC);
     }
+
 
     /*
      * protected int TimetoCoord(java.util.Date time)
@@ -179,6 +188,7 @@ public abstract class AbstractGraphView extends JComponent
         return timeToCoordReal(datetime);
     }
 
+
     /**
      * Set New Rendering Quality
      */
@@ -186,6 +196,7 @@ public abstract class AbstractGraphView extends JComponent
     {
         getRenderingQuality();
     }
+
 
     private void getRenderingQuality()
     {

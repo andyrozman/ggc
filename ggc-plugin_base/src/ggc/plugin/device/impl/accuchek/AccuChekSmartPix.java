@@ -358,20 +358,6 @@ public abstract class AccuChekSmartPix extends XmlProtocol
 
 
     /**
-     * Does this device support file download. Some devices have their native software, which offers export 
-     * into some files (usually CSV files or even XML). We sometimes add support to download from such
-     * files, and in some cases this is only download supported. 
-     *  
-     * @return
-     */
-    @Override
-    public boolean isFileDownloadSupported()
-    {
-        return true;
-    }
-
-
-    /**
      * Is Device Communicating
      * 
      * @return

@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.graphics.dialogs.selector.SelectableInterfaceV2;
 
 import ggc.core.util.GGCI18nControl;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
+import ggc.plugin.data.enums.DeviceType;
 import ggc.plugin.gui.DeviceSpecialConfigPanelInterface;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -38,7 +40,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public abstract class DeviceAbstract implements DeviceInterface, SelectableInterface
+public abstract class DeviceAbstract implements DeviceInterface, SelectableInterfaceV2
 {
 
     protected DataAccessPlugInBase dataAccess;
@@ -55,26 +57,6 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     protected GGCI18nControl i18nControlAbstract = null; // DataAccessMeter.getInstance().getI18nControlInstance();
     protected OutputWriter outputWriter;
     protected List<GGCPlugInFileReaderContext> fileContexts;
-
-    /**
-     * Device Type: Meter
-     */
-    public static final int DEVICE_TYPE_METER = 1;
-
-    /**
-     * Device Type: Pump
-     */
-    public static final int DEVICE_TYPE_PUMP = 2;
-
-    /**
-     * Device Type: CGMS
-     */
-    public static final int DEVICE_TYPE_CGMS = 3;
-
-    /**
-     * Device Type: Other
-     */
-    public static final int DEVICE_TYPE_OTHER = 4;
 
 
     /**
@@ -371,6 +353,18 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
 
 
     /**
+     * getColumnValue - return value of specified column
+     *
+     * @param num number of column
+     * @return string value of column
+     */
+    public String getToolTipValue(int num)
+    {
+        return dataAccess.getPluginDeviceUtil().getTooltipValue(num, this);
+    }
+
+
+    /**
      * getColumnValueObject - return value of specified column
      * 
      * @param num number of column
@@ -451,47 +445,15 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     }
 
 
-    /**
-     * Compares this object with the specified object for order.  Returns a
-     * negative integer, zero, or a positive integer as this object is less
-     * than, equal to, or greater than the specified object.
-     *
-     * <p>The implementor must ensure <tt>sgn(x.compareTo(y)) ==
-     * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>.  (This
-     * implies that <tt>x.compareTo(y)</tt> must throw an exception iff
-     * <tt>y.compareTo(x)</tt> throws an exception.)
-     *
-     * <p>The implementor must also ensure that the relation is transitive:
-     * <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)</tt> implies
-     * <tt>x.compareTo(z)&gt;0</tt>.
-     *
-     * <p>Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
-     * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for
-     * all <tt>z</tt>.
-     *
-     * <p>It is strongly recommended, but <i>not</i> strictly required that
-     * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>.  Generally speaking, any
-     * class that implements the <tt>Comparable</tt> interface and violates
-     * this condition should clearly indicate this fact.  The recommended
-     * language is "Note: this class has a natural ordering that is
-     * inconsistent with equals."
-     *
-     * <p>In the foregoing description, the notation
-     * <tt>sgn(</tt><i>expression</i><tt>)</tt> designates the mathematical
-     * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
-     * <tt>0</tt>, or <tt>1</tt> according to whether the value of
-     * <i>expression</i> is negative, zero or positive.
-     *
-     * @param   o the object to be compared.
-     * @return  a negative integer, zero, or a positive integer as this object
-     *      is less than, equal to, or greater than the specified object.
-     *
-     * @throws ClassCastException if the specified object's type prevents it
-     *         from being compared to this object.
-     */
     public int compareTo(SelectableInterface o)
     {
-        return 0;
+        return this.dataAccess.getPluginDeviceUtil().compareTo(this, o);
+    }
+
+
+    public int compareTo(SelectableInterfaceV2 o)
+    {
+        return this.dataAccess.getPluginDeviceUtil().compareTo(this, o);
     }
 
 
@@ -521,19 +483,6 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     public boolean isReadableDevice()
     {
         return true;
-    }
-
-
-    /**
-     * Does this device support file download. Some devices have their native software, which offers export 
-     * into some files (usually CSV files or even XML). We sometimes add support to download from such
-     * files, and in some cases this is only download supported. 
-     *  
-     * @return
-     */
-    public boolean isFileDownloadSupported()
-    {
-        return false;
     }
 
 
@@ -591,7 +540,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      * @param device
      * @param type type of device (1 = Meter, 2=Pump, 3=CGMS, 4=Other)
      */
-    public void setDeviceType(String group, String device, int type)
+    public void setDeviceType(String group, String device, DeviceType type)
     {
         DeviceIdentification di = new DeviceIdentification(dataAccess.getI18nControlInstance());
         di.company = group;

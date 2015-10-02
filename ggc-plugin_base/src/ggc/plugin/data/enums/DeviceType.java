@@ -1,7 +1,5 @@
 package ggc.plugin.data.enums;
 
-import com.atech.utils.data.CodeEnumWithTranslation;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -22,12 +20,18 @@ import com.atech.utils.data.CodeEnumWithTranslation;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- *  Filename:     DeviceConfigurationGroup
- *  Description:  Device Configuration Group interface
+ *  Filename:     DeviceType
+ *  Description:  Device Type (this is intended for diabetic device types for now, but can be extended at later time
+ *                if we plan to support anything else)
  *
  *  Author: Andy {andy@atech-software.com}
  */
 
-public interface DeviceConfigurationGroup extends CodeEnumWithTranslation
+public enum DeviceType
 {
+    None, //
+    Meter, //
+    Pump, //
+    CGMS, //
+    ;
 }

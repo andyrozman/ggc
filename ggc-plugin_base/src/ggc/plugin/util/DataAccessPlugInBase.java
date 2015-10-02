@@ -16,6 +16,7 @@ import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.components.about.CreditsGroup;
 import com.atech.graphics.components.about.FeaturesGroup;
 import com.atech.graphics.components.about.LibraryInfoEntry;
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.graphs.v2.data.GraphContext;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.I18nControlRunner;
@@ -83,7 +84,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     /**
      * Plugin Version
      */
-    public String plugin_version = "0.6.1";
+    public String plugin_version = "1.0.1";
 
     /**
      * Decimal format: 0 decimal places
@@ -1215,26 +1216,6 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
 
     /**
-     * Get Selected Lang Index
-     */
-    @Override
-    public int getSelectedLangIndex()
-    {
-        return 0;
-    }
-
-
-    /**
-     * Set Selected Lang Index
-     */
-    @Override
-    public void setSelectedLangIndex(int index)
-    {
-
-    }
-
-
-    /**
      * Create Old Data Reader
      */
     public abstract void createOldDataReader();
@@ -1333,7 +1314,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
         if (pi == null)
         {
-            return DownloadSupportType.NoDownloadSupport;
+            return DownloadSupportType.NotSupportedByGGC;
         }
         else
         {
@@ -1761,6 +1742,17 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public GraphContext getGraphContext()
     {
         return this.graphContext;
+    }
+
+
+    public int compareTo(SelectableInterface selectableInterface)
+    {
+        return 0;
+    }
+
+
+    public void prepareManagers()
+    {
     }
 
     /**

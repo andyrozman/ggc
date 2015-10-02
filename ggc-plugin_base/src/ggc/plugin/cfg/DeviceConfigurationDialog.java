@@ -686,6 +686,11 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         // else
         dce.communication_port_raw = this.comm_settings.getParameters(); // .comm_port_comp.getCommunicationPort();
 
+        if (this.comm_settings.getParameters().equals(m_ic.getMessage("NOT_SET")))
+        {
+            dce.communication_port_raw = "";
+        }
+
         dce.processCommunicationSettings();
 
         if (dcd.doesDeviceSupportTimeFix())

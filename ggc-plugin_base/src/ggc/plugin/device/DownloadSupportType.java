@@ -32,9 +32,11 @@ import java.util.Set;
 public enum DownloadSupportType
 {
 
-    NoDownloadSupport, //
+    NotSupportedByGGC, //
+    NotSupportedByGGCYet, //
+    NotSupportedByDevice, //
 
-    DummyDevice, //
+    // DummyDevice, //
     DownloadData, //
     DownloadConfig, //
     DownloadDataFile, //
@@ -132,25 +134,10 @@ public enum DownloadSupportType
         return false;
     }
 
-    // public static Set<DownloadSupportType>
-    // getDownloadSupportTypeSet(DownloadSupportType...supportTypes)
-    // {
-    // Set<DownloadSupportType> downloadSupportTypes = new
-    // HashSet<DownloadSupportType>();
-    //
-    // for(DownloadSupportType dst: supportTypes)
-    // {
-    // downloadSupportTypes.add(dst);
-    // }
-    //
-    // return downloadSupportTypes;
-    // }
 
-    // public static Set<DownloadSupportType> getEmptyDownloadSupportType()
-    // {
-    // Set<DownloadSupportType> dst = new HashSet<DownloadSupportType>();
-    // dst.add(DownloadSupportType.DummyDevice);
-    // return dst;
-    // }
+    public boolean isNotSupported()
+    {
+        return (this == NotSupportedByDevice || this == NotSupportedByGGC || this == NotSupportedByGGCYet);
+    }
 
 }

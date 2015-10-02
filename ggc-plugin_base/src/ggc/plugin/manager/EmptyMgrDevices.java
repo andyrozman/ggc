@@ -1,12 +1,12 @@
 package ggc.plugin.manager;
 
+import javax.swing.*;
+
 import ggc.plugin.device.DeviceAbstract;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import javax.swing.ImageIcon;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -47,6 +47,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
         super(da);
     }
 
+
     // ************************************************
     // *** Meter Identification Methods ***
     // ************************************************
@@ -62,6 +63,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
         return "NO_DEVICES_AVAILABLE";
     }
 
+
     /**
      * getIcon - Get Icon of meter
      * Should be implemented by meter class.
@@ -72,6 +74,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
     {
         return null;
     }
+
 
     /**
      * getIconName - Get Icon of meter
@@ -84,6 +87,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
         return "none";
     }
 
+
     /**
      * getMeterId - Get Meter Id, within Meter Company class 
      * Should be implemented by meter class.
@@ -94,6 +98,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
     {
         return 0;
     }
+
 
     /**
      * getInstructions - get instructions for device
@@ -106,6 +111,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
         return null;
     }
 
+
     /**
      * getComment - Get Comment for device 
      * Should be implemented by meter class.
@@ -116,6 +122,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
     {
         return null;
     }
+
 
     /**
      * getCompanyId - Get Company Id 
@@ -137,6 +144,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
     {
     }
 
+
     /**
      * @see ggc.plugin.device.DeviceInterface#getConnectionProtocol()
      */
@@ -144,6 +152,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
     {
         return DeviceConnectionProtocol.None;
     }
+
 
     /**
      * @see ggc.plugin.device.DeviceInterface#getDeviceSpecialComment()
@@ -154,6 +163,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
         return null;
     }
 
+
     /**
      * @return
      */
@@ -161,6 +171,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
     {
         return null;
     }
+
 
     /**
      * @return
@@ -171,6 +182,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
         return false;
     }
 
+
     /**
      * @see ggc.plugin.device.DeviceInterface#readConfiguration()
      */
@@ -178,6 +190,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * @see ggc.plugin.device.DeviceInterface#readDeviceDataFull()
@@ -195,6 +208,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
         return null;
     }
 
+
     /**
      * @see ggc.plugin.device.DeviceInterface#getConnectionPort()
      */
@@ -203,12 +217,14 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
         return null;
     }
 
+
     /**
      * @see ggc.plugin.device.DeviceInterface#dispose()
      */
     public void dispose()
     {
     }
+
 
     /**
      * Is Device Communicating
@@ -219,6 +235,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
     {
         return true;
     }
+
 
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -232,6 +249,7 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
         return false;
     }
 
+
     /**
      * Get Download Support Type
      * 
@@ -239,7 +257,12 @@ public class EmptyMgrDevices extends DeviceAbstract // extends DummyDevice
      */
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.NoDownloadSupport;
+        return DownloadSupportType.NotSupportedByGGC;
     }
 
+
+    public String getToolTipValue(int column)
+    {
+        return null;
+    }
 }

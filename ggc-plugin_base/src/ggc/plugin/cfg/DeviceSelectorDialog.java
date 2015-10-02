@@ -1,15 +1,15 @@
 package ggc.plugin.cfg;
 
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 
-import javax.swing.JDialog;
+import javax.swing.*;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 import com.atech.utils.ATDataAccessAbstract;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  * Selector component for Meters (Simple Configuration)...
@@ -49,6 +49,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     private static final long serialVersionUID = -391406165609998040L;
     DeviceConfigurationDefinition dcd = null;
 
+
     /**
      * Constructor
      * 
@@ -60,6 +61,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
         super(parent, da, 0, null, true);
         this.showDialog();
     }
+
 
     /**
      * Get Device Configuration Definition
@@ -75,6 +77,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
 
         return this.dcd;
     }
+
 
     /**
      * Init Selector Values For Type
@@ -92,6 +95,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
         this.setHelpEnabled(true);
     }
 
+
     /**
      * Get Full Data
      * 
@@ -103,9 +107,12 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
         this.full = new ArrayList<SelectableInterface>();
         this.full.addAll(this.getDeviceConfigurationDefinition().getSupportedDevices());
 
+        Collections.sort(this.full);
+
         // System.out.println("Counter: " + this.full.size());
 
     }
+
 
     /**
      * Set Help Context
@@ -119,6 +126,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
         // this.getHelpId(), null);
     }
 
+
     /**
      * Check And Execute Action : Edit
      * @see com.atech.graphics.dialogs.selector.SelectorAbstractDialog#checkAndExecuteActionEdit(SelectableInterface)
@@ -127,6 +135,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     public void checkAndExecuteActionEdit(SelectableInterface si)
     {
     }
+
 
     /**
      * Check And Execute Action : New
@@ -137,6 +146,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     public void checkAndExecuteActionNew()
     {
     }
+
 
     /** 
      * Check And Execute Action : Select
@@ -160,6 +170,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
         }
 
     }
+
 
     /**
      * Item State Changed
