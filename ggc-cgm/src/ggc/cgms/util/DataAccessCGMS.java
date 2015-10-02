@@ -60,7 +60,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     /**
      * PlugIn Version
      */
-    public static final String PLUGIN_VERSION = "1.3.2"; // 1.0.2
+    public static final String PLUGIN_VERSION = "1.3.3";
 
     private static final String EXTENDED_HANDLER_CGMSValuesExtendedEntry = "CGMSValuesExtendedEntry";
 

@@ -108,7 +108,7 @@ public abstract class FreestyleCGMS extends AbstractCGMS
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.NotAvailable;
+        return DeviceImplementationStatus.NotDoneButShouldBeDisplayed;
     }
 
 

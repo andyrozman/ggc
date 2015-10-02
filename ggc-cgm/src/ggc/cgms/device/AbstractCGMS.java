@@ -161,7 +161,7 @@ public abstract class AbstractCGMS extends DeviceAbstract // CGMSInterface,
      */
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.NoDownloadSupport;
+        return DownloadSupportType.NotSupportedByGGC;
     }
 
 

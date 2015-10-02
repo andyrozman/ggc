@@ -2,6 +2,9 @@
 Changes file for GGC CGM Tool
 ==============================
 
+1.3.3 [2.10.2015]
+    * Changed Implementation Status for some objects (for selector display)
+
 1.3.2 [26.4.2015]
     * Finalized Animas CGMS implementation
     * Enums fixed

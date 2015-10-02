@@ -187,7 +187,7 @@ public class FreestyleNavigator extends FreestyleCGMS
     @Override
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.NoDownloadSupport;
+        return DownloadSupportType.NotSupportedByGGC;
     }
 
 
