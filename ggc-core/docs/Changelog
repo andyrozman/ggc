@@ -6,6 +6,13 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+0.6.1 [2.10.2015] [Andy]
+    * fixing graph (bolus display)
+    * changes because ATDataAccess refactoring
+    * refactoring DailyValues, DailyValuesRow
+    * translations
+
+
 0.6 [26.4.2015] [Andy]
     * Stocks changes
     * Configuration internal PDF Viewer

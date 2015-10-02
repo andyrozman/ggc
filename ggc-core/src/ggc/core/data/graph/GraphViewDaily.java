@@ -1,12 +1,6 @@
 package ggc.core.data.graph;
 
-import ggc.core.data.DailyValuesRow;
-import ggc.core.data.GlucoValues;
-import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.util.DataAccess;
-
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -18,6 +12,7 @@ import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.time.DateRange;
@@ -26,6 +21,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.data.DailyValuesRow;
+import ggc.core.data.GlucoValues;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,30 +54,22 @@ import com.atech.utils.data.TimeZoneUtil;
  *  Author: rumbi   
  */
 
-public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
-                                                                  // GraphViewInterface,
-                                                                  // GraphViewDataProcessorInterface
+public class GraphViewDaily extends AbstractGraphViewAndProcessor
 {
 
     GregorianCalendar gc;
     private GlucoValues gluco_values;
-    @SuppressWarnings("unused")
-    private GlucoValues gluco_values_prev;
-    XYSeriesCollection dataset = new XYSeriesCollection();
-    // TimeSeriesCollection dataset = new
-    // TimeSeriesCollection(TimeZoneUtil.getInstance().getEmptyTimeZone());
-    // DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+    private XYSeriesCollection datasetBG = new XYSeriesCollection();
+    private XYSeriesCollection datasetInsCH = new XYSeriesCollection();
 
     NumberAxis BGAxis;
-    // private TimeSeriesCollection BGDataset = new TimeSeriesCollection();
-    // private DailyValues data = new DailyValues();
     DateAxis dateAxis;
     NumberAxis insBUAxis;
-    // private TimeSeriesCollection insBUDataset = new TimeSeriesCollection();
-    private XYSeriesCollection insBUDataset = new XYSeriesCollection();
 
     DataAccess da_local = DataAccess.getInstance();
     GGCGraphUtil graph_util = GGCGraphUtil.getInstance(da_local);
+
 
     /**
      * Constructor
@@ -88,8 +80,8 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
     {
         super(DataAccess.getInstance());
         this.gc = gc;
-
     }
+
 
     /**
      * Get Help Id
@@ -101,6 +93,7 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
         return "GGC_BG_Graph_Daily";
     }
 
+
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      * 
@@ -109,9 +102,9 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
     @Override
     public Rectangle getViewerDialogBounds()
     {
-        // return new Rectangle(100,100,500,400);
-        return new Rectangle(0, 0, 500, 400);
+        return new Rectangle(0, 0, 600, 400);
     }
+
 
     /**
      * Load Data
@@ -125,11 +118,12 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
             // System.out.println("Gluco Values: " +
             // this.gluco_values.getDailyValuesRowsCount());
 
-            GregorianCalendar gc_prev = (GregorianCalendar) this.gc.clone();
-            gc_prev.add(Calendar.DAY_OF_YEAR, -1);
-            this.gluco_values_prev = new GlucoValues(gc_prev, gc_prev, true);
+            // GregorianCalendar gc_prev = (GregorianCalendar) this.gc.clone();
+            // gc_prev.add(Calendar.DAY_OF_YEAR, -1);
+            // this.gluco_values_prev = new GlucoValues(gc_prev, gc_prev, true);
         }
     }
+
 
     /**
      * Get Data Set
@@ -138,8 +132,9 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
      */
     public AbstractDataset getDataSet()
     {
-        return this.dataset;
+        return this.datasetBG;
     }
+
 
     /**
      * Preprocess Data
@@ -147,139 +142,50 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
     public void preprocessData()
     {
 
-        /*
-         * //XYSeries xs = new XYSeries("BG");
-         * TimeSeries ts = new TimeSeries("BG", Minute.class);
-         * //System.out.println("preprocessData: " +
-         * this.gv.getDailyValuesRowsCount());
-         * int count = this.gluco_values.getDailyValuesRowsCount();
-         * for(int i=0; i<count; i++)
-         * {
-         * DailyValuesRow dv = this.gluco_values.getDailyValueRow(i);
-         * //ts.addOrUpdate(new Minute(dv.getDateTimeAsDate()), dv.getBG());
-         * if (dv.getBG()>0)
-         * ts.addOrUpdate(new Minute(dv.getDateTimeAsDate()), dv.getBG());
-         * }
-         * dataset.addSeries(ts);
-         * ts = new TimeSeries("CH");
-         * for(int i=0; i<count; i++)
-         * {
-         * DailyValuesRow dv = this.gluco_values.getDailyValueRow(i);
-         * //ts.addOrUpdate(new Minute(dv.getDateTimeAsDate()), dv.getBG());
-         * if (dv.getCH()>0)
-         * ts.addOrUpdate(new Minute(dv.getDateTimeAsDate()), dv.getCH());
-         * // xs.add(dv.getDateT(), dv.getCH());
-         * }
-         * //org.jfree.data.time.
-         * dataset.addSeries(ts);
-         * /*
-         * dataset.clear();
-         * System.out.println("Read HbA1c data:\n" +
-         * hbValues.getPercentOfDaysInClass(0) + "\n" +
-         * hbValues.getPercentOfDaysInClass(1) + "\n"
-         * + hbValues.getPercentOfDaysInClass(2) + "\n" +
-         * hbValues.getPercentOfDaysInClass(3) + "\n"
-         * + hbValues.getPercentOfDaysInClass(4));
-         * dataset.insertValue(0, m_ic.getMessage("DAYS_WITH_READINGS_0_1"),
-         * hbValues.getPercentOfDaysInClass(0));
-         * dataset.insertValue(1, m_ic.getMessage("DAYS_WITH_READINGS_2_3"),
-         * hbValues.getPercentOfDaysInClass(1));
-         * dataset.insertValue(2, m_ic.getMessage("DAYS_WITH_READINGS_4_5"),
-         * hbValues.getPercentOfDaysInClass(2));
-         * dataset.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"),
-         * hbValues.getPercentOfDaysInClass(3));
-         * dataset.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"),
-         * hbValues.getPercentOfDaysInClass(4));
-         */
+        datasetBG.removeAllSeries();
+        datasetInsCH.removeAllSeries();
 
-        dataset.removeAllSeries();
-        insBUDataset.removeAllSeries();
-
-        /*
-         * TimeSeries BGSeries = new
-         * TimeSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), Hour.class);
-         * TimeSeries CHSeries = new TimeSeries(this.m_ic.getMessage("CH_LONG"),
-         * Hour.class);
-         * TimeSeries ins1Series = new
-         * TimeSeries(da_local.getSettings().getIns1Name(), Hour.class);
-         * TimeSeries ins2Series = new
-         * TimeSeries(da_local.getSettings().getIns2Name(), Hour.class);
-         */
-
-        // TimeSeries BGSeries = new
-        // TimeSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), Hour.class);
-        XYSeries BGSeries = new XYSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), true, true); // ,
-                                                                                             // Hour.class);
-        // BGSeries.
-
-        XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true); // ,
-                                                                                       // Hour.class);
-        XYSeries ins1Series = new XYSeries(da_local.getSettings().getIns1Name(), true, true); // ,
-                                                                                              // Hour.class);
-        XYSeries ins2Series = new XYSeries(da_local.getSettings().getIns2Name(), true, true); // ,
-                                                                                              // Hour.class);
+        XYSeries BGSeries = new XYSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), true, true);
+        XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true);
+        XYSeries ins1Series = new XYSeries(da_local.getSettings().getIns1Name(), true, true);
+        XYSeries ins2Series = new XYSeries(da_local.getSettings().getIns2Name(), true, true);
 
         int BGUnit = da_local.getSettings().getBG_unit();
-
-        // DailyValuesRow
-
-        // System.out.println("Rows: " +
-        // this.gluco_values.getDailyValuesRowsCount());
 
         for (int i = 0; i < this.gluco_values.getDailyValuesRowsCount(); i++)
         {
             DailyValuesRow row = this.gluco_values.getDailyValueRow(i);
-            // Hour timeH = new Hour(row.getDateTimeAsDate());
-
-            // TimeSeriesDataItem tsdi = new TimeSeriesDataItem();
-
-            // int time = row.getDateT();
 
             long time = row.getDateTimeMs();
 
-            // System.out.println("time: " + time);
-            // System.out.println("GVD: " + row.getDateTimeAsDate());
-
-            // GregorianCalendar gc = new GregorianCalendar();
-            // gc.setTimeInMillis(time);
-            // gc.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
-
-            // System.out.println("getGregorianCalendar: gc      " +
-            // gc.get(Calendar.HOUR_OF_DAY) + ":" + gc.get(Calendar.MINUTE));
-
-            // long tx = (gc.get(Calendar.HOUR_OF_DAY) * 100) +
-            // gc.get(Calendar.MINUTE);
-
-            // System.out.println("tx: " + tx);
-
             if (row.getBG(BGUnit) > 0)
             {
-                // BGSeries.add(timeH, row.getBG(BGUnit));
-                BGSeries.add(time, row.getBG(BGUnit));
+                createWiderBar(BGSeries, time, row.getBG(BGUnit), 10);
             }
 
             if (row.getCH() > 0)
             {
-                CHSeries.add(time, row.getCH());
+                createWiderBar(CHSeries, time, row.getCH(), 20);
             }
 
             if (row.getIns1() > 0)
             {
-                ins1Series.add(time, row.getIns1());
+                createWiderBar(ins1Series, time, row.getIns1(), 20);
             }
 
             if (row.getIns2() > 0)
             {
-                ins2Series.add(time, row.getIns2());
+                createWiderBar(ins2Series, time, row.getIns2(), 20);
             }
         }
 
-        dataset.addSeries(BGSeries);
-        insBUDataset.addSeries(CHSeries);
-        insBUDataset.addSeries(ins1Series);
-        insBUDataset.addSeries(ins2Series);
+        datasetBG.addSeries(BGSeries);
+        datasetInsCH.addSeries(ins1Series);
+        datasetInsCH.addSeries(ins2Series);
+        datasetInsCH.addSeries(CHSeries);
 
     }
+
 
     /**
      * Get Title (used by GraphViewer)
@@ -293,6 +199,7 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
                 + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR) + "]";
     }
 
+
     /**
      * Set Plot
      * 
@@ -302,16 +209,19 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
     {
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
-        XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
+        // XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
+
         dateAxis = (DateAxis) plot.getDomainAxis();
-        // dateAxis.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
-        // //.getTimeZone()
+
         BGAxis = (NumberAxis) plot.getRangeAxis();
         insBUAxis = new NumberAxis();
 
         ColorSchemeH colorScheme = graph_util.getColorScheme();
 
         chart.setBackgroundPaint(graph_util.backgroundColor);
+
+        // Bars
+        XYBarRenderer barRenderer = new XYBarRenderer();
 
         RenderingHints rh = graph_util.getRenderingHints();
 
@@ -324,22 +234,40 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
 
         plot.setRangeAxis(1, insBUAxis);
         plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
-        plot.setDataset(1, insBUDataset);
+        plot.setDataset(1, datasetInsCH);
         plot.mapDatasetToRangeAxis(1, 1);
-        plot.setRenderer(1, insBURenderer);
+        plot.setRenderer(1, barRenderer);
 
-        graph_util.applyMarkers(plot);
-        plot.setRangeGridlinesVisible(false);
-        plot.setDomainGridlinesVisible(false);
+        //
+        // plot.setRangeAxis(1, insBUAxis);
+        // plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
+        // plot.setDataset(1, datasetInsCH);
+        // plot.mapDatasetToRangeAxis(1, 1);
+        // plot.setRenderer(1, insBURenderer);
+
+        // graph_util.applyMarkers(plot);
+        // plot.setRangeGridlinesVisible(false);
+        // plot.setDomainGridlinesVisible(false);
 
         defaultRenderer.setSeriesPaint(0, da_local.getColor(colorScheme.getColor_bg()));
-        insBURenderer.setSeriesPaint(0, da_local.getColor(colorScheme.getColor_ch()));
-        insBURenderer.setSeriesPaint(1, da_local.getColor(colorScheme.getColor_ins1()));
-        insBURenderer.setSeriesPaint(2, da_local.getColor(colorScheme.getColor_ins2()));
+
+        // insBURenderer.setSeriesPaint(0,
+        // da_local.getColor(colorScheme.getColor_ch()));
+        // insBURenderer.setSeriesPaint(1,
+        // da_local.getColor(colorScheme.getColor_ins1()));
+        // insBURenderer.setSeriesPaint(2,
+        // da_local.getColor(colorScheme.getColor_ins2()));
+
+        barRenderer.setSeriesPaint(0, da_local.getColor(colorScheme.getColor_ins1()));
+        barRenderer.setSeriesPaint(1, da_local.getColor(colorScheme.getColor_ins2()));
+        barRenderer.setSeriesPaint(2, da_local.getColor(colorScheme.getColor_ch()));
+
         defaultRenderer.setSeriesShapesVisible(0, true);
-        insBURenderer.setSeriesShapesVisible(0, true);
-        insBURenderer.setSeriesShapesVisible(1, true);
-        insBURenderer.setSeriesShapesVisible(2, true);
+
+        // defaultRenderer.setSeriesShapesVisible(0, true);
+        // insBURenderer.setSeriesShapesVisible(0, true);
+        // insBURenderer.setSeriesShapesVisible(1, true);
+        // insBURenderer.setSeriesShapesVisible(2, true);
 
         SimpleDateFormat sdf = new SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS"));
         sdf.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
@@ -351,12 +279,25 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
                 .getRangeTo().getTime()));
         dateAxis.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
 
+        // BG Axis
         BGAxis.setAutoRangeIncludesZero(true);
 
+        // Insulin/CH Axis
         insBUAxis.setLabel(m_ic.getMessage("CH_LONG") + " / " + m_ic.getMessage("INSULIN"));
         insBUAxis.setAutoRangeIncludesZero(true);
 
     }
+
+
+    private void createWiderBar(XYSeries series, long timeMs, float value, int widthMin)
+    {
+        for (int k1 = 0; k1 < widthMin; k1++)
+        {
+            series.add(timeMs, value);
+            timeMs += 60000;
+        }
+    }
+
 
     /**
      * Create Chart
@@ -365,11 +306,12 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor // implements
     public void createChart()
     {
         chart = ChartFactory.createTimeSeriesChart(null, this.m_ic.getMessage("AXIS_TIME_LABEL"),
-            String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"), this.graph_util.getUnitLabel()), dataset, true,
+            String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"), this.graph_util.getUnitLabel()), datasetBG, true,
             true, true);
 
         this.setPlot(chart);
     }
+
 
     /**
      * Create Chart Panel

@@ -1,8 +1,5 @@
 package ggc.core.data;
 
-import ggc.core.db.hibernate.DayValueH;
-import ggc.core.util.DataAccess;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +7,9 @@ import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.db.hibernate.DayValueH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -46,12 +46,13 @@ public class DailyValues implements Serializable
     private boolean debug = false;
     private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
 
-    private String[] column_names = {
-            m_ic.getMessage("DATE_TIME"), //
-            m_ic.getMessage("BG"), //
-            m_ic.getMessage("BOLUS_INSULIN_SHORT"), //
-            m_ic.getMessage("BASAL_INSULIN_SHORT"), //
-                                     m_ic.getMessage("CH"), m_ic.getMessage("ACTIVITY"), m_ic.getMessage("URINE"),
+    private String[] column_names = { m_ic.getMessage("DATE_TIME"), //
+                                     m_ic.getMessage("BG"), //
+                                     m_ic.getMessage("BOLUS_INSULIN_SHORT"), //
+                                     m_ic.getMessage("BASAL_INSULIN_SHORT"), //
+                                     m_ic.getMessage("CH"), //
+                                     m_ic.getMessage("ACTIVITY"), //
+                                     m_ic.getMessage("URINE"), //
                                      m_ic.getMessage("COMMENT") };
 
     ArrayList<DailyValuesRow> dataRows = new ArrayList<DailyValuesRow>();
@@ -85,12 +86,14 @@ public class DailyValues implements Serializable
 
     DataAccess m_da = DataAccess.getInstance();
 
+
     /**
      * Constructor
      */
     public DailyValues()
     {
     }
+
 
     /**
      * Reset Changed
@@ -99,6 +102,7 @@ public class DailyValues implements Serializable
     {
         changed = false;
     }
+
 
     /**
      * Set Date
@@ -110,6 +114,7 @@ public class DailyValues implements Serializable
         this.date = date;
     }
 
+
     /**
      * Set Std Dev
      * @param stdDev
@@ -118,6 +123,7 @@ public class DailyValues implements Serializable
     {
         this.stdDev = stdDev;
     }
+
 
     /**
      * Add Row
@@ -129,15 +135,16 @@ public class DailyValues implements Serializable
         dataRows.add(dVR);
         this.sort();
 
-        if (!this.day_count.contains(dVR.getDateDString()))
+        if (!this.day_count.contains(dVR.getDateAsString()))
         {
-            this.day_count.put(dVR.getDateDString(), "");
+            this.day_count.put(dVR.getDateAsString(), "");
             // System.out.println(" Day count: " + this.day_count.size());
         }
 
         bOnlyInsert = false;
         refreshStatData();
     }
+
 
     /**
      * Delete Row
@@ -169,6 +176,7 @@ public class DailyValues implements Serializable
         changed = true;
 
     }
+
 
     /**
      * Refresh Stat Data
@@ -250,12 +258,6 @@ public class DailyValues implements Serializable
 
     }
 
-    /*
-     * public void setColumnNames(String[] names)
-     * {
-     * column_names = names;
-     * }
-     */
 
     /**
      * Has Changed
@@ -278,6 +280,7 @@ public class DailyValues implements Serializable
         }
     }
 
+
     /**
      * Get Column Count
      * 
@@ -287,6 +290,7 @@ public class DailyValues implements Serializable
     {
         return column_names.length;
     }
+
 
     /**
      * Get Row Count
@@ -301,6 +305,7 @@ public class DailyValues implements Serializable
             return dataRows.size();
     }
 
+
     /**
      * Get Row
      * 
@@ -311,6 +316,7 @@ public class DailyValues implements Serializable
     {
         return this.dataRows.get(index);
     }
+
 
     /**
      * Has Deleted Items
@@ -325,6 +331,7 @@ public class DailyValues implements Serializable
             return deleteList.size() != 0;
     }
 
+
     /**
      * Get Deleted Items
      * 
@@ -334,6 +341,7 @@ public class DailyValues implements Serializable
     {
         return deleteList;
     }
+
 
     /**
      * Get Value At
@@ -346,6 +354,7 @@ public class DailyValues implements Serializable
     {
         return getRow(row).getValueAt(column);
     }
+
 
     /**
      * Get Day And Month As String
@@ -360,6 +369,7 @@ public class DailyValues implements Serializable
         return String.format("%1$02d.%2$02d.", day, month);
     }
 
+
     /**
      * Get Date
      * 
@@ -369,6 +379,7 @@ public class DailyValues implements Serializable
     {
         return date;
     }
+
 
     /**
      * Get Date As Localized String
@@ -386,6 +397,7 @@ public class DailyValues implements Serializable
             new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.date).getGregorianCalendar(), 4);
     }
 
+
     /**
      * Get Date As String
      * 
@@ -395,6 +407,7 @@ public class DailyValues implements Serializable
     {
         return getDateAsLocalizedString();
     }
+
 
     /**
      * Get Changed
@@ -407,6 +420,7 @@ public class DailyValues implements Serializable
         return getRow(row).hasChanged();
     }
 
+
     /**
      * Get Column Name
      * 
@@ -417,6 +431,7 @@ public class DailyValues implements Serializable
     {
         return column_names[column] == null ? m_ic.getMessage("NO_NAME") : column_names[column];
     }
+
 
     /**
      * Get Average BG Raw (mg/dL)
@@ -430,6 +445,7 @@ public class DailyValues implements Serializable
         else
             return 0;
     }
+
 
     /**
      * Get Average BG 
@@ -449,6 +465,7 @@ public class DailyValues implements Serializable
             return 0;
     }
 
+
     /**
      * Get Average Ins 1
      * 
@@ -461,6 +478,7 @@ public class DailyValues implements Serializable
         else
             return 0;
     }
+
 
     /**
      * Get Average Ins 2
@@ -475,6 +493,7 @@ public class DailyValues implements Serializable
             return 0;
     }
 
+
     /**
      * Get Average Ins
      * 
@@ -487,6 +506,7 @@ public class DailyValues implements Serializable
         else
             return 0;
     }
+
 
     /**
      * Get Average Bolus
@@ -501,6 +521,7 @@ public class DailyValues implements Serializable
             return 0.0f;
     }
 
+
     /**
      * Get Average Basal
      * 
@@ -513,6 +534,7 @@ public class DailyValues implements Serializable
         else
             return 0.0f;
     }
+
 
     /**
      * Get Average Basal
@@ -527,6 +549,7 @@ public class DailyValues implements Serializable
             return 0.0f;
     }
 
+
     /**
      * Get Average CH
      * 
@@ -540,6 +563,7 @@ public class DailyValues implements Serializable
             return 0;
     }
 
+
     /**
      * Get Sum BG
      * 
@@ -549,6 +573,7 @@ public class DailyValues implements Serializable
     {
         return sumBG;
     }
+
 
     /**
      * Get Sum Ins 1
@@ -560,6 +585,7 @@ public class DailyValues implements Serializable
         return sumIns1;
     }
 
+
     /**
      * Get Sum Ins 2
      * 
@@ -569,6 +595,7 @@ public class DailyValues implements Serializable
     {
         return sumIns2;
     }
+
 
     /**
      * Get Sum Ins
@@ -580,6 +607,7 @@ public class DailyValues implements Serializable
         return sumIns1 + sumIns2;
     }
 
+
     /**
      * Get Sum Basal
      * 
@@ -589,6 +617,7 @@ public class DailyValues implements Serializable
     {
         return this.sum_basal;
     }
+
 
     /**
      * Get Sum Bolus
@@ -600,6 +629,7 @@ public class DailyValues implements Serializable
         return this.sum_bolus;
     }
 
+
     /**
      * Get Sum Basal
      * 
@@ -609,6 +639,7 @@ public class DailyValues implements Serializable
     {
         return this.sum_basal + this.sum_bolus;
     }
+
 
     /**
      * Get Sum CH
@@ -620,6 +651,7 @@ public class DailyValues implements Serializable
         return sumBE;
     }
 
+
     /**
      * Get Count of BG
      * 
@@ -629,6 +661,7 @@ public class DailyValues implements Serializable
     {
         return counterBG;
     }
+
 
     /**
      * Get Count of Ins 1
@@ -640,6 +673,7 @@ public class DailyValues implements Serializable
         return counterIns1;
     }
 
+
     /**
      * Get Count of Ins 2
      * 
@@ -649,6 +683,7 @@ public class DailyValues implements Serializable
     {
         return counterIns2;
     }
+
 
     /**
      * Get Count of Ins
@@ -660,6 +695,7 @@ public class DailyValues implements Serializable
         return counterIns1 + counterIns2;
     }
 
+
     /**
      * Get Count of Basal
      * 
@@ -669,6 +705,7 @@ public class DailyValues implements Serializable
     {
         return this.count_basal;
     }
+
 
     /**
      * Get Count of Bolus
@@ -680,6 +717,7 @@ public class DailyValues implements Serializable
         return this.count_bolus;
     }
 
+
     /**
      * Get Count of Bolus
      * 
@@ -690,6 +728,7 @@ public class DailyValues implements Serializable
         return this.count_bolus + this.count_basal;
     }
 
+
     /**
      * Get Count of CH
      * 
@@ -699,6 +738,7 @@ public class DailyValues implements Serializable
     {
         return counterBE;
     }
+
 
     /**
      * Get Highest BG
@@ -712,6 +752,7 @@ public class DailyValues implements Serializable
         else
             return m_da.getBGValueDifferent(DataAccess.BG_MGDL, highestBG);
     }
+
 
     /**
      * Get Lowest BG
@@ -730,6 +771,7 @@ public class DailyValues implements Serializable
         else
             return 0;
     }
+
 
     /**
      * Get Std Dev
@@ -754,6 +796,7 @@ public class DailyValues implements Serializable
         else
             return 0;
     }
+
 
     /**
      * Sort 

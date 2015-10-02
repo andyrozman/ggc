@@ -30,6 +30,7 @@ import com.atech.utils.logs.RedirectScreen;
 
 import ggc.core.data.*;
 import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.data.graph.v2.GGCGraphContext;
 import ggc.core.db.GGCDb;
 import ggc.core.db.GGCDbLoader;
@@ -72,7 +73,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.6.0";
+    public static String CORE_VERSION = "0.6.1";
 
     /**
      * Current Db Version
@@ -628,7 +629,7 @@ public class DataAccess extends ATDataAccessLMAbstract
          * brc.addNodeChild(brc_nut);
          */
 
-        this.backup_restore_collection = brc_full;
+        this.backupRestoreCollection = brc_full;
     }
 
 
@@ -1159,14 +1160,27 @@ public class DataAccess extends ATDataAccessLMAbstract
      * @param bg_value
      * @return
      */
+    @Deprecated
     public float getBGValueDifferent(int type, float bg_value)
     {
-
         if (type == DataAccess.BG_MGDL)
             return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
         else
             return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
+    }
 
+
+    /**
+     * Get BG Value Different
+     *
+     * @param type
+     * @param bg_value
+     * @return
+     */
+    public float getBGValueDifferent(GlucoseUnitType type, Number bg_value)
+    {
+        return this.getBGConverter().getValueByType(
+            type == GlucoseUnitType.mmol_L ? GlucoseUnitType.mg_dL : GlucoseUnitType.mmol_L, type, bg_value);
     }
 
 
@@ -1642,26 +1656,6 @@ public class DataAccess extends ATDataAccessLMAbstract
     public void loadLanguageInfo()
     {
         // TODO Auto-generated method stub
-    }
-
-
-    /**
-     * Get Selected Lang Index (will be deprecated) ??!!
-     */
-    @Override
-    public int getSelectedLangIndex()
-    {
-        return 0;
-    }
-
-
-    /**
-     * Set Selected Lang Index (will be deprecated) ??!!
-     */
-    @Override
-    public void setSelectedLangIndex(int index)
-    {
-
     }
 
     /**

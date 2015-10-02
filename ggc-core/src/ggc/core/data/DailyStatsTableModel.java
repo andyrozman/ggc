@@ -1,10 +1,9 @@
 package ggc.core.data;
 
-import ggc.core.util.DataAccess;
-
 import javax.swing.table.AbstractTableModel;
 
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -35,26 +34,11 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public class DailyStatsTableModel extends AbstractTableModel
 {
+
     private static final long serialVersionUID = -8281136305573121781L;
+
     DailyValues dayData;
-    DataAccess m_da = DataAccess.getInstance();
 
-    /*
-     * Object objects[] =
-     * {
-     * new Long(0L),
-     * new String(""),
-     * new Float(0.0d),
-     * new Float(0.0d),
-     * new Float(0.0d),
-     * new String(""),
-     * new String(""),
-     * new String("")
-     * };
-     */
-
-    Object objects[] = { new String(""), new String(""), new String(""), new String(""), new String(""),
-                        new String(""), new String(""), new String("") };
 
     public DailyStatsTableModel(DailyValues dayData)
     {
@@ -62,16 +46,19 @@ public class DailyStatsTableModel extends AbstractTableModel
         fireTableChanged(null);
     }
 
+
     public DailyValues getDailyValues()
     {
         return this.dayData;
     }
+
 
     public void setDailyValues(DailyValues dayData)
     {
         this.dayData = dayData;
         fireTableChanged(null);
     }
+
 
     public int getColumnCount()
     {
@@ -81,6 +68,7 @@ public class DailyStatsTableModel extends AbstractTableModel
         return dayData.getColumnCount();
     }
 
+
     public int getRowCount()
     {
         if (dayData == null)
@@ -89,15 +77,17 @@ public class DailyStatsTableModel extends AbstractTableModel
         return dayData.getRowCount();
     }
 
+
     public Object getValueAt(int row, int column)
     {
         Object o = dayData.getValueAt(row, column);
 
         if (o != null && column == 0)
-            return ATDataAccessAbstract.getDateTimeAsTimeString(((Long) o).longValue());
+            return ATechDate.getTimeString(ATechDateType.DateAndTimeMin, ((Long) o).longValue());
 
         return o;
     }
+
 
     @Override
     public String getColumnName(int column)
@@ -105,16 +95,17 @@ public class DailyStatsTableModel extends AbstractTableModel
         return dayData.getColumnName(column);
     }
 
+
     @Override
     public Class<?> getColumnClass(int c)
     {
-        return this.objects[c].getClass();
+        return String.class;
     }
+
 
     @Override
     public boolean isCellEditable(int row, int col)
     {
-        // return true;
         return false;
     }
 

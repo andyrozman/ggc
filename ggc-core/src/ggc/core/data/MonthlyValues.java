@@ -1,9 +1,9 @@
 package ggc.core.data;
 
-import ggc.core.util.DataAccess;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,6 +43,7 @@ public class MonthlyValues extends WeeklyValues
     String empty_value = "";
     int times[] = { 1100, 1800, 2200 };
 
+
     /**
      * Constructor
      * 
@@ -65,6 +66,7 @@ public class MonthlyValues extends WeeklyValues
 
     }
 
+
     /**
      * Load Configuration
      */
@@ -75,6 +77,7 @@ public class MonthlyValues extends WeeklyValues
         this.times[1] = this.m_da.getSettings().getPrintDinnerStartTime();
         this.times[2] = this.m_da.getSettings().getPrintNightStartTime();
     }
+
 
     /*
      * public void getTime(String time, int default_value)
@@ -92,6 +95,7 @@ public class MonthlyValues extends WeeklyValues
         return this.m_month;
     }
 
+
     /**
      * Get Year
      * 
@@ -102,6 +106,7 @@ public class MonthlyValues extends WeeklyValues
         return this.m_year;
     }
 
+
     /**
      * Get Days In Month
      * 
@@ -111,6 +116,7 @@ public class MonthlyValues extends WeeklyValues
     {
         return max_days;
     }
+
 
     /*
      * public void process()
@@ -125,6 +131,7 @@ public class MonthlyValues extends WeeklyValues
         return whichGroup(time);
     }
 
+
     private int whichGroup(int time)
     {
         if (time > 0 & time < times[0])
@@ -136,6 +143,7 @@ public class MonthlyValues extends WeeklyValues
         else
             return 3;
     }
+
 
     /**
      * Get Day Values Simple
@@ -185,7 +193,7 @@ public class MonthlyValues extends WeeklyValues
             // dv.getRowCount());
 
             // TODO: Here we might have exception
-            int grp = whichGroup(dv.getRow(i).getDateT());
+            int grp = whichGroup(dv.getRow(i).getTime());
 
             float d = dv.getRow(i).getBG(); // .getBGAt(i);
             // 5 = BG (avg), BG (count), Insulin 1 (Sum), Insulin 2 (Sum),
@@ -268,6 +276,7 @@ public class MonthlyValues extends WeeklyValues
 
     }
 
+
     private float[][] initTable(float[][] data)
     {
         for (int i = 0; i < 4; i++)
@@ -280,6 +289,7 @@ public class MonthlyValues extends WeeklyValues
 
         return data;
     }
+
 
     /**
      * Get Day Values Extended

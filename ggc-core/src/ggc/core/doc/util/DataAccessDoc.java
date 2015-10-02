@@ -607,7 +607,7 @@ public class DataAccessDoc extends DataAccess
          * brc.addNodeChild(brc_nut);
          */
 
-        this.backup_restore_collection = brc_full;
+        this.backupRestoreCollection = brc_full;
     }
 
 
@@ -1587,26 +1587,6 @@ public class DataAccessDoc extends DataAccess
     public void loadLanguageInfo()
     {
         // TODO Auto-generated method stub
-    }
-
-
-    /**
-     * Get Selected Lang Index (will be deprecated) ??!!
-     */
-    @Override
-    public int getSelectedLangIndex()
-    {
-        return 0;
-    }
-
-
-    /**
-     * Set Selected Lang Index (will be deprecated) ??!!
-     */
-    @Override
-    public void setSelectedLangIndex(int index)
-    {
-
     }
 
     /**
