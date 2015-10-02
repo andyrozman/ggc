@@ -1,5 +1,7 @@
 package ggc.meter.device;
 
+import com.atech.graphics.dialogs.selector.SelectableInterface;
+
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
@@ -10,8 +12,6 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPortEvent;
-
-import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,6 +49,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     protected int m_status = 0;
     protected boolean communication_established = false;
 
+
     /**
      * Constructor
      */
@@ -56,6 +57,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     {
         super(DataAccessMeter.getInstance());
     }
+
 
     /**
      * Constructor
@@ -67,6 +69,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
+
 
     /**
      * Constructor
@@ -80,6 +83,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         super(parameters, writer, da);
     }
 
+
     /** 
      * Serial Event - for handling serial events, this method is called internally
      */
@@ -88,6 +92,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     {
 
     }
+
 
     /** 
      * Set Communication Settings
@@ -98,6 +103,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     {
         super.setCommunicationSettings(baudrate, databits, stopbits, parity, flow_control, event_type);
     }
+
 
     // String meter_group = null;
     // String meter_device = null;
@@ -110,6 +116,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     {
         this.close();
     }
+
 
     /**
      * Set Meter type
@@ -138,6 +145,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
 
     String serial_port = null;
 
+
     /**
      * Set Serial Port used
      * 
@@ -150,6 +158,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         this.setPort(port);
     }
 
+
     /**
      * getConnectionPort - connection port data
      * 
@@ -160,6 +169,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return this.serial_port;
     }
 
+
     /**
      * Get Serial port
      * 
@@ -169,6 +179,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     {
         return this.serial_port;
     }
+
 
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
@@ -181,6 +192,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return false;
     }
 
+
     /**
      * Used for opening connection with device.
      * 
@@ -192,6 +204,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         return communication_established = super.open();
     }
 
+
     /**
      * Is Device Communicating
      * 
@@ -201,6 +214,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
     {
         return this.communication_established;
     }
+
 
     /**
      * Will be called, when the import is ended and freeing resources.
@@ -215,6 +229,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         this.serialPort.close();
     }
 
+
     // ************************************************
     // *** Device Implemented methods ***
     // ************************************************
@@ -225,6 +240,7 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
         this.outputWriter.endOutput();
     }
 
+
     /**
      * Get Download Support Type
      * 
@@ -232,8 +248,9 @@ public abstract class AbstractSerialMeter extends SerialProtocol implements Mete
      */
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.NoDownloadSupport;
+        return DownloadSupportType.NotSupportedByGGC;
     }
+
 
     /**
      * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 

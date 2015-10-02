@@ -1,12 +1,6 @@
 package ggc.meter.manager.company;
 
-import ggc.meter.device.ascensia.AscensiaBreeze;
-import ggc.meter.device.ascensia.AscensiaBreeze2;
-import ggc.meter.device.ascensia.AscensiaContour;
-import ggc.meter.device.ascensia.AscensiaContourLink;
-import ggc.meter.device.ascensia.AscensiaContourTest;
-import ggc.meter.device.ascensia.AscensiaDEX;
-import ggc.meter.device.ascensia.AscensiaEliteXL;
+import ggc.meter.device.ascensia.*;
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.manager.DeviceImplementationStatus;
@@ -52,7 +46,7 @@ public class AscensiaBayer extends AbstractDeviceCompany
                 "Ascensia", // short company name
                 "ASCENSIA_DESC", // company description
                 DeviceImplementationStatus.Done, DataAccessMeter.getInstance()); // implementation
-                                                                                                // status
+                                                                                 // status
 
         this.addDevice(new AscensiaEliteXL(this));
         this.addDevice(new AscensiaDEX(this));
@@ -60,7 +54,7 @@ public class AscensiaBayer extends AbstractDeviceCompany
         this.addDevice(new AscensiaBreeze2(this));
         this.addDevice(new AscensiaContour(this));
         this.addDevice(new AscensiaContourLink(this));
-        this.addDevice(new AscensiaContourTest(this));
+        // this.addDevice(new AscensiaContourTest(this));
     }
 
 }

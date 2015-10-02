@@ -17,6 +17,7 @@ import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.Menarini;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -63,6 +64,7 @@ public class GlucofixMio extends AbstractSerialMeter
     private int entries_current = 0;
     boolean device_disconnected = false;
 
+
     /**
      * Constructor
      * 
@@ -72,6 +74,7 @@ public class GlucofixMio extends AbstractSerialMeter
     {
         super(cmp);
     }
+
 
     /**
      * Constructor
@@ -83,6 +86,7 @@ public class GlucofixMio extends AbstractSerialMeter
     {
         this(comm_parameters, writer, DataAccessMeter.getInstance());
     }
+
 
     /**
      * Constructor
@@ -145,6 +149,7 @@ public class GlucofixMio extends AbstractSerialMeter
 
     }
 
+
     /**
      * getDeviceClassName - Get class name of device
      */
@@ -152,6 +157,7 @@ public class GlucofixMio extends AbstractSerialMeter
     {
         return "ggc.meter.device.menarini.GlucofixMio";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -164,6 +170,7 @@ public class GlucofixMio extends AbstractSerialMeter
         return MeterDevicesIds.METER_MENARINI_GLUCOFIX_MIO;
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -173,6 +180,7 @@ public class GlucofixMio extends AbstractSerialMeter
     {
         return "mn_glucofix_mio.jpg";
     }
+
 
     /**
      * getImplementationStatus - Get implementation status 
@@ -185,6 +193,7 @@ public class GlucofixMio extends AbstractSerialMeter
         return DeviceImplementationStatus.Done;
     }
 
+
     /**
      * getInstructions - get instructions for device
      * 
@@ -195,6 +204,7 @@ public class GlucofixMio extends AbstractSerialMeter
         return "INSTRUCTIONS_ABBOTT_OPTIUMXCEED";
     }
 
+
     /**
      * getName - Get Name of meter. 
      * 
@@ -204,6 +214,7 @@ public class GlucofixMio extends AbstractSerialMeter
     {
         return "Glucofix Mio";
     }
+
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -299,6 +310,7 @@ public class GlucofixMio extends AbstractSerialMeter
 
     int counter = 0;
 
+
     /**
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
      * be done from here. Reading can be done directly here, or event can be used to read data. Usage of events 
@@ -382,6 +394,7 @@ public class GlucofixMio extends AbstractSerialMeter
 
     }
 
+
     private boolean checkBreak()
     {
         counter++;
@@ -396,6 +409,7 @@ public class GlucofixMio extends AbstractSerialMeter
             return false;
 
     }
+
 
     private void readBGEntry(String entry)
     {
@@ -443,6 +457,7 @@ public class GlucofixMio extends AbstractSerialMeter
 
     }
 
+
     /** 
      * This is method for reading configuration
      * 
@@ -453,6 +468,7 @@ public class GlucofixMio extends AbstractSerialMeter
     {
     }
 
+
     /**
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
@@ -461,6 +477,7 @@ public class GlucofixMio extends AbstractSerialMeter
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
+
 
     /**
      * getComment - Get Comment for device 
@@ -472,6 +489,7 @@ public class GlucofixMio extends AbstractSerialMeter
         return null;
     }
 
+
     /**
      * Maximum of records that device can store
      */
@@ -479,6 +497,7 @@ public class GlucofixMio extends AbstractSerialMeter
     {
         return 400;
     }
+
 
     private ATechDate getDateTime(String date, String time)
     {
@@ -494,6 +513,7 @@ public class GlucofixMio extends AbstractSerialMeter
 
     }
 
+
     private void readingEntryStatus()
     {
         float proc_read = this.entries_current * 1.0f / this.entries_max;
@@ -501,12 +521,19 @@ public class GlucofixMio extends AbstractSerialMeter
         this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
     }
 
+
     private void endReading()
     {
         this.outputWriter.setSubStatus(null);
         this.outputWriter.endOutput();
         this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
         System.out.println("Reading finished prematurely !");
+    }
+
+
+    public DownloadSupportType getDownloadSupportType()
+    {
+        return DownloadSupportType.DownloadData;
     }
 
 }

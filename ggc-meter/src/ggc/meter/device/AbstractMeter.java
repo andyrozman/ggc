@@ -33,8 +33,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
  */
 
 public abstract class AbstractMeter extends DeviceAbstract // implements
-                                                           // MeterInterface,
-                                                           // SelectableInterface
+// MeterInterface,
+// SelectableInterface
 {
 
     // AbstractDeviceCompany meter_company;
@@ -55,6 +55,7 @@ public abstract class AbstractMeter extends DeviceAbstract // implements
         // dataAccess = DataAccessMeter.getInstance();
     }
 
+
     /**
      * Constructor
      * @param cmp
@@ -65,6 +66,7 @@ public abstract class AbstractMeter extends DeviceAbstract // implements
         this.setDeviceCompany(cmp);
         this.setMeterType(cmp.getName(), getName());
     }
+
 
     // boolean canReadData = false;
     // boolean canReadPartitialData = false;
@@ -80,6 +82,7 @@ public abstract class AbstractMeter extends DeviceAbstract // implements
     public void dispose()
     {
     }
+
 
     /**
      * Set Meter type
@@ -106,6 +109,7 @@ public abstract class AbstractMeter extends DeviceAbstract // implements
         this.deviceSourceName = group + " " + device;
     }
 
+
     // ************************************************
     // *** Available Functionality ***
     // ************************************************
@@ -119,6 +123,7 @@ public abstract class AbstractMeter extends DeviceAbstract // implements
         return this.getName();
     }
 
+
     /**
      * Get Download Support Type
      * 
@@ -126,8 +131,9 @@ public abstract class AbstractMeter extends DeviceAbstract // implements
      */
     public DownloadSupportType getDownloadSupportType()
     {
-        return DownloadSupportType.NoDownloadSupport;
+        return DownloadSupportType.NotSupportedByGGC;
     }
+
 
     /**
      * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 

@@ -1,26 +1,5 @@
 package ggc.meter.device.abbott;
 
-import ggc.core.data.defs.DailyValuesExtendedType;
-import ggc.core.data.defs.GlucoseUnitType;
-import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.data.MeterValuesEntrySpecial;
-import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.device.MeterInterface;
-import ggc.meter.manager.MeterDevicesIds;
-import ggc.meter.manager.company.Abbott;
-import ggc.meter.util.DataAccessMeter;
-import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.DeviceImplementationStatus;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.plugin.output.AbstractOutputWriter;
-import ggc.plugin.output.OutputUtil;
-import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.SerialProtocol;
-import ggc.plugin.util.DataAccessPlugInBase;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-
 import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
@@ -29,6 +8,26 @@ import org.apache.commons.logging.LogFactory;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.data.defs.DailyValuesExtendedType;
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.device.AbstractSerialMeter;
+import ggc.meter.device.MeterInterface;
+import ggc.meter.manager.MeterDevicesIds;
+import ggc.meter.manager.company.Abbott;
+import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -65,12 +64,14 @@ public class OptiumXceed extends AbstractSerialMeter
     private int entries_max = 0;
     private int entries_current = 0;
 
+
     /**
      * Constructor
      */
     public OptiumXceed()
     {
     }
+
 
     /**
      * Constructor for device manager
@@ -81,6 +82,7 @@ public class OptiumXceed extends AbstractSerialMeter
     {
         super(cmp);
     }
+
 
     /**
      * Constructor
@@ -132,6 +134,7 @@ public class OptiumXceed extends AbstractSerialMeter
 
     }
 
+
     /**
      * Constructor
      * 
@@ -181,6 +184,7 @@ public class OptiumXceed extends AbstractSerialMeter
         }
 
     }
+
 
     // public static final byte ENQ = 0x05;
 
@@ -248,6 +252,7 @@ public class OptiumXceed extends AbstractSerialMeter
 
     }
 
+
     private boolean startMessageToMeter() throws Exception
     {
         boolean done = false;
@@ -287,6 +292,7 @@ public class OptiumXceed extends AbstractSerialMeter
 
         return false;
     }
+
 
     private void processDataLine(String line)
     {
@@ -344,6 +350,7 @@ public class OptiumXceed extends AbstractSerialMeter
 
     }
 
+
     private String[] processId(String line)
     {
 
@@ -365,6 +372,7 @@ public class OptiumXceed extends AbstractSerialMeter
 
     }
 
+
     private void endReading()
     {
         this.outputWriter.setSubStatus(null);
@@ -373,10 +381,12 @@ public class OptiumXceed extends AbstractSerialMeter
         // System.out.println("Reading finished prematurely !");
     }
 
+
     private boolean isDeviceFinished()
     {
         return this.entries_current == this.entries_max;
     }
+
 
     /**
      * This is method for reading partitial data from device. All reading from actual device should be done from 
@@ -388,6 +398,7 @@ public class OptiumXceed extends AbstractSerialMeter
 
     }
 
+
     /** 
      * This is method for reading configuration
      * 
@@ -397,6 +408,7 @@ public class OptiumXceed extends AbstractSerialMeter
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -456,6 +468,7 @@ public class OptiumXceed extends AbstractSerialMeter
 
     }
 
+
     /**
      * Add BG Data
      * 
@@ -468,7 +481,7 @@ public class OptiumXceed extends AbstractSerialMeter
             return;
 
         MeterValuesEntry mve = new MeterValuesEntry();
-        //mve.setBgUnit(OutputUtil.BG_MGDL);
+        // mve.setBgUnit(OutputUtil.BG_MGDL);
 
         mve.setBgValue(data, GlucoseUnitType.mg_dL);
         mve.setDateTimeObject(adt);
@@ -477,6 +490,7 @@ public class OptiumXceed extends AbstractSerialMeter
         this.entries_current++;
         readingEntryStatus();
     }
+
 
     /**
      * Add Urine Data
@@ -493,23 +507,28 @@ public class OptiumXceed extends AbstractSerialMeter
         MeterValuesEntry mve = new MeterValuesEntry();
 
         mve.setDateTimeObject(adt);
-//        mve.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MMOLL, DataAccessPlugInBase.Decimal1Format
-//                .format(dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MGDL, DataAccessPlugInBase.BG_MMOL, data)));
+        // mve.addSpecialEntry(MeterValuesEntrySpecial.SPECIAL_ENTRY_URINE_MMOLL,
+        // DataAccessPlugInBase.Decimal1Format
+        // .format(dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MGDL,
+        // DataAccessPlugInBase.BG_MMOL, data)));
 
-        mve.setUrine(DailyValuesExtendedType.Urine_mmolL, dataAccess.getFormatedValue(
-                dataAccess.getBGValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, Float.parseFloat(data)),1)
-        );
+        mve.setUrine(
+            DailyValuesExtendedType.Urine_mmolL,
+            dataAccess.getFormatedValue(
+                dataAccess.getBGValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, Float.parseFloat(data)), 1));
 
         this.outputWriter.writeData(mve);
         this.entries_current++;
         readingEntryStatus();
     }
 
+
     protected void setDeviceStopped()
     {
         this.device_running = false;
         this.outputWriter.endOutput();
     }
+
 
     protected ATechDate getDateTime(String date, String time)
     {
@@ -520,6 +539,7 @@ public class OptiumXceed extends AbstractSerialMeter
         return tzu.getCorrectedDateTime(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, dt));
     }
 
+
     // private void
 
     private void readingEntryStatus()
@@ -528,6 +548,7 @@ public class OptiumXceed extends AbstractSerialMeter
         float proc_total = 5 + 95 * proc_read;
         this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
     }
+
 
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
@@ -539,6 +560,7 @@ public class OptiumXceed extends AbstractSerialMeter
     {
         return true;
     }
+
 
     /**
      * We don't use serial event for reading data, because process takes too long, we use serial event just 
@@ -583,6 +605,7 @@ public class OptiumXceed extends AbstractSerialMeter
         }
     }
 
+
     /**
      * getCompanyId - Get Company Id 
      * 
@@ -593,6 +616,7 @@ public class OptiumXceed extends AbstractSerialMeter
         return MeterDevicesIds.COMPANY_ABBOTT;
     }
 
+
     /**
      * Maximum of records that device can store
      */
@@ -601,6 +625,7 @@ public class OptiumXceed extends AbstractSerialMeter
         return 450;
     }
 
+
     /** 
      * Get Device ClassName
      */
@@ -608,6 +633,7 @@ public class OptiumXceed extends AbstractSerialMeter
     {
         return "ggc.meter.device.abbott.OptiumXceed";
     }
+
 
     /**
      * getDeviceId - Get Device Id 
@@ -619,6 +645,7 @@ public class OptiumXceed extends AbstractSerialMeter
         return MeterDevicesIds.METER_ABBOTT_OPTIUM_XCEED;
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -628,6 +655,7 @@ public class OptiumXceed extends AbstractSerialMeter
     {
         return "ab_optium_xceed.jpg";
     }
+
 
     /**
      * getName - Get Name of meter. 
@@ -639,6 +667,7 @@ public class OptiumXceed extends AbstractSerialMeter
         return "Optium Xceed";
     }
 
+
     /** 
      * getComment
      */
@@ -647,13 +676,15 @@ public class OptiumXceed extends AbstractSerialMeter
         return null;
     }
 
+
     /** 
      * getImplementationStatus
      */
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.Testing;
+        return DeviceImplementationStatus.Done;
     }
+
 
     /** 
      * getInstructions
@@ -662,6 +693,7 @@ public class OptiumXceed extends AbstractSerialMeter
     {
         return "INSTRUCTIONS_ABBOTT_OPTIUMXCEED";
     }
+
 
     /**
      * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
@@ -673,6 +705,12 @@ public class OptiumXceed extends AbstractSerialMeter
     public int getInterfaceTypeForMeter()
     {
         return MeterInterface.METER_INTERFACE_EXTENDED;
+    }
+
+
+    public DownloadSupportType getDownloadSupportType()
+    {
+        return DownloadSupportType.DownloadData;
     }
 
 }

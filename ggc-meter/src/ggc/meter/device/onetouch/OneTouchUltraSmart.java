@@ -15,6 +15,7 @@ import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -92,6 +93,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 
+
     /**
      * Constructor
      * 
@@ -102,6 +104,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     {
         this(comm_parameters, writer, DataAccessMeter.getInstance());
     }
+
 
     /**
      * Constructor used by most classes
@@ -151,6 +154,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         }
     }
 
+
     /**
      * Constructor
      */
@@ -158,6 +162,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     {
         super();
     }
+
 
     /**
      * Constructor for device manager
@@ -169,6 +174,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         super(cmp);
     }
 
+
     /** 
      * Set Communication Settings
      */
@@ -178,6 +184,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     {
         super.setCommunicationSettings(baudrate, databits, stopbits, parity, flow_control, event_type);
     }
+
 
     /**
      * getName - Get Name of meter.
@@ -189,6 +196,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         return "One Touch UltraSmart";
     }
 
+
     /**
      * getCompanyId - Get Company Id 
      * 
@@ -199,6 +207,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         return MeterDevicesIds.COMPANY_LIFESCAN;
     }
 
+
     /**
      * getDeviceClassName - Get class name of device
      */
@@ -206,6 +215,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     {
         return "ggc.meter.device.onetouch.OneTouchUltraSmart";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class Should be
@@ -218,6 +228,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRASMART;
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -227,6 +238,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     {
         return "ls_ot_ultrasmart.jpg";
     }
+
 
     /**
      * getInstructions - get instructions for device
@@ -238,6 +250,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         return "INSTRUCTIONS_LIFESCAN_ON";
     }
 
+
     /**
      * Maximum of records that device can store
      */
@@ -245,6 +258,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     {
         return entries_max;
     }
+
 
     /**
      * getShortName - Get short name of meter.
@@ -256,6 +270,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         return "UltraSmart";
     }
 
+
     /** 
      * getImplementationStatus
      */
@@ -264,6 +279,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         return DeviceImplementationStatus.Testing;
     }
 
+
     /** 
      * getComment
      */
@@ -271,6 +287,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     {
         return null;
     }
+
 
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
@@ -282,6 +299,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     {
         return true;
     }
+
 
     /**
      * OT Ultasmart version of readInfo() overloaded method.
@@ -321,6 +339,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         }
     }
 
+
     /**
      * This is method for reading configuration
      * 
@@ -330,6 +349,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * Reads dump of data from the OT UltraSmart device.
@@ -415,6 +435,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         this.outputWriter.endOutput();
     }
 
+
     /**
      * This is method for reading partial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
@@ -424,6 +445,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
     {
 
     }
+
 
     /**
      * This method processes the retrieved records
@@ -484,6 +506,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
 
     }
 
+
     /**
      * Processes the Blood Glucose data record
      * 
@@ -511,6 +534,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         this.outputWriter.writeData(mve);
     }
 
+
     @SuppressWarnings("unused")
     private void processExerciseRecord(byte[] recordArray)
     {
@@ -528,6 +552,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         // T => 0,1;
         // D => 2-9;
     }
+
 
     /**
      * Computes the CRC checksum byte.
@@ -550,6 +575,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
 
         return (byte) crc;
     }
+
 
     /**
      * Parses date and time from byte array to Calendar object
@@ -575,6 +601,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
 
     }
 
+
     /**
      * Creates a java signed integer from byte array of unsigned bytes.
      * 
@@ -599,6 +626,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         return time;
     }
 
+
     /**
      * Strips communication escape characters from the data.
      * 
@@ -622,6 +650,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         return tempList;
     }
 
+
     /**
      * Add communication escape characters to the data, if needed.
      * 
@@ -642,6 +671,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         return tempList;
     }
 
+
     /**
      * Computes the entry status for the GUI Progress Bar.
      */
@@ -650,6 +680,12 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         float proc_read = this.entries_current * 1.0f / this.entries_max;
         float proc_total = 4 + 96 * proc_read;
         this.outputWriter.setSpecialProgress((int) proc_total);
+    }
+
+
+    public DownloadSupportType getDownloadSupportType()
+    {
+        return DownloadSupportType.DownloadData;
     }
 
 }

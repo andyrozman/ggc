@@ -1,13 +1,13 @@
 package ggc.meter.device.abbott;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,6 +41,7 @@ public class FreestyleFreedom extends FreestyleMeter
     @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog(FreestyleFreedom.class);
 
+
     /**
      * Constructor
      */
@@ -48,6 +49,7 @@ public class FreestyleFreedom extends FreestyleMeter
     {
         super();
     }
+
 
     /**
      * Constructor for device manager
@@ -59,6 +61,7 @@ public class FreestyleFreedom extends FreestyleMeter
         super(cmp);
     }
 
+
     /**
      * Constructor
      * 
@@ -69,6 +72,7 @@ public class FreestyleFreedom extends FreestyleMeter
     {
         super(portName, writer);
     }
+
 
     /**
      * Constructor
@@ -82,6 +86,7 @@ public class FreestyleFreedom extends FreestyleMeter
         super(comm_parameters, writer, da);
     }
 
+
     /**
      * Maximum of records that device can store
      */
@@ -90,6 +95,7 @@ public class FreestyleFreedom extends FreestyleMeter
         return 0;
     }
 
+
     /** 
      * Get Device ClassName
      */
@@ -97,6 +103,7 @@ public class FreestyleFreedom extends FreestyleMeter
     {
         return "ggc.meter.device.freestyle.FreestyleFreedom";
     }
+
 
     /**
      * getDeviceId - Get Device Id 
@@ -108,6 +115,7 @@ public class FreestyleFreedom extends FreestyleMeter
         return MeterDevicesIds.METER_ABBOTT_FREESTYLE_FREEDOM;
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -118,6 +126,7 @@ public class FreestyleFreedom extends FreestyleMeter
         return "ab_freestyle_freedom.jpg";
     }
 
+
     /**
      * getName - Get Name of meter. 
      * 
@@ -127,6 +136,7 @@ public class FreestyleFreedom extends FreestyleMeter
     {
         return "Abbott Freestyle Freedom";
     }
+
 
     /**
      * getInstructions - get instructions for device
@@ -139,6 +149,7 @@ public class FreestyleFreedom extends FreestyleMeter
         return "INSTRUCTIONS_ABBOTT_FREESTYLE_FREEDOM";
     }
 
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -150,6 +161,7 @@ public class FreestyleFreedom extends FreestyleMeter
         return null;
     }
 
+
     /**
      * getImplementationStatus - Get implementation status 
      * 
@@ -159,7 +171,7 @@ public class FreestyleFreedom extends FreestyleMeter
     @Override
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.NotAvailable;
+        return DeviceImplementationStatus.NotDoneButShouldBeDisplayed;
     }
 
 }

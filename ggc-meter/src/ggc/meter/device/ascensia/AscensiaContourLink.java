@@ -1,7 +1,6 @@
 package ggc.meter.device.ascensia;
 
 import ggc.meter.manager.MeterDevicesIds;
-import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -43,6 +42,7 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
     }
 
+
     /**
      * Constructor
      * 
@@ -52,6 +52,7 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
         super(cmp);
     }
+
 
     /**
      * Constructor
@@ -63,6 +64,7 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
         super(portName, writer);
     }
+
 
     /**
      * Constructor
@@ -76,6 +78,7 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
         super(comm_parameters, writer, da);
     }
 
+
     // ************************************************
     // *** Meter Identification Methods ***
     // ************************************************
@@ -87,8 +90,9 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
      */
     public String getName()
     {
-        return "ContourLink";
+        return "Contour Link";
     }
+
 
     /**
      * getIconName - Get Icon of meter
@@ -99,6 +103,7 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
         return "ascensia_contour.png";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -111,6 +116,7 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
         return MeterDevicesIds.METER_ASCENSIA_CONTOUR_LINK;
     }
 
+
     /**
      * getInstructions - get instructions for device
      * 
@@ -120,6 +126,7 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
         return "INSTRUCTIONS_ASCENSIA_CONTOUR";
     }
+
 
     /**
      * getComment - Get Comment for device 
@@ -139,6 +146,7 @@ public class AscensiaContourLink extends AscensiaMeter implements SerialPortEven
     {
         return "ggc.meter.device.ascensia.AscensiaContourLink";
     }
+
 
     /**
      * Maximum of records that device can store

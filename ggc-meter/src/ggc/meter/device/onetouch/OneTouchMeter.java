@@ -13,6 +13,7 @@ import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -66,12 +67,14 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     protected int info_tokens;
     protected String date_order;
 
+
     /**
      * Constructor
      */
     public OneTouchMeter()
     {
     }
+
 
     /**
      * Constructor for device manager
@@ -82,6 +85,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     {
         super(cmp);
     }
+
 
     /**
      * Constructor
@@ -94,6 +98,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     {
         this(comm_parameters, writer, DataAccessMeter.getInstance());
     }
+
 
     /**
      * Constructor
@@ -158,6 +163,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
     }
 
+
     /** 
      * getComment
      */
@@ -165,6 +171,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     {
         return null;
     }
+
 
     // DO
     /** 
@@ -175,6 +182,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         return DeviceImplementationStatus.Testing;
     }
 
+
     /** 
      * getInstructions
      */
@@ -182,6 +190,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     {
         return null;
     }
+
 
     /** 
      * readDeviceDataFull
@@ -256,10 +265,12 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
     }
 
+
     protected boolean isDeviceFinished()
     {
         return this.entries_current == this.entries_max;
     }
+
 
     /**
      * This is method for reading partitial data from device. All reading from actual device should be done from 
@@ -271,6 +282,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
     }
 
+
     /** 
      * This is method for reading configuration
      * 
@@ -280,6 +292,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -291,6 +304,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     {
     }
 
+
     protected boolean isDeviceStopped(String vals)
     {
         if (vals == null || this.reading_status == 1 && vals.length() == 0 || !this.device_running
@@ -299,6 +313,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
         return false;
     }
+
 
     protected void processEntry(String entry)
     {
@@ -336,11 +351,13 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
     }
 
+
     protected void setDeviceStopped()
     {
         this.device_running = false;
         this.outputWriter.endOutput();
     }
+
 
     private void readInfo(StringTokenizer strtok)
     {
@@ -399,11 +416,13 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
     }
 
+
     protected String getParameterValue(String val)
     {
         String d = val.substring(1, val.length() - 1);
         return d.trim();
     }
+
 
     protected void readBGEntry(StringTokenizer strtok, String entry)
     {
@@ -455,7 +474,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
             String res = this.getParameterValue(strtok.nextToken());
 
-            this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_PROCESSING_ENTRY") + (this.entries_current + 1));
+            this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_PROCESSING_ENTRY")
+                    + (this.entries_current + 1));
 
             // if ((res.contains("CHIGH")) || (res.contains("C ")))
             if (res.startsWith("C") || // control solution
@@ -495,9 +515,10 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
                         try
                         {
-                            mve.setBgValue(""
-                                    + dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MMOL, DataAccessPlugInBase.BG_MGDL,
- res), GlucoseUnitType.mg_dL);
+                            mve.setBgValue(
+                                ""
+                                        + dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MMOL,
+                                            DataAccessPlugInBase.BG_MGDL, res), GlucoseUnitType.mg_dL);
                         }
                         catch (Exception ex)
                         {}
@@ -521,6 +542,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         }
 
     }
+
 
     private ATechDate getDateTime(String date, String time)
     {
@@ -629,6 +651,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
     }
 
+
     // private void
 
     private void readingEntryStatus()
@@ -643,6 +666,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
     }
 
+
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
      *    normal progress status, but with some special devices we calculate progress through other means.
@@ -654,12 +678,14 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         return true;
     }
 
+
     /**
      * Returns short name for meter (for example OT Ultra, would return "Ultra")
      * 
      * @return short name of meter
      */
     public abstract String getShortName();
+
 
     /**
      * We don't use serial event for reading data, because process takes too long, we use serial event just 
@@ -703,6 +729,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
                 break;
         }
     }
+
 
     /*
      * @SuppressWarnings("unused")
@@ -799,6 +826,12 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     public int getCompanyId()
     {
         return MeterDevicesIds.COMPANY_LIFESCAN;
+    }
+
+
+    public DownloadSupportType getDownloadSupportType()
+    {
+        return DownloadSupportType.DownloadData;
     }
 
 }

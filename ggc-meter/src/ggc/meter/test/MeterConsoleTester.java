@@ -176,7 +176,7 @@ public class MeterConsoleTester
         // // asc_meter.setPort(portName);
 
         AscensiaUsbMeterHandler handler = new AscensiaUsbMeterHandler();
-        handler.readDeviceData(MeterDeviceDefinition.AscensiaUsb, null, new ConsoleOutputWriter());
+        handler.readDeviceData(MeterDeviceDefinition.AscensiaContourUsb, null, new ConsoleOutputWriter());
 
         // AscensiaContourUsbReader reader = new AscensiaContourUsbReader()
         // asc_meter.readDeviceDataFull();

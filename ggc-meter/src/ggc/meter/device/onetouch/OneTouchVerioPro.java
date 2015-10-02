@@ -59,6 +59,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     private int reading_status = 0;
     SimpleTimeZone empty_tzi;
 
+
     // 10c4:85a7
 
     /*
@@ -132,6 +133,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         this(portName, writer, DataAccessMeter.getInstance());
     }
 
+
     /**
      * Constructor
      * 
@@ -190,6 +192,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
     }
 
+
     /**
      * Constructor
      */
@@ -197,6 +200,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     {
         super();
     }
+
 
     /**
      * Constructor
@@ -220,6 +224,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         super(cmp);
     }
 
+
     /**
      * getName - Get Name of meter. 
      * 
@@ -230,6 +235,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         return "One Touch Verio Pro";
     }
 
+
     /**
      * getDeviceClassName - Get class name of device
      */
@@ -237,6 +243,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     {
         return "ggc.meter.device.onetouch.OneTouchVerioPro";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -249,6 +256,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         return MeterDevicesIds.METER_LIFESCAN_ONE_TOUCH_ULTRA_EASY;
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -258,6 +266,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     {
         return "ls_ot_ultra_mini.jpg";
     }
+
 
     /**
      * getInstructions - get instructions for device
@@ -269,6 +278,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         return "INSTRUCTIONS_LIFESCAN_OFF";
     }
 
+
     /**
      * Maximum of records that device can store
      */
@@ -276,6 +286,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     {
         return 500;
     }
+
 
     /**
      * getShortName - Get short name of meter. 
@@ -286,6 +297,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     {
         return "Ultra Easy";
     }
+
 
     /**
      * Get Command
@@ -319,6 +331,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
     String ack_pc = "02" + "06" + "07" + "03" + "FC" + "72";
 
+
     /** 
      * readDeviceDataFull
      */
@@ -346,7 +359,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
             System.out.println("PC-> read record 501 to receive nr");
 
-//            write(hex_utils.reconvert(rec_bef + "F5" + "01" + rec_af));
+            // write(hex_utils.reconvert(rec_bef + "F5" + "01" + rec_af));
 
             reta = this.readLineBytes();
             reta = hex_utils.getByteSubArray(reta, 6 + 5, 3, 2);
@@ -390,11 +403,13 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
     }
 
+
     private boolean isDeviceFinished()
     {
         // TODO Auto-generated method stub
         return false;
     }
+
 
     private boolean readDeviceInfo() throws Exception
     {
@@ -409,7 +424,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
         this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_SW_VERSION"));
 
-//        write(hex_utils.reconvert(read_sw_ver_create));
+        // write(hex_utils.reconvert(read_sw_ver_create));
 
         String sw_dd = tryToConvert(this.readLineBytes(), 6 + 6, 3, false);
 
@@ -440,7 +455,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
          * "03" + "9B" + "EA"; // ETX CRC-L CRC-H
          */
 
-//        write(hex_utils.reconvert(read_serial_nr));
+        // write(hex_utils.reconvert(read_serial_nr));
 
         String sn = tryToConvert(this.readLineBytes(), 6 + 5, 3, false);
 
@@ -456,6 +471,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
         return true;
     }
+
 
     private byte[] readLineBytes()
     {
@@ -473,22 +489,26 @@ public class OneTouchVerioPro extends AbstractUsbMeter
      */
     public static final int COMMAND_READ_SERIAL_NUMBER = 2;
 
+
     private void cmdDisconnectAcknowledge() throws IOException
     {
         System.out.println("PC-> Disconnect");
         String disconect = "02" + "06" + "08" + "03" + "C2" + "62";
 
-//        write(hex_utils.reconvert(disconect));
+        // write(hex_utils.reconvert(disconect));
 
-//        System.out.println("Disconected and acknowledged: " + this.readLine());
+        // System.out.println("Disconected and acknowledged: " +
+        // this.readLine());
     }
+
 
     private void cmdAcknowledge() throws IOException
     {
         // System.out.println("PC-> Acknowledge");
-//        write(hex_utils.reconvert(ack_pc));
+        // write(hex_utils.reconvert(ack_pc));
 
     }
+
 
     private boolean readEntry(int number) throws IOException
     {
@@ -585,7 +605,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         create_question += crc_ret.substring(0, 2).toUpperCase();
 
         // System.out.println("PC-> Req: " + create_question);
-//        write(hex_utils.reconvert(create_question));
+        // write(hex_utils.reconvert(create_question));
 
         /*
          * if (number==1)
@@ -661,6 +681,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         return true;
     }
 
+
     private void readingEntryStatus()
     {
         float proc_read = this.entries_current * 1.0f / this.entries_max;
@@ -675,10 +696,12 @@ public class OneTouchVerioPro extends AbstractUsbMeter
 
     boolean debug_crc = false;
 
+
     private int calculateCrc(char[] buffer)
     {
         return this.calculateCrc((short) 0xffff, buffer);
     }
+
 
     private int calculateCrc(int initial_crc, char[] buffer)
     {
@@ -710,6 +733,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         return crc;
     }
 
+
     private void crcDebug(String val)
     {
         if (this.debug_crc)
@@ -717,6 +741,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
             System.out.println(val);
         }
     }
+
 
     // public static final int CMD_GET_SOFTWARE_VERSION = 1;
 
@@ -743,6 +768,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         return ret;
     }
 
+
     /*
      * private byte[] getByteSubArray(byte[] arr, int start, int end)
      * {
@@ -760,6 +786,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         return false;
     }
 
+
     /**
      * 
      */
@@ -769,11 +796,13 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         this.outputWriter.endOutput();
     }
 
+
     protected String getParameterValue(String val)
     {
         String d = val.substring(1, val.length() - 1);
         return d.trim();
     }
+
 
     /**
      * getCompanyId - Get Company Id 
@@ -785,17 +814,20 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         return MeterDevicesIds.COMPANY_LIFESCAN;
     }
 
+
     public String getComment()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+
     public DeviceImplementationStatus getImplementationStatus()
     {
         // TODO Auto-generated method stub
-        return DeviceImplementationStatus.NotAvailable;
+        return DeviceImplementationStatus.NotDoneButShouldBeDisplayed;
     }
+
 
     public DeviceConnectionProtocol getConnectionProtocol()
     {

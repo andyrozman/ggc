@@ -2,6 +2,7 @@ package ggc.meter.manager.company;
 
 import ggc.meter.device.abbott.Freestyle;
 import ggc.meter.device.abbott.OptiumXceed;
+import ggc.meter.device.abbott.PrecisionXtra;
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.manager.DeviceImplementationStatus;
@@ -46,11 +47,12 @@ public class Abbott extends AbstractDeviceCompany
                 "Abbott", // company name (full)
                 "Abbott", // short company name
                 "ABBOTT_DESC", // company description
-                DeviceImplementationStatus.Planned, DataAccessMeter.getInstance()); // implementation
-                                                                                                   // status
+                DeviceImplementationStatus.Partitial, DataAccessMeter.getInstance()); // implementation
+                                                                                      // status
 
         addDevice(new Freestyle(this));
         addDevice(new OptiumXceed(this));
+        addDevice(new PrecisionXtra(this));
     }
 
 }

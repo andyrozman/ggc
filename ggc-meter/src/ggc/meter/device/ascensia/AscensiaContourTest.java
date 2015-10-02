@@ -1,5 +1,16 @@
 package ggc.meter.device.ascensia;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.StringTokenizer;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.TimeZoneUtil;
+
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
@@ -11,24 +22,12 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
-import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.StringTokenizer;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.data.ATechDate;
-import com.atech.utils.data.TimeZoneUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -73,12 +72,14 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     String text_def[] = null;
     boolean device_running;
 
+
     /**
      * Constructor 
      */
     public AscensiaContourTest()
     {
     }
+
 
     /**
      * Constructor 
@@ -90,6 +91,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
         super(cmp);
     }
 
+
     /**
      * Constructor
      * 
@@ -100,6 +102,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     {
         this(portName, writer, DataAccessMeter.getInstance());
     }
+
 
     /**
      * Constructor
@@ -171,6 +174,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
 
     }
 
+
     // ************************************************
     // *** Device Implemented methods ***
     // ************************************************
@@ -210,6 +214,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
         }
 
     }
+
 
     private void sendToProcess(String text)
     {
@@ -314,6 +319,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
 
     }
 
+
     private boolean isDeviceStopped(String vals)
     {
         if (!this.device_running)
@@ -337,6 +343,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
 
     }
 
+
     /**
      * Set Device Stopped
      */
@@ -345,6 +352,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
         this.device_running = false;
         this.outputWriter.endOutput();
     }
+
 
     /**
      * We don't use serial event for reading data, because process takes too long, we use serial event just 
@@ -389,6 +397,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
         }
     }
 
+
     protected void processData(String input)
     {
         input = ATDataAccessAbstract.replaceExpression(input, "||", "|_|");
@@ -402,6 +411,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
             readDeviceIdAndSettings(input);
         }
     }
+
 
     protected void readDeviceIdAndSettings(String input)
     {
@@ -431,6 +441,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
         this.outputWriter.writeDeviceIdentification();
 
     }
+
 
     protected void readDeviceId(String input)
     {
@@ -498,6 +509,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
 
     }
 
+
     protected void readDateInformation(String dt)
     {
 
@@ -523,6 +535,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     }
 
     boolean header_set = false;
+
 
     protected void readData(String input)
     {
@@ -581,14 +594,14 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
 
             if (unit.startsWith("mg/dL"))
             {
-                //mve.setBgUnit(OutputUtil.BG_MGDL);
+                // mve.setBgUnit(OutputUtil.BG_MGDL);
                 mve.setBgValue(val, GlucoseUnitType.mg_dL);
                 // this.m_output.writeBGData(atd, bg_value, OutputUtil.BG_MGDL);
                 // dv.setBG(DailyValuesRow.BG_MGDL, value);
             }
             else
             {
-                //mve.setBgUnit(OutputUtil.BG_MMOL);
+                // mve.setBgUnit(OutputUtil.BG_MMOL);
                 mve.setBgValue(getCorrectDecimal(val), GlucoseUnitType.mmol_L);
                 // this.m_output.writeBGData(atd, bg_value, OutputUtil.BG_MMOL);
                 // dv.setBG(DailyValuesRow.BG_MMOLL, value);
@@ -608,11 +621,13 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
 
     }
 
+
     protected String getCorrectDecimal(String input)
     {
         float f = Float.parseFloat(input);
         return DataAccessPlugInBase.Decimal1Format.format(f).replace(',', '.');
     }
+
 
     // ************************************************
     // *** Test ***
@@ -626,6 +641,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     {
     }
 
+
     /**
      * This is method for reading partitial data from device. All reading from actual device should be done from 
      * here. Reading can be done directly here, or event can be used to read data.
@@ -634,6 +650,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
+
 
     /** 
      * This is method for reading configuration
@@ -645,6 +662,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     {
     }
 
+
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do). 
@@ -655,6 +673,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     {
     }
 
+
     /**
      * getCompanyId - Get Company Id 
      * 
@@ -664,6 +683,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     {
         return MeterDevicesIds.COMPANY_ASCENSIA;
     }
+
 
     // ************************************************
     // *** Meter Identification Methods ***
@@ -679,6 +699,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
         return "Contour Test";
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -688,6 +709,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     {
         return "ascensia_contour.png";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -700,6 +722,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
         return MeterDevicesIds.METER_ASCENSIA_CONTOUR;
     }
 
+
     /**
      * getInstructions - get instructions for device
      * 
@@ -709,6 +732,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     {
         return "INSTRUCTIONS_ASCENSIA_CONTOUR";
     }
+
 
     /**
      * getComment - Get Comment for device 
@@ -720,16 +744,19 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
         return null;
     }
 
+
     /**
      * getImplementationStatus - Get implementation status 
      * 
      * @return implementation status as number
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
+
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return DeviceImplementationStatus.Done;
+        return DeviceImplementationStatus.NotAvailable;
     }
+
 
     /** 
      * Get Device ClassName
@@ -738,6 +765,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     {
         return "ggc.meter.device.ascensia.AscensiaContourTest";
     }
+
 
     /**
      * Maximum of records that device can store

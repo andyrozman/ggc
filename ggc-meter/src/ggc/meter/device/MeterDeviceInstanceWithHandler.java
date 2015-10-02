@@ -44,4 +44,5 @@ public class MeterDeviceInstanceWithHandler extends DeviceInstanceWithHandler im
     {
         return -1;
     }
+
 }

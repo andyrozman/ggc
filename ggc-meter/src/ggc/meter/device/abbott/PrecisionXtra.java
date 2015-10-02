@@ -1,13 +1,14 @@
 package ggc.meter.device.abbott;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import ggc.meter.manager.MeterDevicesIds;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,6 +42,7 @@ public class PrecisionXtra extends OptiumXceed
     @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog(PrecisionXtra.class);
 
+
     /**
      * Constructor
      */
@@ -48,6 +50,7 @@ public class PrecisionXtra extends OptiumXceed
     {
         super();
     }
+
 
     /**
      * Constructor for device manager
@@ -59,6 +62,7 @@ public class PrecisionXtra extends OptiumXceed
         super(cmp);
     }
 
+
     /**
      * Constructor
      * 
@@ -69,6 +73,7 @@ public class PrecisionXtra extends OptiumXceed
     {
         super(portName, writer);
     }
+
 
     /**
      * Constructor
@@ -82,6 +87,7 @@ public class PrecisionXtra extends OptiumXceed
         super(comm_parameters, writer, da);
     }
 
+
     /** 
      * Get Device ClassName
      */
@@ -90,6 +96,7 @@ public class PrecisionXtra extends OptiumXceed
     {
         return "ggc.meter.device.abbott.PrecisionXtra";
     }
+
 
     /**
      * getDeviceId - Get Device Id 
@@ -102,6 +109,7 @@ public class PrecisionXtra extends OptiumXceed
         return MeterDevicesIds.METER_ABBOTT_PRECISION_XTRA;
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -112,6 +120,7 @@ public class PrecisionXtra extends OptiumXceed
     {
         return "ab_precision_xtra.jpg";
     }
+
 
     /**
      * getName - Get Name of meter. 
@@ -124,6 +133,7 @@ public class PrecisionXtra extends OptiumXceed
         return "Abbott Precision Xtra";
     }
 
+
     /**
      * getInstructions - get instructions for device
      * 
@@ -134,6 +144,7 @@ public class PrecisionXtra extends OptiumXceed
     {
         return "INSTRUCTIONS_ABBOTT_OPTIUMXCEED";
     }
+
 
     /**
      * getComment - Get Comment for device 
@@ -146,6 +157,7 @@ public class PrecisionXtra extends OptiumXceed
         return null;
     }
 
+
     /**
      * getImplementationStatus - Get implementation status 
      * 
@@ -156,6 +168,12 @@ public class PrecisionXtra extends OptiumXceed
     public DeviceImplementationStatus getImplementationStatus()
     {
         return DeviceImplementationStatus.Done;
+    }
+
+
+    public DownloadSupportType getDownloadSupportType()
+    {
+        return DownloadSupportType.DownloadData;
     }
 
 }

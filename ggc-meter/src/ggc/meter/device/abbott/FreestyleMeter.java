@@ -1,24 +1,5 @@
 package ggc.meter.device.abbott;
 
-import ggc.core.data.defs.GlucoseUnitType;
-import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.device.AbstractSerialMeter;
-import ggc.meter.manager.MeterDevicesIds;
-import ggc.meter.manager.company.Abbott;
-import ggc.meter.util.DataAccessMeter;
-import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.DeviceImplementationStatus;
-import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.plugin.output.AbstractOutputWriter;
-import ggc.plugin.output.ConsoleOutputWriter;
-import ggc.plugin.output.OutputUtil;
-import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.SerialProtocol;
-import ggc.plugin.util.DataAccessPlugInBase;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-
 import java.io.IOException;
 
 import org.apache.commons.logging.Log;
@@ -26,6 +7,25 @@ import org.apache.commons.logging.LogFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.device.AbstractSerialMeter;
+import ggc.meter.manager.MeterDevicesIds;
+import ggc.meter.manager.company.Abbott;
+import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.output.AbstractOutputWriter;
+import ggc.plugin.output.ConsoleOutputWriter;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -65,13 +65,13 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     private static Log log = LogFactory.getLog(FreestyleMeter.class);
 
     protected boolean device_running = true;
-    // protected ArrayList<MeterValuesEntry> data = null;
-    // protected OutputWriter m_output_writer;
+
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     // public int meter_type = 20000;
     private int entries_max = 0;
     private int entries_current = 0;
     private int reading_status = 0;
+
 
     // private int info_tokens;
     // private String date_order;
@@ -83,6 +83,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     {
     }
 
+
     /**
      * Constructor for device manager
      *
@@ -92,6 +93,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     {
         super(cmp);
     }
+
 
     /**
      * Constructor
@@ -103,6 +105,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     {
         this(portName, writer, DataAccessMeter.getInstance());
     }
+
 
     /**
      * Constructor
@@ -168,6 +171,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     }
 
+
     /**
      * getComment
      */
@@ -175,6 +179,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     {
         return null;
     }
+
 
     // DO
     /**
@@ -185,6 +190,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         return DeviceImplementationStatus.Testing;
     }
 
+
     /**
      * getInstructions
      */
@@ -192,6 +198,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     {
         return null;
     }
+
 
     /**
      * readDeviceDataFull
@@ -244,15 +251,17 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         }
 
         // this.outputWriter.setStatus(100);
-        System.out.println("Reading finsihed");
+        System.out.println("Reading finished");
         super.close();
 
     }
+
 
     private boolean isDeviceFinished()
     {
         return this.entries_current == this.entries_max;
     }
+
 
     /**
      * This is method for reading partitial data from device. All reading from actual device should be done from
@@ -264,6 +273,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     }
 
+
     /**
      * This is method for reading configuration
      *
@@ -273,6 +283,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -311,6 +322,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     }
 
+
     protected String readLineDebug() throws IOException
     {
         String rdl = this.readLine();
@@ -318,6 +330,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
         return rdl;
     }
+
 
     private boolean isDeviceStopped(String vals)
     {
@@ -327,6 +340,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
         return false;
     }
+
 
     /**
      * Process BG Data
@@ -346,7 +360,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         }
 
         MeterValuesEntry mve = new MeterValuesEntry();
-        //mve.setBgUnit(OutputUtil.BG_MGDL);
+        // mve.setBgUnit(OutputUtil.BG_MGDL);
 
         // 227 Oct 11 2006 01:38 17 0x00
         String BGString = entry.substring(0, 5);
@@ -369,11 +383,13 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         readingEntryStatus();
     }
 
+
     protected void setDeviceStopped()
     {
         this.device_running = false;
         this.outputWriter.endOutput();
     }
+
 
     protected String getParameterValue(String val)
     {
@@ -383,6 +399,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     private static String months_en[] = { "", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct",
                                          "Nov", "Dec" };
+
 
     protected ATechDate getDateTime(String datetime)
     {
@@ -421,6 +438,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
 
     }
 
+
     // private void
 
     private void readingEntryStatus()
@@ -435,6 +453,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         this.outputWriter.setSpecialProgress((int) proc_total); // .setSubStatus(sub_status)
     }
 
+
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have
      *    normal progress status, but with some special devices we calculate progress through other means.
@@ -445,6 +464,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     {
         return true;
     }
+
 
     /**
      * Returns short name for meter (for example OT Ultra, would return "Ultra")
@@ -496,6 +516,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         }
     }
 
+
     /**
      * getCompanyId - Get Company Id
      *
@@ -505,6 +526,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     {
         return MeterDevicesIds.COMPANY_ABBOTT;
     }
+
 
     /**
      * @param args
@@ -530,6 +552,12 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
             fm.processBGData(element);
         }
 
+    }
+
+
+    public DownloadSupportType getDownloadSupportType()
+    {
+        return DownloadSupportType.DownloadData;
     }
 
 }

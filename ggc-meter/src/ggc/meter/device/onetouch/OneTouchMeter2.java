@@ -15,6 +15,7 @@ import ggc.meter.manager.MeterDevicesIds;
 import ggc.meter.manager.company.LifeScan;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -62,12 +63,14 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     private int reading_status = 0;
     SimpleTimeZone empty_tzi;
 
+
     /**
      * Constructor
      */
     public OneTouchMeter2()
     {
     }
+
 
     /**
      * Constructor for device manager
@@ -78,6 +81,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     {
         super(cmp);
     }
+
 
     /**
      * Constructor
@@ -90,6 +94,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     {
         this(comm_parameters, writer, DataAccessMeter.getInstance());
     }
+
 
     /**
      * Constructor
@@ -143,6 +148,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
 
     }
 
+
     /**
      * Constructor
      * 
@@ -152,6 +158,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     {
     }
 
+
     /** 
      * getComment
      */
@@ -159,6 +166,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     {
         return null;
     }
+
 
     /** 
      * getImplementationStatus
@@ -174,6 +182,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     String rec_af = "03" + "38" + "AA";
 
     String ack_pc = "02" + "06" + "07" + "03" + "FC" + "72";
+
 
     /** 
      * readDeviceDataFull
@@ -246,6 +255,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
 
     }
 
+
     private boolean readDeviceInfo() throws Exception
     {
 
@@ -317,6 +327,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
      */
     public static final int COMMAND_READ_SERIAL_NUMBER = 2;
 
+
     /**
      * Get Command
      * 
@@ -324,6 +335,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
      * @return
      */
     public abstract String getCommand(int command);
+
 
     private void cmdDisconnectAcknowledge() throws IOException
     {
@@ -335,12 +347,14 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         System.out.println("Disconected and acknowledged: " + this.readLine());
     }
 
+
     private void cmdAcknowledge() throws IOException
     {
         // System.out.println("PC-> Acknowledge");
         write(hex_utils.reconvert(ack_pc));
 
     }
+
 
     private boolean readEntry(int number) throws IOException
     {
@@ -513,6 +527,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         return true;
     }
 
+
     private void readingEntryStatus()
     {
         float proc_read = this.entries_current * 1.0f / this.entries_max;
@@ -527,10 +542,12 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
 
     boolean debug_crc = false;
 
+
     private int calculateCrc(char[] buffer)
     {
         return this.calculateCrc((short) 0xffff, buffer);
     }
+
 
     private int calculateCrc(int initial_crc, char[] buffer)
     {
@@ -562,6 +579,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         return crc;
     }
 
+
     private void crcDebug(String val)
     {
         if (this.debug_crc)
@@ -569,6 +587,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
             System.out.println(val);
         }
     }
+
 
     // public static final int CMD_GET_SOFTWARE_VERSION = 1;
 
@@ -584,6 +603,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     {
         return true;
     }
+
 
     /*
      * public void test_crc_c()
@@ -610,6 +630,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         return this.entries_current == this.entries_max;
     }
 
+
     private String tryToConvert(byte[] arr, int start, int end, boolean display)
     {
         // System.out.println();
@@ -631,6 +652,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         return ret;
     }
 
+
     /*
      * private byte[] getByteSubArray(byte[] arr, int start, int end)
      * {
@@ -648,6 +670,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
 
     }
 
+
     /** 
      * This is method for reading configuration
      * 
@@ -657,6 +680,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
@@ -668,6 +692,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     {
     }
 
+
     @SuppressWarnings("unused")
     private boolean isDeviceStopped(String vals)
     {
@@ -678,6 +703,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         return false;
     }
 
+
     /**
      * 
      */
@@ -687,11 +713,13 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         this.outputWriter.endOutput();
     }
 
+
     protected String getParameterValue(String val)
     {
         String d = val.substring(1, val.length() - 1);
         return d.trim();
     }
+
 
     // private void
 
@@ -701,6 +729,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
      * @return short name of meter
      */
     public abstract String getShortName();
+
 
     /**
      * We don't use serial event for reading data, because process takes too long, we use serial event just 
@@ -745,6 +774,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         }
     }
 
+
     /**
      * getCompanyId - Get Company Id 
      * 
@@ -753,6 +783,12 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     public int getCompanyId()
     {
         return MeterDevicesIds.COMPANY_LIFESCAN;
+    }
+
+
+    public DownloadSupportType getDownloadSupportType()
+    {
+        return DownloadSupportType.DownloadData;
     }
 
 }

@@ -14,6 +14,7 @@ import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.device.ascensia.impl.AscensiaDecoder;
 import ggc.meter.manager.company.AscensiaBayer;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -514,6 +515,12 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     public DeviceImplementationStatus getImplementationStatus()
     {
         return DeviceImplementationStatus.Done;
+    }
+
+
+    public DownloadSupportType getDownloadSupportType()
+    {
+        return DownloadSupportType.DownloadData;
     }
 
 }
