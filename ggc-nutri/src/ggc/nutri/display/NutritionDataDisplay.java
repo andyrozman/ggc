@@ -1,11 +1,10 @@
 package ggc.nutri.display;
 
-import ggc.nutri.db.datalayer.NutritionDefinition;
-import ggc.nutri.util.DataAccessNutri;
-
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.nutri.db.datalayer.NutritionDefinition;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,6 +40,7 @@ public class NutritionDataDisplay extends ATTableData
     private String weight_unit;
     private String decimal_places;
 
+
     /**
      * Constructor
      * 
@@ -50,6 +50,7 @@ public class NutritionDataDisplay extends ATTableData
     {
         super(ic);
     }
+
 
     /**
      * Constructor
@@ -70,6 +71,7 @@ public class NutritionDataDisplay extends ATTableData
 
     }
 
+
     /**
      * Constructor
      * 
@@ -83,6 +85,7 @@ public class NutritionDataDisplay extends ATTableData
         setNutritionDefinition(def);
         this.setAmount(value);
     }
+
 
     /**
      * Set Nutrition Definition
@@ -101,6 +104,7 @@ public class NutritionDataDisplay extends ATTableData
         this.decimal_places = def.getDecimal_places();
     }
 
+
     /**
      * Init
      * 
@@ -115,6 +119,7 @@ public class NutritionDataDisplay extends ATTableData
         init(col, col_size);
     }
 
+
     /**
      * Get Id
      * 
@@ -124,6 +129,7 @@ public class NutritionDataDisplay extends ATTableData
     {
         return this.id;
     }
+
 
     /**
      * Get Column Value
@@ -149,6 +155,7 @@ public class NutritionDataDisplay extends ATTableData
         }
     }
 
+
     /**
      * Get Name
      * 
@@ -158,6 +165,7 @@ public class NutritionDataDisplay extends ATTableData
     {
         return this.name;
     }
+
 
     /**
      * Get Amount
@@ -172,8 +180,7 @@ public class NutritionDataDisplay extends ATTableData
         float f = 0.0f;
         try
         {
-            f = Float.parseFloat(this.value.replace(ATDataAccessAbstract.false_decimal,
-                ATDataAccessAbstract.real_decimal));
+            f = Float.parseFloat(this.value.replace(",", "."));
         }
         catch (Exception ex)
         {
@@ -182,6 +189,7 @@ public class NutritionDataDisplay extends ATTableData
 
         return f;
     }
+
 
     /**
      * Get Weight Unit
@@ -193,6 +201,7 @@ public class NutritionDataDisplay extends ATTableData
         return this.weight_unit;
     }
 
+
     /**
      * Set Amount
      * 
@@ -203,6 +212,7 @@ public class NutritionDataDisplay extends ATTableData
         this.value = DataAccessNutri.getInstance().getDecimalHandler()
                 .getDecimalAsString(amount, Integer.parseInt(this.decimal_places));
     }
+
 
     /**
      * Get Save Data
