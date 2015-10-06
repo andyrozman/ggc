@@ -88,7 +88,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     public static boolean developer_version = false;
     private static Log log = LogFactory.getLog(MainFrame.class);
 
-
     /**
      * Static definitions (Look and Feel)
      */
@@ -387,7 +386,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void refreshMenus(boolean refresh_init)
     {
-        // System.out.println("Refresh Menus: ");
+        System.out.println("Refresh Menus: " + refresh_init);
         this.menuBar.removeAll();
 
         this.menuBar.add(this.menus.get("MENU_FILE"));
@@ -427,7 +426,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         this.menuBar.add(this.menus.get("MENU_PRINT"));
 
         GGCPluginType[] keys = { GGCPluginType.MeterToolPlugin, GGCPluginType.PumpToolPlugin,
-                                 GGCPluginType.CGMSToolPlugin, };
+                                GGCPluginType.CGMSToolPlugin, };
 
         for (GGCPluginType key : keys)
         {
@@ -528,8 +527,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         this.createToolbarButton("MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png", GGCToolbarType.PenInjection);
         toolbar.addSeparator(d);
 
-        this.createToolbarButton("MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png",
-            GGCToolbarType.PenInjection);
+        this.createToolbarButton("MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png", GGCToolbarType.PenInjection);
         this.createToolbarButton("MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png",
             GGCToolbarType.PenInjection);
         this.createToolbarButton("MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png",
@@ -777,6 +775,9 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
      */
     public void setMenusByDbLoad(int status)
     {
+
+        System.out.println("setMenusByDbLoad: " + status);
+
         if (status == StatusBar.DB_STOPPED)
         {
             // bgs menu
@@ -836,7 +837,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
              * this.actions.get("food_nutrition_2").setEnabled(true);
              * this.actions.get("food_meals").setEnabled(true);
              */
-            setSoftwareMode();
+            setSoftwareMode(true); // changed
         }
 
         setToolbarByDbLoad(status);
@@ -1019,6 +1020,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     }
 
+
     /*
      * private JMenuItem addMenuItem(JMenu menu, Action action) { JMenuItem item
      * = menu.add(action);
@@ -1032,7 +1034,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     /*
      * private void addToolBarSpacer() { toolBar.addSeparator(); }
      */
-
 
     // private JButton addToolBarButton(Action action, GGCToolbarType
     // toolbarType)
@@ -1235,7 +1236,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         }
         else // if ((command.equals("report_pdf_extended")) ||
-            if (command.equals("file_login") || command.equals("report_foodmenu_ext3") || command.equals("file_logout"))
+        if (command.equals("file_login") || command.equals("report_foodmenu_ext3") || command.equals("file_logout"))
         {
             featureNotImplemented(command, "0.7");
         }
@@ -1335,11 +1336,11 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         this.informationPanel.invalidatePanelsConstants();
     }
 
+
     /*
      * private JButton addToolBarButtonWithName(String cmd) { return
      * addToolBarButton(this.actions.get(cmd)); }
      */
-
 
     // class GGCAction extends AbstractAction
     // {
@@ -1558,6 +1559,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     /**
      * This refresh is used when configuration of plugin changes
      */
+    // FIXME
     public void refreshMenusPlugins()
     {
         this.refreshMenus(false);
@@ -1582,7 +1584,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         None;
 
         private static List<GGCToolbarType> activeValues;
-
 
         static
         {

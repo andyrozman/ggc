@@ -1,26 +1,24 @@
 package ggc.gui.panels.info;
 
-import ggc.core.data.CollectionValues;
-import ggc.core.plugins.GGCPluginType;
-import ggc.core.util.DataAccess;
-
-import java.awt.GridLayout;
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-import ggc.core.util.GGCSoftwareMode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.atech.misc.statistics.StatisticsCollection;
+import com.atech.misc.statistics.StatisticsItem;
+
+import ggc.core.data.CollectionValues;
+import ggc.core.plugins.GGCPluginType;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCSoftwareMode;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -50,6 +48,7 @@ import com.atech.misc.statistics.StatisticsCollection;
 
 public class StatisticsInfoPanel extends AbstractInfoPanel
 {
+
     private static final long serialVersionUID = 2075057980606217010L;
     GregorianCalendar endDate = null;
     GregorianCalendar startDate = null; // new Date(endDate.getTime() -
@@ -63,9 +62,11 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
     JLabel lblSumIns2, lblIns2Day, lblCountIns2, lblAvgIns2, lblIns2CountDay;
 
     JLabel lbl_sum_ins1_day_name, lbl_sum_ins1_name, lbl_sum_ins2_day_name, lbl_sum_ins2_name;
+    JLabel lblIns2Dose, lblIns2AvgDoseSize, lblIns2DosePerDay;
 
     JPanel PanelIns1, PanelIns2;
     DecimalFormat dec_format;
+
 
     /**
      * Constructor
@@ -97,6 +98,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         init();
         refreshInfo();
     }
+
 
     private void init()
     {
@@ -162,13 +164,13 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         PanelIns2.add(lbl_sum_ins2_day_name = new JLabel(m_ic.getMessage("INS_PER_DAY") + ":"));
         PanelIns2.add(lblIns2Day = new JLabel());
         lblIns2Day.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns2.add(new JLabel(m_ic.getMessage("DOSE") + ":"));
+        PanelIns2.add(lblIns2Dose = new JLabel(m_ic.getMessage("DOSE") + ":"));
         PanelIns2.add(lblCountIns2 = new JLabel());
         lblCountIns2.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns2.add(new JLabel(m_ic.getMessage("AVG_DOSE_SIZE") + ":"));
+        PanelIns2.add(lblIns2AvgDoseSize = new JLabel(m_ic.getMessage("AVG_DOSE_SIZE") + ":"));
         PanelIns2.add(lblAvgIns2 = new JLabel());
         lblAvgIns2.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns2.add(new JLabel(m_ic.getMessage("DOSES_PER_DAY") + ":"));
+        PanelIns2.add(lblIns2DosePerDay = new JLabel(m_ic.getMessage("DOSES_PER_DAY") + ":"));
         PanelIns2.add(lblIns2CountDay = new JLabel());
         lblIns2CountDay.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -179,6 +181,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         add(PanelIns1);
         add(PanelIns2);
     }
+
 
     /**
      * Get Tab Name
@@ -191,6 +194,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         return "StatisticInfo";
     }
 
+
     /**
      * Do Refresh - This method can do Refresh
      */
@@ -200,11 +204,10 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         if (!m_da.isDatabaseInitialized())
             return;
 
-        // System.out.println("Statictics::doRefresh()");
+        makeVisible();
 
         if (m_da.getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE)
         {
-
             log.debug("Statistics - Pen/Injection Mode");
 
             CollectionValues sV = new CollectionValues(startDate, endDate);
@@ -239,75 +242,88 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
             gcs[0] = startDate;
             gcs[1] = endDate;
 
-            Object obj = m_da.getPlugIn(GGCPluginType.PumpToolPlugin).getReturnObject(100, gcs);
+            Object pumpStatistics = m_da.getPlugIn(GGCPluginType.PumpToolPlugin).getReturnObject(100, gcs);
+            Object basalStatistics = m_da.getPlugIn(GGCPluginType.PumpToolPlugin).getReturnObject(101, gcs);
 
-            if (obj != null)
+            if ((pumpStatistics != null) && (pumpStatistics instanceof StatisticsCollection))
             {
-                if (obj instanceof StatisticsCollection)
-                {
-                    StatisticsCollection sc = (StatisticsCollection) obj;
+                StatisticsCollection sc = (StatisticsCollection) pumpStatistics;
 
-                    lblAvgBG.setText(dec_format.format(m_da.getDisplayedBG(sc.getItemStatisticsValue(13)))); // sV.getAvgBG()));
-                                                                                                             // //
-                                                                                                             // 13
-                    lblBGReadings.setText(sc.getItemStatisticValueAsStringInt(16)); // sV.getBGCount()
-                                                                                    // +
-                                                                                    // "");
-                                                                                    // //
-                                                                                    // 16
-                    lblBGReadingsDay.setText(DataAccess.Decimal2Format.format(sc.getItemStatisticsValue(16) / 7.0d)); // (sV.getBGCount()/7.0f)));
+                lblAvgBG.setText(dec_format.format(m_da.getDisplayedBG(sc.getItemStatisticsValue(13)))); // sV.getAvgBG()));
+                                                                                                         // //
+                                                                                                         // 13
+                lblBGReadings.setText(sc.getItemStatisticValueAsStringInt(16)); // sV.getBGCount()
+                                                                                // +
+                                                                                // "");
+                                                                                // //
+                                                                                // 16
+                lblBGReadingsDay.setText(DataAccess.Decimal2Format.format(sc.getItemStatisticsValue(16) / 7.0d)); // (sV.getBGCount()/7.0f)));
 
-                    lblSumBU.setText(dec_format.format(sc.getItemStatisticsValue(10))); // CH_SUM=10
-                                                                                        // //sV.getSumCH()));
-                    lblBUDay.setText(dec_format.format(sc.getItemStatisticsValue(10) / 7.0d)); // sV.getSumCHPerDay()));
-                    lblCountBU.setText(sc.getItemStatisticValueAsStringInt(12)); // MEALS=12
-                                                                                 // //
-                                                                                 // sV.getCHCount()
-                                                                                 // +
-                                                                                 // "");
-                    lblAvgBU.setText(dec_format.format(sc.getItemStatisticsValue(11))); // CH_AVG;
-                                                                                        // 11
-                                                                                        // sV.getAvgCH()));
-                    lblBUCountDay.setText(dec_format.format(sc.getItemStatisticsValue(12) / 7.0d)); // sV.getCHCountPerDay()));
+                lblSumBU.setText(dec_format.format(sc.getItemStatisticsValue(10))); // CH_SUM=10
+                                                                                    // //sV.getSumCH()));
+                lblBUDay.setText(dec_format.format(sc.getItemStatisticsValue(10) / 7.0d)); // sV.getSumCHPerDay()));
+                lblCountBU.setText(sc.getItemStatisticValueAsStringInt(12)); // MEALS=12
+                                                                             // //
+                                                                             // sV.getCHCount()
+                                                                             // +
+                                                                             // "");
+                lblAvgBU.setText(dec_format.format(sc.getItemStatisticsValue(11))); // CH_AVG;
+                                                                                    // 11
+                                                                                    // sV.getAvgCH()));
+                lblBUCountDay.setText(dec_format.format(sc.getItemStatisticsValue(12) / 7.0d)); // sV.getCHCountPerDay()));
 
-                    lblSumIns1.setText(dec_format.format(sc.getItemStatisticsValue(1))); // INS_SUM_BOLUS;
-                                                                                         // 1
-                                                                                         // //sV.getSumBolus()));
-                    lblIns1Day.setText(dec_format.format(sc.getItemStatisticsValue(1) / 7.0d)); // sV.getSumBolusPerDay()));
-                    lblCountIns1.setText(sc.getItemStatisticValueAsStringInt(7)); // INS_DOSES_BOLUS;
-                                                                                  // 7
-                                                                                  // //sV.getBolusCount()
-                                                                                  // +
-                                                                                  // "");
-                    lblAvgIns1.setText(dec_format.format(sc.getItemStatisticsValue(4))); // INS_AVG_BOLUS;
-                                                                                         // //
-                                                                                         // 4
-                                                                                         // //sV.getAvgBolus()));
-                    lblIns1CountDay.setText(dec_format.format(sc.getItemStatisticsValue(7) / 7.0d)); // //
-                                                                                                     // INS_DOSES_BOLUS;
-                                                                                                     // 7
-                                                                                                     // sV.getBolusCountPerDay()));
-
-                    lblSumIns2.setText("N/A");
-                    lblIns2Day.setText("N/A");
-                    lblCountIns2.setText("N/A");
-                    lblAvgIns2.setText("N/A");
-                    lblIns2CountDay.setText("N/A");
-                }
-                else
-                {
-                    log.error("We got wrong type returned: " + obj);
-                }
+                lblSumIns1.setText(dec_format.format(sc.getItemStatisticsValue(1))); // INS_SUM_BOLUS;
+                                                                                     // 1
+                                                                                     // //sV.getSumBolus()));
+                lblIns1Day.setText(dec_format.format(sc.getItemStatisticsValue(1) / 7.0d)); // sV.getSumBolusPerDay()));
+                lblCountIns1.setText(sc.getItemStatisticValueAsStringInt(7)); // INS_DOSES_BOLUS;
+                                                                              // 7
+                                                                              // //sV.getBolusCount()
+                                                                              // +
+                                                                              // "");
+                lblAvgIns1.setText(dec_format.format(sc.getItemStatisticsValue(4))); // INS_AVG_BOLUS;
+                                                                                     // //
+                                                                                     // 4
+                                                                                     // //sV.getAvgBolus()));
+                lblIns1CountDay.setText(dec_format.format(sc.getItemStatisticsValue(7) / 7.0d)); // //
+                                                                                                 // INS_DOSES_BOLUS;
 
             }
-            else
+
+            if ((basalStatistics != null) && (basalStatistics instanceof StatisticsItem))
             {
-                log.warn("  Nothing returned, error communicating with plugin");
+                StatisticsItem item = (StatisticsItem) basalStatistics;
+
+                lblSumIns2.setText(dec_format.format(item.getValueForItem(1)));
+                lblIns2Day.setText(dec_format.format(item.getValueForItem(2)));
+            }
+
+            if (basalStatistics == null && pumpStatistics == null)
+            {
+                log.error("Nothing returned, error communicating with Pump plugin.");
             }
 
         }
 
     }
+
+
+    private void makeVisible()
+    {
+        boolean penInjectionMode = m_da.getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE;
+
+        lblIns2Dose.setVisible(penInjectionMode);
+        lblIns2AvgDoseSize.setVisible(penInjectionMode);
+        lblIns2DosePerDay.setVisible(penInjectionMode);
+        lblCountIns2.setVisible(penInjectionMode);
+        lblAvgIns2.setVisible(penInjectionMode);
+        lblIns2CountDay.setVisible(penInjectionMode);
+
+        lbl_sum_ins2_day_name.setText(penInjectionMode ? //
+        m_ic.getMessage("INS_PER_DAY")
+                : m_ic.getMessage("AVG_INS_PER_DAY"));
+    }
+
 
     /**
      * Get Panel Id

@@ -60,69 +60,134 @@ GGC CGMS Tool
 
 
 
-II. SORTED BY VERSION  (Updated 2.5.2012)
+II. SORTED BY VERSION  (Updated 24.9.2015)
 ===========================================
 
-
-Version 0.6 [4.4.2015]
-------------
-
-* Plugin base:   - Device V2 Framework integration and tests
-
-
-* Pumps:  + Animas Pump
-
-* CGMS:   - Animas Pump/Dexcom
-          + Dexcom
-
-* Core:  - Stocks
-         - Db Update (via Hibernate method)
-
-
-
+We plan to change version to 1.0, when all entries specified with [1.0] are
+finished (Help for english, Upgrade, Db Tool and Support for multiple persons)
 
 
 Version 0.7 [25.12.2015]
-------------
+------------------------
 
-* Core:   
-    - Help (10 pages)
+0.6.1  (15.10.2015 ?)
+======
+
+Deploy: - Local Maven Repository
+        - checkin
+        - make release
+        - release Maven Repository
+        - web page
 
 
-* Pump Tool:
-    - Test Graphs
+0.7
+====
+
+(1)
+Help [1.0]: - prepare for Bob - 1.1
+            - send to Bob  - 1.2
+
+(2)
+Minimed: - comlink: read history data from device -2.1
+         - decode pump history data - 2.2
+         - carelink support - 2.3
+         - carelink: read pump data - 2.4
+         - carelink: read pump history data - 2.5
+
+(3)
+Basal Manager: - for reports
+
+Reports: - Daily Time Sheet: I (v1) - Basal Value Chnage (Basals in general)
+                             I (v2) - important pump events, colors
+                             II - I + CGMS graphs for each day
+
+(4)
+Startup: - fix startup creation (30%) - 5
 
 
-* Graphs: 
-     x New framework 2.0
-     - Graphs
-     - GRAPH EDITOR (Graph Framework 3.0)
-     - GRAPH EDITOR VIEWER 
-     - Predefined graphs for GE (we need to create some usable graphs for end users, and convert all old)
 
-* Db Tools Integration:  - InitDb [1.0]  
 
-* Added functionality for Nutrition Db: 
-    - Import data (selective)
-    - Import Entry
-    - Duplicate
-    - Create Nutrition
-    - Create Home Weight
-    - Column Sorting in meal
-    - Column Sorting in Food
-    - Glycemic data change
-    - Foods tree, we need to see about dynamic loading, since it takes a lot of memory to hold this information
 
-* Update (server) [1.0] 
+
+(Low)
+Refactoring: - DataAccess -> Languages
+             - DataAccess -> BG Conversion
+             - DataAccess (PlugIns also) -> Decimal Formaters (new way)
+
+
+DONE 0.7 (0.6.1):
+===================
+
+Plugins: - USB Hid Api integration
+
+Meters: - Ascensia USB support (through HID Api)
+
+BUGS: - Database can not be contacted
+
+Basal Manager:  - for daily Pump statics on main screen
+                - Device config switch
+                - Device selector sort (v1, v2)
+                - Data: - pump data
+                        - pump profile
+                - for daily statistics in day edit -1
+                - graph - 2
+
+Daily graph Pump: - add basal - 3
+Daily graph Pump: - add extended bolus - 4
+
+BUGS: - Daily graph P/I check/fix
+      - Daily graph Pump check/fix
+
+
+Version 0.8
+-------------
+
+Update System v3 [1.0]
     - Software updater Server
     - Db Updater Server
 
+
+Graphs: - Framework v2
+        - read XML definition
+        - graphs type support: - line
+                               - bar
+                               - ...
+        - CGMS Daily Graph V2
+
+HbA1c: - for Pump
+
+Minimed: - comlink: read CGMS data
+         - decode CGMS history data
+         - carelink: read CGMS data
+         - carelink: read CGMS history data
+         - add support for contour next link
+         - contourNextLink: read pump data
+         - contourNextLink: read pump history data
+         - contourNextLink: read CGMS data
+         - contourNextLink: read CGMS history data
+         - support 5306??
+
+DeviceSelector: - resize possibility (ZeroLayout2)
+                - color (just enabled - supported, disabled for now - not supported)
+
+Stocks: ...
+
+Pump: - Additional data: BP, Weight, Pills
+
+Pen/Injection: - Additional data: BP, Weight, Pills
+
+
+* Graphs: 
+     - Graphs
+     - GRAPH EDITOR (Graph Framework 3.0)
+     - Predefined graphs for GE (we need to create some usable graphs for end users, and convert all old)
+
+
+* Db Tools Integration:  - InitDb [1.0]  
+
 * Support for multiple persons [1.0] 
 
-* External foods database
 
-* Java Help - Write help pages II. (finish EN) [1.0] 
-            - Load from language jar  [1.0]
 
 * Update for Database IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -133,12 +198,27 @@ Bugs:
   again import)
 
 
+GGC 0.9
+=======
 
-We plan to change version to 1.0, when all entries specified with [1.0] are finished.
+* External foods database
+
+* Added functionality for Nutrition Db:
+    - Import data (selective)
+    - Import Entry
+    - Duplicate
+    - Create Nutrition
+    - Create Home Weight
+    - Column Sorting in meal
+    - Column Sorting in Food
+    - Glycemic data change
+    - Foods tree, we need to see about dynamic loading, since it takes a lot of memory to hold this information
 
 
-Version 0.8
--------------
+GGC 0.10 and later
+==================
+
+
 * GGC Little
 * Server Error Resolution (exceptions thrown by application, that help can be found on internet).
 * Activity Manager
@@ -503,6 +583,18 @@ X   - Nutrition Display
     - Meter through DeviceAbstract, test Serial
     - Pump through DeviceAbstract, test Spirit
     - CGMS through DeviceAbstract, test Dexcom
+
+* Pumps:  + Animas Pump
+
+* CGMS:   - Animas Pump/Dexcom
+          + Dexcom
+
+* Plugin base:   - Device V2 Framework integration and tests
+
+* Java Help - Write help pages II. (finish EN) [1.0] 
+            - Load from language jar  [1.0]
+
+
 
 
 

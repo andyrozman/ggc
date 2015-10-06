@@ -12,7 +12,8 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileView;
 
 import com.atech.help.HelpCapable;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 import ggc.gui.dialogs.PropertiesDialog;
 
 /**
@@ -128,12 +129,18 @@ public class PrefPrintingPane extends AbstractPrefOptionsPanel implements HelpCa
         fieldEmpty.setText(settings.getPrintEmptyValue());
         fieldPDFViewer.setText(settings.getExternalPdfVieverPath());
 
-        fieldLunchST.setText(ATDataAccessAbstract.getTimeString(settings.getPrintLunchStartTime()));
-        fieldDinnerST.setText(ATDataAccessAbstract.getTimeString(settings.getPrintDinnerStartTime()));
-        fieldNightST.setText(ATDataAccessAbstract.getTimeString(settings.getPrintNightStartTime()));
+        fieldLunchST.setText(getTimeString(settings.getPrintLunchStartTime()));
+        fieldDinnerST.setText(getTimeString(settings.getPrintDinnerStartTime()));
+        fieldNightST.setText(getTimeString(settings.getPrintNightStartTime()));
 
         this.checkUseExternalPdfViewer.setSelected(settings.getUseExternalPdfViewer());
         setUseExternalStatus();
+    }
+
+
+    private String getTimeString(int time)
+    {
+        return ATechDate.getTimeString(ATechDateType.TimeOnlyMin, time);
     }
 
 

@@ -23,6 +23,7 @@ import ggc.core.data.Converter_mgdL_mmolL;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.ExtendedDailyValueHandler;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.plugins.GGCPluginType;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
@@ -708,7 +709,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
 
         // String s = ch_str;
-        ch_str = ch_str.replace(ATDataAccessAbstract.false_decimal, ATDataAccessAbstract.real_decimal);
+        // ch_str = ch_str.replace(ATDataAccessAbstract.false_decimal,
+        // ATDataAccessAbstract.real_decimal);
+        ch_str = ch_str.replace(",", ".");
         // this.ftf_ch.setValue(dataAccess.getFloatValue(ch_str));
         this.spinner_arr[3].setValue(m_da.getFloatValue(ch_str));
     }
@@ -741,7 +744,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         if (f > 0.0)
         {
-            this.m_dailyValuesRow.setBG(1, f);
+            this.m_dailyValuesRow.setBG(GlucoseUnitType.mg_dL, f);
         }
 
         setInsulinValues();
