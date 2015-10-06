@@ -6,6 +6,37 @@
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
 <td width="150">2014-08-01</td>
+<td>Release 0.6.1</td>
+</tr>
+<tr>
+<td colspan="2">
+You are probably wondering if everything is OK, since new release is already here... And here comes
+the explanation... I planned new release at end of year (I usually try to make 2 releases in year, but
+mostly it happens that there is only one), so I made plan for features and I divided them into simple and hard
+tasks... Simple are tasks that are now in this release, this includes several bug fixes, basal statistics, fixed graphs
+for pump (now we have finally all data displayed... sorry no CGMS in Pump Daily Graph for now) and finally
+implementation of Contour (and Contour Next) meter, which is our first USB Hid Meter supported (this was also main
+reason for this release). <br>
+Now because of this release, it might happen that next release won't be at end of this year, but sometime in
+start of next year (probably february). My plan for this (0.7) release is to prepare support for Minimed Pump. While
+    there are some other tasks to be done, this is my main goal for next release, so when I have this support ready
+    (for ComLink cable and CareLink USB device and for start support will be done only for Pump part, so sorry no
+    CGMS data yet (coming in next release)) you can expect next release. If this is ready by end of year, then you
+    will get release by then, if I encounter some additional problems, then next release will be little later (with help
+    of decoding-carelink project (thanks Ben West) I managed to decode most of data, so everything that I need to do
+    is incorporate this results, with my current Minimed implementation. I hope this to be done in next few weeks
+    (perhaps months)).
+</tr>
+</table>
+
+<br><br>
+
+
+
+
+<table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+<tr class="newsheader">
+<td width="150">2014-08-01</td>
 <td>Release 0.6</td>
 </tr>
 <tr>

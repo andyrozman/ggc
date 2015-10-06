@@ -8,6 +8,7 @@ import ggc.plugin.data.enums.DeviceHandlerType;
 import ggc.plugin.data.enums.DevicePortParameterType;
 import ggc.plugin.data.enums.DeviceProgressStatus;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
+import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
@@ -52,26 +53,51 @@ public enum PumpDeviceDefinition implements DeviceDefinition
             DeviceHandlerType.InsuletOmnipodHandler, DevicePortParameterType.NoParameters,
             DeviceConnectionProtocol.FileImport, DeviceProgressStatus.Special, "", 0.1f, 0.05f),
 
-    // Minimed_508_508c(10001, "name", "pic", "instruction", null, ), //
-    // Minimed_508c, //
-    // Minimed_511, //
-    // Minimed_512_712, //
-    // // Minimed_712, // 513,
-    // // 514
-    // Minimed_515_715, //
-    // // Minimed_715, //
-    // Minimed_522_722, //
-    // // Minimed_722, //
-    // Minimed_523_723, //
-    // // Minimed_723, //
-    //
-    // Minimed_553_753_Revel, //
-    // // Minimed_753, //
-    // Minimed_554_754_Veo, //
-    // // Minimed_754, //
-    // // Minimed_Veo, //
-    //
-    // Minimed_640G,
+    // Minimed (not done yet)
+    Minimed_508_508c(10001, "name", "pic", "instruction", MinimedDeviceType.Minimed_508_508c,
+            DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f), //
+
+    Minimed_511(10003, "name", "pic", "instruction", MinimedDeviceType.Minimed_511,
+            DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f), //
+
+    Minimed_512_712(10004, "name", "pic", "instruction", MinimedDeviceType.Minimed_512_712,
+            DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f), //
+
+    Minimed_515_715(10005, "name", "pic", "instruction", MinimedDeviceType.Minimed_515_715,
+            DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f), //
+
+    Minimed_522_722(10006, "name", "pic", "instruction", MinimedDeviceType.Minimed_522_722,
+            DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f), //
+
+    Minimed_523_723(10007, "name", "pic", "instruction", MinimedDeviceType.Minimed_523_723,
+            DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f), //
+
+    Minimed_553_753_Revel(10008, "name", "pic", "instruction", MinimedDeviceType.Minimed_553_753_Revel,
+            DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f), //
+
+    Minimed_554_754_Veo(10009, "name", "pic", "instruction", MinimedDeviceType.Minimed_554_754_Veo,
+            DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f), //
+
+    Minimed_640G(10010, "name", "pic", "instruction", MinimedDeviceType.Minimed_640G,
+            DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f),
 
     ;
 

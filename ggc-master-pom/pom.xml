@@ -178,6 +178,17 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate</artifactId>
                 <version>${hibernate.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-collections</groupId>
+                        <artifactId>commons-collections</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -324,27 +335,60 @@
                 <version>${nrjavaserial-j15.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons-collections.version}</version>
+            </dependency>
+
+            <!-- slf4j API -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <!--
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>log4j-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            -->
+
+            <!-- slf4j over log4j -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <!-- Commons logging over slf4j -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
     <properties>
 
-        <!-- Modules versions -->
-        <ggc-core.version>0.6.0-SNAPSHOT</ggc-core.version>
-        <ggc-plugin-base.version>0.7.2-SNAPSHOT</ggc-plugin-base.version>
-        <ggc-meter-tool.version>2.2.0-SNAPSHOT</ggc-meter-tool.version>
-        <ggc-pump-tool.version>1.5.1-SNAPSHOT</ggc-pump-tool.version>
-        <ggc-cgms-tool.version>1.3.2-SNAPSHOT</ggc-cgms-tool.version>
-        <ggc-nutri-tool.version>1.3.5-SNAPSHOT</ggc-nutri-tool.version>
-
-        <ggc-desktop.version>0.6.0-SNAPSHOT</ggc-desktop.version>
+        <!-- GGC Modules versions -->
+        <ggc-core.version>0.6.1-SNAPSHOT</ggc-core.version>
+        <ggc-plugin-base.version>1.0.1-SNAPSHOT</ggc-plugin-base.version>
+        <ggc-meter-tool.version>2.3.0-SNAPSHOT</ggc-meter-tool.version>
+        <ggc-pump-tool.version>1.6.0-SNAPSHOT</ggc-pump-tool.version>
+        <ggc-cgms-tool.version>1.3.3-SNAPSHOT</ggc-cgms-tool.version>
+        <ggc-nutri-tool.version>1.3.6-SNAPSHOT</ggc-nutri-tool.version>
+        <ggc-desktop.version>0.6.1-SNAPSHOT</ggc-desktop.version>
         <ggc-help.version>0.2-SNAPSHOT</ggc-help.version>
 
         <!-- NON MAVEN -->
         <ggc-little.version>0.2.4-SNAPSHOT</ggc-little.version>
 
         <!-- Dependencies versions -->
-        <libusb4jwo.version>0.2</libusb4jwo.version>
         <ibm-compapi.version>1.3</ibm-compapi.version>
         <skinlf.version>6.7</skinlf.version>
         <log4j.version>1.2.16</log4j.version>
@@ -359,22 +403,27 @@
         <commons-lang.version>2.6</commons-lang.version>
         <javahelp.version>2.0.05</javahelp.version>
 
-        <!-- NEW THIS VERSION -->
+        <!-- NEW THIS VERSION 0.6 -->
 
         <icepdf-core.version>5.0.7</icepdf-core.version>
         <icepdf-viewer.version>5.0.7</icepdf-viewer.version>
         <jaxen.version>1.1.6</jaxen.version>
 
         <!-- NEW VERSION IN THIS VERSION -->
-        <atech-tools.version>0.7.12-SNAPSHOT</atech-tools.version>
+        <atech-tools.version>0.7.13-SNAPSHOT</atech-tools.version>
         <jna-j15.version>4.1.0</jna-j15.version>
         <hid4java-j15.version>0.3.1</hid4java-j15.version>
         <nrjavaserial-j15.version>3.9.3.1</nrjavaserial-j15.version>
+        <commons-collections.version>3.2.1</commons-collections.version>
+        <slf4j.version>1.7.12</slf4j.version>
+
+        <!-- Changed: CGMS, Core, Meter  -->
+
 
         <!-- Removed -->
         <jna.version>4.1.0-GGC</jna.version>
         <nrjavaserial.version>3.9.3-GGC</nrjavaserial.version>
-
+        <libusb4jwo.version>0.2</libusb4jwo.version>
 
         <maven.compiler.source>1.5</maven.compiler.source>
         <maven.compiler.target>1.5</maven.compiler.target>

@@ -48,6 +48,8 @@ public enum PlugInExceptionType
     TimeoutReadingData("Timeout reading data from device."), //
     DeviceErrorWritingToDevice("EXC_RECEIVER_ERROR_WRITING"), //
     DeviceNotFound("Device not found."), //
+    ErrorWithDeviceCommunication("Error when communicating with device. Exception: %s"), //
+    ErrorWithDeviceCommunicationDescription("Error when communicating with device [%s]. Exception: %s"), //
 
     // Communication Port
     CommunicationPortClosed("Communication Port is closed."), //

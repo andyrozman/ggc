@@ -113,7 +113,8 @@ public class PumpBasalManager
 
     public Map<String, BasalRatesDayDTO> getBasalRatesForRange(GregorianCalendar from, GregorianCalendar to)
     {
-        LOG.debug("Get BasalRates For Range: {} - {}", from, to);
+        LOG.debug("Get BasalRates For Range: {} - {}", DataAccessPump.getGregorianCalendarAsDateString(from),
+            DataAccessPump.getGregorianCalendarAsDateString(to));
         List<PumpValuesEntry> data = this.dataAccess.getDb().getRangePumpBasalValues(from, to);
 
         return prepareBasalRates(data, from, to);
