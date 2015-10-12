@@ -77,12 +77,12 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
     private int m_loadStatus = 0;
 
-
     /*
      * public ArrayList<MeterCompanyH> meter_companies = null; public
      * Hashtable<String,ArrayList<MeterH>> meters_by_cmp = null; public
      * Hashtable<String,MeterH> meters_full = null;
      */
+
 
     // ---
     // --- DB Settings
@@ -306,7 +306,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         logInfo("createDatabase", "Process");
         new SchemaExport(this.getHibernateConfiguration().getConfiguration()).create(true, true);
     }
-
 
     // *************************************************************
     // **** SETTINGS ****
@@ -553,6 +552,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * }
      */
 
+
     // *************************************************************
     // **** SETTINGS ****
     // *************************************************************
@@ -572,7 +572,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return this.hib_config;
     }
 
-
     /**
      * Get Db Cache
      * 
@@ -584,6 +583,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * return cache_db;
      * }
      */
+
 
     // *************************************************************
     // **** DATABASE INIT METHODS ****
@@ -641,8 +641,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
             Hashtable<String, Settings> table = new Hashtable<String, Settings>();
 
-            Query q = sess.createQuery("select cfg from ggc.core.db.hibernate.SettingsH as cfg where cfg.person_id="
-                    + m_da.current_user_id);
+            Query q = sess.createQuery(
+                "select cfg from ggc.core.db.hibernate.SettingsH as cfg where cfg.person_id=" + m_da.current_user_id);
 
             Iterator it = q.iterate();
 
@@ -676,9 +676,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
             Hashtable<String, String> table = new Hashtable<String, String>();
 
-            Query q = sess
-                    .createQuery("SELECT cfg FROM ggc.core.db.hibernate.SettingsH as cfg WHERE cfg.key LIKE 'EXTENDED_RATIO%' AND cfg.person_id="
-                            + m_da.current_user_id);
+            Query q = sess.createQuery(
+                "SELECT cfg FROM ggc.core.db.hibernate.SettingsH as cfg WHERE cfg.key LIKE 'EXTENDED_RATIO%' AND cfg.person_id="
+                        + m_da.current_user_id);
 
             Iterator<SettingsH> it = q.iterate();
 
@@ -937,9 +937,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             String sDay = sdf.format(day.getTime());
 
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + sDay
-                        + "0000 AND dv.dt_info <= " + sDay + "2359 ORDER BY dv.dt_info");
+            Query q = getSession().createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv "
+                    + "WHERE dv.dt_info >=  " + sDay + "0000 AND dv.dt_info <= " + sDay + "2359 ORDER BY dv.dt_info");
 
             Iterator it = q.list().iterator();
 
@@ -992,9 +991,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
             logDebug("getDayStatsRange()", sDay + " - " + eDay);
 
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + sDay
-                        + "0000 AND dv.dt_info <= " + eDay + "2359 ORDER BY dv.dt_info");
+            Query q = getSession().createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv "
+                    + "WHERE dv.dt_info >=  " + sDay + "0000 AND dv.dt_info <= " + eDay + "2359 ORDER BY dv.dt_info");
 
             Iterator it = q.list().iterator();
 
@@ -1047,12 +1045,13 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
             logDebug("getDayStatsRange()", sDay + " - " + eDay);
 
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + sDay
-                        + "0000 AND dv.dt_info <= " + eDay + "2359 ORDER BY dv.dt_info");
+            Query q = getSession().createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv "
+                    + "WHERE dv.dt_info >=  " + sDay + "0000 AND dv.dt_info <= " + eDay + "2359 ORDER BY dv.dt_info");
 
-            System.out.println("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info <=  "
-                    + sDay + "0000 AND dv.dt_info <= " + eDay + "2359 ORDER BY dv.dt_info");
+            // System.out.println("SELECT dv from " +
+            // "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info <= "
+            // + sDay + "0000 AND dv.dt_info <= " + eDay + "2359 ORDER BY
+            // dv.dt_info");
 
             Iterator it = q.list().iterator();
 
@@ -1096,9 +1095,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         {
             String days = year + "" + ATDataAccessAbstract.getLeadingZero(month, 2);
 
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + days
-                        + "010000 AND dv.dt_info <= " + days + "312359 ORDER BY dv.dt_info");
+            Query q = getSession()
+                    .createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  "
+                            + days + "010000 AND dv.dt_info <= " + days + "312359 ORDER BY dv.dt_info");
 
             Iterator it = q.list().iterator();
 
@@ -1141,9 +1140,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         try
         {
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + from
-                        + "0000 AND dv.dt_info <= " + till + "2359 ORDER BY dv.dt_info");
+            Query q = getSession().createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv "
+                    + "WHERE dv.dt_info >=  " + from + "0000 AND dv.dt_info <= " + till + "2359 ORDER BY dv.dt_info");
 
             Iterator it = q.list().iterator();
 
@@ -1353,9 +1351,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
             {
                 try
                 {
-                    Query q = getSession().createQuery(
-                        "SELECT dv from ggc.core.db.hibernate.StocktakingH as dv " + "where datetime="
-                                + m_da.getLongValue(o));
+                    Query q = getSession().createQuery("SELECT dv from ggc.core.db.hibernate.StocktakingH as dv "
+                            + "where datetime=" + m_da.getLongValue(o));
 
                     Iterator it = q.list().iterator();
 
@@ -1393,7 +1390,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
             // Query q = getSession().createQuery(
             // "SELECT stt from ggc.core.db.hibernate.StocktakingH as stt " +
             // "WHERE datetime = " +
-            // "( SELECT max(datetime) FROM ggc.core.db.hibernate.StocktakingH )");
+            // "( SELECT max(datetime) FROM ggc.core.db.hibernate.StocktakingH
+            // )");
             //
             // Iterator it = q.list().iterator();
             //
@@ -1464,7 +1462,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         return false;
     }
-
 
     // // OLD ONE
     // public ArrayList<StocksH> getStocks(int type, int history)
@@ -1558,6 +1555,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     // **** TOOLS Db METHODS ****
     // *************************************************************
 
+
     /*
      * <class name="ggc.core.db.hibernate.GlucoValueH" table="data_dayvalues" >
      * <id name="id" type="long" unsaved-value="0">
@@ -1587,9 +1585,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
             logDebug("getMeterValues()", "Process");
 
-            Query q = getSession(2).createQuery(
-                "SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + "WHERE (dv.bg>0) and person_id="
-                        + m_da.current_user_id + " ORDER BY dv.dt_info");
+            Query q = getSession(2).createQuery("SELECT dv from ggc.core.db.hibernate.DayValueH as dv "
+                    + "WHERE (dv.bg>0) and person_id=" + m_da.current_user_id + " ORDER BY dv.dt_info");
 
             // System.out.println("Found elements: " + q.list().size());
 
@@ -1624,10 +1621,10 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return !(m_loadStatus == DB_STARTED);
     }
 
-
     // *************************************************************
     // **** S T O C K S ****
     // *************************************************************
+
 
     // *************************************************************
     // **** U T I L S ****

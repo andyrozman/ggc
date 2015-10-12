@@ -15,10 +15,10 @@ import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.util.DataAccess;
-import ggc.core.util.GGCProperties;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -70,7 +70,10 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     private boolean changed = false;
     DayValueH m_dv = null;
     DataAccess m_da = DataAccess.getInstance();
-    GGCProperties props = m_da.getSettings();
+    // GGCProperties props = m_da.getSettings();
+
+    ConfigurationManagerWrapper configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
+
     boolean debug = false;
     HashMap<String, String> ht_extended = new HashMap<String, String>();
 
@@ -343,11 +346,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         if (debug)
         {
-            System.out.println("getBg [type=" + props.getBG_unit() + "]");
+            System.out.println("getBg [type=" + configurationManagerWrapper.getGlucoseUnit().name() + "]");
             System.out.println("getBg [internal_value=" + this.bg + "]");
         }
 
-        if (props.getBG_unit() == 2)
+        if (configurationManagerWrapper.getGlucoseUnit() == GlucoseUnitType.mmol_L)
         {
             float v = m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
 
@@ -382,11 +385,11 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     {
         if (debug)
         {
-            System.out.println("getBgAsString [type=" + props.getBG_unit() + "]");
+            System.out.println("getBgAsString [type=" + configurationManagerWrapper.getGlucoseUnit().name() + "]");
             System.out.println("getBgAsString [internal_value=" + this.bg + "]");
         }
 
-        if (props.getBG_unit() == 2)
+        if (configurationManagerWrapper.getGlucoseUnit() == GlucoseUnitType.mmol_L)
         {
             float v = m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
 
@@ -439,6 +442,27 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             return bg;
         else
             return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+
+    }
+
+
+    /**
+     * Get BG
+     *
+     * @param type
+     * @return
+     */
+    public float getBG(GlucoseUnitType type)
+    {
+        if (debug)
+        {
+            System.out.println("Internal value: " + this.bg);
+        }
+
+        if (type == GlucoseUnitType.mg_dL)
+            return bg;
+        else
+            return m_da.getBGValueByTypeFromDefault(GlucoseUnitType.mmol_L, bg);
 
     }
 
@@ -774,22 +798,21 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     public float getBasalInsulin()
     {
-        GGCProperties gp = DataAccess.getInstance().getSettings();
         float sum = 0.0f;
 
-        if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BASAL)
+        if (configurationManagerWrapper.getIns1Type() == DataAccess.INSULIN_DOSE_BASAL)
         {
             sum += getDecimalValueAsFloat(this.ins1,
                 this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS1));
         }
 
-        if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BASAL)
+        if (configurationManagerWrapper.getIns2Type() == DataAccess.INSULIN_DOSE_BASAL)
         {
             sum += getDecimalValueAsFloat(this.ins2,
                 this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS2));
         }
 
-        if (gp.getIns3Type() == DataAccess.INSULIN_DOSE_BASAL)
+        if (configurationManagerWrapper.getIns3Type() == DataAccess.INSULIN_DOSE_BASAL)
         {
             sum += this.getIns3();
         }
@@ -800,22 +823,21 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     public float getBolusInsulin()
     {
-        GGCProperties gp = DataAccess.getInstance().getSettings();
         float sum = 0.0f;
 
-        if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BOLUS)
+        if (configurationManagerWrapper.getIns1Type() == DataAccess.INSULIN_DOSE_BOLUS)
         {
             sum += getDecimalValueAsFloat(this.ins1,
                 this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS1));
         }
 
-        if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BOLUS)
+        if (configurationManagerWrapper.getIns2Type() == DataAccess.INSULIN_DOSE_BOLUS)
         {
             sum += getDecimalValueAsFloat(this.ins2,
                 this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS2));
         }
 
-        if (gp.getIns3Type() == DataAccess.INSULIN_DOSE_BOLUS)
+        if (configurationManagerWrapper.getIns3Type() == DataAccess.INSULIN_DOSE_BOLUS)
         {
             sum += this.getIns3();
         }
@@ -826,24 +848,23 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     public int getBasalInsulinCount()
     {
-        GGCProperties gp = DataAccess.getInstance().getSettings();
         int count = 0;
 
-        if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BASAL)
+        if (configurationManagerWrapper.getIns1Type() == DataAccess.INSULIN_DOSE_BASAL)
             if (getDecimalValueAsFloat(this.ins1,
                 this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS1)) > 0)
             {
                 count++;
             }
 
-        if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BASAL)
+        if (configurationManagerWrapper.getIns2Type() == DataAccess.INSULIN_DOSE_BASAL)
             if (getDecimalValueAsFloat(this.ins2,
                 this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS2)) > 0)
             {
                 count++;
             }
 
-        if (gp.getIns3Type() == DataAccess.INSULIN_DOSE_BASAL)
+        if (configurationManagerWrapper.getIns3Type() == DataAccess.INSULIN_DOSE_BASAL)
             if (this.getIns3() > 0)
             {
                 count++;
@@ -855,24 +876,23 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
     public int getBolusInsulinCount()
     {
-        GGCProperties gp = DataAccess.getInstance().getSettings();
         int count = 0;
 
-        if (gp.getIns1Type() == DataAccess.INSULIN_DOSE_BOLUS)
+        if (configurationManagerWrapper.getIns1Type() == DataAccess.INSULIN_DOSE_BOLUS)
             if (getDecimalValueAsFloat(this.ins1,
                 this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS1)) > 0)
             {
                 count++;
             }
 
-        if (gp.getIns2Type() == DataAccess.INSULIN_DOSE_BOLUS)
+        if (configurationManagerWrapper.getIns2Type() == DataAccess.INSULIN_DOSE_BOLUS)
             if (getDecimalValueAsFloat(this.ins2,
                 this.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS2)) > 0)
             {
                 count++;
             }
 
-        if (gp.getIns3Type() == DataAccess.INSULIN_DOSE_BOLUS)
+        if (configurationManagerWrapper.getIns3Type() == DataAccess.INSULIN_DOSE_BOLUS)
             if (this.getIns3() > 0)
             {
                 count++;

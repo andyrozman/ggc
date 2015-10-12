@@ -191,33 +191,6 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
     }
 
 
-    /**
-     * Load data
-     */
-    /*
-     * private void load()
-     * {
-     * this.dtf_ch_ins.setValue(this.dataAccess.getSettings().getRatio_CH_Insulin
-     * ());
-     * this.dtf_ins_bg.setValue(this.dataAccess.getSettings().getRatio_BG_Insulin
-     * ());
-     * calculateRatio(RATIO_BG_CH);
-     * }
-     */
-
-    /**
-     * Save data
-     */
-    @SuppressWarnings("unused")
-    private void save()
-    {
-        this.m_da.getSettings().setRatio_CH_Insulin(m_da.getFloatValue(this.dtf_ch_ins.getCurrentValue()));
-        this.m_da.getSettings().setRatio_BG_Insulin(m_da.getFloatValue(this.dtf_ins_bg.getCurrentValue()));
-
-        this.m_da.getSettings().save();
-    }
-
-
     private void init()
     {
 
@@ -235,21 +208,19 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         // lbl.setBorder(new LineBorder(Color.black, 1));
         lbl.setVerticalAlignment(SwingConstants.CENTER);
 
-        dtf_ch_ins = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180 + space_between_text_el, y_pos, 80,
-            25, this);
+        dtf_ch_ins = ATSwingUtils.getNumericTextField(3, 2, 0.0f, 180 + space_between_text_el, y_pos, 80, 25, this);
         dtf_ch_ins.addFocusListener(this);
         dtf_ch_ins.addKeyListener(this);
 
         y_pos += 30 + this.space_between_lines;
         y_pos_txt += 30 + this.space_between_lines;
 
-        lbl = ATSwingUtils.getLabel(m_ic.getMessage("SENSITIVITY_FACTOR_LONG") + ":", left_position, y_pos_txt, 150,
-            35, this, ATSwingUtils.FONT_NORMAL_BOLD);
+        lbl = ATSwingUtils.getLabel(m_ic.getMessage("SENSITIVITY_FACTOR_LONG") + ":", left_position, y_pos_txt, 150, 35,
+            this, ATSwingUtils.FONT_NORMAL_BOLD);
         // lbl.setBorder(new LineBorder(Color.blue, 1));
         lbl.setVerticalAlignment(SwingConstants.CENTER);
 
-        dtf_ins_bg = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180 + space_between_text_el, y_pos, 80,
-            25, this);
+        dtf_ins_bg = ATSwingUtils.getNumericTextField(3, 2, 0.0f, 180 + space_between_text_el, y_pos, 80, 25, this);
         dtf_ins_bg.addFocusListener(this);
         dtf_ins_bg.addKeyListener(this);
 
@@ -261,8 +232,7 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         // lbl.setBorder(new LineBorder(Color.red, 1));
         lbl.setVerticalAlignment(SwingConstants.CENTER);
 
-        dtf_bg_ch = ATSwingUtils.getNumericTextField(3, 2, new Float(0.0f), 180 + space_between_text_el, y_pos, 80, 25,
-            this);
+        dtf_bg_ch = ATSwingUtils.getNumericTextField(3, 2, 0.0f, 180 + space_between_text_el, y_pos, 80, 25, this);
         dtf_bg_ch.addFocusListener(this);
         dtf_bg_ch.addKeyListener(this);
 
@@ -464,13 +434,13 @@ public class RatioEntryPanel extends JPanel implements ActionListener, KeyListen
         this.dtf_bg_ch.setValue(val);
     }
 
-
     /*
      * private void cmdOk()
      * {
      * this.save();
      * }
      */
+
 
     /*
      * public boolean isFieldSet(String text)

@@ -25,6 +25,7 @@ import com.atech.utils.logs.RedirectScreen;
 
 import ggc.core.data.*;
 import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.db.GGCDb;
 import ggc.core.db.GGCDbLoader;
 import ggc.core.db.datalayer.DailyValue;
@@ -101,10 +102,6 @@ public class DataAccessDoc extends DataAccess
     private HbA1cValues m_HbA1c = null;
     private DailyValues m_dvalues = null;
     private WeeklyValues m_dRangeValues = null;
-
-    private GGCProperties m_settings = null;
-    private DbToolApplicationGGC m_configFile = null;
-    private ConfigurationManager m_cfgMgr = null;
 
     /**
      * Decimal with zero decimals
@@ -201,7 +198,6 @@ public class DataAccessDoc extends DataAccess
 
     private int current_person_id = 1;
 
-
     // NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
 
     /**
@@ -212,6 +208,7 @@ public class DataAccessDoc extends DataAccess
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
+
 
     // Constructor: DataAccess
     /**
@@ -255,9 +252,10 @@ public class DataAccessDoc extends DataAccess
 
         // System.out.println("configuratioon manager");
         m_cfgMgr = new ConfigurationManager(this);
+        this.configurationManagerWrapper = new ConfigurationManagerWrapper(m_cfgMgr);
 
         // System.out.println("m_settings");
-        this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
+        this.m_settings = new GGCProperties(this, this.m_configFile, configurationManagerWrapper);
 
         // System.out.println("m_set: " + this.m_settings);
 
@@ -329,7 +327,8 @@ public class DataAccessDoc extends DataAccess
 
         if (s_da == null)
         {
-            // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  "
+            // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // "
             // + main);
             // GGCDb db = new GGCDb();
 
@@ -345,7 +344,6 @@ public class DataAccessDoc extends DataAccess
 
         return s_da;
     }
-
 
     /**
      * Create Instance
@@ -369,6 +367,7 @@ public class DataAccessDoc extends DataAccess
     /*
      * static public DataAccess getInstance() { return dataAccess; }
      */
+
 
     // Method: deleteInstance
     /**
@@ -614,40 +613,41 @@ public class DataAccessDoc extends DataAccess
     /** 
      * Get BackupRestoreCollection
      */
-    @Override
-    public BackupRestoreCollection getBackupRestoreCollection()
-    {
-        BackupRestoreCollection brc_full = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
-        brc_full.addNodeChild(new DailyValue(this.m_i18n));
-
-        BackupRestoreCollection brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
-        brc1.addNodeChild(new Settings(this.m_i18n));
-        brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
-        brc_full.addNodeChild(brc1);
-
-        // for(int i=0; i<)
-
-        for (Enumeration<String> en = this.plugins.keys(); en.hasMoreElements();)
-        {
-            PlugInClient pic = this.plugins.get(en.nextElement());
-
-            if (pic.isBackupRestoreEnabled())
-            {
-                brc_full.addNodeChild(pic.getBackupObjects());
-            }
-
-            /*
-             * BackupRestoreCollection brc = pic.getBackupObjects();
-             * if (brc!=null)
-             * brc_full.addNodeChild(brc);
-             */
-        }
-
-        return brc_full;
-
-        // return null;
-    }
-
+    // @Override
+    // public BackupRestoreCollection getBackupRestoreCollection()
+    // {
+    // BackupRestoreCollection brc_full = new
+    // BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
+    // brc_full.addNodeChild(new DailyValue(this.m_i18n));
+    //
+    // BackupRestoreCollection brc1 = new
+    // BackupRestoreCollection("CONFIGURATION", this.m_i18n);
+    // brc1.addNodeChild(new Settings(this.m_i18n));
+    // brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
+    // brc_full.addNodeChild(brc1);
+    //
+    // // for(int i=0; i<)
+    //
+    // for (Enumeration<String> en = this.plugins.keys(); en.hasMoreElements();)
+    // {
+    // PlugInClient pic = this.plugins.get(en.nextElement());
+    //
+    // if (pic.isBackupRestoreEnabled())
+    // {
+    // brc_full.addNodeChild(pic.getBackupObjects());
+    // }
+    //
+    // /*
+    // * BackupRestoreCollection brc = pic.getBackupObjects();
+    // * if (brc!=null)
+    // * brc_full.addNodeChild(brc);
+    // */
+    // }
+    //
+    // return brc_full;
+    //
+    // // return null;
+    // }
 
     /**
      * Load Graph Config Properties
@@ -655,7 +655,7 @@ public class DataAccessDoc extends DataAccess
     @Override
     public void loadGraphConfigProperties()
     {
-        this.graph_config = this.m_settings;
+        // this.graph_config = this.m_settings;
     }
 
 
@@ -936,174 +936,6 @@ public class DataAccessDoc extends DataAccess
     // ****** BG Measurement Type *****
     // ********************************************************
 
-    /**
-     * BG: mg/dL
-     */
-    public static final int BG_MGDL = 1;
-
-    /**
-     * BG: mmol/L
-     */
-    public static final int BG_MMOL = 2;
-
-
-    /**
-     * Get Measurment Type
-     * 
-     * @return
-     */
-    @Override
-    public int getBGMeasurmentType()
-    {
-        return this.m_settings.getBG_unit();
-    }
-
-
-    // String[] bg_types = { "", "mg/dL", "mmol/L"};
-
-    /**
-     * Get Measurment Type
-     * 
-     * @return
-     */
-    @Override
-    public String getBGMeasurmentTypeString()
-    {
-        return this.bg_units[getBGMeasurmentType()];
-    }
-
-
-    /**
-     * Set Measurment Type
-     * 
-     * @param type 
-     */
-    @Override
-    public void setBGMeasurmentType(int type)
-    {
-
-        // this.m_BG_unit = type;
-    }
-
-    private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
-
-    private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
-
-
-    /**
-     * Depending on the return value of <code>getBGMeasurmentType()</code>,
-     * either return the mg/dl or the mmol/l value of the database's value.
-     * Default is mg/dl.
-     * 
-     * @param dbValue
-     *            - The database's value (in float)
-     * @return the BG in either mg/dl or mmol/l
-     */
-    @Override
-    public float getDisplayedBG(float dbValue)
-    {
-        switch (this.getBGMeasurmentType())
-        {
-            case BG_MMOL:
-                return this.converters.get("BG").getValueDifferent(Converter_mgdL_mmolL.UNIT_mg_dL, dbValue);
-                // this POS should return a float rounded to 3 decimal places,
-                // if I understand the docu correctly
-                // return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR, new
-                // MathContext(3, RoundingMode.HALF_UP))
-                // .floatValue());
-            case BG_MGDL:
-            default:
-                return dbValue;
-        }
-    }
-
-
-    /**
-     * Get BG Value
-     * 
-     * @param bg_value
-     * @return
-     */
-    @Override
-    public float getBGValue(float bg_value)
-    {
-        switch (this.getBGMeasurmentType())
-        {
-            case BG_MMOL:
-                return bg_value * MGDL_TO_MMOL_FACTOR;
-            case BG_MGDL:
-            default:
-                return bg_value;
-        }
-
-    }
-
-
-    /**
-     * Get BG Value By Type
-     * 
-     * @param type
-     * @param bg_value
-     * @return
-     */
-    @Override
-    public float getBGValueByType(int type, float bg_value)
-    {
-        switch (type)
-        {
-            case BG_MMOL:
-                return bg_value * MGDL_TO_MMOL_FACTOR;
-            case BG_MGDL:
-            default:
-                return bg_value;
-        }
-
-    }
-
-
-    /**
-     * Get BG Value By Type
-     * 
-     * @param input_type
-     * @param output_type
-     * @param bg_value
-     * @return
-     */
-    @Override
-    public float getBGValueByType(int input_type, int output_type, float bg_value)
-    {
-
-        if (input_type == output_type)
-            return bg_value;
-        else
-        {
-            if (output_type == DataAccessDoc.BG_MGDL)
-                return bg_value * DataAccessDoc.MGDL_TO_MMOL_FACTOR;
-            else
-                return bg_value * DataAccessDoc.MMOL_TO_MGDL_FACTOR;
-        }
-
-    }
-
-
-    /**
-     * Get BG Value Different
-     * 
-     * @param type
-     * @param bg_value
-     * @return
-     */
-    @Override
-    public float getBGValueDifferent(int type, float bg_value)
-    {
-
-        if (type == DataAccessDoc.BG_MGDL)
-            return bg_value * DataAccessDoc.MGDL_TO_MMOL_FACTOR;
-        else
-            return bg_value * DataAccessDoc.MMOL_TO_MGDL_FACTOR;
-
-    }
-
 
     // ********************************************************
     // ****** Parent handling (for UIs) *****
@@ -1142,7 +974,6 @@ public class DataAccessDoc extends DataAccess
     {
         return m_main;
     }
-
 
     /**
      * Get Parent Little
@@ -1187,6 +1018,7 @@ public class DataAccessDoc extends DataAccess
      * }
      */
 
+
     // ********************************************************
     // ****** Person Id / Login *****
     // ********************************************************
@@ -1200,7 +1032,6 @@ public class DataAccessDoc extends DataAccess
     {
         return this.current_person_id;
     }
-
 
     // ********************************************************
     // ****** I18n Utils *****
@@ -1220,6 +1051,7 @@ public class DataAccessDoc extends DataAccess
     // ********************************************************
     // ****** Look and Feel *****
     // ********************************************************
+
 
     /*
      * public void loadAvailableLFs() {
@@ -1574,7 +1406,7 @@ public class DataAccessDoc extends DataAccess
     public void loadSpecialParameters()
     {
         this.special_parameters = new Hashtable<String, String>();
-        this.special_parameters.put("BG", "" + this.m_settings.getBG_unit());
+        this.special_parameters.put("BG", "" + this.configurationManagerWrapper.getGlucoseUnit().getCode());
         // this.m_BG_unit = this.m_settings.getBG_unit();
     }
 

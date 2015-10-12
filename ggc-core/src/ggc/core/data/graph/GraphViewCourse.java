@@ -1,12 +1,6 @@
 package ggc.core.data.graph;
 
-import ggc.core.data.DailyValuesRow;
-import ggc.core.data.GlucoValues;
-import ggc.core.util.DataAccess;
-import ggc.core.util.GGCProperties;
-import ggc.core.util.MathUtils;
-
-import java.awt.Rectangle;
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -29,6 +23,15 @@ import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.graphics.graphs.GraphViewControlerInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.core.data.DailyValuesRow;
+import ggc.core.data.GlucoValues;
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
+import ggc.core.util.MathUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -62,14 +65,13 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
     I18nControlAbstract m_ic = null;
     GlucoValues gv;
 
-    // PlotSelectorData plot_data_old = null;
     PlotSelectorData plot_data = null; // new PlotData();
     GGCGraphViewControler controler = null;
-    GGCProperties settings = null;
 
     ValueAxis va = null;
     XYLineAndShapeRenderer renderer;
-    int BGUnit = DataAccess.BG_MGDL;
+
+    GlucoseUnitType glucoseUnitType;
 
     GGCGraphUtil graph_util;
     GregorianCalendar gc_from, gc_to;
@@ -79,6 +81,10 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
     private TimeSeriesCollection sumDataset = new TimeSeriesCollection();
     private TimeSeriesCollection averageDataset = new TimeSeriesCollection();
 
+    private ConfigurationManagerWrapper configurationManagerWrapper;
+    GGCProperties properties;
+
+
     /**
      * Constructor
      */
@@ -87,8 +93,9 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
         super(DataAccess.getInstance());
         da_local = DataAccess.getInstance();
         m_ic = da_local.getI18nControlInstance();
-        settings = da_local.getSettings();
-        BGUnit = settings.getBG_unit();
+        this.configurationManagerWrapper = da_local.getConfigurationManagerWrapper();
+        this.glucoseUnitType = this.configurationManagerWrapper.getGlucoseUnit();
+        this.properties = da_local.getSettings();
 
         plot_data = new PlotSelectorData();
         graph_util = GGCGraphUtil.getInstance(da_local);
@@ -96,6 +103,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
         this.controler = new GGCGraphViewControler(this, GGCGraphViewControler.GRAPH_COURSE);
 
     }
+
 
     /**
      * Get Help Id
@@ -106,6 +114,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
     {
         return "GGC_BG_Graph_Course";
     }
+
 
     /**
      * Get Title (used by GraphViewer)
@@ -118,6 +127,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
         return m_ic.getMessage("COURSE_GRAPH") + " [" + m_ic.getMessage("NOT_TESTED_100PRO") + "]";
     }
 
+
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      * 
@@ -129,6 +139,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
         return new Rectangle(100, 100, 750, 550);
     }
 
+
     /**
      * Load Data
      */
@@ -137,17 +148,15 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
 
         boolean changed = false;
 
-        if (gc_from == null
-                || !m_da.compareGregorianCalendars(ATDataAccessAbstract.GC_COMPARE_DAY, gc_from, this.plot_data
-                        .getDateRangeData().getRangeFrom()))
+        if (gc_from == null || !m_da.compareGregorianCalendars(ATDataAccessAbstract.GC_COMPARE_DAY, gc_from,
+            this.plot_data.getDateRangeData().getRangeFrom()))
         {
             gc_from = this.plot_data.getDateRangeData().getRangeFrom();
             changed = true;
         }
 
-        if (gc_to == null
-                || !m_da.compareGregorianCalendars(ATDataAccessAbstract.GC_COMPARE_DAY, gc_to, this.plot_data
-                        .getDateRangeData().getRangeTo()))
+        if (gc_to == null || !m_da.compareGregorianCalendars(ATDataAccessAbstract.GC_COMPARE_DAY, gc_to,
+            this.plot_data.getDateRangeData().getRangeTo()))
         {
             gc_to = this.plot_data.getDateRangeData().getRangeTo();
             changed = true;
@@ -164,6 +173,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
 
     }
 
+
     /**
      * Get Data Set
      * 
@@ -173,6 +183,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
     {
         return this.BGDataset;
     }
+
 
     /**
      * Preprocess Data
@@ -212,16 +223,16 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
             row = this.gv.getDailyValueRow(i);
             time = new Day(row.getDateTimeAsDate());
 
-            if (row.getBG(BGUnit) > 0)
+            if (row.getBG(glucoseUnitType) > 0)
             {
                 if (BGAvgSeries.getDataItem(time) == null)
                 {
-                    BGAvgSeries.add(time, row.getBG(BGUnit));
+                    BGAvgSeries.add(time, row.getBG(glucoseUnitType));
                 }
                 else
                 {
                     BGAvgSeries.addOrUpdate(time,
-                        MathUtils.getAverage(row.getBG(BGUnit), BGAvgSeries.getDataItem(time).getValue()));
+                        MathUtils.getAverage(row.getBG(glucoseUnitType), BGAvgSeries.getDataItem(time).getValue()));
                 }
 
                 if (BGReadingsSeries.getDataItem(time) == null)
@@ -475,6 +486,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
 
     }
 
+
     /**
      * Set Plot
      * 
@@ -535,27 +547,23 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
 
         dateAxis.setDateFormatOverride(new SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_DAYS")));
 
-        defaultRenderer.setSeriesPaint(0, this.da_local.getColor(settings.getSelectedColorScheme().getColor_bg_avg()));
+        ColorSchemeH colorScheme = properties.getSelectedColorScheme();
 
-        averageRenderer.setSeriesPaint(0, this.da_local.getColor(settings.getSelectedColorScheme().getColor_ch())
-                .darker());
-        averageRenderer.setSeriesPaint(1, this.da_local.getColor(settings.getSelectedColorScheme().getColor_ins1())
-                .darker());
-        averageRenderer.setSeriesPaint(2, this.da_local.getColor(settings.getSelectedColorScheme().getColor_ins2())
-                .darker());
-        averageRenderer.setSeriesPaint(3, this.da_local.getColor(settings.getSelectedColorScheme().getColor_ins())
-                .darker());
-        averageRenderer.setSeriesPaint(4,
-            this.da_local.getColor(settings.getSelectedColorScheme().getColor_ins_perbu()));
+        defaultRenderer.setSeriesPaint(0, this.da_local.getColor(colorScheme.getColor_bg_avg()));
 
-        sumRenderer.setSeriesPaint(0, this.da_local.getColor(settings.getSelectedColorScheme().getColor_ch()));
-        sumRenderer.setSeriesPaint(1, this.da_local.getColor(settings.getSelectedColorScheme().getColor_ins1()));
-        sumRenderer.setSeriesPaint(2, this.da_local.getColor(settings.getSelectedColorScheme().getColor_ins2()));
-        sumRenderer.setSeriesPaint(3, this.da_local.getColor(settings.getSelectedColorScheme().getColor_ins()));
+        averageRenderer.setSeriesPaint(0, this.da_local.getColor(colorScheme.getColor_ch()).darker());
+        averageRenderer.setSeriesPaint(1, this.da_local.getColor(colorScheme.getColor_ins1()).darker());
+        averageRenderer.setSeriesPaint(2, this.da_local.getColor(colorScheme.getColor_ins2()).darker());
+        averageRenderer.setSeriesPaint(3, this.da_local.getColor(colorScheme.getColor_ins()).darker());
+        averageRenderer.setSeriesPaint(4, this.da_local.getColor(colorScheme.getColor_ins_perbu()));
 
-        readingsRenderer.setSeriesPaint(0, this.da_local.getColor(settings.getSelectedColorScheme().getColor_bg()));
-        readingsRenderer.setSeriesPaint(1, this.da_local.getColor(settings.getSelectedColorScheme().getColor_ch())
-                .brighter());
+        sumRenderer.setSeriesPaint(0, this.da_local.getColor(colorScheme.getColor_ch()));
+        sumRenderer.setSeriesPaint(1, this.da_local.getColor(colorScheme.getColor_ins1()));
+        sumRenderer.setSeriesPaint(2, this.da_local.getColor(colorScheme.getColor_ins2()));
+        sumRenderer.setSeriesPaint(3, this.da_local.getColor(colorScheme.getColor_ins()));
+
+        readingsRenderer.setSeriesPaint(0, this.da_local.getColor(colorScheme.getColor_bg()));
+        readingsRenderer.setSeriesPaint(1, this.da_local.getColor(colorScheme.getColor_ch()).brighter());
 
         // chart.setBackgroundPaint(backgroundColor);
         // chart.setRenderingHints(renderingHints);
@@ -567,6 +575,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
 
     }
 
+
     /**
      * Create Chart
      */
@@ -574,9 +583,10 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
     public void createChart()
     {
         chart = ChartFactory.createTimeSeriesChart(null, m_ic.getMessage("AXIS_TIME_LABEL"),
-            String.format(m_ic.getMessage("AXIS_VALUE_LABEL"), da_local.getBGMeasurmentTypeString()), BGDataset, true,
+            String.format(m_ic.getMessage("AXIS_VALUE_LABEL"), this.glucoseUnitType.getTranslation()), BGDataset, true,
             true, false);
     }
+
 
     /**
      * Create Chart Panel
@@ -589,6 +599,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
         this.chart_panel.setRangeZoomable(true);
     }
 
+
     /**
      * Set Controller Data (Processor)
      * 
@@ -599,6 +610,7 @@ public class GraphViewCourse extends AbstractGraphViewAndProcessor
     {
         plot_data = (PlotSelectorData) data;
     }
+
 
     /**
      * Get Controler Interface instance

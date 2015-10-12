@@ -1,10 +1,8 @@
 package ggc.core.data.graph;
 
-import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.util.DataAccess;
-import ggc.core.util.GGCProperties;
-
-import java.awt.Color;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -14,6 +12,12 @@ import org.jfree.ui.Layer;
 
 import com.atech.graphics.graphs.GraphUtil;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,7 +53,7 @@ public class GGCGraphUtil extends GraphUtil
      * Graph Setting: Background color
      */
     public Color backgroundColor = Color.WHITE;
-    int BGUnit = DataAccess.BG_MGDL;
+    // int BGUnit = DataAccess.BG_MGDL;
     JFreeChart chart;
     GGCProperties settings;
 
@@ -69,10 +73,14 @@ public class GGCGraphUtil extends GraphUtil
 
     DataAccess m_da_local;
 
+    ConfigurationManagerWrapper configurationManagerWrapper;
+    GlucoseUnitType glucoseUnitType;
+
     /**
      * Static instance of Graph Util
      */
-    public static GGCGraphUtil s_graph_util;
+    public static Map<ATDataAccessAbstract, GGCGraphUtil> s_graph_util = new HashMap<ATDataAccessAbstract, GGCGraphUtil>();
+
 
     /**
      * Does some basic preparation needed by all graphs. Should be called from
@@ -84,6 +92,26 @@ public class GGCGraphUtil extends GraphUtil
 
         // getRenderingQuality();
     }
+
+
+    /**
+     * Get Instance (Singelton)
+     *
+     * @param da
+     * @return GGCGraphUtil instance
+     */
+    public static GGCGraphUtil getInstance(ATDataAccessAbstract da)
+    {
+        if (!GGCGraphUtil.s_graph_util.containsKey(da))
+        {
+            GGCGraphUtil gu = new GGCGraphUtil(da);
+            s_graph_util.put(da, gu);
+            return gu;
+        }
+
+        return GGCGraphUtil.s_graph_util.get(da);
+    }
+
 
     /**
      * Init Local
@@ -100,44 +128,33 @@ public class GGCGraphUtil extends GraphUtil
         settings = m_da_local.getSettings(); // DataAccess.getSettings();
 
         colorScheme = settings.getSelectedColorScheme();
-        BGUnit = settings.getBG_unit();
+        configurationManagerWrapper = m_da_local.getConfigurationManagerWrapper();
+        glucoseUnitType = m_da_local.getGlucoseUnitType();
 
-        switch (BGUnit)
+        switch (glucoseUnitType)
         {
-            case DataAccess.BG_MMOL:
+
+            case mmol_L:
                 maxBG = 11.1f;
                 minBG = 2.775f;
                 unitLabel = "mmol/l";
                 break;
 
-            case DataAccess.BG_MGDL:
+            case mg_dL:
+            case None:
             default:
                 maxBG = 200;
                 minBG = 50;
                 unitLabel = "mg/dl";
                 break;
         }
+
         BGDiff = maxBG - minBG;
 
         getRenderingQuality();
 
     }
 
-    /**
-     * Get Instance (Singelton)
-     * 
-     * @param da 
-     * @return GGCGraphUtil instance
-     */
-    public static GGCGraphUtil getInstance(ATDataAccessAbstract da)
-    {
-        if (GGCGraphUtil.s_graph_util == null)
-        {
-            GGCGraphUtil.s_graph_util = new GGCGraphUtil(da);
-        }
-
-        return GGCGraphUtil.s_graph_util;
-    }
 
     /**
      * Adds <code>{@link IntervalMarker IntervalMarkers}</code> to the passed
@@ -159,19 +176,22 @@ public class GGCGraphUtil extends GraphUtil
         // System.out.println("settings: " + this.settings);
         // System.out.println("m_da_local: " + this.m_da_local);
 
-        switch (this.settings.getBG_unit())
+        switch (glucoseUnitType)
         {
-            case DataAccess.BG_MMOL:
-                lowBGMarker = new IntervalMarker(0, settings.getBG2_TargetLow(), m_da_local.getColor(colorScheme
-                        .getColor_bg_low()));
-                targetBGMarker = new IntervalMarker(settings.getBG2_TargetLow(), settings.getBG2_TargetHigh(),
+            case mmol_L:
+                lowBGMarker = new IntervalMarker(0, this.configurationManagerWrapper.getBG2TargetLow(),
+                        m_da_local.getColor(colorScheme.getColor_bg_low()));
+                targetBGMarker = new IntervalMarker(this.configurationManagerWrapper.getBG2TargetLow(),
+                        this.configurationManagerWrapper.getBG2TargetHigh(),
                         m_da_local.getColor(colorScheme.getColor_bg_target()));
                 break;
-            case DataAccess.BG_MGDL:
+
+            case mg_dL:
             default:
-                lowBGMarker = new IntervalMarker(0, settings.getBG1_TargetLow(), m_da_local.getColor(colorScheme
-                        .getColor_bg_low()));
-                targetBGMarker = new IntervalMarker(settings.getBG1_TargetLow(), settings.getBG1_TargetHigh(),
+                lowBGMarker = new IntervalMarker(0, this.configurationManagerWrapper.getBG1TargetLow(),
+                        m_da_local.getColor(colorScheme.getColor_bg_low()));
+                targetBGMarker = new IntervalMarker(this.configurationManagerWrapper.getBG1TargetLow(),
+                        this.configurationManagerWrapper.getBG1TargetHigh(),
                         m_da_local.getColor(colorScheme.getColor_bg_target()));
                 break;
         }
@@ -181,6 +201,7 @@ public class GGCGraphUtil extends GraphUtil
         plot.addRangeMarker(targetBGMarker, Layer.BACKGROUND);
         plot.setBackgroundPaint(m_da_local.getColor(colorScheme.getColor_bg_high()));
     }
+
 
     /**
      * Get Color Scheme
@@ -192,6 +213,7 @@ public class GGCGraphUtil extends GraphUtil
         return this.colorScheme;
     }
 
+
     /**
      * Get Unit Label
      * 
@@ -199,18 +221,7 @@ public class GGCGraphUtil extends GraphUtil
      */
     public String getUnitLabel()
     {
-        BGUnit = settings.getBG_unit();
-        switch (BGUnit)
-        {
-            case DataAccess.BG_MMOL:
-                unitLabel = "mmol/l";
-                break;
-
-            case DataAccess.BG_MGDL:
-            default:
-                unitLabel = "mg/dl";
-                break;
-        }
+        this.unitLabel = glucoseUnitType.getTranslation();
         return this.unitLabel;
     }
 

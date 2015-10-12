@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
 
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.util.DataAccess;
 
@@ -47,13 +48,13 @@ public class DailyValues implements Serializable
     private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
 
     private String[] column_names = { m_ic.getMessage("DATE_TIME"), //
-                                     m_ic.getMessage("BG"), //
-                                     m_ic.getMessage("BOLUS_INSULIN_SHORT"), //
-                                     m_ic.getMessage("BASAL_INSULIN_SHORT"), //
-                                     m_ic.getMessage("CH"), //
-                                     m_ic.getMessage("ACTIVITY"), //
-                                     m_ic.getMessage("URINE"), //
-                                     m_ic.getMessage("COMMENT") };
+                                      m_ic.getMessage("BG"), //
+                                      m_ic.getMessage("BOLUS_INSULIN_SHORT"), //
+                                      m_ic.getMessage("BASAL_INSULIN_SHORT"), //
+                                      m_ic.getMessage("CH"), //
+                                      m_ic.getMessage("ACTIVITY"), //
+                                      m_ic.getMessage("URINE"), //
+                                      m_ic.getMessage("COMMENT") };
 
     ArrayList<DailyValuesRow> dataRows = new ArrayList<DailyValuesRow>();
     Hashtable<String, String> day_count = new Hashtable<String, String>();
@@ -252,8 +253,8 @@ public class DailyValues implements Serializable
 
         if (debug)
         {
-            System.out.println("date=" + date + "sumBG=" + sumBG + " (" + counterBG + ") " + "sumIns1=" + sumIns1
-                    + " (" + counterIns1 + ") " + "sumIns2=" + sumIns2 + " (" + counterIns2 + ") ");
+            System.out.println("date=" + date + "sumBG=" + sumBG + " (" + counterBG + ") " + "sumIns1=" + sumIns1 + " ("
+                    + counterIns1 + ") " + "sumIns2=" + sumIns2 + " (" + counterIns2 + ") ");
         }
 
     }
@@ -456,10 +457,10 @@ public class DailyValues implements Serializable
     {
         if (counterBG != 0)
         {
-            if (m_da.getBGMeasurmentType() == DataAccess.BG_MGDL)
+            if (m_da.getGlucoseUnitType() == GlucoseUnitType.mg_dL)
                 return sumBG / counterBG;
             else
-                return m_da.getBGValueDifferent(DataAccess.BG_MGDL, sumBG / counterBG);
+                return m_da.getBGValueDifferent(GlucoseUnitType.mg_dL, sumBG / counterBG);
         }
         else
             return 0;
@@ -747,10 +748,10 @@ public class DailyValues implements Serializable
      */
     public float getHighestBG()
     {
-        if (m_da.getBGMeasurmentType() == DataAccess.BG_MGDL)
+        if (m_da.getGlucoseUnitType() == GlucoseUnitType.mg_dL)
             return highestBG;
         else
-            return m_da.getBGValueDifferent(DataAccess.BG_MGDL, highestBG);
+            return m_da.getBGValueDifferent(GlucoseUnitType.mg_dL, highestBG);
     }
 
 
@@ -763,10 +764,10 @@ public class DailyValues implements Serializable
     {
         if (lowestBG != Float.MAX_VALUE)
         {
-            if (m_da.getBGMeasurmentType() == DataAccess.BG_MGDL)
+            if (m_da.getGlucoseUnitType() == GlucoseUnitType.mg_dL)
                 return lowestBG;
             else
-                return m_da.getBGValueDifferent(DataAccess.BG_MGDL, lowestBG);
+                return m_da.getBGValueDifferent(GlucoseUnitType.mg_dL, lowestBG);
         }
         else
             return 0;

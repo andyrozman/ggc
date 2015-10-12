@@ -1,17 +1,16 @@
 package ggc.core.data.graph;
 
-import ggc.core.data.PlotData;
-import ggc.core.util.DataAccess;
+import java.awt.*;
 
-import java.awt.GridLayout;
-
-import javax.swing.BorderFactory;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.data.PlotData;
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,6 +42,7 @@ import com.atech.i18n.I18nControlAbstract;
 
 public class PlotSelectorPanel extends JPanel implements ChangeListener
 {
+
     private static final long serialVersionUID = 6420234465982434157L;
     PlotSelectorData data = new PlotSelectorData();
     DataAccess dataAccessInstance = DataAccess.getInstance();
@@ -159,6 +159,9 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
      */
     public static final int MEALS_MASK = 65536;
 
+    ConfigurationManagerWrapper configurationManagerWrapper = dataAccessInstance.getConfigurationManagerWrapper();
+
+
     /**
      * Initialises the <code>{@link JPanel panel}</code> with no checkbox
      * selected.
@@ -167,6 +170,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
     {
         this(0);
     }
+
 
     /**
      * Initialises the <code>{@link JPanel panel}</code> with the specified
@@ -190,6 +194,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         selectBoxes(initialSelection, true);
     }
 
+
     private void initBoxes()
     {
         BGBox.setText(translator.getMessage("BG"));
@@ -206,18 +211,18 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         CHSumBox.setText(translator.getMessage("SUM_BU"));
         CHSumBox.addChangeListener(this);
 
-        ins1Box.setText(dataAccessInstance.getSettings().getIns1Abbr());
+        ins1Box.setText(configurationManagerWrapper.getIns1Abbr());
         ins1Box.addChangeListener(this);
-        ins1DayAvgBox.setText(translator.getMessage("AVG") + " " + dataAccessInstance.getSettings().getIns1Abbr());
+        ins1DayAvgBox.setText(translator.getMessage("AVG") + " " + configurationManagerWrapper.getIns1Abbr());
         ins1DayAvgBox.addChangeListener(this);
-        ins1SumBox.setText(translator.getMessage("SUM") + " " + dataAccessInstance.getSettings().getIns1Abbr());
+        ins1SumBox.setText(translator.getMessage("SUM") + " " + configurationManagerWrapper.getIns1Abbr());
         ins1SumBox.addChangeListener(this);
 
-        ins2Box.setText(dataAccessInstance.getSettings().getIns2Abbr());
+        ins2Box.setText(configurationManagerWrapper.getIns2Abbr());
         ins2Box.addChangeListener(this);
-        ins2DayAvgBox.setText(translator.getMessage("AVG") + " " + dataAccessInstance.getSettings().getIns2Abbr());
+        ins2DayAvgBox.setText(translator.getMessage("AVG") + " " + configurationManagerWrapper.getIns2Abbr());
         ins2DayAvgBox.addChangeListener(this);
-        ins2SumBox.setText(translator.getMessage("SUM") + " " + dataAccessInstance.getSettings().getIns2Abbr());
+        ins2SumBox.setText(translator.getMessage("SUM") + " " + configurationManagerWrapper.getIns2Abbr());
         ins2SumBox.addChangeListener(this);
 
         insTotalBox.setText(translator.getMessage("INS_1") + " + " + translator.getMessage("INS_2"));
@@ -232,6 +237,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         mealsBox.setText(translator.getMessage("MEALS"));
         mealsBox.addChangeListener(this);
     }
+
 
     private void addBoxes()
     {
@@ -259,6 +265,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         add(insPerCHBox);
         add(mealsBox);
     }
+
 
     /**
      * Use the <code>*_MASK</code> constants to select the
@@ -354,6 +361,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         }
     }
 
+
     /**
      * Enables the specified checkboxes.
      * 
@@ -365,10 +373,12 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         setChoice(choiceMask, true);
     }
 
+
     private boolean checkMask(int value, int mask)
     {
         return (value & mask) == mask;
     }
+
 
     /**
      * Disables the specified checkboxes.
@@ -380,6 +390,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
     {
         setChoice(choiceMask, false);
     }
+
 
     /**
      * Remove Choice
@@ -481,6 +492,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
 
     }
 
+
     /**
      * Disables or enables the specified checkboxes, depending on the value of
      * <code>enable</code>.
@@ -571,6 +583,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         }
     }
 
+
     /**
      * @return Returns the <code>{@link PlotSelectorData}</code> containing
      *         information on which kinds of data should be plotted in the
@@ -600,6 +613,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         return data;
     }
 
+
     /**
      * Set Selection Mode
      * 
@@ -611,6 +625,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
     }
 
     boolean in_process = false;
+
 
     /**
      * State Changed
@@ -721,6 +736,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
 
     }
 
+
     private void checkData(ChangeEvent e)
     {
 
@@ -794,6 +810,7 @@ public class PlotSelectorPanel extends JPanel implements ChangeListener
         }
 
     }
+
 
     @SuppressWarnings("deprecation")
     private void unselectAll()

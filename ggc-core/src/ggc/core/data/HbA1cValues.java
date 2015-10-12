@@ -1,11 +1,12 @@
 package ggc.core.data;
 
-import ggc.core.util.DataAccess;
-
 import java.util.Enumeration;
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -47,6 +48,7 @@ public class HbA1cValues
 
     private Hashtable<String, DailyValues> m_dataTable = null;
 
+
     /**
      * Constructor
      */
@@ -59,6 +61,7 @@ public class HbA1cValues
         // ReadingsPerDay = new int[25];
         m_dataTable = new Hashtable<String, DailyValues>();
     }
+
 
     /**
      * Add Day
@@ -74,6 +77,7 @@ public class HbA1cValues
         exp += _readings * _readings;
         dayCount++;
     }
+
 
     /**
      * Add Day Value Row
@@ -101,6 +105,7 @@ public class HbA1cValues
 
     }
 
+
     /**
      * Process Day Values
      */
@@ -126,6 +131,7 @@ public class HbA1cValues
      * Values Class
      */
     public int[] valClass = new int[5];
+
 
     /**
      * Process Day Values 2 (new one for new Hba1c Graphs)
@@ -177,6 +183,7 @@ public class HbA1cValues
 
     }
 
+
     /**
      * Get Average BG
      * @return
@@ -186,10 +193,10 @@ public class HbA1cValues
         if (dayCount != 0)
         {
 
-            if (m_da.getBGMeasurmentType() == DataAccess.BG_MGDL)
+            if (m_da.getGlucoseUnitType() == GlucoseUnitType.mg_dL)
                 return sumBG / dayCount;
             else
-                return m_da.getBGValueDifferent(DataAccess.BG_MGDL, sumBG / dayCount);
+                return m_da.getBGValueDifferent(GlucoseUnitType.mg_dL, sumBG / dayCount);
 
             // return sumBG / dayCount;
 
@@ -197,6 +204,7 @@ public class HbA1cValues
         else
             return 0;
     }
+
 
     /**
      * Get Average BG For Method 3
@@ -207,10 +215,10 @@ public class HbA1cValues
     {
         if (dayCount != 0)
             return sumBG / dayCount;
-        // return sumBG / readings;
         else
             return 0;
     }
+
 
     /**
      * Get Day Count
@@ -221,6 +229,7 @@ public class HbA1cValues
     {
         return dayCount;
     }
+
 
     /**
      * Get Valuation
@@ -246,6 +255,7 @@ public class HbA1cValues
             return m_ic.getMessage("GOOD_EXPRESSIVENESS");
     }
 
+
     /**
      * Get Readings
      * 
@@ -255,6 +265,7 @@ public class HbA1cValues
     {
         return readings;
     }
+
 
     /**
      * Get Reading Per Day
@@ -268,6 +279,7 @@ public class HbA1cValues
         else
             return 0;
     }
+
 
     /**
      * Get HbA1c Method 1
@@ -285,6 +297,7 @@ public class HbA1cValues
             return 0;
     }
 
+
     /**
      * Get HbA1c Method 2
      * 
@@ -300,6 +313,7 @@ public class HbA1cValues
         else
             return 0;
     }
+
 
     /**
      * Get HbA1c Method 3
@@ -321,6 +335,7 @@ public class HbA1cValues
             return 0;
     }
 
+
     /**
      * Get Exp
      * 
@@ -330,6 +345,7 @@ public class HbA1cValues
     {
         return exp;
     }
+
 
     /**
      * Get Percent Of Days In Class

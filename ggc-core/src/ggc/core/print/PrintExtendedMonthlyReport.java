@@ -78,8 +78,9 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
                 + this.dataAccessLocal.getMonthsArray()[monthlyValues.getMonth() - 1] + " " + monthlyValues.getYear(),
                 f));
         p.add(new Paragraph(
-                this.i18nControl.getMessage("FOR") + " " + this.dataAccessLocal.getSettings().getUserName(), new Font(
-                        FontFamily.TIMES_ROMAN, 12, Font.ITALIC)));
+                this.i18nControl.getMessage("FOR") + " "
+                        + this.dataAccessLocal.getConfigurationManagerWrapper().getUserName(),
+                new Font(FontFamily.TIMES_ROMAN, 12, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
 
@@ -218,8 +219,8 @@ public class PrintExtendedMonthlyReport extends PrintAbstractIText
         p.setWidths(wdts);
         p.setWidthPercentage(100); // percentage
         p.addCell("");
-        p.addCell(new Phrase(String.format(this.i18nControl.getMessage("COMMING_IN_VERSION"), "0.7"),
-                this.textFontNormal));
+        p.addCell(
+            new Phrase(String.format(this.i18nControl.getMessage("COMMING_IN_VERSION"), "0.7"), this.textFontNormal));
 
         document.add(p);
 

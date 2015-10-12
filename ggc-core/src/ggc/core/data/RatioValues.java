@@ -1,11 +1,11 @@
 package ggc.core.data;
 
-import ggc.core.util.DataAccess;
-
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Vector;
+
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,6 +42,7 @@ public class RatioValues
     Hashtable<String, DailyValues> data_table = null;
     float average_insulin_usage = 0.0f;
 
+
     /**
      * Constructor
      */
@@ -49,6 +50,7 @@ public class RatioValues
     {
         this.data_table = new Hashtable<String, DailyValues>();
     }
+
 
     /**
      * Constructor
@@ -59,9 +61,6 @@ public class RatioValues
     public RatioValues(GregorianCalendar sDate, GregorianCalendar eDate)
     {
         this();
-
-        // dayValues.add(DataAccess.getInstance().getDayStatsRange(sDate,
-        // eDate));
 
         WeeklyValues wv = DataAccess.getInstance().getDayStatsRange(sDate, eDate);
         Hashtable<String, DailyValues> table = wv.getAllValues();
@@ -74,6 +73,7 @@ public class RatioValues
 
     }
 
+
     private void addDayValues(DailyValues dv)
     {
         if (!this.data_table.containsKey(dv.getDateAsString()))
@@ -81,6 +81,7 @@ public class RatioValues
             this.data_table.put(dv.getDateAsString(), dv);
         }
     }
+
 
     /*
      * x
@@ -113,6 +114,7 @@ public class RatioValues
         return this.average_insulin_usage;
     }
 
+
     private void calculateAvergeInsulinUsage()
     {
         float sum = 0.0f;
@@ -124,6 +126,7 @@ public class RatioValues
 
         this.average_insulin_usage = sum / this.data_table.size();
     }
+
 
     /**
      * Get Insulin Carb Ratio
@@ -169,6 +172,7 @@ public class RatioValues
      */
     public static final int SENSITIVITY_FACTOR_RULE_83 = 83;
 
+
     /**
      * Get Insulin Carb Ratio
      * 
@@ -180,20 +184,21 @@ public class RatioValues
         return rule * 1.0f / this.getAverageInsulinUsage();
     }
 
-    /**
-     * Get Sensitivity factor
-     * 
-     * @param rule
-     * @return
-     */
-    public float getSensitivityFactor(int rule)
-    {
-        if (m_da.getBGMeasurmentType() == DataAccess.BG_MGDL)
-        {
 
-        }
-        return 0.0f;
-    }
+    // /**
+    // * Get Sensitivity factor
+    // *
+    // * @param rule
+    // * @return
+    // */
+    // public float getSensitivityFactor(int rule)
+    // {
+    // if (m_da.getBGMeasurmentType() == DataAccess.BG_MGDL)
+    // {
+    //
+    // }
+    // return 0.0f;
+    // }
 
     /**
      * Get Sensitivity Factor mg/dL
@@ -216,6 +221,7 @@ public class RatioValues
 
         return rule * 1.0f / this.getAverageInsulinUsage();
     }
+
 
     /**
      * Get Sensitivity Factor mmol/L

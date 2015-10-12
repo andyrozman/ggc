@@ -1,18 +1,17 @@
 package ggc.core.data.graph;
 
-import ggc.core.data.PlotData;
-import ggc.core.data.ReadablePlotData;
-import ggc.core.util.DataAccess;
+import java.awt.*;
 
-import java.awt.GridLayout;
-
-import javax.swing.BorderFactory;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.data.PlotData;
+import ggc.core.data.ReadablePlotData;
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,6 +43,7 @@ import com.atech.i18n.I18nControlAbstract;
 
 public class DataPlotSelectorPanel extends JPanel implements ChangeListener
 {
+
     private static final long serialVersionUID = 6420234465982434157L;
     PlotData data = new PlotData();
     DataAccess dataAccessInstance = DataAccess.getInstance();
@@ -71,6 +71,8 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
 
     JCheckBox insPerCHBox = new JCheckBox();
     JCheckBox mealsBox = new JCheckBox();
+
+    ConfigurationManagerWrapper configurationManagerWrapper = dataAccessInstance.getConfigurationManagerWrapper();
 
     /**
      * Mask: BG
@@ -147,6 +149,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
      */
     public static final int MEALS_MASK = 65536;
 
+
     /**
      * Initialises the <code>{@link JPanel panel}</code> with no checkbox
      * selected.
@@ -155,6 +158,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
     {
         this(0);
     }
+
 
     /**
      * Initialises the <code>{@link JPanel panel}</code> with the specified
@@ -178,6 +182,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         selectBoxes(initialSelection, true);
     }
 
+
     private void initBoxes()
     {
         BGBox.setText(translator.getMessage("BG"));
@@ -194,18 +199,18 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         CHSumBox.setText(translator.getMessage("SUM_BU"));
         CHSumBox.addChangeListener(this);
 
-        ins1Box.setText(dataAccessInstance.getSettings().getIns1Abbr());
+        ins1Box.setText(this.configurationManagerWrapper.getIns1Abbr());
         ins1Box.addChangeListener(this);
-        ins1DayAvgBox.setText(translator.getMessage("AVG") + " " + dataAccessInstance.getSettings().getIns1Abbr());
+        ins1DayAvgBox.setText(translator.getMessage("AVG") + " " + this.configurationManagerWrapper.getIns1Abbr());
         ins1DayAvgBox.addChangeListener(this);
-        ins1SumBox.setText(translator.getMessage("SUM") + " " + dataAccessInstance.getSettings().getIns1Abbr());
+        ins1SumBox.setText(translator.getMessage("SUM") + " " + this.configurationManagerWrapper.getIns1Abbr());
         ins1SumBox.addChangeListener(this);
 
-        ins2Box.setText(dataAccessInstance.getSettings().getIns2Abbr());
+        ins2Box.setText(this.configurationManagerWrapper.getIns2Abbr());
         ins2Box.addChangeListener(this);
-        ins2DayAvgBox.setText(translator.getMessage("AVG") + " " + dataAccessInstance.getSettings().getIns2Abbr());
+        ins2DayAvgBox.setText(translator.getMessage("AVG") + " " + this.configurationManagerWrapper.getIns2Abbr());
         ins2DayAvgBox.addChangeListener(this);
-        ins2SumBox.setText(translator.getMessage("SUM") + " " + dataAccessInstance.getSettings().getIns2Abbr());
+        ins2SumBox.setText(translator.getMessage("SUM") + " " + this.configurationManagerWrapper.getIns2Abbr());
         ins2SumBox.addChangeListener(this);
 
         insTotalBox.setText(translator.getMessage("INSULIN"));
@@ -220,6 +225,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         mealsBox.setText(translator.getMessage("MEALS"));
         mealsBox.addChangeListener(this);
     }
+
 
     private void addBoxes()
     {
@@ -247,6 +253,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         add(insPerCHBox);
         add(mealsBox);
     }
+
 
     /**
      * Use the <code>*_MASK</code> constants to select the
@@ -342,6 +349,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         }
     }
 
+
     /**
      * Enables the specified checkboxes.
      * 
@@ -353,6 +361,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         setChoice(choiceMask, true);
     }
 
+
     /**
      * Disables the specified checkboxes.
      * 
@@ -363,6 +372,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
     {
         setChoice(choiceMask, false);
     }
+
 
     /**
      * Disables or enables the specified checkboxes, depending on the value of
@@ -454,6 +464,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
         }
     }
 
+
     /**
      * @return Returns the <code>{@link ReadablePlotData}</code> containing
      *         information on which kinds of data should be plotted in the
@@ -463,6 +474,7 @@ public class DataPlotSelectorPanel extends JPanel implements ChangeListener
     {
         return data;
     }
+
 
     /**
      * State Changed

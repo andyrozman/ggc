@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-    
+
     <!-- ***************** ggc::Main SCHEMA  ******************* -->
 
 
@@ -10,20 +10,20 @@
     <!-- ****************************************** -->
 
     <!--  Day values -->
-    <class name="ggc.core.db.hibernate.DayValueH" table="data_dayvalues" >
+    <class name="ggc.core.db.hibernate.DayValueH" table="data_dayvalues">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>            
-        <property name="dt_info" type="long" not-null="true"/>    
-        <property name="bg"  type="int" />
-        <property name="ins1"  type="int" />
-        <property name="ins2"  type="int" />
-        <property name="ch"  type="float" />
-        <property name="meals_ids"  type="text" />
-        <property name="extended"  type="text" />
-        <property name="person_id"  type="int" not-null="true" />
-        <property name="comment" type="string" length="2000" />
-        <property name="changed" type="long" not-null="false" />    
+        </id>
+        <property name="dt_info" type="long" not-null="true"/>
+        <property name="bg" type="int"/>
+        <property name="ins1" type="int"/>
+        <property name="ins2" type="int"/>
+        <property name="ch" type="float"/>
+        <property name="meals_ids" type="text"/>
+        <property name="extended" type="text"/>
+        <property name="person_id" type="int" not-null="true"/>
+        <property name="comment" type="string" length="2000"/>
+        <property name="changed" type="long" not-null="false"/>
     </class>
 
 
@@ -36,42 +36,40 @@
     <class name="ggc.core.db.hibernate.DoctorTypeH" table="doc_types">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>            
-        <property name="name"  type="string" length="1000" />
-        <property name="predefined" type="int" />
+        </id>
+        <property name="name" type="string" length="1000"/>
+        <property name="predefined" type="int"/>
     </class>
 
     <!--  Doctor -->
     <class name="ggc.core.db.hibernate.DoctorH" table="doc_doctors">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>            
-        <many-to-one name="doctor_type" class="ggc.core.db.hibernate.DoctorTypeH" lazy="false" /> 
-        <property name="name"  type="string" length="100" />
-        <property name="address"  type="string" length="2000" />
-        <property name="phone_gsm"  type="string" length="500" />
-        <property name="phone"  type="string" length="500" />
-        <property name="working_time"  type="text"  />
-        <property name="extended"  type="text" />
-        <property name="visible" type="int" />
-        <property name="person_id"  type="int" not-null="true" />
-        <property name="comment" type="string" length="4000" />
+        </id>
+        <many-to-one name="doctor_type" class="ggc.core.db.hibernate.DoctorTypeH" lazy="false"/>
+        <property name="name" type="string" length="100"/>
+        <property name="address" type="string" length="2000"/>
+        <property name="phone_gsm" type="string" length="500"/>
+        <property name="phone" type="string" length="500"/>
+        <property name="working_time" type="text"/>
+        <property name="extended" type="text"/>
+        <property name="visible" type="int"/>
+        <property name="person_id" type="int" not-null="true"/>
+        <property name="comment" type="string" length="4000"/>
     </class>
 
     <!--  Appointment -->
     <class name="ggc.core.db.hibernate.AppointmentH" table="doc_appointment">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>            
-        <many-to-one name="doctor" class="ggc.core.db.hibernate.DoctorH" lazy="false" /> 
-        <property name="dt_apoint"  type="long" not-null="true" />
-        <property name="apoint_text"  type="string" length="1000" />
-        <property name="extended"  type="text" />
-        <property name="person_id"  type="int" not-null="true" />
-        <property name="comment"  type="string" length="4000" />
+        </id>
+        <many-to-one name="doctor" class="ggc.core.db.hibernate.DoctorH" lazy="false"/>
+        <property name="dt_apoint" type="long" not-null="true"/>
+        <property name="apoint_text" type="string" length="1000"/>
+        <property name="extended" type="text"/>
+        <property name="person_id" type="int" not-null="true"/>
+        <property name="comment" type="string" length="4000"/>
     </class>
-
-
 
 
     <!-- ****************************************** -->
@@ -82,44 +80,42 @@
     <class name="ggc.core.db.hibernate.SettingsH" table="cfg_settings">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>            
-        <property name="key" column="el_key" type="string"  length="44" not-null="true" />    
-        <property name="value" column="el_value" type="string"  length="255"/>    
-        <property name="type" type="int"  />    <!-- 1-string, 2-int, 3=float -->
-        <property name="description" type="string" length="255" />   
-        <property name="person_id"  type="int" not-null="true" />
+        </id>
+        <property name="key" column="el_key" type="string" length="44" not-null="true"/>
+        <property name="value" column="el_value" type="string" length="255"/>
+        <property name="type" type="int"/>    <!-- 1-string, 2-int, 3=float -->
+        <property name="description" type="string" length="255"/>
+        <property name="person_id" type="int" not-null="true"/>
     </class>
-
 
 
     <class name="ggc.core.db.hibernate.ColorSchemeH" table="cfg_colorscheme">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>            
-        <property name="name" type="string"  length="50"/>    
-        <property name="custom_type" type="int" />    
-        <property name="color_bg"  type="int" />
-        <property name="color_bg_avg"  type="int" />
-        <property name="color_bg_low"  type="int" />
-        <property name="color_bg_high"  type="int" />
-        <property name="color_bg_target"  type="int" />
-        <property name="color_ins"  type="int" />
-        <property name="color_ins1"  type="int" />
-        <property name="color_ins2"  type="int" />
-        <property name="color_ins_perbu"  type="int" />
-        <property name="color_ch"  type="int" />
+        </id>
+        <property name="name" type="string" length="50"/>
+        <property name="custom_type" type="int"/>
+        <property name="color_bg" type="int"/>
+        <property name="color_bg_avg" type="int"/>
+        <property name="color_bg_low" type="int"/>
+        <property name="color_bg_high" type="int"/>
+        <property name="color_bg_target" type="int"/>
+        <property name="color_ins" type="int"/>
+        <property name="color_ins1" type="int"/>
+        <property name="color_ins2" type="int"/>
+        <property name="color_ins_perbu" type="int"/>
+        <property name="color_ch" type="int"/>
     </class>
 
     <class name="ggc.core.db.hibernate.DbInfoH" table="db_info">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>            
-        <property name="key" column="el_key" type="string"  length="44" not-null="true" />    
-        <property name="value" column="el_value" type="string"  length="255"/>    
-        <property name="type" type="int"  />    <!-- 1-string, 2-int, 3=float -->
-        <property name="description" type="string" length="255" />   
+        </id>
+        <property name="key" column="el_key" type="string" length="44" not-null="true"/>
+        <property name="value" column="el_value" type="string" length="255"/>
+        <property name="type" type="int"/>    <!-- 1-string, 2-int, 3=float -->
+        <property name="description" type="string" length="255"/>
     </class>
-
 
 
 </hibernate-mapping>

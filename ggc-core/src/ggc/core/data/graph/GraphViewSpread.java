@@ -1,11 +1,6 @@
 package ggc.core.data.graph;
 
-import ggc.core.data.DailyValuesRow;
-import ggc.core.data.GlucoValues;
-import ggc.core.util.DataAccess;
-
-import java.awt.Color;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -27,6 +22,10 @@ import com.atech.graphics.graphs.GraphUtil;
 import com.atech.graphics.graphs.GraphViewControlerInterface;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.data.DailyValuesRow;
+import ggc.core.data.GlucoValues;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -70,6 +69,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
     XYLineAndShapeRenderer renderer;
     GGCGraphUtil graph_util;
 
+
     /**
      * Constructor
      */
@@ -85,6 +85,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
         this.controler = new GGCGraphViewControler(this, GGCGraphViewControler.GRAPH_SPREAD);
     }
 
+
     /**
      * Get Help Id
      *
@@ -94,6 +95,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
     {
         return "GGC_BG_Graph_Spread";
     }
+
 
     /**
      * Get Title (used by GraphViewer)
@@ -106,6 +108,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
         return m_ic.getMessage("SPREAD_GRAPH") + " [" + m_ic.getMessage("NOT_TESTED_100PRO") + "]";
     }
 
+
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      *
@@ -116,6 +119,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
     {
         return new Rectangle(100, 100, 750, 500);
     }
+
 
     /**
      * Set Controller Data
@@ -128,6 +132,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
         plot_data = (PlotSelectorData) obj;
     }
 
+
     /**
      * Load Data
      */
@@ -137,17 +142,15 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
 
         boolean changed = false;
 
-        if (gc_from == null
-                || !m_da.compareGregorianCalendars(ATDataAccessAbstract.GC_COMPARE_DAY, gc_from, this.plot_data
-                        .getDateRangeData().getRangeFrom()))
+        if (gc_from == null || !m_da.compareGregorianCalendars(ATDataAccessAbstract.GC_COMPARE_DAY, gc_from,
+            this.plot_data.getDateRangeData().getRangeFrom()))
         {
             gc_from = this.plot_data.getDateRangeData().getRangeFrom();
             changed = true;
         }
 
-        if (gc_to == null
-                || !m_da.compareGregorianCalendars(ATDataAccessAbstract.GC_COMPARE_DAY, gc_to, this.plot_data
-                        .getDateRangeData().getRangeTo()))
+        if (gc_to == null || !m_da.compareGregorianCalendars(ATDataAccessAbstract.GC_COMPARE_DAY, gc_to,
+            this.plot_data.getDateRangeData().getRangeTo()))
         {
             gc_to = this.plot_data.getDateRangeData().getRangeTo();
             changed = true;
@@ -164,6 +167,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
 
     }
 
+
     /**
      * Get Data Set
      *
@@ -173,6 +177,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
     {
         return this.dataset;
     }
+
 
     /**
      * Preprocess Data
@@ -190,7 +195,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
 
             if (this.plot_data.isPlotBG())
             {
-                String s = m_ic.getMessage("BG") + "  [" + da_local.getSettings().getBG_unitString() + "]";
+                String s = m_ic.getMessage("BG") + "  [" + da_local.getGlucoseUnitType().getTranslation() + "]";
                 va.setLabel(s);
                 graph_util.setShapeAndColor(GraphUtil.SHAPE_SQUARE, Color.green.darker(), renderer);
             }
@@ -261,6 +266,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
 
     GregorianCalendar gc_temp = new GregorianCalendar(2008, 1, 1, 0, 0);
 
+
     private long getFakeDateMs(ATechDate date)
     {
         gc_temp.set(Calendar.HOUR_OF_DAY, date.getHourOfDay());
@@ -268,6 +274,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
 
         return gc_temp.getTimeInMillis();
     }
+
 
     /**
      * Set Plot
@@ -291,6 +298,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
 
         this.va = plot.getRangeAxis();
     }
+
 
     private void setRendererStuff(XYLineAndShapeRenderer renderer)
     {
@@ -318,18 +326,20 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
 
     }
 
+
     /**
      * Create Chart
      */
     @Override
     public void createChart()
     {
-        this.chart = ChartFactory.createScatterPlot(null, m_ic.getMessage("AXIS_TIME_LABEL"), m_ic.getMessage("BG")
-                + "  [" + da_local.getSettings().getBG_unitString() + "]", dataset, PlotOrientation.VERTICAL, false,
-            false, false);
+        this.chart = ChartFactory.createScatterPlot(null, m_ic.getMessage("AXIS_TIME_LABEL"),
+            m_ic.getMessage("BG") + "  [" + da_local.getGlucoseUnitType().getTranslation() + "]", dataset,
+            PlotOrientation.VERTICAL, false, false, false);
         XYPlot plot = this.chart.getXYPlot();
         plot.setDomainAxis(new DateAxis());
     }
+
 
     /**
      * Create Chart Panel
@@ -339,6 +349,7 @@ public class GraphViewSpread extends AbstractGraphViewAndProcessor
     {
         this.chart_panel = new ChartPanel(this.getChart(), true, true, true, true, false);
     }
+
 
     /**
      * Get Controler Interface instance

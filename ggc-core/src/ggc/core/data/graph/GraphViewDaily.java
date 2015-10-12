@@ -2,7 +2,6 @@ package ggc.core.data.graph;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.jfree.chart.ChartFactory;
@@ -18,12 +17,14 @@ import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.time.DateRange;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.utils.data.TimeZoneUtil;
 
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.GlucoValues;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.util.DataAccess;
 
@@ -54,10 +55,11 @@ import ggc.core.util.DataAccess;
  *  Author: rumbi   
  */
 
-public class GraphViewDaily extends AbstractGraphViewAndProcessor
+public class GraphViewDaily extends GraphViewCGMSDailyAbstract
 {
 
-    GregorianCalendar gc;
+    private static final Logger LOG = LoggerFactory.getLogger(GraphViewDaily.class);
+
     private GlucoValues gluco_values;
 
     private XYSeriesCollection datasetBG = new XYSeriesCollection();
@@ -67,19 +69,16 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor
     DateAxis dateAxis;
     NumberAxis insBUAxis;
 
-    DataAccess da_local = DataAccess.getInstance();
-    GGCGraphUtil graph_util = GGCGraphUtil.getInstance(da_local);
-
 
     /**
      * Constructor
      * 
-     * @param gc 
+     * @param currentCalendar
      */
-    public GraphViewDaily(GregorianCalendar gc)
+    public GraphViewDaily(GregorianCalendar currentCalendar)
     {
         super(DataAccess.getInstance());
-        this.gc = gc;
+        this.currentCalendar = currentCalendar;
     }
 
 
@@ -113,15 +112,12 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor
     {
         if (gluco_values == null)
         {
-            this.gluco_values = new GlucoValues(this.gc, (GregorianCalendar) this.gc.clone(), true);
-
-            // System.out.println("Gluco Values: " +
-            // this.gluco_values.getDailyValuesRowsCount());
-
-            // GregorianCalendar gc_prev = (GregorianCalendar) this.gc.clone();
-            // gc_prev.add(Calendar.DAY_OF_YEAR, -1);
-            // this.gluco_values_prev = new GlucoValues(gc_prev, gc_prev, true);
+            this.gluco_values = new GlucoValues(this.currentCalendar, (GregorianCalendar) this.currentCalendar.clone(),
+                    true);
         }
+
+        loadCGMSData();
+
     }
 
 
@@ -147,10 +143,10 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor
 
         XYSeries BGSeries = new XYSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), true, true);
         XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"), true, true);
-        XYSeries ins1Series = new XYSeries(da_local.getSettings().getIns1Name(), true, true);
-        XYSeries ins2Series = new XYSeries(da_local.getSettings().getIns2Name(), true, true);
+        XYSeries ins1Series = new XYSeries(dataAccessCore.getConfigurationManagerWrapper().getIns1Name(), true, true);
+        XYSeries ins2Series = new XYSeries(dataAccessCore.getConfigurationManagerWrapper().getIns2Name(), true, true);
 
-        int BGUnit = da_local.getSettings().getBG_unit();
+        GlucoseUnitType glucoseUnitType = dataAccessCore.getGlucoseUnitType();
 
         for (int i = 0; i < this.gluco_values.getDailyValuesRowsCount(); i++)
         {
@@ -158,9 +154,9 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor
 
             long time = row.getDateTimeMs();
 
-            if (row.getBG(BGUnit) > 0)
+            if (row.getBG(glucoseUnitType) > 0)
             {
-                createWiderBar(BGSeries, time, row.getBG(BGUnit), 10);
+                createWiderBar(BGSeries, time, row.getBG(glucoseUnitType), 10);
             }
 
             if (row.getCH() > 0)
@@ -184,19 +180,11 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor
         datasetInsCH.addSeries(ins2Series);
         datasetInsCH.addSeries(CHSeries);
 
-    }
+        if (useCGMSData)
+        {
+            datasetBG.addSeries(CGMSSeries);
+        }
 
-
-    /**
-     * Get Title (used by GraphViewer)
-     * 
-     * @return title as string 
-     */
-    @Override
-    public String getTitle()
-    {
-        return m_ic.getMessage("DAILYGRAPHFRAME") + " [" + gc.get(Calendar.DAY_OF_MONTH) + "."
-                + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR) + "]";
     }
 
 
@@ -208,22 +196,17 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor
     public void setPlot(JFreeChart chart)
     {
         XYPlot plot = chart.getXYPlot();
-        XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
-        // XYLineAndShapeRenderer insBURenderer = new XYLineAndShapeRenderer();
 
         dateAxis = (DateAxis) plot.getDomainAxis();
 
         BGAxis = (NumberAxis) plot.getRangeAxis();
         insBUAxis = new NumberAxis();
 
-        ColorSchemeH colorScheme = graph_util.getColorScheme();
+        ColorSchemeH colorScheme = graphUtil.getColorScheme();
 
-        chart.setBackgroundPaint(graph_util.backgroundColor);
+        chart.setBackgroundPaint(graphUtil.backgroundColor);
 
-        // Bars
-        XYBarRenderer barRenderer = new XYBarRenderer();
-
-        RenderingHints rh = graph_util.getRenderingHints();
+        RenderingHints rh = graphUtil.getRenderingHints();
 
         if (rh != null)
         {
@@ -231,6 +214,9 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor
         }
 
         chart.setBorderVisible(false);
+
+        XYLineAndShapeRenderer defaultRenderer = (XYLineAndShapeRenderer) plot.getRenderer();
+        XYBarRenderer barRenderer = new XYBarRenderer();
 
         plot.setRangeAxis(1, insBUAxis);
         plot.setRangeAxisLocation(1, AxisLocation.BOTTOM_OR_RIGHT);
@@ -249,7 +235,14 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor
         // plot.setRangeGridlinesVisible(false);
         // plot.setDomainGridlinesVisible(false);
 
-        defaultRenderer.setSeriesPaint(0, da_local.getColor(colorScheme.getColor_bg()));
+        defaultRenderer.setSeriesPaint(0, getColor(colorScheme.getColor_bg()));
+        defaultRenderer.setSeriesShapesVisible(0, true);
+
+        if (useCGMSData)
+        {
+            defaultRenderer.setSeriesPaint(1, Color.MAGENTA);
+            defaultRenderer.setSeriesShapesVisible(1, false);
+        }
 
         // insBURenderer.setSeriesPaint(0,
         // da_local.getColor(colorScheme.getColor_ch()));
@@ -258,11 +251,9 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor
         // insBURenderer.setSeriesPaint(2,
         // da_local.getColor(colorScheme.getColor_ins2()));
 
-        barRenderer.setSeriesPaint(0, da_local.getColor(colorScheme.getColor_ins1()));
-        barRenderer.setSeriesPaint(1, da_local.getColor(colorScheme.getColor_ins2()));
-        barRenderer.setSeriesPaint(2, da_local.getColor(colorScheme.getColor_ch()));
-
-        defaultRenderer.setSeriesShapesVisible(0, true);
+        barRenderer.setSeriesPaint(0, getColor(colorScheme.getColor_ins1()));
+        barRenderer.setSeriesPaint(1, getColor(colorScheme.getColor_ins2()));
+        barRenderer.setSeriesPaint(2, getColor(colorScheme.getColor_ch()));
 
         // defaultRenderer.setSeriesShapesVisible(0, true);
         // insBURenderer.setSeriesShapesVisible(0, true);
@@ -275,8 +266,8 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor
         dateAxis.setDateFormatOverride(sdf);
         dateAxis.setAutoRange(false);
         dateAxis.setRange(this.gluco_values.getRangeFrom().getTime(), this.gluco_values.getRangeTo().getTime());
-        dateAxis.setDefaultAutoRange(new DateRange(this.gluco_values.getRangeFrom().getTime(), this.gluco_values
-                .getRangeTo().getTime()));
+        dateAxis.setDefaultAutoRange(
+            new DateRange(this.gluco_values.getRangeFrom().getTime(), this.gluco_values.getRangeTo().getTime()));
         dateAxis.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
 
         // BG Axis
@@ -306,7 +297,7 @@ public class GraphViewDaily extends AbstractGraphViewAndProcessor
     public void createChart()
     {
         chart = ChartFactory.createTimeSeriesChart(null, this.m_ic.getMessage("AXIS_TIME_LABEL"),
-            String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"), this.graph_util.getUnitLabel()), datasetBG, true,
+            String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"), this.graphUtil.getUnitLabel()), datasetBG, true,
             true, true);
 
         this.setPlot(chart);

@@ -30,6 +30,7 @@ import com.atech.utils.logs.RedirectScreen;
 
 import ggc.core.data.*;
 import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.data.graph.v2.GGCGraphContext;
 import ggc.core.db.GGCDb;
@@ -103,9 +104,9 @@ public class DataAccess extends ATDataAccessLMAbstract
     private DailyValues m_dvalues = null;
     private WeeklyValues m_dRangeValues = null;
 
-    private GGCProperties m_settings = null;
-    private DbToolApplicationGGC m_configFile = null;
-    private ConfigurationManager m_cfgMgr = null;
+    protected GGCProperties m_settings = null;
+    protected DbToolApplicationGGC m_configFile = null;
+    protected ConfigurationManager m_cfgMgr = null;
 
     /**
      * Decimal with zero decimals
@@ -169,7 +170,9 @@ public class DataAccess extends ATDataAccessLMAbstract
     public static final String EXTENDED_HANDLER_DailyValuesRow = "DailyValuesRow";
 
     private GGCGraphContext graphContext;
+    protected ConfigurationManagerWrapper configurationManagerWrapper;
 
+    protected GlucoseUnitType glucoseUnitType;
 
     // private int current_person_id = 1;
     // NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
@@ -182,6 +185,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
+
 
     // Constructor: DataAccess
     /**
@@ -210,27 +214,17 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         loadLanguageIntoContext();
 
-        // System.out.println("init Special");
-        // this.tree_roots = new Hashtable<String, GGCTreeRoot>();
-
-        // Help Context Init
-        // HelpContext hc = new HelpContext("../data/help/en/GGC.hs");
         HelpContext hc = new HelpContext("/" + this.lang_mgr.getHelpSet());
         this.setHelpContext(hc);
         this.help_enabled = true;
 
-        // System.out.println("config File");
         this.m_configFile = new DbToolApplicationGGC();
         this.m_configFile.loadConfig();
 
-        // System.out.println("configuratioon manager");
         m_cfgMgr = new ConfigurationManager(this);
+        configurationManagerWrapper = new ConfigurationManagerWrapper(m_cfgMgr);
 
-        // System.out.println("m_settings");
-        this.m_settings = new GGCProperties(this, this.m_configFile, m_cfgMgr);
-
-        // System.out.println("m_set: " + this.m_settings);
-        // this.m_settings.load();
+        this.m_settings = new GGCProperties(this, this.m_configFile, configurationManagerWrapper);
 
         loadOptions();
 
@@ -241,7 +235,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         this.loadGraphConfigProperties();
         this.startWebServer();
-        this.loadSpecialParameters();
+        // this.loadSpecialParameters(); this will be loaded with GGCDbLoader
         this.loadConverters();
         loadGraphContext();
 
@@ -284,7 +278,8 @@ public class DataAccess extends ATDataAccessLMAbstract
                 I18nControlLangMgrDual mgrd = (I18nControlLangMgrDual) mgr;
                 mgrd.getDefaultLanguageInstance();
 
-                ctx.addLanguageInstance(GGCPluginType.Core, ctx.getDefaultLanguage(), this.getI18nControlInstanceBase());
+                ctx.addLanguageInstance(GGCPluginType.Core, ctx.getDefaultLanguage(),
+                    this.getI18nControlInstanceBase());
 
             }
             else
@@ -355,7 +350,8 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         if (s_da == null)
         {
-            // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  "
+            // System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // "
             // + main);
             // GGCDb db = new GGCDb();
 
@@ -371,7 +367,6 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         return s_da;
     }
-
 
     /**
      * Create Instance
@@ -395,6 +390,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     /*
      * static public DataAccess getInstance() { return dataAccess; }
      */
+
 
     // Method: deleteInstance
     /**
@@ -677,7 +673,8 @@ public class DataAccess extends ATDataAccessLMAbstract
     @Override
     public void loadGraphConfigProperties()
     {
-        this.graph_config = this.m_settings;
+        // this.graph_config = this.m_settings;
+        this.graph_config = this.configurationManagerWrapper;
     }
 
 
@@ -687,7 +684,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     private void loadIcons()
     {
-        config_icons = new ImageIcon[7];
+        config_icons = new ImageIcon[9];
         config_icons[0] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_mode.png", m_main));
         config_icons[1] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_general.png", m_main));
         config_icons[2] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_medical.png", m_main));
@@ -695,9 +692,8 @@ public class DataAccess extends ATDataAccessLMAbstract
         config_icons[4] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_render.png", m_main));
         config_icons[5] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_print.png", m_main));
         config_icons[6] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_lang.png", m_main));
-        // config_icons[4] = new ImageIcon(getImage("/icons/cfg_meter.png",
-        // m_main));
-
+        config_icons[7] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_pump.png", m_main));
+        config_icons[8] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_cgms.png", m_main));
     }
 
 
@@ -754,9 +750,11 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     /**
      * Get Configuration Manager (Db)
-     * 
+     *
+     * @deprecated use Get Configuration Manager Wrapper instead
      * @return
      */
+    @Deprecated
     public ConfigurationManager getConfigurationManager()
     {
         return this.m_cfgMgr;
@@ -986,41 +984,40 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static final int BG_MMOL = 2;
 
+    // /**
+    // * Get Measurment Type
+    // *
+    // * @return
+    // */
+    // public int getBGMeasurmentType()
+    // {
+    // return this.m_settings.getBG_unit();
+    // }
+    //
+    //
+    // // String[] bg_types = { "", "mg/dL", "mmol/L"};
+    //
+    // /**
+    // * Get Measurment Type
+    // *
+    // * @return
+    // */
+    // public String getBGMeasurmentTypeString()
+    // {
+    // return this.bg_units[getBGMeasurmentType()];
+    // }
+    //
 
-    /**
-     * Get Measurment Type
-     * 
-     * @return
-     */
-    public int getBGMeasurmentType()
-    {
-        return this.m_settings.getBG_unit();
-    }
-
-
-    // String[] bg_types = { "", "mg/dL", "mmol/L"};
-
-    /**
-     * Get Measurment Type
-     * 
-     * @return
-     */
-    public String getBGMeasurmentTypeString()
-    {
-        return this.bg_units[getBGMeasurmentType()];
-    }
-
-
-    /**
-     * Set Measurment Type
-     * 
-     * @param type 
-     */
-    public void setBGMeasurmentType(int type)
-    {
-
-        // this.m_BG_unit = type;
-    }
+    // /**
+    // * Set Measurment Type
+    // *
+    // * @param type
+    // */
+    // public void setBGMeasurmentType(int type)
+    // {
+    //
+    // // this.m_BG_unit = type;
+    // }
 
     private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
 
@@ -1038,41 +1035,37 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public float getDisplayedBG(float dbValue)
     {
-        switch (this.getBGMeasurmentType())
+        switch (this.getGlucoseUnitType())
         {
-            case BG_MMOL:
+            case mmol_L:
                 return this.converters.get("BG").getValueDifferent(Converter_mgdL_mmolL.UNIT_mg_dL, dbValue);
-                // this POS should return a float rounded to 3 decimal places,
-                // if I understand the docu correctly
-                // return (new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR, new
-                // MathContext(3, RoundingMode.HALF_UP))
-                // .floatValue());
-            case BG_MGDL:
+
+            case mg_dL:
+            case None:
             default:
                 return dbValue;
         }
     }
 
 
-    /**
-     * Get BG Value
-     * 
-     * @param bgValue
-     * @return
-     */
-    public float getBGValue(float bgValue)
-    {
-        switch (this.getBGMeasurmentType())
-        {
-            case BG_MMOL:
-                return bgValue * MGDL_TO_MMOL_FACTOR;
-            case BG_MGDL:
-            default:
-                return bgValue;
-        }
-
-    }
-
+    // /**
+    // * Get BG Value
+    // *
+    // * @param bgValue
+    // * @return
+    // */
+    // public float getBGValue(float bgValue)
+    // {
+    // switch (this.getBGMeasurmentType())
+    // {
+    // case BG_MMOL:
+    // return bgValue * MGDL_TO_MMOL_FACTOR;
+    // case BG_MGDL:
+    // default:
+    // return bgValue;
+    // }
+    //
+    // }
 
     /**
      * Get BG Value
@@ -1096,13 +1089,30 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         float f = getFloatValueFromString(bgValue, 0.0f);
 
-        switch (this.getBGMeasurmentType())
+        switch (this.getGlucoseUnitType())
         {
-            case BG_MMOL:
+            case mmol_L:
                 return Decimal1Format.format(f);
-            case BG_MGDL:
+            case None:
+            case mg_dL:
             default:
                 return Decimal0Format.format(f);
+        }
+
+    }
+
+
+    public String getBGValueAsString(float bgValue)
+    {
+
+        switch (this.getGlucoseUnitType())
+        {
+            case mmol_L:
+                return Decimal1Format.format(bgValue);
+            case None:
+            case mg_dL:
+            default:
+                return Decimal0Format.format(bgValue);
         }
 
     }
@@ -1114,14 +1124,32 @@ public class DataAccess extends ATDataAccessLMAbstract
      * @param type
      * @param bg_value
      * @return
+     *
+     * @deprecated Use getBGValueByTypeFromDefault instead.
      */
+    @Deprecated
     public float getBGValueByType(int type, float bg_value)
+    {
+        return getBGValueByTypeFromDefault(GlucoseUnitType.getByCode(type), bg_value);
+    }
+
+
+    /**
+     * Get BG Value By Type
+     *
+     * @param type
+     * @param bg_value
+     * @return
+     */
+    public float getBGValueByTypeFromDefault(GlucoseUnitType type, float bg_value)
     {
         switch (type)
         {
-            case BG_MMOL:
-                return bg_value * MGDL_TO_MMOL_FACTOR;
-            case BG_MGDL:
+            case mmol_L:
+                return this.getBGConverter().getValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, bg_value);
+
+            case mg_dL:
+            case None:
             default:
                 return bg_value;
         }
@@ -1136,20 +1164,29 @@ public class DataAccess extends ATDataAccessLMAbstract
      * @param output_type
      * @param bg_value
      * @return
+     *
+     * @deprecated Use getBGValueByType(GlucoseUnitType, GlucoseUnitType,Number)
      */
+    @Deprecated
     public float getBGValueByType(int input_type, int output_type, float bg_value)
     {
+        return getBGValueByType(GlucoseUnitType.getByCode(input_type), GlucoseUnitType.getByCode(output_type),
+            bg_value);
+    }
 
-        if (input_type == output_type)
-            return bg_value;
-        else
-        {
-            if (output_type == DataAccess.BG_MGDL)
-                return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
-            else
-                return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
-        }
 
+    /**
+     * Get BG Value By Type
+     *
+     * @param input_type
+     * @param output_type
+     * @param bg_value
+     * @return
+     *
+     */
+    public Float getBGValueByType(GlucoseUnitType inputType, GlucoseUnitType outputType, Number bgValue)
+    {
+        return this.getBGConverter().getValueByType(inputType, outputType, bgValue);
     }
 
 
@@ -1221,7 +1258,6 @@ public class DataAccess extends ATDataAccessLMAbstract
         return m_main;
     }
 
-
     /**
      * Get Parent Little
      * 
@@ -1265,6 +1301,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      * }
      */
 
+
     // ********************************************************
     // ****** Person Id / Login *****
     // ********************************************************
@@ -1279,7 +1316,6 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         return this.current_user_id;
     }
-
 
     // ********************************************************
     // ****** I18n Utils *****
@@ -1299,6 +1335,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     // ********************************************************
     // ****** Look and Feel *****
     // ********************************************************
+
 
     /*
      * public void loadAvailableLFs() {
@@ -1642,8 +1679,10 @@ public class DataAccess extends ATDataAccessLMAbstract
     @Override
     public void loadSpecialParameters()
     {
+        this.glucoseUnitType = this.configurationManagerWrapper.getGlucoseUnit();
+
         this.special_parameters = new Hashtable<String, String>();
-        this.special_parameters.put("BG", "" + this.m_settings.getBG_unit());
+        this.special_parameters.put("BG", "" + this.getGlucoseUnitType().getCode());
         // this.m_BG_unit = this.m_settings.getBG_unit();
     }
 
@@ -1893,5 +1932,29 @@ public class DataAccess extends ATDataAccessLMAbstract
     public GGCGraphContext getGraphContext()
     {
         return graphContext;
+    }
+
+
+    public GlucoseUnitType getGlucoseUnitType()
+    {
+        return glucoseUnitType;
+    }
+
+
+    public void setGlucoseUnitType(GlucoseUnitType glucoseUnitType)
+    {
+        this.glucoseUnitType = glucoseUnitType;
+    }
+
+
+    public ConfigurationManagerWrapper getConfigurationManagerWrapper()
+    {
+        return configurationManagerWrapper;
+    }
+
+
+    public void setConfigurationManagerWrapper(ConfigurationManagerWrapper configurationManagerWrapper)
+    {
+        this.configurationManagerWrapper = configurationManagerWrapper;
     }
 }

@@ -12,6 +12,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 import com.atech.utils.data.ATechDate;
 
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.util.DataAccess;
 import ggc.shared.ratio.RatioEntry;
 import ggc.shared.ratio.RatioExtendedDialog;
@@ -67,19 +68,8 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
     JLabel label_food;
     JCheckBox cb_food_set;
 
-    // JButton AddButton;
-
-    // String sDate = null;
-
-    // DailyValues dV = null;
-    // DailyValuesRow m_dailyValuesRow = null;
-
     NumberFormat bg_displayFormat, bg_editFormat;
 
-    // JComponent components[] = new JComponent[9];
-
-    // Font f_normal = dataAccess.getFont(DataAccess.FONT_NORMAL);
-    // Font f_bold = dataAccess.getFont(DataAccess.FONT_NORMAL_BOLD);
     boolean in_process;
     boolean debug = true;
     JButton help_button = null;
@@ -87,6 +77,8 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
     int insulin_type;
 
     String ratio_mode = null;
+
+    ConfigurationManagerWrapper configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
 
 
     // private Container m_parent = null;
@@ -154,7 +146,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         this.setBounds(0, 0, width, height);
         m_da.centerJDialog(this);
 
-        this.ratio_mode = m_da.getSettings().getRatioMode();
+        this.ratio_mode = this.configurationManagerWrapper.getRatioMode();
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, width, height);
@@ -176,14 +168,7 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         setTitle(m_ic.getMessage("BOLUS_HELPER"));
         label_title.setText(m_ic.getMessage("BOLUS_HELPER"));
 
-        if (m_da.getBGMeasurmentType() == DataAccess.BG_MMOL)
-        {
-            this.bg_unit = "mmol/L";
-        }
-        else
-        {
-            this.bg_unit = "mg/dL";
-        }
+        this.bg_unit = m_da.getGlucoseUnitType().getTranslation();
 
         ATSwingUtils.getLabel(m_ic.getMessage("TIME") + ":", 30, 68, 100, 23, panel, ATSwingUtils.FONT_NORMAL_BOLD);
         ATSwingUtils.getLabel(ATechDate.getTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.time), 140, 68, 100, 25,
@@ -194,8 +179,8 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
 
         if (ratio_mode.equals("") || ratio_mode.equals("Base"))
         {
-            ATSwingUtils
-                    .getLabel(m_ic.getMessage("RATIO_MODE_BASE"), 140, 93, 150, 23, panel, ATSwingUtils.FONT_NORMAL);
+            ATSwingUtils.getLabel(m_ic.getMessage("RATIO_MODE_BASE"), 140, 93, 150, 23, panel,
+                ATSwingUtils.FONT_NORMAL);
         }
         else
         {
@@ -213,8 +198,8 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
             ATSwingUtils.FONT_NORMAL_BOLD);
         ATSwingUtils.getLabel(m_ic.getMessage("CARB_DOSE") + ":", 30, 268, 200, 25, panel,
             ATSwingUtils.FONT_NORMAL_BOLD);
-        ATSwingUtils
-                .getLabel(m_ic.getMessage("TOGETHER") + ":", 30, 298, 200, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(m_ic.getMessage("TOGETHER") + ":", 30, 298, 200, 25, panel,
+            ATSwingUtils.FONT_NORMAL_BOLD);
         ATSwingUtils.getLabel(m_ic.getMessage("TOGETHER_ROUNDED") + ":", 30, 328, 200, 25, panel,
             ATSwingUtils.FONT_NORMAL_BOLD);
 
@@ -228,22 +213,22 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         lbl_together = ATSwingUtils.getLabel("0 E", 200, 298, 200, 25, panel, ATSwingUtils.FONT_NORMAL);
         lbl_together_rnd = ATSwingUtils.getLabel("0 E", 200, 328, 200, 25, panel, ATSwingUtils.FONT_NORMAL);
 
-        this.ftf_ch_ins = ATSwingUtils.getNumericTextField(2, 2, new Float(0.0f), 180, 143, 45, 25, panel);
+        this.ftf_ch_ins = ATSwingUtils.getNumericTextField(2, 2, 0.0f, 180, 143, 45, 25, panel);
 
-        this.ftf_bg_ins = ATSwingUtils.getNumericTextField(2, 2, new Float(0.0f), 180, 173, 45, 25, panel);
+        this.ftf_bg_ins = ATSwingUtils.getNumericTextField(2, 2, 0.0f, 180, 173, 45, 25, panel);
 
+        ATSwingUtils.getLabel(" g " + m_ic.getMessage("CH") + "  =  1 " + m_ic.getMessage("UNIT_SHORT") + " "
+                + m_ic.getMessage("INSULIN"),
+            230, 145, 200, 25, panel, ATSwingUtils.FONT_NORMAL);
         ATSwingUtils.getLabel(
-            " g " + m_ic.getMessage("CH") + "  =  1 " + m_ic.getMessage("UNIT_SHORT") + " "
-                    + m_ic.getMessage("INSULIN"), 230, 145, 200, 25, panel, ATSwingUtils.FONT_NORMAL);
-        ATSwingUtils.getLabel(
-            " " + this.bg_unit + "  =  1 " + m_ic.getMessage("UNIT_SHORT") + " " + m_ic.getMessage("INSULIN"), 230,
-            175, 200, 25, panel, ATSwingUtils.FONT_NORMAL);
+            " " + this.bg_unit + "  =  1 " + m_ic.getMessage("UNIT_SHORT") + " " + m_ic.getMessage("INSULIN"), 230, 175,
+            200, 25, panel, ATSwingUtils.FONT_NORMAL);
 
-        ATSwingUtils.getButton(m_ic.getMessage("READ_RATIOS"), 240, 115, 120, 25, panel, ATSwingUtils.FONT_NORMAL,
-            null, "read_ratios", this, m_da);
+        ATSwingUtils.getButton(m_ic.getMessage("READ_RATIOS"), 240, 115, 120, 25, panel, ATSwingUtils.FONT_NORMAL, null,
+            "read_ratios", this, m_da);
 
-        ATSwingUtils.getButton(m_ic.getMessage("OK"), 30, 375, 110, 25, panel, ATSwingUtils.FONT_NORMAL, "ok.png",
-            "ok", this, m_da);
+        ATSwingUtils.getButton(m_ic.getMessage("OK"), 30, 375, 110, 25, panel, ATSwingUtils.FONT_NORMAL, "ok.png", "ok",
+            this, m_da);
 
         ATSwingUtils.getButton(m_ic.getMessage("CANCEL"), 145, 375, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
@@ -304,8 +289,8 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         }
         else
         {
-            RatioEntry re = RatioExtendedDialog.getExtendedRatioCollection().getRatioEntryByTime(
-                ATechDate.getTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.time));
+            RatioEntry re = RatioExtendedDialog.getExtendedRatioCollection()
+                    .getRatioEntryByTime(ATechDate.getTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.time));
 
             if (re == null)
             {
@@ -332,10 +317,11 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
 
         if (load_single)
         {
-            this.ftf_bg_ins.setValue(m_da.getSettings().getRatio_BG_Insulin());
-            this.ftf_ch_ins.setValue(m_da.getSettings().getRatio_CH_Insulin());
+            this.ftf_bg_ins.setValue(this.configurationManagerWrapper.getRatioBGInsulin());
+            this.ftf_ch_ins.setValue(this.configurationManagerWrapper.getRatioCHInsulin());
 
-            float cal_r = m_da.getSettings().getRatio_CH_Insulin() / m_da.getSettings().getRatio_BG_Insulin();
+            float cal_r = this.configurationManagerWrapper.getRatioCHInsulin()
+                    / this.configurationManagerWrapper.getRatioBGInsulin();
 
             this.lbl_bg_oh.setText("1 " + this.bg_unit + "  =  " + DataAccess.Decimal1Format.format(cal_r) + " g "
                     + m_ic.getMessage("CH"));
@@ -351,12 +337,10 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
         // calculate correction dose
         if (this.curr_bg > 0)
         {
-            float tg_bg = (this.m_da.getSettings().getBG_TargetHigh() + this.m_da.getSettings().getBG_TargetLow()) / 2.0f;
-
-            // System.out.println("target: " + tg_bg);
+            float tg_bg = (this.configurationManagerWrapper.getBGTargetHigh()
+                    + this.configurationManagerWrapper.getBGTargetLow()) / 2.0f;
 
             float cu = this.curr_bg - tg_bg;
-            // System.out.println("difference: " + cu);
 
             float cu_fix = cu / ATSwingUtils.getJFormatedTextValueFloat(this.ftf_bg_ins);
             this.lbl_correction
@@ -391,8 +375,9 @@ public class BolusHelper extends JDialog implements ActionListener, HelpCapable
 
         // System.out.println("Calc Insulin Rnd: " + this.calc_insulin_rnd);
 
-        this.lbl_together_rnd.setText(m_da.reformatInsulinAmountToCorrectValueString(this.insulin_type,
-            DataAccess.INSULIN_DOSE_BOLUS, sum) + "  " + m_ic.getMessage("UNIT_SHORT"));
+        this.lbl_together_rnd.setText(
+            m_da.reformatInsulinAmountToCorrectValueString(this.insulin_type, DataAccess.INSULIN_DOSE_BOLUS, sum) + "  "
+                    + m_ic.getMessage("UNIT_SHORT"));
     }
 
     boolean res = false;

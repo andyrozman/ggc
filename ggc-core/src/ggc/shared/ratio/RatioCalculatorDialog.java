@@ -15,7 +15,8 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
 
-import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.util.DataAccess;
 
 /**
@@ -72,6 +73,8 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
     private boolean calculate_only = false;
 
+    GlucoseUnitType glucoseUnit;
+
     // boolean in_action = false;
 
     // private GGCProperties props = dataAccess.getSettings();
@@ -86,7 +89,9 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
     // private Container m_parent = null;
 
-    ConfigurationManager config_manager = null;
+    // ConfigurationManager config_manager = null;
+
+    ConfigurationManagerWrapper configurationManagerWrapper;
 
 
     /**
@@ -102,7 +107,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
         setTitle(m_ic.getMessage("RATIO_CALCULATOR"));
         label_title.setText(m_ic.getMessage("RATIO_CALCULATOR"));
-        this.config_manager = m_da.getConfigurationManager();
+        this.configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
 
         init();
 
@@ -124,7 +129,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
         setTitle(m_ic.getMessage("RATIO_CALCULATOR"));
         label_title.setText(m_ic.getMessage("RATIO_CALCULATOR"));
-        this.config_manager = m_da.getConfigurationManager();
+        this.configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
 
         init();
 
@@ -143,7 +148,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
         // m_parent = dialog;
 
-        this.config_manager = m_da.getConfigurationManager();
+        this.configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
 
         init();
 
@@ -178,6 +183,8 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         int height = 625;
 
         ATSwingUtils.initLibrary();
+
+        glucoseUnit = this.configurationManagerWrapper.getGlucoseUnit();
 
         m_da.addComponent(this);
 
@@ -221,8 +228,8 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
             new TitledBorder(m_ic.getMessage("TYPE_SOURCE_MANUAL")), panel);
 
         ATSwingUtils.getLabel(m_ic.getMessage("TDD_FOR_CALCULATION") + ":", 20, 20, 250, 25, p2);
-        dtf_tdd = ATSwingUtils.getNumericTextField(4, 1, this.config_manager.getFloatValue("LAST_TDD"), 290, 20, 60,
-            25, p2);
+        dtf_tdd = ATSwingUtils.getNumericTextField(4, 1, this.configurationManagerWrapper.getLastTotalDailyDose(), 290,
+            20, 60, 25, p2);
         p2.setVisible(true);
         panels[0] = p2;
 
@@ -234,7 +241,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         ATSwingUtils.getLabel(m_ic.getMessage("RATIO_TIME_SELECT_DESC"), 20, 20, 400, 75, p3, ATSwingUtils.FONT_NORMAL);
         ATSwingUtils.getLabel(m_ic.getMessage("SELECT_RANGE") + ":", 20, 100, 150, 25, p3);
         String range_el[] = { m_ic.getMessage("1_WEEK"), m_ic.getMessage("2_WEEKS"), m_ic.getMessage("3_WEEKS"),
-                             m_ic.getMessage("1_MONTH") };
+                              m_ic.getMessage("1_MONTH") };
         cb_time_range = ATSwingUtils.getComboBox(range_el, 180, 100, 120, 25, p3, ATSwingUtils.FONT_NORMAL);
         ATSwingUtils.getLabel(m_ic.getMessage("DB_DATA_STATUS") + ":", 20, 130, 150, 25, p3);
         db_data_status = ATSwingUtils.getLabel(m_ic.getMessage("DB_DATA_NOT_READY"), 180, 130, 150, 25, p3);
@@ -250,7 +257,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         ATSwingUtils.getLabel(m_ic.getMessage("SELECT_RULE") + ":", 20, 20, 160, 25, p4, ATSwingUtils.FONT_NORMAL);
         Object o1[] = { m_ic.getMessage("RULE_500"), m_ic.getMessage("RULE_450"), m_ic.getMessage("RULE_300") };
         cb_icarb_rule = ATSwingUtils.getComboBox(o1, 150, 20, 250, 25, p4, ATSwingUtils.FONT_NORMAL);
-        cb_icarb_rule.setSelectedItem(m_ic.getMessage(this.config_manager.getStringValue("INS_CARB_RULE")));
+        cb_icarb_rule.setSelectedItem(m_ic.getMessage(this.configurationManagerWrapper.getInsulinCarbRule()));
         panels[2] = p4;
 
         JPanel p5 = ATSwingUtils.getPanel(30, startx + 70, 430, 60, null,
@@ -258,7 +265,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         ATSwingUtils.getLabel(m_ic.getMessage("SELECT_RULE") + ":", 20, 20, 160, 25, p5, ATSwingUtils.FONT_NORMAL);
         Object o2[] = { m_ic.getMessage("RULE_1800"), m_ic.getMessage("RULE_1500") };
         cb_sens_rule = ATSwingUtils.getComboBox(o2, 150, 20, 250, 25, p5, ATSwingUtils.FONT_NORMAL);
-        cb_sens_rule.setSelectedItem(m_ic.getMessage(this.config_manager.getStringValue("SENSITIVITY_RULE")));
+        cb_sens_rule.setSelectedItem(m_ic.getMessage(this.configurationManagerWrapper.getSensitivityRule()));
         panels[3] = p5;
 
         JPanel p6 = ATSwingUtils.getPanel(30, startx + 135, 430, 110, null,
@@ -268,20 +275,20 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
             ATSwingUtils.FONT_NORMAL);
 
         lb_ins_carb = ATSwingUtils.getLabel(
-            String.format(m_ic.getMessage("INS_CH_RATIO_PROC"), DataAccess.getFloatAsString(0.0f, 2)), 130, 20, 160,
-            25, p6, ATSwingUtils.FONT_NORMAL);
+            String.format(m_ic.getMessage("INS_CH_RATIO_PROC"), DataAccess.getFloatAsString(0.0f, 2)), 130, 20, 160, 25,
+            p6, ATSwingUtils.FONT_NORMAL);
 
         ATSwingUtils.getLabel(m_ic.getMessage("INS_BG_RATIO") + ":", 20, 45, 160, 25, p6, ATSwingUtils.FONT_NORMAL);
 
-        lb_ins_bg = ATSwingUtils.getLabel(
-            String.format(m_ic.getMessage("INS_BG_RATIO_PROC"), DataAccess.getFloatAsString(0.0f, 2),
-                m_da.getBGMeasurmentTypeString()), 130, 45, 300, 25, p6, ATSwingUtils.FONT_NORMAL);
+        lb_ins_bg = ATSwingUtils.getLabel(String.format(m_ic.getMessage("INS_BG_RATIO_PROC"),
+            DataAccess.getFloatAsString(0.0f, 2), glucoseUnit.getTranslation()), 130, 45, 300, 25, p6,
+            ATSwingUtils.FONT_NORMAL);
 
         ATSwingUtils.getLabel(m_ic.getMessage("CH_BG_RATIO") + ":", 20, 70, 160, 25, p6, ATSwingUtils.FONT_NORMAL);
 
-        lb_ch_bg = ATSwingUtils.getLabel(
-            String.format(m_ic.getMessage("CH_BG_RATIO_PROC"), m_da.getBGMeasurmentTypeString(),
-                DataAccess.getFloatAsString(0.0f, 1)), 130, 70, 300, 25, p6, ATSwingUtils.FONT_NORMAL);
+        lb_ch_bg = ATSwingUtils.getLabel(String.format(m_ic.getMessage("CH_BG_RATIO_PROC"),
+            glucoseUnit.getTranslation(), DataAccess.getFloatAsString(0.0f, 1)), 130, 70, 300, 25, p6,
+            ATSwingUtils.FONT_NORMAL);
 
         ATSwingUtils.getButton("", 390, 20, 30, 30, p6, ATSwingUtils.FONT_NORMAL, "calculator.png", "calculate", this,
             m_da);
@@ -412,7 +419,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
 
         float sens_r = sens_rule[cb_sens_rule.getSelectedIndex()];
 
-        if (m_da.getBGMeasurmentType() == DataAccess.BG_MMOL)
+        if (glucoseUnit == GlucoseUnitType.mmol_L)
         {
             sens_r = sens_r / 18.0f;
         }
@@ -421,24 +428,26 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         result[2] = result[0] / result[1];
         result[3] = tdd;
 
-        lb_ins_carb.setText(String.format(m_ic.getMessage("INS_CH_RATIO_PROC"),
-            DataAccess.getFloatAsString(result[0], 2)));
+        lb_ins_carb.setText(
+            String.format(m_ic.getMessage("INS_CH_RATIO_PROC"), DataAccess.getFloatAsString(result[0], 2)));
 
-        lb_ins_bg.setText(String.format(m_ic.getMessage("INS_BG_RATIO_PROC"),
-            DataAccess.getFloatAsString(result[1], 2), m_da.getBGMeasurmentTypeString()));
+        lb_ins_bg.setText(String.format(m_ic.getMessage("INS_BG_RATIO_PROC"), DataAccess.getFloatAsString(result[1], 2),
+            glucoseUnit.getTranslation()));
 
-        lb_ch_bg.setText(String.format(m_ic.getMessage("CH_BG_RATIO_PROC"), m_da.getBGMeasurmentTypeString(),
+        lb_ch_bg.setText(String.format(m_ic.getMessage("CH_BG_RATIO_PROC"), glucoseUnit.getTranslation(),
             DataAccess.getFloatAsString(result[2], 1)));
 
         if (!calculate_only)
         {
-            this.config_manager.setFloatValue("LAST_TDD", tdd);
-            this.config_manager.setStringValue("INS_CARB_RULE",
+            this.configurationManagerWrapper.setLastTotalDailyDose(tdd);
+
+            this.configurationManagerWrapper.setInsulinCarbRule(
                 getBaseStringEntry(this.carb_rule_desc, (String) this.cb_icarb_rule.getSelectedItem(), "RULE_500"));
-            this.config_manager.setStringValue("SENSITIVITY_RULE",
+
+            this.configurationManagerWrapper.setSensitivityRule(
                 getBaseStringEntry(this.sens_rule_desc, (String) this.cb_sens_rule.getSelectedItem(), "RULE_1800"));
 
-            this.config_manager.saveConfig();
+            this.configurationManagerWrapper.saveConfig();
         }
     }
 
@@ -488,7 +497,6 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
         return this.result;
     }
 
-
     /*
      * private void fixDecimals()
      * {
@@ -520,6 +528,7 @@ public class RatioCalculatorDialog extends JDialog implements ActionListener, He
      * return field;
      * }
      */
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****

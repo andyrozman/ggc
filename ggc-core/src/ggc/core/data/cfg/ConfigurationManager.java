@@ -3,8 +3,8 @@ package ggc.core.data.cfg;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.core.db.GGCDb;
 import ggc.core.db.datalayer.Settings;
@@ -35,48 +35,86 @@ import ggc.core.util.DataAccess;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class ConfigurationManager
+public class ConfigurationManager // extends AbstractConfigurationManager
 {
 
-    private static Log s_logger = LogFactory.getLog(ConfigurationManager.class);
+    private static Logger s_logger = LoggerFactory.getLogger(ConfigurationManager.class);
+
     private boolean changed = false;
 
-    private String cfg_string[] = { "NAME", "Unknown user", "INS1_NAME", "Insulin 1", "INS1_ABBR", "Ins1", "INS2_NAME",
-                                   "Insulin 2", "INS2_ABBR", "Ins2", "METER_PORT", "", "LAF_NAME",
-                                   "blueMetalthemepack.zip", "PRINT_PDF_VIEWER_PATH", "", "PRINT_EMPTY_VALUE", "",
-                                   "SELECTED_COLOR_SCHEME", "Default Scheme", "TIMEZONE", "", "SW_MODE_DESC",
-                                   "PEN_INJECTION_MODE", "PEN_BASAL_PRECISSION", "1", "PEN_BOLUS_PRECISSION", "1",
-                                   "PUMP_BASAL_PRECISSION", "0.1", "PUMP_BOLUS_PRECISSION", "0.1", "INS_CARB_RULE",
-                                   "RULE_500", "SENSITIVITY_RULE", "RULE_1800", "PUMP_INSULIN", "",
-                                   "PRINT_PDF_VIEWER_PARAMETERS", "", "INS3_NAME", "Insulin 3", "INS3_ABBR", "Ins3",
-                                   "RATIO_MODE", "Base" // Base, Extended
+    private String cfg_string[] = { "NAME", "Unknown user", //
+                                    "INS1_NAME", "Insulin 1", //
+                                    "INS1_ABBR", "Ins1", //
+                                    "INS2_NAME", "Insulin 2", //
+                                    "INS2_ABBR", "Ins2", //
+                                    "METER_PORT", "", //
+                                    "LAF_NAME", "blueMetalthemepack.zip", //
+                                    "PRINT_PDF_VIEWER_PATH", "", //
+                                    "PRINT_EMPTY_VALUE", "", //
+                                    "SELECTED_COLOR_SCHEME", "Default Scheme", //
+                                    "TIMEZONE", "", //
+                                    "SW_MODE_DESC", "PEN_INJECTION_MODE", //
+                                    "PEN_BASAL_PRECISSION", "1", //
+                                    "PEN_BOLUS_PRECISSION", "1", //
+                                    "PUMP_BASAL_PRECISSION", "0.1", //
+                                    "PUMP_BOLUS_PRECISSION", "0.1", //
+                                    "INS_CARB_RULE", "RULE_500", //
+                                    "SENSITIVITY_RULE", "RULE_1800", //
+                                    "PUMP_INSULIN", "", //
+                                    "PRINT_PDF_VIEWER_PARAMETERS", "", //
+                                    "INS3_NAME", "Insulin 3", //
+                                    "INS3_ABBR", "Ins3", //
+                                    "RATIO_MODE", "Base" // Base, Extended
     };
 
-    private String cfg_int[] = {
-                                "METER_TYPE",
-                                "0",
-                                "BG_UNIT",
-                                "2", // 1=mg/dl, 2= mmol/l
-                                "RENDER_RENDERING", "0", "RENDER_DITHERING", "0", "RENDER_INTERPOLATION", "0",
-                                "RENDER_ANTIALIASING", "0", "RENDER_TEXT_ANTIALIASING", "0", "RENDER_COLOR_RENDERING",
-                                "0", "RENDER_FRACTIONAL_METRICS", "0", "PRINT_LUNCH_START_TIME", "1100",
-                                "PRINT_DINNER_START_TIME", "1800", "PRINT_NIGHT_START_TIME", "2100", "SW_MODE", "0",
-                                "PUMP_TBR_TYPE", "0", "INS1_TYPE", "2", // 0 -
-                                                                        // Not
-                                                                        // enabled,
-                                                                        // 1=Basal,
-                                                                        // 2=Bolus
-                                "INS2_TYPE", "1", "INS3_TYPE", "0" };
+    private String cfg_int[] = { "METER_TYPE", "0", //
+                                 "BG_UNIT", "2", // 1=mg/dl, 2= mmol/l
+                                 "RENDER_RENDERING", "0", //
+                                 "RENDER_DITHERING", "0", //
+                                 "RENDER_INTERPOLATION", "0", //
+                                 "RENDER_ANTIALIASING", "0", //
+                                 "RENDER_TEXT_ANTIALIASING", "0", //
+                                 "RENDER_COLOR_RENDERING", "0", //
+                                 "RENDER_FRACTIONAL_METRICS", "0", //
+                                 "PRINT_LUNCH_START_TIME", "1100", //
+                                 "PRINT_DINNER_START_TIME", "1800", //
+                                 "PRINT_NIGHT_START_TIME", "2100", //
+                                 "SW_MODE", "0", //
+                                 "PUMP_TBR_TYPE", "0", //
+                                 "INS1_TYPE", "2", // 0 - Not enabled, 1=Basal,
+                                                   // 2=Bolus
+                                 "INS2_TYPE", "1", //
+                                 "INS3_TYPE", "0" //
+    };
 
-    private String cfg_float[] = { "BG1_LOW", "60.0f", "BG1_HIGH", "200.0f", "BG1_TARGET_LOW", "80.0f",
-                                  "BG1_TARGET_HIGH", "120.0f", "BG2_LOW", "3.0f", "BG2_HIGH", "20.0f",
-                                  "BG2_TARGET_LOW", "4.4f", "BG2_TARGET_HIGH", "14.0f", "RATIO_CH_INSULIN", "0.0f",
-                                  "RATIO_BG_INSULIN", "0.0f", "PEN_MAX_BASAL", "80.0f", "PEN_MAX_BOLUS", "40.0f",
-                                  "PUMP_MAX_BASAL", "80.0f", "PUMP_MAX_BOLUS", "20.0f", "PUMP_UNIT_MIN", "0.0f",
-                                  "PUMP_UNIT_MAX", "40.0f", "PUMP_UNIT_STEP", "0.1f", "PUMP_PROC_MIN", "0.0f",
-                                  "PUMP_PROC_MAX", "200.0f", "PUMP_PROC_STEP", "5.0f", "LAST_TDD", "0.0f" };
+    private String cfg_float[] = { "BG1_LOW", "60.0f", //
+                                   "BG1_HIGH", "200.0f", //
+                                   "BG1_TARGET_LOW", "80.0f", //
+                                   "BG1_TARGET_HIGH", "120.0f", //
+                                   "BG2_LOW", "3.0f", //
+                                   "BG2_HIGH", "20.0f", //
+                                   "BG2_TARGET_LOW", "4.4f", //
+                                   "BG2_TARGET_HIGH", "14.0f", //
+                                   "RATIO_CH_INSULIN", "0.0f", //
+                                   "RATIO_BG_INSULIN", "0.0f", //
+                                   "PEN_MAX_BASAL", "80.0f", //
+                                   "PEN_MAX_BOLUS", "40.0f", //
+                                   "PUMP_MAX_BASAL", "80.0f", //
+                                   "PUMP_MAX_BOLUS", "20.0f", //
+                                   "PUMP_UNIT_MIN", "0.0f", //
+                                   "PUMP_UNIT_MAX", "40.0f", //
+                                   "PUMP_UNIT_STEP", "0.1f", //
+                                   "PUMP_PROC_MIN", "0.0f", //
+                                   "PUMP_PROC_MAX", "200.0f", //
+                                   "PUMP_PROC_STEP", "5.0f", //
+                                   "LAST_TDD", "0.0f" //
+    };
 
-    private String cfg_boolean[] = { "METER_DAYLIGHTSAVING_TIME_FIX", "false", "PRINT_USE_EXTERNAL_PDF_VIEWER", "false" };
+    private String cfg_boolean[] = { "METER_DAYLIGHTSAVING_TIME_FIX", "false", //
+                                     "PRINT_USE_EXTERNAL_PDF_VIEWER", "false", //
+                                     "USE_CGMS_DATA_IN_DAILY_PUMP_DISPLAY", "false", //
+                                     "USE_CGMS_DATA_IN_DAILY_PEN_DISPLAY", "false", //
+    };
 
     Hashtable<String, Settings> cfg_values = new Hashtable<String, Settings>();
     DataAccess m_da = null;
@@ -84,7 +122,8 @@ public class ConfigurationManager
 
     public ConfigurationManager(DataAccess da)
     {
-        this.m_da = da;
+        m_da = da;
+
     }
 
 
@@ -131,14 +170,16 @@ public class ConfigurationManager
 
 
     /**
-     * Add New configuration value
-     * 
-     * @param name name of configuration parameter
-     * @param defaultValue value (presumably def. value if added from this class)
-     * @param parameterType type of parameter (1=string, 2=int, 3=float, 4=boolean)
-     * @param db db instance
-     * @param addToConfigurationValues 
-     */
+    * Add New configuration value
+    *
+    * @param name name of configuration parameter
+    * @param defaultValue value (presumably def. value if added from this
+    class)
+    * @param parameterType type of parameter (1=string, 2=int, 3=float,
+    4=boolean)
+    * @param db db instance
+    * @param addToConfigurationValues
+    */
     public void addNewValue(String name, String defaultValue, int parameterType, GGCDb db,
             boolean addToConfigurationValues)
     {
@@ -354,18 +395,6 @@ public class ConfigurationManager
             }
         }
 
-    }
-
-
-    public Hashtable<String, String> loadExtendedRatioData()
-    {
-        return null;
-    }
-
-
-    public void saveExtendedRatioData(Hashtable<String, String> dta)
-    {
-        // return null;
     }
 
 }

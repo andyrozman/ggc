@@ -3,6 +3,7 @@ package ggc.core.data;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.util.DataAccess;
 
 /**
@@ -42,6 +43,7 @@ public class MonthlyValues extends WeeklyValues
 
     String empty_value = "";
     int times[] = { 1100, 1800, 2200 };
+    ConfigurationManagerWrapper configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
 
 
     /**
@@ -72,10 +74,10 @@ public class MonthlyValues extends WeeklyValues
      */
     public void loadConfiguration()
     {
-        this.empty_value = this.m_da.getSettings().getPrintEmptyValue();
-        this.times[0] = this.m_da.getSettings().getPrintLunchStartTime();
-        this.times[1] = this.m_da.getSettings().getPrintDinnerStartTime();
-        this.times[2] = this.m_da.getSettings().getPrintNightStartTime();
+        this.empty_value = configurationManagerWrapper.getPrintEmptyValue();
+        this.times[0] = configurationManagerWrapper.getPrintLunchStartTime();
+        this.times[1] = configurationManagerWrapper.getPrintDinnerStartTime();
+        this.times[2] = configurationManagerWrapper.getPrintNightStartTime();
     }
 
 
@@ -225,14 +227,7 @@ public class MonthlyValues extends WeeklyValues
             // BG
             if (data[i][1] >= 1)
             {
-                if (m_da.getSettings().getBG_unit() == 1)
-                {
-                    dataStr[i][0] = "" + (int) (data[i][0] / data[i][1]); // mg/dl
-                }
-                else
-                {
-                    dataStr[i][0] = "" + DataAccess.Decimal1Format.format(data[i][0] / data[i][1]); // mmol/l
-                }
+                dataStr[i][0] = m_da.getBGValueAsString(data[i][0] / data[i][1]);
             }
             else
             {
