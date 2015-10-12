@@ -14,6 +14,7 @@ import com.atech.utils.ATSwingUtils;
 
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 
@@ -50,13 +51,11 @@ import ggc.core.util.GGCProperties;
 public class StockAmounts extends JDialog implements ActionListener
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 672615534836782499L;
     private DataAccess m_da = DataAccess.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
     private GGCProperties props = m_da.getSettings();
+    private ConfigurationManagerWrapper configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
 
     private boolean m_actionDone = false;
 
@@ -90,7 +89,7 @@ public class StockAmounts extends JDialog implements ActionListener
      * dialog)
      * {
      * super(dialog, "", true);
-     * setTitle(m_ic.getMessage("ADD_NEW_ROW"));
+     * setTitle(i18nControl.getMessage("ADD_NEW_ROW"));
      * dV = ndV;
      * mod = m;
      * init();
@@ -121,62 +120,63 @@ public class StockAmounts extends JDialog implements ActionListener
         init();
     }
 
-
-    @SuppressWarnings("unused")
-    private void load()
-    {
-        this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
-
-        System.out.println(props.getBG_unit());
-
-        // which format
-        this.cob_bg_type.setSelectedIndex(props.getBG_unit() - 1);
-        this.BGField.setText("" + this.m_dailyValuesRow.getBGAsString());
-
-        if (debug)
-        {
-            System.out.println("Db value (cuurent): " + this.m_dailyValuesRow.getBG());
-            System.out.println("Db value (mg/dL): " + this.m_dailyValuesRow.getBG(1));
-            System.out.println("Display value (" + props.getBG_unitString() + "): "
-                    + this.m_dailyValuesRow.getBG(props.getBG_unit()));
-        }
-
-        Ins1Field.setText("" + this.m_dailyValuesRow.getIns1AsString());
-        Ins2Field.setText("" + this.m_dailyValuesRow.getIns2AsString());
-        BUField.setText("" + this.m_dailyValuesRow.getCHAsString());
-
-        ActField.setText(this.m_dailyValuesRow.getActivity());
-        UrineField.setText(this.m_dailyValuesRow.getUrine());
-
-        this.cb_food_set.setEnabled(false);
-        this.cb_food_set.setSelected(this.m_dailyValuesRow.areMealsSet());
-        this.cb_food_set.setEnabled(true);
-
-        CommentField.setText(this.m_dailyValuesRow.getComment());
-
-        /*
-         * addComponent(cb_food_set = new JCheckBox(" " +
-         * m_ic.getMessage("FOOD_SET")), 110, 240, 200, panel);
-         * addComponent(UrineField = new JTextField(), 110, 268, 220, panel);
-         * addComponent(ActField = new JTextField(), 110, 298, 220, panel);
-         */
-
-        /*
-         * this.dtc = new DateTimeComponent(this.m_ic,
-         * DateTimeComponent.ALIGN_VERTICAL, 5);
-         * dtc.setBounds(160, 55, 100, 35);
-         * panel.add(dtc);
-         * addComponent(BGField = new JTextField(), 160, 118, 35, panel);
-         * addComponent(Ins2Field = new JTextField(), 160, 148, 35, panel);
-         * addComponent(Ins2Field = new JTextField(), 160, 178, 35, panel);
-         * addComponent(BUField = new JTextField(), 160, 208, 35, panel);
-         * addComponent(cb_food_set = new JCheckBox(" " +
-         * m_ic.getMessage("FOOD_SET")), 110, 240, 200, panel);
-         * addComponent(UrineField = new JTextField(), 110, 268, 220, panel);
-         * addComponent(ActField = new JTextField(), 110, 298, 220, panel);
-         * addComponent(CommentField = new JTextField(), 110, 328, 220, panel);
-         */
-    }
+    // private void load()
+    // {
+    // this.dtc.setDateTime(this.m_dailyValuesRow.getDateTime());
+    //
+    // System.out.println(props.getBG_unit());
+    //
+    // // which format
+    // this.cob_bg_type.setSelectedIndex(props.getBG_unit() - 1);
+    // this.BGField.setText("" + this.m_dailyValuesRow.getBGAsString());
+    //
+    // if (debug)
+    // {
+    // System.out.println("Db value (cuurent): " +
+    // this.m_dailyValuesRow.getBG());
+    // System.out.println("Db value (mg/dL): " +
+    // this.m_dailyValuesRow.getBG(1));
+    // System.out.println(
+    // "Display value (" + props.getBG_unitString() + "): " +
+    // this.m_dailyValuesRow.getBG(props.getBG_unit()));
+    // }
+    //
+    // Ins1Field.setText("" + this.m_dailyValuesRow.getIns1AsString());
+    // Ins2Field.setText("" + this.m_dailyValuesRow.getIns2AsString());
+    // BUField.setText("" + this.m_dailyValuesRow.getCHAsString());
+    //
+    // ActField.setText(this.m_dailyValuesRow.getActivity());
+    // UrineField.setText(this.m_dailyValuesRow.getUrine());
+    //
+    // this.cb_food_set.setEnabled(false);
+    // this.cb_food_set.setSelected(this.m_dailyValuesRow.areMealsSet());
+    // this.cb_food_set.setEnabled(true);
+    //
+    // CommentField.setText(this.m_dailyValuesRow.getComment());
+    //
+    // /*
+    // * addComponent(cb_food_set = new JCheckBox(" " +
+    // * i18nControl.getMessage("FOOD_SET")), 110, 240, 200, panel);
+    // * addComponent(UrineField = new JTextField(), 110, 268, 220, panel);
+    // * addComponent(ActField = new JTextField(), 110, 298, 220, panel);
+    // */
+    //
+    // /*
+    // * this.dtc = new DateTimeComponent(this.i18nControl,
+    // * DateTimeComponent.ALIGN_VERTICAL, 5);
+    // * dtc.setBounds(160, 55, 100, 35);
+    // * panel.add(dtc);
+    // * addComponent(BGField = new JTextField(), 160, 118, 35, panel);
+    // * addComponent(Ins2Field = new JTextField(), 160, 148, 35, panel);
+    // * addComponent(Ins2Field = new JTextField(), 160, 178, 35, panel);
+    // * addComponent(BUField = new JTextField(), 160, 208, 35, panel);
+    // * addComponent(cb_food_set = new JCheckBox(" " +
+    // * i18nControl.getMessage("FOOD_SET")), 110, 240, 200, panel);
+    // * addComponent(UrineField = new JTextField(), 110, 268, 220, panel);
+    // * addComponent(ActField = new JTextField(), 110, 298, 220, panel);
+    // * addComponent(CommentField = new JTextField(), 110, 328, 220, panel);
+    // */
+    // }
 
 
     /*
@@ -215,8 +215,10 @@ public class StockAmounts extends JDialog implements ActionListener
         addLabel(m_ic.getMessage("DATE") + ":", 78, panel);
         addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
         addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
-        addLabel(props.getIns1Name() + " (" + props.getIns1Abbr() + ") :", 168, panel);
-        addLabel(props.getIns2Name() + " (" + props.getIns2Abbr() + "):", 198, panel);
+        addLabel(configurationManagerWrapper.getIns1Name() + " (" + configurationManagerWrapper.getIns1Abbr() + ") :",
+            168, panel);
+        addLabel(configurationManagerWrapper.getIns2Name() + " (" + configurationManagerWrapper.getIns2Abbr() + "):",
+            198, panel);
         addLabel(m_ic.getMessage("CH_LONG") + ":", 228, panel);
         addLabel(m_ic.getMessage("FOOD") + ":", 258, panel);
         addLabel(m_ic.getMessage("URINE") + ":", 288, panel);
@@ -237,7 +239,7 @@ public class StockAmounts extends JDialog implements ActionListener
         addComponent(ActField = new JTextField(), 110, 318, 220, panel);
         addComponent(CommentField = new JTextField(), 110, 348, 220, panel);
 
-        this.cob_bg_type.setSelectedIndex(props.getBG_unit() - 1);
+        this.cob_bg_type.setSelectedIndex(configurationManagerWrapper.getGlucoseUnit().getCode() - 1);
 
         cb_food_set.setMultiClickThreshhold(500);
 
@@ -265,8 +267,8 @@ public class StockAmounts extends JDialog implements ActionListener
         });
 
         String button_command[] = { "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"), "edit", m_ic.getMessage("EDIT"),
-                                   "ok", m_ic.getMessage("OK"), "cancel", m_ic.getMessage("CANCEL"), "help",
-                                   m_ic.getMessage("HELP") };
+                                    "ok", m_ic.getMessage("OK"), "cancel", m_ic.getMessage("CANCEL"), "help",
+                                    m_ic.getMessage("HELP") };
 
         int button_coord[] = { 210, 228, 120, 0, 230, 258, 100, 0, 50, 390, 80, 1, 140, 390, 80, 1, 250, 390, 80, 0 };
 
@@ -296,7 +298,7 @@ public class StockAmounts extends JDialog implements ActionListener
         label.setBounds(30, posY, 100, 25);
         label.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
         parent.add(label);
-        // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
+        // a.add(new JLabel(i18nControl.getMessage("DATE") + ":",
         // SwingConstants.RIGHT));
 
     }
@@ -316,11 +318,14 @@ public class StockAmounts extends JDialog implements ActionListener
      * {
      * this.setBounds(150, 150, 300, 150);
      * JPanel a = new JPanel(new GridLayout(0, 1));
-     * a.add(new JLabel(m_ic.getMessage("DATE") + ":", SwingConstants.RIGHT));
-     * a.add(new JLabel(m_ic.getMessage("BG") + ":", SwingConstants.RIGHT));
+     * a.add(new JLabel(i18nControl.getMessage("DATE") + ":",
+     * SwingConstants.RIGHT));
+     * a.add(new JLabel(i18nControl.getMessage("BG") + ":",
+     * SwingConstants.RIGHT));
      * a.add(new JLabel(dataAccess.getSettings().getIns1Abbr() + ":",
      * SwingConstants.RIGHT));
-     * a.add(new JLabel(m_ic.getMessage("ACT") + ":", SwingConstants.RIGHT));
+     * a.add(new JLabel(i18nControl.getMessage("ACT") + ":",
+     * SwingConstants.RIGHT));
      * JPanel b = new JPanel(new GridLayout(0, 1));
      * DateField = new JTextField(10);
      * if (sDate != null)
@@ -339,11 +344,13 @@ public class StockAmounts extends JDialog implements ActionListener
      * components[5] = ActField;
      * ActField.addKeyListener(this);
      * JPanel c = new JPanel(new GridLayout(0, 1));
-     * c.add(new JLabel(m_ic.getMessage("TIME") + ":", SwingConstants.RIGHT));
-     * c.add(new JLabel(m_ic.getMessage("BU") + ":", SwingConstants.RIGHT));
+     * c.add(new JLabel(i18nControl.getMessage("TIME") + ":",
+     * SwingConstants.RIGHT));
+     * c.add(new JLabel(i18nControl.getMessage("BU") + ":",
+     * SwingConstants.RIGHT));
      * c.add(new JLabel(dataAccess.getSettings().getIns2Abbr() + ":",
      * SwingConstants.RIGHT));
-     * c.add(new JLabel(m_ic.getMessage("COMMENT") + ":",
+     * c.add(new JLabel(i18nControl.getMessage("COMMENT") + ":",
      * SwingConstants.RIGHT));
      * JPanel d = new JPanel(new GridLayout(0, 1));
      * d.add(TimeField = new JTextField(10));
@@ -364,7 +371,7 @@ public class StockAmounts extends JDialog implements ActionListener
      * e.add(c);
      * e.add(d);
      * Box g = Box.createHorizontalBox();
-     * AddButton = new JButton(m_ic.getMessage("OK"));
+     * AddButton = new JButton(i18nControl.getMessage("OK"));
      * components[7] = AddButton;
      * AddButton.addKeyListener(this);
      * AddButton.setActionCommand("ok");
@@ -372,7 +379,7 @@ public class StockAmounts extends JDialog implements ActionListener
      * g.add(Box.createHorizontalGlue());
      * getRootPane().setDefaultButton(AddButton);
      * g.add(AddButton);
-     * JButton CloseButton = new JButton(m_ic.getMessage("CANCEL"));
+     * JButton CloseButton = new JButton(i18nControl.getMessage("CANCEL"));
      * components[8] = CloseButton;
      * CloseButton.addKeyListener(this);
      * CloseButton.setActionCommand("close");

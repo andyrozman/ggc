@@ -1,16 +1,15 @@
 package ggc.gui.little.panels;
 
-import ggc.core.util.DataAccess;
-import ggc.gui.little.GGCLittle;
-import ggc.gui.panels.info.AbstractInfoPanel;
-
-import java.awt.GridLayout;
+import java.awt.*;
 import java.util.Vector;
 
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+import javax.swing.*;
 
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.util.DataAccess;
+import ggc.gui.little.GGCLittle;
+import ggc.gui.main.panels.AbstractInfoPanel;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,6 +38,7 @@ import com.atech.i18n.I18nControlAbstract;
 
 public class MainLittlePanel extends JPanel
 {
+
     private static final long serialVersionUID = 8210688971878569493L;
 
     private Vector<JPanel> vInfoPanels = new Vector<JPanel>();
@@ -62,6 +62,7 @@ public class MainLittlePanel extends JPanel
 
     private JTabbedPane tabbedPane = null;
     private I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
+
 
     /**
      * Constructor
@@ -112,6 +113,7 @@ public class MainLittlePanel extends JPanel
 
     }
 
+
     private void addPanels()
     {
         for (int i = 0; i < vInfoPanels.size(); i++)
@@ -119,6 +121,7 @@ public class MainLittlePanel extends JPanel
             add(vInfoPanels.get(i));
         }
     }
+
 
     /**
      * Refresh Panels
@@ -131,6 +134,7 @@ public class MainLittlePanel extends JPanel
         }
     }
 
+
     /**
      * Add Panel At
      * @param index index of panel
@@ -142,6 +146,7 @@ public class MainLittlePanel extends JPanel
         removeAll();
         addPanels();
     }
+
 
     /**
      * Remove Panel At

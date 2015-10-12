@@ -1,24 +1,19 @@
 package ggc.gui.little.panels;
 
-import ggc.core.data.DailyValues;
-import ggc.core.util.DataAccess;
-import ggc.gui.dialogs.DailyRowDialog;
-import ggc.gui.dialogs.graphs.DailyGraphDialog;
-import ggc.gui.little.GGCLittle;
-import ggc.gui.panels.info.AbstractInfoPanel;
-import ggc.gui.panels.info.InfoPanelsIds;
-
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.GregorianCalendar;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
+import javax.swing.*;
+
+import ggc.core.data.DailyValues;
+import ggc.core.util.DataAccess;
+import ggc.gui.dialogs.graphs.DailyGraphDialog;
+import ggc.gui.little.GGCLittle;
+import ggc.gui.main.panels.AbstractInfoPanel;
+import ggc.gui.main.panels.InfoPanelsIds;
+import ggc.gui.pen.DailyRowDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,7 +49,9 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     MainLittlePanel m_mlp;
     GregorianCalendar m_gc = null;
 
-    // private I18nControlAbstract m_ic = DataAm_da.getI18nControlInstance();
+
+    // private I18nControlAbstract i18nControl =
+    // DataAm_da.getI18nControlInstance();
 
     /**
      * Constructor
@@ -69,13 +66,13 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         init();
     }
 
+
     private void init()
     {
 
         this.setLayout(new GridLayout(2, 2));
-        setBorder(BorderFactory.createTitledBorder(DataAccess.getInstance().getI18nControlInstance()
-                .getMessage("DAILY_CONTROL")
-                + ":"));
+        setBorder(BorderFactory.createTitledBorder(
+            DataAccess.getInstance().getI18nControlInstance().getMessage("DAILY_CONTROL") + ":"));
 
         Dimension dim = new Dimension(120, 20);
 
@@ -114,6 +111,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         setVisible(true);
     }
 
+
     /**
      * Refresh Information 
      */
@@ -128,6 +126,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         }
     }
 
+
     /**
      * Get Table
      * 
@@ -137,6 +136,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     {
         return this.m_mlp.dailyStats.getTable();
     }
+
 
     /**
      * Get Day Data
@@ -148,6 +148,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         return this.m_mlp.dailyStats.getTableModel().getDailyValues();
     }
 
+
     /**
      * Reload Table
      */
@@ -158,6 +159,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         this.m_mlp.dailyStats.getTableModel().setDailyValues(m_da.getDayStats(m_gc));
     }
 
+
     /**
      * Get Frame
      * @return
@@ -166,6 +168,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     {
         return this.m_mlp.m_little;
     }
+
 
     /**
      * Action Performed
@@ -247,6 +250,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         }
     }
 
+
     /*
      * String command = e.getActionCommand();
      * if (command.equals("add_row"))
@@ -258,7 +262,8 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
      * }
      * else if (command.equals("delete_row"))
      * {
-     * //dayData.deleteRow(m_little.m_infoPanel.dailyStats.table.getSelectedRow()
+     * //dayData.deleteRow(m_little.m_infoPanel.dailyStats.table.getSelectedRow(
+     * )
      * );
      * //model.fireTableChanged(null);
      * }
@@ -279,6 +284,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         return "DeviceInfo";
     }
 
+
     /**
      * Do Refresh - This method can do Refresh
      */
@@ -286,6 +292,7 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     public void doRefresh()
     {
     }
+
 
     /**
      * Get Panel Id

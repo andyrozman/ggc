@@ -28,33 +28,23 @@
  */
 package ggc.gui.dialogs;
 
-import ggc.core.data.DailyValues;
-import ggc.core.data.DailyValuesRow;
-import ggc.core.util.DataAccess;
-import ggc.core.util.GGCProperties;
-
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
+
+import ggc.core.data.DailyValues;
+import ggc.core.data.DailyValuesRow;
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -89,7 +79,7 @@ public class DoctorDialog extends JDialog implements ActionListener
     private static final long serialVersionUID = -8276157027834968535L;
     private DataAccess m_da = DataAccess.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
-    private GGCProperties props = m_da.getSettings();
+    private ConfigurationManagerWrapper configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
 
     private boolean m_actionDone = false;
 
@@ -114,6 +104,7 @@ public class DoctorDialog extends JDialog implements ActionListener
     // private boolean m_add_action = true;
     private Container m_parent = null;
 
+
     public DoctorDialog(DailyValues ndV, String nDate, JDialog dialog)
     {
         super(dialog, "", true);
@@ -122,6 +113,7 @@ public class DoctorDialog extends JDialog implements ActionListener
         init();
     }
 
+
     @SuppressWarnings("unused")
     private void load()
     {
@@ -129,16 +121,18 @@ public class DoctorDialog extends JDialog implements ActionListener
 
         // System.out.println(props.getBG_unit());
 
+        GlucoseUnitType glucoseUnitType = configurationManagerWrapper.getGlucoseUnit();
+
         // which format
-        this.cob_bg_type.setSelectedIndex(props.getBG_unit() - 1);
+        this.cob_bg_type.setSelectedIndex(glucoseUnitType.getCode() - 1);
         this.BGField.setText("" + this.m_dailyValuesRow.getBGAsString());
 
         if (debug)
         {
             System.out.println("Db value (cuurent): " + this.m_dailyValuesRow.getBG());
             System.out.println("Db value (mg/dL): " + this.m_dailyValuesRow.getBG(1));
-            System.out.println("Display value (" + props.getBG_unitString() + "): "
-                    + this.m_dailyValuesRow.getBG(props.getBG_unit()));
+            System.out.println("Display value (" + glucoseUnitType.getTranslation() + "): "
+                    + this.m_dailyValuesRow.getBG(glucoseUnitType));
         }
 
         Ins1Field.setText("" + this.m_dailyValuesRow.getIns1AsString());
@@ -156,13 +150,13 @@ public class DoctorDialog extends JDialog implements ActionListener
 
         /*
          * addComponent(cb_food_set = new JCheckBox(" " +
-         * m_ic.getMessage("FOOD_SET")), 110, 240, 200, panel);
+         * i18nControl.getMessage("FOOD_SET")), 110, 240, 200, panel);
          * addComponent(UrineField = new JTextField(), 110, 268, 220, panel);
          * addComponent(ActField = new JTextField(), 110, 298, 220, panel);
          */
 
         /*
-         * this.dtc = new DateTimeComponent(this.m_ic,
+         * this.dtc = new DateTimeComponent(this.i18nControl,
          * DateTimeComponent.ALIGN_VERTICAL, 5);
          * dtc.setBounds(160, 55, 100, 35);
          * panel.add(dtc);
@@ -171,12 +165,13 @@ public class DoctorDialog extends JDialog implements ActionListener
          * addComponent(Ins2Field = new JTextField(), 160, 178, 35, panel);
          * addComponent(BUField = new JTextField(), 160, 208, 35, panel);
          * addComponent(cb_food_set = new JCheckBox(" " +
-         * m_ic.getMessage("FOOD_SET")), 110, 240, 200, panel);
+         * i18nControl.getMessage("FOOD_SET")), 110, 240, 200, panel);
          * addComponent(UrineField = new JTextField(), 110, 268, 220, panel);
          * addComponent(ActField = new JTextField(), 110, 298, 220, panel);
          * addComponent(CommentField = new JTextField(), 110, 328, 220, panel);
          */
     }
+
 
     /*
      * private void save()
@@ -217,8 +212,10 @@ public class DoctorDialog extends JDialog implements ActionListener
         addLabel(m_ic.getMessage("DATE") + ":", 78, panel);
         addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
         addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
-        addLabel(props.getIns1Name() + " (" + props.getIns1Abbr() + ") :", 168, panel);
-        addLabel(props.getIns2Name() + " (" + props.getIns2Abbr() + "):", 198, panel);
+        addLabel(configurationManagerWrapper.getIns1Name() + " (" + configurationManagerWrapper.getIns1Abbr() + ") :",
+            168, panel);
+        addLabel(configurationManagerWrapper.getIns2Name() + " (" + configurationManagerWrapper.getIns2Abbr() + "):",
+            198, panel);
         addLabel(m_ic.getMessage("CH_LONG") + ":", 228, panel);
         addLabel(m_ic.getMessage("FOOD") + ":", 258, panel);
         addLabel(m_ic.getMessage("URINE") + ":", 288, panel);
@@ -239,7 +236,7 @@ public class DoctorDialog extends JDialog implements ActionListener
         addComponent(ActField = new JTextField(), 110, 318, 220, panel);
         addComponent(CommentField = new JTextField(), 110, 348, 220, panel);
 
-        this.cob_bg_type.setSelectedIndex(props.getBG_unit() - 1);
+        this.cob_bg_type.setSelectedIndex(configurationManagerWrapper.getGlucoseUnit().getCode() - 1);
 
         cb_food_set.setMultiClickThreshhold(500);
 
@@ -248,6 +245,7 @@ public class DoctorDialog extends JDialog implements ActionListener
         // cb_food_set.setEnabled(false);
         cb_food_set.addChangeListener(new ChangeListener()
         {
+
             /**
              * Invoked when the target of the listener has changed its state.
              *
@@ -266,8 +264,8 @@ public class DoctorDialog extends JDialog implements ActionListener
         });
 
         String button_command[] = { "update_ch", m_ic.getMessage("UPDATE_FROM_FOOD"), "edit", m_ic.getMessage("EDIT"),
-                                   "ok", m_ic.getMessage("OK"), "cancel", m_ic.getMessage("CANCEL"), "help",
-                                   m_ic.getMessage("HELP") };
+                                    "ok", m_ic.getMessage("OK"), "cancel", m_ic.getMessage("CANCEL"), "help",
+                                    m_ic.getMessage("HELP") };
 
         int button_coord[] = { 210, 228, 120, 0, 230, 258, 100, 0, 50, 390, 80, 1, 140, 390, 80, 1, 250, 390, 80, 0 };
 
@@ -290,16 +288,18 @@ public class DoctorDialog extends JDialog implements ActionListener
 
     }
 
+
     private void addLabel(String text, int posY, JPanel parent)
     {
         JLabel label = new JLabel(text);
         label.setBounds(30, posY, 100, 25);
         label.setFont(f_bold);
         parent.add(label);
-        // a.add(new JLabel(m_ic.getMessage("DATE") + ":",
+        // a.add(new JLabel(i18nControl.getMessage("DATE") + ":",
         // SwingConstants.RIGHT));
 
     }
+
 
     private void addComponent(JComponent comp, int posX, int posY, int width, JPanel parent)
     {
@@ -308,6 +308,7 @@ public class DoctorDialog extends JDialog implements ActionListener
         comp.setFont(f_normal);
         parent.add(comp);
     }
+
 
     public void actionPerformed(ActionEvent e)
     {
@@ -320,6 +321,7 @@ public class DoctorDialog extends JDialog implements ActionListener
         else if (action.equals("ok"))
         {}
     }
+
 
     public boolean actionSuccessful()
     {

@@ -1,11 +1,8 @@
-package ggc.gui.little.panels;
+package ggc.gui.main.panels;
 
 import java.awt.*;
 
 import javax.swing.*;
-
-import ggc.gui.main.panels.AbstractInfoPanel;
-import ggc.gui.main.panels.InfoPanelsIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -26,27 +23,26 @@ import ggc.gui.main.panels.InfoPanelsIds;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     PlugInPumpPanelL  
- *  Description:  Panel for Pump Plugin
+ *  Filename:     StocksInfoPanel  
+ *  Description:  Panel for displaying stocks
  *
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class PlugInPumpPanelL extends AbstractInfoPanel
+public class StocksInfoPanel extends AbstractInfoPanel
 {
 
-    private static final long serialVersionUID = 2496714983251707250L;
+    private static final long serialVersionUID = -6551579241451753792L;
 
-
-    // private I18nControl i18nControlAbstract = I18nControl.getInstance();
 
     /**
      * Constructor
      */
-    public PlugInPumpPanelL()
+    public StocksInfoPanel()
     {
-        super("PUMPS_PLUGIN");
-        setLayout(new GridLayout(0, 1));
+        super("STOCK");
+        // setLayout(new GridLayout(5, 3));
+        setLayout(new GridLayout(0, 2));
         init();
         refreshInfo();
     }
@@ -54,11 +50,8 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
 
     private void init()
     {
-        String text = "<html><body>";
-        text += String.format(m_ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
-        text += "</body></html>";
-
-        add(new JLabel(text));
+        add(new JLabel(m_ic.getMessage("STOCK_DATA_HERE") + ":"));
+        add(new JLabel(m_ic.getMessage("STO_WILL_BE_FOUND_HERE") + "..." + m_ic.getMessage("NOT_YET")));
     }
 
 
@@ -79,7 +72,7 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
     @Override
     public String getTabName()
     {
-        return "PlugInPumpInfo";
+        return "StocksInfo";
     }
 
 
@@ -100,7 +93,7 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
     @Override
     public int getPanelId()
     {
-        return InfoPanelsIds.INFO_PANEL_NONE;
+        return InfoPanelsIds.INFO_PANEL_STOCKS;
     }
 
 }

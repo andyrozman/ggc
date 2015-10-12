@@ -1,16 +1,14 @@
 package ggc.gui.little.panels;
 
-import ggc.core.data.DailyStatsTableModel;
-import ggc.core.data.DailyValues;
-import ggc.gui.panels.info.AbstractInfoPanel;
-import ggc.gui.panels.info.InfoPanelsIds;
-
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.util.GregorianCalendar;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
+
+import ggc.core.data.DailyStatsTableModel;
+import ggc.core.data.DailyValues;
+import ggc.gui.main.panels.AbstractInfoPanel;
+import ggc.gui.main.panels.InfoPanelsIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -48,6 +46,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
     private JTable table;
     private DailyValues dayData;
 
+
     /**
      * Constructor
      */
@@ -59,6 +58,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
         init();
     }
 
+
     /**
      * Get Table Model
      * 
@@ -69,6 +69,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
         return model;
     }
 
+
     /**
      * Refresh Information 
      */
@@ -77,6 +78,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
     {
         refreshDayData();
     }
+
 
     /**
      * Get Table
@@ -88,6 +90,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
         return this.table;
     }
 
+
     /**
      * Get Day Data
      * 
@@ -97,6 +100,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
     {
         return this.dayData;
     }
+
 
     private void refreshDayData()
     {
@@ -109,6 +113,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
             this.model.fireTableChanged(null);
         }
     }
+
 
     private void init()
     {
@@ -143,6 +148,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
         setVisible(true);
     }
 
+
     /**
      * Get Tab Name
      * 
@@ -154,6 +160,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
         return "DailyStatsPanel";
     }
 
+
     /**
      * Do Refresh - This method can do Refresh
      */
@@ -161,6 +168,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
     public void doRefresh()
     {
     }
+
 
     /**
      * Get Panel Id

@@ -27,16 +27,15 @@
 
 package ggc.gui.dialogs.graphs;
 
+import java.awt.*;
+
+import javax.swing.*;
+
+import com.atech.i18n.I18nControlAbstract;
+
 import ggc.core.data.DailyValues;
 import ggc.core.util.DataAccess;
 import ggc.gui.graphs.DailyGraphView;
-
-import java.awt.BorderLayout;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-
-import com.atech.i18n.I18nControlAbstract;
 
 // FIX
 
@@ -73,12 +72,14 @@ import com.atech.i18n.I18nControlAbstract;
 @Deprecated
 public class DailyGraphDialog extends JDialog
 {
+
     /**
      * 
      */
     private static final long serialVersionUID = 2490681813475803663L;
     private DailyGraphView dGV = null;
     private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
+
 
     /**
      * Constructor
@@ -90,7 +91,7 @@ public class DailyGraphDialog extends JDialog
         this(dialog, null);
         /*
          * super(dialog, "DailyGraphFrame", true);
-         * setTitle(m_ic.getMessage("DAILYGRAPHFRAME"));
+         * setTitle(i18nControl.getMessage("DAILYGRAPHFRAME"));
          * dGV = new DailyGraphView();
          * Rectangle rec = dialog.getBounds(); int x = rec.x + (rec.width/2);
          * int y = rec.y + (rec.height/2);
@@ -101,6 +102,7 @@ public class DailyGraphDialog extends JDialog
          * BorderLayout.CENTER); setVisible(true);
          */
     }
+
 
     /**
      * Constructor
@@ -129,6 +131,7 @@ public class DailyGraphDialog extends JDialog
         setVisible(true);
     }
 
+
     /**
      * Constructor
      * 
@@ -138,6 +141,7 @@ public class DailyGraphDialog extends JDialog
     {
         this(frame, null);
     }
+
 
     /**
      * Constructor
@@ -163,6 +167,7 @@ public class DailyGraphDialog extends JDialog
         setSize(dGV.getPreferredSize());
         setVisible(true);
     }
+
 
     /**
      * Set Daily Values

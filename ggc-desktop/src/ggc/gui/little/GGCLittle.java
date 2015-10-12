@@ -1,19 +1,6 @@
 package ggc.gui.little;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.core.data.DailyValuesRow;
-import ggc.core.db.GGCDb;
-import ggc.core.util.DataAccess;
-import ggc.gui.dialogs.AboutGGCDialog;
-import ggc.gui.dialogs.DailyRowDialog;
-import ggc.gui.dialogs.graphs.DailyGraphDialog;
-import ggc.gui.little.panels.DailyStatsPanelL;
-import ggc.gui.little.panels.MainLittlePanel;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Event;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -29,23 +16,21 @@ import javax.help.CSH;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.help.HelpSetException;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 import com.atech.help.HelpContext;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATSwingUtils;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
+
+import ggc.core.data.DailyValuesRow;
+import ggc.core.db.GGCDb;
+import ggc.core.util.DataAccess;
+import ggc.gui.dialogs.AboutGGCDialog;
+import ggc.gui.dialogs.graphs.DailyGraphDialog;
+import ggc.gui.little.panels.DailyStatsPanelL;
+import ggc.gui.little.panels.MainLittlePanel;
+import ggc.gui.pen.DailyRowDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -103,6 +88,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
     String ggc_little_version = "v0.2.3";
 
+
     /**
      * Static definitions (Look and Feel)
      */
@@ -110,6 +96,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     {
         GGCLittle.setLookAndFeel(); // Win (not so bad) ???
     }
+
 
     /**
      * Set Look And Feel
@@ -148,6 +135,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         }
 
     }
+
 
     /**
      * Constructor 
@@ -205,6 +193,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         this.setVisible(true);
     }
 
+
     private void createToolbar()
     {
 
@@ -256,6 +245,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
     }
 
+
     private void createSystemTrayInstance()
     {
 
@@ -266,22 +256,27 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
          * menu.addSeparator(); menu.add(createItem("EXIT_APP", "EXIT_APP_DESC",
          * "exit_app")); menu.add(new JLabel()); menu.add(new JLabel());
          * SystemTray tray = SystemTray.getSystemTray();
-         * TrayIcon ti = new TrayIcon(dataAccess.getImageIcon("medical_bag.png", 15,
-         * 15, this) , m_ic.getMessage("GGC_LITTLE_TITLE"), menu);
+         * TrayIcon ti = new TrayIcon(dataAccess.getImageIcon("medical_bag.png",
+         * 15,
+         * 15, this) , i18nControl.getMessage("GGC_LITTLE_TITLE"), menu);
          * ti.setIconAutoSize(true); ti.addActionListener(new ActionListener() {
          * public void actionPerformed(ActionEvent e) {
          * JOptionPane.showMessageDialog(null,
-         * m_ic.getMessage("GGC_LITTLE_TITLE"), m_ic.getMessage("ABOUT"),
+         * i18nControl.getMessage("GGC_LITTLE_TITLE"),
+         * i18nControl.getMessage("ABOUT"),
          * JOptionPane.INFORMATION_MESSAGE); } }); tray.addTrayIcon(ti);
          */
 
     }
 
+
     /*
      * private JMenuItem createItem(String name, String desc, String action) {
-     * JMenuItem item = new JMenuItem(m_ic.getMessage(name));
-     * item.setActionCommand(action); //item.setName(m_ic.getMessage(name));
-     * item.setToolTipText(m_ic.getMessage(desc)); item.addActionListener(this);
+     * JMenuItem item = new JMenuItem(i18nControl.getMessage(name));
+     * item.setActionCommand(action);
+     * //item.setName(i18nControl.getMessage(name));
+     * item.setToolTipText(i18nControl.getMessage(desc));
+     * item.addActionListener(this);
      * return item; }
      */
 
@@ -295,6 +290,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         return this.statusPanel;
     }
 
+
     /**
      * Get Information Panel
      * 
@@ -305,6 +301,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         return this.informationPanel;
     }
 
+
     private JLabel getEmptyLabel(int width, int height)
     {
         JLabel label_empty = new JLabel("");
@@ -313,6 +310,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         return label_empty;
 
     }
+
 
     private void createToolbarAction(String name, String tip, String action_command, String icon_small)
     {
@@ -330,6 +328,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
     }
 
+
     /**
      * Get My Parent
      * 
@@ -339,6 +338,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     {
         return this;
     }
+
 
     /**
      * Set Db Actions
@@ -350,6 +350,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         // readMeterAction.setEnabled(opened);
     }
 
+
     private void close()
     {
         // write to prefs to file on close.
@@ -359,6 +360,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         dispose();
         System.exit(0);
     }
+
 
     /*
      * private JMenuItem addMenuItem(JMenu menu, Action action) { JMenuItem item
@@ -409,6 +411,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
          */
         private static final long serialVersionUID = 5381628629001707536L;
 
+
         GGCAction(String name, String command)
         {
             super();
@@ -431,9 +434,11 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
             command = name;
         }
 
+
         /*
          * GGCAction(String name, KeyStroke keystroke) { this();
-         * setName(m_ic.getMessageWithoutMnemonic(name)); if (keystroke != null)
+         * setName(i18nControl.getMessageWithoutMnemonic(name)); if (keystroke
+         * != null)
          * putValue(ACCELERATOR_KEY, keystroke); }
          */
         GGCAction(String name, String tooltip, String command)
@@ -460,6 +465,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
                 putValue(ACTION_COMMAND_KEY, command);
             }
         }
+
 
         /*
          * GGCAction(String name, KeyStroke keystroke, String tooltip) {
@@ -571,6 +577,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         }
     }
 
+
     /**
      * Help Init
      */
@@ -614,7 +621,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
                  * System.out.println("HelpSet " + help_url /*
                  * PISMain.mainHelpSetName
                  */// + " not found.");
-                // else */
+                  // else */
                 main_help_set = new HelpSet(null, hsURL);
             }
             catch (HelpSetException ee)
@@ -631,7 +638,8 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
             if (main_help_set != null)
             {
-                // System.out.println("Help: Main Help Set present, creating broker");
+                // System.out.println("Help: Main Help Set present, creating
+                // broker");
                 main_help_broker = main_help_set.createHelpBroker();
             }
 
@@ -660,6 +668,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
     }
 
+
     private boolean checkDateSame()
     {
         if (m_db == null)
@@ -682,6 +691,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
 
     }
 
+
     // Window Listener
 
     /** 
@@ -690,11 +700,13 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     {
     }
 
+
     /** 
      */
     public void windowActivated(java.awt.event.WindowEvent e)
     {
     }
+
 
     /** 
      */
@@ -702,11 +714,13 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     {
     }
 
+
     /** 
      */
     public void windowIconified(java.awt.event.WindowEvent e)
     {
     }
+
 
     /** 
      */
@@ -714,11 +728,13 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     {
     }
 
+
     /** 
      */
     public void windowOpened(java.awt.event.WindowEvent e)
     {
     }
+
 
     /**
      * Window Closing Event
@@ -728,6 +744,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
     {
         close();
     }
+
 
     /**
      * actionPerformed
@@ -764,6 +781,7 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
         }
 
     }
+
 
     /**
      * Main Method for running

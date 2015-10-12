@@ -70,15 +70,6 @@ finished (Help for english, Upgrade, Db Tool and Support for multiple persons)
 Version 0.7 [25.12.2015]
 ------------------------
 
-0.6.1  (15.10.2015 ?)
-======
-
-Deploy: - Local Maven Repository
-        - checkin
-        - make release
-        - release Maven Repository
-        - web page
-
 
 0.7
 ====
@@ -106,17 +97,29 @@ Startup: - fix startup creation (30%) - 5
 
 
 
-
-
-
 (Low)
 Refactoring: - DataAccess -> Languages
              - DataAccess -> BG Conversion
              - DataAccess (PlugIns also) -> Decimal Formaters (new way)
+             - PlugInBaseExceptionType -> Translations for exceptions
+             - refactor configuration (gui parts, changes detection, make more like ConfigPump...)
+             - CGMS Ranges need to be configurable not hardcoded.
+             - refactor numeric formatters in DataAccess
 
 
-DONE 0.7 (0.6.1):
+DONE 0.6.2 - 0.7.0:
 ===================
+
+Graph: - Show CGMS in Pump Daily
+       - Show CGMS in Pen Daily
+       - Configuration CGMS for displays
+
+Refactoring: - CommunicationPortComponent
+             - refactor configuration (added ConfigurationManagerWrapper)
+
+
+DONE 0.6.1  (8.10.2015)
+======
 
 Plugins: - USB Hid Api integration
 
@@ -139,8 +142,19 @@ BUGS: - Daily graph P/I check/fix
       - Daily graph Pump check/fix
 
 
+Deploy: - Local Maven Repository
+        - checkin
+        - make release
+        - release Maven Repository
+        - web page
+
+
+
 Version 0.8
 -------------
+
+
+
 
 Update System v3 [1.0]
     - Software updater Server

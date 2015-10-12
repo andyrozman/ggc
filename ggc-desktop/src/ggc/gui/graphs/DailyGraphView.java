@@ -27,14 +27,7 @@
 
 package ggc.gui.graphs;
 
-import ggc.core.data.DailyValues;
-import ggc.core.data.DailyValuesRow;
-import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.util.DataAccess;
-import ggc.core.util.MathUtils;
-
-import java.awt.BorderLayout;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
@@ -50,6 +43,14 @@ import org.jfree.data.time.DateRange;
 import org.jfree.data.time.Hour;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+
+import ggc.core.data.DailyValues;
+import ggc.core.data.DailyValuesRow;
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.util.DataAccess;
+import ggc.core.util.MathUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -83,6 +84,7 @@ import org.jfree.data.time.TimeSeriesCollection;
  */
 public class DailyGraphView extends JFAbstractGraphView
 {
+
     private static final long serialVersionUID = -8136217038535558623L;
     NumberAxis BGAxis;
     private TimeSeriesCollection BGDataset = new TimeSeriesCollection();
@@ -90,6 +92,10 @@ public class DailyGraphView extends JFAbstractGraphView
     DateAxis dateAxis;
     NumberAxis insBUAxis;
     private TimeSeriesCollection insBUDataset = new TimeSeriesCollection(); // TimeZone.getTimeZone(""));
+    private ConfigurationManagerWrapper configurationManagerWrapper = DataAccess.getInstance()
+            .getConfigurationManagerWrapper();
+    GlucoseUnitType unitType;
+
 
     /**
      * Calls <code>{@link DailyGraphView#DailyGraphView(DailyValues)}</code>
@@ -99,6 +105,7 @@ public class DailyGraphView extends JFAbstractGraphView
     {
         this(DataAccess.getInstance().getDayStats(new GregorianCalendar()));
     }
+
 
     /**
      * Initialize and draw this graph with the passed
@@ -112,6 +119,7 @@ public class DailyGraphView extends JFAbstractGraphView
     {
         this(DataAccess.getInstance().getSettings().getSelectedColorScheme(), data);
     }
+
 
     /**
      * Initialize and draw this graph with the passed
@@ -129,7 +137,25 @@ public class DailyGraphView extends JFAbstractGraphView
     {
         super();
         colorScheme = cs;
+
+        init();
+    }
+
+
+    public DailyGraphView(ColorSchemeH cs, DailyValues dv, GlucoseUnitType unitType)
+    {
+        super();
+        colorScheme = cs;
         data = dv;
+        BGUnit = unitType;
+
+        init();
+    }
+
+
+    private void init()
+    {
+
         setBackground(backgroundColor);
 
         m_chart = ChartFactory.createTimeSeriesChart(null, translator.getMessage("AXIS_TIME_LABEL"),
@@ -141,6 +167,7 @@ public class DailyGraphView extends JFAbstractGraphView
         add(chartPanel, BorderLayout.CENTER);
         redraw();
     }
+
 
     /*
      * (non-Javadoc)
@@ -229,6 +256,7 @@ public class DailyGraphView extends JFAbstractGraphView
 
     }
 
+
     /*
      * (non-Javadoc)
      * @see
@@ -252,8 +280,8 @@ public class DailyGraphView extends JFAbstractGraphView
 
         TimeSeries BGSeries = new TimeSeries(translator.getMessage("BLOOD_GLUCOSE"), Hour.class);
         TimeSeries CHSeries = new TimeSeries(translator.getMessage("CH_LONG"), Hour.class);
-        TimeSeries ins1Series = new TimeSeries(settings.getIns1Name(), Hour.class);
-        TimeSeries ins2Series = new TimeSeries(settings.getIns2Name(), Hour.class);
+        TimeSeries ins1Series = new TimeSeries(configurationManagerWrapper.getIns1Name(), Hour.class);
+        TimeSeries ins2Series = new TimeSeries(configurationManagerWrapper.getIns2Name(), Hour.class);
 
         for (int i = 0; i < data.getRowCount(); i++)
         {
@@ -282,7 +310,8 @@ public class DailyGraphView extends JFAbstractGraphView
                 }
                 else
                 {
-                    CHSeries.addOrUpdate(time, MathUtils.getAverage(row.getCH(), CHSeries.getDataItem(time).getValue()));
+                    CHSeries.addOrUpdate(time,
+                        MathUtils.getAverage(row.getCH(), CHSeries.getDataItem(time).getValue()));
                 }
             }
 
@@ -318,6 +347,7 @@ public class DailyGraphView extends JFAbstractGraphView
         insBUDataset.addSeries(ins2Series);
     }
 
+
     /**
      * Set the <code>{@link DailyValues data}</code> to be used for drawing this
      * graph and trigger a redraw.
@@ -332,6 +362,7 @@ public class DailyGraphView extends JFAbstractGraphView
         redraw();
     }
 
+
     @Override
     public void setBounds(int x, int y, int width, int height)
     {
@@ -339,6 +370,7 @@ public class DailyGraphView extends JFAbstractGraphView
         this.chartPanel.setBounds(x, y, width, height);
         redraw();
     }
+
 
     @Override
     public void setBounds(Rectangle rec)

@@ -1,11 +1,6 @@
-package ggc.gui.little.panels;
+package ggc.gui.main.panels;
 
 import java.awt.*;
-
-import javax.swing.*;
-
-import ggc.gui.main.panels.AbstractInfoPanel;
-import ggc.gui.main.panels.InfoPanelsIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -26,39 +21,34 @@ import ggc.gui.main.panels.InfoPanelsIds;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     PlugInPumpPanelL  
- *  Description:  Panel for Pump Plugin
+ *  Filename:     OtherInfoPanel  
+ *  Description:  Panel for two other panels (without title)
  *
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class PlugInPumpPanelL extends AbstractInfoPanel
+public class OtherInfoPanel extends AbstractInfoPanel
 {
 
-    private static final long serialVersionUID = 2496714983251707250L;
+    private static final long serialVersionUID = -1695058871914412588L;
+    private AbstractInfoPanel panel_1;
+    private AbstractInfoPanel panel_2;
 
-
-    // private I18nControl i18nControlAbstract = I18nControl.getInstance();
 
     /**
      * Constructor
+     * @param p1 
+     * @param p2 
      */
-    public PlugInPumpPanelL()
+    public OtherInfoPanel(AbstractInfoPanel p1, AbstractInfoPanel p2)
     {
-        super("PUMPS_PLUGIN");
-        setLayout(new GridLayout(0, 1));
-        init();
-        refreshInfo();
-    }
+        super("OTHER_INFO", false);
+        setLayout(new GridLayout(2, 0));
 
-
-    private void init()
-    {
-        String text = "<html><body>";
-        text += String.format(m_ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
-        text += "</body></html>";
-
-        add(new JLabel(text));
+        this.panel_1 = p1;
+        this.panel_2 = p2;
+        add(p1);
+        add(p2);
     }
 
 
@@ -68,6 +58,8 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
     @Override
     public void refreshInfo()
     {
+        this.panel_1.refreshInfo();
+        this.panel_2.refreshInfo();
     }
 
 
@@ -79,7 +71,33 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
     @Override
     public String getTabName()
     {
-        return "PlugInPumpInfo";
+        return "OtherInfo";
+    }
+
+
+    /**
+     * RefreshInfo - Refresh info by name
+     *  
+     * @param name
+     */
+    @Override
+    public void refreshInfo(String name)
+    {
+        this.panel_1.refreshInfo(name);
+        this.panel_2.refreshInfo(name);
+    }
+
+
+    /**
+     * RefreshInfo - Refresh info by mask 
+     *  
+     * @param mask
+     */
+    @Override
+    public void refreshInfo(int mask)
+    {
+        this.panel_1.refreshInfo(mask);
+        this.panel_2.refreshInfo(mask);
     }
 
 

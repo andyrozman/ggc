@@ -6,6 +6,9 @@ import javax.swing.*;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
+
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.util.DataAccess;
 
 /**
@@ -47,14 +50,16 @@ public abstract class AbstractGraphView extends JComponent
     Object oAA, oCR, oTAA, oR, oD, oFM, oI;
 
     DataAccess m_da = DataAccess.getInstance();
+    ConfigurationManagerWrapper configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
 
     // GGCProperties props = GGCProperties.getInstance();
+    GlucoseUnitType BGunit;
 
-    int BGunit, maxBG, minBG, BGDiff;
+    int maxBG, minBG, BGDiff;
     int counter = 10;
     int upperSpace = 20, lowerSpace = 30, leftSpace = 40, rightSpace = 30;
-    float maxGoodBG = m_da.getSettings().getBG_TargetHigh();
-    float minGoodBG = m_da.getSettings().getBG_TargetLow();
+    float maxGoodBG = configurationManagerWrapper.getBGTargetHigh();
+    float minGoodBG = configurationManagerWrapper.getBGTargetLow();
 
     int viewWidth = 0;
     int viewHeight = 0;
@@ -77,16 +82,17 @@ public abstract class AbstractGraphView extends JComponent
     public AbstractGraphView()
     {
 
-        BGunit = m_da.getSettings().getBG_unit();
+        BGunit = configurationManagerWrapper.getGlucoseUnit();
 
         switch (BGunit)
         {
-            case DataAccess.BG_MMOL:
+            case mmol_L:
                 maxBG = 44;
                 minBG = 0;
                 unitLabel = "mmol/l";
                 break;
-            case DataAccess.BG_MGDL:
+
+            case mg_dL:
             default:
                 maxBG = 450;
                 minBG = 0;
@@ -202,7 +208,7 @@ public abstract class AbstractGraphView extends JComponent
     private void getRenderingQuality()
     {
 
-        switch (m_da.getSettings().getAntiAliasing())
+        switch (configurationManagerWrapper.getAntiAliasing())
         {
             case 1:
                 oAA = RenderingHints.VALUE_ANTIALIAS_OFF;
@@ -215,7 +221,7 @@ public abstract class AbstractGraphView extends JComponent
         }
         // System.out.println("rendering " + oAA);
 
-        switch (m_da.getSettings().getColorRendering())
+        switch (configurationManagerWrapper.getColorRendering())
         {
             case 1:
                 oCR = RenderingHints.VALUE_COLOR_RENDER_QUALITY;
@@ -228,7 +234,7 @@ public abstract class AbstractGraphView extends JComponent
         }
         // System.out.println("colorrend " + oCR);
 
-        switch (m_da.getSettings().getDithering())
+        switch (configurationManagerWrapper.getDithering())
         {
             case 1:
                 oD = RenderingHints.VALUE_DITHER_DISABLE;
@@ -241,7 +247,7 @@ public abstract class AbstractGraphView extends JComponent
         }
         // System.out.println("dithering " + oD);
 
-        switch (m_da.getSettings().getFractionalMetrics())
+        switch (configurationManagerWrapper.getFractionalMetrics())
         {
             case 1:
                 oFM = RenderingHints.VALUE_FRACTIONALMETRICS_OFF;
@@ -254,7 +260,7 @@ public abstract class AbstractGraphView extends JComponent
         }
         // System.out.println("fractional " + oFM);
 
-        switch (m_da.getSettings().getInterpolation())
+        switch (configurationManagerWrapper.getInterpolation())
         {
             case 1:
                 oI = RenderingHints.VALUE_INTERPOLATION_BICUBIC;
@@ -267,7 +273,7 @@ public abstract class AbstractGraphView extends JComponent
         }
         // System.out.println("interpolation " + oI);
 
-        switch (m_da.getSettings().getRendering())
+        switch (configurationManagerWrapper.getRendering())
         {
             case 1:
                 oR = RenderingHints.VALUE_RENDER_QUALITY;
@@ -280,7 +286,7 @@ public abstract class AbstractGraphView extends JComponent
         }
         // System.out.println("rendering " + oR);
 
-        switch (m_da.getSettings().getTextAntiAliasing())
+        switch (configurationManagerWrapper.getTextAntiAliasing())
         {
             case 1:
                 oTAA = RenderingHints.VALUE_TEXT_ANTIALIAS_OFF;

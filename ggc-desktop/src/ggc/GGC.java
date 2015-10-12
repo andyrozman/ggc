@@ -1,13 +1,12 @@
 package ggc;
 
-import ggc.core.db.GGCDbConfig;
-import ggc.core.util.DataAccess;
-import ggc.gui.MainFrame;
-
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
 
 import com.atech.db.hibernate.check.DbCheckReport;
+
+import ggc.core.db.GGCDbConfig;
+import ggc.core.util.DataAccess;
+import ggc.gui.main.MainFrame;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,6 +36,7 @@ import com.atech.db.hibernate.check.DbCheckReport;
 
 public class GGC
 {
+
     // fields
     private static GGC s_theApp;
     private static MainFrame s_mainWindow;
@@ -52,6 +52,7 @@ public class GGC
      */
     public static String full_version = "v" + DataAccess.CORE_VERSION;
 
+
     /**
      * Version Date 
      */
@@ -66,8 +67,8 @@ public class GGC
     {
         GGCDbConfig conf = new GGCDbConfig(true);
 
-        DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(), DataAccess.getInstance()
-                .getI18nControlInstance());
+        DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(),
+                DataAccess.getInstance().getI18nControlInstance());
 
         if (dcr.canApplicationStart())
             return true;
@@ -78,6 +79,7 @@ public class GGC
         }
 
     }
+
 
     /**
      * Main startup method
@@ -104,6 +106,7 @@ public class GGC
         s_theApp = new GGC();
         s_theApp.init(dev);
     }
+
 
     /**
      * Init

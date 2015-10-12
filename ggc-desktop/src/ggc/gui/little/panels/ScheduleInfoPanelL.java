@@ -1,11 +1,11 @@
 package ggc.gui.little.panels;
 
-import ggc.gui.panels.info.AbstractInfoPanel;
-import ggc.gui.panels.info.InfoPanelsIds;
+import java.awt.*;
 
-import java.awt.GridLayout;
+import javax.swing.*;
 
-import javax.swing.JLabel;
+import ggc.gui.main.panels.AbstractInfoPanel;
+import ggc.gui.main.panels.InfoPanelsIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -35,7 +35,9 @@ import javax.swing.JLabel;
 
 public class ScheduleInfoPanelL extends AbstractInfoPanel
 {
+
     private static final long serialVersionUID = -4785287187015409811L;
+
 
     /**
      * Constructor
@@ -48,6 +50,7 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
         refreshInfo();
     }
 
+
     private void init()
     {
         add(new JLabel());
@@ -56,6 +59,7 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
         add(new JLabel());
     }
 
+
     /**
      * Refresh Information 
      */
@@ -63,6 +67,7 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
     public void refreshInfo()
     {
     }
+
 
     /**
      * Get Tab Name
@@ -75,6 +80,7 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
         return "ScheduleInfo";
     }
 
+
     /**
      * Do Refresh - This method can do Refresh
      */
@@ -82,6 +88,7 @@ public class ScheduleInfoPanelL extends AbstractInfoPanel
     public void doRefresh()
     {
     }
+
 
     /**
      * Get Panel Id

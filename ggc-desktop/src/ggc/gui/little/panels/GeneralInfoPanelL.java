@@ -1,11 +1,11 @@
 package ggc.gui.little.panels;
 
-import ggc.gui.panels.info.AbstractInfoPanel;
-import ggc.gui.panels.info.InfoPanelsIds;
+import java.awt.*;
 
-import java.awt.GridLayout;
+import javax.swing.*;
 
-import javax.swing.JLabel;
+import ggc.gui.main.panels.AbstractInfoPanel;
+import ggc.gui.main.panels.InfoPanelsIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -34,17 +34,13 @@ import javax.swing.JLabel;
 
 public class GeneralInfoPanelL extends AbstractInfoPanel
 {
+
     private static final long serialVersionUID = 1872339281254813097L;
     private JLabel lblName = new JLabel();
     private JLabel lblIns1 = new JLabel();
     private JLabel lblIns2 = new JLabel();
-
-    // private JLabel lblMeter = new JLabel();
     private JLabel lblUnit = new JLabel();
 
-    // GGCProperties props = GGCProperties.getInstance();
-    // private I18nControl m_ic = I18nControl.getInstance();
-    // DataAccess dataAccess = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -56,6 +52,7 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
         refreshInfo();
     }
 
+
     private void init()
     {
         setLayout(new GridLayout(0, 2));
@@ -66,12 +63,11 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
         add(lblIns1);
         add(new JLabel(m_ic.getMessage("BASAL_INSULIN") + ":"));
         add(lblIns2);
-        // add(new JLabel(m_ic.getMessage("GLUCOMETER")+":"));
-        // add(lblMeter);
         add(new JLabel(m_ic.getMessage("BG_UNIT") + ":"));
         add(lblUnit);
 
     }
+
 
     /**
      * Refresh Information 
@@ -81,14 +77,15 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
     {
         if (this.m_da.isDatabaseInitialized())
         {
-            lblName.setText(m_da.getSettings().getUserName());
-            lblIns1.setText(m_da.getSettings().getIns1Name() + "  (" + m_da.getSettings().getIns1Abbr() + ")");
-            lblIns2.setText(m_da.getSettings().getIns2Name() + "  (" + m_da.getSettings().getIns2Abbr() + ")");
-            // lblMeter.setText(dataAccess.getSettings().getMeterTypeString() + "  ("
-            // + dataAccess.getSettings().getMeterPort() + ")");
-            lblUnit.setText(m_da.getSettings().getBG_unitString());
+            lblName.setText(configurationManagerWrapper.getUserName());
+            lblIns1.setText(
+                configurationManagerWrapper.getIns1Name() + "  (" + configurationManagerWrapper.getIns1Abbr() + ")");
+            lblIns2.setText(
+                configurationManagerWrapper.getIns2Name() + "  (" + configurationManagerWrapper.getIns2Abbr() + ")");
+            lblUnit.setText(configurationManagerWrapper.getGlucoseUnit().getTranslation());
         }
     }
+
 
     /**
      * Get Tab Name
@@ -101,6 +98,7 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
         return "GeneralInfo";
     }
 
+
     /**
      * Do Refresh - This method can do Refresh
      */
@@ -108,6 +106,7 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
     public void doRefresh()
     {
     }
+
 
     /**
      * Get Panel Id

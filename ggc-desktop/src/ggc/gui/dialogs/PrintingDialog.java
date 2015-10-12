@@ -1,33 +1,23 @@
 package ggc.gui.dialogs;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.core.data.MonthlyValues;
-import ggc.core.print.PrintExtendedMonthlyReport;
-import ggc.core.print.PrintSimpleMonthlyReport;
-import ggc.core.util.DataAccess;
-
-import java.awt.Component;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import com.atech.graphics.components.DateComponent;
 import com.atech.graphics.dialogs.ActionExceptionCatchDialog;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.print.engine.PrintProcessor;
 import com.atech.print.engine.PrintRequester;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.core.data.MonthlyValues;
+import ggc.core.print.PrintExtendedMonthlyReport;
+import ggc.core.print.PrintSimpleMonthlyReport;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -56,6 +46,7 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public class PrintingDialog extends ActionExceptionCatchDialog implements PrintRequester
 {
+
     private static final long serialVersionUID = 2693207247071685559L;
     private DataAccess dataAccess = DataAccess.getInstance();
     private I18nControlAbstract i18nControl = dataAccess.getI18nControlInstance();
@@ -73,7 +64,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
     PrintProcessor printProcessor;
 
     private String[] reportTypes = { i18nControl.getMessage("SIMPLE_MONTHLY_REPORT"),
-                                    i18nControl.getMessage("EXTENDED_MONTHLY_REPORT") };
+                                     i18nControl.getMessage("EXTENDED_MONTHLY_REPORT") };
 
     /**
      * Dialog Options: Year and Month Option
@@ -86,6 +77,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
     public static final int PRINT_DIALOG_RANGE_DAY_OPTION = 2;
 
     private int master_type = 1;
+
 
     /**
      * Constructor 
@@ -120,6 +112,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
 
         this.setVisible(true);
     }
+
 
     private void init()
     {
@@ -188,13 +181,15 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         button.setBounds(175, 240, 125, 25);
         panel.add(button);
 
-        helpButton = ATSwingUtils.createHelpButtonByBounds(185, 210, 115, 25, this, ATSwingUtils.FONT_NORMAL, dataAccess);
+        helpButton = ATSwingUtils.createHelpButtonByBounds(185, 210, 115, 25, this, ATSwingUtils.FONT_NORMAL,
+            dataAccess);
         panel.add(helpButton);
 
         dataAccess.enableHelp(this);
 
         printProcessor = new PrintProcessor(i18nControl, this);
     }
+
 
     /*
      * protected void initRange() // throws Exception
@@ -296,10 +291,12 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         }
     }
 
+
     public boolean actionSuccessful()
     {
         return actionDone;
     }
+
 
     public String[] getActionResults()
     {
@@ -320,10 +317,12 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         return res;
     }
 
+
     public void displayPDF(String name) throws Exception
     {
         printProcessor.displayPDF(name);
     }
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
@@ -337,6 +336,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         return this.getRootPane();
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -345,6 +345,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         return this.helpButton;
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -352,6 +353,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
     {
         return "GGC_PenInj_Print";
     }
+
 
     /**
      * {@inheritDoc}
@@ -362,6 +364,7 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
         return this;
     }
 
+
     // ****************************************************************
     // ****** PrintRequester Implementation *****
     // ****************************************************************
@@ -371,24 +374,27 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
      */
     public String getExternalPdfViewer()
     {
-        return DataAccess.getInstance().getSettings().getExternalPdfVieverPath().replace('\\', '/');
+        return DataAccess.getInstance().getConfigurationManagerWrapper().getExternalPdfVieverPath().replace('\\', '/');
     }
+
 
     /**
      * {@inheritDoc}
      */
     public String getExternalPdfViewerParameters()
     {
-        return DataAccess.getInstance().getSettings().getExternalPdfVieverParameters();
+        return DataAccess.getInstance().getConfigurationManagerWrapper().getExternalPdfVieverParameters();
     }
+
 
     /**
      * {@inheritDoc}
      */
     public boolean isExternalPdfViewerActivated()
     {
-        return DataAccess.getInstance().getSettings().getUseExternalPdfViewer();
+        return DataAccess.getInstance().getConfigurationManagerWrapper().getUseExternalPdfViewer();
     }
+
 
     /**
      * {@inheritDoc}

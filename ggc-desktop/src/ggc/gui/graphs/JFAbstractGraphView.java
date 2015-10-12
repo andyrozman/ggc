@@ -1,16 +1,10 @@
 package ggc.gui.graphs;
 
-import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.util.DataAccess;
-import ggc.core.util.GGCProperties;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.RenderingHints.Key;
 import java.util.HashMap;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -19,6 +13,12 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.ui.Layer;
 
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.data.cfg.ConfigurationManagerWrapper;
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCProperties;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -48,22 +48,28 @@ import com.atech.i18n.I18nControlAbstract;
 
 public abstract class JFAbstractGraphView extends JPanel
 {
+
     private static final long serialVersionUID = -1579716091265096686L;
+
+    protected DataAccess dataAccessInst = DataAccess.getInstance();
+    protected GGCProperties settings = dataAccessInst.getSettings();
+    protected ConfigurationManagerWrapper configurationManagerWrapper = dataAccessInst.getConfigurationManagerWrapper();
+    protected I18nControlAbstract translator = dataAccessInst.getI18nControlInstance();
+
+    protected ColorSchemeH colorScheme = settings.getSelectedColorScheme();
+    protected GlucoseUnitType BGUnit = GlucoseUnitType.mg_dL;
+    protected RenderingHints renderingHints;
+
     Color backgroundColor = Color.WHITE;
-    int BGUnit = DataAccess.BG_MGDL;
     JFreeChart m_chart;
 
     ChartPanel chartPanel;
-    DataAccess dataAccessInst = DataAccess.getInstance();
-    GGCProperties settings = dataAccessInst.getSettings();
-    ColorSchemeH colorScheme = settings.getSelectedColorScheme();
     float maxBG = 200;
     float minBG = 50;
     float BGDiff = maxBG - minBG;
-    RenderingHints renderingHints;
 
-    I18nControlAbstract translator = dataAccessInst.getI18nControlInstance();
     String unitLabel = "mg/dl";
+
 
     /**
      * Does some basic preparation needed by all graphs. Should be called from
@@ -71,16 +77,17 @@ public abstract class JFAbstractGraphView extends JPanel
      */
     public JFAbstractGraphView()
     {
-        BGUnit = dataAccessInst.getSettings().getBG_unit();
+        BGUnit = configurationManagerWrapper.getGlucoseUnit();
 
         switch (BGUnit)
         {
-            case DataAccess.BG_MMOL:
+            case mmol_L:
                 maxBG = 11.1f;
                 minBG = 2.775f;
                 unitLabel = "mmol/l";
                 break;
-            case DataAccess.BG_MGDL:
+
+            case mg_dL:
             default:
                 maxBG = 200;
                 minBG = 50;
@@ -92,6 +99,7 @@ public abstract class JFAbstractGraphView extends JPanel
         getRenderingQuality();
     }
 
+
     /**
      * Sets the basic layout on the passed <code>{@link JFreeChart}</code>.
      * 
@@ -100,6 +108,7 @@ public abstract class JFAbstractGraphView extends JPanel
      *            the chart.
      */
     protected abstract void drawFramework(JFreeChart chart);
+
 
     /**
      * Draws the data onto the passed <code>{@link JFreeChart}</code>.
@@ -110,14 +119,15 @@ public abstract class JFAbstractGraphView extends JPanel
      */
     protected abstract void drawValues(JFreeChart chart);
 
+
     /**
-     * Gets the current rendering quality settings from the
+     * Gets the current rendering quality ggcProperties from the
      * <code>{@link DataAccess}</code>.
      */
     private void getRenderingQuality()
     {
         HashMap<Key, Object> hintsMap = new HashMap<Key, Object>();
-        switch (settings.getAntiAliasing())
+        switch (configurationManagerWrapper.getAntiAliasing())
         {
             case 1:
                 hintsMap.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
@@ -129,7 +139,7 @@ public abstract class JFAbstractGraphView extends JPanel
                 hintsMap.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_DEFAULT);
         }
 
-        switch (settings.getColorRendering())
+        switch (configurationManagerWrapper.getColorRendering())
         {
             case 1:
                 hintsMap.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
@@ -141,7 +151,7 @@ public abstract class JFAbstractGraphView extends JPanel
                 hintsMap.put(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_DEFAULT);
         }
 
-        switch (settings.getDithering())
+        switch (configurationManagerWrapper.getDithering())
         {
             case 1:
                 hintsMap.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
@@ -153,7 +163,7 @@ public abstract class JFAbstractGraphView extends JPanel
                 hintsMap.put(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DEFAULT);
         }
 
-        switch (settings.getFractionalMetrics())
+        switch (configurationManagerWrapper.getFractionalMetrics())
         {
             case 1:
                 hintsMap.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_OFF);
@@ -165,7 +175,7 @@ public abstract class JFAbstractGraphView extends JPanel
                 hintsMap.put(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_DEFAULT);
         }
 
-        switch (settings.getInterpolation())
+        switch (configurationManagerWrapper.getInterpolation())
         {
             case 1:
                 hintsMap.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
@@ -177,7 +187,7 @@ public abstract class JFAbstractGraphView extends JPanel
                 hintsMap.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
         }
 
-        switch (settings.getRendering())
+        switch (configurationManagerWrapper.getRendering())
         {
             case 1:
                 hintsMap.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
@@ -189,7 +199,7 @@ public abstract class JFAbstractGraphView extends JPanel
                 hintsMap.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_DEFAULT);
         }
 
-        switch (settings.getTextAntiAliasing())
+        switch (configurationManagerWrapper.getTextAntiAliasing())
         {
             case 1:
                 hintsMap.put(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
@@ -203,6 +213,7 @@ public abstract class JFAbstractGraphView extends JPanel
 
         renderingHints = new RenderingHints(hintsMap);
     }
+
 
     /**
      * Re-draws the graph and sets the <code>{@link JPanel JPanel's}</code> size.
@@ -218,6 +229,7 @@ public abstract class JFAbstractGraphView extends JPanel
         setPreferredSize(new Dimension(chartPanel.getMinimumDrawWidth(), chartPanel.getMinimumDrawHeight()));
     }
 
+
     /**
      * Repaint
      * 
@@ -229,22 +241,24 @@ public abstract class JFAbstractGraphView extends JPanel
         redraw();
     }
 
+
     /**
-     * Should be called whenever the settings were changed.
+     * Should be called whenever the ggcProperties were changed.
      */
     public void settingsChanged()
     {
-        settings = dataAccessInst.getSettings();
+        configurationManagerWrapper = configurationManagerWrapper;
         colorScheme = settings.getSelectedColorScheme();
         getRenderingQuality();
         redraw();
     }
 
+
     /**
-     * Apply passed <code>{@link GGCProperties settings}</code>.
+     * Apply passed <code>{@link GGCProperties ggcProperties}</code>.
      * 
      * @param newSettings
-     *            The <code>{@link GGCProperties settings}</code> to apply.
+     *            The <code>{@link GGCProperties ggcProperties}</code> to apply.
      */
     public void applySettings(GGCProperties newSettings)
     {
@@ -253,6 +267,7 @@ public abstract class JFAbstractGraphView extends JPanel
         getRenderingQuality();
         redraw();
     }
+
 
     /**
      * Apply passed <code>{@link ColorSchemeH color scheme}</code>.
@@ -265,6 +280,7 @@ public abstract class JFAbstractGraphView extends JPanel
         colorScheme = newScheme;
         redraw();
     }
+
 
     /**
      * Adds <code>{@link IntervalMarker IntervalMarkers}</code> to the passed
@@ -284,17 +300,20 @@ public abstract class JFAbstractGraphView extends JPanel
 
         switch (BGUnit)
         {
-            case DataAccess.BG_MMOL:
-                lowBGMarker = new IntervalMarker(0, settings.getBG2_TargetLow(), dataAccessInst.getColor(colorScheme
-                        .getColor_bg_low()));
-                targetBGMarker = new IntervalMarker(settings.getBG2_TargetLow(), settings.getBG2_TargetHigh(),
+            case mmol_L:
+                lowBGMarker = new IntervalMarker(0, configurationManagerWrapper.getBG2TargetLow(),
+                        dataAccessInst.getColor(colorScheme.getColor_bg_low()));
+                targetBGMarker = new IntervalMarker(configurationManagerWrapper.getBG2TargetLow(),
+                        configurationManagerWrapper.getBG2TargetHigh(),
                         dataAccessInst.getColor(colorScheme.getColor_bg_target()));
                 break;
-            case DataAccess.BG_MGDL:
+
+            case mg_dL:
             default:
-                lowBGMarker = new IntervalMarker(0, settings.getBG1_TargetLow(), dataAccessInst.getColor(colorScheme
-                        .getColor_bg_low()));
-                targetBGMarker = new IntervalMarker(settings.getBG1_TargetLow(), settings.getBG1_TargetHigh(),
+                lowBGMarker = new IntervalMarker(0, configurationManagerWrapper.getBG1TargetLow(),
+                        dataAccessInst.getColor(colorScheme.getColor_bg_low()));
+                targetBGMarker = new IntervalMarker(configurationManagerWrapper.getBG1TargetLow(),
+                        configurationManagerWrapper.getBG1TargetHigh(),
                         dataAccessInst.getColor(colorScheme.getColor_bg_target()));
                 break;
         }
