@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -21,25 +19,26 @@ import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.time.DateRange;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.TimeZoneUtil;
 
-import ggc.core.data.graph.GGCGraphUtil;
+import ggc.core.data.graph.GraphViewCGMSDailyAbstract;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpBolusType;
 import ggc.pump.data.dto.BasalRatesDayDTO;
 import ggc.pump.data.util.PumpBasalManager;
 import ggc.pump.data.util.PumpBolusManager;
+import ggc.pump.db.GGCPumpDb;
 import ggc.pump.util.DataAccessPump;
 
 /**
@@ -69,10 +68,10 @@ import ggc.pump.util.DataAccessPump;
  *  Author: rumbi   
  */
 
-public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
+public class GraphViewDailyPump extends GraphViewCGMSDailyAbstract
 {
 
-    Log LOG = LogFactory.getLog(GraphViewDailyPump.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GraphViewDailyPump.class);
 
     private XYSeriesCollection datasetBasalBolusExtBG = new XYSeriesCollection();
     private XYSeriesCollection datasetBolusCH = new XYSeriesCollection();
@@ -81,12 +80,11 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
     NumberAxis insBUAxis;
 
     DataAccessPump dataAccessPump = DataAccessPump.getInstance();
-    GGCGraphUtil graph_util = GGCGraphUtil.getInstance(dataAccessPump);
+    // GGCGraphUtil graphUtil = GGCGraphUtil.getInstance(dataAccessPump);
+
     PumpBasalManager basalManager = dataAccessPump.getBasalManager();
     PumpBolusManager bolusManager = dataAccessPump.getBolusManager();
-    DataAccess da_core = DataAccess.getInstance();
 
-    GregorianCalendar gc;
     public boolean data_loaded = false;
     DeviceValuesDay dvd_data;
 
@@ -94,12 +92,12 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
     /**
      * Constructor
      * 
-     * @param gc 
+     * @param currentCalendar
      */
-    public GraphViewDailyPump(GregorianCalendar gc)
+    public GraphViewDailyPump(GregorianCalendar currentCalendar)
     {
         super(DataAccess.getInstance());
-        this.gc = gc;
+        this.currentCalendar = currentCalendar;
     }
 
 
@@ -134,8 +132,10 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
         if (!data_loaded)
         {
             GGCPumpDb db = dataAccessPump.getDb();
-            dvd_data = db.getDailyPumpValues(gc);
+            dvd_data = db.getDailyPumpValues(currentCalendar);
         }
+
+        loadCGMSData();
     }
 
 
@@ -217,11 +217,8 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
             {
                 PumpValuesEntryExt pvext = pve.getAdditionalData().get(additionalKeyWord);
 
-                createWiderBar(
-                    BGSeries,
-                    time,
-                    dataAccessPump.getBGValueByType(DataAccessPlugInBase.BG_MGDL, dataAccessPump.m_BG_unit,
-                        pvext.getValue()), 10);
+                createWiderBar(BGSeries, time, dataAccessPump.getBGValueByType(DataAccessPlugInBase.BG_MGDL,
+                    dataAccessPump.m_BG_unit, pvext.getValue()), 10);
             }
 
             // Carbohydrates
@@ -236,13 +233,13 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
 
         }
 
-        BasalRatesDayDTO basalRates = basalManager.getBasalRatesForDate(gc, dvd_data);
+        BasalRatesDayDTO basalRates = basalManager.getBasalRatesForDate(currentCalendar, dvd_data);
 
         if (basalRates != null)
         {
             for (int i = 0; i < 24; i++)
             {
-                GregorianCalendar gcBasal = getGCRange(true);
+                GregorianCalendar gcBasal = getCalendarRange(true);
                 gcBasal.add(Calendar.HOUR_OF_DAY, i);
 
                 float basalForHour = basalRates.getBasalForHour(i);
@@ -258,6 +255,11 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
 
         datasetBolusCH.addSeries(bolusInsulinSeries);
         datasetBolusCH.addSeries(CHSeries);
+
+        if (useCGMSData)
+        {
+            datasetBasalBolusExtBG.addSeries(CGMSSeries);
+        }
 
     }
 
@@ -284,42 +286,6 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
     }
 
 
-    private GregorianCalendar getGCRange(boolean start)
-    {
-        GregorianCalendar gc1 = (GregorianCalendar) gc.clone();
-
-        if (start)
-        {
-            gc.set(Calendar.HOUR_OF_DAY, 0);
-            gc.set(Calendar.MINUTE, 0);
-            gc.set(Calendar.SECOND, 0);
-            gc.set(Calendar.MILLISECOND, 0);
-        }
-        else
-        {
-            gc.set(Calendar.HOUR_OF_DAY, 23);
-            gc.set(Calendar.MINUTE, 59);
-            gc.set(Calendar.SECOND, 59);
-            gc.set(Calendar.MILLISECOND, 59);
-        }
-
-        return gc;
-    }
-
-
-    /**
-     * Get Title (used by GraphViewer)
-     * 
-     * @return title as string 
-     */
-    @Override
-    public String getTitle()
-    {
-        return m_ic.getMessage("DAILYGRAPHFRAME") + " [" + gc.get(Calendar.DAY_OF_MONTH) + "."
-                + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR) + "]";
-    }
-
-
     /**
      * Set Plot
      * 
@@ -340,9 +306,9 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
 
         // Bars test
 
-        ColorSchemeH colorScheme = graph_util.getColorScheme();
+        ColorSchemeH colorScheme = graphUtil.getColorScheme();
 
-        RenderingHints rh = graph_util.getRenderingHints();
+        RenderingHints rh = graphUtil.getRenderingHints();
 
         if (rh != null)
         {
@@ -360,18 +326,25 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
         // plot.setDomainGridlinesVisible(false);
 
         // XYLineAndShapeRenderer
-        defaultRenderer.setSeriesPaint(0, da_core.getColor(colorScheme.getColor_bg()));
+        defaultRenderer.setSeriesPaint(0, getColor(colorScheme.getColor_bg()));
         defaultRenderer.setSeriesShapesVisible(0, true);
 
-        defaultRenderer.setSeriesPaint(1, da_core.getColor(colorScheme.getColor_ins2()));
+        defaultRenderer.setSeriesPaint(1, getColor(colorScheme.getColor_ins2()));
         defaultRenderer.setSeriesLinesVisible(1, true);
 
-        defaultRenderer.setSeriesPaint(2, Color.magenta);
+        defaultRenderer.setSeriesPaint(2, getColor(colorScheme.getColor_ins1()));
         defaultRenderer.setSeriesLinesVisible(2, true);
 
+        if (useCGMSData)
+        {
+            defaultRenderer.setSeriesPaint(3, Color.magenta);
+            defaultRenderer.setSeriesLinesVisible(3, true);
+            defaultRenderer.setSeriesShapesVisible(3, false);
+        }
+
         // BarRenderer
-        barRenderer.setSeriesPaint(0, da_core.getColor(colorScheme.getColor_ins1()));
-        barRenderer.setSeriesPaint(1, da_core.getColor(colorScheme.getColor_ch()));
+        barRenderer.setSeriesPaint(0, getColor(colorScheme.getColor_ins1()));
+        barRenderer.setSeriesPaint(1, getColor(colorScheme.getColor_ch()));
 
         // Date Axis
         SimpleDateFormat sdf = new SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS"));
@@ -379,7 +352,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
 
         dateAxis.setDateFormatOverride(sdf);
         dateAxis.setAutoRange(false);
-        Range range = new DateRange(getGCRange(true).getTime(), getGCRange(false).getTime());
+        Range range = new DateRange(getCalendarRange(true).getTime(), getCalendarRange(false).getTime());
         dateAxis.setRange(range);
         dateAxis.setDefaultAutoRange(range);
         dateAxis.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
@@ -400,7 +373,7 @@ public class GraphViewDailyPump extends AbstractGraphViewAndProcessor
     public void createChart()
     {
         chart = ChartFactory.createTimeSeriesChart(null, this.m_ic.getMessage("AXIS_TIME_LABEL"),
-            String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"), this.graph_util.getUnitLabel()),
+            String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"), this.graphUtil.getUnitLabel()),
             datasetBasalBolusExtBG, true, true, false);
 
         this.setPlot(chart);

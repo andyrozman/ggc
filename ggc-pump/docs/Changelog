@@ -2,6 +2,14 @@
 Changes file for GGC Pump Tool
 ==============================
 
+1.6.1 [10.10.2015]
+    * refactoring because of DataAccess and ConfigurationManagerWrapper changes
+    * added Minimed Devices to PumpDefinition
+    * working on report: PumpDataDailyTimeSheet, added CGMS support, added types for different types
+      of reports (Base, Base+CGMS, Base+Food, Base+CGMS+Food). Implementation is planned for
+      Base (v2) and Base+CGMS for 0.7
+
+
 1.6.0 [2.10.2015] - Andy
     * changes because of Selector refactoring / fixing
     * added BasalStatistic, BasalRatesDayDTO, PumpBasalManager, PumpBolusManager

@@ -106,7 +106,7 @@ public class PumpPrintDialog extends PrintDialogRange
     @Override
     public String getExternalPdfViewer()
     {
-        return DataAccess.getInstance().getSettings().getExternalPdfVieverPath().replace('\\', '/');
+        return DataAccess.getInstance().getConfigurationManagerWrapper().getExternalPdfVieverPath().replace('\\', '/');
     }
 
 
@@ -121,11 +121,11 @@ public class PumpPrintDialog extends PrintDialogRange
         // FIXME
 
         return new String[] { this.i18nControl.getMessage("PUMP_DATA_BASE"),
-                             this.i18nControl.getMessage("PUMP_DATA_EXT"), //
-                             this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
-                             this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
-                             this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
-        // "Daily Table Report II (Events,Color)", //
+                              this.i18nControl.getMessage("PUMP_DATA_EXT"), //
+                              this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
+                              this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
+                              this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
+                // "Daily Table Report II (Events,Color)", //
         };
     }
 
@@ -143,8 +143,8 @@ public class PumpPrintDialog extends PrintDialogRange
 
         if (this.cbTemplate.getSelectedIndex() == 0 || this.cbTemplate.getSelectedIndex() == 1)
         {
-            DeviceValuesRange dvr = DataAccessPump.getInstance().getDb()
-                    .getRangePumpValues(this.getFromDateObject(), this.getToDateObject());
+            DeviceValuesRange dvr = DataAccessPump.getInstance().getDb().getRangePumpValues(this.getFromDateObject(),
+                this.getToDateObject());
             // System.out.println(this.dc_from.getDate() + " " +
             // this.dc_to.getDate());
 
@@ -174,7 +174,8 @@ public class PumpPrintDialog extends PrintDialogRange
             }
             else if (this.cbTemplate.getSelectedIndex() == 4)
             {
-                pa = new PrintPumpDataDailyTimeSheet(parameters);
+                pa = new PrintPumpDataDailyTimeSheet(parameters,
+                        PrintPumpDataDailyTimeSheet.PrintPumpDataDailyTimeSheetType.BaseSheet);
             }
         }
 
@@ -186,14 +187,14 @@ public class PumpPrintDialog extends PrintDialogRange
     @Override
     public String getExternalPdfViewerParameters()
     {
-        return DataAccess.getInstance().getSettings().getExternalPdfVieverParameters();
+        return DataAccess.getInstance().getConfigurationManagerWrapper().getExternalPdfVieverParameters();
     }
 
 
     @Override
     public boolean isExternalPdfViewerActivated()
     {
-        return DataAccess.getInstance().getSettings().getUseExternalPdfViewer();
+        return DataAccess.getInstance().getConfigurationManagerWrapper().getUseExternalPdfViewer();
     }
 
 

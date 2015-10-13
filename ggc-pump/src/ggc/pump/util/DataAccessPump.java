@@ -22,10 +22,10 @@ import ggc.pump.data.PumpDataHandler;
 import ggc.pump.data.PumpDataReader;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.cfg.PumpConfigurationDefinition;
-import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.data.defs.*;
 import ggc.pump.data.util.PumpBasalManager;
 import ggc.pump.data.util.PumpBolusManager;
+import ggc.pump.db.GGCPumpDb;
 import ggc.pump.device.animas.AnimasIR1200Handler;
 import ggc.pump.device.insulet.InsuletHandler;
 import ggc.pump.graph.PumpGraphContext;
@@ -112,7 +112,6 @@ public class DataAccessPump extends DataAccessPlugInBase
     private PumpBasalManager pumpBasalManager;
     private PumpBolusManager pumpBolusManager;
 
-
     /**
      * The selected_person_id.
      */
@@ -121,6 +120,7 @@ public class DataAccessPump extends DataAccessPlugInBase
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
+
 
     // Constructor: DataAccess
     /**
@@ -233,7 +233,6 @@ public class DataAccessPump extends DataAccessPlugInBase
         return s_da;
     }
 
-
     /**
      * Get Pump Base Types
      *
@@ -258,6 +257,7 @@ public class DataAccessPump extends DataAccessPlugInBase
      * static public DataAccess getInstance() { return dataAccess; }
      */
 
+
     // Method: deleteInstance
     /**
      * This method sets handle to DataAccess to null and deletes the instance. <br>
@@ -268,7 +268,6 @@ public class DataAccessPump extends DataAccessPlugInBase
         m_i18n = null;
         i18n_plugin = null;
     }
-
 
     /*
      * public void loadPumpsTable() { metersUrl = new
@@ -294,6 +293,7 @@ public class DataAccessPump extends DataAccessPlugInBase
      * "us_diagnostics.html"); metersNames.add("WaveSense");
      * metersUrl.put("WaveSense", "wavesense.html"); }
      */
+
 
     // ********************************************************
     // ****** Init Methods *****
@@ -366,10 +366,10 @@ public class DataAccessPump extends DataAccessPlugInBase
 
         lst_libs.addAll(getBaseLibraries());
 
-        lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c",
-                "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License",
-                "Xml parser for processing xml document",
-                "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
+        lst_libs.add(
+            new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c", "http://www.extreme.indiana.edu/xgws/xsoap/xpp/",
+                    "Indiana University Extreme! Lab Software License", "Xml parser for processing xml document",
+                    "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
 
         this.plugin_libraries = lst_libs;
 
@@ -377,9 +377,14 @@ public class DataAccessPump extends DataAccessPlugInBase
         ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
 
         CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
-        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com",
-                "Framework, About, Outputs")); // and support for Ascensia &
-                                               // Roche devices"));
+        cg.addCreditsEntry(
+            new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework, About, Outputs")); // and
+                                                                                                                   // support
+                                                                                                                   // for
+                                                                                                                   // Ascensia
+                                                                                                                   // &
+                                                                                                                   // Roche
+                                                                                                                   // devices"));
         cg.addCreditsEntry(new CreditsEntry("Tidepool.org", "www.tidepool.org", "Supplied code for Insulet device"));
         lst_credits.add(cg);
 
@@ -409,7 +414,8 @@ public class DataAccessPump extends DataAccessPlugInBase
 
         fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
         // fg.addFeaturesEntry(new
-        // FeaturesEntry("Roche (partitialy, Basal Pattern History is not fully supported due to incomplete export of SmartPix device)"));
+        // FeaturesEntry("Roche (partitialy, Basal Pattern History is not fully
+        // supported due to incomplete export of SmartPix device)"));
         fg.addFeaturesEntry(new FeaturesEntry("Dana (only works on Windows and Linux)"));
         fg.addFeaturesEntry(new FeaturesEntry("Accu-chek/Roche"));
         fg.addFeaturesEntry(new FeaturesEntry("Animas/One Touch"));
@@ -460,13 +466,13 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     }
 
-
     // ********************************************************
     // ****** Pumps *****
     // ********************************************************
     /*
      * public PumpManager getPumpManager() { return this.m_pumpManager; }
      */
+
 
     // ********************************************************
     // ****** Version *****
@@ -513,7 +519,8 @@ public class DataAccessPump extends DataAccessPlugInBase
     @Override
     public void createCustomDb()
     {
-        this.m_db = new GGCPumpDb(this.hdb);
+        this.m_db = new GGCPumpDb(this.hibernateDb);
+        this.pluginDb = this.m_db;
     }
 
 

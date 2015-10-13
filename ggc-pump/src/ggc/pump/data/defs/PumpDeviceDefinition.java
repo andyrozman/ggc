@@ -48,12 +48,13 @@ public enum PumpDeviceDefinition implements DeviceDefinition
             DeviceProgressStatus.Special, "", 0.05f, 0.025f),
 
     // Insulet
-    Insulet_Omnipod(60001, "Omnipod", "in_omnipod.jpg", "INSTRUCTIONS_INSULET_OMNIPOD", null,
-            DeviceImplementationStatus.InProgress, DeviceCompanyDefinition.Insulet,
-            DeviceHandlerType.InsuletOmnipodHandler, DevicePortParameterType.NoParameters,
-            DeviceConnectionProtocol.FileImport, DeviceProgressStatus.Special, "", 0.1f, 0.05f),
+            Insulet_Omnipod(60001, "Omnipod", "in_omnipod.jpg", "INSTRUCTIONS_INSULET_OMNIPOD", null,
+                    DeviceImplementationStatus.InProgress, DeviceCompanyDefinition.Insulet,
+                    DeviceHandlerType.InsuletOmnipodHandler, DevicePortParameterType.NoParameters,
+                    DeviceConnectionProtocol.FileImport, DeviceProgressStatus.Special, "", 0.1f, 0.05f),
 
     // Minimed (not done yet)
+
     Minimed_508_508c(10001, "name", "pic", "instruction", MinimedDeviceType.Minimed_508_508c,
             DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
             DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
@@ -104,6 +105,7 @@ public enum PumpDeviceDefinition implements DeviceDefinition
     static List<DeviceDefinition> allDevices;
     static List<DeviceDefinition> supportedDevices;
 
+
     static
     {
         allDevices = new ArrayList<DeviceDefinition>();
@@ -118,6 +120,10 @@ public enum PumpDeviceDefinition implements DeviceDefinition
                 supportedDevices.add(pdd);
             }
         }
+
+        System.out.println(
+            "Pump Devices V2 (registered: " + allDevices.size() + ", supported: " + supportedDevices.size() + ")");
+
     }
 
     // we need to extend this to all values currently in DeviceImplementation

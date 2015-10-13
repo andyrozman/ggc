@@ -1,14 +1,14 @@
 package ggc.pump.data;
 
-import ggc.plugin.data.DeviceValuesEntryInterface;
-import ggc.plugin.gui.OldDataReaderAbstract;
-import ggc.pump.data.db.GGCPumpDb;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.Hashtable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.gui.OldDataReaderAbstract;
+import ggc.pump.db.GGCPumpDb;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,10 +38,12 @@ import org.apache.commons.logging.LogFactory;
 
 public class PumpDataReader extends OldDataReaderAbstract
 {
+
     private static Log log = LogFactory.getLog(PumpDataReader.class);
 
     GGCPumpDb db = null;
     DataAccessPump m_da = null;
+
 
     /**
      * Constructor
@@ -54,6 +56,7 @@ public class PumpDataReader extends OldDataReaderAbstract
         m_da = da;
     }
 
+
     /**
      * Get Max Entries
      */
@@ -63,6 +66,7 @@ public class PumpDataReader extends OldDataReaderAbstract
         db = m_da.getDb();
         this.all_entries = db.getAllElementsCount();
     }
+
 
     /**
      * Read Old entries
@@ -75,6 +79,7 @@ public class PumpDataReader extends OldDataReaderAbstract
 
     float db_reading = 0.0f;
     int current_entry = 0;
+
 
     /**
      * Write status of reading

@@ -1,12 +1,6 @@
 package ggc.pump.data.graph;
 
-import ggc.core.data.graph.GGCGraphUtil;
-import ggc.pump.data.profile.ProfileSubEntry;
-import ggc.pump.gui.profile.ProfileEditor;
-import ggc.pump.util.DataAccessPump;
-
-import java.awt.Color;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -24,6 +18,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.data.graph.GGCGraphUtil;
+import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.gui.profile.ProfileEditor;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -55,7 +54,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
 // GraphViewDataProcessorInterface
 {
 
-    // GregorianCalendar gc;
+    // GregorianCalendar currentCalendar;
     XYSeriesCollection dataset = new XYSeriesCollection();
 
     // NumberAxis BGAxis;
@@ -69,6 +68,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
     ArrayList<ProfileSubEntry> profiles_entries;
     ProfileEditor prof_editor = null;
 
+
     /**
      * Constructor
      * @param pe
@@ -78,6 +78,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
         super(DataAccessPump.getInstance());
         this.prof_editor = pe;
     }
+
 
     /**
      * Get Help Id
@@ -89,6 +90,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
         return null;
     }
 
+
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      *
@@ -99,6 +101,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
     {
         return new Rectangle(100, 100, 500, 400);
     }
+
 
     /**
      * Load Data
@@ -112,6 +115,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
 
     }
 
+
     /**
      * Get Data Set
      *
@@ -121,6 +125,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
     {
         return this.dataset;
     }
+
 
     /**
      * Preprocess Data
@@ -212,6 +217,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
 
     GregorianCalendar gcx = new GregorianCalendar();
 
+
     /**
      * Get Time in Ms
      *
@@ -233,6 +239,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
         return gcx.getTimeInMillis();
     }
 
+
     /**
      * Get Title (used by GraphViewer)
      *
@@ -243,6 +250,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
     {
         return null;
     }
+
 
     /**
      * Set Plot
@@ -259,6 +267,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
 
     }
 
+
     /**
      * Refresh Data
      */
@@ -270,6 +279,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
         this.setPlot(chart);
     }
 
+
     /**
      * Create Chart
      */
@@ -280,6 +290,7 @@ public class GraphViewProfileEditor extends AbstractGraphViewAndProcessor // imp
             m_ic.getMessage("VALUE_AXIS_BASAL"), dataset, PlotOrientation.VERTICAL, false, false, false);
         this.setPlot(chart);
     }
+
 
     /**
      * Create Chart Panel

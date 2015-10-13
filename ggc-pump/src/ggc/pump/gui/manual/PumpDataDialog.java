@@ -26,12 +26,12 @@ import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpDailyStatistics;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.db.GGCPumpDb;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.dto.BasalStatistics;
 import ggc.pump.data.graph.GraphViewDailyPump;
 import ggc.pump.data.util.PumpBasalManager;
+import ggc.pump.db.GGCPumpDb;
 import ggc.pump.util.DataAccessPump;
 
 /**

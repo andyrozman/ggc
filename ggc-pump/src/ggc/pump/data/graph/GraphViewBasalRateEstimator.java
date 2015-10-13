@@ -120,11 +120,12 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
         /*
          * if (gluco_values==null)
          * {
-         * this.gluco_values = new GlucoValues(this.gc,
-         * (GregorianCalendar)this.gc.clone(), true);
+         * this.gluco_values = new GlucoValues(this.currentCalendar,
+         * (GregorianCalendar)this.currentCalendar.clone(), true);
          * System.out.println("Gluco Values: " +
          * this.gluco_values.getDailyValuesRowsCount());
-         * GregorianCalendar gc_prev = (GregorianCalendar)this.gc.clone();
+         * GregorianCalendar gc_prev =
+         * (GregorianCalendar)this.currentCalendar.clone();
          * gc_prev.add(GregorianCalendar.DAY_OF_YEAR, -1);
          * this.gluco_values_prev = new GlucoValues(gc_prev, gc_prev, true);
          * }

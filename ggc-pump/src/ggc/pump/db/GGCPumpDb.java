@@ -1,4 +1,4 @@
-package ggc.pump.data.db;
+package ggc.pump.db;
 
 import java.util.*;
 
@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.utils.data.ATechDate;
 
+import ggc.core.db.hibernate.cgms.CGMSDataH;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.core.db.hibernate.pump.PumpProfileH;
@@ -23,12 +24,12 @@ import ggc.plugin.db.PluginDb;
 import ggc.plugin.graph.data.GraphValuesCapable;
 import ggc.plugin.graph.data.GraphValuesCollection;
 import ggc.plugin.graph.data.PlugInGraphDb;
+import ggc.plugin.report.data.cgms.CGMSDayData;
 import ggc.pump.data.PumpDataReader;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.PumpValuesEntryProfile;
 import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
 
 /**
@@ -150,6 +151,31 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         mergeRangePumpData(dvr, lst_ext);
 
         return dvr;
+    }
+
+
+    /**
+     * Get Pump Values Range
+     *
+     * @param from
+     * @param to
+     * @return
+     */
+    public List<CGMSDayData> getRangeCGMSValues(GregorianCalendar from, GregorianCalendar to)
+    {
+        log.info("getRangeCGMSValues()");
+
+        List<CGMSDayData> outData = new ArrayList<CGMSDayData>();
+
+        List<CGMSDataH> listCGMSData = getRangeCGMSValuesRaw(from, to, "dv.base_type=1");
+
+        for (CGMSDataH pdh : listCGMSData)
+        {
+            CGMSDayData dv = new CGMSDayData(pdh);
+            outData.add(dv);
+        }
+
+        return outData;
     }
 
 
@@ -521,9 +547,9 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
                     "where (dv.active_from > " + dtFrom + //
                     " and dv.active_from <> 0 )" + //
                     " or dv.active_till > " + dtFrom + //
-                    // " and dv.active_till < " + dtTill +
-                    // " and dv.active_till > " + dtFrom +
-                    " or (dv.active_till = 0) " + //
+            // " and dv.active_till < " + dtTill +
+            // " and dv.active_till > " + dtFrom +
+            " or (dv.active_till = 0) " + //
                     " and dv.person_id=" + m_da.getCurrentUserId();
 
             // " and (dv.active_till < " + dtFrom +
@@ -592,8 +618,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
     private String prepareSqlForProfiles(GregorianCalendar gcFrom, GregorianCalendar gcTill)
     {
         String sql = " SELECT dv " //
-                + " from ggc.core.db.hibernate.pump.PumpProfileH as dv "
-                + " where dv.person_id="
+                + " from ggc.core.db.hibernate.pump.PumpProfileH as dv " + " where dv.person_id="
                 + m_da.getCurrentUserId() //
                 + " and dv.active_from <> 0 and dv.active_till <> 0" + //
                 " and ( ";
@@ -721,15 +746,13 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
             // sql = "SELECT dv from " +
             // "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " +
-            // "WHERE dv.dt_info >=  "
+            // "WHERE dv.dt_info >= "
             // + dt_from + "000000 and dv.person_id=" +
             // dataAccess.getCurrentUserId() + " ORDER BY dv.dt_info ";
 
             sql = "SELECT dv from " //
-                    + "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv "
-                    + "WHERE dv.extended like '%"
-                    + m_da.getSourceDevice() + "%' " + "and dv.person_id="
-                    + m_da.getCurrentUserId()
+                    + "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + "WHERE dv.extended like '%"
+                    + m_da.getSourceDevice() + "%' " + "and dv.person_id=" + m_da.getCurrentUserId()
                     + " ORDER BY dv.dt_info ";
 
             q = this.db.getSession().createQuery(sql);
@@ -756,10 +779,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
             // + " ORDER BY dv.active_from ";
 
             sql = "SELECT dv " //
-                    + "from ggc.core.db.hibernate.pump.PumpProfileH as dv "
-                    + "WHERE dv.extended like '%"
-                    + m_da.getSourceDevice() + "%' " + " and dv.person_id="
-                    + m_da.getCurrentUserId()
+                    + "from ggc.core.db.hibernate.pump.PumpProfileH as dv " + "WHERE dv.extended like '%"
+                    + m_da.getSourceDevice() + "%' " + " and dv.person_id=" + m_da.getCurrentUserId()
                     + " ORDER BY dv.active_from ";
 
             q = this.db.getSession().createQuery(sql);

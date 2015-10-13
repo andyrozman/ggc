@@ -1,10 +1,5 @@
 package ggc.pump.print;
 
-import ggc.core.util.DataAccess;
-import ggc.core.util.GGCLanguageManagerRunner;
-import ggc.pump.db.PumpProfile;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.GregorianCalendar;
 
 import com.atech.i18n.mgr.LanguageManager;
@@ -17,6 +12,11 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
+
+import ggc.core.util.DataAccess;
+import ggc.core.util.GGCLanguageManagerRunner;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,6 +49,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
     GregorianCalendar startDate = null;
     PumpProfile profileForDate;
 
+
     /**
      * Constructor
      *
@@ -58,6 +59,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
     {
         super(DataAccessPump.getInstance(), parameters, true);
     }
+
 
     @Override
     public void initData()
@@ -69,6 +71,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
 
         profileForDate = DataAccessPump.getInstance().getDb().getProfileForDayAndTime(this.startDate);
     }
+
 
     /**
      * {@inheritDoc}
@@ -140,7 +143,8 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
                  * ATechDate(da_local.getDataEntryObject().getDateTimeFormat(),
                  * gc_current);
                  * if
-                 * (deviceValuesRange.isDayEntryAvailable(atd.getATDateTimeAsLong
+                 * (deviceValuesRange.isDayEntryAvailable(atd.
+                 * getATDateTimeAsLong
                  * ()))
                  * {
                  * DeviceValuesDay dvd =
@@ -193,6 +197,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
 
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -201,6 +206,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
     {
         return new ITextDocumentPrintSettings(10, 10, 10, 30);
     }
+
 
     private void writeDataLine(PdfPTable table, Integer hour, Float basalRate)
     {
@@ -224,6 +230,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
         }
     }
 
+
     public int[] getTableColumnWidths(int tableNr)
     {
         if (tableNr == 0)
@@ -238,10 +245,12 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
         }
     }
 
+
     public String getTitleText()
     {
         return "PUMP_DATA_BASAL_CHECK";
     }
+
 
     /**
      * {@inheritDoc}
@@ -251,6 +260,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
     {
         return "PumpBasalCheckSheet";
     }
+
 
     public static void main(String[] args)
     {
@@ -273,6 +283,7 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
 
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -286,14 +297,16 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
         p.setAlignment(Element.ALIGN_CENTER);
         p.add(new Paragraph("", f));
         p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()), f));
-        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " "
-                + DataAccess.getInstance().getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN, 10,
-                Font.ITALIC)));
+        p.add(new Paragraph(
+                this.i18nControl.getMessage("FOR") + " "
+                        + DataAccess.getInstance().getConfigurationManagerWrapper().getUserName(),
+                new Font(FontFamily.TIMES_ROMAN, 10, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
 
         return p;
     }
+
 
     /**
      * {@inheritDoc}
@@ -310,14 +323,16 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
          * deviceValuesRange.getEndGC());
          */
         return ""; // atd1.getDateFilenameString() + "-" +
-                       // atd2.getDateFilenameString();
+                   // atd2.getDateFilenameString();
     }
+
 
     public int[] getTableColumnWidths()
     {
         // TODO Auto-generated method stub
         return null;
     }
+
 
     @Override
     public int getTextSize()

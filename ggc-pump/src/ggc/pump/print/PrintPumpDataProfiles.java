@@ -1,15 +1,5 @@
 package ggc.pump.print;
 
-import ggc.core.db.GGCDbLoader;
-import ggc.core.db.tool.DbToolApplicationGGC;
-import ggc.core.util.DataAccess;
-import ggc.plugin.data.DeviceValuesRange;
-import ggc.pump.data.PumpValuesHourProcessor;
-import ggc.pump.data.db.GGCPumpDb;
-import ggc.pump.data.profile.ProfileSubPattern;
-import ggc.pump.db.PumpProfile;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -19,13 +9,19 @@ import com.atech.print.engine.ITextDocumentPrintSettings;
 import com.atech.print.engine.PrintAbstractITextWithDataRead;
 import com.atech.print.engine.PrintParameters;
 import com.atech.utils.data.ATechDate;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
+import com.itextpdf.text.*;
 import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
+
+import ggc.core.db.GGCDbLoader;
+import ggc.core.db.tool.DbToolApplicationGGC;
+import ggc.core.util.DataAccess;
+import ggc.plugin.data.DeviceValuesRange;
+import ggc.pump.data.PumpValuesHourProcessor;
+import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.db.GGCPumpDb;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -57,6 +53,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 
 public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
 {
+
     Font smallFont = null;
     protected DeviceValuesRange deviceValuesRange;
 
@@ -66,6 +63,7 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
     I18nControlAbstract i18nControl = dataAccessPump.getI18nControlInstance();
     PumpValuesHourProcessor pumpValuesHourProcessor;
     List<PumpProfile> profilesRange;
+
 
     public PrintPumpDataProfiles(PrintParameters parameters)
     {
@@ -79,6 +77,7 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
 
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -91,16 +90,18 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
 
         p.setAlignment(Element.ALIGN_CENTER);
         p.add(new Paragraph("", f));
-        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " [" + this.getDateString(this.gcFrom)
-                + " - " + this.getDateString(this.gcTill) + "]", f));
-        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " "
-                + DataAccess.getInstance().getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN, 10,
-                Font.ITALIC)));
+        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " [" + this.getDateString(this.gcFrom) + " - "
+                + this.getDateString(this.gcTill) + "]", f));
+        p.add(new Paragraph(
+                this.i18nControl.getMessage("FOR") + " "
+                        + DataAccess.getInstance().getConfigurationManagerWrapper().getUserName(),
+                new Font(FontFamily.TIMES_ROMAN, 10, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
 
         return p;
     }
+
 
     @Override
     public void initData()
@@ -126,11 +127,13 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
 
     }
 
+
     // TODO move this to abstract class for printing
     protected String getDateString(GregorianCalendar gc)
     {
         return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
     }
+
 
     /**
      * {@inheritDoc}
@@ -140,9 +143,13 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
     {
 
         PdfPTable datatable = new PdfPTable(28);
-        datatable.setWidths(new float[] { 9.0f, 7.0f, 7.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f,
-                                         3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f,
-                                         3.0f, 5.0f }); // 6 + 2 + 4
+        datatable.setWidths(
+            new float[] { 9.0f, 7.0f, 7.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f,
+                          3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 5.0f }); // 6
+                                                                                                           // +
+                                                                                                           // 2
+                                                                                                           // +
+                                                                                                           // 4
         // 1 + 12
         datatable.setWidthPercentage(100); // percentage
 
@@ -169,6 +176,7 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
 
         document.add(datatable);
     }
+
 
     private void createProfileEntry(PdfPTable table, PumpProfile profile) throws Exception
     {
@@ -211,6 +219,7 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
 
     }
 
+
     private String getDateTime(long time)
     {
         String dt = ATechDate.getDateString(ATechDate.FORMAT_DATE_AND_TIME_S, time);
@@ -222,6 +231,7 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
 
     }
 
+
     // private Phrase createEmptyTextPhraseSmall()
     // {
     // return new Phrase("", smallFont);
@@ -232,10 +242,12 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
         return new Phrase(this.i18nControl.getMessage(text), smallFont);
     }
 
+
     public String getTitleText()
     {
         return "PUMP_DATA_PROFILES";
     }
+
 
     /**
      * {@inheritDoc}
@@ -246,11 +258,13 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
         return "Pump_Profiles";
     }
 
+
     @Override
     public ITextDocumentPrintSettings getCustomDocumentSettings()
     {
         return new ITextDocumentPrintSettings(20, 20, 10, 30);
     }
+
 
     @Override
     public String getFileNameRange()
@@ -261,11 +275,13 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
         return atd1.getDateFilenameString() + "-" + atd2.getDateFilenameString();
     }
 
+
     @Override
     public int getTextSize()
     {
         return 6;
     }
+
 
     public static void main(String[] args)
     {

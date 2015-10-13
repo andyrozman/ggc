@@ -84,9 +84,10 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
         p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " ["
                 + this.getDateString(this.deviceValuesRange.getStartGC()) + " - "
                 + this.getDateString(this.deviceValuesRange.getEndGC()) + "]", f));
-        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " "
-                + DataAccess.getInstance().getSettings().getUserName(), new Font(FontFamily.TIMES_ROMAN, 10,
-                Font.ITALIC)));
+        p.add(new Paragraph(
+                this.i18nControl.getMessage("FOR") + " "
+                        + DataAccess.getInstance().getConfigurationManagerWrapper().getUserName(),
+                new Font(FontFamily.TIMES_ROMAN, 10, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
 
@@ -191,7 +192,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
      * @param mp
      * @throws Exception
      */
-    public abstract void writeColumnData(PdfPTable table, Object /* DailyFoodEntry */mp) throws Exception;
+    public abstract void writeColumnData(PdfPTable table, Object /* DailyFoodEntry */ mp) throws Exception;
 
 
     /**
