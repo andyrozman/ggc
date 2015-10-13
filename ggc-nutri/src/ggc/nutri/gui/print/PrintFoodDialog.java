@@ -1,18 +1,14 @@
 package ggc.nutri.gui.print;
 
-import ggc.core.data.DayValuesData;
-import ggc.core.util.DataAccess;
-import ggc.nutri.print.PrintFoodMenuAbstract;
-import ggc.nutri.print.PrintFoodMenuBase;
-import ggc.nutri.print.PrintFoodMenuExt1;
-import ggc.nutri.print.PrintFoodMenuExt2;
-import ggc.nutri.print.PrintFoodMenuExt3;
-import ggc.nutri.util.DataAccessNutri;
-
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.print.gui.PrintDialogRange;
+
+import ggc.core.data.DayValuesData;
+import ggc.core.util.DataAccess;
+import ggc.nutri.print.*;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,11 +45,12 @@ public class PrintFoodDialog extends PrintDialogRange
     private I18nControlAbstract ic = DataAccessNutri.getInstance().getParentI18nControlInstance();
 
     private String[] report_types_2 = { ic.getMessage("FOOD_MENU_BASE"), ic.getMessage("FOOD_MENU_EXT_I"),
-                                       ic.getMessage("FOOD_MENU_EXT_II"),
-    // m_ic.getMessage("FOOD_MENU_EXT_III")
+                                        ic.getMessage("FOOD_MENU_EXT_II"),
+            // m_ic.getMessage("FOOD_MENU_EXT_III")
     };
 
     DataAccessNutri dataAccessNutri;
+
 
     /**
      * Constructor
@@ -68,6 +65,7 @@ public class PrintFoodDialog extends PrintDialogRange
                 true);
     }
 
+
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
@@ -80,6 +78,7 @@ public class PrintFoodDialog extends PrintDialogRange
     {
         return "GGC_Food_Print";
     }
+
 
     /**
      * {@inheritDoc}
@@ -98,6 +97,7 @@ public class PrintFoodDialog extends PrintDialogRange
         return report_types_2;
     }
 
+
     public DataAccessNutri getDataAccessLocal()
     {
         if (dataAccessNutri == null)
@@ -107,6 +107,7 @@ public class PrintFoodDialog extends PrintDialogRange
 
         return this.dataAccessNutri;
     }
+
 
     /**
      * {@inheritDoc}
@@ -141,6 +142,7 @@ public class PrintFoodDialog extends PrintDialogRange
         displayPDF(pa.getRelativeNameWithPath());
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -150,14 +152,16 @@ public class PrintFoodDialog extends PrintDialogRange
         return false;
     }
 
+
     /**
      * {@inheritDoc}
      */
     @Override
     public String getExternalPdfViewer()
     {
-        return DataAccess.getInstance().getSettings().getExternalPdfVieverPath().replace('\\', '/');
+        return DataAccess.getInstance().getConfigurationManagerWrapper().getExternalPdfVieverPath().replace('\\', '/');
     }
+
 
     /**
      * {@inheritDoc}
@@ -165,8 +169,9 @@ public class PrintFoodDialog extends PrintDialogRange
     @Override
     public String getExternalPdfViewerParameters()
     {
-        return DataAccess.getInstance().getSettings().getExternalPdfVieverParameters();
+        return DataAccess.getInstance().getConfigurationManagerWrapper().getExternalPdfVieverParameters();
     }
+
 
     /**
      * {@inheritDoc}
@@ -174,8 +179,9 @@ public class PrintFoodDialog extends PrintDialogRange
     @Override
     public boolean isExternalPdfViewerActivated()
     {
-        return DataAccess.getInstance().getSettings().getUseExternalPdfViewer();
+        return DataAccess.getInstance().getConfigurationManagerWrapper().getUseExternalPdfViewer();
     }
+
 
     /**
      * {@inheritDoc}

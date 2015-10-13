@@ -1,5 +1,16 @@
 package ggc.nutri.print;
 
+import java.util.Iterator;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.atech.print.engine.ITextDocumentPrintSettings;
+import com.atech.print.engine.PrintAbstractIText;
+import com.itextpdf.text.*;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.pdf.PdfPTable;
+
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
@@ -8,21 +19,6 @@ import ggc.core.util.DataAccess;
 import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 import ggc.nutri.util.DataAccessNutri;
-
-import java.util.Iterator;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.atech.print.engine.ITextDocumentPrintSettings;
-import com.atech.print.engine.PrintAbstractIText;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPTable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -57,6 +53,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
     DayValuesData dayValuesData;
     DataAccess dataAccessCore;
 
+
     /**
      * Constructor
      *
@@ -72,6 +69,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
         this.init();
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -84,17 +82,20 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
         p.setAlignment(Element.ALIGN_CENTER);
         p.add(new Paragraph("", f));
-        p.add(new Paragraph(
-                this.i18nControl.getMessage(getTitleText()) + " [" + this.dayValuesData.getFromAsLocalizedDate()
-                        + " - " + this.dayValuesData.getToAsLocalizedDate() + "]", f));
+        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " ["
+                + this.dayValuesData.getFromAsLocalizedDate() + " - " + this.dayValuesData.getToAsLocalizedDate() + "]",
+                f));
 
-        p.add(new Paragraph(this.i18nControl.getMessage("FOR") + " " + this.dataAccessCore.getSettings().getUserName(),
+        p.add(new Paragraph(
+                this.i18nControl.getMessage("FOR") + " "
+                        + this.dataAccessCore.getConfigurationManagerWrapper().getUserName(),
                 new Font(FontFamily.TIMES_ROMAN, 12, Font.ITALIC)));
         p.add(new Paragraph("", f));
         p.add(new Paragraph("", f));
 
         return p;
     }
+
 
     /**
      * {@inheritDoc}
@@ -138,9 +139,8 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
                 DailyValuesRow rw = dv.getRow(i);
 
-                if (!this.dataAccessCore.isValueSet(rw.getMealsIds())
-                        && !this.dataAccessCore.isValueSet(rw
-                                .getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION)))
+                if (!this.dataAccessCore.isValueSet(rw.getMealsIds()) && !this.dataAccessCore
+                        .isValueSet(rw.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION)))
                 {
                     continue;
                 }
@@ -167,7 +167,8 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
                     }
                 }
 
-                if (this.dataAccessCore.isValueSet(rw.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION)))
+                if (this.dataAccessCore
+                        .isValueSet(rw.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION)))
                 {
                     writeFoodDescData(datatable, rw);
                 }
@@ -189,6 +190,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
     }
 
+
     /**
      * Get Formated Value (String correctly formated from float value)
      *
@@ -202,6 +204,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -210,6 +213,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
     {
         return new ITextDocumentPrintSettings(30, 30, 10, 30);
     }
+
 
     /**
      * {@inheritDoc}
@@ -221,6 +225,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
                 + this.dayValuesData.getRangeEndObject().getDateFilenameString();
     }
 
+
     /**
      * Get text for title
      *
@@ -228,17 +233,20 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      */
     public abstract String getTitleText();
 
+
     /**
      * Return count of table columns
      * @return
      */
     public abstract int getTableColumnsCount();
 
+
     /**
      * Return columns widths for table
      * @return
      */
     public abstract int[] getTableColumnWidths();
+
 
     /**
      * Write additional header to documents
@@ -247,6 +255,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      * @throws Exception
      */
     public abstract void writeAdditionalHeader(PdfPTable table) throws Exception;
+
 
     /**
      * Write together data (all data of certain type summed)
@@ -257,6 +266,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      */
     public abstract void writeTogetherData(PdfPTable table, DailyValuesRow rw) throws Exception;
 
+
     /**
      * Write data in column
      *
@@ -266,6 +276,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      */
     public abstract void writeColumnData(PdfPTable table, DailyFoodEntry mp) throws Exception;
 
+
     /**
      * Write Food Description Data
      *
@@ -274,6 +285,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
      * @throws Exception
      */
     public abstract void writeFoodDescData(PdfPTable table, DailyValuesRow mp) throws Exception;
+
 
     /**
      * Write empty column data. If there is no data, this is used, to fill empty places.
