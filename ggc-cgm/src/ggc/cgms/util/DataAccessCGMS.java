@@ -289,7 +289,8 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void createCustomDb()
     {
-        this.m_db = new GGC_CGMSDb(this.hdb);
+        this.m_db = new GGC_CGMSDb(this.hibernateDb);
+        this.pluginDb = this.m_db;
     }
 
 
@@ -358,9 +359,14 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
 
         CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
-        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com",
-                "Framework, About, Outputs")); // and support for Ascensia &
-                                               // Roche devices"));
+        cg.addCreditsEntry(
+            new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework, About, Outputs")); // and
+                                                                                                                   // support
+                                                                                                                   // for
+                                                                                                                   // Ascensia
+                                                                                                                   // &
+                                                                                                                   // Roche
+                                                                                                                   // devices"));
         lst_credits.add(cg);
 
         this.plugin_developers = lst_credits;
@@ -426,8 +432,8 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     public void createWebListerContext()
     {
         this.weblister_items = new ArrayList<BaseListEntry>();
-        this.weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html",
-                BaseListEntry.STATUS_NOTPLANNED));
+        this.weblister_items
+                .add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html", BaseListEntry.STATUS_NOTPLANNED));
         this.weblister_items
                 .add(new BaseListEntry("Dexcom", "/cgms/dexcom.html", BaseListEntry.STATUS_PART_IMPLEMENTED));
         this.weblister_items.add(new BaseListEntry("Minimed", "/cgms/minimed.html", BaseListEntry.STATUS_PLANNED));

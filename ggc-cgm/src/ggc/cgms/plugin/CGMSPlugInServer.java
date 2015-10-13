@@ -3,8 +3,17 @@ package ggc.cgms.plugin;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
+
+import org.apache.commons.collections.MapUtils;
+import org.jfree.data.xy.XYSeries;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
@@ -22,6 +31,7 @@ import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.graph.data.CGMSGraphDataHandler;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
@@ -54,6 +64,8 @@ import ggc.plugin.list.BaseListDialog;
 
 public class CGMSPlugInServer extends DevicePlugInServer implements ActionListener
 {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CGMSPlugInServer.class);
 
     // /**
     // * Command: Read CGMS data
@@ -171,6 +183,8 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         }
 
         this.initPlugInServer((DataAccess) dataAccess, da_local);
+
+        this.installed = true;
     }
 
 
@@ -264,22 +278,22 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
             null, ic_local, DataAccessCGMS.getInstance(), parent);
 
         menus[0] = menu;
-        menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
-            DownloadSupportType.DownloadData));
+        menus[0].setEnabled(
+            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadData));
 
         menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_CONFIG", "MN_CGMS_READ_CONFIG_DESC",
             "cgms_read_config", this, null, ic_local, DataAccessCGMS.getInstance(), parent);
 
         menus[1] = menu;
-        menus[1].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
-            DownloadSupportType.Download_Data_Config));
+        menus[1].setEnabled(
+            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.Download_Data_Config));
 
         menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_FILE", "MN_CGMS_READ_FILE_DESC", "cgms_read_file",
             this, null, ic_local, DataAccessCGMS.getInstance(), parent);
 
         menus[2] = menu;
-        menus[2].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
-            DownloadSupportType.DownloadDataFile));
+        menus[2].setEnabled(
+            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
 
         menu_cgms.addSeparator();
 
@@ -307,12 +321,12 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
     public void refreshMenusAfterConfig()
     {
-        menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
-            DownloadSupportType.DownloadData));
-        menus[1].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
-            DownloadSupportType.DownloadConfig));
-        menus[2].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
-            DownloadSupportType.DownloadDataFile));
+        menus[0].setEnabled(
+            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadData));
+        menus[1].setEnabled(
+            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadConfig));
+        menus[2].setEnabled(
+            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
     }
 
 
@@ -391,6 +405,41 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     public BackupRestorePlugin getBackupRestoreHandler()
     {
         return new BackupRestoreCGMSHandler();
+    }
+
+
+    @Override
+    public List<Object> getDataFromPlugin(Map<String, Object> parameters)
+    {
+        if (MapUtils.isEmpty(parameters))
+        {
+            LOG.warn("We cannot retrieve data for empty request (no parameters): " + parameters);
+            return null;
+        }
+
+        if (!parameters.containsKey("dataType"))
+        {
+            LOG.warn("DataType of return data must be specified, along with other required parameters.");
+            return null;
+        }
+
+        if (parameters.get("dataType").equals("CGMSReadingsDaily4Graph"))
+        {
+            CGMSGraphDataHandler graphData = new CGMSGraphDataHandler();
+            XYSeries series = graphData.getCGMSDailyReadings(da_local,
+                (GregorianCalendar) parameters.get("calendarDate"));
+
+            List<Object> data = new ArrayList<Object>();
+            data.add(series);
+
+            return data;
+        }
+        else
+        {
+            LOG.warn("Unknown dataType requested: " + parameters.get("dataType"));
+        }
+
+        return null;
     }
 
 }

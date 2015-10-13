@@ -2,6 +2,10 @@
 Changes file for GGC CGM Tool
 ==============================
 
+1.3.4 [12.10.2015]
+    * implement CGMSPlugInServer to return data when requested (for Pen/Injection Daily)
+    * little refactorings here and there
+
 1.3.3 [2.10.2015]
     * Changed Implementation Status for some objects (for selector display)
 

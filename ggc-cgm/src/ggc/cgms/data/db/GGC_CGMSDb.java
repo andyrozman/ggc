@@ -12,7 +12,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.atech.db.hibernate.HibernateDb;
-import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 
 import ggc.cgms.data.CGMSDataReader;
@@ -21,7 +20,6 @@ import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.db.hibernate.cgms.CGMSDataH;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntryInterface;
-import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.db.PluginDb;
 
 /**
@@ -122,59 +120,6 @@ public class GGC_CGMSDb extends PluginDb
         return dV;
 
         // return null;
-    }
-
-
-    /**
-     * Get Pump Values Range
-     * 
-     * @param from 
-     * @param to 
-     * @return
-     */
-    public DeviceValuesRange getRangePumpValues(GregorianCalendar from, GregorianCalendar to)
-    {
-        ATDataAccessAbstract.notImplemented("GGC_CGMSDb::getRangePumpValues()");
-        return null;
-
-        /*
-         * log.info("getPumpDayStats()");
-         * long dt_from = ATechDate.getATDateTimeFromGC(from,
-         * ATechDate.FORMAT_DATE_ONLY);
-         * long dt_to = ATechDate.getATDateTimeFromGC(to,
-         * ATechDate.FORMAT_DATE_ONLY);
-         * String sql = "";
-         * DeviceValuesRange dvr = new
-         * DeviceValuesRange(DataAccessPump.getInstance(), from, to);
-         * try
-         * {
-         * sql = "SELECT dv from " +
-         * "ggc.core.db.hibernate.pump.PumpDataH as dv " +
-         * "WHERE dv.dt_info >=  " + dt_from
-         * + "000000 AND dv.dt_info <= " + dt_to + "235959 ORDER BY dv.dt_info";
-         * //System.out.println("SQL: " + sql);
-         * Query q = this.db.getSession().createQuery(sql);
-         * Iterator<?> it = q.list().iterator();
-         * while (it.hasNext())
-         * {
-         * PumpDataH pdh = (PumpDataH)it.next();
-         * PumpValuesEntry dv = new PumpValuesEntry(pdh);
-         * dvr.addEntry(dv);
-         * }
-         * ArrayList<PumpValuesEntryExt> lst_ext =
-         * getRangePumpValuesExtended(from, to);
-         * mergeRangePumpData(dvr, lst_ext);
-         * // ArrayList<PumpValuesEntryExt> lst_ext =
-         * getDailyPumpValuesExtended(gc);
-         * // mergeDailyPumpData(dV, lst_ext);
-         * }
-         * catch (Exception ex)
-         * {
-         * log.debug("Sql: " + sql);
-         * log.error("getDayStats(). Exception: " + ex, ex);
-         * }
-         * return dvr;
-         */
     }
 
 

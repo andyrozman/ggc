@@ -98,9 +98,6 @@ public class CGMSGraphViewDaily extends AbstractGraphViewAndProcessor implements
     GregorianCalendar currentCalendar;
     XYSeriesCollection dataset = new XYSeriesCollection();
 
-    DateAxis dateAxis;
-    NumberAxis BGAxis;
-
     DataAccessCGMS da_local = DataAccessCGMS.getInstance();
     GGCGraphUtil graph_util = GGCGraphUtil.getInstance(da_local);
     private ArrayList<CGMSValuesSubEntry> dayDataList;
@@ -238,17 +235,28 @@ public class CGMSGraphViewDaily extends AbstractGraphViewAndProcessor implements
     }
 
 
+    public void setPlot(JFreeChart chart)
+    {
+        setPlotStatic(chart);
+    }
+
+
     /**
      * Set Plot
      * 
      * @param chart JFreeChart instance
      */
-    public void setPlot(JFreeChart chart)
+    public void setPlotStatic(JFreeChart chart)
     {
         XYPlot plot = chart.getXYPlot();
         XYItemRenderer defaultRenderer = (XYItemRenderer) plot.getRenderer();
 
+        DateAxis dateAxis;
+        NumberAxis BGAxis;
+
         BGAxis = (NumberAxis) plot.getRangeAxis();
+
+        GGCGraphUtil graphUtil = GGCGraphUtil.getInstance(this.m_da);
 
         // ColorSchemeH colorScheme = graph_util.getColorScheme();
 
@@ -280,7 +288,7 @@ public class CGMSGraphViewDaily extends AbstractGraphViewAndProcessor implements
 
         defaultRenderer.setBasePaint(Color.white);
 
-        dateAxis = GraphUtil.prepareDateAxis(new DateAxis(), this);
+        dateAxis = graphUtil.prepareDateAxis(new DateAxis(), this);
 
         BGAxis.setAutoRangeIncludesZero(true);
 
@@ -303,12 +311,11 @@ public class CGMSGraphViewDaily extends AbstractGraphViewAndProcessor implements
     private void initDates()
     {
         fromDate = GraphUtil.prepareFromCalendar(this.currentCalendar);
-
         tillDate = GraphUtil.prepareTillCalendar(this.currentCalendar);
 
         dateInAtechDate = ATechDate.getATDateTimeFromGC(fromDate, ATechDate.FORMAT_DATE_AND_TIME_S);
 
-        GraphUtil.setDataAccess(this.da_local);
+        //GraphUtil.setDataAccess(this.da_local);
     }
 
 

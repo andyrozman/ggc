@@ -6,6 +6,7 @@ import java.util.List;
 import com.atech.db.ext.ExtendedHandler;
 
 import ggc.cgms.data.CGMSValuesSubEntry;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCI18nControl;
 import ggc.plugin.data.DeviceValuesEntry;
@@ -45,7 +46,7 @@ public class CGMSUtil
 
     private static GGCI18nControl i18nControl = dataAccess.getI18nControlInstance();
 
-    private static int BGUnit = DataAccess.getInstance().getBGMeasurmentType();
+    private static GlucoseUnitType BGUnit = DataAccess.getInstance().getGlucoseUnitType();
 
 
     public static GGCI18nControl getI18Control()
@@ -105,7 +106,7 @@ public class CGMSUtil
 
     public static float getBGInCorrectFormat(int value)
     {
-        if (BGUnit == DataAccess.BG_MGDL)
+        if (BGUnit == GlucoseUnitType.mg_dL)
             return value;
         else
             return dataAccess.getBGValueByType(DataAccess.BG_MMOL, value);
@@ -114,7 +115,7 @@ public class CGMSUtil
 
     public static float getBGInCorrectFormat(float value)
     {
-        if (BGUnit == DataAccess.BG_MGDL)
+        if (BGUnit == GlucoseUnitType.mg_dL)
             return value;
         else
             return dataAccess.getBGValueByType(DataAccess.BG_MMOL, value);
