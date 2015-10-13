@@ -2,6 +2,9 @@
 Changes file for GGC Meter Tool
 ===============================
 
+2.3.1 [9.10.2015]
+    * Ascensia Contour USB devices must now be configured (allowed mapping is secondary to configuration)
+
 2.3.0 [2.10.2015]
     * changes because of Selector refactoring
     * added Ascensia Contour and Ascensia Contour Next family meters (4)

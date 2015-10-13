@@ -20,30 +20,33 @@ public enum MeterDeviceDefinition implements DeviceDefinition
 
     AscensiaContourUsb(10007, "Contour USB", "ascensia_contour_usb.jpg", "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null,
             DeviceImplementationStatus.Done, DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler,
-            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
-            500, MeterDisplayInterfaceType.Simple),
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
+            2000, MeterDisplayInterfaceType.Simple),
 
     AscensiaContourNext(10008, "Contour Next", "ascensia_contour_next.jpg", "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null,
             DeviceImplementationStatus.Done, DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler,
-            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
-            500, MeterDisplayInterfaceType.Simple),
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
+            800, MeterDisplayInterfaceType.Simple),
 
     AscensiaContourNextUsb(10009, "Contour Next USB", "ascensia_contour_nextusb.jpg",
             "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.Done,
             DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler,
-            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
-            500, MeterDisplayInterfaceType.Simple),
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
+            2000, MeterDisplayInterfaceType.Simple),
 
     AscensiaContourNextLink(10010, "Contour Next Link", "ascensia_contour_nextlink.jpg",
             "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.InProgress,
             DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler,
-            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
-            500, MeterDisplayInterfaceType.Simple),
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
+            2000, MeterDisplayInterfaceType.Simple),
 
     ;
 
+    // Contour Next EZ, Contour Next Link 2.4, Didget, Contour XT ?
+
     static List<DeviceDefinition> allDevices;
     static List<DeviceDefinition> supportedDevices;
+
 
     static
     {
@@ -59,6 +62,9 @@ public enum MeterDeviceDefinition implements DeviceDefinition
                 supportedDevices.add(mdd);
             }
         }
+
+        System.out.println(
+            "Meter Devices V2 (registered: " + allDevices.size() + ", supported: " + supportedDevices.size() + ")");
     }
 
     // we need to extend this to all values currently in DeviceImplementation

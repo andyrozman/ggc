@@ -318,7 +318,7 @@ public class AscensiaDecoder
         if (markers.size() == 0)
             return null;
         else
-            return DataAccessMeter.getInstance().createStringFromList(markers, ",");
+            return DataAccessMeter.getInstance().createStringRepresentationOfCollection(markers, ",");
     }
 
 

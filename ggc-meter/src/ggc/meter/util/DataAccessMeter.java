@@ -75,10 +75,10 @@ public class DataAccessMeter extends DataAccessPlugInBase
      */
     public static final String EXTENDED_HANDLER_DAILY_VALUE = "dvh";
 
-
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
+
 
     // Constructor: DataAccessMeter
     /**
@@ -221,10 +221,10 @@ public class DataAccessMeter extends DataAccessPlugInBase
 
         lst_libs.addAll(getBaseLibraries());
 
-        lst_libs.add(new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c",
-                "http://www.extreme.indiana.edu/xgws/xsoap/xpp/", "Indiana University Extreme! Lab Software License",
-                "Xml parser for processing xml document",
-                "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
+        lst_libs.add(
+            new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c", "http://www.extreme.indiana.edu/xgws/xsoap/xpp/",
+                    "Indiana University Extreme! Lab Software License", "Xml parser for processing xml document",
+                    "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
         plugin_libraries = lst_libs;
 
         ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
@@ -397,7 +397,8 @@ public class DataAccessMeter extends DataAccessPlugInBase
     @Override
     public void createCustomDb()
     {
-        this.m_db = new GGCMeterDb(this.hdb);
+        this.m_db = new GGCMeterDb(this.hibernateDb);
+        this.pluginDb = this.m_db;
     }
 
 

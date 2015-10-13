@@ -13,13 +13,6 @@ import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.v2.DeviceHandler;
 import ggc.plugin.output.OutputWriter;
 
-/**
- * Created by andy on 21.09.15.
- */
-
-/**
- * Currently we have only Ascensia Usb Device, other Ascensia devices need to be converted to this format
- */
 public class AscensiaUsbMeterHandler implements DeviceHandler
 {
 
@@ -32,7 +25,8 @@ public class AscensiaUsbMeterHandler implements DeviceHandler
     public void readDeviceData(DeviceDefinition definition, Object connectionParameters, OutputWriter outputWriter)
             throws PlugInBaseException
     {
-        AscensiaContourUsbReader reader = new AscensiaContourUsbReader(this, outputWriter);
+        AscensiaContourUsbReader reader = new AscensiaContourUsbReader(this, (String) connectionParameters,
+                outputWriter);
         reader.readFromDevice();
         reader.closeDevice();
     }

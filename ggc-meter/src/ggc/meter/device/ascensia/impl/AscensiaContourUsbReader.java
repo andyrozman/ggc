@@ -30,10 +30,11 @@ public class AscensiaContourUsbReader
     private AscensiaUsbMeterHandler handler;
 
 
-    public AscensiaContourUsbReader(AscensiaUsbMeterHandler handler, OutputWriter outputWriter)
+    public AscensiaContourUsbReader(AscensiaUsbMeterHandler handler, String selectedDevice, OutputWriter outputWriter)
     {
         decoder = new AscensiaDecoder(outputWriter);
         communicationHandler = new Hid4JavaCommunicationHandler();
+        communicationHandler.setTargetDevice(selectedDevice);
         communicationHandler.setAllowedDevices(handler.getAllowedDevicesList());
         communicationHandler.setDelayForTimedReading(1000);
         this.handler = handler;
