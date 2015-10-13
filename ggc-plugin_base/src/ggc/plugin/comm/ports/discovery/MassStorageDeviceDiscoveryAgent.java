@@ -1,24 +1,33 @@
-package ggc.plugin.comm.ports;
+package ggc.plugin.comm.ports.discovery;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ggc.plugin.comm.ports.DevicePortDto;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.protocol.DeviceConnectionProtocol;
+
 /**
  * Created by andy on 19.04.15.
  */
-public class MassStorageDevice implements CommunicationPortDiscovery
+public class MassStorageDeviceDiscoveryAgent extends PortDiscoveryAgentAbstract
 {
 
-    public String getKey()
+    private static final Logger LOG = LoggerFactory.getLogger(MassStorageDeviceDiscoveryAgent.class);
+
+
+    public MassStorageDeviceDiscoveryAgent()
     {
-        return null;
+        super(DeviceConnectionProtocol.MassStorageXML);
     }
 
 
-    public List<String> getAllPossiblePorts()
+    public List<DevicePortDto> getAllPossiblePorts() throws PlugInBaseException
     {
-
         List<String> drives = new ArrayList<String>();
 
         if (System.getProperty("os.name").contains("Win"))
@@ -27,6 +36,7 @@ public class MassStorageDevice implements CommunicationPortDiscovery
 
             for (File fl : fls)
             {
+                LOG.debug("Root found: {}", fl.toString());
                 drives.add(fl.toString());
             }
         }
@@ -58,20 +68,20 @@ public class MassStorageDevice implements CommunicationPortDiscovery
 
             for (String rt : rts)
             {
-                System.out.println("Possible Port (root): " + rt);
+                LOG.debug("Possible Port (root): {}", rt);
 
                 File f = new File(rt);
 
                 if (f.exists())
                 {
-                    System.out.println("Possible Port (root) FOUND: " + rt);
+                    LOG.debug("Possible Port (root) FOUND: {}", rt);
                     File[] f2 = f.listFiles();
 
                     for (File element : f2)
                     {
                         if (element.isDirectory())
                         {
-                            System.out.println("   DRIVE: " + element.toString());
+                            LOG.debug("   DRIVE: {}", element.toString());
                             drives.add(element.toString());
                         }
                     }
@@ -80,17 +90,36 @@ public class MassStorageDevice implements CommunicationPortDiscovery
 
         }
 
-        return drives;
+        return getListOfDevicePorts(drives);
+    }
 
+
+    public String getSelectProtocolString()
+    {
+        return "SELECT_MASS_STORAGE_DRIVE";
+    }
+
+
+    public String getPortDeviceName()
+    {
+        return "MASS_STORAGE_DRIVE";
     }
 
 
     public static void main(String[] args)
     {
-        MassStorageDevice msd = new MassStorageDevice();
-        List<String> ports = msd.getAllPossiblePorts();
+        MassStorageDeviceDiscoveryAgent msd = new MassStorageDeviceDiscoveryAgent();
+        List<DevicePortDto> ports = null;
+        try
+        {
+            ports = msd.getAllPossiblePorts();
+        }
+        catch (PlugInBaseException e)
+        {
+            System.out.println("" + e.getMessage());
+        }
 
-        for (String p : ports)
+        for (DevicePortDto p : ports)
         {
             System.out.println("D: " + p);
         }

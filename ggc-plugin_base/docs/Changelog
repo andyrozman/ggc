@@ -2,6 +2,16 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+1.0.2 [8.10.2015]
+    * implemented DiscoveryAgents functionality for configuration of different devices (agents for
+      Serial, BluetoothSerial, Usb Hid, MassStorage)
+    * integration of DiscoveryAgents into Devices configuration (CommunicationPortComponent,
+      CommunicationPortSelector)
+    * added getAllPorts methods to all our CommHandlers
+    * added CGMS data functionality to plugin-base: retrieval of raw data, CGMSDayData,
+      CGMSDayDataEntry (simplified CGMSDeviceValues - read only)
+    * added CGMSGraphDatahandler, for creating Graphs, for getting CGMSDayData and XYSeries for display
+    * refactoring because of ConfigurationManagerWrapper
 
 1.0.1 [2.10.2015]
     * changes because of Selector refactoring / fixing

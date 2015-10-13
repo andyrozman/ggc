@@ -409,7 +409,7 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
     }
 
 
-    public static Set<String> getAvailablePorts()
+    public static Set<String> getAvailablePorts() throws Exception
     {
         return NRSerialPort.getAvailableSerialPorts();
     }

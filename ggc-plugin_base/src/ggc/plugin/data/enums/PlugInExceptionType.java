@@ -83,7 +83,10 @@ public enum PlugInExceptionType
     DeviceReturnedError("Device returned error [command=%s, errorCode=%s, errorDescription=%s, returnedData=%s]"), //
 
     ImportFileNotFound("Import file (name=%s) not found."), //
-    ImportFileCouldNotBeRead("Import file (name=%s) could not be read (%s)");
+    ImportFileCouldNotBeRead("Import file (name=%s) could not be read (%s)"), //
+    ErrorCommunicationWithProtocolHandler("Error communicating with specific library [%s]: (%s)"), //
+
+    ;
 
     // DXC_PARSING_ERROR = Error parsing. Exception: %s
     // DXC_PARSING_ERROR_UNSUPP_DATA_LENGTH = Error parsing. Unsupported data

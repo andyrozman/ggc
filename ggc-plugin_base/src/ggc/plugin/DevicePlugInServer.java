@@ -156,7 +156,8 @@ public abstract class DevicePlugInServer extends PlugInServer
         }
         else if (command.equals("plugin_read_data_file"))
         {
-            new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this, DeviceDataHandler.TRANSFER_READ_DATA_FILE);
+            new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this,
+                    DeviceDataHandler.TRANSFER_READ_DATA_FILE);
             this.client.executeReturnAction(RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("plugin_read_config_file"))

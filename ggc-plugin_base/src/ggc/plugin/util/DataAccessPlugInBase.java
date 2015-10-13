@@ -9,6 +9,7 @@ import java.util.*;
 
 import javax.swing.*;
 
+import ggc.core.util.DataAccess;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -38,6 +39,7 @@ import ggc.plugin.cfg.DeviceConfigurationDefinition;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.enums.DeviceEntryStatus;
+import ggc.plugin.db.PluginDb;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
@@ -120,10 +122,13 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public static Hashtable<String, DeviceSpecialConfigPanelAbstract> special_configs = new Hashtable<String, DeviceSpecialConfigPanelAbstract>();
 
+    protected HibernateDb hibernateDb;
+
+    protected PluginDb pluginDb;
+
     /**
      * The hdb.
      */
-    protected HibernateDb hdb;
 
     private PlugInDeviceUtil plugin_device_util = null;
     protected ConfigurationManager config_manager;
@@ -266,10 +271,10 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     private String deviceSource;
     protected GraphContext graphContext;
 
-
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
+
 
     // Constructor: DataAccessMeter
     /**
@@ -760,49 +765,53 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      * @param type input type
      * @param bg_value bg value to convert
      * @return converted value
+     *
+     * @deprecated Use getBGValueByTypeFromDefault instead
      */
+    @Deprecated
     public float getBGValueByType(int type, float bg_value)
     {
-        // FIXME
-        switch (type)
-        {
-            case BG_MMOL:
-                return bg_value * MGDL_TO_MMOL_FACTOR;
-            case BG_MGDL:
-            default:
-                return bg_value;
-        }
+        return getBGValueFromDefault(GlucoseUnitType.getByCode(type), bg_value);
     }
 
 
+    // /**
+    // * Get BG Value by type
+    // *
+    // * @param type input type
+    // * @param bgValue bg value to convert
+    // * @return converted value
+    // */
+    // public float getBGValueByTypeFromDefault(GlucoseUnitType type, float
+    // bgValue)
+    // {
+    // switch (type)
+    // {
+    // case mmol_L:
+    // return this.getBGConverter().getValueByType(GlucoseUnitType.mg_dL,
+    // GlucoseUnitType.mmol_L, bgValue);
+    //
+    // case mg_dL:
+    // default:
+    // return bgValue;
+    // }
+    // }
+
     /**
-     * Get BG Value by type
+     * Get BG Value By Type
      *
-     * @param input_type input type
-     * @param output_type output type
-     * @param bg_value bg value to convert
-     * @return converted value
+     * @param input_type
+     * @param output_type
+     * @param bg_value
+     * @return
+     *
+     * @deprecated Use getBGValueByType(GlucoseUnitType, GlucoseUnitType,Number)
      */
+    @Deprecated
     public float getBGValueByType(int input_type, int output_type, float bg_value)
     {
-        // FIXME
-        // System.out.println("BG: " + bg_value);
-        // System.out.println("input: " + input_type + ",output=" +
-        // output_type);
-        if (input_type == output_type)
-            return bg_value;
-        else
-        {
-            if (output_type == DataAccessPlugInBase.BG_MGDL)
-                // System.out.println("BG-2 [mgDL]: " + bg_value *
-                // MGDL_TO_MMOL_FACTOR);
-                return bg_value * MMOL_TO_MGDL_FACTOR;
-            else
-                // System.out.println("BG-2 [mmol]: " + bg_value *
-                // MMOL_TO_MGDL_FACTOR);
-                return bg_value * MGDL_TO_MMOL_FACTOR;
-        }
-
+        return getBGValueByType(GlucoseUnitType.getByCode(input_type), GlucoseUnitType.getByCode(output_type),
+            bg_value);
     }
 
 
@@ -819,6 +828,14 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
 
 
+    /**
+     * Get BG Value By Type
+     *
+     * @param inputType
+     * @param outputType
+     * @param bgValue
+     * @return
+     */
     public Float getBGValueByType(GlucoseUnitType inputType, GlucoseUnitType outputType, Number bgValue)
     {
         return this.getBGConverter().getValueByType(inputType, outputType, bgValue);
@@ -926,18 +943,23 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public void createDb(HibernateDb db)
     {
-        this.hdb = db;
+        this.hibernateDb = db;
         createCustomDb();
+    }
+
+
+    public HibernateDb getHibernateDb()
+    {
+        return this.hibernateDb;
     }
 
 
     /**
      * Get HibernateDb instance (for working with database in plugin)
      */
-    @Override
-    public HibernateDb getHibernateDb()
+    public PluginDb getPlugInDb()
     {
-        return this.hdb;
+        return this.pluginDb;
     }
 
 
@@ -1356,8 +1378,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
                 if (this.selectedDeviceInstanceV2 == null)
                 {
-                    this.selectedDeviceInstanceV1 = this.getManager()
-                            .getDeviceV1(dce.device_company, dce.device_device);
+                    this.selectedDeviceInstanceV1 = this.getManager().getDeviceV1(dce.device_company,
+                        dce.device_device);
                 }
 
                 this.deviceSource = dce.device_company + " " + dce.device_device;
@@ -1690,8 +1712,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
                 "BSD", //
                 "Framework for Xml manipulation"));
 
-        lst_libs.add(new LibraryInfoEntry("NRSerial", "3.9.3", "https://github.com/NeuronRobotics/nrjavaserial",
-                "LGPL", "Comm API"));
+        lst_libs.add(new LibraryInfoEntry("NRSerial", "3.9.3", "https://github.com/NeuronRobotics/nrjavaserial", "LGPL",
+                "Comm API"));
 
         lst_libs.add(new LibraryInfoEntry("IBM Com Api", "1.3", "https://www.ibm.com", "LGPL",
                 "Comm API (used for BT devices for now)"));
@@ -1753,6 +1775,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     public void prepareManagers()
     {
+    }
+
+    public GlucoseUnitType getGlucoseUnitType()
+    {
+        return configuredBGUnit;
     }
 
     /**

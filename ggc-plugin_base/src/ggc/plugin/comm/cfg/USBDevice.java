@@ -9,6 +9,7 @@ public class USBDevice
     private int vendorId;
     private int productId;
     private byte reportId = 0x0;
+    private String description;
 
 
     public USBDevice(String description, int vendorId, int productId)
@@ -19,6 +20,7 @@ public class USBDevice
 
     public USBDevice(String description, int vendorId, int productId, byte reportId)
     {
+        this.description = description;
         this.vendorId = vendorId;
         this.productId = productId;
         this.reportId = reportId;
@@ -58,5 +60,17 @@ public class USBDevice
     public void setReportId(byte reportId)
     {
         this.reportId = reportId;
+    }
+
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
 }

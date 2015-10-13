@@ -29,13 +29,7 @@
 
 package ggc.plugin.graph.view;
 
-import ggc.core.data.DailyValuesRow;
-import ggc.core.data.GlucoValues;
-import ggc.core.data.PlotData;
-import ggc.core.data.ReadablePlotData;
-import ggc.core.util.MathUtils;
-
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.text.SimpleDateFormat;
 
 import org.jfree.chart.ChartFactory;
@@ -49,6 +43,13 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+
+import ggc.core.data.DailyValuesRow;
+import ggc.core.data.GlucoValues;
+import ggc.core.data.PlotData;
+import ggc.core.data.ReadablePlotData;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.util.MathUtils;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -77,13 +78,16 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 public class CourseGraphView extends JFAbstractGraphView
 {
+
     private static final long serialVersionUID = -7960828650875426272L;
+
     private GlucoValues data = new GlucoValues();
     private ReadablePlotData plotData = null;
     private TimeSeriesCollection BGDataset = new TimeSeriesCollection();
     private TimeSeriesCollection readingsDataset = new TimeSeriesCollection();
     private TimeSeriesCollection sumDataset = new TimeSeriesCollection();
     private TimeSeriesCollection averageDataset = new TimeSeriesCollection();
+
 
     /**
      * Draws an empty graph.
@@ -92,6 +96,7 @@ public class CourseGraphView extends JFAbstractGraphView
     {
         this(new GlucoValues(), new PlotData());
     }
+
 
     /**
      * Initialize and draw an empty graph with the passed
@@ -107,6 +112,7 @@ public class CourseGraphView extends JFAbstractGraphView
     {
         this(new GlucoValues(), data);
     }
+
 
     /**
      * Initialize and draw this graph with the passed
@@ -137,6 +143,7 @@ public class CourseGraphView extends JFAbstractGraphView
         redraw();
     }
 
+
     /**
      * Set the <code>{@link GlucoValues data}</code> to be used for drawing this
      * graph and trigger a redraw.
@@ -151,6 +158,7 @@ public class CourseGraphView extends JFAbstractGraphView
         redraw();
     }
 
+
     /**
      * @param data
      *            the data to set
@@ -161,10 +169,12 @@ public class CourseGraphView extends JFAbstractGraphView
         redraw();
     }
 
+
     /*
      * (non-Javadoc)
      * @see
-     * ggc.gui.graphs.JFAbstractGraphView#drawFramework(org.jfree.chart.JFreeChart
+     * ggc.gui.graphs.JFAbstractGraphView#drawFramework(org.jfree.chart.
+     * JFreeChart
      * )
      */
     @Override
@@ -219,27 +229,23 @@ public class CourseGraphView extends JFAbstractGraphView
 
         dateAxis.setDateFormatOverride(new SimpleDateFormat(translator.getMessage("FORMAT_DATE_DAYS")));
 
-        defaultRenderer.setSeriesPaint(0, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_bg_avg()));
+        ColorSchemeH colorScheme = settings.getSelectedColorScheme();
 
-        averageRenderer.setSeriesPaint(0, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ch())
-                .darker());
-        averageRenderer.setSeriesPaint(1, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins1())
-                .darker());
-        averageRenderer.setSeriesPaint(2, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins2())
-                .darker());
-        averageRenderer.setSeriesPaint(3, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins())
-                .darker());
-        averageRenderer.setSeriesPaint(4,
-            dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins_perbu()));
+        defaultRenderer.setSeriesPaint(0, dataAccessInst.getColor(colorScheme.getColor_bg_avg()));
 
-        sumRenderer.setSeriesPaint(0, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ch()));
-        sumRenderer.setSeriesPaint(1, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins1()));
-        sumRenderer.setSeriesPaint(2, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins2()));
-        sumRenderer.setSeriesPaint(3, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ins()));
+        averageRenderer.setSeriesPaint(0, dataAccessInst.getColor(colorScheme.getColor_ch()).darker());
+        averageRenderer.setSeriesPaint(1, dataAccessInst.getColor(colorScheme.getColor_ins1()).darker());
+        averageRenderer.setSeriesPaint(2, dataAccessInst.getColor(colorScheme.getColor_ins2()).darker());
+        averageRenderer.setSeriesPaint(3, dataAccessInst.getColor(colorScheme.getColor_ins()).darker());
+        averageRenderer.setSeriesPaint(4, dataAccessInst.getColor(colorScheme.getColor_ins_perbu()));
 
-        readingsRenderer.setSeriesPaint(0, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_bg()));
-        readingsRenderer.setSeriesPaint(1, dataAccessInst.getColor(settings.getSelectedColorScheme().getColor_ch())
-                .brighter());
+        sumRenderer.setSeriesPaint(0, dataAccessInst.getColor(colorScheme.getColor_ch()));
+        sumRenderer.setSeriesPaint(1, dataAccessInst.getColor(colorScheme.getColor_ins1()));
+        sumRenderer.setSeriesPaint(2, dataAccessInst.getColor(colorScheme.getColor_ins2()));
+        sumRenderer.setSeriesPaint(3, dataAccessInst.getColor(colorScheme.getColor_ins()));
+
+        readingsRenderer.setSeriesPaint(0, dataAccessInst.getColor(colorScheme.getColor_bg()));
+        readingsRenderer.setSeriesPaint(1, dataAccessInst.getColor(colorScheme.getColor_ch()).brighter());
 
         chart.setBackgroundPaint(backgroundColor);
         chart.setRenderingHints(renderingHints);
@@ -247,6 +253,7 @@ public class CourseGraphView extends JFAbstractGraphView
 
         BGAxis.setAutoRangeIncludesZero(true);
     }
+
 
     /*
      * (non-Javadoc)
@@ -274,14 +281,14 @@ public class CourseGraphView extends JFAbstractGraphView
         TimeSeries BGReadingsSeries = new TimeSeries(translator.getMessage("READINGS"), Day.class);
         TimeSeries CHAvgSeries = new TimeSeries(translator.getMessage("AVG_MEAL_SIZE"), Day.class);
         TimeSeries CHSumSeries = new TimeSeries(translator.getMessage("SUM_BU"), Day.class);
-        TimeSeries ins1AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns1Name(),
-                Day.class);
-        TimeSeries ins1SumSeries = new TimeSeries(translator.getMessage("SUM") + " " + settings.getIns1Name(),
-                Day.class);
-        TimeSeries ins2AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns2Name(),
-                Day.class);
-        TimeSeries ins2SumSeries = new TimeSeries(translator.getMessage("SUM") + " " + settings.getIns2Name(),
-                Day.class);
+        TimeSeries ins1AvgSeries = new TimeSeries(
+                translator.getMessage("AVG") + " " + configurationManagerWrapper.getIns1Name(), Day.class);
+        TimeSeries ins1SumSeries = new TimeSeries(
+                translator.getMessage("SUM") + " " + configurationManagerWrapper.getIns1Name(), Day.class);
+        TimeSeries ins2AvgSeries = new TimeSeries(
+                translator.getMessage("AVG") + " " + configurationManagerWrapper.getIns2Name(), Day.class);
+        TimeSeries ins2SumSeries = new TimeSeries(
+                translator.getMessage("SUM") + " " + configurationManagerWrapper.getIns2Name(), Day.class);
         TimeSeries insAvgSeries = new TimeSeries(translator.getMessage("AVG_INS"), Day.class);
         TimeSeries insSumSeries = new TimeSeries(translator.getMessage("SUM_INSULIN"), Day.class);
         TimeSeries insPerCHSeries = new TimeSeries(translator.getMessage("INS_SLASH_BU"), Day.class);
@@ -409,8 +416,8 @@ public class CourseGraphView extends JFAbstractGraphView
                     }
                     else
                     {
-                        insAvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getIns1() + row.getIns2(), insAvgSeries
-                                .getDataItem(time).getValue()));
+                        insAvgSeries.addOrUpdate(time, MathUtils.getAverage(row.getIns1() + row.getIns2(),
+                            insAvgSeries.getDataItem(time).getValue()));
                     }
 
                     // ins sum
@@ -480,22 +487,26 @@ public class CourseGraphView extends JFAbstractGraphView
         }
         if (!plotData.isPlotIns1DayAvg())
         {
-            ins1AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns1Name(), Day.class);
+            ins1AvgSeries = new TimeSeries(
+                    translator.getMessage("AVG") + " " + configurationManagerWrapper.getIns1Name(), Day.class);
         }
 
         if (!plotData.isPlotIns1Sum())
         {
             System.out.println("ins1sum");
-            ins1SumSeries = new TimeSeries(translator.getMessage("SUM") + " " + settings.getIns1Name(), Day.class);
+            ins1SumSeries = new TimeSeries(
+                    translator.getMessage("SUM") + " " + configurationManagerWrapper.getIns1Name(), Day.class);
         }
 
         if (!plotData.isPlotIns2DayAvg())
         {
-            ins2AvgSeries = new TimeSeries(translator.getMessage("AVG") + " " + settings.getIns2Name(), Day.class);
+            ins2AvgSeries = new TimeSeries(
+                    translator.getMessage("AVG") + " " + configurationManagerWrapper.getIns2Name(), Day.class);
         }
         if (!plotData.isPlotIns2Sum())
         {
-            ins2SumSeries = new TimeSeries(translator.getMessage("SUM") + " " + settings.getIns2Name(), Day.class);
+            ins2SumSeries = new TimeSeries(
+                    translator.getMessage("SUM") + " " + configurationManagerWrapper.getIns2Name(), Day.class);
         }
         if (!plotData.isPlotInsTotalDayAvg())
         {

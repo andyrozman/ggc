@@ -3,10 +3,7 @@ package ggc.plugin.comm;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.TooManyListenersException;
-import java.util.Vector;
+import java.util.*;
 
 import javax.comm.*;
 
@@ -319,7 +316,8 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         }
         catch (UnsupportedCommOperationException ex)
         {
-            // System.out.println("SerialProtocol::open(). Unsupported comm operation: "
+            // System.out.println("SerialProtocol::open(). Unsupported comm
+            // operation: "
             // + ex);
             log.error("Unsupported comm operation: " + ex.getMessage()); // ,
                                                                          // ex);
@@ -911,20 +909,12 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
      * 
      * @return
      */
-    public static Vector<String> getAllAvailablePortsString()
+    public static Set<String> getAllAvailablePortsString() throws Exception
     {
-        Vector<String> retVal = new Vector<String>();
-        // Vector<CommPortIdentifier> retVal = new Vector<CommPortIdentifier>();
+        Set<String> retVal = new HashSet<String>();
 
         try
         {
-            // Vector retVal = new Vector();
-            // int counter = 0;
-
-            // CommPortIdentifier.
-
-            // CommPortIdentifier.getPortIdentifier("xx");
-
             Enumeration<?> enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements())
             {
@@ -936,6 +926,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         catch (Exception ex)
         {
             log.error("There was problem obtaining list of serial ports. Ex: " + ex, ex);
+            throw ex;
         }
         return retVal;
 

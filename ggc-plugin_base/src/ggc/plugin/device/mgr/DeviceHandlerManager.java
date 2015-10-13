@@ -1,22 +1,23 @@
 package ggc.plugin.device.mgr;
 
-import ggc.plugin.data.enums.DeviceHandlerType;
-import ggc.plugin.device.v2.DeviceHandler;
+import java.util.HashMap;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.util.HashMap;
+import ggc.plugin.data.enums.DeviceHandlerType;
+import ggc.plugin.device.v2.DeviceHandler;
 
 /**
  * Created by andy on 10.02.15.
  */
 public class DeviceHandlerManager
 {
+
     private static DeviceHandlerManager deviceHandlerManager = null;
     Log LOG = LogFactory.getLog(DeviceHandlerManager.class);
 
-
-    HashMap<DeviceHandlerType,DeviceHandler> deviceHandlers = new HashMap<DeviceHandlerType, DeviceHandler>();
+    HashMap<DeviceHandlerType, DeviceHandler> deviceHandlers = new HashMap<DeviceHandlerType, DeviceHandler>();
 
 
     public static DeviceHandlerManager getInstance()
@@ -28,7 +29,6 @@ public class DeviceHandlerManager
 
         return deviceHandlerManager;
     }
-
 
 
     private DeviceHandlerManager()
@@ -44,6 +44,9 @@ public class DeviceHandlerManager
 
     public DeviceHandler getDeviceHandler(DeviceHandlerType deviceHandlerType)
     {
+        if (deviceHandlerType == DeviceHandlerType.NoHandler)
+            return null;
+
         if (this.deviceHandlers.containsKey(deviceHandlerType))
         {
             return this.deviceHandlers.get(deviceHandlerType);

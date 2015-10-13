@@ -1,14 +1,21 @@
 package ggc.plugin.db;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.HibernateDb;
+import com.atech.utils.data.ATechDate;
+import ggc.core.db.hibernate.cgms.CGMSDataH;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -48,6 +55,7 @@ public class PluginDb
     private String m_errorDesc = "";
     private String m_addId = "";
 
+
     /**
      * Constructor
      * 
@@ -58,6 +66,7 @@ public class PluginDb
         this.db = db;
     }
 
+
     /**
      * Get Session
      * 
@@ -67,6 +76,7 @@ public class PluginDb
     {
         return this.db.getSession();
     }
+
 
     // ---
     // --- BASIC METHODS (Hibernate and DataLayer processing)
@@ -91,7 +101,7 @@ public class PluginDb
             {
                 String id = doh.DbAdd(getSession()); // getSession());
                 this.m_addId = id;
-                //System.out.println("Add:" + doh);
+                // System.out.println("Add:" + doh);
                 return true;
             }
             catch (SQLException ex)
@@ -124,6 +134,7 @@ public class PluginDb
 
     }
 
+
     /**
      * Commit entry to database
      * 
@@ -143,6 +154,7 @@ public class PluginDb
         else
             return false;
     }
+
 
     /**
      * Add hibernate entry to database
@@ -173,6 +185,7 @@ public class PluginDb
 
     }
 
+
     /**
      * Edit entry to database
      * 
@@ -191,7 +204,7 @@ public class PluginDb
             try
             {
                 doh.DbEdit(getSession());
-                //System.out.println("Edit:" + doh);
+                // System.out.println("Edit:" + doh);
                 return true;
             }
             catch (SQLException ex)
@@ -221,6 +234,7 @@ public class PluginDb
         }
 
     }
+
 
     /**
      * Edit hibernate entry in database
@@ -253,6 +267,7 @@ public class PluginDb
 
     }
 
+
     /**
      * Delete hibernate entry to database
      * 
@@ -283,6 +298,7 @@ public class PluginDb
         }
 
     }
+
 
     /**
      * Get entry from database
@@ -332,6 +348,7 @@ public class PluginDb
         }
 
     }
+
 
     /**
      * Delete entry from database
@@ -391,6 +408,7 @@ public class PluginDb
 
     }
 
+
     /**
      * Get Id from add action
      * @return
@@ -399,6 +417,7 @@ public class PluginDb
     {
         return this.m_addId;
     }
+
 
     /**
      * Get Error Code
@@ -410,6 +429,7 @@ public class PluginDb
         return this.m_errorCode;
     }
 
+
     /**
      * Get Error Description
      * 
@@ -419,6 +439,7 @@ public class PluginDb
     {
         return this.m_errorDesc;
     }
+
 
     /**
      * Set Error
@@ -431,6 +452,52 @@ public class PluginDb
     {
         this.m_errorCode = code;
         this.m_errorDesc = source + " : " + desc;
+    }
+
+
+    public List<CGMSDataH> getRangeCGMSValuesRaw(GregorianCalendar from, GregorianCalendar to, String filter)
+    {
+        log.info(String.format("getRangeCGMSValuesRaw(%s)", filter == null ? "" : filter));
+
+        long dt_from = ATechDate.getATDateTimeFromGC(from, ATechDate.FORMAT_DATE_ONLY);
+        long dt_to = ATechDate.getATDateTimeFromGC(to, ATechDate.FORMAT_DATE_ONLY);
+
+        String sql = "";
+
+        List<CGMSDataH> listCGMSData = new ArrayList<CGMSDataH>();
+
+        try
+        {
+            sql = " SELECT dv from ggc.core.db.hibernate.cgms.CGMSDataH as dv " + //
+                    " WHERE dv.dt_info >=  " + dt_from + " AND dv.dt_info <= " + dt_to;
+
+            if (filter != null)
+            {
+                sql += " AND " + filter;
+            }
+
+            sql += " ORDER BY dv.dt_info";
+
+            Query q = this.db.getSession().createQuery(sql);
+
+            Iterator<?> it = q.list().iterator();
+
+            while (it.hasNext())
+            {
+                CGMSDataH pdh = (CGMSDataH) it.next();
+                listCGMSData.add(pdh);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            log.debug("Sql: " + sql);
+            log.error("getRangeCGMSValuesRaw(). Exception: " + ex, ex);
+        }
+
+        log.debug("Found " + listCGMSData.size() + " entries.");
+
+        return listCGMSData;
     }
 
 }

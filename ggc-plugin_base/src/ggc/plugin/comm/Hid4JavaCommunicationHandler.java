@@ -1,13 +1,16 @@
 package ggc.plugin.comm;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.lang.StringUtils;
 import org.hid4java.HidDevice;
 import org.hid4java.HidDeviceInfo;
 import org.hid4java.HidManager;
 import org.hid4java.HidServices;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.plugin.comm.cfg.USBDevice;
 import ggc.plugin.data.enums.PlugInExceptionType;
@@ -19,18 +22,20 @@ import ggc.plugin.device.PlugInBaseException;
 public class Hid4JavaCommunicationHandler implements CommunicationInterface
 {
 
-    Log LOG = LogFactory.getLog(Hid4JavaCommunicationHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Hid4JavaCommunicationHandler.class);
 
     List<USBDevice> allowedDevices;
-    private HidServices hidServices;
     HidDevice hidDevice = null;
     USBDevice selectedDevice;
     int timeoutMs = 100;
+    private USBDevice targetDevice;
 
 
     public boolean connectAndInitDevice() throws PlugInBaseException
     {
         LOG.debug("connectAndInitDevice - USB/Hid");
+
+        HidServices hidServices;
 
         try
         {
@@ -48,7 +53,7 @@ public class Hid4JavaCommunicationHandler implements CommunicationInterface
         // Provide a list of attached devices
         for (HidDeviceInfo hidDeviceInfo : hidServices.getAttachedHidDevices())
         {
-            if (isInAllowedDevicesList(hidDeviceInfo.getVendorId(), hidDeviceInfo.getProductId()))
+            if (isCorrectDevice(hidDeviceInfo.getVendorId(), hidDeviceInfo.getProductId()))
             {
                 selHidDeviceInfo = hidDeviceInfo;
             }
@@ -79,9 +84,31 @@ public class Hid4JavaCommunicationHandler implements CommunicationInterface
         // 0.4.0
         // hidDevice = selHidDeviceInfo;
 
+        if (hidDevice == null)
+        {
+            throw new PlugInBaseException(PlugInExceptionType.DeviceNotFound);
+        }
+
         LOG.debug("Found correct device: " + hidDevice);
 
         return hidDevice != null;
+    }
+
+
+    private boolean isCorrectDevice(int vendorId, int productId)
+    {
+        if (targetDevice != null)
+        {
+            if ((targetDevice.getVendorId() == vendorId) && (targetDevice.getProductId() == productId))
+            {
+                selectedDevice = targetDevice;
+                return true;
+            }
+            else
+                return false;
+        }
+        else
+            return isInAllowedDevicesList(vendorId, productId);
     }
 
 
@@ -206,5 +233,52 @@ public class Hid4JavaCommunicationHandler implements CommunicationInterface
 
     public void setReceiveTimeout(int timeout) throws PlugInBaseException
     {
+    }
+
+
+    public static Set<USBDevice> getAllDevices() throws Exception
+    {
+        HidServices hidServices;
+
+        try
+        {
+            hidServices = HidManager.getHidServices();
+        }
+        catch (Exception ex)
+        {
+            LOG.error("Error getting HidServices. Ex.: " + ex, ex);
+            throw ex;
+        }
+
+        Set<USBDevice> list = new HashSet<USBDevice>();
+
+        // Provide a list of attached devices
+        for (HidDeviceInfo hidDeviceInfo : hidServices.getAttachedHidDevices())
+        {
+            USBDevice device = new USBDevice(hidDeviceInfo.getProductString().toString(), hidDeviceInfo.getVendorId(),
+                    hidDeviceInfo.getProductId());
+
+            list.add(device);
+        }
+
+        return list;
+    }
+
+
+    public void setTargetDevice(String targetDevice)
+    {
+        if (StringUtils.isNotBlank(targetDevice))
+        {
+            String[] address = targetDevice.split(":");
+
+            USBDevice device = new USBDevice("", Integer.parseInt(address[0], 16), Integer.parseInt(address[1], 16));
+            this.targetDevice = device;
+            LOG.debug("Target device is: " + targetDevice);
+        }
+        else
+        {
+            LOG.debug("Target device address is invalid: " + targetDevice);
+        }
+
     }
 }
