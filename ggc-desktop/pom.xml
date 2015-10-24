@@ -118,12 +118,14 @@
             </dependency> -->
 
         <!-- For minimed testing - remove after integration -->
+
+        <!--
         <dependency>
             <groupId>net.sf.ggc</groupId>
             <artifactId>ggc-device-minimed</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
-
+        -->
 
     </dependencies>
 </project>
