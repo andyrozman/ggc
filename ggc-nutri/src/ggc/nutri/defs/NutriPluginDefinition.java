@@ -19,7 +19,7 @@ import ggc.plugin.report.PluginReportDefinition;
 public class NutriPluginDefinition extends DevicePluginDefinitionAbstract
 {
 
-    String PLUGIN_VERSION = "1.3.6";
+    String PLUGIN_VERSION = "1.4.0";
     String PLUGIN_NAME = "GGC Nutrition Plugin";
 
 

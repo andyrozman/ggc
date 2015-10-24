@@ -86,7 +86,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     /**
      * Plugin Version
      */
-    public String plugin_version = "1.0.1";
+    public String plugin_version = "1.1.0";
 
     /**
      * Decimal format: 0 decimal places

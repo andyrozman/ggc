@@ -2,14 +2,8 @@
 Changes file for GGC Pump Tool
 ==============================
 
-1.6.2 [22.10.2015] [Andy]
+1.7.1 [24.10.2015]  [Andy]
     * implemented all devices as DeviceV2 (created bridges for V1 to V2)
-    * added PumpPluginDefinition for plugin defintions
-    * added PumpReportDefinition for better management of reports
-    * migrating from Log to SLF4j Logger
-    * PumpBasalType TBR Profile deprecated
-    * refactoring BG conversion
-    * Reports changes: PumpAdditionalDataHandler
     * ATechDateType getDateTimeFormat() refactoring
     * AChanges for device V2: AccuChekPumpHandler, AccuChekPumpReader, DanaPumpHandler, updated PumpDefinitions
     * Pump Profile adding with type Profile, ProfileSelector. We now get an error when adding Profile in case that profiles are not defined. We need additional change here, but at least we don;t get nullPointer exception.
@@ -17,6 +11,15 @@ Changes file for GGC Pump Tool
     * added PumpDeviceInstanceWithHandler
     * refactoring PumpProfile selector to work with V2 devices (doesn't work yet, but we don't get Fatal Exception)
     * manager all devices removed from V1 context
+
+
+1.7.0 [19.10.2015] [Andy]
+    * added PumpPluginDefinition for plugin defintions and refactoring of DataAccessPump
+    * added PumpReportDefinition for better management of reports
+    * migrating from Log to SLF4j Logger
+    * PumpBasalType TBR Profile deprecated
+    * refactoring BG conversion
+    * Reports changes: PumpAdditionalDataHandler
 
 
 1.6.1 [10.10.2015]

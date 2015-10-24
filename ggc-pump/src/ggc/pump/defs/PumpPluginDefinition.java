@@ -33,7 +33,7 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
 
     private static final Logger LOG = LoggerFactory.getLogger(PumpPluginDefinition.class);
 
-    String PLUGIN_VERSION = "1.6.0";
+    String PLUGIN_VERSION = "1.7.1";
     String PLUGIN_NAME = "GGC Pump Plugin";
 
 
