@@ -20,7 +20,6 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.AbstractOutputWriter;
-import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -110,8 +109,8 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         empty_tzi = new SimpleTimeZone(0, "Europe/Empty", 0, 0, 0, 0, 0, 0, 0, 0);
 
         this.setCommunicationSettings(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE,
-            SerialPort.FLOWCONTROL_NONE, SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT
-                    | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+            SerialPort.FLOWCONTROL_NONE,
+            SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
@@ -190,7 +189,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
     public void readDeviceDataFull()
     {
 
-        this.outputWriter.setBGOutputType(OutputUtil.BG_MMOL);
+        // this.outputWriter.setBGOutputType(OutputUtil.BG_MMOL);
 
         try
         {
@@ -503,13 +502,15 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         byte[] dt_bg = hex_utils.getByteSubArray(reta, 6 + 5, 3, 8);
 
         int bg_val = Integer.parseInt(hex_utils.getCorrectHexValue(dt_bg[7]) + hex_utils.getCorrectHexValue(dt_bg[6])
-                + hex_utils.getCorrectHexValue(dt_bg[5]) + hex_utils.getCorrectHexValue(dt_bg[4]), 16);
+                + hex_utils.getCorrectHexValue(dt_bg[5]) + hex_utils.getCorrectHexValue(dt_bg[4]),
+            16);
 
         // System.out.println("BG: " + bg_val + " -> " +
         // dataAccess.getBGValueDifferent(DataAccessMeter.BG_MGDL, bg_val));
 
         long dt_val = Integer.parseInt(hex_utils.getCorrectHexValue(dt_bg[3]) + hex_utils.getCorrectHexValue(dt_bg[2])
-                + hex_utils.getCorrectHexValue(dt_bg[1]) + hex_utils.getCorrectHexValue(dt_bg[0]), 16);
+                + hex_utils.getCorrectHexValue(dt_bg[1]) + hex_utils.getCorrectHexValue(dt_bg[0]),
+            16);
 
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTimeInMillis(dt_val * 1000);
@@ -588,8 +589,8 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         }
     }
 
-
     // public static final int CMD_GET_SOFTWARE_VERSION = 1;
+
 
     // public abstract String getDeviceCommand(int command);
 
@@ -743,7 +744,7 @@ public abstract class OneTouchMeter2 extends AbstractSerialMeter
         switch (event.getEventType())
         {
 
-        // If break event append BREAK RECEIVED message.
+            // If break event append BREAK RECEIVED message.
             case SerialPortEvent.BI:
                 System.out.println("recievied break");
                 this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);

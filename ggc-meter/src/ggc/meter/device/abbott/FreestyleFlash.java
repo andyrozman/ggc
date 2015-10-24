@@ -1,8 +1,5 @@
 package ggc.meter.device.abbott;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -37,10 +34,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 public class FreestyleFlash extends FreestyleMeter
 {
-
-    @SuppressWarnings("unused")
-    private static Log log = LogFactory.getLog(FreestyleFlash.class);
-
 
     /**
      * Constructor

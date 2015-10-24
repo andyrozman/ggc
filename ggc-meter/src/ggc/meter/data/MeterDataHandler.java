@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.meter.data.db.GGCMeterDb;
@@ -47,7 +47,7 @@ public class MeterDataHandler extends DeviceDataHandler
 {
 
     MeterValuesExtTableModel m_model2;
-    private static final Log LOG = LogFactory.getLog(MeterDataHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MeterDataHandler.class);
 
     private HashMap<Long, HashMap<MeterValuesEntryDataType, Object>> timeMarksWithChangedData;
 

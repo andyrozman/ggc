@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
@@ -23,7 +23,7 @@ import ggc.plugin.output.OutputWriter;
 public class AscensiaDecoder
 {
 
-    private static final Log LOG = LogFactory.getLog(AscensiaDecoder.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AscensiaDecoder.class);
 
     private OutputWriter outputWriter;
     private I18nControlAbstract i18nControl;

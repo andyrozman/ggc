@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateDb;
 
@@ -51,8 +51,10 @@ import ggc.plugin.db.PluginDb;
 
 public class GGCMeterDb extends PluginDb
 {
-    private static Log log = LogFactory.getLog(GGCMeterDb.class);
+
+    private static final Logger LOG = LoggerFactory.getLogger(GGCMeterDb.class);
     DataAccessMeter m_da = DataAccessMeter.getInstance();
+
 
     /**
      * Constructor
@@ -65,6 +67,7 @@ public class GGCMeterDb extends PluginDb
 
         // getAllElementsCount();
     }
+
 
     /**
      * Get All Elements Count
@@ -80,25 +83,26 @@ public class GGCMeterDb extends PluginDb
 
             Criteria criteria = this.getSession().createCriteria(DayValueH.class);
             criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
-            criteria.add(Restrictions.or(
-                Restrictions.or(Restrictions.gt("bg", 0), Restrictions.like("extended", "%URINE%")),
-                Restrictions.gt("ch", 0.0f)));
+            criteria.add(
+                Restrictions.or(Restrictions.or(Restrictions.gt("bg", 0), Restrictions.like("extended", "%URINE%")),
+                    Restrictions.gt("ch", 0.0f)));
             criteria.add(Restrictions.like("extended", "%" + m_da.getSourceDevice() + "%"));
             criteria.setProjection(Projections.rowCount());
             in = (Integer) criteria.list().get(0);
             sum_all = in.intValue();
 
-            log.debug("Old Meter Data in Db: " + in.intValue());
+            LOG.debug("Old Meter Data in Db: " + in.intValue());
 
             return sum_all;
         }
         catch (Exception ex)
         {
-            log.error("getAllElementsCount: " + ex, ex);
+            LOG.error("getAllElementsCount: " + ex, ex);
             ex.printStackTrace();
             return 0;
         }
     }
+
 
     /**
      * Get Meter Values
@@ -111,21 +115,21 @@ public class GGCMeterDb extends PluginDb
     {
         Hashtable<String, DeviceValuesEntryInterface> ht = new Hashtable<String, DeviceValuesEntryInterface>();
 
-        log.info("getMeterValues()");
+        LOG.info("getMeterValues()");
 
         mdr.writeStatus(-1);
 
         try
         {
 
-            log.debug("getMeterValues() - Process");
+            LOG.debug("getMeterValues() - Process");
 
-            Query q = this.getSession().createQuery(
-" SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + //
-                    " WHERE ((dv.bg>0) OR (dv.extended LIKE '%URINE%') OR (dv.ch>0)) " + //
-                    " AND person_id=" + m_da.getCurrentUserId() + //
-                    " AND dv.extended like '%" + m_da.getSourceDevice() + "%' " + //
-                    " ORDER BY dv.dt_info ASC");
+            Query q = this.getSession()
+                    .createQuery(" SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + //
+                            " WHERE ((dv.bg>0) OR (dv.extended LIKE '%URINE%') OR (dv.ch>0)) " + //
+                            " AND person_id=" + m_da.getCurrentUserId() + //
+                            " AND dv.extended like '%" + m_da.getSourceDevice() + "%' " + //
+                            " ORDER BY dv.dt_info ASC");
 
             // System.out.println("Found elements: " + q.list().size());
 
@@ -150,7 +154,7 @@ public class GGCMeterDb extends PluginDb
         }
         catch (Exception ex)
         {
-            log.error("getMeterValues.Exception: " + ex, ex);
+            LOG.error("getMeterValues.Exception: " + ex, ex);
             ex.printStackTrace();
         }
 
@@ -176,7 +180,7 @@ public class GGCMeterDb extends PluginDb
 
         try
         {
-            log.debug("getPumpData() - Process");
+            LOG.debug("getPumpData() - Process");
 
             Query q = this.getSession().createQuery(
                 " SELECT dv FROM ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + " WHERE dv.person_id="
@@ -198,7 +202,7 @@ public class GGCMeterDb extends PluginDb
         }
         catch (Exception ex)
         {
-            log.error("Error getting pump data: " + ex, ex);
+            LOG.error("Error getting pump data: " + ex, ex);
         }
 
         return pumpData;
@@ -222,7 +226,7 @@ public class GGCMeterDb extends PluginDb
 
         try
         {
-            log.debug("getMeterData() - Process");
+            LOG.debug("getMeterData() - Process");
 
             Query q = this.getSession().createQuery( //
                 " SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + //
@@ -241,12 +245,13 @@ public class GGCMeterDb extends PluginDb
         }
         catch (Exception ex)
         {
-            log.error("Error getting meter data: " + ex, ex);
+            LOG.error("Error getting meter data: " + ex, ex);
         }
 
         return meter_data;
 
     }
+
 
     private String getDataListForSQL(Hashtable<?, ?> ht)
     {

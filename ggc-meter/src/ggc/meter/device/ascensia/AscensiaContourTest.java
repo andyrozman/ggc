@@ -4,8 +4,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
@@ -61,8 +61,8 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     // protected I18nControl i18nControlAbstract = I18nControl.getInstance();
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
-    // private static Log log = LogFactory.getLog(AscensiaContourTest.class);
-    private static Log log = LogFactory.getLog("deviceLogger");
+
+    private static final Logger LOG = LoggerFactory.getLogger(AscensiaContourTest.class);
 
     boolean multiline = false;
     String multiline_body;
@@ -115,8 +115,8 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     {
         // communcation settings for this meter(s)
         this.setCommunicationSettings(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE,
-            SerialPort.FLOWCONTROL_NONE, SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT
-                    | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+            SerialPort.FLOWCONTROL_NONE,
+            SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
@@ -169,7 +169,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
         }
         catch (Exception ex)
         {
-            log.error("Exception on create:" + ex, ex);
+            LOG.error("Exception on create:" + ex, ex);
         }
 
     }
@@ -194,7 +194,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
             this.device_running = true;
 
             write(6); // ENQ
-            log.debug("->ENQ");
+            LOG.debug("->ENQ");
 
             String line;
 
@@ -202,7 +202,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
             {
                 sendToProcess(line);
                 write(6);
-                log.debug("->ENQ");
+                LOG.debug("->ENQ");
             }
 
         }
@@ -366,7 +366,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
         switch (event.getEventType())
         {
 
-        // If break event append BREAK RECEIVED message.
+            // If break event append BREAK RECEIVED message.
             case SerialPortEvent.BI:
                 System.out.println("recievied break");
                 this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
@@ -416,7 +416,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     protected void readDeviceIdAndSettings(String input)
     {
         input = input.substring(input.indexOf("Bayer"));
-        log.debug("<- Id:" + input);
+        LOG.debug("<- Id:" + input);
 
         StringTokenizer strtok = new StringTokenizer(input, "|");
 
@@ -446,7 +446,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     protected void readDeviceId(String input)
     {
 
-        log.debug("<- Id:" + input);
+        LOG.debug("<- Id:" + input);
 
         DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
@@ -541,7 +541,7 @@ public class AscensiaContourTest extends AbstractSerialMeter implements SerialPo
     {
         try
         {
-            log.debug("<- Data:" + input);
+            LOG.debug("<- Data:" + input);
 
             StringTokenizer strtok = new StringTokenizer(input, "|");
 

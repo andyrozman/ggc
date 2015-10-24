@@ -3,17 +3,16 @@ package ggc.meter.test;
 import java.io.File;
 import java.util.Vector;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.atech.i18n.mgr.LanguageManager;
-import com.atech.utils.TimerThread;
+import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.data.TimeZoneUtil;
 
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
-import ggc.core.util.GGCLanguageManagerRunner;
 import ggc.meter.data.defs.MeterDeviceDefinition;
+import ggc.meter.defs.MeterPluginDefinition;
 import ggc.meter.device.abbott.OptiumXceed;
 import ggc.meter.device.accuchek.AccuChekAvivaCombo;
 import ggc.meter.device.ascensia.AscensiaContour;
@@ -56,10 +55,8 @@ public class MeterConsoleTester
 
     String path_to_test_files = "../../test/";
 
-    private static Log logDevice = LogFactory.getLog("deviceLogger");
-    private static Log logDeviceCat = LogFactory.getLog("deviceLogger");
-
-    TimerThread thread;
+    private static Logger logDevice = LoggerFactory.getLogger("deviceLogger");
+    private static Logger logDeviceCat = LoggerFactory.getLogger("deviceLogger");
 
 
     /**
@@ -149,7 +146,7 @@ public class MeterConsoleTester
     /**
      * Ascensia Testing
      * 
-     * @param portName
+     *
      * @throws Exception
      */
     public void startAscensiaUsb() throws Exception
@@ -195,8 +192,9 @@ public class MeterConsoleTester
     {
         try
         {
+            DataAccess da = DataAccess.getInstance();
 
-            DataAccessMeter dap = DataAccessMeter.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
+            DataAccessMeter dap = DataAccessMeter.createInstance(getPluginDefinition(da)); // .getInstance();
             // dap.setHelpContext(da.getHelpContext());
             // dap.setPlugInServerInstance(this);
             // dap.createDb(da.getHibernateDb());
@@ -234,7 +232,7 @@ public class MeterConsoleTester
 
         da.setDb(db);
 
-        DataAccessMeter dap = DataAccessMeter.createInstance(da.getLanguageManager());
+        DataAccessMeter dap = DataAccessMeter.createInstance(getPluginDefinition(da));
         // dap.setHelpContext(da.getHelpContext());
         // dap.setPlugInServerInstance(this);
         // dap.createDb(da.getHibernateDb());
@@ -246,9 +244,15 @@ public class MeterConsoleTester
         // System.out.println("PumpServer: " +
         // dataAccess.getSpecialParameters().get("BG"));
 
-        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+        dap.setGlucoseUnitType(da.getGlucoseUnitType());
 
         return dap;
+    }
+
+
+    private MeterPluginDefinition getPluginDefinition(ATDataAccessLMAbstract da)
+    {
+        return new MeterPluginDefinition(da.getLanguageManager());
     }
 
 
@@ -411,7 +415,7 @@ public class MeterConsoleTester
         logDevice.error("error message");
         logDevice.info("info message");
         logDevice.warn("warn message");
-        logDevice.fatal("fatal message");
+        logDevice.trace("trace message");
 
         logDeviceCat.debug("debug message");
         logDeviceCat.error("error message");

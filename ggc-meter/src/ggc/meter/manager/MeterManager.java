@@ -1,13 +1,11 @@
 package ggc.meter.manager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import ggc.meter.data.defs.MeterDeviceDefinition;
 import ggc.meter.device.MeterDeviceInstanceWithHandler;
 import ggc.meter.manager.company.*;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.manager.DeviceManager;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,8 +36,6 @@ import ggc.plugin.manager.DeviceManager;
 public class MeterManager extends DeviceManager
 {
 
-    private static Log LOG = LogFactory.getLog(MeterManager.class);
-
     /**
      * Singleton instance
      */
@@ -49,9 +45,9 @@ public class MeterManager extends DeviceManager
     /**
      * Constructor
      */
-    private MeterManager()
+    private MeterManager(DataAccessPlugInBase da)
     {
-        super();
+        super(da);
     }
 
 
@@ -75,12 +71,19 @@ public class MeterManager extends DeviceManager
      * 
      * @return
      */
-    public static MeterManager getInstance()
+    public static MeterManager getInstance(DataAccessPlugInBase da)
     {
         if (MeterManager.s_manager == null)
         {
-            MeterManager.s_manager = new MeterManager();
+            MeterManager.s_manager = new MeterManager(da);
         }
+
+        return MeterManager.s_manager;
+    }
+
+
+    public static MeterManager getInstance()
+    {
 
         return MeterManager.s_manager;
     }

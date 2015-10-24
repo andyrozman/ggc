@@ -2,8 +2,8 @@ package ggc.meter.device.abbott;
 
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.TimeZoneUtil;
@@ -62,7 +62,7 @@ import gnu.io.SerialPortEvent;
 public abstract class FreestyleMeter extends AbstractSerialMeter
 {
 
-    private static Log log = LogFactory.getLog(FreestyleMeter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FreestyleMeter.class);
 
     protected boolean device_running = true;
 
@@ -119,8 +119,8 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         super(portName, writer, da);
 
         this.setCommunicationSettings(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_2, SerialPort.PARITY_NONE,
-            SerialPort.FLOWCONTROL_NONE, SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT
-                    | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+            SerialPort.FLOWCONTROL_NONE,
+            SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
@@ -151,8 +151,9 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         }
         catch (Exception ex)
         {
-            log.error("Exception on create:" + ex, ex);
-            // System.out.println("OneTouchMeter: Error connecting !\nException: "
+            LOG.error("Exception on create:" + ex, ex);
+            // System.out.println("OneTouchMeter: Error connecting !\nException:
+            // "
             // + ex);
             // ex.printStackTrace();
         }
@@ -326,7 +327,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     protected String readLineDebug() throws IOException
     {
         String rdl = this.readLine();
-        log.debug(rdl);
+        LOG.debug(rdl);
 
         return rdl;
     }
@@ -398,7 +399,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
     }
 
     private static String months_en[] = { "", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct",
-                                         "Nov", "Dec" };
+                                          "Nov", "Dec" };
 
 
     protected ATechDate getDateTime(String datetime)
@@ -485,7 +486,7 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         switch (event.getEventType())
         {
 
-        // If break event append BREAK RECEIVED message.
+            // If break event append BREAK RECEIVED message.
             case SerialPortEvent.BI:
                 System.out.println("recievied break");
                 this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
@@ -544,8 +545,8 @@ public abstract class FreestyleMeter extends AbstractSerialMeter
         fm.outputWriter = new ConsoleOutputWriter();
 
         String data[] = { "093  May  30 2005 00:46 16 0x01", "105  May  30 2005 00:42 16 0x00",
-                         "085  May  29 2005 23:52 16 0x00", "073  May  29 2005 21:13 16 0x00",
-                         "091  May  29 2005 21:11 16 0x01" };
+                          "085  May  29 2005 23:52 16 0x00", "073  May  29 2005 21:13 16 0x00",
+                          "091  May  29 2005 21:11 16 0x01" };
 
         for (String element : data)
         {

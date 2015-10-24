@@ -1,8 +1,5 @@
 package ggc.meter.device.abbott;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import ggc.meter.manager.MeterDevicesIds;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
@@ -38,10 +35,6 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 public class PrecisionXtra extends OptiumXceed
 {
-
-    @SuppressWarnings("unused")
-    private static Log log = LogFactory.getLog(PrecisionXtra.class);
-
 
     /**
      * Constructor

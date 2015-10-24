@@ -17,7 +17,6 @@ import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -49,6 +48,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
  */
 
 // in works
+@Deprecated
 public class OneTouchVerioPro extends AbstractUsbMeter
 {
 
@@ -59,8 +59,8 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     private int reading_status = 0;
     SimpleTimeZone empty_tzi;
 
-
     // 10c4:85a7
+
 
     /*
      * Bus 001 Device 010: ID 10c4:85a7 Cygnal Integrated Products, Inc.
@@ -338,7 +338,7 @@ public class OneTouchVerioPro extends AbstractUsbMeter
     public void readDeviceDataFull()
     {
 
-        this.outputWriter.setBGOutputType(OutputUtil.BG_MMOL);
+        // this.outputWriter.setBGOutputType(OutputUtil.BG_MMOL);
 
         try
         {
@@ -657,13 +657,15 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         byte[] dt_bg = hex_utils.getByteSubArray(reta, 6 + 5, 3, 8);
 
         int bg_val = Integer.parseInt(hex_utils.getCorrectHexValue(dt_bg[7]) + hex_utils.getCorrectHexValue(dt_bg[6])
-                + hex_utils.getCorrectHexValue(dt_bg[5]) + hex_utils.getCorrectHexValue(dt_bg[4]), 16);
+                + hex_utils.getCorrectHexValue(dt_bg[5]) + hex_utils.getCorrectHexValue(dt_bg[4]),
+            16);
 
         // System.out.println("BG: " + bg_val + " -> " +
         // dataAccess.getBGValueDifferent(DataAccessMeter.BG_MGDL, bg_val));
 
         long dt_val = Integer.parseInt(hex_utils.getCorrectHexValue(dt_bg[3]) + hex_utils.getCorrectHexValue(dt_bg[2])
-                + hex_utils.getCorrectHexValue(dt_bg[1]) + hex_utils.getCorrectHexValue(dt_bg[0]), 16);
+                + hex_utils.getCorrectHexValue(dt_bg[1]) + hex_utils.getCorrectHexValue(dt_bg[0]),
+            16);
 
         GregorianCalendar gc = new GregorianCalendar();
         gc.setTimeInMillis(dt_val * 1000);
@@ -742,8 +744,8 @@ public class OneTouchVerioPro extends AbstractUsbMeter
         }
     }
 
-
     // public static final int CMD_GET_SOFTWARE_VERSION = 1;
+
 
     // public abstract String getDeviceCommand(int command);
 

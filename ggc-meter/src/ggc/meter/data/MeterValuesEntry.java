@@ -4,14 +4,13 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.atech.db.ext.ExtendedHandler;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 
 import ggc.core.data.defs.DailyValuesExtendedType;
 import ggc.core.data.defs.GlucoseUnitType;
@@ -49,8 +48,6 @@ import ggc.plugin.output.OutputWriterType;
 
 public class MeterValuesEntry extends DeviceValuesEntry
 {
-
-    private static final Log log = LogFactory.getLog(MeterValuesEntry.class);
 
     private static DataAccessMeter da = DataAccessMeter.getInstance();
     private static I18nControlAbstract ic = da.getI18nControlInstance();
@@ -394,9 +391,9 @@ public class MeterValuesEntry extends DeviceValuesEntry
      * @return format of date time (precission)
      */
     @Override
-    public int getDateTimeFormat()
+    public ATechDateType getDateTimeFormat()
     {
-        return ATechDate.FORMAT_DATE_AND_TIME_MIN;
+        return ATechDateType.DateAndTimeMin;
     }
 
 
@@ -939,7 +936,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
     public String getDisplayableBgValueWithUnit()
     {
-        return this.da.getDisplayedBGFromDefault(this.bgOriginal) + " " + da.getConfiguredBGUnit().getTranslation();
+        return this.da.getDisplayedBGFromDefault(this.bgOriginal) + " " + da.getGlucoseUnitType().getTranslation();
     }
 
 
@@ -1046,7 +1043,8 @@ public class MeterValuesEntry extends DeviceValuesEntry
         {
 
             // System.out.println(String.format(
-            // "getChangedData [DT=%s,Type=%s, mveImp=%s, thisImp=%s, mveData=%s,thisData=%s",
+            // "getChangedData [DT=%s,Type=%s, mveImp=%s, thisImp=%s,
+            // mveData=%s,thisData=%s",
             // this.getDateTime(),
             // mpe.name(), mve.hasImportData(mpe), this.hasImportData(mpe),
             // mve.getImportData(mpe),

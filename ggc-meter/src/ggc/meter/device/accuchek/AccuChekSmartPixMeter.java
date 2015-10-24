@@ -4,11 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
@@ -24,7 +24,6 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.impl.accuchek.AccuChekSmartPix;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -57,15 +56,12 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements MeterInterface
 {
 
-    Log LOG = LogFactory.getLog(AccuChekSmartPixMeter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AccuChekSmartPixMeter.class);
 
-    // DataAccessMeter dataAccess = DataAccessMeter.getInstance();
-    // OutputWriter outputWriter = null;
-
-    private int bg_unit = OutputUtil.BG_MGDL;
     private GlucoseUnitType bgUnit = GlucoseUnitType.mg_dL;
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
+
 
     /**
      * Constructor
@@ -78,6 +74,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         this.setMeterType(cmp.getName(), getName());
     }
 
+
     /**
      * Constructor
      * 
@@ -88,6 +85,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
     {
         this(conn_parameter, writer, DataAccessMeter.getInstance());
     }
+
 
     /**
      * Constructor
@@ -102,6 +100,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         this.setMeterType("Accu-Chek/Roche", getName());
     }
 
+
     /**
      * getMeterId - Get Meter Id, within Meter Company class 
      * 
@@ -111,6 +110,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
     {
         return MeterDevicesIds.METER_ROCHE_SMARTPIX_DEVICE;
     }
+
 
     /**
      * getCompanyId - Get Company Id 
@@ -123,6 +123,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
     }
 
     Document document;
+
 
     /** 
      * Process Xml
@@ -152,6 +153,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
         }
     }
+
 
     private void getPixDeviceInfo()
     {
@@ -184,6 +186,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
     }
 
+
     /**
      * Letter with which report starts (I for insulin pumps, G for glucose meters)
      * 
@@ -194,6 +197,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
     {
         return "G";
     }
+
 
     private void getMeterDeviceInfo()
     {
@@ -215,7 +219,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
         if (el.attributeValue("BGUnit").equals("mmol/L"))
         {
-            this.bg_unit = OutputUtil.BG_MMOL;
+            // this.bg_unit = OutputUtil.BG_MMOL;
             bgUnit = GlucoseUnitType.mmol_L;
         }
 
@@ -223,6 +227,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         // Dt="2008-05-13" Tm="10:12" BGUnit="mmol/L"/>
 
     }
+
 
     private void readData()
     {
@@ -237,6 +242,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         }
 
     }
+
 
     private ArrayList<MeterValuesEntry> getDataEntries(Node entry)
     {
@@ -290,15 +296,17 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
     }
 
+
     private MeterValuesEntry getEmptyEntry(Element el)
     {
         MeterValuesEntry mve = new MeterValuesEntry();
-        mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(this.getDateTime(el.attributeValue("Dt"),
-            el.attributeValue("Tm")))));
+        mve.setDateTimeObject(tzu.getCorrectedDateTime(
+            new ATechDate(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")))));
         // mve.setBgUnit(this.bg_unit);
 
         return mve;
     }
+
 
     @SuppressWarnings("unused")
     private MeterValuesEntry getDataEntry(Node entry)
@@ -306,8 +314,8 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         Element el = (Element) entry;
 
         MeterValuesEntry mve = new MeterValuesEntry();
-        mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(this.getDateTime(el.attributeValue("Dt"),
-            el.attributeValue("Tm")))));
+        mve.setDateTimeObject(tzu.getCorrectedDateTime(
+            new ATechDate(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")))));
 
         if (el.attributeValue("Val").toUpperCase().startsWith("HI"))
         {
@@ -357,6 +365,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
     }
 
+
     private long getDateTime(String date, String time)
     {
         String o = ATDataAccessAbstract.replaceExpression(date, "-", "");
@@ -374,6 +383,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
 
     }
 
+
     /**
      * Get Download Support Type
      * 
@@ -385,6 +395,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
         return DownloadSupportType.Download_Data_DataFile;
     }
 
+
     /**
      * getInterfaceTypeForMeter - most meter devices, store just BG data, this use simple interface, but 
      *    there are some device which can store different kind of data (Ketones - Optium Xceed; Food, Insulin
@@ -395,6 +406,7 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
     {
         return MeterInterface.METER_INTERFACE_SIMPLE;
     }
+
 
     /**
      * Set Meter type
@@ -432,6 +444,5 @@ public abstract class AccuChekSmartPixMeter extends AccuChekSmartPix implements 
     {
         return DeviceImplementationStatus.Done;
     }
-
 
 }

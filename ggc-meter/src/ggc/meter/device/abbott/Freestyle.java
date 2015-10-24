@@ -6,9 +6,6 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Meter Tool (support for Meter devices)
@@ -39,9 +36,6 @@ import org.apache.commons.logging.LogFactory;
 public class Freestyle extends FreestyleMeter
 {
 
-    @SuppressWarnings("unused")
-    private static Log log = LogFactory.getLog(Freestyle.class);
-
     /**
      * Constructor
      */
@@ -49,6 +43,7 @@ public class Freestyle extends FreestyleMeter
     {
         super();
     }
+
 
     /**
      * Constructor for device manager
@@ -60,6 +55,7 @@ public class Freestyle extends FreestyleMeter
         super(cmp);
     }
 
+
     /**
      * Constructor
      * 
@@ -70,6 +66,7 @@ public class Freestyle extends FreestyleMeter
     {
         super(portName, writer);
     }
+
 
     /**
      * Constructor
@@ -83,6 +80,7 @@ public class Freestyle extends FreestyleMeter
         super(params, writer, da);
     }
 
+
     /**
      * Maximum of records that device can store
      */
@@ -91,6 +89,7 @@ public class Freestyle extends FreestyleMeter
         return 0;
     }
 
+
     /** 
      * Get Device ClassName
      */
@@ -98,6 +97,7 @@ public class Freestyle extends FreestyleMeter
     {
         return "ggc.meter.device.abbott.Freestyle";
     }
+
 
     /**
      * getDeviceId - Get Device Id 
@@ -109,6 +109,7 @@ public class Freestyle extends FreestyleMeter
         return MeterDevicesIds.METER_ABBOTT_FREESTYLE;
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -119,6 +120,7 @@ public class Freestyle extends FreestyleMeter
         return "ab_freestyle.jpg";
     }
 
+
     /**
      * getName - Get Name of meter. 
      * 
@@ -128,6 +130,7 @@ public class Freestyle extends FreestyleMeter
     {
         return "Abbott Freestyle";
     }
+
 
     /**
      * getInstructions - get instructions for device
@@ -140,6 +143,7 @@ public class Freestyle extends FreestyleMeter
         return "INSTRUCTIONS_ABBOTT_FREESTYLE";
     }
 
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -150,6 +154,7 @@ public class Freestyle extends FreestyleMeter
     {
         return null;
     }
+
 
     /**
      * getImplementationStatus - Get implementation status 

@@ -2,8 +2,8 @@ package ggc.meter.device.onetouch;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.TimeZoneUtil;
@@ -19,7 +19,6 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
-import ggc.plugin.output.OutputUtil;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -55,7 +54,7 @@ import gnu.io.SerialPort;
 public class OneTouchUltraSmart extends AbstractSerialMeter
 {
 
-    private static Log logger = LogFactory.getLog(OneTouchUltraSmart.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OneTouchUltraSmart.class);
 
     private static final long serialVersionUID = 3474576211369181186L;
 
@@ -67,29 +66,29 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
      * This is CRC-7 polynomial lookup table for computing checksum byte for OneTouch UltraSmart meter.
      */
     private static byte[] lookupArr = new byte[] { 0x00, 0x1a, 0x34, 0x2e, 0x68, 0x72, 0x5c, 0x46, 0x5d, 0x47, 0x69,
-                                                  0x73, 0x35, 0x2f, 0x01, 0x1b, 0x37, 0x2d, 0x03, 0x19, 0x5f, 0x45,
-                                                  0x6b, 0x71, 0x6a, 0x70, 0x5e, 0x44, 0x02, 0x18, 0x36, 0x2c, 0x6e,
-                                                  0x74, 0x5a, 0x40, 0x06, 0x1c, 0x32, 0x28, 0x33, 0x29, 0x07, 0x1d,
-                                                  0x5b, 0x41, 0x6f, 0x75, 0x59, 0x43, 0x6d, 0x77, 0x31, 0x2b, 0x05,
-                                                  0x1f, 0x04, 0x1e, 0x30, 0x2a, 0x6c, 0x76, 0x58, 0x42, 0x51, 0x4b,
-                                                  0x65, 0x7f, 0x39, 0x23, 0x0d, 0x17, 0x0c, 0x16, 0x38, 0x22, 0x64,
-                                                  0x7e, 0x50, 0x4a, 0x66, 0x7c, 0x52, 0x48, 0x0e, 0x14, 0x3a, 0x20,
-                                                  0x3b, 0x21, 0x0f, 0x15, 0x53, 0x49, 0x67, 0x7d, 0x3f, 0x25, 0x0b,
-                                                  0x11, 0x57, 0x4d, 0x63, 0x79, 0x62, 0x78, 0x56, 0x4c, 0x0a, 0x10,
-                                                  0x3e, 0x24, 0x08, 0x12, 0x3c, 0x26, 0x60, 0x7a, 0x54, 0x4e, 0x55,
-                                                  0x4f, 0x61, 0x7b, 0x3d, 0x27, 0x09, 0x13, 0x2f, 0x35, 0x1b, 0x01,
-                                                  0x47, 0x5d, 0x73, 0x69, 0x72, 0x68, 0x46, 0x5c, 0x1a, 0x00, 0x2e,
-                                                  0x34, 0x18, 0x02, 0x2c, 0x36, 0x70, 0x6a, 0x44, 0x5e, 0x45, 0x5f,
-                                                  0x71, 0x6b, 0x2d, 0x37, 0x19, 0x03, 0x41, 0x5b, 0x75, 0x6f, 0x29,
-                                                  0x33, 0x1d, 0x07, 0x1c, 0x06, 0x28, 0x32, 0x74, 0x6e, 0x40, 0x5a,
-                                                  0x76, 0x6c, 0x42, 0x58, 0x1e, 0x04, 0x2a, 0x30, 0x2b, 0x31, 0x1f,
-                                                  0x05, 0x43, 0x59, 0x77, 0x6d, 0x7e, 0x64, 0x4a, 0x50, 0x16, 0x0c,
-                                                  0x22, 0x38, 0x23, 0x39, 0x17, 0x0d, 0x4b, 0x51, 0x7f, 0x65, 0x49,
-                                                  0x53, 0x7d, 0x67, 0x21, 0x3b, 0x15, 0x0f, 0x14, 0x0e, 0x20, 0x3a,
-                                                  0x7c, 0x66, 0x48, 0x52, 0x10, 0x0a, 0x24, 0x3e, 0x78, 0x62, 0x4c,
-                                                  0x56, 0x4d, 0x57, 0x79, 0x63, 0x25, 0x3f, 0x11, 0x0b, 0x27, 0x3d,
-                                                  0x13, 0x09, 0x4f, 0x55, 0x7b, 0x61, 0x7a, 0x60, 0x4e, 0x54, 0x12,
-                                                  0x08, 0x26, 0x3C };
+                                                   0x73, 0x35, 0x2f, 0x01, 0x1b, 0x37, 0x2d, 0x03, 0x19, 0x5f, 0x45,
+                                                   0x6b, 0x71, 0x6a, 0x70, 0x5e, 0x44, 0x02, 0x18, 0x36, 0x2c, 0x6e,
+                                                   0x74, 0x5a, 0x40, 0x06, 0x1c, 0x32, 0x28, 0x33, 0x29, 0x07, 0x1d,
+                                                   0x5b, 0x41, 0x6f, 0x75, 0x59, 0x43, 0x6d, 0x77, 0x31, 0x2b, 0x05,
+                                                   0x1f, 0x04, 0x1e, 0x30, 0x2a, 0x6c, 0x76, 0x58, 0x42, 0x51, 0x4b,
+                                                   0x65, 0x7f, 0x39, 0x23, 0x0d, 0x17, 0x0c, 0x16, 0x38, 0x22, 0x64,
+                                                   0x7e, 0x50, 0x4a, 0x66, 0x7c, 0x52, 0x48, 0x0e, 0x14, 0x3a, 0x20,
+                                                   0x3b, 0x21, 0x0f, 0x15, 0x53, 0x49, 0x67, 0x7d, 0x3f, 0x25, 0x0b,
+                                                   0x11, 0x57, 0x4d, 0x63, 0x79, 0x62, 0x78, 0x56, 0x4c, 0x0a, 0x10,
+                                                   0x3e, 0x24, 0x08, 0x12, 0x3c, 0x26, 0x60, 0x7a, 0x54, 0x4e, 0x55,
+                                                   0x4f, 0x61, 0x7b, 0x3d, 0x27, 0x09, 0x13, 0x2f, 0x35, 0x1b, 0x01,
+                                                   0x47, 0x5d, 0x73, 0x69, 0x72, 0x68, 0x46, 0x5c, 0x1a, 0x00, 0x2e,
+                                                   0x34, 0x18, 0x02, 0x2c, 0x36, 0x70, 0x6a, 0x44, 0x5e, 0x45, 0x5f,
+                                                   0x71, 0x6b, 0x2d, 0x37, 0x19, 0x03, 0x41, 0x5b, 0x75, 0x6f, 0x29,
+                                                   0x33, 0x1d, 0x07, 0x1c, 0x06, 0x28, 0x32, 0x74, 0x6e, 0x40, 0x5a,
+                                                   0x76, 0x6c, 0x42, 0x58, 0x1e, 0x04, 0x2a, 0x30, 0x2b, 0x31, 0x1f,
+                                                   0x05, 0x43, 0x59, 0x77, 0x6d, 0x7e, 0x64, 0x4a, 0x50, 0x16, 0x0c,
+                                                   0x22, 0x38, 0x23, 0x39, 0x17, 0x0d, 0x4b, 0x51, 0x7f, 0x65, 0x49,
+                                                   0x53, 0x7d, 0x67, 0x21, 0x3b, 0x15, 0x0f, 0x14, 0x0e, 0x20, 0x3a,
+                                                   0x7c, 0x66, 0x48, 0x52, 0x10, 0x0a, 0x24, 0x3e, 0x78, 0x62, 0x4c,
+                                                   0x56, 0x4d, 0x57, 0x79, 0x63, 0x25, 0x3f, 0x11, 0x0b, 0x27, 0x3d,
+                                                   0x13, 0x09, 0x4f, 0x55, 0x7b, 0x61, 0x7a, 0x60, 0x4e, 0x54, 0x12,
+                                                   0x08, 0x26, 0x3C };
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
 
@@ -149,7 +148,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         }
         catch (Exception ex)
         {
-            logger.error("OneTouchMeter -> Error adding listener: ", ex);
+            LOG.error("OneTouchMeter -> Error adding listener: ", ex);
             ex.printStackTrace();
         }
     }
@@ -331,7 +330,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         }
         catch (Exception ex)
         {
-            logger.error(ex);
+            LOG.error("{}", ex);
         }
         finally
         {
@@ -363,7 +362,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
      */
     public void readDeviceDataFull()
     {
-        logger.info("reading device data");
+        LOG.info("reading device data");
         try
         {
             // reading meter settings
@@ -408,7 +407,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
                 else if (packetSize < 17)
                 {
                     msg = "received record no: " + recNo + " data packet too short, discarding";
-                    logger.error(msg);
+                    LOG.error(msg);
                 }
                 else
                 {
@@ -416,7 +415,7 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
                 }
 
                 msg = "received record no: " + recNo + " data size: " + resp.length;
-                logger.debug(msg);
+                LOG.debug(msg);
 
                 recNo++;
 
@@ -425,10 +424,10 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         }
         catch (Exception ex)
         {
-            logger.error(ex);
+            LOG.error(ex.toString());
         }
 
-        logger.info("Reading device data - done");
+        LOG.info("Reading device data - done");
 
         this.outputWriter.setSpecialProgress(100);
         this.outputWriter.setSubStatus(null);
@@ -478,28 +477,28 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         if (typeByte == 0x00)
         {
             msg = String.format("record type is: %h  - BG: ", typeByte);
-            logger.debug(msg);
+            LOG.debug(msg);
             processBGRecord(recordArr);
         }
         else if (typeByte == 0x54 || typeByte == 0x50)
         {
             msg = String.format("record type is: %h  - Food\n", typeByte);
-            logger.debug(msg);
+            LOG.debug(msg);
         }
         else if (typeByte == 0xb4)
         {
             msg = String.format("record type is: %h - Exercise\n", typeByte);
-            logger.debug(msg);
+            LOG.debug(msg);
         }
         else if (typeByte == 0x2c)
         {
             msg = String.format("record type is: %h - Insulin\n", typeByte);
-            logger.debug(msg);
+            LOG.debug(msg);
         }
         else
         {
             msg = String.format("record type is: %h - Unknown\n", typeByte);
-            logger.debug(msg);
+            LOG.debug(msg);
         }
 
         readingEntryStatus(); // Increment progress bar
@@ -522,9 +521,9 @@ public class OneTouchUltraSmart extends AbstractSerialMeter
         GregorianCalendar dateTime = (GregorianCalendar) parseDateTime(timeDateArr);
         byte bgByte = recordArray[5];
         int bgMg = bgByte & 0xFF;
-        float bgMmol = OutputUtil.getInstance().getBGValueDifferent(OutputUtil.BG_MGDL, bgMg);
+        float bgMmol = dataAccess.getBGValueDifferent(GlucoseUnitType.mg_dL, bgMg);
         String msg = String.format("%.1f, timestamp: %s", bgMmol, dateTime.getTime());
-        logger.debug(msg);
+        LOG.debug(msg);
 
         // create GGC internal entry record
         MeterValuesEntry mve = new MeterValuesEntry();

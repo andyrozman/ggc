@@ -2,8 +2,8 @@ package ggc.meter.device.abbott;
 
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
@@ -58,7 +58,7 @@ import gnu.io.SerialPortEvent;
 public class OptiumXceed extends AbstractSerialMeter
 {
 
-    private static Log log = LogFactory.getLog(OptiumXceed.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OptiumXceed.class);
     protected boolean device_running = true;
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
     private int entries_max = 0;
@@ -96,8 +96,8 @@ public class OptiumXceed extends AbstractSerialMeter
         // super(DataAccessMeter.getInstance());
 
         this.setCommunicationSettings(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE,
-            SerialPort.FLOWCONTROL_NONE, SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT
-                    | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+            SerialPort.FLOWCONTROL_NONE,
+            SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
@@ -128,7 +128,7 @@ public class OptiumXceed extends AbstractSerialMeter
         }
         catch (Exception ex)
         {
-            log.error("OptiumXceed: Error connecting !\nException: " + ex, ex);
+            LOG.error("OptiumXceed: Error connecting !\nException: " + ex, ex);
             System.out.println("OptiumXceed: Error connecting !\nException: " + ex);
         }
 
@@ -147,8 +147,8 @@ public class OptiumXceed extends AbstractSerialMeter
         super(comm_parameters, writer, da);
 
         this.setCommunicationSettings(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE,
-            SerialPort.FLOWCONTROL_NONE, SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT
-                    | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+            SerialPort.FLOWCONTROL_NONE,
+            SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
@@ -179,7 +179,7 @@ public class OptiumXceed extends AbstractSerialMeter
         }
         catch (Exception ex)
         {
-            log.error("OptiumXceed: Error connecting !\nException: " + ex, ex);
+            LOG.error("OptiumXceed: Error connecting !\nException: " + ex, ex);
             System.out.println("OptiumXceed: Error connecting !\nException: " + ex);
         }
 
@@ -345,7 +345,7 @@ public class OptiumXceed extends AbstractSerialMeter
         }
         catch (Exception ex)
         {
-            log.error("Exception on parse: " + ex + "\nData: " + line, ex);
+            LOG.error("Exception on parse: " + ex + "\nData: " + line, ex);
         }
 
     }
@@ -462,7 +462,7 @@ public class OptiumXceed extends AbstractSerialMeter
         }
         catch (Exception ex)
         {
-            log.error("Error reading info. Ex: " + ex, ex);
+            LOG.error("Error reading info. Ex: " + ex, ex);
             throw new PlugInBaseException(ex);
         }
 
@@ -512,10 +512,8 @@ public class OptiumXceed extends AbstractSerialMeter
         // .format(dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MGDL,
         // DataAccessPlugInBase.BG_MMOL, data)));
 
-        mve.setUrine(
-            DailyValuesExtendedType.Urine_mmolL,
-            dataAccess.getFormatedValue(
-                dataAccess.getBGValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, Float.parseFloat(data)), 1));
+        mve.setUrine(DailyValuesExtendedType.Urine_mmolL, dataAccess.getFormatedValue(
+            dataAccess.getBGValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, Float.parseFloat(data)), 1));
 
         this.outputWriter.writeData(mve);
         this.entries_current++;
@@ -574,7 +572,7 @@ public class OptiumXceed extends AbstractSerialMeter
         switch (event.getEventType())
         {
 
-        // If break event append BREAK RECEIVED message.
+            // If break event append BREAK RECEIVED message.
             case SerialPortEvent.BI:
                 System.out.println("recievied break");
                 this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);

@@ -2,8 +2,8 @@ package ggc.meter.data;
 
 import java.util.Hashtable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.meter.data.db.GGCMeterDb;
 import ggc.meter.util.DataAccessMeter;
@@ -39,7 +39,7 @@ import ggc.plugin.gui.OldDataReaderAbstract;
 public class MeterDataReader extends OldDataReaderAbstract
 {
 
-    private static Log log = LogFactory.getLog(MeterDataReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MeterDataReader.class);
 
     GGCMeterDb db = null;
     DataAccessMeter m_da = null;
@@ -101,13 +101,13 @@ public class MeterDataReader extends OldDataReaderAbstract
         if (current_entry == -1)
         {
             this.m_drr.setOldDataReadingProgress(0);
-            log.debug("Old Data reading progress [" + m_da.getApplicationName() + "]: 0% not started");
+            LOG.debug("Old Data reading progress [" + m_da.getApplicationName() + "]: 0% not started");
         }
         else if (current_entry == 0)
         {
             this.m_drr.setOldDataReadingProgress(40);
-            log.debug("Old Data reading progress [" + m_da.getApplicationName() + "]: 40% read from database");
-            log.debug("Old Data reading progress [" + m_da.getApplicationName()
+            LOG.debug("Old Data reading progress [" + m_da.getApplicationName() + "]: 40% read from database");
+            LOG.debug("Old Data reading progress [" + m_da.getApplicationName()
                     + "]: Started to sort through data (progress will not be displayed)");
         }
         else if (current_entry == -2)
@@ -121,7 +121,7 @@ public class MeterDataReader extends OldDataReaderAbstract
             float proc_total = (proc * 1.0f + 40.0f) / 140.0f * 100.0f;
             int proc_total_i = (int) proc_total;
 
-            // log.debug("Old Data reading progress [" +
+            // LOG.debug("Old Data reading progress [" +
             // dataAccess.getApplicationName() + "]: " + proc_total_i + " %" );
             this.m_drr.setOldDataReadingProgress(proc_total_i);
 

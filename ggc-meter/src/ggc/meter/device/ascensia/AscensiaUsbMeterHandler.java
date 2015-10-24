@@ -3,6 +3,7 @@ package ggc.meter.device.ascensia;
 import java.util.ArrayList;
 import java.util.List;
 
+import ggc.meter.defs.device.MeterDeviceHandler;
 import ggc.meter.device.ascensia.impl.AscensiaContourUsbReader;
 import ggc.plugin.comm.cfg.USBDevice;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
@@ -10,10 +11,9 @@ import ggc.plugin.data.enums.DeviceHandlerType;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.v2.DeviceDefinition;
-import ggc.plugin.device.v2.DeviceHandler;
 import ggc.plugin.output.OutputWriter;
 
-public class AscensiaUsbMeterHandler implements DeviceHandler
+public class AscensiaUsbMeterHandler extends MeterDeviceHandler
 {
 
     public DeviceHandlerType getDeviceHandlerKey()

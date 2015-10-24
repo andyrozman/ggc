@@ -1,31 +1,17 @@
 package ggc.meter.util;
 
-import java.util.ArrayList;
-
-import javax.swing.*;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.atech.graphics.components.about.*;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.i18n.mgr.LanguageManager;
-
 import ggc.core.data.ExtendedDailyValueHandler;
-import ggc.core.plugins.GGCPluginType;
 import ggc.meter.data.MeterDataHandler;
 import ggc.meter.data.MeterDataReader;
 import ggc.meter.data.cfg.MeterConfigurationDefinition;
 import ggc.meter.data.db.GGCMeterDb;
+import ggc.meter.defs.MeterPluginDefinition;
 import ggc.meter.device.MeterDeviceInstanceWithHandler;
 import ggc.meter.device.MeterDisplayInterfaceType;
 import ggc.meter.device.MeterInterface;
-import ggc.meter.device.ascensia.AscensiaUsbMeterHandler;
 import ggc.meter.manager.MeterManager;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.data.enums.DeviceEntryStatus;
-import ggc.plugin.device.mgr.DeviceHandlerManager;
-import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -57,18 +43,12 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public class DataAccessMeter extends DataAccessPlugInBase
 {
 
-    /**
-     * PlugIn Version
-     */
-    public static final String PLUGIN_VERSION = "2.2.1";
+    // private static final Logger LOG =
+    // LoggerFactory.getLogger(DataAccessMeter.class);
 
-    private static DataAccessMeter s_da = null; // This is handle to unique
+    private static DataAccessMeter s_da = null;
 
     private MeterManager m_meterManager = null;
-
-    private static Log log = LogFactory.getLog(DataAccessMeter.class);
-
-    JFrame m_main = null;
 
     /**
      * Extended Handler: Daily Value
@@ -88,23 +68,11 @@ public class DataAccessMeter extends DataAccessPlugInBase
      *  method.<br><br>
      *
      */
-    private DataAccessMeter(JFrame frame, LanguageManager lm)
+    private DataAccessMeter(MeterPluginDefinition meterPluginDefinition)
     {
-        super(lm, new GGCMeterICRunner());
+        super(meterPluginDefinition);
 
-        try
-        {
-
-            this.m_main = frame;
-            initSpecial();
-        }
-        catch (Exception ex)
-        {
-            log.error("Error init DA Mater: Ex.: " + ex, ex);
-            // System.out.println("Error init DA Mater: Ex.: " + ex);
-            // ex.printStackTrace();
-            // log.error()
-        }
+        initSpecial();
     }
 
 
@@ -115,11 +83,11 @@ public class DataAccessMeter extends DataAccessPlugInBase
     public void initSpecial()
     {
         // System.out.println("init special");
-        checkPrerequisites();
-        createWebListerContext();
-        createPlugInAboutContext();
+
+        // createWebListerContext();
+        // createPlugInAboutContext();
         createConfigurationContext();
-        createPlugInVersion();
+        // createPlugInVersion();
         loadDeviceDataHandler();
         // loadManager();
         // loadReadingStatuses();
@@ -160,209 +128,166 @@ public class DataAccessMeter extends DataAccessPlugInBase
     /**
      * Create Instance
      * 
-     * @param lm
-     * @return
+     * @param meterPluginDefinition MeterPluginDefinition instance
+     *
+     * @return DataAccessMeter static instance
      */
-    public static DataAccessMeter createInstance(LanguageManager lm)
+    public static DataAccessMeter createInstance(MeterPluginDefinition meterPluginDefinition)
     {
         if (s_da == null)
         {
-            s_da = new DataAccessMeter(null, lm);
+            s_da = new DataAccessMeter(meterPluginDefinition);
         }
         return s_da;
     }
 
 
     /**
-     *  This method sets handle to DataAccessMeter to null and deletes the instance. <br><br>
+     *  This method sets handle to DataAccessMeter to null and deletes the instance. 
      */
     public void deleteInstance()
     {
         super.m_i18n = null;
     }
 
-
     // ********************************************************
     // ****** About Methods *****
     // ********************************************************
 
-    @Override
-    public void registerDeviceHandlers()
-    {
-        // DeviceHandlerManager.getInstance().addDeviceHandler();
-
-        // Ascensia
-        DeviceHandlerManager.getInstance().addDeviceHandler(new AscensiaUsbMeterHandler());
-    }
-
-
-    @Override
-    public GGCPluginType getPluginType()
-    {
-        return GGCPluginType.MeterToolPlugin;
-    }
-
-
-    /**
-     * Create About Context for plugin
-     */
-    @Override
-    public void createPlugInAboutContext()
-    {
-        I18nControlAbstract ic = getI18nControlInstance();
-
-        // about_title = i18nControlAbstract.getMessage("METER_PLUGIN_ABOUT");
-        about_image_name = "/icons/about_meter.jpg";
-        // about_image_name = "/icons/about_logo.gif";
-        about_plugin_copyright_from = 2006;
-        // about_plugin_name = i18nControlAbstract.getMessage("METER_PLUGIN");
-
-        ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
-
-        lst_libs.addAll(getBaseLibraries());
-
-        lst_libs.add(
-            new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c", "http://www.extreme.indiana.edu/xgws/xsoap/xpp/",
-                    "Indiana University Extreme! Lab Software License", "Xml parser for processing xml document",
-                    "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights reserved."));
-        plugin_libraries = lst_libs;
-
-        ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
-        CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
-        cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com",
-                "Full framework and support for Ascensia, Roche, LifeScan devices"));
-        cg.addCreditsEntry(new CreditsEntry("Alexander Balaban", "abalaban1@yahoo.ca", "Support for OT UltraSmart"));
-        cg.addCreditsEntry(new CreditsEntry("Ophir Setter", "ophir.setter@gmail.com", "Support for Freestyle Meters"));
-        lst_credits.add(cg);
-        cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
-        cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "", "Supplied hardware for Roche development"));
-        lst_credits.add(cg);
-
-        plugin_developers = lst_credits;
-
-        // features
-        ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
-
-        FeaturesGroup fg = new FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Base Meter Tools Framework"));
-        fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
-        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
-        fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC integration)"));
-        fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
-        fg.addFeaturesEntry(new FeaturesEntry("List of meters"));
-        fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
-
-        lst_features.add(fg);
-
-        fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer (except Contour USB and Didget)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Accu-Chek/Roche: All supported by SmartPix 3.x"));
-        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Profile, Easy, UltraSmart"));
-        fg.addFeaturesEntry(new FeaturesEntry("Abbott: Optium Xceeed, PrecisionXtra, Frestyle"));
-        // FIXME
-        lst_features.add(fg);
-
-        // fg = new
-        // FeaturesGroup(i18nControlAbstract.getMessage("NOT_IMPLEMENTED_FEATURES"));
-        // fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
-
-        // lst_features.add(fg);
-
-        fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra2 (in 2015)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer: Usb devices"));
-
-        lst_features.add(fg);
-
-        this.plugin_features = lst_features;
-
-    }
-
-
-    /** 
-     * Get About Image Size - Define about image size
-     */
-    @Override
-    public int[] getAboutImageSize()
-    {
-        int[] sz = new int[2];
-        sz[0] = 200;
-        sz[1] = 125;
-
-        return sz;
-    }
-
+    // /**
+    // * Create About Context for plugin
+    // */
+    // @Override
+    // public void createPlugInAboutContext()
+    // {
+    // I18nControlAbstract ic = getI18nControlInstance();
+    //
+    // // about_title = i18nControlAbstract.getMessage("METER_PLUGIN_ABOUT");
+    // about_image_name = "/icons/about_meter.jpg";
+    // // about_image_name = "/icons/about_logo.gif";
+    // about_plugin_copyright_from = 2006;
+    // // about_plugin_name = i18nControlAbstract.getMessage("METER_PLUGIN");
+    //
+    // ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
+    //
+    // lst_libs.addAll(getBaseLibraries());
+    //
+    // lst_libs.add(
+    // new LibraryInfoEntry("XML Pull Parser", "3.1.1.4c",
+    // "http://www.extreme.indiana.edu/xgws/xsoap/xpp/",
+    // "Indiana University Extreme! Lab Software License", "Xml parser for
+    // processing xml document",
+    // "Copyright (c) 2002 Extreme! Lab, Indiana University. All rights
+    // reserved."));
+    // plugin_libraries = lst_libs;
+    //
+    // ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
+    // CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
+    // cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)",
+    // "andy@atech-software.com",
+    // "Full framework and support for Ascensia, Roche, LifeScan devices"));
+    // cg.addCreditsEntry(new CreditsEntry("Alexander Balaban",
+    // "abalaban1@yahoo.ca", "Support for OT UltraSmart"));
+    // cg.addCreditsEntry(new CreditsEntry("Ophir Setter",
+    // "ophir.setter@gmail.com", "Support for Freestyle Meters"));
+    // lst_credits.add(cg);
+    // cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
+    // cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "", "Supplied
+    // hardware for Roche development"));
+    // lst_credits.add(cg);
+    //
+    // plugin_developers = lst_credits;
+    //
+    // // features
+    // ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
+    //
+    // FeaturesGroup fg = new
+    // FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Base Meter Tools Framework"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Graphical Interface (GGC
+    // integration)"));
+    // fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
+    // fg.addFeaturesEntry(new FeaturesEntry("List of meters"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
+    //
+    // lst_features.add(fg);
+    //
+    // fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer (except Contour USB
+    // and Didget)"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Accu-Chek/Roche: All supported by
+    // SmartPix 3.x"));
+    // fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra, Profile, Easy,
+    // UltraSmart"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Abbott: Optium Xceeed,
+    // PrecisionXtra, Frestyle"));
+    // // FIXME
+    // lst_features.add(fg);
+    //
+    // // lst_features.add(fg);
+    //
+    // fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
+    // fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra2 (in 2015)"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer: Usb devices"));
+    //
+    // lst_features.add(fg);
+    //
+    // this.plugin_features = lst_features;
+    //
+    // }
 
     // ********************************************************
     // ****** Web Lister Methods *****
     // ********************************************************
 
-    /**
-     * Create WebLister (for List) Context for plugin
-     */
-    @Override
-    public void createWebListerContext()
-    {
-
-        this.loadWebLister();
-
-        // I18nControlAbstract i18nControlAbstract = getI18nControlInstance();
-
-        weblister_items = new ArrayList<BaseListEntry>();
-        weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/meters/abbott.html", 4));
-        weblister_items.add(new BaseListEntry("Arkray USA (formerly Hypoguard)", "/meters/arkray.html", 5));
-        weblister_items.add(new BaseListEntry("Bayer Diagnostics", "/meters/bayer.html", 1));
-        weblister_items.add(new BaseListEntry("Diabetic Supply of Suncoast", "/meters/dsos.html", 5));
-        weblister_items.add(new BaseListEntry("Diagnostic Devices", "/meters/prodigy.html", 5));
-        weblister_items.add(new BaseListEntry("HealthPia America", "/meters/healthpia.html", 5));
-        weblister_items.add(new BaseListEntry("Home Diagnostics", "/meters/home_diagnostics.html", 5));
-        weblister_items.add(new BaseListEntry("Lifescan", "/meters/lifescan.html", 4));
-        weblister_items.add(new BaseListEntry("Nova Biomedical", "/meters/nova_biomedical.html", 5));
-        weblister_items.add(new BaseListEntry("Roche Diagnostics", "/meters/roche.html", 2));
-        weblister_items.add(new BaseListEntry("Sanvita", "/meters/sanvita.html", 5));
-        weblister_items.add(new BaseListEntry("U.S. Diagnostics", "/meters/us_diagnostics.html", 5));
-        weblister_items.add(new BaseListEntry("WaveSense", "/meters/wavesense.html", 5));
-
-        // weblister_title = i18nControlAbstract.getMessage("METERS_LIST_WEB");
-        weblister_desc = i18n_plugin.getMessage("METERS_LIST_WEB_DESC");
-    }
-
-
-    // ********************************************************
-    // ****** Abstract Methods *****
-    // ********************************************************
-
-    /** 
-     * Get Application Name
-     */
-    @Override
-    public String getApplicationName()
-    {
-        return "GGC_MeterTool";
-    }
-
-
-    /** 
-     * Check Prerequisites for Plugin
-     */
-    @Override
-    public void checkPrerequisites()
-    {
-    }
-
+    // /**
+    // * Create WebLister (for List) Context for plugin
+    // */
+    // @Override
+    // public void createWebListerContext()
+    // {
+    //
+    // this.loadWebLister();
+    //
+    // // I18nControlAbstract i18nControlAbstract = getI18nControlInstance();
+    //
+    // weblister_items = new ArrayList<BaseListEntry>();
+    // weblister_items.add(new BaseListEntry("Abbott Diabetes Care",
+    // "/meters/abbott.html", 4));
+    // weblister_items.add(new BaseListEntry("Arkray USA (formerly Hypoguard)",
+    // "/meters/arkray.html", 5));
+    // weblister_items.add(new BaseListEntry("Bayer Diagnostics",
+    // "/meters/bayer.html", 1));
+    // weblister_items.add(new BaseListEntry("Diabetic Supply of Suncoast",
+    // "/meters/dsos.html", 5));
+    // weblister_items.add(new BaseListEntry("Diagnostic Devices",
+    // "/meters/prodigy.html", 5));
+    // weblister_items.add(new BaseListEntry("HealthPia America",
+    // "/meters/healthpia.html", 5));
+    // weblister_items.add(new BaseListEntry("Home Diagnostics",
+    // "/meters/home_diagnostics.html", 5));
+    // weblister_items.add(new BaseListEntry("Lifescan",
+    // "/meters/lifescan.html", 4));
+    // weblister_items.add(new BaseListEntry("Nova Biomedical",
+    // "/meters/nova_biomedical.html", 5));
+    // weblister_items.add(new BaseListEntry("Roche Diagnostics",
+    // "/meters/roche.html", 2));
+    // weblister_items.add(new BaseListEntry("Sanvita", "/meters/sanvita.html",
+    // 5));
+    // weblister_items.add(new BaseListEntry("U.S. Diagnostics",
+    // "/meters/us_diagnostics.html", 5));
+    // weblister_items.add(new BaseListEntry("WaveSense",
+    // "/meters/wavesense.html", 5));
+    //
+    // // weblister_title = i18nControlAbstract.getMessage("METERS_LIST_WEB");
+    // weblister_desc = i18n_plugin.getMessage("METERS_LIST_WEB_DESC");
+    // }
 
     // ********************************************************
     // ****** Version *****
     // ********************************************************
-
-    /**
-     * Create Plugin Version
-     */
-    @Override
-    public void createPlugInVersion()
-    {
-        this.plugin_version = DataAccessMeter.PLUGIN_VERSION;
-    }
 
 
     // ********************************************************
@@ -457,7 +382,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     @Override
     public void loadManager()
     {
-        this.m_manager = MeterManager.getInstance();
+        this.m_manager = MeterManager.getInstance(this);
     }
 
 
@@ -482,16 +407,6 @@ public class DataAccessMeter extends DataAccessPlugInBase
     public String getDeviceImagesRoot()
     {
         return "/icons/meters/";
-    }
-
-
-    /**
-     * Load PlugIns
-     */
-    @Override
-    public void loadPlugIns()
-    {
-        // TODO Auto-generated method stub
     }
 
 
@@ -541,17 +456,6 @@ public class DataAccessMeter extends DataAccessPlugInBase
     {
         // TODO Auto-generated method stub
 
-    }
-
-
-    /**
-     * Get Name of Plugin (for internal use)
-     * @return
-     */
-    @Override
-    public String getPluginName()
-    {
-        return "GGC Meter Plugin";
     }
 
 

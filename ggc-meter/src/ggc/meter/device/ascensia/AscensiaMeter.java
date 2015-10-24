@@ -4,8 +4,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.TimeZoneUtil;
@@ -62,7 +62,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 {
 
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
-    private static Log log = LogFactory.getLog(AscensiaMeter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AscensiaMeter.class);
 
     boolean multiline = false;
     String multiline_body;
@@ -120,8 +120,8 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
 
         // communcation settings for this meter(s)
         this.setCommunicationSettings(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE,
-            SerialPort.FLOWCONTROL_NONE, SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT
-                    | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+            SerialPort.FLOWCONTROL_NONE,
+            SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
@@ -165,7 +165,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         }
         catch (Exception ex)
         {
-            log.error("Exception on create:" + ex, ex);
+            LOG.error("Exception on create:" + ex, ex);
         }
 
     }
@@ -364,7 +364,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
         switch (event.getEventType())
         {
 
-        // If break event append BREAK RECEIVED message.
+            // If break event append BREAK RECEIVED message.
             case SerialPortEvent.BI:
                 System.out.println("recievied break");
                 this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);

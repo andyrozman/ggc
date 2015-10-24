@@ -6,14 +6,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
 
 import ggc.core.util.DataAccess;
+import ggc.meter.defs.MeterPluginDefinition;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
@@ -54,7 +55,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 {
 
     DataAccessMeter da_local; // = DataAccessMeter.getInstance();
-    private static Log log = LogFactory.getLog(MeterPlugInServer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MeterPlugInServer.class);
 
     /**
      * Return Object: Selected Device with parameters
@@ -84,8 +85,14 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     {
         super(cont, selected_lang, da);
 
-        da_local = DataAccessMeter.createInstance(da.getLanguageManager());
+        da_local = DataAccessMeter.createInstance(getPluginDefinition(da));
         da_local.addComponent(cont);
+    }
+
+
+    private MeterPluginDefinition getPluginDefinition(ATDataAccessLMAbstract da)
+    {
+        return new MeterPluginDefinition(da.getLanguageManager());
     }
 
 
@@ -109,7 +116,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     @Override
     public String getVersion()
     {
-        return DataAccessMeter.PLUGIN_VERSION;
+        return da_local.getPlugInVersion();
     }
 
 
@@ -137,11 +144,11 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         {
             try
             {
-                da_local = DataAccessMeter.createInstance(((ATDataAccessLMAbstract) dataAccess).getLanguageManager());
+                da_local = DataAccessMeter.createInstance(getPluginDefinition((ATDataAccessLMAbstract) dataAccess));
             }
             catch (Exception ex)
             {
-                log.error("InitPlugin DaLocal Ex.: " + ex, ex);
+                LOG.error("InitPlugin DaLocal Ex.: " + ex, ex);
             }
         }
 
@@ -245,8 +252,8 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         mi = ATSwingUtils.createMenuItem(menu_meter, "MN_METERS_READ_FILE", "MN_METERS_READ_FILE_DESC",
             "meters_read_file", this, null, this.ic_local, DataAccessMeter.getInstance(), parent);
 
-        mi.setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
-            DownloadSupportType.DownloadDataFile));
+        mi.setEnabled(
+            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
 
         menus[1] = mi;
 
@@ -273,10 +280,10 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 
     public void refreshMenusAfterConfig()
     {
-        menus[0].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
-            DownloadSupportType.DownloadData));
-        menus[1].setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
-            DownloadSupportType.DownloadDataFile));
+        menus[0].setEnabled(
+            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadData));
+        menus[1].setEnabled(
+            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
     }
 
 

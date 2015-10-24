@@ -112,8 +112,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         super(portName, writer, da);
 
         this.setCommunicationSettings(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE,
-            SerialPort.FLOWCONTROL_NONE, SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT
-                    | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+            SerialPort.FLOWCONTROL_NONE,
+            SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
 
         // output writer, this is how data is returned (for testing new devices,
         // we can use Consol
@@ -145,7 +145,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         catch (Exception ex)
         {
             // log.error("")
-            // System.out.println("OneTouchMeter: Error connecting !\nException: "
+            // System.out.println("OneTouchMeter: Error connecting !\nException:
+            // "
             // + ex);
             // ex.printStackTrace();
         }
@@ -164,7 +165,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     }
 
 
-    /** 
+    /**
      * getComment
      */
     public String getComment()
@@ -174,7 +175,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
 
     // DO
-    /** 
+    /**
      * getImplementationStatus
      */
     public DeviceImplementationStatus getImplementationStatus()
@@ -183,7 +184,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     }
 
 
-    /** 
+    /**
      * getInstructions
      */
     public String getInstructions()
@@ -192,7 +193,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     }
 
 
-    /** 
+    /**
      * readDeviceDataFull
      */
     @SuppressWarnings("unused")
@@ -273,7 +274,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
 
     /**
-     * This is method for reading partitial data from device. All reading from actual device should be done from 
+     * This is method for reading partitial data from device. All reading from actual device should be done from
      * here. Reading can be done directly here, or event can be used to read data.
      */
     @Override
@@ -283,9 +284,9 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
     }
 
 
-    /** 
+    /**
      * This is method for reading configuration
-     * 
+     *
      * @throws PlugInBaseException
      */
     @Override
@@ -296,7 +297,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
-     * information (most dumps do). 
+     * information (most dumps do).
      * @throws PlugInBaseException
      */
     @Override
@@ -474,8 +475,8 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
             String res = this.getParameterValue(strtok.nextToken());
 
-            this.outputWriter.setSubStatus(i18nControlAbstract.getMessage("READING_PROCESSING_ENTRY")
-                    + (this.entries_current + 1));
+            this.outputWriter.setSubStatus(
+                i18nControlAbstract.getMessage("READING_PROCESSING_ENTRY") + (this.entries_current + 1));
 
             // if ((res.contains("CHIGH")) || (res.contains("C ")))
             if (res.startsWith("C") || // control solution
@@ -515,10 +516,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
                         try
                         {
-                            mve.setBgValue(
-                                ""
-                                        + dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MMOL,
-                                            DataAccessPlugInBase.BG_MGDL, res), GlucoseUnitType.mg_dL);
+                            mve.setBgValue(res, GlucoseUnitType.mmol_L);
                         }
                         catch (Exception ex)
                         {}
@@ -668,7 +666,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
 
     /**
-     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
+     * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have
      *    normal progress status, but with some special devices we calculate progress through other means.
      * @return true is progress status is special
      */
@@ -681,15 +679,15 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
 
     /**
      * Returns short name for meter (for example OT Ultra, would return "Ultra")
-     * 
+     *
      * @return short name of meter
      */
     public abstract String getShortName();
 
 
     /**
-     * We don't use serial event for reading data, because process takes too long, we use serial event just 
-     * to determine if device is stopped (interrupted) 
+     * We don't use serial event for reading data, because process takes too long, we use serial event just
+     * to determine if device is stopped (interrupted)
      */
     @Override
     public void serialEvent(SerialPortEvent event)
@@ -699,7 +697,7 @@ public abstract class OneTouchMeter extends AbstractSerialMeter
         switch (event.getEventType())
         {
 
-        // If break event append BREAK RECEIVED message.
+            // If break event append BREAK RECEIVED message.
             case SerialPortEvent.BI:
                 System.out.println("recievied break");
                 this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
