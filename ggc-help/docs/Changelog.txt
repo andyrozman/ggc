@@ -2,6 +2,11 @@
 Changelog for GGC Help (Help for GGC)
 =====================================
 
+0.2.1
+    * added some pages that were missing and preparing document for Bob (person who will probably prepare GGC Help)
+    * added pages to en
+
+
 0.2 [26.4.2015]
     * Inital version in this format. Before this was in ggc-lang.jar, now there is no ggc-lang anymore
       and instead we have this separate module just for help
