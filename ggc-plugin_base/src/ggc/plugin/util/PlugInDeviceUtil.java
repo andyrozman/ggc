@@ -178,8 +178,8 @@ public class PlugInDeviceUtil
 
         if (DownloadSupportType.isOptionSet(downloadSupportType, DownloadSupportType.DownloadDataFile))
         {
-            DataAccessPlugInBase
-                    .appendToStringBuilder(sb, getTranslationWithRoot("DOWNLOAD_DATA_FILE", isTooltip), "/");
+            DataAccessPlugInBase.appendToStringBuilder(sb, getTranslationWithRoot("DOWNLOAD_DATA_FILE", isTooltip),
+                "/");
         }
 
         if (DownloadSupportType.isOptionSet(downloadSupportType, DownloadSupportType.DownloadConfig))

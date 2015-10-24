@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DownloadSupportType;
@@ -46,7 +46,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public abstract class AccuChekSmartPix extends XmlProtocol
 {
 
-    private static Log log = LogFactory.getLog(AccuChekSmartPix.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AccuChekSmartPix.class);
 
     protected int max_records = 0;
     protected AccuChekSmartPixReaderAbstract reader = null;
@@ -152,7 +152,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
         }
         catch (Exception ex)
         {
-            log.error("Error checking if device present. Ex.: " + ex, ex);
+            LOG.error("Error checking if device present. Ex.: " + ex, ex);
         }
     }
 
@@ -297,7 +297,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
 
         this.outputWriter.setSubStatus(tx);
         // x System.out.println(tx);
-        // write log
+        // write LOG
 
     }
 

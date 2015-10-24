@@ -7,8 +7,8 @@ import java.util.*;
 
 import javax.comm.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.plugin.comm.cfg.SerialSettings;
 import ggc.plugin.device.PlugInBaseException;
@@ -86,7 +86,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
      */
     public static final byte ASCII_STX = 0x02;
 
-    private static Log log = LogFactory.getLog(IBMCommunicationHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(IBMCommunicationHandler.class);
 
     // protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
     // protected DataAccessPlugInBase dataAccess = null;
@@ -223,7 +223,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
          * {
          * //System.out.println("SerialProtocol::setPort:: No such port: " +
          * ex);
-         * //log.error("No such port exception: " + ex.getMessage(), ex);
+         * //LOG.error("No such port exception: " + ex.getMessage(), ex);
          * throw new PlugInBaseException(ex);
          * }
          */
@@ -261,7 +261,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
             // this.outputWriter.writeLog(LogEntryType.INFO,
             // "AbstractSerialMeter::open() - setting parameters");
 
-            log.debug("SerialProtocol:open()");
+            LOG.debug("SerialProtocol:open()");
             // System.out.println("SerialProtocol: open() - parameters");
             setConnectionParameters();
 
@@ -319,28 +319,28 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
             // System.out.println("SerialProtocol::open(). Unsupported comm
             // operation: "
             // + ex);
-            log.error("Unsupported comm operation: " + ex.getMessage()); // ,
+            LOG.error("Unsupported comm operation: " + ex.getMessage()); // ,
                                                                          // ex);
             throw new PlugInBaseException(ex);
         }
         catch (PortInUseException ex)
         {
             // System.out.println("SerialProtocol::open(). Port in use: " + ex);
-            log.error("Port in use: " + ex.getMessage()); // , ex);
+            LOG.error("Port in use: " + ex.getMessage()); // , ex);
             throw new PlugInBaseException(ex);
         }
         catch (TooManyListenersException ex)
         {
             // System.out.println("SerialProtocol::open(). Too many listeners: "
             // + ex);
-            log.error("Too many listeners: " + ex.getMessage()); // , ex);
+            LOG.error("Too many listeners: " + ex.getMessage()); // , ex);
             throw new PlugInBaseException(ex);
         }
         catch (IOException ex)
         {
             // System.out.println("SerialProtocol::open(). IO exception: " +
             // ex);
-            log.error("IO Exception: " + ex.getMessage()); // , ex);
+            LOG.error("IO Exception: " + ex.getMessage()); // , ex);
             throw new PlugInBaseException(ex);
         }
         catch (Exception ex)
@@ -349,7 +349,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
             {
                 // System.out.println("SerialProtocol::open(). No such port: " +
                 // ex);
-                log.error("No such port: " + ex.getMessage(), ex);
+                LOG.error("No such port: " + ex.getMessage(), ex);
 
                 printAllAvailableSerialPorts();
 
@@ -359,7 +359,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
             {
                 // System.out.println("SerialProtocol::open(). Exception: " +
                 // ex);
-                log.error("Exception: " + ex.getMessage(), ex);
+                LOG.error("Exception: " + ex.getMessage(), ex);
                 throw new PlugInBaseException(ex);
             }
         }
@@ -925,7 +925,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         }
         catch (Exception ex)
         {
-            log.error("There was problem obtaining list of serial ports. Ex: " + ex, ex);
+            LOG.error("There was problem obtaining list of serial ports. Ex: " + ex, ex);
             throw ex;
         }
         return retVal;
@@ -978,7 +978,7 @@ public class IBMCommunicationHandler implements SerialPortEventListener, SerialC
         /*
          * catch(Exception ex)
          * {
-         * log.error("There was problem obtaining list of serial ports. Ex: " +
+         * LOG.error("There was problem obtaining list of serial ports. Ex: " +
          * ex, ex);
          * throw ex;
          * //System.out.println("Exception: getAvailableSerialPorts: " + ex);

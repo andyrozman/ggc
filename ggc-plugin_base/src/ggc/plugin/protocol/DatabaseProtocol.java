@@ -1,14 +1,14 @@
 package ggc.plugin.protocol;
 
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,7 +53,7 @@ public abstract class DatabaseProtocol
     protected String filename = null;
     protected String additional = null;
 
-    private static Log log = LogFactory.getLog(DatabaseProtocol.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DatabaseProtocol.class);
 
     private int selected_db_type = -1;
 
@@ -66,7 +66,7 @@ public abstract class DatabaseProtocol
      * Db: Urls
      */
     public String[] db_urls = { "jdbc:mdbtools:%FILENAME%",
-                               "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=%FILENAME%" };
+                                "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=%FILENAME%" };
 
     /**
      * Database: Ms Access - MDBTools
@@ -78,12 +78,14 @@ public abstract class DatabaseProtocol
      */
     public static final int DATABASE_MS_ACCESS_ODBC_BRIDGE = 1;
 
+
     /**
      * Constructor
      */
     public DatabaseProtocol()
     {
     }
+
 
     /**
      * Constructor
@@ -94,6 +96,7 @@ public abstract class DatabaseProtocol
     {
         this.m_da = da;
     }
+
 
     /**
      * Get Connection Protocol
@@ -117,6 +120,7 @@ public abstract class DatabaseProtocol
      * this.jdbc_url = _jdbc_url;
      * }
      */
+
 
     /**
      * Set JDBC Connection 
@@ -151,6 +155,7 @@ public abstract class DatabaseProtocol
 
     }
 
+
     /**
      * Set JDBC Connection 
      * 
@@ -170,6 +175,7 @@ public abstract class DatabaseProtocol
         this.filename = filename;
         this.additional = additional_;
     }
+
 
     /**
      * Get JDBC Connection Url
@@ -205,6 +211,7 @@ public abstract class DatabaseProtocol
         return tmp;
     }
 
+
     private void createConnection()
     {
         try
@@ -229,6 +236,7 @@ public abstract class DatabaseProtocol
 
     }
 
+
     /**
      * Get Connection - returns opened connection, if none exists, new is created.
      * 
@@ -251,6 +259,7 @@ public abstract class DatabaseProtocol
         return this.m_connection;
     }
 
+
     /**
      * Execute Query, return ResultSet.
      * 
@@ -267,10 +276,11 @@ public abstract class DatabaseProtocol
         }
         catch (Exception ex)
         {
-            log.error("Error getting ResultSet for SQL:\nSql:" + sql + "\nException: " + ex, ex);
+            LOG.error("Error getting ResultSet for SQL:\nSql:" + sql + "\nException: " + ex, ex);
             return null;
         }
     }
+
 
     /**
      * Execute Update, returns row count, for statments returning something or 0 for thoose 

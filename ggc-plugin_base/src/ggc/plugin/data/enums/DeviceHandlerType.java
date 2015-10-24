@@ -31,6 +31,7 @@ import ggc.plugin.device.DownloadSupportType;
 public enum DeviceHandlerType
 {
     NoHandler(DownloadSupportType.NotSupportedByGGC), //
+    NoSupportInDevice(DownloadSupportType.NotSupportedByDevice), //
 
     // Meters
     AscensiaUsbHandler(DownloadSupportType.DownloadData), //
@@ -39,6 +40,8 @@ public enum DeviceHandlerType
     AnimasV2PumpHandler(DownloadSupportType.Download_Data_Config), //
     MinimedPumpHandler(DownloadSupportType.Download_Data_Config), //
     InsuletOmnipodHandler(DownloadSupportType.Download_File_Data_Config), //
+    AccuChekPumpHandler(DownloadSupportType.Download_Data_DataFile), //
+    DanaPumpHandler(DownloadSupportType.Download_Data_Config), //
 
     // CGMSes
     AnimasV2CGMSHandler(DownloadSupportType.Download_Data_Config), //

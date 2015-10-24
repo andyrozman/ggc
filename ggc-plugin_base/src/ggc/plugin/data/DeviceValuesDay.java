@@ -1,15 +1,9 @@
 package ggc.plugin.data;
 
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import com.atech.utils.data.ATechDate;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -50,6 +44,7 @@ public class DeviceValuesDay
                               // might not work
                               // for each instance of this object
 
+
     /**
      * Constructor
      *
@@ -59,6 +54,7 @@ public class DeviceValuesDay
     {
         this(da, null, true);
     }
+
 
     /**
      * Constructor
@@ -70,6 +66,7 @@ public class DeviceValuesDay
     {
         this(da, gc, true);
     }
+
 
     /**
      * Constructor
@@ -91,6 +88,7 @@ public class DeviceValuesDay
         this.gcToday = gc;
     }
 
+
     /**
      * Add List
      *
@@ -106,10 +104,12 @@ public class DeviceValuesDay
         this.sort();
     }
 
+
     public void addEntry(DeviceValuesEntry pve)
     {
         addEntry(pve, true);
     }
+
 
     /**
      * Add Entry
@@ -138,6 +138,7 @@ public class DeviceValuesDay
 
     }
 
+
     /**
      * Remove Entry
      *
@@ -160,6 +161,7 @@ public class DeviceValuesDay
 
     }
 
+
     /**
      * Is Entry Available
      *
@@ -174,6 +176,7 @@ public class DeviceValuesDay
         ATechDate atd = new ATechDate(dataAccessPluginBase.getDataEntryObject().getDateTimeFormat(), datetime);
         return this.entriesIndexedByHour.containsKey(atd.getTimeString());
     }
+
 
     /**
      * Get Entry
@@ -190,6 +193,7 @@ public class DeviceValuesDay
         return this.entriesIndexedByHour.get(atd.getTimeString());
     }
 
+
     /**
      * Set Date Time GC
      *
@@ -200,6 +204,7 @@ public class DeviceValuesDay
         this.gcToday = gc;
     }
 
+
     /**
      * Set Date Time GC
      *
@@ -209,6 +214,7 @@ public class DeviceValuesDay
     {
         return this.gcToday;
     }
+
 
     /**
      * Get Column Width
@@ -232,6 +238,7 @@ public class DeviceValuesDay
         return (int) (mult * width);
     }
 
+
     /**
      * Get Column Count
      *
@@ -241,6 +248,7 @@ public class DeviceValuesDay
     {
         return this.dataAccessPluginBase.getColumnsManual().length;
     }
+
 
     /**
      * Get Row Count
@@ -255,6 +263,7 @@ public class DeviceValuesDay
             return this.allEntries.size();
     }
 
+
     /**
      * Get Row At
      *
@@ -266,6 +275,7 @@ public class DeviceValuesDay
         return this.allEntries.get(index);
     }
 
+
     /**
      * Get Column Name
      *
@@ -276,6 +286,7 @@ public class DeviceValuesDay
     {
         return this.dataAccessPluginBase.getColumnsManual()[column];
     }
+
 
     /**
      * Get Value At
@@ -289,6 +300,7 @@ public class DeviceValuesDay
         return this.allEntries.get(row).getColumnValue(column);
     }
 
+
     /**
      * Sort of elements
      */
@@ -296,6 +308,7 @@ public class DeviceValuesDay
     {
         Collections.sort(allEntries); // , new DeviceValuesEntry());
     }
+
 
     /**
      * Sort of elements
@@ -307,6 +320,7 @@ public class DeviceValuesDay
         Collections.sort(allEntries, dve); // , new DeviceValuesEntry());
     }
 
+
     /**
      * Get List
      *
@@ -317,11 +331,15 @@ public class DeviceValuesDay
         return this.allEntries;
     }
 
+
     /**
      * Group entries by Hour
      */
     public void prepareHourlyEntries()
     {
+        if (entriesGroupedByHour != null)
+            return;
+
         this.sort();
 
         entriesGroupedByHour = new Hashtable<Integer, List<DeviceValuesEntry>>();
@@ -337,6 +355,7 @@ public class DeviceValuesDay
             entriesGroupedByHour.get(atd.getHourOfDay()).add(dve);
         }
     }
+
 
     public List<DeviceValuesEntry> getEntriesForHour(int hour)
     {

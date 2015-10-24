@@ -1,14 +1,9 @@
 package ggc.plugin.gui;
 
-import ggc.plugin.data.DeviceDataHandler;
-import ggc.plugin.device.DeviceAbstract;
-import ggc.plugin.output.ConsoleOutputWriter;
-import ggc.plugin.output.OutputUtil;
-import ggc.plugin.output.OutputWriter;
-import ggc.plugin.util.DataAccessPlugInBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import ggc.plugin.data.DeviceDataHandler;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,10 +37,11 @@ import org.apache.commons.logging.LogFactory;
 public class DevicePreInitRunner extends Thread
 {
 
-    private static Log log = LogFactory.getLog(DevicePreInitRunner.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DevicePreInitRunner.class);
 
     DeviceInstructionsDialog device_instruction_dialog;
     DeviceDataHandler deviceDataHandler;
+
 
     /**
      * Constructor
@@ -54,11 +50,12 @@ public class DevicePreInitRunner extends Thread
      * @param did 
      */
     // FIXME
-    public DevicePreInitRunner( DeviceDataHandler deviceDataHandler, DeviceInstructionsDialog did)
+    public DevicePreInitRunner(DeviceDataHandler deviceDataHandler, DeviceInstructionsDialog did)
     {
         this.deviceDataHandler = deviceDataHandler;
         this.device_instruction_dialog = did;
     }
+
 
     /** 
      * Thread running method
@@ -68,28 +65,27 @@ public class DevicePreInitRunner extends Thread
     {
         try
         {
-            log.debug("preInit Device - Start");
+            LOG.debug("preInit Device - Start");
 
-            if (deviceDataHandler.getDeviceInterfaceV2()!=null)
+            if (deviceDataHandler.getDeviceInterfaceV2() != null)
             {
                 deviceDataHandler.getDeviceInterfaceV2().preInitDevice();
             }
-            else if (deviceDataHandler.getDeviceInterfaceV1()!=null)
+            else if (deviceDataHandler.getDeviceInterfaceV1() != null)
             {
                 deviceDataHandler.getDeviceInterfaceV1().preInitDevice();
             }
 
-            log.debug("preInit Device - End");
+            LOG.debug("preInit Device - End");
         }
         catch (Exception ex)
         {
-            log.error("Error on PreInit. Ex: " + ex, ex);
+            LOG.error("Error on PreInit. Ex: " + ex, ex);
         }
         finally
         {
             this.device_instruction_dialog.preInitDone(true);
         }
     }
-
 
 }

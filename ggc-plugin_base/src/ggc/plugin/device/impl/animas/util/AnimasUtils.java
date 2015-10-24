@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ShortUtils;
@@ -45,7 +45,8 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public class AnimasUtils
 {
 
-    private static Log log = LogFactory.getLog(AnimasUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AnimasUtils.class);
+
     private static ShortUtils shortUtils = new ShortUtils();
     static public HashMap<AnimasDataType, Integer> dataTypeProcessed = new HashMap<AnimasDataType, Integer>();
     static DataAccessPlugInBase dataAccessPlugInBase;
@@ -133,7 +134,7 @@ public class AnimasUtils
     }
 
 
-    public static void debugHexData(boolean debugFlag, short[] data, int dataLength, String logFormater, Log log)
+    public static void debugHexData(boolean debugFlag, short[] data, int dataLength, String logFormater, Logger log)
     {
         if (debugFlag)
         {
@@ -152,13 +153,13 @@ public class AnimasUtils
     }
 
 
-    public static void debugHexData(boolean debugFlag, short[] data, int dataLength, Log log)
+    public static void debugHexData(boolean debugFlag, short[] data, int dataLength, Logger log)
     {
         debugHexData(debugFlag, data, dataLength, "%s [%s]", log);
     }
 
 
-    public static void debugHexData(boolean debugFlag, List<Short> data, int dataLength, String logFormater, Log log)
+    public static void debugHexData(boolean debugFlag, List<Short> data, int dataLength, String logFormater, Logger log)
     {
         if (debugFlag)
         {
@@ -177,13 +178,13 @@ public class AnimasUtils
     }
 
 
-    public static void debugHexData(boolean debugFlag, List<Short> data, int dataLength, Log log)
+    public static void debugHexData(boolean debugFlag, List<Short> data, int dataLength, Logger log)
     {
         debugHexData(debugFlag, data, dataLength, "%s [%s]", log);
     }
 
 
-    public static void debugHexData(boolean debugFlag, char[] data, int dataLength, String logFormater, Log log)
+    public static void debugHexData(boolean debugFlag, char[] data, int dataLength, String logFormater, Logger log)
     {
         if (debugFlag)
         {

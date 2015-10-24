@@ -35,16 +35,18 @@ public enum DeviceCompanyDefinition
     Ascensia(101, "Ascensia/Bayer", "", DeviceImplementationStatus.Done),
 
     // 2xx = Pump
-    Roche(2, "Roche", "", DeviceImplementationStatus.Partitial), // Disetronic(2),
-    Deltec(5), Insulet(206, "Insulet", "", DeviceImplementationStatus.Done), Sooil(7),
+    Roche(202, "AccuChek/Roche", "", DeviceImplementationStatus.Partitial), // Disetronic(2),
+    Deltec(205, "Deltec", "", DeviceImplementationStatus.NotAvailable), //
+    Insulet(206, "Insulet", "", DeviceImplementationStatus.Done), //
+    Sooil(207, "Sooil (Dana)", "", DeviceImplementationStatus.Full), //
 
     // 3xx = CGMS
     Dexcom(301, "Dexcom", "", DeviceImplementationStatus.Partitial), //
 
     // 4xx = Pump + CGMS
-    Animas(401, "Animas", "", DeviceImplementationStatus.Testing), //
+    Animas(401, "Animas", "", DeviceImplementationStatus.Full), //
     Minimed(402, "Minimed", "", DeviceImplementationStatus.Planned), //
-
+    Tandem(403, "Tandem", "", DeviceImplementationStatus.Planned), //
     ;
 
     int id;
@@ -53,14 +55,7 @@ public enum DeviceCompanyDefinition
     DeviceImplementationStatus companyImplementationStatus;
 
 
-    private DeviceCompanyDefinition(int code)
-    {
-
-    }
-
-
-    private DeviceCompanyDefinition(int id, String name, String description,
-            DeviceImplementationStatus implementationStatus)
+    DeviceCompanyDefinition(int id, String name, String description, DeviceImplementationStatus implementationStatus)
     {
         this.id = id;
         this.companyName = name;

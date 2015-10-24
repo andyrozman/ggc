@@ -1,21 +1,14 @@
 package ggc.plugin.gui;
 
+import java.awt.*;
+
+import javax.swing.*;
+
+import com.atech.app.data.about.LicenceInfo;
+import com.atech.app.gui.about.AboutCustomPanel;
+import com.atech.app.gui.about.AboutDialog;
 import com.atech.utils.ATSwingUtils;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import com.atech.graphics.components.about.AboutCustomPanel;
-import com.atech.graphics.components.about.AboutDialog;
-import com.atech.graphics.components.about.LicenceInfo;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -48,6 +41,7 @@ public class AboutBaseDialog extends AboutDialog
 
     private static final long serialVersionUID = 586495485605943204L;
     DataAccessPlugInBase m_da;
+
 
     /**
      * Constructor 
@@ -89,6 +83,7 @@ public class AboutBaseDialog extends AboutDialog
         this.showAbout();
     }
 
+
     /*
      * public void initCustom()
      * {
@@ -108,8 +103,8 @@ public class AboutBaseDialog extends AboutDialog
 
         int[] sz = m_da.getAboutImageSize();
 
-        JLabel l = new JLabel(new ImageIcon(ATSwingUtils.getImage(m_da.getAboutImageName(), this).getScaledInstance(sz[0],
-            sz[1] /* 500,125 */, java.awt.Image.SCALE_SMOOTH)));
+        JLabel l = new JLabel(new ImageIcon(ATSwingUtils.getImage(m_da.getAboutImageName(), this)
+                .getScaledInstance(sz[0], sz[1] /* 500,125 */, java.awt.Image.SCALE_SMOOTH)));
         p1.add(l, BorderLayout.CENTER);
 
         JLabel l2 = new JLabel();

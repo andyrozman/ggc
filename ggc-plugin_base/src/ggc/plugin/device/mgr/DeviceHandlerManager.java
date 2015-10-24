@@ -2,8 +2,8 @@ package ggc.plugin.device.mgr;
 
 import java.util.HashMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.plugin.data.enums.DeviceHandlerType;
 import ggc.plugin.device.v2.DeviceHandler;
@@ -15,7 +15,7 @@ public class DeviceHandlerManager
 {
 
     private static DeviceHandlerManager deviceHandlerManager = null;
-    Log LOG = LogFactory.getLog(DeviceHandlerManager.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DeviceHandlerManager.class);
 
     HashMap<DeviceHandlerType, DeviceHandler> deviceHandlers = new HashMap<DeviceHandlerType, DeviceHandler>();
 
@@ -44,7 +44,8 @@ public class DeviceHandlerManager
 
     public DeviceHandler getDeviceHandler(DeviceHandlerType deviceHandlerType)
     {
-        if (deviceHandlerType == DeviceHandlerType.NoHandler)
+        if ((deviceHandlerType == DeviceHandlerType.NoHandler)
+                || (deviceHandlerType == DeviceHandlerType.NoSupportInDevice))
             return null;
 
         if (this.deviceHandlers.containsKey(deviceHandlerType))

@@ -438,7 +438,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
     public void setBGOutputType(int bg_type)
     {
         // System.out.println("setBGOutput()");
-        this.output_util.setBGMeasurmentType(bg_type);
+        // this.output_util.setBGMeasurmentType(bg_type);
     }
 
 

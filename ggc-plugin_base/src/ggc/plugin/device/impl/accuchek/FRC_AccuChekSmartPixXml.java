@@ -1,15 +1,14 @@
 package ggc.plugin.device.impl.accuchek;
 
+import java.io.File;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocolFile;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.io.File;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.filechooser.FileFilter;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,6 +41,20 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
 
     AccuChekSmartPix pix;
 
+
+    /**
+     * Constructor (for DeviceV2)
+     *
+     * @param da
+     * @param pix_
+     */
+    public FRC_AccuChekSmartPixXml(DataAccessPlugInBase da, AccuChekSmartPix pix_)
+    {
+        super(da);
+        this.pix = pix_;
+    }
+
+
     /**
      * Constructor
      * 
@@ -55,10 +68,12 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
         this.pix = pix_;
     }
 
+
     public String getFileDescription()
     {
         return "Accu-Chek SmartPix Xml";
     }
+
 
     /**
      * Get File Download Panel
@@ -70,20 +85,24 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
         return null;
     }
 
+
     public String getFileExtension()
     {
         return ".xml";
     }
+
 
     public String getFullFileDescription()
     {
         return "Accu-Chek SmartPix Xml (XML)";
     }
 
+
     public boolean hasSpecialSelectorDialog()
     {
         return false;
     }
+
 
     public void readFile(String filename)
     {
@@ -100,6 +119,7 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
 
     int i = 0;
     String tmp_time;
+
 
     public FileFilter getFileFilter()
     {
@@ -123,6 +143,7 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
                         && f.getName().toLowerCase().startsWith(pix.getFirstLetterForReport().toLowerCase());
             }
 
+
             @Override
             public String getDescription()
             {
@@ -133,15 +154,18 @@ public class FRC_AccuChekSmartPixXml extends XmlProtocolFile implements GGCPlugI
 
     }
 
+
     public void goToNextDialog(JDialog currentDialog)
     {
     }
+
 
     @Override
     public String toString()
     {
         return this.getFullFileDescription();
     }
+
 
     public void setOutputWriter(OutputWriter ow)
     {

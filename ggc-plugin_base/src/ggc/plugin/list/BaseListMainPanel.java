@@ -1,18 +1,13 @@
 package ggc.plugin.list;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.plugin.util.DataAccessPlugInBase;
+import java.awt.*;
 
-import java.awt.Component;
-import java.awt.Font;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,6 +37,7 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapable // JPanel
 {
+
     private static final long serialVersionUID = -740039184514067065L;
     I18nControlAbstract m_ic = null;
     DataAccessPlugInBase m_da = null;
@@ -51,6 +47,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
     JButton button, help_button;
 
     BaseListDialog m_dialog = null;
+
 
     /**
      * Constructor
@@ -63,7 +60,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
         super();
 
         m_dialog = dia;
-        m_da = dia.m_da;
+        m_da = dia.dataAccess;
         m_ic = m_da.getI18nControlInstance();
 
         ATSwingUtils.initLibrary();
@@ -75,6 +72,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
         createPanel();
 
     }
+
 
     /**
      * Create Panel
@@ -115,6 +113,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
         return;
     }
 
+
     /**
      * Set Data
      * 
@@ -124,6 +123,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
     public void setData(Object obj)
     {
     }
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
@@ -137,6 +137,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
         return this;
     }
 
+
     /** 
      * getHelpButton - get Help button
      */
@@ -144,6 +145,7 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
     {
         return this.help_button;
     }
+
 
     /** 
      * getHelpId - get id for Help
@@ -155,7 +157,8 @@ public class BaseListMainPanel extends BaseListAbstractPanel implements HelpCapa
         // dataAccess.getDeviceConfigurationDefinition());
         // System.out.println("Help Prefix: " +
         // dataAccess.getDeviceConfigurationDefinition().getHelpPrefix());
-        // return dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
+        // return dataAccess.getDeviceConfigurationDefinition().getHelpPrefix()
+        // +
         // "List";
 
         return "DeviceTool_List";

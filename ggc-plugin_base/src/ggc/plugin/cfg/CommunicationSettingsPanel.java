@@ -99,6 +99,8 @@ public class CommunicationSettingsPanel extends JPanel
      */
     public void setCurrentDevice(DeviceInterface dev_interface)
     {
+        resetDevices(false);
+
         this.currentDeviceV1 = dev_interface;
 
         if (this.currentDeviceV1 == null)
@@ -110,7 +112,9 @@ public class CommunicationSettingsPanel extends JPanel
             this.comm_port_comp.setProtocol(this.currentDeviceV1.getConnectionProtocol());
         }
 
-        resetLayout();
+        this.special_config = dev_interface.getSpecialConfigPanel();
+
+        resetLayout(true);
     }
 
 
@@ -121,6 +125,8 @@ public class CommunicationSettingsPanel extends JPanel
      */
     public void setCurrentDevice(DeviceInstanceWithHandler dev_interface)
     {
+        resetDevices(false);
+
         this.currentDeviceV2 = dev_interface;
 
         if (this.currentDeviceV2 == null)
@@ -134,33 +140,42 @@ public class CommunicationSettingsPanel extends JPanel
 
         this.special_config = dev_interface.getSpecialConfigPanel();
 
-        resetLayout();
+        resetLayout(true);
     }
 
 
-    public void resetDevices()
+    public void resetDevices(boolean withLayout)
     {
         this.currentDeviceV2 = null;
         this.currentDeviceV1 = null;
-        resetLayout();
+
+        if (withLayout)
+        {
+            resetLayout(false);
+        }
     }
 
 
     /**
      * Reset Layout
      */
-    public void resetLayout()
+    public void resetLayout(boolean selected)
     {
-        this.special_config = null;
+        if (selected)
+        {
+            this.special_config = null;
 
-        if (this.currentDeviceV2 != null && this.currentDeviceV2.hasSpecialConfig())
-        {
-            this.special_config = this.currentDeviceV2.getSpecialConfigPanel();
+            if (this.currentDeviceV2 != null && this.currentDeviceV2.hasSpecialConfig())
+            {
+                this.special_config = this.currentDeviceV2.getSpecialConfigPanel();
+            }
+            else if (this.currentDeviceV1 != null && this.currentDeviceV1.hasSpecialConfig())
+            {
+                this.special_config = this.currentDeviceV1.getSpecialConfigPanel();
+            }
         }
-        else if (this.currentDeviceV1 != null && this.currentDeviceV1.hasSpecialConfig())
-        {
-            this.special_config = this.currentDeviceV1.getSpecialConfigPanel();
-        }
+
+        // System.out.println("Special config: " + this.special_config);
 
         this.removeAll();
 
@@ -173,7 +188,7 @@ public class CommunicationSettingsPanel extends JPanel
             if (panel != null)
             {
                 this.special_config.initPanel();
-                panel.setBounds(5, 55, 400, 35);
+                panel.setBounds(5, 55, 400, this.special_config.getHeight());
                 panel.setEnabled(true);
                 this.add(panel);
 
@@ -286,8 +301,9 @@ public class CommunicationSettingsPanel extends JPanel
 
     private boolean hasDefaultParameter()
     {
-        return (((this.currentDeviceV2 != null) && (this.currentDeviceV2.getDevicePortParameterType() == DevicePortParameterType.DefaultParameter)) || ((this.currentDeviceV1 != null) && (this.currentDeviceV1
-                .hasDefaultParameter())));
+        return (((this.currentDeviceV2 != null)
+                && (this.currentDeviceV2.getDevicePortParameterType() != DevicePortParameterType.NoParameters))
+                || ((this.currentDeviceV1 != null) && (this.currentDeviceV1.hasDefaultParameter())));
     }
 
 

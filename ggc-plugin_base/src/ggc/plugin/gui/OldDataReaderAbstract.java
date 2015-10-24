@@ -1,12 +1,12 @@
 package ggc.plugin.gui;
 
-import ggc.plugin.data.DeviceValuesEntryInterface;
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import java.util.Hashtable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,7 +40,7 @@ import org.apache.commons.logging.LogFactory;
 public abstract class OldDataReaderAbstract
 {
 
-    private static Log log = LogFactory.getLog(OldDataReaderAbstract.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OldDataReaderAbstract.class);
 
     protected DeviceReaderRunner m_drr;
 
@@ -50,6 +50,7 @@ public abstract class OldDataReaderAbstract
     protected int all_entries = 0;
     // protected HibernateDb m_db = null;
     protected int cur_entry = 0;
+
 
     /**
      * Constructor
@@ -63,6 +64,7 @@ public abstract class OldDataReaderAbstract
         // this.m_db = da.getHibernateDb();
     }
 
+
     /**
      * Set DeviceReaderRunner instance
      * 
@@ -74,10 +76,12 @@ public abstract class OldDataReaderAbstract
         getMaxEntries();
     }
 
+
     /**
      * Get Max Entries
      */
     public abstract void getMaxEntries();
+
 
     /**
      * Read Old entries (data is returned in form of Hashtable<String,Object>. What is stored there will depend
@@ -85,6 +89,7 @@ public abstract class OldDataReaderAbstract
      * @return 
      */
     public abstract Hashtable<String, DeviceValuesEntryInterface> readOldEntries();
+
 
     /**
      * Write status of reading
@@ -104,10 +109,11 @@ public abstract class OldDataReaderAbstract
         int ee_i = (int) ee;
 
         this.m_drr.setOldDataReadingProgress(ee_i);
-        log.debug("Old Data reading progress [" + m_da.getApplicationName() + "]: " + ee_i);
+        LOG.debug("Old Data reading progress [" + m_da.getApplicationName() + "]: " + ee_i);
         // System.out.println("Progress: " + current_entry + "/" +
         // this.all_entries + " = " + ee_i);
     }
+
 
     /**
      * Get Element Procent (this determines procent of reading by comparing data to full set)
@@ -126,6 +132,7 @@ public abstract class OldDataReaderAbstract
         return ee_i;
     }
 
+
     /**
      * Finish reading
      */
@@ -133,12 +140,12 @@ public abstract class OldDataReaderAbstract
     {
         if (cur_entry != this.all_entries)
         {
-            log.warn("It seems that not all data was read (" + this.cur_entry + "/" + this.all_entries + ")");
+            LOG.warn("It seems that not all data was read (" + this.cur_entry + "/" + this.all_entries + ")");
             this.m_drr.setOldDataReadingProgress(100);
         }
         else if (all_entries == 0)
         {
-            log.debug("Database was empty. Nothing was read.");
+            LOG.debug("Database was empty. Nothing was read.");
             this.m_drr.setOldDataReadingProgress(100);
         }
     }

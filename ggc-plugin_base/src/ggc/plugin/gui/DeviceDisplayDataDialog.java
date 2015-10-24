@@ -79,7 +79,6 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
 
     boolean indeterminate = false;
 
-
     /*
      * public String statuses[] = { m_ic.getMessage("STATUS_NONE"),
      * m_ic.getMessage("STATUS_READY"), m_ic.getMessage("STATUS_DOWNLOADING"),
@@ -88,6 +87,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * m_ic.getMessage("STATUS_DOWNLOAD_FINISHED"),
      * m_ic.getMessage("STATUS_READER_ERROR"), };
      */
+
 
     /*
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da) { super();
@@ -140,7 +140,8 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * this.deviceDataHandler = ddh;
      * this.deviceDataHandler.dialog_data = this;
      * //
-     * this.deviceDataHandler.setTransferType(DeviceDataHandler.TRANSFER_READ_DATA
+     * this.deviceDataHandler.setTransferType(DeviceDataHandler.
+     * TRANSFER_READ_DATA
      * );
      * this.mrr = new DeviceReaderRunner(dataAccess, this.deviceDataHandler);
      * dialogPreInit();
@@ -168,7 +169,6 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
         dialogPreInit();
     }
 
-
     /*
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry
      * mce) { super();
@@ -178,6 +178,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * this);
      * dialogPreInit(); }
      */
+
 
     /*
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry
@@ -616,7 +617,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     public void setBGOutputType(int bg_type)
     {
         // System.out.println("setBGOutput()");
-        this.output_util.setBGMeasurmentType(bg_type);
+        // this.output_util.setBGMeasurmentType(bg_type);
     }
 
 

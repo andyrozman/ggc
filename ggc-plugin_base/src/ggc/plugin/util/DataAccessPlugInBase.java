@@ -1,30 +1,26 @@
 package ggc.plugin.util;
 
 import java.io.File;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
 
 import javax.swing.*;
 
-import ggc.core.util.DataAccess;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.atech.app.data.about.CreditsGroup;
+import com.atech.app.data.about.FeaturesGroup;
+import com.atech.app.data.about.LibraryInfoEntry;
+import com.atech.app.defs.AppPluginDefinition;
 import com.atech.db.hibernate.HibernateDb;
-import com.atech.graphics.components.about.CreditsGroup;
-import com.atech.graphics.components.about.FeaturesGroup;
-import com.atech.graphics.components.about.LibraryInfoEntry;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.graphs.v2.data.GraphContext;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.i18n.I18nControlRunner;
-import com.atech.i18n.mgr.LanguageManager;
 import com.atech.plugin.PlugInServer;
 import com.atech.update.startup.os.OSUtil;
-import com.atech.utils.ATDataAccessLMAbstract;
+import com.atech.utils.ATDataAccessAPDAbstract;
 import com.atech.utils.ATSwingUtils;
 import com.sun.jna.NativeLibrary;
 
@@ -40,15 +36,17 @@ import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.db.PluginDb;
+import ggc.plugin.defs.DevicePluginDefinitionAbstract;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.DownloadSupportType;
+import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.graph.util.PlugInGraphContext;
 import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 import ggc.plugin.gui.OldDataReaderAbstract;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.manager.DeviceManager;
-import ggc.plugin.output.OutputUtil;
+import ggc.plugin.report.PluginReportDefinition;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -78,8 +76,10 @@ import ggc.plugin.output.OutputUtil;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
+public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
 {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DataAccessPlugInBase.class);
 
     protected I18nControlPlugin i18n_plugin = null;
 
@@ -113,26 +113,22 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     /**
      * Which BG unit is configured: BG_MGDL = mg/dl, BG_MMOL = mmol/l
      */
-    public int m_BG_unit = BG_MMOL;
+    // public int m_BG_unit = BG_MMOL;
 
-    public GlucoseUnitType configuredBGUnit;
+    public GlucoseUnitType glucoseUnitType;
 
-    /**
-     * Special Configs Collection
-     */
+    // this are special configs for devices V1 (should be removed at later time)
     public static Hashtable<String, DeviceSpecialConfigPanelAbstract> special_configs = new Hashtable<String, DeviceSpecialConfigPanelAbstract>();
+
+    // this are special configs for devices V2
+    public static Map<String, DeviceSpecialConfigPanelAbstract> specialConfigPanels = new HashMap<String, DeviceSpecialConfigPanelAbstract>();
 
     protected HibernateDb hibernateDb;
 
     protected PluginDb pluginDb;
 
-    /**
-     * The hdb.
-     */
-
     private PlugInDeviceUtil plugin_device_util = null;
     protected ConfigurationManager config_manager;
-    private static Log log = LogFactory.getLog(DataAccessPlugInBase.class);
 
     /**
      * Yes/No Option
@@ -141,30 +137,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     // about
     // protected String about_title;
-    /**
-     * The about_image_name.
-     */
-    protected String about_image_name;
+
     // protected String about_plugin_name;
     /**
      * The about_plugin_copyright_from.
      */
-    protected int about_plugin_copyright_from;
-
-    /**
-     * The plugin_libraries.
-     */
-    protected ArrayList<LibraryInfoEntry> plugin_libraries;
-
-    /**
-     * The plugin_developers.
-     */
-    protected ArrayList<CreditsGroup> plugin_developers;
-
-    /**
-     * The plugin_features.
-     */
-    protected ArrayList<FeaturesGroup> plugin_features;
 
     // web lister
     /**
@@ -172,20 +149,20 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     protected Hashtable<String, String> web_lister_cfg;
 
-    /**
-     * The weblister_title.
-     */
-    protected String weblister_title;
-
-    /**
-     * The weblister_desc.
-     */
-    protected String weblister_desc;
+    // /**
+    // * The weblister_title.
+    // */
+    // protected String weblister_title;
+    //
+    // /**
+    // * The weblister_desc.
+    // */
+    // protected String weblister_desc;
 
     /**
      * The weblister_items.
      */
-    protected ArrayList<BaseListEntry> weblister_items;
+    // protected ArrayList<BaseListEntry> weblister_items;
 
     /**
      * The m_manager.
@@ -235,9 +212,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     protected boolean data_download_screen_wide = false;
 
     /**
-     * The plugin_server.
+     * The pluginServer.
      */
-    PlugInServer plugin_server;
+    PlugInServer pluginServer;
 
     /**
      * Entry Status Icons
@@ -264,68 +241,88 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
     protected GGCI18nControl i18n = null;
 
-    protected static GGCI18nControl i18nStatic = null;
+    // protected static GGCI18nControl i18nStatic = null;
 
     protected DeviceInstanceWithHandler selectedDeviceInstanceV2;
     protected DeviceInterface selectedDeviceInstanceV1;
     private String deviceSource;
     protected GraphContext graphContext;
+    protected DevicePluginDefinitionAbstract pluginDefinition;
+    protected DevicePluginDefinitionAbstract devicePluginDefinition;
 
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
 
 
-    // Constructor: DataAccessMeter
+    // Constructor: DataAccessPlugInBase
     /**
      *
      *  This is DataAccessPlugInBase constructor; Since classes use Singleton Pattern,
      *  constructor is protected and can be accessed only with getInstance()
      *  method.<br><br>
      *
-     *  @param lm language manager
-     *  @param icr i18n control runner
+     *  @param pluginDefinition AppPluginDefinition instance
      *
      */
-    public DataAccessPlugInBase(LanguageManager lm, I18nControlRunner icr)
+    public DataAccessPlugInBase(AppPluginDefinition pluginDefinition)
     {
-        super(lm, icr); // I18nControl.getInstance());
+        super(pluginDefinition);
 
-        this.i18n_plugin = new I18nControlPlugin(lm, icr, this.getPluginType());
+        this.pluginDefinition = (DevicePluginDefinitionAbstract) pluginDefinition;
+
+        this.i18n_plugin = new I18nControlPlugin(pluginDefinition.getLanguageManager(),
+                pluginDefinition.getI18nControlRunner(), this.getPluginType());
         this.i18n = new GGCI18nControl(this.getPluginType());
-        loadIcons();
+
+        initBase();
         initSpecial();
-        this.help_enabled = true;
-        registerDeviceHandlers();
+
+        // New
         prepareGraphContext();
     }
 
 
-    public abstract void registerDeviceHandlers();
+    /**
+     * This initialization for parts which are started from here (no local configuration from
+     * plugin required)
+     */
+    public void initBase()
+    {
+        this.helpEnabled = true;
+        this.pluginDefinition.setDataAccess(this);
+        this.pluginDefinition.registerDeviceHandlers();
+
+        loadIcons();
+        this.loadWebLister();
+    }
 
 
-    public abstract GGCPluginType getPluginType();
+    public GGCPluginType getPluginType()
+    {
+        return this.pluginDefinition.getPluginType();
+    }
 
 
     /**
      * Get PlugIn Server Instance
      *
-     * @param server
+     * @param server PlugIn server instance
      */
     public void setPlugInServerInstance(PlugInServer server)
     {
-        this.plugin_server = server;
+        this.pluginServer = server;
     }
 
 
     /**
      * Set PlugIn Server Instance
      *
-     * @return
+     * @return plugIn server instance
      */
     public PlugInServer getPlugInServerInstance()
     {
-        return this.plugin_server;
+        return this.pluginServer;
     }
 
 
@@ -337,7 +334,10 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      * Get Application Name
      */
     @Override
-    public abstract String getApplicationName();
+    public String getApplicationName()
+    {
+        return this.pluginDefinition.getPluginName();
+    }
 
 
     /**
@@ -368,98 +368,92 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public abstract String getDeviceImagesRoot();
 
 
-    /**
-     * loadBackupRestoreCollection
-     */
-    @Override
-    public void loadBackupRestoreCollection()
-    {
-    }
-
-
     // ********************************************************
     // ****** About Methods *****
     // ********************************************************
 
     /**
-     * Create About Context for plugin
-     */
-    public abstract void createPlugInAboutContext();
-
-
-    /**
      * Get About Dialog image name
      *
-     * @return
+     * @return image name
      */
     public String getAboutImageName()
     {
-        return this.about_image_name;
+        return this.pluginDefinition.getAboutImagePath();
     }
 
 
     /**
      * Get About Image Size
      *
-     * @return
+     * @return image size
      */
     public int[] getAboutImageSize()
     {
-        int[] sz = new int[2];
-        sz[0] = 500;
-        sz[1] = 125;
-
-        return sz;
+        return this.pluginDefinition.getAboutImageSize();
     }
 
 
     /**
      * Get About Plugin Copyright
      *
-     * @return
+     * @return copyright string
      */
     public String getAboutPluginCopyright()
     {
-        int till = new GregorianCalendar().get(Calendar.YEAR);
+        int from = pluginDefinition.getCopyrightFrom();
+        int till = pluginDefinition.getCopyrightTill();
 
-        if (this.about_plugin_copyright_from == till)
-            return "" + till;
+        if (from == till)
+        {
+            return "" + from;
+        }
         else
-            return this.about_plugin_copyright_from + "-" + till;
-
+        {
+            return from + "-" + till;
+        }
     }
 
 
     /**
      * Get PlugIn Libraries
      *
-     * @return
+     * @return plugin libraries
      */
-    public ArrayList<LibraryInfoEntry> getPlugInLibraries()
+    public List<LibraryInfoEntry> getPlugInLibraries()
     {
-        return this.plugin_libraries;
+        List<LibraryInfoEntry> libraries = getBaseLibraries();
+
+        List<LibraryInfoEntry> pluginLibraries = pluginDefinition.getPluginLibraries();
+
+        if (CollectionUtils.isNotEmpty(pluginLibraries))
+        {
+            libraries.addAll(pluginLibraries);
+        }
+
+        return libraries;
     }
 
 
     /**
      * Get Plugin Developers
      *
-     * @return
+     * @return credits for plugin/app
      */
-    public ArrayList<CreditsGroup> getPlugInDevelopers()
+    public List<CreditsGroup> getPlugInDevelopers()
     {
-        return this.plugin_developers;
+        return this.pluginDefinition.getCredits();
     }
 
 
     /**
      * Get Plugin Features
      *
-     * @return
+     * @return feature groups
      */
-    public ArrayList<FeaturesGroup> getPlugInFeatures()
+    public List<FeaturesGroup> getPlugInFeatures()
     {
-        return this.plugin_features;
+        return this.pluginDefinition.getFeatures();
     }
 
 
@@ -477,7 +471,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
 
     /**
-     * Get WebLister Port, return poer on which WebLister is residing
+     * Get WebLister Port, return port on which WebLister is residing
      *
      * @return number of port
      */
@@ -488,46 +482,29 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
 
     /**
-     * Create WebLister (for List) Context for plugin
-     */
-    public abstract void createWebListerContext();
-
-
-    /**
-     * Get Web Lister Title
-     *
-     * @return web lister title
-     */
-    public String getWebListerTitle()
-    {
-        return this.weblister_title;
-    }
-
-
-    /**
-     * Get Web Lister Description
-     *
-     * @return description text
+     * Get WebLister Description
+     * 
+     * @return description
      */
     public String getWebListerDescription()
     {
-        return this.weblister_desc;
+        return pluginDefinition.getWebListerDescription();
     }
 
 
     /**
      * Get Web Lister Items
      *
-     * @return
+     * @return weblister items
      */
-    public ArrayList<BaseListEntry> getWebListerItems()
+    public List<BaseListEntry> getWebListerItems()
     {
-        return weblister_items;
+        return this.pluginDefinition.getWebListerItems();
     }
 
 
     // ********************************************************
-    // ****** Configuration *****
+    // ****** Devices and Configuration *****
     // ********************************************************
 
     /**
@@ -569,6 +546,22 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     public abstract void createDeviceConfiguration();
 
 
+    // **********************************************************
+    // ****** Empty definitions (not used by GGC plugins) *****
+    // **********************************************************
+
+    @Override
+    public void loadPlugIns()
+    {
+    }
+
+
+    @Override
+    public void loadBackupRestoreCollection()
+    {
+    }
+
+
     // ********************************************************
     // ****** Version *****
     // ********************************************************
@@ -580,30 +573,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      */
     public String getPlugInVersion()
     {
-        return this.plugin_version;
+        return this.pluginDefinition.getPluginVersion();
     }
-
-
-    /**
-     * Create Plugin Version
-     */
-    public abstract void createPlugInVersion();
 
     // ********************************************************
     // ****** BG Measurement Type *****
     // ********************************************************
-
-    // THIS SECTION NEEDS TO BE REWRITEN FULLY
-
-    /**
-     * BG: mg/dL
-     */
-    public static final int BG_MGDL = 1;
-
-    /**
-     * BG: mmol/L
-     */
-    public static final int BG_MMOL = 2;
 
 
     /**
@@ -611,9 +586,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      *
      * @return type as int of measurement type
      */
-    public int getBGMeasurmentType()
+    public GlucoseUnitType getGlucoseUnitType()
     {
-        return this.m_BG_unit;
+        return this.glucoseUnitType;
     }
 
 
@@ -622,71 +597,45 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      *
      * @param type as int of measurement type
      */
-    public void setBGMeasurmentType(int type)
+    public void setGlucoseUnitType(GlucoseUnitType type)
     {
-        this.m_BG_unit = type;
-        this.configuredBGUnit = (type == BG_MGDL) ? GlucoseUnitType.mg_dL : GlucoseUnitType.mmol_L;
+        this.glucoseUnitType = type;
     }
 
 
     /**
-     * Get BG Measurment Type Name
+     * Return BG values as it should be displayed (what we have configured for our display
+     * GlucoseUnitType).
      *
-     * @return type as string
-     */
-    public String getBGMeasurmentTypeName()
-    {
-        return OutputUtil.unitsName[this.m_BG_unit];
-    }
-
-
-    /**
-     * Get BG Measurment Type Name
+     * @param bgValue BG value
      *
-     * @param type type index
-     * @return type as string
+     * @return get correct (converted) BG value
      */
-    public String getBGTypeName(int type)
+    public float getDisplayedBG(String bgValue)
     {
-        return OutputUtil.unitsName[type];
+        return getDisplayedBG(Float.parseFloat(bgValue.replace(",", ".")));
     }
 
 
     /**
-     * Get BG Type Name Static
+     * Return BG values as it should be displayed (what we have configured for our display
+     * GlucoseUnitType).
      *
-     * @param type measurment type
-     * @return name as string
+     * @param bgValue BG value
+     *
+     * @return get correct (converted) BG value
      */
-    public static String getBGTypeNameStatic(int type)
+    public float getDisplayedBG(Number bgValue)
     {
-        return OutputUtil.unitsName[type];
-    }
-
-    private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
-
-    private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
-
-
-    /**
-     * Depending on the return value of <code>getBGMeasurmentType()</code>, either
-     * return the mg/dl or the mmol/l value of the database's value. Default is mg/dl.
-     * @param dbValue - The database's value (in float)
-     * @return the BG in either mg/dl or mmol/l
-     */
-    public float getDisplayedBG(float dbValue)
-    {
-        // FIXME
-        switch (this.m_BG_unit)
+        switch (this.glucoseUnitType)
         {
-            case BG_MMOL:
-                // this POS should return a float rounded to 3 decimal places,
-                // if I understand the docu correctly
-                return new BigDecimal(dbValue * MGDL_TO_MMOL_FACTOR, new MathContext(3, RoundingMode.HALF_UP))
-                        .floatValue();
-            case BG_MGDL:
+            case mmol_L:
+                return this.getBGConverter().getValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, bgValue);
+
+            case None:
+            case mg_dL:
             default:
-                return dbValue;
+                return bgValue.floatValue();
         }
     }
 
@@ -694,36 +643,41 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     /**
      * Get Displayed BG String
      *
-     * @param bgValue
-     * @return
+     * @param bgValue BG value
+     *
+     * @return get correct (converted) BG value
      */
     public String getDisplayedBGString(String bgValue)
     {
-        // FIXME
         float val = 0.0f;
 
         if (bgValue != null && bgValue.length() != 0)
         {
             try
             {
-                val = Float.parseFloat(bgValue);
+                val = Float.parseFloat(bgValue.replace(",", "."));
                 val = getDisplayedBG(val);
             }
             catch (Exception ex)
-            {}
+            {
+                LOG.error("Error when converting BG:" + ex.getMessage(), ex);
+            }
         }
 
-        if (this.m_BG_unit == BG_MGDL)
-            return DataAccessPlugInBase.Decimal0Format.format(val);
-        else
-            return DataAccessPlugInBase.Decimal1Format.format(val);
+        return getFormattedBGValue(this.glucoseUnitType, val);
 
     }
 
 
+    /**
+     * Get displayed BG value as String
+     * 
+     * @param bgValue BG value
+     *
+     * @return get correct (converted) BG value
+     */
     public String getDisplayedBGString(Float bgValue)
     {
-        // FIXME
         float val = 0.0f;
 
         if (bgValue != null)
@@ -731,90 +685,18 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
             val = getDisplayedBG(bgValue);
         }
 
-        if (this.m_BG_unit == BG_MGDL)
-            return DataAccessPlugInBase.Decimal0Format.format(val);
-        else
-            return DataAccessPlugInBase.Decimal1Format.format(val);
-
+        return getFormattedBGValue(this.glucoseUnitType, val);
     }
 
 
     /**
-     * Get BG Value (converted to current display type)
+     * Get BG Value from default type (mg/dL)
      *
-     * @param bg_value bg values
-     * @return bg_value
+     * @param outputType output type for Glucose Unit
+     * @param bgValue BG value
+     *
+     * @return get correct (converted) BG value
      */
-    public float getBGValue(float bg_value)
-    {
-        // FIXME
-        switch (this.m_BG_unit)
-        {
-            case BG_MMOL:
-                return bg_value * MGDL_TO_MMOL_FACTOR;
-            case BG_MGDL:
-            default:
-                return bg_value;
-        }
-    }
-
-
-    /**
-     * Get BG Value by type
-     *
-     * @param type input type
-     * @param bg_value bg value to convert
-     * @return converted value
-     *
-     * @deprecated Use getBGValueByTypeFromDefault instead
-     */
-    @Deprecated
-    public float getBGValueByType(int type, float bg_value)
-    {
-        return getBGValueFromDefault(GlucoseUnitType.getByCode(type), bg_value);
-    }
-
-
-    // /**
-    // * Get BG Value by type
-    // *
-    // * @param type input type
-    // * @param bgValue bg value to convert
-    // * @return converted value
-    // */
-    // public float getBGValueByTypeFromDefault(GlucoseUnitType type, float
-    // bgValue)
-    // {
-    // switch (type)
-    // {
-    // case mmol_L:
-    // return this.getBGConverter().getValueByType(GlucoseUnitType.mg_dL,
-    // GlucoseUnitType.mmol_L, bgValue);
-    //
-    // case mg_dL:
-    // default:
-    // return bgValue;
-    // }
-    // }
-
-    /**
-     * Get BG Value By Type
-     *
-     * @param input_type
-     * @param output_type
-     * @param bg_value
-     * @return
-     *
-     * @deprecated Use getBGValueByType(GlucoseUnitType, GlucoseUnitType,Number)
-     */
-    @Deprecated
-    public float getBGValueByType(int input_type, int output_type, float bg_value)
-    {
-        return getBGValueByType(GlucoseUnitType.getByCode(input_type), GlucoseUnitType.getByCode(output_type),
-            bg_value);
-    }
-
-
     public Float getBGValueFromDefault(GlucoseUnitType outputType, Number bgValue)
     {
         if (outputType == GlucoseUnitType.mg_dL)
@@ -831,10 +713,11 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     /**
      * Get BG Value By Type
      *
-     * @param inputType
-     * @param outputType
-     * @param bgValue
-     * @return
+     * @param inputType input type for Glucose Unit
+     * @param outputType output type for Glucose Unit
+     * @param bgValue BG value
+     *
+     * @return get correct (converted) BG value
      */
     public Float getBGValueByType(GlucoseUnitType inputType, GlucoseUnitType outputType, Number bgValue)
     {
@@ -842,9 +725,16 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
 
 
+    /**
+     * Get Displayed BG from default
+     *
+     * @param bgValue BG value
+     *
+     * @return formated value
+     */
     public String getDisplayedBGFromDefault(Number bgValue)
     {
-        if (this.configuredBGUnit == GlucoseUnitType.mg_dL)
+        if (this.glucoseUnitType == GlucoseUnitType.mg_dL)
             return DecimalFormaters[0].format(bgValue);
         else
         {
@@ -853,70 +743,34 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
 
 
-    public GlucoseUnitType getConfiguredBGUnit()
-    {
-        return this.configuredBGUnit;
-    }
-
-
     /**
-     * Get BG Value In Selected Format
+     * Get Formatted BG Value (it just formats current value as specified glucoseUnitType)
      *
-     * @param bg_value bg value to convert
-     * @return converted value
-     */
-    public float getBGValueInSelectedFormat(int bg_value)
-    {
-        switch (this.m_BG_unit)
-        {
-            case BG_MMOL:
-                return bg_value * MGDL_TO_MMOL_FACTOR;
-            case BG_MGDL:
-            default:
-                return bg_value;
-        }
-    }
-
-
-    /**
-     * Get BG Value by Type
+     * @param inputType input type for Glucose Unit
+     * @param bgValue BG value
      *
-     * @param input_type input type
-     * @param output_type output type
-     * @param bg_value_s bg value to convert (as String)
-     * @return converted value
+     * @return formated value
      */
-    public float getBGValueByType(int input_type, int output_type, String bg_value_s)
+    public String getFormattedBGValue(GlucoseUnitType inputType, Number bgValue)
     {
-
-        float bg_value = 0.0f;
-
-        try
-        {
-            bg_value = Float.parseFloat(bg_value_s.replace(',', '.'));
-        }
-        catch (Exception ex)
-        {}
-
-        return getBGValueByType(input_type, output_type, bg_value);
-
+        if (glucoseUnitType == GlucoseUnitType.mg_dL)
+            return DecimalFormaters[0].format(bgValue);
+        else
+            return DecimalFormaters[1].format(bgValue);
     }
 
 
     /**
      * Get BG Value Different
      *
-     * @param type current type
-     * @param bg_value BG value
+     * @param inputType current type
+     * @param bgValue BG value
      * @return converted BG value
      */
-    public float getBGValueDifferent(int type, float bg_value)
+    public float getBGValueDifferent(GlucoseUnitType inputType, float bgValue)
     {
-
-        if (type == DataAccessPlugInBase.BG_MGDL)
-            return bg_value * MGDL_TO_MMOL_FACTOR;
-        else
-            return bg_value * MMOL_TO_MGDL_FACTOR;
+        return this.getBGConverter().getValueByType(inputType,
+            (inputType == GlucoseUnitType.mmol_L) ? GlucoseUnitType.mg_dL : GlucoseUnitType.mmol_L, bgValue);
     }
 
 
@@ -1187,13 +1041,13 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
 
         if (native_dll_file.contains("rxtx"))
         {
-            log.debug("We are using new version of Rxtx (packed in NrJavaSerial), which already contains .dll files.");
+            LOG.debug("We are using new version of Rxtx (packed in NrJavaSerial), which already contains .dll files.");
             return true;
         }
 
         try
         {
-            log.debug("checkNativeLibrary: " + native_dll_file);
+            LOG.debug("checkNativeLibrary: " + native_dll_file);
             // RXTX
             System.out.println("File: " + native_dll_file + "\nPath: " + System.getProperty("java.library.path"));
             NativeLibrary.addSearchPath(native_dll_file, System.getProperty("java.library.path"));
@@ -1204,12 +1058,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
         }
         catch (UnsatisfiedLinkError ex)
         {
-            log.warn("checkNativeLibrary: Not found: " + ex, ex);
+            LOG.warn("checkNativeLibrary: Not found: " + ex, ex);
             return false;
         }
         catch (Exception ex)
         {
-            log.warn("checkNativeLibrary: Not found: " + ex, ex);
+            LOG.warn("checkNativeLibrary: Not found: " + ex, ex);
             return false;
         }
     }
@@ -1240,7 +1094,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     /**
      * Create Old Data Reader
      */
-    public abstract void createOldDataReader();
+    public void createOldDataReader()
+    {
+    }
 
 
     /**
@@ -1400,9 +1256,37 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     }
 
 
+    public DeviceConfigEntry getSelectedDeviceConfigEntry()
+    {
+        return getDeviceConfiguration().getSelectedDeviceInstance();
+    }
+
+
+    public DeviceDefinition getSelectedDeviceDefinition()
+    {
+        DeviceConfigEntry dce = getSelectedDeviceConfigEntry();
+
+        // System.out.println("Selected Device: " + dce.device_company + " " +
+        // dce.device_device);
+
+        DeviceInstanceWithHandler deviceV2 = this.getManager().getDeviceV2(dce.device_company, dce.device_device);
+
+        // System.out.println("DeviceInstance: " + deviceV2);
+
+        return deviceV2.getDeviceDefinitionBase();
+
+    }
+
+
     public boolean isSelectedDeviceOldType()
     {
         return (this.selectedDeviceInstanceV1 != null);
+    }
+
+
+    public boolean isSelectedDeviceNewType()
+    {
+        return (this.selectedDeviceInstanceV2 != null);
     }
 
 
@@ -1648,7 +1532,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     /**
      * Init all Objects
      */
-    public abstract void initAllObjects();
+    public void initAllObjects()
+    {
+    }
 
 
     /**
@@ -1678,33 +1564,23 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
      * Get Name of Plugin (for internal use)
      * @return
      */
-    public abstract String getPluginName();
+    public String getPluginName()
+    {
+        return pluginDefinition.getPluginName();
+    }
 
 
     public List<LibraryInfoEntry> getBaseLibraries()
     {
-
         // libraries
         ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
 
         lst_libs.add(new LibraryInfoEntry("Atech-Tools", //
-                "0.8.x", //
+                "0.7.x", //
                 "www.atech-software.com", //
                 "LGPL", //
                 "Helper Library for Swing/Hibernate/SQL...", //
                 "Copyright (c) 2006-2015 Atech Software Ltd. All rights reserved."));
-
-        lst_libs.add(new LibraryInfoEntry("Apache Commons Lang", //
-                "2.4", //
-                "commons.apache.org/lang/", //
-                "Apache", //
-                "Helper methods for java.lang library"));
-
-        lst_libs.add(new LibraryInfoEntry("Apache Commons Logging", //
-                "1.0.4", //
-                "commons.apache.org/logging/", //
-                "Apache", //
-                "Logger and all around wrapper for logging utilities"));
 
         lst_libs.add(new LibraryInfoEntry("dom4j", //
                 "1.6.1", //
@@ -1712,10 +1588,16 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
                 "BSD", //
                 "Framework for Xml manipulation"));
 
-        lst_libs.add(new LibraryInfoEntry("NRSerial", "3.9.3", "https://github.com/NeuronRobotics/nrjavaserial", "LGPL",
+        lst_libs.add(new LibraryInfoEntry("Neuron Robotics Java Serial (for Java 1.5)", //
+                "3.9.3.1", //
+                "https://github.com/andyrozman/nrjavaserial-j15", //
+                "LGPL", //
                 "Comm API"));
 
-        lst_libs.add(new LibraryInfoEntry("IBM Com Api", "1.3", "https://www.ibm.com", "LGPL",
+        lst_libs.add(new LibraryInfoEntry("IBM Com Api", //
+                "1.3", //
+                "https://www.ibm.com", //
+                "LGPL", //
                 "Comm API (used for BT devices for now)"));
 
         lst_libs.add(new LibraryInfoEntry("Jaxen", //
@@ -1724,17 +1606,37 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
                 "Custom", //
                 "Jaxen is a universal Java XPath engine."));
 
-        lst_libs.add(new LibraryInfoEntry("libusb4j", //
-                "0.2", //
-                "", //
-                "LGPL", //
-                "Experimental library for reading usb devices."));
+        lst_libs.add(new LibraryInfoEntry("HID for Java (for Java 1.5)", //
+                "0.3.1", //
+                "https://github.com/andyrozman/hid4java-j15", //
+                "MIT", //
+                "Library for connection to HID USB devices."));
 
-        lst_libs.add(new LibraryInfoEntry("Java Native Access", //
-                "3.3.0", //
-                "https://github.com/twall/jna", //
+        lst_libs.add(new LibraryInfoEntry("Java Native Access (for Java 1.5)", //
+                "4.1.0", //
+                "https://github.com/andyrozman/jna-j15", //
                 "LGPL (2.1)", //
                 "Access to Native libraries."));
+
+        lst_libs.add(new LibraryInfoEntry("Pygmy Http Server", //
+                "0.2", //
+                "http://pygmy-httpd.sourceforge.net/", //
+                "Artistic", //
+                "Small Http library to see list of all devices."));
+
+        lst_libs.add(new LibraryInfoEntry("iText Pdf", //
+                "5.1.2", //
+                "http://itextpdf.com/", //
+                "LGPL", //
+                "Library for creating and manipulate PDF files"));
+
+        lst_libs.add(new LibraryInfoEntry("JFree Chart", //
+                "1.0.13", //
+                "http://www.jfree.org/jfreechart/", //
+                "LGPL", //
+                "Library for creating Graphs"));
+
+        // CORE
 
         return lst_libs;
 
@@ -1777,9 +1679,10 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     {
     }
 
-    public GlucoseUnitType getGlucoseUnitType()
+
+    public PluginReportDefinition getReportsDefinition()
     {
-        return configuredBGUnit;
+        return this.pluginDefinition.getReportsDefinition();
     }
 
     /**
@@ -1791,5 +1694,49 @@ public abstract class DataAccessPlugInBase extends ATDataAccessLMAbstract
     // {
     // return this.graph_context;
     // }
+
+
+    // ********************************************************
+    // ****** New Implementations *****
+    // ********************************************************
+
+    /**
+     * This is for loading simple class that it's ouside GGC scope. Mostly intended for testing
+     * purposes (before adding code directly to GGC). This is intended for Constructors with
+     * no parameters.
+     *
+     * @param className
+     * @return
+     */
+    protected boolean loadExternalLibrary(String className)
+    {
+        try
+        {
+            Class<?> c = Class.forName(className);
+
+            c.newInstance();
+
+            return true;
+        }
+        catch (ClassNotFoundException ex)
+        {
+            LOG.debug("Class {} could not be found. {}", className, ex.getMessage(), ex);
+        }
+        catch (InstantiationException ex)
+        {
+            LOG.error("Class {} could not be loaded.", className, ex.getMessage(), ex);
+        }
+        catch (IllegalAccessException ex)
+        {
+            LOG.error("Class {} could not be found and/or loaded.", className, ex.getMessage(), ex);
+        }
+        catch (Exception ex)
+        {
+            LOG.error("Class {} could not be loaded. Exception: {}", className, ex.getMessage(), ex);
+        }
+
+        return false;
+
+    }
 
 }

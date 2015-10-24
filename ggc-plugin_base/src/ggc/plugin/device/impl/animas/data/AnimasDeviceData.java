@@ -3,8 +3,8 @@ package ggc.plugin.device.impl.animas.data;
 import java.util.HashMap;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 
@@ -48,7 +48,7 @@ import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
 public abstract class AnimasDeviceData
 {
 
-    public static final Log LOG = LogFactory.getLog(AnimasDeviceData.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AnimasDeviceData.class);
 
     protected AnimasCommProtocolAbstract pumpCommunicationInterface;
     public PumpConnectorInfo pumpConnectorInfo;
@@ -273,7 +273,7 @@ public abstract class AnimasDeviceData
     }
 
 
-    public abstract void debugAllSettings(Log log);
+    public abstract void debugAllSettings(Logger log);
 
 
     public abstract void postProcessReceivedData(AnimasDevicePacket adp);

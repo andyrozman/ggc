@@ -1,7 +1,7 @@
 package ggc.plugin.protocol.reader;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.data.progress.ProgressData;
@@ -40,7 +40,7 @@ import ggc.plugin.output.OutputWriter;
 public abstract class AbstractDeviceReader implements ProgressReportInterface
 {
 
-    public static final Log LOG = LogFactory.getLog(AbstractDeviceReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractDeviceReader.class);
 
     protected ProgressData progressData;
     protected OutputWriter outputWriter;

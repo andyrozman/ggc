@@ -2,8 +2,8 @@ package ggc.plugin.device.impl.animas.converter;
 
 import java.util.Calendar;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.SynchronizedList;
@@ -45,7 +45,8 @@ import ggc.plugin.device.impl.animas.util.AnimasUtils;
 public abstract class AnimasAbstractDataConverter implements AnimasDataConverter, Runnable
 {
 
-    public static final Log LOG = LogFactory.getLog(AnimasAbstractDataConverter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AnimasAbstractDataConverter.class);
+
     AnimasDeviceReader deviceReader;
     private boolean inDataProcessingPacket = false;
     private boolean threadRunning = true;
@@ -223,10 +224,9 @@ public abstract class AnimasAbstractDataConverter implements AnimasDataConverter
 
     private void logUnknownDbSizeForPumpModel(String softwareCodePrefix, String defPump, String suppportedSizes)
     {
-        LOG.debug(String
-                .format(
-                    "Software Code Prefix is %s, but Food Db Size (%s) is unknown, we default to Pump %s (supported Db sizes are %s)",
-                    softwareCodePrefix, getData().pumpInfo.foodDbSize, defPump, suppportedSizes));
+        LOG.debug(String.format(
+            "Software Code Prefix is %s, but Food Db Size (%s) is unknown, we default to Pump %s (supported Db sizes are %s)",
+            softwareCodePrefix, getData().pumpInfo.foodDbSize, defPump, suppportedSizes));
     }
 
 

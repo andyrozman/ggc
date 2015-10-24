@@ -3,8 +3,8 @@ package ggc.plugin.data;
 import java.util.Hashtable;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 import ggc.plugin.output.OutputWriter;
@@ -40,7 +40,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
 
     private static final long serialVersionUID = -1649768167774901903L;
     OutputWriter output_writer = null;
-    private static Log log = LogFactory.getLog(DeviceValuesWriter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DeviceValuesWriter.class);
     boolean debug = false;
     /**
      * Is Silent Mode
@@ -154,7 +154,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
         }
         else
         {
-            log.warn("Unknown key:" + _type);
+            LOG.warn("Unknown key:" + _type);
             return false;
         }
     }
@@ -181,7 +181,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
         }
         else
         {
-            log.warn("Unknown key:" + _type);
+            LOG.warn("Unknown key:" + _type);
             return false;
         }
     }
@@ -214,7 +214,7 @@ public class DeviceValuesWriter extends Hashtable<String, DeviceTempValues>
         }
         else
         {
-            log.warn("Unknown key:" + _type);
+            LOG.warn("Unknown key:" + _type);
             return false;
         }
     }

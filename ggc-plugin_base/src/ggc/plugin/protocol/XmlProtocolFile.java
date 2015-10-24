@@ -1,8 +1,5 @@
 package ggc.plugin.protocol;
 
-import ggc.plugin.output.OutputWriter;
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import java.io.File;
 import java.util.List;
 
@@ -11,6 +8,9 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -46,6 +46,7 @@ public class XmlProtocolFile
     protected DataAccessPlugInBase m_da = null;
     protected OutputWriter output_writer = null;
 
+
     // protected I18nControlAbstract i18nControlAbstract = null;
 
     /**
@@ -60,7 +61,19 @@ public class XmlProtocolFile
         this.output_writer = ow;
     }
 
+
+    /**
+     * Constructor
+     *
+     * @param da
+     */
+    public XmlProtocolFile(DataAccessPlugInBase da)
+    {
+        this.m_da = da;
+    }
+
     protected Document document;
+
 
     /**
      * Open Xml File
@@ -77,6 +90,7 @@ public class XmlProtocolFile
         return document;
     }
 
+
     /**
      * Get Node
      * 
@@ -88,6 +102,7 @@ public class XmlProtocolFile
         return document.selectSingleNode(tag_path);
     }
 
+
     /**
      * Get Element
      * 
@@ -98,6 +113,7 @@ public class XmlProtocolFile
     {
         return (Element) getNode(tag_path);
     }
+
 
     /**
      * Return List of nodes from path

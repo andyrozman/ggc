@@ -1,15 +1,17 @@
 package ggc.plugin.device.impl.animas.handler;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.output.OutputWriter;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
 import ggc.plugin.device.impl.animas.comm.AnimasCommProtocolV2;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
-
-
-import java.util.List;
+import ggc.plugin.output.OutputWriter;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,14 +42,19 @@ import java.util.List;
 public abstract class AbstractDeviceDataV2Handler extends AnimasCommProtocolV2
 {
 
-    public AbstractDeviceDataV2Handler(String portName, AnimasDeviceType deviceType, AnimasDeviceReader deviceReader, OutputWriter outputWriter)
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractDeviceDataV2Handler.class);
+
+
+    public AbstractDeviceDataV2Handler(String portName, AnimasDeviceType deviceType, AnimasDeviceReader deviceReader,
+            OutputWriter outputWriter)
     {
         super(portName, deviceType, deviceReader, outputWriter);
         initLocal();
     }
 
 
-    public AbstractDeviceDataV2Handler(String portName, AnimasDeviceType deviceType, AnimasDeviceReader deviceReader, OutputWriter outputWriter, boolean contextDebug, boolean communicationDebug)
+    public AbstractDeviceDataV2Handler(String portName, AnimasDeviceType deviceType, AnimasDeviceReader deviceReader,
+            OutputWriter outputWriter, boolean contextDebug, boolean communicationDebug)
     {
         super(portName, deviceType, deviceReader, outputWriter);
         initLocal();
@@ -61,25 +68,28 @@ public abstract class AbstractDeviceDataV2Handler extends AnimasCommProtocolV2
         this.debugCommunication = communicationDebug;
     }
 
+
     public abstract void initLocal();
 
 
     public abstract List<AnimasTransferType> getSupportedActions();
+
 
     public void checkIfActionAllowed(AnimasTransferType transferType) throws PlugInBaseException
     {
         if (this.deviceType.getImplementationType() != this.getImplementationType())
         {
             throw new PlugInBaseException(PlugInExceptionType.WrongDeviceConfigurationSelected,
-                    new Object[] {this.deviceType.getImplementationType(), this.getImplementationType() });
+                    new Object[] { this.deviceType.getImplementationType(), this.getImplementationType() });
         }
 
         if (!this.getSupportedActions().contains(transferType))
         {
-            LOG.error(String.format("Operation %s not supported for handler '%s'", transferType.name(), this.getClass().getSimpleName()));
+            LOG.error(String.format("Operation %s not supported for handler '%s'", transferType.name(),
+                this.getClass().getSimpleName()));
 
             throw new PlugInBaseException(PlugInExceptionType.OperationNotSupportedForThisHandler,
-                new Object[] { transferType.name(), this.getClass().getSimpleName() });
+                    new Object[] { transferType.name(), this.getClass().getSimpleName() });
         }
 
     }

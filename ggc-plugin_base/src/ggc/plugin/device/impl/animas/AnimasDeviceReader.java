@@ -1,14 +1,14 @@
 package ggc.plugin.device.impl.animas;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.output.OutputWriter;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasImplementationType;
+import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.reader.SerialDeviceReader;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,19 +39,22 @@ import org.apache.commons.logging.LogFactory;
 
 public abstract class AnimasDeviceReader extends SerialDeviceReader
 {
-    public static final Log LOG = LogFactory.getLog(AnimasDeviceReader.class);
+
+    private static final Logger LOG = LoggerFactory.getLogger(AnimasDeviceReader.class);
 
     protected AnimasDeviceType animasDevice;
 
 
-    public AnimasDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter) throws PlugInBaseException
+    public AnimasDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter)
+            throws PlugInBaseException
     {
         super(portName, outputWriter);
         this.animasDevice = animasDevice;
 
         if (animasDevice.getImplementationType() != AnimasImplementationType.AnimasImplementationV2)
         {
-            throw new PlugInBaseException(PlugInExceptionType.UnsupportedDevice, new Object[] { this.getClass().getSimpleName()  });
+            throw new PlugInBaseException(PlugInExceptionType.UnsupportedDevice,
+                    new Object[] { this.getClass().getSimpleName() });
         }
     }
 

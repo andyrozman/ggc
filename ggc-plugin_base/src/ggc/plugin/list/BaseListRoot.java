@@ -1,8 +1,8 @@
 package ggc.plugin.list;
 
-import ggc.plugin.util.DataAccessPlugInBase;
+import java.util.List;
 
-import java.util.ArrayList;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -33,8 +33,9 @@ import java.util.ArrayList;
 public class BaseListRoot
 {
 
-    protected ArrayList<BaseListEntry> children = null;
+    protected List<BaseListEntry> children = null;
     DataAccessPlugInBase m_da;
+
 
     /**
      * Constructor
@@ -48,6 +49,7 @@ public class BaseListRoot
         // System.out.println("Children: " + this.children);
     }
 
+
     /**
      * To String
      * 
@@ -56,8 +58,8 @@ public class BaseListRoot
     @Override
     public String toString()
     {
-        return String.format(m_da.getI18nControlInstance().getMessage("DEVICE_LIST_WEB"), m_da.getI18nControlInstance()
-                .getMessage("DEVICE_NAME_BIG"));
+        return String.format(m_da.getI18nControlInstance().getMessage("DEVICE_LIST_WEB"),
+            m_da.getI18nControlInstance().getMessage("DEVICE_NAME_BIG"));
     }
 
 }

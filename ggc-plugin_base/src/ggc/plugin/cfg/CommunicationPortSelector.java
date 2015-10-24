@@ -8,8 +8,8 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.event.ListDataListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
@@ -56,7 +56,7 @@ public class CommunicationPortSelector extends JDialog implements ActionListener
      */
 
     private static final long serialVersionUID = 1965963565398592466L;
-    private static final Log LOG = LogFactory.getLog(CommunicationPortSelector.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CommunicationPortSelector.class);
 
     private PortDiscoveryAgentInterface discoveryAgent;
 

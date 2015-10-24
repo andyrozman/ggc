@@ -1,18 +1,20 @@
 package ggc.plugin.gui;
 
-import ggc.plugin.device.DeviceAbstract;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.StringTokenizer;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.plugin.device.DeviceAbstract;
+import ggc.plugin.device.v2.DeviceInstanceWithHandler;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,42 +45,67 @@ import com.atech.i18n.I18nControlAbstract;
 public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialConfigPanelInterface
 {
 
-    protected JPanel config_panel = null;
-    protected Hashtable<String, String> parameters = null;
-    protected String default_parameter = null;
-    protected String packed_conn_parameters = null;
-    private static Log log = LogFactory.getLog(DeviceSpecialConfigPanelAbstract.class);
-    protected DataAccessPlugInBase m_da;
-    protected I18nControlAbstract m_ic;
-    protected DeviceAbstract dev_interface = null;
+    private static final Logger LOG = LoggerFactory.getLogger(DeviceSpecialConfigPanelAbstract.class);
+
+    protected JPanel configPanel = null;
+    protected Map<String, String> parameters = null;
+    protected String defaultParameter = null;
+    protected DataAccessPlugInBase dataAccess;
+    protected I18nControlAbstract i18nControl;
+
+    protected DeviceAbstract deviceInterfaceV1 = null;
+    protected DeviceInstanceWithHandler deviceInterfaceV2 = null;
 
     /**
      * Delimiter for connection parameters parts
      */
-    public static final String connection_part_delimiter = "#;#";
+    public static final String CONNECTION_PART_DELIMITER = "#;#";
 
     /**
      * Delimiter for parameter 
      */
-    public static final String parameter_delimiter = "!=";
+    public static final String PARAMETER_DELIMITER = "!=";
+
 
     /**
      * Constructor
      * 
      * @param da 
-     * @param di 
+     * @param deviceInterfaceV1
+     *
+     * @deprecated You should use Constructor with DeviceInstanceWithHandler (all future devices need to be V2)
      */
-    public DeviceSpecialConfigPanelAbstract(DataAccessPlugInBase da, DeviceAbstract di)
+    @Deprecated
+    public DeviceSpecialConfigPanelAbstract(DataAccessPlugInBase da, DeviceAbstract deviceInterfaceV1)
     {
-        this.m_da = da;
-        this.m_ic = da.getI18nControlInstance();
-        this.dev_interface = di;
+        this.dataAccess = da;
+        this.i18nControl = da.getI18nControlInstance();
+        this.deviceInterfaceV1 = deviceInterfaceV1;
         this.parameters = new Hashtable<String, String>();
         this.initPanel();
         this.initParameters();
     }
 
+
+    /**
+     * Constructor
+     *
+     * @param da
+     * @param deviceInterfaceV2
+     */
+    public DeviceSpecialConfigPanelAbstract(DataAccessPlugInBase da, DeviceInstanceWithHandler deviceInterfaceV2)
+    {
+        this.dataAccess = da;
+        this.i18nControl = da.getI18nControlInstance();
+        this.deviceInterfaceV2 = deviceInterfaceV2;
+        this.parameters = new Hashtable<String, String>();
+        this.initPanel();
+        this.initParameters();
+    }
+
+
     public abstract void initPanel();
+
 
     /**
      * Find Default Parameter
@@ -89,63 +116,63 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
     public static String findDefaultParameter(String params)
     {
 
-        if (!params.contains(connection_part_delimiter))
+        if (!params.contains(CONNECTION_PART_DELIMITER))
             return params;
 
-        StringTokenizer strtok = new StringTokenizer(params, connection_part_delimiter);
+        StringTokenizer strtok = new StringTokenizer(params, CONNECTION_PART_DELIMITER);
 
         while (strtok.hasMoreTokens())
         {
             String tok = strtok.nextToken();
 
-            if (!tok.contains(parameter_delimiter))
+            if (!tok.contains(PARAMETER_DELIMITER))
                 return tok;
         }
 
         return "";
     }
 
+
     public void loadConnectionParameters(String param)
     {
 
         this.initParameters();
 
-        if (!param.contains(connection_part_delimiter))
+        if (!param.contains(CONNECTION_PART_DELIMITER))
         {
-            this.default_parameter = param;
-            log.warn("Simple parameter found, while expecting extended one [param=" + param + "]");
+            this.defaultParameter = param;
+            LOG.warn("Simple parameter found, while expecting extended one [param=" + param + "]");
             return;
         }
 
-        StringTokenizer strtok = new StringTokenizer(param, connection_part_delimiter);
-
-        // int count = 0;
+        StringTokenizer strtok = new StringTokenizer(param, CONNECTION_PART_DELIMITER);
 
         while (strtok.hasMoreTokens())
         {
 
             String tok = strtok.nextToken();
 
-            if (tok.contains(parameter_delimiter))
+            if (tok.contains(PARAMETER_DELIMITER))
             {
-                String key = tok.substring(0, tok.indexOf(parameter_delimiter));
-                String val = tok.substring(tok.indexOf(parameter_delimiter) + parameter_delimiter.length());
+                String key = tok.substring(0, tok.indexOf(PARAMETER_DELIMITER));
+                String val = tok.substring(tok.indexOf(PARAMETER_DELIMITER) + PARAMETER_DELIMITER.length());
 
-                if (this.parameters.containsKey(key))
-                {
-                    this.parameters.remove(key);
-                    this.parameters.put(key, val);
-                }
-                else
-                {
-                    log.warn("Parameter not defined in our Config class: " + key);
-                }
+                // if (this.parameters.containsKey(key))
+                // {
+                // this.parameters.remove(key);
+                // this.parameters.put(key, val);
+                // }
+                // else
+                // {
+                // LOG.warn("Parameter not defined in our Config class: " +
+                // key);
+                // }
 
                 this.parameters.put(key, val);
             }
             else
             {
-                default_parameter = tok;
+                defaultParameter = tok;
             }
 
         }
@@ -154,83 +181,62 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
 
     }
 
+
     public String getDefaultParameter()
     {
-        return this.default_parameter;
+        return this.defaultParameter;
     }
+
 
     public void setDefaultParameter(String par)
     {
-        this.default_parameter = par;
+        this.defaultParameter = par;
     }
+
 
     public String saveConnectionParameters()
     {
-        boolean first = false;
         readParametersFromGUI();
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         if (this.hasDefaultParameter())
         {
-            sb.append(this.default_parameter);
-            first = true;
+            DataAccessPlugInBase.appendToStringBuilder(sb, this.defaultParameter, CONNECTION_PART_DELIMITER);
         }
-        // sb.append(";");
 
-        for (Enumeration<String> en = this.parameters.keys(); en.hasMoreElements();)
+        for (Map.Entry<String, String> entry : this.parameters.entrySet())
         {
-            String key = en.nextElement();
-
-            if (first)
-            {
-                sb.append(connection_part_delimiter);
-            }
-            else
-            {
-                first = true;
-            }
-
-            sb.append(key);
-            sb.append(parameter_delimiter);
-            sb.append(this.parameters.get(key));
+            DataAccessPlugInBase.appendToStringBuilder(sb, entry.getKey() + PARAMETER_DELIMITER + entry.getValue(),
+                CONNECTION_PART_DELIMITER);
         }
 
         return sb.toString();
     }
 
+
     public boolean hasDefaultParameter()
     {
-        return this.dev_interface.hasDefaultParameter();
+        if (this.deviceInterfaceV1 != null)
+            return this.deviceInterfaceV1.hasDefaultParameter();
+        else
+            return this.deviceInterfaceV2.hasDefaultParameter();
     }
+
 
     public boolean areConnectionParametersValid()
     {
-        boolean not_found = false;
-
-        if (this.hasDefaultParameter())
+        if (this.hasDefaultParameter() && (StringUtils.isBlank(this.defaultParameter)))
         {
-            if (this.default_parameter == null || this.default_parameter.length() == 0)
-            {
-                not_found = true;
-            }
+            return false;
         }
 
-        this.readParametersFromGUI();
-
-        for (Enumeration<String> en = this.parameters.keys(); en.hasMoreElements();)
-        {
-            String param = this.parameters.get(en.nextElement());
-
-            if (param == null || param.length() == 0)
-            {
-                not_found = true;
-            }
-        }
-
-        return !not_found;
-
+        return areCustomParametersValid();
     }
+
+
+    public abstract boolean areCustomParametersValid();
+
 
     /**
      * Get Parameter
@@ -246,9 +252,15 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
             return "";
     }
 
+
     public JPanel getPanel()
     {
-        return this.config_panel;
+        return this.configPanel;
     }
 
+
+    public void setParameter(String key, String value)
+    {
+        this.parameters.put(key, value);
+    }
 }

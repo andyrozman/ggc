@@ -1,15 +1,14 @@
 package ggc.plugin.data;
 
-import ggc.core.db.hibernate.GGCHibernateObject;
-import ggc.plugin.data.enums.DeviceEntryStatus;
-import ggc.plugin.output.OutputWriterData;
-
-import java.util.ArrayList;
 import java.util.Comparator;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.components.MultiLineTooltip;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
+
+import ggc.plugin.data.enums.DeviceEntryStatus;
+import ggc.plugin.output.OutputWriterData;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -31,13 +30,11 @@ import com.atech.utils.data.ATechDate;
  * values.
  * Author: Andy {andy@atech-software.com}
  */
-public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator<DeviceValuesEntryInterface>,
-        Comparable<DeviceValuesEntryInterface>,
+public interface DeviceValuesEntryInterface
+        extends OutputWriterData, Comparator<DeviceValuesEntryInterface>, Comparable<DeviceValuesEntryInterface>,
         // StatisticsItem,
         DatabaseObjectHibernate, MultiLineTooltip
 {
-
-
 
     /**
      * Object Status: New
@@ -59,12 +56,14 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     public static String entry_status_icons[] = { "led_gray.gif", "led_green.gif", "led_yellow.gif", "led_red.gif" };
 
+
     /**
      * Get DateTime (long)
      *
      * @return
      */
     long getDateTime();
+
 
     /**
      * Set DateTime Object (ATechDate)
@@ -74,6 +73,7 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     void setDateTimeObject(ATechDate dt);
 
+
     /**
      * Get DateTime Object (ATechDate)
      *
@@ -81,12 +81,14 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     ATechDate getDateTimeObject();
 
+
     /**
      * Get DateTime format
      *
      * @return format of date time (precission)
      */
-    int getDateTimeFormat();
+    ATechDateType getDateTimeFormat();
+
 
     /**
      * Get Column Value
@@ -95,6 +97,7 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      * @return
      */
     Object getColumnValue(int index);
+
 
     /**
      * Get Table Column Value (in case that we need special display values for
@@ -107,12 +110,14 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     Object getTableColumnValue(int index);
 
+
     /**
      * Get Checked
      *
      * @return true if element is checked
      */
     boolean getChecked();
+
 
     /**
      * Set Checked
@@ -127,7 +132,7 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      *
      * @return status
      */
-    //int getStatus();
+    // int getStatus();
 
 
     /**
@@ -148,24 +153,26 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      *
      * @param status_in
      */
-    //void setStatus(int status_in);
+    // void setStatus(int status_in);
+
 
     /**
      * Prepare Entry [Framework v1]
      */
-    //void prepareEntry();
+    // void prepareEntry();
 
     /**
      * Prepare Entry [Framework v2]
      */
     void prepareEntry_v2();
 
-//    /**
-//     * Get Db Objects
-//     *
-//     * @return ArrayList of elements extending GGCHibernateObject
-//     */
-//    ArrayList<? extends GGCHibernateObject> getDbObjects();
+
+    // /**
+    // * Get Db Objects
+    // *
+    // * @return ArrayList of elements extending GGCHibernateObject
+    // */
+    // ArrayList<? extends GGCHibernateObject> getDbObjects();
 
     /**
      * Get DeviceValuesEntry Name
@@ -174,6 +181,7 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     String getDVEName();
 
+
     /**
      * Get Value of object
      *
@@ -181,12 +189,14 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     String getValue();
 
+
     /**
      * Set Output Type
      *
      * @see ggc.plugin.output.OutputWriterData#setOutputType(int)
      */
     void setOutputType(int type);
+
 
     /**
      * Is Data BG
@@ -196,12 +206,14 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     boolean isDataBG();
 
+
     /**
      * Set Old Id (this is used for changing old objects in framework v2)
      *
      * @param id_in
      */
     void setId(long id_in);
+
 
     /**
      * Get Id (this is used for changing old objects in framework v2)
@@ -210,12 +222,14 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     long getId();
 
+
     /**
      * Comparator method, for sorting objects
      *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     int compare(DeviceValuesEntryInterface d1, DeviceValuesEntryInterface d2);
+
 
     /**
      * Comparator method, for sorting objects
@@ -224,12 +238,14 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     int compareTo(DeviceValuesEntryInterface d2);
 
+
     /**
      * Set Object status
      *
      * @param status
      */
     void setObjectStatus(int status);
+
 
     /**
      * Get Object Status
@@ -238,12 +254,14 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     int getObjectStatus();
 
+
     /**
      * Get Special Id
      *
      * @return
      */
     String getSpecialId();
+
 
     /**
      * Set Source
@@ -252,12 +270,14 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     void setSource(String src);
 
+
     /**
      * Get Source
      *
      * @return
      */
     String getSource();
+
 
     /**
      * Has MultiLine Tooltip
@@ -266,6 +286,7 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     boolean hasMultiLineToolTip();
 
+
     /**
      * Set MultiLine Tooltip Type
      *
@@ -273,12 +294,12 @@ public interface DeviceValuesEntryInterface extends OutputWriterData, Comparator
      */
     void setMultiLineTooltipType(int _multiline_tooltip_type);
 
+
     /**
      * Get MultiLine Tooltip Type
      *
      * @return
      */
     int getMultiLineTooltipType();
-
 
 }

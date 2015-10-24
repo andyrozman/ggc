@@ -13,8 +13,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
@@ -54,13 +54,13 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class DeviceConfigurationDialog extends JDialog implements ActionListener, ChangeListener, ItemListener,
-        HelpCapable
+public class DeviceConfigurationDialog extends JDialog
+        implements ActionListener, ChangeListener, ItemListener, HelpCapable
 {
 
     private static final long serialVersionUID = -947278207985014744L;
 
-    private static final Log LOG = LogFactory.getLog(DeviceConfigurationDialog.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DeviceConfigurationDialog.class);
     private I18nControlAbstract m_ic = null; // I18nControl.getInstance();
     private DataAccessPlugInBase m_da; // = DataAccessMeter.getInstance();
 
@@ -247,8 +247,9 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             new TitledBorder(String.format(m_ic.getMessage("SELECT_X_DEVICE"), m_ic.getMessage("DEVICE_NAME_BIG"))),
             main_panel);
 
-        ATSwingUtils.getLabel(String.format(m_ic.getMessage("SELECTED_X_DEVICE"), m_ic.getMessage("DEVICE_NAME_BIG"))
-                + ":", 25, 25, 200, 25, pan_sel, ATSwingUtils.FONT_NORMAL_BOLD);
+        ATSwingUtils.getLabel(
+            String.format(m_ic.getMessage("SELECTED_X_DEVICE"), m_ic.getMessage("DEVICE_NAME_BIG")) + ":", 25, 25, 200,
+            25, pan_sel, ATSwingUtils.FONT_NORMAL_BOLD);
 
         cb_entry = ATSwingUtils.getComboBox(getComboEntriesFromConfiguration(), 205, 25, 190, 25, pan_sel,
             ATSwingUtils.FONT_NORMAL);
@@ -263,15 +264,10 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         cb_entry.addItemListener(this);
 
         // device configuration
-        JPanel pan_meter = ATSwingUtils
-                .getPanel(
-                    20,
-                    140,
-                    410,
-                    125,
-                    null,
-                    new TitledBorder(String.format(m_ic.getMessage("DEVICE_CONFIGURATION"),
-                        m_ic.getMessage("DEVICE_NAME_BIG"))), main_panel);
+        JPanel pan_meter = ATSwingUtils.getPanel(20, 140, 410, 125, null,
+            new TitledBorder(
+                    String.format(m_ic.getMessage("DEVICE_CONFIGURATION"), m_ic.getMessage("DEVICE_NAME_BIG"))),
+            main_panel);
 
         ATSwingUtils.getLabel(String.format(m_ic.getMessage("CUSTOM_NAME"), m_ic.getMessage("DEVICE_NAME_BIG")) + ":",
             25, 25, 150, 25, pan_meter, ATSwingUtils.FONT_NORMAL_BOLD);
@@ -315,8 +311,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             ATSwingUtils.getLabel(m_ic.getMessage("SELECT_TIMEZONE_LIST") + ":", 25, 25, 450, 25, pan_tzfix,
                 ATSwingUtils.FONT_NORMAL_BOLD);
 
-            cb_timezone = ATSwingUtils.getComboBox(this.timeZoneUtil.getTimezonesAsVector(), 25, 50, 370, 25,
-                pan_tzfix, ATSwingUtils.FONT_NORMAL);
+            cb_timezone = ATSwingUtils.getComboBox(this.timeZoneUtil.getTimezonesAsVector(), 25, 50, 370, 25, pan_tzfix,
+                ATSwingUtils.FONT_NORMAL);
 
             chb_fix = ATSwingUtils.getCheckBox("  " + m_ic.getMessage("NEED_DAYLIGHTSAVING_FIX"), 25, 90, 380, 25,
                 pan_tzfix, ATSwingUtils.FONT_NORMAL_BOLD);
@@ -400,8 +396,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
             this.comm_settings.setVisible(true);
         }
         else if (this.currentDeviceV2 != null
-                && (this.currentDeviceV2.getDevicePortParameterType() == DevicePortParameterType.SimpleParameter || this.currentDeviceV2
-                        .hasSpecialConfig()))
+                && (this.currentDeviceV2.getDevicePortParameterType() == DevicePortParameterType.SimpleParameter
+                        || this.currentDeviceV2.hasSpecialConfig()))
         {
             this.comm_settings.setCurrentDevice(this.currentDeviceV2);
 
@@ -411,7 +407,7 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         else
         {
             // System.out.println("No parameters used !");
-            comm_settings.resetDevices();
+            comm_settings.resetDevices(true);
             this.comm_settings.setVisible(false);
         }
 
@@ -741,8 +737,8 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
         if (this.current_entry == null)
             return;
 
-        Object selectedObject = this.m_da.getDeviceConfigurationDefinition().getSpecificDeviceInstance(
-            this.current_entry.device_company, this.current_entry.device_device);
+        Object selectedObject = this.m_da.getDeviceConfigurationDefinition()
+                .getSpecificDeviceInstance(this.current_entry.device_company, this.current_entry.device_device);
 
         if (selectedObject != null)
         {
@@ -823,9 +819,6 @@ public class DeviceConfigurationDialog extends JDialog implements ActionListener
      */
     public String getHelpId()
     {
-        // return
-        // this.dataAccess.getDeviceConfigurationDefinition().getHelpPrefix() +
-        // "Configuration";
         return "DeviceTool_Configuration";
     }
 

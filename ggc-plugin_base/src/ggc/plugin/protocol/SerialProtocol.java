@@ -1,17 +1,5 @@
 package ggc.plugin.protocol;
 
-import ggc.plugin.device.DeviceAbstract;
-import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.output.OutputWriter;
-import ggc.plugin.util.DataAccessPlugInBase;
-import gnu.io.CommPortIdentifier;
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
-import gnu.io.UnsupportedCommOperationException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -20,8 +8,14 @@ import java.util.Enumeration;
 import java.util.TooManyListenersException;
 import java.util.Vector;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ggc.plugin.device.DeviceAbstract;
+import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.output.OutputWriter;
+import ggc.plugin.util.DataAccessPlugInBase;
+import gnu.io.*;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -56,6 +50,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
                                                                                                // //,
                                                                                                // Runnable
 {
+
     /**
      * How many ms do we pause after each character is sent
      */
@@ -91,7 +86,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
      */
     public static final byte ASCII_STX = 0x02;
 
-    private static Log log = LogFactory.getLog("ProtocolLog");
+    private static final Logger LOG = LoggerFactory.getLogger("ProtocolLog");
 
     // protected DataAccessPlugInBase dataAccess = null;
     // //DataAccessMeter.getInstance();
@@ -138,6 +133,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
      */
     public static final int SERIAL_EVENT_ALL = 7;
 
+
     /**
      * Constructor
      * 
@@ -147,6 +143,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
         super(da);
     }
+
 
     /**
      * Constructor
@@ -159,6 +156,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
         super(comm_parameters, writer, da);
     }
+
 
     /**
      * Set Communication Settings
@@ -181,6 +179,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         this.event_type = event_type;
     }
 
+
     /**
      * Return the COM-Port from which will be read.
      * @return String
@@ -189,6 +188,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
         return portIdentifier.getName();
     }
+
 
     /**
      * Set the COM-Port from which will be read.
@@ -208,7 +208,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         {
             // System.out.println("SerialProtocol::setPort:: No such port: " +
             // ex);
-            log.error("No such port exception: " + ex.getMessage(), ex);
+            LOG.error("No such port exception: " + ex.getMessage(), ex);
             throw new PlugInBaseException(ex);
         }
     }
@@ -219,6 +219,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
      * return port_name;
      * }
      */
+
 
     // open was moved to abstract
     // public boolean open() throws PlugInBaseException
@@ -334,7 +335,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
             // this.outputWriter.writeLog(LogEntryType.INFO,
             // "AbstractSerialMeter::open() - setting parameters");
 
-            log.debug("SerialProtocol:open()");
+            LOG.debug("SerialProtocol:open()");
             // System.out.println("SerialProtocol: open() - parameters");
             setConnectionParameters();
 
@@ -390,25 +391,25 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         catch (UnsupportedCommOperationException ex)
         {
             System.out.println("SerialProtocol::open(). Unsupported comm operation: " + ex);
-            log.error("Unsupported comm operation: " + ex.getMessage(), ex);
+            LOG.error("Unsupported comm operation: " + ex.getMessage(), ex);
             throw new PlugInBaseException(ex);
         }
         catch (PortInUseException ex)
         {
             System.out.println("SerialProtocol::open(). Port in use: " + ex);
-            log.error("Port in use: " + ex.getMessage(), ex);
+            LOG.error("Port in use: " + ex.getMessage(), ex);
             throw new PlugInBaseException(ex);
         }
         catch (TooManyListenersException ex)
         {
             System.out.println("SerialProtocol::open(). Too many listeners: " + ex);
-            log.error("Too many listeners: " + ex.getMessage(), ex);
+            LOG.error("Too many listeners: " + ex.getMessage(), ex);
             throw new PlugInBaseException(ex);
         }
         catch (IOException ex)
         {
             System.out.println("SerialProtocol::open(). IO exception: " + ex);
-            log.error("IO Exception: " + ex.getMessage(), ex);
+            LOG.error("IO Exception: " + ex.getMessage(), ex);
             throw new PlugInBaseException(ex);
         }
         catch (Exception ex)
@@ -417,7 +418,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
             {
                 // System.out.println("SerialProtocol::open(). No such port: " +
                 // ex);
-                log.error("No such port: " + ex.getMessage(), ex);
+                LOG.error("No such port: " + ex.getMessage(), ex);
 
                 printAllAvailableSerialPorts();
 
@@ -427,7 +428,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
             {
                 // System.out.println("SerialProtocol::open(). Exception: " +
                 // ex);
-                log.error("Exception: " + ex.getMessage(), ex);
+                LOG.error("Exception: " + ex.getMessage(), ex);
                 throw new PlugInBaseException(ex);
             }
         }
@@ -459,6 +460,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
 
         return isPortOpen;
     }
+
 
     protected void setConnectionParameters()
     {
@@ -505,6 +507,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         }
     }
 
+
     /**
      * Close 
      * 
@@ -525,6 +528,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         // portIdentifier));
     }
 
+
     public void dispose()
     {
         try
@@ -533,9 +537,10 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         }
         catch (Exception ex)
         {
-            log.debug("Error disposing serial port. Ex.: " + ex);
+            LOG.debug("Error disposing serial port. Ex.: " + ex);
         }
     }
+
 
     /**
      * Read
@@ -548,6 +553,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         return portInputStream.read();
     }
 
+
     /**
      * Read
      * 
@@ -559,6 +565,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
         return portInputStream.read(b);
     }
+
 
     /**
      * Read (int[])
@@ -589,6 +596,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         // return portInputStream.read(b);
     }
 
+
     /**
      * Read
      * 
@@ -602,6 +610,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
         return portInputStream.read(b, off, len);
     }
+
 
     /**
      * Read Line
@@ -633,6 +642,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
 
         return stringbuffer.toString();
     }
+
 
     /**
      * Read Line as array of bytes
@@ -684,6 +694,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         // return new String(stringbuffer);
     }
 
+
     /**
      * Write (byte[]) 
      * 
@@ -694,6 +705,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
         portOutputStream.write(b);
     }
+
 
     /**
      * Write (int[]) 
@@ -709,6 +721,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         }
     }
 
+
     /**
      * Write (int)
      * @param i
@@ -718,6 +731,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
         portOutputStream.write(i);
     }
+
 
     /**
      * Write (byte[],int,int)
@@ -732,6 +746,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         portOutputStream.write(b, off, len);
     }
 
+
     // FIXME
 
     protected void sendMessageToMeter(String msg) throws Exception
@@ -744,6 +759,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         writeCommand(SerialProtocol.ASCII_ACK); // 0x06
     }
 
+
     protected String readMessageFromMeter() throws Exception
     {
         String bt_line = readLine();
@@ -751,6 +767,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
 
         return bt_line;
     }
+
 
     protected int readByteTimed() throws Exception
     {
@@ -773,6 +790,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         return -1;
     }
 
+
     /**
      * Wait for x ms
      * @param time
@@ -788,11 +806,13 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         {}
     }
 
+
     protected void writeCommand(int c) throws Exception
     {
         write(c);
         waitTime(character_pause);
     }
+
 
     protected void writeCommand(String line) throws IOException, InterruptedException
     {
@@ -804,6 +824,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
 
         waitTime(command_pause);
     }
+
 
     /*
      * public static final byte ASCII_ENQ = 0x05;
@@ -820,6 +841,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         readByteTimed();
     }
 
+
     protected void commandAfterWrite() throws Exception
     {
         readByteTimed();
@@ -827,6 +849,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         readByteTimed();
         writeCommand(SerialProtocol.ASCII_ACK); // 0x06
     }
+
 
     /**
      * Test
@@ -836,12 +859,14 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
     }
 
+
     /**
      * Serial Event
      * 
      * @see gnu.io.SerialPortEventListener#serialEvent(SerialPortEvent)
      */
     public abstract void serialEvent(SerialPortEvent event);
+
 
     /**
      * Get Timeout
@@ -852,6 +877,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
         return timeOut;
     }
+
 
     /*
      * public void stopImport()
@@ -876,6 +902,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
 
     }
 
+
     /**
      * Get All Available Serial Ports as vector of CommPortIdentifier
      *  
@@ -889,7 +916,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
 
         try
         {
-            log.debug("Listing all ports:");
+            LOG.debug("Listing all ports:");
 
             Enumeration enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements())
@@ -910,6 +937,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
 
     }
 
+
     /**
      * Get All Available Ports as Vector of Strings
      * 
@@ -929,7 +957,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
 
             // CommPortIdentifier.getPortIdentifier("xx");
 
-            log.debug("Listing all ports:");
+            LOG.debug("Listing all ports:");
 
             Enumeration<?> enume = CommPortIdentifier.getPortIdentifiers();
             while (enume.hasMoreElements())
@@ -941,7 +969,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         }
         catch (Exception ex)
         {
-            log.error("There was problem obtaining list of serial ports. Ex: " + ex, ex);
+            LOG.error("There was problem obtaining list of serial ports. Ex: " + ex, ex);
         }
 
         printAllAvailableSerialPorts();
@@ -949,6 +977,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         return retVal;
 
     }
+
 
     /**
      * Get All Available Ports as String (Internal)
@@ -995,7 +1024,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         /*
          * catch(Exception ex)
          * {
-         * log.error("There was problem obtaining list of serial ports. Ex: " +
+         * LOG.error("There was problem obtaining list of serial ports. Ex: " +
          * ex, ex);
          * throw ex;
          * //System.out.println("Exception: getAvailableSerialPorts: " + ex);
@@ -1004,6 +1033,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         return retVal;
 
     }
+
 
     /**
      * Dump Serial Status
@@ -1016,13 +1046,14 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         // Contract.pre(this.m_serialPort != null,
         // "m_serialPortLocal is null.");
         // long l = System.currentTimeMillis() - m_startTimeMS;
-        // log.info("dumpSerialStatus(): Rx ready count: " +
-        // this.portInputStream.available() + "   Tx buffer count: XX, DTR: " +
+        // LOG.info("dumpSerialStatus(): Rx ready count: " +
+        // this.portInputStream.available() + " Tx buffer count: XX, DTR: " +
         // this.m_serialPort.isDTR() +
-        // /*this.portOutputStream.m_serialPortLocal.txBufCount() +*/ "   CD:  "
-        // + this.m_serialPort.isCD() + "   CTS: " + this.m_serialPort.isCTS() +
-        // "   DSR: " + this.m_serialPort.isDSR());
+        // /*this.portOutputStream.m_serialPortLocal.txBufCount() +*/ " CD: "
+        // + this.m_serialPort.isCD() + " CTS: " + this.m_serialPort.isCTS() +
+        // " DSR: " + this.m_serialPort.isDSR());
     }
+
 
     /**
      * Get All Available Ports as vector of CommPortIdentifier
@@ -1053,6 +1084,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
 
     }
 
+
     /**
      * Get Connection Protocol
      * 
@@ -1062,6 +1094,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
         return DeviceConnectionProtocol.Serial_USBBridge;
     }
+
 
     /**
      * Get Receive Timeout
@@ -1073,6 +1106,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         return this.serialPort.getReceiveTimeout();
     }
 
+
     /**
      * Set Receive Timeout
      * 
@@ -1083,7 +1117,5 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
     {
         this.serialPort.enableReceiveTimeout(timeout);
     }
-
-
 
 }

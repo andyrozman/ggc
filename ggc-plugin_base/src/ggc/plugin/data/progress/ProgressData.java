@@ -1,12 +1,7 @@
 package ggc.plugin.data.progress;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 public class ProgressData
 {
-
-    private static final Log log = LogFactory.getLog(ProgressData.class);
 
     // private ProgressType currentProgressType;
     private int progressStatic;
@@ -175,7 +170,8 @@ public class ProgressData
             this.currentProgress = (int) progressFull;
         }
 
-        // log.debug(String.format("Progress: [Static=%s, StaticMax=%s, Dynamic=%s, DynamixMax=%s, Progress=%s",
+        // log.debug(String.format("Progress: [Static=%s, StaticMax=%s,
+        // Dynamic=%s, DynamixMax=%s, Progress=%s",
         // this.progressStatic, this.progressStaticMax, this.progressDynamic,
         // this.progressDynamicMax,
         // this.currentProgress));

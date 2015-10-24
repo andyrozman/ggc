@@ -302,19 +302,19 @@ public class CourseGraphView extends JFAbstractGraphView
                 row = data.getDailyValuesItem(i).getRow(j);
                 time = new Day(row.getDateTimeAsDate());
 
-                if (row.getBG(BGUnit) > 0)
+                if (row.getBG(glucoseUnitType) > 0)
                 {
                     if (BGAvgSeries.getDataItem(time) == null)
                     {
-                        BGAvgSeries.add(time, row.getBG(BGUnit));
+                        BGAvgSeries.add(time, row.getBG(glucoseUnitType));
                     }
                     else
                     {
                         BGAvgSeries.addOrUpdate(time,
-                            MathUtils.getAverage(row.getBG(BGUnit), BGAvgSeries.getDataItem(time).getValue()));
+                            MathUtils.getAverage(row.getBG(glucoseUnitType), BGAvgSeries.getDataItem(time).getValue()));
                     }
                 }
-                if (row.getBG(BGUnit) > 0)
+                if (row.getBG(glucoseUnitType) > 0)
                 {
                     if (BGReadingsSeries.getDataItem(time) == null)
                     {

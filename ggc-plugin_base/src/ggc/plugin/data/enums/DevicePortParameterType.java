@@ -31,6 +31,7 @@ public enum DevicePortParameterType
     NoParameters, //
     SimpleParameter, //
     PackedParameters, //
+    PackedParametersWithoutDefaultParameter, //
     DefaultParameter;
 
 }

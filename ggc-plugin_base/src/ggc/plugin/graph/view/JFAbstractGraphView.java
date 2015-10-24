@@ -51,7 +51,7 @@ public abstract class JFAbstractGraphView extends JPanel
 
     private static final long serialVersionUID = -1579716091265096686L;
     Color backgroundColor = Color.WHITE;
-    int BGUnit = DataAccess.BG_MGDL;
+    // int BGUnit = DataAccess.BG_MGDL;
     JFreeChart m_chart;
 
     ChartPanel chartPanel;
@@ -66,7 +66,7 @@ public abstract class JFAbstractGraphView extends JPanel
 
     I18nControlAbstract translator = dataAccessInst.getI18nControlInstance();
     String unitLabel = "mg/dl";
-    GlucoseUnitType glucoseUnitType;
+    GlucoseUnitType glucoseUnitType = GlucoseUnitType.mg_dL;
 
 
     /**
@@ -296,16 +296,16 @@ public abstract class JFAbstractGraphView extends JPanel
         IntervalMarker lowBGMarker;
         IntervalMarker targetBGMarker;
 
-        switch (BGUnit)
+        switch (glucoseUnitType)
         {
-            case DataAccess.BG_MMOL:
+            case mmol_L:
                 lowBGMarker = new IntervalMarker(0, configurationManagerWrapper.getBG2TargetLow(),
                         dataAccessInst.getColor(colorScheme.getColor_bg_low()));
                 targetBGMarker = new IntervalMarker(configurationManagerWrapper.getBG2TargetLow(),
                         configurationManagerWrapper.getBG2TargetHigh(),
                         dataAccessInst.getColor(colorScheme.getColor_bg_target()));
                 break;
-            case DataAccess.BG_MGDL:
+            case mg_dL:
             default:
                 lowBGMarker = new IntervalMarker(0, configurationManagerWrapper.getBG1TargetLow(),
                         dataAccessInst.getColor(colorScheme.getColor_bg_low()));

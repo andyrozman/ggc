@@ -14,11 +14,20 @@ public interface DeviceDefinition
 {
 
     /**
+     * Name of entry
+     *
+     * @return name of device
+     */
+    String name();
+
+
+    /**
      * Get Device Id.
      *
      * @return device Id
      */
     int getDeviceId();
+
 
     /**
      * Get Device Name.
@@ -27,12 +36,14 @@ public interface DeviceDefinition
      */
     String getDeviceName();
 
+
     /**
      * Get Icon Name for Device
      *
      * @return
      */
     String getIconName();
+
 
     /**
      * Get Instructions I18n Key
@@ -41,12 +52,14 @@ public interface DeviceDefinition
      */
     String getInstructionsI18nKey();
 
+
     /**
      * Get Device Implementation status
      *
      * @return
      */
     DeviceImplementationStatus getDeviceImplementationStatus();
+
 
     /**
      * Get Internal Definition (some devices have Internal definitions, which can in turn provide special data).
@@ -55,6 +68,7 @@ public interface DeviceDefinition
      */
     Object getInternalDefintion();
 
+
     /**
      * Get Device Company
      *
@@ -62,11 +76,13 @@ public interface DeviceDefinition
      */
     DeviceCompanyDefinition getDeviceCompany();
 
+
     /**
      * Get Device handler key
      * @return
      */
     DeviceHandlerType getDeviceHandlerKey();
+
 
     /**
      * Device Port Parameter Type
@@ -74,12 +90,14 @@ public interface DeviceDefinition
      */
     DevicePortParameterType getDevicePortParameterType();
 
+
     /**
      * Get Connection Protocol
      *
      * @return
      */
     DeviceConnectionProtocol getConnectionProtocol();
+
 
     /**
      * Get Device Progress Status. It determines how device progress is determined. In most casess we use Special
@@ -91,6 +109,5 @@ public interface DeviceDefinition
 
 
     String getSpecialComment();
-
 
 }

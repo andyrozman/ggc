@@ -1,18 +1,10 @@
 package ggc.plugin.list;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.BorderLayout;
-import java.awt.Font;
-
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JLabel;
+import java.awt.*;
 
 import com.atech.graphics.components.web.MiniBrowserPanel;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,17 +36,18 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
 {
 
     private static final long serialVersionUID = -3840758557586889169L;
-    I18nControlAbstract ic = null;
+    // I18nControlAbstract ic = null;
     DataAccessPlugInBase m_da = null;
-    JEditorPane editor;
+    // JEditorPane editor;
 
     Font font_big, font_normal, font_normal_b;
-    JLabel label, label_test;
-    JButton button;
+    // JLabel label, label_test;
+    // JButton button;
 
     MiniBrowserPanel mbp;
 
     BaseListDialog m_dialog = null;
+
 
     /**
      * Constructor
@@ -67,7 +60,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
         super();
 
         m_dialog = dia;
-        m_da = dia.m_da;
+        m_da = dia.dataAccess;
 
         ATSwingUtils.initLibrary();
 
@@ -80,6 +73,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
         initBrowser();
 
     }
+
 
     /**
      * Init
@@ -125,6 +119,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
 
     }
 
+
     /**
      * Create Panel
      */
@@ -160,7 +155,8 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
 
             // System.out.println("url_x: " + url_x);
             /*
-             * URL url = new URL("http://localhost: " + dataAccess.getWebListerPort()
+             * URL url = new URL("http://localhost: " +
+             * dataAccess.getWebListerPort()
              * + url_src);
              * //this.getClass().getResource("/html/abbott_diabetes_care.html");
              * System.out.println("url: " + url.toString());
@@ -184,6 +180,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
         }
 
     }
+
 
     /**
      * Set Data

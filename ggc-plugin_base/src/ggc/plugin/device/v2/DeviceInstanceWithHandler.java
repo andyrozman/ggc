@@ -3,6 +3,8 @@ package ggc.plugin.device.v2;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
@@ -27,10 +29,12 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 {
 
-    DataAccessPlugInBase dataAccessPlugInBase;
-    DeviceDefinition deviceDefinitionBase;
-    DeviceHandler deviceHandler;
-    String deviceSourceName;
+    private static final Logger LOG = LoggerFactory.getLogger(DeviceInstanceWithHandler.class);
+
+    protected DataAccessPlugInBase dataAccessPlugInBase;
+    protected DeviceDefinition deviceDefinitionBase;
+    protected DeviceHandler deviceHandler;
+    protected String deviceSourceName;
 
 
     public DeviceInstanceWithHandler(DeviceDefinition deviceDefinition, DataAccessPlugInBase dataAccessPlugInBase)
@@ -40,6 +44,11 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
                 .getDeviceHandler(deviceDefinition.getDeviceHandlerKey());
         this.deviceSourceName = this.getCompany().getName() + " / " + this.getName();
         this.dataAccessPlugInBase = dataAccessPlugInBase;
+
+        if (this.deviceHandler != null)
+        {
+            this.deviceHandler.registerSpecialConfig();
+        }
 
         // System.out.println("Def key: " +
         // deviceDefinition.getDeviceHandlerKey());
@@ -56,49 +65,49 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 
     public String getName()
     {
-        return this.deviceDefinitionBase.getDeviceName();
+        return this.getDeviceDefinitionBase().getDeviceName();
     }
 
 
     public String getIconName()
     {
-        return this.deviceDefinitionBase.getIconName();
+        return this.getDeviceDefinitionBase().getIconName();
     }
 
 
     public int getDeviceId()
     {
-        return this.deviceDefinitionBase.getDeviceId();
+        return this.getDeviceDefinitionBase().getDeviceId();
     }
 
 
     public String getInstructions()
     {
-        return this.deviceDefinitionBase.getInstructionsI18nKey();
+        return this.getDeviceDefinitionBase().getInstructionsI18nKey();
     }
 
 
     public DeviceImplementationStatus getImplementationStatus()
     {
-        return this.deviceDefinitionBase.getDeviceImplementationStatus();
+        return this.getDeviceDefinitionBase().getDeviceImplementationStatus();
     }
 
 
     public String getDeviceSpecialComment()
     {
-        return this.deviceDefinitionBase.getSpecialComment();
+        return this.getDeviceDefinitionBase().getSpecialComment();
     }
 
 
     public DeviceProgressStatus getDeviceProgressStatus()
     {
-        return this.deviceDefinitionBase.getDeviceProgressStatus();
+        return this.getDeviceDefinitionBase().getDeviceProgressStatus();
     }
 
 
     public DeviceConnectionProtocol getConnectionProtocol()
     {
-        return this.deviceDefinitionBase.getConnectionProtocol();
+        return this.getDeviceDefinitionBase().getConnectionProtocol();
     }
 
 
@@ -110,7 +119,7 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 
     public DevicePortParameterType getDevicePortParameterType()
     {
-        return this.deviceDefinitionBase.getDevicePortParameterType();
+        return this.getDeviceDefinitionBase().getDevicePortParameterType();
     }
 
 
@@ -122,7 +131,7 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 
     public DownloadSupportType getDownloadSupportType()
     {
-        return this.deviceDefinitionBase.getDeviceHandlerKey().getDownloadSupportType();
+        return this.getDeviceDefinitionBase().getDeviceHandlerKey().getDownloadSupportType();
     }
 
 
@@ -134,7 +143,7 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 
     public DeviceCompanyDefinition getCompany()
     {
-        return this.deviceDefinitionBase.getDeviceCompany();
+        return this.getDeviceDefinitionBase().getDeviceCompany();
     }
 
 
@@ -144,13 +153,35 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 
     public boolean hasSpecialConfig()
     {
-        return false;
+        return StringUtils.isNotBlank(this.deviceHandler.getSpecialConfigKey());
     }
 
 
     public DeviceSpecialConfigPanelInterface getSpecialConfigPanel()
     {
-        return null;
+        String specialKey = this.deviceHandler.getSpecialConfigKey();
+
+        if (!hasSpecialConfig())
+        {
+            return null;
+        }
+        else
+        {
+            return this.deviceHandler.getSpecialConfigPanel(this);
+
+            //
+            // if
+            // (DataAccessPlugInBase.specialConfigPanels.containsKey(specialKey))
+            // {
+            // return DataAccessPlugInBase.specialConfigPanels.get(specialKey);
+            // }
+            // else
+            // {
+            // LOG.warn("There is special key ({}) defined, but there is not
+            // panel registered.", specialKey);
+            // return null;
+            // }
+        }
     }
 
 
@@ -162,7 +193,9 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 
     public boolean hasDefaultParameter()
     {
-        return false;
+        return (this.deviceDefinitionBase.getDevicePortParameterType() != DevicePortParameterType.NoParameters)
+                && (this.deviceDefinitionBase
+                        .getDevicePortParameterType() != DevicePortParameterType.PackedParametersWithoutDefaultParameter);
     }
 
 
@@ -173,14 +206,14 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
     public void readDeviceData(Object connectionParameters, OutputWriter outputWriter) throws PlugInBaseException
     {
         checkIfOperationIsAllowed(DownloadSupportType.DownloadData);
-        this.deviceHandler.readDeviceData(deviceDefinitionBase, connectionParameters, outputWriter);
+        this.deviceHandler.readDeviceData(getDeviceDefinitionBase(), connectionParameters, outputWriter);
     }
 
 
     public void readConfiguration(Object connectionParameters, OutputWriter outputWriter) throws PlugInBaseException
     {
         checkIfOperationIsAllowed(DownloadSupportType.DownloadConfig);
-        this.deviceHandler.readConfiguration(deviceDefinitionBase, connectionParameters, outputWriter);
+        this.deviceHandler.readConfiguration(getDeviceDefinitionBase(), connectionParameters, outputWriter);
     }
 
 
@@ -331,6 +364,12 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
     public int compareTo(SelectableInterfaceV2 o)
     {
         return this.dataAccessPlugInBase.getPluginDeviceUtil().compareTo(this, o);
+    }
+
+
+    public DeviceDefinition getDeviceDefinitionBase()
+    {
+        return deviceDefinitionBase;
     }
 
     // ----------

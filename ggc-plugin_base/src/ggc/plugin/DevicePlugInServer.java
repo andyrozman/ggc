@@ -1,6 +1,7 @@
 package ggc.plugin;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -43,7 +44,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public abstract class DevicePlugInServer extends PlugInServer
+public abstract class DevicePlugInServer extends PlugInServer implements ActionListener
 {
 
     protected I18nControlAbstract ic_local = null;
@@ -103,6 +104,8 @@ public abstract class DevicePlugInServer extends PlugInServer
         ic_local = da_plugin.getI18nControlInstance();
         da_plugin.setParentI18nControlInstance(ic);
 
+        da_plugin.loadManager();
+
         // System.out.println(da_local.getI18nControlInstance().toString());
         da_plugin.setMainParent(da_ggc_core.getMainParent());
 
@@ -120,7 +123,7 @@ public abstract class DevicePlugInServer extends PlugInServer
         // System.out.println("PumpServer: " +
         // dataAccess.getSpecialParameters().get("BG"));
 
-        da_plugin.setBGMeasurmentType(dataAccess.getIntValueFromString(da_ggc_core.getSpecialParameters().get("BG")));
+        da_plugin.setGlucoseUnitType(((DataAccess) dataAccess).getGlucoseUnitType());
         da_plugin.setGraphConfigProperties(da_ggc_core.getGraphConfigProperties());
         da_plugin.setDeveloperMode(da_ggc_core.getDeveloperMode());
 

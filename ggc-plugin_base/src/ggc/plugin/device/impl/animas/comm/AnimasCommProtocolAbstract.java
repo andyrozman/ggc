@@ -3,8 +3,8 @@ package ggc.plugin.device.impl.animas.comm;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.plugin.comm.NRSerialCommunicationHandler;
 import ggc.plugin.comm.cfg.SerialSettings;
@@ -47,7 +47,7 @@ import ggc.plugin.output.OutputWriter;
 public abstract class AnimasCommProtocolAbstract
 {
 
-    public static final Log LOG = LogFactory.getLog(AnimasCommProtocolAbstract.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AnimasCommProtocolAbstract.class);
 
     // protected NRSerialPort serialDevice;
     // protected String portName;
@@ -341,7 +341,7 @@ public abstract class AnimasCommProtocolAbstract
     {
         return ((character == CTL_MESSAGE_DEVICE) || //
                 (character == START_MESSAGE_DEVICE) || //
-        (character == END_MESSAGE_DEVICE));
+                (character == END_MESSAGE_DEVICE));
     }
 
 }

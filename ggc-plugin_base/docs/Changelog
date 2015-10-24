@@ -2,6 +2,17 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+1.0.3 [24.10.2015]
+   - refactoring changing Log to Logger instance
+   - refactoring use of BG converter
+   - configuration changes (ConfigPanel)
+   - refactoring whole plugin with AppPluginDefintion instance, created DevicePluginDefintionAbstract for use with GGC,
+   - added PluginPrintDialog which works PluginReportDefintion
+   - AccuChek moving pump to Device V2
+   - added File handling to V2 instances (with AccuChek)
+
+
+
 1.0.2 [8.10.2015]
     * implemented DiscoveryAgents functionality for configuration of different devices (agents for
       Serial, BluetoothSerial, Usb Hid, MassStorage)

@@ -1,16 +1,14 @@
 package ggc.plugin.protocol.reader;
 
+import java.util.Enumeration;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.plugin.data.enums.PlugInExceptionType;
-import ggc.plugin.data.progress.ProgressData;
-import ggc.plugin.data.progress.ProgressReportInterface;
-import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 import gnu.io.CommPortIdentifier;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import java.util.Enumeration;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,7 +39,8 @@ import java.util.Enumeration;
 
 public abstract class SerialDeviceReader extends AbstractDeviceReader
 {
-    public static final Log LOG = LogFactory.getLog(SerialDeviceReader.class);
+
+    private static final Logger LOG = LoggerFactory.getLogger(SerialDeviceReader.class);
 
     protected String portName;
 
@@ -51,7 +50,6 @@ public abstract class SerialDeviceReader extends AbstractDeviceReader
         super(outputWriter, false);
 
         this.portName = portName;
-
 
         @SuppressWarnings("rawtypes")
         Enumeration ports = CommPortIdentifier.getPortIdentifiers();
@@ -72,7 +70,7 @@ public abstract class SerialDeviceReader extends AbstractDeviceReader
         }
 
         LOG.debug(String.format("Serial Ports found: %s, configured port (%s) found: %s", sb.toString(), portName,
-                deviceFound));
+            deviceFound));
 
         if (!deviceFound)
         {
@@ -84,6 +82,5 @@ public abstract class SerialDeviceReader extends AbstractDeviceReader
         configureProgressReporter();
 
     }
-
 
 }

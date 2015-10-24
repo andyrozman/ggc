@@ -1,17 +1,12 @@
 package ggc.plugin.device.impl.accuchek;
 
+import java.io.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.OutputStreamWriter;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,9 +37,10 @@ import org.apache.commons.logging.LogFactory;
 public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
 {
 
-    private static Log log = LogFactory.getLog(AccuChekSmartPixReaderV3.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AccuChekSmartPixReaderV3.class);
     // String drive_path = "/media/SMART_PIX/";
     int max_retry = 5;
+
 
     /**
      * Constructor 
@@ -58,6 +54,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         super(da, ow, par);
         this.drive_path = par.getRootDrive();
     }
+
 
     /**
      * 
@@ -169,10 +166,11 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         }
         catch (Exception ex)
         {
-            log.error("Error on ReadDevice(). Exception: " + ex, ex);
+            LOG.error("Error on ReadDevice(). Exception: " + ex, ex);
         }
 
     }
+
 
     private boolean checkFinished(boolean check_var, int status, String status_msg)
     {
@@ -197,6 +195,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
 
     }
 
+
     /**
      * Read Device
      * 
@@ -211,8 +210,10 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
                 return;
 
             // System.out.println("Send " + command);
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(
-                    m_da.pathResolver(drive_path + "/" + System.currentTimeMillis() + ".txt"))), "ISO-8859-1"));
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(
+                            new File(m_da.pathResolver(drive_path + "/" + System.currentTimeMillis() + ".txt"))),
+                    "ISO-8859-1"));
 
             out.write("SL42-B RemoteControl File\n" + "Command=" + command);
             out.flush();
@@ -224,6 +225,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         }
 
     }
+
 
     /**
      * Sleep
@@ -240,6 +242,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         {}
 
     }
+
 
     private boolean readStatusUntilState(String state, long timeout_ms)
     {
@@ -268,6 +271,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
 
         return false;
     }
+
 
     private boolean readStatusUntilState(String state1, String state2, long timeout_ms)
     {
@@ -334,6 +338,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
 
     int count_el = 0;
 
+
     private void incrementProgress()
     {
         count_el += this.parent.getNrOfElementsFor1s();
@@ -346,6 +351,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
         this.parent.writeStatus("PIX_READING_ELEMENT"); // , pro_calc + " %"));
         this.output_writer.setSpecialProgress(pro_calc);
     }
+
 
     private String readStatus()
     {
@@ -366,13 +372,13 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
 
             String[] arr = last_line.split(" ");
 
-            // System.out.println("Status: " + arr[1] + "  [" + last_line +
+            // System.out.println("Status: " + arr[1] + " [" + last_line +
             // "]"); //last_line);
             return arr[1];
         }
         catch (Exception ex)
         {
-            log.error("Error on reading status. Ex.: " + ex, ex);
+            LOG.error("Error on reading status. Ex.: " + ex, ex);
         }
         finally
         {
@@ -386,6 +392,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
 
         return null;
     }
+
 
     private String[] readStatuses()
     {
@@ -403,13 +410,13 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
 
             String[] arr = last_line.split(" ");
 
-            // System.out.println("Statuses: " + arr[1] + "  [" + last_line +
+            // System.out.println("Statuses: " + arr[1] + " [" + last_line +
             // "]"); //last_line);
             return arr;
         }
         catch (Exception ex)
         {
-            log.error("Error on reading statuses. Ex.: " + ex, ex);
+            LOG.error("Error on reading statuses. Ex.: " + ex, ex);
             // System.out.println("Exception: " + ex);
         }
         finally
@@ -424,6 +431,7 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
 
         return null;
     }
+
 
     @Override
     public void preInitDevice()
@@ -440,11 +448,13 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
 
     }
 
+
     @Override
     public boolean hasPreInit()
     {
         return true;
     }
+
 
     private void writeStatus(String[] status)
     {
@@ -457,10 +467,12 @@ public class AccuChekSmartPixReaderV3 extends AccuChekSmartPixReaderAbstract
          */
     }
 
+
     private void writeStatus(String status)
     {
         // System.out.print("[0] " + status + " \n");
     }
+
 
     private void debug(String status)
     {

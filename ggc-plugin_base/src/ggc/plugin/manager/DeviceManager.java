@@ -7,6 +7,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,6 +38,7 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 public abstract class DeviceManager
 {
 
+    protected DataAccessPlugInBase dataAccessPlugInBase;
     protected Hashtable<String, AbstractDeviceCompany> companies_ht = new Hashtable<String, AbstractDeviceCompany>();
     protected Vector<AbstractDeviceCompany> companies = new Vector<AbstractDeviceCompany>();
     protected List<SelectableInterface> supportedDevicesForSelector = new ArrayList<SelectableInterface>();
@@ -48,8 +50,9 @@ public abstract class DeviceManager
     /**
      * Constructor 
      */
-    public DeviceManager()
+    public DeviceManager(DataAccessPlugInBase dataAccessPlugInBase)
     {
+        this.dataAccessPlugInBase = dataAccessPlugInBase;
         this.loadDeviceCompanies();
         this.loadSupportedDevices();
         this.loadDeviceInstancesV2();
@@ -148,6 +151,8 @@ public abstract class DeviceManager
         // System.out.println("Company: " + company + ", device=" + device);
 
         String key = company + "_" + device;
+
+        // System.out.print(this.supportedDevicesV2);
 
         if (this.supportedDevicesV2.containsKey(key))
         {

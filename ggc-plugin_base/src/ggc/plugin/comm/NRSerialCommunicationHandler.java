@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Set;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.BitUtils;
 
@@ -24,7 +24,7 @@ import gnu.io.UnsupportedCommOperationException;
 public class NRSerialCommunicationHandler implements SerialCommunicationInterface
 {
 
-    private static final Log LOG = LogFactory.getLog(NRSerialCommunicationHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(NRSerialCommunicationHandler.class);
 
     protected NRSerialPort serialDevice;
     SerialSettings serialSettings;
@@ -74,7 +74,7 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
             this.serialSettings = createDefaultSerialSettings();
         }
 
-        LOG.debug(serialSettings);
+        LOG.debug("{}" + serialSettings);
 
         this.serialDevice = new NRSerialPort(portName, this.serialSettings.baudRate);
 
@@ -376,7 +376,7 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
         {
             for (int bb : cmd)
             {
-                System.out.println("OS: " + this.outputStream);
+                // System.out.println("OS: " + this.outputStream);
                 this.outputStream.write(bb);
             }
         }

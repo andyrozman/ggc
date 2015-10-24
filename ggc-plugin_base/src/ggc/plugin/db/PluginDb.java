@@ -6,11 +6,11 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.HibernateDb;
@@ -48,7 +48,8 @@ import ggc.core.db.hibernate.cgms.CGMSDataH;
 public class PluginDb
 {
 
-    private static Log log = LogFactory.getLog(PluginDb.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PluginDb.class);
+
     protected HibernateDb db;
 
     private int m_errorCode = 0;
@@ -95,7 +96,7 @@ public class PluginDb
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
 
-            log.info(doh.getObjectName() + "::DbAdd");
+            LOG.info(doh.getObjectName() + "::DbAdd");
 
             try
             {
@@ -107,19 +108,19 @@ public class PluginDb
             catch (SQLException ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
-                log.error("SQLException on add: " + ex, ex);
+                LOG.error("SQLException on add: " + ex, ex);
                 Exception eee = ex.getNextException();
 
                 if (eee != null)
                 {
-                    log.error("Nested Exception on add: " + eee.getMessage(), eee);
+                    LOG.error("Nested Exception on add: " + eee.getMessage(), eee);
                 }
                 return false;
             }
             catch (Exception ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
-                log.error("Exception on add: " + ex, ex);
+                LOG.error("Exception on add: " + ex, ex);
                 return false;
             }
 
@@ -128,7 +129,7 @@ public class PluginDb
         {
             setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
 
-            log.error("Internal error on add: " + obj);
+            LOG.error("Internal error on add: " + obj);
             return false;
         }
 
@@ -165,7 +166,7 @@ public class PluginDb
     public long addHibernate(Object obj)
     {
 
-        log.info("addHibernate::" + obj.toString());
+        LOG.info("addHibernate::" + obj.toString());
 
         try
         {
@@ -179,7 +180,7 @@ public class PluginDb
         }
         catch (Exception ex)
         {
-            log.error("Exception on addHibernate: " + ex, ex);
+            LOG.error("Exception on addHibernate: " + ex, ex);
             return -1;
         }
 
@@ -199,7 +200,7 @@ public class PluginDb
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
 
-            log.info(doh.getObjectName() + "::DbEdit");
+            LOG.info(doh.getObjectName() + "::DbEdit");
 
             try
             {
@@ -210,26 +211,26 @@ public class PluginDb
             catch (SQLException ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
-                log.error("SQLException on edit: " + ex, ex);
+                LOG.error("SQLException on edit: " + ex, ex);
                 Exception eee = ex.getNextException();
 
                 if (eee != null)
                 {
-                    log.error("Nested Exception on edit: " + eee.getMessage(), eee);
+                    LOG.error("Nested Exception on edit: " + eee.getMessage(), eee);
                 }
                 return false;
             }
             catch (Exception ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
-                log.error("Exception on edit: " + ex, ex);
+                LOG.error("Exception on edit: " + ex, ex);
                 return false;
             }
         }
         else
         {
             setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-            log.error("Internal error on edit: " + obj);
+            LOG.error("Internal error on edit: " + obj);
             return false;
         }
 
@@ -245,7 +246,7 @@ public class PluginDb
     public boolean editHibernate(Object obj)
     {
 
-        log.info("editHibernate::" + obj.toString());
+        LOG.info("editHibernate::" + obj.toString());
 
         try
         {
@@ -260,7 +261,7 @@ public class PluginDb
         }
         catch (Exception ex)
         {
-            log.error("Exception on editHibernate: " + ex, ex);
+            LOG.error("Exception on editHibernate: " + ex, ex);
             // ex.printStackTrace();
             return false;
         }
@@ -277,7 +278,7 @@ public class PluginDb
     public boolean deleteHibernate(Object obj)
     {
 
-        log.info("deleteHibernate::" + obj.toString());
+        LOG.info("deleteHibernate::" + obj.toString());
 
         try
         {
@@ -292,7 +293,7 @@ public class PluginDb
         }
         catch (Exception ex)
         {
-            log.error("Exception on deleteHibernate: " + ex, ex);
+            LOG.error("Exception on deleteHibernate: " + ex, ex);
             // ex.printStackTrace();
             return false;
         }
@@ -313,7 +314,7 @@ public class PluginDb
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
 
-            log.info(doh.getObjectName() + "::DbGet");
+            LOG.info(doh.getObjectName() + "::DbGet");
 
             try
             {
@@ -323,19 +324,19 @@ public class PluginDb
             catch (SQLException ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
-                log.error("SQLException on get: " + ex, ex);
+                LOG.error("SQLException on get: " + ex, ex);
                 Exception eee = ex.getNextException();
 
                 if (eee != null)
                 {
-                    log.error("Nested Exception on get: " + eee.getMessage(), eee);
+                    LOG.error("Nested Exception on get: " + eee.getMessage(), eee);
                 }
                 return false;
             }
             catch (Exception ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
-                log.error("Exception on get: " + ex, ex);
+                LOG.error("Exception on get: " + ex, ex);
                 return false;
             }
 
@@ -343,7 +344,7 @@ public class PluginDb
         else
         {
             setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-            log.error("Internal error on get: " + obj);
+            LOG.error("Internal error on get: " + obj);
             return false;
         }
 
@@ -363,7 +364,7 @@ public class PluginDb
         {
             DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
 
-            log.info(doh.getObjectName() + "::DbDelete");
+            LOG.info(doh.getObjectName() + "::DbDelete");
 
             try
             {
@@ -371,7 +372,7 @@ public class PluginDb
                 if (doh.DbHasChildren(getSession()))
                 {
                     setError(-3, "Object has children object", doh.getObjectName());
-                    log.error(doh.getObjectName() + " had Children objects");
+                    LOG.error(doh.getObjectName() + " had Children objects");
                     return false;
                 }
 
@@ -382,19 +383,19 @@ public class PluginDb
             catch (SQLException ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
-                log.error("SQLException on delete: " + ex, ex);
+                LOG.error("SQLException on delete: " + ex, ex);
                 Exception eee = ex.getNextException();
 
                 if (eee != null)
                 {
-                    log.error("Nested Exception on delete: " + eee.getMessage(), eee);
+                    LOG.error("Nested Exception on delete: " + eee.getMessage(), eee);
                 }
                 return false;
             }
             catch (Exception ex)
             {
                 setError(1, ex.getMessage(), doh.getObjectName());
-                log.error("Exception on delete: " + ex, ex);
+                LOG.error("Exception on delete: " + ex, ex);
                 return false;
             }
 
@@ -402,7 +403,7 @@ public class PluginDb
         else
         {
             setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-            log.error("Internal error on delete: " + obj);
+            LOG.error("Internal error on delete: " + obj);
             return false;
         }
 
@@ -457,7 +458,7 @@ public class PluginDb
 
     public List<CGMSDataH> getRangeCGMSValuesRaw(GregorianCalendar from, GregorianCalendar to, String filter)
     {
-        log.info(String.format("getRangeCGMSValuesRaw(%s)", filter == null ? "" : filter));
+        LOG.info(String.format("getRangeCGMSValuesRaw(%s)", filter == null ? "" : filter));
 
         long dt_from = ATechDate.getATDateTimeFromGC(from, ATechDate.FORMAT_DATE_ONLY);
         long dt_to = ATechDate.getATDateTimeFromGC(to, ATechDate.FORMAT_DATE_ONLY);
@@ -491,11 +492,11 @@ public class PluginDb
         }
         catch (Exception ex)
         {
-            log.debug("Sql: " + sql);
-            log.error("getRangeCGMSValuesRaw(). Exception: " + ex, ex);
+            LOG.debug("Sql: " + sql);
+            LOG.error("getRangeCGMSValuesRaw(). Exception: " + ex, ex);
         }
 
-        log.debug("Found " + listCGMSData.size() + " entries.");
+        LOG.debug("Found " + listCGMSData.size() + " entries.");
 
         return listCGMSData;
     }

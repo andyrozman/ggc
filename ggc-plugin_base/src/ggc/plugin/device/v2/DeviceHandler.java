@@ -6,6 +6,7 @@ import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.data.enums.DeviceHandlerType;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
+import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -42,11 +43,30 @@ public interface DeviceHandler
 
 
     /**
-     * Get File Download Contexts for specific downloadSupportType
+     * Get File Download Contexts for specific downloadSupportType.
      * 
-     * @param downloadSupportType
-     * @return
+     * @param downloadSupportType downloadSupportType instance
+     *                            
+     * @return List of file Reader Contexts for specific downloadSupportType
      */
     List<GGCPlugInFileReaderContext> getFileDownloadContexts(DownloadSupportType downloadSupportType);
+
+
+    /**
+     * Register special config. Some devices use special configs. This method puts this special config into
+     * registry in DataAccessPlugInBase.
+     */
+    void registerSpecialConfig();
+
+
+    /**
+     * Get key for special config (if set then its registered)
+     *
+     * @return
+     */
+    String getSpecialConfigKey();
+
+
+    DeviceSpecialConfigPanelAbstract getSpecialConfigPanel(DeviceInstanceWithHandler deviceInstanceWithHandler);
 
 }

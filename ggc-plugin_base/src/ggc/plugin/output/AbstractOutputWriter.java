@@ -1,8 +1,8 @@
 package ggc.plugin.output;
 
-import ggc.plugin.device.DeviceIdentification;
-
 import java.util.ArrayList;
+
+import ggc.plugin.device.DeviceIdentification;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,6 +39,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     protected ArrayList<String> error_list = null;
     String pluginName;
 
+
     /**
      * Constructor
      */
@@ -47,15 +48,18 @@ public abstract class AbstractOutputWriter implements OutputWriter
         out_util = OutputUtil.getInstance(this);
     }
 
+
     /**
      * Write Header
      */
     public abstract void writeHeader();
 
+
     /**
      * End Output
      */
     public abstract void endOutput();
+
 
     /**
      * Set BG Output Type
@@ -64,8 +68,9 @@ public abstract class AbstractOutputWriter implements OutputWriter
      */
     public void setBGOutputType(int bg_type)
     {
-        this.out_util.setOutputBGType(bg_type);
+        // this.out_util.setOutputBGType(bg_type);
     }
+
 
     /**
      * Set Device Identification (we usually don't use this method directly. Prefered way is to use
@@ -80,6 +85,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
         this.device_info = di;
     }
 
+
     /**
      * Get Device Identification
      * 
@@ -89,6 +95,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     {
         return this.device_info;
     }
+
 
     /**
      * Get Output Util
@@ -100,6 +107,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
         return this.out_util;
     }
 
+
     /**
      * Interrupt Communication
      */
@@ -110,6 +118,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
 
     boolean device_should_be_stopped = false;
 
+
     /**
      * User can stop readings from his side (if supported)
      */
@@ -117,6 +126,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     {
         this.device_should_be_stopped = true;
     }
+
 
     /**
      * This should be queried by device implementation, to see if it must stop reading
@@ -163,6 +173,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
      */
     public static final int STATUS_DETECTING_DEVICE = 7;
 
+
     /**
      * This is status of device and also of GUI that is reading device (if we have one)
      * This is to set that status to see where we are. Allowed statuses are: 1-Ready, 2-Downloading,
@@ -175,6 +186,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
         this.reading_status = status;
     }
 
+
     /**
      * Get Status
      * 
@@ -184,6 +196,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     {
         return this.reading_status;
     }
+
 
     /**
      * Set Sub Status - we use this substatus, when we want to send special display (on progress
@@ -196,6 +209,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
         this.sub_status = sub_status;
     }
 
+
     /**
      * Get Sub Status
      * @return Sub status String
@@ -204,6 +218,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     {
         return this.sub_status;
     }
+
 
     /**
      * If we have special status progress defined, by device, we need to set progress, by ourselves, this is 
@@ -215,6 +230,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
 
     }
 
+
     /**
      * Write log entry
      * 
@@ -224,6 +240,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     public void writeLog(int entry_type, String message)
     {
     }
+
 
     /**
      * Write log entry
@@ -236,6 +253,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     {
     }
 
+
     /**
      * Can old data reading be initiated (if module in current running mode supports this, this is
      * intended mostly for usage outside GGC)
@@ -245,6 +263,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     public void canOldDataReadingBeInitiated(boolean value)
     {
     }
+
 
     /**
      * Set old data reading progress
@@ -257,6 +276,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
 
     String device_source;
 
+
     /**
      * Set Device Source
      * 
@@ -266,6 +286,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     {
         this.device_source = dev;
     }
+
 
     /**
      * Set Device Source
@@ -277,6 +298,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
         return this.device_source;
     }
 
+
     /**
      * setIndeterminateProgress - if we cannot trace progress, we set this and JProgressBar will go
      *    into indeterminate mode
@@ -284,6 +306,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     public void setIndeterminateProgress()
     {
     }
+
 
     public void addErrorMessage(String msg)
     {
@@ -295,6 +318,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
         this.error_list.add(msg);
     }
 
+
     public int getErrorMessageCount()
     {
         if (this.error_list == null)
@@ -302,6 +326,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
         else
             return this.error_list.size();
     }
+
 
     public ArrayList<String> getErrorMessages()
     {
@@ -313,6 +338,7 @@ public abstract class AbstractOutputWriter implements OutputWriter
     {
         this.pluginName = pluginName;
     }
+
 
     public String getPluginName()
     {

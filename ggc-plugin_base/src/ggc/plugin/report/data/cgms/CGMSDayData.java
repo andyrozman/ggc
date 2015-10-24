@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
@@ -41,7 +41,7 @@ import ggc.core.db.hibernate.cgms.CGMSDataH;
 public class CGMSDayData
 {
 
-    private static Log log = LogFactory.getLog(CGMSDayData.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CGMSDayData.class);
 
     long id;
 
@@ -277,7 +277,7 @@ public class CGMSDayData
             }
             else
             {
-                log.warn("Unknown token with extended data: " + tok);
+                LOG.warn("Unknown token with extended data: " + tok);
             }
 
         }

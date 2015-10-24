@@ -2,8 +2,8 @@ package ggc.plugin.device.impl.animas.comm;
 
 import java.util.HashMap;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.data.progress.ProgressType;
@@ -44,7 +44,8 @@ import ggc.plugin.util.LogEntryType;
 public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 {
 
-    public static final Log LOG = LogFactory.getLog(AnimasCommProtocolV2.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AnimasCommProtocolV2.class);
+
     private static final int RETRIES_SERIAL_PORT_ON_INIT = 10;
     private static final int MAX_INIT_ATTEMPTS = 8;
     private static final int ENTRY_READ_TIMEOUT = 2000;
@@ -97,8 +98,8 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
     }
 
 
-    protected void sendRequestAndWait(AnimasDataType dataType, int startRecord, int numberOfRecords, int commandWaitTime)
-            throws PlugInBaseException
+    protected void sendRequestAndWait(AnimasDataType dataType, int startRecord, int numberOfRecords,
+            int commandWaitTime) throws PlugInBaseException
     {
         if ((dataType.getBaseTransferType() != AnimasTransferType.All)
                 && (!this.baseData.isCommandAllowedForDeviceType(dataType)))
@@ -192,8 +193,8 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
             if (retryCount > 3)
             {
-                LOG.warn("Communication with device was stopped by device (device not "
-                        + "reachable anymore). Exiting.");
+                LOG.warn(
+                    "Communication with device was stopped by device (device not " + "reachable anymore). Exiting.");
                 throw new PlugInBaseException(PlugInExceptionType.DownloadCanceledByDevice);
             }
 
@@ -293,7 +294,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
         this.xmitRights = false;
 
         sendMessageToDevice(new char[] { (char) (this.baseData.pumpConnectorInfo.connectionAddress + 1),
-                                        (char) (17 + (this.nr * 32)) });
+                                         (char) (17 + (this.nr * 32)) });
     }
 
 
@@ -309,11 +310,11 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
             this.baseData.pumpConnectorInfo.connectionAddress += 2;
 
             sendMessageToDevice(new char[] { '\377', '\223', '\001', '\0', '\0', '\0', //
-                                            (char) this.baseData.pumpConnectorInfo.deviceAdapter[0], //
-                                            (char) this.baseData.pumpConnectorInfo.deviceAdapter[1], //
-                                            (char) this.baseData.pumpConnectorInfo.deviceAdapter[2], //
-                                            (char) this.baseData.pumpConnectorInfo.deviceAdapter[3], //
-                                            (char) this.baseData.pumpConnectorInfo.connectionAddress });
+                                             (char) this.baseData.pumpConnectorInfo.deviceAdapter[0], //
+                                             (char) this.baseData.pumpConnectorInfo.deviceAdapter[1], //
+                                             (char) this.baseData.pumpConnectorInfo.deviceAdapter[2], //
+                                             (char) this.baseData.pumpConnectorInfo.deviceAdapter[3], //
+                                             (char) this.baseData.pumpConnectorInfo.connectionAddress });
             this.ns = 0;
             this.nr = 0;
         }
@@ -361,7 +362,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
         for (int i = 0; i < 16; i++)
         {
             sendMessageToDevice(new char[] { '\377', '\277', '\001', '\0', '\0', '\0', '\377', '\377', '\377', '\377',
-                                            '\002', (char) i });
+                                             '\002', (char) i });
 
             this.animasDevicePacket = new AnimasDevicePacket();
 
@@ -595,12 +596,12 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
             throws PlugInBaseException
     {
         char[] dataToSend = { 'R', 'I', //
-                             (char) (animasDataType.getCode() & 0xFF), //
-                             (char) ((animasDataType.getCode() & 0xFF00) >> 8), //
-                             (char) (startingRecord & 0xFF), //
-                             (char) ((startingRecord & 0xFF00) >> 8), //
-                             (char) (recordCount & 0xFF), //
-                             (char) ((recordCount & 0xFF00) >> 8) };
+                              (char) (animasDataType.getCode() & 0xFF), //
+                              (char) ((animasDataType.getCode() & 0xFF00) >> 8), //
+                              (char) (startingRecord & 0xFF), //
+                              (char) ((startingRecord & 0xFF00) >> 8), //
+                              (char) (recordCount & 0xFF), //
+                              (char) ((recordCount & 0xFF00) >> 8) };
 
         this.animasDevicePacket = new AnimasDevicePacket();
         this.animasDevicePacket.dataTypeObject = animasDataType;
@@ -732,7 +733,7 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
             if (this.connectionState && //
                     (((adp.getReceivedDataBit(1) & 0x1) == 0) || //
-                    ((adp.getReceivedDataBit(1) & 0xF) == 1)))
+                            ((adp.getReceivedDataBit(1) & 0xF) == 1)))
             {
                 // debugCommunication("PM-1");
 
@@ -961,7 +962,8 @@ public class AnimasCommProtocolV2 extends AnimasCommProtocolAbstract
 
                     case END_MESSAGE_DEVICE:
                         {
-                            this.animasDevicePacket.dataReceivedLength = (this.animasDevicePacket.dataReceived.size() - 2);
+                            this.animasDevicePacket.dataReceivedLength = (this.animasDevicePacket.dataReceived.size()
+                                    - 2);
 
                             // AnimasUtils.debugHexData(debugCommunication,
                             // this.animasDevicePacket.dataReceived,

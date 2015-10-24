@@ -1,22 +1,15 @@
 package ggc.plugin.list;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.plugin.util.DataAccessPlugInBase;
+import java.awt.*;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeSelectionModel;
 
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATSwingUtils;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -52,30 +45,31 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener // 
     private JPanel mainPane;
     private JTree tree;
 
-    protected DataAccessPlugInBase m_da = null;
+    protected DataAccessPlugInBase dataAccess = null;
     private I18nControlAbstract ic = null;
     protected BaseListAbstractPanel panels[] = null;
     BaseListRoot m_root = null;
 
+
     /**
      * Constructor
      * 
-     * @param parent
-     * @param da
+     * @param parent parent for this dialog
+     * @param da DataAccessPlugInBase instance
      */
     public BaseListDialog(JFrame parent, DataAccessPlugInBase da)
     {
 
         super(parent, "", true);
 
-        m_da = da;
-        ic = m_da.getI18nControlInstance();
+        dataAccess = da;
+        ic = dataAccess.getI18nControlInstance();
 
         this.setTitle();
 
-        m_da.addComponent(this);
+        dataAccess.addComponent(this);
 
-        m_root = new BaseListRoot(m_da);
+        m_root = new BaseListRoot(dataAccess);
 
         // this.setResizable(false);
         this.setBounds(80, 50, 710, 523);
@@ -86,17 +80,12 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener // 
 
         ATSwingUtils.centerJDialog(this, parent);
 
-        // this.pop.s
-        // add(pop);
-
         // Create a tree that allows one selection at a time.
         tree = new JTree();
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         this.setTreeModel(tree);
-        // tree.setModel(new NutritionTreeModel(dataAccess.m_nutrition_treeroot));
         tree.addTreeSelectionListener(this);
         tree.setCellRenderer(new BaseListRenderer());
-        // tree.addMouseListener(this);
 
         JScrollPane treeView = new JScrollPane(tree);
 
@@ -104,10 +93,7 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener // 
         mainPane.setLayout(null);
 
         // Add the scroll panes to a split pane.
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT/*
-                                                                          * .
-                                                                          * VERTICAL_SPLIT
-                                                                          */);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setTopComponent(treeView);
         splitPane.setBottomComponent(mainPane);
 
@@ -129,20 +115,23 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener // 
 
     }
 
+
     private void setTitle()
     {
         this.setTitle(String.format(ic.getMessage("DEVICE_LIST_WEB"), ic.getMessage("DEVICE_NAME_BIG")));
     }
 
+
     /**
      * Set Tree Model
      * 
-     * @param tree
+     * @param tree tree instance
      */
     public void setTreeModel(JTree tree)
     {
         tree.setModel(new BaseListModel(this.m_root));
     }
+
 
     /**
      * Create Panels
@@ -161,7 +150,6 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener // 
         }
 
         makePanelVisible(0);
-
     }
 
     /**
@@ -174,10 +162,11 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener // 
      */
     public static final int PANEL_BROWSER = 1;
 
+
     /** 
      * Makes selected panel visible
      * 
-     * @param num 
+     * @param num number of panel
      */
     public void makePanelVisible(int num)
     {
@@ -196,13 +185,10 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener // 
 
     Object selected_last_path = null;
 
-    /** Required by TreeSelectionListener interface. */
+
     public void valueChanged(TreeSelectionEvent e)
     {
-
         this.selected_last_path = tree.getLastSelectedPathComponent();
-
-        // this.displayPanel(1);
 
         if (this.selected_last_path instanceof BaseListRoot)
         {
@@ -210,11 +196,11 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener // 
         }
         else if (this.selected_last_path instanceof BaseListEntry)
         {
-            // else if (this.selected_last_path instanceof String)
             makePanelVisible(BaseListDialog.PANEL_BROWSER);
             this.panels[BaseListDialog.PANEL_BROWSER].setData(this.selected_last_path);
         }
     }
+
 
     /**
      * Dispose
@@ -224,21 +210,8 @@ public class BaseListDialog extends JDialog implements TreeSelectionListener // 
     @Override
     public void dispose()
     {
-        this.m_da.removeComponent(this);
+        this.dataAccess.removeComponent(this);
         super.dispose();
-    }
-
-    boolean made = false;
-    int menu_prev_type = 0;
-
-    /**
-     * Get Tree Item Type
-     * 
-     * @return
-     */
-    public int getTreeItemType()
-    {
-        return 0;
     }
 
 }

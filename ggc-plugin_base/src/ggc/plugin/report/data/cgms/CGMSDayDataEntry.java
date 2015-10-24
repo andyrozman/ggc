@@ -1,8 +1,5 @@
 package ggc.plugin.report.data.cgms;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.atech.utils.data.ATechDate;
 
 /**
@@ -33,8 +30,6 @@ import com.atech.utils.data.ATechDate;
 
 public class CGMSDayDataEntry implements Comparable<CGMSDayDataEntry>
 {
-
-    private static final Log log = LogFactory.getLog(CGMSDayDataEntry.class);
 
     /**
      * DateTime

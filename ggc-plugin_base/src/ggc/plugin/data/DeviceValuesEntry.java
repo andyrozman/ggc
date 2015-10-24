@@ -1,14 +1,12 @@
 package ggc.plugin.data;
 
-import ggc.core.db.hibernate.GGCHibernateObject;
+import com.atech.misc.statistics.StatisticsItem;
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
+
 import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.output.OutputWriterData;
 import ggc.plugin.util.DeviceValuesEntryUtil;
-
-import java.util.ArrayList;
-
-import com.atech.misc.statistics.StatisticsItem;
-import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,12 +42,12 @@ import com.atech.utils.data.ATechDate;
 
 public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, OutputWriterData, StatisticsItem
 {
+
     protected boolean checked = false;
     private DeviceEntryStatus status = DeviceEntryStatus.New;
     protected int output_type = 0;
     protected boolean is_bg = false;
     private int multiline_tooltip_type = 1;
-
 
     /**
      *  Object Status: New
@@ -96,12 +94,14 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
      */
     public abstract Object getColumnValue(int index);
 
+
     /**
      * Get DateTime (long)
      * 
      * @return
      */
     public abstract long getDateTime();
+
 
     /**
      * Set DateTime Object (ATechDate)
@@ -110,6 +110,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
      */
     public abstract void setDateTimeObject(ATechDate dt);
 
+
     /**
      * Get DateTime Object (ATechDate)
      * 
@@ -117,12 +118,14 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
      */
     public abstract ATechDate getDateTimeObject();
 
+
     /**
      * Get DateTime format
      * 
      * @return format of date time (precission)
      */
-    public abstract int getDateTimeFormat();
+    public abstract ATechDateType getDateTimeFormat();
+
 
     /**
      * Get Checked 
@@ -133,6 +136,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         return this.checked;
     }
+
 
     /**
      * Set Checked
@@ -145,7 +149,6 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     }
 
 
-
     /**
      * {@inheritDoc}
      */
@@ -153,6 +156,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         return this.status;
     }
+
 
     /**
      * {@inheritDoc}
@@ -174,6 +178,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
         this.output_type = type;
     }
 
+
     /**
      * Is Data BG
      * 
@@ -185,6 +190,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
         return this.is_bg;
     }
 
+
     /**
      * Comparator method, for sorting objects
      * 
@@ -194,6 +200,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         return DeviceValuesEntryUtil.compare(d1, d2);
     }
+
 
     /**
      * Comparator method, for sorting objects
@@ -205,6 +212,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
         return DeviceValuesEntryUtil.compare(this, d2);
     }
 
+
     /**
      * Set Object status
      * 
@@ -214,6 +222,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         this.object_status = status;
     }
+
 
     /**
      * Get Object Status
@@ -225,6 +234,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
         return this.object_status;
     }
 
+
     /**
      * Has MultiLine Tooltip
      * 
@@ -234,6 +244,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         return false;
     }
+
 
     /**
      * Set MultiLine Tooltip Type
@@ -245,6 +256,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
         this.multiline_tooltip_type = _multiline_tooltip_type;
     }
 
+
     /**
      * Get MultiLine Tooltip Type
      * @return 
@@ -253,6 +265,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         return this.multiline_tooltip_type;
     }
+
 
     /**
      * Checks if is indexed.
@@ -264,6 +277,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
         return false;
     }
 
+
     /**
      * Gets the multi line tool tip.
      * 
@@ -273,6 +287,7 @@ public abstract class DeviceValuesEntry implements DeviceValuesEntryInterface, O
     {
         return "";
     }
+
 
     /**
      * Gets the multi line tool tip.
