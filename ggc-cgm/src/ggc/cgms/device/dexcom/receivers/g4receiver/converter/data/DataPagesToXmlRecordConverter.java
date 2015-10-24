@@ -57,7 +57,7 @@ public class DataPagesToXmlRecordConverter extends BytesConverterAbstract
 
             records.add(xr);
 
-            // log.debug(itr);
+            // LOG.debug(itr);
         }
 
         return records;

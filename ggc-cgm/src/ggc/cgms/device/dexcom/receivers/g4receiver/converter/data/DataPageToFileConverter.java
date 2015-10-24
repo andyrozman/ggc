@@ -3,8 +3,8 @@ package ggc.cgms.device.dexcom.receivers.g4receiver.converter.data;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.file.BytesFileUtil;
 
@@ -39,7 +39,7 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.internal.DatabasePage;
 public class DataPageToFileConverter
 {
 
-    Log log = LogFactory.getLog(DataPageToFileConverter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DataPageToFileConverter.class);
 
 
     public void convert(DatabasePage page, int pageNumber, ReceiverRecordType recordType)
@@ -55,7 +55,7 @@ public class DataPageToFileConverter
         }
         catch (IOException ex)
         {
-            log.error("Error writing to file. Ex.:" + ex, ex);
+            LOG.error("Error writing to file. Ex.:" + ex, ex);
         }
     }
 }

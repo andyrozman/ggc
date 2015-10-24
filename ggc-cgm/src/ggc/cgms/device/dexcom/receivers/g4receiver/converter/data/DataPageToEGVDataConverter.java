@@ -12,7 +12,7 @@ import ggc.plugin.device.PlugInBaseException;
 public class DataPageToEGVDataConverter extends BytesConverterAbstract
 {
 
-    // private static final Log log =
+    // private static final Log LOG =
     // LogFactory.getLog(DataPageToEGVDataConverter.class);
 
     public List<EGVRecord> convert(List<DatabasePage> pages) throws PlugInBaseException
@@ -36,7 +36,7 @@ public class DataPageToEGVDataConverter extends BytesConverterAbstract
 
             records.add(egv);
 
-            // log.debug(egv);
+            // LOG.debug(egv);
         }
 
         return records;

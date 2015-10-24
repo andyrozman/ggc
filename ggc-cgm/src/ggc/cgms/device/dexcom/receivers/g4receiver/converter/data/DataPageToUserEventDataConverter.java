@@ -61,7 +61,7 @@ public class DataPageToUserEventDataConverter extends BytesConverterAbstract
 
             records.add(ued);
 
-            // log.debug(ued);
+            // LOG.debug(ued);
         }
 
         return records;

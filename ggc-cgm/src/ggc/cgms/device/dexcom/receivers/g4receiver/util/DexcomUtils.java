@@ -7,13 +7,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ShortUtils;
 
@@ -56,7 +56,7 @@ import ggc.plugin.device.PlugInBaseException;
 public class DexcomUtils
 {
 
-    private static Log log = LogFactory.getLog(DexcomUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DexcomUtils.class);
     public static int ImmediateMatchMask = 0x80;
     private static DexcomG4Api dexcomG4Api;
     private static PartitionInfo partitionInfo;
@@ -66,6 +66,7 @@ public class DexcomUtils
     static SimpleDateFormat dateTimeFormater = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
     private static ShortUtils shortUtils = new ShortUtils();
     private static HashMap<ConverterType, Object> converters = new HashMap<ConverterType, Object>();
+
 
     static
     {
@@ -321,7 +322,7 @@ public class DexcomUtils
     {
         String s = getXmlStringFromElement(element);
 
-        log.debug(s);
+        LOG.debug(s);
     }
 
 
@@ -338,7 +339,7 @@ public class DexcomUtils
         }
         catch (PlugInBaseException ex)
         {
-            log.warn("Error reading DisplayTimeOffset: " + ex, ex);
+            LOG.warn("Error reading DisplayTimeOffset: " + ex, ex);
             return 0;
         }
     }
@@ -376,7 +377,7 @@ public class DexcomUtils
 
         catch (ParseException e)
         {
-            DexcomUtils.log.error("Unable to parse date: " + EPOCH + ", using current time", e);
+            DexcomUtils.LOG.error("Unable to parse date: " + EPOCH + ", using current time", e);
             epoch = new Date();
         }
 

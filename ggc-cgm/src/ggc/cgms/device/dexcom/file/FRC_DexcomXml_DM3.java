@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.*;
 import org.xml.sax.ext.DeclHandler;
 import org.xml.sax.ext.LexicalHandler;
@@ -52,7 +52,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileReaderContext
 {
 
-    private static Log log = LogFactory.getLog(FRC_DexcomXml_DM3.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FRC_DexcomXml_DM3.class);
 
 
     /**
@@ -130,7 +130,7 @@ public class FRC_DexcomXml_DM3 extends XmlProtocolFile implements GGCPlugInFileR
         }
         catch (Exception ex)
         {
-            log.error("Exception on readFile. Ex: " + ex, ex);
+            LOG.error("Exception on readFile. Ex: " + ex, ex);
         }
 
     }

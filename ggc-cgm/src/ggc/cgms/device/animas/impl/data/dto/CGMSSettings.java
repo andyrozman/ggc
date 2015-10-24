@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -83,7 +83,7 @@ public class CGMSSettings
     }
 
 
-    public void debugAllSettings(Log log)
+    public void debugAllSettings(Logger log)
     {
 
     }
@@ -105,18 +105,18 @@ public class CGMSSettings
                     writeSetting("CFG_BASE_FIRMWARE_VERSION", softwareCode, softwareCode,
                         CGMSConfigurationGroup.General);
 
-                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_ABOVE", AnimasSoundType.CGMS_HighAlert), ""
-                            + highAlertWarnAbove, highAlertWarnAbove, CGMSConfigurationGroup.Warnings);
-                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_BELOW", AnimasSoundType.CGMS_LowAlert), ""
-                            + lowAlertWarnBelow, lowAlertWarnBelow, CGMSConfigurationGroup.Warnings);
-                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_ABOVE", AnimasSoundType.CGMS_RiseRate), ""
-                            + riseRateWarnAbove, riseRateWarnAbove, CGMSConfigurationGroup.Warnings);
-                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_ABOVE", AnimasSoundType.CGMS_FallRate), ""
-                            + fallRateWarnAbove, fallRateWarnAbove, CGMSConfigurationGroup.Warnings);
-                    writeSetting(getCombinedKeyword("CCFG_X_SNOOZE_TIME", AnimasSoundType.CGMS_HighAlert), ""
-                            + highAlertSnoozeTime, highAlertSnoozeTime, CGMSConfigurationGroup.Warnings);
-                    writeSetting(getCombinedKeyword("CCFG_X_SNOOZE_TIME", AnimasSoundType.CGMS_LowAlert), ""
-                            + lowAlertSnoozeTime, lowAlertSnoozeTime, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_ABOVE", AnimasSoundType.CGMS_HighAlert),
+                        "" + highAlertWarnAbove, highAlertWarnAbove, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_BELOW", AnimasSoundType.CGMS_LowAlert),
+                        "" + lowAlertWarnBelow, lowAlertWarnBelow, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_ABOVE", AnimasSoundType.CGMS_RiseRate),
+                        "" + riseRateWarnAbove, riseRateWarnAbove, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_WARNING_ABOVE", AnimasSoundType.CGMS_FallRate),
+                        "" + fallRateWarnAbove, fallRateWarnAbove, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_SNOOZE_TIME", AnimasSoundType.CGMS_HighAlert),
+                        "" + highAlertSnoozeTime, highAlertSnoozeTime, CGMSConfigurationGroup.Warnings);
+                    writeSetting(getCombinedKeyword("CCFG_X_SNOOZE_TIME", AnimasSoundType.CGMS_LowAlert),
+                        "" + lowAlertSnoozeTime, lowAlertSnoozeTime, CGMSConfigurationGroup.Warnings);
                     writeSetting(getCombinedKeyword("CCFG_X_SNOOZE_TIME", AnimasSoundType.CGMS_TransmiterOutOfRange),
                         "" + transmiterOutOfRangeSnoozeTime, transmiterOutOfRangeSnoozeTime,
                         CGMSConfigurationGroup.Warnings);

@@ -3,8 +3,8 @@ package ggc.cgms.data;
 import java.util.HashMap;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -48,7 +48,7 @@ import ggc.plugin.output.OutputWriterData;
 public class CGMSDataWriter extends HashMap<String, DeviceTempValues>
 {
 
-    private static Log log = LogFactory.getLog(CGMSDataWriter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CGMSDataWriter.class);
     OutputWriter outputWriter;
     CGMSValuesTableModel valuesModel;
     DataAccessCGMS dataAccess = DataAccessCGMS.getInstance();
@@ -136,7 +136,7 @@ public class CGMSDataWriter extends HashMap<String, DeviceTempValues>
         }
         else
         {
-            log.warn("Unknown key:" + _type);
+            LOG.warn("Unknown key:" + _type);
             return false;
         }
     }
@@ -156,7 +156,7 @@ public class CGMSDataWriter extends HashMap<String, DeviceTempValues>
         }
         else
         {
-            log.warn("Unknown key:" + _type);
+            LOG.warn("Unknown key:" + _type);
             return false;
         }
     }
@@ -218,7 +218,7 @@ public class CGMSDataWriter extends HashMap<String, DeviceTempValues>
     // }
     // else
     // {
-    // log.warn("Unknown key:" + _type);
+    // LOG.warn("Unknown key:" + _type);
     // return false;
     // }
     // }

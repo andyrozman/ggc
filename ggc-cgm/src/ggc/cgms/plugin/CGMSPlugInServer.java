@@ -23,6 +23,7 @@ import com.atech.utils.ATSwingUtils;
 
 import ggc.cgms.data.db.CGMSData;
 import ggc.cgms.data.db.CGMSDataExtended;
+import ggc.cgms.defs.CGMSPluginDefinition;
 import ggc.cgms.gui.viewer.CGMSDataDialog;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.util.DataAccess;
@@ -67,26 +68,6 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
     private static final Logger LOG = LoggerFactory.getLogger(CGMSPlugInServer.class);
 
-    // /**
-    // * Command: Read CGMS data
-    // */
-    // public static final int COMMAND_READ_CGMS_DATA = 0;
-    //
-    // /**
-    // * Command: Get List of devices
-    // */
-    // public static final int COMMAND_CGMS_LIST = 1;
-    //
-    // /**
-    // * Command: Configuration
-    // */
-    // public static final int COMMAND_CGMS_CONFIGURATION = 2;
-    //
-    // /**
-    // * Command: About
-    // */
-    // public static final int COMMAND_CGMS_ABOUT = 3;
-
     /**
      * Return Object: Selected Device with parameters
      */
@@ -128,8 +109,14 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     {
         super(cont, da);
 
-        da_local = DataAccessCGMS.createInstance(da.getLanguageManager());
+        da_local = DataAccessCGMS.createInstance(getPluginDefinition(da));
         da_local.addComponent(cont);
+    }
+
+
+    private CGMSPluginDefinition getPluginDefinition(ATDataAccessLMAbstract da)
+    {
+        return new CGMSPluginDefinition(da.getLanguageManager());
     }
 
 
@@ -153,7 +140,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public String getVersion()
     {
-        return DataAccessCGMS.PLUGIN_VERSION;
+        return da_local.getPlugInVersion();
     }
 
 
@@ -179,7 +166,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
         if (da_local == null)
         {
-            da_local = DataAccessCGMS.createInstance(((ATDataAccessLMAbstract) dataAccess).getLanguageManager());
+            da_local = DataAccessCGMS.createInstance(getPluginDefinition((ATDataAccessLMAbstract) dataAccess));
         }
 
         this.initPlugInServer((DataAccess) dataAccess, da_local);

@@ -25,8 +25,8 @@ import ggc.cgms.data.db.GGC_CGMSDb;
 import ggc.cgms.data.graph.CGMSGraphViewDaily;
 import ggc.cgms.util.CGMSUtil;
 import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.data.DeviceValuesDay;
-import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -471,7 +471,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
 
         int dec_pls = 1;
 
-        if (this.m_da.getBGMeasurmentType() == DataAccessPlugInBase.BG_MGDL)
+        if (this.m_da.getGlucoseUnitType() == GlucoseUnitType.mg_dL)
         {
             dec_pls = 0;
         }
@@ -524,7 +524,7 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
          * PumpValuesEntry.BG_COUNT, 0));
          * //if ()
          * int dec_pls = 1;
-         * if (this.dataAccess.getBGMeasurmentType()==DataAccessPump.BG_MGDL)
+         * if (this.dataAccess.getGlucoseUnitType()==DataAccessPump.BG_MGDL)
          * {
          * dec_pls = 0;
          * avgBG.setText(this.stats.getItemStatisticValueAsStringFloat(

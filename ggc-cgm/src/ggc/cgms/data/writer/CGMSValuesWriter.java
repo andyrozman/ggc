@@ -1,8 +1,5 @@
 package ggc.cgms.data.writer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.CodeEnum;
 
@@ -45,8 +42,6 @@ public class CGMSValuesWriter extends CGMSDataWriter // Hashtable<String,
     static CGMSValuesWriter staticInstance;
     // static CGMSDataWriter cgmsDataWriter;
     boolean debug = false;
-
-    private static Log LOG = LogFactory.getLog(CGMSValuesWriter.class);
 
 
     // private OutputWriter outputWriter;

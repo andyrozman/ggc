@@ -86,39 +86,12 @@ public class CGMSUtil
     }
 
 
-    public static float getBG(int type, float value)
-    {
-        if (type == DataAccess.BG_MGDL)
-            return value;
-        else
-            return dataAccess.getBGValueByType(DataAccess.BG_MMOL, value);
-    }
-
-
-    public static float getBG(int type, int value)
-    {
-        if (type == DataAccess.BG_MGDL)
-            return value;
-        else
-            return dataAccess.getBGValueByType(DataAccess.BG_MMOL, value);
-    }
-
-
-    public static float getBGInCorrectFormat(int value)
-    {
-        if (BGUnit == GlucoseUnitType.mg_dL)
-            return value;
-        else
-            return dataAccess.getBGValueByType(DataAccess.BG_MMOL, value);
-    }
-
-
     public static float getBGInCorrectFormat(float value)
     {
         if (BGUnit == GlucoseUnitType.mg_dL)
             return value;
         else
-            return dataAccess.getBGValueByType(DataAccess.BG_MMOL, value);
+            return dataAccess.getBGValueFromDefault(GlucoseUnitType.mmol_L, value);
     }
 
 }

@@ -1,7 +1,7 @@
 package ggc.cgms.device.animas.impl;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.cgms.device.animas.impl.handler.AnimasDexcomDataHandler;
 import ggc.plugin.device.PlugInBaseException;
@@ -39,7 +39,7 @@ import ggc.plugin.output.OutputWriter;
 public class AnimasCGMSDeviceReader extends AnimasDeviceReader
 {
 
-    public static final Log LOG = LogFactory.getLog(AnimasCGMSDeviceReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AnimasCGMSDeviceReader.class);
 
 
     public AnimasCGMSDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter)

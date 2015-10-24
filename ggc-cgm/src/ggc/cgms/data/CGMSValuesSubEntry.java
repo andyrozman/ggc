@@ -1,19 +1,15 @@
 package ggc.cgms.data;
 
-import java.util.ArrayList;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.misc.statistics.StatisticsObject;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 
 import ggc.cgms.data.defs.CGMSBaseDataType;
 import ggc.cgms.data.defs.CGMSTrendArrow;
 import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.output.OutputWriterType;
 
@@ -45,8 +41,6 @@ import ggc.plugin.output.OutputWriterType;
 
 public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsItem
 {
-
-    private static final Log log = LogFactory.getLog(CGMSValuesSubEntry.class);
 
     /**
      * DateTime
@@ -143,7 +137,7 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         date = (int) (dt / 1000000);
         time = (int) (dt - date * 1000000);
 
-        // System.out.println("Date:  " + date + ", Time: " + time);
+        // System.out.println("Date: " + date + ", Time: " + time);
     }
 
 
@@ -212,9 +206,9 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
 
 
     @Override
-    public int getDateTimeFormat()
+    public ATechDateType getDateTimeFormat()
     {
-        return ATechDate.FORMAT_DATE_AND_TIME_S;
+        return ATechDateType.DateAndTimeSec;
     }
 
 

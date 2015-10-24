@@ -4,12 +4,12 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.utils.data.ATechDate;
@@ -51,7 +51,7 @@ import ggc.plugin.db.PluginDb;
 public class GGC_CGMSDb extends PluginDb
 {
 
-    private static Log log = LogFactory.getLog(GGC_CGMSDb.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GGC_CGMSDb.class);
     DataAccessCGMS m_da = DataAccessCGMS.getInstance();
 
 
@@ -63,7 +63,7 @@ public class GGC_CGMSDb extends PluginDb
     public GGC_CGMSDb(HibernateDb db)
     {
         super(db);
-        log.debug("Created CGMSDb");
+        LOG.debug("Created CGMSDb");
         // getAllElementsCount();
     }
 
@@ -81,7 +81,7 @@ public class GGC_CGMSDb extends PluginDb
         // DeviceValuesDay dV = new DeviceValuesDay(dataAccess);
         // dV.setDateTimeGC(gc);
 
-        log.info("getCGMSDayStats()");
+        LOG.info("getCGMSDayStats()");
 
         long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
         // long dt = 20070323;
@@ -113,8 +113,8 @@ public class GGC_CGMSDb extends PluginDb
         }
         catch (Exception ex)
         {
-            log.debug("Sql: " + sql);
-            log.error("getCGMSStats(). Exception: " + ex, ex);
+            LOG.debug("Sql: " + sql);
+            LOG.error("getCGMSStats(). Exception: " + ex, ex);
         }
 
         return dV;
@@ -182,7 +182,7 @@ public class GGC_CGMSDb extends PluginDb
         catch (Exception ex)
         {
             // System.out.println("Exception on getCGMSValues: " + ex);
-            log.error("Exception on getCGMSValues.\nsql:" + sql + "\nEx: " + ex, ex);
+            LOG.error("Exception on getCGMSValues.\nsql:" + sql + "\nEx: " + ex, ex);
         }
 
         return dt;

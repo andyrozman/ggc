@@ -2,16 +2,11 @@ package ggc.cgms.test;
 
 import java.io.File;
 
-import com.atech.i18n.mgr.LanguageManager;
 import com.atech.utils.TimerThread;
 import com.atech.utils.data.TimeZoneUtil;
 
 import ggc.cgms.device.dexcom.file.FRC_DexcomXml_DM3;
 import ggc.cgms.device.minimed.file.MinimedCareLinkCGMS;
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.db.GGCDb;
-import ggc.core.util.DataAccess;
-import ggc.core.util.GGCLanguageManagerRunner;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.output.ConsoleOutputWriter;
 
@@ -43,7 +38,7 @@ import ggc.plugin.output.ConsoleOutputWriter;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class CGMSConsoleTester // extends JFrame
+public class CGMSConsoleTester extends AbstractCGMSTest
 {
 
     TimerThread thread;
@@ -66,6 +61,8 @@ public class CGMSConsoleTester // extends JFrame
 
         // thread = new TimerThread();
         // thread.start();
+
+        prepareContext();
 
         try
         {
@@ -104,14 +101,7 @@ public class CGMSConsoleTester // extends JFrame
     @SuppressWarnings("unused")
     private void startDexcom()
     {
-        DataAccessCGMS dap = DataAccessCGMS.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
-        // dap.initAllObjects();
-        dap.loadSpecialParameters();
-
-        // FRC_DexcomTxt_DM3 dt = new FRC_DexcomTxt_DM3(dap);
-        // dt.readFile("../test/DexDM3SampleExport.txt");
-
-        FRC_DexcomXml_DM3 dt1 = new FRC_DexcomXml_DM3(dap, new ConsoleOutputWriter());
+        FRC_DexcomXml_DM3 dt1 = new FRC_DexcomXml_DM3(dataAccessCGMS, new ConsoleOutputWriter());
         dt1.readFile("../test/DexDM3SampleExport.xml");
 
     }
@@ -125,34 +115,35 @@ public class CGMSConsoleTester // extends JFrame
      */
     public void startMinimed(String file) throws Exception
     {
-        // MinimedCareLink mcl = new MinimedCareLink();
-        // mcl.parseExportFile(new File(file));
-        // MinimedSMP msp = new MinimedSMP("f:\\Rozman_A_Plus_20090423.mmp");
-
-        DataAccess da = DataAccess.getInstance();
-
-        GGCDb db = new GGCDb(da);
-        // db.initDb();
-
-        da.setDb(db);
-
-        DataAccessCGMS dap = DataAccessCGMS.createInstance(da.getLanguageManager());
-        // dap.setHelpContext(da.getHelpContext());
-        // dap.setPlugInServerInstance(this);
-        // dap.createDb(da.getHibernateDb());
-        dap.initAllObjects();
-        dap.loadSpecialParameters();
-        // this.backup_restore_enabled = true;
-
-        da.loadSpecialParameters();
-        // System.out.println("PumpServer: " +
-        // dataAccess.getSpecialParameters().get("BG"));
-
-        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+        // // MinimedCareLink mcl = new MinimedCareLink();
+        // // mcl.parseExportFile(new File(file));
+        // // MinimedSMP msp = new MinimedSMP("f:\\Rozman_A_Plus_20090423.mmp");
+        //
+        // DataAccess da = DataAccess.getInstance();
+        //
+        // GGCDb db = new GGCDb(da);
+        // // db.initDb();
+        //
+        // da.setDb(db);
+        //
+        // DataAccessCGMS dap =
+        // DataAccessCGMS.createInstance(da.getLanguageManager());
+        // // dap.setHelpContext(da.getHelpContext());
+        // // dap.setPlugInServerInstance(this);
+        // // dap.createDb(da.getHibernateDb());
+        // dap.initAllObjects();
+        // dap.loadSpecialParameters();
+        // // this.backup_restore_enabled = true;
+        //
+        // da.loadSpecialParameters();
+        // // System.out.println("PumpServer: " +
+        // // dataAccess.getSpecialParameters().get("BG"));
+        //
+        // dap.setGlucoseUnitType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
 
         System.out.println(new File(".").getAbsolutePath());
 
-        MinimedCareLinkCGMS mcl = new MinimedCareLinkCGMS(dap, new ConsoleOutputWriter(),
+        MinimedCareLinkCGMS mcl = new MinimedCareLinkCGMS(dataAccessCGMS, new ConsoleOutputWriter(),
                 MinimedCareLink.READ_DEVICE_DATA);
         // mcl.parseExportFile(new File(path_to_test_files +
         // "CareLink-Export-1213803114904.csv"));
@@ -170,9 +161,10 @@ public class CGMSConsoleTester // extends JFrame
      */
     public void startFileSelector()
     {
-        DataAccessCGMS dap = DataAccessCGMS.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
-        // dap.initAllObjects();
-        dap.loadSpecialParameters();
+        // DataAccessCGMS dap = DataAccessCGMS.createInstance(new
+        // LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
+        // // dap.initAllObjects();
+        // dap.loadSpecialParameters();
 
         // JDialog d = new JDialog();
         // MultipleFileSelectorPanel p = new MultipleFileSelectorPanel(dap, d);

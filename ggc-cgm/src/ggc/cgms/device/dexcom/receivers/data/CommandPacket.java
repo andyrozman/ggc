@@ -1,15 +1,15 @@
 package ggc.cgms.device.dexcom.receivers.data;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.cgms.device.dexcom.receivers.DexcomCommand;
 import ggc.cgms.device.dexcom.receivers.ReceiverApiType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.DexcomG4Commands;
 import ggc.cgms.device.dexcom.receivers.g4receiver.data.parsers.ParserType;
 import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
-
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -57,7 +57,8 @@ public class CommandPacket
     Object[] commandParameters = null;
 
     private PlugInBaseException exception;
-    private static Log log = LogFactory.getLog(CommandPacket.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CommandPacket.class);
+
 
     // refacotirng dexcom command, G4 R2... no store of G4 command
 
@@ -65,6 +66,7 @@ public class CommandPacket
     {
         this(dexCommand, null);
     }
+
 
     public CommandPacket(DexcomG4Commands dexCommand, Object[] parameters)
     {
@@ -83,9 +85,10 @@ public class CommandPacket
         }
         catch (Exception ex)
         {
-            log.error("Error creating command: " + ex, ex);
+            LOG.error("Error creating command: " + ex, ex);
         }
     }
+
 
     private void prepareCommand() throws PlugInBaseException
     {
@@ -100,7 +103,7 @@ public class CommandPacket
                 this.command[i] = cmd[i];
             }
 
-            // log.debug("Predefined command: " +
+            // LOG.debug("Predefined command: " +
             // byteUtils.getDebugByteArray(byteUtils.getByteSubArray(this.command,
             // 0, cmd.length)));
         }
@@ -113,6 +116,7 @@ public class CommandPacket
         // support for R2 Command
 
     }
+
 
     private void createCommand() throws PlugInBaseException
     {
@@ -154,12 +158,13 @@ public class CommandPacket
         storeValueAsBytes((long) DexcomUtils.calculateCRC16(cmd, 0, packetLength - 2), cmd, packetLength - 2,
             CommandParameter.Short); // CRC
 
-        // log.debug("Created Command: " +
+        // LOG.debug("Created Command: " +
         // byteUtils.getDebugByteArray(byteUtils.getByteSubArray(cmd, 0,
         // packetLength)));
 
         this.command = cmd;
     }
+
 
     private void storeValueAsBytes(Long parameter, short[] packet, int index, CommandParameter commandParameter)
             throws PlugInBaseException
@@ -202,6 +207,7 @@ public class CommandPacket
 
     }
 
+
     private void writeParameterToPacket(short parameter, short[] packet, int index)
     {
         // packet[index] = (byte)(parameter & 0xff);
@@ -216,6 +222,7 @@ public class CommandPacket
 
     }
 
+
     // private short getByteValuedd(long value)
     // {
     // // problem should 1 6 0 15 251 53
@@ -225,9 +232,9 @@ public class CommandPacket
     //
     // byte b = (byte) val;
     //
-    // //log.debug("Byte: " + value + ", byte=" + b);
+    // //LOG.debug("Byte: " + value + ", byte=" + b);
     //
-    // //log.debug(new Integer(value).)
+    // //LOG.debug(new Integer(value).)
     //
     // if (b < 0)
     // {
@@ -248,6 +255,7 @@ public class CommandPacket
         packet[index + 3] = (short) (parameter >> 0x18 & 0xffL);
     }
 
+
     private void writeParameterToPacket(long parameter, short[] packet, int index)
     {
         packet[index] = (short) (parameter & 0xff);
@@ -260,75 +268,90 @@ public class CommandPacket
         packet[index + 7] = (short) (parameter >> 0x38 & 0xffL);
     }
 
+
     public int getCommandId()
     {
         return commandId;
     }
+
 
     public void setCommandId(int commandId)
     {
         this.commandId = commandId;
     }
 
+
     public short[] getCommand()
     {
         return command;
     }
+
 
     public short[] getResponse()
     {
         return responseData;
     }
 
+
     public void setResponse(short[] destinationArray)
     {
         this.responseData = destinationArray;
     }
+
 
     public int getResponseCommandId()
     {
         return responseCommandId;
     }
 
+
     public void setResponseCommandId(int commandIdReturned)
     {
         this.responseCommandId = commandIdReturned;
     }
+
 
     public PlugInBaseException getException()
     {
         return exception;
     }
 
+
     public void setException(PlugInBaseException exception)
     {
         this.exception = exception;
     }
+
 
     public DexcomG4Commands getDexcomG4Command()
     {
         return dexcomG4Command;
     }
 
+
     public void setDexcomG4Command(DexcomG4Commands dexcomG4Command)
     {
         this.dexcomG4Command = dexcomG4Command;
     }
+
 
     public int getExpectedResponseLength()
     {
         return expectedResponseLength;
     }
 
+
     public void setExpectedResponseLength(int expectedResponseLength)
     {
         this.expectedResponseLength = expectedResponseLength;
     }
 
+
     public ParserType getParserType()
     {
         return parserType;
     }
+
 
     public void setParserType(ParserType parserType)
     {

@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ShortUtils;
 
@@ -66,7 +66,7 @@ import gnu.io.SerialPort;
 public class DexcomG4Api
 {
 
-    private static final Log log = LogFactory.getLog(DexcomG4Api.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DexcomG4Api.class);
     // private CommPort serialDevice;
     private ShortUtils shortUtils = DexcomUtils.getShortUtils();
     private PartitionInfo partitionInfo;
@@ -137,7 +137,7 @@ public class DexcomG4Api
         }
         catch (IOException ex)
         {
-            log.error("Unable to write to serial device to shutdown.", ex);
+            LOG.error("Unable to write to serial device to shutdown.", ex);
             throw new PlugInBaseException(PlugInExceptionType.DeviceErrorWritingToDevice, ex);
         }
         catch (PortInUseException ex)
@@ -175,7 +175,7 @@ public class DexcomG4Api
         dpr.setFirstPage(DexcomUtils.toInt(this.shortUtils.getShortSubArray(data, 0, 4), BitConversion.LITTLE_ENDIAN));
         dpr.setLastPage(DexcomUtils.toInt(this.shortUtils.getShortSubArray(data, 4, 4), BitConversion.LITTLE_ENDIAN));
 
-        log.debug(String.format("DatabasePageRange [RecordType=%s, FirstPage=%s, LastPage=%s, PageCount=%s]",
+        LOG.debug(String.format("DatabasePageRange [RecordType=%s, FirstPage=%s, LastPage=%s, PageCount=%s]",
             recordType.name(), dpr.getFirstPage(), dpr.getLastPage(), dpr.getPagesCount()));
 
         this.addToProgressAndCheckIfCanceled(1);
@@ -188,15 +188,15 @@ public class DexcomG4Api
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.InsertionTime);
 
-        // log.debug("InsertionTime pages: " + pages.size());
+        // LOG.debug("InsertionTime pages: " + pages.size());
 
         DataPagesToInsertionTimeConverter cnv = (DataPagesToInsertionTimeConverter) DexcomUtils
                 .getConverter(ConverterType.DataPagesToInsertionTimeConverter);
 
         List<InsertionTimeRecord> records = cnv.convert(pages);
 
-        // log.debug("InsertionTime Records: " + records.size());
-        log.debug(String.format("InsertionTime Data [records=%s,pages=%s]", records.size(), pages.size()));
+        // LOG.debug("InsertionTime Records: " + records.size());
+        LOG.debug(String.format("InsertionTime Data [records=%s,pages=%s]", records.size(), pages.size()));
 
         return records;
     }
@@ -206,15 +206,15 @@ public class DexcomG4Api
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.MeterData);
 
-        // log.debug("Meter entries pages: " + pages.size());
+        // LOG.debug("Meter entries pages: " + pages.size());
 
         DataPagesToMeterConverter cnv = (DataPagesToMeterConverter) DexcomUtils
                 .getConverter(ConverterType.DataPagesToMeterConverter);
 
         List<MeterDataRecord> records = cnv.convert(pages);
 
-        // log.debug("MeterDataRecord Records: " + records.size());
-        log.debug(String.format("Meter Data [records=%s,pages=%s]", records.size(), pages.size()));
+        // LOG.debug("MeterDataRecord Records: " + records.size());
+        LOG.debug(String.format("Meter Data [records=%s,pages=%s]", records.size(), pages.size()));
 
         return records;
     }
@@ -224,15 +224,15 @@ public class DexcomG4Api
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.UserEventData);
 
-        // log.debug("EventData pages: " + pages.size());
+        // LOG.debug("EventData pages: " + pages.size());
 
         DataPageToUserEventDataConverter cnv = (DataPageToUserEventDataConverter) DexcomUtils
                 .getConverter(ConverterType.DataPageToUserEventDataConverter);
 
         List<UserEventDataRecord> records = cnv.convert(pages);
 
-        // log.debug("EventData Records: " + records.size());
-        log.debug(String.format("Event Data [records=%s,pages=%s]", records.size(), pages.size()));
+        // LOG.debug("EventData Records: " + records.size());
+        LOG.debug(String.format("Event Data [records=%s,pages=%s]", records.size(), pages.size()));
 
         return records;
     }
@@ -243,14 +243,14 @@ public class DexcomG4Api
 
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.EGVData);
 
-        // log.debug("EGV Data pages: " + pages.size());
+        // LOG.debug("EGV Data pages: " + pages.size());
 
         DataPageToEGVDataConverter cnv = (DataPageToEGVDataConverter) DexcomUtils
                 .getConverter(ConverterType.DataPageToEGVDataConverter);
 
         List<EGVRecord> records = cnv.convert(pages);
 
-        log.debug(String.format("EGV Data [records=%s,pages=%s]", records.size(), pages.size()));
+        LOG.debug(String.format("EGV Data [records=%s,pages=%s]", records.size(), pages.size()));
 
         return records;
     }
@@ -278,7 +278,7 @@ public class DexcomG4Api
     {
         List<DatabasePage> pages = readDatabasePagesAll(ReceiverRecordType.ManufacturingData);
 
-        log.debug("Manufacturing pages: " + pages.size());
+        LOG.debug("Manufacturing pages: " + pages.size());
 
         DataPagesToXmlRecordConverter cnv = (DataPagesToXmlRecordConverter) DexcomUtils
                 .getConverter(ConverterType.DataPagesToXmlRecordConverter);
@@ -307,8 +307,8 @@ public class DexcomG4Api
             }
         }
 
-        // log.debug(paramMap);
-        log.debug(String.format("Manufacturing Data [parameters=%s, pages=%s]", paramMap.size(), pages.size()));
+        // LOG.debug(paramMap);
+        LOG.debug(String.format("Manufacturing Data [parameters=%s, pages=%s]", paramMap.size(), pages.size()));
         // this.addToProgressAndCheckIfCanceled(1);
 
         return paramMap;
@@ -335,7 +335,7 @@ public class DexcomG4Api
             {
                 // adjust j
                 j = dpr.getPagesCount() - i + dpr.getFirstPage();
-                // log.debug("J: " + j);
+                // LOG.debug("J: " + j);
             }
 
             pages.addAll(readDatabasePages(recordType, i, j));
@@ -353,11 +353,11 @@ public class DexcomG4Api
 
         if (numberOfPages == 1 && pageNumber == 0)
         {
-            log.debug(String.format("Reading pages %s of %s", pageNumber, recordType.name()));
+            LOG.debug(String.format("Reading pages %s of %s", pageNumber, recordType.name()));
         }
         else
         {
-            log.debug(String.format("Reading pages %s - %s of %s", pageNumber, pageNumber + numberOfPages - 1,
+            LOG.debug(String.format("Reading pages %s - %s of %s", pageNumber, pageNumber + numberOfPages - 1,
                 recordType.name()));
         }
 
@@ -410,8 +410,8 @@ public class DexcomG4Api
             ElementToPartitionInfoConverter cnv = (ElementToPartitionInfoConverter) DexcomUtils
                     .getConverter(ConverterType.ElementToPartitionInfoConverter);
 
-            this.partitionInfo = cnv.convert((Element) this
-                    .writeCommandAndReadParsedResponse(DexcomG4Commands.ReadDatabaseParitionInfo));
+            this.partitionInfo = cnv.convert(
+                (Element) this.writeCommandAndReadParsedResponse(DexcomG4Commands.ReadDatabaseParitionInfo));
         }
         this.addToProgressAndCheckIfCanceled(1);
         return this.partitionInfo;
@@ -447,7 +447,7 @@ public class DexcomG4Api
 
         if (lang == null)
         {
-            log.warn("Unknown language code: " + language);
+            LOG.warn("Unknown language code: " + language);
             return LanguageType.None;
         }
         this.addToProgressAndCheckIfCanceled(1);
@@ -463,7 +463,7 @@ public class DexcomG4Api
 
         if (gluType == null)
         {
-            log.warn("Unknown Glucose Unit Type code: " + glu);
+            LOG.warn("Unknown Glucose Unit Type code: " + glu);
             return GlucoseUnitType.None;
         }
         this.addToProgressAndCheckIfCanceled(1);
@@ -479,7 +479,7 @@ public class DexcomG4Api
 
         if (clockType == null)
         {
-            log.warn("Unknown Clock Mode Type code: " + clock);
+            LOG.warn("Unknown Clock Mode Type code: " + clock);
             return ClockModeType.ClockMode12Hour;
         }
         this.addToProgressAndCheckIfCanceled(1);
@@ -492,7 +492,7 @@ public class DexcomG4Api
         CommandPacket cmdPacket = this.createCommandPacket(command, null);
         this.writeCommandAndReadRawResponse(null, cmdPacket, null);
 
-        // log.debug(cmdPacket.getResponse());
+        // LOG.debug(cmdPacket.getResponse());
 
         return ParserUtils.parsePacketResponse(cmdPacket);
     }
@@ -505,7 +505,7 @@ public class DexcomG4Api
         this.writeCommandAndReadRawResponse(null, cmdPacket, parameters);
 
         // System.out.println(cmdPacket.getResponse());
-        // log.debug(cmdPacket.getResponse());
+        // LOG.debug(cmdPacket.getResponse());
 
         return ParserUtils.parsePacketResponse(cmdPacket);
     }
@@ -535,7 +535,7 @@ public class DexcomG4Api
             cmdPacket = this.createCommandPacket(command, parameters);
         }
 
-        // log.debug(byteUtils.getDebugByteArray(byteUtils.getByteSubArray(cmdPacket.getCommand(),
+        // LOG.debug(byteUtils.getDebugByteArray(byteUtils.getByteSubArray(cmdPacket.getCommand(),
         // 0, 12)));
 
         int retries = 0;
@@ -628,7 +628,7 @@ public class DexcomG4Api
 
                     destinationArray = new short[length];
 
-                    // log.debug("Expected length: " + length);
+                    // LOG.debug("Expected length: " + length);
 
                     short[] buffer4 = this.readSpecifiedBytes(length);
                     System.arraycopy(buffer4, 0, buffer2, destinationIndex, length);
@@ -707,7 +707,7 @@ public class DexcomG4Api
             if (System.currentTimeMillis() > till)
                 throw new PlugInBaseException(PlugInExceptionType.TimeoutReadingData);
 
-            // log.warn("Waiting for data: " + is.available() + ", Req: " +
+            // LOG.warn("Waiting for data: " + is.available() + ", Req: " +
             // nrBytes);
 
             Thread.sleep(44);
@@ -722,7 +722,7 @@ public class DexcomG4Api
             }
             catch (IOException ex)
             {
-                log.error("Error reading from Serial Port: " + ex, ex);
+                LOG.error("Error reading from Serial Port: " + ex, ex);
             }
             count++;
         }

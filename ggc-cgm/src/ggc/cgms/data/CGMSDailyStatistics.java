@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.atech.misc.statistics.StatisticsCollection;
 
 import ggc.cgms.util.DataAccessCGMS;
-import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.core.data.defs.GlucoseUnitType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,7 +37,7 @@ public class CGMSDailyStatistics extends StatisticsCollection
 {
 
     // public int bg_type = -1;
-    DataAccessCGMS da_pump = DataAccessCGMS.getInstance();
+    DataAccessCGMS dataAccessCGMS = DataAccessCGMS.getInstance();
 
 
     /**
@@ -65,8 +65,8 @@ public class CGMSDailyStatistics extends StatisticsCollection
             return;
         }
 
-        // System.out.println("SS: " + da_pump.getBGMeasurmentType());
-        if (da_pump.getBGMeasurmentType() == DataAccessPlugInBase.BG_MMOL)
+        // System.out.println("SS: " + da_pump.getGlucoseUnitType());
+        if (dataAccessCGMS.getGlucoseUnitType() == GlucoseUnitType.mmol_L)
         {
             setBGValue(CGMSValuesSubEntry.STAT_AVG_BG1);
             setBGValue(CGMSValuesSubEntry.STAT_MIN_BG1);
@@ -137,7 +137,7 @@ public class CGMSDailyStatistics extends StatisticsCollection
                 // pve2.getSubTypeString());
 
                 int s = pve2.getDateTimeObject().hourOfDay - pve.getDateTimeObject().hourOfDay;
-                float val = da_pump.getFloatValueFromString(pve.getValue());
+                float val = dataAccessCGMS.getFloatValueFromString(pve.getValue());
                 sum += s * val;
 
                 // System.out.println("Time diff: " + s + ", val=" + val);
@@ -204,7 +204,7 @@ public class CGMSDailyStatistics extends StatisticsCollection
     private void setBGValue(int index)
     {
         float v = this.stat_objects.get(index - 1).sum;
-        float new_val = da_pump.getBGValueDifferent(DataAccessPlugInBase.BG_MGDL, v);
+        float new_val = dataAccessCGMS.getBGValueDifferent(GlucoseUnitType.mg_dL, v);
 
         setValue(index, new_val);
     }

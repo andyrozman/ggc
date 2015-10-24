@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import com.atech.db.ext.ExtendedHandler;
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 
 import ggc.cgms.data.defs.extended.CGMSExtendedDataType;
 import ggc.cgms.util.CGMSUtil;
@@ -420,9 +421,9 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
 
     @Override
-    public int getDateTimeFormat()
+    public ATechDateType getDateTimeFormat()
     {
-        return ATechDate.FORMAT_DATE_AND_TIME_S;
+        return ATechDateType.DateAndTimeSec;
     }
 
 
@@ -433,8 +434,8 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
 
         if (handler.isExtendedValueSet(ExtendedCGMSValuesExtendedEntry.EXTENDED_SUB_TYPE, data))
         {
-            this.subType = Integer.parseInt(handler.getExtendedValue(ExtendedCGMSValuesExtendedEntry.EXTENDED_SUB_TYPE,
-                data));
+            this.subType = Integer
+                    .parseInt(handler.getExtendedValue(ExtendedCGMSValuesExtendedEntry.EXTENDED_SUB_TYPE, data));
         }
 
         if (handler.isExtendedValueSet(ExtendedCGMSValuesExtendedEntry.EXTENDED_SUB_TYPE, data))

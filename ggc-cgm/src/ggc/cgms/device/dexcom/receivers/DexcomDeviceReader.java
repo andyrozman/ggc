@@ -1,5 +1,12 @@
 package ggc.cgms.device.dexcom.receivers;
 
+import java.util.Enumeration;
+import java.util.List;
+
+import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.cgms.device.dexcom.receivers.data.ReceiverDownloadData;
 import ggc.cgms.device.dexcom.receivers.data.output.ConsoleOutputParser;
 import ggc.cgms.device.dexcom.receivers.data.output.DataOutputParserInterface;
@@ -18,13 +25,6 @@ import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 import gnu.io.CommPortIdentifier;
-
-import java.util.Enumeration;
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jdom.Element;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,7 +54,8 @@ import org.jdom.Element;
 
 public class DexcomDeviceReader implements ProgressReportInterface
 {
-    private Log log = LogFactory.getLog(DexcomDeviceReader.class);
+
+    private static final Logger LOG = LoggerFactory.getLogger(DexcomDeviceReader.class);
 
     private String portName;
     CommPortIdentifier portIdentifier;
@@ -63,6 +64,7 @@ public class DexcomDeviceReader implements ProgressReportInterface
     private DataOutputParserInterface dataOutputParser = new ConsoleOutputParser();
     boolean downloadCanceled = false;
     OutputWriter outputWriter;
+
 
     public DexcomDeviceReader(String portName, DexcomDevice dexcomDevice) throws PlugInBaseException
     {
@@ -86,7 +88,7 @@ public class DexcomDeviceReader implements ProgressReportInterface
             sb.append(comp.getName() + " ");
         }
 
-        log.debug(String.format("Serial Ports found: %s, configured port (%s) found: %s", sb.toString(), portName,
+        LOG.debug(String.format("Serial Ports found: %s, configured port (%s) found: %s", sb.toString(), portName,
             deviceFound));
 
         if (!deviceFound)
@@ -103,10 +105,12 @@ public class DexcomDeviceReader implements ProgressReportInterface
 
     }
 
+
     public void setOutputWriter(OutputWriter outputWriter)
     {
         this.outputWriter = outputWriter;
     }
+
 
     public void downloadSettings() throws PlugInBaseException
     {
@@ -153,18 +157,20 @@ public class DexcomDeviceReader implements ProgressReportInterface
 
     }
 
+
     private void parseData(DataOutputParserType parserType, ReceiverDownloadData data) throws PlugInBaseException
     {
         this.dataOutputParser.parse(parserType, data);
         this.addToProgressAndCheckIfCanceled(ProgressType.Dynamic, 1);
     }
 
+
     public void addToProgressAndCheckIfCanceled(ProgressType progressType, int progressAdd) throws PlugInBaseException
     {
 
         this.progressData.addToProgressAndCheckIfCanceled(progressType, progressAdd);
 
-        // log.debug("Progress: " + this.progressData.calculateProgress());
+        // LOG.debug("Progress: " + this.progressData.calculateProgress());
 
         if (this.outputWriter != null)
         {
@@ -175,6 +181,7 @@ public class DexcomDeviceReader implements ProgressReportInterface
             throw new PlugInBaseException(PlugInExceptionType.DownloadCanceledByUser);
 
     }
+
 
     public void downloadData() throws PlugInBaseException
     {
@@ -192,7 +199,7 @@ public class DexcomDeviceReader implements ProgressReportInterface
 
             this.configureProgressReporter(ProgressType.Dynamic_Static, 10, staticProgressMax, 200);
 
-            //this.progressData.setCurrentProgressType(ProgressType.Static);
+            // this.progressData.setCurrentProgressType(ProgressType.Static);
             int countDynamicElements = ReceiverRecordType.getDownloadSupported().size(); // parsing
             countDynamicElements++; // EGV has two parsing passes
 
@@ -205,16 +212,16 @@ public class DexcomDeviceReader implements ProgressReportInterface
             this.progressData.setProgressDynamicMax(countDynamicElements);
 
             PartitionInfo info = this.api.readDatabasePartitionInfo();
-            log.debug("Partition Info: PageLength: " + info.getPageDataLength());
+            LOG.debug("Partition Info: PageLength: " + info.getPageDataLength());
 
             // FIXME
             // report
 
-            log.debug("Partitions: " + info.getPartitions().size());
+            LOG.debug("Partitions: " + info.getPartitions().size());
 
             data.setSerialNumber(api.readReceiverSerialNumber());
 
-            // log.debug("Progress: " + progressData.calculateProgress());
+            // LOG.debug("Progress: " + progressData.calculateProgress());
 
             Element header = this.api.readFirmwareHeader();
 
@@ -222,7 +229,7 @@ public class DexcomDeviceReader implements ProgressReportInterface
             data.addConfigurationEntry("FIRMWARE_VERSION", header.getAttributeValue("FirmwareVersion"), false);
 
             // set dynamic
-            //this.progressData.setCurrentProgressType(ProgressType.Dynamic);
+            // this.progressData.setCurrentProgressType(ProgressType.Dynamic);
 
             data.addData(DataOutputParserType.G4_UserEventData, api.readAllRecordsForEvents());
             parseData(DataOutputParserType.G4_UserEventData, data);
@@ -247,6 +254,7 @@ public class DexcomDeviceReader implements ProgressReportInterface
         }
 
     }
+
 
     public ReceiverDownloadData testDownload() throws Exception
     {
@@ -276,28 +284,28 @@ public class DexcomDeviceReader implements ProgressReportInterface
         // }
 
         PartitionInfo info = this.api.readDatabasePartitionInfo();
-        log.debug("Partition Info: PageLength: " + info.getPageDataLength());
+        LOG.debug("Partition Info: PageLength: " + info.getPageDataLength());
 
-        log.debug("Partitions: " + info.getPartitions().size());
+        LOG.debug("Partitions: " + info.getPartitions().size());
 
-        // log.debug(api.readDatabasePageRange(ReceiverRecordType.InsertionTime));
+        // LOG.debug(api.readDatabasePageRange(ReceiverRecordType.InsertionTime));
 
         List<UserEventDataRecord> evs = api.readAllRecordsForEvents();
-        log.debug("Events Records: " + evs.size());
+        LOG.debug("Events Records: " + evs.size());
 
         List<EGVRecord> recs = api.readAllRecordsForEGVData();
 
-        log.debug("EGV Records: " + recs.size());
+        LOG.debug("EGV Records: " + recs.size());
 
         // LanguageType lang = api.readLanguage();
 
-        // log.debug("Language: " + lang.name());
+        // LOG.debug("Language: " + lang.name());
 
         // GlucoseUnitType glu = api.readGlucoseUnit();
 
         // ClockModeType clk = api.readClockMode();
 
-        // log.debug("Clock Mode: " + clk.name());
+        // LOG.debug("Clock Mode: " + clk.name());
 
         // OK
         // api.readAllRecordsForEvents();
@@ -318,6 +326,7 @@ public class DexcomDeviceReader implements ProgressReportInterface
         return data;
     }
 
+
     public void saveAllPages() throws PlugInBaseException
     {
         for (ReceiverRecordType recordType : ReceiverRecordType.values())
@@ -326,15 +335,17 @@ public class DexcomDeviceReader implements ProgressReportInterface
             {
                 continue;
             }
-            log.debug("Droping pages for " + recordType.name());
+            LOG.debug("Droping pages for " + recordType.name());
             this.api.saveDatabasePages(recordType);
         }
     }
+
 
     public void dispose()
     {
         this.api.disconnectDevice();
     }
+
 
     public static void main(String[] args)
     {
@@ -388,10 +399,12 @@ public class DexcomDeviceReader implements ProgressReportInterface
 
     }
 
+
     public void setDownloadCancel(boolean cancel)
     {
         downloadCanceled = cancel;
     }
+
 
     public boolean isDownloadCanceled()
     {
@@ -401,19 +414,23 @@ public class DexcomDeviceReader implements ProgressReportInterface
             return downloadCanceled;
     }
 
+
     public DataOutputParserInterface getDataOutputParser()
     {
         return dataOutputParser;
     }
+
 
     public void setDataOutputParser(DataOutputParserInterface dataOutputParser)
     {
         this.dataOutputParser = dataOutputParser;
     }
 
+
     public void addToProgress(ProgressType arg0, int arg1)
     {
     }
+
 
     public void configureProgressReporter(ProgressType baseProgressType, int staticProgressPercentage,
             int staticMaxElements, int dynamicMaxElements)

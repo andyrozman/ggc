@@ -1,14 +1,14 @@
 package ggc.cgms.device.minimed.file;
 
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
-import ggc.plugin.device.impl.minimed.file.MinimedCareLinkData;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
+import ggc.plugin.device.impl.minimed.file.MinimedCareLinkData;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,7 +41,7 @@ import org.apache.commons.logging.LogFactory;
 public class MinimedCareLinkCGMSData extends MinimedCareLinkData
 {
 
-    private static Log log = LogFactory.getLog(MinimedCareLinkCGMSData.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MinimedCareLinkCGMSData.class);
     private boolean post_process = false;
     private MinimedCareLinkCGMS mmclp;
     private String index = "";
@@ -54,6 +54,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
     private DataAccessCGMS m_da;
     private boolean isig_set = false;
     Hashtable<String, String> items = null;
+
 
     /**
      * @param data
@@ -68,6 +69,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
         // processData();
 
     }
+
 
     // FIXME
     /**
@@ -89,6 +91,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
 
     }
 
+
     /**
      * @return
      */
@@ -106,78 +109,57 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
          * DONE
          */
 
-        if (this.raw_type.equals("GlucoseSensorData")
-                || // glucose sensor data
-                this.raw_type.equals("GlucoseSensorDataLow")
-                || // data low
-                this.raw_type.equals("SensorWeakSignal")
-                || // warning - sensor weak signal
-                this.raw_type.equals("AlarmSensor")
-                || // alarm
+        if (this.raw_type.equals("GlucoseSensorData") || // glucose sensor data
+                this.raw_type.equals("GlucoseSensorDataLow") || // data low
+                this.raw_type.equals("SensorWeakSignal") || // warning - sensor
+                                                            // weak signal
+        this.raw_type.equals("AlarmSensor") || // alarm
 
-                // this.raw_type.equals("SensorSync") || // sensor sync - ignore
-                this.raw_type.equals("SensorCalFactor")
-                || // unknown
-                this.raw_type.equals("SensorCal")
-                || // unknown
-                this.raw_type.equals("SensorStatus")
-                || // status - unknown
-                this.raw_type.equals("SensorPacket")
-                || // packets from sensor
-                this.raw_type.equals("SensorError")
-                || // sensor errors
+        // this.raw_type.equals("SensorSync") || // sensor sync - ignore
+        this.raw_type.equals("SensorCalFactor") || // unknown
+                this.raw_type.equals("SensorCal") || // unknown
+                this.raw_type.equals("SensorStatus") || // status - unknown
+                this.raw_type.equals("SensorPacket") || // packets from sensor
+                this.raw_type.equals("SensorError") || // sensor errors
 
-                this.raw_type.equals("BGTherasense")
-                || // meter entry
+        this.raw_type.equals("BGTherasense") || // meter entry
 
-                // this.raw_type.equals("SensorTimestamp") || // timstamp
-                // this.raw_type.equals("CalBGForGH") || // meter - ignore
-                // this.raw_type.equals("CalBGForPH") || // meter - ignore
-                // this.raw_type.equals("ChangeBatteryEnable") || // battery
-                // change - ignore
-                // this.raw_type.equals("ChangeBatteryEnableGH") || // battery
-                // change - ignore
+        // this.raw_type.equals("SensorTimestamp") || // timstamp
+        // this.raw_type.equals("CalBGForGH") || // meter - ignore
+        // this.raw_type.equals("CalBGForPH") || // meter - ignore
+        // this.raw_type.equals("ChangeBatteryEnable") || // battery
+        // change - ignore
+        // this.raw_type.equals("ChangeBatteryEnableGH") || // battery
+        // change - ignore
 
-                // config
-                this.raw_type.equals("ChangeSensorGlucoseLimitProfile")
-                || // config
+        // config
+        this.raw_type.equals("ChangeSensorGlucoseLimitProfile") || // config
                 this.raw_type.equals("ChangeSensorAlarmSilenceConfig")
-                || this.raw_type.equals("ChangeSensorGlucoseLimitPattern")
-                ||
+                || this.raw_type.equals("ChangeSensorGlucoseLimitPattern") ||
                 // this.raw_type.equals("ChangeSensorGlucoseLimitPatternSetup")
                 // ||
                 // this.raw_type.equals("ChangeSensorSetup2") ||
-                this.raw_type.equals("ChangeSensorSetupConfig2")
-                ||
+        this.raw_type.equals("ChangeSensorSetupConfig2") ||
 
-                // current ?
-                // this.raw_type.equals("CurrentSensorGlucoseLimitProfile") ||
-                this.raw_type.equals("CurrentSensorHighGlucoseSnoozeTime")
-                || this.raw_type.equals("CurrentSensorPredictiveAlertProfile")
-                ||
+        // current ?
+        // this.raw_type.equals("CurrentSensorGlucoseLimitProfile") ||
+        this.raw_type.equals("CurrentSensorHighGlucoseSnoozeTime")
+                || this.raw_type.equals("CurrentSensorPredictiveAlertProfile") ||
                 // this.raw_type.equals("CurrentSensorGlucoseLimitPattern") ||
                 this.raw_type.equals("CurrentSensorPredictiveAlertPattern")
-                || this.raw_type.equals("CurrentTimeDisplayFormat")
-                || this.raw_type.equals("CurrentBeepVolume")
-                || this.raw_type.equals("CurrentChildBlockEnable")
-                || this.raw_type.equals("CurrentKeypadLockedEnable")
-                || this.raw_type.equals("CurrentAlarmClockEnable")
-                || this.raw_type.equals("CurrentAlarmNotifyMode")
-                ||
+                || this.raw_type.equals("CurrentTimeDisplayFormat") || this.raw_type.equals("CurrentBeepVolume")
+                || this.raw_type.equals("CurrentChildBlockEnable") || this.raw_type.equals("CurrentKeypadLockedEnable")
+                || this.raw_type.equals("CurrentAlarmClockEnable") || this.raw_type.equals("CurrentAlarmNotifyMode") ||
                 // this.raw_type.equals("CurrentBatteryStatus") ||
                 // this.raw_type.equals("CurrentErrorStatus") ||
                 // this.raw_type.equals("CurrentPumpStatus") ||
-                this.raw_type.equals("CurrentPumpModelNumber")
-                || this.raw_type.equals("CurrentDisplayLanguage")
-                || this.raw_type.equals("CurrentParadigmLinkEnable")
-                ||
+        this.raw_type.equals("CurrentPumpModelNumber") || this.raw_type.equals("CurrentDisplayLanguage")
+                || this.raw_type.equals("CurrentParadigmLinkEnable") ||
                 // this.raw_type.equals("CurrentSavedSettingsTime") ||
                 // this.raw_type.equals("CurrentHistoryPageNumber") ||
-                this.raw_type.equals("CurrentCarbUnits")
-                ||
+        this.raw_type.equals("CurrentCarbUnits") ||
                 // this.raw_type.equals("CurrentGlucoseHistoryPageNumber") ||
-                this.raw_type.equals("CurrentSensorCalFactor")
-                || this.raw_type.equals("CurrentSensorCalReminderEnable")
+                this.raw_type.equals("CurrentSensorCalFactor") || this.raw_type.equals("CurrentSensorCalReminderEnable")
                 || this.raw_type.equals("CurrentSensorEnable") || this.raw_type.equals("CurrentSensorCalReminderTime")
                 || this.raw_type.equals("CurrentSensorAlarmSnoozeTime")
                 || this.raw_type.equals("CurrentSensorLowGlucoseSnoozeTime")
@@ -188,10 +170,10 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
                 || this.raw_type.equals("CurrentSensorRateOfChangeAlertConfig")
                 || this.raw_type.equals("CurrentSensorAreaUnderCurveConfig") ||
 
-                // JournalEntryPumpLowBattery
+        // JournalEntryPumpLowBattery
 
-                // ignore
-                this.raw_type.equals("CurrentParadigmLinkID") // ignore
+        // ignore
+        this.raw_type.equals("CurrentParadigmLinkID") // ignore
 
         )
             return true;
@@ -199,6 +181,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
             return false;
 
     }
+
 
     /**
      * @return
@@ -210,6 +193,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
         // return false;
     }
 
+
     /**
      * @return
      */
@@ -217,6 +201,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
     {
         return this.mmclp.getCGMSConfigDefinitions().containsKey(this.raw_type);
     }
+
 
     // FIXME
     /**
@@ -257,6 +242,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
          */
     }
 
+
     /**
      * 
      */
@@ -264,6 +250,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
     {
         processData();
     }
+
 
     @Override
     public void processData()
@@ -286,7 +273,8 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
             {
                 if (this.isig_set)
                 {
-                    v = String.format("VALUE=%s;ISIG=%s", v, m_da.getDecimalHandler().getDecimalNumberAsString(ISIG, 2));
+                    v = String.format("VALUE=%s;ISIG=%s", v,
+                        m_da.getDecimalHandler().getDecimalNumberAsString(ISIG, 2));
                 }
 
                 this.mcl.dvw.writeObject(this.raw_type, this.mcl.mm_date.getAtechDate(date, time), v);
@@ -309,6 +297,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
 
     }
 
+
     /**
      * 
      */
@@ -320,6 +309,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
         }
 
     }
+
 
     /**
      * @return
@@ -334,6 +324,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
         // System.out.println("Debug count left: " + debug);
 
     }
+
 
     /**
      * @return
@@ -368,7 +359,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
                 String a = "Unsupported alarm mapping: " + s + "\n" + this.full_data_line;
 
                 this.mcl.output_writer.addErrorMessage(a);
-                log.error(a);
+                LOG.error(a);
                 return null;
             }
 
@@ -439,7 +430,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
                 String a = "Unsupported error mapping: " + this.processed_value + "\n" + this.full_data_line;
 
                 this.mcl.output_writer.addErrorMessage(a);
-                log.error(a);
+                LOG.error(a);
                 return null;
             }
 
@@ -534,7 +525,9 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
             // System.out.println(" It: " + items);
 
             // System.out.println(this.processed_value);
-            // ChangeSensorGlucoseLimitProfile="PATTERN_DATUM=848868440, PROFILE_INDEX=3, LOW_LIMIT_ENABLE=true, LOW_LIMIT=81.072, HIGH_LIMIT_ENABLE=true, HIGH_LIMIT=144.128, START_TIME=59400000"
+            // ChangeSensorGlucoseLimitProfile="PATTERN_DATUM=848868440,
+            // PROFILE_INDEX=3, LOW_LIMIT_ENABLE=true, LOW_LIMIT=81.072,
+            // HIGH_LIMIT_ENABLE=true, HIGH_LIMIT=144.128, START_TIME=59400000"
             return null;
         }
         /*
@@ -574,31 +567,39 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
          * REAL-Time
          * 301,CurrentAlarmNotifyMode,MODE=audio,815418781,2212653,5,Guardian
          * REAL-Time
-         * 302,CurrentBatteryStatus,"STATUS=normal, VOLTAGE=147",815418782,2212653
+         * 302,CurrentBatteryStatus,"STATUS=normal, VOLTAGE=147"
+         * ,815418782,2212653
          * ,6,Guardian REAL-Time
          * 303,CurrentErrorStatus,RAW_STATUS=0,815418783,2212653,7,Guardian
          * REAL-Time
          * 304,CurrentPumpStatus,STATUS=normal,815418784,2212653,8,Guardian
          * REAL-Time
-         * 305,CurrentPumpModelNumber,MODEL_NUMBER=7100,815418785,2212653,9,Guardian
+         * 305,CurrentPumpModelNumber,MODEL_NUMBER=7100,815418785,2212653,9,
+         * Guardian
          * REAL-Time
          * 306,CurrentDisplayLanguage,LANGUAGE=hungarian,815418786,2212653,10,
          * Guardian REAL-Time
-         * 311,CurrentSavedSettingsTime,SAVE_TIME=1200794775000,815418791,2212653
+         * 311,CurrentSavedSettingsTime,SAVE_TIME=1200794775000,815418791,
+         * 2212653
          * ,15,Guardian REAL-Time
-         * 312,CurrentHistoryPageNumber,PAGE_NUMBER=84,815418792,2212653,16,Guardian
+         * 312,CurrentHistoryPageNumber,PAGE_NUMBER=84,815418792,2212653,16,
+         * Guardian
          * REAL-Time
          * 313,CurrentCarbUnits,UNITS=grams,815418793,2212653,17,Guardian
          * REAL-Time
-         * 314,CurrentGlucoseHistoryPageNumber,PAGE_NUMBER=84,815418794,2212653,18
+         * 314,CurrentGlucoseHistoryPageNumber,PAGE_NUMBER=84,815418794,2212653,
+         * 18
          * ,Guardian REAL-Time
-         * ,,,,,,,,,,,CurrentSensorCalFactor,CAL_FACTOR=10.41,815418795,2212653,18
+         * ,,,,,,,,,,,CurrentSensorCalFactor,CAL_FACTOR=10.41,815418795,2212653,
+         * 18
          * ,Guardian REAL-Time
-         * 323,CurrentSensorTransmitterID,TRANSMITTER_ID=2061978,815418803,2212653
+         * 323,CurrentSensorTransmitterID,TRANSMITTER_ID=2061978,815418803,
+         * 2212653
          * ,26,Guardian REAL-Time
          * 324,CurrentSensorBGUnits,UNITS=mmol l,815418804,2212653,27,Guardian
          * REAL-Time
-         * 325,CurrentSensorAlarmSilenceConfig,"DURATION=0, SCOPE=all",815418805,
+         * 325,CurrentSensorAlarmSilenceConfig,"DURATION=0, SCOPE=all"
+         * ,815418805,
          * 2212653,28,Guardian REAL-Time
          * 327,CurrentSensorRateOfChangeAlertConfig,
          * "LIMIT_UNITS=mmol_l_minute, RISING_LIMIT_ENABLE=false, RISING_LIMIT=1.171, FALLING_LIMIT_ENABLE=false, FALLING_LIMIT=1.171"
@@ -609,9 +610,11 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
          * 330,CurrentSensorPredictiveAlertProfile,
          * "PATTERN_DATUM=815418809, PROFILE_INDEX=0, LOW_ENABLE=true, LOW_DURATION=1800000, HIGH_ENABLE=true, HIGH_DURATION=1800000, START_TIME=0"
          * ,815418810,2212653,33,Guardian REAL-Time
-         * 326,CurrentSensorGraphConfig,"ENABLE=false, DURATION=0",815418806,2212653
+         * 326,CurrentSensorGraphConfig,"ENABLE=false, DURATION=0"
+         * ,815418806,2212653
          * ,29,Guardian REAL-Time
-         * 329,CurrentSensorPredictiveAlertPattern,"ENABLE=true, NUM_PROFILES=1",
+         * 329,CurrentSensorPredictiveAlertPattern,"ENABLE=true, NUM_PROFILES=1"
+         * ,
          * 815418809,2212653,32,Guardian REAL-Time
          * 331,CurrentSensorGlucoseLimitPattern,"ENABLE=true, NUM_PROFILES=4",
          * 815418811,2212653,34,Guardian REAL-Time
@@ -783,7 +786,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
          * String a = "Unsupported profile pattern change: " + s + "\n" +
          * this.full_data_line;
          * this.mcl.outputWriter.addErrorMessage(a);
-         * log.error(a);
+         * LOG.error(a);
          * return null;
          * }
          * // PATTERN_NAME=pattern b
@@ -815,11 +818,11 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
 
         // problem with timezones
         // System.out.println( gc.get(Calendar.DAY_OF_MONTH) + "/" +
-        // (gc.get(Calendar.MONTH)+1) + "/" + gc.get(Calendar.YEAR) + "  " +
+        // (gc.get(Calendar.MONTH)+1) + "/" + gc.get(Calendar.YEAR) + " " +
         // gc.get(Calendar.HOUR_OF_DAY) + ":" + gc.get(Calendar.MINUTE) + ":" +
         // gc.get(Calendar.SECOND));
         // System.out.println( /*gc.get(Calendar.DAY_OF_MONTH) + "/" +
-        // (gc.get(Calendar.MONTH)+1) + "/" + gc.get(Calendar.YEAR) + "  " +*/
+        // (gc.get(Calendar.MONTH)+1) + "/" + gc.get(Calendar.YEAR) + " " +*/
         // gc.getHours() + ":" + gc.getMinutes() + ":" + gc.getSeconds());
 
         // 08.6.14 11:14:00
@@ -838,7 +841,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
          * String a = "Unsupported alarm mapping: " + s + "\n" +
          * this.full_data_line;
          * this.mcl.outputWriter.addErrorMessage(a);
-         * log.error(a);
+         * LOG.error(a);
          * return null;
          * }
          * //System.out.println("ALARM: " + s);
@@ -985,6 +988,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
 
     }
 
+
     /*
      * PumpValuesEntryInterface pve_object;
      * public PumpValuesEntryInterface getPumpValuesEntryObject()
@@ -1007,6 +1011,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
         }
     }
 
+
     /**
      * @return
      */
@@ -1014,6 +1019,7 @@ public class MinimedCareLinkCGMSData extends MinimedCareLinkData
     {
         return this.items;
     }
+
 
     /**
      * @return

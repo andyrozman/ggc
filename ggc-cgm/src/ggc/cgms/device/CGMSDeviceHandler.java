@@ -6,12 +6,12 @@ import ggc.cgms.data.defs.CGMSDeviceDefinition;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.v2.DeviceDefinition;
-import ggc.plugin.device.v2.DeviceHandler;
+import ggc.plugin.device.v2.DeviceHandlerAbstract;
 
 /**
  * Created by andy on 15.04.15.
  */
-public abstract class CGMSDeviceHandler implements DeviceHandler
+public abstract class CGMSDeviceHandler extends DeviceHandlerAbstract
 {
 
     public List<GGCPlugInFileReaderContext> getFileDownloadContexts(DownloadSupportType downloadSupportType)

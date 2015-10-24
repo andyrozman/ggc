@@ -38,7 +38,7 @@ import ggc.plugin.device.PlugInBaseException;
 public class DataPagesToInsertionTimeConverter extends BytesConverterAbstract
 {
 
-    // private static final Log log =
+    // private static final Log LOG =
     // LogFactory.getLog(DataPagesToInsertionTimeConverter.class);
 
     public List<InsertionTimeRecord> convert(List<DatabasePage> pages) throws PlugInBaseException
@@ -62,7 +62,7 @@ public class DataPagesToInsertionTimeConverter extends BytesConverterAbstract
 
             records.add(itr);
 
-            // log.debug(itr);
+            // LOG.debug(itr);
         }
 
         return records;

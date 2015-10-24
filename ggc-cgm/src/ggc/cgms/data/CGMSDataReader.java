@@ -2,8 +2,8 @@ package ggc.cgms.data;
 
 import java.util.Hashtable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.cgms.data.db.GGC_CGMSDb;
 import ggc.cgms.util.DataAccessCGMS;
@@ -39,7 +39,7 @@ import ggc.plugin.gui.OldDataReaderAbstract;
 public class CGMSDataReader extends OldDataReaderAbstract
 {
 
-    private static Log log = LogFactory.getLog(CGMSDataReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CGMSDataReader.class);
 
     GGC_CGMSDb db = null;
     DataAccessCGMS m_da = null;
@@ -102,7 +102,7 @@ public class CGMSDataReader extends OldDataReaderAbstract
         if (centry == -1)
         {
             db_reading += 20.0f;
-            log.debug("Old Data reading progress +20% [" + m_da.getApplicationName() + "]");
+            LOG.debug("Old Data reading progress +20% [" + m_da.getApplicationName() + "]");
         }
         else
         {

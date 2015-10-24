@@ -2,17 +2,17 @@ package ggc.cgms.data;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 
 import ggc.cgms.data.defs.CGMSBaseDataType;
 import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.cgms.CGMSDataH;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.output.OutputWriterType;
@@ -47,7 +47,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
 {
 
     DataAccessCGMS da = DataAccessCGMS.getInstance();
-    private static Log log = LogFactory.getLog(CGMSValuesEntry.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CGMSValuesEntry.class);
 
     long id;
 
@@ -296,33 +296,33 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         switch (index)
         {
-        /*
-         * case 0: // time
-         * {
-         * return this.datetime.getTimeString();
-         * }
-         * case 1: // type
-         * {
-         * return getBaseTypeString();
-         * }
-         * case 2: // subtype
-         * {
-         * return getSubTypeString();
-         * }
-         * case 3: // value
-         * {
-         * //return this.getCode();
-         * return getValuePrint();
-         * }
-         * case 4: // additional
-         * {
-         * return this.getAdditionalDisplay();
-         * }
-         * case 5: // food
-         * {
-         * return this.isFoodSet();
-         * }
-         */
+            /*
+             * case 0: // time
+             * {
+             * return this.datetime.getTimeString();
+             * }
+             * case 1: // type
+             * {
+             * return getBaseTypeString();
+             * }
+             * case 2: // subtype
+             * {
+             * return getSubTypeString();
+             * }
+             * case 3: // value
+             * {
+             * //return this.getCode();
+             * return getValuePrint();
+             * }
+             * case 4: // additional
+             * {
+             * return this.getAdditionalDisplay();
+             * }
+             * case 5: // food
+             * {
+             * return this.isFoodSet();
+             * }
+             */
         }
         return "N/A";
     }
@@ -334,9 +334,9 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      * @return format of date time (precission)
      */
     @Override
-    public int getDateTimeFormat()
+    public ATechDateType getDateTimeFormat()
     {
-        return ATechDate.FORMAT_DATE_AND_TIME_S;
+        return ATechDateType.DateAndTimeSec;
     }
 
 
@@ -368,7 +368,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
                      * }
                      * catch(Exception ex)
                      * {
-                     * log.error(
+                     * LOG.error(
                      * "Problem with PumpValuesEntry export !  Exception: " +
                      * ex, ex);
                      * return "Value could not be decoded for export!";
@@ -817,7 +817,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
             }
             else
             {
-                log.warn("Unknown token with extended data: " + tok);
+                LOG.warn("Unknown token with extended data: " + tok);
             }
 
         }

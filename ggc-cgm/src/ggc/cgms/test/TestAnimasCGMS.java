@@ -1,11 +1,6 @@
 package ggc.cgms.test;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import ggc.cgms.device.animas.impl.AnimasCGMSDeviceReader;
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.util.DataAccess;
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.output.ConsoleOutputWriter;
 
@@ -37,31 +32,15 @@ import ggc.plugin.output.ConsoleOutputWriter;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class TestAnimasCGMS
+public class TestAnimasCGMS extends AbstractCGMSTest
 {
 
-    private static final Log LOG = LogFactory.getLog(TestAnimasCGMS.class);
-
-
-    public static void main(String[] args)
+    public void testAnimas()
     {
         try
         {
-            // DbToolApplicationGGC m_configFile = new DbToolApplicationGGC();
-            // m_configFile.loadConfig();
 
-            DataAccess daCore = DataAccess.getInstance();
-
-            // GGCDbLoader loader = new GGCDbLoader(daCore);
-            // loader.run();
-
-            // GGCDbConfig db = new GGCDbConfig(false);
-
-            // GGCDb db = new GGCDb(daCore);
-            // db.initDb();
-
-            DataAccessCGMS da = DataAccessCGMS.createInstance(daCore.getLanguageManager());
-            da.initAllObjects();
+            prepareContext();
 
             // da.createPlugInDataRetrievalContext();
             //
@@ -85,6 +64,13 @@ public class TestAnimasCGMS
             System.out.println("Error running AnimasDeviceReader: " + ex.getMessage());
             ex.printStackTrace();
         }
+
+    }
+
+
+    public static void main(String[] args)
+    {
+        new TestAnimasCGMS().testAnimas();
     }
 
 }

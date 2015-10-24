@@ -37,7 +37,7 @@ import ggc.plugin.device.PlugInBaseException;
 public class DataPagesToMeterConverter extends BytesConverterAbstract
 {
 
-    // private static final Log log =
+    // private static final Log LOG =
     // LogFactory.getLog(DataPagesToMeterConverter.class);
 
     public List<MeterDataRecord> convert(List<DatabasePage> pages) throws PlugInBaseException
@@ -61,7 +61,7 @@ public class DataPagesToMeterConverter extends BytesConverterAbstract
 
             records.add(mr);
 
-            // log.debug(mr);
+            // LOG.debug(mr);
         }
 
         return records;

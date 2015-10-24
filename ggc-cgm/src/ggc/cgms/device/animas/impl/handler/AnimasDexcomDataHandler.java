@@ -3,6 +3,9 @@ package ggc.cgms.device.animas.impl.handler;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.cgms.device.animas.impl.converter.AnimasDexcomDataConverter;
 import ggc.cgms.device.animas.impl.data.AnimasCGMSDeviceData;
 import ggc.plugin.data.progress.ProgressType;
@@ -44,6 +47,8 @@ import ggc.plugin.output.OutputWriter;
 
 public class AnimasDexcomDataHandler extends AbstractDeviceDataV2Handler
 {
+
+    public static final Logger LOG = LoggerFactory.getLogger(AnimasDexcomDataHandler.class);
 
     AnimasCGMSDeviceData data;
     AnimasDexcomDataConverter dexcomDataConverter;

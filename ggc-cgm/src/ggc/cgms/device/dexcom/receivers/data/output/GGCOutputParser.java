@@ -1,7 +1,7 @@
 package ggc.cgms.device.dexcom.receivers.data.output;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
@@ -53,7 +53,7 @@ import ggc.plugin.output.OutputWriter;
 public class GGCOutputParser implements DataOutputParserInterface
 {
 
-    private static Log log = LogFactory.getLog(GGCOutputParser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GGCOutputParser.class);
     OutputWriter outputWriter;
     CGMSValuesTableModel valuesModel;
     DataAccessCGMS dataAccess = DataAccessCGMS.getInstance();
@@ -113,7 +113,8 @@ public class GGCOutputParser implements DataOutputParserInterface
     }
 
 
-    private void writeElements(DataOutputParserType dataType, DataOutputParserType parserType, ReceiverDownloadData data)
+    private void writeElements(DataOutputParserType dataType, DataOutputParserType parserType,
+            ReceiverDownloadData data)
     {
         for (Object element : data.getDataByType(dataType))
         {
@@ -141,7 +142,7 @@ public class GGCOutputParser implements DataOutputParserInterface
                 writeUserEventData((UserEventDataRecord) element);
                 break;
             default:
-                log.debug("Unsupported Type for Writing: " + parserType.name());
+                LOG.debug("Unsupported Type for Writing: " + parserType.name());
                 break;
 
         }
@@ -194,7 +195,7 @@ public class GGCOutputParser implements DataOutputParserInterface
 
     private void writeMeterData(MeterDataRecord record)
     {
-        // log.debug("DateTime meterdata device: " + record.getDisplayDate());
+        // LOG.debug("DateTime meterdata device: " + record.getDisplayDate());
 
         CGMSValuesSubEntry sub = new CGMSValuesSubEntry();
         sub.setDateTime(ATechDate.getATDateTimeFromDate(record.getDisplayDate(), ATechDate.FORMAT_DATE_AND_TIME_S));
@@ -285,18 +286,18 @@ public class GGCOutputParser implements DataOutputParserInterface
     private void writeConfiguration(ReceiverDownloadData data)
     {
         String[] cfgs = { "API_VERSION", "PRODUCT_ID", //
-                         "PRODUCT_NAME", "SOFTWARE_NUMBER", //
-                         "FIRMWARE_VERSION", "PORT_VERSION", //
-                         "RF_VERSION", "SYSTEM_TIME", //
-                         "DISPLAY_TIME", "LANGUAGE", //
-                         "GLUCOSE_UNIT", "CLOCK_MODE" };
+                          "PRODUCT_NAME", "SOFTWARE_NUMBER", //
+                          "FIRMWARE_VERSION", "PORT_VERSION", //
+                          "RF_VERSION", "SYSTEM_TIME", //
+                          "DISPLAY_TIME", "LANGUAGE", //
+                          "GLUCOSE_UNIT", "CLOCK_MODE" };
 
         CGMSConfigurationGroup[] configGroup = { CGMSConfigurationGroup.Device, CGMSConfigurationGroup.Device,
-                                                CGMSConfigurationGroup.Device, CGMSConfigurationGroup.Device,
-                                                CGMSConfigurationGroup.Device, CGMSConfigurationGroup.Device,
-                                                CGMSConfigurationGroup.Device, CGMSConfigurationGroup.General,
-                                                CGMSConfigurationGroup.General, CGMSConfigurationGroup.General,
-                                                CGMSConfigurationGroup.General, CGMSConfigurationGroup.General };
+                                                 CGMSConfigurationGroup.Device, CGMSConfigurationGroup.Device,
+                                                 CGMSConfigurationGroup.Device, CGMSConfigurationGroup.Device,
+                                                 CGMSConfigurationGroup.Device, CGMSConfigurationGroup.General,
+                                                 CGMSConfigurationGroup.General, CGMSConfigurationGroup.General,
+                                                 CGMSConfigurationGroup.General, CGMSConfigurationGroup.General };
 
         for (int i = 0; i < cfgs.length; i++)
         {

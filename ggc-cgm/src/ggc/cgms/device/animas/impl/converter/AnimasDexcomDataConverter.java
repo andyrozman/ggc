@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 
@@ -52,7 +52,8 @@ import ggc.plugin.device.impl.animas.util.AnimasUtils;
 
 public class AnimasDexcomDataConverter extends AnimasAbstractDataConverter
 {
-    public static final Log LOG = LogFactory.getLog(AnimasDexcomDataConverter.class);
+
+    public static final Logger LOG = LoggerFactory.getLogger(AnimasDexcomDataConverter.class);
 
     AnimasCGMSDeviceData data;
     HashMap<String, BigDecimal> bigDecimals = new HashMap<String, BigDecimal>();
@@ -136,8 +137,8 @@ public class AnimasDexcomDataConverter extends AnimasAbstractDataConverter
                 warn.warningType = AnimasCGMSWarningType.getWarningType(warn.warningCode);
 
                 short[] dataBits = { packet.getReceivedDataBit(start + 5), packet.getReceivedDataBit(start + 6),
-                                    packet.getReceivedDataBit(start + 7), packet.getReceivedDataBit(start + 8),
-                                    packet.getReceivedDataBit(start + 9) };
+                                     packet.getReceivedDataBit(start + 7), packet.getReceivedDataBit(start + 8),
+                                     packet.getReceivedDataBit(start + 9) };
 
                 warn.dataBits = dataBits;
 
@@ -158,8 +159,8 @@ public class AnimasDexcomDataConverter extends AnimasAbstractDataConverter
         {
             AnimasDexcomHistoryEntry entry = new AnimasDexcomHistoryEntry();
 
-            entry.glucoseValueWithFlags = (short) AnimasUtils.createIntValueThroughMoreBits(
-                packet.getReceivedDataBit(i), packet.getReceivedDataBit(i + 1));
+            entry.glucoseValueWithFlags = (short) AnimasUtils
+                    .createIntValueThroughMoreBits(packet.getReceivedDataBit(i), packet.getReceivedDataBit(i + 1));
 
             entry.dateTime = convertDexcomDateTimeToATechDate(packet.getReceivedDataBit(i + 2),
                 packet.getReceivedDataBit(i + 3), packet.getReceivedDataBit(i + 4), packet.getReceivedDataBit(i + 5));
@@ -193,12 +194,12 @@ public class AnimasDexcomDataConverter extends AnimasAbstractDataConverter
 
         settings.soundVolumes.put(AnimasSoundType.CGMS_HighAlert,
             SoundValueType.getByCode(packet.getReceivedDataBit(6)));
-        settings.soundVolumes
-                .put(AnimasSoundType.CGMS_LowAlert, SoundValueType.getByCode(packet.getReceivedDataBit(7)));
-        settings.soundVolumes
-                .put(AnimasSoundType.CGMS_RiseRate, SoundValueType.getByCode(packet.getReceivedDataBit(8)));
-        settings.soundVolumes
-                .put(AnimasSoundType.CGMS_FallRate, SoundValueType.getByCode(packet.getReceivedDataBit(9)));
+        settings.soundVolumes.put(AnimasSoundType.CGMS_LowAlert,
+            SoundValueType.getByCode(packet.getReceivedDataBit(7)));
+        settings.soundVolumes.put(AnimasSoundType.CGMS_RiseRate,
+            SoundValueType.getByCode(packet.getReceivedDataBit(8)));
+        settings.soundVolumes.put(AnimasSoundType.CGMS_FallRate,
+            SoundValueType.getByCode(packet.getReceivedDataBit(9)));
         settings.soundVolumes.put(AnimasSoundType.CGMS_Range, SoundValueType.getByCode(packet.getReceivedDataBit(10)));
         settings.soundVolumes.put(AnimasSoundType.CGMS_Others, SoundValueType.getByCode(packet.getReceivedDataBit(11)));
 
@@ -244,7 +245,6 @@ public class AnimasDexcomDataConverter extends AnimasAbstractDataConverter
 
 
     // UTILS
-
 
     /**
      * This method now works for DaylightSaving and for GMT, but we still need to determine if this will work

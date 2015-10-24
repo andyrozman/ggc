@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 
@@ -44,7 +44,8 @@ public class CGMSValuesTableModel extends DeviceValuesTableModel
 {
 
     private static final long serialVersionUID = 2881771615052748327L;
-    private static final Log LOG = LogFactory.getLog(CGMSValuesTableModel.class);
+
+    private static final Logger LOG = LoggerFactory.getLogger(CGMSValuesTableModel.class);
 
     Map<String, CGMSValuesEntry> dataTable = null;
     String old_key = null;

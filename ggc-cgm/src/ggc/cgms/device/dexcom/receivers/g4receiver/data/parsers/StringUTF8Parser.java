@@ -1,8 +1,5 @@
 package ggc.cgms.device.dexcom.receivers.g4receiver.data.parsers;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.atech.utils.data.ShortUtils;
 
 import ggc.cgms.device.dexcom.receivers.data.CommandPacket;
@@ -35,8 +32,6 @@ import ggc.cgms.device.dexcom.receivers.g4receiver.util.DexcomUtils;
  */
 public class StringUTF8Parser implements DexcomCommandParserInterface
 {
-
-    Log log = LogFactory.getLog(StringUTF8Parser.class);
 
     ShortUtils utils = DexcomUtils.getShortUtils();
 

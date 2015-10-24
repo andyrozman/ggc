@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 
@@ -53,6 +54,8 @@ import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
 
 public class AnimasCGMSDeviceData extends AnimasDeviceData
 {
+
+    public static final Logger LOG = LoggerFactory.getLogger(AnimasCGMSDeviceData.class);
 
     public CGMSSettings cgmsSettings;
     // AnimasCGMSDataWriter animasCGMSDataWriter;
@@ -108,9 +111,9 @@ public class AnimasCGMSDeviceData extends AnimasDeviceData
 
 
     @Override
-    public void debugAllSettings(Log log)
+    public void debugAllSettings(Logger log)
     {
-        this.cgmsSettings.debugAllSettings(log);
+        this.cgmsSettings.debugAllSettings(LOG);
     }
 
 

@@ -1,13 +1,8 @@
 package ggc.cgms.util;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
-
-import com.atech.graphics.components.about.*;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.i18n.mgr.LanguageManager;
 
 import ggc.cgms.data.CGMSDataHandler;
 import ggc.cgms.data.CGMSDataReader;
@@ -16,16 +11,12 @@ import ggc.cgms.data.ExtendedCGMSValuesExtendedEntry;
 import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
 import ggc.cgms.data.db.GGC_CGMSDb;
 import ggc.cgms.data.graph.v2.CGMSGraphContext;
-import ggc.cgms.device.animas.AnimasCGMSHandler;
-import ggc.cgms.device.dexcom.DexcomHandler;
+import ggc.cgms.defs.CGMSPluginDefinition;
 import ggc.cgms.manager.CGMSManager;
-import ggc.core.plugins.GGCPluginType;
 import ggc.core.util.DataAccess;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
-import ggc.plugin.device.mgr.DeviceHandlerManager;
-import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -57,21 +48,11 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public class DataAccessCGMS extends DataAccessPlugInBase
 {
 
-    /**
-     * PlugIn Version
-     */
-    public static final String PLUGIN_VERSION = "1.3.3";
-
     private static final String EXTENDED_HANDLER_CGMSValuesExtendedEntry = "CGMSValuesExtendedEntry";
 
     private static DataAccessCGMS s_da = null; // This is handle to unique
 
     private CGMSManager m_cgms_manager = null;
-
-    /**
-     * Value Types
-     */
-    // public static String[] value_types = null;
 
     /**
      * Value Type
@@ -89,10 +70,11 @@ public class DataAccessCGMS extends DataAccessPlugInBase
      *  constructor is protected and can be accessed only with getInstance() 
      *  method.<br><br>
      *
+     * @param cgmsPluginDefinition
      */
-    private DataAccessCGMS(LanguageManager lm)
+    private DataAccessCGMS(CGMSPluginDefinition cgmsPluginDefinition)
     {
-        super(lm, new GGC_CGMS_ICRunner());
+        super(cgmsPluginDefinition);
     }
 
 
@@ -102,19 +84,16 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void initSpecial()
     {
-        checkPrerequisites();
-
-        this.createWebListerContext();
-        this.createPlugInAboutContext();
+        // this.createWebListerContext();
+        // this.createPlugInAboutContext();
         this.createConfigurationContext();
-        this.createPlugInVersion();
         loadDeviceDataHandler();
         // loadManager();
         // loadReadingStatuses();
         this.createPlugInDataRetrievalContext();
         this.createDeviceConfiguration();
         this.createOldDataReader();
-        loadWebLister();
+
         this.loadConverters();
 
         this.prepareTranslationForEnums();
@@ -147,14 +126,14 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     /**
      * Create Instance
      * 
-     * @param lm
+     * @param cgmsPluginDefinition
      * @return
      */
-    public static DataAccessCGMS createInstance(LanguageManager lm)
+    public static DataAccessCGMS createInstance(CGMSPluginDefinition cgmsPluginDefinition)
     {
         if (s_da == null)
         {
-            s_da = new DataAccessCGMS(lm);
+            s_da = new DataAccessCGMS(cgmsPluginDefinition);
         }
         return s_da;
     }
@@ -169,47 +148,9 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         m_i18n = null;
     }
 
-
     // ********************************************************
     // ****** Abstract Methods *****
     // ********************************************************
-
-    @Override
-    public void registerDeviceHandlers()
-    {
-        // Animas CGMS - Dexcom (Vibe)
-        DeviceHandlerManager.getInstance().addDeviceHandler(new AnimasCGMSHandler());
-
-        // Dexcom: G4
-        DeviceHandlerManager.getInstance().addDeviceHandler(new DexcomHandler());
-
-    }
-
-
-    @Override
-    public GGCPluginType getPluginType()
-    {
-        return GGCPluginType.CGMSToolPlugin;
-    }
-
-
-    /** 
-     * Get Application Name
-     */
-    @Override
-    public String getApplicationName()
-    {
-        return "GGC_CGMSTool";
-    }
-
-
-    /** 
-     * Check Prerequisites for Plugin
-     */
-    @Override
-    public void checkPrerequisites()
-    {
-    }
 
 
     // ********************************************************
@@ -226,42 +167,10 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         return this.m_cgms_manager;
     }
 
-
     // ********************************************************
     // ****** Parent handling (for UIs) *****
     // ********************************************************
 
-    /**
-     *  Utils
-     */
-
-    /*
-     * public Image getImage(String filename, Component cmp)
-     * {
-     * Image img;
-     * InputStream is = this.getClass().getResourceAsStream(filename);
-     * if (is==null)
-     * System.out.println("Error reading image: "+filename);
-     * ByteArrayOutputStream baos = new ByteArrayOutputStream();
-     * try
-     * {
-     * int c;
-     * while ((c = is.read()) >=0)
-     * baos.write(c);
-     * //JDialog.getT
-     * //JFrame.getToolkit();
-     * if (cmp==null)
-     * cmp = new JLabel();
-     * img = cmp.getToolkit().createImage(baos.toByteArray());
-     * }
-     * catch (IOException ex)
-     * {
-     * ex.printStackTrace();
-     * return null;
-     * }
-     * return img;
-     * }
-     */
 
     // ********************************************************
     // ****** Dates and Times Handling *****
@@ -328,119 +237,105 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         this.device_config = new DeviceConfiguration(this);
     }
 
-
     // ********************************************************
     // ****** About Methods *****
     // ********************************************************
 
-    /**
-     * Create About Context for plugin
-     */
-    @Override
-    public void createPlugInAboutContext()
-    {
-        I18nControlAbstract ic = this.getI18nControlInstance();
-        // this.about_title =
-        // i18nControlAbstract.getMessage("PUMP_PLUGIN_ABOUT");
-        this.about_image_name = "/icons/cgms_about.jpg";
-
-        this.about_plugin_copyright_from = 2009;
-        // this.about_plugin_name =
-        // i18nControlAbstract.getMessage("PUMP_PLUGIN");
-
-        // libraries
-        ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
-
-        lst_libs.addAll(getBaseLibraries());
-
-        this.plugin_libraries = lst_libs;
-
-        // developers and other credits
-        ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
-
-        CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
-        cg.addCreditsEntry(
-            new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com", "Framework, About, Outputs")); // and
-                                                                                                                   // support
-                                                                                                                   // for
-                                                                                                                   // Ascensia
-                                                                                                                   // &
-                                                                                                                   // Roche
-                                                                                                                   // devices"));
-        lst_credits.add(cg);
-
-        this.plugin_developers = lst_credits;
-
-        // features
-        ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
-
-        FeaturesGroup fg = new FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Base CGMS Tools Framework"));
-        fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
-        fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
-        fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
-        fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
-        fg.addFeaturesEntry(new FeaturesEntry("List of CGMSes"));
-        fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
-
-        lst_features.add(fg);
-
-        fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Dexcom (file imports from DM3 App)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Dexcom G4"));
-
-        lst_features.add(fg);
-
-        fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Graphs"));
-        fg.addFeaturesEntry(new FeaturesEntry("Printing"));
-
-        lst_features.add(fg);
-
-        fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
-        fg.addFeaturesEntry(new FeaturesEntry("Minimed RealTime (??)"));
-        fg.addFeaturesEntry(new FeaturesEntry("Freestyle Navigator (??)"));
-
-        lst_features.add(fg);
-
-        this.plugin_features = lst_features;
-    }
-
-
-    // ********************************************************
-    // ****** Version *****
-    // ********************************************************
-
-    /**
-     * Create Plugin Version
-     */
-    @Override
-    public void createPlugInVersion()
-    {
-        this.plugin_version = DataAccessCGMS.PLUGIN_VERSION;
-    }
-
+    // /**
+    // * Create About Context for plugin
+    // */
+    // @Override
+    // public void createPlugInAboutContext()
+    // {
+    // I18nControlAbstract ic = this.getI18nControlInstance();
+    // // this.about_title =
+    // // i18nControlAbstract.getMessage("PUMP_PLUGIN_ABOUT");
+    // this.about_image_name = "/icons/cgms_about.jpg";
+    //
+    // this.about_plugin_copyright_from = 2009;
+    // // this.about_plugin_name =
+    // // i18nControlAbstract.getMessage("PUMP_PLUGIN");
+    //
+    // // libraries
+    // ArrayList<LibraryInfoEntry> lst_libs = new ArrayList<LibraryInfoEntry>();
+    //
+    // lst_libs.addAll(getBaseLibraries());
+    //
+    // this.plugin_libraries = lst_libs;
+    //
+    // // developers and other credits
+    // ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
+    //
+    // CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
+    // cg.addCreditsEntry(
+    // new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com",
+    // "Framework, About, Outputs"));
+    // lst_credits.add(cg);
+    //
+    // this.plugin_developers = lst_credits;
+    //
+    // // features
+    // ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
+    //
+    // FeaturesGroup fg = new
+    // FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Base CGMS Tools Framework"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Reading data"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Configuration"));
+    // fg.addFeaturesEntry(new FeaturesEntry("List of CGMSes"));
+    // fg.addFeaturesEntry(new FeaturesEntry("About dialog"));
+    //
+    // lst_features.add(fg);
+    //
+    // fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Dexcom (file imports from DM3
+    // App)"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Dexcom G4"));
+    //
+    // lst_features.add(fg);
+    //
+    // fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Graphs"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Printing"));
+    //
+    // lst_features.add(fg);
+    //
+    // fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Minimed RealTime (??)"));
+    // fg.addFeaturesEntry(new FeaturesEntry("Freestyle Navigator (??)"));
+    //
+    // lst_features.add(fg);
+    //
+    // this.plugin_features = lst_features;
+    // }
 
     // ********************************************************
     // ****** Web Lister Methods *****
     // ********************************************************
 
-    /**
-     * Create WebLister (for List) Context for plugin
-     */
-    @Override
-    public void createWebListerContext()
-    {
-        this.weblister_items = new ArrayList<BaseListEntry>();
-        this.weblister_items
-                .add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html", BaseListEntry.STATUS_NOTPLANNED));
-        this.weblister_items
-                .add(new BaseListEntry("Dexcom", "/cgms/dexcom.html", BaseListEntry.STATUS_PART_IMPLEMENTED));
-        this.weblister_items.add(new BaseListEntry("Minimed", "/cgms/minimed.html", BaseListEntry.STATUS_PLANNED));
-
-        this.weblister_title = this.m_i18n.getMessage("DEVICE_LIST_WEB");
-        this.weblister_desc = this.m_i18n.getMessage("DEVICE_LIST_WEB_DESC");
-    }
+    // /**
+    // * Create WebLister (for List) Context for plugin
+    // */
+    // @Override
+    // public void createWebListerContext()
+    // {
+    // this.weblister_items = new ArrayList<BaseListEntry>();
+    // this.weblister_items
+    // .add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html",
+    // BaseListEntry.STATUS_NOTPLANNED));
+    // this.weblister_items.add(new BaseListEntry("Animas", "/cgms/animas.html",
+    // BaseListEntry.STATUS_DONE));
+    // this.weblister_items
+    // .add(new BaseListEntry("Dexcom", "/cgms/dexcom.html",
+    // BaseListEntry.STATUS_PART_IMPLEMENTED));
+    // this.weblister_items.add(new BaseListEntry("Minimed",
+    // "/cgms/minimed.html", BaseListEntry.STATUS_PLANNED));
+    //
+    // this.weblister_title = this.m_i18n.getMessage("DEVICE_LIST_WEB");
+    // this.weblister_desc = this.m_i18n.getMessage("DEVICE_LIST_WEB_DESC");
+    // }
 
 
     /**
@@ -473,7 +368,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void loadManager()
     {
-        this.m_cgms_manager = CGMSManager.getInstance();
+        this.m_cgms_manager = CGMSManager.getInstance(this);
         this.m_manager = this.m_cgms_manager;
     }
 
@@ -510,15 +405,6 @@ public class DataAccessCGMS extends DataAccessPlugInBase
 
 
     /**
-     * Load PlugIns
-     */
-    @Override
-    public void loadPlugIns()
-    {
-    }
-
-
-    /**
      * Create Old Data Reader
      */
     @Override
@@ -538,38 +424,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     public void loadSpecialParameters()
     {
         this.special_parameters = new Hashtable<String, String>();
-        this.special_parameters.put("BG", "" + this.getBGMeasurmentType());
-    }
-
-
-    /** 
-     * Get About Image Size - Define about image size
-     */
-    @Override
-    public int[] getAboutImageSize()
-    {
-        int[] sz = new int[2];
-        sz[0] = 400;
-        sz[1] = 203;
-
-        return sz;
-    }
-
-
-    @Override
-    public void initAllObjects()
-    {
-    }
-
-
-    /**
-     * Get Name of Plugin (for internal use)
-     * @return
-     */
-    @Override
-    public String getPluginName()
-    {
-        return "GGC CGMS Plugin";
+        this.special_parameters.put("BG", "" + this.getGlucoseUnitType());
     }
 
 

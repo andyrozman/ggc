@@ -7,6 +7,7 @@ import ggc.cgms.manager.company.Dexcom;
 import ggc.cgms.manager.company.Minimed;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.manager.DeviceManager;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -46,9 +47,9 @@ public class CGMSManager extends DeviceManager
     /**
      * Constructor
      */
-    private CGMSManager()
+    private CGMSManager(DataAccessPlugInBase da)
     {
-        super();
+        super(da);
     }
 
 
@@ -56,13 +57,19 @@ public class CGMSManager extends DeviceManager
      * Return singelton instance
      * @return
      */
-    public static CGMSManager getInstance()
+    public static CGMSManager getInstance(DataAccessPlugInBase da)
     {
         if (CGMSManager.s_manager == null)
         {
-            CGMSManager.s_manager = new CGMSManager();
+            CGMSManager.s_manager = new CGMSManager(da);
         }
 
+        return CGMSManager.s_manager;
+    }
+
+
+    public static CGMSManager getInstance()
+    {
         return CGMSManager.s_manager;
     }
 
