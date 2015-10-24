@@ -1,16 +1,10 @@
 package ggc.pump.manager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.manager.DeviceManager;
-import ggc.pump.data.defs.PumpDeviceDefinition;
+import ggc.pump.defs.device.PumpDeviceDefinition;
 import ggc.pump.device.PumpDeviceInstanceWithHandler;
-import ggc.pump.manager.company.Deltec;
-import ggc.pump.manager.company.Minimed;
-import ggc.pump.manager.company.Roche;
-import ggc.pump.manager.company.Sooil;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,8 +35,6 @@ import ggc.pump.manager.company.Sooil;
 public class PumpManager extends DeviceManager
 {
 
-    private static Log LOG = LogFactory.getLog(PumpManager.class);
-
     /**
      * Singleton instance
      */
@@ -52,9 +44,9 @@ public class PumpManager extends DeviceManager
     /**
      * Constructor
      */
-    private PumpManager()
+    private PumpManager(DataAccessPump da)
     {
-        super();
+        super(da);
     }
 
 
@@ -78,13 +70,24 @@ public class PumpManager extends DeviceManager
      * 
      * @return PumpManager instance
      */
-    public static PumpManager getInstance()
+    public static PumpManager getInstance(DataAccessPump da)
     {
         if (PumpManager.s_manager == null)
         {
-            PumpManager.s_manager = new PumpManager();
+            PumpManager.s_manager = new PumpManager(da);
         }
 
+        return PumpManager.s_manager;
+    }
+
+
+    /**
+     * Get PumpManager instance
+     *
+     * @return PumpManager instance
+     */
+    public static PumpManager getInstance()
+    {
         return PumpManager.s_manager;
     }
 
@@ -96,11 +99,11 @@ public class PumpManager extends DeviceManager
     public void loadDeviceCompanies()
     {
         // addDeviceCompany(new Animas()); v2
-        addDeviceCompany(new Deltec());
+        // addDeviceCompany(new Deltec(dataAccessPlugInBase));
         // addDeviceCompany(new Insulet()); v2
-        addDeviceCompany(new Minimed());
-        addDeviceCompany(new Roche());
-        addDeviceCompany(new Sooil());
+        // addDeviceCompany(new Minimed());
+        // addDeviceCompany(new Roche(dataAccessPlugInBase));
+        // addDeviceCompany(new Sooil(dataAccessPlugInBase));
     }
 
 }

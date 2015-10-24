@@ -1,8 +1,5 @@
 package ggc.pump.data.writer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.atech.utils.data.CodeEnumWithTranslation;
 
 import ggc.plugin.data.DeviceValuesWriter;
@@ -23,7 +20,6 @@ import ggc.pump.data.defs.*;
 public class PumpValuesWriter extends DeviceValuesWriter
 {
 
-    private static final Log LOG = LogFactory.getLog(PumpValuesWriter.class);
     static PumpValuesWriter staticInstance;
 
 
@@ -52,32 +48,32 @@ public class PumpValuesWriter extends DeviceValuesWriter
 
         // ========= Events =========
 
-        for (PumpEvents event : PumpEvents.getAllValues())
+        for (PumpEventType event : PumpEventType.getAllValues())
         {
             addConfigurationBase("Event_" + event.name(), PumpBaseType.Event, event, false);
         }
 
         // FIXME missing
         addConfiguration("Event_PrimeInfusionSet", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
-                PumpBaseType.Event, PumpEvents.PrimeInfusionSet, true));
+                PumpBaseType.Event, PumpEventType.PrimeInfusionSet, true));
 
         addConfiguration("Event_FillCannula", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
-                PumpBaseType.Event, PumpEvents.FillCannula, true));
+                PumpBaseType.Event, PumpEventType.FillCannula, true));
 
         addConfiguration("Event_BolusWizard", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
-                PumpBaseType.Event, PumpEvents.BolusWizard, false));
+                PumpBaseType.Event, PumpEventType.BolusWizard, false));
 
         addConfiguration("Event_BatteryLow", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
-                PumpBaseType.Event, PumpEvents.BatteryLow, false));
+                PumpBaseType.Event, PumpEventType.BatteryLow, false));
 
         addConfiguration("Event_BasalStop", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
-                PumpBaseType.Event, PumpEvents.BasalStop, false));
+                PumpBaseType.Event, PumpEventType.BasalStop, false));
 
         addConfiguration("Event_BasalRun", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
-                PumpBaseType.Event, PumpEvents.BasalRun, false));
+                PumpBaseType.Event, PumpEventType.BasalRun, false));
 
         addConfiguration("Event_ReservoirLowDesc", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
-                PumpBaseType.Event, PumpEvents.ReservoirLowDesc, true));
+                PumpBaseType.Event, PumpEventType.ReservoirLowDesc, true));
 
         // ========= Alarms =========
 
@@ -186,7 +182,8 @@ public class PumpValuesWriter extends DeviceValuesWriter
         // else
         // {
         // LOG.warn("Key " + key +
-        // " already added in PumpValuesWriter. Please check your configuration.");
+        // " already added in PumpValuesWriter. Please check your
+        // configuration.");
         // }
     }
 

@@ -2,7 +2,7 @@ package ggc.pump.data;
 
 import com.atech.misc.statistics.StatisticsCollection;
 
-import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.util.DataAccessPump;
 
@@ -62,8 +62,8 @@ public class PumpDailyStatistics extends StatisticsCollection
             return;
         }
 
-        // System.out.println("SS: " + da_pump.getBGMeasurmentType());
-        if (da_pump.getBGMeasurmentType() == DataAccessPlugInBase.BG_MMOL)
+        // System.out.println("SS: " + da_pump.getGlucoseUnitType());
+        if (da_pump.getGlucoseUnitType() == GlucoseUnitType.mmol_L)
         {
             // setValue(PumpValuesEntry.BG_AVG,
             // da_pump.getBGValueByType(DataAccessPump.BG_MGDL, output_type,
@@ -109,7 +109,7 @@ public class PumpDailyStatistics extends StatisticsCollection
         // if (i + 1 == lst.size())
         // {
         // int s = 24 - pve.getDateTimeObject().getHourOfDay();
-        // float val = m_da.getFloatValueFromString(pve.getValue());
+        // float val = dataAccess.getFloatValueFromString(pve.getValue());
         // sum += s * val;
         //
         // // System.out.println("Time diff: " + s + ", val=" + val);
@@ -150,9 +150,8 @@ public class PumpDailyStatistics extends StatisticsCollection
         // this.stat_objects.get(PumpValuesEntry.INS_DOSES_BASAL - 1).setSum(0);
 
         this.stat_objects.get(PumpValuesEntry.INS_SUM_TOGETHER - 1)
-                .setSum(
-                    this.getValueInternal(PumpValuesEntry.INS_SUM_BASAL)
-                            + this.getValueInternal(PumpValuesEntry.INS_SUM_BOLUS));
+                .setSum(this.getValueInternal(PumpValuesEntry.INS_SUM_BASAL)
+                        + this.getValueInternal(PumpValuesEntry.INS_SUM_BOLUS));
 
         // System.out.println("Avg Basal: " +
         // this.getValueInternal(PumpValuesEntry.INS_AVG_BASAL) + "Avg Bolus: "
@@ -160,8 +159,8 @@ public class PumpDailyStatistics extends StatisticsCollection
 
         // this.stat_objects.get(PumpValuesEntry.INS_AVG_TOGETHER-1).setSum(this.getValueInternal(PumpValuesEntry.INS_AVG_BASAL)
         // + this.getValueInternal(PumpValuesEntry.INS_AVG_BOLUS));
-        this.stat_objects.get(PumpValuesEntry.INS_DOSES_TOGETHER - 1).setSum(
-            this.getValueInternal(PumpValuesEntry.INS_DOSES_BOLUS));
+        this.stat_objects.get(PumpValuesEntry.INS_DOSES_TOGETHER - 1)
+                .setSum(this.getValueInternal(PumpValuesEntry.INS_DOSES_BOLUS));
 
         // this.stat_objects.get(PumpValuesEntry.INS_SUM_BASAL-1).setCount(lst.size());
 
@@ -207,7 +206,7 @@ public class PumpDailyStatistics extends StatisticsCollection
     private void setBGValue(int index)
     {
         float v = this.stat_objects.get(index - 1).sum;
-        float new_val = da_pump.getBGValueDifferent(DataAccessPlugInBase.BG_MGDL, v);
+        float new_val = da_pump.getBGValueDifferent(GlucoseUnitType.mg_dL, v);
 
         setValue(index, new_val);
     }

@@ -76,9 +76,9 @@ public class DanaDiabecare_II extends DanaPump
      * 
      * @param cmp
      */
-    public DanaDiabecare_II(AbstractDeviceCompany cmp)
+    public DanaDiabecare_II(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(cmp);
+        super(cmp, da);
     }
 
 

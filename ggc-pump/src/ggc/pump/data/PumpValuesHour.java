@@ -1,20 +1,21 @@
 package ggc.pump.data;
 
-import ggc.pump.data.defs.PumpBaseType;
-import ggc.pump.data.defs.PumpBolusType;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.HashMap;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ExceptionHandling;
 
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.util.DataAccessPump;
+
 public class PumpValuesHour
 {
+
     int hour;
 
     private HashMap<Long, Float> bgs = new HashMap<Long, Float>();
@@ -24,14 +25,16 @@ public class PumpValuesHour
     private float bolusSpecial = 0.0f;
     private StringBuffer sbBolus = new StringBuffer();
 
-    private static final Log LOG = LogFactory.getLog(PumpValuesHour.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PumpValuesHour.class);
     DataAccessPump dataAccessPump;
+
 
     public PumpValuesHour(DataAccessPump da)
     {
         this.dataAccessPump = da;
         this.dataAccessPump.setNumberParsingExceptionHandling(ExceptionHandling.THROW_EXCEPTION);
     }
+
 
     public void addBGEntry(PumpValuesEntryExt pumpValuesEntryExt)
     {
@@ -44,6 +47,7 @@ public class PumpValuesHour
         sbBgs.append(",");
     }
 
+
     private String getTimeAsString(long dt)
     {
         ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, dt);
@@ -53,10 +57,12 @@ public class PumpValuesHour
         return s;
     }
 
+
     public HashMap<Long, Float> getBgs()
     {
         return bgs;
     }
+
 
     public float getBgProcessedValue()
     {
@@ -75,6 +81,7 @@ public class PumpValuesHour
         return sum;
     }
 
+
     public void addCHEntry(String chValue)
     {
         if (StringUtils.isNotBlank(chValue))
@@ -82,6 +89,7 @@ public class PumpValuesHour
             chs += parseFloat(chValue, "CH");
         }
     }
+
 
     private float parseFloat(String value, String valueType)
     {
@@ -96,10 +104,12 @@ public class PumpValuesHour
         }
     }
 
+
     public float getCH()
     {
         return chs;
     }
+
 
     public void addBolus(PumpValuesEntry pve)
     {
@@ -173,10 +183,12 @@ public class PumpValuesHour
         }
     }
 
+
     public float getBolus()
     {
         return bolus;
     }
+
 
     public String getMultipleBgs()
     {
@@ -186,15 +198,18 @@ public class PumpValuesHour
         return mBgs;
     }
 
+
     public float getBolusSpecialForSum()
     {
         return bolusSpecial;
     }
 
+
     public void setBolusSpecial(float bolusSpecial)
     {
         this.bolusSpecial = bolusSpecial;
     }
+
 
     public void addBolusSpecial(String blsSpecial)
     {
@@ -211,10 +226,12 @@ public class PumpValuesHour
         sbBolus.append(",");
     }
 
+
     public boolean hasBolusSpecial()
     {
         return (sbBolus.length() > 0);
     }
+
 
     public String getBolusSpecial()
     {

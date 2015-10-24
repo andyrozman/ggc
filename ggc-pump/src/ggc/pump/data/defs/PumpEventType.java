@@ -34,7 +34,7 @@ import ggc.pump.util.DataAccessPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public enum PumpEvents implements CodeEnumWithTranslation
+public enum PumpEventType implements CodeEnumWithTranslation
 {
 
     None(0, "NONE"), //
@@ -76,9 +76,10 @@ public enum PumpEvents implements CodeEnumWithTranslation
     BgFromMeter(70, "EVENT_BG_FROM_METER"), //
     BolusCancelled(80, "ALARM_BOLUS_CANCELED"), //
 
-    BolusWizard(81, "EVENT_BOLUS_WIZARD", "BG=%s;CH=%s;CH_UNIT=%s;"
-            + "CH_INS_RATIO=%s;BG_INS_RATIO=%s;BG_TARGET_LOW=%s;BG_TARGET_HIGH=%s;BOLUS_TOTAL=%s;"
-            + "BOLUS_CORRECTION=%s;BOLUS_FOOD=%s;UNABSORBED_INSULIN=%s"), //
+    BolusWizard(81, "EVENT_BOLUS_WIZARD",
+            "BG=%s;CH=%s;CH_UNIT=%s;"
+                    + "CH_INS_RATIO=%s;BG_INS_RATIO=%s;BG_TARGET_LOW=%s;BG_TARGET_HIGH=%s;BOLUS_TOTAL=%s;"
+                    + "BOLUS_CORRECTION=%s;BOLUS_FOOD=%s;UNABSORBED_INSULIN=%s"), //
 
     ChangeRemoteId(90, "EVENT_CHANGE_REMOTE_ID"), //
 
@@ -87,13 +88,14 @@ public enum PumpEvents implements CodeEnumWithTranslation
     static String[] descriptions;
 
     static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
-    static HashMap<Integer, PumpEvents> codeMapping = new HashMap<Integer, PumpEvents>();
+    static HashMap<Integer, PumpEventType> codeMapping = new HashMap<Integer, PumpEventType>();
+
 
     static
     {
         I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
 
-        for (PumpEvents pbt : values())
+        for (PumpEventType pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
             translationMapping.put(pbt.getTranslation(), pbt);
@@ -101,27 +103,26 @@ public enum PumpEvents implements CodeEnumWithTranslation
         }
 
         String[] descriptions_lcl = { ic.getMessage("SELECT_SUBTYPE"), ic.getMessage("EVENT_PRIME_INFUSION_SET"),
-                                     ic.getMessage("EVENT_CARTRIDGE_CHANGED"),
-                                     ic.getMessage("EVENT_REWIND_INFUSION_SET"), ic.getMessage("EVENT_RESERVOIR_LOW"),
-                                     ic.getMessage("EVENT_RESERVOIR_LOW_DESC"), ic.getMessage("EVENT_FILL_CANNULA"),
-                                     ic.getMessage("EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"),
-                                     ic.getMessage("EVENT_SET_BASAL_PATTERN"), ic.getMessage("EVENT_BASAL_RUN"),
+                                      ic.getMessage("EVENT_CARTRIDGE_CHANGED"),
+                                      ic.getMessage("EVENT_REWIND_INFUSION_SET"), ic.getMessage("EVENT_RESERVOIR_LOW"),
+                                      ic.getMessage("EVENT_RESERVOIR_LOW_DESC"), ic.getMessage("EVENT_FILL_CANNULA"),
+                                      ic.getMessage("EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"),
+                                      ic.getMessage("EVENT_SET_BASAL_PATTERN"), ic.getMessage("EVENT_BASAL_RUN"),
 
-                                     ic.getMessage("EVENT_BASAL_STOP"), ic.getMessage("EVENT_POWER_DOWN"),
-                                     ic.getMessage("EVENT_POWER_UP"), ic.getMessage("EVENT_SELF_TEST"),
-                                     ic.getMessage("EVENT_DOWNLOAD"), ic.getMessage("EVENT_DATETIME_SET"),
-                                     ic.getMessage("EVENT_DATETIME_CORRECT"),
+                ic.getMessage("EVENT_BASAL_STOP"), ic.getMessage("EVENT_POWER_DOWN"), ic.getMessage("EVENT_POWER_UP"),
+                                      ic.getMessage("EVENT_SELF_TEST"), ic.getMessage("EVENT_DOWNLOAD"),
+                                      ic.getMessage("EVENT_DATETIME_SET"), ic.getMessage("EVENT_DATETIME_CORRECT"),
 
-                                     ic.getMessage("EVENT_SET_MAX_BASAL"), //
-                                     ic.getMessage("EVENT_SET_MAX_BOLUS"), //
-                                     ic.getMessage("EVENT_BATERRY_REMOVED"), //
+                ic.getMessage("EVENT_SET_MAX_BASAL"), //
+                                      ic.getMessage("EVENT_SET_MAX_BOLUS"), //
+                                      ic.getMessage("EVENT_BATERRY_REMOVED"), //
 
-                                     ic.getMessage("EVENT_BATERRY_REPLACED"), //
-                                     ic.getMessage("EVENT_BATERRY_LOW"), //
-                                     ic.getMessage("EVENT_BATERRY_LOW_DESC"), //
-                                     ic.getMessage("EVENT_BG_FROM_METER"), //
-                                     ic.getMessage("ALARM_BOLUS_CANCELED"), //
-                                     ic.getMessage("EVENT_BOLUS_WIZARD") };
+                ic.getMessage("EVENT_BATERRY_REPLACED"), //
+                                      ic.getMessage("EVENT_BATERRY_LOW"), //
+                                      ic.getMessage("EVENT_BATERRY_LOW_DESC"), //
+                                      ic.getMessage("EVENT_BG_FROM_METER"), //
+                                      ic.getMessage("ALARM_BOLUS_CANCELED"), //
+                                      ic.getMessage("EVENT_BOLUS_WIZARD") };
 
         descriptions = descriptions_lcl;
     }
@@ -132,14 +133,14 @@ public enum PumpEvents implements CodeEnumWithTranslation
     private String valueTemplate;
 
 
-    private PumpEvents(int code, String i18nKey)
+    private PumpEventType(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;
     }
 
 
-    private PumpEvents(int code, String i18nKey, String valueTemplate)
+    private PumpEventType(int code, String i18nKey, String valueTemplate)
     {
         this.code = code;
         this.i18nKey = i18nKey;
@@ -190,7 +191,7 @@ public enum PumpEvents implements CodeEnumWithTranslation
     }
 
 
-    public static PumpEvents getByCode(int code)
+    public static PumpEventType getByCode(int code)
     {
         if (codeMapping.containsKey(code))
         {
@@ -198,7 +199,7 @@ public enum PumpEvents implements CodeEnumWithTranslation
         }
         else
         {
-            return PumpEvents.None;
+            return PumpEventType.None;
         }
     }
 
@@ -208,7 +209,7 @@ public enum PumpEvents implements CodeEnumWithTranslation
      * @param type
      * @return
      */
-    public boolean hasValue(PumpEvents type)
+    public boolean hasValue(PumpEventType type)
     {
         switch (type)
         {
@@ -242,7 +243,7 @@ public enum PumpEvents implements CodeEnumWithTranslation
     }
 
 
-    public static Collection<PumpEvents> getAllValues()
+    public static Collection<PumpEventType> getAllValues()
     {
         return codeMapping.values();
     }

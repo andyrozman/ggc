@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.BitUtils;
 
@@ -28,7 +28,7 @@ import ggc.pump.device.insulet.util.InsuletUtil;
 public class InsuletReader extends AbstractDeviceReader
 {
 
-    private static final Log LOG = LogFactory.getLog(InsuletReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(InsuletReader.class);
 
     List<Integer> dataPage;
     BitUtils bitUtils = new BitUtils();

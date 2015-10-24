@@ -1,22 +1,21 @@
-package ggc.pump.print;
+package ggc.pump.report;
 
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
 
 import org.apache.commons.collections.MapUtils;
-import org.jfree.chart.ChartFactory;
+import org.apache.commons.lang.StringUtils;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atech.data.SimpleTimeValueDataDto;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.print.engine.ITextDocumentPrintSettings;
 import com.atech.print.engine.PrintAbstractITextWithDataRead;
 import com.atech.print.engine.PrintParameters;
+import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 import com.itextpdf.text.*;
@@ -34,13 +33,16 @@ import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.graph.data.CGMSGraphDataHandler;
 import ggc.plugin.report.data.cgms.CGMSDayData;
 import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesHour;
 import ggc.pump.data.PumpValuesHourProcessor;
+import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpDeviceValueType;
 import ggc.pump.data.dto.BasalRatesDayDTO;
+import ggc.pump.data.util.PumpAdditionalDataHandler;
 import ggc.pump.data.util.PumpBasalManager;
 import ggc.pump.db.GGCPumpDb;
-import ggc.pump.db.PumpProfile;
+import ggc.pump.defs.PumpPluginDefinition;
 import ggc.pump.util.DataAccessPump;
 
 /**
@@ -76,23 +78,29 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
     private static final Logger LOG = LoggerFactory.getLogger(PrintPumpDataDailyTimeSheet.class);
 
-    Font smallFont = null;
-    protected DeviceValuesRange deviceValuesRange;
-
-    private GregorianCalendar gcFrom;
-    private GregorianCalendar gcTill;
     DataAccessPump dataAccessPump = DataAccessPump.getInstance();
     I18nControlAbstract i18nControl = dataAccessPump.getI18nControlInstance();
+
     PumpValuesHourProcessor pumpValuesHourProcessor;
-    List<PumpProfile> profilesRange;
-    HashMap<String, Font> fontColors = new HashMap<String, Font>();
+    CGMSGraphDataHandler cgmsGraphDataHandler;
     PumpBasalManager pumpBasalManager;
+    PumpAdditionalDataHandler pumpAdditionalDataHandler;
     PrintPumpDataDailyTimeSheetType sheetType;
 
-    CGMSGraphDataHandler cgmsGraphDataHandler = new CGMSGraphDataHandler();
-    Map<Long, CGMSDayData> cgmsReadingsDataMap;
-    boolean hasCGMSData = false;
+    Font smallFont = null;
+    private GregorianCalendar gcFrom;
+    private GregorianCalendar gcTill;
+    HashMap<String, Font> fontColors = new HashMap<String, Font>();
 
+    boolean hasCGMSData = false;
+    boolean shouldDisplayFood = false;
+
+    protected DeviceValuesRange deviceValuesRange;
+    Map<Long, CGMSDayData> cgmsReadingsDataMap;
+    Map<String, BasalRatesDayDTO> basalRatesRange;
+
+
+    // List<PumpProfile> profilesRange;
 
     public PrintPumpDataDailyTimeSheet(PrintParameters parameters, PrintPumpDataDailyTimeSheetType sheetType)
     {
@@ -101,11 +109,12 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         smallFont = new Font(this.baseFontTimes, 6, Font.NORMAL);
         pumpValuesHourProcessor = new PumpValuesHourProcessor();
         pumpBasalManager = new PumpBasalManager(dataAccessPump);
+        cgmsGraphDataHandler = new CGMSGraphDataHandler();
+        pumpAdditionalDataHandler = new PumpAdditionalDataHandler();
         this.sheetType = sheetType;
 
         this.initData();
         this.init();
-
     }
 
 
@@ -121,8 +130,9 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
         p.setAlignment(Element.ALIGN_CENTER);
         p.add(new Paragraph("", f));
-        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + " [" + this.getDateString(this.gcFrom) + " - "
-                + this.getDateString(this.gcTill) + "]", f));
+        p.add(new Paragraph(this.i18nControl.getMessage(getTitleText()) + "   ["
+                + DataAccess.getGregorianCalendarAsDateString(this.gcFrom) + " - "
+                + DataAccess.getGregorianCalendarAsDateString(this.gcTill) + "]", f));
         p.add(new Paragraph(
                 this.i18nControl.getMessage("FOR") + " "
                         + DataAccess.getInstance().getConfigurationManagerWrapper().getUserName(),
@@ -137,32 +147,30 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
     @Override
     public void initData()
     {
-        // FIXME read from parameters
-
         if (this.printParameters.containsKey("RANGE_FROM"))
         {
-            gcFrom = (GregorianCalendar) this.printParameters.get("RANGE_FROM");
-            gcTill = (GregorianCalendar) this.printParameters.get("RANGE_TO");
+            gcFrom = this.printParameters.getRangeFrom();
+            gcTill = this.printParameters.getRangeTo();
         }
         else
         {
-            gcFrom = new GregorianCalendar(2015, 3, 1);
-            gcTill = new GregorianCalendar(2015, 3, 12);
+            // gcFrom = new GregorianCalendar(2015, 3, 1); // CGMS
+            // gcTill = new GregorianCalendar(2015, 3, 12);
+            gcFrom = new GregorianCalendar(2012, 11, 17); // TBR, Bolus Ext,
+                                                          // Multiwave
+            gcTill = new GregorianCalendar(2012, 11, 28);
         }
 
         GGCPumpDb db = DataAccessPump.getInstance().getDb();
 
         this.deviceValuesRange = db.getRangePumpValues(gcFrom, gcTill);
-        this.profilesRange = db.getProfilesForRange(gcFrom, gcTill);
+        basalRatesRange = pumpBasalManager.getBasalRatesForRange(gcFrom, gcTill);
 
-        if (this.profilesRange.size() > 0)
+        if ((this.sheetType == PrintPumpDataDailyTimeSheetType.BaseWithFood) || //
+                (this.sheetType == PrintPumpDataDailyTimeSheetType.BaseWithFoodAndCGMS))
         {
-            this.lastActiveProfile = this.profilesRange.get(0);
+            shouldDisplayFood = true;
         }
-
-        System.out.println("Profiles all: " + this.profilesRange.size());
-
-        // FIXME load Basals and remove profiles
 
         if ((this.sheetType == PrintPumpDataDailyTimeSheetType.BaseWithCGMS) || //
                 (this.sheetType == PrintPumpDataDailyTimeSheetType.BaseWithFoodAndCGMS))
@@ -173,45 +181,37 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
             {
                 hasCGMSData = true;
             }
-
         }
 
         // FIXME configuration of colors for reports
 
         // colors
-        this.fontColors.put("BG_COLOR", createFont("DarkRed")); // createFont(63));
-                                                                // // DarkRed
-        this.fontColors.put("BASAL_COLOR", createFont("MidnightBlue")); // createFont(37));
-                                                                        // //
-                                                                        // MidnightBlue
-        this.fontColors.put("BOLUS_COLOR", createFont("DodgerBlue")); // createFont(128));
-                                                                      // //
-                                                                      // IndianRed
-        this.fontColors.put("CH_COLOR", createFont("DarkGreen")); // createFont(186));
-                                                                  // //
-                                                                  // YellowGreen
-        this.fontColors.put("PUMP_ADD_DATA_COLOR", createFont("MediumSeaGreen")); // createFont(213));
-        // //
-        // PowderBlue
+        this.fontColors.put("BG_COLOR", createFont("DarkRed"));
+        this.fontColors.put("BASAL_COLOR", createFont("MidnightBlue"));
+        this.fontColors.put("BOLUS_COLOR", createFont("DodgerBlue"));
+        this.fontColors.put("CH_COLOR", createFont("DarkGreen"));
+        this.fontColors.put("PUMP_ADD_DATA_COLOR", createFont("MediumSeaGreen"));
     }
 
 
     public Font createFont(String colorName)
     {
         return new Font(FontFamily.HELVETICA, 6, Font.BOLD, WebColors.getRGBColor(colorName));
-        // Font f = new Font(this.baseFontTimes, 6, Font.NORMAL);
-        // f.setColor(new BaseColor(colorNumber));
-
-        // return f;
     }
 
 
-    // TODO move this to abstract class for printing
-    protected String getDateString(GregorianCalendar gc)
-    {
-        return gc.get(Calendar.DAY_OF_MONTH) + "." + (gc.get(Calendar.MONTH) + 1) + "." + gc.get(Calendar.YEAR);
-    }
-
+    /**
+     *   TODO
+     *
+     *   III. (Base + Food)
+     *   - Food data                                      0%
+     *
+     *   IV. (Base + CGMS + Food)
+     *   - Base                                         100%
+     *   - CGMS                                         100%
+     *   - Food                                           0%
+     *
+     */
 
     /**
      * {@inheritDoc}
@@ -230,7 +230,6 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
         do
         {
-
             ATechDate atd = new ATechDate(dataAccessPump.getDataEntryObject().getDateTimeFormat(), gc_current);
 
             if (deviceValuesRange.isDayEntryAvailable(atd.getATDateTimeAsLong()))
@@ -252,85 +251,14 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
     }
 
 
-    private List<PumpProfile> getCorrectProfilesForDay(GregorianCalendar currentGc)
-    {
-        GregorianCalendar gc = (GregorianCalendar) currentGc.clone();
-        gc.set(Calendar.HOUR_OF_DAY, 23);
-        gc.set(Calendar.MINUTE, 59);
-        gc.set(Calendar.SECOND, 59);
-
-        GregorianCalendar gc2 = (GregorianCalendar) currentGc.clone();
-        gc2.set(Calendar.HOUR_OF_DAY, 0);
-        gc2.set(Calendar.MINUTE, 0);
-        gc2.set(Calendar.SECOND, 0);
-
-        // long ss = ATechDate.getATDateTimeFromGC(gc,
-        // ATechDate.FORMAT_DATE_AND_TIME_S);
-
-        System.out.println("Profiles for day: " + ATechDate.getDateString(ATechDate.FORMAT_DATE_AND_TIME_S, currentGc));
-
-        List<PumpProfile> acProfiles = new ArrayList<PumpProfile>();
-
-        long dt1 = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_AND_TIME_S);
-        long dt2 = ATechDate.getATDateTimeFromGC(gc2, ATechDate.FORMAT_DATE_AND_TIME_S);
-
-        for (PumpProfile pp : this.profilesRange)
-        {
-            if (((pp.getActive_from() < dt1 && pp.getActive_from() != 0))
-                    && (pp.getActive_till() == 0 || pp.getActive_till() > dt2))
-            {
-                acProfiles.add(pp);
-                System.out.println("Profile: " + pp.getActive_from() + " - " + pp.getActive_till());
-            }
-        }
-
-        return acProfiles;
-    }
-
-    /**
-     * TODO
-     *
-     * + main view table (day, comment, space)    100%
-     * - multiple BG in comment                   100%
-     * - comments                                 100%
-     * - bolus swuare or extended                 100%
-     * + sums                                     100%
-     * - days resolve                              95%
-     * - basal                                     95%  some bugs to fix...
-     *
-     *
-     * NOT IMPORTANT FOR NOW:
-     * - Extended and Multiwave in table and comm.        0%
-     *
-     * PROFILES REPORT                             100%
-     *
-     *   I. (v2)
-     * - special pump statues (stopped pump, change
-     *   of pump material, TBR)                           0%
-     * - Color display                                   40%
-     * - Comments types                                  30%
-     * - Extended and Multiwave in comm.                  0%
-     *
-     *
-     *   II. (Base + CGMS)
-     *
-     *
-     */
-
-    private PumpProfile lastActiveProfile;
-
-
     private void createDayEntry(PdfPTable mainTable, DeviceValuesDay deviceValuesDay, GregorianCalendar gcCurrent)
             throws Exception
     {
         PdfPTable datatable = new PdfPTable(27);
         datatable.setWidths(
             new float[] { 4.0f, 6.0f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f,
-                          3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 6.0f }); // 6
-                                                                                                     // +
-                                                                                                     // 2
-                                                                                                     // +
-                                                                                                     // 4
+                          3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 3.5f, 6.0f });
+
         datatable.setWidthPercentage(100); // percentage
 
         datatable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -338,15 +266,15 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         datatable.getDefaultCell().setBorderWidth(1);
 
         // cell 1
-        datatable.addCell(this.createBoldTextPhrase("DAY"));
-        datatable.addCell(this.createBoldTextPhrase("TIME"));
+        datatable.addCell(createGreyCenteredCellWithNormalText("DAY"));
+        datatable.addCell(createGreyCenteredCellWithNormalText("TIME"));
 
         for (int i = 0; i < 24; i++)
         {
-            datatable.addCell(this.createBoldTextPhrase("" + i));
+            datatable.addCell(createGreyCenteredCellWithNormalText("" + i));
         }
 
-        datatable.addCell(this.createBoldTextPhrase("SUM"));
+        datatable.addCell(createGreyCenteredCellWithNormalText("SUM"));
 
         pumpValuesHourProcessor.clearComments();
 
@@ -354,8 +282,9 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         {
             if (j == 0)
             {
-                datatable.addCell(this.createNormalTextPhrase(dataAccessPump.getDayOfWeekFromGCShorter(gcCurrent, 2)));
-                datatable.addCell(this.createBoldTextPhrase("BASAL"));
+                datatable.addCell(
+                    this.createCenteredCellWithNormalText(dataAccessPump.getDayOfWeekFromGCShorter(gcCurrent, 2)));
+                datatable.addCell(this.createGreyCenteredCellWithNormalText("BASAL"));
 
                 writeHourlyValues(PumpDeviceValueType.BASAL, datatable, deviceValuesDay, gcCurrent);
             }
@@ -363,28 +292,45 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
             {
                 PdfPCell cell = new PdfPCell();
                 cell.setPhrase(this.createNormalTextPhrase(gcCurrent.get(Calendar.DAY_OF_MONTH) + "."));
-                cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT | Rectangle.TOP);
-                cell.setBorderWidth(1);
+                // cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT |
+                // Rectangle.TOP);
+                // cell.setBorderWidth(0);
+                // cell.setBorder(Rectangle.BOTTOM);
+                // cell.setBorder(Rectangle.LEFT);
+                // cell.setBorderColorLeft(BaseColor.BLACK);
+                //
+                // cell.setBorderColorBottom(BaseColor.WHITE);
+
                 cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 
                 datatable.addCell(cell);
-                datatable.addCell(this.createBoldTextPhrase("BOLUS"));
+                datatable.addCell(this.createGreyCenteredCellWithNormalText("BOLUS"));
 
                 writeHourlyValues(PumpDeviceValueType.BOLUS, datatable, deviceValuesDay, gcCurrent);
             }
             else if (j == 2)
             {
                 PdfPCell cell = new PdfPCell();
-                cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);
-                cell.setBorderWidth(1);
+                // cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT);
+                // cell.setBorder(Rectangle.BOTTOM | Rectangle.TOP);
+                // cell.setBorderWidth(0);
+                // cell.setBorder(Rectangle.LEFT);
+                // cell.setBorderColorLeft(BaseColor.BLACK);
+                // cell.setBorderWidthBottom(1);
+                //
+                cell.setBorderColorBottom(BaseColor.WHITE);
+                //
+                cell.setBorderColorTop(BaseColor.WHITE);
+                // cell.setBorderWidthTop(1);
+
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setPhrase(this.createNormalTextPhrase(
                     dataAccessPump.getMonthsArray()[gcCurrent.get(Calendar.MONTH)].substring(0, 3)));
 
                 datatable.addCell(cell);
-                datatable.addCell(this.createBoldTextPhrase("BG"));
+                datatable.addCell(this.createGreyCenteredCellWithNormalText("BG"));
 
                 writeHourlyValues(PumpDeviceValueType.BG, datatable, deviceValuesDay, gcCurrent);
             }
@@ -392,14 +338,22 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
             // if (j==3)
             {
                 PdfPCell cell = new PdfPCell();
-                cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT | Rectangle.BOTTOM);
-                cell.setBorderWidth(1);
+                // cell.setBorder(Rectangle.LEFT | Rectangle.RIGHT |
+                // Rectangle.BOTTOM);
+                // cell.setBorderWidth(1);
+
+                // cell.setBorderWidthLeft(1);
+                // cell.setBorderWidthRight(1);
+                //
+                cell.setBorderColorTop(BaseColor.WHITE);
+                // cell.setBorderWidthTop(1);
+
                 cell.setVerticalAlignment(Element.ALIGN_TOP);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 cell.setPhrase(this.createNormalTextPhrase("" + gcCurrent.get(Calendar.YEAR)));
 
                 datatable.addCell(cell);
-                datatable.addCell(this.createBoldTextPhrase("CH"));
+                datatable.addCell(this.createGreyCenteredCellWithNormalText("CH"));
 
                 writeHourlyValues(PumpDeviceValueType.CH, datatable, deviceValuesDay, gcCurrent);
             }
@@ -414,39 +368,126 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         tableComment.setWidthPercentage(100);
         tableComment.getDefaultCell().setBorderWidth(0);
 
+        boolean commentFound = false;
+
         if (this.pumpValuesHourProcessor.isAdditionalDataForPumpTypeSet(PumpDeviceValueType.BG))
         {
-            tableComment.addCell(this.createBoldTextPhrase(this.i18nControl.getMessage("BG") + ":"));
+            tableComment.addCell(this.createNormalTextPhrase(this.i18nControl.getMessage("BG") + ":"));
             tableComment.addCell(this.createNormalTextPhraseSmall(
                 this.pumpValuesHourProcessor.getAdditionalDataForPumpTypeSet(PumpDeviceValueType.BG),
                 PumpDeviceValueType.BG.getColorKey()));
+
+            commentFound = true;
         }
 
-        if (this.pumpValuesHourProcessor.isAdditionalDataForPumpTypeSet(PumpDeviceValueType.PUMP_ADDITIONAL_DATA))
+        String pumpAdditionalData = getPumpAdditionalData(deviceValuesDay);
+
+        if (StringUtils.isNotBlank(pumpAdditionalData))
         {
-            tableComment.addCell(this.createBoldTextPhrase(this.i18nControl.getMessage("PUMP") + ":"));
-            tableComment.addCell(this.createNormalTextPhraseSmall(
-                this.pumpValuesHourProcessor.getAdditionalDataForPumpTypeSet(PumpDeviceValueType.PUMP_ADDITIONAL_DATA),
+            tableComment.addCell(this.createNormalTextPhrase(this.i18nControl.getMessage("PUMP") + ":"));
+            tableComment.addCell(this.createNormalTextPhraseSmall(pumpAdditionalData,
                 PumpDeviceValueType.PUMP_ADDITIONAL_DATA.getColorKey()));
+            commentFound = true;
         }
 
         displayFoodData(tableComment, gcCurrent);
+        // commentFound = true;
 
-        tableComment.addCell(this.createBoldTextPhrase(this.i18nControl.getMessage("COMMENT") + ":"));
-        tableComment.addCell(this.createNormalTextPhrase(
-            this.pumpValuesHourProcessor.getAdditionalDataForPumpTypeSet(PumpDeviceValueType.COMMENT)));
-
-        mainTable.addCell(tableComment);
-
-        if (!hasCGMSData)
+        if (this.pumpValuesHourProcessor.isAdditionalDataForPumpTypeSet(PumpDeviceValueType.COMMENT))
         {
-            mainTable.addCell(createEmptyLine());
+            tableComment.addCell(this.createNormalTextPhrase(this.i18nControl.getMessage("COMMENT") + ":"));
+            tableComment.addCell(this.createNormalTextPhrase(
+                this.pumpValuesHourProcessor.getAdditionalDataForPumpTypeSet(PumpDeviceValueType.COMMENT)));
+            commentFound = true;
+
         }
-        else
+
+        if (commentFound)
+        {
+            mainTable.addCell(tableComment);
+        }
+
+        mainTable.addCell(createEmptyLine());
+
+        if (hasCGMSData)
         {
             displayCGMSData(mainTable, gcCurrent);
         }
 
+    }
+
+
+    private String getPumpAdditionalData(DeviceValuesDay deviceValuesDay)
+    {
+        List<PumpValuesEntry> tbrList = new ArrayList<PumpValuesEntry>();
+        List<PumpValuesEntry> pairedEventsList = new ArrayList<PumpValuesEntry>();
+
+        List<SimpleTimeValueDataDto> pumpExtraDataList = new ArrayList<SimpleTimeValueDataDto>();
+
+        if (deviceValuesDay == null)
+            return null;
+
+        List<DeviceValuesEntry> listEntries = deviceValuesDay.getList();
+
+        if (listEntries == null)
+            return null;
+
+        for (DeviceValuesEntry entry : deviceValuesDay.getList())
+        {
+            PumpValuesEntry pve = (PumpValuesEntry) entry;
+            SimpleTimeValueDataDto pumpAdditionalDataDto = null;
+
+            if (pve.getBaseType() == PumpBaseType.Bolus)
+            {
+                pumpAdditionalDataDto = pumpAdditionalDataHandler.processBolusEntry(pve);
+            }
+            else if (pve.getBaseType() == PumpBaseType.Basal)
+            {
+                if (pumpAdditionalDataHandler.isTBREntry(pve))
+                {
+                    tbrList.add(pve);
+                }
+
+            }
+            else if (pve.getBaseType() == PumpBaseType.Event)
+            {
+                pumpAdditionalDataDto = pumpAdditionalDataHandler.processEventEntryWithoutPaired(pve);
+
+                if (pumpAdditionalDataDto == null)
+                {
+                    if (pumpAdditionalDataHandler.isPairedEvent(pve))
+                    {
+                        pairedEventsList.add(pve);
+                    }
+                }
+            }
+
+            if (pumpAdditionalDataDto != null)
+            {
+                pumpExtraDataList.add(pumpAdditionalDataDto);
+            }
+        }
+
+        if (tbrList.size() > 0)
+        {
+            pumpExtraDataList.addAll(pumpAdditionalDataHandler.processTBRs(tbrList));
+        }
+
+        if (pairedEventsList.size() > 0)
+        {
+            pumpExtraDataList.addAll(pumpAdditionalDataHandler.processPairedEvents(pairedEventsList));
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        Collections.sort(pumpExtraDataList);
+
+        for (SimpleTimeValueDataDto data : pumpExtraDataList)
+        {
+            DataAccessPump.appendToStringBuilder(sb, data.getValue(), ", ");
+        }
+
+        return sb.toString();
     }
 
 
@@ -460,12 +501,12 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
     }
 
 
-    private void displayFoodData(PdfPTable tableComment, GregorianCalendar gcCurrent)
+    private boolean displayFoodData(PdfPTable tableComment, GregorianCalendar gcCurrent)
     {
         if ((this.sheetType != PrintPumpDataDailyTimeSheetType.BaseWithFood) && //
                 (this.sheetType != PrintPumpDataDailyTimeSheetType.BaseWithFoodAndCGMS))
         {
-            return;
+            return false;
         }
 
         // FIXME
@@ -476,36 +517,26 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         // this.pumpValuesHourProcessor.getAdditionalDataForPumpTypeSet(PumpDeviceValueType.PUMP_ADDITIONAL_DATA)
         // ));
 
+        return false;
+
     }
 
 
     private void displayCGMSData(PdfPTable mainTable, GregorianCalendar currentCalendar)
     {
-
         try
         {
             long date = ATechDate.getATDateTimeFromGC(currentCalendar, ATechDateType.DateOnly);
-
-            // System.out.println("Querty for CGMS : " + date);
 
             JFreeChart chart = null;
 
             if (cgmsReadingsDataMap.containsKey(date))
             {
-                //System.out.println("CGMS Data Found in Map");
                 chart = cgmsGraphDataHandler.createDailyChartForReport(dataAccessPump, cgmsReadingsDataMap.get(date));
             }
 
-            // FIXME
-            // add adding of CGMS to report
-
             if (chart != null)
             {
-
-                // add image
-                int width = 1000;
-                int height = 180;
-                // chart = getChart(currentCalendar);
                 BufferedImage bufferedImage = chart.createBufferedImage(1000, 160);
                 Image image = Image.getInstance(pdfWriter, bufferedImage, 1.0f);
                 mainTable.addCell(image);
@@ -513,12 +544,6 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                 mainTable.addCell(createEmptyLine());
                 mainTable.addCell(createEmptyLine());
             }
-            else
-            {
-                System.out.println("Chart was null. Shouldn't happen.");
-
-            }
-
         }
         catch (Exception ex)
         {
@@ -528,32 +553,9 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
     }
 
 
-    public JFreeChart getChart(GregorianCalendar currentCalendar)
-    {
-
-        XYSeries series = cgmsGraphDataHandler.getCGMSDailyReadings(dataAccessPump, currentCalendar);
-
-        XYSeriesCollection coll = new XYSeriesCollection();
-        coll.addSeries(series);
-
-        // use the ChartFactory to create a pie chart
-        JFreeChart chart = ChartFactory.createScatterPlot(null, "X", "Y", coll, PlotOrientation.VERTICAL, false, false,
-            false);
-
-        // .createLineChart("Dummy Data", "X", "Y", coll,
-        // PlotOrientation.HORIZONTAL, true, true, false);
-        // String title, String categoryAxisLabel, String valueAxisLabel,
-        // CategoryDataset dataset, PlotOrientation orientation, boolean legend,
-        // boolean tooltips, boolean urls
-
-        return chart;
-    }
-
-
     private void writeHourlyValues(PumpDeviceValueType type, PdfPTable table, DeviceValuesDay deviceValuesDay,
             GregorianCalendar gcCurrent)
     {
-
         float sum = 0.0f;
         float count = 0;
 
@@ -568,131 +570,36 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
         if (type == PumpDeviceValueType.BASAL)
         {
-            // FIXME
-            // basalRatesDTO =
-            // pumpBasalManager.getBasalRatesForDay(deviceValuesDay);
-            // basalRatesDTO.addProfilesForDay(this.getCorrectProfilesForDay(gcCurrent));
+            String dateString = ATechDate.getDateString(ATechDateType.DateAndTimeSec, gcCurrent);
+
+            if (this.basalRatesRange.containsKey(dateString))
+            {
+                basalRatesDTO = this.basalRatesRange.get(dateString);
+            }
         }
 
         for (int hour = 0; hour < 24; hour++)
         {
 
-            // if (type == PumpDeviceValueType.BASAL)
-            // {
-            // // FIXME profile name
-            // PumpProfile profile =
-            // pumpValuesHourProcessor.getProfileForHour(profiles, gcCurrent,
-            // hour, "5");
-            //
-            // if (profile == null)
-            // {
-            // profile = this.lastActiveProfile;
-            // }
-            // else
-            // {
-            // this.lastActiveProfile = profile;
-            // }
-            //
-            // float value = -1.0f;
-            //
-            // if (profile != null)
-            // {
-            // ProfileSubPattern patternForHour =
-            // profile.getPatternForHour(hour);
-            //
-            // if (patternForHour != null)
-            // {
-            // value = patternForHour.getAmount();
-            // }
-            // }
-            //
-            // if (value < 0.0f)
-            // {
-            // table.addCell(this.createNormalTextPhraseSmall(""));
-            // }
-            // else
-            // {
-            // table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBasalValue(value)));
-            // }
-            // }
-
-            if (deviceValuesDay == null)
+            if (type == PumpDeviceValueType.BASAL)
             {
-                if (type == PumpDeviceValueType.BASAL)
+                float value = writeBasalProfileValue(gcCurrent, hour, basalRatesDTO, "5", table);
+
+                if (value > 0.0f)
                 {
-
-                    // // FIXME profile name
-                    float value = writeBasalProfileValue(gcCurrent, hour, basalRatesDTO, "5", table);
-
-                    if (value > 0.0f)
-                    {
-                        sum += value;
-                    }
-
-                    // // FIXME profile name
-                    // PumpProfile profile = getPumpProfile(gcCurrent, profiles,
-                    // hour, "5");
-                    //
-                    // float value = pumpBasalManager.getBasalValueForHour(hour,
-                    // profile, basalRatesDTO);
-                    //
-                    // if (value < 0.0f)
-                    // {
-                    // table.addCell(this.createNormalTextPhraseSmall(""));
-                    // }
-                    // else
-                    // {
-                    // table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBasalValue(value),
-                    // type.getColorKey()));
-                    // sum += value;
-                    // }
-                }
-                else
-                {
-
-                    table.addCell(this.createEmptyTextPhraseSmall());
-
+                    sum += value;
                 }
             }
             else
             {
-                List<DeviceValuesEntry> entries = deviceValuesDay.getEntriesForHour(hour);
-
-                // System.out.println("Hour: " + i + "DateTime: "
-                // + deviceValuesDay.getDateTimeGC().get(Calendar.DAY_OF_MONTH)
-                // + ", entries=" + entries.size());
-
-                if (type == PumpDeviceValueType.BASAL)
+                if (deviceValuesDay == null)
                 {
-
-                    // // FIXME profile name
-                    float value = writeBasalProfileValue(gcCurrent, hour, basalRatesDTO, "5", table);
-
-                    if (value > 0.0f)
-                    {
-                        sum += value;
-                    }
-
-                    // // FIXME profile name
-                    // PumpProfile profile =
-                    // getPumpProfile(deviceValuesDay.getDateTimeGC(), profiles,
-                    // hour, "5");
-                    //
-                    // float value = pumpBasalManager.getBasalValueForHour(hour,
-                    // profile, basalRatesDTO);
-                    //
-                    // if (value < 0.0f)
-                    // {
-                    // table.addCell(this.createNormalTextPhraseSmall(""));
-                    // }
-                    // else
-                    // {
-                    // table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBasalValue(value),
-                    // type.getColorKey()));
-                    // }
+                    table.addCell(this.createCellWithEmptySmallText());
                 }
                 else
                 {
+                    List<DeviceValuesEntry> entries = deviceValuesDay.getEntriesForHour(hour);
+
                     PumpValuesHour pumpValuesHour = pumpValuesHourProcessor.createPumpValuesHour(entries);
 
                     if (type == PumpDeviceValueType.BOLUS)
@@ -700,20 +607,29 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                         if (pumpValuesHour.getBolus() > 0.0f)
                         {
                             sum += pumpValuesHour.getBolus();
-                            table.addCell(this.createNormalTextPhraseSmall(
+                            table.addCell(this.createCellWithNormalSmallText(
                                 dataAccessPump.getFormatedBolusValue(pumpValuesHour.getBolus()), type.getColorKey()));
 
                             if (pumpValuesHour.hasBolusSpecial())
                             {
-                                pumpValuesHourProcessor.addAdditionalData(PumpDeviceValueType.PUMP_ADDITIONAL_DATA,
-                                    pumpValuesHour.getBolusSpecial());
+                                // pumpValuesHourProcessor.addAdditionalData(PumpDeviceValueType.PUMP_ADDITIONAL_DATA,
+                                // pumpValuesHour.getBolusSpecial());
 
                                 sum += pumpValuesHour.getBolusSpecialForSum();
                             }
+
+                        }
+                        else if (pumpValuesHour.hasBolusSpecial())
+                        {
+                            table.addCell(this.createCellWithNormalSmallText("*", type.getColorKey()));
+                            // pumpValuesHourProcessor.addAdditionalData(PumpDeviceValueType.PUMP_ADDITIONAL_DATA,
+                            // pumpValuesHour.getBolusSpecial());
+
+                            sum += pumpValuesHour.getBolusSpecialForSum();
                         }
                         else
                         {
-                            table.addCell(this.createEmptyTextPhraseSmall());
+                            table.addCell(this.createCellWithEmptySmallText());
                         }
 
                     }
@@ -721,7 +637,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                     {
                         if (pumpValuesHour.getBgs().size() > 1)
                         {
-                            table.addCell(this.createNormalTextPhraseSmall("*", type.getColorKey()));
+                            table.addCell(this.createCellWithNormalSmallText("*", type.getColorKey()));
 
                             pumpValuesHourProcessor.addAdditionalData(PumpDeviceValueType.BG,
                                 pumpValuesHour.getMultipleBgs());
@@ -731,13 +647,13 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                             sum += pumpValuesHour.getBgProcessedValue();
                             count++;
 
-                            table.addCell(this.createNormalTextPhraseSmall(
+                            table.addCell(this.createCellWithNormalSmallText(
                                 dataAccessPump.getDisplayedBGString(pumpValuesHour.getBgProcessedValue()),
                                 type.getColorKey()));
                         }
                         else
                         {
-                            table.addCell(this.createEmptyTextPhraseSmall());
+                            table.addCell(this.createCellWithEmptySmallText());
                         }
                     }
                     else
@@ -746,13 +662,13 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                         if (pumpValuesHour.getCH() > 0.0f)
                         {
                             sum += pumpValuesHour.getCH();
-                            table.addCell(this.createNormalTextPhraseSmall(
+                            table.addCell(this.createCellWithNormalSmallText(
                                 DataAccessPlugInBase.Decimal0Format.format(pumpValuesHour.getCH()),
                                 type.getColorKey()));
                         }
                         else
                         {
-                            table.addCell(this.createEmptyTextPhraseSmall());
+                            table.addCell(this.createCellWithEmptySmallText());
                         }
                     }
                 }
@@ -766,28 +682,28 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
                 float d = sum / (count * (1.0f));
 
                 table.addCell(
-                    this.createNormalTextPhraseSmall(dataAccessPump.getDisplayedBGString(d), type.getColorKey()));
+                    this.createCellWithNormalSmallText(dataAccessPump.getDisplayedBGString(d), type.getColorKey()));
             }
             else if (type == PumpDeviceValueType.BASAL)
             {
                 table.addCell(
-                    this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBasalValue(sum), type.getColorKey()));
+                    this.createCellWithNormalSmallText(dataAccessPump.getFormatedBasalValue(sum), type.getColorKey()));
             }
             else if (type == PumpDeviceValueType.BOLUS)
             {
                 table.addCell(
-                    this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBolusValue(sum), type.getColorKey()));
+                    this.createCellWithNormalSmallText(dataAccessPump.getFormatedBolusValue(sum), type.getColorKey()));
             }
             else
             {
-                table.addCell(this.createNormalTextPhraseSmall(DataAccessPlugInBase.Decimal0Format.format(sum),
+                table.addCell(this.createCellWithNormalSmallText(DataAccessPlugInBase.Decimal0Format.format(sum),
                     type.getColorKey()));
             }
 
         }
         else
         {
-            table.addCell(this.createEmptyTextPhraseSmall());
+            table.addCell(this.createCellWithEmptySmallText());
         }
 
     }
@@ -797,45 +713,39 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
             String activeProfileName, PdfPTable table)
     {
 
-        // FIXME
-
-        if (true)
+        if (basalRatesDTO == null)
         {
-            table.addCell(this.createNormalTextPhraseSmall(""));
+            table.addCell(this.createCellWithEmptySmallText());
             return 0.0f;
         }
-
-        // PumpProfile profile = getPumpProfile(gcCurrent,
-        // basalRatesDTO.getProfiles(), hour, "5");
-
-        PumpProfile profile = pumpValuesHourProcessor.getProfileForHour(basalRatesDTO.getProfiles(), gcCurrent, hour,
-            activeProfileName);
-
-        if (profile == null)
-        {
-            profile = this.lastActiveProfile;
-        }
         else
         {
-            this.lastActiveProfile = profile;
+            float basalValue = basalRatesDTO.getBasalForHour(hour);
+
+            if (basalValue < 0.0f)
+            {
+                table.addCell(this.createCellWithEmptySmallText());
+            }
+            else
+            {
+                table.addCell(this.createCellWithNormalSmallText(dataAccessPump.getFormatedBasalValue(basalValue),
+                    PumpDeviceValueType.BASAL.getColorKey()));
+            }
+
+            return basalValue;
         }
+    }
 
-        float value = 0.0f;
-        // FIXME
-        // pumpBasalManager.getBasalValueForHour(hour, profile, basalRatesDTO);
 
-        if (value < 0.0f)
-        {
-            table.addCell(this.createNormalTextPhraseSmall(""));
-        }
-        else
-        {
-            table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBasalValue(value),
-                PumpDeviceValueType.BASAL.getColorKey()));
-        }
+    private PdfPCell createGreyCenteredCellWithNormalText(String text)
+    {
+        return this.createCellWithCenterAlignment(this.createNormalTextPhrase(text), BaseColor.LIGHT_GRAY);
+    }
 
-        return value;
 
+    private PdfPCell createCenteredCellWithNormalText(String text)
+    {
+        return this.createCellWithCenterAlignment(this.createNormalTextPhrase(text), null);
     }
 
 
@@ -845,9 +755,22 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
     }
 
 
+    private PdfPCell createCellWithEmptySmallText()
+    {
+        return this.createCellWithCenterAlignment(new Phrase("", smallFont), null);
+    }
+
+
     private Phrase createNormalTextPhraseSmall(String text)
     {
         return new Phrase(this.i18nControl.getMessage(text), smallFont);
+    }
+
+
+    private PdfPCell createCellWithNormalSmallText(String text, String fontName)
+    {
+        return this.createCellWithCenterAlignment(new Phrase(this.i18nControl.getMessage(text), getFont(fontName)),
+            null);
     }
 
 
@@ -871,7 +794,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
     public String getTitleText()
     {
-        return "PUMP_DATA_DAILY_TIMESHEET_1";
+        return this.sheetType.getTitle();
     }
 
 
@@ -881,7 +804,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
     @Override
     public String getFileNameBase()
     {
-        return "Pump_DailyTimeSheet";
+        return this.sheetType.getFileNamePrefix();
     }
 
 
@@ -911,6 +834,12 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
     }
 
 
+    private static PumpPluginDefinition getPluginDefinition(ATDataAccessLMAbstract da)
+    {
+        return new PumpPluginDefinition(da.getLanguageManager());
+    }
+
+
     public static void main(String[] args)
     {
         // LanguageManager lm = new LanguageManager(new
@@ -929,7 +858,7 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
         // GGCDb db = new GGCDb(daCore);
         // db.initDb();
 
-        DataAccessPump da = DataAccessPump.createInstance(daCore.getLanguageManager());
+        DataAccessPump da = DataAccessPump.createInstance(getPluginDefinition(daCore));
 
         da.createPlugInDataRetrievalContext();
 
@@ -947,10 +876,36 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
     public enum PrintPumpDataDailyTimeSheetType
     {
-        BaseSheet, // Normal sheet (v2)
-        BaseWithCGMS, // Normal + CGMS II
-        BaseWithFood, // Normal + Food III
-        BaseWithFoodAndCGMS // Normal + Food + CGMS IV
+        // Normal sheet (v2) - I
+        BaseSheet("PUMP_DATA_DAILY_TIMESHEET_1", "Pump_DailyTimeSheet_1"),
+        // Normal + CGMS - II
+        BaseWithCGMS("PUMP_DATA_DAILY_TIMESHEET_2", "Pump_DailyTimeSheet_2"),
+        // Normal + Food - III
+        BaseWithFood("PUMP_DATA_DAILY_TIMESHEET_3", "Pump_DailyTimeSheet_3"),
+        // Normal + Food + CGMS - IV
+        BaseWithFoodAndCGMS("PUMP_DATA_DAILY_TIMESHEET_4", "Pump_DailyTimeSheet_4");
+
+        private String title;
+        private String fileNamePrefix;
+
+
+        PrintPumpDataDailyTimeSheetType(String title, String fileNamePrefix)
+        {
+            this.title = title;
+            this.fileNamePrefix = fileNamePrefix;
+        }
+
+
+        public String getTitle()
+        {
+            return title;
+        }
+
+
+        public String getFileNamePrefix()
+        {
+            return fileNamePrefix;
+        }
     }
 
 }

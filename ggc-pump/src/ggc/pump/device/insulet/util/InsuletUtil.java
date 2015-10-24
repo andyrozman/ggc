@@ -1,7 +1,7 @@
 package ggc.pump.device.insulet.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.BitUtils;
@@ -21,7 +21,7 @@ import ggc.pump.util.DataAccessPump;
 public class InsuletUtil
 {
 
-    private static final Log LOG = LogFactory.getLog(InsuletUtil.class);
+    private static final Logger LOG = LoggerFactory.getLogger(InsuletUtil.class);
 
     private static OutputWriter outputWriter;
     private static BitUtils bitUtils = new BitUtils();

@@ -1,11 +1,10 @@
 package ggc.pump.device;
 
+import java.util.Hashtable;
+
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
-import ggc.plugin.device.PlugInBaseException;
 import ggc.pump.data.defs.*;
-
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,7 +37,6 @@ import java.util.Hashtable;
 public interface PumpInterface extends DeviceInterface
 {
 
-
     // ************************************************
     // *** Meter Identification Methods ***
     // ************************************************
@@ -50,11 +48,13 @@ public interface PumpInterface extends DeviceInterface
      */
     public int getMaxMemoryRecords();
 
+
     /**
      * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
      *      create, AlarmMappings and EventMappings and any other pump constants.
      */
     public void loadPumpSpecificValues();
+
 
     /**
      * Get Alarm Mappings - Map pump specific alarms to Pump Tool specific 
@@ -63,12 +63,14 @@ public interface PumpInterface extends DeviceInterface
      */
     public Hashtable<String, PumpAlarms> getAlarmMappings();
 
+
     /**
      * Get Event Mappings - Map pump specific events to Pump Tool specific 
      *     event codes
      * @return
      */
-    public Hashtable<String, PumpEvents> getEventMappings();
+    public Hashtable<String, PumpEventType> getEventMappings();
+
 
     /**
      * Get Error Mappings - Map pump specific errors to Pump Tool specific 
@@ -77,12 +79,14 @@ public interface PumpInterface extends DeviceInterface
      */
     public Hashtable<String, PumpErrors> getErrorMappings();
 
+
     /**
      * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific 
      *     event codes
      * @return
      */
     public Hashtable<String, PumpBolusType> getBolusMappings();
+
 
     /**
      * Get Report Mappings - Map pump specific reports to Pump Tool specific 
@@ -91,11 +95,13 @@ public interface PumpInterface extends DeviceInterface
      */
     public Hashtable<String, PumpReport> getReportMappings();
 
+
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      * @return 
      */
     public DeviceIdentification getDeviceInfo();
+
 
     /**
      * Get Temporary Basal Type Definition
@@ -107,12 +113,14 @@ public interface PumpInterface extends DeviceInterface
      */
     public String getTemporaryBasalTypeDefinition();
 
+
     /**
      * Get Bolus Step (precission)
      * 
      * @return
      */
     public float getBolusStep();
+
 
     /**
      * Get Basal Step (precission)
@@ -121,12 +129,14 @@ public interface PumpInterface extends DeviceInterface
      */
     public float getBasalStep();
 
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
     public boolean arePumpSettingsSet();
+
 
     /**
      * How Many Months Of Data Stored

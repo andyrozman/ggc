@@ -1,5 +1,9 @@
 package ggc.pump.device;
 
+import java.util.Hashtable;
+
+import javax.comm.SerialPortEvent;
+
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
@@ -8,9 +12,6 @@ import ggc.plugin.protocol.BlueToothProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.defs.*;
 import ggc.pump.util.DataAccessPump;
-
-import javax.comm.SerialPortEvent;
-import java.util.Hashtable;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,6 +55,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     // AbstractDeviceCompany pump_company = null;
     boolean communication_established = false;
 
+
     /**
      * Constructor
      */
@@ -61,6 +63,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     {
         super(DataAccessPump.getInstance());
     }
+
 
     /**
      * Constructor
@@ -74,14 +77,15 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
         super(comm_parameters, writer, da);
     }
 
+
     /**
      * Constructor
      * 
      * @param cmp
      */
-    public AbstractBlueToothPump(AbstractDeviceCompany cmp)
+    public AbstractBlueToothPump(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(cmp, DataAccessPump.getInstance());
+        super(cmp, da);
         // super(cmp);
 
         // System.out.println("m_Da: " + dataAccess);
@@ -90,6 +94,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
         // this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }
+
 
     /**
      * Set Pump Type
@@ -117,6 +122,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
 
     }
 
+
     // this.m_device_index = device_index;
 
     /**
@@ -129,6 +135,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     {
     }
 
+
     /**
      * Dispose
      */
@@ -136,6 +143,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     {
         this.close();
     }
+
 
     /**
      * Is Device Communicating
@@ -155,6 +163,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
      */
 
     String serial_port = null;
+
 
     /**
      * Set Serial Port
@@ -182,6 +191,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
 
     }
 
+
     /**
      * getConnectionPort - connection port data
      * 
@@ -192,6 +202,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
         return this.serial_port;
     }
 
+
     /**
      * Get Serial Port
      * @return
@@ -200,6 +211,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     {
         return this.serial_port;
     }
+
 
     /*
      * public GenericMeter(int meter_type, String portName)
@@ -236,6 +248,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
         return communication_established = super.open();
     }
 
+
     /**
      * Will be called, when the import is ended and freeing resources.
      */
@@ -262,6 +275,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
         return null;
     }
 
+
     /**
      * Get Bolus Mappings - Map pump specific bolus to Pump Tool specific
      *     event codes
@@ -271,6 +285,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     {
         return null;
     }
+
 
     /**
      * Get Error Mappings - Map pump specific errors to Pump Tool specific
@@ -282,15 +297,17 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
         return null;
     }
 
+
     /**
      * Get Event Mappings - Map pump specific events to Pump Tool specific
      *     event codes
      * @return
      */
-    public Hashtable<String, PumpEvents> getEventMappings()
+    public Hashtable<String, PumpEventType> getEventMappings()
     {
         return null;
     }
+
 
     /**
      * Get Report Mappings - Map pump specific reports to Pump Tool specific
@@ -301,6 +318,7 @@ public abstract class AbstractBlueToothPump extends BlueToothProtocol implements
     {
         return null;
     }
+
 
     /**
      * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should

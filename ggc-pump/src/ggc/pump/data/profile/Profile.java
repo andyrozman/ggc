@@ -1,15 +1,15 @@
 package ggc.pump.data.profile;
 
-import ggc.pump.data.PumpValuesEntryProfile;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
+
+import ggc.pump.data.PumpValuesEntryProfile;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,7 +40,7 @@ import com.atech.utils.data.ATechDate;
 public class Profile implements Comparable<Profile>
 {
 
-    private static Log log = LogFactory.getLog(Profile.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Profile.class);
 
     /**
      * Profile Id
@@ -88,12 +88,14 @@ public class Profile implements Comparable<Profile>
      */
     public int sort_order = SORT_ORDER_DESC;
 
+
     /**
      * Constructor
      */
     public Profile()
     {
     }
+
 
     /**
      * Add profile sub entry
@@ -112,6 +114,7 @@ public class Profile implements Comparable<Profile>
         }
     }
 
+
     /**
      * Add profile sub other
      * 
@@ -122,6 +125,7 @@ public class Profile implements Comparable<Profile>
         this.other_entries.add(entry);
     }
 
+
     /**
      * Add profile sub pattern
      * 
@@ -131,6 +135,7 @@ public class Profile implements Comparable<Profile>
     {
         this.pattern_entries.add(entry);
     }
+
 
     /**
      * Fill End Times
@@ -163,6 +168,7 @@ public class Profile implements Comparable<Profile>
         Collections.sort(this.pattern_entries);
 
     }
+
 
     /**
      * Pack Profiles (if we have start and end time)
@@ -198,6 +204,7 @@ public class Profile implements Comparable<Profile>
 
     }
 
+
     /**
      * Get Profile Information
      * 
@@ -220,11 +227,13 @@ public class Profile implements Comparable<Profile>
         return sb.toString();
     }
 
+
     @Override
     public String toString()
     {
         return this.getProfileInformation();
     }
+
 
     /**
      * Is Complete Profile
@@ -275,16 +284,17 @@ public class Profile implements Comparable<Profile>
 
         if (!sb_not_set.toString().equals("Not set: ["))
         {
-            log.debug(sb_not_set.toString() + "]");
+            LOG.debug(sb_not_set.toString() + "]");
         }
 
         if (!sb_multiple_set.toString().equals("Multiple set: ["))
         {
-            log.debug(sb_multiple_set.toString() + "]");
+            LOG.debug(sb_multiple_set.toString() + "]");
         }
 
         return !error;
     }
+
 
     private String getPackedTime(int i, int j, int stamps)
     {
@@ -325,6 +335,7 @@ public class Profile implements Comparable<Profile>
         return "{" + time + "}";
     }
 
+
     /**
      * Compare.
      * 
@@ -341,6 +352,7 @@ public class Profile implements Comparable<Profile>
             return (int) (pse2.date_at - pse1.date_at);
     }
 
+
     /** 
      * compareTo
      */
@@ -348,6 +360,7 @@ public class Profile implements Comparable<Profile>
     {
         return compare(this, pse);
     }
+
 
     /**
      * Equals
@@ -360,6 +373,7 @@ public class Profile implements Comparable<Profile>
         return this.getProfileInformation().equals(p_in.getProfileInformation());
     }
 
+
     /**
      * Get Profile Time Info
      * 
@@ -371,6 +385,7 @@ public class Profile implements Comparable<Profile>
                 + ", Till: " + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.profile_active_till)
                 + ", Profile: " + this.profile_id;
     }
+
 
     /**
      * Create Db Object
@@ -392,6 +407,7 @@ public class Profile implements Comparable<Profile>
 
         return p;
     }
+
 
     /**
      * Create Basal Diffs

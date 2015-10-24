@@ -3,8 +3,8 @@ package ggc.pump.device.insulet.data.dto.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -22,7 +22,7 @@ import ggc.pump.util.DataAccessPump;
 public class Profile extends ConfigRecord
 {
 
-    private static final Log LOG = LogFactory.getLog(Profile.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Profile.class);
 
     private ProfileHeader header = new ProfileHeader();
     private ProfileType profileType;
@@ -139,8 +139,8 @@ public class Profile extends ConfigRecord
 
             writeSetting(
                 i18nControl.getMessage("PCFG_BASAL_PROFILE") + " #" + profileNr + " "
-                        + i18nControl.getMessage("CFG_BASE_NAME"), bpn.basalNames.get(profileNr), "",
-                PumpConfigurationGroup.Basal);
+                        + i18nControl.getMessage("CFG_BASE_NAME"),
+                bpn.basalNames.get(profileNr), "", PumpConfigurationGroup.Basal);
 
             int slot = 1;
             String start = DataAccess.getTimeFromMinutes(0);

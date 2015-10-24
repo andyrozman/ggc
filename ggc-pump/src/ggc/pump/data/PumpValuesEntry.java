@@ -3,8 +3,6 @@ package ggc.pump.data;
 import java.util.*;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -51,11 +49,10 @@ import ggc.pump.util.DataAccessPump;
  * Author: Andy {andy@atech-software.com}
  */
 
-public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem, PumpValuesEntryInterface,
-        GraphValuesCapable
+public class PumpValuesEntry extends DeviceValuesEntry
+        implements StatisticsItem, PumpValuesEntryInterface, GraphValuesCapable
 {
 
-    private static Log log = LogFactory.getLog(PumpValuesEntry.class);
     private static final long serialVersionUID = -2047203215269156938L;
 
     DataAccessPump dataAccess; // = DataAccessPump.getInstance();
@@ -422,7 +419,7 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
         }
         else if (this.baseType == PumpBaseType.Event)
         {
-            return PumpEvents.getByCode(this.sub_type).getTranslation();
+            return PumpEventType.getByCode(this.sub_type).getTranslation();
         }
         else if (this.baseType == PumpBaseType.AdditionalData)
         {
@@ -1013,9 +1010,9 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
      * @return format of date time (precission)
      */
     @Override
-    public int getDateTimeFormat()
+    public ATechDateType getDateTimeFormat()
     {
-        return ATechDate.FORMAT_DATE_AND_TIME_S;
+        return ATechDateType.DateAndTimeSec;
     }
 
 
@@ -1046,7 +1043,8 @@ public class PumpValuesEntry extends DeviceValuesEntry implements StatisticsItem
             case OutputWriterType.FILE:
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.append(this.getDateTimeObject().getDateTimeString() + ":  Base Type=" + this.getBaseTypeString());
+                    sb.append(
+                        this.getDateTimeObject().getDateTimeString() + ":  Base Type=" + this.getBaseTypeString());
 
                     if (StringUtils.isNotBlank(this.getSubTypeString()))
                     {

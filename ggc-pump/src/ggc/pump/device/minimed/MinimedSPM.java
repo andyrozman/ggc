@@ -1,16 +1,17 @@
 package ggc.pump.device.minimed;
 
-import ggc.plugin.protocol.DatabaseProtocol;
-import ggc.plugin.util.DataAccessPlugInBase;
-
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Time;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.plugin.protocol.DatabaseProtocol;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,10 +42,12 @@ import com.atech.utils.data.ATechDate;
 
 public abstract class MinimedSPM extends DatabaseProtocol
 {
+
     DataAccessPlugInBase m_da = null; // DataAccessPump.getInstance();
     int count_unk = 0;
-    private static Log log = LogFactory.getLog(MinimedSPM.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MinimedSPM.class);
     String[] profile_names;
+
 
     /**
      * Constructor
@@ -62,7 +65,8 @@ public abstract class MinimedSPM extends DatabaseProtocol
                          // filename) + ";PWD=wolfGang";
 
         // String url =
-        // "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=f:\\Rozman_A_Plus_20090423.mdb;PWD=wolfGang";
+        // "jdbc:odbc:Driver={Microsoft Access Driver
+        // (*.mdb)};DBQ=f:\\Rozman_A_Plus_20090423.mdb;PWD=wolfGang";
         System.out.println("Url: " + url);
 
         profile_names = new String[3];
@@ -79,10 +83,12 @@ public abstract class MinimedSPM extends DatabaseProtocol
 
     }
 
+
     /**
      * Read Data
      */
     public abstract void readData();
+
 
     /*
      * {
@@ -100,15 +106,16 @@ public abstract class MinimedSPM extends DatabaseProtocol
         readBasalHistory();
     }
 
+
     private void readBasalHistory()
     {
         try
         {
             System.out.println("=======   BASAL HISTORY   ========");
 
-            ResultSet rs = this
-                    .executeQuery(" select EV.EHDate as EHDate, EV.EHTime as EHTime, PH.PHTime as PHTime, PH.PHAmount as PHAmount, PH.Pattern as Pattern  from tblProfileHistory PH "
-                            + " inner join tblEvents EV on PH.EVX = EV.EVX " + " order by EV.EVX, PH.PHTime ");
+            ResultSet rs = this.executeQuery(
+                " select EV.EHDate as EHDate, EV.EHTime as EHTime, PH.PHTime as PHTime, PH.PHAmount as PHAmount, PH.Pattern as Pattern  from tblProfileHistory PH "
+                        + " inner join tblEvents EV on PH.EVX = EV.EVX " + " order by EV.EVX, PH.PHTime ");
 
             long current_dt = -1L;
             int current_profile = -1;
@@ -147,6 +154,7 @@ public abstract class MinimedSPM extends DatabaseProtocol
 
     }
 
+
     @SuppressWarnings("deprecation")
     protected void readDailyTotals()
     {
@@ -180,6 +188,7 @@ public abstract class MinimedSPM extends DatabaseProtocol
             e.printStackTrace();
         }
     }
+
 
     protected void readPrimes()
     {
@@ -217,6 +226,7 @@ public abstract class MinimedSPM extends DatabaseProtocol
         }
     }
 
+
     protected void readAlarms()
     {
         try
@@ -253,19 +263,19 @@ public abstract class MinimedSPM extends DatabaseProtocol
         }
     }
 
+
     protected void readBoluses()
     {
         try
         {
             System.out.println("=======   BOLUSES   ========");
 
-            ResultSet rs = this
-                    .executeQuery("select BHDate, BHTime, BHType, BHAmount, BHDuration, BHDescription, BHDateStatus, BHAmountProg "
-                            + "from tblBolusHistory order by BHDate, BHTime");
+            ResultSet rs = this.executeQuery(
+                "select BHDate, BHTime, BHType, BHAmount, BHDuration, BHDescription, BHDateStatus, BHAmountProg "
+                        + "from tblBolusHistory order by BHDate, BHTime");
 
             while (rs.next())
             {
-
                 int type = rs.getInt("BHType");
                 double amount = rs.getDouble("BHAmount");
                 double duration = rs.getDouble("BHDuration");
@@ -317,7 +327,7 @@ public abstract class MinimedSPM extends DatabaseProtocol
                 else
                 {
                     type_desc = "Unknown Bolus Type (" + type + ")";
-                    log.error("Bolus: " + type_desc);
+                    LOG.error("Bolus: " + type_desc);
                 }
                 // else
 
@@ -337,6 +347,7 @@ public abstract class MinimedSPM extends DatabaseProtocol
             e.printStackTrace();
         }
     }
+
 
     @SuppressWarnings("deprecation")
     protected void readEvents()
@@ -481,12 +492,11 @@ public abstract class MinimedSPM extends DatabaseProtocol
                         break;
 
                     case 49:
-                        float val = m_da.getBGValueByType(DataAccessPlugInBase.BG_MGDL, m_da.getBGMeasurmentType(),
-                            (float) val_dbl);
+                        float val = m_da.getBGValueFromDefault(m_da.getGlucoseUnitType(), (float) val_dbl);
                         // desc="Event=BG Sent from Meter (" + val + ")";
                         data.sub_type = 70; // PUMP_EVENT_BG_FROM_METER
 
-                        if (m_da.getBGMeasurmentType() == DataAccessPlugInBase.BG_MGDL)
+                        if (m_da.getGlucoseUnitType() == GlucoseUnitType.mg_dL)
                         {
                             data.value_str = DataAccessPlugInBase.Decimal0Format.format(val);
                         }
@@ -494,6 +504,7 @@ public abstract class MinimedSPM extends DatabaseProtocol
                         {
                             data.value_str = DataAccessPlugInBase.Decimal1Format.format(val);
                         }
+
                         desc = "Event=BG Sent from Meter (" + data.value_str + ")";
                         set = true;
                         break;
@@ -516,7 +527,7 @@ public abstract class MinimedSPM extends DatabaseProtocol
                     default:
                         {
                             desc = "Unknown event (" + code + ")";
-                            log.error(desc);
+                            LOG.error(desc);
                         }
 
                 }
@@ -542,6 +553,7 @@ public abstract class MinimedSPM extends DatabaseProtocol
         }
     }
 
+
     private String getProfileName(int type)
     {
         if (type == 0)
@@ -551,6 +563,7 @@ public abstract class MinimedSPM extends DatabaseProtocol
         else
             return "Pattern B";
     }
+
 
     private long getDateTime(Date date, Time time)
     {
@@ -566,6 +579,7 @@ public abstract class MinimedSPM extends DatabaseProtocol
      * Datetime in minutes
      */
     public static final int DATETIME_MIN = 2;
+
 
     @SuppressWarnings("deprecation")
     private long getDateTime(Date date, Time time, int type)
@@ -592,11 +606,12 @@ public abstract class MinimedSPM extends DatabaseProtocol
 
         // System.out.println("Date: " + date + " Time: " + time);
         // System.out.println("Day: " + atd.day_of_month + " Month: " +
-        // atd.month + " Year: " + atd.year + "  " + atd.hour_of_day + ":" +
+        // atd.month + " Year: " + atd.year + " " + atd.hour_of_day + ":" +
         // atd.minute + ":" + atd.second);
 
         return atd.getATDateTimeAsLong();
     }
+
 
     /**
      * Process Data Entry

@@ -3,11 +3,11 @@ package ggc.pump.device.accuchek;
 import java.io.File;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
@@ -60,25 +60,20 @@ import ggc.pump.util.DataAccessPump;
 public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements PumpInterface
 {
 
-    private static Log log = LogFactory.getLog(AccuChekSmartPixPump.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AccuChekSmartPixPump.class);
 
     private Hashtable<String, PumpAlarms> alarm_mappings = null;
-    private Hashtable<String, PumpEvents> event_mappings = null;
+    private Hashtable<String, PumpEventType> event_mappings = null;
     private Hashtable<String, PumpErrors> error_mappings = null;
     private Hashtable<String, PumpBolusType> bolus_mappings = null;
     private Hashtable<String, PumpReport> report_mappings = null;
     private Hashtable<String, PumpBasalType> basal_mappings = null;
 
 
-    /**
-     * Constructor
-     * 
-     * @param cmp
-     */
-    public AccuChekSmartPixPump(AbstractDeviceCompany cmp)
+    public AccuChekSmartPixPump(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(cmp, DataAccessPump.getInstance());
-        this.loadPumpSpecificValues();
+        super(cmp, da);
+        // this.loadPumpSpecificValues();
         this.setDeviceType(cmp.getName(), getName(), DeviceType.Pump);
     }
 
@@ -107,6 +102,14 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         super(conn_parameter, writer, da);
         loadPumpSpecificValues();
         this.setDeviceType("Accu-Chek/Roche", getName(), DeviceType.Pump);
+    }
+
+
+    // for file download
+    public AccuChekSmartPixPump(String conn_parameter, DataAccessPlugInBase da)
+    {
+        super(conn_parameter, null, da);
+        loadPumpSpecificValues();
     }
 
 
@@ -224,15 +227,15 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         ArrayList<PumpValuesEntry> list = new ArrayList<PumpValuesEntry>();
 
-        log.info(" -- Basals --");
+        LOG.info(" -- Basals --");
         list.addAll(getBasals());
         // System.out.println("Basals: " + list.size());
 
-        log.info(" -- Boluses --");
+        LOG.info(" -- Boluses --");
         list.addAll(getBoluses());
         // System.out.println("Boluses: " + list.size());
 
-        log.info(" -- Events --");
+        LOG.info(" -- Events --");
         list.addAll(getEvents());
         // System.out.println("Events: " + list.size());
 
@@ -247,7 +250,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     {
         // this code is discarded. We read basals with basal_value_change type
         // used, which makes Profiles redundant
-        // log.info(" -- Profiles --");
+        // LOG.info(" -- Profiles --");
         // list.addAll(this.getPumpProfiles());
         //
         // ArrayList<PumpValuesEntryProfile> list_profiles =
@@ -272,7 +275,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         List<Node> nodelist;
 
         // boolean was_broken = true;
-        log.info("Profile processing - START");
+        LOG.info("Profile processing - START");
 
         Element id = (Element) this.getNode("IMPORT/IP");
         // System.out.println("" + id.attributeValue("Dt") +
@@ -280,7 +283,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         ATechDate dt = this.getDateTime(id.attributeValue("Dt"), id.attributeValue("Tm"));
 
         // 1. read initial
-        log.info("STEP 1 - Read inital profiles");
+        LOG.info("STEP 1 - Read inital profiles");
         Hashtable<String, Profile> original_profiles = new Hashtable<String, Profile>();
 
         nodelist = getSpecificDataChildren("IMPORT/IP/IPPROFILE");
@@ -318,7 +321,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
 
         // 2. read all basal entries (we don't sort them now, we just put them
         // all together, also events)
-        log.info("STEP 2 - Reading profile data");
+        LOG.info("STEP 2 - Reading profile data");
 
         List<Node> lst = getSpecificDataChildren("IMPORT/IPDATA/BASAL");
 
@@ -335,8 +338,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 continue;
             }
 
-            long dt_current = this.getDateFromDT(this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm"))
-                    .getATDateTimeAsLong());
+            long dt_current = this.getDateFromDT(
+                this.getDateTime(el.attributeValue("Dt"), el.attributeValue("Tm")).getATDateTimeAsLong());
 
             if (!profiles_raw.containsKey(dt_current))
             {
@@ -354,7 +357,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         }
 
         // 3. sort profile_entries into different profiles and patterns
-        log.info("STEP 3 - Remove incompletes and group profiles by name");
+        LOG.info("STEP 3 - Remove incompletes and group profiles by name");
 
         // remove incomplete profiles, and group profiles by name
 
@@ -386,7 +389,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         }
 
         // 4 - Create changes list
-        log.info("STEP 4 - Create changes list");
+        LOG.info("STEP 4 - Create changes list");
 
         Hashtable<Long, ArrayList<ProfileSubOther>> profile_changes_v2 = new Hashtable<Long, ArrayList<ProfileSubOther>>();
 
@@ -431,7 +434,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         profile_changes_v2 = null;
 
         // 5 - Create actual profile list and export it
-        log.info("STEP 5 - Create actual active profile list");
+        LOG.info("STEP 5 - Create actual active profile list");
 
         ArrayList<Profile> active_profiles = new ArrayList<Profile>();
         Hashtable<String, Profile> current_profiles = new Hashtable<String, Profile>();
@@ -480,7 +483,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         }
 
         // 6 - Profile changes
-        log.info("STEP 6 - Check profiles (dates) and save (export) data");
+        LOG.info("STEP 6 - Check profiles (dates) and save (export) data");
 
         for (int j = 0; j < active_profiles.size(); j++)
         {
@@ -506,7 +509,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         }
 
         // 7 - Profile export
-        log.info("STEP 7 - Profile export");
+        LOG.info("STEP 7 - Profile export");
 
         ArrayList<PumpValuesEntryProfile> pvep = new ArrayList<PumpValuesEntryProfile>();
 
@@ -526,7 +529,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             pvep.add(p.createDbObject());
         }
 
-        log.info("Profile processing - END");
+        LOG.info("Profile processing - END");
 
         return pvep;
 
@@ -592,7 +595,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         ArrayList<PumpValuesEntry> lst_out = new ArrayList<PumpValuesEntry>();
         boolean add = false;
 
-        log.info("Process " + type_desc[type] + " data - START");
+        LOG.info("Process " + type_desc[type] + " data - START");
 
         for (int i = 0; i < lst.size(); i++)
         {
@@ -625,7 +628,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             }
         }
 
-        log.info("Process " + type_desc[type] + " data - END");
+        LOG.info("Process " + type_desc[type] + " data - END");
 
         return lst_out;
 
@@ -768,7 +771,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 {}
                 else
                 {
-                    log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
+                    LOG.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc + ",value=" + cbrf + "]");
                 }
             }
             else
@@ -778,7 +781,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                     pve.setBaseType(PumpBaseType.Basal);
                     pve.setSubType(PumpBasalType.ValueChange);
                     pve.setValue(cbrf);
-                    // log.warn("Basal Entry N/A [dt=" +
+                    // LOG.warn("Basal Entry N/A [dt=" +
                     // pve.getDateTimeObject().getDateTimeString() + ", amount="
                     // + cbrf);
                     return true;
@@ -794,7 +797,8 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
     PumpValuesEntry first_basal = null;
 
 
-    private ProfileSubEntry resolveBasalProfilePatterns(/* PumpValuesEntry pve, */Element el)
+    private ProfileSubEntry resolveBasalProfilePatterns(
+            /* PumpValuesEntry pve, */Element el)
     {
         // pve.setDateTimeObject(this.getDateTime(el.attributeValue("Dt"),
         // el.attributeValue("Tm")));
@@ -906,12 +910,12 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
          * isSet(tbrinc)); if ((!isSet(tbrdec)) && (!isSet(tbrinc)) &&
          * (cbrf.equals("0.00"))) { //System.out.println("tbrdec=" +
          * isSet(tbrdec) + "tbrinc=" + isSet(tbrinc)); return false; } else {
-         * log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc +
+         * LOG.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc +
          * ",value=" + cbrf + "]"); return false; } } else { // profile used
          * pve.setBaseType(PumpBaseType.PUMP_DATA_BASAL);
          * pve.setSubType(PumpBasalSubType.PUMP_BASAL_PROFILE);
          * pve.setValue(profile); first_basal = pve;
-         * //log.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc +
+         * //LOG.error("Basal Unknown [tbrdec=" + tbrdec + ",tbrinc=" + tbrinc +
          * ",value=" + cbrf + "]"); if
          * (pve.getDateTimeObject().getTimeString().equals("00:00:00")) {
          * //System.out.println("Profile used: " + pve.getValue()); first_basal
@@ -979,13 +983,13 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 }
                 else
                 {
-                    log.error("AccuChekSmartPixPump: Unknown Bolus Type [" + type + "]");
+                    LOG.error("AccuChekSmartPixPump: Unknown Bolus Type [" + type + "]");
                 }
 
             }
             else
             {
-                log.error("Unknown Pump Bolus [info=" + type + ",desc=" + amount + ",remark=" + remark + "]");
+                LOG.error("Unknown Pump Bolus [info=" + type + ",desc=" + amount + ",remark=" + remark + "]");
             }
         }
         else
@@ -998,7 +1002,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             }
             else
             {
-                log.error("Unknown Pump Bolus Info [info=" + type + ",desc=" + amount + ",remark=" + remark + "]");
+                LOG.error("Unknown Pump Bolus Info [info=" + type + ",desc=" + amount + ",remark=" + remark + "]");
             }
         }
 
@@ -1029,7 +1033,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 }
                 else
                 {
-                    log.error("Unknown Pump Alarm [info=" + info + ",desc=" + desc + "]");
+                    LOG.error("Unknown Pump Alarm [info=" + info + ",desc=" + desc + "]");
                 }
             }
             else if (info.startsWith("E"))
@@ -1041,7 +1045,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 }
                 else
                 {
-                    log.error("Unknown Pump Error [info=" + info + ",desc=" + desc + "]");
+                    LOG.error("Unknown Pump Error [info=" + info + ",desc=" + desc + "]");
                 }
 
             }
@@ -1055,7 +1059,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 }
                 else
                 {
-                    log.error("Unknown Pump Warning [info=" + info + ",desc=" + desc + "]");
+                    LOG.error("Unknown Pump Warning [info=" + info + ",desc=" + desc + "]");
                 }
             }
             else
@@ -1069,7 +1073,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
                 }
                 else
                 {
-                    log.error("Unknown Pump Event [info=" + info + ",desc=" + desc + "]");
+                    LOG.error("Unknown Pump Event [info=" + info + ",desc=" + desc + "]");
                 }
             }
 
@@ -1083,7 +1087,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
             }
             else
             {
-                log.error("Unknown Pump Event [info=" + info + ",desc=" + desc + "]");
+                LOG.error("Unknown Pump Event [info=" + info + ",desc=" + desc + "]");
             }
         }
 
@@ -1181,19 +1185,19 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
         this.alarm_mappings.put("A7", PumpAlarms.TemporaryBasalRateOver);
         this.alarm_mappings.put("A8", PumpAlarms.BolusCanceled);
 
-        this.event_mappings = new Hashtable<String, PumpEvents>();
-        this.event_mappings.put("prime infusion set", PumpEvents.PrimeInfusionSet);
-        this.event_mappings.put("cartridge changed", PumpEvents.CartridgeChange);
-        this.event_mappings.put("Run", PumpEvents.BasalRun);
-        this.event_mappings.put("Stop", PumpEvents.BasalStop);
-        this.event_mappings.put("power down", PumpEvents.PowerDown);
-        this.event_mappings.put("power up", PumpEvents.PowerUp);
-        this.event_mappings.put("time / date set", PumpEvents.DateTimeSet);
-        this.event_mappings.put("time / date corrected", PumpEvents.DateTimeCorrect);
-        this.event_mappings.put("time / date set (time shift back)", PumpEvents.DateTimeCorrect);
-        this.event_mappings.put("W1", PumpEvents.ReservoirLow);
-        this.event_mappings.put("W8", PumpEvents.BolusCancelled);
-        this.event_mappings.put("W2", PumpEvents.BatteryLow);
+        this.event_mappings = new Hashtable<String, PumpEventType>();
+        this.event_mappings.put("prime infusion set", PumpEventType.PrimeInfusionSet);
+        this.event_mappings.put("cartridge changed", PumpEventType.CartridgeChange);
+        this.event_mappings.put("Run", PumpEventType.BasalRun);
+        this.event_mappings.put("Stop", PumpEventType.BasalStop);
+        this.event_mappings.put("power down", PumpEventType.PowerDown);
+        this.event_mappings.put("power up", PumpEventType.PowerUp);
+        this.event_mappings.put("time / date set", PumpEventType.DateTimeSet);
+        this.event_mappings.put("time / date corrected", PumpEventType.DateTimeCorrect);
+        this.event_mappings.put("time / date set (time shift back)", PumpEventType.DateTimeCorrect);
+        this.event_mappings.put("W1", PumpEventType.ReservoirLow);
+        this.event_mappings.put("W8", PumpEventType.BolusCancelled);
+        this.event_mappings.put("W2", PumpEventType.BatteryLow);
 
         this.error_mappings = new Hashtable<String, PumpErrors>();
         this.error_mappings.put("E1", PumpErrors.CartridgeEmpty);
@@ -1256,7 +1260,7 @@ public abstract class AccuChekSmartPixPump extends AccuChekSmartPix implements P
      * 
      * @return
      */
-    public Hashtable<String, PumpEvents> getEventMappings()
+    public Hashtable<String, PumpEventType> getEventMappings()
     {
         return this.event_mappings;
     }

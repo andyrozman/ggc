@@ -1,15 +1,15 @@
 package ggc.pump.test;
 
+import java.util.Vector;
+
+import com.atech.utils.TimerThread;
+
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.dana.DanaDiabecare_III_R;
 import ggc.pump.util.DataAccessPump;
-
-import java.util.Vector;
-
-import com.atech.utils.TimerThread;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,6 +46,7 @@ public class DanaPumpTester // extends JFrame
      */
     TimerThread thread;
 
+
     /**
      * Constructor
      * 
@@ -66,6 +67,7 @@ public class DanaPumpTester // extends JFrame
 
     }
 
+
     /**
      * Start Dana - For testing implementation of Dana Pump
      * @param portname
@@ -80,6 +82,7 @@ public class DanaPumpTester // extends JFrame
         DanaDiabecare_III_R dana = new DanaDiabecare_III_R("COM14", new ConsoleOutputWriter());
         dana.readConfiguration();
     }
+
 
     /**
      * Start Roche
@@ -103,6 +106,7 @@ public class DanaPumpTester // extends JFrame
         // ConsoleOutputWriter());
         // acs.processXml(new File("../test/I0014072.XML"));
     }
+
 
     /**
      * Start Minimed
@@ -135,13 +139,14 @@ public class DanaPumpTester // extends JFrame
         // System.out.println("PumpServer: " +
         // dataAccess.getSpecialParameters().get("BG"));
 
-        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+        dap.setGlucoseUnitType(da.getGlucoseUnitType());
 
         // MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp",
         // DataAccessPump.getInstance());
         // msp.readData();
 
     }
+
 
     /**
      * Display Serial Ports
@@ -167,6 +172,7 @@ public class DanaPumpTester // extends JFrame
 
     }
 
+
     /**
      * Something.
      */
@@ -176,6 +182,7 @@ public class DanaPumpTester // extends JFrame
         // String[] ss = input.split("[-=]");
 
     }
+
 
     /**
      * Main startup method

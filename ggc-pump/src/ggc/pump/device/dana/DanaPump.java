@@ -48,6 +48,7 @@ public abstract class DanaPump extends AbstractPump
         super();
     }
 
+
     /**
      * Constructor 
      * 
@@ -58,6 +59,7 @@ public abstract class DanaPump extends AbstractPump
     {
         super(); // params, writer);
     }
+
 
     /**
      * Constructor
@@ -71,15 +73,17 @@ public abstract class DanaPump extends AbstractPump
         super(params, writer, da);
     }
 
+
     /**
      * Constructor
      * 
      * @param cmp
      */
-    public DanaPump(AbstractDeviceCompany cmp)
+    public DanaPump(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(cmp);
+        super(cmp, da);
     }
+
 
     // ************************************************
     // *** Meter Identification Methods ***
@@ -95,6 +99,7 @@ public abstract class DanaPump extends AbstractPump
         return null;
     }
 
+
     /**
      * getImplementationStatus - Get Implementation Status 
      * 
@@ -106,6 +111,7 @@ public abstract class DanaPump extends AbstractPump
         return DeviceImplementationStatus.NotAvailable;
     }
 
+
     /**
      * Open
      */
@@ -114,12 +120,14 @@ public abstract class DanaPump extends AbstractPump
         return true;
     }
 
+
     /**
      * Close
      */
     public void close() throws PlugInBaseException
     {
     }
+
 
     /** 
      * This is method for reading configuration, in case that dump doesn't give this information.
@@ -130,6 +138,7 @@ public abstract class DanaPump extends AbstractPump
     public void readConfiguration() throws PlugInBaseException
     {
     }
+
 
     /**
      * readDeviceDataFull - This is method for reading data from device. All reading from actual device should 
@@ -142,6 +151,7 @@ public abstract class DanaPump extends AbstractPump
     {
     }
 
+
     /**
      * This is method for reading partial data from device. This can be used if your device can be read partialy 
      * (from some date to another)
@@ -153,6 +163,7 @@ public abstract class DanaPump extends AbstractPump
     {
     }
 
+
     /**
      * This is for reading device information. This should be used only if normal dump doesn't retrieve this
      * information (most dumps do).
@@ -163,6 +174,7 @@ public abstract class DanaPump extends AbstractPump
     public void readInfo() throws PlugInBaseException
     {
     }
+
 
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
@@ -182,6 +194,7 @@ public abstract class DanaPump extends AbstractPump
     {
     }
 
+
     /**
      * getConnectionPort - connection port data
      * 
@@ -192,6 +205,7 @@ public abstract class DanaPump extends AbstractPump
         return null;
     }
 
+
     /**
      * getConnectionProtocol - returns id of connection protocol
      * 
@@ -201,6 +215,7 @@ public abstract class DanaPump extends AbstractPump
     {
         return DeviceConnectionProtocol.None;
     }
+
 
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from device, in this case we have 
@@ -214,6 +229,7 @@ public abstract class DanaPump extends AbstractPump
         return false;
     }
 
+
     /**
      * Is Device Communicating
      * 
@@ -223,6 +239,7 @@ public abstract class DanaPump extends AbstractPump
     {
         return false;
     }
+
 
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some

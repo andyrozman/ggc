@@ -10,13 +10,13 @@ import ggc.plugin.data.enums.DeviceHandlerType;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.v2.DeviceDefinition;
-import ggc.plugin.device.v2.DeviceHandler;
 import ggc.plugin.output.OutputWriter;
+import ggc.pump.defs.device.PumpDeviceHandler;
 
 /**
  * Created by andy on 22.05.15.
  */
-public class InsuletHandler implements DeviceHandler
+public class InsuletHandler extends PumpDeviceHandler
 {
 
     Map<DownloadSupportType, List<GGCPlugInFileReaderContext>> fileContexts = new HashMap<DownloadSupportType, List<GGCPlugInFileReaderContext>>();

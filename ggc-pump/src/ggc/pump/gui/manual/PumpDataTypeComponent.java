@@ -17,6 +17,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
 import ggc.core.data.cfg.ConfigurationManager;
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.util.DataAccess;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
@@ -79,16 +80,16 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
     // PumpBolusType m_p_bolus = new PumpBolusType();
     // PumpBasalSubType m_p_basal = new PumpBasalSubType();
 
-    PumpDataRowDialog m_parent = null;
+    private PumpDataRowDialog m_parent = null;
 
     private DataAccessPump m_da = DataAccessPump.getInstance();
     private I18nControlAbstract ic = m_da.getI18nControlInstance();
 
     private Object[] type_items = { ic.getMessage("SELECT_ITEM"), ic.getMessage("BASAL_DOSE"),
-                                   ic.getMessage("BOLUS_DOSE"), ic.getMessage("EVENT"), ic.getMessage("ALARM"),
-                                   ic.getMessage("ERROR"), ic.getMessage("REPORT"),
-                                   ic.getMessage("PEN_INJECTION_BASAL"), ic.getMessage("PEN_INJECTION_BOLUS"),
-                                   ic.getMessage("ADDITIONAL_DATA") };
+                                    ic.getMessage("BOLUS_DOSE"), ic.getMessage("EVENT"), ic.getMessage("ALARM"),
+                                    ic.getMessage("ERROR"), ic.getMessage("REPORT"),
+                                    ic.getMessage("PEN_INJECTION_BASAL"), ic.getMessage("PEN_INJECTION_BOLUS"),
+                                    ic.getMessage("ADDITIONAL_DATA") };
 
 
     /**
@@ -276,7 +277,6 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         setHeight(0);
     }
 
-
     /*
      * private void setUnsupported()
      * {
@@ -288,6 +288,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
      * this.setHeight(40);
      * }
      */
+
 
     // type: event, alarm, error
     private void setComboAndText()
@@ -313,7 +314,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         if (this.type == PumpBaseType.Event)
         {
             this.label_1.setText(ic.getMessage("EVENT_TYPE") + ":");
-            addAllItems(this.combo_1, PumpEvents.getDescriptions());
+            addAllItems(this.combo_1, PumpEventType.getDescriptions());
         }
         else if (this.type == PumpBaseType.Alarm)
         {
@@ -445,8 +446,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             this.sub_type = stype;
         }
 
-        int index = m_da.getIndexOfElementInArray(PumpBasalType.getDescriptions(), PumpBasalType.getByCode(stype)
-                .getTranslation());
+        int index = m_da.getIndexOfElementInArray(PumpBasalType.getDescriptions(),
+            PumpBasalType.getByCode(stype).getTranslation());
 
         this.combo_1.setSelectedIndex(index);
 
@@ -639,8 +640,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         // fix subtype
         // getIndexFromStaticDescriptionArrayWithID(stype)
 
-        this.combo_1.setSelectedIndex(m_da.getIndexOfElementInArray(PumpBolusType.getDescriptions(), PumpBolusType
-                .getByCode(stype).getTranslation()));
+        this.combo_1.setSelectedIndex(m_da.getIndexOfElementInArray(PumpBolusType.getDescriptions(),
+            PumpBolusType.getByCode(stype).getTranslation()));
         // this.dataAccess.getBolusSubTypes().getIndexFromStaticDescriptionArrayWithID(stype));
 
         this.num_tf_1_d2.setVisible(false);
@@ -752,7 +753,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
      */
     public boolean areRequiredElementsSet()
     {
-        // System.out.println("!!!!  Are Elements Set - Not Implemented   !!!!");
+        // System.out.println("!!!! Are Elements Set - Not Implemented !!!!");
 
         switch (this.type)
         {
@@ -962,8 +963,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
             case Event:
                 {
-                    int index = m_da.getIndexOfElementInArray(PumpEvents.getDescriptions(),
-                        PumpEvents.getByCode(data.getSubType()).getTranslation());
+                    int index = m_da.getIndexOfElementInArray(PumpEventType.getDescriptions(),
+                        PumpEventType.getByCode(data.getSubType()).getTranslation());
                     this.combo_1.setSelectedIndex(index);
                 }
                 break;
@@ -1049,8 +1050,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
                         case TemporaryBasalRateProfile:
                             {
-                                pve.setValue("PROFILE_ID=" + this.profile_comp.getValue() + ";TBR="
-                                        + this.tbr_cmp.getValue());
+                                pve.setValue(
+                                    "PROFILE_ID=" + this.profile_comp.getValue() + ";TBR=" + this.tbr_cmp.getValue());
                             }
                             break;
 
@@ -1140,7 +1141,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
             case Event:
                 {
-                    pve.setSubType(PumpEvents.getTypeFromDescription((String) this.combo_1.getSelectedItem()));
+                    pve.setSubType(PumpEventType.getTypeFromDescription((String) this.combo_1.getSelectedItem()));
                 }
                 break;
 
@@ -1287,9 +1288,9 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
                 PumpValuesEntryExt pvex = m_parent.ht_data.get(PumpAdditionalDataType.BloodGlucose);
                 _bg = m_da.getFloatValueFromString(pvex.getValue());
 
-                if (m_da.getBGMeasurmentType() != DataAccess.BG_MGDL)
+                if (m_da.getGlucoseUnitType() == GlucoseUnitType.mmol_L)
                 {
-                    _bg = m_da.getBGValueDifferent(DataAccess.BG_MGDL, _bg);
+                    _bg = m_da.getBGValueDifferent(GlucoseUnitType.mmol_L, _bg);
                 }
             }
 
@@ -1358,29 +1359,30 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
 
         public void actionPerformed(ActionEvent arg0)
         {
+
+            if (!ProfileSelectorPump.isPrecheckForProfilesSucessful(m_parent))
+            {
+                System.out.println("Not Successfull !");
+                return;
+            }
+            else
+            {
+                System.out.println("Successfull !");
+            }
+
             ProfileSelectorPump psp = new ProfileSelectorPump(m_da, m_parent);
+
             if (psp.wasAction())
             {
                 label_2_1.setText(psp.getSelectedObject().toString());
                 this.profile = psp.getSelectedObject().toString();
             }
-            /*
-             * System.out.println("Profile Selector N/A !!!");
-             * JOptionPane.showMessageDialog(this,
-             * "Profile functionality will be added at " +
-             * "later time (version 0.5), so profile " +
-             * "selecttion is currently not possible.",
-             * i18nControlAbstract.getMessage("PFORILE"),
-             * JOptionPane.WARNING_MESSAGE);
-             */
         }
 
 
         public boolean isSelected()
         {
             return profile != null;
-            // return
-            // !(label_2_1.getText().equals(i18nControlAbstract.getMessage("NOT_SELECTED")));
         }
 
 
@@ -1605,8 +1607,8 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
             cb_sign.setSelectedIndex(1);
             this.add(cb_sign);
 
-            model_unit = new SpinnerNumberModel(0, cm.getFloatValue("PUMP_UNIT_MIN"),
-                    cm.getFloatValue("PUMP_UNIT_MAX"), cm.getFloatValue("PUMP_UNIT_STEP"));
+            model_unit = new SpinnerNumberModel(0, cm.getFloatValue("PUMP_UNIT_MIN"), cm.getFloatValue("PUMP_UNIT_MAX"),
+                    cm.getFloatValue("PUMP_UNIT_STEP"));
 
             model_proc = new SpinnerNumberModel(100, cm.getFloatValue("PUMP_PROC_MIN"),
                     cm.getFloatValue("PUMP_PROC_MAX"), cm.getFloatValue("PUMP_PROC_STEP"));

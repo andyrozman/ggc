@@ -29,7 +29,6 @@ import ggc.core.data.graph.GraphViewCGMSDailyAbstract;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesDay;
-import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.PumpAdditionalDataType;
@@ -217,8 +216,7 @@ public class GraphViewDailyPump extends GraphViewCGMSDailyAbstract
             {
                 PumpValuesEntryExt pvext = pve.getAdditionalData().get(additionalKeyWord);
 
-                createWiderBar(BGSeries, time, dataAccessPump.getBGValueByType(DataAccessPlugInBase.BG_MGDL,
-                    dataAccessPump.m_BG_unit, pvext.getValue()), 10);
+                createWiderBar(BGSeries, time, dataAccessPump.getDisplayedBG(pvext.getValue()), 10);
             }
 
             // Carbohydrates

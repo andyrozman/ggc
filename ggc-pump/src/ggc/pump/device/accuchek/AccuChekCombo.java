@@ -1,7 +1,6 @@
 package ggc.pump.device.accuchek;
 
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -49,6 +48,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         super(drive_letter, writer);
     }
 
+
     /**
      * Constructor
      * 
@@ -61,15 +61,17 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         super(params, writer, da);
     }
 
+
     /**
      * Constructor
      * 
      * @param cmp
      */
-    public AccuChekCombo(AbstractDeviceCompany cmp)
+    public AccuChekCombo(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(cmp);
+        super(cmp, da);
     }
+
 
     /**
      * getName - Get Name of meter. 
@@ -81,6 +83,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         return "Combo";
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -90,6 +93,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         return "ac_combo.jpg";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -103,6 +107,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         return PumpDevicesIds.PUMP_ACCUCHEK_COMBO;
     }
 
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -114,6 +119,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         return "INSTRUCTIONS_ACCUCHEK_SPIRIT";
     }
 
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -123,7 +129,6 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         return null;
     }
-
 
 
     /**
@@ -137,6 +142,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         return 2000;
     }
 
+
     /**
      * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
      * @return number of elements
@@ -146,6 +152,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         return 85;
     }
+
 
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
@@ -157,6 +164,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         return "ggc.pump.device.accuchek.AccuChekCombo";
     }
 
+
     /**
      * Open
      */
@@ -166,6 +174,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         return true;
     }
 
+
     /**
      * Close
      */
@@ -173,6 +182,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     public void close() throws PlugInBaseException
     {
     }
+
 
     /**
      * Get Temporary Basal Type Definition
@@ -188,6 +198,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         return null;
     }
 
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -198,6 +209,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
         return 0.1f;
     }
 
+
     /**
      * Get Basal Step (precission)
      * 
@@ -207,6 +219,7 @@ public class AccuChekCombo extends AccuChekSmartPixPump
     {
         return 0.01f;
     }
+
 
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)

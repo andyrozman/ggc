@@ -1,10 +1,10 @@
 package ggc.pump.test;
 
-import com.atech.i18n.mgr.LanguageManager;
+import com.atech.utils.ATDataAccessLMAbstract;
 
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
-import ggc.core.util.GGCLanguageManagerRunner;
+import ggc.pump.defs.PumpPluginDefinition;
 import ggc.pump.util.DataAccessPump;
 
 /**
@@ -16,9 +16,14 @@ public class AbstractPumpTest
     protected DataAccess dataAccess;
     protected DataAccessPump dataAccessPump;
 
+    protected boolean contextReady = false;
+
 
     protected void prepareContext()
     {
+        if (contextReady)
+            return;
+
         // Init core and Db
         dataAccess = DataAccess.getInstance();
 
@@ -29,14 +34,22 @@ public class AbstractPumpTest
         dataAccess.loadSpecialParameters();
 
         // Init Pump Context
-        dataAccessPump = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner()));
+        dataAccessPump = DataAccessPump.createInstance(getPluginDefinition(dataAccess));
         dataAccessPump.createDb(dataAccess.getHibernateDb());
         dataAccessPump.initAllObjects();
         dataAccessPump.loadSpecialParameters();
         dataAccessPump.setCurrentUserId(1);
-        dataAccessPump.setBGMeasurmentType(dataAccess
-                .getIntValueFromString(dataAccess.getSpecialParameters().get("BG")));
+        dataAccessPump.initSpecial();
+        dataAccessPump.setGlucoseUnitType(dataAccess.getGlucoseUnitType());
 
+        this.contextReady = true;
+
+    }
+
+
+    private PumpPluginDefinition getPluginDefinition(ATDataAccessLMAbstract da)
+    {
+        return new PumpPluginDefinition(da.getLanguageManager());
     }
 
 }

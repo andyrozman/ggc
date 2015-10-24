@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 
@@ -46,6 +47,8 @@ import ggc.pump.device.animas.impl.data.dto.*;
 public class AnimasPumpDeviceData extends AnimasDeviceData
 {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AnimasPumpDeviceData.class);
+
     public PumpSettings pumpSettings;
     // public PumpData pumpData;
     List<BasalLogEntry> basalLogEntries = new ArrayList<BasalLogEntry>();
@@ -85,9 +88,9 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
 
 
     @Override
-    public void debugAllSettings(Log log)
+    public void debugAllSettings(Logger log)
     {
-        this.pumpSettings.debugAllSettings(log);
+        this.pumpSettings.debugAllSettings(LOG);
     }
 
 

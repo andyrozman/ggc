@@ -1,7 +1,13 @@
 package ggc.pump.device.dana.impl.comm;
 
+import java.util.GregorianCalendar;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
+
 import ggc.plugin.comm.IBMCommunicationHandler;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
@@ -10,17 +16,14 @@ import ggc.plugin.protocol.reader.AbstractDeviceReader;
 import ggc.pump.device.dana.impl.data.defs.DanaDataType;
 import ggc.pump.util.DataAccessPump;
 import gnu.io.SerialPort;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import java.util.GregorianCalendar;
 
 /**
  * Created by andy on 11.03.15.
  */
 public abstract class DanaCommProtocolAbstract
 {
-    private static final Log LOG = LogFactory.getLog(DanaCommProtocolAbstract.class);
+
+    private static final Logger LOG = LoggerFactory.getLogger(DanaCommProtocolAbstract.class);
 
     protected OutputWriter outputWriter;
     protected DataAccessPump dataAccess;
@@ -31,6 +34,7 @@ public abstract class DanaCommProtocolAbstract
 
     IBMCommunicationHandler commHandler;
     private String portName;
+
 
     public DanaCommProtocolAbstract(OutputWriter outputWriter, AbstractDeviceReader reader, String portName)
     {
@@ -74,6 +78,7 @@ public abstract class DanaCommProtocolAbstract
         }
     }
 
+
     protected void incrementError()
     {
         this.errorCount++;
@@ -81,31 +86,24 @@ public abstract class DanaCommProtocolAbstract
     }
 
 
-
-
     public void init()
     {
         try
         {
-        this.commHandler = new IBMCommunicationHandler(this.portName, null);
+            this.commHandler = new IBMCommunicationHandler(this.portName, null);
 
+            // communcation settings for this meter(s)
+            this.commHandler.setCommunicationSettings(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
+                SerialPort.PARITY_NONE, SerialPort.FLOWCONTROL_NONE,
+                SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
 
-        // communcation settings for this meter(s)
-        this.commHandler.setCommunicationSettings(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE,
-                SerialPort.FLOWCONTROL_NONE, SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT
-                        | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+            this.errorCount = 0;
 
+            // this.outputWriter.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
 
+            // settting serial port in com library
 
-        this.errorCount = 0;
-
-
-        // this.outputWriter.getOutputUtil().setMaxMemoryRecords(this.getMaxMemoryRecords());
-
-
-        // settting serial port in com library
-
-            //this.commHandler.setSerialPort(params);
+            // this.commHandler.setSerialPort(params);
 
             if (!open())
             {
@@ -130,11 +128,10 @@ public abstract class DanaCommProtocolAbstract
     }
 
 
-
     public boolean open() throws Exception
     {
 
-        //try
+        // try
         {
             byte[] buffer = new byte[0x100];
 
@@ -170,12 +167,14 @@ public abstract class DanaCommProtocolAbstract
 
             return true;
         }
-        /*catch (Exception ex)
-        {
-            LOG.error("Exception on open: " + ex, ex);
-            this.setDeviceStopped();
-            return false;
-        }*/
+        /*
+         * catch (Exception ex)
+         * {
+         * LOG.error("Exception on open: " + ex, ex);
+         * this.setDeviceStopped();
+         * return false;
+         * }
+         */
     }
 
 
@@ -194,6 +193,7 @@ public abstract class DanaCommProtocolAbstract
             throw ex;
         }
     }
+
 
     protected void disconnect() throws Exception
     {
@@ -251,6 +251,7 @@ public abstract class DanaCommProtocolAbstract
         this.writeData(buffer, 0, buffer.length);
     }
 
+
     protected void writeData(byte[] buffer, int offset, int length) throws Exception
     {
         byte[] destinationArray = new byte[length + 8];
@@ -279,7 +280,6 @@ public abstract class DanaCommProtocolAbstract
     }
 
 
-
     protected int getYear(int year)
     {
         year += 2000;
@@ -293,6 +293,7 @@ public abstract class DanaCommProtocolAbstract
             return year;
         }
     }
+
 
     protected ATechDate getDateTime(byte year, byte month, byte day, byte hour, byte minute, byte second)
     {
@@ -313,7 +314,7 @@ public abstract class DanaCommProtocolAbstract
 
     protected void setDeviceStopped()
     {
-        //this.device_communicating = false;
+        // this.device_communicating = false;
         // System.out.println("Device not communicating");
         this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
     }
@@ -328,6 +329,7 @@ public abstract class DanaCommProtocolAbstract
         num ^= num << 8 << 4;
         return num ^ (((num & 0xff) << 5) | ((((num & 0xff) >> 3) & 0x1fff) << 8));
     }
+
 
     /**
      * Creates the crc.

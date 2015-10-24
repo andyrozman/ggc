@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.BitUtils;
 import com.atech.utils.data.HexUtils;
@@ -26,7 +26,7 @@ public class PumpSimple
     // //MinimedDeviceUtil.getInstance();
     BitUtils hex_utils = new BitUtils();
 
-    private static Log log = LogFactory.getLog(PumpSimple.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PumpSimple.class);
 
 
     public PumpSimple(String port, String serial_no)
@@ -58,7 +58,7 @@ public class PumpSimple
         }
         catch (Exception ex)
         {
-            log.error("Exception on execute: Ex.: " + ex, ex);
+            LOG.error("Exception on execute: Ex.: " + ex, ex);
         }
 
         //
@@ -86,7 +86,7 @@ public class PumpSimple
 
     public void initSerialCommunication() throws Exception
     {
-        log.debug("Init Serial Communication - Start");
+        LOG.debug("Init Serial Communication - Start");
 
         try
         {
@@ -98,7 +98,7 @@ public class PumpSimple
         {
             // System.out.println("SerialProtocol::setPort:: No such port: " +
             // ex);
-            log.error("No such port exception: " + ex.getMessage(), ex);
+            LOG.error("No such port exception: " + ex.getMessage(), ex);
             throw new PlugInBaseException(ex);
         }
 
@@ -112,7 +112,7 @@ public class PumpSimple
             // this.outputWriter.writeLog(LogEntryType.INFO,
             // "AbstractSerialMeter::open() - setting parameters");
 
-            log.debug("SerialProtocol:open()");
+            LOG.debug("SerialProtocol:open()");
             // System.out.println("SerialProtocol: open() - parameters");
 
             try
@@ -124,7 +124,7 @@ public class PumpSimple
             }
             catch (UnsupportedCommOperationException ex)
             {
-                log.error("Unuprted Comm Operation: " + ex, ex);
+                LOG.error("Unuprted Comm Operation: " + ex, ex);
             }
 
             portOutputStream = serialPort.getOutputStream();
@@ -169,13 +169,13 @@ public class PumpSimple
         catch (UnsupportedCommOperationException ex)
         {
             System.out.println("SerialProtocol::open(). Unsupported comm operation: " + ex);
-            log.error("Unsupported comm operation: " + ex.getMessage(), ex);
+            LOG.error("Unsupported comm operation: " + ex.getMessage(), ex);
             throw new PlugInBaseException(ex);
         }
         catch (PortInUseException ex)
         {
             System.out.println("SerialProtocol::open(). Port in use: " + ex);
-            log.error("Port in use: " + ex.getMessage(), ex);
+            LOG.error("Port in use: " + ex.getMessage(), ex);
             throw new PlugInBaseException(ex);
         }
         /*
@@ -183,14 +183,14 @@ public class PumpSimple
          * {
          * System.out.println("SerialProtocol::open(). Too many listeners: " +
          * ex);
-         * log.error("Too many listeners: " + ex.getMessage(), ex);
+         * LOG.error("Too many listeners: " + ex.getMessage(), ex);
          * throw new PlugInBaseException(ex);
          * }
          */
         catch (IOException ex)
         {
             System.out.println("SerialProtocol::open(). IO exception: " + ex);
-            log.error("IO Exception: " + ex.getMessage(), ex);
+            LOG.error("IO Exception: " + ex.getMessage(), ex);
             throw new PlugInBaseException(ex);
         }
         catch (Exception ex)
@@ -199,7 +199,7 @@ public class PumpSimple
             {
                 // System.out.println("SerialProtocol::open(). No such port: " +
                 // ex);
-                log.error("No such port: " + ex.getMessage(), ex);
+                LOG.error("No such port: " + ex.getMessage(), ex);
 
                 printAllAvailableSerialPorts();
 
@@ -209,41 +209,41 @@ public class PumpSimple
             {
                 // System.out.println("SerialProtocol::open(). Exception: " +
                 // ex);
-                log.error("Exception: " + ex.getMessage(), ex);
+                LOG.error("Exception: " + ex.getMessage(), ex);
                 throw new PlugInBaseException(ex);
             }
         }
 
-        log.debug("Init Serial Communication - End");
-        // log.debug("N/A");
+        LOG.debug("Init Serial Communication - End");
+        // LOG.debug("N/A");
 
     }
 
 
     public void initCommunicationAdapter() throws Exception
     {
-        log.debug("Init Communication Adapter - Start");
+        LOG.debug("Init Communication Adapter - Start");
 
         // readUntilEmpty();
         boolean done = this.sendCommandCheckReply((byte) 6, (byte) 51);
 
         if (done)
         {
-            log.error("Communication Adapter READY.");
+            LOG.error("Communication Adapter READY.");
         }
         else
         {
-            log.error("Communication Adapter failed.");
+            LOG.error("Communication Adapter failed.");
         }
 
-        log.debug("Init Communication Adapter - End");
+        LOG.debug("Init Communication Adapter - End");
 
         /*
          * this.portOutputStream.write(6);
          * sleepMs(device_timeout);
-         * log.trace("Read: " + this.portInputStream.read());
+         * LOG.trace("Read: " + this.portInputStream.read());
          */
-        // log.debug("N/A");
+        // LOG.debug("N/A");
 
     }
 
@@ -275,7 +275,7 @@ public class PumpSimple
         {}
         if (i > 0)
         {
-            log.info("readUntilEmpty: dumped " + i + (i <= 1 ? " byte." : " bytes."));
+            LOG.info("readUntilEmpty: dumped " + i + (i <= 1 ? " byte." : " bytes."));
         }
         return i;
     }
@@ -301,7 +301,7 @@ public class PumpSimple
             // hex_utils.getHex(cmd_byte) + " reply " + hex_utils.getHex(i) +
             // " does not match expected command " +
             // hex_utils.getHex(expected_return));
-            log.debug("SendCommand: command " + hex_utils.getHex(cmd_byte) + " reply " + hex_utils.getHex(i)
+            LOG.debug("SendCommand: command " + hex_utils.getHex(cmd_byte) + " reply " + hex_utils.getHex(i)
                     + " does not match expected command " + hex_utils.getHex(expected_return));
             return false;
         }
@@ -312,9 +312,9 @@ public class PumpSimple
 
     public void initPumpForCommunication()
     {
-        log.debug("Init Pump For Communication");
+        LOG.debug("Init Pump For Communication");
 
-        log.debug("N/A");
+        LOG.debug("N/A");
 
     }
 
@@ -357,7 +357,8 @@ public class PumpSimple
          * da.loadSpecialParameters();
          * //System.out.println("PumpServer: " +
          * dataAccess.getSpecialParameters().get("BG"));
-         * dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters
+         * dap.setGlucoseUnitType(da.getIntValueFromString(da.
+         * getSpecialParameters
          * ().get("BG")));
          * MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp",
          * DataAccessPump.getInstance());
@@ -418,7 +419,7 @@ public class PumpSimple
 
     public int initializeCommunicationInterface() throws PlugInBaseException
     {
-        log.debug("Here");
+        LOG.debug("Here");
 
         // setState(2);
         boolean flag = false;
@@ -432,13 +433,13 @@ public class PumpSimple
             }
             catch (IOException ex)
             {
-                log.warn("Got error on init. Ex.: " + ex);
+                LOG.warn("Got error on init. Ex.: " + ex);
 
                 if (i == 4)
                     // FIXME
                     throw new PlugInBaseException(ex);
 
-                log.warn("initCommunications: retrying...");
+                LOG.warn("initCommunications: retrying...");
                 i++;
             }
         }
@@ -452,25 +453,25 @@ public class PumpSimple
     private void initCommunicationsIO() throws PlugInBaseException, IOException // ,
                                                                                 // SerialIOHaltedException
     {
-        log.debug("Here");
-        log.info("initCommunicationsIO: waking up ComLink1.");
+        LOG.debug("Here");
+        LOG.info("initCommunicationsIO: waking up ComLink1.");
         // createSerialPort();
-        log.debug("initCommunicationsIO: before read until empty");
+        LOG.debug("initCommunicationsIO: before read until empty");
         // readUntilEmpty();
-        log.debug("initCommunicationsIO: before send command check reply [send=" + 6 + ", waiting for=" + 51);
+        LOG.debug("initCommunicationsIO: before send command check reply [send=" + 6 + ", waiting for=" + 51);
 
         System.out.println("Receive timeout: " + this.serialPort.getReceiveTimeout());
 
         sendCommandCheckReply((byte) 6, (byte) 51);
         try
         {
-            log.debug("initCommunicationsIO: before status");
+            LOG.debug("initCommunicationsIO: before status");
             int i = readStatus();
 
             System.out.println("Status: " + i);
             if (i > 0)
             {
-                log.warn("initCommunicationsIO: dumping " + i + " bytes.");
+                LOG.warn("initCommunicationsIO: dumping " + i + " bytes.");
                 this.portOutputStream.write((byte) 8);
                 // sendTransferDataCommand();
                 byte ai[] = new byte[i];
@@ -494,13 +495,13 @@ public class PumpSimple
 
     private int readStatus() throws PlugInBaseException, IOException
     {
-        log.debug("readStatus");
+        LOG.debug("readStatus");
 
         int status = sendCommandGetReply((byte) 2); // ASCII_STX);
         int m_numDataBytes = this.portInputStream.available();
         // read();
         readAckByte();
-        log.debug("readStatus: " + status + ", CS status follows: NumberReceivedDataBytes=" + m_numDataBytes
+        LOG.debug("readStatus: " + status + ", CS status follows: NumberReceivedDataBytes=" + m_numDataBytes
                 + ", ReceivedData=" + isStatusReceivedData(status) + ", RS232Mode=" + isStatusRS232Mode(status)
                 + ", FilterRepeat=" + isStatusFilterRepeat(status) + ", AutoSleep=" + isStatusAutoSleep(status)
                 + ", StatusError=" + isStatusError(status) + ", SelfTestError=" + isStatusSelfTestError(status));
@@ -553,7 +554,7 @@ public class PumpSimple
 
     private boolean readAckByte() throws PlugInBaseException, IOException
     {
-        log.debug("readAckByte");
+        LOG.debug("readAckByte");
 
         // this.portInputStream.
 
@@ -582,14 +583,14 @@ public class PumpSimple
 
         if (rdata[0] != 102)
         {
-            log.debug("No return reply. We received: <" + hex_utils.getHex(rdata) + ">");
+            LOG.debug("No return reply. We received: <" + hex_utils.getHex(rdata) + ">");
             // throw Exception;
             return false;
         }
 
         if (rdata[1] != 85)
         {
-            log.debug("Incorrect ACK package. We expected " + hex_utils.getHex((byte) 85) + " (we got "
+            LOG.debug("Incorrect ACK package. We expected " + hex_utils.getHex((byte) 85) + " (we got "
                     + hex_utils.getHex(rdata[1]) + ")");
             // throw Exception
             return false;

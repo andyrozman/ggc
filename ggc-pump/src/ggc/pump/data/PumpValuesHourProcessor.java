@@ -1,7 +1,6 @@
 package ggc.pump.data;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import ggc.plugin.data.DeviceValuesEntry;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.defs.PumpDeviceValueType;
-import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
 
 public class PumpValuesHourProcessor
@@ -38,28 +36,6 @@ public class PumpValuesHourProcessor
             additionalData.get(PumpDeviceValueType.COMMENT).clear();
         }
 
-    }
-
-
-    public PumpProfile getProfileForHour(List<PumpProfile> profiles, GregorianCalendar gregorianCalendar, int hour,
-            String profileName)
-    {
-
-        if (profiles.size() == 1)
-        {
-            return profiles.get(0);
-        }
-
-        for (PumpProfile profile : profiles)
-        {
-            // FIXME doesn't totally work, need to check Andy
-            if (profile.containsPatternForHourAndDate(gregorianCalendar, hour))
-            {
-                return profile;
-            }
-        }
-
-        return null;
     }
 
 
@@ -109,13 +85,18 @@ public class PumpValuesHourProcessor
                     (pve.getBaseType() == PumpBaseType.PenInjectionBolus))
             {
                 pumpValuesHour.addBolus(pve);
+
+                if (pve.getBaseType() == PumpBaseType.Bolus)
+                {
+
+                }
             }
 
             if (StringUtils.isNotBlank(pve.getComment()))
             {
                 if (!this.index.containsKey(pve.toString()))
                 {
-                    System.out.println("C:" + pve.getComment());
+                    // System.out.println("C:" + pve.getComment());
                     this.addAdditionalData(PumpDeviceValueType.COMMENT, pve.getComment());
                     this.index.put(pve.toString(), "");
                 }

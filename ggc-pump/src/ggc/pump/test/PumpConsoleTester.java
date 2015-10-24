@@ -4,13 +4,9 @@ import java.io.File;
 import java.util.Vector;
 
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.i18n.mgr.LanguageManager;
 import com.atech.utils.TimerThread;
 import com.atech.utils.data.TimeZoneUtil;
 
-import ggc.core.db.GGCDb;
-import ggc.core.util.DataAccess;
-import ggc.core.util.GGCLanguageManagerRunner;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
@@ -18,7 +14,6 @@ import ggc.pump.device.accuchek.AccuChekCombo;
 import ggc.pump.device.animas.FRC_EZManager_v2;
 import ggc.pump.device.dana.DanaDiabecare_III_R;
 import ggc.pump.device.minimed.file.MinimedCareLinkPump;
-import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,7 +41,7 @@ import ggc.pump.util.DataAccessPump;
  * Author: Andy {andy@atech-software.com}
  */
 
-public class PumpConsoleTester // extends JFrame
+public class PumpConsoleTester extends AbstractPumpTest
 {
 
     String path_to_test_files = "../../test/";
@@ -70,6 +65,8 @@ public class PumpConsoleTester // extends JFrame
         tzu.setTimeZone("Europe/Prague");
         tzu.setWinterTimeChange(0);
         tzu.setSummerTimeChange(0);
+
+        prepareContext();
 
         try
         {
@@ -132,10 +129,11 @@ public class PumpConsoleTester // extends JFrame
      */
     public void startRoche(String portName) throws Exception
     {
-        DataAccess daCore = DataAccess.getInstance();
-
-        DataAccessPump dap = DataAccessPump.createInstance(daCore.getLanguageManager());
-        dap.initAllObjects();
+        // DataAccess daCore = DataAccess.getInstance();
+        //
+        // DataAccessPump dap =
+        // DataAccessPump.createInstance(daCore.getLanguageManager());
+        // dap.initAllObjects();
 
         // DataAccessPump dap = DataAccessPump.createInstance(new
         // LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
@@ -183,30 +181,31 @@ public class PumpConsoleTester // extends JFrame
         // mcl.parseExportFile(new File(file));
         // MinimedSMP msp = new MinimedSMP("f:\\Rozman_A_Plus_20090423.mmp");
 
-        DataAccess da = DataAccess.getInstance();
-
-        GGCDb db = new GGCDb(da);
-        // db.initDb();
-
-        da.setDb(db);
-
-        DataAccessPump dap = DataAccessPump.createInstance(da.getLanguageManager());
-        // dap.setHelpContext(da.getHelpContext());
-        // dap.setPlugInServerInstance(this);
-        // dap.createDb(da.getHibernateDb());
-        dap.initAllObjects();
-        dap.loadSpecialParameters();
-        // this.backup_restore_enabled = true;
-
-        da.loadSpecialParameters();
-        // System.out.println("PumpServer: " +
-        // dataAccess.getSpecialParameters().get("BG"));
-
-        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+        // DataAccess da = DataAccess.getInstance();
+        //
+        // GGCDb db = new GGCDb(da);
+        // // db.initDb();
+        //
+        // da.setDb(db);
+        //
+        // DataAccessPump dap =
+        // DataAccessPump.createInstance(da.getLanguageManager());
+        // // dap.setHelpContext(da.getHelpContext());
+        // // dap.setPlugInServerInstance(this);
+        // // dap.createDb(da.getHibernateDb());
+        // dap.initAllObjects();
+        // dap.loadSpecialParameters();
+        // // this.backup_restore_enabled = true;
+        //
+        // da.loadSpecialParameters();
+        // // System.out.println("PumpServer: " +
+        // // dataAccess.getSpecialParameters().get("BG"));
+        //
+        // dap.setGlucoseUnitType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
 
         System.out.println(new File(".").getAbsolutePath());
 
-        MinimedCareLinkPump mcl = new MinimedCareLinkPump(dap, new ConsoleOutputWriter(),
+        MinimedCareLinkPump mcl = new MinimedCareLinkPump(dataAccessPump, new ConsoleOutputWriter(),
                 MinimedCareLink.READ_DEVICE_DATA);
         mcl.parseExportFile(new File(path_to_test_files + "CareLink-Export-1213803114904.csv"));
 
@@ -220,29 +219,30 @@ public class PumpConsoleTester // extends JFrame
     public void checkTranslation()
     {
 
-        DataAccess da = DataAccess.getInstance();
-        // da.initSpecial();
+        // DataAccess da = DataAccess.getInstance();
+        // // da.initSpecial();
+        //
+        // // GGCDb db = new GGCDb(da);
+        // // db.initDb();
+        //
+        // // da.setDb(db);
+        //
+        // DataAccessPump dap =
+        // DataAccessPump.createInstance(da.getLanguageManager());
+        // // dap.setHelpContext(da.getHelpContext());
+        // // dap.setPlugInServerInstance(this);
+        // // dap.createDb(da.getHibernateDb());
+        // dap.initAllObjects();
+        // dap.loadSpecialParameters();
+        // // this.backup_restore_enabled = true;
+        //
+        // da.loadSpecialParameters();
+        // // System.out.println("PumpServer: " +
+        // // dataAccess.getSpecialParameters().get("BG"));
+        //
+        // dap.setGlucoseUnitType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
 
-        // GGCDb db = new GGCDb(da);
-        // db.initDb();
-
-        // da.setDb(db);
-
-        DataAccessPump dap = DataAccessPump.createInstance(da.getLanguageManager());
-        // dap.setHelpContext(da.getHelpContext());
-        // dap.setPlugInServerInstance(this);
-        // dap.createDb(da.getHibernateDb());
-        dap.initAllObjects();
-        dap.loadSpecialParameters();
-        // this.backup_restore_enabled = true;
-
-        da.loadSpecialParameters();
-        // System.out.println("PumpServer: " +
-        // dataAccess.getSpecialParameters().get("BG"));
-
-        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
-
-        I18nControlAbstract ic = dap.getI18nControlInstance();
+        I18nControlAbstract ic = dataAccessPump.getI18nControlInstance();
 
         System.out.println("Profiles: " + ic.getMessage("PUMP_DATA_PROFILES"));
 
@@ -258,28 +258,29 @@ public class PumpConsoleTester // extends JFrame
      */
     public void startAnimas()
     {
-        DataAccess da = DataAccess.getInstance();
-
-        GGCDb db = new GGCDb(da);
-        db.initDb();
-
-        da.setDb(db);
-
-        DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
-
-        // DataAccessPump dap = DataAccessPump.getInstance();
-        // dap.setHelpContext(da.getHelpContext());
-        // dap.setPlugInServerInstance(this);
-        dap.createDb(da.getHibernateDb());
-        dap.initAllObjects();
-        dap.loadSpecialParameters();
-        // this.backup_restore_enabled = true;
-
-        da.loadSpecialParameters();
-        // System.out.println("PumpServer: " +
-        // dataAccess.getSpecialParameters().get("BG"));
-
-        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+        // DataAccess da = DataAccess.getInstance();
+        //
+        // GGCDb db = new GGCDb(da);
+        // db.initDb();
+        //
+        // da.setDb(db);
+        //
+        // DataAccessPump dap = DataAccessPump.createInstance(new
+        // LanguageManager(new GGCLanguageManagerRunner())); // .getInstance();
+        //
+        // // DataAccessPump dap = DataAccessPump.getInstance();
+        // // dap.setHelpContext(da.getHelpContext());
+        // // dap.setPlugInServerInstance(this);
+        // dap.createDb(da.getHibernateDb());
+        // dap.initAllObjects();
+        // dap.loadSpecialParameters();
+        // // this.backup_restore_enabled = true;
+        //
+        // da.loadSpecialParameters();
+        // // System.out.println("PumpServer: " +
+        // // dataAccess.getSpecialParameters().get("BG"));
+        //
+        // dap.setGlucoseUnitType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
 
         FRC_EZManager_v2 ezm = new FRC_EZManager_v2(new ConsoleOutputWriter());
         ezm.readFile("/home/andy/workspace/EZMD.mdb");
@@ -310,7 +311,8 @@ public class PumpConsoleTester // extends JFrame
          * dap.loadSpecialParameters(); //this.backup_restore_enabled = true;
          * da.loadSpecialParameters(); //System.out.println("PumpServer: " +
          * dataAccess.getSpecialParameters().get("BG"));
-         * dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters
+         * dap.setGlucoseUnitType(da.getIntValueFromString(da.
+         * getSpecialParameters
          * ().get("BG")));
          * //FRC_EZManager_v2 ezm = new FRC_EZManager_v2(new
          * ConsoleOutputWriter());
@@ -319,7 +321,8 @@ public class PumpConsoleTester // extends JFrame
          */
 
         // CoPilot cp = new CoPilot(dap);
-        // cp.readFile("/home/andy/workspace/GGC Desktop/test/CoPilot_Arch.XML");
+        // cp.readFile("/home/andy/workspace/GGC
+        // Desktop/test/CoPilot_Arch.XML");
 
     }
 

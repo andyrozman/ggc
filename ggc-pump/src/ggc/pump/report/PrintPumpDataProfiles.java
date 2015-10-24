@@ -1,4 +1,4 @@
-package ggc.pump.print;
+package ggc.pump.report;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -8,6 +8,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.print.engine.ITextDocumentPrintSettings;
 import com.atech.print.engine.PrintAbstractITextWithDataRead;
 import com.atech.print.engine.PrintParameters;
+import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.data.ATechDate;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font.FontFamily;
@@ -21,6 +22,7 @@ import ggc.pump.data.PumpValuesHourProcessor;
 import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.db.GGCPumpDb;
 import ggc.pump.db.PumpProfile;
+import ggc.pump.defs.PumpPluginDefinition;
 import ggc.pump.util.DataAccessPump;
 
 /**
@@ -283,6 +285,12 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
     }
 
 
+    private static PumpPluginDefinition getPluginDefinition(ATDataAccessLMAbstract da)
+    {
+        return new PumpPluginDefinition(da.getLanguageManager());
+    }
+
+
     public static void main(String[] args)
     {
         // LanguageManager lm = new LanguageManager(new
@@ -301,7 +309,7 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
         // GGCDb db = new GGCDb(daCore);
         // db.initDb();
 
-        DataAccessPump da = DataAccessPump.createInstance(daCore.getLanguageManager());
+        DataAccessPump da = DataAccessPump.createInstance(getPluginDefinition(daCore));
 
         da.createPlugInDataRetrievalContext();
 

@@ -8,7 +8,9 @@ import org.hibernate.Transaction;
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.db.hibernate.GGCHibernateObject;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.plugin.data.DeviceValuesEntryInterface;
@@ -16,7 +18,6 @@ import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.graph.data.GraphValue;
 import ggc.plugin.graph.data.GraphValuesCapable;
 import ggc.plugin.output.OutputWriterType;
-import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.plugin.util.DeviceValuesEntryUtil;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
@@ -47,8 +48,8 @@ import ggc.pump.util.DataAccessPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesEntryInterface, DatabaseObjectHibernate,
-        GraphValuesCapable
+public class PumpValuesEntryExt extends PumpDataExtendedH
+        implements PumpValuesEntryInterface, DatabaseObjectHibernate, GraphValuesCapable
 {
 
     private static final long serialVersionUID = 2300422547257308019L;
@@ -204,7 +205,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
             }
             else if (this.getTypeEnum() == PumpAdditionalDataType.BloodGlucose)
             {
-                if (this.da.m_BG_unit == DataAccessPlugInBase.BG_MGDL)
+                if (this.da.getGlucoseUnitType() == GlucoseUnitType.mg_dL)
                 {
                     sb.append(this.getValue() + " mg/dL");
                 }
@@ -434,9 +435,9 @@ public class PumpValuesEntryExt extends PumpDataExtendedH implements PumpValuesE
      * 
      * @return format of date time (precission)
      */
-    public int getDateTimeFormat()
+    public ATechDateType getDateTimeFormat()
     {
-        return ATechDate.FORMAT_DATE_AND_TIME_S;
+        return ATechDateType.DateAndTimeSec;
     }
 
 

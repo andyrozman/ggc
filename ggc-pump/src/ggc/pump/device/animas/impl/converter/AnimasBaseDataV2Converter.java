@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 
@@ -52,7 +52,7 @@ import ggc.pump.device.animas.impl.data.enums.AnimasBolusSettingSubType;
 public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 {
 
-    public static final Log LOG = LogFactory.getLog(AnimasBaseDataV2Converter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AnimasBaseDataV2Converter.class);
     AnimasPumpDeviceData data;
     boolean inDataProcessing = false;
     HashMap<String, BigDecimal> bigDecimals = new HashMap<String, BigDecimal>();
@@ -180,8 +180,8 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
     }
 
-
     // UTILS
+
 
     // DATA METHODS
 
@@ -262,9 +262,11 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
         bolusEntry.bolusSubType = packet.getReceivedDataBit(18) & 0x3;
         bolusEntry.bolusRecordType = (packet.getReceivedDataBit(18) >> 2) & 0x3;
 
-        bolusEntry.amount = AnimasUtils.createBigDecimalValueThroughMoreBits( //
-            packet.getReceivedDataBit(10), packet.getReceivedDataBit(11), //
-            packet.getReceivedDataBit(12), packet.getReceivedDataBit(13)).divide(bigDecimals.get("BIG_DECIMAL_10000f"));
+        bolusEntry.amount = AnimasUtils
+                .createBigDecimalValueThroughMoreBits( //
+                    packet.getReceivedDataBit(10), packet.getReceivedDataBit(11), //
+                    packet.getReceivedDataBit(12), packet.getReceivedDataBit(13))
+                .divide(bigDecimals.get("BIG_DECIMAL_10000f"));
         bolusEntry.requestedAmount = AnimasUtils.createBigDecimalValueThroughMoreBits( //
             packet.getReceivedDataBit(14), //
             packet.getReceivedDataBit(15)).divide(bigDecimals.get("BIG_DECIMAL_1000f"));
@@ -309,13 +311,14 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
         ebs.i2C = packet.getReceivedDataBit(7);
         ebs.carbs = AnimasUtils.createIntValueThroughMoreBits(packet.getReceivedDataBit(8),
             packet.getReceivedDataBit(9));
-        ebs.bg = ((int) Math.round(AnimasUtils.createIntValueThroughMoreBits(packet.getReceivedDataBit(12),
-            packet.getReceivedDataBit(13))
-                * 0.1D * BGmult));
+        ebs.bg = ((int) Math.round(
+            AnimasUtils.createIntValueThroughMoreBits(packet.getReceivedDataBit(12), packet.getReceivedDataBit(13))
+                    * 0.1D * BGmult));
         ebs.isf = AnimasUtils.createIntValueThroughMoreBits(packet.getReceivedDataBit(10),
             packet.getReceivedDataBit(11));
-        ebs.bgTarget = ((int) Math.round(AnimasUtils.createIntValueThroughMoreBits(packet.getReceivedDataBit(14),
-            packet.getReceivedDataBit(15)) * 0.1D * BGmult));
+        ebs.bgTarget = ((int) Math.round(
+            AnimasUtils.createIntValueThroughMoreBits(packet.getReceivedDataBit(14), packet.getReceivedDataBit(15))
+                    * 0.1D * BGmult));
         ebs.bgDelta = ((int) Math.round(packet.getReceivedDataBit(16) * 0.1D * BGmult));
 
         short t = (short) ((packet.getReceivedDataBit(17) & 0x4) >> 2);
@@ -351,8 +354,8 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
     private void decodeBasalLog(AnimasDeviceReplyPacket packet, ATechDate dateTime)
     {
-        BigDecimal rate = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(10),
-            packet.getReceivedDataBit(11)). //
+        BigDecimal rate = AnimasUtils
+                .createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(10), packet.getReceivedDataBit(11)). //
                 divide(bigDecimals.get("BIG_DECIMAL_1000"), 3, BigDecimal.ROUND_CEILING);
         int flag = (short) (packet.getReceivedDataBit(12) & 0x1);
 
@@ -380,15 +383,17 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
         dateTime.minute = 0;
         dateTime.second = 0;
 
-        BigDecimal tdd = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(10),
-            packet.getReceivedDataBit(11), packet.getReceivedDataBit(12), packet.getReceivedDataBit(13)).divide(
-            bigDecimals.get("BIG_DECIMAL_10000f"), 3, BigDecimal.ROUND_CEILING);
+        BigDecimal tdd = AnimasUtils
+                .createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(10), packet.getReceivedDataBit(11),
+                    packet.getReceivedDataBit(12), packet.getReceivedDataBit(13))
+                .divide(bigDecimals.get("BIG_DECIMAL_10000f"), 3, BigDecimal.ROUND_CEILING);
 
         writeDataInternal("Report_All_Daily_Insulin", dateTime, String.format("%4.3f", tdd.floatValue()));
 
-        BigDecimal basal = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(14),
-            packet.getReceivedDataBit(15), packet.getReceivedDataBit(16), packet.getReceivedDataBit(17)).divide(
-            bigDecimals.get("BIG_DECIMAL_10000f"), 3, BigDecimal.ROUND_CEILING);
+        BigDecimal basal = AnimasUtils
+                .createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(14), packet.getReceivedDataBit(15),
+                    packet.getReceivedDataBit(16), packet.getReceivedDataBit(17))
+                .divide(bigDecimals.get("BIG_DECIMAL_10000f"), 3, BigDecimal.ROUND_CEILING);
 
         writeDataInternal("Report_Daily_Basal_Insulin", dateTime, String.format("%4.3f", basal.floatValue()));
     }
@@ -396,8 +401,9 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
     private void decodePrimeLog(AnimasDeviceReplyPacket packet, ATechDate dateTime)
     {
-        BigDecimal primeAmount = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(10),
-            packet.getReceivedDataBit(11)).divide(bigDecimals.get("BIG_DECIMAL_100"), 2, BigDecimal.ROUND_CEILING);
+        BigDecimal primeAmount = AnimasUtils
+                .createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(10), packet.getReceivedDataBit(11))
+                .divide(bigDecimals.get("BIG_DECIMAL_100"), 2, BigDecimal.ROUND_CEILING);
         short flag = packet.getReceivedDataBit(12);
 
         // flag 2: prime
@@ -415,8 +421,8 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
         }
         else
         {
-            LOG.warn(String.format("decodePrimeLog, unknown flag (%s) with value (%4.2f)", flag,
-                primeAmount.floatValue()));
+            LOG.warn(
+                String.format("decodePrimeLog, unknown flag (%s) with value (%4.2f)", flag, primeAmount.floatValue()));
         }
     }
 
@@ -541,23 +547,23 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
         pumpSettings.bolusReminderEnabled = getBooleanValue(packet.getReceivedDataBit(9));
         pumpSettings.bolusSpeed = packet.getReceivedDataBit(10) == 0 ? BolusSpeed.Normal : BolusSpeed.Slow;
         pumpSettings.numberOfBasalProfiles = packet.getReceivedDataBit(11);
-        pumpSettings.maxBasalAmountProHour = AnimasUtils.createBigDecimalValueThroughMoreBits(
-            packet.getReceivedDataBit(12), packet.getReceivedDataBit(13)).divide(
-            this.bigDecimals.get("BIG_DECIMAL_100f"), 2, BigDecimal.ROUND_CEILING);
-        pumpSettings.maxBolusProHour = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(14),
-            packet.getReceivedDataBit(15))
+        pumpSettings.maxBasalAmountProHour = AnimasUtils
+                .createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(12), packet.getReceivedDataBit(13))
                 .divide(this.bigDecimals.get("BIG_DECIMAL_100f"), 2, BigDecimal.ROUND_CEILING);
-        pumpSettings.totalDailyDose = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(16),
-            packet.getReceivedDataBit(17))
+        pumpSettings.maxBolusProHour = AnimasUtils
+                .createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(14), packet.getReceivedDataBit(15))
+                .divide(this.bigDecimals.get("BIG_DECIMAL_100f"), 2, BigDecimal.ROUND_CEILING);
+        pumpSettings.totalDailyDose = AnimasUtils
+                .createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(16), packet.getReceivedDataBit(17))
                 .divide(this.bigDecimals.get("BIG_DECIMAL_100f"), 2, BigDecimal.ROUND_CEILING);
 
         int startBit = 18;
 
         if ((this.data.isModelPingOrHigher()))
         {
-            pumpSettings.maxDoseIn2h = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(18),
-                packet.getReceivedDataBit(19)).divide(this.bigDecimals.get("BIG_DECIMAL_100f"), 2,
-                BigDecimal.ROUND_CEILING);
+            pumpSettings.maxDoseIn2h = AnimasUtils
+                    .createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(18), packet.getReceivedDataBit(19))
+                    .divide(this.bigDecimals.get("BIG_DECIMAL_100f"), 2, BigDecimal.ROUND_CEILING);
             startBit = 20;
         }
         else
@@ -571,11 +577,11 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
         pumpSettings.autoOffEnabled = getBooleanValue(packet.getReceivedDataBit(startBit + 3));
         pumpSettings.autoOffTimeoutHr = packet.getReceivedDataBit(startBit + 4);
         pumpSettings.lowCartridgeWarning = packet.getReceivedDataBit(startBit + 5);
-        pumpSettings.occlusionSensitivity = getBooleanValue(packet.getReceivedDataBit(startBit + 6)) ? OcclusionSensitivity.High
-                : OcclusionSensitivity.Low;
+        pumpSettings.occlusionSensitivity = getBooleanValue(packet.getReceivedDataBit(startBit + 6))
+                ? OcclusionSensitivity.High : OcclusionSensitivity.Low;
         pumpSettings.iOBEnabled = getBooleanValue(packet.getReceivedDataBit(startBit + 7));
-        pumpSettings.iOBDecay = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(28)).divide(
-            this.bigDecimals.get("BIG_DECIMAL_10f"), 1, BigDecimal.ROUND_CEILING);
+        pumpSettings.iOBDecay = AnimasUtils.createBigDecimalValueThroughMoreBits(packet.getReceivedDataBit(28))
+                .divide(this.bigDecimals.get("BIG_DECIMAL_10f"), 1, BigDecimal.ROUND_CEILING);
 
         if ((this.data.isModel1200()) || (this.data.isModel1200p()))
         {
@@ -638,9 +644,10 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
         {
             ATechDate time = calculateTimeFromTimeSet(adp.getReceivedDataBit((8 + p)));
 
-            BigDecimal amount = AnimasUtils.createBigDecimalValueThroughMoreBits(
-                adp.getReceivedDataBit((20 + (p * 2))), adp.getReceivedDataBit((20 + (p * 2) + 1))).divide(
-                bigDecimals.get("BIG_DECIMAL_1000f"), 3, BigDecimal.ROUND_CEILING);
+            BigDecimal amount = AnimasUtils
+                    .createBigDecimalValueThroughMoreBits(adp.getReceivedDataBit((20 + (p * 2))),
+                        adp.getReceivedDataBit((20 + (p * 2) + 1)))
+                    .divide(bigDecimals.get("BIG_DECIMAL_1000f"), 3, BigDecimal.ROUND_CEILING);
 
             data.addBasalProfileEntry(profileNumber, new BasalProfileEntry(time, amount.floatValue()));
         }
@@ -657,10 +664,9 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
             int isf = AnimasUtils.createIntValueThroughMoreBits(adp.getReceivedDataBit((12 + (2 * i))),
                 adp.getReceivedDataBit((12 + (2 * i) + 1)));
 
-            this.data
-                    .addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinBGRatio,
-                            (i + 1), this.calculateTimeFromTimeSet(i * 8), this.data.isBGinMgDL() ? isf
-                                    : (float) (isf / 18.0f)));
+            this.data.addSettingTimeValueEntry(
+                new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinBGRatio, (i + 1),
+                        this.calculateTimeFromTimeSet(i * 8), this.data.isBGinMgDL() ? isf : (float) (isf / 18.0f)));
         }
 
         for (int i = 0; i < 12; i++)
@@ -668,11 +674,10 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
             short bgTarget = adp.getReceivedDataBit((24 + i));
             short bgDelta = adp.getReceivedDataBit((36 + i));
 
-            this.data
-                    .addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.BGTarget, (i + 1),
-                            this.calculateTimeFromTimeSet(i * 8), this.data.isBGinMgDL() ? bgTarget
-                                    : (float) (bgTarget / 18.0f), this.data.isBGinMgDL() ? bgDelta
-                                    : (float) (bgDelta / 18.0f)));
+            this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.BGTarget, (i + 1),
+                    this.calculateTimeFromTimeSet(i * 8),
+                    this.data.isBGinMgDL() ? bgTarget : (float) (bgTarget / 18.0f),
+                    this.data.isBGinMgDL() ? bgDelta : (float) (bgDelta / 18.0f)));
         }
     }
 

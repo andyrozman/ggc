@@ -1,7 +1,7 @@
 package ggc.pump.device.insulet.data.dto.data;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
@@ -17,7 +17,7 @@ import ggc.pump.device.insulet.data.enums.OmnipodDataType;
 public class LogRecord extends AbstractRecord
 {
 
-    private static final Log LOG = LogFactory.getLog(LogRecord.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LogRecord.class);
 
     // log_record: { format: 'bNSSbbsbbb.i', fields: [
     // 'logId', 'logIndex', 'recordSize', 'errorCode',

@@ -2,8 +2,8 @@ package ggc.pump.device.insulet.data.converter;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.BitUtils;
@@ -31,7 +31,7 @@ import ggc.pump.util.DataAccessPump;
 public class OmnipodDataConverter implements OmnipodConverter
 {
 
-    public static final Log LOG = LogFactory.getLog(OmnipodDataConverter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OmnipodDataConverter.class);
 
     OutputWriter outputWriter;
     BitUtils bitUtils;
@@ -71,8 +71,8 @@ public class OmnipodDataConverter implements OmnipodConverter
             case ManufacturingData:
             case PdmVersion:
             case Profile:
-                LOG.debug(String.format("This type %s is not supported by this converter.", record.getOmnipodDataType()
-                        .name()));
+                LOG.debug(String.format("This type %s is not supported by this converter.",
+                    record.getOmnipodDataType().name()));
                 break;
 
             // ignored
@@ -189,8 +189,8 @@ public class OmnipodDataConverter implements OmnipodConverter
 
                 default:
                 case Unknown:
-                    LOG.warn(String.format("This HistoryType cannot be processed (%s, %s)", lr.getHistoryRecordType()
-                            .name(), lr.getRecordType()));
+                    LOG.warn(String.format("This HistoryType cannot be processed (%s, %s)",
+                        lr.getHistoryRecordType().name(), lr.getRecordType()));
                     break;
 
             }
@@ -330,7 +330,7 @@ public class OmnipodDataConverter implements OmnipodConverter
         // we ignore errored entries
         if ((errorCode != null && errorCode > 0) || //
                 (flags == BGFlags.TEMPERATURE_FLAG.getCode() || //
-                flags == BGFlags.OTHER_ERROR_FLAG.getCode()))
+                        flags == BGFlags.OTHER_ERROR_FLAG.getCode()))
         {
             return;
         }
@@ -480,9 +480,9 @@ public class OmnipodDataConverter implements OmnipodConverter
                 // first tbr
                 tbrRunning = basalEntry;
 
-                writeData("Basal_TemporaryBasalRate", basalEntry.dateTime, String.format(
-                    "TBR_VALUE=%s;TBR_UNIT=%s;DURATION=%s", basalEntry.temporaryBasal, "%",
-                    DataAccessPump.getTimeFromMinutes(basalEntry.duration)));
+                writeData("Basal_TemporaryBasalRate", basalEntry.dateTime,
+                    String.format("TBR_VALUE=%s;TBR_UNIT=%s;DURATION=%s", basalEntry.temporaryBasal, "%",
+                        DataAccessPump.getTimeFromMinutes(basalEntry.duration)));
             }
             else
             {

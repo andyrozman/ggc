@@ -2,8 +2,8 @@ package ggc.pump.data;
 
 import java.util.Hashtable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.gui.OldDataReaderAbstract;
@@ -39,7 +39,7 @@ import ggc.pump.util.DataAccessPump;
 public class PumpDataReader extends OldDataReaderAbstract
 {
 
-    private static Log log = LogFactory.getLog(PumpDataReader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PumpDataReader.class);
 
     GGCPumpDb db = null;
     DataAccessPump m_da = null;
@@ -98,7 +98,7 @@ public class PumpDataReader extends OldDataReaderAbstract
         if (centry == -1)
         {
             db_reading += 20.0f;
-            log.debug("Old Data reading progress +20% [" + m_da.getApplicationName() + "]");
+            LOG.debug("Old Data reading progress +20% [" + m_da.getApplicationName() + "]");
         }
         else
         {

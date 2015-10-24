@@ -1,5 +1,15 @@
 package ggc.pump.device.dana;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Hashtable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.HexUtils;
+
 import ggc.plugin.data.DeviceValueConfigEntry;
 import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.device.DeviceIdentification;
@@ -11,9 +21,8 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-import ggc.pump.data.PumpWriterValues;
-
 import ggc.pump.data.PumpValuesEntryProfile;
+import ggc.pump.data.PumpWriterValues;
 import ggc.pump.data.defs.*;
 import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.device.AbstractBlueToothPump;
@@ -23,16 +32,6 @@ import ggc.pump.manager.company.Sooil;
 import ggc.pump.util.DataAccessPump;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.atech.utils.data.ATechDate;
-import com.atech.utils.data.HexUtils;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
@@ -64,7 +63,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 {
 
     HexUtils hex_utils = new HexUtils();
-    private static Log log = LogFactory.getLog(DanaDiabecare_III_R.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DanaDiabecare_III_R.class);
     private boolean device_communicating = true;
     int entries_current = 0;
     int entries_max = 100;
@@ -84,16 +83,18 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         loadPumpSpecificValues();
     }
 
+
     /**
      * Constructor
      *
      * @param cmp
      */
-    public DanaDiabecare_III_R(AbstractDeviceCompany cmp)
+    public DanaDiabecare_III_R(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(cmp);
-        loadPumpSpecificValues();
+        super(cmp, da);
+        // loadPumpSpecificValues();
     }
+
 
     /**
      * Constructor
@@ -106,6 +107,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         this(params, writer, DataAccessPump.getInstance());
         // super(); //DataAccessPump.getInstance());
     }
+
 
     /**
      * Constructor
@@ -120,8 +122,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
         // communcation settings for this meter(s)
         this.setCommunicationSettings(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE,
-            SerialPort.FLOWCONTROL_NONE, SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT
-                    | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+            SerialPort.FLOWCONTROL_NONE,
+            SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
 
         loadPumpSpecificValues();
 
@@ -139,7 +141,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         this.setPumpType("Sooil (Dana)", this.getName());
 
         // set device company (needed for now, will also be deprecated)
-        this.setDeviceCompany(new Sooil());
+        this.setDeviceCompany(new Sooil(da));
 
         // settting serial port in com library
         try
@@ -157,16 +159,17 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
         catch (javax.comm.NoSuchPortException ex)
         {
-            log.error("Port [" + params + "] not found");
+            LOG.error("Port [" + params + "] not found");
             setDeviceStopped();
         }
         catch (Exception ex)
         {
-            log.error("Exception on create:" + ex, ex);
+            LOG.error("Exception on create:" + ex, ex);
             this.setDeviceStopped();
         }
 
     }
+
 
     /**
      * getName - Get Name of device
@@ -178,6 +181,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return "Diabcare II R (III)";
     }
 
+
     /**
      * getIconName - Get Icon of device
      *
@@ -187,6 +191,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     {
         return "so_danaIII.jpg";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class Should be
@@ -199,6 +204,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return PumpDevicesIds.PUMP_DANA_DIABECARE_III_R;
     }
 
+
     /**
      * getInstructions - get instructions for device Should be implemented by
      * meter class.
@@ -210,6 +216,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return "INSTRUCTIONS_DANA_III_R";
     }
 
+
     /**
      * getComment - Get Comment for device
      *
@@ -219,6 +226,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     {
         return null;
     }
+
 
     /**
      * getImplementationStatus - Get Implementation Status
@@ -231,6 +239,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return DeviceImplementationStatus.Done;
     }
 
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by
      * Reflection at later time
@@ -242,6 +251,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return "ggc.pump.device.dana.DanaDiabecare_III_R";
     }
 
+
     /**
      * Get Max Memory Records
      *
@@ -251,6 +261,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     {
         return -1;
     }
+
 
     private void connect() throws Exception
     {
@@ -263,10 +274,11 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
         catch (Exception ex)
         {
-            log.error("Error on connect. Ex: " + ex, ex);
+            LOG.error("Error on connect. Ex: " + ex, ex);
             throw ex;
         }
     }
+
 
     private void disconnect() throws Exception
     {
@@ -279,7 +291,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
         catch (Exception ex)
         {
-            log.error("Error on disconnect. Ex: " + ex, ex);
+            LOG.error("Error on disconnect. Ex: " + ex, ex);
             throw ex;
         }
     }
@@ -289,6 +301,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     ATechDate atd_1 = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, 0);
     byte old_record_code = -1;
     int old_record_value = -1;
+
 
     /**
      * Gets the device record.
@@ -306,7 +319,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         {
             boolean flag;
 
-            log.debug("getDeviceRecord (" + dataType.getCommand()[1] + "/" + dataType.getDescription() + "):Start");
+            LOG.debug("getDeviceRecord (" + dataType.getCommand()[1] + "/" + dataType.getDescription() + "):Start");
 
             byte[] buffer = new byte[0x200];
             int num2 = 0;
@@ -325,8 +338,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
                 }
                 catch (Exception exception1)
                 {
-                    log.error("getDeviceRecord. Ex: " + exception1.getMessage(), exception1);
-                    log.debug("getDeviceRecord(" + dataType.getDescription() + "):End");
+                    LOG.error("getDeviceRecord. Ex: " + exception1.getMessage(), exception1);
+                    LOG.debug("getDeviceRecord(" + dataType.getDescription() + "):End");
                     flag = false;
                     break;
                 }
@@ -372,9 +385,11 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
                 {
                     if (!writeData(key, atd, DanaDataType.getByCode(hex_utils.getByteFromArray(6)), record_value))
                     {
-                        System.out.println("date: " + atd.getDateTimeString() + ", code: " + record_code + ", value="
-                                + record_value); // +", value2=" +
-                                                 // record_value2);
+                        System.out.println(
+                            "date: " + atd.getDateTimeString() + ", code: " + record_code + ", value=" + record_value); // +",
+                                                                                                                        // value2="
+                                                                                                                        // +
+                                                                                                                        // record_value2);
                     }
                 }
 
@@ -388,10 +403,11 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
         finally
         {
-            log.debug("getDeviceRecord(" + dataType.getDescription() + "):End");
+            LOG.debug("getDeviceRecord(" + dataType.getDescription() + "):End");
         }
 
     }
+
 
     private boolean writeData(String key, ATechDate atd, DanaDataType type, int value)
     {
@@ -420,6 +436,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
     int current_year;
 
+
     private int getYear(int year)
     {
         year += 2000;
@@ -433,6 +450,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             return year;
         }
     }
+
 
     private ATechDate getDateTime(byte y, byte m, byte d, byte h, byte min, byte s)
     {
@@ -449,6 +467,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, gc);
 
     }
+
 
     /**
      * open
@@ -495,11 +514,12 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
         catch (Exception ex)
         {
-            log.error("Exception on open: " + ex, ex);
+            LOG.error("Exception on open: " + ex, ex);
             this.setDeviceStopped();
             return false;
         }
     }
+
 
     /**
      * Read data.
@@ -529,12 +549,13 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
         catch (Exception ex)
         {
-            log.error("readData(). Exception: " + ex, ex);
+            LOG.error("readData(). Exception: " + ex, ex);
         }
         return num;
     }
 
     DeviceValuesWriter dvw = null;
+
 
     private DeviceValuesWriter getWriter()
     {
@@ -548,10 +569,12 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
     }
 
+
     private void writeData(byte[] buffer) throws Exception
     {
         this.writeData(buffer, 0, buffer.length);
     }
+
 
     private void writeData(byte[] buffer, int offset, int length) throws Exception
     {
@@ -580,6 +603,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
     }
 
+
     /**
      * serialEvent
      *
@@ -590,6 +614,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         // not used
     }
 
+
     /**
      * Get Download Support Type
      *
@@ -599,6 +624,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     {
         return DownloadSupportType.Download_Data_Config;
     }
+
 
     /**
      * Get Download Support Type for Configuration
@@ -620,6 +646,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return -1;
     }
 
+
     /**
      * Get Temporary Basal Type Definition "TYPE=Unit;STEP=0.1"
      * "TYPE=Procent;STEP=10;MIN=0;MAX=200"
@@ -633,6 +660,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return null;
     }
 
+
     /**
      * Get Bolus Step (precission)
      *
@@ -642,6 +670,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     {
         return 0.1f;
     }
+
 
     /**
      * Get Basal Step (precission)
@@ -653,6 +682,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return 0.1f;
     }
 
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      *
@@ -662,6 +692,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     {
         return false;
     }
+
 
     /**
      * Map pump specific alarms to PumpTool specific alarm codes
@@ -685,9 +716,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return this.error_map;
     }
 
-
     Hashtable<String, PumpErrors> error_map;
     Hashtable<String, PumpAlarms> alarm_map;
+
 
     /**
      * loadPumpSpecificValues - should be called from constructor of any
@@ -706,6 +737,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         alarm_map.put("26410", PumpAlarms.CartridgeLow);
     }
 
+
     /**
      * hasSpecialProgressStatus - in most cases we read data directly from
      * device, in this case we have normal progress status, but with some
@@ -718,6 +750,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     {
         return true;
     }
+
 
     /**
      * This is method for reading configuration
@@ -754,7 +787,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
         catch (Exception ex)
         {
-            log.error("ReadConfiguration(). Exception: " + ex, ex);
+            LOG.error("ReadConfiguration(). Exception: " + ex, ex);
         }
         finally
         {
@@ -768,13 +801,14 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             }
             catch (Exception exx)
             {
-                log.error("readDeviceDataFull.disconnect(): " + exx, exx);
+                LOG.error("readDeviceDataFull.disconnect(): " + exx, exx);
             }
 
             config_mode = false;
         }
 
     }
+
 
     /**
      * Read Device Data Full
@@ -837,7 +871,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
         catch (Exception ex)
         {
-            log.error("readDeviceDataFull: " + ex, ex);
+            LOG.error("readDeviceDataFull: " + ex, ex);
             this.setDeviceStopped();
         }
         finally
@@ -852,12 +886,13 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             }
             catch (Exception exx)
             {
-                log.error("readDeviceDataFull.disconnect(): " + exx, exx);
+                LOG.error("readDeviceDataFull.disconnect(): " + exx, exx);
             }
 
         }
 
     }
+
 
     /**
      * This is method for reading partitial data from device. All reading from
@@ -868,6 +903,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
     public void readDeviceDataPartitial() throws PlugInBaseException
     {
     }
+
 
     /**
      * This is for reading device information. This should be used only if
@@ -885,7 +921,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             DeviceIdentification di = this.outputWriter.getDeviceIdentification();
 
             byte[] buffer = new byte[0x200];
-            log.debug("readInfo() - Start");
+            LOG.debug("readInfo() - Start");
 
             this.readingEntryStatus(7);
 
@@ -915,14 +951,15 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
         catch (Exception ex)
         {
-            log.error("readInfo(). Ex: " + ex, ex);
+            LOG.error("readInfo(). Ex: " + ex, ex);
         }
         finally
         {
-            log.debug("readInfo() - End");
+            LOG.debug("readInfo() - End");
         }
 
     }
+
 
     private boolean checkIfValid(byte[] arr)
     {
@@ -936,11 +973,14 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
     }
 
+
     private void incrementError()
     {
         this.error_count++;
-        this.outputWriter.setSubStatus(String.format(i18nControlAbstract.getMessage("ERROR_COUNT"), "" + this.error_count));
+        this.outputWriter
+                .setSubStatus(String.format(i18nControlAbstract.getMessage("ERROR_COUNT"), "" + this.error_count));
     }
+
 
     private void readProfiles()
     {
@@ -949,7 +989,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         {
             byte[] buffer = new byte[0x100];
             // int num = 0;
-            log.debug("getProfiles() :Start");
+            LOG.debug("getProfiles() :Start");
 
             getDeviceConfiguration(DanaDataType.SettingsGeneral);
 
@@ -997,15 +1037,16 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         }
         catch (Exception ex2)
         {
-            log.error("getProfiles(). Ex: " + ex2.getMessage());
+            LOG.error("getProfiles(). Ex: " + ex2.getMessage());
             this.setDeviceStopped();
         }
         finally
         {
-            log.debug("getProfiles() :End");
+            LOG.debug("getProfiles() :End");
         }
 
     }
+
 
     private void readingEntryStatus(int cur_ent)
     {
@@ -1018,12 +1059,14 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
     }
 
+
     private void setDeviceStopped()
     {
         this.device_communicating = false;
         // System.out.println("Device not communicating");
         this.outputWriter.setStatus(AbstractOutputWriter.STATUS_STOPPED_DEVICE);
     }
+
 
     private void createDeviceValuesWriter()
     {
@@ -1033,30 +1076,31 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         // added isNumeric, could cause problem
 
         // bolus - standard
-        this.dvw.put("1_66", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus,
-                PumpBolusType.Normal, true));
+        this.dvw.put("1_66",
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus, PumpBolusType.Normal, true));
 
         // bolus - wave (this is unhandled, data is not all available)
-        this.dvw.put("1_69", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus,
-                PumpBolusType.Multiwave, false));
+        this.dvw.put("1_69",
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus, PumpBolusType.Multiwave, false));
 
         // daily insulin record
-        this.dvw.put("2_68", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Report,
-                PumpReport.InsulinTotalDay, true));
+        this.dvw.put("2_68",
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Report, PumpReport.InsulinTotalDay, true));
 
         // CH (carbohydrates)
-        this.dvw.put("8_82", new PumpWriterValues(PumpWriterValues.OBJECT_EXT, PumpAdditionalDataType.Carbohydrates, 0,
-                true));
+        this.dvw.put("8_82",
+            new PumpWriterValues(PumpWriterValues.OBJECT_EXT, PumpAdditionalDataType.Carbohydrates, 0, true));
         // prime
         this.dvw.put("3_80", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
-                PumpEvents.PrimeInfusionSet, false));
+                PumpEventType.PrimeInfusionSet, false));
 
         // BG
-        this.dvw.put("6_71", new PumpWriterValues(PumpWriterValues.OBJECT_EXT, PumpAdditionalDataType.BloodGlucose, 0,
-                true));
+        this.dvw.put("6_71",
+            new PumpWriterValues(PumpWriterValues.OBJECT_EXT, PumpAdditionalDataType.BloodGlucose, 0, true));
 
         // alarm
-        this.dvw.put("5_66", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(), 0, false));
+        this.dvw.put("5_66",
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(), 0, false));
 
         // error
         this.dvw.put("4_2", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Error.getCode(), 0, false));
@@ -1073,6 +1117,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
      */
     public static final int CODE_TYPE_ERROR = 2;
 
+
     private int getCorrectCode(int type, int code)
     {
         if (type == CODE_TYPE_ALARM)
@@ -1085,7 +1130,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             }
             else
             {
-                log.info("DanaDiabecare_III_R: Unknown Alarm [type=" + type + ", code=" + code + "]");
+                LOG.info("DanaDiabecare_III_R: Unknown Alarm [type=" + type + ", code=" + code + "]");
                 return PumpAlarms.UnknownAlarm.getCode();
             }
         }
@@ -1098,13 +1143,14 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             }
             else
             {
-                log.info("DanaDiabecare_III_R: Unknown Error [type=" + type + ", code=" + code + "]");
+                LOG.info("DanaDiabecare_III_R: Unknown Error [type=" + type + ", code=" + code + "]");
                 return PumpErrors.UnknownError.getCode();
             }
 
         }
 
     }
+
 
     private int crc16(byte data, int crc)
     {
@@ -1115,6 +1161,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         num ^= num << 8 << 4;
         return num ^ (((num & 0xff) << 5) | ((((num & 0xff) >> 3) & 0x1fff) << 8));
     }
+
 
     /**
      * Creates the crc.
@@ -1138,7 +1185,9 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         return crc;
     }
 
-    private void getDeviceConfiguration(DanaDataType cmd /*    byte[] cmd*/) // throws Exception
+
+    private void getDeviceConfiguration(DanaDataType cmd /* byte[] cmd */) // throws
+                                                                           // Exception
     {
 
         String param = "";
@@ -1146,7 +1195,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
         try
         {
             byte[] buffer = new byte[0x100];
-            log.debug("getDeviceInfo(" + cmd.name() + "):Start");
+            LOG.debug("getDeviceInfo(" + cmd.name() + "):Start");
 
             this.writeData(cmd.getCommand());
             // waitTime(200);
@@ -1164,25 +1213,25 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             if (cmd == DanaDataType.SettingsGeneral)
             {
                 writeConfiguration("PCFG_BASAL_INCREMENT", "" + (hex_utils.getByteFromArray(6) / 100.0f),
-                        PumpConfigurationGroup.Basal); //PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
+                    PumpConfigurationGroup.Basal); // PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
                 writeConfiguration("PCFG_BOLUS_INCREMENT", "" + (hex_utils.getByteFromArray(7) / 100.0f),
-                        PumpConfigurationGroup.Bolus); //PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
+                    PumpConfigurationGroup.Bolus); // PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
                 writeConfiguration("PCFG_BOLUS_PRESET", "" + getTrueOrFalse(hex_utils.getByteFromArray(8)),
-                        PumpConfigurationGroup.Bolus); //PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
+                    PumpConfigurationGroup.Bolus); // PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
                 writeConfiguration("PCFG_BOLUS_ALARM", "" + hex_utils.getByteFromArray(9),
-                        PumpConfigurationGroup.Bolus); //PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
+                    PumpConfigurationGroup.Bolus); // PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
                 writeConfiguration("PCFG_BOLUS_BLOCK", "" + hex_utils.getByteFromArray(10),
-                        PumpConfigurationGroup.Bolus); //PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
+                    PumpConfigurationGroup.Bolus); // PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
 
                 if (hex_utils.getByteFromArray(11) == 0)
                 {
                     writeConfiguration("PCFG_BASAL_UNIT", i18nControlAbstract.getMessage("UNIT_PER_HOUR"),
-                            PumpConfigurationGroup.Basal); //PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
+                        PumpConfigurationGroup.Basal); // PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
                 }
                 else
                 {
                     writeConfiguration("PCFG_BASAL_UNIT", i18nControlAbstract.getMessage("UNIT_PER_DAY"),
-                            PumpConfigurationGroup.Basal); //PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
+                        PumpConfigurationGroup.Basal); // PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
                 }
 
                 // PROFILE = 12
@@ -1192,27 +1241,27 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             else if (cmd == DanaDataType.SettingsMaxValues)
             {
                 writeConfiguration("PCFG_MAX_BOLUS", "" + (hex_utils.getIntFromArray(6) / 100.0f),
-                        PumpConfigurationGroup.Insulin); //PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
+                    PumpConfigurationGroup.Insulin); // PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
                 writeConfiguration("PCFG_MAX_BASAL", "" + (hex_utils.getIntFromArray(8) / 100.0f),
-                        PumpConfigurationGroup.Insulin); //PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
+                    PumpConfigurationGroup.Insulin); // PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
                 writeConfiguration("PCFG_MAX_DAILY", "" + (hex_utils.getIntFromArray(10) / 100.0f),
-                        PumpConfigurationGroup.Insulin); //PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
+                    PumpConfigurationGroup.Insulin); // PumpConfigurationOld.PUMP_CONFIG_GROUP_INSULIN);
             }
             else if (cmd == DanaDataType.SettingsGlucomode)
             {
                 if (hex_utils.getByteFromArray(6) == 1)
                 {
                     writeConfiguration("CFG_BASE_GLUCOSE_UNIT", i18nControlAbstract.getMessage("GLUCOSE_UNIT_MMOLL"),
-                            PumpConfigurationGroup.General); //PumpConfigurationOld.PUMP_CONFIG_GROUP_BLOOD_GLUCOSE);
+                        PumpConfigurationGroup.General); // PumpConfigurationOld.PUMP_CONFIG_GROUP_BLOOD_GLUCOSE);
                 }
                 else
                 {
                     writeConfiguration("CFG_BASE_GLUCOSE_UNIT", i18nControlAbstract.getMessage("GLUCOSE_UNIT_MGDL"),
-                            PumpConfigurationGroup.General); //PumpConfigurationOld.PUMP_CONFIG_GROUP_BLOOD_GLUCOSE);
+                        PumpConfigurationGroup.General); // PumpConfigurationOld.PUMP_CONFIG_GROUP_BLOOD_GLUCOSE);
                 }
 
                 writeConfiguration("PCFG_EASY_MODE", "" + getTrueOrFalse(hex_utils.getByteFromArray(8)),
-                        PumpConfigurationGroup.General); //PumpConfigurationOld.PUMP_CONFIG_GROUP_GENERAL);
+                    PumpConfigurationGroup.General); // PumpConfigurationOld.PUMP_CONFIG_GROUP_GENERAL);
             }
             else if (cmd == DanaDataType.SettingsBolusHelper)
             {
@@ -1221,44 +1270,45 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
                 {
                     writeConfiguration("PCFG_CH_INS_RATIO",
                         "" + DataAccessPlugInBase.Decimal0Format.format(hex_utils.getIntFromArray(6)),
-                            PumpConfigurationGroup.Bolus); //PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
+                        PumpConfigurationGroup.Bolus); // PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
                     writeConfiguration("PCFG_BG_INS_RATIO",
                         "" + DataAccessPlugInBase.Decimal0Format.format(hex_utils.getIntFromArray(8)),
-                            PumpConfigurationGroup.Bolus); //PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
+                        PumpConfigurationGroup.Bolus); // PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
                     writeConfiguration("PCFG_TARGET_BG",
                         "" + DataAccessPlugInBase.Decimal0Format.format(hex_utils.getIntFromArray(12)),
-                            PumpConfigurationGroup.Bolus); //PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
+                        PumpConfigurationGroup.Bolus); // PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
 
                 }
                 else
                 {
                     writeConfiguration("PCFG_CH_INS_RATIO",
                         "" + DataAccessPlugInBase.Decimal0Format.format(hex_utils.getIntFromArray(6) / 100.0f),
-                            PumpConfigurationGroup.Bolus); //PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
+                        PumpConfigurationGroup.Bolus); // PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
                     writeConfiguration("PCFG_BG_INS_RATIO",
                         "" + DataAccessPlugInBase.Decimal0Format.format(hex_utils.getIntFromArray(8) / 100.0f),
-                            PumpConfigurationGroup.Bolus); //PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
+                        PumpConfigurationGroup.Bolus); // PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
                     writeConfiguration("PCFG_TARGET_BG",
                         "" + DataAccessPlugInBase.Decimal0Format.format(hex_utils.getIntFromArray(12) / 100.0f),
-                            PumpConfigurationGroup.Bolus); //PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
+                        PumpConfigurationGroup.Bolus); // PumpConfigurationOld.PUMP_CONFIG_GROUP_BOLUS_HELPER);
                 }
 
                 writeConfiguration("PCFG_ACTIVE_INSULIN_RATE",
                     "" + DataAccessPlugInBase.Decimal0Format.format(hex_utils.getIntFromArray(10) / 100.0f),
-                        PumpConfigurationGroup.Insulin); //.PUMP_CONFIG_GROUP_BOLUS_HELPER);
+                    PumpConfigurationGroup.Insulin); // .PUMP_CONFIG_GROUP_BOLUS_HELPER);
                 writeConfiguration("PCFG_ACTIVE_INSULIN_DECREMENT_RATIO", "" + (hex_utils.getByteFromArray(14) * 5),
-                        PumpConfigurationGroup.Insulin); //.PUMP_CONFIG_GROUP_BOLUS_HELPER
+                    PumpConfigurationGroup.Insulin); // .PUMP_CONFIG_GROUP_BOLUS_HELPER
 
             }
 
             waitTime(200);
-            log.debug("getDeviceInfo(" + param + "):End");
+            LOG.debug("getDeviceInfo(" + param + "):End");
         }
         catch (Exception ex)
         {
-            log.error("getDeviceConfiguration(). Exception: " + ex, ex);
+            LOG.error("getDeviceConfiguration(). Exception: " + ex, ex);
         }
     }
+
 
     private void writeConfiguration(String key, String value, PumpConfigurationGroup config_group)
     {
@@ -1267,11 +1317,13 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             return;
         }
 
-        DeviceValueConfigEntry pvec = new DeviceValueConfigEntry(i18nControlAbstract.getMessage(key), value, config_group);
+        DeviceValueConfigEntry pvec = new DeviceValueConfigEntry(i18nControlAbstract.getMessage(key), value,
+                config_group);
         this.outputWriter.writeConfigurationData(pvec);
 
         // System.out.println(m_ic.getMessage(key) + " = " + value);
     }
+
 
     private String getTrueOrFalse(byte val)
     {

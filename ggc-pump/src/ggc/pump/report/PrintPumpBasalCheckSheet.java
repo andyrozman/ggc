@@ -1,11 +1,11 @@
-package ggc.pump.print;
+package ggc.pump.report;
 
 import java.util.GregorianCalendar;
 
-import com.atech.i18n.mgr.LanguageManager;
 import com.atech.print.engine.ITextDocumentPrintSettings;
 import com.atech.print.engine.PrintAbstractITextWithDataRead;
 import com.atech.print.engine.PrintParameters;
+import com.atech.utils.ATDataAccessLMAbstract;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -14,8 +14,8 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 
 import ggc.core.util.DataAccess;
-import ggc.core.util.GGCLanguageManagerRunner;
 import ggc.pump.db.PumpProfile;
+import ggc.pump.defs.PumpPluginDefinition;
 import ggc.pump.util.DataAccessPump;
 
 /**
@@ -262,13 +262,18 @@ public class PrintPumpBasalCheckSheet extends PrintAbstractITextWithDataRead
     }
 
 
+    private static PumpPluginDefinition getPluginDefinition(ATDataAccessLMAbstract da)
+    {
+        return new PumpPluginDefinition(da.getLanguageManager());
+    }
+
+
     public static void main(String[] args)
     {
-        LanguageManager lm = new LanguageManager(new GGCLanguageManagerRunner()); // ,
-                                                                                  // new
-                                                                                  // GGCCoreICRunner();
 
-        DataAccessPump da = DataAccessPump.createInstance(lm);
+        DataAccess da = DataAccess.createInstance(null);
+
+        DataAccessPump dap = DataAccessPump.createInstance(getPluginDefinition(da));
 
         // DeviceValuesRange dvr = DataAccessPump.getInstance().getDb()
         // .getRangePumpValues(this.getFromDateObject(),

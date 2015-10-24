@@ -43,6 +43,7 @@ public class DeltecCosmo1800 extends DeltecPump
         super();
     }
 
+
     /**
      * Constructor 
      * 
@@ -53,6 +54,7 @@ public class DeltecCosmo1800 extends DeltecPump
     {
         super(drive_letter, writer);
     }
+
 
     /**
      * Constructor
@@ -66,15 +68,17 @@ public class DeltecCosmo1800 extends DeltecPump
         super(params, writer, da);
     }
 
+
     /**
      * Constructor
      * 
      * @param cmp
      */
-    public DeltecCosmo1800(AbstractDeviceCompany cmp)
+    public DeltecCosmo1800(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(cmp);
+        super(cmp, da);
     }
+
 
     /**
      * getName - Get Name of meter. 
@@ -87,6 +91,7 @@ public class DeltecCosmo1800 extends DeltecPump
         return "Cosmo 1800";
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -96,6 +101,7 @@ public class DeltecCosmo1800 extends DeltecPump
     {
         return "de_cosmo1800.jpg";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -108,6 +114,7 @@ public class DeltecCosmo1800 extends DeltecPump
         return PumpDevicesIds.PUMP_DELTEC_COSMO_1800;
     }
 
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -119,6 +126,7 @@ public class DeltecCosmo1800 extends DeltecPump
         return "INSTRUCTIONS_DELTEC_COSMO_1800";
     }
 
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -129,6 +137,7 @@ public class DeltecCosmo1800 extends DeltecPump
     {
         return null;
     }
+
 
     /**
      * getImplementationStatus - Get Implementation Status 
@@ -142,6 +151,7 @@ public class DeltecCosmo1800 extends DeltecPump
         return DeviceImplementationStatus.NotPlanned;
     }
 
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -152,6 +162,7 @@ public class DeltecCosmo1800 extends DeltecPump
         return "ggc.pump.device.deltec.DeltecCosmo1800";
     }
 
+
     /** 
      * Get Max Memory Records
      */
@@ -159,6 +170,7 @@ public class DeltecCosmo1800 extends DeltecPump
     {
         return 0;
     }
+
 
     /**
      * How Many Months Of Data Stored
@@ -170,6 +182,7 @@ public class DeltecCosmo1800 extends DeltecPump
     {
         return -1;
     }
+
 
     /**
      * Get Temporary Basal Type Definition
@@ -186,6 +199,7 @@ public class DeltecCosmo1800 extends DeltecPump
         return null;
     }
 
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -196,6 +210,7 @@ public class DeltecCosmo1800 extends DeltecPump
         return 0.1f;
     }
 
+
     /**
      * Get Basal Step (precission)
      * 
@@ -205,6 +220,7 @@ public class DeltecCosmo1800 extends DeltecPump
     {
         return 0.1f;
     }
+
 
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)

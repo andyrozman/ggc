@@ -1,14 +1,5 @@
 package ggc.pump.data;
 
-import ggc.core.db.hibernate.GGCHibernateObject;
-import ggc.core.db.hibernate.pump.PumpProfileH;
-import ggc.plugin.data.DeviceValuesEntryInterface;
-import ggc.plugin.data.enums.DeviceEntryStatus;
-import ggc.plugin.output.OutputWriterType;
-import ggc.plugin.util.DeviceValuesEntryUtil;
-import ggc.pump.data.profile.ProfileSubEntry;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -19,6 +10,16 @@ import org.hibernate.Transaction;
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
+
+import ggc.core.db.hibernate.GGCHibernateObject;
+import ggc.core.db.hibernate.pump.PumpProfileH;
+import ggc.plugin.data.DeviceValuesEntryInterface;
+import ggc.plugin.data.enums.DeviceEntryStatus;
+import ggc.plugin.output.OutputWriterType;
+import ggc.plugin.util.DeviceValuesEntryUtil;
+import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -80,12 +81,14 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      * //public
      * public Hashtable<String,String> params;
      * public int status = 1; //MeterValuesEntry.
-     * public static I18nControl i18nControlAbstract = I18nControl.getInstance();
+     * public static I18nControl i18nControlAbstract =
+     * I18nControl.getInstance();
      * public String bg_original = null;
      * public OutputUtil util = new OutputUtil();
      */
 
     // PumpAdditionalDataType pumpAdditionalDataType = null;
+
 
     /**
      * Constructor
@@ -110,6 +113,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         // pumpAdditionalDataType = new PumpAdditionalDataType();
     }
 
+
     /**
      * Constructor
      * 
@@ -129,6 +133,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         this.setChanged(pd.getChanged());
     }
 
+
     /**
      * Has Changed - This is method which is tied only to changes of value or datetime
      * 
@@ -138,6 +143,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return this.changed;
     }
+
 
     /*
      * public void setDateTime(long dt)
@@ -183,6 +189,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      * return this.status;
      * }
      */
+
 
     /*
      * public String getParametersAsString()
@@ -232,6 +239,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
          */
     }
 
+
     /**
      * Add Profile Sub Entry
      * 
@@ -251,6 +259,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      * Process: Pump
      */
     public static final int PROCESS_PUMP = 2;
+
 
     /**
      * Process Profile Sub Entry
@@ -305,6 +314,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
     }
 
+
     /**
      * End Entry (create basal diffs entry)
      */
@@ -312,6 +322,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         this.processProfileSubEntries(1);
     }
+
 
     /** 
      * To String
@@ -322,6 +333,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         // OutputUtil o= null;
         return "PumpValueEntryProfile [id=" + this.getId() + "] " + this.getBasal_diffs();
     }
+
 
     /** 
      * DbAdd
@@ -351,6 +363,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return "" + id.longValue();
     }
 
+
     /** 
      * DbDelete
      */
@@ -364,6 +377,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
         return true;
     }
+
 
     /** 
      * Db Edit
@@ -389,6 +403,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return true;
     }
 
+
     /** 
      * Db Get
      */
@@ -411,6 +426,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return true;
     }
 
+
     /**
      * Db Has Children
      */
@@ -418,6 +434,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return false;
     }
+
 
     /** 
      * Get Action
@@ -427,6 +444,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return 0;
     }
 
+
     /** 
      * Get Object Name
      */
@@ -434,6 +452,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return "PumpProfileH";
     }
+
 
     /**
      * Is Debug Mode
@@ -443,6 +462,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         // TODO Auto-generated method stub
         return false;
     }
+
 
     /**
      * getObjectUniqueId - get id of object
@@ -456,6 +476,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
     boolean changed = false;
 
+
     /**
      * Get Column Value
      * 
@@ -468,6 +489,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return null;
     }
 
+
     /**
      * Get Db Objects
      * 
@@ -478,6 +500,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         // TODO Auto-generated method stub
         return null;
     }
+
 
     /**
      * Get Table Column Value (in case that we need special display values for download data table, this method 
@@ -516,6 +539,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
                 return "";
         }
     }
+
 
     /** 
      * Get Data As String (for export)
@@ -558,6 +582,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         }
     }
 
+
     /**
      * Get Special Id
      * 
@@ -568,6 +593,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return "PP_" + this.getActive_from() + "_" + this.getName();
     }
 
+
     /**
      * Get DeviceValuesEntry Name
      * 
@@ -577,6 +603,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return "PumpValuesEntryProfile";
     }
+
 
     /**
      * Get Value of object
@@ -589,6 +616,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return this.getBasal_diffs();
     }
 
+
     /**
      * Get DateTime (long)
      * 
@@ -599,6 +627,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return this.getActive_from();
     }
 
+
     /**
      * Set DateTime Object (ATechDate)
      * 
@@ -608,17 +637,20 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
     }
 
+
     /**
      * Get DateTime format
      * 
      * @return format of date time (precission)
      */
-    public int getDateTimeFormat()
+    public ATechDateType getDateTimeFormat()
     {
-        return ATechDate.FORMAT_DATE_AND_TIME_S;
+        return ATechDateType.DateAndTimeSec;
     }
 
+
     /**
+     *
      * Get Checked 
      * 
      * @return true if element is checked
@@ -627,6 +659,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return this.checked;
     }
+
 
     /**
      * Set Checked
@@ -639,7 +672,6 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     }
 
 
-
     /**
      * {@inheritDoc}
      */
@@ -648,6 +680,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return this.status;
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -655,6 +688,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         this.status = stat;
     }
+
 
     /**
      * Set Output Type
@@ -667,6 +701,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         this.output_type = type;
     }
 
+
     /**
      * Get Output Type
      * 
@@ -676,6 +711,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return this.output_type;
     }
+
 
     /**
      * Is Data BG
@@ -688,6 +724,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return false;
     }
 
+
     /**
      * Comparator method, for sorting objects
      * 
@@ -697,6 +734,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return DeviceValuesEntryUtil.compare(d1, d2);
     }
+
 
     /**
      * Comparator method, for sorting objects
@@ -708,6 +746,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return DeviceValuesEntryUtil.compare(this, d2);
     }
 
+
     /**
      * Set Object status
      * 
@@ -717,6 +756,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         this.object_status = status;
     }
+
 
     /**
      * Get Object Status
@@ -730,6 +770,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
     long old_id;
 
+
     /**
      * Set Old Id (this is used for changing old objects in framework v2)
      * 
@@ -739,6 +780,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         this.old_id = id_in;
     }
+
 
     /**
      * Get Old Id (this is used for changing old objects in framework v2)
@@ -752,6 +794,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
     String source;
 
+
     /**
      * Set Source
      * 
@@ -763,6 +806,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
     }
 
+
     /**
      * Get Source 
      * 
@@ -773,6 +817,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return this.source;
     }
 
+
     /** 
      * Has MultiLine ToolTip
      */
@@ -781,6 +826,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         return true;
     }
 
+
     /** 
      * Get MultiLine ToolTip
      */
@@ -788,6 +834,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return null;
     }
+
 
     /** 
      * Get MultiLine ToolTip
@@ -802,6 +849,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
             return "" + this.getTableColumnValue(index);
     }
 
+
     /** 
      * Is Indexed (multiline tooltip)
      */
@@ -811,6 +859,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     }
 
     int multiline_tooltip_type = 1;
+
 
     /**
      * Set MultiLine Tooltip Type
@@ -822,6 +871,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
         this.multiline_tooltip_type = _multiline_tooltip_type;
     }
 
+
     /**
      * Get MultiLine Tooltip Type
      * @return 
@@ -830,6 +880,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         return this.multiline_tooltip_type;
     }
+
 
     public void prepareEntry_v2()
     {

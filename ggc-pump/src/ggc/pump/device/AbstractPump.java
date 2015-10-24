@@ -113,6 +113,20 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
 
 
     /**
+     * Constructor
+     *
+     * @param cmp
+     */
+    public AbstractPump(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
+    {
+        super(cmp, da);
+        // super(DataAccessPump.getInstance());
+        // this.setDeviceCompany(cmp);
+        this.setPumpType(cmp.getName(), getName());
+    }
+
+
+    /**
      * Set Pump Type
      * 
      * @param group
@@ -269,7 +283,7 @@ public abstract class AbstractPump extends DeviceAbstract implements PumpInterfa
      *     event codes
      * @return
      */
-    public Hashtable<String, PumpEvents> getEventMappings()
+    public Hashtable<String, PumpEventType> getEventMappings()
     {
         return null;
     }

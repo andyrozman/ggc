@@ -79,9 +79,9 @@ public abstract class DeltecPump extends AbstractPump
      * 
      * @param cmp
      */
-    public DeltecPump(AbstractDeviceCompany cmp)
+    public DeltecPump(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(cmp);
+        super(cmp, da);
     }
 
 

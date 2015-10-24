@@ -1,13 +1,10 @@
 package ggc.pump.device.animas.impl.data.dto;
 
-
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.data.ATechDate;
+
 import ggc.pump.device.animas.impl.data.enums.AnimasBolusSettingSubType;
 import ggc.pump.util.DataAccessPump;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.atech.utils.data.ATechDate;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,7 +34,6 @@ import com.atech.utils.data.ATechDate;
 
 public class SettingTimeValueEntry
 {
-    Log LOG = LogFactory.getLog(SettingTimeValueEntry.class);
 
     AnimasBolusSettingSubType type;
     ATechDate time;
@@ -51,11 +47,13 @@ public class SettingTimeValueEntry
     boolean valueTypeShort = true;
     boolean deltaSet = false;
 
+
     public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, short value)
     {
         this.setBaseData(type, index, time);
         setValuesShort(value, null);
     }
+
 
     public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, float value)
     {
@@ -63,17 +61,20 @@ public class SettingTimeValueEntry
         setValuesFloat(value, null);
     }
 
+
     public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, short value, short delta)
     {
         this.setBaseData(type, index, time);
         setValuesShort(value, delta);
     }
 
+
     public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, float value, float delta)
     {
         this.setBaseData(type, index, time);
         setValuesFloat(value, delta);
     }
+
 
     private void setBaseData(AnimasBolusSettingSubType type, int index, ATechDate time)
     {
@@ -82,6 +83,7 @@ public class SettingTimeValueEntry
         this.time = time;
     }
 
+
     private void setValuesShort(short value, Short delta)
     {
         this.valueTypeShort = true;
@@ -89,6 +91,7 @@ public class SettingTimeValueEntry
         this.valueDeltaShort = delta;
         this.deltaSet = (this.valueDeltaShort != null);
     }
+
 
     private void setValuesFloat(float value, Float delta)
     {
@@ -99,22 +102,23 @@ public class SettingTimeValueEntry
     }
 
     static String templateNoDeltaMain; // = "From=%s,Amount=<ValueFormat>";
-    static String templateDeltaMain; // = "From=%s,Amount=<ValueFormat>,Delta=<ValueFormat>";
+    static String templateDeltaMain; // =
+                                     // "From=%s,Amount=<ValueFormat>,Delta=<ValueFormat>";
+
 
     private void setTranslations()
     {
-        if (templateNoDeltaMain==null)
+        if (templateNoDeltaMain == null)
         {
             I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
 
-            templateNoDeltaMain = ic.getMessage("CFG_BASE_FROM") + "=%s, " + ic.getMessage("CFG_BASE_AMOUNT") + "=<ValueFormat>";
+            templateNoDeltaMain = ic.getMessage("CFG_BASE_FROM") + "=%s, " + ic.getMessage("CFG_BASE_AMOUNT")
+                    + "=<ValueFormat>";
             templateDeltaMain = ic.getMessage("CFG_BASE_FROM") + "=%s, " + ic.getMessage("CFG_BASE_AMOUNT")
                     + "=<ValueFormat>, " + ic.getMessage("CFG_BASE_DELTA") + "=<ValueFormat>";
 
-
         }
     }
-
 
 
     // FIXME use i18nControl
@@ -122,15 +126,16 @@ public class SettingTimeValueEntry
     {
         setTranslations();
 
-        //String templateNoDelta = "From=%s,Amount=<ValueFormat>";
-        //String templateDelta = "From=%s,Amount=<ValueFormat>,Delta=<ValueFormat>";
+        // String templateNoDelta = "From=%s,Amount=<ValueFormat>";
+        // String templateDelta =
+        // "From=%s,Amount=<ValueFormat>,Delta=<ValueFormat>";
 
         String template = this.deltaSet ? templateDeltaMain : templateNoDeltaMain;
 
         if (this.valueTypeShort)
         {
             template = template.replace("<ValueFormat>", "%d");
-            //LOG.debug("Template: " + template);
+            // LOG.debug("Template: " + template);
 
             if (valueDeltaShort == null)
             {
@@ -144,7 +149,7 @@ public class SettingTimeValueEntry
         else
         {
             template = template.replace("<ValueFormat>", "%6.4f");
-            //LOG.debug("Template: " + template);
+            // LOG.debug("Template: " + template);
 
             if (valueDeltaShort == null)
             {
@@ -156,6 +161,7 @@ public class SettingTimeValueEntry
             }
         }
     }
+
 
     @Override
     public String toString()

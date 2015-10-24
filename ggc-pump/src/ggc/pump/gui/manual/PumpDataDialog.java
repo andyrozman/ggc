@@ -20,9 +20,9 @@ import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
+import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
-import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpDailyStatistics;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
@@ -463,7 +463,7 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         // if ()
         int dec_pls = 1;
 
-        if (this.m_da.getBGMeasurmentType() == DataAccessPlugInBase.BG_MGDL)
+        if (this.m_da.getGlucoseUnitType() == GlucoseUnitType.mg_dL)
         {
             dec_pls = 0;
             avgBG.setText(this.stats.getItemStatisticValueAsStringFloat(PumpValuesEntry.BG_AVG, dec_pls));

@@ -47,6 +47,7 @@ public enum PumpBolusType implements CodeEnumWithTranslation
     static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static HashMap<Integer, PumpBolusType> codeMapping = new HashMap<Integer, PumpBolusType>();
 
+
     static
     {
         I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
@@ -57,14 +58,14 @@ public enum PumpBolusType implements CodeEnumWithTranslation
             translationMapping.put(pbt.getTranslation(), pbt);
             codeMapping.put(pbt.code, pbt);
 
-            // System.out.println("Tr: " + ic.getMessage(pbt.i18nKey));
+            // System.out.println("Tr: " + i18nControl.getMessage(pbt.i18nKey));
         }
 
         String[] bolus_desc_lcl = { ic.getMessage("SELECT_BOLUS_TYPE"), //
-                                   ic.getMessage("BOLUS_STANDARD"), //
-                                   ic.getMessage("BOLUS_AUDIO"), //
-                                   ic.getMessage("BOLUS_SQUARE"), //
-                                   ic.getMessage("BOLUS_MULTIWAVE"), };
+                                    ic.getMessage("BOLUS_STANDARD"), //
+                                    ic.getMessage("BOLUS_AUDIO"), //
+                                    ic.getMessage("BOLUS_SQUARE"), //
+                                    ic.getMessage("BOLUS_MULTIWAVE"), };
 
         bolus_desc = bolus_desc_lcl;
 

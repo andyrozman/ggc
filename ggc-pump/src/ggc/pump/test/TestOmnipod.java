@@ -2,25 +2,19 @@ package ggc.pump.test;
 
 import java.io.File;
 
-import ggc.core.util.DataAccess;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.pump.device.insulet.InsuletReader;
-import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 25.05.15.
  */
-public class TestOmnipod
+public class TestOmnipod extends AbstractPumpTest
 {
 
-    public static void main(String[] args)
+    public void testOmnipod()
     {
-
-        DataAccess daCore = DataAccess.getInstance();
-
-        DataAccessPump dap = DataAccessPump.createInstance(daCore.getLanguageManager());
-        dap.initAllObjects();
+        prepareContext();
 
         File f = new File(".");
         System.out.println(f.getAbsolutePath());
@@ -48,6 +42,16 @@ public class TestOmnipod
         {
             e.printStackTrace();
         }
+
+    }
+
+
+    public static void main(String[] args)
+    {
+
+        TestOmnipod to = new TestOmnipod();
+        to.testOmnipod();
+
     }
 
 }

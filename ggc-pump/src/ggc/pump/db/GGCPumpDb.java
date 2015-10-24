@@ -2,12 +2,12 @@ package ggc.pump.db;
 
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.utils.data.ATechDate;
@@ -60,7 +60,7 @@ import ggc.pump.util.DataAccessPump;
 public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 {
 
-    private static Log log = LogFactory.getLog(GGCPumpDb.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GGCPumpDb.class);
     DataAccessPump m_da = DataAccessPump.getInstance();
 
 
@@ -85,7 +85,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public DeviceValuesDay getDailyPumpValues(GregorianCalendar gc)
     {
-        log.info("getPumpDayStats()");
+        LOG.info("getPumpDayStats()");
 
         long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
 
@@ -116,8 +116,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
         catch (Exception ex)
         {
-            log.debug("Sql: " + sql);
-            log.error("getDayStats(). Exception: " + ex, ex);
+            LOG.debug("Sql: " + sql);
+            LOG.error("getDayStats(). Exception: " + ex, ex);
         }
 
         return dV;
@@ -135,7 +135,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public DeviceValuesRange getRangePumpValues(GregorianCalendar from, GregorianCalendar to)
     {
-        log.info("getRangePumpValues()");
+        LOG.info("getRangePumpValues()");
 
         DeviceValuesRange dvr = new DeviceValuesRange(DataAccessPump.getInstance(), from, to);
 
@@ -163,7 +163,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public List<CGMSDayData> getRangeCGMSValues(GregorianCalendar from, GregorianCalendar to)
     {
-        log.info("getRangeCGMSValues()");
+        LOG.info("getRangeCGMSValues()");
 
         List<CGMSDayData> outData = new ArrayList<CGMSDayData>();
 
@@ -194,7 +194,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     public List<PumpDataH> getRangePumpValuesRaw(GregorianCalendar from, GregorianCalendar to, String filter)
     {
-        log.info(String.format("getRangePumpValuesRaw(%s)", filter == null ? "" : filter));
+        LOG.info(String.format("getRangePumpValuesRaw(%s)", filter == null ? "" : filter));
 
         long dt_from = ATechDate.getATDateTimeFromGC(from, ATechDate.FORMAT_DATE_ONLY);
         long dt_to = ATechDate.getATDateTimeFromGC(to, ATechDate.FORMAT_DATE_ONLY);
@@ -230,11 +230,11 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
         catch (Exception ex)
         {
-            log.debug("Sql: " + sql);
-            log.error("getDayStats(). Exception: " + ex, ex);
+            LOG.debug("Sql: " + sql);
+            LOG.error("getDayStats(). Exception: " + ex, ex);
         }
 
-        log.debug("Found " + listPumpData.size() + " entries.");
+        LOG.debug("Found " + listPumpData.size() + " entries.");
 
         return listPumpData;
     }
@@ -248,7 +248,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public ArrayList<PumpValuesEntryExt> getDailyPumpValuesExtended(GregorianCalendar gc)
     {
-        log.info("getDailyPumpValuesExtended() - Run");
+        LOG.info("getDailyPumpValuesExtended() - Run");
 
         long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
 
@@ -280,8 +280,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
         catch (Exception ex)
         {
-            log.debug("Sql: " + sql);
-            log.error("getDailyPumpValuesExtended(). Exception: " + ex, ex);
+            LOG.debug("Sql: " + sql);
+            LOG.error("getDailyPumpValuesExtended(). Exception: " + ex, ex);
         }
 
         return lst;
@@ -320,7 +320,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public List<PumpDataExtendedH> getRangePumpValuesExtendedRaw(GregorianCalendar from, GregorianCalendar to)
     {
-        log.info("getRangePumpValuesExtendedRaw() - Run");
+        LOG.info("getRangePumpValuesExtendedRaw() - Run");
 
         long dt_from = ATechDate.getATDateTimeFromGC(from, ATechDate.FORMAT_DATE_ONLY);
         long dt_to = ATechDate.getATDateTimeFromGC(to, ATechDate.FORMAT_DATE_ONLY);
@@ -347,8 +347,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
         catch (Exception ex)
         {
-            log.debug("Sql: " + sql);
-            log.error("getRangePumpValuesExtendedRaw(). Exception: " + ex, ex);
+            LOG.debug("Sql: " + sql);
+            LOG.error("getRangePumpValuesExtendedRaw(). Exception: " + ex, ex);
         }
 
         return lst;
@@ -448,7 +448,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public ArrayList<PumpProfile> getProfiles()
     {
-        log.info("getProfiles() - Run");
+        LOG.info("getProfiles() - Run");
 
         ArrayList<PumpProfile> lst = new ArrayList<PumpProfile>();
         String sql = "";
@@ -470,8 +470,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
         catch (Exception ex)
         {
-            log.debug("Sql: " + sql);
-            log.error("getProfiles(). Exception: " + ex, ex);
+            LOG.debug("Sql: " + sql);
+            LOG.error("getProfiles(). Exception: " + ex, ex);
         }
 
         return lst;
@@ -487,7 +487,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
     {
         // FIXME this doesn't work like it should, we need to get active
         // profile, not all profiles active on specific day
-        log.info("getProfileForDayAndTime() - Run");
+        LOG.info("getProfileForDayAndTime() - Run");
 
         String sql = "";
 
@@ -510,8 +510,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
         catch (Exception ex)
         {
-            log.debug("Sql: " + sql);
-            log.error("getProfileForDayAndTime(). Exception: " + ex, ex);
+            LOG.debug("Sql: " + sql);
+            LOG.error("getProfileForDayAndTime(). Exception: " + ex, ex);
         }
 
         return null;
@@ -529,7 +529,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
     {
         // FIXME this doesn't work like it should, we need to get active
         // profile, not all profiles active on specific day
-        log.info("getProfilesForRange() - Run");
+        LOG.info("getProfilesForRange() - Run");
 
         String sql = "";
 
@@ -567,8 +567,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
         catch (Exception ex)
         {
-            log.debug("Sql: " + sql);
-            log.error("getProfilesForRange(). Exception: " + ex, ex);
+            LOG.debug("Sql: " + sql);
+            LOG.error("getProfilesForRange(). Exception: " + ex, ex);
         }
 
         return listProfiles;
@@ -583,7 +583,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public List<PumpProfile> getProfilesForRange(GregorianCalendar gcFrom, GregorianCalendar gcTill)
     {
-        log.info("getProfilesForRange() - Run");
+        LOG.info("getProfilesForRange() - Run");
 
         String sql = "";
 
@@ -606,8 +606,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
         catch (Exception ex)
         {
-            log.debug("Sql: " + sql);
-            log.error("getProfilesForRange(). Exception: " + ex, ex);
+            LOG.debug("Sql: " + sql);
+            LOG.error("getProfilesForRange(). Exception: " + ex, ex);
         }
 
         return listProfiles;
@@ -677,7 +677,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         in = (Integer) criteria.list().get(0);
         sum_all = in.intValue();
 
-        log.debug("  Pump Data : " + in.intValue());
+        LOG.debug("  Pump Data : " + in.intValue());
 
         criteria = this.getSession().createCriteria(PumpDataExtendedH.class);
         criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
@@ -688,7 +688,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         in = (Integer) criteria.list().get(0);
         sum_all += in.intValue();
 
-        log.debug("  Pump Extended Data : " + in.intValue());
+        LOG.debug("  Pump Extended Data : " + in.intValue());
 
         criteria = this.getSession().createCriteria(PumpProfileH.class);
         criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
@@ -698,7 +698,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         in = (Integer) criteria.list().get(0);
         sum_all += in.intValue();
 
-        log.debug("  Pump Profiles : " + in.intValue());
+        LOG.debug("  Pump Profiles : " + in.intValue());
 
         return sum_all;
     }
@@ -808,7 +808,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         catch (Exception ex)
         {
             System.out.println("Exception on getPumpValues: " + ex);
-            log.error("Exception on getPumpValues.\nsql:" + sql + "\nEx: " + ex, ex);
+            LOG.error("Exception on getPumpValues.\nsql:" + sql + "\nEx: " + ex, ex);
         }
 
         return dt;

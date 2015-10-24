@@ -1,33 +1,10 @@
 package ggc.pump.gui.manual;
 
-import ggc.core.data.Converter_mgdL_mmolL;
-import ggc.core.plugins.GGCPluginType;
-import ggc.core.plugins.NutriPlugIn;
-import ggc.core.util.DataAccess;
-import ggc.plugin.util.DataAccessPlugInBase;
-import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.data.defs.PumpAdditionalDataType;
-import ggc.pump.util.DataAccessPump;
-import ggc.shared.fooddesc.FoodDescriptionDialog;
-
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.lang.reflect.Constructor;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -37,6 +14,16 @@ import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATSwingUtils;
+
+import ggc.core.data.Converter_mgdL_mmolL;
+import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.plugins.GGCPluginType;
+import ggc.core.plugins.NutriPlugIn;
+import ggc.core.util.DataAccess;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.util.DataAccessPump;
+import ggc.shared.fooddesc.FoodDescriptionDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -66,8 +53,8 @@ import com.atech.utils.ATSwingUtils;
 
 // fix this
 
-public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListener, HelpCapable, KeyListener,
-        ChangeListener
+public class PumpDataAdditionalWizardTwo extends JDialog
+        implements ActionListener, HelpCapable, KeyListener, ChangeListener
 {
 
     private static final long serialVersionUID = 6600123145384610341L;
@@ -99,6 +86,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     private String internal_data[] = null;
     float food_ch;
 
+
     // new data
     /**
      * Constructor
@@ -116,11 +104,11 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         m_parent = wiz_one;
         this.pumpAdditionalDataType = pumpAdditionalDataType.getByDescription(type);
 
-
         ATSwingUtils.initLibrary();
 
         init();
     }
+
 
     /**
      * Constructor
@@ -147,6 +135,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
         loadObject();
     }
+
 
     /**
      * Constructor
@@ -178,12 +167,13 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     String food_data = null;
 
+
     // for edit
     private void loadObject()
     {
         if (this.pumpAdditionalDataType == PumpAdditionalDataType.Activity || //
-            this.pumpAdditionalDataType == PumpAdditionalDataType.Comment || //
-            this.pumpAdditionalDataType == PumpAdditionalDataType.Urine)
+                this.pumpAdditionalDataType == PumpAdditionalDataType.Comment || //
+                this.pumpAdditionalDataType == PumpAdditionalDataType.Urine)
         {
             this.text_1.setText(this.data_object.getValue());
             // po.setValue(this.text_1.getText());
@@ -253,6 +243,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     int startx = 0;
 
+
     private void init()
     {
         ATSwingUtils.initLibrary();
@@ -281,7 +272,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         setTitle(m_ic.getMessage("ADD_PARAMETER2"));
 
         String button_command[] = { "cancel", m_ic.getMessage("CANCEL"), "ok", m_ic.getMessage("OK"),
-        // "help", m_ic.getMessage("HELP")
+                // "help", m_ic.getMessage("HELP")
         };
 
         // button
@@ -289,10 +280,10 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         // null, "ok.png", "cancel.png" };
 
         int button_coord[] = { startx, 230, 120, 1, startx + 130, 230, 130, 1,
-        // 170, 190, 140, 1,
-        // 30, 620, 110, 1,
-        // 145, 620, 110, 1,
-        // 250, 390, 80, 0
+                // 170, 190, 140, 1,
+                // 30, 620, 110, 1,
+                // 145, 620, 110, 1,
+                // 250, 390, 80, 0
         };
 
         JButton button;
@@ -324,7 +315,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             }
         }
 
-        help_button = ATSwingUtils.createHelpButtonByBounds(startx + 140, 195, 120, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
+        help_button = ATSwingUtils.createHelpButtonByBounds(startx + 140, 195, 120, 25, this, ATSwingUtils.FONT_NORMAL,
+            m_da);
         panel.add(help_button);
 
         m_da.enableHelp(this);
@@ -332,6 +324,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         initType();
 
     }
+
 
     private void initType()
     {
@@ -372,6 +365,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         }
     }
 
+
     // activity, comment, urine
     private void areaText()
     {
@@ -392,6 +386,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         }
 
     }
+
 
     /**
      * Area: BG
@@ -422,6 +417,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     }
 
+
     /**
      * Area: CH
      */
@@ -436,6 +432,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         this.spin_1 = ATSwingUtils.getJSpinner(0.0f, 0.0f, 250.0f, 1, startx + 180, 108, 55, 25, this.main_panel);
 
     }
+
 
     /**
      * Area: Food
@@ -483,6 +480,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         }
     }
 
+
     /**
      * Area: Unsupported
      */
@@ -492,6 +490,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         this.label_1.setBounds(startx, 100, 100, 25);
         this.main_panel.add(this.label_1);
     }
+
 
     /**
      * Invoked when an action occurs.
@@ -551,7 +550,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
                         food_data = (String) data[0];
                         food_ch = new Float((String) data[1]);
 
-                        // float f = dataAccess.getFloatValue(this.internal_data[1]);
+                        // float f =
+                        // dataAccess.getFloatValue(this.internal_data[1]);
                         this.cb_1.setSelected(food_ch > 0);
 
                         this.internal_data = new String[2];
@@ -571,6 +571,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     }
 
+
     /**
      * Was Action
      *
@@ -580,6 +581,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     {
         return this.was_action;
     }
+
 
     /**
      * Get Objects
@@ -592,14 +594,15 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     }
 
+
     private void cmdOk()
     {
         // System.out.println("wizard_2 [ok]");
 
         this.was_action = true;
 
-        if (this.pumpAdditionalDataType == PumpAdditionalDataType.FoodDb ||
-            this.pumpAdditionalDataType == PumpAdditionalDataType.FoodDescription)
+        if (this.pumpAdditionalDataType == PumpAdditionalDataType.FoodDb
+                || this.pumpAdditionalDataType == PumpAdditionalDataType.FoodDescription)
         {
             this.pump_objects_ext = new PumpValuesEntryExt[2];
 
@@ -641,8 +644,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             po.setType(this.pumpAdditionalDataType.getCode());
 
             if (this.pumpAdditionalDataType == PumpAdditionalDataType.Activity || //
-                this.pumpAdditionalDataType == PumpAdditionalDataType.Comment || //
-                this.pumpAdditionalDataType == PumpAdditionalDataType.Urine)
+                    this.pumpAdditionalDataType == PumpAdditionalDataType.Comment || //
+                    this.pumpAdditionalDataType == PumpAdditionalDataType.Urine)
             {
                 po.setValue(this.text_1.getText());
             }
@@ -669,6 +672,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     }
 
+
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
@@ -681,6 +685,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      */
@@ -689,6 +694,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
         return this.help_button;
     }
 
+
     /**
      * getHelpId - get id for Help
      */
@@ -696,6 +702,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     {
         return "PumpTool_Data_Additional_2";
     }
+
 
     /**
      * focusGained
@@ -706,6 +713,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     boolean in_action = false;
 
+
     /**
      * focusLost
      */
@@ -713,6 +721,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     {
         focusProcess(ev.getSource());
     }
+
 
     private void focusProcess(Object src)
     {
@@ -736,11 +745,11 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
             // System.out.println("Bg Conv: ")
 
-            float v_2 = m_da.getBGConverter().getValueByType(DataAccessPlugInBase.BG_MGDL,
-                DataAccessPlugInBase.BG_MMOL, val);
-            // float v_2 = dataAccess.getBGValueDifferent(DataAccessPump.BG_MGDL,
+            float v_2 = m_da.getBGConverter().getValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, val);
+            // float v_2 =
+            // dataAccess.getBGValueDifferent(DataAccessPump.BG_MGDL,
             // val);
-            this.num_2.setValue(new Float(v_2));
+            this.num_2.setValue(v_2);
         }
         else if (src.equals(this.num_2))
         {
@@ -754,11 +763,11 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
             // System.out.println("focus lost: bg2");
             float val = ATSwingUtils.getJFormatedTextValueFloat(this.num_2);
-            int v_2 = (int) m_da.getBGConverter().getValueByType(DataAccessPlugInBase.BG_MMOL,
-                DataAccessPlugInBase.BG_MGDL, val);
-            // int v_2 = (int) dataAccess.getBGValueDifferent(DataAccessPump.BG_MMOL,
+            int v_2 = (int) m_da.getBGConverter().getValueByType(GlucoseUnitType.mmol_L, GlucoseUnitType.mg_dL, val);
+            // int v_2 = (int)
+            // dataAccess.getBGValueDifferent(DataAccessPump.BG_MMOL,
             // val);
-            this.num_1.setValue(new Integer(v_2));
+            this.num_1.setValue(v_2);
         }
         else
         {
@@ -769,6 +778,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     }
 
+
     /**
      * keyTyped
      */
@@ -776,12 +786,14 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
     {
     }
 
+
     /**
      * keyPressed
      */
     public void keyPressed(KeyEvent e)
     {
     }
+
 
     /**
      * Invoked when a key has been released. See the class description for
@@ -800,6 +812,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             cmdOk();
         }
     }
+
 
     @SuppressWarnings("unused")
     private TransferDialog createInstance()
@@ -858,6 +871,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
 
     }
 
+
     public void stateChanged(ChangeEvent e)
     {
         if (e.getSource() instanceof JSpinner)
@@ -865,6 +879,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             changeProcess(e.getSource());
         }
     }
+
 
     private void changeProcess(Object src)
     {
@@ -900,10 +915,11 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             // this.spinner_arr[4].getValue());
             float val = this.m_da.getFloatValue(this.spin_1.getValue());
             // dataAccess.getJFormatedTextValueInt(ftf_bg1);
-            // float v_2 = dataAccess.getBGValueDifferent(DataAccess.BG_MGDL, val);
+            // float v_2 = dataAccess.getBGValueDifferent(DataAccess.BG_MGDL,
+            // val);
             float v_2 = m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mg_dL,
                 Converter_mgdL_mmolL.UNIT_mmol_L, val);
-            // this.ftf_bg2.setValue(new Float(v_2));
+                // this.ftf_bg2.setValue(new Float(v_2));
 
             // System.out.println("focus lost: bg1 (spinner[4]). mmol/L: " +
             // v_2);
@@ -929,7 +945,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog implements ActionListen
             // System.out.println("focus lost: bg2");
             float val = this.m_da.getFloatValue(this.spin_2.getValue());
             // dataAccess.getJFormatedTextValueFloat(ftf_bg2);
-            // int v_2 = (int) dataAccess.getBGValueDifferent(DataAccess.BG_MMOL,
+            // int v_2 = (int)
+            // dataAccess.getBGValueDifferent(DataAccess.BG_MMOL,
             // val);
             int v_2 = (int) m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mmol_L,
                 Converter_mgdL_mmolL.UNIT_mg_dL, val);

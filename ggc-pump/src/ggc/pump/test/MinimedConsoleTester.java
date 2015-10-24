@@ -2,13 +2,11 @@ package ggc.pump.test;
 
 import java.util.Vector;
 
-import com.atech.i18n.mgr.LanguageManager;
 import com.atech.utils.TimerThread;
 import com.atech.utils.data.TimeZoneUtil;
 
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
-import ggc.core.util.GGCLanguageManagerRunner;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.pump.device.minimed.Minimed522;
@@ -42,7 +40,7 @@ import ggc.pump.util.DataAccessPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class MinimedConsoleTester
+public class MinimedConsoleTester extends AbstractPumpTest
 {
 
     /**
@@ -115,7 +113,7 @@ public class MinimedConsoleTester
         // System.out.println("PumpServer: " +
         // dataAccess.getSpecialParameters().get("BG"));
 
-        dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+        dap.setGlucoseUnitType(da.getGlucoseUnitType());
 
         MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp", DataAccessPump.getInstance());
         msp.readData();
@@ -130,6 +128,8 @@ public class MinimedConsoleTester
      */
     public void startMinimed_Device() throws Exception
     {
+        prepareContext();
+
         // MinimedCareLink mcl = new MinimedCareLink();
         // mcl.parseExportFile(new File(file));
         // MinimedSMP msp = new MinimedSMP("f:\\Rozman_A_Plus_20090423.mmp");
@@ -142,18 +142,19 @@ public class MinimedConsoleTester
          * db.initDb();
          * da.setDb(db);
          */
-        DataAccessPump dap = DataAccessPump.createInstance(new LanguageManager(new GGCLanguageManagerRunner()));
-        // dap.setHelpContext(da.getHelpContext());
-        // dap.setPlugInServerInstance(this);
-        // dap.createDb(da.getHibernateDb());
-        dap.initAllObjects();
-        dap.loadSpecialParameters();
+        // DataAccessPump dap = DataAccessPump.createInstance(new
+        // LanguageManager(new GGCLanguageManagerRunner()));
+        // // dap.setHelpContext(da.getHelpContext());
+        // // dap.setPlugInServerInstance(this);
+        // // dap.createDb(da.getHibernateDb());
+        // dap.initAllObjects();
+        // dap.loadSpecialParameters();
         // this.backup_restore_enabled = true;
 
         // System.out.println("PumpServer: " +
         // dataAccess.getSpecialParameters().get("BG"));
 
-        // dap.setBGMeasurmentType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
+        // dap.setGlucoseUnitType(da.getIntValueFromString(da.getSpecialParameters().get("BG")));
 
         // MinimedSPMPump msp = new MinimedSPMPump("Nemec_B_001_20090425.mmp",
         // DataAccessPump.getInstance());
@@ -191,7 +192,7 @@ public class MinimedConsoleTester
         // ConsoleOutputWriter());
         // mm.readDeviceDataFull();
 
-        Minimed522 mm = new Minimed522(dap, sb.toString(), new ConsoleOutputWriter());
+        Minimed522 mm = new Minimed522(this.dataAccessPump, sb.toString(), new ConsoleOutputWriter());
         mm.readDeviceDataFull();
 
     }

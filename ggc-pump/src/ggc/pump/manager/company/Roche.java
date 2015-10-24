@@ -1,6 +1,7 @@
 package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.device.accuchek.AccuChekCombo;
 import ggc.pump.device.accuchek.AccuChekDTron;
 import ggc.pump.device.accuchek.AccuChekSpirit;
@@ -39,20 +40,21 @@ public class Roche extends AbstractPumpDeviceCompany
     /**
      * Constructor
      */
-    public Roche()
+    public Roche(DataAccessPlugInBase da)
     {
         super(PumpDevicesIds.COMPANY_ROCHE, // company_id
                 "Accu-Chek/Roche", // company name (full)
                 "Roche", // short company name
                 "ROCHE_DESC", // company description
                 DeviceImplementationStatus.Testing); // implementation
-                                                                    // status
+                                                     // status
 
-        this.addDevice(new DisetronicDTron(this));
-        this.addDevice(new AccuChekDTron(this));
-        this.addDevice(new AccuChekSpirit(this));
-        this.addDevice(new AccuChekCombo(this));
+        this.addDevice(new DisetronicDTron(this, da));
+        this.addDevice(new AccuChekDTron(this, da));
+        this.addDevice(new AccuChekSpirit(this, da));
+        this.addDevice(new AccuChekCombo(this, da));
     }
+
 
     /**
      * Init Profile Names (for Profile Editor)

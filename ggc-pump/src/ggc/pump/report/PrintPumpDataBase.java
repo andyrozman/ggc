@@ -1,10 +1,4 @@
-package ggc.pump.print;
-
-import ggc.core.data.DailyValuesRow;
-import ggc.core.util.DataAccess;
-import ggc.plugin.data.DeviceValuesDay;
-import ggc.plugin.data.DeviceValuesRange;
-import ggc.pump.data.PumpValuesEntry;
+package ggc.pump.report;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -16,43 +10,43 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 
-/**
- *  Application:   GGC - GNU Gluco Control
- *
- *  See AUTHORS for copyright information.
- * 
- *  This program is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License as published by the Free Software
- *  Foundation; either version 2 of the License, or (at your option) any later
- *  version.
- * 
- *  This program is distributed in the hope that it will be useful, but WITHOUT
- *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- *  details.
- * 
- *  You should have received a copy of the GNU General Public License along with
- *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- *  Place, Suite 330, Boston, MA 02111-1307 USA
- * 
- *  Filename:     PrintPumpDataExt  
- *  Description:  Print Pump Extended Report
- * 
- *  Author: andyrozman {andy@atech-software.com}  
- */
+import ggc.core.data.DailyValuesRow;
+import ggc.core.util.DataAccess;
+import ggc.plugin.data.DeviceValuesDay;
+import ggc.plugin.data.DeviceValuesRange;
+import ggc.pump.data.PumpValuesEntry;
 
-public class PrintPumpDataExt extends PrintPumpDataAbstract
+/**
+ * Application: GGC - GNU Gluco Control
+ * See AUTHORS for copyright information.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ * Filename: PrintPumpDataBase
+ * Description: Print Pump Data - Base
+ * Author: andyrozman {andy@atech-software.com}
+ */
+public class PrintPumpDataBase extends PrintPumpDataAbstract
 {
 
     /**
      * Constructor
-     *  
-     * @param dvr 
+     *
+     * @param dvr
      */
-    public PrintPumpDataExt(DeviceValuesRange dvr)
+    public PrintPumpDataBase(DeviceValuesRange dvr)
     {
         super(dvr);
     }
+
 
     /**
      * {@inheritDoc}
@@ -60,8 +54,6 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
     @Override
     public void fillDocumentBody(Document document) throws Exception
     {
-        // int count = 0;
-
         Font f = this.textFontNormal;
 
         PdfPTable datatable = new PdfPTable(getTableColumnsCount());
@@ -77,11 +69,11 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
         datatable.addCell(this.createBoldTextPhrase("BASE_TYPE"));
         datatable.addCell(this.createBoldTextPhrase("SUB_TYPE"));
         datatable.addCell(this.createBoldTextPhrase("VALUE_SHORT"));
-        datatable.addCell(this.createBoldTextPhrase("OTHER_DATA_FOOD"));
+        datatable.addCell(this.createBoldTextPhrase("OTHER_DATA"));
 
         // writeAdditionalHeader(datatable);
 
-        GregorianCalendar gc_end = this.deviceValuesRange.getEndGC();
+        GregorianCalendar gc_end = deviceValuesRange.getEndGC();
         gc_end.add(Calendar.DAY_OF_MONTH, 1);
 
         GregorianCalendar gc_current = deviceValuesRange.getStartGC();
@@ -104,7 +96,8 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
 
                     PumpValuesEntry pve = (PumpValuesEntry) dvd.getList().get(i);
 
-                    ATechDate atdx = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), pve.getDateTime());
+                    ATechDate atdx = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(),
+                            pve.getDateTime());
 
                     if (i != 0)
                     {
@@ -114,9 +107,9 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
                     datatable.addCell(new Phrase(atdx.getTimeString(), f));
                     datatable.addCell(new Phrase(pve.getBaseTypeString(), f));
                     datatable.addCell(new Phrase(pve.getSubTypeString(), f));
-                    datatable.addCell(new Phrase(pve.getValuePrint(), f));
-                    datatable.addCell(new Phrase(pve
-                            .getAdditionalDataPrint(PumpValuesEntry.PRINT_ADDITIONAL_ALL_ENTRIES_WITH_FOOD), f));
+                    datatable.addCell(new Phrase(pve.getValue(), f));
+                    datatable.addCell(
+                        new Phrase(pve.getAdditionalDataPrint(PumpValuesEntry.PRINT_ADDITIONAL_ALL_ENTRIES), f));
                 }
 
             }
@@ -137,6 +130,7 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
 
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -147,6 +141,7 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
         return headerwidths;
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -156,14 +151,16 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
         return 6;
     }
 
+
     /**
      * {@inheritDoc}
      */
     @Override
     public String getTitleText()
     {
-        return "PUMP_DATA_EXT";
+        return "PUMP_DATA_BASE";
     }
+
 
     /**
      * {@inheritDoc}
@@ -171,27 +168,16 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
     @Override
     public void writeAdditionalHeader(PdfPTable table) throws Exception
     {
-        // table.addCell(new Phrase(i18nControlAbstract.getMessage("CH"), this.text_bold));
+        // table.addCell(new Phrase(i18nControlAbstract.getMessage("CH"),
+        // this.text_bold));
     }
+
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void writeEmptyColumnData(PdfPTable table) throws Exception
-    {
-        table.addCell(this.createEmptyTextPhrase());
-        table.addCell(this.createEmptyTextPhrase());
-        table.addCell(this.createEmptyTextPhrase());
-        table.addCell(this.createEmptyTextPhrase());
-        table.addCell(this.createEmptyTextPhrase());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void writeColumnData(PdfPTable table, Object /* DailyFoodEntry */mp) throws Exception
+    public void writeColumnData(PdfPTable table, Object /* DailyFoodEntry */ mp) throws Exception
     {
         /*
          * table.addCell(new Phrase("", this.text_normal));
@@ -200,14 +186,16 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
          * float value = 0.0f;
          * if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_AMOUNT)
          * {
-         * table.addCell(new Phrase(i18nControlAbstract.getMessage("AMOUNT_LBL"),
+         * table.addCell(new
+         * Phrase(i18nControlAbstract.getMessage("AMOUNT_LBL"),
          * this.text_normal));
          * //value = mp.getNutrientValue(205);
          * value = mp.getMealCH();
          * }
          * else if (mp.getAmountType()==DailyFoodEntry.WEIGHT_TYPE_WEIGHT)
          * {
-         * table.addCell(new Phrase(i18nControlAbstract.getMessage("WEIGHT_LBL2"),
+         * table.addCell(new
+         * Phrase(i18nControlAbstract.getMessage("WEIGHT_LBL2"),
          * this.text_normal));
          * //value = mp.getNutrientValue(205);
          * value = mp.getNutrientValue(205) * (mp.getAmount() / 100.0f);
@@ -226,6 +214,7 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
          */
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -239,13 +228,14 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
         table.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.textFontItalic));
     }
 
+
     /**
      * {@inheritDoc}
      */
     @Override
     public String getFileNameBase()
     {
-        return "PumpDataExt";
+        return "PumpDataBase";
     }
 
 }

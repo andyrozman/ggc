@@ -1,17 +1,13 @@
 package ggc.pump.test;
 
+import java.util.GregorianCalendar;
+
 import com.atech.utils.data.ATechDate;
-import ggc.core.util.DataAccess;
+
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.pump.device.animas.impl.AnimasPumpDeviceReader;
 import ggc.pump.device.animas.impl.handler.AnimasPumpDataWriter;
-import ggc.pump.util.DataAccessPump;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import java.util.GregorianCalendar;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,48 +35,29 @@ import java.util.GregorianCalendar;
  *  Author: Andy Rozman {andy@atech-software.com}
  */
 
-public class TestAnimas
+public class TestAnimas extends AbstractPumpTest
 {
 
-    private static final Log LOG = LogFactory.getLog(TestAnimas.class);
-
-    static DataAccessPump da;
-
-
-    public static void initMainData()
+    public void testAnimas()
     {
-        DataAccess daCore = DataAccess.getInstance();
+        prepareContext();
 
-        da = DataAccessPump.createInstance(daCore.getLanguageManager());
-        da.initAllObjects();
-    }
-
-
-
-    public static void main(String[] args)
-    {
         try
         {
-            TestAnimas.initMainData();
-
-
 
             AnimasPumpDataWriter d = new AnimasPumpDataWriter(new ConsoleOutputWriter());
 
-
             ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MS, new GregorianCalendar());
 
-            d.getDeviceValuesWriter().writeObject("TDD_All_Insulin", atd, (String)null);
-
+            d.getDeviceValuesWriter().writeObject("TDD_All_Insulin", atd, (String) null);
 
             if (true)
                 return;
 
-
             // DbToolApplicationGGC m_configFile = new DbToolApplicationGGC();
             // m_configFile.loadConfig();
 
-            DataAccess daCore = DataAccess.getInstance();
+            // DataAccess daCore = DataAccess.getInstance();
 
             // GGCDbLoader loader = new GGCDbLoader(daCore);
             // loader.run();
@@ -90,14 +67,13 @@ public class TestAnimas
             // GGCDb db = new GGCDb(daCore);
             // db.initDb();
 
-            DataAccessPump da = DataAccessPump.createInstance(daCore.getLanguageManager());
-            da.initAllObjects();
+            // DataAccessPump da =
+            // DataAccessPump.createInstance(daCore.getLanguageManager());
+            // da.initAllObjects();
 
             // da.createPlugInDataRetrievalContext();
             //
             // da.createDb(daCore.getHibernateDb());
-
-
 
             String portName = "/dev/ttyUSB0"; // linux
 
@@ -106,10 +82,9 @@ public class TestAnimas
                 portName = "COM9";
             }
 
-
-            AnimasPumpDeviceReader adr = new AnimasPumpDeviceReader(portName, AnimasDeviceType.Animas_Vibe, new ConsoleOutputWriter());
+            AnimasPumpDeviceReader adr = new AnimasPumpDeviceReader(portName, AnimasDeviceType.Animas_Vibe,
+                    new ConsoleOutputWriter());
             adr.readData();
-
 
         }
         catch (Exception ex)
@@ -118,6 +93,14 @@ public class TestAnimas
             System.out.println("Error running AnimasDeviceReader: " + ex.getMessage());
             ex.printStackTrace();
         }
+
+    }
+
+
+    public static void main(String[] args)
+    {
+        TestAnimas ta = new TestAnimas();
+        ta.testAnimas();
     }
 
 }

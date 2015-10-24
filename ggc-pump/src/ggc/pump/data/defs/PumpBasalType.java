@@ -41,7 +41,7 @@ public enum PumpBasalType implements CodeEnumWithTranslation
     Value(1, "BASAL_VALUE"), //
     Profile(2, "BASAL_PROFILE"), //
     TemporaryBasalRate(3, "BASAL_TEMPORARY_BASAL_RATE"), //
-    TemporaryBasalRateProfile(4, "BASAL_TEMPORARY_BASAL_RATE_PROFILE"), //
+    @Deprecated TemporaryBasalRateProfile(4, "BASAL_TEMPORARY_BASAL_RATE_PROFILE"), //
     PumpStatus(5, "BASAL_PUMP_STATUS"), //
     TemporaryBasalRateEnded(6, "BASAL_TEMPORARY_BASAL_RATE_ENDED"), //
     TemporaryBasalRateCanceled(7, "BASAL_TEMPORARY_BASAL_RATE_CANCELED"), //
@@ -54,7 +54,8 @@ public enum PumpBasalType implements CodeEnumWithTranslation
 
     public static boolean isTemporaryBasalType(PumpBasalType type)
     {
-        return (type == TemporaryBasalRate || type == TemporaryBasalRateProfile || type == TemporaryBasalRateCanceled || type == TemporaryBasalRateEnded);
+        return (type == TemporaryBasalRate || type == TemporaryBasalRateProfile || type == TemporaryBasalRateCanceled
+                || type == TemporaryBasalRateEnded);
     }
 
     /**
@@ -64,6 +65,7 @@ public enum PumpBasalType implements CodeEnumWithTranslation
 
     static Map<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static Map<Integer, PumpBasalType> codeMapping = new HashMap<Integer, PumpBasalType>();
+
 
     static
     {
@@ -76,15 +78,14 @@ public enum PumpBasalType implements CodeEnumWithTranslation
             codeMapping.put(pbt.code, pbt);
         }
 
-        String[] basal_desc_lcl = { ic.getMessage("SELECT_BASAL_TYPE"),
-                                   ic.getMessage("BASAL_VALUE"), //
-                                   ic.getMessage("BASAL_PROFILE"), //
-                                   ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"), //
-                                   ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"), //
-                                   ic.getMessage("BASAL_PUMP_STATUS"), //
-                                   ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_ENDED"), //
-                                   ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_CANCELED"),
-                                   ic.getMessage("BASAL_VALUE_CHANGE"), //
+        String[] basal_desc_lcl = { ic.getMessage("SELECT_BASAL_TYPE"), ic.getMessage("BASAL_VALUE"), //
+                                    ic.getMessage("BASAL_PROFILE"), //
+                                    ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"), //
+                                    ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"), //
+                                    ic.getMessage("BASAL_PUMP_STATUS"), //
+                                    ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_ENDED"), //
+                                    ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_CANCELED"),
+                                    ic.getMessage("BASAL_VALUE_CHANGE"), //
         };
 
         basal_desc = basal_desc_lcl;

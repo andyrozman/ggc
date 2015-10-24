@@ -1,6 +1,7 @@
 package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.device.deltec.DeltecCosmo1700;
 import ggc.pump.device.deltec.DeltecCosmo1800;
 import ggc.pump.manager.PumpDevicesIds;
@@ -37,7 +38,7 @@ public class Deltec extends AbstractPumpDeviceCompany
     /**
      * Constructor
      */
-    public Deltec()
+    public Deltec(DataAccessPlugInBase da)
     {
         super( // empty devices
                 PumpDevicesIds.COMPANY_DELTEC, // company_id
@@ -45,11 +46,12 @@ public class Deltec extends AbstractPumpDeviceCompany
                 "Deltec", // short company name
                 "DELTEC_DESC", // company description
                 DeviceImplementationStatus.NotAvailable); // implementation
-                                                                          // status
+                                                          // status
 
-        this.addDevice(new DeltecCosmo1700(this));
-        this.addDevice(new DeltecCosmo1800(this));
+        this.addDevice(new DeltecCosmo1700(this, da));
+        this.addDevice(new DeltecCosmo1800(this, da));
     }
+
 
     /**
      * Init Profile Names (for Profile Editor)

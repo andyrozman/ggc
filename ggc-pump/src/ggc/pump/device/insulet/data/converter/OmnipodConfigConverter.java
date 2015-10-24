@@ -1,7 +1,7 @@
 package ggc.pump.device.insulet.data.converter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.device.insulet.data.dto.AbstractRecord;
@@ -13,7 +13,7 @@ import ggc.pump.device.insulet.data.dto.config.ConfigRecord;
 public class OmnipodConfigConverter implements OmnipodConverter
 {
 
-    public static final Log LOG = LogFactory.getLog(OmnipodConfigConverter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OmnipodConfigConverter.class);
 
     OutputWriter outputWriter;
 
@@ -42,7 +42,7 @@ public class OmnipodConfigConverter implements OmnipodConverter
 
             // case Profile:
             // {
-            // System.out.println(record.getOmnipodDataType().name() + "  N/A");
+            // System.out.println(record.getOmnipodDataType().name() + " N/A");
             // }
             // break;
 
@@ -52,8 +52,8 @@ public class OmnipodConfigConverter implements OmnipodConverter
 
             case LogRecord:
             case HistoryRecord:
-                LOG.debug(String.format("This type %s is not supported by this converter.", record.getOmnipodDataType()
-                        .name()));
+                LOG.debug(String.format("This type %s is not supported by this converter.",
+                    record.getOmnipodDataType().name()));
                 break;
 
             default:

@@ -1,16 +1,15 @@
-package ggc.pump.device.cozmo;
+package ggc.pump.device.deltec;
+
+import java.io.File;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+
+import com.atech.utils.file.FileReaderContext;
 
 import ggc.plugin.device.impl.abbott.CoPilot;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.io.File;
-
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.filechooser.FileFilter;
-
-import com.atech.utils.file.FileReaderContext;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,11 +48,13 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
         super(da);
     }
 
+
     @Override
     public String getFileDescription()
     {
         return "DM3 Dexcom Software Export";
     }
+
 
     /**
      * Get File Download Panel
@@ -66,17 +67,20 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
         return null;
     }
 
+
     @Override
     public String getFileExtension()
     {
         return ".txt";
     }
 
+
     @Override
     public String getFullFileDescription()
     {
         return "DM3 Dexcom Software Export (TXT)";
     }
+
 
     @Override
     public boolean hasSpecialSelectorDialog()
@@ -90,7 +94,8 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
      * try
      * {
      * cvtm =
-     * (CGMSValuesTableModel)dataAccess.getDeviceDataHandler().getDeviceValuesTableModel
+     * (CGMSValuesTableModel)dataAccess.getDeviceDataHandler().
+     * getDeviceValuesTableModel
      * ();
      * BufferedReader br = new BufferedReader(new FileReader(filename));
      * String line = null;
@@ -109,6 +114,7 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
 
     int i = 0;
     String tmp_time;
+
 
     /*
      * private void addEntry(CGMSValuesSubEntry entry)
@@ -134,6 +140,7 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
                 return f.getName().toLowerCase().endsWith(getFileExtension());
             }
 
+
             @Override
             public String getDescription()
             {
@@ -144,10 +151,12 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
 
     }
 
+
     @Override
     public void goToNextDialog(JDialog currentDialog)
     {
     }
+
 
     @Override
     public String toString()
@@ -155,11 +164,13 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
         return this.getFullFileDescription();
     }
 
+
     public String getComment()
     {
         // TODO Auto-generated method stub
         return null;
     }
+
 
     public String getDeviceClassName()
     {
@@ -167,11 +178,13 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
         return null;
     }
 
+
     public int getDeviceId()
     {
         // TODO Auto-generated method stub
         return 0;
     }
+
 
     @Override
     public String getDeviceSpecialComment()
@@ -180,22 +193,26 @@ public class FRC_CoPilotXMLPump extends CoPilot implements FileReaderContext
         return null;
     }
 
+
     public String getIconName()
     {
         // TODO Auto-generated method stub
         return null;
     }
 
+
     public DeviceImplementationStatus getImplementationStatus()
     {
         return DeviceImplementationStatus.NotAvailable;
     }
+
 
     public String getInstructions()
     {
         // TODO Auto-generated method stub
         return null;
     }
+
 
     public String getName()
     {

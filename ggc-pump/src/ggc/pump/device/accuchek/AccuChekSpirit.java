@@ -1,7 +1,6 @@
 package ggc.pump.device.accuchek;
 
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -47,6 +46,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
         super(drive_letter, writer);
     }
 
+
     /**
      * Constructor
      * 
@@ -59,15 +59,17 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
         super(conn_parameter, writer, da);
     }
 
+
     /**
      * Constructor
      * 
      * @param cmp
      */
-    public AccuChekSpirit(AbstractDeviceCompany cmp)
+    public AccuChekSpirit(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(cmp);
+        super(cmp, da);
     }
+
 
     // ************************************************
     // *** Pump Identification Methods ***
@@ -83,6 +85,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
         return "Spirit";
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -92,6 +95,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
     {
         return "ac_spirit.jpg";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -105,6 +109,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
         return PumpDevicesIds.PUMP_ACCUCHEK_SPIRIT;
     }
 
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -115,6 +120,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
     {
         return "INSTRUCTIONS_ACCUCHEK_SPIRIT";
     }
+
 
     /**
      * getComment - Get Comment for device 
@@ -138,6 +144,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
         return 2000;
     }
 
+
     /**
      * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
      * @return number of elements
@@ -148,6 +155,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
         return 85;
     }
 
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -157,6 +165,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
     {
         return "ggc.pump.device.accuchek.AccuChekSpirit";
     }
+
 
     /**
      * Open
@@ -176,6 +185,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
     {
     }
 
+
     /**
      * Get Temporary Basal Type Definition
      * "TYPE=Unit;STEP=0.1"
@@ -190,6 +200,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
         return null;
     }
 
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -200,6 +211,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
         return 0.1f;
     }
 
+
     /**
      * Get Basal Step (precission)
      * 
@@ -209,6 +221,7 @@ public class AccuChekSpirit extends AccuChekSmartPixPump
     {
         return 0.1f;
     }
+
 
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)

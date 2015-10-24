@@ -76,9 +76,9 @@ public class DanaDiabecare_IIS extends DanaDiabecare_II
      * 
      * @param cmp
      */
-    public DanaDiabecare_IIS(AbstractDeviceCompany cmp)
+    public DanaDiabecare_IIS(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(cmp);
+        super(cmp, da);
     }
 
 

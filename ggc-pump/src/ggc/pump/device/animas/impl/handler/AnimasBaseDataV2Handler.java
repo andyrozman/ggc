@@ -3,8 +3,8 @@ package ggc.pump.device.animas.impl.handler;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.PlugInBaseException;
@@ -47,7 +47,7 @@ import ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
 public class AnimasBaseDataV2Handler extends AbstractDeviceDataV2Handler
 {
 
-    public static final Log LOG = LogFactory.getLog(AnimasBaseDataV2Handler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AnimasBaseDataV2Handler.class);
 
     AnimasPumpDeviceData data;
     AnimasBaseDataV2Converter baseDataConverter;

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -50,6 +50,7 @@ import ggc.pump.util.DataAccessPump;
 
 public class PumpSettings
 {
+
     List<SettingEntry> allSettings = null;
     public HashMap<AnimasSoundType, SoundValueType> soundVolumes = new HashMap<AnimasSoundType, SoundValueType>();
     public ClockModeType clockMode;
@@ -102,106 +103,139 @@ public class PumpSettings
     }
 
 
-
     public void writeSettingsToGGC(AnimasDataType dataType)
     {
-        switch(dataType)
+        switch (dataType)
         {
             case ClockMode:
                 {
-                    writeSetting("CFG_BASE_CLOCK_MODE", clockMode.getTranslation(), clockMode, PumpConfigurationGroup.General);
-                    writeSetting("PCFG_ACTIVE_BASAL_PROFILE", "" + this.activeBasalProfile, this.activeBasalProfile, PumpConfigurationGroup.Basal);
-                    writeSetting("CFG_BASE_GLUCOSE_UNIT", glucoseUnitType.getTranslation(), glucoseUnitType, PumpConfigurationGroup.General);
+                    writeSetting("CFG_BASE_CLOCK_MODE", clockMode.getTranslation(), clockMode,
+                        PumpConfigurationGroup.General);
+                    writeSetting("PCFG_ACTIVE_BASAL_PROFILE", "" + this.activeBasalProfile, this.activeBasalProfile,
+                        PumpConfigurationGroup.Basal);
+                    writeSetting("CFG_BASE_GLUCOSE_UNIT", glucoseUnitType.getTranslation(), glucoseUnitType,
+                        PumpConfigurationGroup.General);
                     writeSetting("CFG_BASE_SERIAL_NUMBER", serialNumber, serialNumber, PumpConfigurationGroup.General);
-                    writeSetting("CFG_BASE_FIRMWARE_VERSION", softwareCode, softwareCode, PumpConfigurationGroup.General);
+                    writeSetting("CFG_BASE_FIRMWARE_VERSION", softwareCode, softwareCode,
+                        PumpConfigurationGroup.General);
 
-
-                } break;
+                }
+                break;
 
             case SoundSettings:
                 {
                     for (Entry<AnimasSoundType, SoundValueType> entry : soundVolumes.entrySet())
                     {
-                        writeSetting(i18nControl.getMessage("CFG_SOUND_VOLUME_FOR") + " " + entry.getKey().getTranslation(), entry.getValue().getTranslation(), entry.getValue(), PumpConfigurationGroup.Sound);
+                        writeSetting(
+                            i18nControl.getMessage("CFG_SOUND_VOLUME_FOR") + " " + entry.getKey().getTranslation(),
+                            entry.getValue().getTranslation(), entry.getValue(), PumpConfigurationGroup.Sound);
                     }
-                } break;
+                }
+                break;
 
             case AdvancedSettings:
                 {
-                    writeSetting("PCFG_AUDIO_BOLUS_ENABLED", getBooleanValue(audioBolusEnabled), audioBolusEnabled, PumpConfigurationGroup.Bolus);
-                    writeSetting("PCFG_AUDIO_BOLUS_STEP_SIZE", audioBolusStepSize.getValue(), audioBolusStepSize, PumpConfigurationGroup.Bolus);
-                    writeSetting("PCFG_ADVANCED_BOLUS_ENABLED", getBooleanValue(advancedBolusEnabled), advancedBolusEnabled, PumpConfigurationGroup.Bolus);
-                    writeSetting("PCFG_BOLUS_REMINDER", getBooleanValue(bolusReminderEnabled), bolusReminderEnabled, PumpConfigurationGroup.Bolus);
-                    writeSetting("PCFG_NUMBER_OF_BASAL_PROFILES", "" + numberOfBasalProfiles, numberOfBasalProfiles, PumpConfigurationGroup.Basal);
-                    writeSetting("PCFG_MAX_BOLUS_IN_HOUR", "" + maxBolusProHour.intValue(), maxBolusProHour, PumpConfigurationGroup.Bolus);
-                    writeSetting("PCFG_MAX_BASAL_IN_HOUR", "" + maxBasalAmountProHour.intValue(), maxBasalAmountProHour, PumpConfigurationGroup.Basal);
-                    writeSetting("PCFG_TOTAL_DAILY_DOSE", "" + totalDailyDose.intValue(), totalDailyDose, PumpConfigurationGroup.Insulin);
-                    writeSetting("PCFG_MAX_DOSE_IN_2HOURS", "" + maxDoseIn2h.intValue(), maxDoseIn2h, PumpConfigurationGroup.Insulin);
-                    writeSetting("PCFG_LOW_CARTRIDGE_WARNING", "" + lowCartridgeWarning, lowCartridgeWarning, PumpConfigurationGroup.Insulin);
-                    writeSetting("PCFG_AUTOOFF_ENABLED", getBooleanValue(autoOffEnabled), autoOffEnabled, PumpConfigurationGroup.Device);
-                    writeSetting("PCFG_AUTOOFF_TIMEOUT", "" + autoOffTimeoutHr, autoOffTimeoutHr, PumpConfigurationGroup.Device);
-                    writeSetting("PCFG_IOB_ENABLED", getBooleanValue(iOBEnabled), iOBEnabled, PumpConfigurationGroup.Insulin);
-                    writeSetting("PCFG_BOLUS_SPEED", bolusSpeed.getDescription(), bolusSpeed, PumpConfigurationGroup.Bolus);
-                    writeSetting("PCFG_DISPLAY_TIMEOUT", displayTimeout + " min", displayTimeout, PumpConfigurationGroup.Device);
-                    writeSetting("PCFG_OCCLUSION_SENSITIVITY", occlusionSensitivity.name(), occlusionSensitivity, PumpConfigurationGroup.Device);
-                    writeSetting("PCFG_IOB_DECAY", "" + formatDecimal(iOBDecay, 2, 1), iOBDecay, PumpConfigurationGroup.Insulin);
+                    writeSetting("PCFG_AUDIO_BOLUS_ENABLED", getBooleanValue(audioBolusEnabled), audioBolusEnabled,
+                        PumpConfigurationGroup.Bolus);
+                    writeSetting("PCFG_AUDIO_BOLUS_STEP_SIZE", audioBolusStepSize.getValue(), audioBolusStepSize,
+                        PumpConfigurationGroup.Bolus);
+                    writeSetting("PCFG_ADVANCED_BOLUS_ENABLED", getBooleanValue(advancedBolusEnabled),
+                        advancedBolusEnabled, PumpConfigurationGroup.Bolus);
+                    writeSetting("PCFG_BOLUS_REMINDER", getBooleanValue(bolusReminderEnabled), bolusReminderEnabled,
+                        PumpConfigurationGroup.Bolus);
+                    writeSetting("PCFG_NUMBER_OF_BASAL_PROFILES", "" + numberOfBasalProfiles, numberOfBasalProfiles,
+                        PumpConfigurationGroup.Basal);
+                    writeSetting("PCFG_MAX_BOLUS_IN_HOUR", "" + maxBolusProHour.intValue(), maxBolusProHour,
+                        PumpConfigurationGroup.Bolus);
+                    writeSetting("PCFG_MAX_BASAL_IN_HOUR", "" + maxBasalAmountProHour.intValue(), maxBasalAmountProHour,
+                        PumpConfigurationGroup.Basal);
+                    writeSetting("PCFG_TOTAL_DAILY_DOSE", "" + totalDailyDose.intValue(), totalDailyDose,
+                        PumpConfigurationGroup.Insulin);
+                    writeSetting("PCFG_MAX_DOSE_IN_2HOURS", "" + maxDoseIn2h.intValue(), maxDoseIn2h,
+                        PumpConfigurationGroup.Insulin);
+                    writeSetting("PCFG_LOW_CARTRIDGE_WARNING", "" + lowCartridgeWarning, lowCartridgeWarning,
+                        PumpConfigurationGroup.Insulin);
+                    writeSetting("PCFG_AUTOOFF_ENABLED", getBooleanValue(autoOffEnabled), autoOffEnabled,
+                        PumpConfigurationGroup.Device);
+                    writeSetting("PCFG_AUTOOFF_TIMEOUT", "" + autoOffTimeoutHr, autoOffTimeoutHr,
+                        PumpConfigurationGroup.Device);
+                    writeSetting("PCFG_IOB_ENABLED", getBooleanValue(iOBEnabled), iOBEnabled,
+                        PumpConfigurationGroup.Insulin);
+                    writeSetting("PCFG_BOLUS_SPEED", bolusSpeed.getDescription(), bolusSpeed,
+                        PumpConfigurationGroup.Bolus);
+                    writeSetting("PCFG_DISPLAY_TIMEOUT", displayTimeout + " min", displayTimeout,
+                        PumpConfigurationGroup.Device);
+                    writeSetting("PCFG_OCCLUSION_SENSITIVITY", occlusionSensitivity.name(), occlusionSensitivity,
+                        PumpConfigurationGroup.Device);
+                    writeSetting("PCFG_IOB_DECAY", "" + formatDecimal(iOBDecay, 2, 1), iOBDecay,
+                        PumpConfigurationGroup.Insulin);
                     writeSetting("LANGUAGE", language.getDescription(), language, PumpConfigurationGroup.Device);
                     // addSetting(public short maxLock;
 
                     if (sickDaysCheckOverLimit != null)
                     {
-                        writeSetting("PCFG_SICK_DAYS_CHECK_KETONES_EVERY", "" + sickDaysCheckKetones, sickDaysCheckKetones, PumpConfigurationGroup.Device);
-                        writeSetting("PCFG_SICK_DAYS_CHECK_BG_EVERY", "" + sickDaysCheckBG, sickDaysCheckBG, PumpConfigurationGroup.Device);
+                        writeSetting("PCFG_SICK_DAYS_CHECK_KETONES_EVERY", "" + sickDaysCheckKetones,
+                            sickDaysCheckKetones, PumpConfigurationGroup.Device);
+                        writeSetting("PCFG_SICK_DAYS_CHECK_BG_EVERY", "" + sickDaysCheckBG, sickDaysCheckBG,
+                            PumpConfigurationGroup.Device);
                         writeSetting("PCFG_SICK_DAYS_CHECK_OVER_LIMIT",
-                                formatDecimal(sickDaysCheckOverLimit, 3, glucoseUnitType == GlucoseUnitType.mmol_L ? 1 : 0), sickDaysCheckOverLimit, PumpConfigurationGroup.Device);
+                            formatDecimal(sickDaysCheckOverLimit, 3, glucoseUnitType == GlucoseUnitType.mmol_L ? 1 : 0),
+                            sickDaysCheckOverLimit, PumpConfigurationGroup.Device);
                     }
 
-                } break;
-
+                }
+                break;
 
             case BasalProfile:
-            {
-                for (int i = 1; i < 5; i++)
                 {
-                    if (this.basalProfiles.containsKey(i))
+                    for (int i = 1; i < 5; i++)
                     {
-                        BasalProfile bp = this.basalProfiles.get(i);
-                        writeSetting(i18nControl.getMessage("PCFG_BASAL_PROFILE") + " #" + i + " " +
-                                i18nControl.getMessage("CFG_BASE_NAME"), bp.name, bp, PumpConfigurationGroup.Basal);
-
-                        int slot = 1;
-
-                        for (BasalProfileEntry en : bp)
+                        if (this.basalProfiles.containsKey(i))
                         {
-                           String key = i18nControl.getMessage("PCFG_BASAL_PROFILE") + " #" + i + " " +
-                                    i18nControl.getMessage("CFG_BASE_SLOT") + " " + ((slot < 10) ? "0" + slot : slot);
+                            BasalProfile bp = this.basalProfiles.get(i);
+                            writeSetting(
+                                i18nControl.getMessage("PCFG_BASAL_PROFILE") + " #" + i + " "
+                                        + i18nControl.getMessage("CFG_BASE_NAME"),
+                                bp.name, bp, PumpConfigurationGroup.Basal);
 
-                            String value = i18nControl.getMessage("CFG_BASE_FROM") + "=" + en.time.getTimeString() + ", " +
-                                    i18nControl.getMessage("CFG_BASE_AMOUNT") + "=" + en.amount;
+                            int slot = 1;
 
-                            writeSetting(key, value, en, PumpConfigurationGroup.Basal);
+                            for (BasalProfileEntry en : bp)
+                            {
+                                String key = i18nControl.getMessage("PCFG_BASAL_PROFILE") + " #" + i + " "
+                                        + i18nControl.getMessage("CFG_BASE_SLOT") + " "
+                                        + ((slot < 10) ? "0" + slot : slot);
 
-                            slot++;
+                                String value = i18nControl.getMessage("CFG_BASE_FROM") + "=" + en.time.getTimeString()
+                                        + ", " + i18nControl.getMessage("CFG_BASE_AMOUNT") + "=" + en.amount;
+
+                                writeSetting(key, value, en, PumpConfigurationGroup.Basal);
+
+                                slot++;
+                            }
                         }
                     }
                 }
-            } break;
+                break;
 
             case FriendlyName:
                 {
-                    writeSetting("PCFG_FRIENDLY_NAME", this.friendlyName, this.friendlyName, PumpConfigurationGroup.Device);
+                    writeSetting("PCFG_FRIENDLY_NAME", this.friendlyName, this.friendlyName,
+                        PumpConfigurationGroup.Device);
 
-                } break;
+                }
+                break;
 
             case BGTargetSetting:
                 for (Entry<AnimasBolusSettingSubType, List<SettingTimeValueEntry>> entry : timeValueSettings.entrySet())
                 {
                     for (SettingTimeValueEntry stve : entry.getValue())
                     {
-                        writeSetting(entry.getKey().getTranslation() + " #" + stve.index, stve.getSettingValue(), stve, PumpConfigurationGroup.Bolus);
+                        writeSetting(entry.getKey().getTranslation() + " #" + stve.index, stve.getSettingValue(), stve,
+                            PumpConfigurationGroup.Bolus);
                     }
-                } break;
-
+                }
+                break;
 
             default:
                 System.out.println("writeSettingsToGGC: " + dataType.name());
@@ -209,7 +243,6 @@ public class PumpSettings
         }
 
     }
-
 
 
     public void setBasalName(int basalProfilerNr, String basalName)
@@ -222,6 +255,7 @@ public class PumpSettings
         this.basalProfiles.get(basalProfilerNr).name = basalName;
     }
 
+
     public void addSettingTimeValueEntry(SettingTimeValueEntry settingTimeValueEntry)
     {
         if (!timeValueSettings.containsKey(settingTimeValueEntry.type))
@@ -231,6 +265,7 @@ public class PumpSettings
 
         timeValueSettings.get(settingTimeValueEntry.type).add(settingTimeValueEntry);
     }
+
 
     public List<SettingEntry> getAllSettings()
     {
@@ -249,74 +284,106 @@ public class PumpSettings
     }
 
 
-
-
     public void createAllSettings()
     {
-//        allSettings = new ArrayList<SettingEntry>();
-//
-//        // I18n
-//
-//        addSetting("CLOCK_MODE", clockMode.getDescription(), clockMode, PumpConfigurationGroup.General);
-//        addSetting("ACTIVE_BASAL_PROFILE", "" + this.activeBasalProfile, this.activeBasalProfile, PumpConfigurationGroup.Basal);
-//        addSetting("GLUCOSE_UNIT", glucoseUnitType.getDescription(), glucoseUnitType, PumpConfigurationGroup.General);
-//
-//        if (AnimasUtils.wasDataTypeProcessed(AnimasDataType.AdvancedSettings))
-//        {
-//            addSetting("AUDIO_BOLUS_ENABLED", getBooleanValue(audioBolusEnabled), audioBolusEnabled, PumpConfigurationGroup.Bolus);
-//            addSetting("AUDIO_BOLUS_STEP_SIZE", audioBolusStepSize.getValue(), audioBolusStepSize, PumpConfigurationGroup.Bolus);
-//            addSetting("ADVANCED_BOLUS_ENABLED", getBooleanValue(advancedBolusEnabled), advancedBolusEnabled, PumpConfigurationGroup.Bolus);
-//            addSetting("BOLUS_REMINDER", getBooleanValue(bolusReminderEnabled), bolusReminderEnabled, PumpConfigurationGroup.Bolus);
-//            addSetting("NUMBER_OF_BASAL_PROFILES", "" + numberOfBasalProfiles, numberOfBasalProfiles, PumpConfigurationGroup.Basal);
-//            addSetting("MAX_BOLUS_IN_HOUR", "" + maxBolusProHour.intValue(), maxBolusProHour, PumpConfigurationGroup.Bolus);
-//            addSetting("MAX_BASAL_IN_HOUR", "" + maxBasalAmountProHour.intValue(), maxBasalAmountProHour, PumpConfigurationGroup.Basal);
-//            addSetting("TOTAL_DAILY_DOSE", "" + totalDailyDose.intValue(), totalDailyDose, PumpConfigurationGroup.Insulin);
-//            addSetting("MAX_DOSE_IN_2HOURS", "" + maxDoseIn2h.intValue(), maxDoseIn2h, PumpConfigurationGroup.Insulin);
-//            addSetting("LOW_CARTRIDGE_WARNING", "" + lowCartridgeWarning, lowCartridgeWarning, PumpConfigurationGroup.Insulin);
-//            addSetting("AUTOOFF_ENABLED", getBooleanValue(autoOffEnabled), autoOffEnabled, PumpConfigurationGroup.Device);
-//            addSetting("AUTOOFF_TIMEOUT", "" + autoOffTimeoutHr, autoOffTimeoutHr, PumpConfigurationGroup.Device);
-//            addSetting("IOB_ENABLED", getBooleanValue(iOBEnabled), iOBEnabled, PumpConfigurationGroup.Insulin);
-//            addSetting("BOLUS_SPEED", bolusSpeed.getDescription(), bolusSpeed, PumpConfigurationGroup.Bolus);
-//            addSetting("DISPLAY_TIMEOUT", displayTimeout + " min", displayTimeout, PumpConfigurationGroup.Device);
-//            addSetting("OCCLUSION_SENSITIVITY", occlusionSensitivity.name(), occlusionSensitivity, PumpConfigurationGroup.Device);
-//            addSetting("IOB_DECAY", "" + formatDecimal(iOBDecay, 2, 1), iOBDecay, PumpConfigurationGroup.Insulin);
-//            addSetting("LANGUAGE", language.getDescription(), language, PumpConfigurationGroup.Device);
-//            // addSetting(public short maxLock;
-//
-//
-//
-//            if (sickDaysCheckOverLimit != null)
-//            {
-//                addSetting("SICK_DAYS_CHECK_KETONES_EVERY", "" + sickDaysCheckKetones.shortValue(), sickDaysCheckKetones, PumpConfigurationGroup.Device);
-//                addSetting("SICK_DAYS_CHECK_BG_EVERY", "" + sickDaysCheckBG.shortValue(), sickDaysCheckBG, PumpConfigurationGroup.Device);
-//                addSetting("SICK_DAYS_CHECK_OVER_LIMIT",
-//                    formatDecimal(sickDaysCheckOverLimit, 3, glucoseUnitType == GlucoseUnitType.mmol_L ? 1 : 0), sickDaysCheckOverLimit, PumpConfigurationGroup.Device);
-//            }
-//        }
-//
-//        // basal profiles
-//        for (int i = 1; i < 5; i++)
-//        {
-//            if (this.basalProfiles.containsKey(i))
-//            {
-//                BasalProfile bp = this.basalProfiles.get(i);
-//                addSetting("BASAL_PROFILE_" + i + "_NAME", bp.name, bp, PumpConfigurationGroup.Basal);
-//
-//                for (BasalProfileEntry en : bp)
-//                {
-//                    addSetting("BASAL_PROFILE_" + i + "_" + en.time.getTimeString(), "" + en.amount, en, PumpConfigurationGroup.Basal);
-//                }
-//            }
-//        }
-//
-//        // sound volumes
-//        for (Entry<AnimasSettingSubType, List<SettingTimeValueEntry>> entry : timeValueSettings.entrySet())
-//        {
-//            for (SettingTimeValueEntry stve : entry.getValue())
-//            {
-//                addSetting(entry.getKey().name() + stve.index, stve.getSettingValue(), stve, PumpConfigurationGroup.Sound);
-//            }
-//        }
+        // allSettings = new ArrayList<SettingEntry>();
+        //
+        // // I18n
+        //
+        // addSetting("CLOCK_MODE", clockMode.getDescription(), clockMode,
+        // PumpConfigurationGroup.General);
+        // addSetting("ACTIVE_BASAL_PROFILE", "" + this.activeBasalProfile,
+        // this.activeBasalProfile, PumpConfigurationGroup.Basal);
+        // addSetting("GLUCOSE_UNIT", glucoseUnitType.getDescription(),
+        // glucoseUnitType, PumpConfigurationGroup.General);
+        //
+        // if
+        // (AnimasUtils.wasDataTypeProcessed(AnimasDataType.AdvancedSettings))
+        // {
+        // addSetting("AUDIO_BOLUS_ENABLED", getBooleanValue(audioBolusEnabled),
+        // audioBolusEnabled, PumpConfigurationGroup.Bolus);
+        // addSetting("AUDIO_BOLUS_STEP_SIZE", audioBolusStepSize.getValue(),
+        // audioBolusStepSize, PumpConfigurationGroup.Bolus);
+        // addSetting("ADVANCED_BOLUS_ENABLED",
+        // getBooleanValue(advancedBolusEnabled), advancedBolusEnabled,
+        // PumpConfigurationGroup.Bolus);
+        // addSetting("BOLUS_REMINDER", getBooleanValue(bolusReminderEnabled),
+        // bolusReminderEnabled, PumpConfigurationGroup.Bolus);
+        // addSetting("NUMBER_OF_BASAL_PROFILES", "" + numberOfBasalProfiles,
+        // numberOfBasalProfiles, PumpConfigurationGroup.Basal);
+        // addSetting("MAX_BOLUS_IN_HOUR", "" + maxBolusProHour.intValue(),
+        // maxBolusProHour, PumpConfigurationGroup.Bolus);
+        // addSetting("MAX_BASAL_IN_HOUR", "" +
+        // maxBasalAmountProHour.intValue(), maxBasalAmountProHour,
+        // PumpConfigurationGroup.Basal);
+        // addSetting("TOTAL_DAILY_DOSE", "" + totalDailyDose.intValue(),
+        // totalDailyDose, PumpConfigurationGroup.Insulin);
+        // addSetting("MAX_DOSE_IN_2HOURS", "" + maxDoseIn2h.intValue(),
+        // maxDoseIn2h, PumpConfigurationGroup.Insulin);
+        // addSetting("LOW_CARTRIDGE_WARNING", "" + lowCartridgeWarning,
+        // lowCartridgeWarning, PumpConfigurationGroup.Insulin);
+        // addSetting("AUTOOFF_ENABLED", getBooleanValue(autoOffEnabled),
+        // autoOffEnabled, PumpConfigurationGroup.Device);
+        // addSetting("AUTOOFF_TIMEOUT", "" + autoOffTimeoutHr,
+        // autoOffTimeoutHr, PumpConfigurationGroup.Device);
+        // addSetting("IOB_ENABLED", getBooleanValue(iOBEnabled), iOBEnabled,
+        // PumpConfigurationGroup.Insulin);
+        // addSetting("BOLUS_SPEED", bolusSpeed.getDescription(), bolusSpeed,
+        // PumpConfigurationGroup.Bolus);
+        // addSetting("DISPLAY_TIMEOUT", displayTimeout + " min",
+        // displayTimeout, PumpConfigurationGroup.Device);
+        // addSetting("OCCLUSION_SENSITIVITY", occlusionSensitivity.name(),
+        // occlusionSensitivity, PumpConfigurationGroup.Device);
+        // addSetting("IOB_DECAY", "" + formatDecimal(iOBDecay, 2, 1), iOBDecay,
+        // PumpConfigurationGroup.Insulin);
+        // addSetting("LANGUAGE", language.getDescription(), language,
+        // PumpConfigurationGroup.Device);
+        // // addSetting(public short maxLock;
+        //
+        //
+        //
+        // if (sickDaysCheckOverLimit != null)
+        // {
+        // addSetting("SICK_DAYS_CHECK_KETONES_EVERY", "" +
+        // sickDaysCheckKetones.shortValue(), sickDaysCheckKetones,
+        // PumpConfigurationGroup.Device);
+        // addSetting("SICK_DAYS_CHECK_BG_EVERY", "" +
+        // sickDaysCheckBG.shortValue(), sickDaysCheckBG,
+        // PumpConfigurationGroup.Device);
+        // addSetting("SICK_DAYS_CHECK_OVER_LIMIT",
+        // formatDecimal(sickDaysCheckOverLimit, 3, glucoseUnitType ==
+        // GlucoseUnitType.mmol_L ? 1 : 0), sickDaysCheckOverLimit,
+        // PumpConfigurationGroup.Device);
+        // }
+        // }
+        //
+        // // basal profiles
+        // for (int i = 1; i < 5; i++)
+        // {
+        // if (this.basalProfiles.containsKey(i))
+        // {
+        // BasalProfile bp = this.basalProfiles.get(i);
+        // addSetting("BASAL_PROFILE_" + i + "_NAME", bp.name, bp,
+        // PumpConfigurationGroup.Basal);
+        //
+        // for (BasalProfileEntry en : bp)
+        // {
+        // addSetting("BASAL_PROFILE_" + i + "_" + en.time.getTimeString(), "" +
+        // en.amount, en, PumpConfigurationGroup.Basal);
+        // }
+        // }
+        // }
+        //
+        // // sound volumes
+        // for (Entry<AnimasSettingSubType, List<SettingTimeValueEntry>> entry :
+        // timeValueSettings.entrySet())
+        // {
+        // for (SettingTimeValueEntry stve : entry.getValue())
+        // {
+        // addSetting(entry.getKey().name() + stve.index,
+        // stve.getSettingValue(), stve, PumpConfigurationGroup.Sound);
+        // }
+        // }
     }
 
 
@@ -340,7 +407,7 @@ public class PumpSettings
 
     private void addSetting(String key, String value, Object rawValue, PumpConfigurationGroup group)
     {
-        if (rawValue!=null)
+        if (rawValue != null)
         {
             allSettings.add(new SettingEntry(key, value));
         }
@@ -349,14 +416,14 @@ public class PumpSettings
 
     private void writeSetting(String key, String value, Object rawValue, PumpConfigurationGroup group)
     {
-        if (rawValue!=null)
+        if (rawValue != null)
         {
             writer.writeConfigurationData(new DeviceValueConfigEntry(i18nControl.getMessage(key), value, group));
         }
     }
 
 
-    public void debugAllSettings(Log log)
+    public void debugAllSettings(Logger log)
     {
         List<SettingEntry> settings = getAllSettings();
 

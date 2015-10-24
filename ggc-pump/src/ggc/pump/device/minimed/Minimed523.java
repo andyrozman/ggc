@@ -1,8 +1,5 @@
 package ggc.pump.device.minimed;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
@@ -37,9 +34,6 @@ import ggc.pump.manager.PumpDevicesIds;
 
 public class Minimed523 extends Minimed522
 {
-
-    private static Log log = LogFactory.getLog(Minimed522.class);
-
 
     /**
      * Constructor

@@ -1,7 +1,6 @@
 package ggc.pump.device.accuchek;
 
 import ggc.plugin.device.PlugInBaseException;
-import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -47,6 +46,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
         super(drive_letter, writer);
     }
 
+
     /**
      * Constructor
      * 
@@ -59,15 +59,17 @@ public class AccuChekDTron extends AccuChekSmartPixPump
         super(params, writer, da);
     }
 
+
     /**
      * Constructor
      * 
      * @param cmp
      */
-    public AccuChekDTron(AbstractDeviceCompany cmp)
+    public AccuChekDTron(AbstractDeviceCompany cmp, DataAccessPlugInBase da)
     {
-        super(cmp);
+        super(cmp, da);
     }
+
 
     /**
      * getName - Get Name of meter. 
@@ -79,6 +81,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
         return "D-Tron";
     }
 
+
     /**
      * getIconName - Get Icon of meter
      * 
@@ -88,6 +91,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
     {
         return "ac_dtron.jpg";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -101,6 +105,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
         return PumpDevicesIds.PUMP_ACCUCHEK_D_TRON;
     }
 
+
     /**
      * getInstructions - get instructions for device
      * Should be implemented by meter class.
@@ -112,6 +117,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
         return "INSTRUCTIONS_ACCUCHEK_SPIRIT";
     }
 
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -121,7 +127,6 @@ public class AccuChekDTron extends AccuChekSmartPixPump
     {
         return null;
     }
-
 
 
     /**
@@ -135,6 +140,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
         return 100;
     }
 
+
     /**
      * getNrOfElementsFor1s - How many elements are read in 1s (which is our refresh time)
      * @return number of elements
@@ -144,6 +150,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
     {
         return 10;
     }
+
 
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
@@ -155,6 +162,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
         return "ggc.meter.device.accuchek.AccuChekDTron";
     }
 
+
     /**
      * Open
      */
@@ -164,6 +172,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
         return true;
     }
 
+
     /**
      * Close
      */
@@ -171,6 +180,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
     public void close() throws PlugInBaseException
     {
     }
+
 
     /**
      * Get Temporary Basal Type Definition
@@ -186,6 +196,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
         return null;
     }
 
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -196,6 +207,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
         return 0.1f;
     }
 
+
     /**
      * Get Basal Step (precission)
      * 
@@ -205,6 +217,7 @@ public class AccuChekDTron extends AccuChekSmartPixPump
     {
         return 0.1f;
     }
+
 
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)

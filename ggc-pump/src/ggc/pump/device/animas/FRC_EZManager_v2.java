@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.file.FileReaderContext;
@@ -59,7 +59,7 @@ import ggc.pump.util.DataAccessPump;
 public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderContext
 {
 
-    private static Log log = LogFactory.getLog(FRC_EZManager_v2.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FRC_EZManager_v2.class);
 
     OutputWriter output_writer = null;
 
@@ -151,7 +151,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                     }
                     catch (Exception ex)
                     {
-                        log.error("Error reading row [" + type + ":" + ex, ex);
+                        LOG.error("Error reading row [" + type + ":" + ex, ex);
                         return;
                     }
                 }
@@ -160,7 +160,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
             }
             catch (Exception ex)
             {
-                log.error("Error reading [" + type + ":" + ex, ex);
+                LOG.error("Error reading [" + type + ":" + ex, ex);
                 return;
             }
 
@@ -214,7 +214,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                     }
                     catch (Exception ex)
                     {
-                        log.error("Error reading row [" + type + ":" + ex, ex);
+                        LOG.error("Error reading row [" + type + ":" + ex, ex);
                     }
                 }
 
@@ -223,7 +223,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
             }
             catch (Exception ex)
             {
-                log.error("Error reading [" + type + ":" + ex, ex);
+                LOG.error("Error reading [" + type + ":" + ex, ex);
             }
 
         }
@@ -279,7 +279,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
             }
             catch (Exception ex)
             {
-                log.error("Error reading row [" + type + "]:" + ex, ex);
+                LOG.error("Error reading row [" + type + "]:" + ex, ex);
             }
         }
 
@@ -361,7 +361,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
             }
             catch (Exception ex)
             {
-                log.error("Error reading row [" + type + "]:" + ex, ex);
+                LOG.error("Error reading row [" + type + "]:" + ex, ex);
             }
         }
 
@@ -441,7 +441,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
             }
             catch (Exception ex)
             {
-                log.error("Error reading row [" + type + "]:" + ex, ex);
+                LOG.error("Error reading row [" + type + "]:" + ex, ex);
             }
         }
 
@@ -492,7 +492,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
             }
             catch (Exception ex)
             {
-                log.error("Error reading row [" + type + "]:" + ex, ex);
+                LOG.error("Error reading row [" + type + "]:" + ex, ex);
             }
         }
 
@@ -529,7 +529,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
                     }
                     catch (Exception ex)
                     {
-                        log.error("Error reading row [" + type + "]:" + ex, ex);
+                        LOG.error("Error reading row [" + type + "]:" + ex, ex);
                     }
 
                 }
@@ -538,7 +538,7 @@ public class FRC_EZManager_v2 extends DatabaseProtocol implements FileReaderCont
             }
             catch (Exception ex)
             {
-                log.error("Error reading [" + type + "]:" + ex, ex);
+                LOG.error("Error reading [" + type + "]:" + ex, ex);
             }
         }
 
