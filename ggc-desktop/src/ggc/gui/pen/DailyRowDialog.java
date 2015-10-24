@@ -360,7 +360,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         table_ins_pos = new Hashtable<Integer, Integer>();
         table_pos_ins = new Hashtable<Integer, Integer>();
 
-        // GGCProperties configurationManagerWrapper = m_da.getSettings();
+        // GGCProperties configurationManagerWrapper = dataAccess.getSettings();
 
         int ins_type = 0;
 

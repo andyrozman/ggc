@@ -1,25 +1,21 @@
 package ggc.gui.dialogs.stock.def;
 
-import com.atech.graphics.dialogs.guilist.ButtonDef;
-import com.atech.graphics.dialogs.guilist.DividerDef;
-import com.atech.graphics.dialogs.guilist.GUIListDefAbstract;
-import com.atech.graphics.dialogs.guilist.LabelDef;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATSwingUtils;
-import ggc.core.data.defs.StockTypeBase;
-import ggc.core.db.GGCDb;
-import ggc.core.db.dto.StockDTO;
-import ggc.core.db.dto.StocktakingDTO;
-import ggc.core.db.hibernate.StockSubTypeH;
-import ggc.core.util.DataAccess;
-import ggc.gui.dialogs.stock.StockSubTypeDialog;
+import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumnModel;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.atech.graphics.dialogs.guilist.ButtonDef;
+import com.atech.graphics.dialogs.guilist.DividerDef;
+import com.atech.graphics.dialogs.guilist.GUIListDefAbstract;
+import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.dto.StockDTO;
+import ggc.core.db.dto.StocktakingDTO;
+import ggc.core.util.DataAccess;
 
 /**
  * Created by andy on 02.03.15.
@@ -30,13 +26,13 @@ public class StocktakingListDef extends GUIListDefAbstract
     DataAccess dataAccess = DataAccess.getInstance();
     I18nControlAbstract i18nControl = dataAccess.getI18nControlInstance();
 
-    //private List<StockSubTypeH> activeList = null;
-    //private List<StockSubTypeH> filteredList = null;
+    // private List<StockSubTypeH> activeList = null;
+    // private List<StockSubTypeH> filteredList = null;
 
     StocktakingDTO dto = null;
 
-
     GGCDb database;
+
 
     /**
      * Constructor
@@ -47,38 +43,37 @@ public class StocktakingListDef extends GUIListDefAbstract
         init();
     }
 
+
     @Override
     public void doTableAction(String action)
     {
-//        if (action.equals("add_stocktype"))
-//        {
-//            StockSubTypeDialog dialog = new StockSubTypeDialog(this.getParentDialog());
-//
-//            if (dialog.wasOperationSuccessful())
-//            {
-//                loadData();
-//                table.invalidate();
-//            }
-//
-//        }
-//        else if (action.equals("edit_stocktype"))
-//        {
-//            this.editTableRow();
-//        }
-//        else if (action.equals("delete_stocktype"))
-//        {
-//
-//        }
-//        else
+        // if (action.equals("add_stocktype"))
+        // {
+        // StockSubTypeDialog dialog = new
+        // StockSubTypeDialog(this.getParentDialog());
+        //
+        // if (dialog.wasOperationSuccessful())
+        // {
+        // loadData();
+        // table.invalidate();
+        // }
+        //
+        // }
+        // else if (action.equals("edit_stocktype"))
+        // {
+        // this.editTableRow();
+        // }
+        // else if (action.equals("delete_stocktype"))
+        // {
+        //
+        // }
+        // else
         {
             System.out.println(this.getDefName() + " has not implemented action " + action);
         }
 
-
-
-
-
     }
+
 
     private void refreshDataFromDb()
     {
@@ -86,7 +81,7 @@ public class StocktakingListDef extends GUIListDefAbstract
 
         dto = new StocktakingDTO();
 
-        //this.activeList = database.getStockTypes();
+        // this.activeList = database.getStockTypes();
     }
 
 
@@ -97,23 +92,25 @@ public class StocktakingListDef extends GUIListDefAbstract
         {
             this.table = new JTable(new AbstractTableModel()
             {
+
                 private static final long serialVersionUID = 7899186427378309394L;
+
 
                 public int getColumnCount()
                 {
                     return 5;
                 }
 
+
                 public int getRowCount()
                 {
                     return dto.getEntries().size();
                 }
 
+
                 public Object getValueAt(int row, int column)
                 {
                     StockDTO std = dto.getEntries().get(row);
-
-
 
                     switch (column)
                     {
@@ -132,33 +129,32 @@ public class StocktakingListDef extends GUIListDefAbstract
                         case 4:
                             return i18nControl.getMessage(std.hasChanges());
 
+                        // private long stockSubtypeId;
+                        // private long amount;
+                        // private String location;
 
-//                        private long stockSubtypeId;
-//                        private long amount;
-//                        private String location;
-
-
-//                        case 0:
-//                            return std.
-//                            return StockTypeBase.getByCode((int) sst.getStockTypeId()).getTranslation();
-//
-//                        case 1:
-//                            return sst.getName();
-//
-//                        case 2:
-//                            return sst.getDescription();
-//
-//                        case 3:
-//                            return sst.getPackageContent() + " " + sst.getPackageContentUnit();
-//
-//                        case 4:
-//                            return sst.getUsageDescription();
+                        // case 0:
+                        // return std.
+                        // return StockTypeBase.getByCode((int)
+                        // sst.getStockTypeId()).getTranslation();
+                        //
+                        // case 1:
+                        // return sst.getName();
+                        //
+                        // case 2:
+                        // return sst.getDescription();
+                        //
+                        // case 3:
+                        // return sst.getPackageContent() + " " +
+                        // sst.getPackageContentUnit();
+                        //
+                        // case 4:
+                        // return sst.getUsageDescription();
 
                         default:
                             return "";
 
                     }
-
 
                 }
 
@@ -170,7 +166,7 @@ public class StocktakingListDef extends GUIListDefAbstract
 
             TableColumnModel cm = table.getColumnModel();
 
-            for(int i = 0; i<columns.length; i++)
+            for (int i = 0; i < columns.length; i++)
             {
                 cm.getColumn(i).setHeaderValue(ic.getMessage(columns[i]));
 
@@ -183,18 +179,17 @@ public class StocktakingListDef extends GUIListDefAbstract
 
             }
 
-//
-//            stock_type_id bigint,
-//            name character varying(512),
-//                description character varying(2000),
-//                content_pkg bigint,
-//                usage_type integer,
-//                usage_min integer,
-//                usage_max integer,
-//                active boolean,
-//            extended text,
-//            comment character varying(2000),
-
+            //
+            // stock_type_id bigint,
+            // name character varying(512),
+            // description character varying(2000),
+            // content_pkg bigint,
+            // usage_type integer,
+            // usage_min integer,
+            // usage_max integer,
+            // active boolean,
+            // extended text,
+            // comment character varying(2000),
 
         }
 
@@ -202,11 +197,13 @@ public class StocktakingListDef extends GUIListDefAbstract
 
     }
 
+
     @Override
     public String getTitle()
     {
         return "STOCKTAKING_LIST";
     }
+
 
     @Override
     public void init()
@@ -214,67 +211,83 @@ public class StocktakingListDef extends GUIListDefAbstract
         this.ic = DataAccess.getInstance().getI18nControlInstance();
         this.translation_root = "STOCK";
 
-        //this.setCustomDisplayHeader(true);
-        //this.filter_type = FILTER_NONE;
+        // this.setCustomDisplayHeader(true);
+        // this.filter_type = FILTER_NONE;
         // this.filter_enabled = true;
 
-        this.filter_type = GUIListDefAbstract.FILTER_NONE; //.FILTER_COMBO_AND_TEXT;
+        this.filter_type = GUIListDefAbstract.FILTER_NONE; // .FILTER_COMBO_AND_TEXT;
         // this.filter_text = i18nControlAbstract.getMessage("FILTER") + ":";
 
-//        String s1[] = { ic.getMessage("STATUS_USED") + ":", ic.getMessage("DESCRIPTION") + ":" };
-//        this.filter_texts = s1;
-//
-//        String s[] = { ic.getMessage("FILTER_ACTIVE"), ic.getMessage("FILTER_ACTIVE_1_MONTH_USED"),
-//                ic.getMessage("FILTER_ACTIVE_2_MONTH_USED"), ic.getMessage("FILTER_ACTIVE_3-6_MONTH_USED"),
-//                ic.getMessage("FILTER_ACTIVE_6M_MONTH_USED"), ic.getMessage("FILTER_ALL") };
-//
-//        this.filter_options_combo1 = s;
+        // String s1[] = { i18nControl.getMessage("STATUS_USED") + ":",
+        // i18nControl.getMessage("DESCRIPTION") + ":" };
+        // this.filter_texts = s1;
+        //
+        // String s[] = { i18nControl.getMessage("FILTER_ACTIVE"),
+        // i18nControl.getMessage("FILTER_ACTIVE_1_MONTH_USED"),
+        // i18nControl.getMessage("FILTER_ACTIVE_2_MONTH_USED"),
+        // i18nControl.getMessage("FILTER_ACTIVE_3-6_MONTH_USED"),
+        // i18nControl.getMessage("FILTER_ACTIVE_6M_MONTH_USED"),
+        // i18nControl.getMessage("FILTER_ALL") };
+        //
+        // this.filter_options_combo1 = s;
 
         this.button_defs = new ArrayList<ButtonDef>();
-        //this.button_defs.add(new LabelDef(this.ic.getMessage("IMPORTS"), LabelDef.FONT_BOLD));
+        // this.button_defs.add(new
+        // LabelDef(this.i18nControl.getMessage("IMPORTS"),
+        // LabelDef.FONT_BOLD));
 
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("IMPORT"), "import", "STOCKS_TABLE_ADD_DESC",
-                "table_sql_check.png"));
+        this.button_defs.add(
+            new ButtonDef(this.ic.getMessage("IMPORT"), "import", "STOCKS_TABLE_ADD_DESC", "table_sql_check.png"));
 
         this.button_defs.add(new DividerDef());
 
-        //this.button_defs.add(new LabelDef(this.ic.getMessage("STOCK_SUBTYPES"), LabelDef.FONT_BOLD));
-        //this.button_defs.add(new ButtonDef(this.ic.getMessage("MANAGE"), "manage_type", "STOCKS_TABLE_ADD_DESC",
-        //        "table_sql_check.png"));
-//        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_type", "STOCKS_TABLE_EDIT_DESC",
-//                "table_edit.png"));
-        // this.button_defs.add(new ButtonDef(this.i18nControlAbstract.getMessage("VIEW_TYPE"),
+        // this.button_defs.add(new
+        // LabelDef(this.i18nControl.getMessage("STOCK_SUBTYPES"),
+        // LabelDef.FONT_BOLD));
+        // this.button_defs.add(new
+        // ButtonDef(this.i18nControl.getMessage("MANAGE"), "manage_type",
+        // "STOCKS_TABLE_ADD_DESC",
+        // "table_sql_check.png"));
+        // this.button_defs.add(new
+        // ButtonDef(this.i18nControl.getMessage("EDIT"), "edit_type",
+        // "STOCKS_TABLE_EDIT_DESC",
+        // "table_edit.png"));
+        // this.button_defs.add(new
+        // ButtonDef(this.i18nControlAbstract.getMessage("VIEW_TYPE"),
         // "view", "STOCKS_TABLE_VIEW_DESC", "table_view.png"));
-        //this.button_defs.add(new DividerDef());
-        //this.button_defs.add(new LabelDef(this.ic.getMessage("STOCKTAKING"), LabelDef.FONT_BOLD));
+        // this.button_defs.add(new DividerDef());
+        // this.button_defs.add(new
+        // LabelDef(this.i18nControl.getMessage("STOCKTAKING"),
+        // LabelDef.FONT_BOLD));
 
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("ADD"), "add_stock", "STOCKS_TABLE_VIEW_DESC",
-                "table_add.png"));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_stock", "STOCKS_TABLE_VIEW_DESC",
-                "table_edit.png"));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("DELETE"), "delete_stock", "STOCKS_TABLE_VIEW_DESC",
-                "table_delete.png"));
+        this.button_defs
+                .add(new ButtonDef(this.ic.getMessage("ADD"), "add_stock", "STOCKS_TABLE_VIEW_DESC", "table_add.png"));
+        this.button_defs.add(
+            new ButtonDef(this.ic.getMessage("EDIT"), "edit_stock", "STOCKS_TABLE_VIEW_DESC", "table_edit.png"));
+        this.button_defs.add(
+            new ButtonDef(this.ic.getMessage("DELETE"), "delete_stock", "STOCKS_TABLE_VIEW_DESC", "table_delete.png"));
 
         this.button_defs.add(new DividerDef());
 
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_VALUE"), "edit_stock_value", "STOCKS_TABLE_VIEW_DESC",
-                "table_edit.png"));
+        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_VALUE"), "edit_stock_value",
+                "STOCKS_TABLE_VIEW_DESC", "table_edit.png"));
 
-
-//        this.button_defs.add(new DividerDef());
-//        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_LIST"), "edit_list", "STOCKS_TABLE_VIEW_DESC",
-//                "table_view.png"));
-
-
+        // this.button_defs.add(new DividerDef());
+        // this.button_defs.add(new
+        // ButtonDef(this.i18nControl.getMessage("EDIT_LIST"), "edit_list",
+        // "STOCKS_TABLE_VIEW_DESC",
+        // "table_view.png"));
 
         loadData();
 
     }
 
+
     public void loadData()
     {
         refreshDataFromDb();
     }
+
 
     @Override
     public String getDefName()
@@ -282,18 +295,19 @@ public class StocktakingListDef extends GUIListDefAbstract
         return "StocktakingListDef";
     }
 
+
     @Override
     public Rectangle getTableSize(int pos_y)
     {
         return new Rectangle(40, pos_y, 580, 250);
     }
 
+
     @Override
     public Dimension getWindowSize()
     {
         return new Dimension(800, 500);
     }
-
 
 
     @Override
@@ -307,51 +321,52 @@ public class StocktakingListDef extends GUIListDefAbstract
     {
     }
 
+
     @Override
     public void setFilterCombo_2(String val)
     {
     }
 
 
-//    @Override
-//    public JPanel getCustomDisplayHeader()
-//    {
-//        JPanel panel = new JPanel();
-//        panel.setLayout(null);
-//        panel.setBackground(Color.blue);
-//        panel.setBounds(0, 0, 300, 55);
-//
-//        ATSwingUtils.initLibrary();
-//
-//        ATSwingUtils.getLabel("Test1:", 0, 0, 120, 25, panel);
-//
-//        JLabel label_datetime = ATSwingUtils.getLabel("ccc", 130, 0, 90, 25, panel);
-//
-//        ATSwingUtils.getLabel("Test2:", 0, 30, 120, 25, panel);
-//
-//        JLabel label_ddd = ATSwingUtils.getLabel("ccc", 130, 30, 90, 25, panel);
-//
-//        return panel;
-//    }
+    // @Override
+    // public JPanel getCustomDisplayHeader()
+    // {
+    // JPanel panel = new JPanel();
+    // panel.setLayout(null);
+    // panel.setBackground(Color.blue);
+    // panel.setBounds(0, 0, 300, 55);
+    //
+    // ATSwingUtils.initLibrary();
+    //
+    // ATSwingUtils.getLabel("Test1:", 0, 0, 120, 25, panel);
+    //
+    // JLabel label_datetime = ATSwingUtils.getLabel("ccc", 130, 0, 90, 25,
+    // panel);
+    //
+    // ATSwingUtils.getLabel("Test2:", 0, 30, 120, 25, panel);
+    //
+    // JLabel label_ddd = ATSwingUtils.getLabel("ccc", 130, 30, 90, 25, panel);
+    //
+    // return panel;
+    // }
 
     @Override
     public void editTableRow()
     {
-//        int index = this.getParentDialog().getSelectedObjectIndexFromTable();
-//
-//        if (index > -1)
-//        {
-//            StockSubTypeH stockType = this.filteredList.get(index);
-//
-//            StockSubTypeDialog dialog = new StockSubTypeDialog(this.getParentDialog(), stockType);
-//
-//            if (dialog.wasOperationSuccessful())
-//            {
-//                loadData();
-//            }
-//        }
+        // int index = this.getParentDialog().getSelectedObjectIndexFromTable();
+        //
+        // if (index > -1)
+        // {
+        // StockSubTypeH stockType = this.filteredList.get(index);
+        //
+        // StockSubTypeDialog dialog = new
+        // StockSubTypeDialog(this.getParentDialog(), stockType);
+        //
+        // if (dialog.wasOperationSuccessful())
+        // {
+        // loadData();
+        // }
+        // }
     }
-
-
 
 }

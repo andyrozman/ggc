@@ -60,62 +60,81 @@ GGC CGMS Tool
 
 
 
-II. SORTED BY VERSION  (Updated 24.9.2015)
+II. SORTED BY VERSION  (Updated 16.10.2015)
 ===========================================
 
 We plan to change version to 1.0, when all entries specified with [1.0] are
 finished (Help for english, Upgrade, Db Tool and Support for multiple persons)
 
 
-Version 0.7 [25.12.2015]
+Version 0.7 [25.12.2015]  / 1.2.2016
 ------------------------
 
 
-0.7
-====
-
 (1)
-Help [1.0]: - prepare for Bob - 1.1
-            - send to Bob  - 1.2
-
-(2)
 Minimed: - comlink: read history data from device -2.1
          - decode pump history data - 2.2
          - carelink support - 2.3
          - carelink: read pump data - 2.4
          - carelink: read pump history data - 2.5
 
-(3)
-Basal Manager: - for reports
-
-Reports: - Daily Time Sheet: I (v1) - Basal Value Chnage (Basals in general)
-                             I (v2) - important pump events, colors
-                             II - I + CGMS graphs for each day
-
-(4)
+(2)
 Startup: - fix startup creation (30%) - 5
 
 
 
 (Low)
 Refactoring: - DataAccess -> Languages
-             - DataAccess -> BG Conversion
              - DataAccess (PlugIns also) -> Decimal Formaters (new way)
              - PlugInBaseExceptionType -> Translations for exceptions
              - refactor configuration (gui parts, changes detection, make more like ConfigPump...)
-             - CGMS Ranges need to be configurable not hardcoded.
              - refactor numeric formatters in DataAccess
+             - refactor Pump Report to use internal data retrieval to use PrintParameter
+             - Pump Profile Editor -> Not available for some pumps
+             - Pump -> Manual -> Add -> Profile Selector not available for some Pumps (implement it must be available)
+             - Pump Profile (??) - rethinking after Minimed is finished, possible removal
+
+
+Tasks:       - configuration of colors for Daily TimeSheet report (hardcoded)
+             - configuration CGMS: Low Target range, High target range (graph, reports)
+
+ReportPluginDefinition:
+             - refactor all reports to use same Print Dialog (at least Food, Pump and CGMS should use the same), add
+               printing defintions or something similar, this should also take care of register of menus for
+               printing.
+             - Pump   100%
+             - Food    20%
+             - CGMS    20%
+
 
 
 DONE 0.6.2 - 0.7.0:
 ===================
 
+Help      : - prepare for Bob - 1.1
+            - send to Bob  - 1.2
+
 Graph: - Show CGMS in Pump Daily
        - Show CGMS in Pen Daily
        - Configuration CGMS for displays
 
+Basal Manager: - for reports
+
+Reports: - Daily Time Sheet:  - II - (I + CGMS graphs) for each day
+                              - I (v1) - Basal Value Chnage (Basals in general)
+                              - I (v2) - important pump events, colors
+
 Refactoring: - CommunicationPortComponent
              - refactor configuration (added ConfigurationManagerWrapper)
+             - Pump -> Manual -> Add -> Profile Selector not available for some Pumps (show message)
+             - DataAccess (PluginBase) -> BG Conversion
+
+
+DevicePluginDefinition:  - implement interface    100%
+                      - CGMS                   100%
+                      - Pump                   100%
+                      - Nutri                  100%
+                      - Meter                  100%
 
 
 DONE 0.6.1  (8.10.2015)
@@ -153,9 +172,6 @@ Deploy: - Local Maven Repository
 Version 0.8
 -------------
 
-
-
-
 Update System v3 [1.0]
     - Software updater Server
     - Db Updater Server
@@ -191,6 +207,10 @@ Pump: - Additional data: BP, Weight, Pills
 Pen/Injection: - Additional data: BP, Weight, Pills
 
 
+
+0.9
+====
+
 * Graphs: 
      - Graphs
      - GRAPH EDITOR (Graph Framework 3.0)
@@ -212,7 +232,7 @@ Bugs:
   again import)
 
 
-GGC 0.9
+GGC 0.10
 =======
 
 * External foods database
@@ -228,8 +248,14 @@ GGC 0.9
     - Glycemic data change
     - Foods tree, we need to see about dynamic loading, since it takes a lot of memory to hold this information
 
+* Stocks
+    - AED subtypes
+    - AED stocks
 
-GGC 0.10 and later
+* Tandem support ??
+
+
+GGC 0.11 and later
 ==================
 
 
@@ -246,9 +272,7 @@ GGC 0.10 and later
 * Appoinmtments Mngr
     - AED doctor
     - AED appointment
-* Stocks
-    - AED subtypes
-    - AED stocks
+
 
 * GGC Network - Support for multiple instances of GGC and their communication
 * Import of data from SiDiary Desktop application. SiDiary has its sister 
@@ -512,7 +536,7 @@ Documentation:
     o  Data gather (MonthlyValues)
     o  Simple print sheet
     o  Print dialog
-* GGC Little: 
+* GGC Little:
         o  Add/Edit/Delete
         o  Daily graph
         o  Show day
@@ -607,6 +631,47 @@ X   - Nutrition Display
 
 * Java Help - Write help pages II. (finish EN) [1.0] 
             - Load from language jar  [1.0]
+
+
+
+* PumpDailyTimesheet Report
+     *
+     * + main view table (day, comment, space)    100%
+     * - multiple BG in comment                   100%
+     * - comments                                 100%
+     * - bolus swuare or extended                 100%
+     * + sums                                     100%
+     * - days resolve                             100%
+     * - basal                                    100%
+     *
+     * NOT IMPORTANT FOR NOW:
+     * - Extended and Multiwave in table and comm.        0%
+     *
+     * PROFILES REPORT                             100%
+     *
+     *   I. (v2)
+     * - special pump statues (stopped pump, change
+     *   of pump material, TBR)                         100%
+     * - Color display                                  100%
+     * - Comments types                                 100%
+     * - Extended and Multiwave in comm.                100%
+     * - Basals                                         100%
+     *
+     *
+     *   II. (Base + CGMS)
+     * - CGMS data                                      100%
+     *
+     *   III. (Base + Food)
+     *   - Food data                                      0%
+     *
+     *   IV. (Base + CGMS + Food)
+     *   - Base                                         100%
+     *   - CGMS                                         100%
+     *   - Food                                           0%
+     *
+     */
+
+
 
 
 

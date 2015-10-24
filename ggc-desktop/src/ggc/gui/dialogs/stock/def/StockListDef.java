@@ -146,8 +146,8 @@ public class StockListDef extends GUIListDefAbstract
 
                         case 1:
                             return se.getStocktakingId();
-                            // return
-                            // i18nControlAbstract.getMessage(dh.getDoctor_type().getName());
+                        // return
+                        // i18nControlAbstract.getMessage(dh.getDoctor_type().getName());
                     }
 
                     return null;
@@ -205,17 +205,18 @@ public class StockListDef extends GUIListDefAbstract
         this.filter_texts = s1;
 
         String s[] = { ic.getMessage("FILTER_ACTIVE"), ic.getMessage("FILTER_ACTIVE_1_MONTH_USED"),
-                      ic.getMessage("FILTER_ACTIVE_2_MONTH_USED"), ic.getMessage("FILTER_ACTIVE_3-6_MONTH_USED"),
-                      ic.getMessage("FILTER_ACTIVE_6M_MONTH_USED"), ic.getMessage("FILTER_ALL") };
+                       ic.getMessage("FILTER_ACTIVE_2_MONTH_USED"), ic.getMessage("FILTER_ACTIVE_3-6_MONTH_USED"),
+                       ic.getMessage("FILTER_ACTIVE_6M_MONTH_USED"), ic.getMessage("FILTER_ALL") };
 
         this.filter_options_combo1 = s;
 
         // FIXME
         this.button_defs = new ArrayList<ButtonDef>();
         this.button_defs.add(new LabelDef(this.ic.getMessage("STOCK_SUBTYPES"), LabelDef.FONT_BOLD));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("MANAGE"), "manage_types", "manage_types desc",
-                "table_sql_check.png"));
-        // this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"),
+        this.button_defs.add(
+            new ButtonDef(this.ic.getMessage("MANAGE"), "manage_types", "manage_types desc", "table_sql_check.png"));
+        // this.button_defs.add(new
+        // ButtonDef(this.i18nControl.getMessage("EDIT"),
         // "edit_type", "STOCKS_TABLE_EDIT_DESC",
         // "table_edit.png"));
         // this.button_defs.add(new
@@ -224,12 +225,13 @@ public class StockListDef extends GUIListDefAbstract
         this.button_defs.add(new DividerDef());
         this.button_defs.add(new LabelDef(this.ic.getMessage("STOCKTAKING"), LabelDef.FONT_BOLD));
 
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("NEW"), "new_stocktaking", "STOCKS_TABLE_VIEW_DESC",
-                "table_add.png"));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_stocktaking", "STOCKS_TABLE_VIEW_DESC",
-                "table_edit.png"));
+        this.button_defs.add(
+            new ButtonDef(this.ic.getMessage("NEW"), "new_stocktaking", "STOCKS_TABLE_VIEW_DESC", "table_add.png"));
+        this.button_defs.add(
+            new ButtonDef(this.ic.getMessage("EDIT"), "edit_stocktaking", "STOCKS_TABLE_VIEW_DESC", "table_edit.png"));
         // this.button_defs.add(new DividerDef());
-        // this.button_defs.add(new ButtonDef(this.ic.getMessage("EDIT_LIST"),
+        // this.button_defs.add(new
+        // ButtonDef(this.i18nControl.getMessage("EDIT_LIST"),
         // "edit_list", "STOCKS_TABLE_VIEW_DESC",
         // "table_view.png"));
 
