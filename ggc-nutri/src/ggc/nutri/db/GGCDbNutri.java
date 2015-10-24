@@ -1,47 +1,26 @@
 package ggc.nutri.db;
 
-import ggc.core.data.DailyValues;
-import ggc.core.data.DailyValuesRow;
-import ggc.core.data.DayValuesData;
-import ggc.core.data.HbA1cValues;
-import ggc.core.data.MonthlyValues;
-import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.DayValueH;
-import ggc.core.db.hibernate.FoodDescriptionH;
-import ggc.core.db.hibernate.FoodGroupH;
-import ggc.core.db.hibernate.FoodUserDescriptionH;
-import ggc.core.db.hibernate.FoodUserGroupH;
-import ggc.core.db.hibernate.MealGroupH;
-import ggc.core.db.hibernate.MealH;
-import ggc.core.db.hibernate.NutritionDefinitionH;
-import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
-import ggc.nutri.data.GGCTreeRoot;
-import ggc.nutri.data.GGCTreeRootDyn;
-import ggc.nutri.db.datalayer.FoodDescription;
-import ggc.nutri.db.datalayer.FoodGroup;
-import ggc.nutri.db.datalayer.Meal;
-import ggc.nutri.db.datalayer.MealGroup;
-import ggc.nutri.db.datalayer.NutritionDefinition;
-import ggc.nutri.db.datalayer.NutritionHomeWeightType;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.data.*;
+import ggc.core.db.GGCDb;
+import ggc.core.db.hibernate.*;
+import ggc.nutri.data.GGCTreeRoot;
+import ggc.nutri.data.GGCTreeRootDyn;
+import ggc.nutri.db.datalayer.*;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -77,7 +56,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
     private boolean debug = true;
     // x private boolean db_debug = false;
 
-    private static Log log = LogFactory.getLog(GGCDbNutri.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GGCDbNutri.class);
     // private Session m_session = null;
     // private Session m_session_2 = null;
     // private SessionFactory sessions = null;
@@ -109,6 +88,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     HibernateConfiguration hib_config;
 
+
     /**
      * Constructor 
      * 
@@ -135,6 +115,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     GGCDbCache cache_db = null;
 
+
     /**
      * Get Db Cache
      * 
@@ -144,6 +125,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
     {
         return cache_db;
     }
+
 
     // *************************************************************
     // **** DATABASE INIT METHODS ****
@@ -163,6 +145,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
          */
     }
 
+
     /**
      * Load Nutrition Db Base
      */
@@ -176,6 +159,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         this.loadMealsDb();
     }
 
+
     /**
      * Load Nutrition Db 1 - USDA
      */
@@ -188,6 +172,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     /**
      * Load Nutrition Db 2 - User
      */
@@ -196,6 +181,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         cache_db.tree_roots.put("2", new GGCTreeRootDyn(GGCTreeRoot.TREE_USER_NUTRITION, this));
     }
 
+
     /**
      * Load Meals Db
      */
@@ -203,6 +189,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
     {
         cache_db.tree_roots.put("3", new GGCTreeRootDyn(GGCTreeRoot.TREE_MEALS, this));
     }
+
 
     // *************************************************************
     // **** NUTRITION DATA ****
@@ -228,6 +215,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         }
     }
 
+
     /**
      * Get Food Group By Id
      * 
@@ -242,6 +230,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         else
             return this.getUSDAFoodGroup(id);
     }
+
 
     /**
      * Get Food Groups - USDA
@@ -258,8 +247,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.FoodGroupH as pst order by pst.name");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -278,6 +267,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return list;
 
     }
+
 
     /**
      * Get USDA Food Group
@@ -295,8 +285,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.FoodGroupH as pst where pst.id=" + id);
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst where pst.id=" + id);
 
             Iterator<?> it = q.iterate();
 
@@ -316,6 +306,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     /**
      * Get Food Groups - User
      * 
@@ -331,8 +322,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.FoodUserGroupH as pst order by pst.name");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -346,12 +337,13 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
             logException("getUserFoodGroup()", ex);
 
-            // log.error("Exception on getloadConfigData: " + ex.getMessage(),
+            // LOG.error("Exception on getloadConfigData: " + ex.getMessage(),
             // ex);
         }
 
         return null;
     }
+
 
     /**
      * Get Food Groups - User
@@ -367,8 +359,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.FoodUserGroupH as pst order by pst.name");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -384,12 +376,13 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
             logException("getUserFoodGroups()", ex);
 
-            // log.error("Exception on getloadConfigData: " + ex.getMessage(),
+            // LOG.error("Exception on getloadConfigData: " + ex.getMessage(),
             // ex);
         }
 
         return list;
     }
+
 
     /**
      * Get Food Groups - User
@@ -407,9 +400,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.FoodUserGroupH as pst where pst.parent_id=" + parent_id
-                        + " order by pst.name");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst where pst.parent_id="
+                            + parent_id + " order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -425,12 +418,13 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
             logException("getUserFoodGroups()", ex);
 
-            // log.error("Exception on getloadConfigData: " + ex.getMessage(),
+            // LOG.error("Exception on getloadConfigData: " + ex.getMessage(),
             // ex);
         }
 
         return list;
     }
+
 
     /**
      * Get Meal Groups
@@ -447,8 +441,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.MealGroupH as pst order by pst.name");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -466,6 +460,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
         return list;
     }
+
 
     /**
      * Get Meal Groups
@@ -484,9 +479,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.parent_id=" + parent_id
-                        + " order by pst.name");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.parent_id="
+                            + parent_id + " order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -504,6 +499,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
         return list;
     }
+
 
     /**
      * Get Food Descriptions - USDA
@@ -524,6 +520,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     /**
      * Get Food Descriptions - USDA
      * 
@@ -538,8 +535,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.FoodDescriptionH as pst order by pst.name");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -558,6 +555,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
         return list;
     }
+
 
     /**
      * Get Food Descriptions - USDA
@@ -575,9 +573,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.FoodDescriptionH as pst where pst.group_id=" + parent_id
-                        + " order by pst.name");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst where pst.group_id="
+                            + parent_id + " order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -597,6 +595,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return list;
     }
 
+
     /**
      * Get Food Descriptions - USDA
      * 
@@ -610,8 +609,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.FoodDescriptionH as pst where pst.id=" + id);
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst where pst.id=" + id);
 
             Iterator<?> it = q.iterate();
 
@@ -630,6 +629,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return null;
     }
 
+
     /**
      * Get Food by Id
      * 
@@ -644,6 +644,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         else
             return this.getUSDAFoodDescriptionById(id);
     }
+
 
     /**
      * Get User Food Description By Id
@@ -683,6 +684,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     /**
      * Get Food Descriptions - User
      * 
@@ -698,9 +700,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst where pst.group_id=" + parent_id
-                        + " order by pst.name");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst where pst.group_id="
+                            + parent_id + " order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -721,6 +723,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return list;
 
     }
+
 
     /**
      * Get Food Descriptions - User
@@ -759,6 +762,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     /**
      * Get Meals Descriptions
      * 
@@ -773,8 +777,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.MealH as pst order by pst.group_id, pst.name");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.MealH as pst order by pst.group_id, pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -796,6 +800,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     /**
      * Get Meals Descriptions
      * 
@@ -810,8 +815,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.MealH as pst where pst.id=" + meal_id);
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.id=" + meal_id);
 
             Iterator<?> it = q.iterate();
 
@@ -832,6 +837,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     /**
      * Get Meals Descriptions
      * 
@@ -848,9 +854,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.MealH as pst where pst.group_id=" + parent_id
-                        + " order by pst.group_id, pst.name");
+            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.group_id="
+                    + parent_id + " order by pst.group_id, pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -871,6 +876,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return list;
 
     }
+
 
     /**
      * Get Meal
@@ -905,6 +911,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     /**
      * Get Meal Group
      * @param id 
@@ -918,8 +925,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.id=" + id);
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.id=" + id);
 
             Iterator<?> it = q.iterate();
 
@@ -937,6 +944,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return null;
 
     }
+
 
     private void loadNutritionDefinitions()
     {
@@ -974,7 +982,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
             String[] units = { "gi", "gl", "gi", "gi", "gl", "gl" };
             String[] name = { "Glycemic Index", "Glycemic Load", "Glycemic Index (Min)", "Glycemic Index (Max)",
-                             "Glycemic Load (Min)", "Glycemic Load (Max)" };
+                              "Glycemic Load (Min)", "Glycemic Load (Max)" };
 
             for (int i = 0; i < ids.length; i++)
             {
@@ -1003,6 +1011,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     private void loadHomeWeights()
     {
 
@@ -1028,11 +1037,11 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
             }
 
             int[] ids = { 4000, 4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009, 4010, 4011, 4012, 4013, 4014,
-                         4015, 4016, 4017, 4018, 4019 };
+                          4015, 4016, 4017, 4018, 4019 };
             String[] names = { "PORTION", "PORTION,_BIG", "PORTION,_MEDIUM", "PORTION,_SMALL", "SPOON", "SPOON,_BIG",
-                              "STEAK,_SMALL", "STEAK,_SMALLER", "ITEMS", "SMALLER", "ITEM,_SMALLER",
-                              "ITEM,_MEDIUM_SIZE", "ITEMS,_BIGGER", "SPOON,_SMALL", "ITEM,_SMALL", "CAN_(_100_G_)",
-                              "HEADS", "ROOT,_MEDIUM", "SIZE", "FRUIT,_MEDIUM_SIZE" };
+                               "STEAK,_SMALL", "STEAK,_SMALLER", "ITEMS", "SMALLER", "ITEM,_SMALLER",
+                               "ITEM,_MEDIUM_SIZE", "ITEMS,_BIGGER", "SPOON,_SMALL", "ITEM,_SMALL", "CAN_(_100_G_)",
+                               "HEADS", "ROOT,_MEDIUM", "SIZE", "FRUIT,_MEDIUM_SIZE" };
 
             // static (need to be done in init)
 
@@ -1070,6 +1079,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     HbA1cValues hba1c_object = null;
 
+
     /**
      * Get HbA1c
      * 
@@ -1094,6 +1104,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return this.hba1c_object;
 
     }
+
 
     /**
      * Load HbA1c
@@ -1148,6 +1159,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return hbVal;
     }
 
+
     /**
      * Get Day Stats
      * 
@@ -1163,7 +1175,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         logInfo("getDayStats()");
 
         DailyValues dV = new DailyValues();
-        // dV.setDate(dataAccess.getDateTimeFromDateObject(day.getTime()) / 10000);
+        // dV.setDate(dataAccess.getDateTimeFromDateObject(day.getTime()) /
+        // 10000);
 
         dV.setDate(ATechDate.getATDateTimeFromGC(day, ATechDate.FORMAT_DATE_ONLY));
 
@@ -1172,9 +1185,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             String sDay = sdf.format(day.getTime());
 
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + sDay
-                        + "0000 AND dv.dt_info <= " + sDay + "2359 ORDER BY dv.dt_info");
+            Query q = getSession().createQuery("SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv "
+                    + "WHERE dv.dt_info >=  " + sDay + "0000 AND dv.dt_info <= " + sDay + "2359 ORDER BY dv.dt_info");
 
             Iterator<?> it = q.list().iterator();
 
@@ -1194,6 +1206,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
         return dV;
     }
+
 
     /**
      * Get Monthly Values
@@ -1216,9 +1229,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
             String days = year + "" + ATDataAccessAbstract.getLeadingZero(month, 2);
 
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + days
-                        + "010000 AND dv.dt_info <= " + days + "312359 ORDER BY dv.dt_info");
+            Query q = getSession()
+                    .createQuery("SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  "
+                            + days + "010000 AND dv.dt_info <= " + days + "312359 ORDER BY dv.dt_info");
 
             Iterator<?> it = q.list().iterator();
 
@@ -1240,6 +1253,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     /**
      * Get DayValuesData
      * 
@@ -1259,9 +1273,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
         try
         {
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  " + from
-                        + "0000 AND dv.dt_info <= " + till + "2359 ORDER BY dv.dt_info");
+            Query q = getSession().createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv "
+                    + "WHERE dv.dt_info >=  " + from + "0000 AND dv.dt_info <= " + till + "2359 ORDER BY dv.dt_info");
 
             Iterator<?> it = q.list().iterator();
 
@@ -1282,6 +1295,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return dvd;
 
     }
+
 
     /**
      * Save Day Stats
@@ -1366,6 +1380,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     /**
      * DateTime Exists
      * 
@@ -1395,6 +1410,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     // *************************************************************
     // **** NUTRITION DATA ****
     // *************************************************************
@@ -1409,6 +1425,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return this.cache_db.homeweight_defs_list;
     }
 
+
     /**
      * Get Nutrition Home Weight
      * 
@@ -1419,6 +1436,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
     {
         return this.cache_db.homeweight_defs.get("" + id);
     }
+
 
     /**
      * Get Nutrition Definitions
@@ -1445,6 +1463,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * <property name="changed" type="long" not-null="false" />
      * </class>
      */
+
 
     // *************************************************************
     // **** U T I L S ****
@@ -1502,6 +1521,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
+
     /**
      * Get Application Db Name
      */
@@ -1510,6 +1530,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
     {
         return "ggc";
     }
+
 
     /** 
      * Create Configuration
@@ -1521,25 +1542,30 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return this.hib_config;
     }
 
+
     protected void logException(String source, Exception ex)
     {
-        log.error(source + "::Exception: " + ex.getMessage(), ex);
+        LOG.error(source + "::Exception: " + ex.getMessage(), ex);
     }
+
 
     protected void logDebug(String source, String action)
     {
-        log.debug(source + " - " + action);
+        LOG.debug(source + " - " + action);
     }
+
 
     protected void logInfo(String source, String action)
     {
-        log.info(source + " - " + action);
+        LOG.info(source + " - " + action);
     }
+
 
     protected void logInfo(String source)
     {
-        log.info(source + " - Process");
+        LOG.info(source + " - Process");
     }
+
 
     /**
      * Get Session
@@ -1549,6 +1575,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
     {
         return getSession(1);
     }
+
 
     /**
      * Get Session

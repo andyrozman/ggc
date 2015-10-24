@@ -35,9 +35,6 @@ import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.db.datalayer.MealGroup;
 import ggc.nutri.util.DataAccessNutri;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -65,9 +62,6 @@ import org.apache.commons.logging.LogFactory;
 
 public class GGCTreeRootDyn extends GGCTreeRoot
 {
-
-    @SuppressWarnings("unused")
-    private Log log = LogFactory.getLog(GGCTreeRootDyn.class);
 
     // private int m_type = TREE_USDA_NUTRITION;
 
@@ -125,6 +119,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
     // private boolean dev = false;
 
     GGCDbCache db_cache = null;
+
 
     /**
      * Constructor
@@ -312,6 +307,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
      * }
      */
 
+
     /**
      * Add Food Group
      * 
@@ -368,6 +364,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
         return m_type;
     }
 
+
     /**
      * To String
      * 
@@ -384,6 +381,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
             return DataAccessNutri.getInstance().getI18nControlInstance().getMessage("MEALS_DB");
     }
 
+
     /**
      * Add Food To Tree
      * 
@@ -395,6 +393,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
     {
         this.db_cache.addFood2Tree(type, fd);
     }
+
 
     /**
      * Add Food Group To Tree
@@ -408,6 +407,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
         this.db_cache.addFoodGroup2Tree(type, fg);
     }
 
+
     /**
      * Add Meal To Tree
      * 
@@ -420,6 +420,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
         this.db_cache.addMeal2Tree(type, _meal);
     }
 
+
     /**
      * Add Meal Group To Tree
      * 
@@ -431,6 +432,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
     {
         this.db_cache.addMealGroup2Tree(type, mg);
     }
+
 
     /**
      * Find Food
@@ -445,6 +447,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
         return this.db_cache.findFood(type, food_id);
     }
 
+
     /**
      * Find Food Group
      * 
@@ -457,6 +460,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
     {
         return this.db_cache.findFoodGroup(type, group_id);
     }
+
 
     /**
      * Find Meal
@@ -471,6 +475,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
         return this.db_cache.findMeal(type, meal_id);
     }
 
+
     /**
      * Find Meal Group
      * 
@@ -483,6 +488,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
     {
         return this.db_cache.findMealGroup(type, group_id);
     }
+
 
     /**
      * Get Child
@@ -503,6 +509,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
         else
             return this.m_children_foods.getChild(index);
     }
+
 
     /**
      * Load Children
@@ -530,6 +537,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
 
     }
 
+
     /**
      * Get Child Count
      * 
@@ -548,6 +556,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
         else
             return this.m_children_foods.getChildCount();
     }
+
 
     /**
      * Index Of
@@ -572,6 +581,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
 
     }
 
+
     /**
      * Remove Food From Tree
      * 
@@ -584,6 +594,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
     {
         this.db_cache.removeFoodFromTree(type, _food, prev_group_id);
     }
+
 
     /**
      * Remove Food Group From Tree
@@ -598,6 +609,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
         this.db_cache.removeFoodGroupFromTree(type, fg, prev_parent_id);
     }
 
+
     /**
      * Remove Meal From Tree
      * 
@@ -610,6 +622,7 @@ public class GGCTreeRootDyn extends GGCTreeRoot
     {
         this.db_cache.removeMealFromTree(type, _meal, prev_group_id);
     }
+
 
     /**
      * Remove Meal Group From Tree

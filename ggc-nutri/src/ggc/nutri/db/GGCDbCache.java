@@ -27,21 +27,13 @@
 
 package ggc.nutri.db;
 
-import ggc.nutri.data.GGCTreeRoot;
-import ggc.nutri.db.datalayer.FoodDescription;
-import ggc.nutri.db.datalayer.FoodGroup;
-import ggc.nutri.db.datalayer.Meal;
-import ggc.nutri.db.datalayer.MealGroup;
-import ggc.nutri.db.datalayer.NutritionDefinition;
-import ggc.nutri.db.datalayer.NutritionHomeWeightType;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+
+import ggc.nutri.data.GGCTreeRoot;
+import ggc.nutri.db.datalayer.*;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -70,9 +62,6 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 public class GGCDbCache
 {
-
-    @SuppressWarnings("unused")
-    private Log log = LogFactory.getLog(GGCDbCache.class);
 
     /**
      * Object Load Status - None
@@ -136,6 +125,7 @@ public class GGCDbCache
      */
     public Hashtable<String, Hashtable<String, Meal>> meals = null;
 
+
     /**
      * Constructor
      * 
@@ -172,6 +162,7 @@ public class GGCDbCache
 
     }
 
+
     /**
      * Add Meal Group
      * 
@@ -196,6 +187,7 @@ public class GGCDbCache
          * }
          */
     }
+
 
     /**
      * Add Food Group
@@ -251,6 +243,7 @@ public class GGCDbCache
      * }
      */
 
+
     // public GGCTreeRoot
 
     /**
@@ -267,6 +260,7 @@ public class GGCDbCache
         this.foods.get("" + type).put("" + fd.getId(), fd);
     }
 
+
     /**
      * Add Food Group To Tree
      * 
@@ -279,6 +273,7 @@ public class GGCDbCache
         this.food_groups.get("" + type).get("" + fg.getParentId()).addChild(fg);
         this.food_groups.get("" + type).put("" + fg.getId(), fg);
     }
+
 
     /**
      * Add Meal To Tree
@@ -293,6 +288,7 @@ public class GGCDbCache
         this.meals.get("" + type).put("" + _meal.getId(), _meal);
     }
 
+
     /**
      * Add Meal Group To Tree
      * 
@@ -306,6 +302,7 @@ public class GGCDbCache
         this.meal_groups.get("" + type).put("" + mg.getId(), mg);
 
     }
+
 
     /**
      * Remove Food From Tree
@@ -324,6 +321,7 @@ public class GGCDbCache
 
     }
 
+
     /**
      * Remove Food Group From Tree
      * 
@@ -336,6 +334,7 @@ public class GGCDbCache
         // debug("removeFoodGroupFromTree :: Not Implemented Yet !");
         this.food_groups.get("" + type).get("" + prev_parent_id).removeChild(fg);
     }
+
 
     /**
      * Remove Meal From Tree
@@ -352,6 +351,7 @@ public class GGCDbCache
                                                  // _meal.getId()).removeChild(fg);
     }
 
+
     /**
      * Remove Meal Group From Tree
      * 
@@ -364,6 +364,7 @@ public class GGCDbCache
         // debug("removeMealGroupFromTree :: Not Implemented Yet !");
         this.meal_groups.get("" + type).get("" + prev_parent_id).removeChild(mg);
     }
+
 
     /**
      * Find Food Group
@@ -383,6 +384,7 @@ public class GGCDbCache
             return mg;
         }
     }
+
 
     /**
      * Find Food
@@ -404,6 +406,7 @@ public class GGCDbCache
         }
 
     }
+
 
     /**
      * Find Meal
@@ -427,6 +430,7 @@ public class GGCDbCache
 
     }
 
+
     /**
      * Find Meal Group
      * 
@@ -446,6 +450,7 @@ public class GGCDbCache
         }
 
     }
+
 
     /**
      * Get Children Food Group
@@ -495,6 +500,7 @@ public class GGCDbCache
             return null;
 
     }
+
 
     /**
      * Get Children Foods
@@ -546,6 +552,7 @@ public class GGCDbCache
 
     }
 
+
     /**
      * Get Children Meal Group
      * 
@@ -592,6 +599,7 @@ public class GGCDbCache
         else
             return null;
     }
+
 
     /**
      * Get Children Meals

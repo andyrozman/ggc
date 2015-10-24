@@ -27,19 +27,19 @@
 
 package ggc.nutri.data;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.nutri.db.GGCDbNutri;
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.db.datalayer.Meal;
 import ggc.nutri.db.datalayer.MealGroup;
 import ggc.nutri.util.DataAccessNutri;
-
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -69,7 +69,7 @@ import org.apache.commons.logging.LogFactory;
 public class GGCTreeRootStatic extends GGCTreeRoot
 {
 
-    private Log log = LogFactory.getLog(GGCTreeRootStatic.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GGCTreeRootStatic.class);
 
     private ArrayList<FoodGroup> import1_grp = null;
     private ArrayList<FoodDescription> import1_foods = null;
@@ -117,6 +117,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
 
     // private boolean debug = true;
     private boolean dev = false;
+
 
     /**
      * Constructor
@@ -169,6 +170,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
      * }
      */
 
+
     /*
      * public void manualCreate(ArrayList<FoodGroup> lst_grp,
      * ArrayList<FoodDescription> lst_food)
@@ -204,34 +206,35 @@ public class GGCTreeRootStatic extends GGCTreeRoot
 
         if (type == GGCTreeRoot.TREE_USDA_NUTRITION)
         {
-            log.trace("USDA Db Load !");
-            // log.trace("USDA Load Started !");
+            LOG.trace("USDA Db Load !");
+            // LOG.trace("USDA Load Started !");
             this.import1_grp = this.m_db.getUSDAFoodGroups();
             this.import1_foods = this.m_db.getUSDAFoodDescriptions();
-            // log.trace("USDA Load Ended !");
+            // LOG.trace("USDA Load Ended !");
         }
         else if (type == GGCTreeRoot.TREE_USER_NUTRITION)
         {
-            log.trace("USER Db Load !");
-            // log.trace("USER Load Started !");
+            LOG.trace("USER Db Load !");
+            // LOG.trace("USER Load Started !");
             this.import1_grp = this.m_db.getUserFoodGroups();
             this.import1_foods = this.m_db.getUserFoodDescriptions();
-            // log.trace("USDA Load Ended !");
+            // LOG.trace("USDA Load Ended !");
         }
         else if (type == GGCTreeRoot.TREE_MEALS)
         {
-            log.trace("Meals Db Load !");
-            // log.trace("Meals Load Started !");
+            LOG.trace("Meals Db Load !");
+            // LOG.trace("Meals Load Started !");
             this.import2_grp = this.m_db.getMealGroups();
             this.import2_foods = this.m_db.getMeals();
-            // log.trace("Meal Load Ended !");
+            // LOG.trace("Meal Load Ended !");
         }
         else
         {
-            log.error("Unknown database type: " + type);
+            LOG.error("Unknown database type: " + type);
         }
 
     }
+
 
     // create group list (for tree) and group hashtable (for editing)
     private void initReceivedData()
@@ -270,6 +273,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         }
 
     }
+
 
     private void createGroupTree()
     {
@@ -318,6 +322,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
 
     }
 
+
     /**
      * Add Meal Group
      * 
@@ -337,6 +342,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         }
     }
 
+
     /**
      * Add Food Group
      * 
@@ -355,6 +361,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
             this.m_groups_ht.get("" + fg.getParentId()).addChild(fg);
         }
     }
+
 
     private void fillGroups()
     {
@@ -389,6 +396,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         }
     }
 
+
     /**
      * Get Type
      * 
@@ -398,6 +406,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
     {
         return m_type;
     }
+
 
     /**
      * To String
@@ -415,6 +424,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
             return DataAccessNutri.getInstance().getI18nControlInstance().getMessage("MEALS_DB");
     }
 
+
     /**
      * Get Child
      * 
@@ -427,6 +437,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         return null;
     }
 
+
     /**
      * Get Child Count
      * 
@@ -437,6 +448,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
     {
         return 0;
     }
+
 
     /**
      * Index Of
@@ -449,6 +461,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
     {
         return 0;
     }
+
 
     /**
      * Add Food To Tree
@@ -463,6 +476,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
 
     }
 
+
     /**
      * Add Food Group To Tree
      * 
@@ -475,6 +489,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         // TODO Auto-generated method stub
 
     }
+
 
     /**
      * Add Meal To Tree
@@ -489,6 +504,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
 
     }
 
+
     /**
      * Add Meal Group To Tree
      * 
@@ -500,6 +516,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
     {
         // TODO Auto-generated method stub
     }
+
 
     /**
      * Find Food Group
@@ -515,6 +532,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         return null;
     }
 
+
     /**
      * Find Meal Group
      * 
@@ -529,6 +547,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         return null;
     }
 
+
     /**
      * Remove Food From Tree
      * 
@@ -542,6 +561,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         // TODO Auto-generated method stub
     }
 
+
     /**
      * Remove Food Group From Tree
      * 
@@ -554,6 +574,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
     {
         // TODO Auto-generated method stub
     }
+
 
     /**
      * Remove Meal From Tree
@@ -569,6 +590,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
 
     }
 
+
     /**
      * Remove Meal Group From Tree
      * 
@@ -581,6 +603,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
     {
         // TODO Auto-generated method stub
     }
+
 
     /**
      * Find Food
@@ -595,6 +618,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         // TODO Auto-generated method stub
         return null;
     }
+
 
     /**
      * Find Meal

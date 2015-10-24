@@ -1,13 +1,13 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.nutri.data.GGCTreeRoot;
-import ggc.nutri.util.DataAccessNutri;
-
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ggc.nutri.data.GGCTreeRoot;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -37,7 +37,7 @@ import org.apache.commons.logging.LogFactory;
 public class MealPart
 {
 
-    private static Log log = LogFactory.getLog(MealPart.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MealPart.class);
 
     DataAccessNutri m_da = DataAccessNutri.getInstance();
     // private boolean debug = false;
@@ -49,6 +49,7 @@ public class MealPart
     private float amount = 0.0f;
 
     private ArrayList<MealNutrition> nutritions = null;
+
 
     /**
      * Constructor
@@ -76,6 +77,7 @@ public class MealPart
         this.amount = Float.parseFloat(amount_in);
 
     }
+
 
     /**
      * This constructor is used for Printing Meal data (it unpacks weight data)
@@ -105,13 +107,15 @@ public class MealPart
 
     }
 
+
     /**
      * Constructor
      */
     public MealPart()
     {
-        log.warn("MealPart was created with empty constructor");
+        LOG.warn("MealPart was created with empty constructor");
     }
+
 
     /**
      * Constructor
@@ -139,6 +143,7 @@ public class MealPart
 
     }
 
+
     private void loadMealPart(int type, String id)
     {
         if (type == GGCTreeRoot.TREE_USDA_NUTRITION || type == GGCTreeRoot.TREE_USER_NUTRITION)
@@ -151,11 +156,13 @@ public class MealPart
         else
         {
             this.meal_obj_meal = m_da.getDbCache().tree_roots.get("" + type).findMeal(3, Long.parseLong(id));
-            // this.meal_obj_meal = dataAccess.tree_roots.get("3").m_meals_ht.get(id);
+            // this.meal_obj_meal =
+            // dataAccess.tree_roots.get("3").m_meals_ht.get(id);
             System.out.println("MealPart [Meal]: " + this.meal_obj_food + ",id=" + id);
         }
 
     }
+
 
     /**
      * Get Id
@@ -170,6 +177,7 @@ public class MealPart
             return this.meal_obj_meal.getId();
     }
 
+
     /**
      * Get Name
      * 
@@ -183,6 +191,7 @@ public class MealPart
             return this.meal_obj_meal.getName();
     }
 
+
     /**
      * Get Type
      * 
@@ -192,6 +201,7 @@ public class MealPart
     {
         return this.meal_type;
     }
+
 
     /**
      * Get Amount
@@ -203,6 +213,7 @@ public class MealPart
         return this.amount;
     }
 
+
     /**
      * Set Amount
      * 
@@ -212,6 +223,7 @@ public class MealPart
     {
         this.amount = amount;
     }
+
 
     /**
      * Get Food Object
@@ -223,6 +235,7 @@ public class MealPart
         return this.meal_obj_food;
     }
 
+
     /**
      * Get Meal Object
      * 
@@ -232,6 +245,7 @@ public class MealPart
     {
         return this.meal_obj_meal;
     }
+
 
     /*
      * public DailyFoodEntry getDailyFoodEntry() { if ((this.meal_type ==
@@ -266,6 +280,7 @@ public class MealPart
 
     }
 
+
     /**
      * Get Nutrients
      * 
@@ -280,6 +295,7 @@ public class MealPart
 
         return this.nutritions;
     }
+
 
     /**
      * To String

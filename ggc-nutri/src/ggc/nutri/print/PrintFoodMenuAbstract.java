@@ -2,8 +2,8 @@ package ggc.nutri.print;
 
 import java.util.Iterator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.print.engine.ITextDocumentPrintSettings;
 import com.atech.print.engine.PrintAbstractIText;
@@ -48,7 +48,7 @@ import ggc.nutri.util.DataAccessNutri;
 public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 {
 
-    private static final Log LOG = LogFactory.getLog(PrintFoodMenuAbstract.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PrintFoodMenuAbstract.class);
 
     DayValuesData dayValuesData;
     DataAccess dataAccessCore;
