@@ -27,18 +27,11 @@ package ggc.core.db.tool.transfer;
  * Author: andyrozman {andy@atech-software.com}
  */
 
-import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.FoodUserDescriptionH;
-import ggc.core.db.hibernate.FoodUserGroupH;
-import ggc.core.db.hibernate.MealGroupH;
-import ggc.core.db.hibernate.MealH;
-import ggc.core.util.DataAccess;
-
 import java.io.File;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
@@ -46,6 +39,13 @@ import com.atech.db.hibernate.transfer.ImportExportAbstract;
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.db.hibernate.transfer.RestoreFileInfo;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.hibernate.FoodUserDescriptionH;
+import ggc.core.db.hibernate.FoodUserGroupH;
+import ggc.core.db.hibernate.MealGroupH;
+import ggc.core.db.hibernate.MealH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -77,9 +77,10 @@ public class ImportNutrition extends ImportTool implements Runnable
 
     GGCDb m_db = null;
     // public String file_name;
-    private static Log log = LogFactory.getLog(ImportDailyValues.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ImportDailyValues.class);
 
     DataAccess m_da = DataAccess.getInstance();
+
 
     /**
      * Constructor
@@ -90,6 +91,7 @@ public class ImportNutrition extends ImportTool implements Runnable
     {
         this(file_name, true);
     }
+
 
     /**
      * Constructor
@@ -103,6 +105,7 @@ public class ImportNutrition extends ImportTool implements Runnable
         this.setStatusReceiver(giver);
         this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
     }
+
 
     /**
      * Constructor
@@ -119,6 +122,7 @@ public class ImportNutrition extends ImportTool implements Runnable
 
         this.selected_class = res.class_name;
     }
+
 
     /**
      * Constructor
@@ -140,6 +144,7 @@ public class ImportNutrition extends ImportTool implements Runnable
             this.identifyAndImport();
         }
     }
+
 
     /**
      * Constructor
@@ -163,6 +168,7 @@ public class ImportNutrition extends ImportTool implements Runnable
     }
 
     String selected_class = null;
+
 
     /**
      * Identify And Import
@@ -197,6 +203,7 @@ public class ImportNutrition extends ImportTool implements Runnable
 
     }
 
+
     /**
      * Get Active Session
      */
@@ -205,6 +212,7 @@ public class ImportNutrition extends ImportTool implements Runnable
     {
         return 2;
     }
+
 
     /**
      * Check File Target
@@ -239,6 +247,7 @@ public class ImportNutrition extends ImportTool implements Runnable
             System.out.println("Exception on identification of file. Ex: " + ex);
         }
     }
+
 
     /**
      * Import User Food
@@ -319,11 +328,12 @@ public class ImportNutrition extends ImportTool implements Runnable
         }
         catch (Exception ex)
         {
-            log.error("Error on importUserFood: \nData: " + line + "\nException: " + ex, ex);
+            LOG.error("Error on importUserFood: \nData: " + line + "\nException: " + ex, ex);
             // ex.printStackTrace();
         }
 
     }
+
 
     /**
      * Import User Groups
@@ -396,11 +406,12 @@ public class ImportNutrition extends ImportTool implements Runnable
         }
         catch (Exception ex)
         {
-            log.error("Error on importUserGroup: \nData: " + line + "\nException: " + ex, ex);
+            LOG.error("Error on importUserGroup: \nData: " + line + "\nException: " + ex, ex);
             // ex.printStackTrace();
         }
 
     }
+
 
     /**
      * Import Meals
@@ -479,11 +490,12 @@ public class ImportNutrition extends ImportTool implements Runnable
         }
         catch (Exception ex)
         {
-            log.error("Error on importMeal: \nData: " + line + "\nException: " + ex, ex);
+            LOG.error("Error on importMeal: \nData: " + line + "\nException: " + ex, ex);
             // ex.printStackTrace();
         }
 
     }
+
 
     /**
      * Import Meal Groups
@@ -556,10 +568,11 @@ public class ImportNutrition extends ImportTool implements Runnable
         }
         catch (Exception ex)
         {
-            log.error("Error on importMealGroup: \nData: " + line + "\nException: " + ex, ex);
+            LOG.error("Error on importMealGroup: \nData: " + line + "\nException: " + ex, ex);
             // ex.printStackTrace();
         }
     }
+
 
     /**
      * Thread Run
@@ -585,6 +598,7 @@ public class ImportNutrition extends ImportTool implements Runnable
         }
 
     }
+
 
     /**
      * @param args

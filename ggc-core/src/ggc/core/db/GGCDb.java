@@ -3,8 +3,6 @@ package ggc.core.db;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -13,6 +11,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.HibernateDb;
@@ -62,7 +62,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     private boolean debug = true;
     // x private boolean db_debug = false;
 
-    private static Log log = LogFactory.getLog(GGCDb.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GGCDb.class);
     // private Session m_session = null;
     // private Session m_session_2 = null;
     // private SessionFactory sessions = null;
@@ -228,7 +228,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     {
 
         System.out.println("Exception [" + source + "]: " + ex);
-        log.error("Exception [" + source + "]: " + ex, ex);
+        LOG.error("Exception [" + source + "]: " + ex, ex);
 
         if (debug)
         {
@@ -241,25 +241,25 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
     protected void logException(String source, Exception ex)
     {
-        log.error(source + "::Exception: " + ex.getMessage(), ex);
+        LOG.error(source + "::Exception: " + ex.getMessage(), ex);
     }
 
 
     protected void logDebug(String source, String action)
     {
-        log.debug(source + " - " + action);
+        LOG.debug(source + " - " + action);
     }
 
 
     protected void logInfo(String source, String action)
     {
-        log.info(source + " - " + action);
+        LOG.info(source + " - " + action);
     }
 
 
     protected void logInfo(String source)
     {
-        log.info(source + " - Process");
+        LOG.info(source + " - Process");
     }
 
 
@@ -320,7 +320,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * if (obj instanceof DatabaseObjectHibernate)
      * {
      * DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-     * log.info(doh.getObjectName() + "::DbAdd");
+     * LOG.info(doh.getObjectName() + "::DbAdd");
      * try
      * {
      * String id = doh.DbAdd(getSession()); // getSession());
@@ -330,25 +330,25 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * catch (SQLException ex)
      * {
      * setError(1, ex.getMessage(), doh.getObjectName());
-     * log.error("SQLException on add: " + ex, ex);
+     * LOG.error("SQLException on add: " + ex, ex);
      * Exception eee = ex.getNextException();
      * if (eee != null)
      * {
-     * log.error("Nested Exception on add: " + eee.getMessage(), eee);
+     * LOG.error("Nested Exception on add: " + eee.getMessage(), eee);
      * }
      * return false;
      * }
      * catch (Exception ex)
      * {
      * setError(1, ex.getMessage(), doh.getObjectName());
-     * log.error("Exception on add: " + ex, ex);
+     * LOG.error("Exception on add: " + ex, ex);
      * return false;
      * }
      * }
      * else
      * {
      * setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-     * log.error("Internal error on add: " + obj);
+     * LOG.error("Internal error on add: " + obj);
      * return false;
      * }
      * }
@@ -361,7 +361,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * // datalayer classes)
      * public long addHibernate(Object obj, int session_id)
      * {
-     * log.info("addHibernate::" + obj.toString());
+     * LOG.info("addHibernate::" + obj.toString());
      * try
      * {
      * Session sess = getSession(session_id);
@@ -372,7 +372,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * }
      * catch (Exception ex)
      * {
-     * log.error("Exception on addHibernate: " + ex, ex);
+     * LOG.error("Exception on addHibernate: " + ex, ex);
      * return -1;
      * }
      * }
@@ -381,7 +381,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * if (obj instanceof DatabaseObjectHibernate)
      * {
      * DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-     * log.info(doh.getObjectName() + "::DbEdit");
+     * LOG.info(doh.getObjectName() + "::DbEdit");
      * try
      * {
      * doh.DbEdit(getSession());
@@ -390,25 +390,25 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * catch (SQLException ex)
      * {
      * setError(1, ex.getMessage(), doh.getObjectName());
-     * log.error("SQLException on edit: " + ex, ex);
+     * LOG.error("SQLException on edit: " + ex, ex);
      * Exception eee = ex.getNextException();
      * if (eee != null)
      * {
-     * log.error("Nested Exception on edit: " + eee.getMessage(), eee);
+     * LOG.error("Nested Exception on edit: " + eee.getMessage(), eee);
      * }
      * return false;
      * }
      * catch (Exception ex)
      * {
      * setError(1, ex.getMessage(), doh.getObjectName());
-     * log.error("Exception on edit: " + ex, ex);
+     * LOG.error("Exception on edit: " + ex, ex);
      * return false;
      * }
      * }
      * else
      * {
      * setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-     * log.error("Internal error on edit: " + obj);
+     * LOG.error("Internal error on edit: " + obj);
      * return false;
      * }
      * }
@@ -421,7 +421,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * // datalayer classes)
      * public boolean editHibernate(Object obj, int session_id)
      * {
-     * log.info("editHibernate::" + obj.toString());
+     * LOG.info("editHibernate::" + obj.toString());
      * try
      * {
      * Session sess = getSession(session_id);
@@ -432,14 +432,14 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * }
      * catch (Exception ex)
      * {
-     * log.error("Exception on editHibernate: " + ex, ex);
+     * LOG.error("Exception on editHibernate: " + ex, ex);
      * // ex.printStackTrace();
      * return false;
      * }
      * }
      * public boolean deleteHibernate(Object obj)
      * {
-     * log.info("deleteHibernate::" + obj.toString());
+     * LOG.info("deleteHibernate::" + obj.toString());
      * try
      * {
      * Session sess = getSession();
@@ -450,7 +450,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * }
      * catch (Exception ex)
      * {
-     * log.error("Exception on deleteHibernate: " + ex, ex);
+     * LOG.error("Exception on deleteHibernate: " + ex, ex);
      * // ex.printStackTrace();
      * return false;
      * }
@@ -460,7 +460,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * if (obj instanceof DatabaseObjectHibernate)
      * {
      * DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-     * log.info(doh.getObjectName() + "::DbGet");
+     * LOG.info(doh.getObjectName() + "::DbGet");
      * try
      * {
      * doh.DbGet(getSession());
@@ -469,25 +469,25 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * catch (SQLException ex)
      * {
      * setError(1, ex.getMessage(), doh.getObjectName());
-     * log.error("SQLException on get: " + ex, ex);
+     * LOG.error("SQLException on get: " + ex, ex);
      * Exception eee = ex.getNextException();
      * if (eee != null)
      * {
-     * log.error("Nested Exception on get: " + eee.getMessage(), eee);
+     * LOG.error("Nested Exception on get: " + eee.getMessage(), eee);
      * }
      * return false;
      * }
      * catch (Exception ex)
      * {
      * setError(1, ex.getMessage(), doh.getObjectName());
-     * log.error("Exception on get: " + ex, ex);
+     * LOG.error("Exception on get: " + ex, ex);
      * return false;
      * }
      * }
      * else
      * {
      * setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-     * log.error("Internal error on get: " + obj);
+     * LOG.error("Internal error on get: " + obj);
      * return false;
      * }
      * }
@@ -496,13 +496,13 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * if (obj instanceof DatabaseObjectHibernate)
      * {
      * DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-     * log.info(doh.getObjectName() + "::DbDelete");
+     * LOG.info(doh.getObjectName() + "::DbDelete");
      * try
      * {
      * if (doh.DbHasChildren(getSession()))
      * {
      * setError(-3, "Object has children object", doh.getObjectName());
-     * log.error(doh.getObjectName() + " had Children objects");
+     * LOG.error(doh.getObjectName() + " had Children objects");
      * return false;
      * }
      * doh.DbDelete(getSession());
@@ -511,25 +511,25 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * catch (SQLException ex)
      * {
      * setError(1, ex.getMessage(), doh.getObjectName());
-     * log.error("SQLException on delete: " + ex, ex);
+     * LOG.error("SQLException on delete: " + ex, ex);
      * Exception eee = ex.getNextException();
      * if (eee != null)
      * {
-     * log.error("Nested Exception on delete: " + eee.getMessage(), eee);
+     * LOG.error("Nested Exception on delete: " + eee.getMessage(), eee);
      * }
      * return false;
      * }
      * catch (Exception ex)
      * {
      * setError(1, ex.getMessage(), doh.getObjectName());
-     * log.error("Exception on delete: " + ex, ex);
+     * LOG.error("Exception on delete: " + ex, ex);
      * return false;
      * }
      * }
      * else
      * {
      * setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-     * log.error("Internal error on delete: " + obj);
+     * LOG.error("Internal error on delete: " + obj);
      * return false;
      * }
      * }
@@ -623,7 +623,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         }
         catch (Exception ex)
         {
-            // log.error("Exception on loadConfigData: " + ex.getMessage(), ex);
+            // LOG.error("Exception on loadConfigData: " + ex.getMessage(), ex);
             logException("loadConfigData()", ex);
 
         }
@@ -656,7 +656,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         }
         catch (Exception ex)
         {
-            // log.error("Exception on loadConfigDataEntries: " +
+            // LOG.error("Exception on loadConfigDataEntries: " +
             // ex.getMessage(), ex);
             logException("loadConfigDataEntries()", ex);
         }
@@ -695,7 +695,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         }
         catch (Exception ex)
         {
-            // log.error("Exception on loadConfigDataEntries: " +
+            // LOG.error("Exception on loadConfigDataEntries: " +
             // ex.getMessage(), ex);
             logException("loadConfigDataEntries()", ex);
             return null;
@@ -710,7 +710,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * {
      * if (m_loadStatus == DB_CONFIG_LOADED)
      * return null;
-     * log.info("getExtendedRatioData() - Process");
+     * LOG.info("getExtendedRatioData() - Process");
      * Hashtable<String,String> ht = new Hashtable<String,String>();
      * String sql = "";
      * try
@@ -729,7 +729,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * }
      * catch (Exception ex)
      * {
-     * log.error("getExtendedRatioData()::Exception: " + ex.getMessage(), ex);
+     * LOG.error("getExtendedRatioData()::Exception: " + ex.getMessage(), ex);
      * }
      * return ht;
      * }
@@ -806,7 +806,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         }
         catch (Exception ex)
         {
-            // log.error("Exception on loadColorSchemes: " + ex.getMessage(),
+            // LOG.error("Exception on loadColorSchemes: " + ex.getMessage(),
             // ex);
             logException("loadColorSchemes()", ex);
         }
@@ -1303,7 +1303,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         }
         catch (Exception ex)
         {
-            log.error("getStockTypes()::Exception: " + ex.getMessage(), ex);
+            LOG.error("getStockTypes()::Exception: " + ex.getMessage(), ex);
         }
 
         return list;
@@ -1318,7 +1318,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         dto.setStocktakingH(sth);
 
-        log.debug("Last stocktaking : " + sth);
+        LOG.debug("Last stocktaking : " + sth);
 
         // FIXME
 
@@ -1364,7 +1364,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
                 }
                 catch (Exception ex)
                 {
-                    log.error("getLastStocktaking()::Exception: " + ex.getMessage(), ex);
+                    LOG.error("getLastStocktaking()::Exception: " + ex.getMessage(), ex);
                 }
             }
 
@@ -1425,13 +1425,13 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
             // in = (Integer) criteria.list().get(0);
             // sum_all = in.intValue();
             //
-            // log.debug("Old Meter Data in Db: " + in.intValue());
+            // LOG.debug("Old Meter Data in Db: " + in.intValue());
             //
             // return sum_all;
         }
         catch (Exception ex)
         {
-            log.error("getAllElementsCount: " + ex, ex);
+            LOG.error("getAllElementsCount: " + ex, ex);
             ex.printStackTrace();
             return null;
         }
@@ -1471,7 +1471,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     // if (m_loadStatus == DB_CONFIG_LOADED)
     // return null;
     //
-    // log.info("getStocks() - Process");
+    // LOG.info("getStocks() - Process");
     //
     // ArrayList<StocksH> list = new ArrayList<StocksH>();
     // String sql = "";
@@ -1521,7 +1521,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     // if (m_loadStatus == DB_CONFIG_LOADED)
     // return null;
     //
-    // log.info("getStockBaseTypes() - Process");
+    // LOG.info("getStockBaseTypes() - Process");
     //
     // ArrayList<StockBaseType> list = new ArrayList<StockBaseType>();
     // String sql = "";
@@ -1544,7 +1544,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     // }
     // catch (Exception ex)
     // {
-    // log.error("getStockBaseTypes()::Exception: " + ex.getMessage(), ex);
+    // LOG.error("getStockBaseTypes()::Exception: " + ex.getMessage(), ex);
     // }
     //
     // return list;

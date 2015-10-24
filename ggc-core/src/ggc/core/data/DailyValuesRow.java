@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.ext.ExtendedCapable;
 import com.atech.db.ext.ExtendedHandler;
@@ -53,7 +53,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 {
 
     private static final long serialVersionUID = 3047797993365876861L;
-    private static Log log = LogFactory.getLog(DailyValuesRow.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DailyValuesRow.class);
 
     // private long datetime;
     private ATechDate datetime;
@@ -352,7 +352,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
         if (configurationManagerWrapper.getGlucoseUnit() == GlucoseUnitType.mmol_L)
         {
-            float v = m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+            float v = m_da.getBGValueByTypeFromDefault(GlucoseUnitType.mmol_L, bg);
 
             if (debug)
             {
@@ -391,7 +391,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
 
         if (configurationManagerWrapper.getGlucoseUnit() == GlucoseUnitType.mmol_L)
         {
-            float v = m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
+            float v = m_da.getBGValueByTypeFromDefault(GlucoseUnitType.mmol_L, bg);
 
             if (debug)
             {
@@ -438,11 +438,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             System.out.println("Internal value: " + this.bg);
         }
 
-        if (type == DataAccess.BG_MGDL)
-            return bg;
-        else
-            return m_da.getBGValueByType(DataAccess.BG_MMOL, bg);
-
+        return m_da.getBGValueByTypeFromDefault(GlucoseUnitType.getByCode(type), bg);
     }
 
 
@@ -459,11 +455,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             System.out.println("Internal value: " + this.bg);
         }
 
-        if (type == GlucoseUnitType.mg_dL)
-            return bg;
-        else
-            return m_da.getBGValueByTypeFromDefault(GlucoseUnitType.mmol_L, bg);
-
+        return m_da.getBGValueByTypeFromDefault(type, bg);
     }
 
 
@@ -1089,7 +1081,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
                 return comment;
             default:
                 {
-                    log.warn("Shouldn't have reached by here: " + column);
+                    LOG.warn("Shouldn't have reached by here: " + column);
                     return "";
                 }
         }

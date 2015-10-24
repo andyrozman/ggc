@@ -8,8 +8,8 @@ import java.util.*;
 
 import javax.swing.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pygmy.core.Server;
 
@@ -86,7 +86,7 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public long current_user_id = 1;
 
-    private static Log log = LogFactory.getLog(DataAccess.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DataAccess.class);
 
     private Hashtable<String, EventSource> observables = null;
 
@@ -216,7 +216,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         HelpContext hc = new HelpContext("/" + this.lang_mgr.getHelpSet());
         this.setHelpContext(hc);
-        this.help_enabled = true;
+        this.helpEnabled = true;
 
         this.m_configFile = new DbToolApplicationGGC();
         this.m_configFile.loadConfig();
@@ -284,7 +284,7 @@ public class DataAccess extends ATDataAccessLMAbstract
             }
             else
             {
-                log.error("I18nControl instance is not Mgr Dual !!!!!!");
+                LOG.error("I18nControl instance is not Mgr Dual !!!!!!");
             }
         }
 
@@ -767,19 +767,19 @@ public class DataAccess extends ATDataAccessLMAbstract
     public void initPlugIns()
     {
 
-        log.debug("init Plugins: Meter Tool");
+        LOG.debug("init Plugins: Meter Tool");
         addPlugIn(GGCPluginType.MeterToolPlugin.getKey(), //
             new MetersPlugIn(this.m_main, this.ggci18nControl));
 
-        log.debug("init Plugins: Pumps Tool");
+        LOG.debug("init Plugins: Pumps Tool");
         addPlugIn(GGCPluginType.PumpToolPlugin.getKey(), //
             new PumpsPlugIn(this.m_main, this.ggci18nControl));
 
-        log.debug("init Plugins: CGMS Tool");
+        LOG.debug("init Plugins: CGMS Tool");
         addPlugIn(GGCPluginType.CGMSToolPlugin.getKey(), //
             new CGMSPlugIn(this.m_main, this.ggci18nControl));
 
-        log.debug("init Plugins: Nutrition Tool");
+        LOG.debug("init Plugins: Nutrition Tool");
         addPlugIn(GGCPluginType.NutritionToolPlugin.getKey(), //
             new NutriPlugIn(this.m_main, this.ggci18nControl));
 
@@ -974,63 +974,13 @@ public class DataAccess extends ATDataAccessLMAbstract
     // ****** BG Measurement Type *****
     // ********************************************************
 
-    /**
-     * BG: mg/dL
-     */
-    public static final int BG_MGDL = 1;
-
-    /**
-     * BG: mmol/L
-     */
-    public static final int BG_MMOL = 2;
-
-    // /**
-    // * Get Measurment Type
-    // *
-    // * @return
-    // */
-    // public int getBGMeasurmentType()
-    // {
-    // return this.m_settings.getBG_unit();
-    // }
-    //
-    //
-    // // String[] bg_types = { "", "mg/dL", "mmol/L"};
-    //
-    // /**
-    // * Get Measurment Type
-    // *
-    // * @return
-    // */
-    // public String getBGMeasurmentTypeString()
-    // {
-    // return this.bg_units[getBGMeasurmentType()];
-    // }
-    //
-
-    // /**
-    // * Set Measurment Type
-    // *
-    // * @param type
-    // */
-    // public void setBGMeasurmentType(int type)
-    // {
-    //
-    // // this.m_BG_unit = type;
-    // }
-
-    private static final float MGDL_TO_MMOL_FACTOR = 0.0555f;
-
-    private static final float MMOL_TO_MGDL_FACTOR = 18.016f;
-
 
     /**
      * Depending on the return value of <code>getBGMeasurmentType()</code>,
      * either return the mg/dl or the mmol/l value of the database's value.
      * Default is mg/dl.
      * 
-     * @param dbValue
-     *            - The database's value (in float)
+     * @param dbValue The database's value (in float)
      * @return the BG in either mg/dl or mmol/l
      */
     public float getDisplayedBG(float dbValue)
@@ -1048,30 +998,11 @@ public class DataAccess extends ATDataAccessLMAbstract
     }
 
 
-    // /**
-    // * Get BG Value
-    // *
-    // * @param bgValue
-    // * @return
-    // */
-    // public float getBGValue(float bgValue)
-    // {
-    // switch (this.getBGMeasurmentType())
-    // {
-    // case BG_MMOL:
-    // return bgValue * MGDL_TO_MMOL_FACTOR;
-    // case BG_MGDL:
-    // default:
-    // return bgValue;
-    // }
-    //
-    // }
-
     /**
      * Get BG Value
      *
-     * @param bgValue
-     * @return
+     * @param bgValue BG value
+     * @return BG value as float
      */
     public float getBGValue(String bgValue)
     {
@@ -1082,29 +1013,25 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Get BG Value
      *
-     * @param bgValue
-     * @return
+     * @param bgValue BG value
+     * @return correct BG values (as string)
      */
     public String getBGValueAsString(String bgValue)
     {
         float f = getFloatValueFromString(bgValue, 0.0f);
 
-        switch (this.getGlucoseUnitType())
-        {
-            case mmol_L:
-                return Decimal1Format.format(f);
-            case None:
-            case mg_dL:
-            default:
-                return Decimal0Format.format(f);
-        }
-
+        return getBGValueAsString(f);
     }
 
 
+    /**
+     * Get BG Value
+     *
+     * @param bgValue BG value
+     * @return correct BG value (as string)
+     */
     public String getBGValueAsString(float bgValue)
     {
-
         switch (this.getGlucoseUnitType())
         {
             case mmol_L:
@@ -1114,74 +1041,40 @@ public class DataAccess extends ATDataAccessLMAbstract
             default:
                 return Decimal0Format.format(bgValue);
         }
-
-    }
-
-
-    /**
-     * Get BG Value By Type
-     * 
-     * @param type
-     * @param bg_value
-     * @return
-     *
-     * @deprecated Use getBGValueByTypeFromDefault instead.
-     */
-    @Deprecated
-    public float getBGValueByType(int type, float bg_value)
-    {
-        return getBGValueByTypeFromDefault(GlucoseUnitType.getByCode(type), bg_value);
     }
 
 
     /**
      * Get BG Value By Type
      *
-     * @param type
-     * @param bg_value
-     * @return
+     * @param outputType Output GlucoseUnitType
+     * @param bgValue BG value
+     *
+     * @return correct BG value
      */
-    public float getBGValueByTypeFromDefault(GlucoseUnitType type, float bg_value)
+    public float getBGValueByTypeFromDefault(GlucoseUnitType outputType, float bgValue)
     {
-        switch (type)
+        switch (outputType)
         {
             case mmol_L:
-                return this.getBGConverter().getValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, bg_value);
+                return this.getBGConverter().getValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, bgValue);
 
             case mg_dL:
             case None:
             default:
-                return bg_value;
+                return bgValue;
         }
-
-    }
-
-
-    /**
-     * Get BG Value By Type
-     * 
-     * @param input_type
-     * @param output_type
-     * @param bg_value
-     * @return
-     *
-     * @deprecated Use getBGValueByType(GlucoseUnitType, GlucoseUnitType,Number)
-     */
-    @Deprecated
-    public float getBGValueByType(int input_type, int output_type, float bg_value)
-    {
-        return getBGValueByType(GlucoseUnitType.getByCode(input_type), GlucoseUnitType.getByCode(output_type),
-            bg_value);
     }
 
 
     /**
      * Get BG Value By Type
      *
-     * @param input_type
-     * @param output_type
-     * @param bg_value
-     * @return
+     * @param inputType Input GlucoseUnitType
+     * @param outputType Output GlucoseUnitType
+     * @param bgValue BG value
+     *
+     * @return correct BG value
      *
      */
     public Float getBGValueByType(GlucoseUnitType inputType, GlucoseUnitType outputType, Number bgValue)
@@ -1192,32 +1085,16 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     /**
      * Get BG Value Different
-     * 
-     * @param type
-     * @param bg_value
-     * @return
-     */
-    @Deprecated
-    public float getBGValueDifferent(int type, float bg_value)
-    {
-        if (type == DataAccess.BG_MGDL)
-            return bg_value * DataAccess.MGDL_TO_MMOL_FACTOR;
-        else
-            return bg_value * DataAccess.MMOL_TO_MGDL_FACTOR;
-    }
-
-
-    /**
-     * Get BG Value Different
      *
-     * @param type
-     * @param bg_value
-     * @return
+     * @param inputType Input GlucoseUnitType
+     * @param bgValue BG value
+     *
+     * @return correct BG value
      */
-    public float getBGValueDifferent(GlucoseUnitType type, Number bg_value)
+    public float getBGValueDifferent(GlucoseUnitType inputType, Number bgValue)
     {
-        return this.getBGConverter().getValueByType(
-            type == GlucoseUnitType.mmol_L ? GlucoseUnitType.mg_dL : GlucoseUnitType.mmol_L, type, bg_value);
+        return this.getBGConverter().getValueByType(inputType,
+            inputType == GlucoseUnitType.mmol_L ? GlucoseUnitType.mg_dL : GlucoseUnitType.mmol_L, bgValue);
     }
 
 
@@ -1456,7 +1333,7 @@ public class DataAccess extends ATDataAccessLMAbstract
             return;
 
         // System.out.println("Reload daily settings (force:" + force + ")");
-        log.debug("Reload daily settings (force:" + force + ")");
+        LOG.debug("Reload daily settings (force:" + force + ")");
 
         m_date = day;
         m_HbA1c = m_db.getHbA1c(day, force);
@@ -1485,7 +1362,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         // System.out.println("(Re)Load daily settings Little - (force:" + force
         // + ")");
-        log.debug("(Re)Load daily settings Little - (force:" + force + ")");
+        LOG.debug("(Re)Load daily settings Little - (force:" + force + ")");
 
         m_date = day;
         // m_HbA1c = m_db.getHbA1c(day);
@@ -1620,32 +1497,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         try
         {
-
-            /*
-             * Properties p = new Properties();
-             * p.put("http.port", "444");
-             * p.put("handler", "chain");
-             * p.put("chain.chain", "root plug_pump plug_cgm");
-             * p.put("chain.class", "pygmy.handlers.DefaultChainHandler");
-             * p.put("root.class", "pygmy.handlers.ResourceHandler");
-             * p.put("root.url-prefix", "/meters/");
-             * p.put("root.resourceMount", "/html/meters");
-             * p.put("plug_pump.class", "pygmy.handlers.ResourceHandler");
-             * p.put("plug_pump.url-prefix", "/pumps/");
-             * p.put("plug_pump.resourceMount", "/html/pumps");
-             * p.put("plug_cgm.class", "pygmy.handlers.ResourceHandler");
-             * p.put("plug_cgm.url-prefix", "/cgms/");
-             * p.put("plug_cgm.resourceMount", "/html/cgms");
-             * p.put("mime.html", "text/html");
-             * p.put("mime.zip", "application/x-zip-compressed");
-             * p.put("mime.gif", "image/gif");
-             * p.put("mime.jpeg", "image/jpeg");
-             * p.put("mime.jpg", "image/jpeg");
-             */
-
-            // System.out.println("Start internal web server");
-
-            log.info("Start internal Web Server");
+            LOG.info("Start internal Web Server");
 
             String[] cnf = { "-config", "../data/tools/WebLister.properties" };
 

@@ -1,20 +1,15 @@
 package ggc.core.plugins;
 
-import ggc.core.util.DataAccess;
-import ggc.core.util.RefreshInfo;
+import java.awt.*;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
+import javax.swing.*;
 
-import javax.swing.JFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.plugin.PlugInClient;
-import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessLMAbstract;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import ggc.core.util.RefreshInfo;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,13 +40,12 @@ import org.apache.commons.logging.LogFactory;
 public class PumpsPlugIn extends GGCPluginClient
 {
 
-    public static final Log LOG = LogFactory.getLog(PumpsPlugIn.class);
-
+    private static final Logger LOG = LoggerFactory.getLogger(PumpsPlugIn.class);
 
     /**
      * Return Object: Selected Device with parameters
      */
-    //public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
+    // public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
 
     /**
      * This is action that needs to be done, after read data.
@@ -63,10 +57,8 @@ public class PumpsPlugIn extends GGCPluginClient
      */
     public static final int RETURN_ACTION_CONFIG = 2;
 
-
     private static final String PLUGIN_SERVER_CLASS_NAME = "ggc.pump.plugin.PumpPlugInServer";
     private static final String PLUGIN_SERVER_SHORT_NAME = "PumpsPlugIn";
-
 
 
     /**

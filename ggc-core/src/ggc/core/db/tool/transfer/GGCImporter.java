@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Enumeration;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.*;
@@ -48,7 +48,7 @@ public class GGCImporter extends ImportTool implements Runnable
 
     GGCDb m_db = null;
     private String file_name;
-    private static Log log = LogFactory.getLog(GGCImporter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GGCImporter.class);
     String selected_class = null;
     DataAccess m_da = DataAccess.getInstance();
 
@@ -125,40 +125,40 @@ public class GGCImporter extends ImportTool implements Runnable
 
         this.checkFileTarget();
 
-        log.debug("Importing file '" + this.file_name + "'.");
+        LOG.debug("Importing file '" + this.file_name + "'.");
 
         if (this.selected_class.equals("None"))
         {
             System.out.println("Class type for export class was unidentified. Exiting !");
-            log.debug("File was not identified as valid import file !!!");
+            LOG.debug("File was not identified as valid import file !!!");
         }
         else if (this.selected_class.equals("ggc.core.db.hibernate.FoodUserDescriptionH"))
         {
-            log.debug("File was identified as 'ggc.core.db.hibernate.FoodUserDescriptionH'.");
+            LOG.debug("File was identified as 'ggc.core.db.hibernate.FoodUserDescriptionH'.");
             ImportNutrition in = new ImportNutrition(this.file_name, false);
             in.importUserFood();
         }
         else if (this.selected_class.equals("ggc.core.db.hibernate.FoodUserGroupH"))
         {
-            log.debug("File was identified as 'ggc.core.db.hibernate.FoodUserGroupH'.");
+            LOG.debug("File was identified as 'ggc.core.db.hibernate.FoodUserGroupH'.");
             ImportNutrition in = new ImportNutrition(this.file_name, false);
             in.importUserGroups();
         }
         else if (this.selected_class.equals("ggc.core.db.hibernate.MealH"))
         {
-            log.debug("File was identified as 'ggc.core.db.hibernate.MealH'.");
+            LOG.debug("File was identified as 'ggc.core.db.hibernate.MealH'.");
             ImportNutrition in = new ImportNutrition(this.file_name, false);
             in.importMeals();
         }
         else if (this.selected_class.equals("ggc.core.db.hibernate.MealGroupH"))
         {
-            log.debug("File was identified as 'ggc.core.db.hibernate.MealGroupH'.");
+            LOG.debug("File was identified as 'ggc.core.db.hibernate.MealGroupH'.");
             ImportNutrition in = new ImportNutrition(this.file_name, false);
             in.importMealGroups();
         }
         else if (this.selected_class.equals("ggc.core.db.hibernate.DayValueH"))
         {
-            log.debug("File was identified as 'ggc.core.db.hibernate.DayValueH'.");
+            LOG.debug("File was identified as 'ggc.core.db.hibernate.DayValueH'.");
             ImportDailyValues idv = new ImportDailyValues(this.file_name, false);
             idv.importDailyValues();
         }
@@ -367,7 +367,7 @@ public class GGCImporter extends ImportTool implements Runnable
         }
         catch (Exception ex)
         {
-            log.error("Error on importData: \nData: " + line + "\nException: " + ex, ex);
+            LOG.error("Error on importData: \nData: " + line + "\nException: " + ex, ex);
         }
 
     }

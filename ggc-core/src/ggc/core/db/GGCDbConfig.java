@@ -30,8 +30,8 @@ package ggc.core.db;
  * Author: andyrozman {andy@atech-software.com}
  */
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import ggc.core.util.DataAccess;
@@ -66,20 +66,21 @@ import ggc.core.util.DataAccess;
 public class GGCDbConfig extends HibernateConfiguration
 {
 
-    private static Log log = LogFactory.getLog(GGCDbConfig.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GGCDbConfig.class);
 
     private String[] db_files = { "GGC_Main.hbm.xml", //
-                                 "GGC_Nutrition.hbm.xml", //
-                                 "GGC_Other.hbm.xml", //
-                                 "GGC_Pump.hbm.xml", //
-                                 "GGC_CGMS.hbm.xml" };
+                                  "GGC_Nutrition.hbm.xml", //
+                                  "GGC_Other.hbm.xml", //
+                                  "GGC_Pump.hbm.xml", //
+                                  "GGC_CGMS.hbm.xml" };
 
     private String[] db_files_debug = { "GGC_Main.hbm.xml", //
-                                       "GGC_Nutrition.hbm.xml", //
-                                       "GGC_Other.hbm.xml", //
-                                       "GGC_Pump.hbm.xml", //
-                                       "GGC_CGMS.hbm.xml", //
-                                       "GGC_New.hbm.xml" };
+                                        "GGC_Nutrition.hbm.xml", //
+                                        "GGC_Other.hbm.xml", //
+                                        "GGC_Pump.hbm.xml", //
+                                        "GGC_CGMS.hbm.xml", //
+                                        "GGC_New.hbm.xml" };
+
 
     /**
      * Constructor
@@ -91,6 +92,7 @@ public class GGCDbConfig extends HibernateConfiguration
         super(val);
     }
 
+
     /**
      * Get Db Name
      * 
@@ -101,6 +103,7 @@ public class GGCDbConfig extends HibernateConfiguration
         return "GGCDb";
     }
 
+
     /**
      * Get Configuration File
      */
@@ -110,6 +113,7 @@ public class GGCDbConfig extends HibernateConfiguration
         return "../data/GGC_Config.properties";
     }
 
+
     /**
      * Get Resource Files
      */
@@ -118,6 +122,7 @@ public class GGCDbConfig extends HibernateConfiguration
     {
         return (DataAccess.getInstance().getDeveloperMode()) ? db_files_debug : db_files;
     }
+
 
     /**
      * Load Default Database
@@ -133,9 +138,9 @@ public class GGCDbConfig extends HibernateConfiguration
 
         if (!config_found)
         {
-            log.info("GGCDb: Database configuration not found. Using default database.");
+            LOG.info("GGCDb: Database configuration not found. Using default database.");
         }
-        log.info("GGCDb: Loading Db Configuration #" + db_num + ": " + db_conn_name);
+        LOG.info("GGCDb: Loading Db Configuration #" + db_num + ": " + db_conn_name);
 
         db_hib_dialect = "org.hibernate.dialect.H2Dialect";
         db_driver_class = "org.h2.Driver";
@@ -143,6 +148,7 @@ public class GGCDbConfig extends HibernateConfiguration
         db_conn_username = "sa";
         db_conn_password = "";
     }
+
 
     /**
      * Is Check Enabled
@@ -155,6 +161,7 @@ public class GGCDbConfig extends HibernateConfiguration
         return true;
     }
 
+
     /**
      * Get DbInfo Configuration
      * 
@@ -164,6 +171,7 @@ public class GGCDbConfig extends HibernateConfiguration
     {
         return "../data/db_info.txt";
     }
+
 
     /**
      * Get Number Of Sessions
@@ -176,11 +184,13 @@ public class GGCDbConfig extends HibernateConfiguration
         return 2;
     }
 
+
     @Override
     public boolean canShemaBeAutomaticallyChanged()
     {
         return false;
     }
+
 
     @Override
     public String getShemaChangeType()

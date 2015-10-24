@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
 
 import javax.swing.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.dialogs.TransferDialog;
@@ -50,7 +50,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
 
     private static final long serialVersionUID = 6763016271693781911L;
 
-    private static Log log = LogFactory.getLog(FoodDescriptionDialog.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FoodDescriptionDialog.class);
     private I18nControlAbstract m_ic = DataAccess.getInstance().getI18nControlInstance();
     // private DataAccess dataAccess = DataAccess.getInstance();
     // private GGCProperties props = dataAccess.getSettings();
@@ -289,8 +289,8 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         this.text_area = new JTextArea();
         this.text_area.setLineWrap(true);
         JScrollPane scr = new JScrollPane(text_area);
-        scr.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
-                | ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scr.setHorizontalScrollBarPolicy(
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER | ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         scr.setBounds(40, 115, 310, 75);
         panel.add(scr);
 
@@ -301,8 +301,8 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         ATSwingUtils.getButton(m_ic.getMessage("CALCULATE"), 230, 210, 120, 25, panel, ATSwingUtils.FONT_NORMAL, null,
             "calculate", this, m_da);
 
-        ATSwingUtils.getButton(m_ic.getMessage("OK"), 30, 260, 110, 25, panel, ATSwingUtils.FONT_NORMAL, "ok.png",
-            "ok", this, m_da);
+        ATSwingUtils.getButton(m_ic.getMessage("OK"), 30, 260, 110, 25, panel, ATSwingUtils.FONT_NORMAL, "ok.png", "ok",
+            this, m_da);
 
         ATSwingUtils.getButton(m_ic.getMessage("CANCEL"), 145, 260, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
@@ -386,7 +386,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
              * }
              * catch(Exception ex)
              * {
-             * log.error("Error on parse: [token=" + t + ",exception=" + ex +
+             * LOG.error("Error on parse: [token=" + t + ",exception=" + ex +
              * "]", ex );
              * //System.out.println("Ex: " + ex);
              * }
@@ -424,7 +424,7 @@ public class FoodDescriptionDialog extends TransferDialog /* JDialog */implement
         }
         else
         {
-            log.error("DailyRowMealsDialog::unknown command: " + action);
+            LOG.error("DailyRowMealsDialog::unknown command: " + action);
             // System.out.println("DailyRowMealsDialog::unknown command: " +
             // action);
         }

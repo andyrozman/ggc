@@ -8,10 +8,8 @@ import java.util.*;
 
 import javax.swing.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import pygmy.core.Server;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
@@ -85,7 +83,7 @@ public class DataAccessDoc extends DataAccess
      */
     public long current_user_id = 1;
 
-    private static Log log = LogFactory.getLog(DataAccessDoc.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DataAccessDoc.class);
 
     private Hashtable<String, EventSource> observables = null;
 
@@ -244,7 +242,7 @@ public class DataAccessDoc extends DataAccess
         // HelpContext hc = new HelpContext("../data/help/en/GGC.hs");
         HelpContext hc = new HelpContext("../data/" + this.lang_mgr.getHelpSet());
         this.setHelpContext(hc);
-        this.help_enabled = true;
+        this.helpEnabled = true;
 
         // System.out.println("config File");
         this.m_configFile = new DbToolApplicationGGC();
@@ -754,16 +752,16 @@ public class DataAccessDoc extends DataAccess
     public void initPlugIns()
     {
 
-        log.debug("init Plugins: Meter Tool");
+        LOG.debug("init Plugins: Meter Tool");
         addPlugIn(DataAccessDoc.PLUGIN_METERS, new MetersPlugIn(this.m_main, this.m_i18n));
 
-        log.debug("init Plugins: Pumps Tool");
+        LOG.debug("init Plugins: Pumps Tool");
         addPlugIn(DataAccessDoc.PLUGIN_PUMPS, new PumpsPlugIn(this.m_main, this));
 
-        log.debug("init Plugins: CGMS Tool");
+        LOG.debug("init Plugins: CGMS Tool");
         addPlugIn(DataAccessDoc.PLUGIN_CGMS, new CGMSPlugIn(this.m_main, this.m_i18n));
 
-        log.debug("init Plugins: Nutrition Tool");
+        LOG.debug("init Plugins: Nutrition Tool");
         addPlugIn(DataAccessDoc.PLUGIN_NUTRITION, new NutriPlugIn(this.m_main, this.m_i18n));
 
     }
@@ -1174,7 +1172,7 @@ public class DataAccessDoc extends DataAccess
             return;
 
         // System.out.println("Reload daily settings (force:" + force + ")");
-        log.debug("Reload daily settings (force:" + force + ")");
+        LOG.debug("Reload daily settings (force:" + force + ")");
 
         m_date = day;
         m_HbA1c = m_db.getHbA1c(day, force);
@@ -1204,7 +1202,7 @@ public class DataAccessDoc extends DataAccess
 
         // System.out.println("(Re)Load daily settings Little - (force:" + force
         // + ")");
-        log.debug("(Re)Load daily settings Little - (force:" + force + ")");
+        LOG.debug("(Re)Load daily settings Little - (force:" + force + ")");
 
         m_date = day;
         // m_HbA1c = m_db.getHbA1c(day);
@@ -1308,82 +1306,6 @@ public class DataAccessDoc extends DataAccess
             return false;
         else
             return true;
-    }
-
-
-    /**
-     * Is Same Day (GregorianCalendars)
-     * 
-     * @param gc1
-     * @param gc2 
-     * @return
-     */
-    @Override
-    public boolean isSameDay(GregorianCalendar gc1, GregorianCalendar gc2)
-    {
-
-        if (gc1 == null || gc2 == null)
-            return false;
-        else
-        {
-
-            if (gc1.get(Calendar.DAY_OF_MONTH) == gc2.get(Calendar.DAY_OF_MONTH)
-                    && gc1.get(Calendar.MONTH) == gc2.get(Calendar.MONTH)
-                    && gc1.get(Calendar.YEAR) == gc2.get(Calendar.YEAR))
-                return true;
-            else
-                return false;
-
-        }
-    }
-
-
-    /**
-     * Start Internal Web Server
-     */
-    @Override
-    public void startWebServer()
-    {
-        try
-        {
-
-            /*
-             * Properties p = new Properties();
-             * p.put("http.port", "444");
-             * p.put("handler", "chain");
-             * p.put("chain.chain", "root plug_pump plug_cgm");
-             * p.put("chain.class", "pygmy.handlers.DefaultChainHandler");
-             * p.put("root.class", "pygmy.handlers.ResourceHandler");
-             * p.put("root.url-prefix", "/meters/");
-             * p.put("root.resourceMount", "/html/meters");
-             * p.put("plug_pump.class", "pygmy.handlers.ResourceHandler");
-             * p.put("plug_pump.url-prefix", "/pumps/");
-             * p.put("plug_pump.resourceMount", "/html/pumps");
-             * p.put("plug_cgm.class", "pygmy.handlers.ResourceHandler");
-             * p.put("plug_cgm.url-prefix", "/cgms/");
-             * p.put("plug_cgm.resourceMount", "/html/cgms");
-             * p.put("mime.html", "text/html");
-             * p.put("mime.zip", "application/x-zip-compressed");
-             * p.put("mime.gif", "image/gif");
-             * p.put("mime.jpeg", "image/jpeg");
-             * p.put("mime.jpg", "image/jpeg");
-             */
-
-            // System.out.println("Start internal web server");
-
-            log.info("Start internal Web Server");
-
-            String[] cnf = { "-config", "../data/tools/WebLister.properties" };
-
-            Server web_server = new Server(cnf);
-            web_server.start();
-
-        }
-        catch (Exception ex)
-        {
-            System.out.println("Error starting WebServer on 444. Ex: " + ex);
-        }
-
     }
 
 

@@ -27,15 +27,11 @@
 
 package ggc.core.db.tool.transfer;
 
-import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.SettingsH;
-import ggc.core.util.DataAccess;
-
 import java.io.File;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
@@ -43,6 +39,10 @@ import com.atech.db.hibernate.transfer.ImportExportAbstract;
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.db.hibernate.transfer.RestoreFileInfo;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.hibernate.SettingsH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -74,9 +74,10 @@ public class ImportSettings extends ImportTool implements Runnable
 
     GGCDb m_db = null;
     // public String file_name;
-    private static Log log = LogFactory.getLog(ImportSettings.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ImportSettings.class);
 
     DataAccess m_da = DataAccess.getInstance();
+
 
     /**
      * Constructor
@@ -87,6 +88,7 @@ public class ImportSettings extends ImportTool implements Runnable
     {
         this(file_name, true);
     }
+
 
     /**
      * Constructor
@@ -113,6 +115,7 @@ public class ImportSettings extends ImportTool implements Runnable
 
     }
 
+
     /**
      * Constructor
      * 
@@ -132,6 +135,7 @@ public class ImportSettings extends ImportTool implements Runnable
         System.out.println();
     }
 
+
     /**
      * Constructor
      * 
@@ -144,6 +148,7 @@ public class ImportSettings extends ImportTool implements Runnable
         this.setStatusReceiver(giver);
         this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
     }
+
 
     /**
      * Constructor
@@ -159,6 +164,7 @@ public class ImportSettings extends ImportTool implements Runnable
         this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
     }
 
+
     /**
      * Get Active Session
      */
@@ -167,6 +173,7 @@ public class ImportSettings extends ImportTool implements Runnable
     {
         return 2;
     }
+
 
     /**
      * Import Settings
@@ -245,11 +252,12 @@ public class ImportSettings extends ImportTool implements Runnable
         catch (Exception ex)
         {
             // System.err.println("Error on loadDailyValues: " + ex);
-            log.error("Error on importSettings: \nData: " + line + "\nException: " + ex, ex);
+            LOG.error("Error on importSettings: \nData: " + line + "\nException: " + ex, ex);
             // ex.printStackTrace();
         }
 
     }
+
 
     /**
      * Thread Run
@@ -258,6 +266,7 @@ public class ImportSettings extends ImportTool implements Runnable
     {
         this.importSettings();
     }
+
 
     /**
      * @param args

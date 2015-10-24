@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
@@ -21,7 +21,7 @@ import ggc.core.util.DataAccess;
 public abstract class GGCPluginClient extends PlugInClient
 {
 
-    private static final Log LOG = LogFactory.getLog(GGCPluginClient.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GGCPluginClient.class);
 
 
     /**
@@ -82,13 +82,13 @@ public abstract class GGCPluginClient extends PlugInClient
         catch (InstantiationException ex)
         {
             LOG.debug(getServerShortName() + ":: Plugin could not be found and/or loaded.");
-            LOG.error(ex);
+            LOG.error(ex.getMessage(), ex);
             this.installed = false;
         }
         catch (IllegalAccessException ex)
         {
             LOG.debug(getServerShortName() + ":: Plugin could not be found and/or loaded.");
-            LOG.error(ex);
+            LOG.error(ex.getMessage(), ex);
             this.installed = false;
         }
         catch (Exception ex)

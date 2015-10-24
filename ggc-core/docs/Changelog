@@ -6,11 +6,15 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
-0.6.2 [12.10.2015] [Andy]
+
+0.6.2  [Andy]
+[12.10.2015]
 - ConfigurationManager changes, added ConfigurationManagerWrapper
 - changes to graphs: added GraphViewCGMSDailyAbstract for displaying CGMS data in Daily graphs
 - some refactorings because of ConfigurationManager and GGCProperties
-
+[24.10.2015]
+- refactoring changing Log to Logger instance
+- refactoring use of BG converter
 
 0.6.1 [2.10.2015] [Andy]
     * fixing graph (bolus display)

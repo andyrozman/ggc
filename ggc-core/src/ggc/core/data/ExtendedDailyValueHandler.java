@@ -2,9 +2,6 @@ package ggc.core.data;
 
 import java.util.Hashtable;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.atech.db.ext.ExtendedHandler;
 import com.atech.utils.ATDataAccessAbstract;
 
@@ -36,9 +33,6 @@ import com.atech.utils.ATDataAccessAbstract;
 public class ExtendedDailyValueHandler extends ExtendedHandler
 {
 
-    @SuppressWarnings("unused")
-    private static Log log = LogFactory.getLog(ExtendedDailyValueHandler.class);
-
     // private String extended;
 
     // private String[] extended_arr;
@@ -64,6 +58,7 @@ public class ExtendedDailyValueHandler extends ExtendedHandler
         super(da);
     }
 
+
     @Override
     public void initExtended()
     {
@@ -78,6 +73,7 @@ public class ExtendedDailyValueHandler extends ExtendedHandler
         ext_mapped_types.put(ExtendedDailyValueHandler.EXTENDED_INSULIN_3, "INSULIN_3");
         ext_mapped_types.put(ExtendedDailyValueHandler.EXTENDED_SOURCE, "SOURCE");
     }
+
 
     @Override
     public String getExtendedObject()

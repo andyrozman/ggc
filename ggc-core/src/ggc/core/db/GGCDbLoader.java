@@ -3,8 +3,8 @@ package ggc.core.db;
 import java.io.File;
 import java.util.GregorianCalendar;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.core.plugins.GGCPluginType;
 import ggc.core.plugins.NutriPlugIn;
@@ -78,7 +78,7 @@ public class GGCDbLoader extends Thread
      * Db Status: Db Initialization done - Load completed
      */
     public static final int DB_INIT_FINISHED = 4;
-    private static Log log = LogFactory.getLog(GGCDbLoader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GGCDbLoader.class);
     /**
      * Part start. When this is enables, we don't load Food, Doctor's data
      */
@@ -271,7 +271,7 @@ public class GGCDbLoader extends Thread
 
             // System.out.println("We needed " + (dif/1000) +
             // " seconds to startup.");
-            log.debug("We needed " + dif / 1000 + " seconds to startup.");
+            LOG.debug("We needed " + dif / 1000 + " seconds to startup.");
 
         }
         catch (Exception ex)

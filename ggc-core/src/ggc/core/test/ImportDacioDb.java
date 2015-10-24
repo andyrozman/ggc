@@ -33,10 +33,10 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.utils.ATDataAccessAbstract;
@@ -74,7 +74,7 @@ public class ImportDacioDb extends ImportTool
 
     // GGCDb m_db = null;
     // public String file_name;
-    private static Log log = LogFactory.getLog(ImportDacioDb.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ImportDacioDb.class);
 
     DataAccess m_da = DataAccess.getInstance();
 
@@ -214,7 +214,8 @@ public class ImportDacioDb extends ImportTool
                 addParameters(lst, 318, getElementString(strtok.nextToken())); // "A_IE";
                 addParameters(lst, 404, getElementString(strtok.nextToken())); // "B1";
                 addParameters(lst, 405, getElementString(strtok.nextToken())); // "B2";
-                addParameters(lst, 406, getElementString(strtok.nextToken())); // "nikotinska kislina";
+                addParameters(lst, 406, getElementString(strtok.nextToken())); // "nikotinska
+                                                                               // kislina";
                 addParameters(lst, 401, getElementString(strtok.nextToken())); // "C";
 
                 Collections.sort(lst);
@@ -258,7 +259,7 @@ public class ImportDacioDb extends ImportTool
         catch (Exception ex)
         {
             // System.err.println("Error on loadDailyValues: " + ex);
-            log.error("Error on importSettings: \nData: " + line + "\nException: " + ex, ex);
+            LOG.error("Error on importSettings: \nData: " + line + "\nException: " + ex, ex);
             // ex.printStackTrace();
         }
 

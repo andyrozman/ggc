@@ -27,15 +27,11 @@
 
 package ggc.core.db.tool.transfer;
 
-import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.DayValueH;
-import ggc.core.util.DataAccess;
-
 import java.io.File;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
@@ -43,6 +39,10 @@ import com.atech.db.hibernate.transfer.ImportExportAbstract;
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.db.hibernate.transfer.RestoreFileInfo;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.hibernate.DayValueH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -74,10 +74,11 @@ public class ImportDailyValues extends ImportTool implements Runnable
 
     GGCDb m_db = null;
     // public String file_name;
-    private static Log log = LogFactory.getLog(ImportDailyValues.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ImportDailyValues.class);
 
     DataAccess m_da = DataAccess.getInstance();
     boolean clean_db = false;
+
 
     /**
      * Constructor
@@ -91,6 +92,7 @@ public class ImportDailyValues extends ImportTool implements Runnable
         this.setStatusReceiver(giver);
         this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
     }
+
 
     /**
      * Constructor
@@ -106,6 +108,7 @@ public class ImportDailyValues extends ImportTool implements Runnable
         this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
     }
 
+
     /**
      * @param file_name
      */
@@ -113,6 +116,7 @@ public class ImportDailyValues extends ImportTool implements Runnable
     {
         this(file_name, true);
     }
+
 
     /**
      * Constructor
@@ -138,6 +142,7 @@ public class ImportDailyValues extends ImportTool implements Runnable
 
     }
 
+
     /**
      * Constructor
      * 
@@ -156,6 +161,7 @@ public class ImportDailyValues extends ImportTool implements Runnable
         System.out.println();
     }
 
+
     /**
      * Set Import Clean
      * 
@@ -166,6 +172,7 @@ public class ImportDailyValues extends ImportTool implements Runnable
         this.clean_db = clean;
     }
 
+
     /**
      * Get Active Session
      */
@@ -174,6 +181,7 @@ public class ImportDailyValues extends ImportTool implements Runnable
     {
         return 2;
     }
+
 
     /**
      * Import Daily Values
@@ -293,11 +301,12 @@ public class ImportDailyValues extends ImportTool implements Runnable
         catch (Exception ex)
         {
             // System.err.println("Error on loadDailyValues: " + ex);
-            log.error("Error on importDailyValues: \nData: " + line + "\nException: " + ex, ex);
+            LOG.error("Error on importDailyValues: \nData: " + line + "\nException: " + ex, ex);
             // ex.printStackTrace();
         }
 
     }
+
 
     /**
      * Thread Run
@@ -306,6 +315,7 @@ public class ImportDailyValues extends ImportTool implements Runnable
     {
         this.importDailyValues();
     }
+
 
     /**
      * @param args
