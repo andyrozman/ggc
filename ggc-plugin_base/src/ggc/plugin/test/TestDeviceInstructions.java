@@ -20,6 +20,9 @@ public class TestDeviceInstructions implements ActionListener
     JTextArea ta_html;
     JLabel label_ins;
 
+    // String textInstructions = "<html><li>Attach Carelink USB device
+    // (or</li></html>";
+
 
     /**
      * Constructor
@@ -53,8 +56,8 @@ public class TestDeviceInstructions implements ActionListener
 
         // ATSwingUtils.getPanel(300, 190, 330, 200, (plugin instructions)
 
-        JPanel panel_instruct = ATSwingUtils.getPanel(200, 220, 330, 200, new FlowLayout(), new TitledBorder(
-                "INSTRUCTIONS"), mainFrame.getContentPane());
+        JPanel panel_instruct = ATSwingUtils.getPanel(200, 220, 330, 200, new FlowLayout(),
+            new TitledBorder("INSTRUCTIONS"), mainFrame.getContentPane());
 
         label_ins = ATSwingUtils.getLabel("", 5, 0, 280, 180, panel_instruct, ATSwingUtils.FONT_NORMAL_SMALLER);
         label_ins.setVerticalAlignment(SwingConstants.TOP);

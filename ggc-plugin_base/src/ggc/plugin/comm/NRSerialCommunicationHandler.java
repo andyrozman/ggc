@@ -15,13 +15,13 @@ import ggc.plugin.comm.cfg.SerialSettingsType;
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import gnu.io.NRSerialPort;
+import gnu.io.RXTXPort;
 import gnu.io.SerialPort;
-import gnu.io.UnsupportedCommOperationException;
 
 /**
  * Created by andy on 11.03.15.
  */
-public class NRSerialCommunicationHandler implements SerialCommunicationInterface
+public class NRSerialCommunicationHandler extends SerialCommunicationAbstract
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(NRSerialCommunicationHandler.class);
@@ -33,7 +33,7 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
     private InputStream inputStream;
     private OutputStream outputStream;
     private BitUtils bitUtils = new BitUtils();
-    SerialPort serialPortRaw;
+    RXTXPort serialPortRaw;
 
 
     public NRSerialCommunicationHandler(String portName)
@@ -74,7 +74,7 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
             this.serialSettings = createDefaultSerialSettings();
         }
 
-        LOG.debug("{}" + serialSettings);
+        LOG.debug("{}" + serialSettings.toString());
 
         this.serialDevice = new NRSerialPort(portName, this.serialSettings.baudRate);
 
@@ -275,6 +275,45 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
     }
 
 
+    public void activateBlockingReads()
+    {
+        try
+        {
+            // this.serialPortRaw.enableReceiveThreshold(1);
+            // this.serialPortRaw.disableReceiveTimeout();
+
+            // this.serialPortRaw.s;
+
+            this.serialPortRaw.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+
+            this.serialPortRaw.notifyOnCTS(true);
+            // this.serialPortRaw.notifyOnCD(true);
+            this.serialPortRaw.notifyOnDSR(true);
+
+            // this.serialPortRaw.notifyOnCTS(true);
+            // this.serialPortRaw.notifyOnCD(true);
+            // this.serialPortRaw.notifyOnDSR(true);
+
+            // this.serialPortRaw.staticSetDSR(portName, true);
+            // this.serialPortRaw.staticS.staticSetCD(portName, true);
+
+            // this.serialPortRaw.sendEvent(4, true);
+
+            LOG.debug("Is CD: {}", this.serialPortRaw.isCD());
+            LOG.debug("Is CTS: {}", this.serialPortRaw.isCTS());
+            LOG.debug("Is DSR: {}", this.serialPortRaw.isDSR());
+
+            // this.serialPortRaw.
+
+        }
+        catch (Exception ex)
+        {
+            LOG.error("Problem on activateBlockingReads: " + ex);
+        }
+
+    }
+
+
     public int read(byte[] b, int off, int len) throws PlugInBaseException
     {
         // fixme
@@ -295,12 +334,31 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
     }
 
 
+    public void sleepMs(int time)
+    {
+        try
+        {
+            Thread.sleep(time);
+        }
+        catch (InterruptedException e)
+        {
+            // e.printStackTrace();
+        }
+    }
+
+
     public byte[] readAvailableData() throws PlugInBaseException
     {
         byte[] outBuffer = null;
         byte[] buffer = null;
 
         // int len = -1;
+
+        do
+        {
+            sleepMs(5);
+        } while (available() == 0);
+
         try
         {
             int available = 0;
@@ -319,6 +377,27 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
             LOG.error("Error reading from device. Exception: " + e, e);
             throw new PlugInBaseException(PlugInExceptionType.CommunicationError, new Object[] { e.getMessage() });
         }
+    }
+
+
+    public int[] readAvailableDataInt() throws PlugInBaseException
+    {
+        byte[] data = readAvailableData();
+
+        int[] dataOut = new int[data.length];
+
+        for (int i = 0; i < data.length; i++)
+        {
+            int o = data[i];
+
+            if (o < 0)
+                o += 256;
+
+            dataOut[i] = o;
+        }
+
+        return dataOut;
+
     }
 
 
@@ -401,7 +480,7 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
         {
             serialPortRaw.enableReceiveTimeout(timeout);
         }
-        catch (UnsupportedCommOperationException e)
+        catch (Exception e)
         {
             e.printStackTrace();
             throw new PlugInBaseException(e);
@@ -412,6 +491,31 @@ public class NRSerialCommunicationHandler implements SerialCommunicationInterfac
     public static Set<String> getAvailablePorts() throws Exception
     {
         return NRSerialPort.getAvailableSerialPorts();
+    }
+
+
+    public void write(byte toWrite) throws PlugInBaseException
+    {
+        try
+        {
+            outputStream.write(toWrite);
+        }
+        catch (IOException ex)
+        {
+            throw new PlugInBaseException(ex);
+        }
+    }
+
+
+    public int read(int[] buffer) throws PlugInBaseException
+    {
+        byte[] byteArray = new byte[buffer.length];
+
+        int x = read(byteArray);
+
+        convertByteArrayToIntArray(byteArray, buffer);
+
+        return x;
     }
 
 }

@@ -1,9 +1,6 @@
 package ggc.plugin.protocol;
 
-import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnum;
-import com.atech.utils.data.CodeEnumWithTranslation;
-import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -34,22 +31,20 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public enum DeviceConnectionProtocol implements CodeEnum
 {
 
-    None(0, "PROT_NONE"),
-    Serial_USBBridge(1, "PROT_SERIAL_BRIDGE"),
-    USB_Hid(2, "PROT_USB_HID"),
-    MassStorageXML(3, "PROT_MASS_STORAGE_XML"),
-    BlueTooth_Serial(4, "PROT_BLUETOOTH_SERIAL"),
+    None(0, "PROT_NONE"), //
+    Serial_USBBridge(1, "PROT_SERIAL_BRIDGE"), //
+    USB_Hid(2, "PROT_USB_HID"), //
+    MassStorageXML(3, "PROT_MASS_STORAGE_XML"), //
+    BlueTooth_Serial(4, "PROT_BLUETOOTH_SERIAL"), //
     FileImport(5, "PROT_FILE_IMPORT"), // ?
-    Database(6, "PROT_DATABASE")
+    Database(6, "PROT_DATABASE"), //
+    Multiple(7, "PROT_MULTIPLE") //
     ;
-
-
-
-
 
     int code;
     String i18nKey;
     String translation;
+
 
     private DeviceConnectionProtocol(int code, String descriptionKey)
     {
@@ -80,18 +75,5 @@ public enum DeviceConnectionProtocol implements CodeEnum
     {
         return i18nKey;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

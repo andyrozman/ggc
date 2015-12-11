@@ -31,6 +31,9 @@ public interface CommunicationInterface
     int read(byte[] b, int off, int len) throws PlugInBaseException;
 
 
+    void write(byte toWrite) throws PlugInBaseException;
+
+
     void write(int toWrite) throws PlugInBaseException;
 
 

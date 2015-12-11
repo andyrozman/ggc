@@ -47,7 +47,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 // communicate with BT devices.
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-public class IBMCommunicationHandler implements SerialPortEventListener, SerialCommunicationInterface
+public class IBMCommunicationHandler extends SerialCommunicationAbstract implements SerialPortEventListener
 {
 
     private final String portName;

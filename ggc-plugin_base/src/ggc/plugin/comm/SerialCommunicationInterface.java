@@ -9,10 +9,6 @@ import ggc.plugin.device.PlugInBaseException;
 public interface SerialCommunicationInterface extends CommunicationInterface
 {
 
-    // connect and settings
-
-    // public boolean open() throws PlugInBaseException;
-
     void setSerialSettings(SerialSettings settings);
 
 
@@ -65,9 +61,13 @@ public interface SerialCommunicationInterface extends CommunicationInterface
     void setDelayForTimedReading(int ms);
 
 
+    int read(int[] buffer) throws PlugInBaseException;
+
+
     /**
      * @deprecated
      */
+    @Deprecated
     void write(int[] cmd) throws PlugInBaseException;
 
 

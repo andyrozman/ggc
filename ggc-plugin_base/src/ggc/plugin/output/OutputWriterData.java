@@ -34,20 +34,22 @@ public interface OutputWriterData
      * 
      * @return data as string
      */
-    public abstract String getDataAsString();
+    String getDataAsString();
+
 
     /**
      * Is Data BG
      * 
      * @return true if data is BG
      */
-    public abstract boolean isDataBG();
+    boolean isDataBG();
+
 
     /**
      * Set Output Type
      * 
      * @param type output type as defined in OutputWriterType
      */
-    public abstract void setOutputType(int type);
+    void setOutputType(int type);
 
 }

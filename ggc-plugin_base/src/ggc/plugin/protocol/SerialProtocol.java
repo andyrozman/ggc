@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.TooManyListenersException;
-import java.util.Vector;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,12 +44,10 @@ import gnu.io.*;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public abstract class SerialProtocol extends DeviceAbstract implements SerialPortEventListener // implements
-                                                                                               // MeterInterface,
-                                                                                               // SerialPortEventListener
-                                                                                               // //,
-                                                                                               // Runnable
+public abstract class SerialProtocol extends DeviceAbstract implements SerialPortEventListener
 {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SerialProtocol.class);
 
     /**
      * How many ms do we pause after each character is sent
@@ -85,8 +83,6 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
      * Ascii Code: Start of Text (0x02)
      */
     public static final byte ASCII_STX = 0x02;
-
-    private static final Logger LOG = LoggerFactory.getLogger("ProtocolLog");
 
     // protected DataAccessPlugInBase dataAccess = null;
     // //DataAccessMeter.getInstance();
@@ -213,13 +209,13 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
         }
     }
 
+
     /*
      * public String getPort()
      * {
      * return port_name;
      * }
      */
-
 
     // open was moved to abstract
     // public boolean open() throws PlugInBaseException
@@ -891,50 +887,18 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
      */
     public static void printAllAvailableSerialPorts()
     {
-        Vector<CommPortIdentifier> lst = SerialProtocol.getAllAvailablePorts();
-
-        System.out.println("Displaying all available ports");
-        System.out.println("-------------------------------");
-        for (int i = 0; i < lst.size(); i++)
-        {
-            System.out.println(lst.get(i));
-        }
-
+        printAllAvailableSerialPorts(SerialProtocol.getAllAvailablePorts());
     }
 
 
-    /**
-     * Get All Available Serial Ports as vector of CommPortIdentifier
-     *  
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    public static Vector<CommPortIdentifier> getAvailableSerialPorts()
+    public static void printAllAvailableSerialPorts(List<CommPortIdentifier> allAvailablePorts)
     {
-        // Vector<String> retVal = new Vector<String>();
-        Vector<CommPortIdentifier> retVal = new Vector<CommPortIdentifier>();
-
-        try
+        System.out.println("Displaying all available ports");
+        System.out.println("-------------------------------");
+        for (int i = 0; i < allAvailablePorts.size(); i++)
         {
-            LOG.debug("Listing all ports:");
-
-            Enumeration enume = CommPortIdentifier.getPortIdentifiers();
-            while (enume.hasMoreElements())
-            {
-                CommPortIdentifier portID = (CommPortIdentifier) enume.nextElement();
-
-                if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
-                {
-                    retVal.add(portID);
-                }
-            }
+            System.out.println(allAvailablePorts.get(i));
         }
-        catch (Exception ex)
-        {
-            System.out.println("Exception: getAvailableSerialPorts: " + ex);
-        }
-        return retVal;
-
     }
 
 
@@ -943,115 +907,19 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
      * 
      * @return
      */
-    public static Vector<String> getAllAvailablePortsString()
+    public static List<String> getAllAvailablePortsString()
     {
-        Vector<String> retVal = new Vector<String>();
-        // Vector<CommPortIdentifier> retVal = new Vector<CommPortIdentifier>();
+        List<CommPortIdentifier> allAvailablePorts = getAllAvailablePorts();
+        List<String> outList = new ArrayList<String>();
 
-        try
+        for (CommPortIdentifier portIdentifier : allAvailablePorts)
         {
-            // Vector retVal = new Vector();
-            // int counter = 0;
-
-            // CommPortIdentifier.
-
-            // CommPortIdentifier.getPortIdentifier("xx");
-
-            LOG.debug("Listing all ports:");
-
-            Enumeration<?> enume = CommPortIdentifier.getPortIdentifiers();
-            while (enume.hasMoreElements())
-            {
-                CommPortIdentifier portID = (CommPortIdentifier) enume.nextElement();
-                // if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
-                retVal.add(portID.getName());
-            }
-        }
-        catch (Exception ex)
-        {
-            LOG.error("There was problem obtaining list of serial ports. Ex: " + ex, ex);
+            outList.add(portIdentifier.getName());
         }
 
-        printAllAvailableSerialPorts();
+        printAllAvailableSerialPorts(allAvailablePorts);
 
-        return retVal;
-
-    }
-
-
-    /**
-     * Get All Available Ports as String (Internal)
-     * @return
-     * @throws Exception
-     */
-    public Vector<String> getAllAvailablePortsStringInternal() throws Exception
-    {
-        Vector<String> retVal = new Vector<String>();
-        // Vector<CommPortIdentifier> retVal = new Vector<CommPortIdentifier>();
-
-        // try
-        {
-            // Vector retVal = new Vector();
-            // int counter = 0;
-
-            // CommPortIdentifier.
-
-            // CommPortIdentifier.getPortIdentifier("xx");
-
-            try
-            {
-                this.setPort("COM1");
-                // System.loadLibrary( "rxtxSerial" );
-            }
-            catch (Exception ex)
-            {
-                System.out.println(ex);
-                if (dataAccess.checkUnsatisfiedLink(ex))
-                {
-                    System.out.println("UNSATISFIED");
-                }
-
-            }
-
-            Enumeration<?> enume = CommPortIdentifier.getPortIdentifiers();
-            while (enume.hasMoreElements())
-            {
-                CommPortIdentifier portID = (CommPortIdentifier) enume.nextElement();
-                // if (portID.getPortType() == CommPortIdentifier.PORT_SERIAL)
-                retVal.add(portID.getName());
-            }
-        }
-        /*
-         * catch(Exception ex)
-         * {
-         * LOG.error("There was problem obtaining list of serial ports. Ex: " +
-         * ex, ex);
-         * throw ex;
-         * //System.out.println("Exception: getAvailableSerialPorts: " + ex);
-         * }
-         */
-        return retVal;
-
-    }
-
-
-    /**
-     * Dump Serial Status
-     * 
-     * @throws IOException
-     */
-    public void dumpSerialStatus() throws IOException
-    {
-        // FIXME
-        // Contract.pre(this.m_serialPort != null,
-        // "m_serialPortLocal is null.");
-        // long l = System.currentTimeMillis() - m_startTimeMS;
-        // LOG.info("dumpSerialStatus(): Rx ready count: " +
-        // this.portInputStream.available() + " Tx buffer count: XX, DTR: " +
-        // this.m_serialPort.isDTR() +
-        // /*this.portOutputStream.m_serialPortLocal.txBufCount() +*/ " CD: "
-        // + this.m_serialPort.isCD() + " CTS: " + this.m_serialPort.isCTS() +
-        // " DSR: " + this.m_serialPort.isDSR());
+        return outList;
     }
 
 
@@ -1060,10 +928,9 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
      *  
      * @return
      */
-    @SuppressWarnings("unchecked")
-    public static Vector<CommPortIdentifier> getAllAvailablePorts()
+    public static List<CommPortIdentifier> getAllAvailablePorts()
     {
-        Vector<CommPortIdentifier> retVal = new Vector<CommPortIdentifier>();
+        List<CommPortIdentifier> retVal = new ArrayList<CommPortIdentifier>();
 
         try
         {
@@ -1079,7 +946,6 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
             System.out.println("Exception: getAvailableSerialPorts: " + ex);
         }
 
-        // printAllAvailableSerialPorts();
         return retVal;
 
     }

@@ -31,16 +31,25 @@ public enum PlugInExceptionType
 
     UnsupportedReceiver("XX"), //
 
+    // Interface
+    UnsupportedAndNotPlannedInterface("%s interface is not supported and is not planned to be supported."), //
+    YetUnsupportedInterface("%s interface is not YET supported."), //
+    NeedToSelectInterface("You need to select valid interface."), //
+
     // Device
     InvalidPortOrPortClosed("Invalid port or port closed!"), //
     DeviceNotFoundOnConfiguredPort("DEVICE_NOT_FOUND_ON_CONFIGURED_PORT"), //
     DevicePortInUse("DEVICE_PORT_IN_USE"), //
     DeviceNAKOrInvalidCRC("Device reported NAK or an invalid CRC error."), //
+    DeviceNAKOrInvalidCRCDesc("Device reported NAK or an invalid CRC error. (%s)"), //
+
+    DeviceNAK("Device reported NAK error [%s]."), //
+
     DeviceInvalidCommand("Device reported an invalid command error."), //
     DeviceInvalidParameterDesc("Device reported an invalid parameter error for parameter %s."), //
     DeviceInvalidParameter("Device reported an invalid parameter error."), //
     DeviceInternalError("Device reported an internal error."), //
-    DeviceInvalidResponseCommand("Unknown or invalid response command %s (expected %s)."), //
+    DeviceInvalidResponseCommand("Unknown or invalid response for command: %s (expected: %s)."), //
     DeviceInvalidResponseLength("Device packet response length is %d (expected length is %d)"), //
     DeviceFailedToReadResponse("Failed to read contents of device packet"), //
     DeviceModelCouldNotBeIdentified("Device Model could not be identified."), //
@@ -63,6 +72,7 @@ public enum PlugInExceptionType
 
     // Data - Commands
     UnknownDataReadWrongStartOfPacket("Unknown data read. Failed to read start of packet."), //
+    WrongResponseStatus("Wrong response status or start of command. Expected status: %s, returned statuses are: %s."), //
     NoDataFoundForConversion("No data found for converting %s."), //
     NoResponseFromDeviceForIssuedCommand("No response from device for Issued Command (%s)."), //
     Parsing_BytesParsingError("EXC_BYTES_PARSING_ERROR"), //
@@ -76,9 +86,10 @@ public enum PlugInExceptionType
     WrongDeviceConfigurationSelected("Wrong device implementation selected: %s (supported %s)"), //
     OperationNotSupportedForThisHandler("Operation '%s' not supported for handler '%s'"), //
     UnsupportedDevice("Unsupported device for this reader: %s"), //
+    InvalidInternalConfiguration("Problem with plugin configuration: %s"), //
 
-    DeviceInvalidResponse("Device returned invalid response. Expected: %s, Received: %s"), DeviceCommandInvalidResponse(
-            "Device was sent command [%s], but it responded with [%s], instead of [%s]"), //
+    DeviceInvalidResponse("Device returned invalid response. Expected: %s, Received: %s"), //
+    DeviceCommandInvalidResponse("Device was sent command [%s], but it responded with [%s], instead of [%s]"), //
 
     DeviceReturnedError("Device returned error [command=%s, errorCode=%s, errorDescription=%s, returnedData=%s]"), //
 

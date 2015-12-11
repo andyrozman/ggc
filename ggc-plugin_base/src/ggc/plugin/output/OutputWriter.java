@@ -1,8 +1,8 @@
 package ggc.plugin.output;
 
-import ggc.plugin.device.DeviceIdentification;
-
 import java.util.ArrayList;
+
+import ggc.plugin.device.DeviceIdentification;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -108,14 +108,14 @@ public interface OutputWriter
     /**
      * User can stop readings from his side (if supported)
      */
-    public abstract void setReadingStop();
+    void setReadingStop();
 
 
     /**
      * This should be queried by device implementation, to see if it must stop reading
      * @return if reading has stopped
      */
-    public abstract boolean isReadingStopped();
+    boolean isReadingStopped();
 
 
     /**
@@ -152,7 +152,7 @@ public interface OutputWriter
      * 
      * @return DeviceIdentification object
      */
-    public abstract DeviceIdentification getDeviceIdentification();
+    DeviceIdentification getDeviceIdentification();
 
 
     /**
@@ -161,7 +161,7 @@ public interface OutputWriter
      *  
      * @param sub_status String with substatus text (should be i18n-ed)
      */
-    public abstract void setSubStatus(String sub_status);
+    void setSubStatus(String sub_status);
 
 
     /**
@@ -176,14 +176,14 @@ public interface OutputWriter
      * done with this method.
      * @param value
      */
-    public abstract void setSpecialProgress(int value);
+    void setSpecialProgress(int value);
 
 
     /**
      * setIndeterminateProgress - if we cannot trace progress, we set this and JProgressBar will go
      *    into indeterminate mode
      */
-    public abstract void setIndeterminateProgress();
+    void setIndeterminateProgress();
 
 
     /**
@@ -192,7 +192,7 @@ public interface OutputWriter
      * @param entry_type
      * @param message
      */
-    public abstract void writeLog(int entry_type, String message);
+    void writeLog(int entry_type, String message);
 
 
     /**
@@ -202,7 +202,7 @@ public interface OutputWriter
      * @param message
      * @param ex
      */
-    public abstract void writeLog(int entry_type, String message, Exception ex);
+    void writeLog(int entry_type, String message, Exception ex);
 
 
     /**
@@ -219,7 +219,7 @@ public interface OutputWriter
      * 
      * @param value
      */
-    public abstract void setOldDataReadingProgress(int value);
+    void setOldDataReadingProgress(int value);
 
 
     /**
@@ -227,7 +227,7 @@ public interface OutputWriter
      * 
      * @param dev
      */
-    public abstract void setDeviceSource(String dev);
+    void setDeviceSource(String dev);
 
 
     /**
@@ -235,7 +235,7 @@ public interface OutputWriter
      * 
      * @return 
      */
-    public abstract String getDeviceSource();
+    String getDeviceSource();
 
 
     /**
@@ -243,7 +243,7 @@ public interface OutputWriter
      * 
      * @param msg
      */
-    public void addErrorMessage(String msg);
+    void addErrorMessage(String msg);
 
 
     /**
@@ -251,7 +251,7 @@ public interface OutputWriter
      * 
      * @return
      */
-    public int getErrorMessageCount();
+    int getErrorMessageCount();
 
 
     /**
@@ -259,6 +259,6 @@ public interface OutputWriter
      * 
      * @return
      */
-    public ArrayList<String> getErrorMessages();
+    ArrayList<String> getErrorMessages();
 
 }

@@ -19,7 +19,7 @@ import ggc.plugin.device.PlugInBaseException;
 /**
  * Created by andy on 08.06.15.
  */
-public class Hid4JavaCommunicationHandler implements CommunicationInterface
+public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(Hid4JavaCommunicationHandler.class);

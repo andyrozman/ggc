@@ -73,7 +73,7 @@ public interface DeviceInterfaceV2 extends SelectableInterfaceV2
      * getName - Get Name of device.
      * Should be implemented by device class.
      *
-     * @return
+     * @return name of device
      */
     String getName();
 
@@ -81,7 +81,8 @@ public interface DeviceInterfaceV2 extends SelectableInterfaceV2
     /**
      * getIcon - Get Icon of device
      * Should be implemented by device class.
-     * @return
+     *
+     * @return icon Name
      */
     String getIconName();
 
@@ -106,17 +107,9 @@ public interface DeviceInterfaceV2 extends SelectableInterfaceV2
 
 
     /**
-     * getComment - Get Comment for device
-     * Should be implemented by device class.
-     *
-     * @return comment or null
-     */
-    // String getComment();
-
-    /**
      * getImplementationStatus - Get Implementation Status
      *
-     * @return implementation status as number
+     * @return implementation status as DeviceImplementationStatus instance
      * @see ggc.plugin.manager.DeviceImplementationStatus
      */
     DeviceImplementationStatus getImplementationStatus();
@@ -183,7 +176,7 @@ public interface DeviceInterfaceV2 extends SelectableInterfaceV2
      * @param param 
      * @return
      */
-    public boolean validateConnectionParameters(String param);
+    boolean validateConnectionParameters(String param);
 
 
     /**
@@ -255,13 +248,13 @@ public interface DeviceInterfaceV2 extends SelectableInterfaceV2
      */
     void initSpecialConfig();
 
-
     /**
      * Has Default Parameter (if device has default parameter)
      * 
      * @return
      */
     // boolean hasDefaultParameter();
+
 
     // ************************************************
     // *** Pre-init ***
