@@ -1,4 +1,4 @@
-package ggc.cgms.device.minimed;
+package ggc.cgms.device.minimed.old;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package ggc.cgms.device.minimed;
+package ggc.cgms.device.minimed.old;
 
 import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
@@ -8,7 +8,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       Pump Tool (support for Pump devices)
+ *  Plug-in:       CGMS Tool (support for CGMS devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -26,22 +26,23 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     GuardianRealTime  
- *  Description:  Guardian RealTime implementation (just settings)
+ *  Filename:     MiniMedRealTime  
+ *  Description:  MiniMed RealTime implementation (just settings)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class GuardianRealTime extends MiniMedCGMS
+public class MiniMedRealTime extends MiniMedCGMS
 {
 
     /**
      * Constructor 
      */
-    public GuardianRealTime()
+    public MiniMedRealTime()
     {
         super();
     }
+
 
     /**
      * Constructor 
@@ -49,10 +50,11 @@ public class GuardianRealTime extends MiniMedCGMS
      * @param drive_letter 
      * @param writer 
      */
-    public GuardianRealTime(String drive_letter, OutputWriter writer)
+    public MiniMedRealTime(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
     }
+
 
     /**
      * Constructor
@@ -61,20 +63,22 @@ public class GuardianRealTime extends MiniMedCGMS
      * @param writer
      * @param da
      */
-    public GuardianRealTime(String params, OutputWriter writer, DataAccessPlugInBase da)
+    public MiniMedRealTime(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);
     }
+
 
     /**
      * Constructor
      * 
      * @param cmp
      */
-    public GuardianRealTime(AbstractDeviceCompany cmp)
+    public MiniMedRealTime(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
+
 
     // ************************************************
     // *** Device Identification Methods ***
@@ -88,8 +92,9 @@ public class GuardianRealTime extends MiniMedCGMS
     @Override
     public String getName()
     {
-        return "Guardian RealTime";
+        return "MiniMed (Pump) RealTime";
     }
+
 
     /**
      * getIconName - Get Icon of meter
@@ -98,8 +103,9 @@ public class GuardianRealTime extends MiniMedCGMS
      */
     public String getIconName()
     {
-        return "mm_guardian_rt.jpg";
+        return "mm_pump_rt.jpg";
     }
+
 
     /**
      * getDeviceId - Get Device Id, within MgrCompany class 
@@ -109,8 +115,9 @@ public class GuardianRealTime extends MiniMedCGMS
      */
     public int getDeviceId()
     {
-        return CGMSDevicesIds.CGMS_GUARDIAN_REALTIME;
+        return CGMSDevicesIds.CGMS_MINIMED_522;
     }
+
 
     /**
      * getInstructions - get instructions for device
@@ -123,6 +130,7 @@ public class GuardianRealTime extends MiniMedCGMS
         return "INSTRUCTIONS_NO_INFO";
     }
 
+
     /**
      * getComment - Get Comment for device 
      * 
@@ -133,6 +141,7 @@ public class GuardianRealTime extends MiniMedCGMS
     {
         return null;
     }
+
 
     /**
      * getImplementationStatus - Get Implementation Status 
@@ -146,6 +155,7 @@ public class GuardianRealTime extends MiniMedCGMS
         return DeviceImplementationStatus.Partitial;
     }
 
+
     /**
      * getDeviceClassName - Get Class name of device implementation, used by Reflection at later time
      * 
@@ -153,8 +163,9 @@ public class GuardianRealTime extends MiniMedCGMS
      */
     public String getDeviceClassName()
     {
-        return "ggc.cgms.device.minimed.GuardianRealTime";
+        return "ggc.cgms.device.minimed.old.MiniMedRealTime";
     }
+
 
     /** 
      * Get Max Memory Records
@@ -165,6 +176,7 @@ public class GuardianRealTime extends MiniMedCGMS
     {
         return 0;
     }
+
 
     /**
      * Get Download Support Type

@@ -1,4 +1,4 @@
-package ggc.cgms.device.minimed;
+package ggc.cgms.device.minimed.old;
 
 import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
@@ -26,19 +26,18 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     MiniMedRealTime  
- *  Description:  MiniMed RealTime implementation (just settings)
+ *  Filename:     MiniMedCGMSGold  
+ *  Description:  MiniMed CGMS Gold implementation (just settings)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-
-public class MiniMedRealTime extends MiniMedCGMS
+public class MiniMedCGMSGold extends MiniMedCGMS
 {
 
     /**
      * Constructor 
      */
-    public MiniMedRealTime()
+    public MiniMedCGMSGold()
     {
         super();
     }
@@ -50,7 +49,7 @@ public class MiniMedRealTime extends MiniMedCGMS
      * @param drive_letter 
      * @param writer 
      */
-    public MiniMedRealTime(String drive_letter, OutputWriter writer)
+    public MiniMedCGMSGold(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
     }
@@ -63,7 +62,7 @@ public class MiniMedRealTime extends MiniMedCGMS
      * @param writer
      * @param da
      */
-    public MiniMedRealTime(String params, OutputWriter writer, DataAccessPlugInBase da)
+    public MiniMedCGMSGold(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);
     }
@@ -74,7 +73,7 @@ public class MiniMedRealTime extends MiniMedCGMS
      * 
      * @param cmp
      */
-    public MiniMedRealTime(AbstractDeviceCompany cmp)
+    public MiniMedCGMSGold(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
@@ -92,7 +91,7 @@ public class MiniMedRealTime extends MiniMedCGMS
     @Override
     public String getName()
     {
-        return "MiniMed (Pump) RealTime";
+        return "Minimed CGMS Gold";
     }
 
 
@@ -103,7 +102,7 @@ public class MiniMedRealTime extends MiniMedCGMS
      */
     public String getIconName()
     {
-        return "mm_pump_rt.jpg";
+        return "mm_cgms_gold.jpg";
     }
 
 
@@ -115,7 +114,7 @@ public class MiniMedRealTime extends MiniMedCGMS
      */
     public int getDeviceId()
     {
-        return CGMSDevicesIds.CGMS_MINIMED_REALTIME;
+        return CGMSDevicesIds.CGMS_MINIMED_GOLD;
     }
 
 
@@ -163,7 +162,7 @@ public class MiniMedRealTime extends MiniMedCGMS
      */
     public String getDeviceClassName()
     {
-        return "ggc.cgms.device.minimed.MiniMedRealTime";
+        return "ggc.cgms.device.minimed.old.MiniMedCGMSGold";
     }
 
 

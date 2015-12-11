@@ -2,7 +2,23 @@
 Changes file for GGC CGM Tool
 ==============================
 
-1.4.0
+-- We will move to version 2.0, when Minimed and at least one of Abbott CGMSes is supported (Navigator 1.x or 2.x)
+
+
+
+
+
+
+1.5.0 --- 11.12.2015
+- added Minimed code. CGMS code is still WIP, at least decoding is
+- move device definition enums to other package
+- CGMSPluginDefinition
+- extends Dexcom enum to new devices (G5)
+- change enum for FreeStyle
+- change list for CGMS
+
+
+1.4.0 [30.10.2015]
 - refactoring changing Log to Logger instance
 - refactoring use of BG converter
 - configuration changes (ConfigPanel)

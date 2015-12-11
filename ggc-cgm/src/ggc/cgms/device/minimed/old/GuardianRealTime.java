@@ -1,4 +1,4 @@
-package ggc.cgms.device.minimed;
+package ggc.cgms.device.minimed.old;
 
 import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.plugin.manager.DeviceImplementationStatus;
@@ -8,7 +8,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
- *  Plug-in:       CGMS Tool (support for CGMS devices)
+ *  Plug-in:       Pump Tool (support for Pump devices)
  *
  *  See AUTHORS for copyright information.
  * 
@@ -26,18 +26,19 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     MiniMedCGMSGold  
- *  Description:  MiniMed CGMS Gold implementation (just settings)
+ *  Filename:     GuardianRealTime  
+ *  Description:  Guardian RealTime implementation (just settings)
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-public class MiniMedCGMSGold extends MiniMedCGMS
+
+public class GuardianRealTime extends MiniMedCGMS
 {
 
     /**
      * Constructor 
      */
-    public MiniMedCGMSGold()
+    public GuardianRealTime()
     {
         super();
     }
@@ -49,7 +50,7 @@ public class MiniMedCGMSGold extends MiniMedCGMS
      * @param drive_letter 
      * @param writer 
      */
-    public MiniMedCGMSGold(String drive_letter, OutputWriter writer)
+    public GuardianRealTime(String drive_letter, OutputWriter writer)
     {
         super(drive_letter, writer);
     }
@@ -62,7 +63,7 @@ public class MiniMedCGMSGold extends MiniMedCGMS
      * @param writer
      * @param da
      */
-    public MiniMedCGMSGold(String params, OutputWriter writer, DataAccessPlugInBase da)
+    public GuardianRealTime(String params, OutputWriter writer, DataAccessPlugInBase da)
     {
         super(params, writer, da);
     }
@@ -73,7 +74,7 @@ public class MiniMedCGMSGold extends MiniMedCGMS
      * 
      * @param cmp
      */
-    public MiniMedCGMSGold(AbstractDeviceCompany cmp)
+    public GuardianRealTime(AbstractDeviceCompany cmp)
     {
         super(cmp);
     }
@@ -91,7 +92,7 @@ public class MiniMedCGMSGold extends MiniMedCGMS
     @Override
     public String getName()
     {
-        return "Minimed CGMS Gold";
+        return "Guardian RealTime";
     }
 
 
@@ -102,7 +103,7 @@ public class MiniMedCGMSGold extends MiniMedCGMS
      */
     public String getIconName()
     {
-        return "mm_cgms_gold.jpg";
+        return "mm_guardian_rt.jpg";
     }
 
 
@@ -114,7 +115,7 @@ public class MiniMedCGMSGold extends MiniMedCGMS
      */
     public int getDeviceId()
     {
-        return CGMSDevicesIds.CGMS_MINIMED_GOLD;
+        return CGMSDevicesIds.CGMS_GUARDIAN_REALTIME;
     }
 
 
@@ -162,7 +163,7 @@ public class MiniMedCGMSGold extends MiniMedCGMS
      */
     public String getDeviceClassName()
     {
-        return "ggc.cgms.device.minimed.MiniMedCGMSGold";
+        return "ggc.cgms.device.minimed.old.GuardianRealTime";
     }
 
 

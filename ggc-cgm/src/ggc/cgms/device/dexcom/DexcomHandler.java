@@ -1,6 +1,6 @@
 package ggc.cgms.device.dexcom;
 
-import ggc.cgms.device.CGMSDeviceHandler;
+import ggc.cgms.defs.device.CGMSDeviceHandler;
 import ggc.cgms.device.dexcom.receivers.DexcomDevice;
 import ggc.cgms.device.dexcom.receivers.DexcomDeviceReader;
 import ggc.cgms.device.dexcom.receivers.data.output.GGCOutputParser;

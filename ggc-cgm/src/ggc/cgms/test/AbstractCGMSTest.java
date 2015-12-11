@@ -15,6 +15,7 @@ public class AbstractCGMSTest
 
     protected DataAccess dataAccess;
     protected DataAccessCGMS dataAccessCGMS;
+    protected boolean initDb = true;
 
     protected boolean contextReady = false;
 
@@ -27,20 +28,27 @@ public class AbstractCGMSTest
         // Init core and Db
         dataAccess = DataAccess.getInstance();
 
-        GGCDb db = new GGCDb(dataAccess);
-        db.initDb();
+        if (initDb)
+        {
+            GGCDb db = new GGCDb(dataAccess);
+            db.initDb();
 
-        dataAccess.setDb(db);
-        dataAccess.loadSpecialParameters();
+            dataAccess.setDb(db);
+            dataAccess.loadSpecialParameters();
+        }
 
         // Init Pump Context
         dataAccessCGMS = DataAccessCGMS.createInstance(getPluginDefinition(dataAccess));
-        dataAccessCGMS.createDb(dataAccess.getHibernateDb());
-        dataAccessCGMS.initAllObjects();
-        dataAccessCGMS.loadSpecialParameters();
-        dataAccessCGMS.setCurrentUserId(1);
-        dataAccessCGMS.initSpecial();
-        dataAccessCGMS.setGlucoseUnitType(dataAccess.getGlucoseUnitType());
+
+        if (initDb)
+        {
+            dataAccessCGMS.createDb(dataAccess.getHibernateDb());
+            dataAccessCGMS.initAllObjects();
+            dataAccessCGMS.loadSpecialParameters();
+            dataAccessCGMS.setCurrentUserId(1);
+            dataAccessCGMS.initSpecial();
+            dataAccessCGMS.setGlucoseUnitType(dataAccess.getGlucoseUnitType());
+        }
 
         this.contextReady = true;
 

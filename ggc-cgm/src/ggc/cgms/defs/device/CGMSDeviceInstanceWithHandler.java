@@ -1,6 +1,6 @@
-package ggc.cgms.device;
+package ggc.cgms.defs.device;
 
-import ggc.cgms.data.defs.CGMSDeviceDefinition;
+import ggc.cgms.device.CGMSInterfaceV2;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 
@@ -24,8 +24,8 @@ import ggc.plugin.device.v2.DeviceInstanceWithHandler;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- *  Filename: CGMDataType
- *  Description: CGMS Data types, as used in database (undefined at this time)
+ *  Filename: CGMSDeviceInstanceWithHandler
+ *  Description: CGMS Device Instance With Handler (CGMS specific)
  *
  *  Author: Andy {andy@atech-software.com}
  */

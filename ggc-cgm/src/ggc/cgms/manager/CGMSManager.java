@@ -1,7 +1,7 @@
 package ggc.cgms.manager;
 
-import ggc.cgms.data.defs.CGMSDeviceDefinition;
-import ggc.cgms.device.CGMSDeviceInstanceWithHandler;
+import ggc.cgms.defs.device.CGMSDeviceDefinition;
+import ggc.cgms.defs.device.CGMSDeviceInstanceWithHandler;
 import ggc.cgms.manager.company.Abbott;
 import ggc.cgms.manager.company.Dexcom;
 import ggc.cgms.manager.company.Minimed;

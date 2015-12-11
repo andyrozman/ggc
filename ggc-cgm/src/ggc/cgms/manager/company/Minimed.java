@@ -1,8 +1,8 @@
 package ggc.cgms.manager.company;
 
-import ggc.cgms.device.minimed.GuardianRealTime;
-import ggc.cgms.device.minimed.MiniMedCGMSGold;
-import ggc.cgms.device.minimed.MiniMedRealTime;
+import ggc.cgms.device.minimed.old.GuardianRealTime;
+import ggc.cgms.device.minimed.old.MiniMedCGMSGold;
+import ggc.cgms.device.minimed.old.MiniMedRealTime;
 import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.plugin.manager.DeviceImplementationStatus;
@@ -48,7 +48,7 @@ public class Minimed extends AbstractDeviceCompany
                 "MiniMed", // short company name
                 "MINIMED_DESC", // company description
                 DeviceImplementationStatus.Planned, DataAccessCGMS.getInstance()); // implementation
-                                                                                                  // status
+                                                                                   // status
 
         this.addDevice(new MiniMedCGMSGold(this));
         this.addDevice(new GuardianRealTime(this));

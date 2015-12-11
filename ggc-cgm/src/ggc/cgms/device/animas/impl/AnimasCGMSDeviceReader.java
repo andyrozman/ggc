@@ -60,10 +60,6 @@ public class AnimasCGMSDeviceReader extends AnimasDeviceReader
     {
         AnimasDexcomDataHandler handler = new AnimasDexcomDataHandler(portName, animasDevice, this, outputWriter);
         handler.startAction(AnimasTransferType.DownloadCGMSSettings);
-
-        // AnimasCGMSDeviceData data = (AnimasCGMSDeviceData) handler.getData();
-
-        // data.writeSettings(outputWriter);
     }
 
 }

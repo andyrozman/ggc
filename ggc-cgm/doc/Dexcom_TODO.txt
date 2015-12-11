@@ -1,5 +1,5 @@
 
-DEXCOM Todo
+DEXCOM To-do
 ============
 
 LAST CHANGE: 22.8. W

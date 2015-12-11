@@ -50,10 +50,16 @@ public class CGMSDevicesIds
      */
     public static final int COMPANY_ANIMAS = 4;
 
+    public static final int COMPANY_TANDEM = 5;
+
     /**
      * CGMS (Abbott) - Freestyle Navigator
      */
-    public static final int CGMS_FREESTYLE_NAVIGATOR = 10001;
+    public static final int CGMS_FREESTYLE_NAVIGATOR1 = 10001;
+
+    public static final int CGMS_FREESTYLE_NAVIGATOR2 = 10002;
+
+    public static final int CGMS_FREESTYLE_NEO = 10003;
 
     /**
      * CGMS (Dexcom) - Dexcom 7
@@ -70,6 +76,8 @@ public class CGMSDevicesIds
      */
     public static final int CGMS_DEXCOM_G4 = 20003;
 
+    public static final int CGMS_DEXCOM_G5 = 20004;
+
     /**
      * CGMS (Minimed) - Guardian
      */
@@ -83,11 +91,23 @@ public class CGMSDevicesIds
     /**
      * CGMS (Minimed) - Minimed RealTime
      */
-    public static final int CGMS_MINIMED_REALTIME = 30003;
+    // public static final int CGMS_MINIMED_REALTIME = 30003;
+
+    public static final int CGMS_MINIMED_522 = 30003;
+
+    public static final int CGMS_MINIMED_523 = 30004;
+
+    public static final int CGMS_MINIMED_553 = 30005;
+
+    public static final int CGMS_MINIMED_554 = 30006;
+
+    public static final int CGMS_MINIMED_640G = 30007;
 
     /**
      * CGMS (Minimed) - Minimed RealTime
      */
     public static final int CGMS_ANIMAS_VIBE_DEXCOM_INTEGRATION = 40001;
+
+    public static final int CGMS_TANDEM_TSLIM_G4_DEXCOM_INTEGRATION = 50001;
 
 }

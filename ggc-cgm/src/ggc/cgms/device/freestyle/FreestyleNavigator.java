@@ -116,7 +116,7 @@ public class FreestyleNavigator extends FreestyleCGMS
      */
     public int getDeviceId()
     {
-        return CGMSDevicesIds.CGMS_FREESTYLE_NAVIGATOR;
+        return CGMSDevicesIds.CGMS_FREESTYLE_NAVIGATOR1;
     }
 
 

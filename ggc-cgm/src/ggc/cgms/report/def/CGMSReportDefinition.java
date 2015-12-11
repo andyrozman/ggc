@@ -13,16 +13,15 @@ import ggc.plugin.report.PluginReportDefinition;
 /**
  * Created by andy on 17.10.15.
  *
- * NOT DEPRECATED, JUST NOT IMPLEMENTED
+ * NOT DEPRECATED, JUST NOT IMPLEMENTED YET
  *
  */
 @Deprecated
 public class CGMSReportDefinition implements PluginReportDefinition
 {
 
-    DataAccessCGMS dataAccessCGMS; // = DataAccessPump.getInstance();
-    I18nControlAbstract i18nControl; // =
-                                     // dataAccessCGMS.getI18nControlInstance();
+    DataAccessCGMS dataAccessCGMS;
+    I18nControlAbstract i18nControl;
 
     DevicePlugInServer pluginServer;
 
@@ -128,7 +127,7 @@ public class CGMSReportDefinition implements PluginReportDefinition
 
     public String getHelpId()
     {
-        return "PumpTool_Print";
+        return "CGMSTool_Print";
     }
 
 

@@ -1,6 +1,6 @@
 package ggc.cgms.device.animas;
 
-import ggc.cgms.device.CGMSDeviceHandler;
+import ggc.cgms.defs.device.CGMSDeviceHandler;
 import ggc.cgms.device.animas.impl.AnimasCGMSDeviceReader;
 import ggc.plugin.data.enums.DeviceHandlerType;
 import ggc.plugin.device.PlugInBaseException;
