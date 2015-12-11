@@ -77,50 +77,54 @@ public enum PumpDeviceDefinition implements DeviceDefinition
 
     // Minimed (not done yet)
 
-    Minimed_508_508c(10001, "Minimed 508/508c", "mm_508.jpg", "instruction", MinimedDeviceType.Minimed_508_508c,
-            DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
+    Minimed_508_508c(10001, "Minimed 508/508c", "mm_508.jpg", "INSTRUCTIONS_MINIMED",
+            MinimedDeviceType.Minimed_508_508c, DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
             DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
             DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
             PumpProfileDefinition.MinimedProfile), //
 
-    Minimed_511(10003, "Minimed 511", "mm_515_715.jpg", "instruction", MinimedDeviceType.Minimed_511,
+    Minimed_511(10003, "Minimed 511", "mm_515_715.jpg", "INSTRUCTIONS_MINIMED", MinimedDeviceType.Minimed_511,
             DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler,
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Serial_USBBridge,
             DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0, PumpProfileDefinition.MinimedProfile), //
 
-    Minimed_512_712(10004, "Minimed 512/712", "mm_515_715.jpg", "instruction", MinimedDeviceType.Minimed_512_712,
-            DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler,
-            DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Serial_USBBridge,
-            DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0, PumpProfileDefinition.MinimedProfile), //
+    Minimed_512_712(10004, "Minimed 512/712", "mm_515_715.jpg", "INSTRUCTIONS_MINIMED",
+            MinimedDeviceType.Minimed_512_712, DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
+            PumpProfileDefinition.MinimedProfile), //
 
-    Minimed_515_715(10005, "Minimed 515/715", "mm_515_715.jpg", "instruction", MinimedDeviceType.Minimed_515_715,
-            DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler,
-            DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Serial_USBBridge,
-            DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0, PumpProfileDefinition.MinimedProfile), //
+    Minimed_515_715(10005, "Minimed 515/715", "mm_515_715.jpg", "INSTRUCTIONS_MINIMED",
+            MinimedDeviceType.Minimed_515_715, DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
+            PumpProfileDefinition.MinimedProfile), //
 
-    Minimed_522_722(10006, "Minimed 522/722", "mm_522_722.jpg", "instruction", MinimedDeviceType.Minimed_522_722,
-            DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler,
-            DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Serial_USBBridge,
-            DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0, PumpProfileDefinition.MinimedProfile), //
+    Minimed_522_722(10006, "Minimed 522/722", "mm_522_722.jpg", "INSTRUCTIONS_MINIMED",
+            MinimedDeviceType.Minimed_522_722, DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
+            PumpProfileDefinition.MinimedProfile), //
 
-    Minimed_523_723(10007, "Minimed 523/723", "mm_522_722.jpg", "instruction", MinimedDeviceType.Minimed_523_723,
-            DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler,
-            DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Serial_USBBridge,
-            DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0, PumpProfileDefinition.MinimedProfile), //
+    Minimed_523_723(10007, "Minimed 523/723", "mm_522_722.jpg", "INSTRUCTIONS_MINIMED",
+            MinimedDeviceType.Minimed_523_723, DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed,
+            DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
+            DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
+            PumpProfileDefinition.MinimedProfile), //
 
-    Minimed_553_753_Revel(10008, "Minimed 553/753 (Revel)", "mm_554_veo.jpg", "instruction",
+    Minimed_553_753_Revel(10008, "Minimed 553/753 (Revel)", "mm_554_veo.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.Minimed_553_753_Revel, DeviceImplementationStatus.Planned,
             DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler,
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Serial_USBBridge,
             DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0, PumpProfileDefinition.MinimedProfile), //
 
-    Minimed_554_754_Veo(10009, "Minimed 554/754 (Veo)", "mm_554_veo.jpg", "instruction",
+    Minimed_554_754_Veo(10009, "Minimed 554/754 (Veo)", "mm_554_veo.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.Minimed_554_754_Veo, DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed,
             DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
             DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
             PumpProfileDefinition.MinimedProfile), //
 
-    Minimed_640G(10010, "Minimed 640G", "pic", "instruction", MinimedDeviceType.Minimed_640G,
+    Minimed_640G(10010, "Minimed 640G", "pic", "INSTRUCTIONS_MINIMED", MinimedDeviceType.Minimed_640G,
             DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed, DeviceHandlerType.NoHandler,
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special,
             "", 0.1f, 0.1f, null, -1, 0, null),
@@ -163,11 +167,43 @@ public enum PumpDeviceDefinition implements DeviceDefinition
             DeviceConnectionProtocol.MassStorageXML, DeviceProgressStatus.Normal, "", 0.1f, 0.1f,
             PumpTBRDefinition.DanaTBR, -1, -1, PumpProfileDefinition.DanaProfile),
 
-    DanaDiabecare_III_R(70003, "Diabcare II R (III)", "so_danaIII.jpg", "INSTRUCTIONS_DANA_III_R", null,
+    DanaDiabecare_III_R(70003, "Diabcare II R (III)", "so_danaIII.jpg", "INSTRUCTIONS_DANA_III_R", null, //
             DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Sooil, DeviceHandlerType.DanaPumpHandler,
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML,
-            DeviceProgressStatus.Normal, "", 0.1f, 0.1f, PumpTBRDefinition.DanaTBR, -1, -1,
-            PumpProfileDefinition.DanaProfile),;
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            0.1f, null, 0.1f, null, //
+            PumpTBRDefinition.DanaTBR, PumpProfileDefinition.DanaProfile),
+
+    // Asante
+
+    AsanteSnap(80001, "Asante Snap", null, null, null, //
+            DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Asante, DeviceHandlerType.NoHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            0.1f, null, 0.1f, null, //
+            PumpTBRDefinition.AsanteTBR, PumpProfileDefinition.AsanteProfile), //
+
+    // Tandem
+
+    TandemTSlim(90001, "t:slim", "tan_tslim.jpg", null, null, //
+            DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Tandem, DeviceHandlerType.NoHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            0.1f, 0.05f, 0.05f, 0.05f, //
+            PumpTBRDefinition.TandemTBR, PumpProfileDefinition.TandemProfile), //
+
+    TandemTFlex(90002, "t:flex", "tan_tflex.jpg", null, null, //
+            DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Tandem, DeviceHandlerType.NoHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            0.1f, 0.05f, 0.05f, 0.05f, //
+            PumpTBRDefinition.TandemTBR, PumpProfileDefinition.TandemProfile), //
+
+    TandemTSlimG4(90003, "t:slim G4", "tan_tslimG4.jpg", null, null, //
+            DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Tandem, DeviceHandlerType.NoHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            0.1f, 0.05f, 0.05f, 0.05f, //
+            PumpTBRDefinition.TandemTBR, PumpProfileDefinition.TandemProfile), //
+
+    ;
+
+    // Tandem
 
     static List<DeviceDefinition> allDevices;
     static List<DeviceDefinition> supportedDevices;
@@ -212,6 +248,8 @@ public enum PumpDeviceDefinition implements DeviceDefinition
     Integer monthsStored;
     Integer maxRecords;
     PumpProfileDefinition profileDefinition;
+    Float basalMinPerH;
+    Float bolusMin;
 
 
     PumpDeviceDefinition()
@@ -220,7 +258,8 @@ public enum PumpDeviceDefinition implements DeviceDefinition
     }
 
 
-    private PumpDeviceDefinition(int id, String name, String iconName, String instructions, Object internalDefinition,
+    @Deprecated
+    PumpDeviceDefinition(int id, String name, String iconName, String instructions, Object internalDefinition,
             DeviceImplementationStatus implementationStatus, DeviceCompanyDefinition companyDefinition,
             DeviceHandlerType deviceHandlerType, DevicePortParameterType portParameterType,
             DeviceConnectionProtocol connectionProtocol, DeviceProgressStatus progressStatus, String specialComment,
@@ -245,6 +284,49 @@ public enum PumpDeviceDefinition implements DeviceDefinition
         this.monthsStored = monthsStored;
         this.maxRecords = maxRecords;
         this.profileDefinition = profileDefinition;
+    }
+
+
+    PumpDeviceDefinition(int id, String name, String iconName, String instructions, Object internalDefinition,
+            DeviceImplementationStatus implementationStatus, DeviceCompanyDefinition companyDefinition,
+            DeviceHandlerType deviceHandlerType, DevicePortParameterType portParameterType,
+            DeviceConnectionProtocol connectionProtocol, Float basalStep, Float basalMinH, Float bolusStep,
+            Float bolusMin, PumpTBRDefinition tempBasalType, PumpProfileDefinition profileDefinition)
+
+    {
+        this(id, name, iconName, instructions, internalDefinition, implementationStatus, companyDefinition,
+                deviceHandlerType, portParameterType, connectionProtocol, basalStep, basalMinH, bolusStep, bolusMin,
+                tempBasalType, profileDefinition, DeviceProgressStatus.Special, -1, -1, null);
+    }
+
+
+    PumpDeviceDefinition(int id, String name, String iconName, String instructions, Object internalDefinition,
+            DeviceImplementationStatus implementationStatus, DeviceCompanyDefinition companyDefinition,
+            DeviceHandlerType deviceHandlerType, DevicePortParameterType portParameterType,
+            DeviceConnectionProtocol connectionProtocol, Float basalStep, Float basalMinPerH, Float bolusStep,
+            Float bolusMin, PumpTBRDefinition tempBasalType, PumpProfileDefinition profileDefinition,
+            DeviceProgressStatus progressStatus, Integer monthsStored, Integer maxRecords, String specialComment)
+    {
+        this.deviceId = id;
+        this.deviceName = name;
+        this.iconName = iconName;
+        this.instructions = instructions;
+        this.internalDefintion = internalDefinition;
+        this.implementationStatus = implementationStatus;
+        this.companyDefinition = companyDefinition;
+        this.deviceHandlerType = deviceHandlerType;
+        this.devicePortParameterType = portParameterType;
+        this.deviceConnectionProtocol = connectionProtocol;
+        this.deviceProgressStatus = progressStatus;
+        this.specialComment = specialComment;
+        this.basalStep = basalStep;
+        this.bolusStep = bolusStep;
+        this.tempBasalType = tempBasalType;
+        this.monthsStored = monthsStored;
+        this.maxRecords = maxRecords;
+        this.profileDefinition = profileDefinition;
+        this.basalMinPerH = basalMinPerH;
+        this.bolusMin = bolusMin;
     }
 
 

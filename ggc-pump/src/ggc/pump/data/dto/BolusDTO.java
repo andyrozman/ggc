@@ -35,36 +35,36 @@ import ggc.pump.data.defs.PumpBolusType;
 public class BolusDTO
 {
 
-    private Double requestedAmount;
-    private Double deliveredAmount;
-    private Double immediateAmount; // when Multiwave this is used
+    private Float requestedAmount;
+    private Float deliveredAmount;
+    private Float immediateAmount; // when Multiwave this is used
     private Integer duration;
     private PumpBolusType bolusType;
-    private Double insulinOnBoard;
+    private Float insulinOnBoard;
     private ATechDate aTechDate;
 
-    private DecimalPrecission precission = DecimalPrecission.TwoDecimals;
+    private DecimalPrecission precision = DecimalPrecission.TwoDecimals;
 
 
-    public Double getRequestedAmount()
+    public Float getRequestedAmount()
     {
         return requestedAmount;
     }
 
 
-    public void setRequestedAmount(Double requestedAmount)
+    public void setRequestedAmount(Float requestedAmount)
     {
         this.requestedAmount = requestedAmount;
     }
 
 
-    public Double getDeliveredAmount()
+    public Float getDeliveredAmount()
     {
         return deliveredAmount;
     }
 
 
-    public void setDeliveredAmount(Double deliveredAmount)
+    public void setDeliveredAmount(Float deliveredAmount)
     {
         this.deliveredAmount = deliveredAmount;
     }
@@ -94,13 +94,13 @@ public class BolusDTO
     }
 
 
-    public Double getInsulinOnBoard()
+    public Float getInsulinOnBoard()
     {
         return insulinOnBoard;
     }
 
 
-    public void setInsulinOnBoard(Double insulinOnBoard)
+    public void setInsulinOnBoard(Float insulinOnBoard)
     {
         this.insulinOnBoard = insulinOnBoard;
     }
@@ -120,7 +120,7 @@ public class BolusDTO
 
     private String getDurationString()
     {
-        int minutes = this.duration.intValue();
+        int minutes = this.duration;
 
         int h = minutes / 60;
 
@@ -149,13 +149,13 @@ public class BolusDTO
     }
 
 
-    public Double getImmediateAmount()
+    public Float getImmediateAmount()
     {
         return immediateAmount;
     }
 
 
-    public void setImmediateAmount(Double immediateAmount)
+    public void setImmediateAmount(Float immediateAmount)
     {
         this.immediateAmount = immediateAmount;
     }
@@ -163,7 +163,7 @@ public class BolusDTO
 
     public String getFormattedDecimal(double value)
     {
-        String val = String.format(this.precission.getFormatString(), value);
+        String val = String.format(this.precision.getFormatString(), value);
         return val.replaceAll(",", ".");
     }
 

@@ -1,16 +1,14 @@
 package ggc.pump.test;
 
-import java.util.Vector;
+import java.util.List;
 
 import com.atech.utils.TimerThread;
 import com.atech.utils.data.TimeZoneUtil;
 
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
-import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
-import ggc.pump.device.minimed.Minimed522;
-import ggc.pump.device.minimed.MinimedSPMPump;
+import ggc.pump.device.minimed.old.MinimedSPMPump;
 import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
@@ -192,8 +190,9 @@ public class MinimedConsoleTester extends AbstractPumpTest
         // ConsoleOutputWriter());
         // mm.readDeviceDataFull();
 
-        Minimed522 mm = new Minimed522(this.dataAccessPump, sb.toString(), new ConsoleOutputWriter());
-        mm.readDeviceDataFull();
+        // Minimed522 mm = new Minimed522(this.dataAccessPump, sb.toString(),
+        // new ConsoleOutputWriter());
+        // mm.readDeviceDataFull();
 
     }
 
@@ -205,7 +204,7 @@ public class MinimedConsoleTester extends AbstractPumpTest
     {
         try
         {
-            Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
+            List<String> vct = SerialProtocol.getAllAvailablePortsString();
 
             System.out.println(" --- List Serial Ports -----");
 

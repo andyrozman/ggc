@@ -53,27 +53,16 @@
             <artifactId>atech-tools</artifactId>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-        </dependency>
--->
+
         <dependency>
             <groupId>com.ibm.old.comapi</groupId>
             <artifactId>ibm-compapi</artifactId>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>com.neuronrobotics</groupId>
-            <artifactId>nrjavaserial</artifactId>
-        </dependency>
--->
+
         <dependency>
             <groupId>jaxen</groupId>
             <artifactId>jaxen</artifactId>
-
         </dependency>
 
         <dependency>

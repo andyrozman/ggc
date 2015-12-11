@@ -13,22 +13,23 @@ public class BolusWizardDTO
     public Integer carbs = 0;
     public String chUnit = "g";
 
-    public Double carbRatio = 0.0d;
-    public Double insulinSensitivity = 0.0d;
+    public Float carbRatio = 0.0f;
+    public Float insulinSensitivity = 0.0f;
     public Integer bgTargetLow = 0;
     public Integer bgTargetHigh = 0;
-    public Double bolusTotal = 0.0d;
-    public Double correctionEstimate = 0.0d;
-    public Double foodEstimate = 0.0d;
-    public Double unabsorbedInsulin = 0.0d;
+    public Float bolusTotal = 0.0f;
+    public Float correctionEstimate = 0.0f;
+    public Float foodEstimate = 0.0f;
+    public Float unabsorbedInsulin = 0.0f;
     public ATechDate atechDate;
 
 
     public String getValue()
     {
-        return String.format("BG=%d;CH=%d;CH_UNIT=%s;CH_INS_RATIO=%5.3f;BG_INS_RATIO=%5.3f;"
-                + "BG_TARGET_LOW=%d;BG_TARGET_HIGH=%d;BOLUS_TOTAL=%5.3f;"
-                + "BOLUS_CORRECTION=%5.3f;BOLUS_FOOD=%5.3f;UNABSORBED_INSULIN=%5.3f", //
+        return String.format(
+            "BG=%d;CH=%d;CH_UNIT=%s;CH_INS_RATIO=%5.3f;BG_INS_RATIO=%5.3f;"
+                    + "BG_TARGET_LOW=%d;BG_TARGET_HIGH=%d;BOLUS_TOTAL=%5.3f;"
+                    + "BOLUS_CORRECTION=%5.3f;BOLUS_FOOD=%5.3f;UNABSORBED_INSULIN=%5.3f", //
             bloodGlucose, carbs, chUnit, carbRatio, insulinSensitivity, bgTargetLow, //
             bgTargetHigh, bolusTotal, correctionEstimate, foodEstimate, unabsorbedInsulin);
     }

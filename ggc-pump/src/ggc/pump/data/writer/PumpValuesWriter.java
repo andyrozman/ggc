@@ -119,6 +119,9 @@ public class PumpValuesWriter extends DeviceValuesWriter
         addConfiguration("Report_All_Daily_Insulin", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
                 PumpBaseType.Report, PumpReport.InsulinTotalDay, true));
 
+        addConfiguration("Report_InsulinTotalDay", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
+                PumpBaseType.Report, PumpReport.InsulinTotalDay, true));
+
         addConfiguration("Report_Daily_Basal_Insulin", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, //
                 PumpBaseType.Report, PumpReport.BasalTotalDay, true));
 
@@ -152,12 +155,14 @@ public class PumpValuesWriter extends DeviceValuesWriter
 
         // ========= Additional Data =========
 
-        addConfiguration("AdditionalData_BG", new PumpWriterValues(PumpWriterValues.OBJECT_EXT, //
+        addConfiguration("AdditionalData_BloodGlucose", new PumpWriterValues(PumpWriterValues.OBJECT_EXT, //
                 PumpAdditionalDataType.BloodGlucose, true));
+
+        addConfiguration("AdditionalData_BG", new PumpWriterValues(PumpWriterValues.OBJECT_EXT, //
+                PumpAdditionalDataType.BloodGlucose, true)); // REMOVE
 
         addConfiguration("AdditionalData_CH", new PumpWriterValues(PumpWriterValues.OBJECT_EXT, //
                 PumpAdditionalDataType.Carbohydrates, true));
-
     }
 
 

@@ -1,4 +1,4 @@
-package ggc.pump.device.minimed;
+package ggc.pump.device.minimed.old;
 
 import java.util.Hashtable;
 
@@ -32,6 +32,7 @@ import java.util.Hashtable;
 
 public class MinimedSPMData
 {
+
     /**
      * Source: None
      */
@@ -112,6 +113,7 @@ public class MinimedSPMData
      */
     public Hashtable<Long, Float> profiles = null;
 
+
     /**
      * Constructor
      * 
@@ -123,6 +125,7 @@ public class MinimedSPMData
         this.source = _source;
         this.value_type = _value_type;
     }
+
 
     /**
      * Gets the value.
@@ -138,6 +141,7 @@ public class MinimedSPMData
         else
             return null;
     }
+
 
     /**
      * Add Profile 

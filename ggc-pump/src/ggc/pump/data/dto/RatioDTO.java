@@ -1,9 +1,10 @@
-package ggc.pump.device.animas.impl.data.dto;
+package ggc.pump.data.dto;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
 
-import ggc.pump.device.animas.impl.data.enums.AnimasBolusSettingSubType;
+import ggc.plugin.data.enums.ValueType;
+import ggc.pump.data.defs.RatioType;
 import ggc.pump.util.DataAccessPump;
 
 /**
@@ -32,10 +33,10 @@ import ggc.pump.util.DataAccessPump;
  *  Author: Andy Rozman {andy@atech-software.com}
  */
 
-public class SettingTimeValueEntry
+public class RatioDTO
 {
 
-    AnimasBolusSettingSubType type;
+    RatioType type;
     ATechDate time;
     int index;
 
@@ -45,42 +46,80 @@ public class SettingTimeValueEntry
     Float valueDeltaFloat;
 
     boolean valueTypeShort = true;
-    boolean deltaSet = false;
+    ValueType valueType;
+
+    private String unitString = null;
 
 
-    public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, short value)
+    public RatioDTO(RatioType type, int index, ATechDate time, short value)
     {
         this.setBaseData(type, index, time);
         setValuesShort(value, null);
     }
 
 
-    public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, float value)
+    public RatioDTO(RatioType type, int index, ATechDate time, short value, String unit)
+    {
+        this.setBaseData(type, index, time);
+        setValuesShort(value, null);
+        this.unitString = unit;
+    }
+
+
+    public RatioDTO(RatioType type, int index, ATechDate time, float value)
     {
         this.setBaseData(type, index, time);
         setValuesFloat(value, null);
     }
 
 
-    public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, short value, short delta)
+    public RatioDTO(RatioType type, int index, ATechDate time, float value, String unit)
+    {
+        this.setBaseData(type, index, time);
+        setValuesFloat(value, null);
+        this.unitString = unit;
+
+    }
+
+
+    public RatioDTO(RatioType type, int index, ATechDate time, short value, short delta)
     {
         this.setBaseData(type, index, time);
         setValuesShort(value, delta);
     }
 
 
-    public SettingTimeValueEntry(AnimasBolusSettingSubType type, int index, ATechDate time, float value, float delta)
+    public RatioDTO(RatioType type, int index, ATechDate time, short value, short delta, String unit)
+    {
+        this.setBaseData(type, index, time);
+        setValuesShort(value, delta);
+        this.unitString = unit;
+
+    }
+
+
+    public RatioDTO(RatioType type, int index, ATechDate time, float value, float delta)
     {
         this.setBaseData(type, index, time);
         setValuesFloat(value, delta);
     }
 
 
-    private void setBaseData(AnimasBolusSettingSubType type, int index, ATechDate time)
+    public RatioDTO(RatioType type, int index, ATechDate time, float value, float delta, String unit)
+    {
+        this.setBaseData(type, index, time);
+        setValuesFloat(value, delta);
+        this.unitString = unit;
+
+    }
+
+
+    private void setBaseData(RatioType type, int index, ATechDate time)
     {
         this.type = type;
         this.index = index;
         this.time = time;
+        this.valueType = type.getValueType();
     }
 
 
@@ -89,7 +128,8 @@ public class SettingTimeValueEntry
         this.valueTypeShort = true;
         this.valueAmountShort = value;
         this.valueDeltaShort = delta;
-        this.deltaSet = (this.valueDeltaShort != null);
+        if (this.valueDeltaShort == null)
+            this.valueType = ValueType.Simple;
     }
 
 
@@ -98,12 +138,13 @@ public class SettingTimeValueEntry
         this.valueTypeShort = false;
         this.valueAmountFloat = value;
         this.valueDeltaFloat = delta;
-        this.deltaSet = (this.valueDeltaFloat != null);
+
+        if (this.valueDeltaFloat == null)
+            this.valueType = ValueType.Simple;
     }
 
-    static String templateNoDeltaMain; // = "From=%s,Amount=<ValueFormat>";
-    static String templateDeltaMain; // =
-                                     // "From=%s,Amount=<ValueFormat>,Delta=<ValueFormat>";
+    static String templateNoDeltaMain;
+    static String templateDeltaMain;
 
 
     private void setTranslations()
@@ -116,50 +157,73 @@ public class SettingTimeValueEntry
                     + "=<ValueFormat>";
             templateDeltaMain = ic.getMessage("CFG_BASE_FROM") + "=%s, " + ic.getMessage("CFG_BASE_AMOUNT")
                     + "=<ValueFormat>, " + ic.getMessage("CFG_BASE_DELTA") + "=<ValueFormat>";
-
         }
     }
 
 
-    // FIXME use i18nControl
     public String getSettingValue()
     {
         setTranslations();
 
-        // String templateNoDelta = "From=%s,Amount=<ValueFormat>";
-        // String templateDelta =
-        // "From=%s,Amount=<ValueFormat>,Delta=<ValueFormat>";
+        String template = this.valueType == ValueType.Delta ? templateDeltaMain : templateNoDeltaMain;
 
-        String template = this.deltaSet ? templateDeltaMain : templateNoDeltaMain;
+        String value;
 
         if (this.valueTypeShort)
         {
-            template = template.replace("<ValueFormat>", "%d");
-            // LOG.debug("Template: " + template);
+            if (valueType == ValueType.Range)
+                template = template.replace("<ValueFormat>", "%d - %d");
+            else
+                template = template.replace("<ValueFormat>", "%d");
 
             if (valueDeltaShort == null)
             {
-                return String.format(template, time.getTimeString(), valueAmountShort);
+                value = String.format(template, time.getTimeString(), valueAmountShort);
             }
             else
             {
-                return String.format(template, time.getTimeString(), valueAmountShort, valueDeltaShort);
+                value = String.format(template, time.getTimeString(), valueAmountShort, valueDeltaShort);
             }
         }
         else
         {
-            template = template.replace("<ValueFormat>", "%6.4f");
-            // LOG.debug("Template: " + template);
+            if (valueType == ValueType.Range)
+                template = template.replace("<ValueFormat>", "%6.4f - %6.4f");
+            else
+                template = template.replace("<ValueFormat>", "%6.4f");
 
-            if (valueDeltaShort == null)
+            if (valueDeltaFloat == null)
             {
-                return String.format(template, time.getTimeString(), valueAmountFloat);
+                value = String.format(template, time.getTimeString(), valueAmountFloat);
             }
             else
             {
-                return String.format(template, time.getTimeString(), valueAmountFloat, valueDeltaFloat);
+                value = String.format(template, time.getTimeString(), valueAmountFloat, valueDeltaFloat);
             }
         }
+
+        if (this.unitString != null)
+            value += " " + this.unitString;
+
+        return value;
+    }
+
+
+    public int getIndex()
+    {
+        return this.index;
+    }
+
+
+    public RatioType getType()
+    {
+        return type;
+    }
+
+
+    public String getTimeAsString()
+    {
+        return time.getTimeString();
     }
 
 
@@ -185,11 +249,22 @@ public class SettingTimeValueEntry
             sb.append(String.format(",amount=%6.4f", valueAmountFloat));
             if (valueDeltaShort != null)
             {
-                sb.append(String.format(",deltea=%6.4f", valueDeltaFloat));
+                sb.append(String.format(",delta=%6.4f", valueDeltaFloat));
             }
         }
 
         return sb.toString();
     }
 
+
+    public String getUnitString()
+    {
+        return unitString;
+    }
+
+
+    public void setUnitString(String unitString)
+    {
+        this.unitString = unitString;
+    }
 }

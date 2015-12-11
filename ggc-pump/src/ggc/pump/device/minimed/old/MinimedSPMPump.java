@@ -1,4 +1,6 @@
-package ggc.pump.device.minimed;
+package ggc.pump.device.minimed.old;
+
+import java.util.Enumeration;
 
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -6,8 +8,6 @@ import ggc.pump.data.PumpValuesEntryProfile;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.util.DataAccessPump;
-
-import java.util.Enumeration;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
@@ -52,6 +52,7 @@ public class MinimedSPMPump extends MinimedSPM
         super(filename, da);
     }
 
+
     /**
      * Read Data
      */
@@ -67,6 +68,7 @@ public class MinimedSPMPump extends MinimedSPM
         // Db Test
         this.readBasals();
     }
+
 
     /**
      * Process Data Entry

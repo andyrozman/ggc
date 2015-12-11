@@ -64,14 +64,15 @@ public enum PumpEventType implements CodeEnumWithTranslation
     DateTimeCorrect(41, "EVENT_DATETIME_CORRECT"), //
     TimeSet(42, "EVENT_TIME_SET"), //
     DateSet(43, "EVENT_DATE_SET"), //
+    DateTimeChanged(44, "EVENT_DATETIME_CHANGED", "OLD_DT=%s;NEW_DT=%s"), //
 
     SetMaxBasal(50, "EVENT_SET_MAX_BASAL"), //
     SetMaxBolus(51, "EVENT_SET_MAX_BOLUS"), //
 
-    BatteryRemoved(55, "EVENT_BATERRY_REMOVED"), //
-    BatteryReplaced(56, "EVENT_BATERRY_REPLACED"), //
-    BatteryLow(57, "EVENT_BATERRY_LOW"), //
-    BatteryLowDesc(58, "EVENT_BATERRY_LOW_DESC"), //
+    BatteryRemoved(55, "EVENT_BATTERY_REMOVED"), //
+    BatteryReplaced(56, "EVENT_BATTERY_REPLACED"), //
+    BatteryLow(57, "EVENT_BATTERY_LOW"), //
+    BatteryLowDesc(58, "EVENT_BATTERY_LOW_DESC"), //
 
     BgFromMeter(70, "EVENT_BG_FROM_METER"), //
     BolusCancelled(80, "ALARM_BOLUS_CANCELED"), //

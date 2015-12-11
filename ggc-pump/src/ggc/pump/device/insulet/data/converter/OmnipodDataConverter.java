@@ -282,8 +282,8 @@ public class OmnipodDataConverter implements OmnipodConverter
     {
         int offset = 31;
 
-        Double correction_delivered = toDecimal(lr.getIntInverted(offset));
-        Double carb_bolus_delivered = toDecimal(lr.getIntInverted(offset + 4));
+        Float correction_delivered = toDecimal(lr.getIntInverted(offset));
+        Float carb_bolus_delivered = toDecimal(lr.getIntInverted(offset + 4));
         // Double correction_programmed = toDecimal(lr.getIntInverted(offset +
         // 8));
         // Double carb_bolus_programmed = toDecimal(lr.getIntInverted(offset +
@@ -292,8 +292,8 @@ public class OmnipodDataConverter implements OmnipodConverter
         // 16));
         // Double carb_bolus_suggested = toDecimal(lr.getIntInverted(offset +
         // 20));
-        Double correction_iob = toDecimal(lr.getIntInverted(offset + 24));
-        Double meal_iob = toDecimal(lr.getIntInverted(offset + 28));
+        Float correction_iob = toDecimal(lr.getIntInverted(offset + 24));
+        Float meal_iob = toDecimal(lr.getIntInverted(offset + 28));
         Short correction_factor_used = lr.getShortInverted(offset + 32);
         Short current_bg = lr.getShortInverted(offset + 34);
         Short target_bg = lr.getShortInverted(offset + 36);
@@ -311,8 +311,8 @@ public class OmnipodDataConverter implements OmnipodConverter
         dto.bolusTotal = correction_delivered + carb_bolus_delivered;
         dto.foodEstimate = carb_bolus_delivered;
         dto.correctionEstimate = correction_delivered;
-        dto.carbRatio = correction_factor_used > 0 ? correction_factor_used.doubleValue() : 0.0d;
-        dto.insulinSensitivity = ic_ratio_used > 0 ? ic_ratio_used.doubleValue() : 0.0d;
+        dto.carbRatio = correction_factor_used > 0 ? correction_factor_used.floatValue() : 0.0f;
+        dto.insulinSensitivity = ic_ratio_used > 0 ? ic_ratio_used.floatValue() : 0.0f;
         dto.unabsorbedInsulin = meal_iob + correction_iob;
 
         writeData("Event_BolusWizard", lr.getATechDate(), dto.getValue());
@@ -352,7 +352,7 @@ public class OmnipodDataConverter implements OmnipodConverter
         // int calculationRecordOffset = lr.getShortInverted(36);
         // int immediateDurationSec = lr.getShortInverted(37);
 
-        double bolus = toDecimal(bolusInt);
+        float bolus = toDecimal(bolusInt);
 
         BolusDTO bolusEntry = new BolusDTO();
         bolusEntry.setDeliveredAmount(bolus);
@@ -503,9 +503,9 @@ public class OmnipodDataConverter implements OmnipodConverter
     }
 
 
-    private double toDecimal(int num)
+    private float toDecimal(int num)
     {
-        return (num / 100.0d);
+        return (num / 100.0f);
     }
 
 

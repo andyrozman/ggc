@@ -22,6 +22,7 @@ import ggc.pump.device.accuchek.AccuChekPumpHandler;
 import ggc.pump.device.animas.AnimasIR1200Handler;
 import ggc.pump.device.dana.DanaPumpHandler;
 import ggc.pump.device.insulet.InsuletHandler;
+import ggc.pump.device.minimed.MinimedPumpDeviceHandler;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.GGCPumpICRunner;
 
@@ -87,6 +88,13 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
         cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com",
                 "Framework, About, Outputs, All devices")); //
         cg.addCreditsEntry(new CreditsEntry("Tidepool.org", "www.tidepool.org", "Supplied code for Insulet device"));
+
+        cg.addCreditsEntry(new CreditsEntry("decoding-carelink Project & Benjamin West",
+                "https://github.com/bewest/decoding-carelink",
+                "Ben has given me a lot of support, and also his project has a lot of testing data for history data decoding."));
+        cg.addCreditsEntry(new CreditsEntry("Nightscout Project", "www.nightscout.info",
+                "Nightscout's code for data download helped me with my implementation of pump reader."));
+
         lst_credits.add(cg);
 
         return lst_credits;
@@ -175,11 +183,13 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
         List<BaseListEntry> weblister_items = new ArrayList<BaseListEntry>();
 
         weblister_items.add(new BaseListEntry("Animas", "/pumps/animas.html", BaseListEntry.STATUS_DONE));
+        weblister_items.add(new BaseListEntry("Asante", "/pumps/asante.html", BaseListEntry.STATUS_NOTPLANNED));
         weblister_items.add(new BaseListEntry("Deltec", "/pumps/deltec.html", BaseListEntry.STATUS_NOTPLANNED));
         weblister_items.add(new BaseListEntry("Insulet", "/pumps/insulet.html", BaseListEntry.STATUS_DONE));
         weblister_items.add(new BaseListEntry("Minimed", "/pumps/minimed.html", BaseListEntry.STATUS_PLANNED));
         weblister_items.add(new BaseListEntry("Roche", "/pumps/roche.html", BaseListEntry.STATUS_DONE));
         weblister_items.add(new BaseListEntry("Sooil", "/pumps/sooil.html", BaseListEntry.STATUS_DONE));
+        weblister_items.add(new BaseListEntry("Tandem", "/pumps/tandem.html", BaseListEntry.STATUS_PLANNED));
 
         return weblister_items;
     }
@@ -221,6 +231,9 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
 
         // Dana
         deviceHandlerManager.addDeviceHandler(new DanaPumpHandler());
+
+        // Minimed
+        deviceHandlerManager.addDeviceHandler(new MinimedPumpDeviceHandler((DataAccessPump) this.dataAccess));
 
     }
 

@@ -1,6 +1,5 @@
 package ggc.pump.util;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
@@ -122,16 +121,14 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     private void loadExternalLibrariesInDevelopment()
     {
-
-        File fileMinimed = new File("../MinimedIntegration.txt");
-
-        System.out.println("" + fileMinimed.exists());
-
-        if (fileMinimed.exists())
-        {
-            this.loadExternalLibrary("ggc.pump.test.MinimedIntegration");
-        }
-
+        // File fileMinimed = new File("../MinimedIntegration.txt");
+        //
+        // System.out.println("" + fileMinimed.exists());
+        //
+        // if (fileMinimed.exists())
+        // {
+        // this.loadExternalLibrary("ggc.pump.test.MinimedIntegration");
+        // }
     }
 
 
@@ -164,10 +161,9 @@ public class DataAccessPump extends DataAccessPlugInBase
     }
 
 
-    // Method: getInstance
-    // Author: Andy
     /**
-     *
+     * getInstance
+     * 
      * This method returns reference to DataAccessPump object created, or if no
      * object was created yet, it creates one.<br>
      * <br>
@@ -212,79 +208,6 @@ public class DataAccessPump extends DataAccessPlugInBase
 
     // ********************************************************
     // ****** Init Methods *****
-    // ********************************************************
-
-    // /**
-    // * Create About Context for plugin
-    // */
-    // @Override
-    // public void createPlugInAboutContext()
-    // {
-    // // FIXME
-    // // FIXME
-    // PumpPluginDefinition pluginDefinition = (PumpPluginDefinition)
-    // this.getAppPluginDefinition();
-    //
-    // I18nControlAbstract ic = this.getI18nControlInstance();
-    //
-    // this.about_image_name = pluginDefinition.getAboutImagePath();
-    //
-    // this.about_plugin_copyright_from =
-    // pluginDefinition.getCopyrightFrom();
-    //
-    // // libraries
-    // ArrayList<LibraryInfoEntry> lst_libs = new
-    // ArrayList<LibraryInfoEntry>();
-    //
-    // lst_libs.addAll(getBaseLibraries());
-    // lst_libs.addAll(pluginDefinition.getPluginLibraries());
-    //
-    // this.plugin_libraries = lst_libs;
-    //
-    // // developers and other credits
-    // this.plugin_developers = pluginDefinition.getCredits();
-    //
-    // // features
-    // this.plugin_features = pluginDefinition.getFeatures();
-    //
-    // }
-
-    // /**
-    // * Create WebLister (for List) Context for plugin
-    // */
-    // @Override
-    // public void createWebListerContext()
-    // {
-    //
-    // this.weblister_items = new ArrayList<BaseListEntry>();
-    //
-    // this.weblister_items.add(new BaseListEntry("Animas",
-    // "/pumps/animas.html", BaseListEntry.STATUS_DONE));
-    // this.weblister_items.add(new BaseListEntry("Deltec",
-    // "/pumps/deltec.html", BaseListEntry.STATUS_NOTPLANNED));
-    // this.weblister_items.add(new BaseListEntry("Insulet",
-    // "/pumps/insulet.html", BaseListEntry.STATUS_DONE));
-    // this.weblister_items.add(new BaseListEntry("Minimed",
-    // "/pumps/minimed.html", BaseListEntry.STATUS_PLANNED));
-    // this.weblister_items.add(new BaseListEntry("Roche", "/pumps/roche.html",
-    // BaseListEntry.STATUS_DONE));
-    // this.weblister_items.add(new BaseListEntry("Sooil", "/pumps/sooil.html",
-    // BaseListEntry.STATUS_DONE));
-    //
-    // this.weblister_title = this.m_i18n.getMessage("DEVICE_LIST_WEB");
-    // this.weblister_desc = this.m_i18n.getMessage("DEVICE_LIST_WEB_DESC");
-    //
-    // }
-
-    // ********************************************************
-    // ****** Pumps *****
-    // ********************************************************
-    /*
-     * public PumpManager getPumpManager() { return this.m_pumpManager; }
-     */
-
-    // ********************************************************
-    // ****** Version *****
     // ********************************************************
 
 

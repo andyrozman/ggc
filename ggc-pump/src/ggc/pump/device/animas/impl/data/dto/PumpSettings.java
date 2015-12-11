@@ -19,7 +19,8 @@ import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.*;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.data.defs.PumpConfigurationGroup;
-import ggc.pump.device.animas.impl.data.enums.AnimasBolusSettingSubType;
+import ggc.pump.data.defs.RatioType;
+import ggc.pump.data.dto.RatioDTO;
 import ggc.pump.util.DataAccessPump;
 
 /**
@@ -57,7 +58,7 @@ public class PumpSettings
     public HashMap<Integer, BasalProfile> basalProfiles = new HashMap<Integer, BasalProfile>();
     public Integer activeBasalProfile = 1;
     public GlucoseUnitType glucoseUnitType;
-    private HashMap<AnimasBolusSettingSubType, List<SettingTimeValueEntry>> timeValueSettings = new HashMap<AnimasBolusSettingSubType, List<SettingTimeValueEntry>>();
+    private HashMap<RatioType, List<RatioDTO>> timeValueSettings = new HashMap<RatioType, List<RatioDTO>>();
     public Boolean audioBolusEnabled;
     public Boolean advancedBolusEnabled = false;
     public Boolean bolusReminderEnabled = false;
@@ -227,12 +228,12 @@ public class PumpSettings
                 break;
 
             case BGTargetSetting:
-                for (Entry<AnimasBolusSettingSubType, List<SettingTimeValueEntry>> entry : timeValueSettings.entrySet())
+                for (Entry<RatioType, List<RatioDTO>> entry : timeValueSettings.entrySet())
                 {
-                    for (SettingTimeValueEntry stve : entry.getValue())
+                    for (RatioDTO stve : entry.getValue())
                     {
-                        writeSetting(entry.getKey().getTranslation() + " #" + stve.index, stve.getSettingValue(), stve,
-                            PumpConfigurationGroup.Bolus);
+                        writeSetting(entry.getKey().getTranslation() + " #" + stve.getIndex(), stve.getSettingValue(),
+                            stve, PumpConfigurationGroup.Bolus);
                     }
                 }
                 break;
@@ -256,14 +257,14 @@ public class PumpSettings
     }
 
 
-    public void addSettingTimeValueEntry(SettingTimeValueEntry settingTimeValueEntry)
+    public void addSettingTimeValueEntry(RatioDTO settingTimeValueEntry)
     {
-        if (!timeValueSettings.containsKey(settingTimeValueEntry.type))
+        if (!timeValueSettings.containsKey(settingTimeValueEntry.getType()))
         {
-            timeValueSettings.put(settingTimeValueEntry.type, new ArrayList<SettingTimeValueEntry>());
+            timeValueSettings.put(settingTimeValueEntry.getType(), new ArrayList<RatioDTO>());
         }
 
-        timeValueSettings.get(settingTimeValueEntry.type).add(settingTimeValueEntry);
+        timeValueSettings.get(settingTimeValueEntry.getType()).add(settingTimeValueEntry);
     }
 
 

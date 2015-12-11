@@ -5,15 +5,21 @@ package ggc.pump.defs.device;
  */
 public enum PumpProfileDefinition
 {
-    AnimasProfile("1", "2", "3", "4"), //
-    MinimedProfile("STD", "A", "B"), //
-    RocheProfile("1", "2", "3", "4", "5"), //
+    AnimasProfile(12, "1", "2", "3", "4"), //
+    MinimedProfile(-1, "STD", "A", "B"), // FIXME
+    RocheProfile(24, "1", "2", "3", "4", "5"), //
+    AsanteProfile(10, "A", "B", "C", "D"), //
+    TandemProfile(16, "1", "2", "3", "4", "5", "6"), //
+    DanaProfile(48, "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");
 
-    DanaProfile("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");
+    int maxTimeSlots;
+    String[] profiles;
 
-    private PumpProfileDefinition(String... profiles)
+
+    PumpProfileDefinition(int maxTimeSlots, String... profiles)
     {
-
+        this.maxTimeSlots = maxTimeSlots;
+        this.profiles = profiles;
     }
 
 }

@@ -16,7 +16,11 @@ import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
 import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
-import ggc.pump.device.animas.impl.data.dto.*;
+import ggc.pump.data.dto.RatioDTO;
+import ggc.pump.device.animas.impl.data.dto.BasalLogEntry;
+import ggc.pump.device.animas.impl.data.dto.BasalProfileEntry;
+import ggc.pump.device.animas.impl.data.dto.BolusEntry;
+import ggc.pump.device.animas.impl.data.dto.PumpSettings;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -148,7 +152,7 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
     }
 
 
-    public void addSettingTimeValueEntry(SettingTimeValueEntry settingTimeValueEntry)
+    public void addSettingTimeValueEntry(RatioDTO settingTimeValueEntry)
     {
         this.pumpSettings.addSettingTimeValueEntry(settingTimeValueEntry);
 

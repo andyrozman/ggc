@@ -1,7 +1,9 @@
-package ggc.pump.device.animas.impl.data.enums;
+package ggc.pump.data.defs;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
+
+import ggc.plugin.data.enums.ValueType;
 import ggc.pump.util.DataAccessPump;
 
 /**
@@ -30,32 +32,46 @@ import ggc.pump.util.DataAccessPump;
  *  Author: Andy Rozman {andy@atech-software.com}
  */
 
-public enum AnimasBolusSettingSubType implements CodeEnumWithTranslation
+public enum RatioType implements CodeEnumWithTranslation
 {
-    InsulinCHRatio(1, "PCFG_CH_INS_RATIO"), //
-    InsulinBGRatio(2, "PCFG_BG_INS_RATIO"), //
-    BGTarget(3, "PCFG_TARGET_BG"), //
+    // simple values
+    InsulinCHRatio(1, "PCFG_CH_INS_RATIO", ValueType.Simple), //
+    InsulinBGRatio(2, "PCFG_BG_INS_RATIO", ValueType.Simple), //
+    BGTarget(3, "PCFG_TARGET_BG", ValueType.Simple), //
+
+    // delta
+    InsulinCHRatioDelta(1, "PCFG_CH_INS_RATIO", ValueType.Delta), //
+    InsulinBGRatioDelta(2, "PCFG_BG_INS_RATIO", ValueType.Delta), //
+    BGTargetDelta(3, "PCFG_TARGET_BG", ValueType.Delta), //
+
+    // range
+    InsulinCHRatioRange(1, "PCFG_CH_INS_RATIO", ValueType.Range), //
+    InsulinBGRatioRange(2, "PCFG_BG_INS_RATIO", ValueType.Range), //
+    BGTargetRange(3, "PCFG_TARGET_BG", ValueType.Range), //
     ;
 
     int code;
     String i18nKey;
     String translation;
+    ValueType valueType;
+
 
     static
     {
         I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
 
-        for (AnimasBolusSettingSubType pbt : values())
+        for (RatioType pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
         }
     }
 
 
-    private AnimasBolusSettingSubType(int code, String i18nKey)
+    RatioType(int code, String i18nKey, ValueType valueType)
     {
         this.code = code;
         this.i18nKey = i18nKey;
+        this.valueType = valueType;
     }
 
 
@@ -86,6 +102,24 @@ public enum AnimasBolusSettingSubType implements CodeEnumWithTranslation
     public String getName()
     {
         return this.name();
+    }
+
+
+    public ValueType getValueType()
+    {
+        return this.valueType;
+    }
+
+
+    public boolean isValueRange()
+    {
+        return (this.valueType == ValueType.Range);
+    }
+
+
+    public boolean isValueDelta()
+    {
+        return (this.valueType == ValueType.Delta);
     }
 
 }

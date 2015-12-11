@@ -1,7 +1,7 @@
 package ggc.pump.test;
 
 import java.io.File;
-import java.util.Vector;
+import java.util.List;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.TimerThread;
@@ -334,7 +334,7 @@ public class PumpConsoleTester extends AbstractPumpTest
     {
         try
         {
-            Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
+            List<String> vct = SerialProtocol.getAllAvailablePortsString();
 
             System.out.println(" --- List Serial Ports -----");
 

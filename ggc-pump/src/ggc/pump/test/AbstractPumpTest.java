@@ -17,6 +17,7 @@ public class AbstractPumpTest
     protected DataAccessPump dataAccessPump;
 
     protected boolean contextReady = false;
+    protected boolean initDb = true;
 
 
     protected void prepareContext()
@@ -27,20 +28,27 @@ public class AbstractPumpTest
         // Init core and Db
         dataAccess = DataAccess.getInstance();
 
-        GGCDb db = new GGCDb(dataAccess);
-        db.initDb();
+        if (initDb)
+        {
+            GGCDb db = new GGCDb(dataAccess);
+            db.initDb();
 
-        dataAccess.setDb(db);
-        dataAccess.loadSpecialParameters();
+            dataAccess.setDb(db);
+            dataAccess.loadSpecialParameters();
+        }
 
         // Init Pump Context
         dataAccessPump = DataAccessPump.createInstance(getPluginDefinition(dataAccess));
-        dataAccessPump.createDb(dataAccess.getHibernateDb());
-        dataAccessPump.initAllObjects();
-        dataAccessPump.loadSpecialParameters();
-        dataAccessPump.setCurrentUserId(1);
-        dataAccessPump.initSpecial();
-        dataAccessPump.setGlucoseUnitType(dataAccess.getGlucoseUnitType());
+
+        if (initDb)
+        {
+            dataAccessPump.createDb(dataAccess.getHibernateDb());
+            dataAccessPump.initAllObjects();
+            dataAccessPump.loadSpecialParameters();
+            dataAccessPump.setCurrentUserId(1);
+            dataAccessPump.initSpecial();
+            dataAccessPump.setGlucoseUnitType(dataAccess.getGlucoseUnitType());
+        }
 
         this.contextReady = true;
 

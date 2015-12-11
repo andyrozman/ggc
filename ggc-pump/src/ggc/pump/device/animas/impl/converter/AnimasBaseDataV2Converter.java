@@ -19,9 +19,13 @@ import ggc.plugin.device.impl.animas.data.AnimasDeviceReplyPacket;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.*;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
+import ggc.pump.data.defs.RatioType;
+import ggc.pump.data.dto.RatioDTO;
 import ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
-import ggc.pump.device.animas.impl.data.dto.*;
-import ggc.pump.device.animas.impl.data.enums.AnimasBolusSettingSubType;
+import ggc.pump.device.animas.impl.data.dto.BasalProfileEntry;
+import ggc.pump.device.animas.impl.data.dto.BolusEntry;
+import ggc.pump.device.animas.impl.data.dto.BolusExtEntry;
+import ggc.pump.device.animas.impl.data.dto.PumpSettings;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -590,16 +594,16 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
             int i2c_s2 = packet.getReceivedDataBit(29);
             int i2c_s3 = packet.getReceivedDataBit(30);
 
-            this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinCHRatio, 1,
-                    this.calculateTimeFromTimeSet(0), i2c_s3));
-            this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinCHRatio, 2,
-                    this.calculateTimeFromTimeSet(8), i2c_s0));
-            this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinCHRatio, 3,
-                    this.calculateTimeFromTimeSet(20), i2c_s1));
-            this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinCHRatio, 4,
-                    this.calculateTimeFromTimeSet(32), i2c_s2));
-            this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinCHRatio, 5,
-                    this.calculateTimeFromTimeSet(44), i2c_s3));
+            this.data.addSettingTimeValueEntry(
+                new RatioDTO(RatioType.InsulinCHRatio, 1, this.calculateTimeFromTimeSet(0), i2c_s3));
+            this.data.addSettingTimeValueEntry(
+                new RatioDTO(RatioType.InsulinCHRatio, 2, this.calculateTimeFromTimeSet(8), i2c_s0));
+            this.data.addSettingTimeValueEntry(
+                new RatioDTO(RatioType.InsulinCHRatio, 3, this.calculateTimeFromTimeSet(20), i2c_s1));
+            this.data.addSettingTimeValueEntry(
+                new RatioDTO(RatioType.InsulinCHRatio, 4, this.calculateTimeFromTimeSet(32), i2c_s2));
+            this.data.addSettingTimeValueEntry(
+                new RatioDTO(RatioType.InsulinCHRatio, 5, this.calculateTimeFromTimeSet(44), i2c_s3));
         }
         else
         {
@@ -658,15 +662,14 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
     {
         for (int i = 0; i < 6; i++)
         {
-            this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinCHRatio,
-                    (i + 1), this.calculateTimeFromTimeSet(i * 8), adp.getReceivedDataBit((6 + i))));
+            this.data.addSettingTimeValueEntry(new RatioDTO(RatioType.InsulinCHRatio, (i + 1),
+                    this.calculateTimeFromTimeSet(i * 8), adp.getReceivedDataBit((6 + i))));
 
             int isf = AnimasUtils.createIntValueThroughMoreBits(adp.getReceivedDataBit((12 + (2 * i))),
                 adp.getReceivedDataBit((12 + (2 * i) + 1)));
 
-            this.data.addSettingTimeValueEntry(
-                new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinBGRatio, (i + 1),
-                        this.calculateTimeFromTimeSet(i * 8), this.data.isBGinMgDL() ? isf : (float) (isf / 18.0f)));
+            this.data.addSettingTimeValueEntry(new RatioDTO(RatioType.InsulinBGRatio, (i + 1),
+                    this.calculateTimeFromTimeSet(i * 8), this.data.isBGinMgDL() ? isf : (float) (isf / 18.0f)));
         }
 
         for (int i = 0; i < 12; i++)
@@ -674,10 +677,10 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
             short bgTarget = adp.getReceivedDataBit((24 + i));
             short bgDelta = adp.getReceivedDataBit((36 + i));
 
-            this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.BGTarget, (i + 1),
-                    this.calculateTimeFromTimeSet(i * 8),
-                    this.data.isBGinMgDL() ? bgTarget : (float) (bgTarget / 18.0f),
-                    this.data.isBGinMgDL() ? bgDelta : (float) (bgDelta / 18.0f)));
+            this.data.addSettingTimeValueEntry(new RatioDTO(RatioType.BGTarget, (i + 1), //
+                    this.calculateTimeFromTimeSet(i * 8), //
+                    this.data.isBGinMgDL() ? bgTarget : (bgTarget / 18.0f), //
+                    this.data.isBGinMgDL() ? bgDelta : (bgDelta / 18.0f)));
         }
     }
 
@@ -687,8 +690,8 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
         int maxEntry = adp.getReceivedDataBit(7);
         for (int i = 0; i < maxEntry; i++)
         {
-            this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinCHRatio,
-                    (i + 1), this.calculateTimeFromTimeSet(adp.getReceivedDataBit((8 + i))), //
+            this.data.addSettingTimeValueEntry(new RatioDTO(RatioType.InsulinCHRatio, (i + 1),
+                    this.calculateTimeFromTimeSet(adp.getReceivedDataBit((8 + i))), //
                     AnimasUtils.createIntValueThroughMoreBits(adp.getReceivedDataBit((20 + (i * 2))),
                         adp.getReceivedDataBit((20 + (i * 2) + 1)))));
         }
@@ -705,13 +708,13 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
             if (this.data.isBGinMgDL())
             {
-                this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinBGRatio,
-                        (i + 1), this.calculateTimeFromTimeSet(adp.getReceivedDataBit((8 + i))), isf));
+                this.data.addSettingTimeValueEntry(new RatioDTO(RatioType.InsulinBGRatio, (i + 1),
+                        this.calculateTimeFromTimeSet(adp.getReceivedDataBit((8 + i))), isf));
             }
             else
             {
-                this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.InsulinBGRatio,
-                        (i + 1), this.calculateTimeFromTimeSet(adp.getReceivedDataBit((8 + i))), (isf / 18.0f)));
+                this.data.addSettingTimeValueEntry(new RatioDTO(RatioType.InsulinBGRatio, (i + 1),
+                        this.calculateTimeFromTimeSet(adp.getReceivedDataBit((8 + i))), (isf / 18.0f)));
             }
         }
     }
@@ -728,13 +731,13 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
             if (this.data.isBGinMgDL())
             {
-                this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.BGTarget,
-                        (i + 1), this.calculateTimeFromTimeSet(adp.getReceivedDataBit((8 + i))), bgTarget, bgDelta));
+                this.data.addSettingTimeValueEntry(new RatioDTO(RatioType.BGTarget, (i + 1),
+                        this.calculateTimeFromTimeSet(adp.getReceivedDataBit((8 + i))), bgTarget, bgDelta));
             }
             else
             {
-                this.data.addSettingTimeValueEntry(new SettingTimeValueEntry(AnimasBolusSettingSubType.BGTarget,
-                        (i + 1), this.calculateTimeFromTimeSet(adp.getReceivedDataBit((8 + i))), (bgTarget / 18.0f),
+                this.data.addSettingTimeValueEntry(new RatioDTO(RatioType.BGTarget, (i + 1),
+                        this.calculateTimeFromTimeSet(adp.getReceivedDataBit((8 + i))), (bgTarget / 18.0f),
                         (bgDelta / 18.0f)));
             }
         }

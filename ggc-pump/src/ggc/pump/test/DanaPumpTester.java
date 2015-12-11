@@ -1,6 +1,6 @@
 package ggc.pump.test;
 
-import java.util.Vector;
+import java.util.List;
 
 import com.atech.utils.TimerThread;
 
@@ -155,7 +155,7 @@ public class DanaPumpTester // extends JFrame
     {
         try
         {
-            Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
+            List<String> vct = SerialProtocol.getAllAvailablePortsString();
 
             System.out.println(" --- List Serial Ports -----");
 

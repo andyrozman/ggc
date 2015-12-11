@@ -65,6 +65,10 @@ public class PumpDevicesIds
      */
     public static final int COMPANY_SOOIL = 7;
 
+    public static final int COMPANY_ASANTE = 8;
+
+    public static final int COMPANY_TANDEM = 9;
+
     /**
      * Pump Minimed 508
      */
@@ -135,10 +139,6 @@ public class PumpDevicesIds
      */
     public static final int PUMP_DISETRONIC_D_TRON = 30001;
 
-
-
-
-
     public static final int PUMP_ANIMAS_IR_1000 = 40001;
 
     /**
@@ -165,7 +165,6 @@ public class PumpDevicesIds
      * Pump Animas Vibe
      */
     public static final int PUMP_ANIMAS_VIBE = 40006;
-
 
     /**
      * Deltec - Cosmo 1700
@@ -197,5 +196,10 @@ public class PumpDevicesIds
      */
     public static final int PUMP_DANA_DIABECARE_III_R = 70003;
 
+    public static final int PUMP_ASANTE_SNAP = 80001;
+
+    public static final int PUMP_TANDEM_TSLIM = 90001;
+    public static final int PUMP_TANDEM_TFLEX = 90002;
+    public static final int PUMP_TANDEM_TSLIM_G4 = 90003;
 
 }
