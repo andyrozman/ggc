@@ -1,6 +1,10 @@
 package ggc.gui.main;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Observable;
 
 import javax.swing.*;
@@ -8,7 +12,10 @@ import javax.swing.*;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.utils.ATSwingUtils;
+
+import ggc.core.enums.UpgradeCheckStatus;
 import ggc.core.util.DataAccess;
+import info.clearthought.layout.TableLayout;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,70 +43,156 @@ import ggc.core.util.DataAccess;
  *          Andy {andy@atech-software.com}  
  */
 
-public class StatusBar extends JPanel implements EventObserverInterface
+public class StatusBar extends JPanel implements EventObserverInterface, ActionListener
 {
 
     private static final long serialVersionUID = 1184879736050179885L;
 
+    DataAccess dataAccess = DataAccess.getInstance();
+    private I18nControlAbstract m_ic = dataAccess.getI18nControlInstance();
+
     private JLabel lblMessage = null;
-    private JLabel lblLed = null;
-    private JLabel lblName = null;
-    DataAccess da = DataAccess.getInstance();
-    private I18nControlAbstract m_ic = da.getI18nControlInstance();
+    private JLabel lblDbName = null;
+    private JLabel lblDbLed = null;
+    private JLabel lblNetwork = null;
 
     private ImageIcon[] statusIcons = null;
+    private ImageIcon[] networkIcons = null;
     MainFrame m_frame;
+    private UpgradeCheckStatus upgradeCheckStatus = UpgradeCheckStatus.NotChecked;
 
 
-    /**
-     * Constructor
-     * 
-     * @param frame 
-     */
     public StatusBar(MainFrame frame)
     {
         this.m_frame = frame;
-        statusIcons = new ImageIcon[4];
-
         ATSwingUtils.initLibrary();
 
+        initIcons();
+        initStatusBars();
+
+        dataAccess.addObserver(DataAccess.OBSERVABLE_STATUS, this);
+    }
+
+
+    private void initIcons()
+    {
+        statusIcons = new ImageIcon[4];
         statusIcons[0] = new ImageIcon(getClass().getResource("/icons/led_red.gif"));
         statusIcons[1] = new ImageIcon(getClass().getResource("/icons/led_yellow.gif"));
-        statusIcons[2] = ATSwingUtils.getImageIcon("led_blue.gif", 14, 14, this, da);
-
-        // new ImageIcon(getClass().getResource("/icons/led_blue.gif"));
+        statusIcons[2] = ATSwingUtils.getImageIcon("led_blue.gif", 14, 14, this, dataAccess);
         statusIcons[3] = new ImageIcon(getClass().getResource("/icons/led_green.gif"));
 
+        networkIcons = new ImageIcon[5];
+        // no state
+        networkIcons[0] = ATSwingUtils.getImageIcon("net_no_state.png", 23, 23, this, dataAccess);
+        // success
+        networkIcons[1] = ATSwingUtils.getImageIcon("net_connected.png", 22, 22, this, dataAccess);
+        // error
+        networkIcons[2] = ATSwingUtils.getImageIcon("net_error.png", 22, 22, this, dataAccess);
+        // news - update
+        networkIcons[3] = ATSwingUtils.getImageIcon("net_news.png", 22, 22, this, dataAccess);
+        // download (not planned for now)
+        networkIcons[3] = ATSwingUtils.getImageIcon("net_download.png", 22, 22, this, dataAccess);
+    }
+
+
+    private JPanel createDbStatusPanel()
+    {
+        // Db Name
+        JPanel panelDb = new JPanel();
+        panelDb.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
+
+        double sizes[][] = { { 4, TableLayout.FILL, 20, 5 }, //
+                             { 20, 2 } };
+
+        panelDb.setLayout(new TableLayout(sizes));
+
+        lblDbName = new JLabel();
+        setDatabaseName(m_ic.getMessage("UNKNOWN"));
+        lblDbName.setVerticalAlignment(JLabel.CENTER);
+        panelDb.add(lblDbName, "1, 0");
+
+        lblDbLed = new JLabel(statusIcons[0]);
+        lblDbLed.setPreferredSize(new Dimension(20, 20));
+
+        panelDb.add(lblDbLed, "2, 0");
+
+        return panelDb;
+    }
+
+
+    private JPanel createCombinedStatusPanel()
+    {
+        JPanel statusMainPanel = new JPanel();
+
+        double sizes[][] = { { 0.5, 2, TableLayout.FILL, 2 }, //
+                             { 2, 20 } };
+
+        statusMainPanel.setLayout(new TableLayout(sizes));
+
+        // Status message
         lblMessage = new JLabel();
         lblMessage.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
-        lblMessage.setPreferredSize(new Dimension(400, 18));
+        lblMessage.setText("ufufuu");
+        lblMessage.setBackground(Color.red);
 
-        JPanel pan = new JPanel();
-        pan.setPreferredSize(new Dimension(385, 18));
-        pan.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
-        SpringLayout layout = new SpringLayout();
-        pan.setLayout(layout); // new java.awt.FlowLayout());
+        statusMainPanel.add(lblMessage, "0, 1");
 
-        lblName = new JLabel();
-        setDatabaseName(m_ic.getMessage("UNKNOWN"));
-        pan.add(lblName);
+        JPanel dbStatusPanel = createDbStatusPanel();
+        statusMainPanel.add(dbStatusPanel, "2, 1");
 
-        lblLed = new JLabel(statusIcons[0]);
-        pan.add(lblLed, BorderLayout.EAST);
+        return statusMainPanel;
+    }
 
-        layout.putConstraint(SpringLayout.WEST, lblName, 5, SpringLayout.WEST, pan);
 
-        layout.putConstraint(SpringLayout.EAST, lblLed, -10, SpringLayout.EAST, pan);
+    private void initStatusBars()
+    {
+        double sizes[][] = { { 3, TableLayout.FILL, 24, 3 }, //
+                             { 24 } };
 
-        layout.putConstraint(SpringLayout.NORTH, lblLed, 1, SpringLayout.NORTH, pan);
+        this.setLayout(new TableLayout(sizes));
 
-        setLayout(new BorderLayout(2, 2));
-        this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-        add(lblMessage, BorderLayout.WEST);
-        add(pan, BorderLayout.EAST);
+        JPanel statusMainPanel = createCombinedStatusPanel();
 
-        da.addObserver(DataAccess.OBSERVABLE_STATUS, this);
+        this.add(statusMainPanel, "1, 0");
 
+        // Update Connection Panel
+        JPanel connectionPanel = new JPanel();
+        connectionPanel.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
+        connectionPanel.setBackground(Color.blue);
+
+        connectionPanel.setPreferredSize(new Dimension(24, 24));
+        connectionPanel.setMinimumSize(new Dimension(24, 24));
+        connectionPanel.setMaximumSize(new Dimension(24, 24));
+
+        lblNetwork = new JLabel(networkIcons[0]);
+        lblNetwork.setVerticalAlignment(JLabel.CENTER);
+        lblNetwork.setHorizontalAlignment(JLabel.CENTER);
+        lblNetwork.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
+        lblNetwork.addMouseListener(new MouseAdapter()
+        {
+
+            public void mouseClicked(MouseEvent e)
+            {
+                if (e.getClickCount() == 2)
+                {
+                    displayUpgradeDialog();
+                }
+            }
+        });
+
+        connectionPanel.add(lblNetwork);
+
+        this.add(lblNetwork, "2, 0");
+
+    }
+
+
+    private void displayUpgradeDialog()
+    {
+        dataAccess.showDialog(dataAccess.getMainParent(), ATSwingUtils.DIALOG_INFO,
+            "<html><b>There is no update available.</b><br><br>Functionality to check for new version and to<br>upgrade"
+                    + " from server will become available in<br>version 0.8.</html>");
     }
 
 
@@ -159,8 +252,7 @@ public class StatusBar extends JPanel implements EventObserverInterface
      */
     public void setDbStatus(int status)
     {
-        this.lblLed.setIcon(statusIcons[status]);
-        // this.m_frame.setMenusByDbLoad(status);
+        this.lblDbLed.setIcon(statusIcons[status]);
     }
 
 
@@ -171,7 +263,13 @@ public class StatusBar extends JPanel implements EventObserverInterface
      */
     public void setDatabaseName(String dbName)
     {
-        lblName.setText(m_ic.getMessage("DATABASE") + " [" + dbName + "]:");
+        lblDbName.setText(m_ic.getMessage("DATABASE") + " [" + dbName + "]:");
+    }
+
+
+    public void setUpgradeCheckStatus(UpgradeCheckStatus status)
+    {
+        this.upgradeCheckStatus = status;
     }
 
 
@@ -180,7 +278,7 @@ public class StatusBar extends JPanel implements EventObserverInterface
      */
     public void update(Observable obj, Object arg)
     {
-        // System.out.println("update status");
+        // System.out.println("update status: " + arg);
 
         if (arg instanceof Integer)
         {
@@ -195,6 +293,10 @@ public class StatusBar extends JPanel implements EventObserverInterface
             {
                 this.setDatabaseName(s.substring(8));
             }
+            else if (s.startsWith("UPDATE_STATUS="))
+            {
+                // TODO
+            }
             else
             {
                 this.setStatusMessage(s);
@@ -202,4 +304,9 @@ public class StatusBar extends JPanel implements EventObserverInterface
         }
     }
 
+
+    public void actionPerformed(ActionEvent e)
+    {
+        System.out.println("Clicked: " + this.upgradeCheckStatus);
+    }
 }

@@ -25,23 +25,28 @@ import com.atech.help.HelpContext;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.plugin.PlugInClient;
-import com.atech.update.client.UpdateDialog;
+import com.atech.upgrade.client.gui.UpgradeDialog;
 import com.atech.utils.ATSwingUtils;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
 import ggc.GGC;
-import ggc.core.data.graph.GraphViewCourse;
-import ggc.core.data.graph.GraphViewSpread;
+import ggc.core.data.graph.v1.db.GraphV1DbRetrieverCore;
+import ggc.core.data.graph.v1.gui.HbA1cDialog;
+import ggc.core.data.graph.v1.view.GraphViewAbstract;
+import ggc.core.data.graph.v1.view.GraphViewCourse;
+import ggc.core.data.graph.v1.view.GraphViewFrequency;
+import ggc.core.data.graph.v1.view.GraphViewSpread;
 import ggc.core.db.GGCDbLoader;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
 import ggc.core.plugins.GGCPluginType;
 import ggc.core.util.DataAccess;
 import ggc.core.util.RefreshInfo;
+import ggc.core.util.upgrade.GGCUpgradeApplicationContext;
 import ggc.gui.cfg.PropertiesDialog;
 import ggc.gui.dialogs.*;
 import ggc.gui.dialogs.stock.def.StockListDef;
-import ggc.gui.main.panels.InfoPanel;
+import ggc.gui.main.panels.MainWindowInfoPanel;
 import ggc.gui.pen.DailyStatsDialog;
 import ggc.shared.ratio.RatioBaseDialog;
 import ggc.shared.ratio.RatioExtendedDialog;
@@ -88,6 +93,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     public static boolean developer_version = false;
     private static Log log = LogFactory.getLog(MainFrame.class);
 
+    private GraphV1DbRetrieverCore graphV1DbRetrieverCore;
+
 
     /**
      * Static definitions (Look and Feel)
@@ -104,7 +111,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     /**
      * Information panels
      */
-    public InfoPanel informationPanel;
+    public MainWindowInfoPanel informationPanel;
     boolean title_set = false;
     /**
      * Menu Bar
@@ -144,6 +151,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         statusPanel = new StatusBar(this);
 
         this.actions = new Hashtable<String, JMenuItem>();
+        graphV1DbRetrieverCore = new GraphV1DbRetrieverCore();
         MainFrame.developer_version = developer_version;
 
         String title_full = "  GGC - GNU Gluco Control (" + GGC.full_version + ")";
@@ -179,7 +187,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         statusPanel.setStatusMessage(m_ic.getMessage("INIT"));
 
         // information panel
-        informationPanel = new InfoPanel();
+        informationPanel = new MainWindowInfoPanel();
         getContentPane().add(informationPanel, BorderLayout.CENTER);
 
         setMenusByDbLoad(StatusBar.DB_STOPPED);
@@ -310,41 +318,57 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         this.menus.put("MENU_FILE", menux);
 
-        // bgs menu
-        menux = this.createMenu("MN_DATA", null);
-        this.createMenuItem(menux, "MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png");
+        // pen/injection menu
+        menux = this.createMenu("MN_PEN_INJECTION", null);
+        this.createMenuItem(menux, "MN_DAILY", "MN_DAILY_DESC", "pen_view_daily", "calendar.png");
         menux.addSeparator();
 
-        menuxsub = this.createMenu(menux, "MN_DATA_GRAPH", null);
-        this.createMenuItem(menuxsub, "MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png");
-        this.createMenuItem(menuxsub, "MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png");
-        this.createMenuItem(menuxsub, "MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png");
+        // menuxsub = this.createMenu(menux, "MN_DATA_GRAPH", null);
+        // this.createMenuItem(menuxsub, "MN_COURSE", "MN_COURSE_DESC",
+        // "view_course", "line-chart.png");
+        // this.createMenuItem(menuxsub, "MN_SPREAD", "MN_SPREAD_DESC",
+        // "view_spread", "dot-chart.png");
+        // this.createMenuItem(menuxsub, "MN_FREQUENCY", "MN_FREQUENCY_DESC",
+        // "view_freq", "column-chart.png");
+        //
+        // menux.addSeparator();
+        this.createMenuItem(menux, "MN_HBA1C", "MN_HBA1C_DESC", "pen_view_hba1c", "pie-chart.png");
 
-        menux.addSeparator();
-        this.createMenuItem(menux, "MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png");
-
-        addRatioMenu(menux);
+        // addRatioMenu(menux, true);
 
         this.menus.put("MENU_PEN", menux);
 
-        // doctors menu
-        menux = this.createMenu("MN_DOCTOR", null);
-        this.createMenuItem(menux, "MN_DOCS", "MN_DOCS_DESC", "doc_docs", null);
-        menux.addSeparator();
-        this.createMenuItem(menux, "MN_APPOINT", "MN_APPOINT_DESC", "doc_appoint", null);
-        menux.addSeparator();
-        this.createMenuItem(menux, "MN_STOCKS", "MN_STOCKS_DESC", "doc_stocks", null);
-
-        this.menus.put("MENU_DOCTOR", menux);
-
         // reports menu
-        menux = this.createMenu("MN_PRINTING", null);
+        menux = this.createMenu("MN_REPORTS_GRAPHS", null);
 
-        menuxsub = this.createMenu(menux, "MN_REPORTS", "MN_REPORTS_DESC");
+        menux.add(createTextMenuItem("MN_REPORTS"));
+
+        menuxsub = this.createMenu(menux, "MN_PEN_INJECTION", "MN_REPORTS_DESC");
         this.createMenuItem(menuxsub, "MN_PDF_SIMPLE", "MN_PDF_SIMPLE_DESC", "report_pdf_simple", "print.png");
         this.createMenuItem(menuxsub, "MN_PDF_EXT", "MN_PDF_EXT_DESC", "report_pdf_extended", "print.png");
 
         this.menus.put("MENU_PRINT", menux);
+
+        // misc menu
+        menux = this.createMenu("MN_MISC", null);
+
+        // misc - ratios
+        menux.add(createTextMenuItem("MN_DATA_RATIO"));
+        addRatioMenu(menux, false);
+
+        menux.addSeparator();
+
+        // misc - doctors
+        menux.add(createTextMenuItem("MN_DOCTOR"));
+        this.createMenuItem(menux, "MN_DOCS", "MN_DOCS_DESC", "doc_docs", null);
+        this.createMenuItem(menux, "MN_APPOINT", "MN_APPOINT_DESC", "doc_appoint", null);
+
+        menux.addSeparator();
+
+        menux.add(createTextMenuItem("MN_STOCKS"));
+        this.createMenuItem(menux, "MN_STOCKS", "MN_STOCKS_DESC", "doc_stocks", null);
+
+        this.menus.put("MENU_MISC", menux);
 
         // tools menu
         menux = this.createMenu("MN_TOOLS", null);
@@ -390,45 +414,18 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         // System.out.println("Refresh Menus: " + refresh_init);
         this.menuBar.removeAll();
 
+        // file
         this.menuBar.add(this.menus.get("MENU_FILE"));
+
+        // pen-injection
         this.menuBar.add(this.menus.get("MENU_PEN"));
 
-        JMenu menu = getPlugInMenu(GGCPluginType.NutritionToolPlugin);
-
-        if (menu != null)
-        {
-            this.menuBar.add(menu);
-        }
-
-        // doctors menu
-        this.menuBar.add(this.menus.get("MENU_DOCTOR"));
-
-        if (refresh_init)
-        {
-            // reports menu
-            for (Enumeration<String> en = m_da.getPlugins().keys(); en.hasMoreElements();)
-            {
-                String key = en.nextElement();
-
-                PlugInClient pic = m_da.getPlugIn(key);
-
-                if (pic.getPlugInPrintMenus() != null)
-                {
-                    JMenu[] menus = pic.getPlugInPrintMenus();
-
-                    for (JMenu menu2 : menus)
-                    {
-                        this.menus.get("MENU_PRINT").add(menu2);
-                    }
-                }
-            }
-        }
-
-        this.menuBar.add(this.menus.get("MENU_PRINT"));
-
-        GGCPluginType[] keys = { GGCPluginType.MeterToolPlugin, //
+        // plugins
+        GGCPluginType[] keys = { GGCPluginType.NutritionToolPlugin, //
+                                 GGCPluginType.MeterToolPlugin, //
                                  GGCPluginType.PumpToolPlugin, //
-                                 GGCPluginType.CGMSToolPlugin, };
+                                 GGCPluginType.CGMSToolPlugin, //
+                                 GGCPluginType.ConnectToolPlugin };
 
         for (GGCPluginType key : keys)
         {
@@ -442,7 +439,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
                     if (key == GGCPluginType.PumpToolPlugin)
                     {
-                        addRatioMenu(menuTmp);
+                        // addRatioMenu(menuTmp, true);
                     }
 
                     this.menuBar.add(menuTmp);
@@ -450,16 +447,110 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             }
         }
 
+        if (refresh_init)
+        {
+            prepareReportsGraphsMenu();
+        }
+
+        this.menuBar.add(this.menus.get("MENU_PRINT"));
+
+        // misc menu
+        this.menuBar.add(this.menus.get("MENU_MISC"));
+
+        // tools
         this.menuBar.add(this.menus.get("MENU_TOOLS"));
+
+        // help
         this.menuBar.add(this.menus.get("MENU_HELP"));
 
         this.setJMenuBar(this.menuBar);
     }
 
 
-    private void addRatioMenu(JMenu menuParent)
+    private JMenuItem createTextMenuItem(String text)
     {
-        menuParent.addSeparator();
+        JMenuItem mi = new JMenuItem(m_ic.getMessageWithoutMnemonic(text));
+        mi.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
+
+        return mi;
+    }
+
+
+    private void prepareReportsGraphsMenu()
+    {
+        JMenu parentMenu = this.menus.get("MENU_PRINT");
+
+        GGCPluginType[] keys = { GGCPluginType.NutritionToolPlugin, //
+                                 GGCPluginType.MeterToolPlugin, //
+                                 GGCPluginType.PumpToolPlugin, //
+                                 GGCPluginType.CGMSToolPlugin, };
+
+        // this.menus.get("MENU_PRINT").add(mi);
+
+        // reports menu
+        // for (Enumeration<String> en = m_da.getPlugins().keys();
+        // en.hasMoreElements();)
+        for (GGCPluginType pluginType : keys)
+        {
+            // String key = en.nextElement();
+
+            PlugInClient pic = m_da.getPlugIn(pluginType);
+
+            if (pic.getPlugInReportMenus() != null)
+            {
+                JMenu[] menus = pic.getPlugInReportMenus();
+
+                for (JMenu menu2 : menus)
+                {
+                    // this.menus.get("MENU_PRINT").add(menu2);
+                    parentMenu.add(menu2);
+                }
+            }
+        }
+
+        parentMenu.addSeparator();
+
+        parentMenu.add(createTextMenuItem("MN_GRAPHS"));
+
+        JMenu menuxsub = this.createMenu(parentMenu, "MN_PEN_INJECTION", null);
+        this.createMenuItem(menuxsub, "MN_COURSE", "MN_COURSE_DESC", "pen_graph_course", "line-chart.png");
+        this.createMenuItem(menuxsub, "MN_SPREAD", "MN_SPREAD_DESC", "pen_graph_spread", "dot-chart.png");
+        this.createMenuItem(menuxsub, "MN_FREQUENCY", "MN_FREQUENCY_DESC", "pen_graph_freq", "column-chart.png");
+
+        // mi = new JMenuItem("Graphs");
+        // mi.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
+        // this.menus.get("MENU_PRINT").add(mi);
+
+        // reports menu
+        // for (Enumeration<String> en = m_da.getPlugins().keys();
+        // en.hasMoreElements();)
+        for (GGCPluginType pluginType : keys)
+        {
+            // String key = en.nextElement();
+
+            PlugInClient pic = m_da.getPlugIn(pluginType);
+
+            if (pic.getPlugInGraphMenus() != null)
+            {
+                JMenu[] menus = pic.getPlugInGraphMenus();
+
+                for (JMenu menu2 : menus)
+                {
+                    // this.menus.get("MENU_PRINT").add(menu2);
+                    parentMenu.add(menu2);
+                }
+            }
+        }
+
+    }
+
+
+    private void addRatioMenu(JMenu menuParent, boolean withSeparator)
+    {
+        if (withSeparator)
+        {
+            menuParent.addSeparator();
+        }
 
         JMenu menuxsub = this.createMenu(menuParent, "MN_DATA_RATIO", null);
         this.createMenuItem(menuxsub, "MN_RATIO_BASE", "MN_RATIO_BASE_DESC", "ratio_base", null);
@@ -529,15 +620,15 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         this.createToolbarButton("MN_LOGIN", "MN_LOGIN_DESC", "file_login", "logon.png", GGCToolbarType.PenInjection);
         toolbar.addSeparator(d);
 
-        this.createToolbarButton("MN_DAILY", "MN_DAILY_DESC", "view_daily", "calendar.png",
+        this.createToolbarButton("MN_DAILY", "MN_DAILY_DESC", "pen_view_daily", "calendar.png",
             GGCToolbarType.PenInjection);
-        this.createToolbarButton("MN_COURSE", "MN_COURSE_DESC", "view_course", "line-chart.png",
+        this.createToolbarButton("MN_COURSE", "MN_COURSE_DESC", "pen_graph_course", "line-chart.png",
             GGCToolbarType.PenInjection);
-        this.createToolbarButton("MN_SPREAD", "MN_SPREAD_DESC", "view_spread", "dot-chart.png",
+        this.createToolbarButton("MN_SPREAD", "MN_SPREAD_DESC", "pen_graph_pread", "dot-chart.png",
             GGCToolbarType.PenInjection);
-        this.createToolbarButton("MN_FREQUENCY", "MN_FREQUENCY_DESC", "view_freq", "column-chart.png",
+        this.createToolbarButton("MN_FREQUENCY", "MN_FREQUENCY_DESC", "pen_graph_freq", "column-chart.png",
             GGCToolbarType.PenInjection);
-        this.createToolbarButton("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png",
+        this.createToolbarButton("MN_HBA1C", "MN_HBA1C_DESC", "pen_view_hba1c", "pie-chart.png",
             GGCToolbarType.PenInjection);
         toolbar.addSeparator(d);
 
@@ -582,7 +673,11 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         this.createToolbarButton("MN_PUMPS_MANUAL_ENTRY", "MN_PUMPS_MANUAL_ENTRY_DESC", "pumps_manual_entry",
             "calendar.png", GGCToolbarType.Pump);
-        this.createToolbarButton("MN_HBA1C", "MN_HBA1C_DESC", "view_hba1c", "pie-chart.png", GGCToolbarType.Pump);
+        this.createToolbarButton("MN_HBA1C" + " Old", "MN_HBA1C_DESC", "view_hba1c_old", "pie-chart.png",
+            GGCToolbarType.Pump);
+
+        this.createToolbarButton("MN_HBA1C", "MN_HBA1C_DESC", "pen_view_hba1c", "pie-chart.png", GGCToolbarType.Pump);
+
         toolbar.addSeparator(d);
 
         this.createToolbarButton("MN_MEALS", "MN_MEALS_DESC", "food_meals", "food.png", GGCToolbarType.Pump);
@@ -618,11 +713,11 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         {
             // this.createToolbarButton("MN_LOGIN", "MN_LOGIN_DESC",
             // "file_login", "logon.png");
-            setToolBarItemEnabled("view_daily", false);
-            setToolBarItemEnabled("view_course", false);
-            setToolBarItemEnabled("view_spread", false);
-            setToolBarItemEnabled("view_freq", false);
-            setToolBarItemEnabled("view_hba1c", false);
+            setToolBarItemEnabled("pen_view_daily", false);
+            setToolBarItemEnabled("pen_graph_course", false);
+            setToolBarItemEnabled("pen_graph_spread", false);
+            setToolBarItemEnabled("pen_graph_freq", false);
+            setToolBarItemEnabled("pen_view_hba1c", false);
 
             // setToolBarItemEnabled("food_meals", false);
 
@@ -632,23 +727,50 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         }
         else if (status == StatusBar.DB_INIT_DONE)
         {
-            setToolBarItemEnabled("view_daily", true);
-            setToolBarItemEnabled("view_course", true);
-            setToolBarItemEnabled("view_spread", true);
-            setToolBarItemEnabled("view_freq", true);
-            setToolBarItemEnabled("view_hba1c", true);
+            setToolBarItemEnabled("pen_view_daily", true);
+            setToolBarItemEnabled("pen_graph_course", true);
+            setToolBarItemEnabled("pen_graph_spread", true);
+            setToolBarItemEnabled("pen_graph_freq", true);
+            setToolBarItemEnabled("pen_view_hba1c", true);
 
             setToolBarItemEnabled("report_pdf_simple", true);
         }
         else if (status == StatusBar.DB_BASE_DONE)
         {
             setToolBarItemEnabled("tools_pref", true);
+            loadInitialSize();
         }
         else if (status == StatusBar.DB_LOADED)
         {
             // this.toolbar_items.get("food_meals").setEnabled(true);
         }
 
+    }
+
+
+    private void loadInitialSize()
+    {
+        this.setSize(this.m_da.getConfigurationManagerWrapper().getMainWindowSize());
+
+        // this.addComponentListener(new ComponentAdapter()
+        // {
+        //
+        // public void componentResized(ComponentEvent e)
+        // {
+        // JFrame frame = (JFrame) e.getSource();
+        // // FIXME
+        // m_da.getConfigurationManagerWrapper().setMainWindowSize(frame.getSize());
+        // m_da.getConfigurationManagerWrapper().saveConfig();
+        // }
+        //
+        // });
+    }
+
+
+    private void saveInitialSize()
+    {
+        m_da.getConfigurationManagerWrapper().setMainWindowSize(this.getSize());
+        m_da.getConfigurationManagerWrapper().saveConfig();
     }
 
 
@@ -761,11 +883,11 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         {
             // bgs menu
             this.menus.get("MENU_PEN").setEnabled(false);
-            this.actions.get("view_daily").setEnabled(false);
-            this.actions.get("view_course").setEnabled(false);
-            this.actions.get("view_spread").setEnabled(false);
-            this.actions.get("view_freq").setEnabled(false);
-            this.actions.get("view_hba1c").setEnabled(false);
+            this.actions.get("pen_view_daily").setEnabled(false);
+            // this.actions.get("view_course").setEnabled(false);
+            // this.actions.get("view_spread").setEnabled(false);
+            // this.actions.get("view_freq").setEnabled(false);
+            this.actions.get("pen_view_hba1c").setEnabled(false);
 
             // reports menu
             this.menus.get("MENU_PRINT").setEnabled(false);
@@ -784,11 +906,11 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         {
             // bgs menu
             this.menus.get("MENU_PEN").setEnabled(true);
-            this.actions.get("view_daily").setEnabled(true);
-            this.actions.get("view_course").setEnabled(true);
-            this.actions.get("view_spread").setEnabled(true);
-            this.actions.get("view_freq").setEnabled(true);
-            this.actions.get("view_hba1c").setEnabled(true);
+            this.actions.get("pen_view_daily").setEnabled(true);
+            // this.actions.get("view_course").setEnabled(true);
+            // this.actions.get("view_spread").setEnabled(true);
+            // this.actions.get("view_freq").setEnabled(true);
+            this.actions.get("pen_view_hba1c").setEnabled(true);
 
             // reports menu
             this.menus.get("MENU_PRINT").setEnabled(true);
@@ -892,7 +1014,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void close()
     {
-        m_da.getSettings().save();
+        saveInitialSize();
+        // m_da.getSettings().save();
 
         if (m_da != null)
         {
@@ -937,26 +1060,29 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         {
             close();
         }
-        else if (command.equals("view_daily"))
+        else if (command.equals("pen_view_daily"))
         {
             new DailyStatsDialog(m_da);
         }
-        else if (command.equals("view_course"))
+        else if (command.equals("pen_graph_course"))
         {
-            new GraphViewer(new GraphViewCourse(), m_da, MainFrame.this, true);
+            startGraphViewer(new GraphViewCourse(null, graphV1DbRetrieverCore));
         }
-        else if (command.equals("view_spread"))
+        else if (command.equals("pen_graph_spread"))
         {
-            new GraphViewer(new GraphViewSpread(), m_da, MainFrame.this, true);
+            startGraphViewer(new GraphViewSpread(null, graphV1DbRetrieverCore));
         }
-        else if (command.equals("view_freq"))
+        else if (command.equals("pen_graph_freq"))
         {
-            // new FrequencyGraphDialog(dataAccess);
-            featureNotImplementedDescription(m_ic.getMessage("FREQGRAPHFRAME"), next_version);
+            startGraphViewer(new GraphViewFrequency(null, graphV1DbRetrieverCore));
         }
-        else if (command.equals("view_hba1c"))
+        else if (command.equals("view_hba1c_old"))
         {
-            new HbA1cDialog(m_da);
+            new HbA1cDialogOld(m_da);
+        }
+        else if (command.equals("pen_view_hba1c"))
+        {
+            new HbA1cDialog(m_da, graphV1DbRetrieverCore);
         }
         else if (command.equals("tools_pref"))
         {
@@ -974,7 +1100,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         }
         else if (command.equals("hlp_check_update"))
         {
-            UpdateDialog ud = new UpdateDialog(MainFrame.this, m_da);
+            UpgradeDialog ud = new UpgradeDialog(MainFrame.this, new GGCUpgradeApplicationContext(m_da), m_da);
             ud.enableHelp("GGC_Tools_Update");
             ud.showDialog();
         }
@@ -1162,6 +1288,20 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             System.out.println("Unknown Command: " + command);
         }
 
+    }
+
+
+    private void startGraphViewer(GraphViewAbstract graphViewAbstract)
+    {
+        Dimension size = m_da.getConfigurationManagerWrapper().getGraphViewerSize();
+
+        graphViewAbstract.setInitialSize(size);
+
+        GraphViewer graphViewer = new GraphViewer(graphViewAbstract, m_da, MainFrame.this, true);
+
+        size = graphViewer.getSize();
+
+        m_da.getConfigurationManagerWrapper().setGraphViewerSize(size);
     }
 
 

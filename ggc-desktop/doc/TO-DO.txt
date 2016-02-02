@@ -67,19 +67,121 @@ We plan to change version to 1.0, when all entries specified with [1.0] are
 finished (Help for english, Upgrade, Db Tool and Support for multiple persons)
 
 
-Version 0.7 [25.12.2015]  / 1.2.2016
-------------------------
+Version 0.7  [1.4 - 1.6.2016]
+=================================
+
+(1) [EXP:31.12.2015]
+Minimed:
+         - decode pump history data - 2.2 [?]  [EXP:31.12.2015]
+
+(2) [EXP:5.1.2016]
+Startup: - fix startup creation (30%) - 5  [4.1]  [EXP:4.1.2016]
+         - move package  [EXP:5.1.2016]
+
+(3) [EXP:20.2.2016]
+Update System v3 [1.0]
+    - Software updater
+       CLIENT
+        - tasks:         [EXP:20.1.2016]
+                 - download file from server
+                 + unpack file
+                 + backup files
+                 - backup db
+                 - install update
+                 - complete update
+                 - restore (if error on install) [12.12]
+        - gui with tasks [EXP:25.1.2016]
+        - download process (display all tasks, create task list, start processing tasks) [16.12] [EXP:30.1.2016]
+        - complete download client [EXP:1.2.2016]
+        - test [EXP:2.2.2016]
+        - cleanup client [EXP:3.2.2016]
+       SERVER
+        - WS: version_check [EXP:10.2.2016]
+        - WS: server file download [EXP:20.1.2016]
+        - finalize server
+        - cleanup server [24.12]
+    - Db Updater (DbCheck) [1.1.] [EXP:20.2.2016]
 
 
-(1)
-Minimed: - comlink: read history data from device -2.1
-         - decode pump history data - 2.2
-         - carelink support - 2.3
-         - carelink: read pump data - 2.4
-         - carelink: read pump history data - 2.5
+(4) [EXP:25.2.2016]
+VersionCheck: - on start we check if we have newest version (only if we are online)
+                  - error: write log
+                  - no: no action, write info in log
+                  - yes: message "we have new version, please run update", ! displayed on status bar (clickable)  [31.1]
+                Fix: UpgradeCheckStatus class, and Statusbar
 
-(2)
-Startup: - fix startup creation (30%) - 5
+
+(5)
+Release 0.7:  - prepare release
+              - release
+              - upgrade configuration
+              - upgrade server deploy
+
+(6)
+Graphs (v2):
+        - CGMS Daily Graph V2
+        - CGMS Weekly Graph
+
+
+(7)
+GGC Connect Plugin:  - base
+                     - about
+                     - display version
+                     - export GUI
+                     - import GUI
+                     - GGC: - import Pen
+                            - import Pump
+                            - export Pen
+                            - export Pump
+                     - SiDiary: - export
+                                - import
+
+
+
+
+REFACTORING 0.7 or later
+=========================
+
+GUI Refacoring:  - main window
+                 - pen: ?
+                 - pumo: ?
+                 - cgms: ?
+                 - tools: ?
+                 - ...
+
+Project refactoring:  - add doctors project as maven:
+                                    - core
+                                    - desktop
+                                    - server (?)
+                      - add desktop little as separate project
+                      - create correct maven structure:   - core
+                                                          - desktop
+                                                          - plugin_base (rename ?)
+                                                          - cgms
+                                                          - pump
+                                                          - meter
+                                                          - nutrition
+
+
+GGC Help:
+
+    *******************************************************************
+    ***   Section                 *   Done   *     All    *   N/A   ***
+    *******************************************************************
+    *     Main                    *     0    *     1      *         ***
+    *     File                    *     0    *     2      *     2   ***
+    *     Pen/Injection           *     0    *    13      *     4   ***
+    *     Food                    *     0    *    17      *     2   ***
+    *     Doctor                  *     0    *     3      *     3   ***
+    *     Printing                *     0    *     3      *     3   ***
+    *     Graphs                  *          *            *     ?   ***
+    *     Plugin - Core           *     0    *    10      *         ***
+    *     Meter                   *          *            *         ***
+    *     Pump                    *     0    *     9      *     4   ***
+    *     CGMS                    *     0    *     0      *         ***
+    *     Tools                   *     0    *    10      *         ***
+    *     Help                    *     0    *     1      *     1   ***
+    *******************************************************************
 
 
 
@@ -105,11 +207,19 @@ ReportPluginDefinition:
              - Pump   100%
              - Food    20%
              - CGMS    20%
+             - Connect ---
+             - Meter   ---
+             - Core    ???
 
 
 
 DONE 0.6.2 - 0.7.0:
 ===================
+
+Minimed: - carelink support - 2.3
+         - carelink: read pump data - 2.4    (80 , conversion of some config entries in question)
+         - carelink: read pump history data - 2.5
+
 
 Help      : - prepare for Bob - 1.1
             - send to Bob  - 1.2
@@ -129,6 +239,8 @@ Refactoring: - CommunicationPortComponent
              - Pump -> Manual -> Add -> Profile Selector not available for some Pumps (show message)
              - DataAccess (PluginBase) -> BG Conversion
 
+Tasks:  - save window size
+
 
 DevicePluginDefinition:  - implement interface    100%
                       - CGMS                   100%
@@ -138,7 +250,7 @@ DevicePluginDefinition:  - implement interface    100%
 
 
 DONE 0.6.1  (8.10.2015)
-======
+========================
 
 Plugins: - USB Hid Api integration
 
@@ -168,14 +280,19 @@ Deploy: - Local Maven Repository
         - web page
 
 
+CANCELED 0.7
+=============
 
+Minimed: - comlink: read history data from device -2.1
+
+
+
+**************************************************************************************
 Version 0.8
--------------
+**************************************************************************************
 
-Update System v3 [1.0]
-    - Software updater Server
-    - Db Updater Server
-
+(6)
+Stocks: ...  [?]
 
 Graphs: - Framework v2
         - read XML definition
@@ -183,6 +300,7 @@ Graphs: - Framework v2
                                - bar
                                - ...
         - CGMS Daily Graph V2
+        - CGMS Weekly Graph
 
 HbA1c: - for Pump
 
@@ -200,7 +318,7 @@ Minimed: - comlink: read CGMS data
 DeviceSelector: - resize possibility (ZeroLayout2)
                 - color (just enabled - supported, disabled for now - not supported)
 
-Stocks: ...
+
 
 Pump: - Additional data: BP, Weight, Pills
 

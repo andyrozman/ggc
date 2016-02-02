@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import ggc.gui.main.panels.AbstractInfoPanel;
-import ggc.gui.main.panels.InfoPanelsIds;
+import ggc.gui.main.panels.InfoPanelType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -69,15 +69,10 @@ public class PlugInMeterPanelL extends AbstractInfoPanel
     }
 
 
-    /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
     @Override
-    public String getTabName()
+    public InfoPanelType getPanelType()
     {
-        return "PlugInMeterInfo";
+        return InfoPanelType.PluginMeter;
     }
 
 
@@ -87,18 +82,6 @@ public class PlugInMeterPanelL extends AbstractInfoPanel
     @Override
     public void doRefresh()
     {
-    }
-
-
-    /**
-     * Get Panel Id
-     * 
-     * @return id of panel
-     */
-    @Override
-    public int getPanelId()
-    {
-        return InfoPanelsIds.INFO_PANEL_NONE;
     }
 
 }

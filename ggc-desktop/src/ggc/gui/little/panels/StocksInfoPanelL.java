@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import ggc.gui.main.panels.AbstractInfoPanel;
-import ggc.gui.main.panels.InfoPanelsIds;
+import ggc.gui.main.panels.InfoPanelType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -59,24 +59,10 @@ public class StocksInfoPanelL extends AbstractInfoPanel
     }
 
 
-    /**
-     * Refresh Information 
-     */
     @Override
-    public void refreshInfo()
+    public InfoPanelType getPanelType()
     {
-    }
-
-
-    /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
-    @Override
-    public String getTabName()
-    {
-        return "StocksInfo";
+        return InfoPanelType.Stocks;
     }
 
 
@@ -86,18 +72,6 @@ public class StocksInfoPanelL extends AbstractInfoPanel
     @Override
     public void doRefresh()
     {
-    }
-
-
-    /**
-     * Get Panel Id
-     * 
-     * @return id of panel
-     */
-    @Override
-    public int getPanelId()
-    {
-        return InfoPanelsIds.INFO_PANEL_NONE;
     }
 
 }

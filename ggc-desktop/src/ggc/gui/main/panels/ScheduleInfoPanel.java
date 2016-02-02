@@ -41,7 +41,6 @@ public class ScheduleInfoPanel extends AbstractInfoPanel
     public ScheduleInfoPanel()
     {
         super("SCHEDULE");
-        setLayout(new GridLayout(0, 2));
         init();
         refreshInfo();
     }
@@ -49,29 +48,9 @@ public class ScheduleInfoPanel extends AbstractInfoPanel
 
     private void init()
     {
+        setLayout(new GridLayout(0, 2));
         add(new JLabel(m_ic.getMessage("YOUR_NEXT_APPOINTMENT") + ":"));
         add(new JLabel(m_ic.getMessage("APP_WILL_BE_FOUND_HERE") + "..." + m_ic.getMessage("NOT_YET")));
-    }
-
-
-    /**
-     * Refresh Information 
-     */
-    @Override
-    public void refreshInfo()
-    {
-    }
-
-
-    /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
-    @Override
-    public String getTabName()
-    {
-        return "ScheduleInfo";
     }
 
 
@@ -84,15 +63,10 @@ public class ScheduleInfoPanel extends AbstractInfoPanel
     }
 
 
-    /**
-     * Get Panel Id
-     * 
-     * @return id of panel
-     */
     @Override
-    public int getPanelId()
+    public InfoPanelType getPanelType()
     {
-        return InfoPanelsIds.INFO_PANEL_SCHEDULE;
+        return InfoPanelType.Schedule;
     }
 
 }

@@ -184,18 +184,6 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
 
 
     /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
-    @Override
-    public String getTabName()
-    {
-        return "StatisticInfo";
-    }
-
-
-    /**
      * Do Refresh - This method can do Refresh
      */
     @Override
@@ -324,15 +312,10 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
     }
 
 
-    /**
-     * Get Panel Id
-     * 
-     * @return id of panel
-     */
     @Override
-    public int getPanelId()
+    public InfoPanelType getPanelType()
     {
-        return InfoPanelsIds.INFO_PANEL_STATISTICS;
+        return InfoPanelType.Statistics;
     }
 
 }

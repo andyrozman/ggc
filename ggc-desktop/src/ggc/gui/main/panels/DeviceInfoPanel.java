@@ -10,6 +10,7 @@ import com.atech.plugin.PlugInClient;
 
 import ggc.core.plugins.GGCPluginType;
 import ggc.core.util.DataAccess;
+import info.clearthought.layout.TableLayout;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -35,7 +36,7 @@ import ggc.core.util.DataAccess;
  *
  *  Author: andyrozman {andy@atech-software.com}  
  */
-
+@Deprecated
 public class DeviceInfoPanel extends AbstractInfoPanel
 {
 
@@ -44,8 +45,6 @@ public class DeviceInfoPanel extends AbstractInfoPanel
     private JLabel lblPump;
     private JLabel lblCgms;
 
-
-    // private DataAccess dataAccess = DataAccess.getInstance();
 
     /**
      * Constructor
@@ -59,6 +58,24 @@ public class DeviceInfoPanel extends AbstractInfoPanel
 
 
     private void init()
+    {
+        double sizes[][] = { { 10, 0.20, 10, TableLayout.FILL, 10 }, //
+                             { 0.10, 0.27, 0.27, 0.27, TableLayout.FILL }, };
+
+        setLayout(new TableLayout(sizes));
+
+        add(new JLabel(m_ic.getMessage("DEVICE_METER") + ":"), "1, 1");
+        add(this.lblMeter = new JLabel("N/A"), "3, 1");
+
+        add(new JLabel(m_ic.getMessage("DEVICE_PUMP") + ":"), "1, 2");
+        add(this.lblPump = new JLabel("N/A"), "3, 2");
+
+        add(new JLabel(m_ic.getMessage("DEVICE_CGMS") + ":"), "1, 3");
+        add(this.lblCgms = new JLabel("N/A"), "3, 3");
+    }
+
+
+    private void init_old()
     {
         setLayout(new BorderLayout());
 
@@ -112,18 +129,6 @@ public class DeviceInfoPanel extends AbstractInfoPanel
 
 
     /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
-    @Override
-    public String getTabName()
-    {
-        return "DeviceInfo";
-    }
-
-
-    /**
      * Do Refresh - This method can do Refresh
      */
     @Override
@@ -144,15 +149,10 @@ public class DeviceInfoPanel extends AbstractInfoPanel
     }
 
 
-    /**
-     * Get Panel Id
-     * 
-     * @return id of panel
-     */
     @Override
-    public int getPanelId()
+    public InfoPanelType getPanelType()
     {
-        return InfoPanelsIds.INFO_PANEL_PLUGIN_DEVICES;
+        return InfoPanelType.ConfiguredDevices;
     }
 
 }

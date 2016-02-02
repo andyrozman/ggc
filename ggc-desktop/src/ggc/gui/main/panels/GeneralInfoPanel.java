@@ -1,12 +1,13 @@
 package ggc.gui.main.panels;
 
 import java.awt.*;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.util.DataAccess;
@@ -41,6 +42,7 @@ import ggc.core.util.GGCSoftwareMode;
 public class GeneralInfoPanel extends AbstractInfoPanel
 {
 
+    private static Logger log = LoggerFactory.getLogger(GeneralInfoPanel.class);
     private static final long serialVersionUID = 6567668717839226425L;
 
     private JLabel lblName = new JLabel();
@@ -48,11 +50,10 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     private JLabel lblIns2 = new JLabel();
     private JLabel lblUnit = new JLabel();
     private JLabel lblTarget = new JLabel();
-    private JLabel lbl_pump_insulin = new JLabel();
+    private JLabel lblPumpInsulin = new JLabel();
 
     private GGCSoftwareMode currentMode = null;
-    private Hashtable<String, JLabel> list_elems;
-    private static Log log = LogFactory.getLog(GeneralInfoPanel.class);
+    private Map<String, JLabel> elementsMap;
 
     String[] pen_mode = { "name", "name_value", "bolus", "bolus_value", "basal", "basal_value", "bg_unit",
                           "bg_unit_value", "bg_target", "bg_target_value" };
@@ -75,7 +76,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     private void init()
     {
         setLayout(new GridLayout(0, 2));
-        list_elems = new Hashtable<String, JLabel>();
+        elementsMap = new HashMap<String, JLabel>();
 
         addToList("name", new JLabel(m_ic.getMessage("YOUR_NAME") + ":"));
         addToList("name_value", lblName);
@@ -88,20 +89,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         addToList("bg_target", new JLabel(m_ic.getMessage("BG_TARGET") + ":"));
         addToList("bg_target_value", lblTarget);
         addToList("pump_insulin", new JLabel(m_ic.getMessage("PUMP_INSULIN") + ":"));
-        addToList("pump_insulin_value", this.lbl_pump_insulin);
-
-        // add(new JLabel(i18nControl.getMessage("NUTRITION_PLUGIN")+":"));
-        // add(lblNutri);
-        /*
-         * add(new JLabel(i18nControl.getMessage("METERS_PLUGIN")+":"));
-         * add(lblMeter);
-         * add(new JLabel(i18nControl.getMessage("PUMPS_PLUGIN")+":"));
-         * add(lblPumps);
-         * add(new JLabel(i18nControl.getMessage("CGMS_PLUGIN")+":"));
-         * add(lblCGMS);
-         */
-        // add(new JLabel());
-        // add(new JLabel());
+        addToList("pump_insulin_value", this.lblPumpInsulin);
 
         changeMode(GGCSoftwareMode.PEN_INJECTION_MODE);
 
@@ -137,7 +125,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
 
         for (String sel_element : sel_elements)
         {
-            this.add(this.list_elems.get(sel_element));
+            this.add(this.elementsMap.get(sel_element));
         }
 
     }
@@ -145,53 +133,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
 
     private void addToList(String keyword, JLabel item)
     {
-        this.list_elems.put(keyword, item);
-    }
-
-
-    /**
-     * Refresh Information 
-     */
-    @Override
-    public void refreshInfo()
-    {
-        if (!this.m_da.isDatabaseInitialized())
-            return;
-
-        lblName.setText(configurationManagerWrapper.getUserName());
-        lblIns1.setText(getInsulins(DataAccess.INSULIN_DOSE_BOLUS));
-        lblIns2.setText(getInsulins(DataAccess.INSULIN_DOSE_BASAL));
-
-        GlucoseUnitType glucoseUnitType = configurationManagerWrapper.getGlucoseUnit();
-
-        lblUnit.setText(glucoseUnitType.getTranslation());
-
-        // int unit = configurationManagerWrapper.getBG_unit();
-
-        float min, max;
-
-        if (glucoseUnitType == GlucoseUnitType.mg_dL)
-        {
-            min = configurationManagerWrapper.getBG1TargetLow();
-            max = configurationManagerWrapper.getBG1TargetHigh();
-        }
-        else
-        {
-            min = configurationManagerWrapper.getBG2TargetLow();
-            max = configurationManagerWrapper.getBG2TargetHigh();
-        }
-
-        float avg = (float) ((min + max) / 2.0);
-
-        // String s = dataAccess.getConfigurationManager().getFloatValue(key)
-
-        lblTarget.setText(DataAccess.Decimal1Format.format(min) + " - " + DataAccess.Decimal1Format.format(max) + " ["
-                + DataAccess.Decimal1Format.format(avg) + "]");
-
-        this.lbl_pump_insulin.setText(configurationManagerWrapper.getPumpInsulin());
-
-        changeMode(DataAccess.getInstance().getSoftwareMode());
-
+        this.elementsMap.put(keyword, item);
     }
 
 
@@ -232,36 +174,51 @@ public class GeneralInfoPanel extends AbstractInfoPanel
 
 
     /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
-    @Override
-    public String getTabName()
-    {
-        return "GeneralInfo";
-    }
-
-
-    /**
      * Do Refresh - This method can do Refresh
      */
     @Override
     public void doRefresh()
     {
-        refreshInfo();
+        if (!this.m_da.isDatabaseInitialized())
+            return;
+
+        lblName.setText(configurationManagerWrapper.getUserName());
+        lblIns1.setText(getInsulins(DataAccess.INSULIN_DOSE_BOLUS));
+        lblIns2.setText(getInsulins(DataAccess.INSULIN_DOSE_BASAL));
+
+        GlucoseUnitType glucoseUnitType = configurationManagerWrapper.getGlucoseUnit();
+
+        lblUnit.setText(glucoseUnitType.getTranslation());
+
+        float min, max;
+
+        if (glucoseUnitType == GlucoseUnitType.mg_dL)
+        {
+            min = configurationManagerWrapper.getBG1TargetLow();
+            max = configurationManagerWrapper.getBG1TargetHigh();
+        }
+        else
+        {
+            min = configurationManagerWrapper.getBG2TargetLow();
+            max = configurationManagerWrapper.getBG2TargetHigh();
+        }
+
+        float avg = (float) ((min + max) / 2.0);
+
+        lblTarget.setText(DataAccess.Decimal1Format.format(min) + " - " + DataAccess.Decimal1Format.format(max) + " ["
+                + DataAccess.Decimal1Format.format(avg) + "]");
+
+        this.lblPumpInsulin.setText(configurationManagerWrapper.getPumpInsulin());
+
+        changeMode(DataAccess.getInstance().getSoftwareMode());
+
     }
 
 
-    /**
-     * Get Panel Id
-     * 
-     * @return id of panel
-     */
     @Override
-    public int getPanelId()
+    public InfoPanelType getPanelType()
     {
-        return InfoPanelsIds.INFO_PANEL_GENERAL;
+        return InfoPanelType.General;
     }
 
 }

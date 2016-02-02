@@ -1,12 +1,15 @@
 package ggc.gui.main.panels;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 
 import com.atech.i18n.I18nControlAbstract;
 
 import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.util.DataAccess;
+import info.clearthought.layout.TableLayout;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,17 +46,18 @@ public abstract class AbstractInfoPanel extends JPanel
     protected ConfigurationManagerWrapper configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
     protected boolean first_refresh = true;
 
+    protected Map<String, JLabel> valueLabels;
+    protected int currentLine = 1;
+
 
     /**
      * Constructor
      * 
-     * @param title
+     * @param title Title of panel
      */
     public AbstractInfoPanel(String title)
     {
-        super();
-        setBorder(BorderFactory.createTitledBorder(this.m_ic.getMessage(title) + ":"));
-        setOpaque(false);
+        this(title, true);
     }
 
 
@@ -61,28 +65,18 @@ public abstract class AbstractInfoPanel extends JPanel
      * Constructor
      * 
      * @param title
-     * @param border
+     * @param createBorder
      */
-    public AbstractInfoPanel(String title, boolean border)
+    public AbstractInfoPanel(String title, boolean createBorder)
     {
         super();
-        if (border)
+
+        if (createBorder)
         {
             setBorder(BorderFactory.createTitledBorder(this.m_ic.getMessage(title) + ":"));
         }
+
         setOpaque(false);
-    }
-
-
-    /**
-     * Set Title
-     * 
-     * @param title
-     */
-    public void setTitle(String title)
-    {
-        TitledBorder tb = (TitledBorder) this.getBorder();
-        tb.setTitle(title);
     }
 
 
@@ -104,56 +98,37 @@ public abstract class AbstractInfoPanel extends JPanel
     }
 
 
-    /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
-    public abstract String getTabName();
+    public abstract InfoPanelType getPanelType();
 
 
     /**
-     * Get Panel Id
-     * 
-     * @return id of panel
+     * Is Tab Checked (by PanelType)
+     *
+     * @param panelTypes
+     * @return
      */
-    public abstract int getPanelId();
-
-
-    /** 
-     * Is Tab Checked
-     * 
-     * @param check_mask 
-     * @return 
-     */
-    public boolean isPanelTaged(int check_mask)
+    public boolean isPanelTaged(InfoPanelType... panelTypes)
     {
-        return (check_mask & this.getPanelId()) == this.getPanelId();
-    }
-
-
-    /**
-     * RefreshInfo - Refresh info by name 
-     *  
-     * @param name
-     */
-    public void refreshInfo(String name)
-    {
-        if (this.getTabName().equals(name))
+        for (InfoPanelType panelType : panelTypes)
         {
-            doRefresh();
+            if (panelType == this.getPanelType())
+            {
+                return true;
+            }
         }
+
+        return false;
     }
 
 
     /**
-     * RefreshInfo - Refresh info by mask 
-     *  
-     * @param mask
+     * RefreshInfo - Refresh info by panel type(s)
+     *
+     * @param panelTypes
      */
-    public void refreshInfo(int mask)
+    public void refreshInfo(InfoPanelType... panelTypes)
     {
-        if (this.isPanelTaged(mask))
+        if (this.isPanelTaged(panelTypes))
         {
             doRefresh();
         }
@@ -164,5 +139,38 @@ public abstract class AbstractInfoPanel extends JPanel
      * Do Refresh - This method can do Refresh
      */
     public abstract void doRefresh();
+
+
+    protected void initWithTableLayoutAndDisplayPairs(double[][] sizes, String... keysForDisplayPairs)
+    {
+        setLayout(new TableLayout(sizes));
+
+        valueLabels = new HashMap<String, JLabel>();
+
+        for (String key : keysForDisplayPairs)
+        {
+            addDisplayLabelsToPanel(key);
+        }
+    }
+
+
+    protected void addDisplayLabelsToPanel(String i18nKey)
+    {
+        add(new JLabel(m_ic.getMessage(i18nKey) + ":"), "1, " + currentLine);
+
+        JLabel label = new JLabel("N/A");
+
+        valueLabels.put(i18nKey, label);
+
+        add(label, "3, " + currentLine);
+
+        currentLine++;
+    }
+
+
+    protected void setValueOnDisplayLabel(String key, String value)
+    {
+        valueLabels.get(key).setText(value);
+    }
 
 }

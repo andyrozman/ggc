@@ -160,4 +160,6 @@ public class MainLittlePanel extends JPanel
         addPanels();
     }
 
+    // TODO missing refresh functionality see ggc-desktop
+
 }

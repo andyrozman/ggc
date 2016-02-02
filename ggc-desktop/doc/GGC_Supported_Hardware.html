@@ -151,10 +151,10 @@ List of supported devices (25), planned (5), partial (1), not tested (1).
             <td>Ascensia/Bayer</td>
             <td>Contour USB</td>
             <td>Level 2</td>
-            <td>Planned</td>
+            <td>Done</td>
+            <td>0.6.1</td>
             <td>&nbsp;</td>
-            <td>2015/16</td>
-            <td>?</td>
+            <td>Andy</td>
             <td>&nbsp;</td>
         </tr>
 
@@ -162,10 +162,10 @@ List of supported devices (25), planned (5), partial (1), not tested (1).
             <td>Ascensia/Bayer</td>
             <td>Contour Next</td>
             <td>Level 2</td>
-            <td>Planned</td>
+            <td>Done</td>
+            <td>0.6.1</td>
             <td>&nbsp;</td>
-            <td>2015/16</td>
-            <td>?</td>
+            <td>Andy</td>
             <td>&nbsp;</td>
         </tr>
 
@@ -173,10 +173,10 @@ List of supported devices (25), planned (5), partial (1), not tested (1).
             <td>Ascensia/Bayer</td>
             <td>Contour Next USB</td>
             <td>Level 2</td>
-            <td>Planned</td>
+            <td>Done</td>
+            <td>0.6.1</td>
             <td>&nbsp;</td>
-            <td>2015/16</td>
-            <td>?</td>
+            <td>Andy</td>
             <td>&nbsp;</td>
         </tr>
 
@@ -184,10 +184,10 @@ List of supported devices (25), planned (5), partial (1), not tested (1).
             <td>Ascensia/Bayer</td>
             <td>Contour Next Link</td>
             <td>Level 2</td>
-            <td>Planned</td>
+            <td>Done</td>
+            <td>0.6.1</td>
             <td>&nbsp;</td>
-            <td>2015/16</td>
-            <td>?</td>
+            <td>Andy</td>
             <td>&nbsp;</td>
         </tr>
 
@@ -499,6 +499,18 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
         </tr>
 
 
+        <tr bgcolor="#6495ed">
+            <td>Accu-Chek/Roche</td>
+            <td>Insight</td>
+            <td>Level 2.1</td>
+            <td>?</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Might already work, needs to be tested.</td>
+        </tr>
+
+
         <tr bgcolor="#3cb371">
             <td>Animas</td>
             <td>IR 1200</td>
@@ -590,14 +602,14 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
             <td>Not sold since 2009</td>
         </tr>
 
-        <tr bgcolor="#6495ed">
+        <tr bgcolor="#3cb371">
             <td>Insulet</td>
             <td>OmniPod</td>
             <td>Level 1</td>
-            <td>Work in progress</td>
+            <td>Done</td>
             <td>0.6</td>
-            <td>2015</td>
-            <td>&nbsp;</td>
+            <td></td>
+            <td>Andy</td>
             <td>Reading backup .ibf file</td>
         </tr>
 
@@ -753,6 +765,17 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
             <td>No support from company for now.</td>
         </tr>
 
+        <tr bgcolor="#F2893E">
+            <td><a href="http://www.tandemdiabetes.com/">Tandem Diabetes</a></td>
+            <td>t:slim G4</td>
+            <td>&nbsp;</td>
+            <td>Not planned for now</td>
+            <td>-</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>No support from company for now.</td>
+        </tr>
+
 
     </table>
 
@@ -761,12 +784,14 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
 
 <br>
 
-*1 - Minimed Pumps currently have 3 interfaces (devices) which can be used to read data from them. We are currently
-working on ComLink interface (Serial Cable with RF transmiter), but before release we will support at least Countour
-USB interface (USB Key with RF transmiter), which is currently most used method to connect to pump. Third method
-(Contour Next Link meter) will be probably implemented at later time (next year together with CGMS support).<br>
-*2 - New Minimed Pump uses different protocol (unknown at this time), which means that it won't be supported together
-with all other devices. We might make support for importing CareLink export file, to temporary support this type.
+*1 - Minimed Pumps currently have 3 interfaces (devices) which can be used to read data from them. <b>ComLink</b> is
+oldest of
+them and is no longer used, so we won't add support for it. Second one is <b>Carelink USB</b>, which is at least for
+most used interface, so we are adding support for this. Third one is <b>Contour Next Link meter</b>. Protocol for
+this one is at this time unknown, so time when this will be supported is undetermined, we hope to get it done by
+end of 2016.<br>
+*2 - New Minimed Pump uses different protocol (which is supported through Contour Next Link 2.4 meter ), which means
+that it won't be supported together with all other devices.
 
 
 <br><br><br>
@@ -795,13 +820,35 @@ List of supported devices (4), not planned for now (1), planned (6).
 
         <tr bgcolor="#F2893E">
             <td>Abbott</td>
-            <td>Freestyle Navigator</td>
+            <td>Freestyle Navigator v1</td>
             <td>Level 1</td>
             <td>Not planned for now</td>
             <td></td>
             <td>?</td>
             <td>&nbsp;</td>
             <td>Support through export file from CoPilot</td>
+        </tr>
+
+        <tr bgcolor="#F2893E">
+            <td>Abbott</td>
+            <td>Freestyle Navigator v2</td>
+            <td>Level 1</td>
+            <td>Not planned for now</td>
+            <td></td>
+            <td>?</td>
+            <td>&nbsp;</td>
+            <td></td>
+        </tr>
+
+        <tr bgcolor="#F2893E">
+            <td>Abbott</td>
+            <td>Freestyle Neo</td>
+            <td>Level 1</td>
+            <td>Not planned for now</td>
+            <td></td>
+            <td>?</td>
+            <td>&nbsp;</td>
+            <td></td>
         </tr>
 
         <tr bgcolor="#3cb371">
@@ -918,6 +965,16 @@ List of supported devices (4), not planned for now (1), planned (6).
             <td></td>
         </tr>
 
+        <tr bgcolor="#F2893E">
+            <td>Minimed</td>
+            <td>640G</td>
+            <td>Level 1</td>
+            <td>Not planned for now</td>
+            <td>-</td>
+            <td>?</td>
+            <td>&nbsp;</td>
+            <td></td>
+        </tr>
 
     </table>
 

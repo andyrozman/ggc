@@ -57,7 +57,7 @@ import com.atech.utils.ATSwingUtils;
 import ggc.core.data.DailyStatsTableModel;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
-import ggc.core.data.graph.GraphViewDaily;
+import ggc.core.data.graph.v1.view.GraphViewDaily;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.core.util.RefreshInfo;

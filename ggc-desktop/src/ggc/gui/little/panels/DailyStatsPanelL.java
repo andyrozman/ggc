@@ -4,11 +4,12 @@ import java.awt.*;
 import java.util.GregorianCalendar;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 import ggc.core.data.DailyStatsTableModel;
 import ggc.core.data.DailyValues;
 import ggc.gui.main.panels.AbstractInfoPanel;
-import ggc.gui.main.panels.InfoPanelsIds;
+import ggc.gui.main.panels.InfoPanelType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -35,9 +36,7 @@ import ggc.gui.main.panels.InfoPanelsIds;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
-                                                        // implements
-                                                        // ActionListener
+public class DailyStatsPanelL extends AbstractInfoPanel
 {
 
     private static final long serialVersionUID = 3519092324025060409L;
@@ -52,10 +51,17 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
      */
     public DailyStatsPanelL()
     {
-        super("");
+        super(null);
 
         setTitle(m_ic.getMessage("DAILY_VALUES") + ": (" + m_da.getCurrentDateString() + ")");
         init();
+    }
+
+
+    public void setTitle(String title)
+    {
+        TitledBorder titledBorder = (TitledBorder) this.getBorder();
+        titledBorder.setTitle(title);
     }
 
 
@@ -77,6 +83,13 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
     public void refreshInfo()
     {
         refreshDayData();
+    }
+
+
+    @Override
+    public InfoPanelType getPanelType()
+    {
+        return InfoPanelType.DailyValues;
     }
 
 
@@ -150,35 +163,11 @@ public class DailyStatsPanelL extends AbstractInfoPanel // extends JPanel
 
 
     /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
-    @Override
-    public String getTabName()
-    {
-        return "DailyStatsPanel";
-    }
-
-
-    /**
      * Do Refresh - This method can do Refresh
      */
     @Override
     public void doRefresh()
     {
-    }
-
-
-    /**
-     * Get Panel Id
-     * 
-     * @return id of panel
-     */
-    @Override
-    public int getPanelId()
-    {
-        return InfoPanelsIds.INFO_PANEL_NONE;
     }
 
 }

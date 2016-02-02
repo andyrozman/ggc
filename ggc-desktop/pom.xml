@@ -81,6 +81,12 @@
         </dependency>
 
         <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-connect-tool</artifactId>
+        </dependency>
+
+
+        <dependency>
             <groupId>javax.help</groupId>
             <artifactId>javahelp</artifactId>
         </dependency>
@@ -106,6 +112,19 @@
             <artifactId>commons-lang</artifactId>
         </dependency>
 
+        <!-- Is Required ?? -->
+
+        <!--
+        <dependency>
+            <groupId>org.simpleframework</groupId>
+            <artifactId>simple-xml</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.lingala.zip4j</groupId>
+            <artifactId>zip4j</artifactId>
+        </dependency>
+-->
 
         <dependency>
             <groupId>postgresql</groupId>
@@ -113,19 +132,25 @@
             <version>8.4-702.jdbc3</version>
         </dependency>
 
+
+        <!--
+        <dependency>
+            <groupId>info.clearthought</groupId>
+            <artifactId>table-layout-j15</artifactId>
+            <version>1.0</version>
+        </dependency>
+        -->
+
+        <dependency>
+            <groupId>info.clearthought</groupId>
+            <artifactId>table-layout</artifactId>
+        </dependency>
+
+
         <!-- <dependency> <groupId>org.swinglabs</groupId> <artifactId>pdf-renderer</artifactId>
             </dependency> <dependency> <groupId>com.google.guava</groupId> <artifactId>guava</artifactId>
             </dependency> -->
 
-        <!-- For minimed testing - remove after integration -->
-
-        <!--
-        <dependency>
-            <groupId>net.sf.ggc</groupId>
-            <artifactId>ggc-device-minimed</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-        -->
 
     </dependencies>
 </project>

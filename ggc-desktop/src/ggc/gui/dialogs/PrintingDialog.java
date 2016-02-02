@@ -242,9 +242,9 @@ public class PrintingDialog extends ActionExceptionCatchDialog implements PrintR
      * button.addActionListener(this);
      * button.setBounds(175, 340, 125, 25);
      * panel.add(button);
-     * help_button = dataAccess.createHelpButtonByBounds(185, 310, 115, 25,
+     * helpButton = dataAccess.createHelpButtonByBounds(185, 310, 115, 25,
      * this);
-     * panel.add(help_button);
+     * panel.add(helpButton);
      * dataAccess.enableHelp(this);
      * }
      */

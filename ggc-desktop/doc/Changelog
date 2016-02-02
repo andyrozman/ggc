@@ -6,6 +6,13 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+
+0.7.0 [2.2.2016] [Andy]
+- table layout:
+   - refactoring of info panels
+   - status bar changes
+- removed old graph classes (Dialogs and Views)
+
 0.6.2
 - added packages for main application, pen dialogs, cfg
 - refactoring of configuration, because of changes in ConfigurationManager(Wrapper), some

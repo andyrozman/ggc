@@ -37,7 +37,7 @@ import ggc.core.util.RefreshInfo;
  *          andyrozman {andy@atech-software.com}  
  */
 
-public class InfoPanel extends JPanel implements EventObserverInterface
+public class MainWindowInfoPanel extends JPanel implements EventObserverInterface
 {
 
     private static final long serialVersionUID = -8288632669830259690L;
@@ -48,19 +48,14 @@ public class InfoPanel extends JPanel implements EventObserverInterface
     /**
      * Constructor
      */
-    public InfoPanel()
+    public MainWindowInfoPanel()
     {
         setLayout(new GridLayout(0, 2));
         setBackground(Color.white);
 
-        vInfoPanels.add(new OtherInfoPanel(new GeneralInfoPanel(), new HbA1cInfoPanel()));
-        vInfoPanels.add(new OtherInfoPanel(new PlugInsInfoPanel(), new DeviceInfoPanel()));
-
-        // vInfoPanels.add(new GeneralInfoPanel());
-        // vInfoPanels.add(new OtherInfoPanel(new HbA1cInfoPanel(), new
-        // DeviceInfoPanel()));
-        // vInfoPanels.add(new HbA1cInfoPanel());
-        vInfoPanels.add(new OtherInfoPanel(new ScheduleInfoPanel(), new StocksInfoPanel()));
+        vInfoPanels.add(new SplittedInfoPanel(new GeneralInfoPanel(), new HbA1cInfoPanel()));
+        vInfoPanels.add(new SplittedInfoPanel(new PlugInsInfoPanel(), new DeviceInfoPanel()));
+        vInfoPanels.add(new SplittedInfoPanel(new ScheduleInfoPanel(), new StocksInfoPanel()));
         vInfoPanels.add(new StatisticsInfoPanel());
 
         addPanels();
@@ -91,38 +86,11 @@ public class InfoPanel extends JPanel implements EventObserverInterface
 
 
     /**
-     * Refresh Panel
-     */
-    public void refreshPanels()
-    {
-        for (int i = 0; i < vInfoPanels.size(); i++)
-        {
-            vInfoPanels.get(i).refreshInfo();
-        }
-    }
-
-
-    /**
-     * RefreshInfo - Refresh info by name 
-     *  
-     * @param name
-     */
-    public void refreshPanels(String name)
-    {
-        for (int i = 0; i < vInfoPanels.size(); i++)
-        {
-            vInfoPanels.get(i).refreshInfo(name);
-        }
-
-    }
-
-
-    /**
-     * RefreshInfo - Refresh info by id 
-     *  
-     * @param mask
-     */
-    public void refreshPanels(int mask)
+    * RefreshInfo - Refresh info by id
+    *
+    * @param mask
+    */
+    public void refreshPanels(InfoPanelType... mask)
     {
         for (int i = 0; i < vInfoPanels.size(); i++)
         {
@@ -138,28 +106,29 @@ public class InfoPanel extends JPanel implements EventObserverInterface
      */
     public void refreshGroup(int type)
     {
+        // TODO groups as enums if possible
+
         if (type == RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES)
         {
-            this.refreshPanels(InfoPanelsIds.INFO_PANEL_PLUGIN_DEVICES);
+            this.refreshPanels(InfoPanelType.ConfiguredDevices);
         }
         else if (type == RefreshInfo.PANEL_GROUP_ALL_DATA)
         {
-            this.refreshPanels(InfoPanelsIds.INFO_PANEL_HBA1C | InfoPanelsIds.INFO_PANEL_STATISTICS);
+            this.refreshPanels(InfoPanelType.HbA1c, InfoPanelType.Statistics);
         }
         else if (type == RefreshInfo.PANEL_GROUP_GENERAL_INFO)
         {
-            this.refreshPanels(InfoPanelsIds.INFO_PANEL_GENERAL);
+            this.refreshPanels(InfoPanelType.General);
         }
         else if (type == RefreshInfo.PANEL_GROUP_PLUGINS_ALL)
         {
-            this.refreshPanels(InfoPanelsIds.INFO_PANEL_PLUGINS);
-            this.refreshPanels(InfoPanelsIds.INFO_PANEL_PLUGIN_DEVICES);
+            this.refreshPanels(InfoPanelType.Plugins, InfoPanelType.ConfiguredDevices);
         }
     }
 
 
     /**
-     * Update (From Ovservable)
+     * Update (From Observable)
      */
     public void update(Observable obj, Object arg)
     {
@@ -170,18 +139,4 @@ public class InfoPanel extends JPanel implements EventObserverInterface
         }
     }
 
-    /*
-     * public void addPanelAt(int index, AbstractInfoPanel panel)
-     * {
-     * vInfoPanels.add(index, panel);
-     * removeAll();
-     * addPanels();
-     * }
-     * public void removePanelAt(int index)
-     * {
-     * vInfoPanels.remove(index);
-     * removeAll();
-     * addPanels();
-     * }
-     */
 }

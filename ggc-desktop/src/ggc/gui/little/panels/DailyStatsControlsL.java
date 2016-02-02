@@ -12,7 +12,7 @@ import ggc.core.util.DataAccess;
 import ggc.gui.dialogs.graphs.DailyGraphDialog;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.main.panels.AbstractInfoPanel;
-import ggc.gui.main.panels.InfoPanelsIds;
+import ggc.gui.main.panels.InfoPanelType;
 import ggc.gui.pen.DailyRowDialog;
 
 /**
@@ -124,6 +124,13 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         {
             button.setEnabled(start);
         }
+    }
+
+
+    @Override
+    public InfoPanelType getPanelType()
+    {
+        return InfoPanelType.DailyValuesController;
     }
 
 
@@ -250,7 +257,6 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         }
     }
 
-
     /*
      * String command = e.getActionCommand();
      * if (command.equals("add_row"))
@@ -273,17 +279,6 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
      * }
      */
 
-    /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
-    @Override
-    public String getTabName()
-    {
-        return "DeviceInfo";
-    }
-
 
     /**
      * Do Refresh - This method can do Refresh
@@ -291,18 +286,6 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
     @Override
     public void doRefresh()
     {
-    }
-
-
-    /**
-     * Get Panel Id
-     * 
-     * @return id of panel
-     */
-    @Override
-    public int getPanelId()
-    {
-        return InfoPanelsIds.INFO_PANEL_NONE;
     }
 
 }

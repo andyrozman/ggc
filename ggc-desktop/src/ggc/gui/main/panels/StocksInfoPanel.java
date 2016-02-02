@@ -41,8 +41,6 @@ public class StocksInfoPanel extends AbstractInfoPanel
     public StocksInfoPanel()
     {
         super("STOCK");
-        // setLayout(new GridLayout(5, 3));
-        setLayout(new GridLayout(0, 2));
         init();
         refreshInfo();
     }
@@ -50,29 +48,9 @@ public class StocksInfoPanel extends AbstractInfoPanel
 
     private void init()
     {
+        setLayout(new GridLayout(0, 2));
         add(new JLabel(m_ic.getMessage("STOCK_DATA_HERE") + ":"));
         add(new JLabel(m_ic.getMessage("STO_WILL_BE_FOUND_HERE") + "..." + m_ic.getMessage("NOT_YET")));
-    }
-
-
-    /**
-     * Refresh Information 
-     */
-    @Override
-    public void refreshInfo()
-    {
-    }
-
-
-    /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
-    @Override
-    public String getTabName()
-    {
-        return "StocksInfo";
     }
 
 
@@ -85,15 +63,10 @@ public class StocksInfoPanel extends AbstractInfoPanel
     }
 
 
-    /**
-     * Get Panel Id
-     * 
-     * @return id of panel
-     */
     @Override
-    public int getPanelId()
+    public InfoPanelType getPanelType()
     {
-        return InfoPanelsIds.INFO_PANEL_STOCKS;
+        return InfoPanelType.Stocks;
     }
 
 }

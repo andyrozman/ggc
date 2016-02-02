@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import ggc.gui.main.panels.AbstractInfoPanel;
-import ggc.gui.main.panels.InfoPanelsIds;
+import ggc.gui.main.panels.InfoPanelType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -69,11 +69,19 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
     }
 
 
+    @Override
+    public InfoPanelType getPanelType()
+    {
+
+        return InfoPanelType.General;
+    }
+
+
     /**
-     * Refresh Information 
+     * Do Refresh - This method can do Refresh
      */
     @Override
-    public void refreshInfo()
+    public void doRefresh()
     {
         if (this.m_da.isDatabaseInitialized())
         {
@@ -84,39 +92,6 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
                 configurationManagerWrapper.getIns2Name() + "  (" + configurationManagerWrapper.getIns2Abbr() + ")");
             lblUnit.setText(configurationManagerWrapper.getGlucoseUnit().getTranslation());
         }
-    }
-
-
-    /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
-    @Override
-    public String getTabName()
-    {
-        return "GeneralInfo";
-    }
-
-
-    /**
-     * Do Refresh - This method can do Refresh
-     */
-    @Override
-    public void doRefresh()
-    {
-    }
-
-
-    /**
-     * Get Panel Id
-     * 
-     * @return id of panel
-     */
-    @Override
-    public int getPanelId()
-    {
-        return InfoPanelsIds.INFO_PANEL_NONE;
     }
 
 }

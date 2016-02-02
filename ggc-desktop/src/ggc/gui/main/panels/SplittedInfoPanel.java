@@ -21,13 +21,13 @@ import java.awt.*;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     OtherInfoPanel  
+ *  Filename:     SplittedInfoPanel
  *  Description:  Panel for two other panels (without title)
  *
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class OtherInfoPanel extends AbstractInfoPanel
+public class SplittedInfoPanel extends AbstractInfoPanel
 {
 
     private static final long serialVersionUID = -1695058871914412588L;
@@ -40,7 +40,7 @@ public class OtherInfoPanel extends AbstractInfoPanel
      * @param p1 
      * @param p2 
      */
-    public OtherInfoPanel(AbstractInfoPanel p1, AbstractInfoPanel p2)
+    public SplittedInfoPanel(AbstractInfoPanel p1, AbstractInfoPanel p2)
     {
         super("OTHER_INFO", false);
         setLayout(new GridLayout(2, 0));
@@ -53,51 +53,15 @@ public class OtherInfoPanel extends AbstractInfoPanel
 
 
     /**
-     * Refresh Information 
-     */
-    @Override
-    public void refreshInfo()
-    {
-        this.panel_1.refreshInfo();
-        this.panel_2.refreshInfo();
-    }
-
-
-    /**
-     * Get Tab Name
-     * 
-     * @return name as string
-     */
-    @Override
-    public String getTabName()
-    {
-        return "OtherInfo";
-    }
-
-
-    /**
-     * RefreshInfo - Refresh info by name
-     *  
-     * @param name
-     */
-    @Override
-    public void refreshInfo(String name)
-    {
-        this.panel_1.refreshInfo(name);
-        this.panel_2.refreshInfo(name);
-    }
-
-
-    /**
      * RefreshInfo - Refresh info by mask 
      *  
-     * @param mask
+     * @param panelTypes
      */
     @Override
-    public void refreshInfo(int mask)
+    public void refreshInfo(InfoPanelType... panelTypes)
     {
-        this.panel_1.refreshInfo(mask);
-        this.panel_2.refreshInfo(mask);
+        this.panel_1.refreshInfo(panelTypes);
+        this.panel_2.refreshInfo(panelTypes);
     }
 
 
@@ -110,15 +74,10 @@ public class OtherInfoPanel extends AbstractInfoPanel
     }
 
 
-    /**
-     * Get Panel Id
-     * 
-     * @return id of panel
-     */
     @Override
-    public int getPanelId()
+    public InfoPanelType getPanelType()
     {
-        return InfoPanelsIds.INFO_PANEL_NONE;
+        return InfoPanelType.SplitPanelContainer;
     }
 
 }
