@@ -35,8 +35,8 @@ public class DeviceValuesDay
 {
 
     private List<DeviceValuesEntry> allEntries = null;
-    private Hashtable<String, DeviceValuesEntry> entriesIndexedByHour = null;
-    private Hashtable<Integer, List<DeviceValuesEntry>> entriesGroupedByHour = null;
+    private Map<String, DeviceValuesEntry> entriesIndexedByHour = null;
+    private Map<Integer, List<DeviceValuesEntry>> entriesGroupedByHour = null;
 
     DataAccessPlugInBase dataAccessPluginBase;
     GregorianCalendar gcToday;
@@ -83,7 +83,7 @@ public class DeviceValuesDay
 
         if (use_index)
         {
-            entriesIndexedByHour = new Hashtable<String, DeviceValuesEntry>();
+            entriesIndexedByHour = new HashMap<String, DeviceValuesEntry>();
         }
         this.gcToday = gc;
     }
@@ -94,7 +94,7 @@ public class DeviceValuesDay
      *
      * @param lst
      */
-    public void addList(ArrayList<? extends DeviceValuesEntry> lst)
+    public void addList(List<? extends DeviceValuesEntry> lst)
     {
         for (DeviceValuesEntry dve : lst)
         {

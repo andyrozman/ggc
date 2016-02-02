@@ -121,7 +121,7 @@ public abstract class MinimedHistoryDecoder
         LOG.debug("Data: {}", bitUtils.getHex(data));
 
         int crcCalculated = bitUtils.computeCRC16CCITT(data, 0, 1022);
-        int crcStored = bitUtils.makeInt(page.rawDataPage[1022], page.rawDataPage[1023]);
+        int crcStored = bitUtils.toInt(page.rawDataPage[1022], page.rawDataPage[1023]);
 
         if (crcCalculated != crcStored)
         {

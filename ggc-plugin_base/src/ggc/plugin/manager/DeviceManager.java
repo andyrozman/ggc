@@ -84,6 +84,19 @@ public abstract class DeviceManager
     }
 
 
+    public int getLoadedDevicesV1Count()
+    {
+        int count = 0;
+
+        for (AbstractDeviceCompany pdc : this.companies)
+        {
+            count += pdc.getDevices().size();
+        }
+
+        return count;
+    }
+
+
     /**
      * Get Companies
      * @return

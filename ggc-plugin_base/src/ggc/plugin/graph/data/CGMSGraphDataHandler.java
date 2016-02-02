@@ -25,7 +25,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 
-import ggc.core.data.graph.GGCGraphUtil;
+import ggc.core.data.graph.v1.GGCGraphUtil;
 import ggc.core.db.hibernate.cgms.CGMSDataH;
 import ggc.plugin.db.PluginDb;
 import ggc.plugin.report.data.cgms.CGMSDayData;

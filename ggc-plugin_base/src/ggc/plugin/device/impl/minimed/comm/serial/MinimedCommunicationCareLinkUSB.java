@@ -304,7 +304,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
             {
                 throw new PlugInBaseException(PlugInExceptionType.WrongResponseStatus,
                         new Object[] { MinimedResponseStatus.ReceivingData,
-                                       MinimedResponseStatus.getAllStatusesAsString(header[0]) });
+                                      MinimedResponseStatus.getAllStatusesAsString(header[0]) });
             }
         }
         else
@@ -313,7 +313,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
             {
                 throw new PlugInBaseException(PlugInExceptionType.WrongResponseStatus,
                         new Object[] { MinimedResponseStatus.ReceivedData,
-                                       MinimedResponseStatus.getAllStatusesAsString(header[0]) });
+                                      MinimedResponseStatus.getAllStatusesAsString(header[0]) });
             }
 
             if (MinimedResponseStatus.Acknowledge.getStatusCode() == header[1])
@@ -485,8 +485,8 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
                 break;
 
             case SignalStrength:
-                LOG.debug("Signal Strength= {} dBm",
-                    responseDto.data[0] < 0 ? (responseDto.data[0] + 256) : responseDto.data[0]);
+                LOG.debug("Signal Strength= {} dBm", responseDto.data[0] < 0 ? (responseDto.data[0] + 256)
+                        : responseDto.data[0]);
                 break;
 
             case ReadData:
@@ -530,7 +530,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
         sb.append(String.format("\nAfter modification: %s",
             bitUtils.getHex(new int[] { responseDto.rawData[5], responseDto.rawData[6] })));
 
-        int resultLength = bitUtils.makeInt(responseDto.rawData[5], responseDto.rawData[6]); // .getShort(5);
+        int resultLength = bitUtils.toInt(responseDto.rawData[5], responseDto.rawData[6]); // .getShort(5);
 
         sb.append(String.format("\nResult length: %s", resultLength));
         sb.append(String.format("\nResponse length: %s", responseDto.rawData.length));
@@ -574,7 +574,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
         LOG.info("After modification: {}",
             bitUtils.getHex(new int[] { responseDto.rawData[5], responseDto.rawData[6] }));
 
-        int resultLength = bitUtils.makeInt(responseDto.rawData[5], responseDto.rawData[6]); // .getShort(5);
+        int resultLength = bitUtils.toInt(responseDto.rawData[5], responseDto.rawData[6]); // .getShort(5);
 
         LOG.info("Result length: {}", resultLength);
         LOG.info("Response length: {}", responseDto.rawData.length);
@@ -604,7 +604,7 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
 
     private void decodeLinkStatus(CareLinkUSBResponseDto responseDto)
     {
-        responseDto.parsedValue = bitUtils.makeInt(responseDto.data[3], responseDto.data[4]);
+        responseDto.parsedValue = bitUtils.toInt(responseDto.data[3], responseDto.data[4]);
         LOG.debug("LinkStatus: size={}", responseDto.parsedValue);
     }
 
@@ -618,8 +618,8 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
                 "USB Transmitted: {}, " + //
                 "USB Received: {}.";
 
-        int received = bitUtils.makeInt(dataResponse[4], dataResponse[5], dataResponse[6], dataResponse[7]);
-        int transmitted = bitUtils.makeInt(dataResponse[8], dataResponse[9], dataResponse[10], dataResponse[11]);
+        int received = bitUtils.toInt(dataResponse[4], dataResponse[5], dataResponse[6], dataResponse[7]);
+        int transmitted = bitUtils.toInt(dataResponse[8], dataResponse[9], dataResponse[10], dataResponse[11]);
 
         if (ifName.equals("Radio"))
         {
@@ -685,9 +685,11 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
         if (debug)
         {
             LOG.info("============================================================");
-            LOG.info("   execute - Command: {} {}", commandPacket.commandType.name(),
-                (commandPacket.commandParameters != null
-                        ? "(parameters: " + bitUtils.getByteArrayShow(commandPacket.commandParameters) + ")" : ""));
+            LOG.info(
+                "   execute - Command: {} {}",
+                commandPacket.commandType.name(),
+                (commandPacket.commandParameters != null ? "(parameters: "
+                        + bitUtils.getByteArrayShow(commandPacket.commandParameters) + ")" : ""));
             LOG.info("============================================================");
         }
 
@@ -885,7 +887,6 @@ public class MinimedCommunicationCareLinkUSB extends MinimedSerialCommunicationA
         CommandNotSupported(4, "COMMAND NOT SUPPORTED");
 
         static Map<Integer, CareLinkUSBNak> mapByCode;
-
 
         static
         {

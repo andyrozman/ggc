@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
@@ -13,9 +14,11 @@ import com.atech.utils.ATDataAccessLMAbstract;
 import ggc.core.util.DataAccess;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.data.DeviceDataHandler;
+import ggc.plugin.graph.PluginGraphDefinition;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
+import ggc.plugin.report.PluginReportDefinition;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -59,7 +62,14 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
      */
     public static final int RETURN_ACTION_CONFIG = 2;
 
+    protected BackupRestoreCollection backupRestoreCollection;
+    protected DataAccessPlugInBase dataAccessPlugInBase;
+    protected String pluginPrefix;
 
+
+    /**
+     * {@inheritDoc}
+     */
     public DevicePlugInServer()
     {
         super();
@@ -67,11 +77,7 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
 
 
     /**
-     * Constructor
-     * 
-     * @param cont
-     * @param selected_lang
-     * @param da
+     * {@inheritDoc}
      */
     public DevicePlugInServer(Container cont, String selected_lang, ATDataAccessAbstract da)
     {
@@ -80,10 +86,7 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
 
 
     /**
-     * Constructor
-     * 
-     * @param cont
-     * @param da
+     * {@inheritDoc}
      */
     public DevicePlugInServer(Container cont, ATDataAccessLMAbstract da)
     {
@@ -92,10 +95,7 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
 
 
     /**
-     * Init PlugIn Server
-     * 
-     * @param da_ggc_core
-     * @param da_plugin
+     * {@inheritDoc}
      */
     public void initPlugInServer(DataAccess da_ggc_core, DataAccessPlugInBase da_plugin)
     {
@@ -127,6 +127,7 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
         da_plugin.setGraphConfigProperties(da_ggc_core.getGraphConfigProperties());
         da_plugin.setDeveloperMode(da_ggc_core.getDeveloperMode());
 
+        this.pluginPrefix = da_plugin.getPluginActionsPrefix();
     }
 
 
@@ -140,7 +141,6 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
         {
             new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this, DeviceDataHandler.TRANSFER_READ_DATA);
             this.client.executeReturnAction(RETURN_ACTION_READ_DATA);
-            return true;
         }
         else if (command.equals("plugin_read_config"))
         {
@@ -159,8 +159,7 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
         }
         else if (command.equals("plugin_read_data_file"))
         {
-            new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this,
-                    DeviceDataHandler.TRANSFER_READ_DATA_FILE);
+            new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this, DeviceDataHandler.TRANSFER_READ_DATA_FILE);
             this.client.executeReturnAction(RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("plugin_read_config_file"))
@@ -172,6 +171,14 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
         else if (command.equals("plugin_about"))
         {
             new AboutBaseDialog((JFrame) this.parent, dataAccessPlugIn);
+        }
+        else if (command.startsWith(this.pluginPrefix + "report_"))
+        {
+            this.getPlugInDataAccess().getReportsDefinition().startPlugInReportMenuAction(command);
+        }
+        else if (command.startsWith(this.pluginPrefix + "graph_"))
+        {
+            this.getPlugInDataAccess().getGraphsDefinition().startPlugInGraphMenuAction(command);
         }
         else
         {
@@ -185,9 +192,62 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
     public abstract void refreshMenusAfterConfig();
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void executeCommand(int commandId, Object data)
     {
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getWhenWillBeImplemented()
+    {
+        return null;
+    }
+
+
+    /**
+     * Get PlugIn DataAccess instance
+     */
+    public abstract DataAccessPlugInBase getPlugInDataAccess();
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public JMenu[] getPlugInGraphMenus()
+    {
+        PluginGraphDefinition pgd = this.getPlugInDataAccess().getPluginDefinition().getGraphsDefinition();
+
+        if (pgd != null)
+        {
+            return pgd.getPlugInGraphMenus(this);
+        }
+
+        return null;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public JMenu[] getPlugInReportMenus()
+    {
+        PluginReportDefinition prd = this.getPlugInDataAccess().getPluginDefinition().getReportsDefinition();
+
+        if (prd != null)
+        {
+            return prd.getPlugInReportMenus(this);
+        }
+
+        return null;
     }
 
 }

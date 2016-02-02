@@ -10,6 +10,7 @@ import com.atech.i18n.I18nControlRunner;
 import com.atech.i18n.mgr.LanguageManager;
 
 import ggc.core.plugins.GGCPluginType;
+import ggc.plugin.graph.PluginGraphDefinition;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.report.PluginReportDefinition;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -20,6 +21,7 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public abstract class DevicePluginDefinitionAbstract extends AppPluginDefinitionAbstract
 {
 
+    // FIXME-Andy
     public DevicePluginDefinitionAbstract(DataAccessPlugInBase dataAccess)
     {
         super(dataAccess);
@@ -79,6 +81,19 @@ public abstract class DevicePluginDefinitionAbstract extends AppPluginDefinition
 
 
     public abstract PluginReportDefinition getReportsDefinition();
+
+
+    public abstract PluginGraphDefinition getGraphsDefinition();
+
+
+    /**
+     * This is prefix for this plugins actions. So for example PumpPlugin has
+     * prefix 'pumps_', so we know that actionCommand that starts with 'pumps_' is
+     * intended for this plugin.
+     *
+     * @return Prefix with underscore
+     */
+    public abstract String getPluginActionsPrefix();
 
 
     /**

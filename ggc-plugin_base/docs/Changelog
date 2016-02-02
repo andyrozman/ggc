@@ -2,13 +2,18 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+1.2.1 [2.2.2016] [Andy]
+- changes DeviceValues
+- PluginDb implementing GraphDbDataRetriever
+- added PluginGraphDefinition into DevicePluginDefinitionAbstract
+- added GGCPluginGraphViewerV2 and added support for Graphs
+
 1.2.0 [11.12.2015]
 - redesign of CommunicationHandlers
 - extends PluginExceptionType
 - added Minimed code for both devices. Configuration is ready and we now support reading via CareLinkUSB device.
 Contour Next will be supported with next release of GGC (0.8 or perhaps 0.9)
 - added new devices companies (Asante, Tandem)
-
 
 1.1.0 [24.10.2015]
    - refactoring changing Log to Logger instance

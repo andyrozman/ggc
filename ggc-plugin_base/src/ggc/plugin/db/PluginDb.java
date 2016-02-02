@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.HibernateDb;
+import com.atech.graphics.graphs.v2.data.GraphDbDataRetriever;
 import com.atech.utils.data.ATechDate;
 import ggc.core.db.hibernate.cgms.CGMSDataH;
 
@@ -45,7 +46,7 @@ import ggc.core.db.hibernate.cgms.CGMSDataH;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class PluginDb
+public abstract class PluginDb implements GraphDbDataRetriever
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(PluginDb.class);

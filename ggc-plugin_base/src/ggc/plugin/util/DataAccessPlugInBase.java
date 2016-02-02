@@ -17,6 +17,7 @@ import com.atech.app.defs.AppPluginDefinition;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.graphs.v2.data.GraphContext;
+import com.atech.graphics.graphs.v2.data.GraphDbDataRetriever;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInServer;
 import com.atech.update.startup.os.OSUtil;
@@ -41,6 +42,7 @@ import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
+import ggc.plugin.graph.PluginGraphDefinition;
 import ggc.plugin.graph.util.PlugInGraphContext;
 import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 import ggc.plugin.gui.OldDataReaderAbstract;
@@ -248,12 +250,13 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     private String deviceSource;
     protected GraphContext graphContext;
     protected DevicePluginDefinitionAbstract pluginDefinition;
-    protected DevicePluginDefinitionAbstract devicePluginDefinition;
+
+
+    // protected DevicePluginDefinitionAbstract devicePluginDefinition;
 
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
-
 
     // Constructor: DataAccessPlugInBase
     /**
@@ -337,6 +340,15 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     public String getApplicationName()
     {
         return this.pluginDefinition.getPluginName();
+    }
+
+
+    /**
+     * Get Actions Prefix for plugin (e.g. pumps_)
+     */
+    public String getPluginActionsPrefix()
+    {
+        return this.pluginDefinition.getPluginActionsPrefix();
     }
 
 
@@ -576,10 +588,10 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
         return this.pluginDefinition.getPluginVersion();
     }
 
+
     // ********************************************************
     // ****** BG Measurement Type *****
     // ********************************************************
-
 
     /**
      * Get BG Measurment Type
@@ -1234,8 +1246,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
 
                 if (this.selectedDeviceInstanceV2 == null)
                 {
-                    this.selectedDeviceInstanceV1 = this.getManager().getDeviceV1(dce.device_company,
-                        dce.device_device);
+                    this.selectedDeviceInstanceV1 = this.getManager()
+                            .getDeviceV1(dce.device_company, dce.device_device);
                 }
 
                 this.deviceSource = dce.device_company + " " + dce.device_device;
@@ -1685,6 +1697,26 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
         return this.pluginDefinition.getReportsDefinition();
     }
 
+
+    public PluginGraphDefinition getGraphsDefinition()
+    {
+        return this.pluginDefinition.getGraphsDefinition();
+    }
+
+
+    public DevicePluginDefinitionAbstract getPluginDefinition()
+    {
+        return this.pluginDefinition;
+    }
+
+
+    @Override
+    public GraphDbDataRetriever getGraphDbDataRetriever()
+    {
+        return this.getPlugInDb();
+    }
+
+
     /**
      * Get Graph Context
      *
@@ -1694,7 +1726,6 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     // {
     // return this.graph_context;
     // }
-
 
     // ********************************************************
     // ****** New Implementations *****

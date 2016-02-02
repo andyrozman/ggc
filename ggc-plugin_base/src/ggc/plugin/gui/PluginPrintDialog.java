@@ -103,7 +103,7 @@ public class PluginPrintDialog extends PrintDialogRange
     @Override
     public void startPrintingAction() throws Exception
     {
-        this.reportsDefinition.startPrintingAction(this);
+        this.reportsDefinition.startReportingAction(this);
     }
 
 

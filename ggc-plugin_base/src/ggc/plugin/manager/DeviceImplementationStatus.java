@@ -71,6 +71,8 @@ public enum DeviceImplementationStatus
 
     NotDoneButShouldBeDisplayed, //
 
+    DoesntSupportDownload,
+
     ;
 
     public static boolean isSupportedDevice(DeviceImplementationStatus status)
@@ -80,7 +82,8 @@ public enum DeviceImplementationStatus
                 (status == InProgress) || //
                 (status == Testing) || //
                 (status == Done) || //
-        (status == NotDoneButShouldBeDisplayed) //
+                (status == NotDoneButShouldBeDisplayed) || //
+        (status == DoesntSupportDownload) //
         );
     }
 }

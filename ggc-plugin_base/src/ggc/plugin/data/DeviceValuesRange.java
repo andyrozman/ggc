@@ -1,13 +1,9 @@
 package ggc.plugin.data;
 
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
+import java.util.*;
 
 import com.atech.utils.data.ATechDate;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,11 +35,12 @@ public class DeviceValuesRange
 {
 
     // private ArrayList<DeviceValuesEntry> list = null;
-    private Hashtable<String, DeviceValuesDay> hash_table = null;
+    private Map<String, DeviceValuesDay> hashMap = null;
     DataAccessPlugInBase m_da;
     GregorianCalendar gc_from;
     GregorianCalendar gc_to;
     DeviceValuesEntry dve;
+
 
     /**
      * Constructor
@@ -56,11 +53,12 @@ public class DeviceValuesRange
     {
         this.m_da = da;
         // list = new ArrayList<DeviceValuesEntry>();
-        hash_table = new Hashtable<String, DeviceValuesDay>();
+        hashMap = new HashMap<String, DeviceValuesDay>();
         this.gc_from = from;
         this.gc_to = to;
         dve = m_da.getDataEntryObject();
     }
+
 
     /**
      * Add Entry
@@ -71,18 +69,19 @@ public class DeviceValuesRange
     {
         ATechDate atd = new ATechDate(pve.getDateTimeFormat(), pve.getDateTime());
 
-        if (!this.hash_table.containsKey(atd.getDateFilenameString()))
+        if (!this.hashMap.containsKey(atd.getDateFilenameString()))
         {
             DeviceValuesDay dvd = new DeviceValuesDay(this.m_da, atd.getGregorianCalendar());
             dvd.addEntry(pve);
 
-            this.hash_table.put(atd.getDateFilenameString(), dvd);
+            this.hashMap.put(atd.getDateFilenameString(), dvd);
         }
         else
         {
-            this.hash_table.get(atd.getDateFilenameString()).addEntry(pve);
+            this.hashMap.get(atd.getDateFilenameString()).addEntry(pve);
         }
     }
+
 
     /**
      * Add Entry
@@ -94,9 +93,9 @@ public class DeviceValuesRange
 
         ATechDate atd = new ATechDate(dve.getDateTimeFormat(), dvd.getDateTimeGC());
 
-        if (!this.hash_table.containsKey(atd.getDateFilenameString()))
+        if (!this.hashMap.containsKey(atd.getDateFilenameString()))
         {
-            this.hash_table.put(atd.getDateFilenameString(), dvd);
+            this.hashMap.put(atd.getDateFilenameString(), dvd);
         }
         else
         {
@@ -104,6 +103,7 @@ public class DeviceValuesRange
             System.out.println("addEntry problem (DeviceValuesDay)");
         }
     }
+
 
     /**
      * Is Day Entry Available
@@ -114,8 +114,9 @@ public class DeviceValuesRange
     public boolean isDayEntryAvailable(long dt)
     {
         ATechDate atd = new ATechDate(dve.getDateTimeFormat(), dt);
-        return this.hash_table.containsKey(atd.getDateFilenameString());
+        return this.hashMap.containsKey(atd.getDateFilenameString());
     }
+
 
     /**
      * Is Entry Available
@@ -134,6 +135,7 @@ public class DeviceValuesRange
             return false;
     }
 
+
     /**
      * Get Day Entry
      * 
@@ -143,8 +145,9 @@ public class DeviceValuesRange
     public DeviceValuesDay getDayEntry(long dt)
     {
         ATechDate atd = new ATechDate(dve.getDateTimeFormat(), dt);
-        return this.hash_table.get(atd.getDateFilenameString());
+        return this.hashMap.get(atd.getDateFilenameString());
     }
+
 
     /**
      * Get Start GC
@@ -156,6 +159,7 @@ public class DeviceValuesRange
         return this.gc_from;
     }
 
+
     /**
      * Get End GC
      * 
@@ -166,22 +170,27 @@ public class DeviceValuesRange
         return this.gc_to;
     }
 
+
     /**
      * Get All Entries (of type DeviceValuesEntry)
      * @return
      */
-    public ArrayList<DeviceValuesEntry> getAllEntries()
+    public List<DeviceValuesEntry> getAllEntries()
     {
-
         ArrayList<DeviceValuesEntry> list = new ArrayList<DeviceValuesEntry>();
 
-        for (Enumeration<DeviceValuesDay> en = this.hash_table.elements(); en.hasMoreElements();)
+        for (DeviceValuesDay dvd : this.hashMap.values())
         {
-            DeviceValuesDay dvd = en.nextElement();
             list.addAll(dvd.getList());
         }
 
         return list;
+    }
+
+
+    public Collection<DeviceValuesDay> getDayEntries()
+    {
+        return hashMap.values();
     }
 
 }

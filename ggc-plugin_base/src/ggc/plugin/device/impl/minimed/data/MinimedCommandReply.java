@@ -87,13 +87,13 @@ public class MinimedCommandReply
 
     public int getRawDataBytesAsInt(int byte1, int byte2, int byte3)
     {
-        return bitUtils.makeInt(rawData[byte1], rawData[byte2], rawData[byte3]);
+        return bitUtils.toInt(rawData[byte1], rawData[byte2], rawData[byte3]);
     }
 
 
     public int getRawDataBytesAsInt(int byte1, int byte2)
     {
-        return bitUtils.makeInt(rawData[byte1], rawData[byte2]);
+        return bitUtils.toInt(rawData[byte1], rawData[byte2]);
     }
 
 

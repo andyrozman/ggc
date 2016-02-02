@@ -19,12 +19,12 @@ public interface PluginReportDefinition
 
 
     /**
-     * Start printing action. We need to read getComboBoxListOfReports() to get number of selected report
-     * and then start printing action.
+     * Start reporting action. We need to read getComboBoxListOfReports() to get number of selected report
+     * and then start report action.
      *
      * @param pluginPrintDialog
      */
-    void startPrintingAction(PluginPrintDialog pluginPrintDialog) throws Exception;
+    void startReportingAction(PluginPrintDialog pluginPrintDialog) throws Exception;
 
 
     /**
@@ -36,20 +36,20 @@ public interface PluginReportDefinition
 
 
     /**
-     * Get PlugIn Print Menus
+     * Get PlugIn Report Menus
      *
      * Menus for Printing Reports.
      *
      * @return
      */
-    JMenu[] getPlugInPrintMenus(DevicePlugInServer pluginServer);
+    JMenu[] getPlugInReportMenus(DevicePlugInServer pluginServer);
 
 
     /**
-     * Start printing action from Menu
+     * Start report action from Menu
      * 
      * @param actionCommand
      */
-    void startPlugInPrintMenusAction(String actionCommand);
+    void startPlugInReportMenuAction(String actionCommand);
 
 }

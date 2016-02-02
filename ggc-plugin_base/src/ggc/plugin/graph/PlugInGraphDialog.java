@@ -1,24 +1,21 @@
 package ggc.plugin.graph;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.plugin.graph.panel.AxesEditorPanel;
-import ggc.plugin.graph.panel.DefinitionsPanel;
-import ggc.plugin.util.DataAccessPlugInBase;
-
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import com.atech.graphics.calendar.DateRangeData;
 import com.atech.graphics.calendar.DateRangeSelectionPanel2;
 import com.atech.graphics.layout.ZeroLayout;
 import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.plugin.graph.panel.AxesEditorPanel;
+import ggc.plugin.graph.panel.DefinitionsPanel;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -66,6 +63,7 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
     DefinitionsPanel def_panel = null;
     AxesEditorPanel axes_panel = null;
 
+
     /**
      * Constructor
      * 
@@ -108,6 +106,7 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
         setVisible(true);
     }
 
+
     private void initControlPanel()
     {
         /*
@@ -147,8 +146,8 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
          * | DataPlotSelectorPanel.INS_TOTAL_MASK);
          * cGV.setData(selectionPanel.getPlotData());
          * JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-         * help_button = dataAccess.createHelpButtonBySize(120, 25, this);
-         * buttonPanel.add(help_button);
+         * helpButton = dataAccess.createHelpButtonBySize(120, 25, this);
+         * buttonPanel.add(helpButton);
          * // Dimension dim = new Dimension(80, 20);
          * Dimension dim = new Dimension(120, 25);
          * JButton drawButton = new JButton("    " + m_ic.getMessage("DRAW"));
@@ -159,7 +158,8 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
          * JButton closeButton = new JButton("    " + m_ic.getMessage("CLOSE"));
          * closeButton.setPreferredSize(dim);
          * closeButton.setActionCommand("close");
-         * closeButton.setIcon(dataAccess.getImageIcon_22x22("cancel.png", this));
+         * closeButton.setIcon(dataAccess.getImageIcon_22x22("cancel.png",
+         * this));
          * closeButton.addActionListener(this);
          * buttonPanel.add(drawButton);
          * buttonPanel.add(closeButton);
@@ -170,17 +170,20 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
         // return cPanel;
     }
 
+
     private void setNewDateRange()
     {
         // cGV.setGlucoValues(new GlucoValues(dRS.getStartCalendar(),
         // dRS.getEndCalendar()));
     }
 
+
     private void closeDialog()
     {
         cGV = null;
         this.dispose();
     }
+
 
     /**
      * Invoked when an action occurs.
@@ -205,6 +208,7 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
         }
     }
 
+
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
@@ -217,6 +221,7 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      */
@@ -224,6 +229,7 @@ public class PlugInGraphDialog extends JDialog implements ActionListener, HelpCa
     {
         return this.help_button;
     }
+
 
     /**
      * getHelpId - get id for Help
