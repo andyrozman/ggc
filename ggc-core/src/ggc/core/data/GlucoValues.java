@@ -121,6 +121,27 @@ public class GlucoValues // extends DailyValues
     }
 
 
+    public GlucoValues(GregorianCalendar sDate, GregorianCalendar eDate, Collection<DailyValuesRow> collection)
+    {
+        sDate.set(Calendar.HOUR_OF_DAY, 0);
+        sDate.set(Calendar.MINUTE, 0);
+        sDate.set(Calendar.SECOND, 0);
+        sDate.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
+        from_date = sDate;
+
+        eDate.set(Calendar.HOUR_OF_DAY, 23);
+        eDate.set(Calendar.MINUTE, 59);
+        eDate.set(Calendar.SECOND, 0);
+        eDate.setTimeZone(TimeZoneUtil.getInstance().getEmptyTimeZone());
+        to_date = eDate;
+
+        for (DailyValuesRow dailyValuesRow : collection)
+        {
+            addRow(dailyValuesRow);
+        }
+    }
+
+
     /**
      * Get Range From
      * 
@@ -226,7 +247,6 @@ public class GlucoValues // extends DailyValues
         }
     }
 
-
     /**
      * Set New Row
      * 
@@ -241,6 +261,7 @@ public class GlucoValues // extends DailyValues
      * }
      * }
      */
+
 
     /**
      * Save Values

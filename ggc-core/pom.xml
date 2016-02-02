@@ -115,5 +115,16 @@
             <artifactId>commons-collections</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>8.4-702.jdbc3</version>
+        </dependency>
+
     </dependencies>
 </project>

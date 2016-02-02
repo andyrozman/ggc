@@ -783,6 +783,10 @@ public class DataAccess extends ATDataAccessLMAbstract
         addPlugIn(GGCPluginType.NutritionToolPlugin.getKey(), //
             new NutriPlugIn(this.m_main, this.ggci18nControl));
 
+        LOG.debug("init Plugins: Connect Tool");
+        addPlugIn(GGCPluginType.ConnectToolPlugin.getKey(), //
+            new ConnectPlugIn(this.m_main, this.ggci18nControl));
+
     }
 
 

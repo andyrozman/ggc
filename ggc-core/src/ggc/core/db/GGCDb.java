@@ -857,6 +857,18 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
 
     /**
+     * Get HbA1c
+     *
+     * @param day
+     * @return
+     */
+    public HbA1cValues getHbA1cForGraph(GregorianCalendar day)
+    {
+        return loadHbA1c(day);
+    }
+
+
+    /**
      * Load HbA1c
      * 
      * @param day
@@ -872,7 +884,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         logInfo("getHbA1c()");
 
-        HbA1cValues hbVal = new HbA1cValues();
+        HbA1cValues hbVal = new HbA1cValues(day);
 
         try
         {

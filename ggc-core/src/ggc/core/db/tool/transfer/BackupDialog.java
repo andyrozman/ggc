@@ -1,7 +1,6 @@
 package ggc.core.db.tool.transfer;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import com.atech.db.hibernate.transfer.BackupRestoreDialog;
 import com.atech.utils.ATDataAccessAbstract;
@@ -36,6 +35,7 @@ public class BackupDialog extends BackupRestoreDialog
 
     private static final long serialVersionUID = -9066907986768713200L;
 
+
     /**
      * Constructor
      * 
@@ -52,6 +52,7 @@ public class BackupDialog extends BackupRestoreDialog
         enableHelp("GGC_Tools_Backup");
         showDialog();
     }
+
 
     /**
      * Constructor
@@ -70,13 +71,14 @@ public class BackupDialog extends BackupRestoreDialog
         showDialog();
     }
 
+
     /** 
      * Perform Backup
      */
     @Override
     public void performBackup()
     {
-        GGCBackupRestoreRunner gbrr = new GGCBackupRestoreRunner(this.ht_backup_objects, this);
+        GGCBackupRestoreRunner gbrr = new GGCBackupRestoreRunner(this.backupObjects, this);
         gbrr.start();
     }
 

@@ -1,10 +1,7 @@
 package ggc.core.db.tool.transfer;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
+import java.util.*;
 
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.db.hibernate.transfer.BackupRestoreRunner;
@@ -47,6 +44,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
     DataAccess da = DataAccess.getInstance();
     I18nControlAbstract ic = da.getI18nControlInstance();
     boolean restore_with_append = true;
+    private String lastBackupFile = null;
 
 
     /**
@@ -55,10 +53,10 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
      * @param objects
      * @param giver
      */
-    public GGCBackupRestoreRunner(Hashtable<String, BackupRestoreObject> objects, BackupRestoreWorkGiver giver)
+    public GGCBackupRestoreRunner(Map<String, BackupRestoreObject> objects, BackupRestoreWorkGiver giver)
     {
         super(objects, giver);
-        // this.ht_backup_objects = objects;
+        // this.backupObjects = objects;
     }
 
 
@@ -186,6 +184,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
 
     }
 
+
     /*
      * private boolean isAnyNutritionBackupObjectSelected()
      * {
@@ -201,25 +200,11 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
      * }
      */
 
-
-    /*
-     * private boolean isAnyNutritionRestoreObjectSelected()
-     * {
-     * if
-     * ((this.isRestoreObjectSelected(i18nControl.getMessage("USER_FOOD_GROUPS")
-     * )) ||
-     * (this.isRestoreObjectSelected(i18nControl.getMessage("FOODS"))) ||
-     * (this.isRestoreObjectSelected(i18nControl.getMessage("MEAL_GROUPS"))) ||
-     * (this.isRestoreObjectSelected(i18nControl.getMessage("MEALS"))))
-     * return true;
-     * else
-     * return false;
-     * }
-     */
-
     private void zipAndRemoveBackupFiles()
     {
         String file_out = "../data/export/GGC_backup_" + getCurrentDate() + ".zip";
+
+        this.lastBackupFile = file_out;
 
         File directory = new File("../data/export/tmp/");
 
@@ -320,47 +305,50 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         /*
          * {
          * if
-         * (this.isRestoreObjectSelected("ggc.core.db.hibernate.FoodUserGroupH"
+         * (this.isRestoreObjectSelected("ggc.core.db.hibernate.food.FoodUserGroupH"
          * ))
          * {
          * this.setStatus(0);
          * this.setTask(i18nControl.getMessage("USER_FOOD_GROUPS"));
          * ImportNutrition edv = new ImportNutrition(this,
-         * this.getRestoreObject("ggc.core.db.hibernate.FoodUserGroupH"));
+         * this.getRestoreObject("ggc.core.db.hibernate.food.FoodUserGroupH"));
          * edv.run();
          * //end.export_UserFoodGroups();
          * this.setStatus(100);
          * // this.done_backup_elements++;
          * }
          * if (this.isRestoreObjectSelected(
-         * "ggc.core.db.hibernate.FoodUserDescriptionH"))
+         * "ggc.core.db.hibernate.food.FoodUserDescriptionH"))
          * {
          * this.setStatus(0);
          * this.setTask(i18nControl.getMessage("FOODS"));
          * ImportNutrition edv = new ImportNutrition(this,
-         * this.getRestoreObject("ggc.core.db.hibernate.FoodUserDescriptionH"));
+         * this.getRestoreObject("ggc.core.db.hibernate.food.FoodUserDescriptionH"
+         * ));
          * edv.run();
          * // end.export_UserFoods();
          * this.setStatus(100);
          * // this.done_backup_elements++;
          * }
-         * if (this.isRestoreObjectSelected("ggc.core.db.hibernate.MealGroupH"))
+         * if
+         * (this.isRestoreObjectSelected("ggc.core.db.hibernate.food.MealGroupH"
+         * ))
          * {
          * this.setStatus(0);
          * this.setTask(i18nControl.getMessage("MEAL_GROUPS"));
          * ImportNutrition edv = new ImportNutrition(this,
-         * this.getRestoreObject("ggc.core.db.hibernate.MealGroupH"));
+         * this.getRestoreObject("ggc.core.db.hibernate.food.MealGroupH"));
          * edv.run();
          * // end.export_MealGroups();
          * this.setStatus(100);
          * // this.done_backup_elements++;
          * }
-         * if (this.isRestoreObjectSelected("ggc.core.db.hibernate.MealH"))
+         * if (this.isRestoreObjectSelected("ggc.core.db.hibernate.food.MealH"))
          * {
          * this.setStatus(0);
          * this.setTask(i18nControl.getMessage("MEALS"));
          * ImportNutrition edv = new ImportNutrition(this,
-         * this.getRestoreObject("ggc.core.db.hibernate.MealH"));
+         * this.getRestoreObject("ggc.core.db.hibernate.food.MealH"));
          * edv.run();
          * // end.export_Meals();
          * this.setStatus(100);
@@ -383,4 +371,9 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         super.run();
     }
 
+
+    public String getLastBackupFile()
+    {
+        return lastBackupFile;
+    }
 }

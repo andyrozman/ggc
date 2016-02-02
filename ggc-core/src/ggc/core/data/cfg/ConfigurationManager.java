@@ -64,8 +64,11 @@ public class ConfigurationManager // extends AbstractConfigurationManager
                                     "PRINT_PDF_VIEWER_PARAMETERS", "", //
                                     "INS3_NAME", "Insulin 3", //
                                     "INS3_ABBR", "Ins3", //
-                                    "RATIO_MODE", "Base" // Base, Extended
-    };
+                                    "RATIO_MODE", "Base", // Base, Extended
+                                    // Main Window Size
+                                    "MAIN_WINDOW_SIZE", "800x600",
+                                    // Graph Viewer Size
+                                    "GRAPH_VIEWER_SIZE", "640x480", };
 
     private String cfg_int[] = { "METER_TYPE", "0", //
                                  "BG_UNIT", "2", // 1=mg/dl, 2= mmol/l

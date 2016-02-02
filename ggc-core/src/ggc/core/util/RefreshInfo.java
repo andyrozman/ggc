@@ -25,6 +25,7 @@ package ggc.core.util;
  *  Author:  andyrozman {andy@atech-software.com}  
  */
 
+@Deprecated
 public class RefreshInfo
 {
 

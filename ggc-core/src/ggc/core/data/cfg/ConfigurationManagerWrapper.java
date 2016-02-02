@@ -1,5 +1,11 @@
 package ggc.core.data.cfg;
 
+import java.awt.*;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.atech.graphics.graphs.GraphConfigProperties;
 import ggc.core.data.defs.GlucoseUnitType;
 
@@ -9,6 +15,7 @@ import ggc.core.data.defs.GlucoseUnitType;
 public class ConfigurationManagerWrapper implements GraphConfigProperties
 {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ConfigurationManagerWrapper.class);
     ConfigurationManager configurationManager;
 
 
@@ -1249,6 +1256,63 @@ public class ConfigurationManagerWrapper implements GraphConfigProperties
     public void setUseCGMSDataInPenDailyGraph(boolean useCGMSDataInPenDailyGraph)
     {
         setBooleanValue("USE_CGMS_DATA_IN_DAILY_PEN_DISPLAY", useCGMSDataInPenDailyGraph);
+    }
+
+
+    public Dimension getMainWindowSize()
+    {
+        return getDimensionFromParameter("MAIN_WINDOW_SIZE", 800, 600);
+    }
+
+
+    public void setMainWindowSize(Dimension size)
+    {
+        setDimensionToParameter("MAIN_WINDOW_SIZE", size);
+    }
+
+
+    public Dimension getGraphViewerSize()
+    {
+        return getDimensionFromParameter("GRAPH_VIEWER_SIZE", 640, 480);
+    }
+
+
+    public void setGraphViewerSize(Dimension size)
+    {
+        setDimensionToParameter("GRAPH_VIEWER_SIZE", size);
+    }
+
+
+    private void setDimensionToParameter(String parameterKey, Dimension size)
+    {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append((int) size.getWidth());
+        sb.append("x");
+        sb.append((int) size.getHeight());
+
+        setStringValue(parameterKey, sb.toString());
+    }
+
+
+    public Dimension getDimensionFromParameter(String parameterKey, int defaultWidth, int defaultHeight)
+    {
+        String value = getStringValue(parameterKey);
+
+        if (StringUtils.isNotBlank(value))
+        {
+            try
+            {
+                String[] splitStrings = value.split("x");
+                return new Dimension(Integer.parseInt(splitStrings[0]), Integer.parseInt(splitStrings[1]));
+            }
+            catch (NumberFormatException e)
+            {
+                LOG.debug("Undefinied value for Dimension Parameter. {}", value, e);
+            }
+        }
+
+        return new Dimension(defaultWidth, defaultHeight);
     }
 
 }

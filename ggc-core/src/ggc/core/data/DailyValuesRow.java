@@ -413,6 +413,38 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     }
 
 
+    public String getBGAsString(GlucoseUnitType glucoseUnitType)
+    {
+        if (debug)
+        {
+            System.out.println("getBgAsString [type=" + glucoseUnitType.name() + "]");
+            System.out.println("getBgAsString [internal_value=" + this.bg + "]");
+        }
+
+        if (glucoseUnitType == GlucoseUnitType.mmol_L)
+        {
+            float v = m_da.getBGValueByTypeFromDefault(GlucoseUnitType.mmol_L, bg);
+
+            if (debug)
+            {
+                System.out.println("getBgAsString [type=2,return=" + v + "]");
+            }
+
+            return DataAccess.getFloatAsString(v, 1);
+        }
+        else
+        {
+            if (debug)
+            {
+                System.out.println("getBgAsString [type=1,return=" + this.bg + "]");
+            }
+
+            return "" + bg;
+        }
+
+    }
+
+
     /**
      * Get BG Raw
      * 
@@ -813,6 +845,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     }
 
 
+    public String getBasalInsulinAsString()
+    {
+        return m_da.getDecimalHandler().getDecimalNumberAsString(this.getBasalInsulin(), 1);
+    }
+
+
     public float getBolusInsulin()
     {
         float sum = 0.0f;
@@ -835,6 +873,12 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
         }
 
         return sum;
+    }
+
+
+    public String getBolusInsulinAsString()
+    {
+        return m_da.getDecimalHandler().getDecimalNumberAsString(this.getBolusInsulin(), 1);
     }
 
 

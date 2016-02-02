@@ -35,7 +35,13 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.*;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.DbInfoH;
+import ggc.core.db.hibernate.DoctorTypeH;
+import ggc.core.db.hibernate.food.FoodDescriptionH;
+import ggc.core.db.hibernate.food.FoodGroupH;
+import ggc.core.db.hibernate.food.NutritionDefinitionH;
+import ggc.core.db.hibernate.food.NutritionHomeWeightTypeH;
 import ggc.core.util.DataAccess;
 
 /**

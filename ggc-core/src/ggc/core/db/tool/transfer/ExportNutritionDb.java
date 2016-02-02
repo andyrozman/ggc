@@ -1,12 +1,5 @@
 package ggc.core.db.tool.transfer;
 
-import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.FoodUserDescriptionH;
-import ggc.core.db.hibernate.FoodUserGroupH;
-import ggc.core.db.hibernate.MealGroupH;
-import ggc.core.db.hibernate.MealH;
-import ggc.core.util.DataAccess;
-
 import java.io.File;
 import java.util.Iterator;
 
@@ -17,6 +10,13 @@ import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
 import com.atech.db.hibernate.transfer.ImportExportAbstract;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.hibernate.food.FoodUserDescriptionH;
+import ggc.core.db.hibernate.food.FoodUserGroupH;
+import ggc.core.db.hibernate.food.MealGroupH;
+import ggc.core.db.hibernate.food.MealH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -63,6 +63,7 @@ public class ExportNutritionDb extends ExportTool
         // exportAll();
     }
 
+
     /**
      * Constructor
      * 
@@ -77,6 +78,7 @@ public class ExportNutritionDb extends ExportTool
         checkPrerequisites();
         exportAll();
     }
+
 
     private void checkPrerequisites()
     {
@@ -97,6 +99,7 @@ public class ExportNutritionDb extends ExportTool
         this.setRootPath("../data/export/");
         this.setFileLastPart("_" + getCurrentDateForFile());
     }
+
 
     private void checkPrerequisitesForAutoBackup()
     {
@@ -125,6 +128,7 @@ public class ExportNutritionDb extends ExportTool
         this.setFileLastPart("");
     }
 
+
     /**
      * Get Active Session
      */
@@ -133,6 +137,7 @@ public class ExportNutritionDb extends ExportTool
     {
         return 2;
     }
+
 
     private void exportAll()
     {
@@ -143,6 +148,7 @@ public class ExportNutritionDb extends ExportTool
         export_Meals();
     }
 
+
     /**
      * Export User Food Group
      */
@@ -152,12 +158,12 @@ public class ExportNutritionDb extends ExportTool
         openFile(this.getRootPath() + "FoodUserGroupH" + this.getFileLastPart() + ".dbe");
 
         // openFile("../data/export/food_user_group.txt");
-        writeHeader("ggc.core.db.hibernate.FoodUserGroupH", "id; name; name_i18n; description; parent_id; changed",
-            DataAccess.getInstance().current_db_version);
+        writeHeader("ggc.core.db.hibernate.food.FoodUserGroupH",
+            "id; name; name_i18n; description; parent_id; changed", DataAccess.getInstance().current_db_version);
 
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.FoodUserGroupH as grp order by grp.id");
+        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.food.FoodUserGroupH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
 
@@ -180,6 +186,7 @@ public class ExportNutritionDb extends ExportTool
         closeFile();
     }
 
+
     /**
      * Export User Foods
      */
@@ -188,13 +195,14 @@ public class ExportNutritionDb extends ExportTool
     {
         openFile(this.getRootPath() + "FoodUserDescriptionH" + this.getFileLastPart() + ".dbe");
         // openFile("../data/export/food_user_foods.txt");
-        writeHeader("ggc.core.db.hibernate.FoodUserDescriptionH",
+        writeHeader("ggc.core.db.hibernate.food.FoodUserDescriptionH",
             "id; name; name_i18n; group_id; refuse; description; home_weights; nutritions; changed",
             DataAccess.getInstance().current_db_version);
 
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.FoodUserDescriptionH as grp order by grp.id");
+        Query q = sess
+                .createQuery("select grp from ggc.core.db.hibernate.food.FoodUserDescriptionH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
 
@@ -228,6 +236,7 @@ public class ExportNutritionDb extends ExportTool
         closeFile();
     }
 
+
     /**
      * Export Meal Groups
      */
@@ -236,12 +245,12 @@ public class ExportNutritionDb extends ExportTool
     {
         openFile(this.getRootPath() + "MealGroupH" + this.getFileLastPart() + ".dbe");
         // openFile("../data/export/meal_groups.txt");
-        writeHeader("ggc.core.db.hibernate.MealGroupH", "id; name; name_i18n; description; parent_id; changed",
-            DataAccess.getInstance().current_db_version);
+        writeHeader("ggc.core.db.hibernate.food.food.MealGroupH",
+            "id; name; name_i18n; description; parent_id; changed", DataAccess.getInstance().current_db_version);
 
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.MealGroupH as grp order by grp.id");
+        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.food.MealGroupH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
 
@@ -264,6 +273,7 @@ public class ExportNutritionDb extends ExportTool
         closeFile();
     }
 
+
     /**
      * Export Meals
      */
@@ -272,12 +282,12 @@ public class ExportNutritionDb extends ExportTool
     {
         openFile(this.getRootPath() + "MealH" + this.getFileLastPart() + ".dbe");
         // openFile("../data/export/meal_meals.txt");
-        writeHeader("ggc.core.db.hibernate.MealH", "id; name; name_i18n; group_id; description; parts;"
+        writeHeader("ggc.core.db.hibernate.food.MealH", "id; name; name_i18n; group_id; description; parts;"
                 + "nutritions; extended; comment; changed", DataAccess.getInstance().current_db_version);
 
         Session sess = getSession();
 
-        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.MealH as grp order by grp.id");
+        Query q = sess.createQuery("select grp from ggc.core.db.hibernate.food.MealH as grp order by grp.id");
 
         this.statusSetMaxEntry(q.list().size());
 
@@ -301,6 +311,7 @@ public class ExportNutritionDb extends ExportTool
 
         closeFile();
     }
+
 
     /**
      * @param args

@@ -132,27 +132,27 @@ public class GGCImporter extends ImportTool implements Runnable
             System.out.println("Class type for export class was unidentified. Exiting !");
             LOG.debug("File was not identified as valid import file !!!");
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.FoodUserDescriptionH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.food.FoodUserDescriptionH"))
         {
-            LOG.debug("File was identified as 'ggc.core.db.hibernate.FoodUserDescriptionH'.");
+            LOG.debug("File was identified as 'ggc.core.db.hibernate.food.FoodUserDescriptionH'.");
             ImportNutrition in = new ImportNutrition(this.file_name, false);
             in.importUserFood();
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.FoodUserGroupH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.food.FoodUserGroupH"))
         {
-            LOG.debug("File was identified as 'ggc.core.db.hibernate.FoodUserGroupH'.");
+            LOG.debug("File was identified as 'ggc.core.db.hibernate.food.FoodUserGroupH'.");
             ImportNutrition in = new ImportNutrition(this.file_name, false);
             in.importUserGroups();
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.MealH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.food.MealH"))
         {
-            LOG.debug("File was identified as 'ggc.core.db.hibernate.MealH'.");
+            LOG.debug("File was identified as 'ggc.core.db.hibernate.food.MealH'.");
             ImportNutrition in = new ImportNutrition(this.file_name, false);
             in.importMeals();
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.MealGroupH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.food.MealGroupH"))
         {
-            LOG.debug("File was identified as 'ggc.core.db.hibernate.MealGroupH'.");
+            LOG.debug("File was identified as 'ggc.core.db.hibernate.food.MealGroupH'.");
             ImportNutrition in = new ImportNutrition(this.file_name, false);
             in.importMealGroups();
         }
@@ -183,7 +183,7 @@ public class GGCImporter extends ImportTool implements Runnable
 
             while ((line = br.readLine()) != null)
             {
-                // ; Class: ggc.core.db.hibernate.FoodUserDescriptionH
+                // ; Class: ggc.core.db.hibernate.food.FoodUserDescriptionH
 
                 if (line.contains("Class:"))
                 {

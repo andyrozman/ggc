@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.utils.ATDataAccessAbstract;
 
-import ggc.core.db.hibernate.FoodUserDescriptionH;
+import ggc.core.db.hibernate.food.FoodUserDescriptionH;
 import ggc.core.util.DataAccess;
 
 /**

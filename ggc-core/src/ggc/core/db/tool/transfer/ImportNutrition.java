@@ -41,10 +41,10 @@ import com.atech.db.hibernate.transfer.RestoreFileInfo;
 import com.atech.utils.ATDataAccessAbstract;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.FoodUserDescriptionH;
-import ggc.core.db.hibernate.FoodUserGroupH;
-import ggc.core.db.hibernate.MealGroupH;
-import ggc.core.db.hibernate.MealH;
+import ggc.core.db.hibernate.food.FoodUserDescriptionH;
+import ggc.core.db.hibernate.food.FoodUserGroupH;
+import ggc.core.db.hibernate.food.MealGroupH;
+import ggc.core.db.hibernate.food.MealH;
 import ggc.core.util.DataAccess;
 
 /**
@@ -182,19 +182,19 @@ public class ImportNutrition extends ImportTool implements Runnable
         {
             System.out.println("Class type for export class was unidentified. Exiting !");
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.FoodUserDescriptionH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.food.FoodUserDescriptionH"))
         {
             this.importUserFood();
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.FoodUserGroupH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.food.FoodUserGroupH"))
         {
             this.importUserGroups();
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.MealH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.food.MealH"))
         {
             this.importMeals();
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.MealGroupH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.food.MealGroupH"))
         {
             this.importMealGroups();
         }
@@ -230,7 +230,7 @@ public class ImportNutrition extends ImportTool implements Runnable
 
             while ((line = this.br_file.readLine()) != null)
             {
-                // ; Class: ggc.core.db.hibernate.FoodUserDescriptionH
+                // ; Class: ggc.core.db.hibernate.food.FoodUserDescriptionH
 
                 if (line.contains("Class:"))
                 {
@@ -260,7 +260,7 @@ public class ImportNutrition extends ImportTool implements Runnable
         try
         {
 
-            this.clearExistingData("ggc.core.db.hibernate.FoodUserDescriptionH");
+            this.clearExistingData("ggc.core.db.hibernate.food.FoodUserDescriptionH");
 
             System.out.println("\nLoading UserFoodDescription (5/dot)");
 
@@ -345,7 +345,7 @@ public class ImportNutrition extends ImportTool implements Runnable
 
         try
         {
-            this.clearExistingData("ggc.core.db.hibernate.FoodUserGroupH");
+            this.clearExistingData("ggc.core.db.hibernate.food.FoodUserGroupH");
 
             System.out.println("\nLoading UserGroups (2/dot)");
 
@@ -423,7 +423,7 @@ public class ImportNutrition extends ImportTool implements Runnable
 
         try
         {
-            this.clearExistingData("ggc.core.db.hibernate.MealH");
+            this.clearExistingData("ggc.core.db.hibernate.food.MealH");
 
             System.out.println("\nLoading MealsDescription (5/dot)");
 
@@ -507,7 +507,7 @@ public class ImportNutrition extends ImportTool implements Runnable
 
         try
         {
-            this.clearExistingData("ggc.core.db.hibernate.MealGroupH");
+            this.clearExistingData("ggc.core.db.hibernate.food.MealGroupH");
 
             System.out.println("\nLoading MealGroups (2/dot)");
 
@@ -580,19 +580,19 @@ public class ImportNutrition extends ImportTool implements Runnable
     public void run()
     {
 
-        if (this.selected_class.equals("ggc.core.db.hibernate.FoodUserDescriptionH"))
+        if (this.selected_class.equals("ggc.core.db.hibernate.food.FoodUserDescriptionH"))
         {
             this.importUserFood();
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.FoodUserGroupH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.food.FoodUserGroupH"))
         {
             this.importUserGroups();
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.MealH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.food.MealH"))
         {
             this.importMeals();
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.MealGroupH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.food.MealGroupH"))
         {
             this.importMealGroups();
         }

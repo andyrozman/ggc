@@ -1,6 +1,7 @@
 package ggc.core.data;
 
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
@@ -47,6 +48,7 @@ public class HbA1cValues
     // private int[] ReadingsPerDay;
 
     private Hashtable<String, DailyValues> m_dataTable = null;
+    GregorianCalendar calendar;
 
 
     /**
@@ -60,6 +62,14 @@ public class HbA1cValues
         exp = 0;
         // ReadingsPerDay = new int[25];
         m_dataTable = new Hashtable<String, DailyValues>();
+    }
+
+
+    public HbA1cValues(GregorianCalendar calendar)
+    {
+        this();
+
+        this.calendar = calendar;
     }
 
 
@@ -383,5 +393,15 @@ public class HbA1cValues
          * return 0;
          * }
          */
+    }
+
+
+    @Override
+    public String toString()
+    {
+        return "HbA1cValues [" + "sumBG=" + sumBG + //
+                ", readings=" + readings + //
+                ", dayCount=" + dayCount + //
+                ", calendar=" + DataAccess.getInstance().getGregorianCalendarDateAsString(calendar) + ']';
     }
 }

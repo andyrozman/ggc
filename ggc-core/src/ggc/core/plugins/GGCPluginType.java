@@ -31,8 +31,10 @@ public enum GGCPluginType
     PumpToolPlugin("PumpsPlugIn", true), //
     NutritionToolPlugin("NutritionPlugIn", true), //
     CGMSToolPlugin("CGMSPlugIn", true), //
+    ConnectToolPlugin("ConnectToolPlugin", true), //
 
-    // this two are not plugins themselves, but we need it for translation context, so we define them here
+    // this two are not plugins themselves, but we need it for translation
+    // context, so we define them here
     PluginBase("PluginBase", false), //
     Core("GGCCore", false) //
     ;
@@ -40,21 +42,25 @@ public enum GGCPluginType
     private String key;
     private boolean isPlugin = false;
 
+
     private GGCPluginType(String key, boolean plugin)
     {
         this.key = key;
         this.isPlugin = plugin;
     }
 
+
     public String getKey()
     {
         return key;
     }
 
+
     public void setKey(String key)
     {
         this.key = key;
     }
+
 
     public boolean isPlugin()
     {
