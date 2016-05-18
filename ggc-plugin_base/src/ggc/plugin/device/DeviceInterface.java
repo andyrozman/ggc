@@ -119,7 +119,6 @@ public interface DeviceInterface extends SelectableInterfaceV2
      */
     void dispose();
 
-
     // ************************************************
     // *** Device GUI Methods ***
     // ************************************************
@@ -136,6 +135,7 @@ public interface DeviceInterface extends SelectableInterfaceV2
     // public void setDeviceAllowedActions(boolean can_read_data, boolean
     // can_read_partitial_data,
     // boolean can_read_device_info, boolean can_read_device_configuration);
+
 
     // ************************************************
     // *** Device Implemented methods ***
@@ -208,7 +208,6 @@ public interface DeviceInterface extends SelectableInterfaceV2
      */
     public boolean isDeviceCommunicating();
 
-
     // ************************************************
     // *** Available Functionality ***
     // ************************************************
@@ -242,6 +241,7 @@ public interface DeviceInterface extends SelectableInterfaceV2
      * Test
      */
     // void test();
+
 
     // ************************************************
     // *** Connection type/parameters ***
@@ -326,10 +326,10 @@ public interface DeviceInterface extends SelectableInterfaceV2
      */
     public AbstractDeviceCompany getDeviceCompany();
 
-
     // ************************************************
     // *** Download Support ***
     // ************************************************
+
 
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -387,7 +387,6 @@ public interface DeviceInterface extends SelectableInterfaceV2
     /**
      * Has Special Config
      * 
-     * @return
      */
     public boolean hasSpecialConfig();
 

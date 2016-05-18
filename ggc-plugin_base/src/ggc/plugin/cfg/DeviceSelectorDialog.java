@@ -72,7 +72,7 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     {
         if (this.dcd == null)
         {
-            this.dcd = ((DataAccessPlugInBase) m_da).getDeviceConfigurationDefinition();
+            this.dcd = ((DataAccessPlugInBase) dataAccess).getDeviceConfigurationDefinition();
         }
 
         return this.dcd;
@@ -88,7 +88,8 @@ public class DeviceSelectorDialog extends SelectorAbstractDialog
     public void initSelectorValuesForType()
     {
         setSelectorObject((SelectableInterface) this.getDeviceConfigurationDefinition().getDummyObject());
-        setSelectorName(String.format(ic.getMessage("SELECTOR_DEVICE"), ic.getMessage("DEVICE_NAME_BIG")));
+        setSelectorName(
+            String.format(i18nControl.getMessage("SELECTOR_DEVICE"), i18nControl.getMessage("DEVICE_NAME_BIG")));
         setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
         this.setColumnSortingEnabled(false);
         this.setHelpStringId("DeviceTool_Configuration_DeviceSelector");

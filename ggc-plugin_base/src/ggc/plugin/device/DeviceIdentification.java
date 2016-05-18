@@ -1,6 +1,7 @@
 package ggc.plugin.device;
 
 import com.atech.i18n.I18nControlAbstract;
+import ggc.plugin.device.v2.DeviceDefinition;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -32,6 +33,8 @@ public class DeviceIdentification
 {
 
     private I18nControlAbstract m_ic = null;
+
+    private DeviceDefinition deviceDefinition;
 
     /**
      * Company
@@ -84,6 +87,7 @@ public class DeviceIdentification
 
     // DataAccessPlugInBase da
 
+
     // I18nControlAbstract m_ic;
 
     /**
@@ -95,6 +99,7 @@ public class DeviceIdentification
     {
         this.m_ic = ic;
     }
+
 
     /**
      * Constructor 
@@ -148,6 +153,7 @@ public class DeviceIdentification
         return sb.toString();
     }
 
+
     /**
      * Get Short Information
      * 
@@ -195,6 +201,7 @@ public class DeviceIdentification
         return sb.toString();
     }
 
+
     private String getShortInformationFile()
     {
         StringBuffer sb = new StringBuffer();
@@ -216,6 +223,7 @@ public class DeviceIdentification
         return sb.toString();
     }
 
+
     private void appendParameter(String param, String text, StringBuffer sb)
     {
         if (param != null)
@@ -223,6 +231,15 @@ public class DeviceIdentification
             sb.append(text + ": " + param + "  ");
         }
 
+    }
+
+
+    public void setDeviceDefinition(DeviceDefinition deviceDefinition)
+    {
+        this.deviceDefinition = deviceDefinition;
+
+        this.company = deviceDefinition.getDeviceCompany().getName();
+        this.device_selected = deviceDefinition.getDeviceName();
     }
 
 }

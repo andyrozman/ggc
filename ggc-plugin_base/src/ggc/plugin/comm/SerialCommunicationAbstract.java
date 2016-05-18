@@ -197,4 +197,10 @@ public abstract class SerialCommunicationAbstract implements SerialCommunication
         return outputArray;
     }
 
+
+    public void flush() throws PlugInBaseException
+    {
+        LOG.warn("flush() not implemented.");
+    }
+
 }

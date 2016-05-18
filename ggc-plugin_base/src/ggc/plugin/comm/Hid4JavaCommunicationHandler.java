@@ -47,7 +47,21 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
             return false;
         }
 
-        // 0.3.1
+        hidDevice = findHidDevice_0_3_1(hidServices);
+
+        if (hidDevice == null)
+        {
+            throw new PlugInBaseException(PlugInExceptionType.DeviceNotFound);
+        }
+
+        LOG.debug("Found correct device: " + hidDevice);
+
+        return hidDevice != null;
+    }
+
+
+    private HidDevice findHidDevice_0_3_1(HidServices hidServices) throws PlugInBaseException
+    {
         HidDeviceInfo selHidDeviceInfo = null;
 
         // Provide a list of attached devices
@@ -59,7 +73,20 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
             }
         }
 
-        // 0.4.0
+        if (selHidDeviceInfo == null)
+        {
+            throw new PlugInBaseException(PlugInExceptionType.DeviceNotFound);
+        }
+
+        hidDevice = hidServices.getHidDevice(selectedDevice.getVendorId(), selectedDevice.getProductId(), null);
+
+        return hidDevice;
+    }
+
+
+    private HidDevice findHidDevice_0_4_x(HidServices hidServices) throws PlugInBaseException
+    {
+
         // HidDevice selHidDeviceInfo = null;
         //
         // // Provide a list of attached devices
@@ -72,26 +99,17 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
         // selHidDeviceInfo = hidDeviceInfo;
         // }
         // }
-
-        if (selHidDeviceInfo == null)
-        {
-            throw new PlugInBaseException(PlugInExceptionType.DeviceNotFound);
-        }
-
-        // 0.3.1
-        hidDevice = hidServices.getHidDevice(selectedDevice.getVendorId(), selectedDevice.getProductId(), null);
-
-        // 0.4.0
+        //
+        // if (selHidDeviceInfo == null)
+        // {
+        // throw new PlugInBaseException(PlugInExceptionType.DeviceNotFound);
+        // }
+        //
         // hidDevice = selHidDeviceInfo;
+        //
+        // return hidDevice;
+        return null;
 
-        if (hidDevice == null)
-        {
-            throw new PlugInBaseException(PlugInExceptionType.DeviceNotFound);
-        }
-
-        LOG.debug("Found correct device: " + hidDevice);
-
-        return hidDevice != null;
     }
 
 

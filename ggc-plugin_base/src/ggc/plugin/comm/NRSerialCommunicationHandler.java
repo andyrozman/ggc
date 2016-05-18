@@ -15,7 +15,6 @@ import ggc.plugin.comm.cfg.SerialSettingsType;
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import gnu.io.NRSerialPort;
-import gnu.io.RXTXPort;
 import gnu.io.SerialPort;
 
 /**
@@ -33,7 +32,8 @@ public class NRSerialCommunicationHandler extends SerialCommunicationAbstract
     private InputStream inputStream;
     private OutputStream outputStream;
     private BitUtils bitUtils = new BitUtils();
-    RXTXPort serialPortRaw;
+    // RXTXPort serialPortRaw;
+    SerialPort serialPortRaw;
 
 
     public NRSerialCommunicationHandler(String portName)
@@ -488,9 +488,17 @@ public class NRSerialCommunicationHandler extends SerialCommunicationAbstract
     }
 
 
-    public static Set<String> getAvailablePorts() throws Exception
+    public static Set<String> getAvailablePorts() throws PlugInBaseException
     {
-        return NRSerialPort.getAvailableSerialPorts();
+        try
+        {
+            return NRSerialPort.getAvailableSerialPorts();
+        }
+        catch (Exception ex)
+        {
+            throw new PlugInBaseException(PlugInExceptionType.InterfaceProblem,
+                    new Object[] { "Problem getting available Serial Ports." }, ex);
+        }
     }
 
 
@@ -516,6 +524,19 @@ public class NRSerialCommunicationHandler extends SerialCommunicationAbstract
         convertByteArrayToIntArray(byteArray, buffer);
 
         return x;
+    }
+
+
+    public void flush() throws PlugInBaseException
+    {
+        try
+        {
+            outputStream.flush();
+        }
+        catch (IOException e)
+        {
+            throw new PlugInBaseException(e);
+        }
     }
 
 }

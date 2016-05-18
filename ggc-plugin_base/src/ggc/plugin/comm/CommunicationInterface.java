@@ -68,4 +68,6 @@ public interface CommunicationInterface
 
     void setReceiveTimeout(int timeout) throws PlugInBaseException;
 
+
+    void flush() throws PlugInBaseException;
 }

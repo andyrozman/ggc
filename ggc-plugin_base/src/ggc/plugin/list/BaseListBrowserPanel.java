@@ -36,7 +36,7 @@ public class BaseListBrowserPanel extends BaseListAbstractPanel
 {
 
     private static final long serialVersionUID = -3840758557586889169L;
-    // I18nControlAbstract ic = null;
+    // I18nControlAbstract i18nControl = null;
     DataAccessPlugInBase m_da = null;
     // JEditorPane editor;
 

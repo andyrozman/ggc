@@ -393,12 +393,6 @@ public class IBMCommunicationHandler extends SerialCommunicationAbstract impleme
     }
 
 
-    public void disconnectDevice()
-    {
-        // fixme
-    }
-
-
     public boolean isDataAvailable()
     {
         // fixme
@@ -476,10 +470,39 @@ public class IBMCommunicationHandler extends SerialCommunicationAbstract impleme
     }
 
 
+    public void disconnectDevice()
+    {
+
+        try
+        {
+            if (this.portInputStream != null)
+                this.portInputStream.close();
+        }
+        catch (IOException e)
+        {
+            LOG.warn("error closing input stream");
+
+        }
+
+        try
+        {
+            if (this.portOutputStream != null)
+                this.portOutputStream.close();
+        }
+        catch (IOException e)
+        {
+            LOG.warn("error closing output stream");
+        }
+
+        this.close();
+
+    }
+
+
     /**
      * Read
      *
-     * @throws java.io.IOException
+     * @throws PlugInBaseException
      * @return
      */
     public int read() throws PlugInBaseException
@@ -499,7 +522,7 @@ public class IBMCommunicationHandler extends SerialCommunicationAbstract impleme
      * Read
      *
      * @param b
-     * @throws java.io.IOException
+     * @throws PlugInBaseException
      * @return
      */
     public int read(byte[] b) throws PlugInBaseException
@@ -521,7 +544,7 @@ public class IBMCommunicationHandler extends SerialCommunicationAbstract impleme
      * @param b
      * @param off
      * @param len
-     * @throws java.io.IOException
+     * @throws PlugInBaseException
      * @return
      */
     public int read(byte[] b, int off, int len) throws PlugInBaseException
@@ -541,7 +564,7 @@ public class IBMCommunicationHandler extends SerialCommunicationAbstract impleme
      * Read Line
      *
      * @return
-     * @throws java.io.IOException
+     * @throws PlugInBaseException
      */
     public String readLine() throws PlugInBaseException // ,
                                                         // SerialIOHaltedException
@@ -582,7 +605,7 @@ public class IBMCommunicationHandler extends SerialCommunicationAbstract impleme
     /**
      * Read Line as array of bytes
      * @return
-     * @throws java.io.IOException
+     * @throws PlugInBaseException
      */
     public byte[] readLineBytes() throws PlugInBaseException
     {
@@ -641,7 +664,7 @@ public class IBMCommunicationHandler extends SerialCommunicationAbstract impleme
      * Write (byte[])
      *
      * @param b
-     * @throws java.io.IOException
+     * @throws PlugInBaseException
      */
     public void write(byte[] b) throws PlugInBaseException
     {
@@ -659,7 +682,7 @@ public class IBMCommunicationHandler extends SerialCommunicationAbstract impleme
     /**
      * Write (int)
      * @param i
-     * @throws java.io.IOException
+     * @throws PlugInBaseException
      */
     public void write(int i) throws PlugInBaseException
     {

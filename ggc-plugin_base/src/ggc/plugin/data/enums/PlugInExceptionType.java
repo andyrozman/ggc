@@ -35,10 +35,14 @@ public enum PlugInExceptionType
     UnsupportedAndNotPlannedInterface("%s interface is not supported and is not planned to be supported."), //
     YetUnsupportedInterface("%s interface is not YET supported."), //
     NeedToSelectInterface("You need to select valid interface."), //
+    InterfaceProblem("Problem with computer interface. %s"), //
 
     // Device
     InvalidPortOrPortClosed("Invalid port or port closed!"), //
     DeviceNotFoundOnConfiguredPort("DEVICE_NOT_FOUND_ON_CONFIGURED_PORT"), //
+    DeviceNotFoundOnConfiguredPortOtherAvailable(
+            "Device not found on configured port, but other ports are available (%s)."), //
+
     DevicePortInUse("DEVICE_PORT_IN_USE"), //
     DeviceNAKOrInvalidCRC("Device reported NAK or an invalid CRC error."), //
     DeviceNAKOrInvalidCRCDesc("Device reported NAK or an invalid CRC error. (%s)"), //

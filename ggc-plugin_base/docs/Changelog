@@ -2,6 +2,11 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+1.2.2 [18.5.2016] [Andy]
+- extended CommunicationInterface
+- refactorings
+- added companies, deviceHandlers
+
 1.2.1 [2.2.2016] [Andy]
 - changes DeviceValues
 - PluginDb implementing GraphDbDataRetriever

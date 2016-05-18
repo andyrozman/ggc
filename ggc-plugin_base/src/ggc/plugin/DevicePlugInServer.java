@@ -117,7 +117,8 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
         da_plugin.loadSpecialParameters();
         da_plugin.setCurrentUserId(da_ggc_core.current_user_id);
         da_plugin.setConfigurationManager(((DataAccess) dataAccess).getConfigurationManager());
-        this.backup_restore_enabled = true;
+
+        this.backup_restore_enabled = (getBackupObjects() != null);
 
         da_ggc_core.loadSpecialParameters();
         // System.out.println("PumpServer: " +
@@ -159,7 +160,8 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
         }
         else if (command.equals("plugin_read_data_file"))
         {
-            new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this, DeviceDataHandler.TRANSFER_READ_DATA_FILE);
+            new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this,
+                    DeviceDataHandler.TRANSFER_READ_DATA_FILE);
             this.client.executeReturnAction(RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("plugin_read_config_file"))
