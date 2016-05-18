@@ -1,10 +1,7 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.core.db.hibernate.MealGroupH;
-import ggc.nutri.db.GGCDbCache;
-import ggc.nutri.util.DataAccessNutri;
-
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,6 +11,10 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.db.hibernate.food.MealGroupH;
+import ggc.nutri.db.GGCDbCache;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -78,6 +79,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public ArrayList<Object> children = null; // new ArrayList<Object>();
 
+
     /**
      * Constructor
      * 
@@ -89,6 +91,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         this.meal_empty = true;
     }
 
+
     /**
      * Constructor
      * 
@@ -99,6 +102,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         this.meal_empty = meal_empty;
         ic = DataAccessNutri.getInstance().getI18nControlInstance();
     }
+
 
     /**
      * Constructor
@@ -112,6 +116,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         this.setName_i18n("");
         this.setParent_id(-1);
     }
+
 
     /**
      * Constructor
@@ -128,6 +133,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         this.setParent_id(ch.getParent_id());
     }
 
+
     /**
      * Get Child Count
      * 
@@ -139,6 +145,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return this.children.size();
     }
 
+
     /**
      * Has Children
      * 
@@ -149,6 +156,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         checkLoadStatus();
         return getChildCount() != 0;
     }
+
 
     /**
      * Add Child
@@ -169,6 +177,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         children_group.add(fg);
         children.add(fg);
     }
+
 
     /**
      * Add Child
@@ -197,6 +206,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         children.add(fd);
     }
 
+
     /**
      * Remove Child
      * 
@@ -208,6 +218,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         children_group.remove(fg);
         children.remove(fg);
     }
+
 
     /**
      * Remove Child
@@ -221,6 +232,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         children_meal.remove(fd);
     }
 
+
     /**
      * Get Child
      * 
@@ -232,6 +244,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         checkLoadStatus();
         return this.children.get(index);
     }
+
 
     /**
      * Find Child
@@ -245,6 +258,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return this.children.indexOf(child);
     }
 
+
     /**
      * Get Group Children Count
      * 
@@ -256,6 +270,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return this.children_group.size();
     }
 
+
     /**
      * Has Group Children
      * 
@@ -266,6 +281,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         checkLoadStatus();
         return getGroupChildrenCount() != 0;
     }
+
 
     /**
      * Get Group Child
@@ -279,6 +295,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return this.children_group.get(index);
     }
 
+
     /**
      * Find Group Child
      * 
@@ -291,6 +308,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return this.children_group.indexOf(child);
     }
 
+
     /**
      * Get Short Description
      * 
@@ -301,6 +319,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return this.getName();
     }
 
+
     /**
      * Get Long Description
      * @return
@@ -310,10 +329,11 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return "MealGroup [id=" + this.getId() + ",name=" + this.getName() + ",parent_id=" + this.getParent_id() + "]";
     }
 
+
     /**
      * To String
      * 
-     * @see ggc.core.db.hibernate.MealGroupH#toString()
+     * @see MealGroupH#toString()
      */
     @Override
     public String toString()
@@ -323,6 +343,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         else
             return this.getShortDescription();
     }
+
 
     // ---
     // --- DatabaseObjectHibernate
@@ -358,6 +379,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
     }
 
+
     /**
      * DbEdit - Edit this object in database
      * 
@@ -384,6 +406,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
     }
 
+
     /**
      * DbDelete - Delete this object in database
      * 
@@ -405,6 +428,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
@@ -415,8 +439,8 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        Query q = sess.createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.meal_group_id="
-                + getId());
+        Query q = sess
+                .createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.meal_group_id=" + getId());
         int size = q.list().size();
 
         if (size > 0)
@@ -431,6 +455,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
             return false;
 
     }
+
 
     /**
      * DbGet - Loads this object. Id must be set.
@@ -453,6 +478,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return true;
     }
 
+
     /**
      * getObjectName - returns name of DatabaseObject
      * 
@@ -463,6 +489,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return "Meal Group";
     }
 
+
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -472,6 +499,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return debug;
     }
+
 
     /**
      * getAction - returns action that should be done on object 0 = no action 1
@@ -485,6 +513,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return 0;
     }
+
 
     /**
      * Load Children
@@ -509,6 +538,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
     }
 
+
     /**
      * Check Load Status
      */
@@ -520,6 +550,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         }
     }
 
+
     /**
      * Get Load Status
      * 
@@ -529,6 +560,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return this.object_load_status;
     }
+
 
     // ---
     // --- BackupRestoreObject
@@ -542,6 +574,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return ic.getMessage("MEAL_GROUPS");
     }
 
+
     /**
      * Get Class Name
      * 
@@ -549,8 +582,9 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public String getClassName()
     {
-        return "ggc.core.db.hibernate.MealGroupH";
+        return "ggc.core.db.hibernate.food.MealGroupH";
     }
+
 
     /**
      * Get Children
@@ -562,6 +596,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return null;
     }
 
+
     /**
      * Is Selected
      */
@@ -570,6 +605,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return selected;
     }
 
+
     /**
      * Set Selected
      */
@@ -577,6 +613,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         this.selected = newValue;
     }
+
 
     /**
      * Is Collection
@@ -587,6 +624,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return false;
     }
+
 
     /**
      * Get Object Unique Id - get id of object
@@ -602,6 +640,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public int TABLE_VERSION = 1;
 
+
     /**
      * getTableVersion - returns version of table
      * 
@@ -611,6 +650,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return this.TABLE_VERSION;
     }
+
 
     /**
      * dbExport - returns export String, for current version 
@@ -624,6 +664,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return null;
     }
 
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -634,6 +675,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return dbExport(this.TABLE_VERSION);
     }
+
 
     /**
      * dbExportHeader - header for export file
@@ -647,6 +689,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return null;
     }
 
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -657,30 +700,40 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return this.dbExportHeader(this.TABLE_VERSION);
     }
 
-    /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @throws Exception if import for selected table version is not supported or it fails
-     */
-    public void dbImport(int table_version, String value_entry) throws Exception
-    {
-        dbImport(table_version, value_entry, null);
-    }
 
     /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @param parameters parameters
-     * @throws Exception if import for selected table version is not supported or it fails
+     * {@inheritDoc}
      */
-    public void dbImport(int table_version, String value_entry, Object[] parameters) throws Exception
+    public void dbImport(int tableVersion, String valueEntry) throws Exception
     {
-        // TODO
+        dbImport(tableVersion, valueEntry, (Object[]) null);
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dbImport(int tableVersion, String valueEntry, Object[] parameters) throws Exception
+    {
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isNewImport()
+    {
+        return false;
+    }
+
 
     /**
      * getBackupFile - name of backup file (base part)
@@ -693,6 +746,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return "DayValueH";
     }
 
+
     /**
      * getBackupClassName - name of class which will be updated/restored
      * 
@@ -704,6 +758,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return "";
     }
 
+
     /**
      * Has To Be Clean - if table needs to be cleaned before import
      * 
@@ -714,6 +769,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         return true;
     }
 
+
     /**
      * Get Node Children
      */
@@ -721,6 +777,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     {
         return null;
     }
+
 
     /**
      * Has Node Children

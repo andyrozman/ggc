@@ -1,8 +1,5 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.core.db.hibernate.NutritionHomeWeightTypeH;
-import ggc.nutri.util.DataAccessNutri;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -10,6 +7,9 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.db.hibernate.food.NutritionHomeWeightTypeH;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -50,6 +50,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     private boolean debug = false;
     String text_idx;
 
+
     /**
      * Constructor
      */
@@ -59,6 +60,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         this.setName("");
         setSearchContext();
     }
+
 
     /**
      * Constructor
@@ -72,6 +74,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         setSearchContext();
     }
 
+
     /**
      * Get Short Description
      * 
@@ -83,16 +86,18 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         return this.getResolvedName();
     }
 
+
     /**
      * To String
      * 
-     * @see ggc.core.db.hibernate.NutritionHomeWeightTypeH#toString()
+     * @see NutritionHomeWeightTypeH#toString()
      */
     @Override
     public String toString()
     {
         return getShortDescription();
     }
+
 
     // ---
     // --- DatabaseObjectHibernate
@@ -124,6 +129,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         return "" + id.longValue();
     }
 
+
     /**
      * DbEdit - Edit this object in database
      * 
@@ -149,6 +155,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 
     }
 
+
     /**
      * DbDelete - Delete this object in database
      * 
@@ -171,6 +178,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
@@ -185,6 +193,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         // System.out.println("Not implemented: FoodGroup::DbHasChildren");
         return false;
     }
+
 
     /**
      * DbGet - Loads this object. Id must be set.
@@ -204,6 +213,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         return true;
     }
 
+
     /**
      * getObjectName - returns name of DatabaseObject
      * 
@@ -214,6 +224,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         return "Home Weight Type";
     }
 
+
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -223,6 +234,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     {
         return debug;
     }
+
 
     /**
      * getAction - returns action that should be done on object 0 = no action 1
@@ -237,6 +249,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         return 0;
     }
 
+
     // ---
     // --- SelectorInterface
     // ---
@@ -249,6 +262,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         return 3;
         // return 4;
     }
+
 
     /**
      * getColumnName
@@ -268,6 +282,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 
         }
     }
+
 
     /**
      * Get Column Value
@@ -289,6 +304,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 
     }
 
+
     private String getYesNo(int value)
     {
         if (value == 1)
@@ -296,6 +312,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         else
             return ic.getMessage("NO");
     }
+
 
     /**
      * Get Column Value Object
@@ -316,6 +333,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         }
     }
 
+
     /**
      * Get Resolved Name
      * 
@@ -325,6 +343,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     {
         return ic.getPartitialTranslation(this.getName(), "_");
     }
+
 
     /**
      * Get Column Width
@@ -345,6 +364,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 
     }
 
+
     /**
      * Get Item Id
      */
@@ -352,6 +372,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     {
         return this.getId();
     }
+
 
     /**
      * Is Found
@@ -361,6 +382,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         return true;
     }
 
+
     /**
      * Is Found
      */
@@ -368,6 +390,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     {
         return true;
     }
+
 
     /**
      * Is Found
@@ -379,6 +402,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         else
             return false;
     }
+
 
     /**
      * Set Search Context
@@ -394,6 +418,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
 
     private ColumnSorter columnSorter = null;
 
+
     /**
      * setColumnSorter - sets class that will help with column sorting
      * 
@@ -404,6 +429,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
     {
         this.columnSorter = cs;
     }
+
 
     /**
      * Compares this object with the specified object for order. Returns a
@@ -460,6 +486,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements
         return this.columnSorter.compareObjects(this, o);
 
     }
+
 
     /**
      * getObjectUniqueId - get id of object

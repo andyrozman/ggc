@@ -1,15 +1,15 @@
 package ggc.nutri.plugin;
 
+import com.atech.db.hibernate.transfer.BackupRestoreObject;
+import com.atech.db.hibernate.transfer.BackupRestoreRunner;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.BackupRestorePlugin;
+
 import ggc.core.db.datalayer.DailyValue;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.tool.transfer.ExportNutritionDb;
 import ggc.core.db.tool.transfer.ImportNutrition;
 import ggc.nutri.util.DataAccessNutri;
-
-import com.atech.db.hibernate.transfer.BackupRestoreObject;
-import com.atech.db.hibernate.transfer.BackupRestoreRunner;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.plugin.BackupRestorePlugin;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -44,6 +44,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
 
     I18nControlAbstract ic = DataAccessNutri.getInstance().getI18nControlInstance();
 
+
     // Hashtable<String, Backup>ht_restore_objects
 
     /**
@@ -52,6 +53,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
     public BackupRestoreNutriHandler()
     {
     }
+
 
     /**
      * Do Backup
@@ -109,6 +111,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
 
     }
 
+
     private boolean isAnyNutritionBackupObjectSelected(BackupRestoreRunner brr)
     {
         if (brr.isBackupObjectSelected(ic.getMessage("USER_FOOD_GROUPS"))
@@ -120,6 +123,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
             return false;
     }
 
+
     /**
      * Do Restore
      */
@@ -127,45 +131,47 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
     public void doRestore(BackupRestoreRunner brr)
     {
 
-        if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.FoodUserGroupH"))
+        if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.food.FoodUserGroupH"))
         {
             brr.setStatus(0);
             brr.setTask(ic.getMessage("USER_FOOD_GROUPS"));
-            ImportNutrition edv = new ImportNutrition(brr, brr.getRestoreObject("ggc.core.db.hibernate.FoodUserGroupH"));
+            ImportNutrition edv = new ImportNutrition(brr,
+                    brr.getRestoreObject("ggc.core.db.hibernate.food.FoodUserGroupH"));
             edv.run();
             // end.export_UserFoodGroups();
             brr.setStatus(100);
             // this.done_backup_elements++;
         }
 
-        if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.FoodUserDescriptionH"))
+        if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.food.FoodUserDescriptionH"))
         {
             brr.setStatus(0);
             brr.setTask(ic.getMessage("FOODS"));
             ImportNutrition edv = new ImportNutrition(brr,
-                    brr.getRestoreObject("ggc.core.db.hibernate.FoodUserDescriptionH"));
+                    brr.getRestoreObject("ggc.core.db.hibernate.food.FoodUserDescriptionH"));
             edv.run();
             // end.export_UserFoods();
             brr.setStatus(100);
             // this.done_backup_elements++;
         }
 
-        if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.MealGroupH"))
+        if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.food.MealGroupH"))
         {
             brr.setStatus(0);
             brr.setTask(ic.getMessage("MEAL_GROUPS"));
-            ImportNutrition edv = new ImportNutrition(brr, brr.getRestoreObject("ggc.core.db.hibernate.MealGroupH"));
+            ImportNutrition edv = new ImportNutrition(brr,
+                    brr.getRestoreObject("ggc.core.db.hibernate.food.MealGroupH"));
             edv.run();
             // end.export_MealGroups();
             brr.setStatus(100);
             // this.done_backup_elements++;
         }
 
-        if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.MealH"))
+        if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.food.MealH"))
         {
             brr.setStatus(0);
             brr.setTask(ic.getMessage("MEALS"));
-            ImportNutrition edv = new ImportNutrition(brr, brr.getRestoreObject("ggc.core.db.hibernate.MealH"));
+            ImportNutrition edv = new ImportNutrition(brr, brr.getRestoreObject("ggc.core.db.hibernate.food.MealH"));
             edv.run();
             // end.export_Meals();
             brr.setStatus(100);
@@ -174,6 +180,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
 
         // System.out.println("BackupRestoreNutriHandler::doRestore()");
     }
+
 
     /** 
      * Get Backup Restore Object
@@ -187,6 +194,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
         return null;
 
     }
+
 
     /** 
      * Get Backup Restore Object
@@ -203,6 +211,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
         return null;
 
     }
+
 
     /** 
      * Does Contain Backup Restore Object

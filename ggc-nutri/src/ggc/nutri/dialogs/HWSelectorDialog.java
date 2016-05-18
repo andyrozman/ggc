@@ -1,17 +1,16 @@
 package ggc.nutri.dialogs;
 
-import ggc.nutri.db.datalayer.HomeWeightSpecial;
-import ggc.nutri.db.datalayer.NutritionHomeWeightType;
-import ggc.nutri.util.DataAccessNutri;
-
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
+
+import ggc.nutri.db.datalayer.HomeWeightSpecial;
+import ggc.nutri.db.datalayer.NutritionHomeWeightType;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -55,6 +54,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
 
     private String hws = null;
 
+
     /**
      * Constructor
      * 
@@ -69,6 +69,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
         this.init();
         this.showDialog();
     }
+
 
     /**
      * Constructor
@@ -85,6 +86,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
         this.showDialog();
     }
 
+
     /**
      * Init Selector Values For Type
      */
@@ -92,14 +94,15 @@ public class HWSelectorDialog extends SelectorAbstractDialog
     public void initSelectorValuesForType()
     {
         setSelectorObject(new HomeWeightSpecial());
-        setSelectorName(ic.getMessage("SELECTOR_HOME_WEIGHT"));
+        setSelectorName(i18nControl.getMessage("SELECTOR_HOME_WEIGHT"));
         setHelpStringId("GGC_Food_User_Select_Nutrition");
-        setNewItemString(ic.getMessage("NEW_NUTR_DEF"));
+        setNewItemString(i18nControl.getMessage("NEW_NUTR_DEF"));
         setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
-        this.getDescriptions().put("DESC_1", ic.getMessage("HOME_WEIGHT_NAME"));
+        this.getDescriptions().put("DESC_1", i18nControl.getMessage("HOME_WEIGHT_NAME"));
         setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
         this.setHelpEnabled(true);
     }
+
 
     /**
      * Get Full Data
@@ -120,6 +123,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
             System.out.println("getFullData(): type not handled (" + this.getSelectorType() + ")");
         }
     }
+
 
     /**
      * Get Full List
@@ -165,6 +169,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
 
     }
 
+
     /**
      * Check and Execute Action: Edit
      */
@@ -174,6 +179,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
         System.out.println("checkAndExecuteActionEdit()");
     }
 
+
     /**
      * Check and Execute Action: New
      */
@@ -182,6 +188,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
     {
         System.out.println("checkAndExecuteActionNew()");
     }
+
 
     /**
      * Check and Execute Action: Select
@@ -198,6 +205,7 @@ public class HWSelectorDialog extends SelectorAbstractDialog
             this.dispose();
         }
     }
+
 
     /**
      * Item State Changed

@@ -10,6 +10,7 @@ import ggc.core.plugins.GGCPluginType;
 import ggc.nutri.report.def.NutriReportDefinition;
 import ggc.nutri.util.DataAccessNutri;
 import ggc.plugin.defs.DevicePluginDefinitionAbstract;
+import ggc.plugin.graph.PluginGraphDefinition;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.report.PluginReportDefinition;
 
@@ -90,17 +91,37 @@ public class NutriPluginDefinition extends DevicePluginDefinitionAbstract
         return null;
     }
 
+    // FIXME-Andy
     NutriReportDefinition reportsNutriDefinition;
 
 
     @Override
     public PluginReportDefinition getReportsDefinition()
     {
-        if (reportsNutriDefinition == null)
-        {
-            this.reportsNutriDefinition = new NutriReportDefinition((DataAccessNutri) this.dataAccess);
-        }
-        return reportsNutriDefinition;
+        // FIXME-Andy
+        return null;
+
+        // if (reportsNutriDefinition == null)
+        // {
+        // this.reportsNutriDefinition = new
+        // NutriReportDefinition((DataAccessNutri) this.dataAccess);
+        // }
+        // return reportsNutriDefinition;
+    }
+
+
+    @Override
+    public PluginGraphDefinition getGraphsDefinition()
+    {
+        // no graphs
+        return null;
+    }
+
+
+    @Override
+    public String getPluginActionsPrefix()
+    {
+        return "nutri_";
     }
 
 }

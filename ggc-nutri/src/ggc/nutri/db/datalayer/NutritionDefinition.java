@@ -1,8 +1,5 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.core.db.hibernate.NutritionDefinitionH;
-import ggc.nutri.util.DataAccessNutri;
-
 import java.util.Comparator;
 
 import org.hibernate.Session;
@@ -12,6 +9,9 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.db.hibernate.food.NutritionDefinitionH;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,6 +49,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     private boolean debug = false;
     String text_idx = "";
 
+
     /**
      * Constructor
      */
@@ -64,6 +65,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
         this.setSearchContext();
     }
+
 
     /**
      * Constructor
@@ -81,6 +83,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         this.setSearchContext();
     }
 
+
     /**
      * Get Short Description
      * 
@@ -91,16 +94,18 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return this.getResolvedName() + " (" + this.getWeight_unit() + ")";
     }
 
+
     /**
      * To String
      * 
-     * @see ggc.core.db.hibernate.NutritionDefinitionH#toString()
+     * @see NutritionDefinitionH#toString()
      */
     @Override
     public String toString()
     {
         return this.getShortDescription();
     }
+
 
     // ---
     // --- DatabaseObjectHibernate
@@ -134,6 +139,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     }
 
+
     /**
      * DbEdit - Edit this object in database
      * 
@@ -161,6 +167,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     }
 
+
     /**
      * DbDelete - Delete this object in database
      * 
@@ -182,6 +189,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
@@ -195,6 +203,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         System.out.println("Not implemented: FoodDescription::DbHasChildren");
         return true;
     }
+
 
     /**
      * DbGet - Loads this object. Id must be set.
@@ -219,6 +228,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return true;
     }
 
+
     /**
      * getObjectName - returns name of DatabaseObject
      * 
@@ -229,6 +239,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return "Food Nutrition Definition";
     }
 
+
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -238,6 +249,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     {
         return debug;
     }
+
 
     /**
      * getAction - returns action that should be done on object 0 = no action 1
@@ -252,6 +264,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return 0;
     }
 
+
     /**
      * getColumnCount - return number of displayable columns
      * 
@@ -262,6 +275,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return 4;
 
     }
+
 
     /**
      * getColumnName - return name of specified column
@@ -292,6 +306,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         }
 
     }
+
 
     /**
      * getColumnValue - return value of specified column
@@ -324,6 +339,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     }
 
+
     /**
      * getColumnValueObject - return value of specified column
      * 
@@ -349,6 +365,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         }
     }
 
+
     /**
      * Get Resolved Name
      * 
@@ -370,6 +387,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
             return t;
 
     }
+
 
     /**
      * getColumnWidth - return width of specified column
@@ -394,6 +412,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         }
     }
 
+
     /**
      * Get Item Id
      * 
@@ -404,6 +423,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return this.getId();
     }
 
+
     /**
      * Is Found
      */
@@ -412,6 +432,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         return true;
     }
 
+
     /**
      * Is Found
      */
@@ -419,6 +440,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     {
         return true;
     }
+
 
     /**
      * Is Found
@@ -430,6 +452,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
         else
             return false;
     }
+
 
     /**
      * Set Search Context
@@ -447,6 +470,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     private ColumnSorter columnSorter = null;
 
+
     /**
      * setColumnSorter - sets class that will help with column sorting
      * 
@@ -457,6 +481,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
     {
         this.columnSorter = cs;
     }
+
 
     /**
      * Compares this object with the specified object for order. Returns a
@@ -514,6 +539,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
     }
 
+
     /**
      * compare (MealPartsDisplay, MealPartsDisplay)
      * 
@@ -554,6 +580,7 @@ public class NutritionDefinition extends NutritionDefinitionH implements Databas
 
         return (int) (id1 - id2);
     }
+
 
     /**
      * getObjectUniqueId - get id of object

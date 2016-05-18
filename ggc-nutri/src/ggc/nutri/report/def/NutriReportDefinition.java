@@ -56,21 +56,22 @@ public class NutriReportDefinition implements PluginReportDefinition
 
     public String[] getReportsNames()
     {
+        // FIXME-Andy
         System.out.println("Reports def: getReportsNames");
         return new String[] { //
-                              this.i18nControl.getMessage("PUMP_DATA_BASE"), //
-                              this.i18nControl.getMessage("PUMP_DATA_EXT"), //
-                              this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
-                              this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
-                              this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
-                              this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_2"), //
-                // TIMESHEET_3 = 1 + Food
-                // TIMESHEET_4 = 1 + CGMS + Food
+        this.i18nControl.getMessage("PUMP_DATA_BASE"), //
+                this.i18nControl.getMessage("PUMP_DATA_EXT"), //
+                this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
+                this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
+                this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
+                this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_2"), //
+        // TIMESHEET_3 = 1 + Food
+        // TIMESHEET_4 = 1 + CGMS + Food
         };
     }
 
 
-    public void startPrintingAction(PluginPrintDialog pluginPrintDialog) throws Exception
+    public void startReportingAction(PluginPrintDialog pluginPrintDialog) throws Exception
     {
         // PrintAbstractIText pa = null;
         //
@@ -140,7 +141,7 @@ public class NutriReportDefinition implements PluginReportDefinition
      *
      * @return
      */
-    public JMenu[] getPlugInPrintMenus(DevicePlugInServer pluginServer)
+    public JMenu[] getPlugInReportMenus(DevicePlugInServer pluginServer)
     {
 
         // this.pluginServer = pluginServer;
@@ -170,14 +171,14 @@ public class NutriReportDefinition implements PluginReportDefinition
     }
 
 
-    private void addPrintMenuItem(JMenu menuReports, String name, String actionCommand)
+    private void addMenuItem(JMenu menuReports, String name, String actionCommand)
     {
         ATSwingUtils.createMenuItem(menuReports, name, name + "_DESC", actionCommand, pluginServer, "print.png",
             i18nControl, dataAccessNutri, pluginServer.getParent());
     }
 
 
-    public void startPlugInPrintMenusAction(String actionCommand)
+    public void startPlugInReportMenuAction(String actionCommand)
     {
         // PumpReportType pumpReportType = null;
         //

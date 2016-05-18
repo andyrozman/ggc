@@ -1,9 +1,7 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.core.db.hibernate.MealH;
-import ggc.nutri.util.DataAccessNutri;
-
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,6 +10,9 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.db.hibernate.food.MealH;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,6 +54,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
                                    // getI18nControlInstance();
     boolean meal_empty = false;
 
+
     /**
      * Constructor
      * 
@@ -64,6 +66,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         this.meal_empty = true;
     }
 
+
     /**
      * Constructor
      * 
@@ -74,6 +77,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         this.meal_empty = meal_empty;
         ic = DataAccessNutri.getInstance().getI18nControlInstance();
     }
+
 
     /**
      * Constructor
@@ -95,6 +99,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         loadParts();
         loadValues();
     }
+
 
     /**
      * Constructor
@@ -119,6 +124,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         // loadValues();
     }
 
+
     private void loadParts()
     {
         /*
@@ -129,9 +135,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
          */
     }
 
+
     private void loadValues()
     {
     }
+
 
     /**
      * Get Short Description
@@ -143,10 +151,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return this.getName();
     }
 
+
     /**
      * To String
      * 
-     * @see ggc.core.db.hibernate.MealH#toString()
+     * @see MealH#toString()
      */
     @Override
     public String toString()
@@ -156,6 +165,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         else
             return this.getShortDescription();
     }
+
 
     // ---
     // --- DatabaseObjectHibernate
@@ -191,6 +201,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return "" + id.longValue();
     }
 
+
     /**
      * DbEdit - Edit this object in database
      * 
@@ -221,6 +232,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return true;
     }
 
+
     /**
      * DbDelete - Delete this object in database
      * 
@@ -242,6 +254,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
 
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
@@ -252,9 +265,11 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        // System.out.println("Not implemented: FoodDescription::DbHasChildren");
+        // System.out.println("Not implemented:
+        // FoodDescription::DbHasChildren");
         return true;
     }
+
 
     /**
      * DbGet - Loads this object. Id must be set.
@@ -281,6 +296,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return true;
     }
 
+
     /**
      * getObjectName - returns name of DatabaseObject
      * 
@@ -291,6 +307,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return "Meal";
     }
 
+
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -300,6 +317,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         return debug;
     }
+
 
     /**
      * getAction - returns action that should be done on object 0 = no action 1
@@ -314,6 +332,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return 0;
     }
 
+
     // ---
     // --- BackupRestoreObject
     // ---
@@ -326,6 +345,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return ic.getMessage("MEALS");
     }
 
+
     /**
      * Get Class Name
      * 
@@ -333,8 +353,9 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
      */
     public String getClassName()
     {
-        return "ggc.core.db.hibernate.MealH";
+        return "ggc.core.db.hibernate.food.MealH";
     }
+
 
     /**
      * Get Children
@@ -346,6 +367,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return null;
     }
 
+
     /**
      * Has Children
      * 
@@ -355,6 +377,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         return false;
     }
+
 
     /**
      * Is Selected
@@ -366,6 +389,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return selected;
     }
 
+
     /**
      * Set Selected
      * 
@@ -376,6 +400,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         this.selected = _selected;
     }
 
+
     /**
      * Is Object Collection
      * 
@@ -385,6 +410,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         return false;
     }
+
 
     /**
      * getObjectUniqueId - get id of object
@@ -400,6 +426,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
      */
     public int TABLE_VERSION = 1;
 
+
     /**
      * getTableVersion - returns version of table
      * 
@@ -409,6 +436,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         return this.TABLE_VERSION;
     }
+
 
     /**
      * dbExport - returns export String, for current version 
@@ -422,6 +450,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return null;
     }
 
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -432,6 +461,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         return dbExport(this.TABLE_VERSION);
     }
+
 
     /**
      * dbExportHeader - header for export file
@@ -445,6 +475,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return null;
     }
 
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -455,30 +486,40 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return this.dbExportHeader(this.TABLE_VERSION);
     }
 
-    /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @throws Exception if import for selected table version is not supported or it fails
-     */
-    public void dbImport(int table_version, String value_entry) throws Exception
-    {
-        dbImport(table_version, value_entry, null);
-    }
 
     /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @param parameters parameters
-     * @throws Exception if import for selected table version is not supported or it fails
+     * {@inheritDoc}
      */
-    public void dbImport(int table_version, String value_entry, Object[] parameters) throws Exception
+    public void dbImport(int tableVersion, String valueEntry) throws Exception
     {
-        // TODO
+        dbImport(tableVersion, valueEntry, (Object[]) null);
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dbImport(int tableVersion, String valueEntry, Object[] parameters) throws Exception
+    {
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isNewImport()
+    {
+        return false;
+    }
+
 
     /**
      * getBackupFile - name of backup file (base part)
@@ -491,6 +532,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return "DayValueH";
     }
 
+
     /**
      * getBackupClassName - name of class which will be updated/restored
      * 
@@ -502,6 +544,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return "";
     }
 
+
     /**
      * Has To Be Clean - if table needs to be cleaned before import
      * 
@@ -512,6 +555,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
         return true;
     }
 
+
     /**
      * Get Node Children
      */
@@ -519,6 +563,7 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         return null;
     }
+
 
     /**
      * Has Node Children

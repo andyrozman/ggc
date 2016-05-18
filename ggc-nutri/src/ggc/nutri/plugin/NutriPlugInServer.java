@@ -2,14 +2,12 @@ package ggc.nutri.plugin;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.BackupRestorePlugin;
-import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
 
@@ -27,6 +25,8 @@ import ggc.nutri.gui.print.PrintFoodDialog;
 import ggc.nutri.panels.PanelMealSelector;
 import ggc.nutri.util.DataAccessNutri;
 import ggc.nutri.util.GGCNutriICRunner;
+import ggc.plugin.DevicePlugInServer;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,10 +54,11 @@ import ggc.nutri.util.GGCNutriICRunner;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class NutriPlugInServer extends PlugInServer implements ActionListener
+public class NutriPlugInServer extends DevicePlugInServer // implements
+// ActionListener
 {
 
-    DataAccessNutri da_local; // = DataAccessMeter.getInstance();
+    DataAccessNutri dataAccessNutri; // = DataAccessMeter.getInstance();
 
     /**
      * Command: Db USDA Tree
@@ -96,6 +97,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
 
     private I18nControlAbstract ic_local = null;
 
+
     /*
      * private String commands[] = {
      * "MN_NUTRI_READ_DESC",
@@ -104,7 +106,6 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
      * "MN_LOAD_DATABASE_DESC",
      * "MN_NUTRI_ABOUT" };
      */
-
 
     // I18nControl i18nControlAbstract = I18nControl.getInstance();
 
@@ -127,6 +128,12 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     }
 
 
+    @Override
+    public void refreshMenusAfterConfig()
+    {
+    }
+
+
     /**
      * Constructor
      * 
@@ -146,8 +153,8 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
 
     private void init(Container cont)
     {
-        NutriPluginDefinition nutriPluginDefinition = new NutriPluginDefinition(
-                DataAccess.getInstance().getLanguageManager(), new GGCNutriICRunner());
+        NutriPluginDefinition nutriPluginDefinition = new NutriPluginDefinition(DataAccess.getInstance()
+                .getLanguageManager(), new GGCNutriICRunner());
         DataAccessNutri.createInstance(nutriPluginDefinition);
         DataAccessNutri.getInstance().addComponent(cont);
     }
@@ -170,46 +177,53 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
                 }
                 break;
 
-            /*
-             * case PumpPlugInServer.COMMAND_CONFIGURATION:
-             * {
-             * new DeviceConfigurationDialog((JFrame)this.parent,
-             * DataAccessPump.getInstance());
-             * //new SimpleConfigurationDialog(this.dataAccess);
-             * return;
-             * }
-             * case PumpPlugInServer.COMMAND_PUMPS_LIST:
-             * {
-             * new BaseListDialog((JFrame)this.parent,
-             * DataAccessPump.getInstance());
-             * return;
-             * }
-             * case PumpPlugInServer.COMMAND_ABOUT:
-             * {
-             * new AboutBaseDialog((JFrame)this.parent,
-             * DataAccessPump.getInstance());
-             * return;
-             * }
-             * case PumpPlugInServer.COMMAND_PROFILES:
-             * {
-             * System.out.println("parent: " + this.parent);
-             * new ProfileSelector(DataAccessPump.getInstance(), this.parent);
-             * return;
-             * }
-             * case PumpPlugInServer.COMMAND_MANUAL_ENTRY:
-             * case PumpPlugInServer.COMMAND_ADDITIONAL_DATA:
-             * {
-             * new PumpDataDialog(DataAccessPump.getInstance(), this.parent);
-             * return;
-             * }
-             * default:
-             * {
-             * this.featureNotImplemented(commands[command]);
-             * return;
-             * }
-             */
+        /*
+         * case PumpPlugInServer.COMMAND_CONFIGURATION:
+         * {
+         * new DeviceConfigurationDialog((JFrame)this.parent,
+         * DataAccessPump.getInstance());
+         * //new SimpleConfigurationDialog(this.dataAccess);
+         * return;
+         * }
+         * case PumpPlugInServer.COMMAND_PUMPS_LIST:
+         * {
+         * new BaseListDialog((JFrame)this.parent,
+         * DataAccessPump.getInstance());
+         * return;
+         * }
+         * case PumpPlugInServer.COMMAND_ABOUT:
+         * {
+         * new AboutBaseDialog((JFrame)this.parent,
+         * DataAccessPump.getInstance());
+         * return;
+         * }
+         * case PumpPlugInServer.COMMAND_PROFILES:
+         * {
+         * System.out.println("parent: " + this.parent);
+         * new ProfileSelector(DataAccessPump.getInstance(), this.parent);
+         * return;
+         * }
+         * case PumpPlugInServer.COMMAND_MANUAL_ENTRY:
+         * case PumpPlugInServer.COMMAND_ADDITIONAL_DATA:
+         * {
+         * new PumpDataDialog(DataAccessPump.getInstance(), this.parent);
+         * return;
+         * }
+         * default:
+         * {
+         * this.featureNotImplemented(commands[command]);
+         * return;
+         * }
+         */
         }
 
+    }
+
+
+    @Override
+    public DataAccessPlugInBase getPlugInDataAccess()
+    {
+        return this.dataAccessNutri;
     }
 
 
@@ -233,7 +247,7 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
     @Override
     public String getVersion()
     {
-        return da_local.getPlugInVersion();
+        return dataAccessNutri.getPlugInVersion();
     }
 
 
@@ -258,37 +272,37 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
 
         ic = dataAccess.getI18nControlInstance();
 
-        if (da_local == null)
+        if (dataAccessNutri == null)
         {
             NutriPluginDefinition nutriPluginDefinition = new NutriPluginDefinition(
                     ((ATDataAccessLMAbstract) dataAccess).getLanguageManager(), new GGCNutriICRunner());
 
-            da_local = DataAccessNutri.createInstance(nutriPluginDefinition);
+            dataAccessNutri = DataAccessNutri.createInstance(nutriPluginDefinition);
         }
 
-        // this.initPlugInServer((DataAccess)dataAccess, da_local);
+        // this.initPlugInServer((DataAccess)dataAccess, dataAccessNutri);
 
         // i18nControlAbstract = dataAccess.getI18nControlInstance();
         // I18nControl.getInstance().setLanguage(this.selected_lang);
 
         // DataAccessNutri da = DataAccessNutri.getInstance();
-        da_local.addComponent(this.parent);
-        da_local.setHelpContext(this.dataAccess.getHelpContext());
-        da_local.setPlugInServerInstance(this);
-        da_local.setParentI18nControlInstance(ic);
+        dataAccessNutri.addComponent(this.parent);
+        dataAccessNutri.setHelpContext(this.dataAccess.getHelpContext());
+        dataAccessNutri.setPlugInServerInstance(this);
+        dataAccessNutri.setParentI18nControlInstance(ic);
         // da.createDb(dataAccess.getHibernateDb());
         // da.initAllObjects();
-        da_local.loadSpecialParameters();
+        dataAccessNutri.loadSpecialParameters();
 
         GGCDbNutri _db = new GGCDbNutri(((DataAccess) dataAccess).getDb());
-        da_local.setNutriDb(_db);
+        dataAccessNutri.setNutriDb(_db);
 
         this.backup_restore_enabled = true;
         dataAccess.loadSpecialParameters();
         // System.out.println("PumpServer: " +
         // dataAccess.getSpecialParameters().get("BG"));
 
-        this.ic_local = da_local.getI18nControlInstance();
+        this.ic_local = dataAccessNutri.getI18nControlInstance();
 
         // da.setGlucoseUnitType(dataAccess.getIntValueFromString(dataAccess.getSpecialParameters().get("BG")));
     }
@@ -394,8 +408,9 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
      * @return
      */
     @Override
-    public JMenu[] getPlugInPrintMenus()
+    public JMenu[] getPlugInReportMenus()
     {
+        // FIXME-Andy
         JMenu menu_reports_foodmenu = ATSwingUtils.createMenu("MN_FOODMENU", "MN_FOODMENU_DESC", this.ic_local);
 
         ATSwingUtils.createMenuItem(menu_reports_foodmenu, "MN_FOODMENU_SIMPLE", "MN_FOODMENU_SIMPLE_DESC",
@@ -479,8 +494,8 @@ public class NutriPlugInServer extends PlugInServer implements ActionListener
         if (command != NutriPlugInServer.COMMAND_DB_FOOD_SELECTOR
                 && command != NutriPlugInServer.COMMAND_RECALCULATE_CH)
         {
-            System.out
-                    .println("ExecuteCommandDialogReturn[" + getName() + "] is not valid for this command: " + command);
+            System.out.println("ExecuteCommandDialogReturn[" + getName() + "] is not valid for this command: "
+                    + command);
             return null;
         }
         else

@@ -1,7 +1,8 @@
 package ggc.nutri.db;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -12,12 +13,13 @@ import org.slf4j.LoggerFactory;
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
-import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.data.ATechDate;
 
-import ggc.core.data.*;
+import ggc.core.data.DailyValues;
+import ggc.core.data.DailyValuesRow;
+import ggc.core.data.DayValuesData;
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.*;
+import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.food.*;
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.data.GGCTreeRootDyn;
 import ggc.nutri.db.datalayer.*;
@@ -49,6 +51,7 @@ import ggc.nutri.db.datalayer.*;
 
 public class GGCDbNutri extends HibernateDb // extends GGCDb
 {
+
     // public static final int DB_CONFIG_LOADED = 1;
     // public static final int DB_INITIALIZED = 2;
     // public static final int DB_STARTED = 3;
@@ -248,7 +251,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst order by pst.name");
+                    .createQuery("select pst from ggc.core.db.hibernate.food.FoodGroupH as pst order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -286,7 +289,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.FoodGroupH as pst where pst.id=" + id);
+                    .createQuery("select pst from ggc.core.db.hibernate.food.FoodGroupH as pst where pst.id=" + id);
 
             Iterator<?> it = q.iterate();
 
@@ -323,7 +326,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst order by pst.name");
+                    .createQuery("select pst from ggc.core.db.hibernate.food.FoodUserGroupH as pst order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -360,7 +363,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst order by pst.name");
+                    .createQuery("select pst from ggc.core.db.hibernate.food.FoodUserGroupH as pst order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -401,7 +404,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.FoodUserGroupH as pst where pst.parent_id="
+                    .createQuery("select pst from ggc.core.db.hibernate.food.FoodUserGroupH as pst where pst.parent_id="
                             + parent_id + " order by pst.name");
 
             Iterator<?> it = q.iterate();
@@ -442,7 +445,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst order by pst.name");
+                    .createQuery("select pst from ggc.core.db.hibernate.food.MealGroupH as pst order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -480,7 +483,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.parent_id="
+                    .createQuery("select pst from ggc.core.db.hibernate.food.MealGroupH as pst where pst.parent_id="
                             + parent_id + " order by pst.name");
 
             Iterator<?> it = q.iterate();
@@ -535,8 +538,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst order by pst.name");
+            Query q = getSession(2).createQuery(
+                "select pst from ggc.core.db.hibernate.food.FoodDescriptionH as pst order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -573,9 +576,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst where pst.group_id="
-                            + parent_id + " order by pst.name");
+            Query q = getSession(2).createQuery(
+                "select pst from ggc.core.db.hibernate.food.FoodDescriptionH as pst where pst.group_id=" + parent_id
+                        + " order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -609,8 +612,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.FoodDescriptionH as pst where pst.id=" + id);
+            Query q = getSession(2).createQuery(
+                "select pst from ggc.core.db.hibernate.food.FoodDescriptionH as pst where pst.id=" + id);
 
             Iterator<?> it = q.iterate();
 
@@ -662,7 +665,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst where pst.id=" + id);
+                "select pst from ggc.core.db.hibernate.food.FoodUserDescriptionH as pst where pst.id=" + id);
 
             Iterator<?> it = q.iterate();
 
@@ -700,9 +703,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst where pst.group_id="
-                            + parent_id + " order by pst.name");
+            Query q = getSession(2).createQuery(
+                "select pst from ggc.core.db.hibernate.food.FoodUserDescriptionH as pst where pst.group_id=" + parent_id
+                        + " order by pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -740,7 +743,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.FoodUserDescriptionH as pst order by pst.group_id, pst.name");
+                "select pst from ggc.core.db.hibernate.food.FoodUserDescriptionH as pst order by pst.group_id, pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -777,8 +780,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.MealH as pst order by pst.group_id, pst.name");
+            Query q = getSession(2).createQuery(
+                "select pst from ggc.core.db.hibernate.food.MealH as pst order by pst.group_id, pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -816,7 +819,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.id=" + meal_id);
+                    .createQuery("select pst from ggc.core.db.hibernate.food.MealH as pst where pst.id=" + meal_id);
 
             Iterator<?> it = q.iterate();
 
@@ -854,8 +857,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         try
         {
 
-            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.group_id="
-                    + parent_id + " order by pst.group_id, pst.name");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.food.MealH as pst where pst.group_id="
+                            + parent_id + " order by pst.group_id, pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -892,7 +896,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.MealH as pst where pst.id=" + id);
+                    .createQuery("select pst from ggc.core.db.hibernate.food.MealH as pst where pst.id=" + id);
 
             Iterator<?> it = q.iterate();
 
@@ -926,7 +930,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         {
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.MealGroupH as pst where pst.id=" + id);
+                    .createQuery("select pst from ggc.core.db.hibernate.food.MealGroupH as pst where pst.id=" + id);
 
             Iterator<?> it = q.iterate();
 
@@ -960,7 +964,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
             Hashtable<String, NutritionDefinition> nut_defs = new Hashtable<String, NutritionDefinition>();
             ArrayList<SelectableInterface> nut_defs_lst = new ArrayList<SelectableInterface>();
 
-            Query q = getSession(2).createQuery("select pst from ggc.core.db.hibernate.NutritionDefinitionH as pst");
+            Query q = getSession(2)
+                    .createQuery("select pst from ggc.core.db.hibernate.food.NutritionDefinitionH as pst");
 
             Iterator<?> it = q.iterate();
 
@@ -1023,7 +1028,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
             ArrayList<SelectableInterface> nut_hw_lst = new ArrayList<SelectableInterface>();
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.NutritionHomeWeightTypeH as pst");
+                    .createQuery("select pst from ggc.core.db.hibernate.food.NutritionHomeWeightTypeH as pst");
 
             Iterator<?> it = q.iterate();
 
@@ -1077,186 +1082,10 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
     // **** Comment: Were implemnted in DataBaseHandler ****
     // *************************************************************
 
-    HbA1cValues hba1c_object = null;
-
-
-    /**
-     * Get HbA1c
-     * 
-     * @param day
-     * @param force
-     * @return
-     */
-    public HbA1cValues getHbA1c(GregorianCalendar day, boolean force)
-    {
-        if (this.hba1c_object == null)
-        {
-            hba1c_object = loadHbA1c(day);
-        }
-        else
-        {
-            if (force)
-            {
-                hba1c_object = loadHbA1c(day);
-            }
-        }
-
-        return this.hba1c_object;
-
-    }
-
-
-    /**
-     * Load HbA1c
-     * 
-     * @param day
-     * @return
-     */
-    public HbA1cValues loadHbA1c(GregorianCalendar day)
-    {
-        // System.out.println("Hibernate: getHbA1c() B1 Stat:" + m_loadStatus);
-
-        if (m_loadStatus == DB_CONFIG_LOADED)
-            return null;
-
-        logInfo("getHbA1c()");
-
-        HbA1cValues hbVal = new HbA1cValues();
-
-        try
-        {
-            GregorianCalendar gc1 = (GregorianCalendar) day.clone();
-            gc1.add(Calendar.MONTH, -3);
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-            String eDay = sdf.format(day.getTime()) + "2359";
-            String sDay = sdf.format(gc1.getTime()) + "0000";
-
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv " + "WHERE dv.bg > 0 AND dv.dt_info >=  "
-                        + sDay + " AND dv.dt_info <= " + eDay + " ORDER BY dv.dt_info");
-
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                DayValueH dv = (DayValueH) it.next();
-                hbVal.addDayValueRow(new DailyValuesRow(dv));
-            }
-
-            hbVal.processDayValues();
-
-            logDebug("getHbA1c()", "Readings: " + hbVal.getDayCount() + " " + hbVal.getReadings());
-
-            // System.out.println("Avg BG: " + hbVal.getAvgBGForMethod3());
-
-        }
-        catch (Exception ex)
-        {
-            logException("getHbA1c()", ex);
-        }
-
-        return hbVal;
-    }
-
-
-    /**
-     * Get Day Stats
-     * 
-     * @param day
-     * @return
-     */
-    public DailyValues getDayStats(GregorianCalendar day)
-    {
-
-        if (m_loadStatus == DB_CONFIG_LOADED)
-            return null;
-
-        logInfo("getDayStats()");
-
-        DailyValues dV = new DailyValues();
-        // dV.setDate(dataAccess.getDateTimeFromDateObject(day.getTime()) /
-        // 10000);
-
-        dV.setDate(ATechDate.getATDateTimeFromGC(day, ATechDate.FORMAT_DATE_ONLY));
-
-        try
-        {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-            String sDay = sdf.format(day.getTime());
-
-            Query q = getSession().createQuery("SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv "
-                    + "WHERE dv.dt_info >=  " + sDay + "0000 AND dv.dt_info <= " + sDay + "2359 ORDER BY dv.dt_info");
-
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                DayValueH dv = (DayValueH) it.next();
-
-                DailyValuesRow dVR = new DailyValuesRow(dv);
-                dV.addRow(dVR);
-            }
-
-        }
-        catch (Exception ex)
-        {
-            logException("getDayStats()", ex);
-        }
-
-        return dV;
-    }
-
-
-    /**
-     * Get Monthly Values
-     * 
-     * @param year
-     * @param month
-     * @return
-     */
-    public MonthlyValues getMonthlyValues(int year, int month)
-    {
-
-        if (m_loadStatus == DB_CONFIG_LOADED)
-            return null;
-
-        logInfo("getMonthlyValues()");
-
-        MonthlyValues mv = new MonthlyValues(year, month);
-
-        try
-        {
-            String days = year + "" + ATDataAccessAbstract.getLeadingZero(month, 2);
-
-            Query q = getSession()
-                    .createQuery("SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  "
-                            + days + "010000 AND dv.dt_info <= " + days + "312359 ORDER BY dv.dt_info");
-
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                DayValueH dv = (DayValueH) it.next();
-
-                DailyValuesRow dVR = new DailyValuesRow(dv);
-                mv.addDayValueRow(dVR);
-            }
-
-        }
-        catch (Exception ex)
-        {
-            logException("getMonthlyValues()", ex);
-        }
-
-        return mv;
-
-    }
-
 
     /**
      * Get DayValuesData
-     * 
+     *
      * @param from
      * @param till
      * @return
@@ -1299,7 +1128,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     /**
      * Save Day Stats
-     * 
+     *
      * @param dV
      */
     public void saveDayStats(DailyValues dV)

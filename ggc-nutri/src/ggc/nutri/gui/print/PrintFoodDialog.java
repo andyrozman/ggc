@@ -117,8 +117,8 @@ public class PrintFoodDialog extends PrintDialogRange
     {
         DataAccessNutri da = getDataAccessLocal();
 
-        DayValuesData dvd = da.getNutriDb().getDayValuesData(this.getFromDate(), this.getToDate()); // .getMonthlyValues(yr,
-                                                                                                    // mnth);
+        DayValuesData dvd = da.getDb().getDayValuesData(this.getFromDate(), this.getToDate()); // .getMonthlyValues(yr,
+                                                                                               // mnth);
 
         PrintFoodMenuAbstract pa = null;
 

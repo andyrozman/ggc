@@ -1,10 +1,7 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.core.db.hibernate.FoodDescriptionH;
-import ggc.core.db.hibernate.FoodUserDescriptionH;
-import ggc.nutri.util.DataAccessNutri;
-
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,6 +10,10 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.db.hibernate.food.FoodDescriptionH;
+import ggc.core.db.hibernate.food.FoodUserDescriptionH;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -56,6 +57,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     // getI18nControlInstance();
     boolean food_empty = false;
 
+
     /**
      * Constructor
      * 
@@ -67,6 +69,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         this.food_empty = true;
     }
 
+
     /**
      * Constructor
      * 
@@ -77,6 +80,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         this.food_empty = food_empty;
         ic = DataAccessNutri.getInstance().getI18nControlInstance();
     }
+
 
     /**
      * Constructor
@@ -105,6 +109,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
          */
     }
 
+
     /**
      * Constructor
      * 
@@ -130,6 +135,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
          */
     }
 
+
     /**
      * Constructor
      * 
@@ -143,6 +149,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         ic = DataAccessNutri.getInstance().getI18nControlInstance();
     }
 
+
     /**
      * Get Hibernate Object
      * @return
@@ -155,6 +162,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
             return this.m_food_desc2;
     }
 
+
     /**
      * Get Short Description
      * 
@@ -166,6 +174,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         // return "Food [id=" + getId() + ",name=" + this.getName() +
         // ",parent_id=" + this.getGroup_id() + "]";
     }
+
 
     /**
      * Get Id
@@ -182,6 +191,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         else
             return this.m_food_desc2.getId();
     }
+
 
     /**
      * Set Id
@@ -205,6 +215,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         }
     }
 
+
     /**
      * Get Group Id
      * @return
@@ -216,6 +227,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         else
             return this.m_food_desc2.getGroup_id();
     }
+
 
     /**
      * Set Group Id
@@ -234,6 +246,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         }
     }
 
+
     /**
      * Get Name
      * 
@@ -246,6 +259,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         else
             return this.m_food_desc2.getName();
     }
+
 
     /**
      * Set Name
@@ -264,6 +278,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         }
     }
 
+
     /**
      * Get Name I18n
      * 
@@ -276,6 +291,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         else
             return this.m_food_desc2.getName_i18n();
     }
+
 
     /**
      * Set Name I18n
@@ -294,6 +310,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         }
     }
 
+
     /**
      * Get Refuse
      * 
@@ -306,6 +323,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         else
             return this.m_food_desc2.getRefuse();
     }
+
 
     /**
      * Set Refuse
@@ -324,6 +342,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         }
     }
 
+
     /**
      * Get Nutritions
      * 
@@ -336,6 +355,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         else
             return this.m_food_desc2.getNutritions();
     }
+
 
     /**
      * Set Nutritions
@@ -354,6 +374,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         }
     }
 
+
     /**
      * Get Home Weights
      * 
@@ -366,6 +387,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         else
             return this.m_food_desc2.getHome_weights();
     }
+
 
     /**
      * Set Home Weights
@@ -384,6 +406,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         }
     }
 
+
     /**
      * Get Description
      * 
@@ -396,6 +419,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         else
             return null;
     }
+
 
     /**
      * Set Description
@@ -410,6 +434,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         }
     }
 
+
     /**
      * Get Food Type
      * 
@@ -419,6 +444,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     {
         return type;
     }
+
 
     /**
      * To String
@@ -433,6 +459,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         else
             return this.getShortDescription();
     }
+
 
     // ---
     // --- DatabaseObjectHibernate
@@ -469,6 +496,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
 
     }
 
+
     /**
      * DbEdit - Edit this object in database
      * 
@@ -497,6 +525,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return true;
 
     }
+
 
     /**
      * DbDelete - Delete this object in database
@@ -527,6 +556,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
 
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
@@ -540,9 +570,11 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
      */
     public boolean DbHasChildren(Session sess) throws Exception
     {
-        // System.out.println("Not implemented: FoodDescription::DbHasChildren");
+        // System.out.println("Not implemented:
+        // FoodDescription::DbHasChildren");
         return true;
     }
+
 
     /**
      * DbGet - Loads this object. Id must be set.
@@ -569,6 +601,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return true;
     }
 
+
     /**
      * getObjectName - returns name of DatabaseObject
      * 
@@ -579,6 +612,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return "Food Description";
     }
 
+
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -588,6 +622,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     {
         return debug;
     }
+
 
     /**
      * getAction - returns action that should be done on object 0 = no action 1
@@ -602,6 +637,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return 0;
     }
 
+
     // ---
     // --- BackupRestoreObject
     // ---
@@ -614,6 +650,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return ic.getMessage("FOODS");
     }
 
+
     /**
      * Get Class Name
      * 
@@ -621,8 +658,9 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
      */
     public String getClassName()
     {
-        return "ggc.core.db.hibernate.FoodUserDescriptionH";
+        return "ggc.core.db.hibernate.food.FoodUserDescriptionH";
     }
+
 
     /**
      * Get Children
@@ -632,6 +670,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return null;
     }
 
+
     /**
      * Has Children
      */
@@ -639,6 +678,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     {
         return false;
     }
+
 
     /**
      * Is Selected
@@ -648,6 +688,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return selected;
     }
 
+
     /**
      * Set Selected
      */
@@ -655,6 +696,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     {
         this.selected = newValue;
     }
+
 
     /**
      * Is Collection
@@ -665,6 +707,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     {
         return false;
     }
+
 
     /**
      * getObjectUniqueId - get id of object
@@ -680,6 +723,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
      */
     public int TABLE_VERSION = 1;
 
+
     /**
      * getTableVersion - returns version of table
      * 
@@ -689,6 +733,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     {
         return this.TABLE_VERSION;
     }
+
 
     /**
      * dbExport - returns export String, for current version 
@@ -702,6 +747,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return null;
     }
 
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -712,6 +758,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
     {
         return dbExport(this.TABLE_VERSION);
     }
+
 
     /**
      * dbExportHeader - header for export file
@@ -725,6 +772,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return null;
     }
 
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -735,30 +783,40 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return this.dbExportHeader(this.TABLE_VERSION);
     }
 
-    /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @throws Exception if import for selected table version is not supported or it fails
-     */
-    public void dbImport(int table_version, String value_entry) throws Exception
-    {
-        dbImport(table_version, value_entry, null);
-    }
 
     /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @param parameters parameters
-     * @throws Exception if import for selected table version is not supported or it fails
+     * {@inheritDoc}
      */
-    public void dbImport(int table_version, String value_entry, Object[] parameters) throws Exception
+    public void dbImport(int tableVersion, String valueEntry) throws Exception
     {
-        // TODO
+        dbImport(tableVersion, valueEntry, (Object[]) null);
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dbImport(int tableVersion, String valueEntry, Object[] parameters) throws Exception
+    {
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isNewImport()
+    {
+        return false;
+    }
+
 
     /**
      * getBackupFile - name of backup file (base part)
@@ -771,6 +829,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         return "DayValueH";
     }
 
+
     /**
      * getBackupClassName - name of class which will be updated/restored
      * 
@@ -781,6 +840,7 @@ public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreOb
         // TODO
         return "";
     }
+
 
     /**
      * Has To Be Clean - if table needs to be cleaned before import

@@ -1,16 +1,15 @@
 package ggc.nutri.dialogs;
 
-import ggc.nutri.db.datalayer.NutritionDefinition;
-import ggc.nutri.db.datalayer.NutritionHomeWeightType;
-import ggc.nutri.util.DataAccessNutri;
-
 import java.awt.event.ItemEvent;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
+
+import ggc.nutri.db.datalayer.NutritionDefinition;
+import ggc.nutri.db.datalayer.NutritionHomeWeightType;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,6 +52,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
      */
     public static final int SELECTOR_HOME_WEIGHT = 2;
 
+
     /**
      * Constructor
      * 
@@ -66,6 +66,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
         super(parent, da, type, except, true);
         this.showDialog();
     }
+
 
     /**
      * Constructor
@@ -81,6 +82,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
         this.showDialog();
     }
 
+
     /**
      * Init Selector Values For Type
      */
@@ -90,27 +92,28 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
         if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_NUTRITION)
         {
             setSelectorObject(new NutritionDefinition());
-            setSelectorName(ic.getMessage("SELECTOR_NUTRITION_DEFINITION"));
+            setSelectorName(i18nControl.getMessage("SELECTOR_NUTRITION_DEFINITION"));
             setHelpStringId("GGC_Food_User_Select_Nutrition");
-            setNewItemString(ic.getMessage("NEW_NUTR_DEF"));
+            setNewItemString(i18nControl.getMessage("NEW_NUTR_DEF"));
             setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
-            this.getDescriptions().put("DESC_1", ic.getMessage("NUTRITION_NAME"));
+            this.getDescriptions().put("DESC_1", i18nControl.getMessage("NUTRITION_NAME"));
             setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
             this.setHelpEnabled(true);
         }
         else if (this.getSelectorType() == FoodPartSelectorDialog.SELECTOR_HOME_WEIGHT)
         {
             setSelectorObject(new NutritionHomeWeightType());
-            setSelectorName(ic.getMessage("SELECTOR_HOME_WEIGHT"));
+            setSelectorName(i18nControl.getMessage("SELECTOR_HOME_WEIGHT"));
             setHelpStringId("GGC_Food_User_Select_HomeWeight");
-            setNewItemString(ic.getMessage("NEW_HOME_WEIGHT"));
+            setNewItemString(i18nControl.getMessage("NEW_HOME_WEIGHT"));
             setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_CANCEL_AND_SELECT);
-            this.getDescriptions().put("DESC_1", ic.getMessage("HOME_WEIGHT_NAME"));
+            this.getDescriptions().put("DESC_1", i18nControl.getMessage("HOME_WEIGHT_NAME"));
             setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
             this.setHelpEnabled(true);
         }
 
     }
+
 
     /**
      * Get Full Data
@@ -135,6 +138,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
         }
     }
 
+
     /**
      * Check and Execute Action: Edit
      */
@@ -144,6 +148,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
         System.out.println("checkAndExecuteActionEdit()");
     }
 
+
     /**
      * Check and Execute Action: New
      */
@@ -152,6 +157,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
     {
         System.out.println("checkAndExecuteActionNew()");
     }
+
 
     /**
      * Check and Execute Action: Select
@@ -169,6 +175,7 @@ public class FoodPartSelectorDialog extends SelectorAbstractDialog
         }
 
     }
+
 
     /**
      * Item State Changed

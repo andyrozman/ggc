@@ -6,6 +6,10 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+1.4.1 [18.5.2016]
+- db objects refactoring
+- refactorings
+
 1.4.0 [24.10.2015]
     * refactoring changing Log to Logger instance
     * refactoring use of BG converter

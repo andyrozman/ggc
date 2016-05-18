@@ -1,18 +1,5 @@
 package ggc.nutri.dialogs;
 
-import ggc.core.db.GGCDb;
-import ggc.core.db.datalayer.DailyValue;
-import ggc.core.db.hibernate.FoodUserDescriptionH;
-import ggc.core.db.hibernate.FoodUserGroupH;
-import ggc.core.db.hibernate.MealGroupH;
-import ggc.core.db.hibernate.MealH;
-import ggc.core.db.tool.transfer.BackupDialog;
-import ggc.nutri.db.datalayer.FoodDescription;
-import ggc.nutri.db.datalayer.FoodGroup;
-import ggc.nutri.db.datalayer.Meal;
-import ggc.nutri.db.datalayer.MealGroup;
-import ggc.nutri.util.DataAccessNutri;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -21,11 +8,24 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.datalayer.DailyValue;
+import ggc.core.db.hibernate.food.FoodUserDescriptionH;
+import ggc.core.db.hibernate.food.FoodUserGroupH;
+import ggc.core.db.hibernate.food.MealGroupH;
+import ggc.core.db.hibernate.food.MealH;
+import ggc.core.db.tool.transfer.BackupDialog;
+import ggc.nutri.db.datalayer.FoodDescription;
+import ggc.nutri.db.datalayer.FoodGroup;
+import ggc.nutri.db.datalayer.Meal;
+import ggc.nutri.db.datalayer.MealGroup;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,8 +54,10 @@ import com.atech.utils.ATDataAccessAbstract;
 
 public class TestNutritionData
 {
+
     private DataAccessNutri m_da = null;
     private GGCDb db = null;
+
 
     /**
      * Constructor
@@ -70,6 +72,7 @@ public class TestNutritionData
          */
         createTree();
     }
+
 
     /**
      * Constructor
@@ -130,6 +133,7 @@ public class TestNutritionData
 
     }
 
+
     /**
      * Constructor
      * 
@@ -145,6 +149,7 @@ public class TestNutritionData
         System.out.println("Return: \n" + line);
 
     }
+
 
     private void createTree()
     {
@@ -169,7 +174,8 @@ public class TestNutritionData
 
         frame.setBounds(0, 0, 640, 480);
 
-        // BackupRestoreDialog brd = new BackupRestoreDialog(frame, dataAccess, brc);
+        // BackupRestoreDialog brd = new BackupRestoreDialog(frame, dataAccess,
+        // brc);
 
         /* BackupDialog brd = */new BackupDialog(frame, m_da /* , brc */);
 
@@ -200,6 +206,7 @@ public class TestNutritionData
 
     }
 
+
     @SuppressWarnings("unused")
     private void createFakeData_Meals()
     {
@@ -220,6 +227,7 @@ public class TestNutritionData
          * dataAccess.tree_roots.put("" + GGCTreeRoot.TREE_MEALS, gtr);
          */
     }
+
 
     @SuppressWarnings("unused")
     private void createFakeData_User()
@@ -243,6 +251,7 @@ public class TestNutritionData
          */
     }
 
+
     @SuppressWarnings("unused")
     private FoodGroup getUserGroup(long id, long parent_id)
     {
@@ -259,6 +268,7 @@ public class TestNutritionData
         return new FoodGroup(f);
 
     }
+
 
     @SuppressWarnings("unused")
     private FoodDescription getUserFoodDescription(int id, int group_id)
@@ -277,6 +287,7 @@ public class TestNutritionData
         return new FoodDescription(fuh);
     }
 
+
     @SuppressWarnings("unused")
     private MealGroup getMealGroup(long id, long parent_id)
     {
@@ -293,6 +304,7 @@ public class TestNutritionData
 
     }
 
+
     @SuppressWarnings("unused")
     private Meal getMealDescription(int id, long group_id)
     {
@@ -308,6 +320,7 @@ public class TestNutritionData
 
         return new Meal(fuh);
     }
+
 
     @SuppressWarnings({ "unused" })
     private void getKeywords(GGCDb _db)
@@ -394,6 +407,7 @@ public class TestNutritionData
 
     }
 
+
     private String process(String input)
     {
         // input = input.replaceAll(",", "");
@@ -406,6 +420,7 @@ public class TestNutritionData
 
         return input;
     }
+
 
     private boolean isNumber(String input)
     {
@@ -420,6 +435,7 @@ public class TestNutritionData
         }
 
     }
+
 
     /**
      * Main
