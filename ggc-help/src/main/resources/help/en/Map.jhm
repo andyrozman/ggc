@@ -45,10 +45,13 @@
     <mapID target="GGC_Prefs_CGMS" url="pages/GGC_Prefs_CGMS.html"/>
 
 
-    <mapID target="GGC_PenInj_Print" url="pages/GGC_Print_Pen.html"/>  <!-- FIx keywords -->
+    <mapID target="GGC_PenInj_Print" url="pages/GGC_Print_Pen.html"/>
+    <!-- FIx keywords -->
     <mapID target="GGC_Food_Print" url="pages/GGC_Print_FoodMenu.html"/>
     <mapID target="PumpTool_Print" url="pages/GGC_Print_Pump.html"/>
     <mapID target="CGMSTool_Print" url="pages/GGC_Print_CGMS.html"/>
+
+    <mapID target="CGMSTool_Graphs" url="pages/GGC_Graph_CGMS.html"/>
 
 
     <mapID target="GGC_Food_USDA_Main" url="pages/GGC_Food_USDA_Main.html"/>
@@ -105,6 +108,13 @@
     <mapID target="PumpTool_Profile_Entry_Editor" url="pages/PumpTool_Profile_Entry_Editor.html"/>
     <mapID target="PumpTool_Profile_Type_Selector" url="pages/PumpTool_Profile_Type_Selector.html"/>
 
+    <!-- Doctor -->
+    <mapID target="Doc_DocList" url="pages/GGC_Doc_DocList.html"/>
+    <mapID target="Doc_DoctorDialog" url="pages/GGC_Doc_DoctorDialog.html"/>
+    <mapID target="Doc_DocTypeDialog" url="pages/GGC_Doc_DocTypeAddEdit.html"/>
+    <mapID target="Doc_DocTypeSelector" url="pages/GGC_Doc_DocTypeSelector.html"/>
+    <mapID target="Doc_WorkingTimeDialog" url="pages/GGC_Doc_WorkingTimeDialog.html"/>
+    <mapID target="Doc_WorkingTimeTimeDialog" url="pages/GGC_Doc_WorkingTimeTimeDialog.html"/>
 
     <mapID target="images.popup" url="images/popup.gif"/>
 

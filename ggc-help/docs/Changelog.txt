@@ -2,6 +2,11 @@
 Changelog for GGC Help (Help for GGC)
 =====================================
 
+0.2.2 [18.5.2016] [Andy]
+- added pages for Doctors module (WIP)
+- added pages for Graph_CGMS
+
+
 0.2.1
     * added some pages that were missing and preparing document for Bob (person who will probably prepare GGC Help)
     * added pages to en
