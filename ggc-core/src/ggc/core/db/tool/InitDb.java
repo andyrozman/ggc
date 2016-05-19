@@ -37,7 +37,7 @@ import java.util.StringTokenizer;
 import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.db.hibernate.DbInfoH;
-import ggc.core.db.hibernate.DoctorTypeH;
+import ggc.core.db.hibernate.doc.DoctorTypeH;
 import ggc.core.db.hibernate.food.FoodDescriptionH;
 import ggc.core.db.hibernate.food.FoodGroupH;
 import ggc.core.db.hibernate.food.NutritionDefinitionH;
@@ -163,7 +163,8 @@ public class InitDb
 
         /*
          * SettingsH seti = new
-         * SettingsH(dataAccess.getI18nControlInstance().getMessage("UNNAMED_USER"
+         * SettingsH(dataAccess.getI18nControlInstance().getMessage(
+         * "UNNAMED_USER"
          * ),
          * "Insulin 1", "Ins1", "Insulin 2", "Ins2", 0, "No port available", 2,
          * 60.0f, 200.0f, 80.0f, 120.0f, 3.0f, 20.0f, 4.4f, 14.0f, 2,
@@ -659,32 +660,32 @@ public class InitDb
         // id, name, predefined
 
         String data[] = { "1", "ADDICTION_MEDICINE", "1", "2", "ADOLESCENT_MEDICINE", "1", "3",
-                         "AIDS_HIV_CARE=AIDS/HIV Care", "1", "4", "ANESTHESIOLOGY", "1", "5",
-                         "ASTHMA_ALLERGY_IMMUNOLOGY", "1", "6", "BREAST_CANCER_SURGERY", "1", "7", "CARDIAC_SURGERY",
-                         "1", "8", "CHILD_CARE", "1", "9", "CARDIOLOGY", "1", "10", "COLORECTAL_SURGERY", "1", "11",
-                         "COSMETIC_SURGERY", "1", "12", "CRITICAL_CARE", "1", "13", "DENTAL_SPECIALTIES", "1", "14",
-                         "DERMATOLOGY", "1", "15", "DIABETES", "1", "16", "EMERGENCY_MEDICINE", "1", "17",
-                         "ENDOCRINOLOGY", "1", "18", "EPILEPSY", "1", "19", "FAMILY_MEDICINE", "1", "20",
-                         "GASTROENTEROLOGY", "1", "21", "GENERAL_SURGERY", "1", "22", "GENERAL_INTERNAL_MEDICINE", "1",
-                         "23", "GERIATRICS", "1", "24", "GYNECOLOGIC_ONCOLOGY", "1", "25", "GYNECOLOGY", "1", "26",
-                         "HAND_SURGERY", "1", "27", "HEAD_AND_NECK_SURGERY", "1", "28", "HEADACHE", "1", "29",
-                         "HEMATOLOGY", "1", "30", "HOSPITAL_INTERNAL_MEDICINE", "1", "31", "INFECTIOUS_DISEASES", "1",
-                         "32", "INFERTILITY_MEDICINE", "1", "33", "INTERNAL_MEDICINE", "1", "34",
-                         "LABORATORY_MEDICINE", "1", "35", "MIDWIFE", "1", "36", "MEDICAL_GENETICS", "1", "37",
-                         "METABOLISM", "1", "38", "MOVEMENT_DISORDERS", "1", "39", "NEONATOLOGY", "1", "40",
-                         "NEPHROLOGY", "1", "41", "NEUROLOGY", "1", "42", "NEURO_OPTHALMOLOGY", "1", "43",
-                         "NEUROSURGERY", "1", "44", "NUCLEAR_MEDICINE", "1", "45", "NUTRITION_MEDICINE", "1", "46",
-                         "OBSTETRICS_AND_GYNECOLOGY", "1", "47", "ONCOLOGY_MEDICAL", "1", "48", "ONCOLOGY_RADIATION",
-                         "1", "49", "OPTHALMOLOGY", "1", "50", "ORAL_MAXILLOFACIAL_SURGERY", "1", "51",
-                         "ORTHOPEDIC_SURGERY", "1", "52", "OTOLARYNGOLOGY", "1", "53", "OTOLOGY", "1", "54",
-                         "PAIN_MANAGEMENT", "1", "55", "PATHOLOGY", "1", "56", "PEDIATRIC", "1", "57",
-                         "PEDIATRIC_SPECIALISTS", "1", "58", "PERINATOLOGY", "1", "59", "PHYSIATRY", "1", "60",
-                         "PHYSICAL_REHABILITATION", "1", "61", "PLASTIC_RECONSTRUCTIVE_SURGERY", "1", "62", "PODIATRY",
-                         "1", "63", "PROSTATE_CARE", "1", "64", "PSYCHIATRY", "1", "65", "PSYCHOLOGY", "1", "66",
-                         "PULMONARY_MEDICINE", "1", "67", "RADIOLOGY", "1", "68", "RADIATION_ONCOLOGY", "1", "69",
-                         "REPRODUCTIVE_ENDOCRINOLOGY_INFERTILITY", "1", "70", "RHEUMATOLOGY", "1", "71",
-                         "SLEEP_DISOREDERS", "1", "72", "SPORTS_MEDICINE", "1", "73", "THORACIC_SURGERY", "1", "74",
-                         "TRANSPLANT", "1", "75", "UROLOGY", "1", "76", "VASCULAR_SURGERY", "1" };
+                          "AIDS_HIV_CARE=AIDS/HIV Care", "1", "4", "ANESTHESIOLOGY", "1", "5",
+                          "ASTHMA_ALLERGY_IMMUNOLOGY", "1", "6", "BREAST_CANCER_SURGERY", "1", "7", "CARDIAC_SURGERY",
+                          "1", "8", "CHILD_CARE", "1", "9", "CARDIOLOGY", "1", "10", "COLORECTAL_SURGERY", "1", "11",
+                          "COSMETIC_SURGERY", "1", "12", "CRITICAL_CARE", "1", "13", "DENTAL_SPECIALTIES", "1", "14",
+                          "DERMATOLOGY", "1", "15", "DIABETES", "1", "16", "EMERGENCY_MEDICINE", "1", "17",
+                          "ENDOCRINOLOGY", "1", "18", "EPILEPSY", "1", "19", "FAMILY_MEDICINE", "1", "20",
+                          "GASTROENTEROLOGY", "1", "21", "GENERAL_SURGERY", "1", "22", "GENERAL_INTERNAL_MEDICINE", "1",
+                          "23", "GERIATRICS", "1", "24", "GYNECOLOGIC_ONCOLOGY", "1", "25", "GYNECOLOGY", "1", "26",
+                          "HAND_SURGERY", "1", "27", "HEAD_AND_NECK_SURGERY", "1", "28", "HEADACHE", "1", "29",
+                          "HEMATOLOGY", "1", "30", "HOSPITAL_INTERNAL_MEDICINE", "1", "31", "INFECTIOUS_DISEASES", "1",
+                          "32", "INFERTILITY_MEDICINE", "1", "33", "INTERNAL_MEDICINE", "1", "34",
+                          "LABORATORY_MEDICINE", "1", "35", "MIDWIFE", "1", "36", "MEDICAL_GENETICS", "1", "37",
+                          "METABOLISM", "1", "38", "MOVEMENT_DISORDERS", "1", "39", "NEONATOLOGY", "1", "40",
+                          "NEPHROLOGY", "1", "41", "NEUROLOGY", "1", "42", "NEURO_OPTHALMOLOGY", "1", "43",
+                          "NEUROSURGERY", "1", "44", "NUCLEAR_MEDICINE", "1", "45", "NUTRITION_MEDICINE", "1", "46",
+                          "OBSTETRICS_AND_GYNECOLOGY", "1", "47", "ONCOLOGY_MEDICAL", "1", "48", "ONCOLOGY_RADIATION",
+                          "1", "49", "OPTHALMOLOGY", "1", "50", "ORAL_MAXILLOFACIAL_SURGERY", "1", "51",
+                          "ORTHOPEDIC_SURGERY", "1", "52", "OTOLARYNGOLOGY", "1", "53", "OTOLOGY", "1", "54",
+                          "PAIN_MANAGEMENT", "1", "55", "PATHOLOGY", "1", "56", "PEDIATRIC", "1", "57",
+                          "PEDIATRIC_SPECIALISTS", "1", "58", "PERINATOLOGY", "1", "59", "PHYSIATRY", "1", "60",
+                          "PHYSICAL_REHABILITATION", "1", "61", "PLASTIC_RECONSTRUCTIVE_SURGERY", "1", "62", "PODIATRY",
+                          "1", "63", "PROSTATE_CARE", "1", "64", "PSYCHIATRY", "1", "65", "PSYCHOLOGY", "1", "66",
+                          "PULMONARY_MEDICINE", "1", "67", "RADIOLOGY", "1", "68", "RADIATION_ONCOLOGY", "1", "69",
+                          "REPRODUCTIVE_ENDOCRINOLOGY_INFERTILITY", "1", "70", "RHEUMATOLOGY", "1", "71",
+                          "SLEEP_DISOREDERS", "1", "72", "SPORTS_MEDICINE", "1", "73", "THORACIC_SURGERY", "1", "74",
+                          "TRANSPLANT", "1", "75", "UROLOGY", "1", "76", "VASCULAR_SURGERY", "1" };
 
         int j = 0;
 

@@ -24,6 +24,9 @@ import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.db.datalayer.Settings;
 import ggc.core.db.dto.StocktakingDTO;
 import ggc.core.db.hibernate.*;
+import ggc.core.db.hibernate.doc.DoctorAppointmentH;
+import ggc.core.db.hibernate.doc.DoctorH;
+import ggc.core.db.hibernate.doc.DoctorTypeH;
 import ggc.core.util.DataAccess;
 
 /**
@@ -1352,7 +1355,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
             int sum_all = 0;
 
             Criteria criteria = this.getSession().createCriteria(StocktakingH.class);
-            criteria.add(Restrictions.eq("personId", (int) m_da.getCurrentUserId()));
+            setPersonId(criteria);
+            // criteria.add(Restrictions.eq("personId", (int)
+            // m_da.getCurrentUserId()));
             criteria.setProjection(Projections.max("datetime"));
 
             Object o = criteria.uniqueResult();
@@ -1564,60 +1569,82 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     // }
 
     // *************************************************************
-    // **** TOOLS Db METHODS ****
+    // **** D O C T O R S ****
     // *************************************************************
 
+    Map<Long, DoctorTypeH> doctorTypeMap;
 
-    /*
-     * <class name="ggc.core.db.hibernate.GlucoValueH" table="data_dayvalues" >
-     * <id name="id" type="long" unsaved-value="0">
-     * <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-     * </id>
-     * <property name="dt_info" type="long" not-null="true"/>
-     * <property name="bg" type="int" />
-     * <property name="person_id" type="int" not-null="true" />
-     * <property name="changed" type="long" not-null="false" />
-     * </class>
-     */
 
-    /**
-     * Get Meter Values
-     * 
-     * @return
-     */
-    public Hashtable<String, DayValueH> getMeterValues()
+    public List<DoctorTypeH> getDoctorTypes()
     {
-
-        Hashtable<String, DayValueH> ht = new Hashtable<String, DayValueH>();
-
-        logInfo("getMeterValues()");
-
-        try
+        if (doctorTypeMap != null)
         {
-
-            logDebug("getMeterValues()", "Process");
-
-            Query q = getSession(2).createQuery("SELECT dv from ggc.core.db.hibernate.DayValueH as dv "
-                    + "WHERE (dv.bg>0) and person_id=" + m_da.current_user_id + " ORDER BY dv.dt_info");
-
-            // System.out.println("Found elements: " + q.list().size());
-
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                DayValueH gv = (DayValueH) it.next();
-                ht.put("" + gv.getDt_info(), gv);
-            }
-
+            return (List<DoctorTypeH>) doctorTypeMap.values();
         }
-        catch (Exception ex)
+        else
         {
-            logException("getMeterValues()", ex);
-            ex.printStackTrace();
+            doctorTypeMap = new HashMap<Long, DoctorTypeH>();
         }
 
-        return ht;
+        Criteria criteria = this.getSession().createCriteria(DoctorTypeH.class);
+
+        List results = criteria.list();
+
+        List<DoctorTypeH> doctorTypeList = new ArrayList<DoctorTypeH>();
+
+        for (Object o : results)
+        {
+            DoctorTypeH doctorTypeH = (DoctorTypeH) o;
+            doctorTypeList.add(doctorTypeH);
+            doctorTypeMap.put(doctorTypeH.getId(), doctorTypeH);
+        }
+
+        return doctorTypeList;
+    }
+
+
+    public DoctorTypeH getDoctorType(long doctorTypeId)
+    {
+        if (doctorTypeMap == null)
+            getDoctorTypes();
+
+        return doctorTypeMap.get(doctorTypeId);
+    }
+
+
+    public List<DoctorH> getDoctors()
+    {
+        Criteria criteria = this.getSession().createCriteria(DoctorH.class);
+        setPersonId(criteria);
+
+        List results = criteria.list();
+
+        List<DoctorH> doctorsList = new ArrayList<DoctorH>();
+
+        for (Object o : results)
+        {
+            doctorsList.add((DoctorH) o);
+        }
+
+        return doctorsList;
+    }
+
+
+    public List<DoctorAppointmentH> getDoctorAppointments()
+    {
+        Criteria criteria = this.getSession().createCriteria(DoctorAppointmentH.class);
+        setPersonId(criteria);
+
+        List results = criteria.list();
+
+        List<DoctorAppointmentH> doctorAppointmentList = new ArrayList<DoctorAppointmentH>();
+
+        for (Object o : results)
+        {
+            doctorAppointmentList.add((DoctorAppointmentH) o);
+        }
+
+        return doctorAppointmentList;
     }
 
 
@@ -1632,10 +1659,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     {
         return !(m_loadStatus == DB_STARTED);
     }
-
-    // *************************************************************
-    // **** S T O C K S ****
-    // *************************************************************
 
 
     // *************************************************************
@@ -1671,6 +1694,12 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * }
      * }
      */
+
+    public void setPersonId(Criteria criteria)
+    {
+        criteria.add(Restrictions.eq("personId", (int) m_da.getCurrentUserId()));
+    }
+
 
     /**
      * Debug Out

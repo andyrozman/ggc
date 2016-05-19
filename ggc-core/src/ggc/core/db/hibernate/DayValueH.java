@@ -1,15 +1,15 @@
 package ggc.core.db.hibernate;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.atech.db.hibernate.HibernateObject;
+
 /**
  *  @author Hibernate CodeGenerator 
  */
-public class DayValueH implements Serializable, GGCHibernateObject
+public class DayValueH extends HibernateObject
 {
 
     private static final long serialVersionUID = -1661031856854546844L;
@@ -47,6 +47,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     /** nullable persistent field */
     private long changed;
 
+
     /**
      * full constructor
      * 
@@ -76,12 +77,14 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.changed = changed;
     }
 
+
     /** 
      * default constructor 
      */
     public DayValueH()
     {
     }
+
 
     /**
      * minimal constructor
@@ -95,6 +98,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.person_id = person_id;
     }
 
+
     /**
      * Get Id
      * 
@@ -104,6 +108,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return this.id;
     }
+
 
     /**
      * Set Id
@@ -115,6 +120,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.id = id;
     }
 
+
     /**
      * Get Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * @return
@@ -123,6 +129,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return this.dt_info;
     }
+
 
     /**
      * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
@@ -134,6 +141,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.dt_info = dt_info;
     }
 
+
     /**
      * Get Bg
      * 
@@ -143,6 +151,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return this.bg;
     }
+
 
     /**
      * Set Bg
@@ -154,6 +163,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.bg = bg;
     }
 
+
     /**
      * Get Insulin 1
      * 
@@ -163,6 +173,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return this.ins1;
     }
+
 
     /**
      * Set Insulin 1
@@ -174,6 +185,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.ins1 = ins1;
     }
 
+
     /**
      * Get Insulin 2
      * 
@@ -183,6 +195,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return this.ins2;
     }
+
 
     /**
      * Set Insulin 2
@@ -194,6 +207,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.ins2 = ins2;
     }
 
+
     /**
      * Get Carbohydrates
      * 
@@ -203,6 +217,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return this.ch;
     }
+
 
     /**
      * Set Carbohydrates
@@ -214,6 +229,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.ch = ch;
     }
 
+
     /**
      * Get Meal Ids
      * 
@@ -223,6 +239,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return this.meals_ids;
     }
+
 
     /**
      * Set Meal Ids
@@ -234,6 +251,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.meals_ids = meals_ids;
     }
 
+
     /**
      * Get Extended 
      * 
@@ -243,6 +261,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return this.extended;
     }
+
 
     /**
      * Set Extended
@@ -254,6 +273,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.extended = extended;
     }
 
+
     /**
      * Get Person Id
      * 
@@ -263,6 +283,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return this.person_id;
     }
+
 
     /**
      * Set Person Id
@@ -274,6 +295,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.person_id = person_id;
     }
 
+
     /**
      * Get Comment
      * 
@@ -283,6 +305,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return this.comment;
     }
+
 
     /**
      * Set Comment
@@ -294,6 +317,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.comment = comment;
     }
 
+
     /**
      * Get Changed
      * 
@@ -303,6 +327,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return this.changed;
     }
+
 
     /**
      * Set Changed
@@ -314,6 +339,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         this.changed = changed;
     }
 
+
     /**
      * Custom toString implementation
      * @see java.lang.Object#toString()
@@ -323,6 +349,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
+
 
     /** 
      * Custom equals implementation
@@ -337,6 +364,7 @@ public class DayValueH implements Serializable, GGCHibernateObject
         DayValueH castOther = (DayValueH) other;
         return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
+
 
     /**
      * Hash code generator

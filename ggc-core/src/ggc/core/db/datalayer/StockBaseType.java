@@ -1,9 +1,7 @@
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.StockSubTypeH;
-
-
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.hibernate.Session;
 
@@ -12,21 +10,24 @@ import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import ggc.core.db.hibernate.StockSubTypeH;
 
-public class StockBaseType extends StockSubTypeH implements SelectableInterface, DatabaseObjectHibernate,
-        BackupRestoreObject
+public class StockBaseType extends StockSubTypeH
+        implements SelectableInterface, DatabaseObjectHibernate, BackupRestoreObject
 {
 
     public StockBaseType()
     {
     }
 
+
     public StockBaseType(StockSubTypeH sth)
     {
-//        this.setId(sth.getId());
-//        this.setName(sth.getName());
-//        this.setName_i18n(sth.getName_i18n());
+        // this.setId(sth.getId());
+        // this.setName(sth.getName());
+        // this.setName_i18n(sth.getName_i18n());
     }
+
 
     public boolean isCollection()
     {
@@ -34,11 +35,13 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return false;
     }
 
+
     public void setSelected(boolean selected)
     {
         // TODO Auto-generated method stub
 
     }
+
 
     public boolean isSelected()
     {
@@ -46,11 +49,13 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return false;
     }
 
+
     public String getClassName()
     {
         // TODO Auto-generated method stub
         return null;
     }
+
 
     public ArrayList<CheckBoxTreeNodeInterface> getNodeChildren()
     {
@@ -58,17 +63,20 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return null;
     }
 
+
     public boolean hasNodeChildren()
     {
         // TODO Auto-generated method stub
         return false;
     }
 
+
     public String getTargetName()
     {
         // TODO Auto-generated method stub
-        return null;
+        return "StockBaseType";
     }
+
 
     public int getTableVersion()
     {
@@ -76,11 +84,13 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return 0;
     }
 
+
     public String dbExport(int table_version) throws Exception
     {
         // TODO Auto-generated method stub
         return null;
     }
+
 
     public String dbExport() throws Exception
     {
@@ -88,11 +98,13 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return null;
     }
 
+
     public String dbExportHeader(int table_version)
     {
         // TODO Auto-generated method stub
         return null;
     }
+
 
     public String dbExportHeader()
     {
@@ -100,11 +112,13 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return null;
     }
 
+
     public void dbImport(int table_version, String value_entry) throws Exception
     {
         // TODO Auto-generated method stub
 
     }
+
 
     public void dbImport(int table_version, String value_entry, Object[] parameters) throws Exception
     {
@@ -112,11 +126,25 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
 
     }
 
+
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+
+    }
+
+
+    public boolean isNewImport()
+    {
+        return false;
+    }
+
+
     public String getBackupFile()
     {
         // TODO Auto-generated method stub
         return null;
     }
+
 
     public String getBackupClassName()
     {
@@ -124,11 +152,13 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return null;
     }
 
+
     public boolean hasToBeCleaned()
     {
         // TODO Auto-generated method stub
         return false;
     }
+
 
     public String getObjectUniqueId()
     {
@@ -136,11 +166,13 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return null;
     }
 
+
     public String DbAdd(Session sess) throws Exception
     {
         // TODO Auto-generated method stub
         return null;
     }
+
 
     public boolean DbEdit(Session sess) throws Exception
     {
@@ -148,11 +180,13 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return false;
     }
 
+
     public boolean DbDelete(Session sess) throws Exception
     {
         // TODO Auto-generated method stub
         return false;
     }
+
 
     public boolean DbHasChildren(Session sess) throws Exception
     {
@@ -160,11 +194,13 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return false;
     }
 
+
     public boolean DbGet(Session sess) throws Exception
     {
         // TODO Auto-generated method stub
         return false;
     }
+
 
     public String getObjectName()
     {
@@ -172,11 +208,13 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return null;
     }
 
+
     public boolean isDebugMode()
     {
         // TODO Auto-generated method stub
         return false;
     }
+
 
     public int getAction()
     {
@@ -184,11 +222,13 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return 0;
     }
 
+
     public long getItemId()
     {
         // TODO Auto-generated method stub
         return 0;
     }
+
 
     public String getShortDescription()
     {
@@ -196,10 +236,12 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         return null;
     }
 
+
     public int getColumnCount()
     {
         return 2;
     }
+
 
     public String getColumnName(int num)
     {
@@ -213,6 +255,7 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         }
     }
 
+
     public String getColumnValue(int num)
     {
         switch (num)
@@ -224,6 +267,7 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
                 return this.getName();
         }
     }
+
 
     public Object getColumnValueObject(int num)
     {
@@ -237,6 +281,7 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         }
     }
 
+
     public int getColumnWidth(int num, int width)
     {
         switch (num)
@@ -248,6 +293,7 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
         }
     }
 
+
     public boolean isFound(String text)
     {
         if (text.length() == 0)
@@ -256,15 +302,18 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
             return this.getName().contains(text);
     }
 
+
     public boolean isFound(int value)
     {
         return true;
     }
 
+
     public boolean isFound(int from, int till, int state)
     {
         return true;
     }
+
 
     public void setSearchContext()
     {
@@ -272,10 +321,12 @@ public class StockBaseType extends StockSubTypeH implements SelectableInterface,
 
     private ColumnSorter columnSorter = null;
 
+
     public void setColumnSorter(ColumnSorter cs)
     {
         this.columnSorter = cs;
     }
+
 
     public int compareTo(SelectableInterface o)
     {

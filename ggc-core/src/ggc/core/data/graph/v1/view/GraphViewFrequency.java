@@ -156,9 +156,7 @@ public class GraphViewFrequency extends GraphViewAbstract
 
 
     /**
-     * Set Plot
-     * 
-     * @param chart JFreeChart instance
+     * {@inheritDoc}
      */
     public void setPlot(JFreeChart chart)
     {
@@ -208,7 +206,7 @@ public class GraphViewFrequency extends GraphViewAbstract
 
 
     /**
-     * Create Chart
+     * {@inheritDoc}
      */
     @Override
     public void createChart()

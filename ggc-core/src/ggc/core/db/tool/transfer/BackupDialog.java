@@ -49,6 +49,7 @@ public class BackupDialog extends BackupRestoreDialog
                                                                  */)
     {
         super(parent, da, da.getBackupRestoreCollection());
+        System.out.println("BRC: " + da.getBackupRestoreCollection());
         enableHelp("GGC_Tools_Backup");
         showDialog();
     }
@@ -67,6 +68,9 @@ public class BackupDialog extends BackupRestoreDialog
                                                                 */)
     {
         super(parent, da, da.getBackupRestoreCollection());
+
+        System.out.println("BRC: " + da.getBackupRestoreCollection());
+
         enableHelp("GGC_Tools_Backup");
         showDialog();
     }

@@ -133,8 +133,8 @@ public class GGCDbLoader extends Thread
         {
             // if (!part_start)
             {
-                m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, "DB_NAME="
-                        + db.getHibernateConfiguration().getConnectionName());
+                m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS,
+                    "DB_NAME=" + db.getHibernateConfiguration().getConnectionName());
                 /*
                  * if (m_bar!=null)
                  * m_bar.setDatabaseName(db.getHibernateConfiguration().
@@ -154,7 +154,7 @@ public class GGCDbLoader extends Thread
 
             db.loadConfigData();
             db.loadStaticData();
-            // m_da.setDb(db);
+            // dataAccess.setDb(db);
             m_da.setDbLoadingStatus(GGCDbLoader.DB_DATA_BASE);
 
             m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_GENERAL_INFO);
@@ -177,7 +177,8 @@ public class GGCDbLoader extends Thread
 
             // dataAccess.loadSettingsFromDb();
             m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
-            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, m_da.getI18nControlInstance().getMessage("READY"));
+            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS,
+                m_da.getI18nControlInstance().getMessage("READY"));
 
             // mf.informationPanel.refreshPanels();
             // mf.statusPanel.setStatusMessage(dataAccess.getI18nControlInstance().getMessage("READY"));

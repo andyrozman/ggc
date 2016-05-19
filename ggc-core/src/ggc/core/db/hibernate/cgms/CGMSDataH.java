@@ -1,17 +1,14 @@
 package ggc.core.db.hibernate.cgms;
 
-import ggc.core.db.hibernate.GGCHibernateObject;
-
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.atech.db.hibernate.HibernateObject;
 
 /**
  * @author Hibernate CodeGenerator
  */
-public class CGMSDataH implements Serializable, GGCHibernateObject
+public class CGMSDataH extends HibernateObject
 {
 
     private static final long serialVersionUID = 9052976780137113098L;
@@ -43,6 +40,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
     /** nullable persistent field */
     private long changed;
 
+
     /**
      * full constructor
      * 
@@ -68,12 +66,14 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.changed = changed;
     }
 
+
     /**
      * default constructor
      */
     public CGMSDataH()
     {
     }
+
 
     /**
      * minimal constructor
@@ -87,6 +87,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.person_id = person_id;
     }
 
+
     /**
      * Get Id
      * 
@@ -96,6 +97,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
     {
         return this.id;
     }
+
 
     /**
      * Set Id
@@ -107,6 +109,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.id = id;
     }
 
+
     /**
      * Get Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * @return
@@ -115,6 +118,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
     {
         return this.dt_info;
     }
+
 
     /**
      * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
@@ -126,6 +130,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.dt_info = dt_info;
     }
 
+
     /**
      * Get Base Type 
      * 
@@ -135,6 +140,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
     {
         return this.base_type;
     }
+
 
     /**
      * Set Base Type 
@@ -146,6 +152,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.base_type = base_type;
     }
 
+
     /**
      * Get Sub Type 
      * 
@@ -155,6 +162,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
     {
         return this.sub_type;
     }
+
 
     /**
      * Set Sub Type 
@@ -166,6 +174,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.sub_type = sub_type;
     }
 
+
     /**
      * Get Value 
      * 
@@ -175,6 +184,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
     {
         return this.value;
     }
+
 
     /**
      * Set Extended
@@ -186,6 +196,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.value = value;
     }
 
+
     /**
      * Get Extended 
      * 
@@ -195,6 +206,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
     {
         return this.extended;
     }
+
 
     /**
      * Set Extended
@@ -206,6 +218,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.extended = extended;
     }
 
+
     /**
      * Get Person Id
      * 
@@ -215,6 +228,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
     {
         return this.person_id;
     }
+
 
     /**
      * Set Person Id
@@ -226,6 +240,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.person_id = person_id;
     }
 
+
     /**
      * Get Comment
      * 
@@ -235,6 +250,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
     {
         return this.comment;
     }
+
 
     /**
      * Set Comment
@@ -246,6 +262,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.comment = comment;
     }
 
+
     /**
      * Get Changed
      * 
@@ -255,6 +272,7 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
     {
         return this.changed;
     }
+
 
     /**
      * Set Changed
@@ -266,40 +284,51 @@ public class CGMSDataH implements Serializable, GGCHibernateObject
         this.changed = changed;
     }
 
+
     /**
      * Equals - method to check equalicy of object
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object other)
+    public boolean equals(Object o)
     {
-        if (!(other instanceof CGMSDataH))
+        if (this == o)
+            return true;
+
+        if (o == null || getClass() != o.getClass())
             return false;
-        CGMSDataH castOther = (CGMSDataH) other;
-        return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
+
+        CGMSDataH cgmsDataH = (CGMSDataH) o;
+
+        return new EqualsBuilder() //
+                .append(id, cgmsDataH.id) //
+                .append(dt_info, cgmsDataH.dt_info) //
+                .append(base_type, cgmsDataH.base_type) //
+                .append(sub_type, cgmsDataH.sub_type) //
+                .append(person_id, cgmsDataH.person_id) //
+                .append(changed, cgmsDataH.changed) //
+                .append(value, cgmsDataH.value) //
+                .append(extended, cgmsDataH.extended) //
+                .append(comment, cgmsDataH.comment) //
+                .isEquals();
     }
 
-    /**
-     * To String
-     * 
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return new ToStringBuilder(this).append("id", getId()).toString();
-    }
 
-    /**
-     * Create Hash Code
-     * 
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode()
     {
-        return new HashCodeBuilder().append(getId()).toHashCode();
+        return new HashCodeBuilder(17, 37) //
+                .appendSuper(super.hashCode()) //
+                .append(id) //
+                .append(dt_info) //
+                .append(base_type) //
+                .append(sub_type) //
+                .append(value) //
+                .append(extended) //
+                .append(person_id) //
+                .append(comment) //
+                .append(changed) //
+                .toHashCode();
     }
-
 }

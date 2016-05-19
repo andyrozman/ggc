@@ -64,13 +64,20 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     private String comment;
     private String extended;
 
+    // this is used for graphs in pump (for calculating so that there is less
+    // error, since normal ins1 (bolus) is in int).
+    private float pumpBolus;
+
+    private float pumpBg;
+    private int pumpBgCount;
+
     // private String[] extended_arr;
     private String meals;
 
     private boolean changed = false;
     DayValueH m_dv = null;
     DataAccess m_da = DataAccess.getInstance();
-    // GGCProperties props = m_da.getSettings();
+    // GGCProperties props = dataAccess.getSettings();
 
     ConfigurationManagerWrapper configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
 
@@ -143,7 +150,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
             String Comment, ArrayList<String> lst_meals)
     {
         this.datetime = new ATechDate(ATechDateType.DateAndTimeMin, datetime);
-        this.bg = m_da.getIntValueFromString(BG, 0);
+        this.bg = DataAccess.getIntValueFromString(BG, 0);
         this.ins1 = m_da.getIntValueFromString(Ins1, 0);
         this.ins2 = m_da.getIntValueFromString(Ins2, 0);
         this.ch = m_da.getIntValueFromString(CH, 0);
@@ -256,7 +263,7 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
      */
     public void setDateTime(long dt)
     {
-        if (this.datetime.getATDateTimeAsLong() != dt)
+        if ((this.datetime == null) || (this.datetime.getATDateTimeAsLong() != dt))
         {
             this.datetime = new ATechDate(dt);
             this.changed = true;
@@ -1215,6 +1222,31 @@ public class DailyValuesRow implements Serializable, Comparable<DailyValuesRow>,
     public void createExtended()
     {
         this.extended = this.getExtendedHandler().saveExtended(this.ht_extended);
+    }
+
+
+    public float getPumpBolus()
+    {
+        return pumpBolus;
+    }
+
+
+    public void setPumpBolus(float pumpBolus)
+    {
+        this.pumpBolus = pumpBolus;
+    }
+
+
+    public void addPumpBg(float bg)
+    {
+        this.pumpBg = bg;
+        this.pumpBgCount++;
+    }
+
+
+    public float getPumpBgCalculated()
+    {
+        return pumpBg / pumpBgCount;
     }
 
 }

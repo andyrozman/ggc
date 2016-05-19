@@ -368,7 +368,7 @@ public class HbA1cValues
 
         float f = valClass[r] / 90.0f;
 
-        // System.out.println("Class: " + r + "= "+ valClass[r] + " = " + f);
+        // System.out.println("Class: " + r + "= " + valClass[r] + " = " + f);
 
         return f;
 
@@ -402,6 +402,8 @@ public class HbA1cValues
         return "HbA1cValues [" + "sumBG=" + sumBG + //
                 ", readings=" + readings + //
                 ", dayCount=" + dayCount + //
-                ", calendar=" + DataAccess.getInstance().getGregorianCalendarDateAsString(calendar) + ']';
+                ", calendar="
+                + (calendar != null ? DataAccess.getInstance().getGregorianCalendarDateAsString(calendar) : "null")
+                + ']';
     }
 }

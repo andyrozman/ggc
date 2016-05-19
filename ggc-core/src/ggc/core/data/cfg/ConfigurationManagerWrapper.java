@@ -31,13 +31,13 @@ public class ConfigurationManagerWrapper implements GraphConfigProperties
     }
 
 
-    private void setStringValue(String key, String stringValue)
+    public void setStringValue(String key, String stringValue)
     {
         this.configurationManager.setStringValue(key, stringValue);
     }
 
 
-    private String getStringValue(String key)
+    public String getStringValue(String key)
     {
         return this.configurationManager.getStringValue(key);
     }
@@ -1283,7 +1283,7 @@ public class ConfigurationManagerWrapper implements GraphConfigProperties
     }
 
 
-    private void setDimensionToParameter(String parameterKey, Dimension size)
+    public void setDimensionToParameter(String parameterKey, Dimension size)
     {
 
         StringBuilder sb = new StringBuilder();
@@ -1308,7 +1308,7 @@ public class ConfigurationManagerWrapper implements GraphConfigProperties
             }
             catch (NumberFormatException e)
             {
-                LOG.debug("Undefinied value for Dimension Parameter. {}", value, e);
+                LOG.debug("Undefined value for Dimension Parameter [key={}, value={}]", parameterKey, value, e);
             }
         }
 

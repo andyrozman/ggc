@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -267,9 +269,6 @@ public class GGCImporter extends ImportTool implements Runnable
         try
         {
 
-            // if (!clean_db)
-            // append = true;
-
             if (bro.hasToBeCleaned() || clean_db)
             {
                 this.clearExistingData(bro.getBackupClassName());
@@ -279,23 +278,17 @@ public class GGCImporter extends ImportTool implements Runnable
                 append = true;
             }
 
-            // System.out.println("\nLoading DailyValues (5/dot)");
-            // System.out.println("getRoot: " + this.getRootPath());
-
             this.openFileForReading(new File(this.getRootPath() + bro.getBackupFile() + ".dbe"));
-
-            // BufferedReader br = new BufferedReader(new
-            // FileReader(this.restore_file)); //new File(file_name)));
-
-            // int i = 0;
 
             int dot_mark = 5;
             int count = 0;
+            Map<String, String> headers = new HashMap<String, String>();
 
             while ((line = this.br_file.readLine()) != null)
             {
                 if (line.startsWith(";") || line.trim().length() == 0)
                 {
+                    addHeaders(headers, line);
                     continue;
                 }
 
@@ -307,55 +300,13 @@ public class GGCImporter extends ImportTool implements Runnable
                 }
                 else
                 {
-                    bro_new.dbImport(bro.getTableVersion(), line);
+                    if (bro.isNewImport())
+                        bro_new.dbImport(bro.getTableVersion(), line, headers);
+                    else
+                        bro_new.dbImport(bro.getTableVersion(), line);
                 }
 
-                /*
-                 * // line = line.replaceAll("||", "| |");
-                 * line = dataAccess.replaceExpression(line, "||", "| |");
-                 * StringTokenizer strtok = new StringTokenizer(line, "|");
-                 * DayValueH dvh = new DayValueH();
-                 * // ; Columns:
-                 * id,dt_info,bg,ins1,ins2,ch,meals_ids,act,comment
-                 * // 1|200603250730|0|10.0|0.0|0.0|null|null|
-                 * // id; dt_info; bg; ins1; ins2; ch; meals_ids; extended;
-                 * // person_id; comment
-                 * if (!append)
-                 * {
-                 * long id = this.getLong(strtok.nextToken());
-                 * if (id != 0)
-                 * dvh.setId(id);
-                 * }
-                 * else
-                 * {
-                 * strtok.nextToken();
-                 * }
-                 * dvh.setDt_info(getLong(strtok.nextToken()));
-                 * dvh.setBg(getInt(strtok.nextToken()));
-                 * dvh.setIns1((int) getFloat(strtok.nextToken()));
-                 * dvh.setIns2((int) getFloat(strtok.nextToken()));
-                 * dvh.setCh(getFloat(strtok.nextToken()));
-                 * dvh.setMeals_ids(getString(strtok.nextToken()));
-                 * dvh.setExtended(getString(strtok.nextToken()));
-                 * int person_id = this.getInt(strtok.nextToken());
-                 * if (person_id == 0)
-                 * dvh.setPerson_id(1);
-                 * else
-                 * dvh.setPerson_id(person_id);
-                 * dvh.setComment(getString(strtok.nextToken()));
-                 * dvh.setChanged(getLong(strtok.nextToken()));
-                 * /*
-                 * String act = getString(strtok.nextToken());
-                 * if (act != null) { dvh.setExtended("ACTIVITY=" + act); }
-                 * String bef = "MTI"; // String bef = null;
-                 * if (strtok.hasMoreElements()) { String comm =
-                 * getString(strtok.nextToken());
-                 * // remove if (bef!=null) comm += ";" + bef;
-                 * if (comm!=null) dvh.setComment(comm); } else { if (bef!=null)
-                 * dvh.setComment(bef); }
-                 */
-
-                this.hibernate_util.add(bro_new); // dvh);
+                this.hibernate_util.add(bro_new);
 
                 count++;
                 this.writeStatus(dot_mark, count);
@@ -370,6 +321,21 @@ public class GGCImporter extends ImportTool implements Runnable
             LOG.error("Error on importData: \nData: " + line + "\nException: " + ex, ex);
         }
 
+    }
+
+
+    private void addHeaders(Map<String, String> headers, String line)
+    {
+        if (!line.contains(":"))
+        {
+            return;
+        }
+
+        String ln = line.substring(2);
+
+        String[] pars = ln.split(":");
+
+        headers.put(pars[0], pars[1].trim());
     }
 
 

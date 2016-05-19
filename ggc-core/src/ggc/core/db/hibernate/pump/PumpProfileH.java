@@ -1,15 +1,13 @@
 package ggc.core.db.hibernate.pump;
 
-import ggc.core.db.hibernate.GGCHibernateObject;
-
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.atech.db.hibernate.HibernateObject;
+
 /** @author Hibernate CodeGenerator */
-public class PumpProfileH implements Serializable, GGCHibernateObject
+public class PumpProfileH extends HibernateObject
 {
 
     private static final long serialVersionUID = 8212384538572472772L;
@@ -44,6 +42,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     /** nullable persistent field */
     private long changed;
 
+
     /** full constructor 
      * @param name 
      * @param basal_base 
@@ -68,10 +67,12 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         this.changed = changed;
     }
 
+
     /** default constructor */
     public PumpProfileH()
     {
     }
+
 
     /** minimal constructor 
      * @param person_id */
@@ -79,6 +80,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         this.person_id = person_id;
     }
+
 
     /**
      * Get Id
@@ -90,6 +92,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         return this.id;
     }
 
+
     /**
      * Set Id
      * 
@@ -99,6 +102,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         this.id = id;
     }
+
 
     /**
      * Get Name
@@ -110,6 +114,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         return this.name;
     }
 
+
     /**
      * Set Name
      * 
@@ -119,6 +124,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         this.name = name;
     }
+
 
     /**
      * Get Basal Rate - Base
@@ -130,6 +136,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         return this.basal_base;
     }
 
+
     /**
      * Set Basal Rate - Base
      * 
@@ -139,6 +146,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         this.basal_base = basal_base;
     }
+
 
     /**
      * Get Basal Rate - Diffs (example: 1100-1230=1.26;1330-1430=1.35)
@@ -150,6 +158,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         return this.basal_diffs;
     }
 
+
     /**
      * Set Basal Rate - Diffs (example: 1100-1230=1.26;1330-1430=1.35)
      * 
@@ -159,6 +168,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         this.basal_diffs = basal_diffs;
     }
+
 
     /**
      * Get Active From
@@ -170,6 +180,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         return this.active_from;
     }
 
+
     /**
      * Set Active From
      * 
@@ -179,6 +190,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         this.active_from = active_from;
     }
+
 
     /**
      * Get Active Till
@@ -190,6 +202,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         return this.active_till;
     }
 
+
     /**
      * Set Active Till
      * 
@@ -199,6 +212,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         this.active_till = active_till;
     }
+
 
     /**
      * Get Extended 
@@ -210,6 +224,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         return this.extended;
     }
 
+
     /**
      * Set Extended
      *  
@@ -219,6 +234,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         this.extended = extended;
     }
+
 
     /**
      * Get Person Id
@@ -230,6 +246,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         return this.person_id;
     }
 
+
     /**
      * Set Person Id
      * 
@@ -239,6 +256,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         this.person_id = person_id;
     }
+
 
     /**
      * Get Comment
@@ -250,6 +268,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         return this.comment;
     }
 
+
     /**
      * Set Comment
      * 
@@ -259,6 +278,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         this.comment = comment;
     }
+
 
     /**
      * Get Changed
@@ -270,6 +290,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         return this.changed;
     }
 
+
     /**
      * Set Changed
      * 
@@ -279,6 +300,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         this.changed = changed;
     }
+
 
     /**
      * Equals - method to check equalicy of object
@@ -294,6 +316,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
         return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
+
     /**
      * To String
      * 
@@ -304,6 +327,7 @@ public class PumpProfileH implements Serializable, GGCHibernateObject
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
+
 
     /**
      * Create Hash Code

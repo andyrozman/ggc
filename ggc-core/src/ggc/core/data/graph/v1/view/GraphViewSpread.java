@@ -71,9 +71,7 @@ public class GraphViewSpread extends GraphViewAbstract
 
 
     /**
-     * Get Data Set
-     *
-     * @return AbstractDataset instance
+     * {@inheritDoc}
      */
     public AbstractDataset getDataSet()
     {
@@ -181,10 +179,7 @@ public class GraphViewSpread extends GraphViewAbstract
 
 
     /**
-     * Set Plot
-     *
-     * @param chart
-     *            JFreeChart instance
+     * {@inheritDoc}
      */
     @SuppressWarnings("deprecation")
     public void setPlot(JFreeChart chart)
@@ -232,7 +227,7 @@ public class GraphViewSpread extends GraphViewAbstract
 
 
     /**
-     * Create Chart
+     * {@inheritDoc}
      */
     @Override
     public void createChart()

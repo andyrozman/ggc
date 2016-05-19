@@ -1,6 +1,7 @@
 package ggc.core.db.datalayer;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.hibernate.Session;
 
@@ -45,12 +46,14 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     private boolean selected = false;
     I18nControlAbstract ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
 
+
     /**
      * Constructor
      */
     public DailyValue()
     {
     }
+
 
     /**
      * Constructor
@@ -61,6 +64,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
     }
 
+
     /**
      * Constructor
      * 
@@ -70,6 +74,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         this.ic = ic;
     }
+
 
     // ---
     // --- BackupRestoreObject
@@ -85,6 +90,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return ic.getMessage("DAILY_VALUES");
     }
 
+
     /** 
      * Get Name
      * @return 
@@ -93,6 +99,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         return this.getTargetName();
     }
+
 
     /**
      * getBackupClassName - name of class which will be updated/restored
@@ -103,6 +110,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         return "ggc.core.db.hibernate.DayValueH";
     }
+
 
     /**
      * To String
@@ -115,6 +123,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return this.getTargetName();
     }
 
+
     /** 
      * getChildren
      */
@@ -122,6 +131,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         return null;
     }
+
 
     /** 
      * isSelected
@@ -131,6 +141,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return selected;
     }
 
+
     /** 
      * setSelected
      */
@@ -138,6 +149,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         this.selected = newValue;
     }
+
 
     /**
      * Is Object Collection
@@ -149,6 +161,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return false;
     }
 
+
     /**
      * Has Children
      */
@@ -156,6 +169,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         return false;
     }
+
 
     /**
      * DbAdd - Add this object to database
@@ -170,6 +184,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return null;
     }
 
+
     /**
      * DbDelete - Delete this object in database
      * 
@@ -182,6 +197,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         // TODO Auto-generated method stub
         return false;
     }
+
 
     /**
      * DbEdit - Edit this object in database
@@ -196,6 +212,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return false;
     }
 
+
     /**
      * DbGet - Loads this object. Id must be set.
      * 
@@ -209,6 +226,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return false;
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
      * 
@@ -220,6 +238,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         return false;
     }
+
 
     /** 
      * getAction
@@ -234,6 +253,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public int TABLE_VERSION = 1;
 
+
     /**
      * Get Table Version - returns version of table
      * 
@@ -243,6 +263,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         return this.TABLE_VERSION;
     }
+
 
     /**
      * dbExport - returns export String, for current version 
@@ -256,6 +277,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return null;
     }
 
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -266,6 +288,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         return dbExport(this.TABLE_VERSION);
     }
+
 
     /**
      * dbExportHeader - header for export file
@@ -279,6 +302,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return null;
     }
 
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -289,6 +313,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return this.dbExportHeader(this.TABLE_VERSION);
     }
 
+
     /**
      * dbImport - processes input entry to right fields
      * 
@@ -298,8 +323,9 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public void dbImport(int table_version, String value_entry) throws Exception
     {
-        dbImport(table_version, value_entry, null);
+        dbImport(table_version, value_entry, (Object[]) null);
     }
+
 
     /**
      * dbImport - processes input entry to right fields
@@ -314,6 +340,19 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         // TODO
     }
 
+
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+
+    }
+
+
+    public boolean isNewImport()
+    {
+        return false;
+    }
+
+
     /**
      * getBackupFile - name of backup file (base part)
      * 
@@ -323,6 +362,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         return "DayValueH";
     }
+
 
     /**
      * getBackupClassName - name of class which will be updated/restored
@@ -335,6 +375,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return "";
     }
 
+
     /** 
      * getObjectName
      */
@@ -342,6 +383,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         return "DailyValue";
     }
+
 
     /** 
      * isDebugMode
@@ -351,6 +393,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
         return false;
     }
 
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -359,6 +402,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
     {
         return "";
     }
+
 
     /**
      * Has To Be Clean - if table needs to be cleaned before import

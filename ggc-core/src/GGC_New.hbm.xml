@@ -79,6 +79,55 @@
         <property name="changed" type="java.lang.Long"/>
     </class>
 
+
+    <!-- ****************************************** -->
+    <!-- ***                  Doctors              **** -->
+    <!-- ****************************************** -->
+
+
+    <!--  Doctor types -->
+    <class name="ggc.core.db.hibernate.doc.DoctorTypeH" table="doc_types">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>
+        <property name="name" type="string" length="1000"/>
+        <property name="predefined" type="int"/>
+    </class>
+
+    <!--  Doctor -->
+    <class name="ggc.core.db.hibernate.doc.DoctorH" table="doc_doctors">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>
+        <many-to-one name="doctorType" column="doctor_type_id" class="ggc.core.db.hibernate.doc.DoctorTypeH"
+                     lazy="false"/>
+        <property name="name" type="string" length="100"/>
+        <property name="address" type="string" length="2000"/>
+        <property name="phoneGsm" column="phone_gsm" type="string" length="500"/>
+        <property name="phone" type="string" length="500"/>
+        <property name="email" type="string" length="500"/>
+        <property name="workingTime" column="working_time" type="text"/>
+        <property name="activeFrom" column="active_from" type="long"/>
+        <property name="activeTill" column="active_till" type="long"/>
+        <property name="extended" type="text"/>
+        <property name="personId" column="person_id" type="int" not-null="true"/>
+        <property name="comment" type="string" length="4000"/>
+    </class>
+
+    <!--  Appointment -->
+    <class name="ggc.core.db.hibernate.doc.DoctorAppointmentH" table="doc_appointment">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>
+        <many-to-one name="doctor" class="ggc.core.db.hibernate.doc.DoctorH" lazy="false"/>
+        <property name="dt_apoint" type="long" not-null="true"/>
+        <property name="apoint_text" type="string" length="1000"/>
+        <property name="extended" type="text"/>
+        <property name="personId" column="person_id" type="int" not-null="true"/>
+        <property name="comment" type="string" length="4000"/>
+    </class>
+
+
     <!-- ****************************************** -->
     <!-- ***                  Connect          **** -->
     <!-- ****************************************** -->

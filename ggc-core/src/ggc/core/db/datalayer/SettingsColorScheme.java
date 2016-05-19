@@ -1,9 +1,7 @@
 package ggc.core.db.datalayer;
 
-import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.util.DataAccess;
-
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,6 +11,9 @@ import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,12 +55,14 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     private I18nControlAbstract ic;
     private boolean backup_object = false;
 
+
     /**
      * Constructor
      */
     public SettingsColorScheme()
     {
     }
+
 
     /**
      * Constructor
@@ -71,6 +74,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         this.ic = ic;
         this.backup_object = true;
     }
+
 
     /**
      * Constructor
@@ -96,6 +100,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         // this.setSelected()
     }
 
+
     /**
      * Get Short Description
      * 
@@ -105,6 +110,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         return "ColorScheme [id=" + this.getId() + ";name=" + this.getName() + "]";
     }
+
 
     /**
      * To String
@@ -119,6 +125,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         else
             return this.getShortDescription();
     }
+
 
     // ---
     // --- DatabaseObjectHibernate
@@ -162,6 +169,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
 
     }
 
+
     /**
      * DbEdit - Edit this object in database
      * 
@@ -197,6 +205,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
 
     }
 
+
     /**
      * DbDelete - Delete this object in database
      * 
@@ -218,6 +227,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
 
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is
      * needed for delete
@@ -230,6 +240,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         return false;
     }
+
 
     /**
      * DbGet - Loads this object. Id must be set.
@@ -260,6 +271,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return true;
     }
 
+
     /**
      * getObjectName - returns name of DatabaseObject
      * 
@@ -270,6 +282,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return "ColorScheme";
     }
 
+
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -279,6 +292,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         return debug;
     }
+
 
     /**
      * getAction - returns action that should be done on object 
@@ -300,6 +314,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
 
     private boolean selected = false;
 
+
     /**
      * getTargetName
      */
@@ -307,6 +322,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         return ic.getMessage("COLOR_SCHEMES");
     }
+
 
     /**
      * Get Class Name
@@ -317,6 +333,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         return "ggc.core.db.hibernate.ColorSchemeH";
     }
+
 
     // ---
     // --- BackupRestoreObject
@@ -332,6 +349,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return null;
     }
 
+
     /**
      * Is Selected
      */
@@ -340,6 +358,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return selected;
     }
 
+
     /**
      * Set Selected
      */
@@ -347,6 +366,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         this.selected = newValue;
     }
+
 
     /**
      * Is Collection
@@ -358,6 +378,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return false;
     }
 
+
     /**
      * Has Children
      * 
@@ -367,6 +388,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         return false;
     }
+
 
     /**
      * getObjectUniqueId - get id of object
@@ -383,6 +405,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
      */
     public int TABLE_VERSION = 1;
 
+
     /**
      * getTableVersion - returns version of table
      * 
@@ -392,6 +415,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         return this.TABLE_VERSION;
     }
+
 
     /**
      * dbExport - returns export String, for current version
@@ -435,6 +459,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return sb.toString();
     }
 
+
     /**
      * dbExport - returns export String, for current version
      * 
@@ -446,6 +471,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         return dbExport(this.TABLE_VERSION);
     }
+
 
     /**
      * dbExportHeader - header for export file
@@ -459,6 +485,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
                 + "; Table version: " + getTableVersion() + "\n";
     }
 
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -468,6 +495,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         return this.dbExportHeader(this.TABLE_VERSION);
     }
+
 
     /**
      * dbImport - processes input entry to right fields
@@ -482,8 +510,9 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
      */
     public void dbImport(int table_version, String value_entry) throws Exception
     {
-        dbImport(table_version, value_entry, null);
+        dbImport(table_version, value_entry, (Object[]) null);
     }
+
 
     /**
      * dbImport - processes input entry to right fields
@@ -530,6 +559,19 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
 
     }
 
+
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+
+    }
+
+
+    public boolean isNewImport()
+    {
+        return false;
+    }
+
+
     /**
      * getBackupFile - name of backup file (base part)
      * 
@@ -539,6 +581,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         return "ColorSchemeH";
     }
+
 
     /**
      * getBackupClassName - name of class which will be updated/restored
@@ -550,6 +593,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return "ggc.core.db.hibernate.ColorSchemeH";
     }
 
+
     /**
      * Has To Be Clean - if table needs to be cleaned before import
      * 
@@ -560,6 +604,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
         return true;
     }
 
+
     /** 
      * Get Node Children
      */
@@ -567,6 +612,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     {
         return null;
     }
+
 
     /** 
      * Has Node Children

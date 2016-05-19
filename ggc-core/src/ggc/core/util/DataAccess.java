@@ -15,6 +15,7 @@ import pygmy.core.Server;
 
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
+import com.atech.graphics.components.DialogSizePersistInterface;
 import com.atech.help.HelpContext;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.I18nControlLangMgr;
@@ -74,7 +75,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * Core Version
      */
-    public static String CORE_VERSION = "0.6.1";
+    public static String CORE_VERSION = "0.7.0";
 
     /**
      * Current Db Version
@@ -249,6 +250,7 @@ public class DataAccess extends ATDataAccessLMAbstract
          * }
          */
 
+        // this.loadBackupRestoreCollection();
     }
 
 
@@ -587,45 +589,54 @@ public class DataAccess extends ATDataAccessLMAbstract
     @Override
     public void loadBackupRestoreCollection()
     {
-
-        BackupRestoreCollection brc_full = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
-        brc_full.addNodeChild(new DailyValue(this.m_i18n));
-
-        BackupRestoreCollection brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
-        brc1.addNodeChild(new Settings(this.m_i18n));
-        brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
-        brc_full.addNodeChild(brc1);
-
-        // for(int i=0; i<)
-
-        for (Enumeration<String> en = this.plugins.keys(); en.hasMoreElements();)
-        {
-            PlugInClient pic = this.plugins.get(en.nextElement());
-
-            BackupRestoreCollection brc = pic.getBackupObjects();
-
-            if (brc != null)
-            {
-                brc_full.addNodeChild(brc);
-            }
-        }
-
-        /*
-         * BackupRestoreCollection brc_nut = new
-         * BackupRestoreCollection("NUTRITION_OBJECTS", this.m_i18n);
-         * brc_nut.addNodeChild(new FoodGroup(this.m_i18n));
-         * brc_nut.addNodeChild(new FoodDescription(this.m_i18n));
-         * brc_nut.addNodeChild(new MealGroup(this.m_i18n));
-         * brc_nut.addNodeChild(new Meal(this.m_i18n));
-         * brc.addNodeChild(brc_nut);
-         * brc_nut = new BackupRestoreCollection("PUMP_TOOL", this.m_i18n);
-         * brc_nut.addNodeChild(new PumpData(this.m_i18n));
-         * brc_nut.addNodeChild(new PumpDataExtended(this.m_i18n));
-         * brc_nut.addNodeChild(new PumpProfile(this.m_i18n));
-         * brc.addNodeChild(brc_nut);
-         */
-
-        this.backupRestoreCollection = brc_full;
+        // System.out.println("loadBackupRestoreCollection");
+        //
+        // BackupRestoreCollection brc_full = new
+        // BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
+        // brc_full.addNodeChild(new DailyValue(this.m_i18n));
+        //
+        // BackupRestoreCollection brc1 = new
+        // BackupRestoreCollection("CONFIGURATION", this.m_i18n);
+        // brc1.addNodeChild(new Settings(this.m_i18n));
+        // brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
+        // brc_full.addNodeChild(brc1);
+        //
+        // // for(int i=0; i<)
+        //
+        // for (Enumeration<String> en = this.plugins.keys();
+        // en.hasMoreElements();)
+        // {
+        // PlugInClient pic = this.plugins.get(en.nextElement());
+        //
+        // System.out.println("Plugin: " + pic.getName());
+        //
+        // BackupRestoreCollection brc = pic.getBackupObjects();
+        //
+        // System.out.println("Plugin: " + pic.getName() + " Backup Collection:
+        // " + brc);
+        //
+        // if (brc != null)
+        // {
+        // brc_full.addNodeChild(brc);
+        // }
+        // }
+        //
+        // /*
+        // * BackupRestoreCollection brc_nut = new
+        // * BackupRestoreCollection("NUTRITION_OBJECTS", this.m_i18n);
+        // * brc_nut.addNodeChild(new FoodGroup(this.m_i18n));
+        // * brc_nut.addNodeChild(new FoodDescription(this.m_i18n));
+        // * brc_nut.addNodeChild(new MealGroup(this.m_i18n));
+        // * brc_nut.addNodeChild(new Meal(this.m_i18n));
+        // * brc.addNodeChild(brc_nut);
+        // * brc_nut = new BackupRestoreCollection("PUMP_TOOL", this.m_i18n);
+        // * brc_nut.addNodeChild(new PumpData(this.m_i18n));
+        // * brc_nut.addNodeChild(new PumpDataExtended(this.m_i18n));
+        // * brc_nut.addNodeChild(new PumpProfile(this.m_i18n));
+        // * brc.addNodeChild(brc_nut);
+        // */
+        //
+        // this.backupRestoreCollection = brc_full;
     }
 
 
@@ -783,9 +794,9 @@ public class DataAccess extends ATDataAccessLMAbstract
         addPlugIn(GGCPluginType.NutritionToolPlugin.getKey(), //
             new NutriPlugIn(this.m_main, this.ggci18nControl));
 
-        LOG.debug("init Plugins: Connect Tool");
-        addPlugIn(GGCPluginType.ConnectToolPlugin.getKey(), //
-            new ConnectPlugIn(this.m_main, this.ggci18nControl));
+        // LOG.debug("init Plugins: Connect Tool");
+        // addPlugIn(GGCPluginType.ConnectToolPlugin.getKey(), //
+        // new ConnectPlugIn(this.m_main, this.ggci18nControl));
 
     }
 
@@ -1803,6 +1814,8 @@ public class DataAccess extends ATDataAccessLMAbstract
     }
 
 
+    // Configuration Manager Wrapper
+
     public ConfigurationManagerWrapper getConfigurationManagerWrapper()
     {
         return configurationManagerWrapper;
@@ -1813,4 +1826,43 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         this.configurationManagerWrapper = configurationManagerWrapper;
     }
+
+    // Saving/ Loading sizes
+
+
+    // DialogSizePersistInterface
+
+    public void loadWindowSize(DialogSizePersistInterface dialogSizePersistInterface)
+    {
+        Dimension defaultDimension = dialogSizePersistInterface.getDefaultSize();
+
+        Dimension minimalDimemsion = dialogSizePersistInterface.getMinimalSize();
+
+        Dimension newDimension = this.configurationManagerWrapper.getDimensionFromParameter(
+            dialogSizePersistInterface.getSettingKey(), defaultDimension.width, defaultDimension.height);
+
+        double height = newDimension.getHeight();
+        double width = newDimension.getWidth();
+
+        if (height < minimalDimemsion.getHeight())
+        {
+            height = minimalDimemsion.getHeight();
+        }
+
+        if (width < minimalDimemsion.getWidth())
+        {
+            width = minimalDimemsion.getWidth();
+        }
+
+        dialogSizePersistInterface.getContainer().setSize((int) width, (int) height);
+    }
+
+
+    public void saveWindowSize(DialogSizePersistInterface dialogSizePersistInterface)
+    {
+        Dimension dimension = dialogSizePersistInterface.getContainer().getSize();
+
+        this.configurationManagerWrapper.setDimensionToParameter(dialogSizePersistInterface.getSettingKey(), dimension);
+    }
+
 }

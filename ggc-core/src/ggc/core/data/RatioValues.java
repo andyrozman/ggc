@@ -193,7 +193,7 @@ public class RatioValues
     // */
     // public float getSensitivityFactor(int rule)
     // {
-    // if (m_da.getBGMeasurmentType() == DataAccess.BG_MGDL)
+    // if (dataAccess.getBGMeasurmentType() == DataAccess.BG_MGDL)
     // {
     //
     // }

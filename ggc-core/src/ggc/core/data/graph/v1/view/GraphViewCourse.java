@@ -70,9 +70,7 @@ public class GraphViewCourse extends GraphViewAbstract
 
 
     /**
-     * Get Data Set
-     * 
-     * @return AbstractDataset instance
+     * {@inheritDoc}
      */
     public AbstractDataset getDataSet()
     {
@@ -346,9 +344,7 @@ public class GraphViewCourse extends GraphViewAbstract
 
 
     /**
-     * Set Plot
-     * 
-     * @param chart JFreeChart instance
+     * {@inheritDoc}
      */
     public void setPlot(JFreeChart chart)
     {
@@ -434,7 +430,7 @@ public class GraphViewCourse extends GraphViewAbstract
 
 
     /**
-     * Create Chart
+     * {@inheritDoc}
      */
     @Override
     public void createChart()

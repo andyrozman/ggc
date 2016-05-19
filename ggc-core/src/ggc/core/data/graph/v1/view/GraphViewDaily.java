@@ -83,9 +83,7 @@ public class GraphViewDaily extends GraphViewCGMSDailyAbstract
 
 
     /**
-     * Get Help Id
-     * 
-     * @return
+     * {@inheritDoc}
      */
     public String getHelpId()
     {
@@ -94,9 +92,7 @@ public class GraphViewDaily extends GraphViewCGMSDailyAbstract
 
 
     /**
-     * Get Viewer Dialog Bounds (used by GraphViewer)
-     * 
-     * @return Rectangle object
+     * {@inheritDoc}
      */
     @Override
     public Rectangle getViewerDialogBounds()
@@ -122,9 +118,7 @@ public class GraphViewDaily extends GraphViewCGMSDailyAbstract
 
 
     /**
-     * Get Data Set
-     * 
-     * @return AbstractDataset instance
+     * {@inheritDoc}
      */
     public AbstractDataset getDataSet()
     {
@@ -189,9 +183,7 @@ public class GraphViewDaily extends GraphViewCGMSDailyAbstract
 
 
     /**
-     * Set Plot
-     * 
-     * @param chart JFreeChart instance
+     * {@inheritDoc}
      */
     public void setPlot(JFreeChart chart)
     {
@@ -268,7 +260,7 @@ public class GraphViewDaily extends GraphViewCGMSDailyAbstract
 
 
     /**
-     * Create Chart
+     * {@inheritDoc}
      */
     @Override
     public void createChart()
@@ -282,7 +274,7 @@ public class GraphViewDaily extends GraphViewCGMSDailyAbstract
 
 
     /**
-     * Create Chart Panel
+     * {@inheritDoc}
      */
     @Override
     public void createChartPanel()

@@ -28,51 +28,6 @@
 
 
     <!-- ****************************************** -->
-    <!-- ***                  Doctors              **** -->
-    <!-- ****************************************** -->
-
-
-    <!--  Doctor types -->
-    <class name="ggc.core.db.hibernate.DoctorTypeH" table="doc_types">
-        <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>
-        <property name="name" type="string" length="1000"/>
-        <property name="predefined" type="int"/>
-    </class>
-
-    <!--  Doctor -->
-    <class name="ggc.core.db.hibernate.DoctorH" table="doc_doctors">
-        <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>
-        <many-to-one name="doctor_type" class="ggc.core.db.hibernate.DoctorTypeH" lazy="false"/>
-        <property name="name" type="string" length="100"/>
-        <property name="address" type="string" length="2000"/>
-        <property name="phone_gsm" type="string" length="500"/>
-        <property name="phone" type="string" length="500"/>
-        <property name="working_time" type="text"/>
-        <property name="extended" type="text"/>
-        <property name="visible" type="int"/>
-        <property name="person_id" type="int" not-null="true"/>
-        <property name="comment" type="string" length="4000"/>
-    </class>
-
-    <!--  Appointment -->
-    <class name="ggc.core.db.hibernate.AppointmentH" table="doc_appointment">
-        <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>
-        <many-to-one name="doctor" class="ggc.core.db.hibernate.DoctorH" lazy="false"/>
-        <property name="dt_apoint" type="long" not-null="true"/>
-        <property name="apoint_text" type="string" length="1000"/>
-        <property name="extended" type="text"/>
-        <property name="person_id" type="int" not-null="true"/>
-        <property name="comment" type="string" length="4000"/>
-    </class>
-
-
-    <!-- ****************************************** -->
     <!-- ***               Configuration          **** -->
     <!-- ****************************************** -->
 
@@ -83,7 +38,8 @@
         </id>
         <property name="key" column="el_key" type="string" length="44" not-null="true"/>
         <property name="value" column="el_value" type="string" length="255"/>
-        <property name="type" type="int"/>    <!-- 1-string, 2-int, 3=float -->
+        <property name="type" type="int"/>
+        <!-- 1-string, 2-int, 3=float -->
         <property name="description" type="string" length="255"/>
         <property name="person_id" type="int" not-null="true"/>
     </class>
@@ -113,7 +69,8 @@
         </id>
         <property name="key" column="el_key" type="string" length="44" not-null="true"/>
         <property name="value" column="el_value" type="string" length="255"/>
-        <property name="type" type="int"/>    <!-- 1-string, 2-int, 3=float -->
+        <property name="type" type="int"/>
+        <!-- 1-string, 2-int, 3=float -->
         <property name="description" type="string" length="255"/>
     </class>
 

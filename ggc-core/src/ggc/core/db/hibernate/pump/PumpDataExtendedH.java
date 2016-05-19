@@ -1,15 +1,13 @@
 package ggc.core.db.hibernate.pump;
 
-import ggc.core.db.hibernate.GGCHibernateObject;
-
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.atech.db.hibernate.HibernateObject;
+
 /** @author Hibernate CodeGenerator */
-public class PumpDataExtendedH implements Serializable, GGCHibernateObject
+public class PumpDataExtendedH extends HibernateObject
 {
 
     private static final long serialVersionUID = -5755359170220045869L;
@@ -38,6 +36,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     /** nullable persistent field */
     private long changed;
 
+
     /** full constructor 
      * @param dt_info 
      * @param type 
@@ -58,10 +57,12 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
         this.changed = changed;
     }
 
+
     /** default constructor */
     public PumpDataExtendedH()
     {
     }
+
 
     /** minimal constructor 
      * @param dt_info 
@@ -71,6 +72,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
         this.dt_info = dt_info;
         this.person_id = person_id;
     }
+
 
     /**
      * Get Id
@@ -82,6 +84,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
         return this.id;
     }
 
+
     /**
      * Set Id
      * 
@@ -92,6 +95,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
         this.id = id;
     }
 
+
     /**
      * Get Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * @return
@@ -100,6 +104,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     {
         return this.dt_info;
     }
+
 
     /**
      * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
@@ -110,6 +115,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     {
         this.dt_info = dt_info;
     }
+
 
     /**
      * Get Type 
@@ -122,8 +128,6 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     }
 
 
-
-
     /**
      * Set Type
      *  
@@ -133,6 +137,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     {
         this.type = type;
     }
+
 
     /**
      * Get Value 
@@ -144,6 +149,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
         return this.value;
     }
 
+
     /**
      * Set Extended
      *  
@@ -153,6 +159,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     {
         this.value = value;
     }
+
 
     /**
      * Get Extended 
@@ -164,6 +171,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
         return this.extended;
     }
 
+
     /**
      * Set Extended
      *  
@@ -173,6 +181,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     {
         this.extended = extended;
     }
+
 
     /**
      * Get Person Id
@@ -184,6 +193,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
         return this.person_id;
     }
 
+
     /**
      * Set Person Id
      * 
@@ -193,6 +203,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     {
         this.person_id = person_id;
     }
+
 
     /**
      * Get Comment
@@ -204,6 +215,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
         return this.comment;
     }
 
+
     /**
      * Set Comment
      * 
@@ -213,6 +225,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     {
         this.comment = comment;
     }
+
 
     /**
      * Get Changed
@@ -224,6 +237,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
         return this.changed;
     }
 
+
     /**
      * Set Changed
      * 
@@ -233,6 +247,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     {
         this.changed = changed;
     }
+
 
     /**
      * Equals - method to check equalicy of object
@@ -248,6 +263,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
         return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
+
     /**
      * To String
      * 
@@ -258,6 +274,7 @@ public class PumpDataExtendedH implements Serializable, GGCHibernateObject
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
+
 
     /**
      * Create Hash Code

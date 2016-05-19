@@ -25,8 +25,30 @@ import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 
 /**
- * Created by andy on 25.01.16.
+ *  Application:   GGC - GNU Gluco Control
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     GraphViewAbstract
+ *  Description:  GraphView Abstract for GGC graphs
+ *
+ *  Author: andyrozman {andy@atech-software.com}
  */
+
 public abstract class GraphViewAbstract extends AbstractGraphViewAndProcessor
 {
 
@@ -110,9 +132,7 @@ public abstract class GraphViewAbstract extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Get Help Id
-     *
-     * @return Help id
+     * {@inheritDoc}
      */
     public String getHelpId()
     {
@@ -121,9 +141,7 @@ public abstract class GraphViewAbstract extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Get Title (used by GraphViewer)
-     *
-     * @return title as string
+     * {@inheritDoc}
      */
     @Override
     public String getTitle()
@@ -133,9 +151,7 @@ public abstract class GraphViewAbstract extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Get Viewer Dialog Bounds (used by GraphViewer)
-     *
-     * @return Rectangle object
+     * {@inheritDoc}
      */
     @Override
     public Rectangle getViewerDialogBounds()
@@ -146,9 +162,7 @@ public abstract class GraphViewAbstract extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Set Controller Data (Processor)
-     *
-     * @see com.atech.graphics.graphs.AbstractGraphViewAndProcessor#setControllerData(java.lang.Object)
+     * {@inheritDoc}
      */
     @Override
     public void setControllerData(Object data)
@@ -158,9 +172,7 @@ public abstract class GraphViewAbstract extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Get Controler Interface instance
-     *
-     * @return GraphViewControlerInterface instance or null
+     * {@inheritDoc}
      */
     @Override
     public GraphViewControlerInterface getControler()
@@ -170,7 +182,7 @@ public abstract class GraphViewAbstract extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Create Chart Panel
+     * {@inheritDoc}
      */
     @Override
     public void createChartPanel()

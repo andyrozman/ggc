@@ -88,9 +88,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Get Controler Interface instance
-     * 
-     * @return GraphViewControlerInterface instance or null
+     * {@inheritDoc}
      */
     @Override
     public GraphViewControlerInterface getControler()
@@ -100,9 +98,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Get Help Id
-     * 
-     * @return
+     * {@inheritDoc}
      */
     public String getHelpId()
     {
@@ -111,9 +107,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Get Title (used by GraphViewer)
-     * 
-     * @return title as string 
+     * {@inheritDoc}
      */
     @Override
     public String getTitle()
@@ -123,9 +117,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Get Viewer Dialog Bounds (used by GraphViewer)
-     * 
-     * @return Rectangle object
+     * {@inheritDoc}
      */
     @Override
     public Rectangle getViewerDialogBounds()
@@ -141,7 +133,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor
     {
         if (dateHasChanged())
         {
-            LOG.debug("Reload data [graphType={}, from={-3 monhs}, to={}]", GGCGraphType.HbA1c.name(),
+            LOG.debug("Reload data [graphType={}, from={-3 months}, to={}]", GGCGraphType.HbA1c.name(),
                 m_da.getGregorianCalendarAsString(currentCalendar));
 
             hbValues = this.dbRetriever.getHba1cValues(this.currentCalendar);
@@ -165,9 +157,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Get Data Set
-     * 
-     * @return AbstractDataset instance
+     * {@inheritDoc}
      */
     public AbstractDataset getDataSet()
     {
@@ -195,14 +185,14 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Set Plot Properties
-     * 
-     * @param chart JFreeChart instance
+     * {@inheritDoc}
      */
     public void setPlot(JFreeChart chart)
     {
         if (chart == null)
+        {
             return;
+        }
 
         PiePlot plot = (PiePlot) chart.getPlot();
 
@@ -211,8 +201,7 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor
         plot.setForegroundAlpha(0.7f);
         plot.setInteriorGap(0);
         plot.setStartAngle(45);
-        Rotation direction = Rotation.ANTICLOCKWISE;
-        plot.setDirection(direction);
+        plot.setDirection(Rotation.ANTICLOCKWISE);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_0_1"), Color.RED);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_2_3"), Color.BLUE);
         plot.setSectionPaint(m_ic.getMessage("DAYS_WITH_READINGS_4_5"), Color.YELLOW);
@@ -223,19 +212,18 @@ public class GraphViewHbA1c extends AbstractGraphViewAndProcessor
 
 
     /**
-     * Create Chart
+     * {@inheritDoc}
      */
     @Override
     public void createChart()
     {
         chart = ChartFactory.createPieChart3D(null, dataset, true, true, false);
         setPlot(chart);
-
     }
 
 
     /**
-     * Create Chart Panel
+     * {@inheritDoc}
      */
     @Override
     public void createChartPanel()

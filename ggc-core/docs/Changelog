@@ -6,7 +6,7 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
-0.7 [2.2.2016] [Andy]
+0.7 [18.5.2016] [Andy]
 - started implementation of graph v2
 - fixing graph v1 and extending it to be used by pump also
 - extending hba1c
@@ -19,6 +19,8 @@ Newer entries are on top, older on bottom.
 - some refactorings because of ConfigurationManager and GGCProperties
 - refactoring changing Log to Logger instance
 - refactoring use of BG converter
+- working on doctors
+
 
 0.6.1 [2.10.2015] [Andy]
     * fixing graph (bolus display)
