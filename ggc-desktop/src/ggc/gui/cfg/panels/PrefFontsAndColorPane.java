@@ -21,7 +21,7 @@ import ggc.core.util.DataAccess;
 import ggc.gui.cfg.PropertiesDialog;
 import ggc.gui.cfg.SchemeDialog;
 import ggc.gui.cfg.SchemeEDDialog;
-import ggc.gui.graphs.DailyGraphView;
+import ggc.gui.cfg.graph.DailyGraphView;
 
 /**
  *  Application:   GGC - GNU Gluco Control

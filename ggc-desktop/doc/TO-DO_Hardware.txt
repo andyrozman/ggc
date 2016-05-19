@@ -1,0 +1,28 @@
+
+METERS
+======
+
+Meanrini (from GlucoLog)       [10%]
+ARKRAY (from GlucoLog)         [5%]
+OT - IQ Verio                  [-]
+
+
+
+PUMPS
+=====
+
+Minimed                        [70%]
+Tandem                         [1%]
+Minimed - ContourNext          [-]
+
+
+
+
+CGMS
+====
+
+Minimed                        [10%]
+Dexcom 7 ??                    [10%]
+Tandem                         [-]
+
+

@@ -67,16 +67,49 @@ We plan to change version to 1.0, when all entries specified with [1.0] are
 finished (Help for english, Upgrade, Db Tool and Support for multiple persons)
 
 
-Version 0.7  [1.4 - 1.6.2016]
+Version 0.7  [1.4 - 1.7.2016]
 =================================
 
-(1) [EXP:31.12.2015]
+(1)
 Minimed:
-         - decode pump history data - 2.2 [?]  [EXP:31.12.2015]
+         - decode pump history data
 
-(2) [EXP:5.1.2016]
-Startup: - fix startup creation (30%) - 5  [4.1]  [EXP:4.1.2016]
-         - move package  [EXP:5.1.2016]
+(2)
+Startup: - fix startup creation (30%)
+         - move package
+
+(3)
+Graphs (v1): (make them workable for Pen and add them for Pump)
+
+    Pump:
+    - data retrival: - gluco values
+    - menus
+
+(4)
+Release 0.7:  - prepare release
+              - release
+              - upgrade configuration
+              - upgrade server deploy
+
+
+
+
+DONE Version 0.7
+=================
+
+(6)
+Graphs (v2):
+        - CGMS Daily Graph V2
+        - CGMS Weekly Graph
+
+Graphs (v1): (make them workable for Pen and add them for Pump)
+
+    Pen:
+    - cleanup code
+
+
+================================
+
 
 (3) [EXP:20.2.2016]
 Update System v3 [1.0]
@@ -111,19 +144,8 @@ VersionCheck: - on start we check if we have newest version (only if we are onli
                 Fix: UpgradeCheckStatus class, and Statusbar
 
 
-(5)
-Release 0.7:  - prepare release
-              - release
-              - upgrade configuration
-              - upgrade server deploy
 
-(6)
-Graphs (v2):
-        - CGMS Daily Graph V2
-        - CGMS Weekly Graph
-
-
-(7)
+(8)
 GGC Connect Plugin:  - base
                      - about
                      - display version
@@ -135,6 +157,19 @@ GGC Connect Plugin:  - base
                             - export Pump
                      - SiDiary: - export
                                 - import
+
+(9)
+Doctors module: [Required Db Update functionality]
+                - add doctor: - dialog
+                              - working days
+                              + working hours
+                - add scheduling entry: - dialog
+
+(10)
+Meanrini support
+
+(11)
+Arkray support
 
 
 
@@ -195,6 +230,8 @@ Refactoring: - DataAccess -> Languages
              - Pump Profile Editor -> Not available for some pumps
              - Pump -> Manual -> Add -> Profile Selector not available for some Pumps (implement it must be available)
              - Pump Profile (??) - rethinking after Minimed is finished, possible removal
+             - in configuration we use old Graph for display of settings, reimplet with new Graph v1
+               (Atech Graph V1) and then remove all of pre V1 implementation (rumbi's Jchart preview).
 
 
 Tasks:       - configuration of colors for Daily TimeSheet report (hardcoded)
@@ -212,78 +249,6 @@ ReportPluginDefinition:
              - Core    ???
 
 
-
-DONE 0.6.2 - 0.7.0:
-===================
-
-Minimed: - carelink support - 2.3
-         - carelink: read pump data - 2.4    (80 , conversion of some config entries in question)
-         - carelink: read pump history data - 2.5
-
-
-Help      : - prepare for Bob - 1.1
-            - send to Bob  - 1.2
-
-Graph: - Show CGMS in Pump Daily
-       - Show CGMS in Pen Daily
-       - Configuration CGMS for displays
-
-Basal Manager: - for reports
-
-Reports: - Daily Time Sheet:  - II - (I + CGMS graphs) for each day
-                              - I (v1) - Basal Value Chnage (Basals in general)
-                              - I (v2) - important pump events, colors
-
-Refactoring: - CommunicationPortComponent
-             - refactor configuration (added ConfigurationManagerWrapper)
-             - Pump -> Manual -> Add -> Profile Selector not available for some Pumps (show message)
-             - DataAccess (PluginBase) -> BG Conversion
-
-Tasks:  - save window size
-
-
-DevicePluginDefinition:  - implement interface    100%
-                      - CGMS                   100%
-                      - Pump                   100%
-                      - Nutri                  100%
-                      - Meter                  100%
-
-
-DONE 0.6.1  (8.10.2015)
-========================
-
-Plugins: - USB Hid Api integration
-
-Meters: - Ascensia USB support (through HID Api)
-
-BUGS: - Database can not be contacted
-
-Basal Manager:  - for daily Pump statics on main screen
-                - Device config switch
-                - Device selector sort (v1, v2)
-                - Data: - pump data
-                        - pump profile
-                - for daily statistics in day edit -1
-                - graph - 2
-
-Daily graph Pump: - add basal - 3
-Daily graph Pump: - add extended bolus - 4
-
-BUGS: - Daily graph P/I check/fix
-      - Daily graph Pump check/fix
-
-
-Deploy: - Local Maven Repository
-        - checkin
-        - make release
-        - release Maven Repository
-        - web page
-
-
-CANCELED 0.7
-=============
-
-Minimed: - comlink: read history data from device -2.1
 
 
 
@@ -790,7 +755,104 @@ X   - Nutrition Display
      */
 
 
+DONE 0.6.2 - 0.7.0:
+===================
 
+Minimed: - carelink support - 2.3
+         - carelink: read pump data - 2.4    (80 , conversion of some config entries in question)
+         - carelink: read pump history data - 2.5
+
+
+Help      : - prepare for Bob - 1.1
+            - send to Bob  - 1.2
+
+Graph: - Show CGMS in Pump Daily
+       - Show CGMS in Pen Daily
+       - Configuration CGMS for displays
+
+Basal Manager: - for reports
+
+Reports: - Daily Time Sheet:  - II - (I + CGMS graphs) for each day
+                              - I (v1) - Basal Value Chnage (Basals in general)
+                              - I (v2) - important pump events, colors
+
+Refactoring: - CommunicationPortComponent
+             - refactor configuration (added ConfigurationManagerWrapper)
+             - Pump -> Manual -> Add -> Profile Selector not available for some Pumps (show message)
+             - DataAccess (PluginBase) -> BG Conversion
+
+Tasks:  - save window size
+
+
+DevicePluginDefinition:  - implement interface    100%
+                      - CGMS                   100%
+                      - Pump                   100%
+                      - Nutri                  100%
+                      - Meter                  100%
+
+
+Graphs (v1):
+Pen:
++ frequency implement : + other data
+                        + X os
++- move to correct Menu item
++- size load
++- size save (viewer)
++- data retrival (dates check) : + week
+                                + month
+                                + 3 months
+                                + custom
+                                + whole day?
+- hba1c (start date)
++ remove old versions, leave TableLayouts only
+
+Pump:
+- data retrival: - hba1c
+ - hba1c
+
+
+
+DONE 0.6.1  (8.10.2015)
+========================
+
+Plugins: - USB Hid Api integration
+
+Meters: - Ascensia USB support (through HID Api)
+
+BUGS: - Database can not be contacted
+
+Basal Manager:  - for daily Pump statics on main screen
+                - Device config switch
+                - Device selector sort (v1, v2)
+                - Data: - pump data
+                        - pump profile
+                - for daily statistics in day edit -1
+                - graph - 2
+
+Daily graph Pump: - add basal - 3
+Daily graph Pump: - add extended bolus - 4
+
+BUGS: - Daily graph P/I check/fix
+      - Daily graph Pump check/fix
+
+
+Deploy: - Local Maven Repository
+        - checkin
+        - make release
+        - release Maven Repository
+        - web page
+
+
+CANCELED 0.7
+=============
+
+Minimed: - comlink: read history data from device -2.1
+
+
+
+
+
+==============================
 
 
 

@@ -369,4 +369,12 @@ public class StocktakingListDef extends GUIListDefAbstract
         // }
     }
 
+
+    @Override
+    public String getHelpId()
+    {
+        // TODO
+        return null;
+    }
+
 }

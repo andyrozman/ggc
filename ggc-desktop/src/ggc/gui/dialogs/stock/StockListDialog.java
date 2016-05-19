@@ -31,31 +31,20 @@
  */
 package ggc.gui.dialogs.stock;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.core.db.hibernate.DoctorH;
-import ggc.core.util.DataAccess;
-
-import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.core.db.hibernate.doc.DoctorH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -114,6 +103,7 @@ public class StockListDialog extends JDialog implements ActionListener
 
     Font font_normal, font_normal_bold;
 
+
     public StockListDialog()
     {
         setBounds(new Rectangle(0, 0, 700, 500));
@@ -121,6 +111,7 @@ public class StockListDialog extends JDialog implements ActionListener
         initComponents();
         this.setVisible(true);
     }
+
 
     /**
      * Constructor
@@ -146,6 +137,7 @@ public class StockListDialog extends JDialog implements ActionListener
 
         this.setVisible(true);
     }
+
 
     private void initComponents()
     {
@@ -188,17 +180,20 @@ public class StockListDialog extends JDialog implements ActionListener
                      */
             private static final long serialVersionUID = 9088931662879087375L;
 
+
             public int getColumnCount()
             {
                 // TODO Auto-generated method stub
                 return 2;
             }
 
+
             public int getRowCount()
             {
                 active_list.size();
                 return 0;
             }
+
 
             public Object getValueAt(int row, int column)
             {
@@ -211,7 +206,7 @@ public class StockListDialog extends JDialog implements ActionListener
                         return dh.getName();
 
                     case 1:
-                        return m_ic.getMessage(dh.getDoctor_type().getName());
+                        return m_ic.getMessage(dh.getDoctorType().getName());
                 }
 
                 return null;
@@ -243,9 +238,11 @@ public class StockListDialog extends JDialog implements ActionListener
 
     }
 
+
     private void populateList()
     {
     }
+
 
     /**
      * Invoked when an action occurs.
@@ -273,79 +270,73 @@ public class StockListDialog extends JDialog implements ActionListener
 
     }
 
+    // DROP TABLE stock_subtypes;
+    //
+    // CREATE TABLE stock_subtypes
+    // (
+    // id bigint NOT NULL,
+    // stock_type_id bigint,
+    // name character varying(512),
+    // description character varying(2000),
+    // content_pkg bigint,
+    // usage_type int,
+    // usage_min int,
+    // usage_max int,
+    // active boolean,
+    // extended text,
+    // comment character varying(2000),
+    // CONSTRAINT stock_subtypes_pkey PRIMARY KEY (id)
+    // )
+    // WITH (
+    // OIDS=FALSE
+    // );
+    // ALTER TABLE stock_subtypes
+    // OWNER TO ggc;
 
+    // -- Table: stock_stocks
+    //
+    // DROP TABLE stock_stocks;
+    //
+    // CREATE TABLE stock_stocks
+    // (
+    // id bigint NOT NULL,
+    // stock_subtype_id bigint,
+    // stocktaking_id bigint,
+    // amount bigint,
+    // "location" character varying(1000),
+    //
+    // extended text,
+    // person_id integer NOT NULL,
+    // comment character varying(2000),
+    // CONSTRAINT stock_stocks_pkey PRIMARY KEY (id)
+    // )
+    // WITH (
+    // OIDS=FALSE
+    // );
+    // ALTER TABLE stock_stocks
+    // OWNER TO ggc;
 
-//    DROP TABLE stock_subtypes;
-//
-//    CREATE TABLE stock_subtypes
-//        (
-//                id bigint NOT NULL,
-//                stock_type_id bigint,
-//                name character varying(512),
-//    description character varying(2000),
-//    content_pkg bigint,
-//    usage_type int,
-//    usage_min int,
-//    usage_max int,
-//    active boolean,
-//    extended text,
-//    comment character varying(2000),
-//    CONSTRAINT stock_subtypes_pkey PRIMARY KEY (id)
-//    )
-//    WITH (
-//            OIDS=FALSE
-//    );
-//    ALTER TABLE stock_subtypes
-//    OWNER TO ggc;
+    // -- Table: stock_stocktaking
 
-
-
-//    -- Table: stock_stocks
-//
-//    DROP TABLE stock_stocks;
-//
-//    CREATE TABLE stock_stocks
-//        (
-//                id bigint NOT NULL,
-//                stock_subtype_id bigint,
-//                stocktaking_id bigint,
-//                amount bigint,
-//                "location" character varying(1000),
-//
-//    extended text,
-//    person_id integer NOT NULL,
-//    comment character varying(2000),
-//    CONSTRAINT stock_stocks_pkey PRIMARY KEY (id)
-//    )
-//    WITH (
-//            OIDS=FALSE
-//    );
-//    ALTER TABLE stock_stocks
-//    OWNER TO ggc;
-
-
-//    -- Table: stock_stocktaking
-
-//    --DROP TABLE stock_stocktaking;
-//
-//    CREATE TABLE stock_stocktaking
-//        (
-//                id bigint NOT NULL,
-//                dt_stocktaking bigint,
-//                description character varying(2000),
-//    amount bigint,
-//
-//
-//    extended text,
-//    person_id integer NOT NULL,
-//    comment character varying(2000),
-//    CONSTRAINT stock_stocktaking_pkey PRIMARY KEY (id)
-//    )
-//    WITH (
-//            OIDS=FALSE
-//    );
-//    ALTER TABLE stock_stocks
-//    OWNER TO ggc;
-
+    // --DROP TABLE stock_stocktaking;
+    //
+    // CREATE TABLE stock_stocktaking
+    // (
+    // id bigint NOT NULL,
+    // dt_stocktaking bigint,
+    // description character varying(2000),
+    // amount bigint,
+    //
+    //
+    // extended text,
+    // person_id integer NOT NULL,
+    // comment character varying(2000),
+    // CONSTRAINT stock_stocktaking_pkey PRIMARY KEY (id)
+    // )
+    // WITH (
+    // OIDS=FALSE
+    // );
+    // ALTER TABLE stock_stocks
+    // OWNER TO ggc;
 
 }

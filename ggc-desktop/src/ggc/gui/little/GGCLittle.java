@@ -27,7 +27,6 @@ import ggc.core.data.DailyValuesRow;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.gui.dialogs.AboutGGCDialog;
-import ggc.gui.dialogs.graphs.DailyGraphDialog;
 import ggc.gui.little.panels.DailyStatsPanelL;
 import ggc.gui.little.panels.MainLittlePanel;
 import ggc.gui.pen.DailyRowDialog;
@@ -554,8 +553,9 @@ public class GGCLittle extends JFrame implements WindowListener, ActionListener
             }
             else if (command.equals("show_graph"))
             {
-                DailyGraphDialog dgd = new DailyGraphDialog(getMyParent(), dailyStats.getDayData());
-                dgd.setDailyValues(dailyStats.getDayData());
+                // DailyGraphDialog dgd = new DailyGraphDialog(getMyParent(),
+                // dailyStats.getDayData());
+                // dgd.setDailyValues(dailyStats.getDayData());
             }
             else if (command.equals("read_meter"))
             {

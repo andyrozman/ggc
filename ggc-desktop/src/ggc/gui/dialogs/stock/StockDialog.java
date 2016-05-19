@@ -1,32 +1,15 @@
 package ggc.gui.dialogs.stock;
 
-import com.atech.graphics.dialogs.StandardDialogForObject;
-import com.atech.utils.ATSwingUtils;
-import ggc.core.data.DailyValues;
-import ggc.core.data.DailyValuesRow;
-import ggc.core.db.hibernate.StockH;
-import ggc.core.db.hibernate.StockSubTypeH;
+import java.awt.*;
 
+import javax.swing.*;
+
+import com.atech.graphics.dialogs.StandardDialogForObject;
+import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.db.hibernate.StockH;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import com.atech.graphics.components.DateTimeComponent;
-import com.atech.i18n.I18nControlAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -56,7 +39,6 @@ import com.atech.i18n.I18nControlAbstract;
 // fix this
 // for defining stock entry
 
-
 // REUSED
 
 /**
@@ -65,6 +47,7 @@ import com.atech.i18n.I18nControlAbstract;
  * @author andy
  *
  */
+// FIXME addComponent
 
 public class StockDialog extends StandardDialogForObject
 {
@@ -77,10 +60,7 @@ public class StockDialog extends StandardDialogForObject
     // edit value
     // edit stock
 
-
-    boolean editValue;
-
-
+    // s boolean editValue;
 
     // OLD
     private DataAccess m_da = DataAccess.getInstance();
@@ -93,9 +73,7 @@ public class StockDialog extends StandardDialogForObject
 
     // static AddRowFrame singleton = null;
 
-
     JLabel label_title = new JLabel();
-
 
     boolean in_process;
     boolean debug = false;
@@ -114,14 +92,13 @@ public class StockDialog extends StandardDialogForObject
     private JLabel lblStockType;
     private JLabel lblStockSubType;
     private JButton btnSelectstocktype;
-    private JButton btnHelp;
+    // private JButton btnHelp;
 
 
     public StockDialog(JDialog dialog)
     {
         super(dialog, DataAccess.getInstance());
     }
-
 
 
     public StockDialog(JDialog dialog, StockH subTypeObject, boolean editValue)
@@ -134,12 +111,12 @@ public class StockDialog extends StandardDialogForObject
     }
 
 
-
     @Override
     public void loadData(Object dataObject)
     {
         // editing (changes value only)
     }
+
 
     @Override
     public boolean saveData()
@@ -148,6 +125,7 @@ public class StockDialog extends StandardDialogForObject
 
         return false;
     }
+
 
     public void initGUI()
     {
@@ -239,21 +217,8 @@ public class StockDialog extends StandardDialogForObject
     }
 
 
-
     @Override
     public String getHelpId()
-    {
-        return null;
-    }
-
-    @Override
-    public JButton getHelpButton()
-    {
-        return null;
-    }
-
-    @Override
-    public Component getComponent()
     {
         return null;
     }

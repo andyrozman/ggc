@@ -9,8 +9,8 @@ import java.util.GregorianCalendar;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.misc.statistics.StatisticsCollection;
 import com.atech.misc.statistics.StatisticsItem;
@@ -54,7 +54,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
     GregorianCalendar startDate = null; // new Date(endDate.getTime() -
                                         // (518400000L)); //now - 6 days in
                                         // millisec
-    private static Log log = LogFactory.getLog(StatisticsInfoPanel.class);
+    private static Logger LOG = LoggerFactory.getLogger(StatisticsInfoPanel.class);
 
     JLabel lblAvgBG, lblBGReadings, lblBGReadingsDay;
     JLabel lblSumBU, lblBUDay, lblCountBU, lblAvgBU, lblBUCountDay;
@@ -196,7 +196,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
 
         if (m_da.getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE)
         {
-            log.debug("Statistics - Pen/Injection Mode");
+            LOG.debug("Statistics - Pen/Injection Mode");
 
             CollectionValues sV = new CollectionValues(startDate, endDate);
 
@@ -224,7 +224,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         }
         else
         {
-            log.debug("Statistics - Pump Mode");
+            LOG.debug("Statistics - Pump Mode");
 
             GregorianCalendar[] gcs = new GregorianCalendar[2];
             gcs[0] = startDate;
@@ -288,7 +288,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
 
             if (basalStatistics == null && pumpStatistics == null)
             {
-                log.error("Nothing returned, error communicating with Pump plugin.");
+                LOG.error("Nothing returned, error communicating with Pump plugin.");
             }
 
         }

@@ -28,31 +28,20 @@
  */
 package ggc.gui.dialogs;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.core.db.hibernate.DoctorH;
-import ggc.core.util.DataAccess;
-
-import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.core.db.hibernate.doc.DoctorH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -112,6 +101,7 @@ public class AppointmentsDialog extends JDialog implements ActionListener
 
     Font font_normal, font_normal_bold;
 
+
     /**
      * Constructor
      * 
@@ -144,6 +134,7 @@ public class AppointmentsDialog extends JDialog implements ActionListener
 
         this.setVisible(true);
     }
+
 
     private void init()
     {
@@ -178,16 +169,19 @@ public class AppointmentsDialog extends JDialog implements ActionListener
                      */
             private static final long serialVersionUID = -7078981917311146976L;
 
+
             public int getColumnCount()
             {
                 return 2;
             }
+
 
             public int getRowCount()
             {
                 active_list.size();
                 return 0;
             }
+
 
             public Object getValueAt(int row, int column)
             {
@@ -199,7 +193,7 @@ public class AppointmentsDialog extends JDialog implements ActionListener
                         return dh.getName();
 
                     case 1:
-                        return m_ic.getMessage(dh.getDoctor_type().getName());
+                        return m_ic.getMessage(dh.getDoctorType().getName());
                 }
 
                 return null;
@@ -231,9 +225,11 @@ public class AppointmentsDialog extends JDialog implements ActionListener
 
     }
 
+
     private void populateList()
     {
     }
+
 
     /**
      * Invoked when an action occurs.

@@ -35,12 +35,6 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
 
     String notFoundString;
 
-    // private JLabel lblMeter;
-    // private JLabel lblPump;
-    // private JLabel lblCgms;
-    // private JLabel lblNutri;
-    // private JLabel lblConnect;
-
 
     /**
      * Constructor
@@ -56,36 +50,17 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
     private void init()
     {
         double sizes[][] = { { 10, 0.45, 10, TableLayout.FILL, 10 },
-                             { 0.02, 0.19, 0.19, 0.19, 0.19, 0.19, TableLayout.FILL }, };
+                             { 0.02, 0.19, 0.19, 0.19, 0.19, 0.19, TableLayout.FILL }, }; // 0.19
 
         initWithTableLayoutAndDisplayPairs(sizes, //
             "NUTRITION_PLUGIN", //
             "METERS_PLUGIN", //
             "PUMPS_PLUGIN", //
-            "CGMS_PLUGIN", //
-            "CONNECT_PLUGIN");
+            "CGMS_PLUGIN" // , //
+        // "CONNECT_PLUGIN"
+        );
 
         notFoundString = m_ic.getMessage("STATUS_NOT_INSTALLED");
-
-        // setLayout(new TableLayout(sizes));
-        //
-        // add(new JLabel(m_ic.getMessage("NUTRITION_PLUGIN") + ":"), "1, 1");
-        // add(this.lblNutri = new JLabel("N/A"), "3, 1");
-        //
-        // add(new JLabel(m_ic.getMessage("METERS_PLUGIN") + ":"), "1, 2");
-        // add(this.lblMeter = new JLabel("N/A"), "3, 2");
-        //
-        // add(new JLabel(m_ic.getMessage("PUMPS_PLUGIN") + ":"), "1, 3");
-        // add(this.lblPump = new JLabel("N/A"), "3, 3");
-        //
-        // add(new JLabel(m_ic.getMessage("CGMS_PLUGIN") + ":",
-        // SwingConstants.LEADING), "1, 4");
-        // add(this.lblCgms = new JLabel("N/A"), "3, 4");
-        //
-        // add(new JLabel(m_ic.getMessage("CONNECT_PLUGIN") + ":",
-        // SwingConstants.LEADING), "1, 5");
-        // add(this.lblConnect = new JLabel("N/A"), "3, 5");
-
     }
 
 
@@ -99,32 +74,7 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
         setPluginStatus(GGCPluginType.PumpToolPlugin, "PUMPS_PLUGIN");
         setPluginStatus(GGCPluginType.CGMSToolPlugin, "CGMS_PLUGIN");
         setPluginStatus(GGCPluginType.NutritionToolPlugin, "NUTRITION_PLUGIN");
-        setPluginStatus(GGCPluginType.ConnectToolPlugin, "CONNECT_PLUGIN");
-
-        // if (m_da.isPluginAvailable(GGCPluginType.MeterToolPlugin))
-        // {
-        // lblMeter.setText(m_da.getPlugIn(GGCPluginType.MeterToolPlugin).getShortStatus());
-        // }
-        //
-        // if (m_da.isPluginAvailable(GGCPluginType.PumpToolPlugin))
-        // {
-        // lblPump.setText(m_da.getPlugIn(GGCPluginType.PumpToolPlugin).getShortStatus());
-        // }
-        //
-        // if (m_da.isPluginAvailable(GGCPluginType.CGMSToolPlugin))
-        // {
-        // lblCgms.setText(m_da.getPlugIn(GGCPluginType.CGMSToolPlugin).getShortStatus());
-        // }
-        //
-        // if (m_da.isPluginAvailable(GGCPluginType.NutritionToolPlugin))
-        // {
-        // this.lblNutri.setText(m_da.getPlugIn(GGCPluginType.NutritionToolPlugin).getShortStatus());
-        // }
-        //
-        // if (m_da.isPluginAvailable(GGCPluginType.ConnectToolPlugin))
-        // {
-        // this.lblConnect.setText(m_da.getPlugIn(GGCPluginType.ConnectToolPlugin).getShortStatus());
-        // }
+        // setPluginStatus(GGCPluginType.ConnectToolPlugin, "CONNECT_PLUGIN");
     }
 
 

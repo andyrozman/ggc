@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
 
 import javax.swing.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.dialogs.TransferDialog;
@@ -52,10 +52,9 @@ public class DailyRowMealsDialog extends TransferDialog /* JDialog */implements 
 
     private static final long serialVersionUID = 6763016271693781911L;
 
-    private static Log log = LogFactory.getLog(DailyRowMealsDialog.class);
+    private static Logger LOG = LoggerFactory.getLogger(DailyRowMealsDialog.class);
+
     private I18nControlAbstract m_ic = null;
-    // private DataAccess dataAccess = DataAccess.getInstance();
-    // private GGCProperties props = dataAccess.getSettings();
 
     JLabel label_title;
     JDecimalTextField ftf_ch;
@@ -344,7 +343,7 @@ public class DailyRowMealsDialog extends TransferDialog /* JDialog */implements 
             }
             catch (Exception ex)
             {
-                log.error("Error on parse: [token=" + t + ",exception=" + ex + "]", ex);
+                LOG.error("Error on parse: [token=" + t + ",exception=" + ex + "]", ex);
                 // System.out.println("Ex: " + ex);
             }
         }
@@ -380,7 +379,7 @@ public class DailyRowMealsDialog extends TransferDialog /* JDialog */implements 
         }
         else
         {
-            log.error("DailyRowMealsDialog::unknown command: " + action);
+            LOG.error("DailyRowMealsDialog::unknown command: " + action);
             // System.out.println("DailyRowMealsDialog::unknown command: " +
             // action);
         }

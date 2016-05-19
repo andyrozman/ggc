@@ -9,7 +9,6 @@ import javax.swing.*;
 
 import ggc.core.data.DailyValues;
 import ggc.core.util.DataAccess;
-import ggc.gui.dialogs.graphs.DailyGraphDialog;
 import ggc.gui.little.GGCLittle;
 import ggc.gui.main.panels.AbstractInfoPanel;
 import ggc.gui.main.panels.InfoPanelType;
@@ -248,8 +247,8 @@ public class DailyStatsControlsL extends AbstractInfoPanel implements ActionList
         }
         else if (command.equals("show_daily_graph"))
         {
-            DailyGraphDialog dgd = new DailyGraphDialog(m_mlp.m_little);
-            dgd.setDailyValues(getDayData());
+            // DailyGraphDialog dgd = new DailyGraphDialog(m_mlp.m_little);
+            // dgd.setDailyValues(getDayData());
         }
         else
         {

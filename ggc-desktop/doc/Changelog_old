@@ -729,7 +729,7 @@ Newer entries are on top, older on bottom.
     * Added loading of Hibernate (in seperate thread) and show loading in MainFrame 
     * More usage of DataAccess class, added several functions
     * Add daily values tables in hibernate
-    * Added doctors, doctor_type and appointments tables in hibernate
+    * Added doctors, doctorType and appointments tables in hibernate
     * Implemented methods and classes for working with daily values in Hibernate
     * Removed all database support except hibernate
     * Changed DailyValues and DailyValuesRow

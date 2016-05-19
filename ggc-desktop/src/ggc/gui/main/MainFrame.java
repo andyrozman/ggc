@@ -15,10 +15,11 @@ import javax.help.HelpSet;
 import javax.help.HelpSetException;
 import javax.swing.*;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
+import com.atech.graphics.components.DialogSizePersistInterface;
 import com.atech.graphics.dialogs.guilist.GUIListDialog;
 import com.atech.graphics.graphs.GraphViewer;
 import com.atech.help.HelpContext;
@@ -44,7 +45,10 @@ import ggc.core.util.DataAccess;
 import ggc.core.util.RefreshInfo;
 import ggc.core.util.upgrade.GGCUpgradeApplicationContext;
 import ggc.gui.cfg.PropertiesDialog;
-import ggc.gui.dialogs.*;
+import ggc.gui.dialogs.AboutGGCDialog;
+import ggc.gui.dialogs.PrintingDialog;
+import ggc.gui.dialogs.doctor.DoctorListDef;
+import ggc.gui.dialogs.doctor.appointment.AppointmentListDef;
 import ggc.gui.dialogs.stock.def.StockListDef;
 import ggc.gui.main.panels.MainWindowInfoPanel;
 import ggc.gui.pen.DailyStatsDialog;
@@ -77,7 +81,7 @@ import ggc.shared.ratio.RatioExtendedDialog;
  *          Andy {andy@atech-software.com}  
  */
 
-public class MainFrame extends JFrame implements EventObserverInterface, ActionListener
+public class MainFrame extends JFrame implements EventObserverInterface, ActionListener, DialogSizePersistInterface
 {
 
     private static final long serialVersionUID = -8971779470148201332L;
@@ -91,18 +95,9 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
      * Developer version 
      */
     public static boolean developer_version = false;
-    private static Log log = LogFactory.getLog(MainFrame.class);
+    private static Logger LOG = LoggerFactory.getLogger(MainFrame.class);
 
     private GraphV1DbRetrieverCore graphV1DbRetrieverCore;
-
-
-    /**
-     * Static definitions (Look and Feel)
-     */
-    static
-    {
-        MainFrame.setLookAndFeel();
-    }
 
     /**
      * Status panels
@@ -121,15 +116,23 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
      * Tool Bars
      */
     private Hashtable<GGCToolbarType, JToolBar> toolbars = null;
-    private DataAccess m_da = null;
-    private I18nControlAbstract m_ic = null;
+    private DataAccess dataAccess = null;
+    private I18nControlAbstract i18Control = null;
     private Map<String, JMenu> menus = null;
     private Map<String, JMenuItem> actions = null;
     private Map<GGCToolbarType, Map<String, JButton>> toolbarItems = new HashMap<GGCToolbarType, Map<String, JButton>>();
-    // private Hashtable<String, JMenuItem> toolbar_pen_items = null;
-    // private Hashtable<String, JMenuItem> toolbar_pump_items = null;
+
     private GGCToolbarType current_toolbar = GGCToolbarType.None;
-    private String next_version = "0.7";
+    private String nextVersion = "0.8";
+
+
+    /**
+     * Static definitions (Look and Feel)
+     */
+    static
+    {
+        MainFrame.setLookAndFeel();
+    }
 
 
     /**
@@ -140,13 +143,13 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
      */
     public MainFrame(String title, boolean developer_version)
     {
-        m_da = DataAccess.createInstance(this);
+        dataAccess = DataAccess.createInstance(this);
 
-        m_ic = m_da.getI18nControlInstance();
+        i18Control = dataAccess.getI18nControlInstance();
 
-        m_da.addComponent(this);
+        dataAccess.addComponent(this);
 
-        m_da.setDeveloperMode(developer_version);
+        dataAccess.setDeveloperMode(developer_version);
 
         statusPanel = new StatusBar(this);
 
@@ -163,11 +166,19 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         setTitle(title_full);
 
-        this.setIconImage(ATSwingUtils.getImageIcon_22x22("diabetesbluecircle.png", this, m_da).getImage());
+        this.setIconImage(ATSwingUtils.getImageIcon_22x22("diabetesbluecircle.png", this, dataAccess).getImage());
 
         setJMenuBar(menuBar);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new CloseListener());
+        addWindowListener(new WindowAdapter()
+        {
+
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                close();
+            }
+        });
 
         helpInit();
 
@@ -175,16 +186,16 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         createMenus();
         createToolBars();
         this.setSoftwareMode();
-        m_da.addObserver(DataAccess.OBSERVABLE_STATUS, this);
-        m_da.addObserver(DataAccess.OBSERVABLE_DB, this);
+        dataAccess.addObserver(DataAccess.OBSERVABLE_STATUS, this);
+        dataAccess.addObserver(DataAccess.OBSERVABLE_DB, this);
 
         // getContentPane().add(this.toolbars.get("TOOLBAR_PEN"),
         // BorderLayout.NORTH);
         getContentPane().add(statusPanel, BorderLayout.SOUTH);
 
-        m_da.startDb();
+        dataAccess.startDb();
 
-        statusPanel.setStatusMessage(m_ic.getMessage("INIT"));
+        statusPanel.setStatusMessage(i18Control.getMessage("INIT"));
 
         // information panel
         informationPanel = new MainWindowInfoPanel();
@@ -192,7 +203,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         setMenusByDbLoad(StatusBar.DB_STOPPED);
 
-        m_da.startToObserve();
+        dataAccess.startToObserve();
         this.setVisible(true);
 
     }
@@ -219,6 +230,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
                     s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
                     UIManager.setLookAndFeel(s_skinlf);
+
+                    setExceptionsForLookAndFeel(data[1], s_skinlf);
                 }
                 else
                 {
@@ -236,6 +249,35 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     }
 
+    private static Map<String, Object> skinLfOverrides;
+
+
+    public static void setExceptionsForLookAndFeel(String skinName, SkinLookAndFeel skinLookAndFeel)
+    {
+        System.out.println("Skin Name: " + skinName);
+
+        if (skinName.equals("modernthemepack_orig.zip"))
+        {
+            skinLfOverrides = new HashMap<String, Object>();
+
+            skinLfOverrides.put("JTableHeader.backgroundColor", new Color(102, 178, 255));
+            skinLfOverrides.put("JTableHeader.borderColor", Color.gray);
+
+            DataAccess.setSkinLfOverrides(skinLfOverrides);
+        }
+
+        // for (Object keyo : skinLookAndFeel.getDefaults().keySet())
+        // {
+        // String key = (String) keyo;
+        //
+        // // if (key.contains("Table"))
+        // {
+        // System.out.println("Key2: " + key);
+        // }
+        // }
+
+    }
+
 
     private void setSoftwareMode()
     {
@@ -250,7 +292,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
      */
     public String getSoftwareMode()
     {
-        return " [" + m_ic.getMessage(m_da.getSoftwareModeDescription()) + "]";
+        return " [" + i18Control.getMessage(dataAccess.getSoftwareModeDescription()) + "]";
     }
 
 
@@ -277,7 +319,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         boolean changed = false;
 
-        if (m_da.isPumpMode())
+        if (dataAccess.isPumpMode())
         {
             if (this.current_toolbar != GGCToolbarType.Pump)
             {
@@ -386,7 +428,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         // help menu
         menux = this.createMenu("MN_HELP", null);
-        menux.add(m_da.getHelpContext().getHelpItem());
+        menux.add(dataAccess.getHelpContext().getHelpItem());
         menux.addSeparator();
         this.createMenuItem(menux, "MN_CHECK_FOR_UPDATE", "MN_CHECK_FOR_UPDATE_DESC", "hlp_check_update", null);
         menux.addSeparator();
@@ -429,9 +471,9 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         for (GGCPluginType key : keys)
         {
-            if (m_da.isPluginAvailable(key))
+            if (dataAccess.isPluginAvailable(key))
             {
-                PlugInClient pic = m_da.getPlugIn(key);
+                PlugInClient pic = dataAccess.getPlugIn(key);
 
                 if (pic.getPlugInMainMenu() != null)
                 {
@@ -469,7 +511,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private JMenuItem createTextMenuItem(String text)
     {
-        JMenuItem mi = new JMenuItem(m_ic.getMessageWithoutMnemonic(text));
+        JMenuItem mi = new JMenuItem(i18Control.getMessageWithoutMnemonic(text));
         mi.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
 
         return mi;
@@ -488,13 +530,13 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         // this.menus.get("MENU_PRINT").add(mi);
 
         // reports menu
-        // for (Enumeration<String> en = m_da.getPlugins().keys();
+        // for (Enumeration<String> en = dataAccess.getPlugins().keys();
         // en.hasMoreElements();)
         for (GGCPluginType pluginType : keys)
         {
             // String key = en.nextElement();
 
-            PlugInClient pic = m_da.getPlugIn(pluginType);
+            PlugInClient pic = dataAccess.getPlugIn(pluginType);
 
             if (pic.getPlugInReportMenus() != null)
             {
@@ -522,13 +564,13 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         // this.menus.get("MENU_PRINT").add(mi);
 
         // reports menu
-        // for (Enumeration<String> en = m_da.getPlugins().keys();
+        // for (Enumeration<String> en = dataAccess.getPlugins().keys();
         // en.hasMoreElements();)
         for (GGCPluginType pluginType : keys)
         {
             // String key = en.nextElement();
 
-            PlugInClient pic = m_da.getPlugIn(pluginType);
+            PlugInClient pic = dataAccess.getPlugIn(pluginType);
 
             if (pic.getPlugInGraphMenus() != null)
             {
@@ -560,8 +602,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private JMenu createMenu(String name, String tool_tip)
     {
-        JMenu item = new JMenu(m_ic.getMessageWithoutMnemonic(name));
-        item.setMnemonic(m_ic.getMnemonic(name));
+        JMenu item = new JMenu(i18Control.getMessageWithoutMnemonic(name));
+        item.setMnemonic(i18Control.getMnemonic(name));
 
         if (tool_tip != null)
         {
@@ -580,12 +622,12 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private JMenu createMenu(JMenu parent, String name, String tool_tip)
     {
-        JMenu item = new JMenu(m_ic.getMessageWithoutMnemonic(name));
-        item.setMnemonic(m_ic.getMnemonic(name));
+        JMenu item = new JMenu(i18Control.getMessageWithoutMnemonic(name));
+        item.setMnemonic(i18Control.getMnemonic(name));
 
         if (tool_tip != null)
         {
-            item.setToolTipText(m_ic.getMessage(tool_tip));
+            item.setToolTipText(i18Control.getMessage(tool_tip));
         }
 
         parent.add(item);
@@ -703,7 +745,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     /**
      * Set Toolbar by Db Load
      *
-     * @param status
+     * @param status status type
      */
     public void setToolbarByDbLoad(int status)
     {
@@ -740,37 +782,26 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             setToolBarItemEnabled("tools_pref", true);
             loadInitialSize();
         }
-        else if (status == StatusBar.DB_LOADED)
-        {
-            // this.toolbar_items.get("food_meals").setEnabled(true);
-        }
+        // else // if (status == StatusBar.DB_LOADED)
+        // {
+        //
+        // }
 
     }
 
 
     private void loadInitialSize()
     {
-        this.setSize(this.m_da.getConfigurationManagerWrapper().getMainWindowSize());
-
-        // this.addComponentListener(new ComponentAdapter()
-        // {
-        //
-        // public void componentResized(ComponentEvent e)
-        // {
-        // JFrame frame = (JFrame) e.getSource();
-        // // FIXME
-        // m_da.getConfigurationManagerWrapper().setMainWindowSize(frame.getSize());
-        // m_da.getConfigurationManagerWrapper().saveConfig();
-        // }
-        //
-        // });
+        dataAccess.loadWindowSize(this);
     }
 
 
     private void saveInitialSize()
     {
-        m_da.getConfigurationManagerWrapper().setMainWindowSize(this.getSize());
-        m_da.getConfigurationManagerWrapper().saveConfig();
+        dataAccess.saveWindowSize(this);
+
+        // dataAccess.getConfigurationManagerWrapper().setMainWindowSize(this.getSize());
+        dataAccess.getConfigurationManagerWrapper().saveConfig();
     }
 
 
@@ -791,11 +822,11 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     {
 
         JButton button = new JButton();
-        button.setName(m_ic.getMessageWithoutMnemonic(name));
+        button.setName(i18Control.getMessageWithoutMnemonic(name));
 
         if (toolTip != null)
         {
-            button.setToolTipText(m_ic.getMessage(toolTip));
+            button.setToolTipText(i18Control.getMessage(toolTip));
         }
 
         if (actionCommand != null)
@@ -805,7 +836,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         if (iconSmall != null)
         {
-            button.setIcon(ATSwingUtils.getImageIcon(iconSmall, 28, 28, this, m_da));
+            button.setIcon(ATSwingUtils.getImageIcon(iconSmall, 28, 28, this, dataAccess));
         }
 
         button.addActionListener(this);
@@ -828,18 +859,18 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void createMenuItem(JMenu menu, String name, String toolTip, String actionCommand, String iconSmall)
     {
-        JMenuItem item = new JMenuItem(m_ic.getMessageWithoutMnemonic(name));
+        JMenuItem item = new JMenuItem(i18Control.getMessageWithoutMnemonic(name));
         // item.setName(i18nControl.getMessageWithoutMnemonic(name));
 
-        if (m_ic.hasMnemonic(name))
+        if (i18Control.hasMnemonic(name))
         {
-            char ch = m_ic.getMnemonic(name);
+            char ch = i18Control.getMnemonic(name);
             item.setAccelerator(KeyStroke.getKeyStroke(ch, Event.CTRL_MASK));
         }
 
         if (toolTip != null)
         {
-            item.setToolTipText(m_ic.getMessage(toolTip));
+            item.setToolTipText(i18Control.getMessage(toolTip));
         }
 
         if (actionCommand != null)
@@ -850,7 +881,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         if (iconSmall != null)
         {
-            item.setIcon(ATSwingUtils.getImageIcon(iconSmall, 15, 15, this, m_da));
+            item.setIcon(ATSwingUtils.getImageIcon(iconSmall, 15, 15, this, dataAccess));
         }
 
         if (menu != null)
@@ -947,19 +978,19 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void helpInit()
     {
-        log.debug("JavaHelp - START");
+        LOG.debug("JavaHelp - START");
 
-        HelpContext hc = m_da.getHelpContext();
+        HelpContext hc = dataAccess.getHelpContext();
 
-        log.debug("JavaHelp - HelpContext: " + hc);
+        LOG.debug("JavaHelp - HelpContext: " + hc);
 
-        JMenuItem helpItem = new JMenuItem(m_ic.getMessage("HELP") + "...");
+        JMenuItem helpItem = new JMenuItem(i18Control.getMessage("HELP") + "...");
         helpItem.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
         hc.setHelpItem(helpItem);
 
-        String mainHelpSetName = "/" + m_da.getLanguageManager().getHelpSet();
+        String mainHelpSetName = "/" + dataAccess.getLanguageManager().getHelpSet();
 
-        log.debug("JavaHelp - MainHelpSetName: " + mainHelpSetName);
+        LOG.debug("JavaHelp - MainHelpSetName: " + mainHelpSetName);
 
         hc.setMainHelpSetName(mainHelpSetName);
 
@@ -975,14 +1006,14 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             }
             catch (HelpSetException ex)
             {
-                log.error("HelpSet " + mainHelpSetName + " could not be opened.", ex);
+                LOG.error("HelpSet " + mainHelpSetName + " could not be opened.", ex);
             }
 
             HelpBroker main_help_broker = null;
 
             if (main_help_set != null)
             {
-                log.debug("JavaHelp - Main Help Set present, creating broker.");
+                LOG.debug("JavaHelp - Main Help Set present, creating broker.");
                 main_help_broker = main_help_set.createHelpBroker();
             }
 
@@ -1008,20 +1039,21 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             CSH.trackCSEvents();
         }
 
-        log.debug("JavaHelp - END");
+        LOG.debug("JavaHelp - END");
     }
 
 
     private void close()
     {
-        saveInitialSize();
-        // m_da.getSettings().save();
 
-        if (m_da != null)
+        saveInitialSize();
+        // dataAccess.getSettings().save();
+
+        if (dataAccess != null)
         {
-            if (m_da.getDb() != null)
+            if (dataAccess.getDb() != null)
             {
-                m_da.getDb().closeDb();
+                dataAccess.getDb().closeDb();
             }
 
             DataAccess.deleteInstance();
@@ -1031,9 +1063,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         System.exit(0);
     }
 
-    // FIXME
-    private static String nextVersion = "0.7";
-
 
     public void actionPerformed(ActionEvent e)
     {
@@ -1042,19 +1071,19 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
         if (command.startsWith("meters_"))
         {
-            m_da.getPlugIn(GGCPluginType.MeterToolPlugin).actionPerformed(e);
+            dataAccess.getPlugIn(GGCPluginType.MeterToolPlugin).actionPerformed(e);
         }
         else if (command.startsWith("pumps_") || command.startsWith("report_print_pump"))
         {
-            m_da.getPlugIn(GGCPluginType.PumpToolPlugin).actionPerformed(e);
+            dataAccess.getPlugIn(GGCPluginType.PumpToolPlugin).actionPerformed(e);
         }
         else if (command.startsWith("cgms_"))
         {
-            m_da.getPlugIn(GGCPluginType.CGMSToolPlugin).actionPerformed(e);
+            dataAccess.getPlugIn(GGCPluginType.CGMSToolPlugin).actionPerformed(e);
         }
         else if (command.startsWith("food_"))
         {
-            m_da.getPlugIn(GGCPluginType.NutritionToolPlugin).actionPerformed(e);
+            dataAccess.getPlugIn(GGCPluginType.NutritionToolPlugin).actionPerformed(e);
         }
         else if (command.equals("file_quit"))
         {
@@ -1062,7 +1091,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         }
         else if (command.equals("pen_view_daily"))
         {
-            new DailyStatsDialog(m_da);
+            new DailyStatsDialog(dataAccess);
         }
         else if (command.equals("pen_graph_course"))
         {
@@ -1076,17 +1105,13 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         {
             startGraphViewer(new GraphViewFrequency(null, graphV1DbRetrieverCore));
         }
-        else if (command.equals("view_hba1c_old"))
-        {
-            new HbA1cDialogOld(m_da);
-        }
         else if (command.equals("pen_view_hba1c"))
         {
-            new HbA1cDialog(m_da, graphV1DbRetrieverCore);
+            new HbA1cDialog(dataAccess, graphV1DbRetrieverCore);
         }
         else if (command.equals("tools_pref"))
         {
-            PropertiesDialog pd = new PropertiesDialog(m_da);
+            PropertiesDialog pd = new PropertiesDialog(dataAccess);
 
             if (pd.actionSuccessful())
             {
@@ -1100,13 +1125,14 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         }
         else if (command.equals("hlp_check_update"))
         {
-            UpgradeDialog ud = new UpgradeDialog(MainFrame.this, new GGCUpgradeApplicationContext(m_da), m_da);
+            UpgradeDialog ud = new UpgradeDialog(MainFrame.this, new GGCUpgradeApplicationContext(dataAccess),
+                    dataAccess);
             ud.enableHelp("GGC_Tools_Update");
             ud.showDialog();
         }
         else if (command.equals("hlp_help"))
         {
-            m_da.getHelpContext().getDisplayHelpFromSourceInstance().actionPerformed(e);
+            dataAccess.getHelpContext().getDisplayHelpFromSourceInstance().actionPerformed(e);
         }
         else if (command.equals("ratio_base"))
         {
@@ -1116,24 +1142,18 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         {
             new RatioExtendedDialog(MainFrame.this);
         }
-
-        /*
-         * else if (command.equals("hlp_check")) { new
-         * VersionChecker().checkForUpdate(); }
-         */
-
         else if (command.equals("tools_db_backup"))
         {
-            new BackupDialog(MainFrame.this, m_da);
+            new BackupDialog(MainFrame.this, dataAccess);
         }
         else if (command.equals("tools_db_restore"))
         {
-            RestoreGGCSelectorDialog rsd = new RestoreGGCSelectorDialog(MainFrame.this, m_da);
+            RestoreGGCSelectorDialog rsd = new RestoreGGCSelectorDialog(MainFrame.this, dataAccess);
             rsd.showDialog();
 
             // update main panels
             DataAccess.getInstance().loadDailySettings(new GregorianCalendar(), true);
-            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
+            dataAccess.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
         }
         else if (command.equals("report_pdf_simple"))
         {
@@ -1143,54 +1163,25 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         {
             new PrintingDialog(MainFrame.this, 2, PrintingDialog.PRINT_DIALOG_YEAR_MONTH_OPTION);
         }
-        /*
-         * else if (command.equals("report_foodmenu_simple"))
-         * {
-         * new PrintingDialog(MainFrame.this, 1,
-         * PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
-         * }
-         * else if (command.equals("report_foodmenu_ext1"))
-         * {
-         * new PrintingDialog(MainFrame.this, 2,
-         * PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
-         * }
-         * else if (command.equals("report_foodmenu_ext2"))
-         * {
-         * new PrintingDialog(MainFrame.this, 3,
-         * PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
-         * }
-         */
-        /*
-         * else if (command.equals("report_foodmenu_ext3"))
-         * {
-         * // disabled for now, until it's implement to fully function
-         * new PrintingDialog(MainFrame.this, 4,
-         * PrintingDialog.PRINT_DIALOG_RANGE_DAY_OPTION);
-         * }
-         */
-        /*
-         * else if (command.equals("view_ratio"))
-         * {
-         * new RatioDialog(getMyParent());
-         * }
-         */
         else if (command.equals("doc_docs"))
         {
+            // FIXME
             if (MainFrame.developer_version)
             {
-                new DoctorsDialog(MainFrame.this);
+                new GUIListDialog(MainFrame.this, new DoctorListDef(), dataAccess);
             }
             else
             {
                 featureNotImplemented(command, nextVersion);
             }
-
         }
         else if (command.equals("doc_appoint"))
         {
             if (MainFrame.developer_version)
             {
-                new AppointmentsDialog(MainFrame.this);
+                new GUIListDialog(MainFrame.this, new AppointmentListDef(), dataAccess);
+
+                // new AppointmentsDialog(MainFrame.this);
             }
             else
             {
@@ -1198,8 +1189,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             }
 
         }
-        else // if ((command.equals("report_pdf_extended")) ||
-            if (command.equals("file_login") || command.equals("report_foodmenu_ext3") || command.equals("file_logout"))
+        else if (command.equals("file_login") || command.equals("file_logout"))
         {
             featureNotImplemented(command, nextVersion);
         }
@@ -1212,7 +1202,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         {
             if (MainFrame.developer_version)
             {
-                new GUIListDialog(MainFrame.this, new StockListDef(), m_da);
+                new GUIListDialog(MainFrame.this, new StockListDef(), dataAccess);
             }
             else
             {
@@ -1264,25 +1254,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             // BolusHelper bh = new BolusHelper(MainFrame.this);
             // featureNotImplemented(command, "0.6");
         }
-        else if (command.equals("file_login"))
-        {
-            // ggc.gui.ReadMeterDialog rm = new
-            // ggc.gui.ReadMeterDialog(MainFrame.this);
-
-            // System.out.println("In login");
-            /*
-             * try
-             * {
-             * throw new Exception("Test Exception");
-             * }
-             * catch (Exception ex)
-             * {
-             * System.out.println("we falled into exception");
-             * dataAccess.createErrorDialog("MainFrame", "", ex,
-             * "Exception in mainframe.");
-             * }
-             */
-        }
         else
         {
             System.out.println("Unknown Command: " + command);
@@ -1293,15 +1264,15 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void startGraphViewer(GraphViewAbstract graphViewAbstract)
     {
-        Dimension size = m_da.getConfigurationManagerWrapper().getGraphViewerSize();
+        Dimension size = dataAccess.getConfigurationManagerWrapper().getGraphViewerSize();
 
         graphViewAbstract.setInitialSize(size);
 
-        GraphViewer graphViewer = new GraphViewer(graphViewAbstract, m_da, MainFrame.this, true);
+        GraphViewer graphViewer = new GraphViewer(graphViewAbstract, dataAccess, MainFrame.this, true);
 
         size = graphViewer.getSize();
 
-        m_da.getConfigurationManagerWrapper().setGraphViewerSize(size);
+        dataAccess.getConfigurationManagerWrapper().setGraphViewerSize(size);
     }
 
 
@@ -1412,13 +1383,13 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void featureNotImplemented(String cmd, String version)
     {
-        String text = m_ic.getMessage("FEATURE");
+        String text = i18Control.getMessage("FEATURE");
 
         text += " '" + this.actions.get(cmd).getName() + "' ";
-        text += String.format(m_ic.getMessage("IMPLEMENTED_VERSION"), version);
+        text += String.format(i18Control.getMessage("IMPLEMENTED_VERSION"), version);
         text += "!";
 
-        JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"),
+        JOptionPane.showMessageDialog(MainFrame.this, text, i18Control.getMessage("INFORMATION"),
             JOptionPane.INFORMATION_MESSAGE);
 
     }
@@ -1426,13 +1397,13 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void featureNotImplementedDescription(String desc, String version)
     {
-        String text = m_ic.getMessage("FEATURE");
+        String text = i18Control.getMessage("FEATURE");
 
         text += " '" + desc + "' ";
-        text += String.format(m_ic.getMessage("IMPLEMENTED_VERSION"), version);
+        text += String.format(i18Control.getMessage("IMPLEMENTED_VERSION"), version);
         text += "!";
 
-        JOptionPane.showMessageDialog(MainFrame.this, text, m_ic.getMessage("INFORMATION"),
+        JOptionPane.showMessageDialog(MainFrame.this, text, i18Control.getMessage("INFORMATION"),
             JOptionPane.INFORMATION_MESSAGE);
 
     }
@@ -1472,7 +1443,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             // Integer i = (Integer)arg;
             setMenusByDbLoad(i.intValue());
 
-            if (m_da.getDbLoadingStatus() >= GGCDbLoader.DB_DATA_BASE)
+            if (dataAccess.getDbLoadingStatus() >= GGCDbLoader.DB_DATA_BASE)
             {
                 ;
             }
@@ -1487,12 +1458,12 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         else if (arg instanceof Exception)
         {
             Exception ex = (Exception) arg;
-            log.error("Error connecting to Database: " + ex.getMessage(), ex);
+            LOG.error("Error connecting to Database: " + ex.getMessage(), ex);
 
-            m_da.createErrorDialog("Main", "Opening Db", ex, getDbSettingsAndCause(false), //
+            dataAccess.createErrorDialog("Main", "Opening Db", ex, getDbSettingsAndCause(false), //
                 getDbSettingsAndCause(true), //
-                m_ic.getMessage("DB_PROBLEM_NOT_CONNECTED_SOLUTION"), //
-                m_ic.getMessage("DB_PROBLEM_NOT_CONNECTED_SOLUTION_TOOLTIP"));
+                i18Control.getMessage("DB_PROBLEM_NOT_CONNECTED_SOLUTION"), //
+                i18Control.getMessage("DB_PROBLEM_NOT_CONNECTED_SOLUTION_TOOLTIP"));
 
             System.exit(1);
         }
@@ -1501,13 +1472,13 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private String getDbSettingsAndCause(boolean forToolTip)
     {
-        HibernateConfiguration hc = m_da.getDb().getHibernateConfiguration();
+        HibernateConfiguration hc = dataAccess.getDb().getHibernateConfiguration();
 
         StringBuilder sb = new StringBuilder();
 
         if (!forToolTip)
         {
-            return String.format(m_ic.getMessage("DB_PROBLEM_NOT_CONNECTED"), hc.db_num, hc.db_conn_name,
+            return String.format(i18Control.getMessage("DB_PROBLEM_NOT_CONNECTED"), hc.db_num, hc.db_conn_name,
                 hc.db_driver_class);
         }
         else
@@ -1525,7 +1496,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             // sb.append("<br>Password: " + hc.db_conn_password);
             // sb.append("<br>Dialect: " + hc.db_hib_dialect);
 
-            return String.format(m_ic.getMessage("DB_PROBLEM_NOT_CONNECTED_TOOLTIP"), hc.db_num, hc.db_conn_name,
+            return String.format(i18Control.getMessage("DB_PROBLEM_NOT_CONNECTED_TOOLTIP"), hc.db_num, hc.db_conn_name,
                 hc.db_driver_class, hc.db_conn_url, hc.db_conn_username, hc.db_conn_password, hc.db_hib_dialect);
         }
         //
@@ -1545,13 +1516,37 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private JMenu getPlugInMenu(GGCPluginType name)
     {
-        if (m_da.isPluginAvailable(name))
+        if (dataAccess.isPluginAvailable(name))
         {
-            PlugInClient pic = m_da.getPlugIn(name);
+            PlugInClient pic = dataAccess.getPlugIn(name);
             return pic.getPlugInMainMenu();
         }
         else
             return null;
+    }
+
+
+    public String getSettingKey()
+    {
+        return "MAIN_WINDOW_SIZE";
+    }
+
+
+    public Dimension getMinimalSize()
+    {
+        return new Dimension(800, 600);
+    }
+
+
+    public Dimension getDefaultSize()
+    {
+        return new Dimension(800, 600);
+    }
+
+
+    public Window getContainer()
+    {
+        return this;
     }
 
     enum GGCToolbarType
@@ -1574,16 +1569,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         public static List<GGCToolbarType> getActiveValues()
         {
             return activeValues;
-        }
-    }
-
-    private class CloseListener extends WindowAdapter
-    {
-
-        @Override
-        public void windowClosing(WindowEvent e)
-        {
-            close();
         }
     }
 

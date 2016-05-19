@@ -335,9 +335,9 @@ public class StockTypeListDef extends GUIListDefAbstract
         // "STOCKS_TABLE_VIEW_DESC",
         // "table_view.png"));
 
-        this.def_parameters = new String[2];
-        this.def_parameters[0] = "Test 1";
-        this.def_parameters[1] = "Test 2";
+        this.defaultParameters = new String[2];
+        this.defaultParameters[0] = "Test 1";
+        this.defaultParameters[1] = "Test 2";
 
         loadData();
 
@@ -433,6 +433,14 @@ public class StockTypeListDef extends GUIListDefAbstract
                 loadData();
             }
         }
+    }
+
+
+    @Override
+    public String getHelpId()
+    {
+        // TODO
+        return null;
     }
 
 }

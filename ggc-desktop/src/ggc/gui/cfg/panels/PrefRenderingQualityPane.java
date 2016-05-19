@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.gui.cfg.PropertiesDialog;
-import ggc.gui.graphs.DailyGraphView;
+import ggc.gui.cfg.graph.DailyGraphView;
 
 /**
  *  Application:   GGC - GNU Gluco Control

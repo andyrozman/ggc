@@ -43,8 +43,8 @@ import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atech.graphics.calendar.CalendarEvent;
 import com.atech.graphics.calendar.CalendarListener;
@@ -93,7 +93,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
 
     private static final long serialVersionUID = 8762133987606084209L;
 
-    private static Log log = LogFactory.getLog(DailyStatsDialog.class);
+    private static Logger LOG = LoggerFactory.getLogger(DailyStatsDialog.class);
 
     // private I18nControl i18nControl = I18nControl.getInstance();
     private DataAccess m_da = null; // DataAccess.getInstance();
@@ -310,6 +310,12 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
                 }
             }
         });
+
+        // JTableUtil.reconfigureTableHeader(table, new Color(102, 178, 255),
+        // null, Color.gray);
+
+        DataAccess.reSkinifyComponent(table);
+
         // MouseListener ml = new MouseListener();
 
         resultsPane = new JScrollPane(table);
@@ -497,7 +503,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
             catch (Exception ex)
             {
                 System.out.println("DailyStatsDialog:Action:Delete Row: " + ex);
-                log.error("Action::Delete Row::Exception: " + ex, ex);
+                LOG.error("Action::Delete Row::Exception: " + ex, ex);
             }
         }
         else if (command.equals("close"))
