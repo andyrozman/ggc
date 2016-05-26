@@ -153,6 +153,7 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
     static List<DeviceDefinition> allDevices;
     static List<DeviceDefinition> supportedDevices;
 
+
     static
     {
         allDevices = new ArrayList<DeviceDefinition>();

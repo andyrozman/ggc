@@ -52,7 +52,7 @@ import ggc.plugin.report.PluginReportDefinition;
 public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
 {
 
-    String PLUGIN_VERSION = "1.4.0";
+    String PLUGIN_VERSION = "1.5.1";
     String PLUGIN_NAME = "GGC CGMS Plugin";
 
     CGMSReportDefinition reportsCGMSDefinition;
@@ -183,8 +183,8 @@ public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<BaseListEntry> weblister_items = new ArrayList<BaseListEntry>();
 
-        weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html",
-                BaseListEntry.STATUS_NOTPLANNED));
+        weblister_items
+                .add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html", BaseListEntry.STATUS_NOTPLANNED));
         weblister_items.add(new BaseListEntry("Animas", "/cgms/animas.html", BaseListEntry.STATUS_DONE));
         weblister_items.add(new BaseListEntry("Dexcom", "/cgms/dexcom.html", BaseListEntry.STATUS_PART_IMPLEMENTED));
         weblister_items.add(new BaseListEntry("Minimed", "/cgms/minimed.html", BaseListEntry.STATUS_PLANNED));
