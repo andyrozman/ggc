@@ -160,7 +160,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     // @Override
     // public void createPlugInAboutContext()
     // {
-    // I18nControlAbstract ic = getI18nControlInstance();
+    // I18nControlAbstract i18nControl = getI18nControlInstance();
     //
     // // about_title = i18nControlAbstract.getMessage("METER_PLUGIN_ABOUT");
     // about_image_name = "/icons/about_meter.jpg";
@@ -182,7 +182,8 @@ public class DataAccessMeter extends DataAccessPlugInBase
     // plugin_libraries = lst_libs;
     //
     // ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
-    // CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
+    // CreditsGroup cg = new
+    // CreditsGroup(i18nControl.getMessage("DEVELOPERS_DESC"));
     // cg.addCreditsEntry(new CreditsEntry("Aleksander Rozman (Andy)",
     // "andy@atech-software.com",
     // "Full framework and support for Ascensia, Roche, LifeScan devices"));
@@ -191,7 +192,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     // cg.addCreditsEntry(new CreditsEntry("Ophir Setter",
     // "ophir.setter@gmail.com", "Support for Freestyle Meters"));
     // lst_credits.add(cg);
-    // cg = new CreditsGroup(ic.getMessage("HELPERS_DESC"));
+    // cg = new CreditsGroup(i18nControl.getMessage("HELPERS_DESC"));
     // cg.addCreditsEntry(new CreditsEntry("Rafael Ziherl (RAF)", "", "Supplied
     // hardware for Roche development"));
     // lst_credits.add(cg);
@@ -202,7 +203,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     // ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
     //
     // FeaturesGroup fg = new
-    // FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
+    // FeaturesGroup(i18nControl.getMessage("IMPLEMENTED_FEATURES"));
     // fg.addFeaturesEntry(new FeaturesEntry("Base Meter Tools Framework"));
     // fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
     // fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
@@ -214,7 +215,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     //
     // lst_features.add(fg);
     //
-    // fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
+    // fg = new FeaturesGroup(i18nControl.getMessage("SUPPORTED_DEVICES"));
     // fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer (except Contour USB
     // and Didget)"));
     // fg.addFeaturesEntry(new FeaturesEntry("Accu-Chek/Roche: All supported by
@@ -228,7 +229,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     //
     // // lst_features.add(fg);
     //
-    // fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
+    // fg = new FeaturesGroup(i18nControl.getMessage("PLANNED_DEVICES"));
     // fg.addFeaturesEntry(new FeaturesEntry("LifeScan: Ultra2 (in 2015)"));
     // fg.addFeaturesEntry(new FeaturesEntry("Ascensia/Bayer: Usb devices"));
     //
@@ -448,14 +449,6 @@ public class DataAccessMeter extends DataAccessPlugInBase
         }
 
         return (displayInterfaceType == MeterDisplayInterfaceType.Extended);
-    }
-
-
-    @Override
-    public void initAllObjects()
-    {
-        // TODO Auto-generated method stub
-
     }
 
 

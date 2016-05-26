@@ -14,6 +14,7 @@ import ggc.meter.device.ascensia.AscensiaUsbMeterHandler;
 import ggc.meter.util.GGCMeterICRunner;
 import ggc.plugin.defs.DevicePluginDefinitionAbstract;
 import ggc.plugin.device.mgr.DeviceHandlerManager;
+import ggc.plugin.graph.PluginGraphDefinition;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.report.PluginReportDefinition;
 
@@ -23,7 +24,7 @@ import ggc.plugin.report.PluginReportDefinition;
 public class MeterPluginDefinition extends DevicePluginDefinitionAbstract
 {
 
-    String PLUGIN_VERSION = "2.2.1";
+    String PLUGIN_VERSION = "2.4.1";
     String PLUGIN_NAME = "GGC Meter Plugin";
 
 
@@ -154,23 +155,23 @@ public class MeterPluginDefinition extends DevicePluginDefinitionAbstract
     @Override
     public List<BaseListEntry> getWebListerItems()
     {
-        List<BaseListEntry> weblister_items = new ArrayList<BaseListEntry>();
+        List<BaseListEntry> weblisterItems = new ArrayList<BaseListEntry>();
 
-        weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/meters/abbott.html", 4));
-        weblister_items.add(new BaseListEntry("Arkray USA (formerly Hypoguard)", "/meters/arkray.html", 5));
-        weblister_items.add(new BaseListEntry("Bayer Diagnostics", "/meters/bayer.html", 1));
-        weblister_items.add(new BaseListEntry("Diabetic Supply of Suncoast", "/meters/dsos.html", 5));
-        weblister_items.add(new BaseListEntry("Diagnostic Devices", "/meters/prodigy.html", 5));
-        weblister_items.add(new BaseListEntry("HealthPia America", "/meters/healthpia.html", 5));
-        weblister_items.add(new BaseListEntry("Home Diagnostics", "/meters/home_diagnostics.html", 5));
-        weblister_items.add(new BaseListEntry("Lifescan", "/meters/lifescan.html", 4));
-        weblister_items.add(new BaseListEntry("Nova Biomedical", "/meters/nova_biomedical.html", 5));
-        weblister_items.add(new BaseListEntry("Roche Diagnostics", "/meters/roche.html", 2));
-        weblister_items.add(new BaseListEntry("Sanvita", "/meters/sanvita.html", 5));
-        weblister_items.add(new BaseListEntry("U.S. Diagnostics", "/meters/us_diagnostics.html", 5));
-        weblister_items.add(new BaseListEntry("WaveSense", "/meters/wavesense.html", 5));
+        weblisterItems.add(new BaseListEntry("Abbott Diabetes Care", "/meters/abbott.html", 4));
+        weblisterItems.add(new BaseListEntry("Arkray USA (formerly Hypoguard)", "/meters/arkray.html", 5));
+        weblisterItems.add(new BaseListEntry("Bayer Diagnostics", "/meters/bayer.html", 1));
+        weblisterItems.add(new BaseListEntry("Diabetic Supply of Suncoast", "/meters/dsos.html", 5));
+        weblisterItems.add(new BaseListEntry("Diagnostic Devices", "/meters/prodigy.html", 5));
+        weblisterItems.add(new BaseListEntry("HealthPia America", "/meters/healthpia.html", 5));
+        weblisterItems.add(new BaseListEntry("Home Diagnostics", "/meters/home_diagnostics.html", 5));
+        weblisterItems.add(new BaseListEntry("Lifescan", "/meters/lifescan.html", 4));
+        weblisterItems.add(new BaseListEntry("Nova Biomedical", "/meters/nova_biomedical.html", 5));
+        weblisterItems.add(new BaseListEntry("Roche Diagnostics", "/meters/roche.html", 2));
+        weblisterItems.add(new BaseListEntry("Sanvita", "/meters/sanvita.html", 5));
+        weblisterItems.add(new BaseListEntry("U.S. Diagnostics", "/meters/us_diagnostics.html", 5));
+        weblisterItems.add(new BaseListEntry("WaveSense", "/meters/wavesense.html", 5));
 
-        return weblister_items;
+        return weblisterItems;
     }
 
 
@@ -184,7 +185,23 @@ public class MeterPluginDefinition extends DevicePluginDefinitionAbstract
     @Override
     public PluginReportDefinition getReportsDefinition()
     {
+        // no reports for this plugin
         return null;
+    }
+
+
+    @Override
+    public PluginGraphDefinition getGraphsDefinition()
+    {
+        // no graphs for this plugin
+        return null;
+    }
+
+
+    @Override
+    public String getPluginActionsPrefix()
+    {
+        return "meters_";
     }
 
 

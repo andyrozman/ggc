@@ -265,7 +265,8 @@ public class MeterDevicesIds
      * Abbott Devices (FreeStyle and Medisense) 
      */
 
-    /** * */
+    /**
+     * * */
     public static final int METER_ABBOTT_FREESTYLE = 40001; // Not tested yet
     /** * */
     public static final int METER_ABBOTT_FREESTYLE_LITE = 40002; // NS
@@ -275,14 +276,25 @@ public class MeterDevicesIds
     public static final int METER_ABBOTT_FREESTYLE_FREEDOM_LITE = 40004; // NS
     /** * */
     public static final int METER_ABBOTT_FREESTYLE_FLASH = 40005; // NS
-    /** * */
-    public static final int METER_ABBOTT_PRECISION_XTRA = 40006; // Not tested
-                                                                 // yet
-    /** * */
-    public static final int METER_ABBOTT_OPTIUM_XCEED = 40007; // Not tested yet
+    public static final int METER_ABBOTT_PRECISION_XTRA = 40006;
+    public static final int METER_ABBOTT_OPTIUM_XCEED = 40007;
+
+    /**
+     * Menarini Devices
+     */
 
     /** * */
-    public static final int METER_MENARINI_GLUCOFIX_MIO = 50001; // Not tested
-                                                                 // yet
+    public static final int METER_MENARINI_GLUCOFIX_MIO = 50001;
+    public static final int METER_MENARINI_GLUCOFIX_MIO_PLUS = 50002;
+
+
+
+
+
+
+    /**
+     * Arkray Devices
+     */
+
 
 }

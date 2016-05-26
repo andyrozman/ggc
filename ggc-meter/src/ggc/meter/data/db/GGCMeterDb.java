@@ -1,9 +1,6 @@
 package ggc.meter.data.db;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.*;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -13,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateDb;
+import com.atech.graphics.graphs.v2.data.GraphDefinitionDto;
+import com.atech.graphics.graphs.v2.data.GraphTimeDataCollection;
 
 import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
@@ -83,9 +82,9 @@ public class GGCMeterDb extends PluginDb
 
             Criteria criteria = this.getSession().createCriteria(DayValueH.class);
             criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
-            criteria.add(
-                Restrictions.or(Restrictions.or(Restrictions.gt("bg", 0), Restrictions.like("extended", "%URINE%")),
-                    Restrictions.gt("ch", 0.0f)));
+            criteria.add(Restrictions.or(
+                Restrictions.or(Restrictions.gt("bg", 0), Restrictions.like("extended", "%URINE%")),
+                Restrictions.gt("ch", 0.0f)));
             criteria.add(Restrictions.like("extended", "%" + m_da.getSourceDevice() + "%"));
             criteria.setProjection(Projections.rowCount());
             in = (Integer) criteria.list().get(0);
@@ -124,12 +123,11 @@ public class GGCMeterDb extends PluginDb
 
             LOG.debug("getMeterValues() - Process");
 
-            Query q = this.getSession()
-                    .createQuery(" SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + //
-                            " WHERE ((dv.bg>0) OR (dv.extended LIKE '%URINE%') OR (dv.ch>0)) " + //
-                            " AND person_id=" + m_da.getCurrentUserId() + //
-                            " AND dv.extended like '%" + m_da.getSourceDevice() + "%' " + //
-                            " ORDER BY dv.dt_info ASC");
+            Query q = this.getSession().createQuery(" SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + //
+                    " WHERE ((dv.bg>0) OR (dv.extended LIKE '%URINE%') OR (dv.ch>0)) " + //
+                    " AND person_id=" + m_da.getCurrentUserId() + //
+                    " AND dv.extended like '%" + m_da.getSourceDevice() + "%' " + //
+                    " ORDER BY dv.dt_info ASC");
 
             // System.out.println("Found elements: " + q.list().size());
 
@@ -280,4 +278,10 @@ public class GGCMeterDb extends PluginDb
         return sb.substring(0, sb.length() - 2) + ")";
     }
 
+
+    public GraphTimeDataCollection getGraphTimeData(GregorianCalendar gcFrom, GregorianCalendar gcTill,
+            GraphDefinitionDto definitionDto)
+    {
+        return null;
+    }
 }

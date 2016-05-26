@@ -40,6 +40,15 @@ public enum MeterDeviceDefinition implements DeviceDefinition
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
             2000, MeterDisplayInterfaceType.Simple),
 
+    // FIXME - just for testing
+    // MenariniGlucoMenReady(100011, "Menarini", null, //
+    // "instructions", null, DeviceImplementationStatus.Planned,
+    // DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler,
+    // //
+    // DevicePortParameterType.SimpleParameter,
+    // DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
+    // 200, MeterDisplayInterfaceType.Simple), //
+
     ;
 
     // Contour Next EZ, Contour Next Link 2.4, Didget, Contour XT ?

@@ -24,6 +24,7 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.gui.AboutBaseDialog;
 import ggc.plugin.gui.DeviceInstructionsDialog;
 import ggc.plugin.list.BaseListDialog;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,8 +55,9 @@ import ggc.plugin.list.BaseListDialog;
 public class MeterPlugInServer extends DevicePlugInServer implements ActionListener
 {
 
-    DataAccessMeter da_local; // = DataAccessMeter.getInstance();
     private static final Logger LOG = LoggerFactory.getLogger(MeterPlugInServer.class);
+
+    DataAccessMeter dataAccessMeter;
 
     /**
      * Return Object: Selected Device with parameters
@@ -66,8 +68,8 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 
 
     /**
-    * Constructor
-    */
+     * {@inheritDoc}
+     */
     public MeterPlugInServer()
     {
         super();
@@ -75,21 +77,20 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 
 
     /**
-     * Constructor
-     * 
-     * @param cont
-     * @param selected_lang
-     * @param da
+     * {@inheritDoc}
      */
     public MeterPlugInServer(Container cont, String selected_lang, ATDataAccessLMAbstract da)
     {
         super(cont, selected_lang, da);
 
-        da_local = DataAccessMeter.createInstance(getPluginDefinition(da));
-        da_local.addComponent(cont);
+        dataAccessMeter = DataAccessMeter.createInstance(getPluginDefinition(da));
+        dataAccessMeter.addComponent(cont);
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     private MeterPluginDefinition getPluginDefinition(ATDataAccessLMAbstract da)
     {
         return new MeterPluginDefinition(da.getLanguageManager());
@@ -97,9 +98,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 
 
     /**
-     * Get Name of plugin
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public String getName()
@@ -109,42 +108,39 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 
 
     /**
-     * Get Version of plugin
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public String getVersion()
     {
-        return da_local.getPlugInVersion();
+        return dataAccessMeter.getPlugInVersion();
     }
 
 
     /**
-     * Get Information When will it be implemented
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
-    public String getWhenWillBeImplemented()
+    public DataAccessPlugInBase getPlugInDataAccess()
     {
-        return "0.4";
+        return this.dataAccessMeter;
     }
 
 
     /**
-     * Init PlugIn which needs to be implemented [PlugIn Framework v1/v2] 
+     * {@inheritDoc}
      */
     @Override
     public void initPlugIn()
     {
         ic = dataAccess.getI18nControlInstance();
 
-        if (da_local == null)
+        if (dataAccessMeter == null)
         {
             try
             {
-                da_local = DataAccessMeter.createInstance(getPluginDefinition((ATDataAccessLMAbstract) dataAccess));
+                dataAccessMeter = DataAccessMeter
+                        .createInstance(getPluginDefinition((ATDataAccessLMAbstract) dataAccess));
             }
             catch (Exception ex)
             {
@@ -152,17 +148,14 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
             }
         }
 
-        this.initPlugInServer((DataAccess) dataAccess, da_local);
+        this.initPlugInServer((DataAccess) dataAccess, dataAccessMeter);
 
         this.backup_restore_enabled = false;
     }
 
 
     /**
-     * Get Return Object [PlugIn Framework v1/v2]
-     * 
-     * @param ret_obj_id
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public Object getReturnObject(int ret_obj_id)
@@ -198,11 +191,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 
 
     /**
-     * Get Return Object
-     * 
-     * @param ret_obj_id Return Object Id
-     * @param parameters Parameters
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public Object getReturnObject(int ret_obj_id, Object[] parameters)
@@ -212,9 +201,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 
 
     /**
-     * Get Backup Objects (if available) [PlugIn Framework v2]
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public BackupRestoreCollection getBackupObjects()
@@ -225,13 +212,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 
 
     /**
-     * Get PlugIn Main Menu [PlugIn Framework v2]
-     * 
-     * This is new way to handle everything, previously we used to pass ActionListener items through
-     * plugin framework, but in new way, we will use this one. We just give main application menu,
-     * which contains all items accessible through menus.
-     *  
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public JMenu getPlugInMainMenu()
@@ -242,18 +223,20 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         JMenuItem mi = ATSwingUtils.createMenuItem(menu_meter, "MN_METERS_READ", "MN_METERS_READ_DESC", "meters_read",
             this, null, this.ic_local, DataAccessMeter.getInstance(), parent);
 
-        // if (DownloadSupportType.isOptionSet(da_local.getDownloadStatus(),
+        // if
+        // (DownloadSupportType.isOptionSet(dataAccessMeter.getDownloadStatus(),
         // DownloadSupportType.DownloadData))
 
-        mi.setEnabled(DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadData));
+        mi.setEnabled(DownloadSupportType.isOptionSet(dataAccessMeter.getDownloadStatus(),
+            DownloadSupportType.DownloadData));
 
         menus[0] = mi;
 
         mi = ATSwingUtils.createMenuItem(menu_meter, "MN_METERS_READ_FILE", "MN_METERS_READ_FILE_DESC",
             "meters_read_file", this, null, this.ic_local, DataAccessMeter.getInstance(), parent);
 
-        mi.setEnabled(
-            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
+        mi.setEnabled(DownloadSupportType.isOptionSet(dataAccessMeter.getDownloadStatus(),
+            DownloadSupportType.DownloadDataFile));
 
         menus[1] = mi;
 
@@ -278,24 +261,23 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     public void refreshMenusAfterConfig()
     {
-        menus[0].setEnabled(
-            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadData));
-        menus[1].setEnabled(
-            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
+        menus[0].setEnabled(DownloadSupportType.isOptionSet(dataAccessMeter.getDownloadStatus(),
+            DownloadSupportType.DownloadData));
+        menus[1].setEnabled(DownloadSupportType.isOptionSet(dataAccessMeter.getDownloadStatus(),
+            DownloadSupportType.DownloadDataFile));
     }
 
 
     /**
-     * Get PlugIn Print Menus [PlugIn Framework v2] 
-     * 
-     * Since printing is also PlugIn specific we need to add Printing jobs to application.
-     *  
-     * @return
+     * {@inheritDoc}
      */
     @Override
-    public JMenu[] getPlugInPrintMenus()
+    public JMenu[] getPlugInReportMenus()
     {
         // there are no print menus for this plugin
         return null;
@@ -303,27 +285,39 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
 
 
     /**
-     * Action Performed 
-     * 
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     * {@inheritDoc}
+     */
+    @Override
+    public JMenu[] getPlugInGraphMenus()
+    {
+        // no graph menus for this plugin
+        return null;
+    }
+
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void actionPerformed(ActionEvent ae)
     {
         String command = ae.getActionCommand();
 
+        // FIXME-Andy
+        // if (executeBasePluginAction(command, this.dataAccessMeter))
+
         if (command.equals("meters_read"))
         {
-            new DeviceInstructionsDialog(this.parent, da_local, this, DeviceDataHandler.TRANSFER_READ_DATA);
+            new DeviceInstructionsDialog(this.parent, dataAccessMeter, this, DeviceDataHandler.TRANSFER_READ_DATA);
             this.client.executeReturnAction(MeterPlugInServer.RETURN_ACTION_READ_DATA);
         }
         else if (command.equals("meters_list"))
         {
-            new BaseListDialog((JFrame) parent, da_local);
+            new BaseListDialog((JFrame) parent, dataAccessMeter);
         }
         else if (command.equals("meters_about"))
         {
-            new AboutBaseDialog((JFrame) parent, da_local);
+            new AboutBaseDialog((JFrame) parent, dataAccessMeter);
         }
         else if (command.equals("meters_read_file"))
         {
@@ -334,7 +328,7 @@ public class MeterPlugInServer extends DevicePlugInServer implements ActionListe
         }
         else if (command.equals("meters_config"))
         {
-            new DeviceConfigurationDialog((JFrame) parent, da_local);
+            new DeviceConfigurationDialog((JFrame) parent, dataAccessMeter);
             refreshMenusAfterConfig();
             this.client.executeReturnAction(MeterPlugInServer.RETURN_ACTION_CONFIG);
         }

@@ -29,14 +29,14 @@
 
 package ggc.meter.test;
 
-import ggc.meter.device.onetouch.OneTouchUltraSmart;
-import ggc.plugin.output.ConsoleOutputWriter;
-import ggc.plugin.protocol.SerialProtocol;
-
-import java.util.Vector;
+import java.util.List;
 
 import com.atech.utils.TimerThread;
 import com.atech.utils.data.TimeZoneUtil;
+
+import ggc.meter.device.onetouch.OneTouchUltraSmart;
+import ggc.plugin.output.ConsoleOutputWriter;
+import ggc.plugin.protocol.SerialProtocol;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -69,6 +69,7 @@ public class MeterConsoleTesterAlex // extends JFrame
 
     TimerThread thread;
 
+
     /**
      * Constructor
      * 
@@ -95,6 +96,7 @@ public class MeterConsoleTesterAlex // extends JFrame
 
     }
 
+
     /**
      * @param portName
      * @throws Exception
@@ -115,6 +117,7 @@ public class MeterConsoleTesterAlex // extends JFrame
 
     }
 
+
     /**
      * Display Serial Ports
      */
@@ -122,7 +125,7 @@ public class MeterConsoleTesterAlex // extends JFrame
     {
         try
         {
-            Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
+            List<String> vct = SerialProtocol.getAllAvailablePortsString();
 
             System.out.println(" --- List Serial Ports -----");
 
@@ -138,6 +141,7 @@ public class MeterConsoleTesterAlex // extends JFrame
         }
 
     }
+
 
     /**
      * Main startup method

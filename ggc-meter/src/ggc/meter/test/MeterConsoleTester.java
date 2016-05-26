@@ -1,7 +1,7 @@
 package ggc.meter.test;
 
 import java.io.File;
-import java.util.Vector;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -345,7 +345,7 @@ public class MeterConsoleTester
     {
         try
         {
-            Vector<String> vct = SerialProtocol.getAllAvailablePortsString();
+            List<String> vct = SerialProtocol.getAllAvailablePortsString();
 
             System.out.println(" --- List Serial Ports -----");
 

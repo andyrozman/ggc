@@ -158,6 +158,12 @@ public class MeterValuesEntry extends DeviceValuesEntry
     }
 
 
+    public void setBgValue(float value, GlucoseUnitType unitType)
+    {
+        this.setBgValue(value, unitType, true);
+    }
+
+
     /**
      * Set Bg Value (String)
      * 
@@ -167,12 +173,32 @@ public class MeterValuesEntry extends DeviceValuesEntry
     {
         if (unitType == GlucoseUnitType.mg_dL)
         {
-            this.bgOriginal = da.getIntValueFromString(value);
+            this.bgOriginal = da.getIntValueFromString(value, 0);
             this.bgMmolL = da.getBGValueFromDefault(GlucoseUnitType.mmol_L, this.bgOriginal);
         }
         else
         {
             this.bgMmolL = da.getFloatValueFromString(value);
+
+            Float f = da.getBGValueByType(GlucoseUnitType.mmol_L, GlucoseUnitType.mg_dL, this.bgMmolL);
+            this.bgOriginal = f.intValue();
+        }
+
+        if (resetExtendedType)
+            resetExtendedType();
+    }
+
+
+    public void setBgValue(float value, GlucoseUnitType unitType, boolean resetExtendedType)
+    {
+        if (unitType == GlucoseUnitType.mg_dL)
+        {
+            this.bgOriginal = (int) value;
+            this.bgMmolL = da.getBGValueFromDefault(GlucoseUnitType.mmol_L, this.bgOriginal);
+        }
+        else
+        {
+            this.bgMmolL = value;
 
             Float f = da.getBGValueByType(GlucoseUnitType.mmol_L, GlucoseUnitType.mg_dL, this.bgMmolL);
             this.bgOriginal = f.intValue();

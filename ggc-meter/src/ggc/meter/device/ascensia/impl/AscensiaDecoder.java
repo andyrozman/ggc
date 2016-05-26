@@ -134,8 +134,7 @@ public class AscensiaDecoder
 
             String time = strtok.nextToken(); // datetime
 
-            mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(Long.parseLong(time))));
-            mve.setBgValue(val, unit.startsWith("mg/dL") ? GlucoseUnitType.mg_dL : GlucoseUnitType.mmol_L);
+            setBgData(mve, time, val, unit);
 
             this.outputWriter.writeData(mve);
 
@@ -145,6 +144,18 @@ public class AscensiaDecoder
             LOG.error("Problem decoding result data. Ex.: " + ex);
         }
 
+    }
+
+
+    private void setBgData(MeterValuesEntry mve, String time, String value, String unit)
+    {
+        ATechDate correctedDate = tzu.getCorrectedDateTime(new ATechDate(Long.parseLong(time)));
+        GlucoseUnitType unitType = unit.startsWith("mg/dL") ? GlucoseUnitType.mg_dL : GlucoseUnitType.mmol_L;
+
+        LOG.debug("Data: dt={}, value={}, unit={}", correctedDate, value, unitType.getTranslation());
+
+        mve.setDateTimeObject(correctedDate);
+        mve.setBgValue(value, unitType);
     }
 
 
@@ -195,8 +206,7 @@ public class AscensiaDecoder
 
             String time = strtok.nextToken(); // datetime
 
-            mve.setDateTimeObject(tzu.getCorrectedDateTime(new ATechDate(Long.parseLong(time))));
-            mve.setBgValue(val, unit.startsWith("mg/dL") ? GlucoseUnitType.mg_dL : GlucoseUnitType.mmol_L);
+            setBgData(mve, time, val, unit);
 
             this.outputWriter.writeData(mve);
 

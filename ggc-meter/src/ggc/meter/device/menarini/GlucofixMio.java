@@ -378,7 +378,6 @@ public class GlucofixMio extends AbstractSerialMeter
                 {
                     break;
                 }
-
             }
 
             this.outputWriter.setSpecialProgress(100);

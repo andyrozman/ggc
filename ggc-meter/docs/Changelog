@@ -2,6 +2,13 @@
 Changes file for GGC Meter Tool
 ===============================
 
+2.4.1 [26.5.2016]
+- refactorings (code, db)
+- graphs
+- comments
+- ascensia decoder fix
+- started work on Menarini
+
 2.4.0 [24.10.2015]
 - refactoring changing Log to Logger instance
 - refactoring use of BG converter
