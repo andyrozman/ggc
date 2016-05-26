@@ -56,15 +56,21 @@ public class CGMSReportDefinition implements PluginReportDefinition
     public String[] getReportsNames()
     {
         return new String[] { //
-                              this.i18nControl.getMessage("PUMP_DATA_BASE"), //
-                              this.i18nControl.getMessage("PUMP_DATA_EXT"), //
-                              this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
-                              this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
-                              this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
-                              this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_2"), //
-                // TIMESHEET_3 = 1 + Food
-                // TIMESHEET_4 = 1 + CGMS + Food
+        this.i18nControl.getMessage("PUMP_DATA_BASE"), //
+                this.i18nControl.getMessage("PUMP_DATA_EXT"), //
+                this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
+                this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
+                this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
+                this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_2"), //
+        // TIMESHEET_3 = 1 + Food
+        // TIMESHEET_4 = 1 + CGMS + Food
         };
+    }
+
+
+    public void startReportingAction(PluginPrintDialog pluginPrintDialog) throws Exception
+    {
+
     }
 
 
@@ -128,6 +134,18 @@ public class CGMSReportDefinition implements PluginReportDefinition
     public String getHelpId()
     {
         return "CGMSTool_Print";
+    }
+
+
+    public JMenu[] getPlugInReportMenus(DevicePlugInServer pluginServer)
+    {
+        return new JMenu[0];
+    }
+
+
+    public void startPlugInReportMenuAction(String actionCommand)
+    {
+
     }
 
 

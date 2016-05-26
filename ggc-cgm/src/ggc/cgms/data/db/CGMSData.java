@@ -1,11 +1,7 @@
 package ggc.cgms.data.db;
 
-import ggc.cgms.data.CGMSValuesEntry;
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.db.hibernate.cgms.CGMSDataH;
-import ggc.core.util.DataAccess;
-
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,6 +11,11 @@ import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.cgms.data.CGMSValuesEntry;
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.db.hibernate.cgms.CGMSDataH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,12 +55,14 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     private boolean selected = false;
     I18nControlAbstract ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
 
+
     /**
      * Constructor
      */
     public CGMSData()
     {
     }
+
 
     /**
      * Constructor
@@ -78,6 +81,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         this.setComment(ch.getComment());
         this.setChanged(ch.getChanged());
     }
+
 
     /**
      * Constructor
@@ -98,6 +102,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         this.setChanged(System.currentTimeMillis());
     }
 
+
     /**
      * Constructor
      * 
@@ -107,6 +112,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         this.ic = _ic;
     }
+
 
     // ---
     // --- BackupRestoreObject
@@ -122,6 +128,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         return DataAccessCGMS.getInstance().getI18nControlInstance().getMessage("CGMS_DATA");
     }
 
+
     /** 
      * Get Name
      * @return 
@@ -130,6 +137,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         return this.getTargetName();
     }
+
 
     /**
      * getBackupClassName - name of class which will be updated/restored
@@ -140,6 +148,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         return "ggc.core.db.hibernate.cgms.CGMSDataH";
     }
+
 
     /**
      * To String
@@ -152,6 +161,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         return this.getTargetName();
     }
 
+
     /** 
      * getChildren
      */
@@ -159,6 +169,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         return null;
     }
+
 
     /** 
      * isSelected
@@ -168,6 +179,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         return selected;
     }
 
+
     /** 
      * setSelected
      */
@@ -175,6 +187,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         this.selected = newValue;
     }
+
 
     /**
      * Is Object Collection
@@ -186,6 +199,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         return false;
     }
 
+
     /**
      * Has Children
      */
@@ -193,6 +207,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         return false;
     }
+
 
     /**
      * DbAdd - Add this object to database
@@ -224,6 +239,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         return "" + id.longValue();
     }
 
+
     /**
      * DbDelete - Delete this object in database
      * 
@@ -242,6 +258,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
 
         return true;
     }
+
 
     /**
      * DbEdit - Edit this object in database
@@ -272,6 +289,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         return true;
     }
 
+
     /**
      * DbGet - Loads this object. Id must be set.
      * 
@@ -296,6 +314,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         return true;
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
      * 
@@ -307,6 +326,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         return false;
     }
+
 
     /** 
      * getAction
@@ -321,6 +341,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
      */
     public int TABLE_VERSION = 1;
 
+
     /**
      * Get Table Version - returns version of table
      * 
@@ -330,6 +351,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         return this.TABLE_VERSION;
     }
+
 
     /**
      * dbExport - returns export String, for current version 
@@ -365,6 +387,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         return sb.toString();
     }
 
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -375,6 +398,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         return dbExport(this.TABLE_VERSION);
     }
+
 
     /**
      * dbExportHeader - header for export file
@@ -388,6 +412,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
                 + "; Table version: " + getTableVersion() + "\n";
     }
 
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -398,25 +423,18 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         return this.dbExportHeader(this.TABLE_VERSION);
     }
 
+
     /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @throws Exception if import for selected table version is not supported or it fails
+     * {@inheritDoc}
      */
     public void dbImport(int table_version, String value_entry) throws Exception
     {
-        dbImport(table_version, value_entry, null);
+        dbImport(table_version, value_entry, (Object[]) null);
     }
 
+
     /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @param parameters parameters
-     * @throws Exception if import for selected table version is not supported or it fails
+     * {@inheritDoc}
      */
     public void dbImport(int table_version, String value_entry, Object[] parameters) throws Exception
     {
@@ -437,6 +455,25 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
 
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isNewImport()
+    {
+        return false;
+    }
+
+
     /**
      * getBackupFile - name of backup file (base part)
      * 
@@ -446,6 +483,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         return "CGMSDataH";
     }
+
 
     /**
      * getBackupClassName - name of class which will be updated/restored
@@ -457,6 +495,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         return "ggc.core.db.hibernate.cgms.CGMSDataH";
     }
 
+
     /** 
      * getObjectName
      */
@@ -464,6 +503,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         return "CGMSData";
     }
+
 
     /** 
      * isDebugMode
@@ -473,6 +513,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
         return false;
     }
 
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -481,6 +522,7 @@ public class CGMSData extends CGMSDataH implements BackupRestoreObject, Database
     {
         return "";
     }
+
 
     /**
      * Has To Be Clean - if table needs to be cleaned before import

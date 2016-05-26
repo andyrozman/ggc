@@ -5,8 +5,11 @@ Changes file for GGC CGM Tool
 -- We will move to version 2.0, when Minimed and at least one of Abbott CGMSes is supported (Navigator 1.x or 2.x)
 
 
-
-
+1.5.1 [26.5.2016] [Andy]
+- refactorings (code, db)
+- db import
+- graphs
+- comments
 
 
 1.5.0 --- 11.12.2015

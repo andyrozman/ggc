@@ -247,7 +247,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     // @Override
     // public void createPlugInAboutContext()
     // {
-    // I18nControlAbstract ic = this.getI18nControlInstance();
+    // I18nControlAbstract i18nControl = this.getI18nControlInstance();
     // // this.about_title =
     // // i18nControlAbstract.getMessage("PUMP_PLUGIN_ABOUT");
     // this.about_image_name = "/icons/cgms_about.jpg";
@@ -266,7 +266,8 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     // // developers and other credits
     // ArrayList<CreditsGroup> lst_credits = new ArrayList<CreditsGroup>();
     //
-    // CreditsGroup cg = new CreditsGroup(ic.getMessage("DEVELOPERS_DESC"));
+    // CreditsGroup cg = new
+    // CreditsGroup(i18nControl.getMessage("DEVELOPERS_DESC"));
     // cg.addCreditsEntry(
     // new CreditsEntry("Aleksander Rozman (Andy)", "andy@atech-software.com",
     // "Framework, About, Outputs"));
@@ -278,7 +279,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     // ArrayList<FeaturesGroup> lst_features = new ArrayList<FeaturesGroup>();
     //
     // FeaturesGroup fg = new
-    // FeaturesGroup(ic.getMessage("IMPLEMENTED_FEATURES"));
+    // FeaturesGroup(i18nControl.getMessage("IMPLEMENTED_FEATURES"));
     // fg.addFeaturesEntry(new FeaturesEntry("Base CGMS Tools Framework"));
     // fg.addFeaturesEntry(new FeaturesEntry("Various output types"));
     // fg.addFeaturesEntry(new FeaturesEntry("Communication Framework"));
@@ -289,20 +290,21 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     //
     // lst_features.add(fg);
     //
-    // fg = new FeaturesGroup(ic.getMessage("SUPPORTED_DEVICES"));
+    // fg = new FeaturesGroup(i18nControl.getMessage("SUPPORTED_DEVICES"));
     // fg.addFeaturesEntry(new FeaturesEntry("Dexcom (file imports from DM3
     // App)"));
     // fg.addFeaturesEntry(new FeaturesEntry("Dexcom G4"));
     //
     // lst_features.add(fg);
     //
-    // fg = new FeaturesGroup(ic.getMessage("NOT_IMPLEMENTED_FEATURES"));
+    // fg = new
+    // FeaturesGroup(i18nControl.getMessage("NOT_IMPLEMENTED_FEATURES"));
     // fg.addFeaturesEntry(new FeaturesEntry("Graphs"));
     // fg.addFeaturesEntry(new FeaturesEntry("Printing"));
     //
     // lst_features.add(fg);
     //
-    // fg = new FeaturesGroup(ic.getMessage("PLANNED_DEVICES"));
+    // fg = new FeaturesGroup(i18nControl.getMessage("PLANNED_DEVICES"));
     // fg.addFeaturesEntry(new FeaturesEntry("Minimed RealTime (??)"));
     // fg.addFeaturesEntry(new FeaturesEntry("Freestyle Navigator (??)"));
     //
@@ -314,6 +316,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     // ********************************************************
     // ****** Web Lister Methods *****
     // ********************************************************
+
 
     // /**
     // * Create WebLister (for List) Context for plugin
@@ -336,7 +339,6 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     // this.weblister_title = this.m_i18n.getMessage("DEVICE_LIST_WEB");
     // this.weblister_desc = this.m_i18n.getMessage("DEVICE_LIST_WEB_DESC");
     // }
-
 
     /**
      * Create About Context for plugin

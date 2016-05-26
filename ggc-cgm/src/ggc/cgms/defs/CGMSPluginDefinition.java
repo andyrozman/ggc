@@ -12,12 +12,14 @@ import com.atech.i18n.mgr.LanguageManager;
 
 import ggc.cgms.device.animas.AnimasCGMSHandler;
 import ggc.cgms.device.dexcom.DexcomHandler;
+import ggc.cgms.graph.CGMSGraphDefintion;
 import ggc.cgms.report.def.CGMSReportDefinition;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.cgms.util.GGC_CGMS_ICRunner;
 import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.defs.DevicePluginDefinitionAbstract;
 import ggc.plugin.device.mgr.DeviceHandlerManager;
+import ggc.plugin.graph.PluginGraphDefinition;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.report.PluginReportDefinition;
 
@@ -54,6 +56,7 @@ public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
     String PLUGIN_NAME = "GGC CGMS Plugin";
 
     CGMSReportDefinition reportsCGMSDefinition;
+    CGMSGraphDefintion graphsCGMSDefintion;
 
 
     public CGMSPluginDefinition(LanguageManager languageManager)
@@ -180,8 +183,8 @@ public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<BaseListEntry> weblister_items = new ArrayList<BaseListEntry>();
 
-        weblister_items
-                .add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html", BaseListEntry.STATUS_NOTPLANNED));
+        weblister_items.add(new BaseListEntry("Abbott Diabetes Care", "/cgms/abbott.html",
+                BaseListEntry.STATUS_NOTPLANNED));
         weblister_items.add(new BaseListEntry("Animas", "/cgms/animas.html", BaseListEntry.STATUS_DONE));
         weblister_items.add(new BaseListEntry("Dexcom", "/cgms/dexcom.html", BaseListEntry.STATUS_PART_IMPLEMENTED));
         weblister_items.add(new BaseListEntry("Minimed", "/cgms/minimed.html", BaseListEntry.STATUS_PLANNED));
@@ -206,6 +209,25 @@ public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
         }
 
         return reportsCGMSDefinition;
+    }
+
+
+    @Override
+    public PluginGraphDefinition getGraphsDefinition()
+    {
+        if (graphsCGMSDefintion == null)
+        {
+            this.graphsCGMSDefintion = new CGMSGraphDefintion((DataAccessCGMS) this.dataAccess);
+        }
+
+        return graphsCGMSDefintion;
+    }
+
+
+    @Override
+    public String getPluginActionsPrefix()
+    {
+        return "cgms_";
     }
 
 

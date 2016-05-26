@@ -29,13 +29,9 @@ import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.util.DataAccess;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.cfg.DeviceConfigEntry;
-import ggc.plugin.cfg.DeviceConfigurationDialog;
-import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.graph.data.CGMSGraphDataHandler;
-import ggc.plugin.gui.AboutBaseDialog;
-import ggc.plugin.gui.DeviceInstructionsDialog;
-import ggc.plugin.list.BaseListDialog;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -86,7 +82,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     // private String commands[] = { "MN_CGMS_READ_DESC", "MN_CGMS_LIST_DESC",
     // "MN_CGMS_CONFIG_DESC", "MN_CGMS_ABOUT_DESC" };
 
-    DataAccessCGMS da_local;
+    DataAccessCGMS dataAccessCGMS;
     private JMenuItem[] menus = new JMenuItem[3];
 
 
@@ -109,11 +105,14 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     {
         super(cont, da);
 
-        da_local = DataAccessCGMS.createInstance(getPluginDefinition(da));
-        da_local.addComponent(cont);
+        dataAccessCGMS = DataAccessCGMS.createInstance(getPluginDefinition(da));
+        dataAccessCGMS.addComponent(cont);
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     private CGMSPluginDefinition getPluginDefinition(ATDataAccessLMAbstract da)
     {
         return new CGMSPluginDefinition(da.getLanguageManager());
@@ -121,9 +120,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
 
     /**
-     * Get Name of plugin
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public String getName()
@@ -133,53 +130,36 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
 
     /**
-     * Get Version of plugin
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public String getVersion()
     {
-        return da_local.getPlugInVersion();
+        return dataAccessCGMS.getPlugInVersion();
     }
 
 
     /**
-     * Get Information When will it be implemented
-     * 
-     * @return
-     */
-    @Override
-    public String getWhenWillBeImplemented()
-    {
-        return null;
-    }
-
-
-    /**
-     * Init PlugIn which needs to be implemented 
+     * {@inheritDoc}
      */
     @Override
     public void initPlugIn()
     {
         ic = dataAccess.getI18nControlInstance();
 
-        if (da_local == null)
+        if (dataAccessCGMS == null)
         {
-            da_local = DataAccessCGMS.createInstance(getPluginDefinition((ATDataAccessLMAbstract) dataAccess));
+            dataAccessCGMS = DataAccessCGMS.createInstance(getPluginDefinition((ATDataAccessLMAbstract) dataAccess));
         }
 
-        this.initPlugInServer((DataAccess) dataAccess, da_local);
+        this.initPlugInServer((DataAccess) dataAccess, dataAccessCGMS);
 
         this.installed = true;
     }
 
 
     /**
-     * Get Return Object
-     * 
-     * @param ret_obj_id
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public Object getReturnObject(int ret_obj_id)
@@ -216,11 +196,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
 
     /**
-     * Get Return Object
-     * 
-     * @param ret_obj_id
-     * @param parameters
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public Object getReturnObject(int ret_obj_id, Object[] parameters)
@@ -230,9 +206,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
 
     /**
-     * Get Backup Objects (if available)
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public BackupRestoreCollection getBackupObjects()
@@ -247,146 +221,113 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
 
     /**
-     * Get PlugIn Main Menu 
-     * 
-     * This is new way to handle everything, previously we used to pass ActionListener items through
-     * plugin framework, but in new way, we will use this one. We just give main application menu,
-     * which contains all items accessible through menus.
-     *  
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public JMenu getPlugInMainMenu()
     {
-
         JMenu menu_cgms = ATSwingUtils.createMenu("MN_CGMS", null, ic_local);
 
-        JMenuItem menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ", "MN_CGMS_READ_DESC", "cgms_read", this,
-            null, ic_local, DataAccessCGMS.getInstance(), parent);
+        JMenuItem menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ", //
+            "MN_CGMS_READ_DESC", "plugin_read_data", //
+            this, null, ic_local, DataAccessCGMS.getInstance(), parent);
 
         menus[0] = menu;
-        menus[0].setEnabled(
-            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadData));
+        menus[0].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
+            DownloadSupportType.DownloadData));
 
-        menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_CONFIG", "MN_CGMS_READ_CONFIG_DESC",
-            "cgms_read_config", this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+        menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_CONFIG", //
+            "MN_CGMS_READ_CONFIG_DESC", "plugin_read_config", //
+            this, null, ic_local, DataAccessCGMS.getInstance(), parent);
 
         menus[1] = menu;
-        menus[1].setEnabled(
-            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.Download_Data_Config));
+        menus[1].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
+            DownloadSupportType.Download_Data_Config));
 
-        menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_FILE", "MN_CGMS_READ_FILE_DESC", "cgms_read_file",
+        menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_FILE", //
+            "MN_CGMS_READ_FILE_DESC", "plugin_read_data_file", //
             this, null, ic_local, DataAccessCGMS.getInstance(), parent);
 
         menus[2] = menu;
-        menus[2].setEnabled(
-            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
+        menus[2].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
+            DownloadSupportType.DownloadDataFile));
 
         menu_cgms.addSeparator();
 
-        ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_LIST", "MN_CGMS_LIST_DESC", "cgms_list", this, null, ic_local,
-            DataAccessCGMS.getInstance(), parent);
+        ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_VIEW_DATA", //
+            "MN_CGMS_VIEW_DATA_DESC", "cgms_view_data", //
+            this, null, ic_local, DataAccessCGMS.getInstance(), parent);
 
         menu_cgms.addSeparator();
 
-        ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_VIEW_DATA", "MN_CGMS_VIEW_DATA_DESC", "cgms_view_data", this,
-            null, ic_local, DataAccessCGMS.getInstance(), parent);
+        ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_LIST", //
+            "MN_CGMS_LIST_DESC", "plugin_list", //
+            this, null, ic_local, DataAccessCGMS.getInstance(), parent);
 
         menu_cgms.addSeparator();
 
-        ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_CONFIG", "MN_CGMS_CONFIG_DESC", "cgms_config", this, null,
-            ic_local, DataAccessCGMS.getInstance(), parent);
+        ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_CONFIG", //
+            "MN_CGMS_CONFIG_DESC", "plugin_config", //
+            this, null, ic_local, DataAccessCGMS.getInstance(), parent);
 
         menu_cgms.addSeparator();
 
-        ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_ABOUT", "MN_CGMS_ABOUT_DESC", "cgms_about", this, null,
-            ic_local, DataAccessCGMS.getInstance(), parent);
+        ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_ABOUT", //
+            "MN_CGMS_ABOUT_DESC", "plugin_about", this, null, ic_local, DataAccessCGMS.getInstance(), parent);
 
         return menu_cgms;
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     public void refreshMenusAfterConfig()
     {
-        menus[0].setEnabled(
-            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadData));
-        menus[1].setEnabled(
-            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadConfig));
-        menus[2].setEnabled(
-            DownloadSupportType.isOptionSet(da_local.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
+        menus[0].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
+            DownloadSupportType.DownloadData));
+        menus[1].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
+            DownloadSupportType.DownloadConfig));
+        menus[2].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
+            DownloadSupportType.DownloadDataFile));
     }
 
 
     /**
-     * Get PlugIn Print Menus 
-     * 
-     * Since printing is also PlugIn specific we need to add Printing jobs to application.
-     *  
-     * @return
+     * {@inheritDoc}
      */
     @Override
-    public JMenu[] getPlugInPrintMenus()
+    public DataAccessPlugInBase getPlugInDataAccess()
     {
-        return null;
+        return dataAccessCGMS;
     }
 
 
-    /** 
-     * actionPerformed
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void actionPerformed(ActionEvent ae)
     {
         String command = ae.getActionCommand();
 
-        if (command.equals("cgms_read"))
+        if (!executeBasePluginAction(command, this.dataAccessCGMS))
         {
-            new DeviceInstructionsDialog(this.parent, DataAccessCGMS.getInstance(), this,
-                    DeviceDataHandler.TRANSFER_READ_DATA);
-            // this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
-        }
-        else if (command.equals("cgms_read_config"))
-        {
-            new DeviceInstructionsDialog(this.parent, DataAccessCGMS.getInstance(), this,
-                    DeviceDataHandler.TRANSFER_READ_CONFIGURATION);
-            // this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
-        }
-        else if (command.equals("cgms_read_file"))
-        {
-            new DeviceInstructionsDialog(this.parent, DataAccessCGMS.getInstance(), this,
-                    DeviceDataHandler.TRANSFER_READ_DATA_FILE);
-            // this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_READ_DATA);
-        }
-        else if (command.equals("cgms_list"))
-        {
-            new BaseListDialog((JFrame) this.parent, DataAccessCGMS.getInstance());
-        }
-        else if (command.equals("cgms_config"))
-        {
-            new DeviceConfigurationDialog((JFrame) this.parent, DataAccessCGMS.getInstance());
-            refreshMenusAfterConfig();
-            this.client.executeReturnAction(CGMSPlugInServer.RETURN_ACTION_CONFIG);
-        }
-        else if (command.equals("cgms_about"))
-        {
-            new AboutBaseDialog((JFrame) this.parent, DataAccessCGMS.getInstance());
-        }
-        else if (command.equals("cgms_view_data"))
-        {
-            new CGMSDataDialog(DataAccessCGMS.getInstance(), (JFrame) this.parent);
-        }
-        else
-        {
-            System.out.println("CGMSPluginServer::Unknown Command: " + command);
+            if (command.equals("cgms_view_data"))
+            {
+                new CGMSDataDialog(dataAccessCGMS, (JFrame) this.parent);
+            }
+            else
+            {
+                System.out.println("CGMSPluginServer::Unknown Command: " + command);
+            }
         }
 
     }
 
 
     /**
-     * Get Backup Restore Handler
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public BackupRestorePlugin getBackupRestoreHandler()
@@ -395,6 +336,9 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Object> getDataFromPlugin(Map<String, Object> parameters)
     {
@@ -413,7 +357,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
         if (parameters.get("dataType").equals("CGMSReadingsDaily4Graph"))
         {
             CGMSGraphDataHandler graphData = new CGMSGraphDataHandler();
-            XYSeries series = graphData.getCGMSDailyReadings(da_local,
+            XYSeries series = graphData.getCGMSDailyReadings(dataAccessCGMS,
                 (GregorianCalendar) parameters.get("calendarDate"));
 
             List<Object> data = new ArrayList<Object>();

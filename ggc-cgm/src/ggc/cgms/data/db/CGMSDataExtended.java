@@ -1,10 +1,7 @@
 package ggc.cgms.data.db;
 
-import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.db.hibernate.cgms.CGMSDataExtendedH;
-import ggc.core.util.DataAccess;
-
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,6 +11,10 @@ import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.db.hibernate.cgms.CGMSDataExtendedH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,12 +54,14 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     private boolean selected = false;
     I18nControlAbstract ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
 
+
     /**
      * Constructor
      */
     public CGMSDataExtended()
     {
     }
+
 
     /**
      * Constructor
@@ -77,6 +80,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         this.setChanged(ch.getChanged());
     }
 
+
     /**
      * Constructor
      * 
@@ -86,6 +90,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         this.ic = _ic;
     }
+
 
     // ---
     // --- BackupRestoreObject
@@ -101,6 +106,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         return DataAccessCGMS.getInstance().getI18nControlInstance().getMessage("CGMS_DATA_EXTENDED");
     }
 
+
     /** 
      * Get Name
      * @return 
@@ -109,6 +115,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         return this.getTargetName();
     }
+
 
     /**
      * getBackupClassName - name of class which will be updated/restored
@@ -119,6 +126,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         return "ggc.core.db.hibernate.cgms.CGMSDataExtendedH";
     }
+
 
     /**
      * To String
@@ -131,6 +139,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         return this.getTargetName();
     }
 
+
     /** 
      * getChildren
      */
@@ -138,6 +147,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         return null;
     }
+
 
     /** 
      * isSelected
@@ -147,6 +157,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         return selected;
     }
 
+
     /** 
      * setSelected
      */
@@ -154,6 +165,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         this.selected = newValue;
     }
+
 
     /**
      * Is Object Collection
@@ -165,6 +177,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         return false;
     }
 
+
     /**
      * Has Children
      */
@@ -172,6 +185,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         return false;
     }
+
 
     /**
      * DbAdd - Add this object to database
@@ -202,6 +216,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         return "" + id.longValue();
     }
 
+
     /**
      * DbDelete - Delete this object in database
      * 
@@ -220,6 +235,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
 
         return true;
     }
+
 
     /**
      * DbEdit - Edit this object in database
@@ -251,6 +267,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
 
     }
 
+
     /**
      * DbGet - Loads this object. Id must be set.
      * 
@@ -274,6 +291,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         return true;
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
      * 
@@ -285,6 +303,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         return false;
     }
+
 
     /** 
      * getAction
@@ -299,6 +318,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
      */
     public int TABLE_VERSION = 1;
 
+
     /**
      * Get Table Version - returns version of table
      * 
@@ -308,6 +328,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         return this.TABLE_VERSION;
     }
+
 
     /**
      * dbExport - returns export String, for current version 
@@ -341,6 +362,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         return sb.toString();
     }
 
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -351,6 +373,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         return dbExport(this.TABLE_VERSION);
     }
+
 
     /**
      * dbExportHeader - header for export file
@@ -364,6 +387,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
                 + getTableVersion() + "\n";
     }
 
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -374,25 +398,18 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         return this.dbExportHeader(this.TABLE_VERSION);
     }
 
+
     /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @throws Exception if import for selected table version is not supported or it fails
+     * {@inheritDoc}
      */
     public void dbImport(int table_version, String value_entry) throws Exception
     {
-        dbImport(table_version, value_entry, null);
+        dbImport(table_version, value_entry, (Object[]) null);
     }
 
+
     /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @param parameters parameters
-     * @throws Exception if import for selected table version is not supported or it fails
+     * {@inheritDoc}
      */
     public void dbImport(int table_version, String value_entry, Object[] parameters) throws Exception
     {
@@ -411,6 +428,25 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         this.setChanged(da.getLongValueFromString(arr[7]));
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isNewImport()
+    {
+        return false;
+    }
+
+
     /**
      * getBackupFile - name of backup file (base part)
      * 
@@ -420,6 +456,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         return "CGMSDataExtendedH";
     }
+
 
     /**
      * getBackupClassName - name of class which will be updated/restored
@@ -431,6 +468,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         return "ggc.core.db.hibernate.cgms.CGMSDataExtendedH";
     }
 
+
     /** 
      * getObjectName
      */
@@ -438,6 +476,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         return "CGMSDataExtended";
     }
+
 
     /** 
      * isDebugMode
@@ -447,6 +486,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
         return false;
     }
 
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -455,6 +495,7 @@ public class CGMSDataExtended extends CGMSDataExtendedH implements BackupRestore
     {
         return "";
     }
+
 
     /**
      * Has To Be Clean - if table needs to be cleaned before import

@@ -42,7 +42,6 @@ import ggc.plugin.protocol.DeviceConnectionProtocol;
 
 public enum CGMSDeviceDefinition implements DeviceDefinition
 {
-
     // Abbott
 
     AbbottFreeStyleNavigatorV1(10001, "Abbott FreeStyle Navigator V1", null, null, //
@@ -154,7 +153,6 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
     static List<DeviceDefinition> allDevices;
     static List<DeviceDefinition> supportedDevices;
 
-
     static
     {
         allDevices = new ArrayList<DeviceDefinition>();
@@ -170,8 +168,8 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
             }
         }
 
-        System.out.println(
-            "CGMS Devices V2 (registered: " + allDevices.size() + ", supported: " + supportedDevices.size() + ")");
+        // LOG.info("CGMS Devices V2 (registered: " + allDevices.size() +
+        // ", supported: " + supportedDevices.size() + ")");
 
     }
 

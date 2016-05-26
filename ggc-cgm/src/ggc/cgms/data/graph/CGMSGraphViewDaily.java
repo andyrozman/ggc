@@ -28,7 +28,7 @@ import ggc.cgms.data.CGMSValuesSubEntry;
 import ggc.cgms.data.defs.CGMSBaseDataType;
 import ggc.cgms.util.CGMSUtil;
 import ggc.cgms.util.DataAccessCGMS;
-import ggc.core.data.graph.GGCGraphUtil;
+import ggc.core.data.graph.v1.GGCGraphUtil;
 import ggc.plugin.data.DeviceValuesDay;
 
 /**
@@ -315,7 +315,7 @@ public class CGMSGraphViewDaily extends AbstractGraphViewAndProcessor implements
 
         dateInAtechDate = ATechDate.getATDateTimeFromGC(fromDate, ATechDate.FORMAT_DATE_AND_TIME_S);
 
-        //GraphUtil.setDataAccess(this.da_local);
+        // GraphUtil.setDataAccess(this.da_local);
     }
 
 

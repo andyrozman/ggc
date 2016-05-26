@@ -6,14 +6,11 @@ import ggc.cgms.device.dexcom.receivers.DexcomDeviceReader;
 import ggc.cgms.device.dexcom.receivers.data.output.GGCOutputParser;
 import ggc.cgms.manager.CGMSDevicesIds;
 import ggc.cgms.util.DataAccessCGMS;
-import ggc.plugin.device.DeviceIdentification;
-import ggc.plugin.device.DeviceInterface;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.ConnectionProtocols;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -63,12 +60,16 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     Dexcom 7  
- *  Description:  Dexcom 7 implementation (just settings)
+ *  Filename:     DexcomG4
+ *  Description:  Dexcom G4 implementation
  * 
  *  Author: Andy {andy@atech-software.com}
  */
 
+/**
+ * This is device V1 class. It was replaced with DexcomHandler, but until is not tested
+ * ths file will stay.
+ */
 public class DexcomG4 extends AbstractSerialCGMS
 {
 
@@ -79,6 +80,7 @@ public class DexcomG4 extends AbstractSerialCGMS
     {
         super();
     }
+
 
     /**
      * Constructor 
@@ -91,6 +93,7 @@ public class DexcomG4 extends AbstractSerialCGMS
         super(communicationParameters, writer, DataAccessCGMS.getInstance());
     }
 
+
     /**
      * Constructor
      * 
@@ -102,6 +105,7 @@ public class DexcomG4 extends AbstractSerialCGMS
     {
         super(communicationParameters, writer, da);
     }
+
 
     /**
      * Constructor
@@ -199,6 +203,7 @@ public class DexcomG4 extends AbstractSerialCGMS
         return -1;
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -220,10 +225,11 @@ public class DexcomG4 extends AbstractSerialCGMS
 
             ddr.downloadSettings();
         }
-//        catch (DexcomException ex)
-//        {
-//            throw new PlugInBaseException("Error reading Dexcom G4 device. Exception: " + ex, ex);
-//        }
+        // catch (DexcomException ex)
+        // {
+        // throw new PlugInBaseException("Error reading Dexcom G4 device.
+        // Exception: " + ex, ex);
+        // }
         finally
         {
             if (ddr != null)
@@ -234,10 +240,12 @@ public class DexcomG4 extends AbstractSerialCGMS
 
     }
 
+
     private void prepareBaseDeviceIdentification()
     {
         dataAccess.getPluginDeviceUtil().prepareDeviceIdentification(this.outputWriter);
     }
+
 
     /**
      * {@inheritDoc}
@@ -257,10 +265,11 @@ public class DexcomG4 extends AbstractSerialCGMS
 
             ddr.downloadData();
         }
-//        catch (DexcomException ex)
-//        {
-//            throw new PlugInBaseException("Error reading Dexcom G4 device. Exception: " + ex, ex);
-//        }
+        // catch (DexcomException ex)
+        // {
+        // throw new PlugInBaseException("Error reading Dexcom G4 device.
+        // Exception: " + ex, ex);
+        // }
         finally
         {
             if (ddr != null)
@@ -273,6 +282,7 @@ public class DexcomG4 extends AbstractSerialCGMS
 
     }
 
+
     /**
      * hasIndeterminateProgressStatus - if status can't be determined then JProgressBar will go from 
      *     left to right side, without displaying progress.
@@ -283,6 +293,7 @@ public class DexcomG4 extends AbstractSerialCGMS
     {
         return false;
     }
+
 
     /**
      * getConnectionProtocol - returns id of connection protocol
@@ -295,11 +306,13 @@ public class DexcomG4 extends AbstractSerialCGMS
         return DeviceConnectionProtocol.Serial_USBBridge;
     }
 
+
     public String getInstructions()
     {
         // FIXME
         return "DEXCOM_INSTRUCTIONS_DL_SERIAL_USB";
     }
+
 
     @Override
     public boolean isDeviceCommunicating()

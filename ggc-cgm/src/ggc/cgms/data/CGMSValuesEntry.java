@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atech.graphics.graphs.v2.data.GraphTimeDataDto;
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
@@ -127,7 +128,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     @Override
     public ATechDate getDateTimeObject()
     {
-        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.datetime);
+        return new ATechDate(ATechDateType.DateAndTimeSec, this.datetime);
     }
 
 
@@ -153,9 +154,22 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
      * 
      * @return
      */
-    public ArrayList<CGMSValuesSubEntry> getSubEntryList()
+    public List<CGMSValuesSubEntry> getSubEntryList()
     {
         return this.list;
+    }
+
+
+    public List<GraphTimeDataDto> getGraphSubEntryList()
+    {
+        List<GraphTimeDataDto> graphList = new ArrayList<GraphTimeDataDto>();
+
+        for (CGMSValuesSubEntry entry : this.list)
+        {
+            graphList.add(new GraphTimeDataDto(this.datetime, entry.time, (double) entry.value));
+        }
+
+        return graphList;
     }
 
 
@@ -296,33 +310,33 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         switch (index)
         {
-            /*
-             * case 0: // time
-             * {
-             * return this.datetime.getTimeString();
-             * }
-             * case 1: // type
-             * {
-             * return getBaseTypeString();
-             * }
-             * case 2: // subtype
-             * {
-             * return getSubTypeString();
-             * }
-             * case 3: // value
-             * {
-             * //return this.getCode();
-             * return getValuePrint();
-             * }
-             * case 4: // additional
-             * {
-             * return this.getAdditionalDisplay();
-             * }
-             * case 5: // food
-             * {
-             * return this.isFoodSet();
-             * }
-             */
+        /*
+         * case 0: // time
+         * {
+         * return this.datetime.getTimeString();
+         * }
+         * case 1: // type
+         * {
+         * return getBaseTypeString();
+         * }
+         * case 2: // subtype
+         * {
+         * return getSubTypeString();
+         * }
+         * case 3: // value
+         * {
+         * //return this.getCode();
+         * return getValuePrint();
+         * }
+         * case 4: // additional
+         * {
+         * return this.getAdditionalDisplay();
+         * }
+         * case 5: // food
+         * {
+         * return this.isFoodSet();
+         * }
+         */
         }
         return "N/A";
     }
@@ -533,10 +547,10 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         Long _id = (Long) sess.save(pdh);
         tx.commit();
 
-        pdh.setId(_id.longValue());
-        this.id = _id.longValue();
+        pdh.setId(_id);
+        this.id = _id;
 
-        return "" + _id.longValue();
+        return "" + _id;
     }
 
 
@@ -556,7 +570,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         System.out.println("old_id: " + old_id);
         System.out.println("id: " + this.id);
 
-        CGMSDataH pdh = (CGMSDataH) sess.get(CGMSDataH.class, new Long(this.id));
+        CGMSDataH pdh = (CGMSDataH) sess.get(CGMSDataH.class, this.id);
 
         pdh.setId(this.id);
         pdh.setBase_type(this.type);
@@ -582,7 +596,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         Transaction tx = sess.beginTransaction();
 
-        CGMSDataH pdh = (CGMSDataH) sess.get(CGMSDataH.class, new Long(this.id));
+        CGMSDataH pdh = (CGMSDataH) sess.get(CGMSDataH.class, this.id);
         sess.delete(pdh);
         tx.commit();
 
@@ -613,7 +627,7 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     public boolean DbGet(Session sess) throws Exception
     {
 
-        CGMSDataH pdh = (CGMSDataH) sess.get(CGMSDataH.class, new Long(this.id));
+        CGMSDataH pdh = (CGMSDataH) sess.get(CGMSDataH.class, this.id);
 
         this.id = pdh.getId();
         this.datetime = pdh.getDt_info();

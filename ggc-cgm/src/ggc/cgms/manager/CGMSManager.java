@@ -1,10 +1,11 @@
 package ggc.cgms.manager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.cgms.defs.device.CGMSDeviceDefinition;
 import ggc.cgms.defs.device.CGMSDeviceInstanceWithHandler;
-import ggc.cgms.manager.company.Abbott;
 import ggc.cgms.manager.company.Dexcom;
-import ggc.cgms.manager.company.Minimed;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.manager.DeviceManager;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -37,6 +38,8 @@ import ggc.plugin.util.DataAccessPlugInBase;
 
 public class CGMSManager extends DeviceManager
 {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CGMSManager.class);
 
     /**
      * Singelton instance
@@ -80,9 +83,12 @@ public class CGMSManager extends DeviceManager
     @Override
     public void loadDeviceCompanies()
     {
-        addDeviceCompany(new Abbott());
+        // addDeviceCompany(new Abbott());
         addDeviceCompany(new Dexcom());
-        addDeviceCompany(new Minimed());
+        // addDeviceCompany(new Minimed());
+
+        LOG.info("CGMS Devices V1 (registered: " + this.getLoadedDevicesV1Count() + ", supported: "
+                + this.supportedDevicesV1.size() + ")");
     }
 
 
@@ -98,6 +104,9 @@ public class CGMSManager extends DeviceManager
             this.supportedDevicesV2.put(di.getCompany().getName() + "_" + di.getName(), di);
             this.supportedDevicesForSelector.add(di);
         }
+
+        LOG.info("CGMS Devices V2 (registered: " + CGMSDeviceDefinition.getAllDevices().size() + ", supported: "
+                + this.supportedDevicesV2.size() + ")");
     }
 
 }

@@ -3,6 +3,7 @@ package ggc.cgms.data.db;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -12,7 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateDb;
+import com.atech.graphics.graphs.v2.data.GraphDbDataRetriever;
+import com.atech.graphics.graphs.v2.data.GraphDefinitionDto;
+import com.atech.graphics.graphs.v2.data.GraphTimeDataCollection;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 
 import ggc.cgms.data.CGMSDataReader;
 import ggc.cgms.data.CGMSValuesEntry;
@@ -48,7 +53,7 @@ import ggc.plugin.db.PluginDb;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class GGC_CGMSDb extends PluginDb
+public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(GGC_CGMSDb.class);
@@ -76,14 +81,9 @@ public class GGC_CGMSDb extends PluginDb
      */
     public DeviceValuesDay getDailyCGMSValues(GregorianCalendar gc)
     {
-        // DataAccessCGMS.notImplemented("GGC_CGMSDb::getDailyCGMSValues()");
+        LOG.info("getDailyCGMSValues()");
 
-        // DeviceValuesDay dV = new DeviceValuesDay(dataAccess);
-        // dV.setDateTimeGC(gc);
-
-        LOG.info("getCGMSDayStats()");
-
-        long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
+        long dt = ATechDate.getATDateTimeFromGC(gc, ATechDateType.DateOnly);
         // long dt = 20070323;
 
         DeviceValuesDay dV = new DeviceValuesDay(m_da);
@@ -188,4 +188,43 @@ public class GGC_CGMSDb extends PluginDb
         return dt;
     }
 
+
+    public GraphTimeDataCollection getGraphTimeData(GregorianCalendar gcFrom, GregorianCalendar gcTill,
+            GraphDefinitionDto definitionDto)
+    {
+        // TODO types, for now we get only glucose data
+
+        GraphTimeDataCollection collection = new GraphTimeDataCollection();
+
+        List<ATechDate> dates = m_da.getDatesList(gcFrom, gcTill, true);
+
+        Criteria criteria = null;
+
+        try
+        {
+            criteria = getSession().createCriteria(CGMSDataH.class)
+                    .add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()))
+                    .add(Restrictions.eq("base_type", 1))
+                    .add(Restrictions.and(Restrictions.ge("dt_info", dates.get(0).getATDateTimeAsLong()),
+                        Restrictions.le("dt_info", dates.get(1).getATDateTimeAsLong())));
+
+            List listData = criteria.list();
+
+            for (Object cgg : listData)
+            {
+                CGMSDataH pdh = (CGMSDataH) cgg;
+                CGMSValuesEntry dv = new CGMSValuesEntry(pdh);
+
+                collection.put(dv.getDateTimeObject().getATDateTimeAsLong(), dv.getGraphSubEntryList());
+            }
+
+        }
+        catch (Exception ex)
+        {
+            LOG.debug("Criteria: " + criteria);
+            LOG.error("getGraphTimeData(). Exception: " + ex, ex);
+        }
+
+        return collection;
+    }
 }

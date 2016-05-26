@@ -109,7 +109,8 @@ public class CGMSValuesSubEntry extends DeviceValuesEntry implements StatisticsI
         this.setType(type);
         this.source = DataAccessCGMS.getInstance().getSourceDevice();
 
-        this.datetime = time * 10 + type;
+        // FIXME this was removed, it displayed wrong datetime...
+        // this.datetime = time * 10 + type;
         // time_only = true;
     }
 
