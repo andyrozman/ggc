@@ -1,6 +1,7 @@
 package ggc.pump.db;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -428,7 +429,7 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
      */
     public void dbImport(int table_version, String value_entry) throws Exception
     {
-        dbImport(table_version, value_entry, null);
+        dbImport(table_version, value_entry, (Object[]) null);
     }
 
 
@@ -457,6 +458,18 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         this.setComment(arr[7]);
         this.setChanged(da.getLongValueFromString(arr[8]));
 
+    }
+
+
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+
+    }
+
+
+    public boolean isNewImport()
+    {
+        return false;
     }
 
 

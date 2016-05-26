@@ -2,15 +2,20 @@ package ggc.pump.db;
 
 import java.util.*;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateDb;
+import com.atech.graphics.graphs.v2.data.GraphDefinitionDto;
+import com.atech.graphics.graphs.v2.data.GraphTimeDataCollection;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
+import com.atech.utils.data.CodeEnum;
 
 import ggc.core.db.hibernate.cgms.CGMSDataH;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
@@ -29,6 +34,7 @@ import ggc.pump.data.PumpDataReader;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.PumpValuesEntryProfile;
+import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.data.defs.PumpBaseType;
 import ggc.pump.util.DataAccessPump;
 
@@ -61,7 +67,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(GGCPumpDb.class);
-    DataAccessPump m_da = DataAccessPump.getInstance();
+
+    DataAccessPump dataAccess = DataAccessPump.getInstance();
 
 
     /**
@@ -87,25 +94,30 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
     {
         LOG.info("getPumpDayStats()");
 
-        long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
+        // long dt = ATechDate.getATDateTimeFromGC(gc,
+        // ATechDate.FORMAT_DATE_ONLY);
 
-        DeviceValuesDay dV = new DeviceValuesDay(m_da);
+        DeviceValuesDay dV = new DeviceValuesDay(dataAccess);
         dV.setDateTimeGC(gc);
 
         String sql = "";
 
         try
         {
-            sql = "SELECT dv from " + "ggc.core.db.hibernate.pump.PumpDataH as dv " + "WHERE dv.dt_info >=  " + dt
-                    + "000000 AND dv.dt_info <= " + dt + "235959 ORDER BY dv.dt_info";
+            List<?> dataList = getListOfDatabaseObjectsRange(PumpDataH.class, gc, gc, null, null);
 
-            Query q = this.db.getSession().createQuery(sql);
+            // sql = "SELECT dv from " + "ggc.core.db.hibernate.pump.PumpDataH
+            // as dv " + "WHERE dv.dt_info >= " + dt
+            // + "000000 AND dv.dt_info <= " + dt + "235959 ORDER BY
+            // dv.dt_info";
+            //
+            // Query q = this.db.getSession().createQuery(sql);
+            //
+            // Iterator<?> it = q.list().iterator();
 
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
+            for (Object dataEntry : dataList)
             {
-                PumpDataH pdh = (PumpDataH) it.next();
+                PumpDataH pdh = (PumpDataH) dataEntry;
                 PumpValuesEntry dv = new PumpValuesEntry(pdh);
 
                 dV.addEntry(dv);
@@ -116,8 +128,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
         catch (Exception ex)
         {
-            LOG.debug("Sql: " + sql);
-            LOG.error("getDayStats(). Exception: " + ex, ex);
+            // LOG.debug("Sql: " + sql);
+            LOG.error("getDailyPumpValues(). Exception: " + ex, ex);
         }
 
         return dV;
@@ -127,7 +139,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
 
     /**
-     * Get Pump Values Range
+     * Get Pump Values Range (with Extended, without filtering)
      *
      * @param from
      * @param to
@@ -148,6 +160,67 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
 
         List<PumpDataExtendedH> lst_ext = getRangePumpValuesExtendedRaw(from, to);
+        mergeRangePumpData(dvr, lst_ext);
+
+        return dvr;
+    }
+
+
+    /**
+     * Get Pump Values Range (with Extended, with filtering)
+     *
+     * @param from
+     * @param to
+     * @return
+     */
+    // public DeviceValuesRange getRangePumpValues(GregorianCalendar from,
+    // GregorianCalendar to, String filterBase,
+    // String filterExtended)
+    // {
+    // LOG.info("getRangePumpValues()");
+    //
+    // DeviceValuesRange dvr = new
+    // DeviceValuesRange(DataAccessPump.getInstance(), from, to);
+    //
+    // List<PumpDataH> listPumpData = getRangePumpValuesRaw(from, to,
+    // filterBase);
+    //
+    // for (PumpDataH pdh : listPumpData)
+    // {
+    // PumpValuesEntry dv = new PumpValuesEntry(pdh);
+    // dvr.addEntry(dv);
+    // }
+    //
+    // List<PumpDataExtendedH> lst_ext = getRangePumpValuesExtendedRaw(from, to,
+    // filterExtended);
+    // mergeRangePumpData(dvr, lst_ext);
+    //
+    // return dvr;
+    // }
+
+    /**
+     * Get Pump Values Range (with Extended, with filtering)
+     *
+     * @param from
+     * @param to
+     * @return
+     */
+    public DeviceValuesRange getRangePumpValues(GregorianCalendar from, GregorianCalendar to,
+            List<PumpBaseType> filterBase, List<PumpAdditionalDataType> filterExtended)
+    {
+        LOG.info("getRangePumpValues()");
+
+        DeviceValuesRange dvr = new DeviceValuesRange(DataAccessPump.getInstance(), from, to);
+
+        List<PumpDataH> listPumpData = getRangePumpValuesRaw(from, to, filterBase);
+
+        for (PumpDataH pdh : listPumpData)
+        {
+            PumpValuesEntry dv = new PumpValuesEntry(pdh);
+            dvr.addEntry(dv);
+        }
+
+        List<PumpDataExtendedH> lst_ext = getRangePumpValuesExtendedRaw(from, to, filterExtended);
         mergeRangePumpData(dvr, lst_ext);
 
         return dvr;
@@ -191,46 +264,81 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         return getRangePumpValuesRaw(from, to, null);
     }
 
+    // public List<PumpDataH> getRangePumpValuesRaw(GregorianCalendar from,
+    // GregorianCalendar to, String filter)
+    // {
+    // LOG.info(String.format("getRangePumpValuesRaw(%s)", filter == null ? "" :
+    // filter));
+    //
+    // long dt_from = ATechDate.getATDateTimeFromGC(from,
+    // ATechDate.FORMAT_DATE_ONLY);
+    // long dt_to = ATechDate.getATDateTimeFromGC(to,
+    // ATechDate.FORMAT_DATE_ONLY);
+    //
+    // String sql = "";
+    //
+    // List<PumpDataH> listPumpData = new ArrayList<PumpDataH>();
+    //
+    // try
+    // {
+    // sql = "SELECT dv from " + //
+    // "ggc.core.db.hibernate.pump.PumpDataH as dv " + //
+    // "WHERE dv.dt_info >= " + dt_from + "000000 AND dv.dt_info <= " + //
+    // dt_to + "235959 ";
+    //
+    // if (filter != null)
+    // {
+    // sql += " AND " + filter;
+    // }
+    //
+    // sql += " ORDER BY dv.dt_info";
+    //
+    // Query q = this.db.getSession().createQuery(sql);
+    //
+    // Iterator<?> it = q.list().iterator();
+    //
+    // while (it.hasNext())
+    // {
+    // PumpDataH pdh = (PumpDataH) it.next();
+    // listPumpData.add(pdh);
+    // }
+    //
+    // }
+    // catch (Exception ex)
+    // {
+    // LOG.debug("Sql: " + sql);
+    // LOG.error("getDayStats(). Exception: " + ex, ex);
+    // }
+    //
+    // LOG.debug("Found " + listPumpData.size() + " entries.");
+    //
+    // return listPumpData;
+    // }
 
-    public List<PumpDataH> getRangePumpValuesRaw(GregorianCalendar from, GregorianCalendar to, String filter)
+
+    public List<PumpDataH> getRangePumpValuesRaw(GregorianCalendar from, GregorianCalendar to,
+            List<PumpBaseType> filterBase)
     {
-        LOG.info(String.format("getRangePumpValuesRaw(%s)", filter == null ? "" : filter));
-
-        long dt_from = ATechDate.getATDateTimeFromGC(from, ATechDate.FORMAT_DATE_ONLY);
-        long dt_to = ATechDate.getATDateTimeFromGC(to, ATechDate.FORMAT_DATE_ONLY);
-
-        String sql = "";
+        LOG.info(String.format("getRangePumpValuesRaw(%s)", CollectionUtils.isEmpty(filterBase) ? ""
+                : dataAccess.createStringRepresentationOfCollection(filterBase, ", ")));
 
         List<PumpDataH> listPumpData = new ArrayList<PumpDataH>();
 
         try
         {
-            sql = "SELECT dv from " + //
-                    "ggc.core.db.hibernate.pump.PumpDataH as dv " + //
-                    "WHERE dv.dt_info >=  " + dt_from + "000000 AND dv.dt_info <= " + //
-                    dt_to + "235959 ";
 
-            if (filter != null)
+            List<?> dataList = getListOfDatabaseObjectsRange(PumpDataH.class, from, to, "base_type", filterBase);
+
+            for (Object dataEntry : dataList)
             {
-                sql += " AND " + filter;
-            }
-
-            sql += " ORDER BY dv.dt_info";
-
-            Query q = this.db.getSession().createQuery(sql);
-
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                PumpDataH pdh = (PumpDataH) it.next();
+                PumpDataH pdh = (PumpDataH) dataEntry;
                 listPumpData.add(pdh);
             }
 
         }
         catch (Exception ex)
         {
-            LOG.debug("Sql: " + sql);
+            // LOG.debug("Sql: " + sql);
             LOG.error("getDayStats(). Exception: " + ex, ex);
         }
 
@@ -240,38 +348,106 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
     }
 
 
+    private List getListOfDatabaseObjectsRange(Class clazz, GregorianCalendar from, GregorianCalendar to,
+            String propertyToFilter, List<? extends CodeEnum> filter) throws Exception
+    {
+
+        Criteria criteria = null;
+        try
+        {
+            criteria = this.db.getSession().createCriteria(clazz);
+            criteria.add(Restrictions.between("dt_info", getDate(from, true), getDate(to, false)));
+            criteria.add(Restrictions.eq("person_id", (int) dataAccess.getCurrentUserId()));
+
+            if ((CollectionUtils.isNotEmpty(filter)) && (StringUtils.isNotBlank(propertyToFilter)))
+            {
+                criteria.add(createOrCriterionsForList(propertyToFilter, filter));
+            }
+
+            criteria.addOrder(Property.forName("dt_info").asc());
+
+            return criteria.list();
+        }
+        catch (Exception ex)
+        {
+            LOG.error("Criteria: " + criteria);
+            LOG.error("Exception when getting data: {}", ex.getMessage(), ex);
+            throw ex;
+        }
+    }
+
+
+    private Criterion createOrCriterionsForList(String propertyName, List<? extends CodeEnum> list)
+    {
+        Criterion criterion = null;
+
+        for (CodeEnum codeEnum : list)
+        {
+            if (criterion == null)
+                criterion = Expression.eq(propertyName, codeEnum.getCode());
+            else
+                criterion = Restrictions.or(criterion, Expression.eq(propertyName, codeEnum.getCode()));
+        }
+
+        return criterion;
+    }
+
+
+    private long getDate(GregorianCalendar gregorianCalendar, boolean isBegin)
+    {
+        long dt = ATechDate.getATDateTimeFromGC(gregorianCalendar, ATechDateType.DateOnly) * 1000000;
+
+        if (!isBegin)
+        {
+            dt += 235959;
+        }
+
+        return dt;
+    }
+
+
     /**
      * Get Daily Pump Values Extended
      *
-     * @param gc
-     * @return
+     * @param gc calendar instance
+     * @return list of PumpValuesEntryExt
      */
     public ArrayList<PumpValuesEntryExt> getDailyPumpValuesExtended(GregorianCalendar gc)
     {
         LOG.info("getDailyPumpValuesExtended() - Run");
 
-        long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_ONLY);
+        // long dt = ATechDate.getATDateTimeFromGC(gc,
+        // ATechDate.FORMAT_DATE_ONLY);
 
         ArrayList<PumpValuesEntryExt> lst = new ArrayList<PumpValuesEntryExt>();
-        String sql = "";
+        // String sql = "";
 
         try
         {
+
+            // Iterator<?> it =
+            // getListOfDatabaseObjectsRange(PumpDataExtendedH.class, gc, gc,
+            // null, null).iterator();
+
+            List<?> dataList = getListOfDatabaseObjectsRange(PumpDataExtendedH.class, gc, gc, null, null);
+
             // SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
             // String sDay = sdf.format(day.getTime());
 
-            sql = "SELECT dv from " + //
-                    "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + //
-                    "WHERE dv.dt_info >=  " + dt + "000000 AND dv.dt_info <= " + //
-                    dt + "235959 ORDER BY dv.dt_info";
+            // sql = "SELECT dv from " + //
+            // "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + //
+            // "WHERE dv.dt_info >= " + dt + "000000 AND dv.dt_info <= " + //
+            // dt + "235959 ORDER BY dv.dt_info";
+            //
+            // Query q = this.db.getSession().createQuery(sql);
+            //
+            // Iterator<?> it = q.list().iterator();
 
-            Query q = this.db.getSession().createQuery(sql);
+            // for()
 
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
+            for (Object dataEntry : dataList)
             {
-                PumpDataExtendedH pdh = (PumpDataExtendedH) it.next();
+                PumpDataExtendedH pdh = (PumpDataExtendedH) dataEntry;
 
                 PumpValuesEntryExt dv = new PumpValuesEntryExt(pdh);
                 lst.add(dv);
@@ -280,7 +456,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         }
         catch (Exception ex)
         {
-            LOG.debug("Sql: " + sql);
+            // LOG.debug("Sql: " + sql);
             LOG.error("getDailyPumpValuesExtended(). Exception: " + ex, ex);
         }
 
@@ -291,8 +467,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     public List<PumpValuesEntry> getRangePumpBasalValues(GregorianCalendar from, GregorianCalendar to)
     {
-        String filter = "dv.base_type=1";
-        return convertPumpDataRawEntries(getRangePumpValuesRaw(from, to, filter));
+        // String filter = "dv.base_type=1";
+        return convertPumpDataRawEntries(getRangePumpValuesRaw(from, to, Arrays.asList(PumpBaseType.Basal)));
     }
 
 
@@ -311,6 +487,70 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
     }
 
 
+    public List<PumpDataExtendedH> getRangePumpValuesExtendedRaw(GregorianCalendar from, GregorianCalendar to)
+    {
+        return getRangePumpValuesExtendedRaw(from, to, null);
+    }
+
+
+    // /**
+    // * Get Daily Pump Values Extended
+    // *
+    // * @param from
+    // * @param to
+    // * @return
+    // */
+    // public List<PumpDataExtendedH>
+    // getRangePumpValuesExtendedRaw(GregorianCalendar from, GregorianCalendar
+    // to,
+    // String filter)
+    // {
+    // LOG.info("getRangePumpValuesExtendedRaw() - Run");
+    //
+    // long dt_from = ATechDate.getATDateTimeFromGC(from,
+    // ATechDate.FORMAT_DATE_ONLY);
+    // long dt_to = ATechDate.getATDateTimeFromGC(to,
+    // ATechDate.FORMAT_DATE_ONLY);
+    //
+    // List<PumpDataExtendedH> lst = new ArrayList<PumpDataExtendedH>();
+    //
+    // String sql = "";
+    //
+    // try
+    // {
+    // sql = "SELECT dv from " + "ggc.core.db.hibernate.pump.PumpDataExtendedH
+    // as dv " + //
+    // "WHERE dv.dt_info >= " + dt_from + "000000 AND dv.dt_info <= " + dt_to +
+    // "235959";
+    //
+    // if (filter != null)
+    // {
+    // sql += " AND " + filter;
+    // }
+    //
+    // sql += " ORDER BY dv.dt_info";
+    //
+    // Query q = this.db.getSession().createQuery(sql);
+    //
+    // Iterator<?> it = q.list().iterator();
+    //
+    // while (it.hasNext())
+    // {
+    // PumpDataExtendedH pdh = (PumpDataExtendedH) it.next();
+    // lst.add(pdh);
+    // }
+    //
+    // }
+    // catch (Exception ex)
+    // {
+    // LOG.debug("Sql: " + sql);
+    // LOG.error("getRangePumpValuesExtendedRaw(). Exception: " + ex, ex);
+    // }
+    //
+    // return lst;
+    //
+    // }
+
     /**
      * Get Daily Pump Values Extended
      *
@@ -318,36 +558,43 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      * @param to
      * @return
      */
-    public List<PumpDataExtendedH> getRangePumpValuesExtendedRaw(GregorianCalendar from, GregorianCalendar to)
+    public List<PumpDataExtendedH> getRangePumpValuesExtendedRaw(GregorianCalendar from, GregorianCalendar to,
+            List<PumpAdditionalDataType> filter)
     {
         LOG.info("getRangePumpValuesExtendedRaw() - Run");
 
-        long dt_from = ATechDate.getATDateTimeFromGC(from, ATechDate.FORMAT_DATE_ONLY);
-        long dt_to = ATechDate.getATDateTimeFromGC(to, ATechDate.FORMAT_DATE_ONLY);
-
         List<PumpDataExtendedH> lst = new ArrayList<PumpDataExtendedH>();
-
-        String sql = "";
 
         try
         {
-            sql = "SELECT dv from " + "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + "WHERE dv.dt_info >=  "
-                    + dt_from + "000000 AND dv.dt_info <= " + dt_to + "235959 ORDER BY dv.dt_info";
+            List<?> dataList = getListOfDatabaseObjectsRange(PumpDataExtendedH.class, from, to, "type", filter);
 
-            Query q = this.db.getSession().createQuery(sql);
+            // sql = "SELECT dv from " +
+            // "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + //
+            // "WHERE dv.dt_info >= " + dt_from + "000000 AND dv.dt_info <= " +
+            // dt_to + "235959";
+            //
+            // if (filter != null)
+            // {
+            // sql += " AND " + filter;
+            // }
+            //
+            // sql += " ORDER BY dv.dt_info";
+            //
+            // Query q = this.db.getSession().createQuery(sql);
+            //
+            // Iterator<?> it = q.list().iterator();
 
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
+            for (Object dataEntry : dataList)
             {
-                PumpDataExtendedH pdh = (PumpDataExtendedH) it.next();
+                PumpDataExtendedH pdh = (PumpDataExtendedH) dataEntry;
                 lst.add(pdh);
             }
 
         }
         catch (Exception ex)
         {
-            LOG.debug("Sql: " + sql);
+            // LOG.debug("Sql: " + sql);
             LOG.error("getRangePumpValuesExtendedRaw(). Exception: " + ex, ex);
         }
 
@@ -372,15 +619,13 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
             if (dV.isEntryAvailable(pvex.getDt_info()))
             {
-
                 PumpValuesEntry pve = (PumpValuesEntry) dV.getEntry(pvex.getDt_info());
                 pve.addAdditionalData(pvex);
             }
             else
             {
-
                 PumpValuesEntry pve = new PumpValuesEntry();
-                pve.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pvex.getDt_info()));
+                pve.setDateTimeObject(new ATechDate(ATechDateType.DateAndTimeSec, pvex.getDt_info()));
                 pve.setBaseType(PumpBaseType.AdditionalData.getCode());
 
                 pve.addAdditionalData(pvex);
@@ -395,7 +640,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      * Merge Daily Pump Data
      *
      * @param dvr
-     * @param lst_ext
+     * @param listExtended
      */
     public void mergeRangePumpData(DeviceValuesRange dvr, List<PumpDataExtendedH> listExtended)
     {
@@ -413,8 +658,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
             else
             {
                 // System.out.println("DeviceValuesDay Created");
-                ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pvex.getDt_info());
-                dvd = new DeviceValuesDay(m_da, atd.getGregorianCalendar());
+                ATechDate atd = new ATechDate(ATechDateType.DateAndTimeSec, pvex.getDt_info());
+                dvd = new DeviceValuesDay(dataAccess, atd.getGregorianCalendar());
                 dvr.addEntry(dvd);
             }
 
@@ -429,7 +674,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
             {
                 // System.out.println("PumpValuesEntry Created");
                 PumpValuesEntry pve = new PumpValuesEntry();
-                pve.setDateTimeObject(new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pvex.getDt_info()));
+                pve.setDateTimeObject(new ATechDate(ATechDateType.DateAndTimeSec, pvex.getDt_info()));
                 pve.setBaseType(PumpBaseType.AdditionalData.getCode());
 
                 pve.addAdditionalData(pvex);
@@ -491,7 +736,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
         String sql = "";
 
-        long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_AND_TIME_S);
+        long dt = ATechDate.getATDateTimeFromGC(gc, ATechDateType.DateAndTimeSec);
 
         try
         {
@@ -550,7 +795,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
             // " and dv.active_till < " + dtTill +
             // " and dv.active_till > " + dtFrom +
             " or (dv.active_till = 0) " + //
-                    " and dv.person_id=" + m_da.getCurrentUserId();
+                    " and dv.person_id=" + dataAccess.getCurrentUserId();
 
             // " and (dv.active_till < " + dtFrom +
 
@@ -619,11 +864,11 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
     {
         String sql = " SELECT dv " //
                 + " from ggc.core.db.hibernate.pump.PumpProfileH as dv " + " where dv.person_id="
-                + m_da.getCurrentUserId() //
+                + dataAccess.getCurrentUserId() //
                 + " and dv.active_from <> 0 and dv.active_till <> 0" + //
                 " and ( ";
 
-        int days = m_da.getDaysInInterval(gcFrom, gcTill);
+        int days = dataAccess.getDaysInInterval(gcFrom, gcTill);
 
         StringBuilder sb = new StringBuilder();
 
@@ -670,8 +915,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         // ATechDate.FORMAT_DATE_ONLY) * 10000;
 
         Criteria criteria = this.getSession().createCriteria(PumpDataH.class);
-        criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
-        criteria.add(Restrictions.like("extended", "%" + m_da.getSourceDevice() + "%"));
+        criteria.add(Restrictions.eq("person_id", (int) dataAccess.getCurrentUserId()));
+        criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
         // criteria.add(Restrictions.ge("dt_info", dt_from));
         criteria.setProjection(Projections.rowCount());
         in = (Integer) criteria.list().get(0);
@@ -680,8 +925,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         LOG.debug("  Pump Data : " + in.intValue());
 
         criteria = this.getSession().createCriteria(PumpDataExtendedH.class);
-        criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
-        criteria.add(Restrictions.like("extended", "%" + m_da.getSourceDevice() + "%"));
+        criteria.add(Restrictions.eq("person_id", (int) dataAccess.getCurrentUserId()));
+        criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
         // criteria.add(Restrictions.ge("dt_info", dt_from));
         // criteria.add(Restrictions.gt("id", minLogID));
         criteria.setProjection(Projections.rowCount());
@@ -691,8 +936,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         LOG.debug("  Pump Extended Data : " + in.intValue());
 
         criteria = this.getSession().createCriteria(PumpProfileH.class);
-        criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
-        criteria.add(Restrictions.like("extended", "%" + m_da.getSourceDevice() + "%"));
+        criteria.add(Restrictions.eq("person_id", (int) dataAccess.getCurrentUserId()));
+        criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
         // criteria.add(Restrictions.ge("active_from", dt_from));
         criteria.setProjection(Projections.rowCount());
         in = (Integer) criteria.list().get(0);
@@ -722,8 +967,8 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
             sql = "SELECT dv  " //
                     + "from ggc.core.db.hibernate.pump.PumpDataH as dv " //
-                    + "WHERE dv.extended like '%" + m_da.getSourceDevice() + "%' " //
-                    + "and dv.person_id=" + m_da.getCurrentUserId() //
+                    + "WHERE dv.extended like '%" + dataAccess.getSourceDevice() + "%' " //
+                    + "and dv.person_id=" + dataAccess.getCurrentUserId() //
                     + " ORDER BY dv.dt_info ";
 
             Query q = this.db.getSession().createQuery(sql);
@@ -752,7 +997,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
             sql = "SELECT dv from " //
                     + "ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + "WHERE dv.extended like '%"
-                    + m_da.getSourceDevice() + "%' " + "and dv.person_id=" + m_da.getCurrentUserId()
+                    + dataAccess.getSourceDevice() + "%' " + "and dv.person_id=" + dataAccess.getCurrentUserId()
                     + " ORDER BY dv.dt_info ";
 
             q = this.db.getSession().createQuery(sql);
@@ -780,7 +1025,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
             sql = "SELECT dv " //
                     + "from ggc.core.db.hibernate.pump.PumpProfileH as dv " + "WHERE dv.extended like '%"
-                    + m_da.getSourceDevice() + "%' " + " and dv.person_id=" + m_da.getCurrentUserId()
+                    + dataAccess.getSourceDevice() + "%' " + " and dv.person_id=" + dataAccess.getCurrentUserId()
                     + " ORDER BY dv.active_from ";
 
             q = this.db.getSession().createQuery(sql);
@@ -815,12 +1060,13 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
     }
 
 
+    // TODO this might be obsolote, use getGraphTimeData (not defined yet)
     public GraphValuesCollection getGraphData(GregorianCalendar gc_from, GregorianCalendar gc_to, int filter)
     {
         GraphValuesCollection gvc = new GraphValuesCollection(gc_from, gc_to);
 
         DeviceValuesRange dvr = getRangePumpValues(gc_from, gc_to);
-        ArrayList<DeviceValuesEntry> list = dvr.getAllEntries();
+        List<DeviceValuesEntry> list = dvr.getAllEntries();
 
         for (int i = 0; i < list.size(); i++)
         {
@@ -833,10 +1079,13 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
         }
 
-        // dvr.
-
-        // TODO Auto-generated method stub
-        return null;
+        return gvc;
     }
 
+
+    public GraphTimeDataCollection getGraphTimeData(GregorianCalendar gcFrom, GregorianCalendar gcTill,
+            GraphDefinitionDto definitionDto)
+    {
+        return null;
+    }
 }

@@ -49,8 +49,8 @@ import ggc.pump.util.DataAccessPump;
 
 // TODO: DL
 
-public class PumpProfile extends PumpProfileH implements BackupRestoreObject, DatabaseObjectHibernate,
-        SelectableInterface
+public class PumpProfile extends PumpProfileH
+        implements BackupRestoreObject, DatabaseObjectHibernate, SelectableInterface
 {
 
     private static final long serialVersionUID = 4355479385042532802L;
@@ -428,25 +428,16 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
 
     /**
-     * dbImport - processes input entry to right fields
-     *
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @throws Exception if import for selected table version is not supported or it fails
+     * {@inheritDoc}
      */
     public void dbImport(int table_version, String value_entry) throws Exception
     {
-        dbImport(table_version, value_entry, null);
+        dbImport(table_version, value_entry, (Object[]) null);
     }
 
 
     /**
-     * dbImport - processes input entry to right fields
-     *
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @param parameters parameters
-     * @throws Exception if import for selected table version is not supported or it fails
+     * {@inheritDoc}
      */
     public void dbImport(int table_version, String value_entry, Object[] parameters) throws Exception
     {
@@ -465,6 +456,24 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
         this.setPerson_id(da.getIntValueFromString(arr[7]));
         this.setComment(arr[8]);
         this.setChanged(da.getLongValueFromString(arr[9]));
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isNewImport()
+    {
+        return false;
     }
 
 
@@ -570,20 +579,20 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
 
             case 2:
                 return getDateDisplay(this.getActive_till());
-                /*
-                 * if (this.getActive_till() <= 0)
-                 * return "";
-                 * else
-                 * return
-                 * ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN
-                 * , this.getActive_till());
-                 */
+            /*
+             * if (this.getActive_till() <= 0)
+             * return "";
+             * else
+             * return
+             * ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN
+             * , this.getActive_till());
+             */
 
             default:
                 return getDateDisplay(this.getActive_from());
-                // return
-                // ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN,
-                // this.getActive_from());
+            // return
+            // ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN,
+            // this.getActive_from());
 
         }
     }
@@ -825,7 +834,7 @@ public class PumpProfile extends PumpProfileH implements BackupRestoreObject, Da
     public boolean isInProfileRange(long dateTimeAtechDateLong)
     {
         return ((this.getActive_from() <= dateTimeAtechDateLong) && //
-        (this.getActive_till() >= dateTimeAtechDateLong));
+                (this.getActive_till() >= dateTimeAtechDateLong));
     }
 
 }

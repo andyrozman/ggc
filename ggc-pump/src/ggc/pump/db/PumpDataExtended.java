@@ -1,10 +1,7 @@
 package ggc.pump.db;
 
-import ggc.core.db.hibernate.pump.PumpDataExtendedH;
-import ggc.core.util.DataAccess;
-import ggc.pump.util.DataAccessPump;
-
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,6 +11,10 @@ import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
+
+import ggc.core.db.hibernate.pump.PumpDataExtendedH;
+import ggc.core.util.DataAccess;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -52,12 +53,14 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     private boolean selected = false;
     I18nControlAbstract ic = null; // (I18nControl)DataAccess.getInstance().getI18nControlInstance();
 
+
     /**
      * Constructor
      */
     public PumpDataExtended()
     {
     }
+
 
     /**
      * Constructor
@@ -76,6 +79,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         this.setChanged(ch.getChanged());
     }
 
+
     /**
      * Constructor
      * 
@@ -85,6 +89,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         this.ic = _ic;
     }
+
 
     // ---
     // --- BackupRestoreObject
@@ -100,6 +105,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         return DataAccessPump.getInstance().getI18nControlInstance().getMessage("PUMP_DATA_EXTENDED");
     }
 
+
     /** 
      * Get Name
      * @return 
@@ -108,6 +114,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         return this.getTargetName();
     }
+
 
     /**
      * getBackupClassName - name of class which will be updated/restored
@@ -118,6 +125,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         return "ggc.core.db.hibernate.pump.PumpDataExtendedH";
     }
+
 
     /**
      * To String
@@ -130,6 +138,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         return this.getTargetName();
     }
 
+
     /** 
      * getChildren
      */
@@ -137,6 +146,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         return null;
     }
+
 
     /** 
      * isSelected
@@ -146,6 +156,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         return selected;
     }
 
+
     /** 
      * setSelected
      */
@@ -153,6 +164,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         this.selected = newValue;
     }
+
 
     /**
      * Is Object Collection
@@ -164,6 +176,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         return false;
     }
 
+
     /**
      * Has Children
      */
@@ -171,6 +184,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         return false;
     }
+
 
     /**
      * DbAdd - Add this object to database
@@ -201,6 +215,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         return "" + id.longValue();
     }
 
+
     /**
      * DbDelete - Delete this object in database
      * 
@@ -219,6 +234,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
 
         return true;
     }
+
 
     /**
      * DbEdit - Edit this object in database
@@ -250,6 +266,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
 
     }
 
+
     /**
      * DbGet - Loads this object. Id must be set.
      * 
@@ -273,6 +290,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         return true;
     }
 
+
     /**
      * DbHasChildren - Shows if this entry has any children object, this is needed for delete
      * 
@@ -284,6 +302,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         return false;
     }
+
 
     /** 
      * getAction
@@ -298,6 +317,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
      */
     public int TABLE_VERSION = 1;
 
+
     /**
      * Get Table Version - returns version of table
      * 
@@ -307,6 +327,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         return this.TABLE_VERSION;
     }
+
 
     /**
      * dbExport - returns export String, for current version 
@@ -340,6 +361,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         return sb.toString();
     }
 
+
     /**
      * dbExport - returns export String, for current version 
      *
@@ -350,6 +372,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         return dbExport(this.TABLE_VERSION);
     }
+
 
     /**
      * dbExportHeader - header for export file
@@ -363,6 +386,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
                 + getTableVersion() + "\n";
     }
 
+
     /**
      * dbExportHeader - header for export file
      * 
@@ -373,25 +397,18 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         return this.dbExportHeader(this.TABLE_VERSION);
     }
 
+
     /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @throws Exception if import for selected table version is not supported or it fails
+     * {@inheritDoc}
      */
     public void dbImport(int table_version, String value_entry) throws Exception
     {
-        dbImport(table_version, value_entry, null);
+        dbImport(table_version, value_entry, (Object[]) null);
     }
 
+
     /**
-     * dbImport - processes input entry to right fields
-     * 
-     * @param table_version version of table
-     * @param value_entry whole import line
-     * @param parameters parameters
-     * @throws Exception if import for selected table version is not supported or it fails
+     * {@inheritDoc}
      */
     public void dbImport(int table_version, String value_entry, Object[] parameters) throws Exception
     {
@@ -410,6 +427,25 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         this.setChanged(da.getLongValueFromString(arr[7]));
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isNewImport()
+    {
+        return false;
+    }
+
+
     /**
      * getBackupFile - name of backup file (base part)
      * 
@@ -419,6 +455,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         return "PumpDataExtendedH";
     }
+
 
     /**
      * getBackupClassName - name of class which will be updated/restored
@@ -430,6 +467,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         return "ggc.core.db.hibernate.pump.PumpDataExtendedH";
     }
 
+
     /** 
      * getObjectName
      */
@@ -437,6 +475,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         return "PumpDataExtended";
     }
+
 
     /** 
      * isDebugMode
@@ -446,6 +485,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         return false;
     }
 
+
     /**
      * getObjectUniqueId - get id of object
      * @return unique object id
@@ -454,6 +494,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     {
         return "";
     }
+
 
     /**
      * Has To Be Clean - if table needs to be cleaned before import

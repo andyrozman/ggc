@@ -9,39 +9,35 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.output.OutputWriter;
 import ggc.pump.defs.device.PumpDeviceHandler;
-import ggc.pump.util.DataAccessPump;
+import ggc.pump.device.dana.impl.DanaDeviceReader;
 
 /**
  * Created by andy on 21.10.15.
  */
 
-// uses old class
-public class DanaPumpHandler extends PumpDeviceHandler
+// uses DanaCommProtocolNRSJV1
+public class DanaPumpHandlerV2 extends PumpDeviceHandler
 {
 
     public DeviceHandlerType getDeviceHandlerKey()
     {
-        return DeviceHandlerType.DanaPumpHandler;
+        return DeviceHandlerType.DanaPumpHandlerV2;
     }
 
 
     public void readDeviceData(DeviceDefinition definition, Object connectionParameters, OutputWriter outputWriter)
             throws PlugInBaseException
     {
-        DanaDiabecare_III_R danaReader = new DanaDiabecare_III_R(getCommunicationPort(connectionParameters),
-                outputWriter, DataAccessPump.getInstance());
-        danaReader.readDeviceDataFull();
-        danaReader.close();
+        DanaDeviceReader reader = new DanaDeviceReader(getCommunicationPort(connectionParameters), outputWriter);
+        reader.readData();
     }
 
 
     public void readConfiguration(DeviceDefinition definition, Object connectionParameters, OutputWriter outputWriter)
             throws PlugInBaseException
     {
-        DanaDiabecare_III_R danaReader = new DanaDiabecare_III_R(getCommunicationPort(connectionParameters),
-                outputWriter, DataAccessPump.getInstance());
-        danaReader.readConfiguration();
-        danaReader.close();
+        DanaDeviceReader reader = new DanaDeviceReader(getCommunicationPort(connectionParameters), outputWriter);
+        reader.readConfiguration();
     }
 
 

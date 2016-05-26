@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.HexUtils;
 
+import ggc.plugin.comm.IBMCommunicationHandler;
 import ggc.plugin.data.DeviceValueConfigEntry;
-import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.AbstractOutputWriter;
@@ -19,13 +19,14 @@ import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.reader.AbstractDeviceReader;
 import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpValuesEntryProfile;
-import ggc.pump.data.PumpWriterValues;
-import ggc.pump.data.defs.*;
+import ggc.pump.data.defs.PumpAlarms;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.data.defs.PumpErrors;
 import ggc.pump.data.profile.ProfileSubPattern;
 import ggc.pump.device.dana.impl.data.defs.DanaDataType;
 
 /**
- * Created by andy on 11.03.15.
+ * Communication Protocol as used by Dana_III_R with IBMCommHandler
  */
 public class DanaCommProtocolV1 extends DanaCommProtocolAbstract
 {
@@ -189,21 +190,6 @@ public class DanaCommProtocolV1 extends DanaCommProtocolAbstract
 
     }
 
-    DeviceValuesWriter dvw = null;
-
-
-    private DeviceValuesWriter getWriter()
-    {
-
-        if (dvw == null)
-        {
-            createDeviceValuesWriter();
-        }
-
-        return dvw;
-
-    }
-
 
     /**
      * Get Error Mappings - Map pump specific errors to Pump Tool specific event
@@ -234,6 +220,13 @@ public class DanaCommProtocolV1 extends DanaCommProtocolAbstract
         alarm_map = new Hashtable<String, PumpAlarms>();
         alarm_map.put("17030", PumpAlarms.BatteryLow);
         alarm_map.put("26410", PumpAlarms.CartridgeLow);
+    }
+
+
+    @Override
+    protected void createCommunicationHandler() throws Exception
+    {
+        this.commHandler = new IBMCommunicationHandler(this.portName, getSerialSettings());
     }
 
 
@@ -294,7 +287,7 @@ public class DanaCommProtocolV1 extends DanaCommProtocolAbstract
                 // if (this.device_communicating)
                 {
                     disconnect();
-                    this.commHandler.close();
+                    this.commHandler.disconnectDevice();
                     // this.close();
                 }
             }
@@ -380,7 +373,7 @@ public class DanaCommProtocolV1 extends DanaCommProtocolAbstract
                 // if (this.device_communicating)
                 {
                     disconnect();
-                    this.commHandler.close();
+                    this.commHandler.disconnectDevice();
                 }
             }
             catch (Exception exx)
@@ -523,46 +516,6 @@ public class DanaCommProtocolV1 extends DanaCommProtocolAbstract
         // this.outputWriter.setSpecialProgress((int)proc_total);
         // //.setSubStatus(sub_status)
         this.outputWriter.setSpecialProgress(cur_ent); // .setSubStatus(sub_status)
-
-    }
-
-
-    private void createDeviceValuesWriter()
-    {
-        this.dvw = new DeviceValuesWriter();
-        this.dvw.setOutputWriter(this.outputWriter);
-
-        // added isNumeric, could cause problem
-
-        // bolus - standard
-        this.dvw.put("1_66",
-            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus, PumpBolusType.Normal, true));
-
-        // bolus - wave (this is unhandled, data is not all available)
-        this.dvw.put("1_69",
-            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus, PumpBolusType.Multiwave, false));
-
-        // daily insulin record
-        this.dvw.put("2_68",
-            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Report, PumpReport.InsulinTotalDay, true));
-
-        // CH (carbohydrates)
-        this.dvw.put("8_82",
-            new PumpWriterValues(PumpWriterValues.OBJECT_EXT, PumpAdditionalDataType.Carbohydrates, 0, true));
-        // prime
-        this.dvw.put("3_80", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
-                PumpEventType.PrimeInfusionSet, false));
-
-        // BG
-        this.dvw.put("6_71",
-            new PumpWriterValues(PumpWriterValues.OBJECT_EXT, PumpAdditionalDataType.BloodGlucose, 0, true));
-
-        // alarm
-        this.dvw.put("5_66",
-            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(), 0, false));
-
-        // error
-        this.dvw.put("4_2", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Error.getCode(), 0, false));
 
     }
 
@@ -746,19 +699,6 @@ public class DanaCommProtocolV1 extends DanaCommProtocolAbstract
         this.outputWriter.writeConfigurationData(pvec);
 
         // System.out.println(m_ic.getMessage(key) + " = " + value);
-    }
-
-
-    private String getTrueOrFalse(byte val)
-    {
-        if (val == 0)
-        {
-            return i18nControl.getMessage("FALSE");
-        }
-        else
-        {
-            return i18nControl.getMessage("TRUE");
-        }
     }
 
 }

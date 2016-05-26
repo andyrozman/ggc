@@ -10,6 +10,7 @@ import com.atech.utils.data.ATechDateType;
 
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
+import ggc.plugin.data.DeviceValuesRange;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.defs.PumpBasalType;
 import ggc.pump.data.defs.PumpBaseType;
@@ -194,6 +195,19 @@ public class PumpBasalManager
         }
 
         return profiles.values();
+    }
+
+
+    public Map<String, BasalRatesDayDTO> getBasalRatesFromData(DeviceValuesRange rangePumpValues)
+    {
+        List<PumpValuesEntry> pumpValuesEntryList = new ArrayList<PumpValuesEntry>();
+
+        for (DeviceValuesDay day : rangePumpValues.getDayEntries())
+        {
+            pumpValuesEntryList.addAll(getPumpValuesEntries(day));
+        }
+
+        return getBasalRatesFromData(pumpValuesEntryList);
     }
 
 

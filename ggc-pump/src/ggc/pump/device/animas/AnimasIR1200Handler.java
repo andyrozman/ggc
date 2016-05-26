@@ -44,14 +44,13 @@ public class AnimasIR1200Handler extends PumpDeviceHandler
             Object connectionParameters, //
             OutputWriter outputWriter) throws PlugInBaseException
     {
-        // try
-        {
-            AnimasPumpDeviceReader reader = new AnimasPumpDeviceReader( //
-                    getCommunicationPort(connectionParameters), //
-                    this.getAnimasDeviceType(definition), //
-                    outputWriter);
-            reader.readConfiguration();
-        }
+
+        AnimasPumpDeviceReader reader = new AnimasPumpDeviceReader( //
+                getCommunicationPort(connectionParameters), //
+                this.getAnimasDeviceType(definition), //
+                outputWriter);
+        reader.readConfiguration();
+
     }
 
 

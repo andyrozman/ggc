@@ -261,7 +261,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
 
         switch ((PumpHistoryEntryType) entry.getEntryType())
         {
-            // not implemented
+        // not implemented
             case ChangeBasalProfile_NewProfile:
             case ChangeBasalProfile_OldProfile:
             case SelectBasalProfile:
@@ -276,14 +276,14 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
             case AndyB4:
                 return RecordDecodeStatus.NotSupported;
 
-            // WORK IN PROGRESS
+                // WORK IN PROGRESS
 
-            // POSSIBLY READY
+                // POSSIBLY READY
 
             case BasalProfileStart:
                 return decodeBasalProfileStart(entry);
 
-            // **** Implemented records ****
+                // **** Implemented records ****
 
             case ChangeTime:
                 changeTimeRecord = entry;
@@ -353,7 +353,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
                 decodePrime(entry);
                 return RecordDecodeStatus.OK;
 
-            // **** Ignored Records - PUMP ****
+                // **** Ignored Records - PUMP ****
             case ClearAlarm:
             case ChangeTimeDisplay:
             case ChangeAlarmNotifyMode: // ChangeUtility:
@@ -364,7 +364,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
                 // entry.getEntryType().name());
                 return RecordDecodeStatus.Ignored;
 
-            // **** Ignored Records - CGMS ****
+                // **** Ignored Records - CGMS ****
             case BGReceived: // Ian3F:
             case SensorAlert: // Ian08
 
@@ -384,8 +384,8 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
         if (changeTimeRecord == null)
             return;
 
-        String timeChange = String.format(PumpEventType.DateTimeChanged.getValueTemplate(),
-            this.changeTimeRecord.getATechDate().getDateTimeString(), entry.getATechDate().getDateTimeString());
+        String timeChange = String.format(PumpEventType.DateTimeChanged.getValueTemplate(), this.changeTimeRecord
+                .getATechDate().getDateTimeString(), entry.getATechDate().getDateTimeString());
 
         writeData(PumpBaseType.Event, PumpEventType.DateTimeChanged, timeChange, entry.getATechDate());
 
@@ -396,7 +396,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
     private void decodeCalBGForPH(PumpHistoryEntry entry)
     {
         int high = (entry.getDatetime()[4] & 0x80) >> 7;
-        int bg = bitUtils.makeInt(high, getUnsignedInt(entry.getHead()[0]));
+        int bg = bitUtils.toInt(high, getUnsignedInt(entry.getHead()[0]));
 
         writeData(PumpBaseType.AdditionalData, PumpAdditionalDataType.BloodGlucose, "" + bg, entry.getATechDate());
     }
@@ -410,15 +410,14 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
 
     private void decodeBatteryActivity(PumpHistoryEntry entry)
     {
-        this.writeData(PumpBaseType.Event,
-            entry.getHead()[0] == 0 ? PumpEventType.BatteryRemoved : PumpEventType.BatteryReplaced,
-            entry.getATechDate());
+        this.writeData(PumpBaseType.Event, entry.getHead()[0] == 0 ? PumpEventType.BatteryRemoved
+                : PumpEventType.BatteryReplaced, entry.getATechDate());
     }
 
 
     private void decodeEndResultTotals(PumpHistoryEntry entry)
     {
-        float totals = bitUtils.makeInt(entry.getHead()[2], entry.getHead()[3]) * 0.025f;
+        float totals = bitUtils.toInt(entry.getHead()[2], entry.getHead()[3]) * 0.025f;
 
         this.writeData(PumpBaseType.Report, PumpReport.InsulinTotalDay, getFormattedFloat(totals, 2),
             entry.getATechDate());
@@ -510,11 +509,11 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
 
     private void decodePrime(PumpHistoryEntry entry)
     {
-        float amount = bitUtils.makeInt(entry.getHead()[2], entry.getHead()[3]) / 10.0f;
-        float fixed = bitUtils.makeInt(entry.getHead()[0], entry.getHead()[1]) / 10.0f;
+        float amount = bitUtils.toInt(entry.getHead()[2], entry.getHead()[3]) / 10.0f;
+        float fixed = bitUtils.toInt(entry.getHead()[0], entry.getHead()[1]) / 10.0f;
 
-        this.writeData(PumpBaseType.Event, PumpEventType.PrimeInfusionSet,
-            fixed > 0 ? getFormattedFloat(fixed, 1) : getFormattedFloat(amount, 1), entry.getATechDate());
+        this.writeData(PumpBaseType.Event, PumpEventType.PrimeInfusionSet, fixed > 0 ? getFormattedFloat(fixed, 1)
+                : getFormattedFloat(amount, 1), entry.getATechDate());
     }
 
 
@@ -553,9 +552,9 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
 
         if (MinimedDeviceType.isSameDevice(MinimedUtil.getDeviceType(), MinimedDeviceType.Minimed_523andHigher))
         {
-            bolus.setRequestedAmount(bitUtils.makeInt(data[0], data[1]) / 40.0f);
-            bolus.setDeliveredAmount(bitUtils.makeInt(data[2], data[3]) / 10.0f);
-            bolus.setInsulinOnBoard(bitUtils.makeInt(data[4], data[5]) / 40.0f);
+            bolus.setRequestedAmount(bitUtils.toInt(data[0], data[1]) / 40.0f);
+            bolus.setDeliveredAmount(bitUtils.toInt(data[2], data[3]) / 10.0f);
+            bolus.setInsulinOnBoard(bitUtils.toInt(data[4], data[5]) / 40.0f);
             bolus.setDuration(data[6] * 30);
         }
         else
@@ -565,8 +564,8 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
             bolus.setDuration(data[2] * 30);
         }
 
-        bolus.setBolusType(
-            (bolus.getDuration() != null && (bolus.getDuration() > 0)) ? PumpBolusType.Extended : PumpBolusType.Normal);
+        bolus.setBolusType((bolus.getDuration() != null && (bolus.getDuration() > 0)) ? PumpBolusType.Extended
+                : PumpBolusType.Normal);
         bolus.setATechDate(entry.getATechDate());
 
         if (bolusEntry != null)

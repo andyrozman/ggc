@@ -1,5 +1,10 @@
 package ggc.pump.plugin;
 
+import com.atech.db.hibernate.transfer.BackupRestoreObject;
+import com.atech.db.hibernate.transfer.BackupRestoreRunner;
+import com.atech.i18n.I18nControlAbstract;
+import com.atech.plugin.BackupRestorePlugin;
+
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.core.db.hibernate.pump.PumpProfileH;
@@ -9,11 +14,6 @@ import ggc.pump.db.PumpData;
 import ggc.pump.db.PumpDataExtended;
 import ggc.pump.db.PumpProfile;
 import ggc.pump.util.DataAccessPump;
-
-import com.atech.db.hibernate.transfer.BackupRestoreObject;
-import com.atech.db.hibernate.transfer.BackupRestoreRunner;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.plugin.BackupRestorePlugin;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -55,6 +55,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
                                     "ggc.core.db.hibernate.pump.PumpDataExtendedH",
                                     "ggc.core.db.hibernate.pump.PumpProfileH" };
 
+
     /**
      * Constructor
      */
@@ -62,6 +63,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
     {
         // i18nControlAbstract = I18nControl.getInstance();
     }
+
 
     /**
      * Do Backup
@@ -74,7 +76,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
         {
             if (brr.isBackupObjectSelected(this.object_desc[i]))
             {
-                System.out.println("Selected: " + this.object_desc[i]);
+                // System.out.println("Selected: " + this.object_desc[i]);
                 brr.setTask(this.object_desc[i]);
                 GGCExporter ge = new GGCExporter(brr);
                 ge.exportData(this.object_name[i]);
@@ -82,12 +84,13 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
             }
             else
             {
-                System.out.println("NOT Selected: " + this.object_desc[i]);
+                // System.out.println("NOT Selected: " + this.object_desc[i]);
             }
 
         }
 
     }
+
 
     /**
      * Do Restore
@@ -109,6 +112,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
 
     }
 
+
     /**
      * Get Backup Restore Object
      */
@@ -124,6 +128,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
         else
             return null;
     }
+
 
     /**
      * Get Backup Restore Object
@@ -150,6 +155,7 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
             return null;
 
     }
+
 
     /**
      * Does Contain Backup Restore Object

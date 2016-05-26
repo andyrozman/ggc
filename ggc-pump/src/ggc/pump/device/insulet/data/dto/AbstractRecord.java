@@ -61,21 +61,21 @@ public abstract class AbstractRecord
 
     public Short getShort(int[] data, int offset)
     {
-        Integer ii = bitUtils.makeInt(data[offset], data[offset + 1]);
+        Integer ii = bitUtils.toInt(data[offset], data[offset + 1]);
         return ii.shortValue();
     }
 
 
     public Short getShortInverted(int[] data, int offset)
     {
-        Integer ii = bitUtils.makeInt(data[offset], data[offset + 1], BitUtils.BitConversion.LITTLE_ENDIAN);
+        Integer ii = bitUtils.toInt(data[offset], data[offset + 1], BitUtils.BitConversion.LITTLE_ENDIAN);
         return ii.shortValue();
     }
 
 
     public Integer getShort2Inverted(int[] data, int offset)
     {
-        Integer ii = bitUtils.makeInt(data[offset], data[offset + 1], data[offset + 2],
+        Integer ii = bitUtils.toInt(data[offset], data[offset + 1], data[offset + 2],
             BitUtils.BitConversion.LITTLE_ENDIAN);
         return ii.intValue();
     }
@@ -83,20 +83,20 @@ public abstract class AbstractRecord
 
     public Short getShortInverted(int offset)
     {
-        Integer ii = bitUtils.makeInt(rawData[offset], rawData[offset + 1], BitUtils.BitConversion.LITTLE_ENDIAN);
+        Integer ii = bitUtils.toInt(rawData[offset], rawData[offset + 1], BitUtils.BitConversion.LITTLE_ENDIAN);
         return ii.shortValue();
     }
 
 
     public Integer getInt(List<Integer> data, int offset)
     {
-        return bitUtils.makeInt(data.get(offset), data.get(offset + 1), data.get(offset + 2), data.get(offset + 3));
+        return bitUtils.toInt(data.get(offset), data.get(offset + 1), data.get(offset + 2), data.get(offset + 3));
     }
 
 
     public Integer getInt(int[] data, int offset)
     {
-        return bitUtils.makeInt(data[offset], data[offset + 1], data[offset + 2], data[offset + 3]);
+        return bitUtils.toInt(data[offset], data[offset + 1], data[offset + 2], data[offset + 3]);
     }
 
 
@@ -181,7 +181,7 @@ public abstract class AbstractRecord
 
     public Integer getIntInverted(int[] data, int offset)
     {
-        return bitUtils.makeInt(data[offset], data[offset + 1], data[offset + 2], data[offset + 3],
+        return bitUtils.toInt(data[offset], data[offset + 1], data[offset + 2], data[offset + 3],
             BitUtils.BitConversion.LITTLE_ENDIAN);
     }
 

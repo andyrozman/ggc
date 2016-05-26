@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.TimeZoneUtil;
 
-import ggc.core.data.graph.GraphViewCGMSDailyAbstract;
+import ggc.core.data.graph.v1.view.GraphViewCGMSDailyAbstract;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesDay;

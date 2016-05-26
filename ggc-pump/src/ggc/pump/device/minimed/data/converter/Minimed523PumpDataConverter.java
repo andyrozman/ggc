@@ -59,8 +59,7 @@ public class Minimed523PumpDataConverter extends Minimed515PumpDataConverter
     {
         super.decodeCurrentSettings(minimedReply);
 
-        writeSetting("PCFG_BOLUS_SCROLL_STEP_SIZE", "" + minimedReply.getRawDataAsInt(21),
-            PumpConfigurationGroup.Bolus);
+        writeSetting("PCFG_BOLUS_SCROLL_STEP_SIZE", "" + minimedReply.getRawDataAsInt(21), PumpConfigurationGroup.Bolus);
 
         this.decodeEnableSetting("PCFG_CAPTURE_EVENT_ENABLE", minimedReply, 22, PumpConfigurationGroup.Other);
         this.decodeEnableSetting("PCFG_OTHER_DEVICE_ENABLE", minimedReply, 23, PumpConfigurationGroup.Other);
@@ -85,7 +84,7 @@ public class Minimed523PumpDataConverter extends Minimed515PumpDataConverter
     @Override
     public double decodeMaxBolus(byte ai[])
     {
-        return decodeBolusInsulin(this.bitUtils.makeInt(ai[5], ai[6]));
+        return decodeBolusInsulin(this.bitUtils.toInt(ai[5], ai[6]));
     }
 
 }

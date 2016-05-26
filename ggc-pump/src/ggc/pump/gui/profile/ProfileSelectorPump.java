@@ -206,9 +206,9 @@ public class ProfileSelectorPump extends SelectorAbstractDialog
     public void initSelectorValuesForType()
     {
         setSelectorObject(new PumpProfileType());
-        setSelectorName(ic.getMessage("PUMP_PROFILE_SELECTOR"));
+        setSelectorName(i18nControl.getMessage("PUMP_PROFILE_SELECTOR"));
         this.descriptions = new Hashtable<String, String>();
-        this.descriptions.put("DESC_1", ic.getMessage("NAME_OF_PROFILE"));
+        this.descriptions.put("DESC_1", i18nControl.getMessage("NAME_OF_PROFILE"));
         setAllowedActions(
             SelectorAbstractDialog.SELECTOR_ACTION_CANCEL | SelectorAbstractDialog.SELECTOR_ACTION_SELECT);
         this.setColumnSortingEnabled(false);
@@ -283,7 +283,7 @@ public class ProfileSelectorPump extends SelectorAbstractDialog
 
         public String getColumnName(int num)
         {
-            return ic.getMessage("NAME");
+            return i18nControl.getMessage("NAME");
         }
 
 

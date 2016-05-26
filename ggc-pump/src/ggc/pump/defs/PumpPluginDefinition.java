@@ -15,6 +15,7 @@ import com.atech.i18n.mgr.LanguageManager;
 import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.defs.DevicePluginDefinitionAbstract;
 import ggc.plugin.device.mgr.DeviceHandlerManager;
+import ggc.plugin.graph.PluginGraphDefinition;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.report.PluginReportDefinition;
 import ggc.pump.defs.report.PumpReportDefinition;
@@ -23,6 +24,7 @@ import ggc.pump.device.animas.AnimasIR1200Handler;
 import ggc.pump.device.dana.DanaPumpHandler;
 import ggc.pump.device.insulet.InsuletHandler;
 import ggc.pump.device.minimed.MinimedPumpDeviceHandler;
+import ggc.pump.graph.PumpGraphDefintion;
 import ggc.pump.util.DataAccessPump;
 import ggc.pump.util.GGCPumpICRunner;
 
@@ -34,8 +36,11 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
 
     private static final Logger LOG = LoggerFactory.getLogger(PumpPluginDefinition.class);
 
-    String PLUGIN_VERSION = "1.7.1";
+    String PLUGIN_VERSION = "2.0.1";
     String PLUGIN_NAME = "GGC Pump Plugin";
+
+    PumpReportDefinition reportsPumpDefinition;
+    PumpGraphDefintion graphsPumpDefinition;
 
 
     public PumpPluginDefinition(LanguageManager languageManager)
@@ -201,8 +206,6 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
         return this.i18nControl.getMessage("DEVICE_LIST_WEB_DESC");
     }
 
-    PumpReportDefinition reportsPumpDefinition;
-
 
     @Override
     public PluginReportDefinition getReportsDefinition()
@@ -211,7 +214,27 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
         {
             this.reportsPumpDefinition = new PumpReportDefinition((DataAccessPump) this.dataAccess);
         }
+
         return reportsPumpDefinition;
+    }
+
+
+    @Override
+    public PluginGraphDefinition getGraphsDefinition()
+    {
+        if (graphsPumpDefinition == null)
+        {
+            this.graphsPumpDefinition = new PumpGraphDefintion((DataAccessPump) this.dataAccess);
+        }
+
+        return graphsPumpDefinition;
+    }
+
+
+    @Override
+    public String getPluginActionsPrefix()
+    {
+        return "pumps_";
     }
 
 
@@ -236,5 +259,4 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
         deviceHandlerManager.addDeviceHandler(new MinimedPumpDeviceHandler((DataAccessPump) this.dataAccess));
 
     }
-
 }

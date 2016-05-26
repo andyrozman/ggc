@@ -2,6 +2,13 @@
 Changes file for GGC Pump Tool
 ==============================
 
+2.0.1 [26.5.2016] [Andy]
+- refactorings (code, db)
+- graphs for pump (the one from core), not complete yet
+- comments
+- dana refactoring
+- added code for minimed. not tested yet, disabled for now
+
 2.0.0 [11.12.2015]
 - change to PumpEventType, RatioType
 - changes to Bolus, BolusWizard, RatioDTO and TBR Dto

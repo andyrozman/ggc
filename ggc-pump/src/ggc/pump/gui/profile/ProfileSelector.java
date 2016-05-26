@@ -1,18 +1,18 @@
 package ggc.pump.gui.profile;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.core.db.hibernate.pump.PumpProfileH;
-import ggc.pump.db.PumpProfile;
-import ggc.pump.util.DataAccessPump;
-
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
+import com.atech.utils.ATSwingUtils;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.db.hibernate.pump.PumpProfileH;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,6 +28,7 @@ public class ProfileSelector extends SelectorAbstractDialog
      */
     DataAccessPump da_local = DataAccessPump.getInstance();
     boolean m_select = false;
+
 
     /**
      * Constructor
@@ -47,6 +48,7 @@ public class ProfileSelector extends SelectorAbstractDialog
 
         this.showDialog();
     }
+
 
     /**
      * Constructor
@@ -69,6 +71,7 @@ public class ProfileSelector extends SelectorAbstractDialog
 
         this.showDialog();
     }
+
 
     // /**
     // * Constructor
@@ -98,6 +101,7 @@ public class ProfileSelector extends SelectorAbstractDialog
         }
 
     }
+
 
     /** 
      * Check And Execute Action New
@@ -157,6 +161,7 @@ public class ProfileSelector extends SelectorAbstractDialog
         }
     }
 
+
     private PumpProfile getOpenProfile(String name)
     {
         for (int i = 0; i < this.full.size(); i++)
@@ -169,6 +174,7 @@ public class ProfileSelector extends SelectorAbstractDialog
         return null;
     }
 
+
     /** 
      * Check And Execute Action Select
      */
@@ -177,6 +183,7 @@ public class ProfileSelector extends SelectorAbstractDialog
     {
 
     }
+
 
     /** 
      * Get Full Data
@@ -189,6 +196,7 @@ public class ProfileSelector extends SelectorAbstractDialog
         this.full.addAll(da_local.getDb().getProfiles());
     }
 
+
     /**
      * Init Selector Values For Type
      */
@@ -196,12 +204,12 @@ public class ProfileSelector extends SelectorAbstractDialog
     public void initSelectorValuesForType()
     {
         setSelectorObject(new PumpProfile(DataAccessPump.getInstance().getI18nControlInstance()));
-        setSelectorName(ic.getMessage("PROFILE_SELECTOR"));
+        setSelectorName(i18nControl.getMessage("PROFILE_SELECTOR"));
 
         if (this.m_select)
         {
-            setAllowedActions(SelectorAbstractDialog.SELECTOR_ACTION_SELECT
-                    | SelectorAbstractDialog.SELECTOR_ACTION_CANCEL);
+            setAllowedActions(
+                SelectorAbstractDialog.SELECTOR_ACTION_SELECT | SelectorAbstractDialog.SELECTOR_ACTION_CANCEL);
             this.use_generic_select = true;
         }
         else
@@ -213,8 +221,9 @@ public class ProfileSelector extends SelectorAbstractDialog
         this.setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_DATE_BOTH);
         this.setHelpStringId("PumpTool_Profile_Selector");
         this.setHelpEnabled(true);
-        setNewItemString(ic.getMessage("NEW__PROFILE"));
+        setNewItemString(i18nControl.getMessage("NEW__PROFILE"));
     }
+
 
     /** 
      * Item State Changed

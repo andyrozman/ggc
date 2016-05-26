@@ -264,7 +264,7 @@ public class InsuletReader extends AbstractDeviceReader
 
     private int[] getRecord(List<Integer> data, int offset)
     {
-        int size = bitUtils.makeInt(data.get(offset), data.get(offset + 1));
+        int size = bitUtils.toInt(data.get(offset), data.get(offset + 1));
 
         int[] record = bitUtils.getIntSubArray(data, offset, size + 2);
 

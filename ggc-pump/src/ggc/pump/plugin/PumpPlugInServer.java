@@ -19,6 +19,7 @@ import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.graph.PlugInGraphDialog;
+import ggc.plugin.util.DataAccessPlugInBase;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.dto.BasalStatistics;
 import ggc.pump.db.PumpData;
@@ -58,55 +59,6 @@ import ggc.pump.util.DataAccessPump;
 public class PumpPlugInServer extends DevicePlugInServer
 {
 
-    // String plugin_version = "0.1.7.1";
-
-    // I18nControlAbstract ic_local = null;
-
-    /**
-     *  Command: Read Pump Data  
-     */
-    public static final int COMMAND_READ_PUMP_DATA = 0;
-
-    /**
-     *  Command: Pumps List  
-     */
-    public static final int COMMAND_PUMPS_LIST = 1;
-
-    /**
-     *  Command: Configuration  
-     */
-    public static final int COMMAND_CONFIGURATION = 2;
-
-    /**
-     *  Command: Profiles  
-     */
-    public static final int COMMAND_PROFILES = 3;
-
-    /**
-     *  Command: Manual Entry 
-     */
-    public static final int COMMAND_MANUAL_ENTRY = 4;
-
-    /**
-     *  Command: Additional Data  
-     */
-    public static final int COMMAND_ADDITIONAL_DATA = 5;
-
-    /**
-     *  Command: About  
-     */
-    public static final int COMMAND_ABOUT = 6;
-
-    /**
-     * This is action that needs to be done, after read data.
-     */
-    // public static final int RETURN_ACTION_READ_DATA = 1;
-
-    /**
-     * This is action that needs to be done, after config
-     */
-    // public static final int RETURN_ACTION_CONFIG = 2;
-
     /**
      * This is action that needs to be done, after config
      */
@@ -118,10 +70,6 @@ public class PumpPlugInServer extends DevicePlugInServer
      * Return Object: Selected Device with parameters
      */
     public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
-
-    private String commands[] = { "MN_PUMPS_READ_DESC", "MN_PUMPS_LIST_DESC", "MN_PUMPS_CONFIG_DESC",
-                                  "MN_PUMP_PROFILES_DESC", "MN_PUMPS_MANUAL_ENTRY_DESC",
-                                  "MN_PUMPS_ADDITIONAL_DATA_DESC", "MN_PUMPS_ABOUT" };
 
     private DataAccessPump dataAccessPump = null;
     private JMenuItem[] menus = new JMenuItem[4];
@@ -145,13 +93,13 @@ public class PumpPlugInServer extends DevicePlugInServer
 
         dataAccessPump = DataAccessPump.createInstance(getPluginDefinition(da));
         dataAccessPump.addComponent(cont);
+
+        this.dataAccessPlugInBase = dataAccessPump;
     }
 
 
     /**
-     * Get Name of plugin
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public String getName()
@@ -161,9 +109,17 @@ public class PumpPlugInServer extends DevicePlugInServer
 
 
     /**
-     * Get Version of plugin
-     * 
-     * @return
+     * {@inheritDoc}
+     */
+    @Override
+    public DataAccessPlugInBase getPlugInDataAccess()
+    {
+        return this.dataAccessPump;
+    }
+
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getVersion()
@@ -173,19 +129,7 @@ public class PumpPlugInServer extends DevicePlugInServer
 
 
     /**
-     * Get Information When will it be implemented
-     * 
-     * @return
-     */
-    @Override
-    public String getWhenWillBeImplemented()
-    {
-        return "0.4";
-    }
-
-
-    /**
-     * Init PlugIn which needs to be implemented 
+     * {@inheritDoc}
      */
     @Override
     public void initPlugIn()
@@ -201,6 +145,9 @@ public class PumpPlugInServer extends DevicePlugInServer
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     private PumpPluginDefinition getPluginDefinition(ATDataAccessLMAbstract da)
     {
         return new PumpPluginDefinition(da.getLanguageManager());
@@ -208,10 +155,7 @@ public class PumpPlugInServer extends DevicePlugInServer
 
 
     /**
-     * Get Return Object
-     * 
-     * @param ret_obj_id
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public Object getReturnObject(int ret_obj_id)
@@ -248,11 +192,7 @@ public class PumpPlugInServer extends DevicePlugInServer
 
 
     /**
-     * Get Return Object
-     * 
-     * @param ret_obj_id
-     * @param parameters
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public Object getReturnObject(int ret_obj_id, Object[] parameters)
@@ -287,42 +227,28 @@ public class PumpPlugInServer extends DevicePlugInServer
     }
 
 
-    /*
-     * private String getDT(GregorianCalendar gc)
-     * {
-     * return gc.get(GregorianCalendar.DAY_OF_MONTH) + "/" +
-     * gc.get(GregorianCalendar.MONTH) + "/" + gc.get(GregorianCalendar.YEAR) +
-     * " " + gc.get(GregorianCalendar.HOUR_OF_DAY) + ":" +
-     * gc.get(GregorianCalendar.MINUTE);
-     * }
-     */
-
     /**
-     * Get Backup Objects (if available)
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public BackupRestoreCollection getBackupObjects()
     {
-        I18nControlAbstract ic_pump = DataAccessPump.getInstance().getI18nControlInstance();
-        BackupRestoreCollection brc = new BackupRestoreCollection("PUMP_TOOL", ic_pump);
-        brc.addNodeChild(new PumpData(ic_pump));
-        brc.addNodeChild(new PumpDataExtended(ic_pump));
-        brc.addNodeChild(new PumpProfile(ic_pump));
+        if (backupRestoreCollection == null)
+        {
+            I18nControlAbstract ic_pump = DataAccessPump.getInstance().getI18nControlInstance();
 
-        return brc;
+            backupRestoreCollection = new BackupRestoreCollection("PUMP_TOOL", ic_pump);
+            backupRestoreCollection.addNodeChild(new PumpData(ic_pump));
+            backupRestoreCollection.addNodeChild(new PumpDataExtended(ic_pump));
+            backupRestoreCollection.addNodeChild(new PumpProfile(ic_pump));
+        }
+
+        return backupRestoreCollection;
     }
 
 
     /**
-     * Get PlugIn Main Menu 
-     * 
-     * This is new way to handle everything, previously we used to pass ActionListener items through
-     * plugin framework, but in new way, we will use this one. We just give main application menu,
-     * which contains all items accessible through menus.
-     *  
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public JMenu getPlugInMainMenu()
@@ -330,15 +256,6 @@ public class PumpPlugInServer extends DevicePlugInServer
         DataAccessPump dataAccessPump = DataAccessPump.getInstance();
 
         JMenu menu_pump = ATSwingUtils.createMenu("MN_PUMPS", null, ic_local);
-
-        // DeviceConfigEntry de =
-        // DataAccessPump.getInstance().getDeviceConfiguration().getSelectedDeviceInstance();
-
-        // DataAccessPump.getInstance().getDe
-
-        // plugin_read_data, plugin_read_config, plugin_list, plugin_config,
-        // plugin_read_data_file, plugin_read_config_file
-        // plugin_about
 
         JMenuItem menu = ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_READ_DATA", "MN_PUMPS_READ_DATA_DESC",
             "plugin_read_data", this, null, ic_local, dataAccessPump, parent);
@@ -370,8 +287,14 @@ public class PumpPlugInServer extends DevicePlugInServer
 
         menu_pump.addSeparator();
 
-        ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_MANUAL_ENTRY", "MN_PUMPS_MANUAL_ENTRY_DESC",
-            "pumps_manual_entry", this, null, ic_local, dataAccessPump, parent);
+        // this.createMenuItem(menux, "MN_DAILY", "MN_DAILY_DESC", "view_daily",
+        // "calendar.png");
+        // ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_MANUAL_ENTRY",
+        // "MN_PUMPS_MANUAL_ENTRY_DESC",
+        // "pumps_manual_entry", this, null, ic_local, dataAccessPump, parent);
+
+        ATSwingUtils.createMenuItem(menu_pump, "MN_PUMP_DAILY", "MN_PUMP_DAILY_DESC", "pumps_manual_entry", this,
+            "calendar.png", ic_local, dataAccessPump, parent);
 
         ATSwingUtils.createMenuItem(menu_pump, "MN_PUMPS_ADDITIONAL_DATA", "MN_PUMPS_ADDITIONAL_DATA_DESC",
             "pumps_additional_data", this, null, ic_local, dataAccessPump, parent);
@@ -386,11 +309,12 @@ public class PumpPlugInServer extends DevicePlugInServer
 
         menu_pump.addSeparator();
 
+        // TODO
         if (this.dataAccessPump.isDeveloperMode())
         {
             JMenu m = ATSwingUtils.createMenu("MN_PUMPS_GRAPHS", "MN_PUMPS_GRAPHS_DESC", menu_pump, ic_local);
 
-            ATSwingUtils.createMenuItem(m, "MN_PUMPS_GRAPH_CUSTOM", "MN_PUMPS_GRAPH_CUSTOM_DESC", "pumps_graph_custom",
+            ATSwingUtils.createMenuItem(m, "MN_PUMPS_GRAPH_CUSTOM", "MN_PUMPS_GRAPH_CUSTOM_DESC", "pumps_graph1_custom",
                 this, null, ic_local, dataAccessPump, parent);
 
             menu_pump.addSeparator();
@@ -410,6 +334,9 @@ public class PumpPlugInServer extends DevicePlugInServer
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     public void refreshMenusAfterConfig()
     {
         menus[0].setEnabled(
@@ -424,65 +351,7 @@ public class PumpPlugInServer extends DevicePlugInServer
 
 
     /**
-     * Get PlugIn Print Menus 
-     * 
-     * Since printing is also PlugIn specific we need to add Printing jobs to application.
-     *  
-     * @return
-     */
-    @Override
-    public JMenu[] getPlugInPrintMenus()
-    {
-        return dataAccessPump.getReportsDefinition().getPlugInPrintMenus(this);
-
-        //
-        // I18nControlAbstract icp =
-        // DataAccessPump.getInstance().getI18nControlInstance();
-        //
-        // JMenu menu_reports_pump = ATSwingUtils.createMenu("MN_PUMP",
-        // "MN_PUMP_PRINT_DESC", icp);
-        //
-        // ATSwingUtils.createMenuItem(menu_reports_pump,
-        // "MN_PUMP_PRINT_SIMPLE", "MN_PUMP_PRINT_SIMPLE_DESC",
-        // "report_print_pump_simple", this, "print.png", icp,
-        // DataAccessPump.getInstance(), parent);
-        //
-        // ATSwingUtils.createMenuItem(menu_reports_pump, "MN_PUMP_PRINT_EXT",
-        // "MN_PUMP_PRINT_EXT_DESC",
-        // "report_print_pump_ext", this, "print.png", icp,
-        // DataAccessPump.getInstance(), parent);
-        //
-        // ATSwingUtils.createMenuItem(menu_reports_pump,
-        // "MN_PUMP_PRINT_PROFILE", "MN_PUMP_PRINT_PROFILE_DESC",
-        // "report_print_profile", this, "print.png", icp,
-        // DataAccessPump.getInstance(), parent);
-        //
-        // ATSwingUtils.createMenuItem(menu_reports_pump,
-        // "MN_PUMP_PRINT_BASAL_CHECK", "MN_PUMP_PRINT_BASAL_CHECK_DESC",
-        // "report_print_basal_check", this, "print.png", icp,
-        // DataAccessPump.getInstance(), parent);
-        //
-        // ATSwingUtils.createMenuItem(menu_reports_pump,
-        // "MN_PUMP_PRINT_DAILY_TIMESHEET_1",
-        // "MN_PUMP_PRINT_DAILY_TIMESHEET_1_DESC",
-        // "report_print_daily_timesheet_1", this, "print.png", icp,
-        // DataAccessPump.getInstance(), parent);
-        //
-        // ATSwingUtils.createMenuItem(menu_reports_pump,
-        // "MN_PUMP_PRINT_DAILY_TIMESHEET_2",
-        // "MN_PUMP_PRINT_DAILY_TIMESHEET_2_DESC",
-        // "report_print_daily_timesheet_2", this, "print.png", icp,
-        // DataAccessPump.getInstance(), parent);
-        //
-        // JMenu[] mns = new JMenu[1];
-        // mns[0] = menu_reports_pump;
-        //
-        // return mns;
-    }
-
-
-    /** 
-     * Action Performed
+     * {@inheritDoc}
      */
     @Override
     public void actionPerformed(ActionEvent ae)
@@ -491,11 +360,7 @@ public class PumpPlugInServer extends DevicePlugInServer
 
         if (!executeBasePluginAction(command, DataAccessPump.getInstance()))
         {
-            if (command.startsWith("report_"))
-            {
-                dataAccessPump.getReportsDefinition().startPlugInPrintMenusAction(command);
-            }
-            else if (command.equals("pumps_manual_entry") || command.equals("pumps_additional_data"))
+            if (command.equals("pumps_manual_entry") || command.equals("pumps_additional_data"))
             {
                 new PumpDataDialog(DataAccessPump.getInstance(), (JFrame) this.parent);
                 this.client.executeReturnAction(PumpPlugInServer.RETURN_ACTION_READ_DATA);
@@ -504,59 +369,19 @@ public class PumpPlugInServer extends DevicePlugInServer
             {
                 new ProfileSelector(DataAccessPump.getInstance(), this.parent);
             }
-            else if (command.equals("pumps_graph_custom"))
+            else if (command.equals("pumps_graph1_custom"))
             {
                 new PlugInGraphDialog(DataAccessPump.getInstance(), null);
+            }
+            else if (command.startsWith("pump_graph_"))
+            {
+                dataAccessPump.getGraphsDefinition().startPlugInGraphMenuAction(command);
             }
             else
             {
                 System.out.println("PumpPlugInServer::Unknown Command: " + command);
             }
         }
-
-    }
-
-
-    private void actionPumpReports(String command)
-    {
-
-        // dataAccessPump.getReportsDefinition().startPlugInPrintMenusAction(command);
-
-        // if (command.equals("report_print_pump_simple"))
-        // {
-        // new PumpPrintDialog((JFrame) parent,
-        // PumpPrintDialog.PumpReportType.Simple);
-        // }
-        // else if (command.equals("report_print_pump_ext"))
-        // {
-        // new PumpPrintDialog((JFrame) parent,
-        // PumpPrintDialog.PumpReportType.Extended);
-        // }
-        // else if (command.equals("report_print_profile"))
-        // {
-        // new PumpPrintDialog((JFrame) parent,
-        // PumpPrintDialog.PumpReportType.Profiles);
-        // }
-        // else if (command.equals("report_print_basal_check"))
-        // {
-        // new PumpPrintDialog((JFrame) parent,
-        // PumpPrintDialog.PumpReportType.BasalCheck);
-        // }
-        // else if (command.equals("report_print_daily_timesheet_1"))
-        // {
-        // new PumpPrintDialog((JFrame) parent,
-        // PumpPrintDialog.PumpReportType.DailyTimesheet_Base);
-        // }
-        // else if (command.equals("report_print_daily_timesheet_2"))
-        // {
-        // new PumpPrintDialog((JFrame) parent,
-        // PumpPrintDialog.PumpReportType.DailyTimesheet_BaseCGMS);
-        // }
-        // else
-        // {
-        // System.out.println("PumpPlugInServer::Unknown Report Command: " +
-        // command);
-        // }
 
     }
 

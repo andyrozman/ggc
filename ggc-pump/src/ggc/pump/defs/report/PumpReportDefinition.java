@@ -58,19 +58,19 @@ public class PumpReportDefinition implements PluginReportDefinition
     {
         System.out.println("Reports def: getReportsNames");
         return new String[] { //
-                              this.i18nControl.getMessage("PUMP_DATA_BASE"), //
-                              this.i18nControl.getMessage("PUMP_DATA_EXT"), //
-                              this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
-                              this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
-                              this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
-                              this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_2"), //
-                // TIMESHEET_3 = 1 + Food
-                // TIMESHEET_4 = 1 + CGMS + Food
+        this.i18nControl.getMessage("PUMP_DATA_BASE"), //
+                this.i18nControl.getMessage("PUMP_DATA_EXT"), //
+                this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
+                this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
+                this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
+                this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_2"), //
+        // TIMESHEET_3 = 1 + Food
+        // TIMESHEET_4 = 1 + CGMS + Food
         };
     }
 
 
-    public void startPrintingAction(PluginPrintDialog pluginPrintDialog) throws Exception
+    public void startReportingAction(PluginPrintDialog pluginPrintDialog) throws Exception
     {
         PrintAbstractIText pa = null;
 
@@ -90,7 +90,8 @@ public class PumpReportDefinition implements PluginReportDefinition
             {
                 pa = new PrintPumpDataBase(dvr);
             }
-            else // if (selectedIndex == 1)
+            else
+            // if (selectedIndex == 1)
             {
                 pa = new PrintPumpDataExt(dvr);
             }
@@ -139,7 +140,7 @@ public class PumpReportDefinition implements PluginReportDefinition
      *
      * @return
      */
-    public JMenu[] getPlugInPrintMenus(DevicePlugInServer pluginServer)
+    public JMenu[] getPlugInReportMenus(DevicePlugInServer pluginServer)
     {
 
         this.pluginServer = pluginServer;
@@ -149,12 +150,12 @@ public class PumpReportDefinition implements PluginReportDefinition
 
         JMenu menu_reports_pump = ATSwingUtils.createMenu("MN_PUMP", "MN_PUMP_PRINT_DESC", this.i18nControl);
 
-        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_SIMPLE", "report_print_pump_simple");
-        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_EXT", "report_print_pump_ext");
-        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_PROFILE", "report_print_profile");
-        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_BASAL_CHECK", "report_print_basal_check");
-        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_DAILY_TIMESHEET_1", "report_print_daily_timesheet_1");
-        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_DAILY_TIMESHEET_2", "report_print_daily_timesheet_2");
+        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_SIMPLE", "pumps_report_simple");
+        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_EXT", "pumps_report_ext");
+        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_PROFILE", "pumps_report_profile");
+        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_BASAL_CHECK", "pumps_report_basal_check");
+        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_DAILY_TIMESHEET_1", "pumps_report_daily_timesheet_1");
+        addPrintMenuItem(menu_reports_pump, "MN_PUMP_PRINT_DAILY_TIMESHEET_2", "pumps_report_daily_timesheet_2");
 
         JMenu[] mns = new JMenu[1];
         mns[0] = menu_reports_pump;
@@ -170,31 +171,31 @@ public class PumpReportDefinition implements PluginReportDefinition
     }
 
 
-    public void startPlugInPrintMenusAction(String actionCommand)
+    public void startPlugInReportMenuAction(String actionCommand)
     {
         PumpReportType pumpReportType = null;
 
-        if (actionCommand.equals("report_print_pump_simple"))
+        if (actionCommand.equals("pumps_report_simple"))
         {
             pumpReportType = PumpReportType.Simple;
         }
-        else if (actionCommand.equals("report_print_pump_ext"))
+        else if (actionCommand.equals("pumps_report_ext"))
         {
             pumpReportType = PumpReportType.Extended;
         }
-        else if (actionCommand.equals("report_print_profile"))
+        else if (actionCommand.equals("pumps_report_profile"))
         {
             pumpReportType = PumpReportType.Profiles;
         }
-        else if (actionCommand.equals("report_print_basal_check"))
+        else if (actionCommand.equals("pumps_report_basal_check"))
         {
             pumpReportType = PumpReportType.BasalCheck;
         }
-        else if (actionCommand.equals("report_print_daily_timesheet_1"))
+        else if (actionCommand.equals("pumps_report_daily_timesheet_1"))
         {
             pumpReportType = PumpReportType.DailyTimesheet_Base;
         }
-        else if (actionCommand.equals("report_print_daily_timesheet_2"))
+        else if (actionCommand.equals("pumps_report_daily_timesheet_2"))
         {
             pumpReportType = PumpReportType.DailyTimesheet_BaseCGMS;
         }

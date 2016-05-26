@@ -64,6 +64,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
     HexUtils hex_utils = new HexUtils();
     private static final Logger LOG = LoggerFactory.getLogger(DanaDiabecare_III_R.class);
+
     private boolean device_communicating = true;
     int entries_current = 0;
     int entries_max = 100;

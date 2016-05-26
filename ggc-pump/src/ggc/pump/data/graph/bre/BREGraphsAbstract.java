@@ -1,10 +1,6 @@
 package ggc.pump.data.graph.bre;
 
-import ggc.core.data.graph.GGCGraphUtil;
-import ggc.pump.data.bre.BREDataCollection;
-import ggc.pump.util.DataAccessPump;
-
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -12,6 +8,10 @@ import org.jfree.chart.ChartPanel;
 
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.data.graph.v1.GGCGraphUtil;
+import ggc.pump.data.bre.BREDataCollection;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -52,6 +52,7 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
 
     GregorianCalendar gcx = new GregorianCalendar();
 
+
     /**
      * Constructor
      */
@@ -59,6 +60,7 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
     {
         super(DataAccessPump.getInstance());
     }
+
 
     /**
      * Get Help Id
@@ -70,6 +72,7 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
         return null;
     }
 
+
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      *
@@ -80,6 +83,7 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
     {
         return new Rectangle(100, 100, 500, 400);
     }
+
 
     /**
      * Get Time Ms
@@ -104,6 +108,7 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
         return gcx.getTimeInMillis();
     }
 
+
     /**
      * Set Data
      *
@@ -118,6 +123,7 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
         this.setPlot(chart);
     }
 
+
     /**
      * Create Chart Panel
      */
@@ -126,6 +132,7 @@ public abstract class BREGraphsAbstract extends AbstractGraphViewAndProcessor //
     {
         this.chart_panel = new ChartPanel(getChart(), true, true, true, true, false);
     }
+
 
     /**
      * Get Title (used by GraphViewer)

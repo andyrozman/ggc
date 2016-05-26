@@ -19,7 +19,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.utils.data.ATechDate;
 
-import ggc.core.data.graph.GGCGraphUtil;
+import ggc.core.data.graph.v1.GGCGraphUtil;
 import ggc.pump.data.profile.ProfileSubEntry;
 import ggc.pump.gui.profile.ProfileEditor;
 import ggc.pump.util.DataAccessPump;

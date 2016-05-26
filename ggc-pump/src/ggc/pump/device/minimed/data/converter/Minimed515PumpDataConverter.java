@@ -98,10 +98,9 @@ public class Minimed515PumpDataConverter extends Minimed512PumpDataConverter
 
         LOG.debug("convertCurrentSettings");
 
-        writeSetting(
-            "PCFG_MM_RESERVOIR_WARNING_TYPE_TIME", minimedReply.getRawDataAsInt(18) != 0
-                    ? "PCFG_MM_RESERVOIR_WARNING_TYPE_TIME" : "PCFG_MM_RESERVOIR_WARNING_TYPE_UNITS",
-            PumpConfigurationGroup.Other);
+        writeSetting("PCFG_MM_RESERVOIR_WARNING_TYPE_TIME",
+            minimedReply.getRawDataAsInt(18) != 0 ? "PCFG_MM_RESERVOIR_WARNING_TYPE_TIME"
+                    : "PCFG_MM_RESERVOIR_WARNING_TYPE_UNITS", PumpConfigurationGroup.Other);
 
         writeSetting("PCFG_MM_SRESERVOIR_WARNING_POINT", "" + minimedReply.getRawDataAsInt(19),
             PumpConfigurationGroup.Other);
@@ -187,7 +186,7 @@ public class Minimed515PumpDataConverter extends Minimed512PumpDataConverter
         int unit = rd[0];
 
         String unitName = unit == 1 ? //
-                GlucoseUnitType.mg_dL.getTranslation()
+        GlucoseUnitType.mg_dL.getTranslation()
                 : //
                 GlucoseUnitType.mmol_L.getTranslation();
 
@@ -221,8 +220,8 @@ public class Minimed515PumpDataConverter extends Minimed512PumpDataConverter
         int unit = rd[0];
 
         String unitName = unit == 1 ? //
-                getMessage("CFG_BASE_CARBOHYDRATE_UNIT_GRAMS_SHORT") + "/" + //
-                        getMessage("CFG_BASE_UNIT_UNIT_SHORT")
+        getMessage("CFG_BASE_CARBOHYDRATE_UNIT_GRAMS_SHORT") + "/" + //
+                getMessage("CFG_BASE_UNIT_UNIT_SHORT")
                 : //
                 getMessage("CFG_BASE_CARBOHYDRATE_UNIT_EXCH_SHORT") + "/" + //
                         getMessage("CFG_BASE_UNIT_UNIT_SHORT");
@@ -231,7 +230,7 @@ public class Minimed515PumpDataConverter extends Minimed512PumpDataConverter
         {
             RatioDTO ratioDTO = new RatioDTO(RatioType.InsulinCHRatio, j, //
                     getTimeFrom30MinInterval(rd[i]), //
-                    this.bitUtils.makeInt(rd[i + 1], rd[i + 2]), unitName);
+                    this.bitUtils.toInt(rd[i + 1], rd[i + 2]), unitName);
 
             writeSetting(ratioDTO.getType().getTranslation() + " #" + ratioDTO.getIndex(), ratioDTO.getSettingValue(),
                 ratioDTO, PumpConfigurationGroup.Bolus);

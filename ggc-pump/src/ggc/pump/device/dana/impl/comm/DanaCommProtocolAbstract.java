@@ -8,14 +8,16 @@ import org.slf4j.LoggerFactory;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
 
-import ggc.plugin.comm.IBMCommunicationHandler;
+import ggc.plugin.comm.SerialCommunicationAbstract;
+import ggc.plugin.comm.cfg.SerialSettings;
+import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
-import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.protocol.reader.AbstractDeviceReader;
+import ggc.pump.data.PumpWriterValues;
+import ggc.pump.data.defs.*;
 import ggc.pump.device.dana.impl.data.defs.DanaDataType;
 import ggc.pump.util.DataAccessPump;
-import gnu.io.SerialPort;
 
 /**
  * Created by andy on 11.03.15.
@@ -31,9 +33,10 @@ public abstract class DanaCommProtocolAbstract
     byte[] check_response = { 0x7e, 0x7e, (byte) 0xf2 };
     protected int errorCount;
     int currentYear;
+    DeviceValuesWriter dvw = null;
 
-    IBMCommunicationHandler commHandler;
-    private String portName;
+    SerialCommunicationAbstract commHandler;
+    protected String portName;
 
 
     public DanaCommProtocolAbstract(OutputWriter outputWriter, AbstractDeviceReader reader, String portName)
@@ -86,16 +89,34 @@ public abstract class DanaCommProtocolAbstract
     }
 
 
+    protected SerialSettings getSerialSettings()
+    {
+        SerialSettings serialSettings = new SerialSettings();
+        serialSettings.baudRate = 19200;
+
+        return serialSettings;
+    }
+
+
+    protected abstract void createCommunicationHandler() throws Exception;
+
+
     public void init()
     {
         try
         {
-            this.commHandler = new IBMCommunicationHandler(this.portName, null);
+
+            createCommunicationHandler();
+
+            /// this.commHandler = new IBMCommunicationHandler(this.portName,
+            /// getSerialSettings());
 
             // communcation settings for this meter(s)
-            this.commHandler.setCommunicationSettings(19200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
-                SerialPort.PARITY_NONE, SerialPort.FLOWCONTROL_NONE,
-                SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT | SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
+            // this.commHandler.setCommunicationSettings(19200,
+            // SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
+            // SerialPort.PARITY_NONE, SerialPort.FLOWCONTROL_NONE,
+            // SerialProtocol.SERIAL_EVENT_BREAK_INTERRUPT |
+            // SerialProtocol.SERIAL_EVENT_OUTPUT_EMPTY);
 
             this.errorCount = 0;
 
@@ -124,6 +145,59 @@ public abstract class DanaCommProtocolAbstract
             LOG.error("Exception on create:" + ex, ex);
             this.setDeviceStopped();
         }
+
+    }
+
+
+    protected DeviceValuesWriter getWriter()
+    {
+
+        if (dvw == null)
+        {
+            createDeviceValuesWriter();
+        }
+
+        return dvw;
+
+    }
+
+
+    private void createDeviceValuesWriter()
+    {
+        this.dvw = new DeviceValuesWriter();
+        this.dvw.setOutputWriter(this.outputWriter);
+
+        // added isNumeric, could cause problem
+
+        // bolus - standard
+        this.dvw.put("1_66",
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus, PumpBolusType.Normal, true));
+
+        // bolus - wave (this is unhandled, data is not all available)
+        this.dvw.put("1_69",
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Bolus, PumpBolusType.Multiwave, false));
+
+        // daily insulin record
+        this.dvw.put("2_68",
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Report, PumpReport.InsulinTotalDay, true));
+
+        // CH (carbohydrates)
+        this.dvw.put("8_82",
+            new PumpWriterValues(PumpWriterValues.OBJECT_EXT, PumpAdditionalDataType.Carbohydrates, 0, true));
+        // prime
+        this.dvw.put("3_80", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Event,
+                PumpEventType.PrimeInfusionSet, false));
+
+        // BG
+        this.dvw.put("6_71",
+            new PumpWriterValues(PumpWriterValues.OBJECT_EXT, PumpAdditionalDataType.BloodGlucose, 0, true));
+
+        // alarm
+        this.dvw.put("5_66",
+            new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Alarm.getCode(), 0, false));
+
+        // error
+        this.dvw.put("4_2", new PumpWriterValues(PumpWriterValues.OBJECT_BASE, PumpBaseType.Error.getCode(), 0, false));
 
     }
 
@@ -351,6 +425,19 @@ public abstract class DanaCommProtocolAbstract
             crc = crc16(data[offset + i], crc);
         }
         return crc;
+    }
+
+
+    protected String getTrueOrFalse(byte val)
+    {
+        if (val == 0)
+        {
+            return i18nControl.getMessage("FALSE");
+        }
+        else
+        {
+            return i18nControl.getMessage("TRUE");
+        }
     }
 
 }
