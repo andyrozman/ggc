@@ -85,6 +85,11 @@ Graphs (v1): (make them workable for Pen and add them for Pump)
     - data retrival: - gluco values
     - menus
 
+
+
+Graph: - Configuration CGMS for Graph (Low, High Value)
+
+
 (4)
 Release 0.7:  - prepare release
               - release

@@ -80,11 +80,12 @@
             <artifactId>ggc-nutri-tool</artifactId>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>net.sf.ggc</groupId>
             <artifactId>ggc-connect-tool</artifactId>
         </dependency>
-
+-->
 
         <dependency>
             <groupId>javax.help</groupId>
