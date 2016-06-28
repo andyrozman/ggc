@@ -36,7 +36,7 @@ public class AscensiaContourUsbReader
         communicationHandler = new Hid4JavaCommunicationHandler();
         communicationHandler.setTargetDevice(selectedDevice);
         communicationHandler.setAllowedDevices(handler.getAllowedDevicesList());
-        communicationHandler.setDelayForTimedReading(1000);
+        communicationHandler.setDelayForTimedReading(100);
         this.handler = handler;
     }
 
@@ -61,13 +61,22 @@ public class AscensiaContourUsbReader
 
             byte lastData;
 
+            if (debug)
+                System.out.println("Data size: " + data.size() + ", Data: " + data);
+
             if (data.size() == 0)
             {
                 lastData = 0x05;
+
+                if (debug)
+                    System.out.println("Last response, zero, data:  " + lastData);
             }
             else
             {
                 lastData = data.get(data.size() - 1);
+
+                if (debug)
+                    System.out.println("Last response, data:  " + lastData);
             }
 
             if (lastData == 0x15)
@@ -108,9 +117,10 @@ public class AscensiaContourUsbReader
 
         int ret = this.communicationHandler.writeWithReturn(packet);
 
-        if (ret == 0)
+        if (ret <= 0)
         {
-            LOG.error("Error on write to meter.");
+            String errorMessage = this.communicationHandler.getLastErrorMessage();
+            LOG.error("Error on write to meter. Error message: " + errorMessage);
             throw new PlugInBaseException(PlugInExceptionType.DeviceCouldNotBeContacted);
         }
         else

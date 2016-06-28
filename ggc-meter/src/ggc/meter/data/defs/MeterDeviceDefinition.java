@@ -18,10 +18,12 @@ import ggc.plugin.protocol.DeviceConnectionProtocol;
 public enum MeterDeviceDefinition implements DeviceDefinition
 {
 
-    AscensiaContourUsb(10007, "Contour USB", "ascensia_contour_usb.jpg", "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null,
-            DeviceImplementationStatus.Done, DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler,
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
-            2000, MeterDisplayInterfaceType.Simple),
+    AscensiaContourUsb(10007, "Contour USB", "ascensia_contour_usb.jpg", //
+            "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, //
+            DeviceProgressStatus.Special, "", 2000, //
+            MeterDisplayInterfaceType.Simple),
 
     AscensiaContourNext(10008, "Contour Next", "ascensia_contour_next.jpg", "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null,
             DeviceImplementationStatus.Done, DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler,
@@ -34,8 +36,8 @@ public enum MeterDeviceDefinition implements DeviceDefinition
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
             2000, MeterDisplayInterfaceType.Simple),
 
-    AscensiaContourNextLink(10010, "Contour Next Link", "ascensia_contour_nextlink.jpg",
-            "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.InProgress,
+    AscensiaContourNextLink(10010, "Contour Next Link", "ascensia_contour_nextlink.jpg", //
+            "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.InProgress, //
             DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler,
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
             2000, MeterDisplayInterfaceType.Simple),
