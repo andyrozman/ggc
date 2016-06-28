@@ -184,7 +184,7 @@ public class CGMSGraphDataHandler
         plot.setDomainAxis(dateAxis);
 
         // FIXME fix hardcoded values
-        ValueMarker markerHigh = new ValueMarker(dataAccess.getDisplayedBG(240));
+        ValueMarker markerHigh = new ValueMarker(dataAccess.getDisplayedBG(180));
         markerHigh.setPaint(Color.red);
 
         ValueMarker markerLow = new ValueMarker(dataAccess.getDisplayedBG(80));

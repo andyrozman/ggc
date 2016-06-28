@@ -51,7 +51,7 @@ public class NRSerialCommunicationHandler extends SerialCommunicationAbstract
 
     public void setSerialSettings(SerialSettings settings)
     {
-        this.serialSettings = serialSettings;
+        this.serialSettings = settings;
     }
 
 

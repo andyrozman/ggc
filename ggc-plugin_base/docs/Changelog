@@ -2,10 +2,11 @@
 Changes file for GGC Plug-In Base
 ==================================
 
-1.2.2 [18.5.2016] [Andy]
+1.2.2 [26.6.2016] [Andy]
 - extended CommunicationInterface
 - refactorings
 - added companies, deviceHandlers
+- Hid4Java Communication Handler switched to Hid4Java 0.4.x
 
 1.2.1 [2.2.2016] [Andy]
 - changes DeviceValues
