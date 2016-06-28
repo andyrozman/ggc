@@ -1,25 +1,8 @@
 package ggc.gui.dialogs;
 
-import ggc.core.data.DailyValuesRow;
-import ggc.core.util.DataAccess;
-
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.StringTokenizer;
-
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.graphics.dialogs.TransferDialog;
@@ -27,6 +10,9 @@ import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATSwingUtils;
+
+import ggc.core.data.DailyValuesRow;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -55,32 +41,33 @@ import com.atech.utils.ATSwingUtils;
 
 // DEPRECATED
 
-public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements ActionListener, HelpCapable
+public class DailyRowMealsDialog extends TransferDialog /* JDialog */ implements ActionListener, HelpCapable
 {
 
     private static final long serialVersionUID = 6763016271693781911L;
 
-    private static Log log = LogFactory.getLog(DailyRowMealsDialog.class);
+    private static Logger LOG = LoggerFactory.getLogger(DailyRowMealsDialog.class);
+
     private I18nControlAbstract m_ic = null;
-    //private DataAccess m_da = DataAccess.getInstance();
-//    private GGCProperties props = m_da.getSettings();
+    // private DataAccess m_da = DataAccess.getInstance();
+    // private GGCProperties props = m_da.getSettings();
 
     JLabel label_title;
     JDecimalTextField ftf_ch;
     JTextArea text_area;
-    
-    //DateTimeComponent dtc;
-    //JButton AddButton;
-    //String sDate = null;
-    //DailyValues dV = null;
+
+    // DateTimeComponent dtc;
+    // JButton AddButton;
+    // String sDate = null;
+    // DailyValues dV = null;
     DailyValuesRow m_dailyValuesRow = null;
 
-    //NumberFormat bg_displayFormat, bg_editFormat;
+    // NumberFormat bg_displayFormat, bg_editFormat;
 
     JComponent components[] = new JComponent[9];
 
-    //Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
-    //Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
+    // Font f_normal = m_da.getFont(DataAccess.FONT_NORMAL);
+    // Font f_bold = m_da.getFont(DataAccess.FONT_NORMAL);
     boolean in_process;
     boolean debug = true;
     JButton help_button = null;
@@ -89,12 +76,12 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
 
     String food_desc;
     String food_ch;
-    
+
     boolean transfer_mode = false;
     Component parent;
-    
-    
-    //private Container m_parent = null;
+
+
+    // private Container m_parent = null;
 
     /**
      * Constructor
@@ -104,14 +91,14 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
      */
     public DailyRowMealsDialog(DailyValuesRow row, JDialog dialog)
     {
-        super(dialog); //, "", true);
+        super(dialog); // , "", true);
 
         parent = dialog;
         this.m_da = DataAccess.getInstance();
         this.m_ic = m_da.getI18nControlInstance();
-        //m_parent = dialog;
+        // m_parent = dialog;
         this.m_dailyValuesRow = row;
-        
+
         init();
         load();
         m_da.centerJDialog(this);
@@ -127,19 +114,19 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
      */
     public DailyRowMealsDialog(JFrame parent)
     {
-        super(parent); //, "", true);
+        super(parent); // , "", true);
 
         this.parent = parent;
-        //m_parent = dialog;
-        //this.m_dailyValuesRow = row;
+        // m_parent = dialog;
+        // this.m_dailyValuesRow = row;
         transfer_mode = true;
         init();
-        //load();
-        //m_da.centerJDialog(this);
+        // load();
+        // m_da.centerJDialog(this);
 
-        
     }
-    
+
+
     /**
      * Constructor
      * 
@@ -147,23 +134,22 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
      */
     public DailyRowMealsDialog(JDialog parent)
     {
-        super(parent); //, "", true);
+        super(parent); // , "", true);
 
         this.parent = parent;
-        //m_parent = dialog;
-        //this.m_dailyValuesRow = row;
+        // m_parent = dialog;
+        // this.m_dailyValuesRow = row;
         transfer_mode = true;
-        //init();
-        //load();
-        //m_da.centerJDialog(this);
+        // init();
+        // load();
+        // m_da.centerJDialog(this);
 
-        
     }
-    
+
 
     private void load()
     {
-        
+
         if (this.transfer_mode)
         {
             this.text_area.setText(this.food_desc);
@@ -174,52 +160,44 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
             this.text_area.setText(this.m_dailyValuesRow.getFoodDescription());
             this.ftf_ch.setValue(m_da.getFloatValueFromString(this.m_dailyValuesRow.getFoodDescriptionCH(), 0.0f));
         }
-            
-         /*   
-        String ch = this.m_dailyValuesRow.getFoodDescriptionCH();
-        
-        
-        
-        if (ch!=null)
-        {
-            
-        
-            System.out.println("CH:" + ch);
-            
-            ch = ch.replace(DataAccess.false_decimal, DataAccess.real_decimal);
-            
-            ch = ch.replace(",", ".");
-    
-            try
-            {
-                float f = Float.parseFloat(ch);
-                System.out.println("CH:" + f);
-                
-                this.ftf_ch.setValue(f);
-            }
-            catch(Exception ex)
-            {
-                System.out.println("load ex: " + ex);
-            }
-        }
-        } */
+
+        /*
+         * String ch = this.m_dailyValuesRow.getFoodDescriptionCH();
+         * if (ch!=null)
+         * {
+         * System.out.println("CH:" + ch);
+         * ch = ch.replace(DataAccess.false_decimal, DataAccess.real_decimal);
+         * ch = ch.replace(",", ".");
+         * try
+         * {
+         * float f = Float.parseFloat(ch);
+         * System.out.println("CH:" + f);
+         * this.ftf_ch.setValue(f);
+         * }
+         * catch(Exception ex)
+         * {
+         * System.out.println("load ex: " + ex);
+         * }
+         * }
+         * }
+         */
 
     }
 
-    
+
     private void save()
     {
-        
-//        System.out.println(this.ftf_ch.getValue());
-//        System.out.println(this.ftf_ch.getCurrentValue());
-        
-        float ch = m_da.getFloatValue(this.ftf_ch.getCurrentValue()); 
-        //ch = ch.replace(DataAccess.false_decimal, DataAccess.real_decimal);
 
-//        System.out.println("Save.Float= " + ch);
-  
-        String val = null; 
-        if (ch>0)
+        // System.out.println(this.ftf_ch.getValue());
+        // System.out.println(this.ftf_ch.getCurrentValue());
+
+        float ch = m_da.getFloatValue(this.ftf_ch.getCurrentValue());
+        // ch = ch.replace(DataAccess.false_decimal, DataAccess.real_decimal);
+
+        // System.out.println("Save.Float= " + ch);
+
+        String val = null;
+        if (ch > 0)
             val = "" + ch;
         else
             val = "";
@@ -232,37 +210,31 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
         else
         {
             this.m_dailyValuesRow.setFoodDescription(this.text_area.getText());
-            this.m_dailyValuesRow.setFoodDescriptionCH(val); //DataAccess.Decimal2Format.format(ch));
+            this.m_dailyValuesRow.setFoodDescriptionCH(val); // DataAccess.Decimal2Format.format(ch));
         }
-            
 
     }
-    
 
-
-    
 
     private void init()
     {
         m_da.addComponent(this);
-        
+
         ATSwingUtils.initLibrary();
-        
-        
+
         int x = 0;
         int y = 0;
         int width = 400;
         int height = 340;
 
         /*
-        Rectangle bnd = m_parent.getBounds();
+         * Rectangle bnd = m_parent.getBounds();
+         * x = (bnd.width / 2) + bnd.x - (width / 2);
+         * y = (bnd.height / 2) + bnd.y - (height / 2);
+         */
 
-        x = (bnd.width / 2) + bnd.x - (width / 2);
-        y = (bnd.height / 2) + bnd.y - (height / 2);
-        */
-        
         this.setBounds(x, y, width, height);
-        
+
         m_da.centerJDialog(this);
 
         JPanel panel = new JPanel();
@@ -274,38 +246,32 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
         this.getContentPane().add(panel);
 
         setTitle(m_ic.getMessage("FOOD_BY_DESCRIPTION_TITLE"));
-        label_title = ATSwingUtils.getTitleLabel(m_ic.getMessage("FOOD_BY_DESCRIPTION_TITLE"), 
-            0, 15, 400, 35, panel, 
+        label_title = ATSwingUtils.getTitleLabel(m_ic.getMessage("FOOD_BY_DESCRIPTION_TITLE"), 0, 15, 400, 35, panel,
             ATSwingUtils.FONT_BIG_BOLD);
-        
-        ATSwingUtils.getLabel(m_ic.getMessage("DESCRIBE_FOODS"), 
-            40, 65, 310, 50, panel);
-        
+
+        ATSwingUtils.getLabel(m_ic.getMessage("DESCRIBE_FOODS"), 40, 65, 310, 50, panel);
+
         this.text_area = new JTextArea();
         this.text_area.setLineWrap(true);
         JScrollPane scr = new JScrollPane(text_area);
-        scr.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER|JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scr.setHorizontalScrollBarPolicy(
+            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER | JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scr.setBounds(40, 115, 310, 75);
         panel.add(scr);
-        
-        ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") +":", 
-            40, 210, 100, 25, panel);
-        
-        this.ftf_ch = ATSwingUtils.getNumericTextField(2, 2, 
-            new Float(0.0f), 160, 210, 55, 25, panel); 
-            
-        ATSwingUtils.getButton(m_ic.getMessage("CALCULATE"), 
-            230, 210, 120, 25, 
-            panel, ATSwingUtils.FONT_NORMAL, null, "calculate", this, m_da);
-        
-        ATSwingUtils.getButton(m_ic.getMessage("OK"), 
-            30, 260, 110, 25, 
-            panel, ATSwingUtils.FONT_NORMAL, "ok.png", "ok", this, m_da);
-        
-        ATSwingUtils.getButton(m_ic.getMessage("CANCEL"), 
-            145, 260, 110, 25, 
-            panel, ATSwingUtils.FONT_NORMAL, "cancel.png", "cancel", this, m_da);
-        
+
+        ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", 40, 210, 100, 25, panel);
+
+        this.ftf_ch = ATSwingUtils.getNumericTextField(2, 2, new Float(0.0f), 160, 210, 55, 25, panel);
+
+        ATSwingUtils.getButton(m_ic.getMessage("CALCULATE"), 230, 210, 120, 25, panel, ATSwingUtils.FONT_NORMAL, null,
+            "calculate", this, m_da);
+
+        ATSwingUtils.getButton(m_ic.getMessage("OK"), 30, 260, 110, 25, panel, ATSwingUtils.FONT_NORMAL, "ok.png", "ok",
+            this, m_da);
+
+        ATSwingUtils.getButton(m_ic.getMessage("CANCEL"), 145, 260, 110, 25, panel, ATSwingUtils.FONT_NORMAL,
+            "cancel.png", "cancel", this, m_da);
+
         help_button = m_da.createHelpButtonByBounds(260, 260, 110, 25, this);
         panel.add(help_button);
         m_da.enableHelp(this);
@@ -316,66 +282,67 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
     private void calculateCH()
     {
         String txt = this.text_area.getText();
-        
-        if ((txt.length()==0) || (!txt.contains("[")))
+
+        if ((txt.length() == 0) || (!txt.contains("[")))
         {
-            JOptionPane.showMessageDialog(this, 
-                m_ic.getMessage("NO_DESCRIPTIONS_WITH_CH"), 
-                m_ic.getMessage("WARNING"), JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, m_ic.getMessage("NO_DESCRIPTIONS_WITH_CH"), m_ic.getMessage("WARNING"),
+                JOptionPane.WARNING_MESSAGE);
         }
         else
         {
             float sum = this.calculationInternal(this.text_area.getText());
             System.out.println("doing calcualtion: " + sum);
-            
+
             this.ftf_ch.setValue(new Float(sum));
         }
-            
+
     }
-    
+
+
     private float calculationInternal(String text)
     {
         float sum = 0.0f;
-        
+
         StringTokenizer strtok = new StringTokenizer(text, "[");
         strtok.nextToken();
-        
-        while(strtok.hasMoreTokens())
+
+        while (strtok.hasMoreTokens())
         {
             String t = strtok.nextToken();
-            
-            //System.out.println("Token: " + t);
-            
-            if (t.indexOf("]")==-1)
+
+            // System.out.println("Token: " + t);
+
+            if (t.indexOf("]") == -1)
                 continue;
-                
+
             t = t.substring(0, t.indexOf("]"));
-            //System.out.println("Bef: " + t);
-            
-            t = t.replace(",", "."); //DataAccess.false_decimal, DataAccess.real_decimal);
+            // System.out.println("Bef: " + t);
 
-//            System.out.println("False dec: " + DataAccess.false_decimal + " rwal=" + DataAccess.real_decimal);
+            t = t.replace(",", "."); // DataAccess.false_decimal,
+                                     // DataAccess.real_decimal);
 
-            //System.out.println("Aff: " + t);
+            // System.out.println("False dec: " + DataAccess.false_decimal + "
+            // rwal=" + DataAccess.real_decimal);
+
+            // System.out.println("Aff: " + t);
             try
             {
                 float f = Float.parseFloat(t);
-//                System.out.println("entry: " + f);
+                // System.out.println("entry: " + f);
                 sum += f;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                log.error("Error on parse: [token=" + t + ",exception=" + ex + "]", ex );
-                //System.out.println("Ex: " + ex);
+                LOG.error("Error on parse: [token=" + t + ",exception=" + ex + "]", ex);
+                // System.out.println("Ex: " + ex);
             }
         }
-        
+
         return sum;
-        
+
     }
-    
+
     boolean was_action = false;
-    
 
 
     /**
@@ -401,12 +368,13 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
             calculateCH();
         }
         else
-            log.error("DailyRowMealsDialog::unknown command: " + action);
-            //System.out.println("DailyRowMealsDialog::unknown command: " + action);
+            LOG.error("DailyRowMealsDialog::unknown command: " + action);
+        // System.out.println("DailyRowMealsDialog::unknown command: " +
+        // action);
 
     }
 
-    
+
     private void removeAndClose()
     {
         m_da.removeComponent(this);
@@ -414,23 +382,24 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
         this.dispose();
 
         /*
-        if (da_local!=null)
-        {
-            da_local.removeComponent(this);
-            //this.setVisible(false);
-            this.dispose();
-        }
-        else
-        {
-            this.dispose();
-        }*/
+         * if (da_local!=null)
+         * {
+         * da_local.removeComponent(this);
+         * //this.setVisible(false);
+         * this.dispose();
+         * }
+         * else
+         * {
+         * this.dispose();
+         * }
+         */
     }
-    
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
     // ****************************************************************
-    
+
     /**
      * getComponent - get component to which to attach help context
      */
@@ -439,6 +408,7 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      */
@@ -446,6 +416,7 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
     {
         return this.help_button;
     }
+
 
     /**
      * getHelpId - get id for Help
@@ -482,7 +453,6 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
         return ob;
     }
 
-    
     /**
      * Input Parameter: Parent Dialog
      */
@@ -492,12 +462,12 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
      * Input Parameter: Data Access
      */
     public static final int PARAMETER_DATA_ACCESS = 1;
-    
+
     /**
      * Input Parameter: Food Description
      */
     public static final int PARAMETER_FOOD_DESC = 2;
-    
+
     /**
      * Input Parameter: Food Ch
      */
@@ -513,16 +483,16 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
     public void setInputParameters(Object[] ip)
     {
         this.was_action = false;
-        JDialog di = (JDialog)ip[0];
+        JDialog di = (JDialog) ip[0];
         this.parent = di;
-        
-        m_da = (ATDataAccessAbstract)ip[1];
-        food_desc = (String)ip[2];
-        food_ch = (String)ip[3];
-        
-        //m_da.addComponent(this);
-        //m_da.centerJDialog(this, di);
-        
+
+        m_da = (ATDataAccessAbstract) ip[1];
+        food_desc = (String) ip[2];
+        food_ch = (String) ip[3];
+
+        // m_da.addComponent(this);
+        // m_da.centerJDialog(this, di);
+
         init();
         load();
     }
@@ -562,5 +532,5 @@ public class DailyRowMealsDialog extends TransferDialog /*JDialog*/ implements A
     {
         return 4;
     }
-    
+
 }
