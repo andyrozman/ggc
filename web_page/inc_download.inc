@@ -48,6 +48,31 @@
 
     <h3>GGC Releases</h3>
 
+    <h4>Version 0.7.0 [June 2016]</h4>
+
+    <ul>
+       <li><b>I am sorry but I couldn't make windows installer this time.</b></li>
+
+        <li>
+            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.7.0/GGC_0.7.0.zip/download">GGC
+                0.7.0 (Full) Zip file</a>
+        </li>
+
+        <li>
+            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.7.0/GGC_Update_0.7.0.zip/download">GGC
+                0.7.0 Update Zip file</a>
+        </li>
+
+
+    <h4>Version 0.6.1 [October 2015]</h4>
+
+    <ul>
+        <li>
+            <a href="http://sourceforge.net/projects/ggc/files/GNU%20Gluco%20Control/GGC%200.6.1/GGC_Update_0.6.1.zip/download">GGC
+                0.6.1 Update Zip file</a>
+        </li>
+
+    </ul>
 
     <h4>Version 0.6.0 [August 2015]</h4>
 

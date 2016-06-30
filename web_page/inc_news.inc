@@ -3,29 +3,71 @@
 <h2 class="head">News</h2>
 
 
+    <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+        <tr class="newsheader">
+            <td width="150">2016-06-29</td>
+            <td>Release 0.7.0</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                It's been long time, again... since the last release... Unfortunately my "real" life got in the way
+                of GGC development again.<br>
+                I know I promised that Minimed support comes with next version, but I didn't have time do a lot of
+                development and testing with Minimed. I can report, that basic support is done, but everything else
+                is untested. You can test it yourself if you want, but like I said it might not work... If you do the
+                testing, please send us the log files, so that we can anlyze it and see if it works, or if it works
+                correctly. I just got news that it might not work anymore on never Linux (it seems that USB 3.0 support
+                broke support for Carelink USB).<br>
+                Changes in this version:<br>
+                - I changed menus a little, different grouping
+                - added graphs from Pen to Pump (this is still work in progress, but at least some things should be working)
+                - added/changed reports, they now contain also CGMS data (Daily Time Sheet report for Pump)
+                - added some daily/weekly graphs for CGMS
+                - minor change for Contour USB meters (it seems that library we are using has a bug, so reading of data
+                  takes a long time (about 2 min for all entries)... We are looking to remedy the problem ASAP).
+                  We added development version
+                  of library to our project, so that we can test this and possibly find a solution in near future.
+                <br>
+                If you find some problems please report and I will try to make a fix release if needed.<br>
+                <br>
+                Next release is planned for end of year 2016. I will try to get final version of Minimed
+                support in project, but it all depends if we can solve Carelink USB problem. There should also
+                be some new meters added (Menarini and some Arkray models).
+                <br>
+                Any help from any of you is greatly appreciated... I try to reply to each mail I get...
+        </tr>
+    </table>
+
+    <br><br>
+
+
+
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
-<td width="150">2014-08-01</td>
+<td width="150">2015-10-08</td>
 <td>Release 0.6.1</td>
 </tr>
 <tr>
 <td colspan="2">
-You are probably wondering if everything is OK, since new release is already here... And here comes
-the explanation... I planned new release at end of year (I usually try to make 2 releases in year, but
+You are probably wondering if everything is OK, since new release is already here...<br>And here comes
+the explanation...<br>I planned new release at end of year (I usually try to make 2 releases in year, but
 mostly it happens that there is only one), so I made plan for features and I divided them into simple and hard
 tasks... Simple are tasks that are now in this release, this includes several bug fixes, basal statistics, fixed graphs
 for pump (now we have finally all data displayed... sorry no CGMS in Pump Daily Graph for now) and finally
-implementation of Contour (and Contour Next) meter, which is our first USB Hid Meter supported (this was also main
+implementation of Contour USB (and Contour Next Family) meters, which are our first USB Hid Meters supported (this was also main
 reason for this release). <br>
 Now because of this release, it might happen that next release won't be at end of this year, but sometime in
-start of next year (probably february). My plan for this (0.7) release is to prepare support for Minimed Pump. While
+start of next year (probably february). My plan for next (0.7) release is to prepare support for Minimed Pump. While
     there are some other tasks to be done, this is my main goal for next release, so when I have this support ready
     (for ComLink cable and CareLink USB device and for start support will be done only for Pump part, so sorry no
     CGMS data yet (coming in next release)) you can expect next release. If this is ready by end of year, then you
     will get release by then, if I encounter some additional problems, then next release will be little later (with help
     of decoding-carelink project (thanks Ben West) I managed to decode most of data, so everything that I need to do
-    is incorporate this results, with my current Minimed implementation. I hope this to be done in next few weeks
-    (perhaps months)).
+    is incorporate this results, with my current Minimed implementation and extend implementation to Carelink USB device
+    (so far I only worked with old ComLink cable). I hope this will be done in next few weeks/months.
+    <br>
+    This release is update only. Which means that if you are new user you need to install full 0.6.0 and then overwrite
+    its files, with this new upgrade. Same for existing users... just overwrite files with files in this package.
 </tr>
 </table>
 
@@ -36,7 +78,7 @@ start of next year (probably february). My plan for this (0.7) release is to pre
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
-<td width="150">2014-08-01</td>
+<td width="150">2015-08-01</td>
 <td>Release 0.6</td>
 </tr>
 <tr>
@@ -70,7 +112,7 @@ Any help from any of you is greatly appreciated... I try to reply to each mail I
 
 <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
 <tr class="newsheader">
-<td width="150">2014-04-29</td>
+<td width="150">2015-04-29</td>
 <td>About next release 0.6 and Help Needed</td>
 </tr>
 <tr>

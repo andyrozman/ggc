@@ -603,7 +603,7 @@
       all texts for check and select elements were displayed to close to control
 
 2006-04-14 (v0.2.1.10) Andy Rozman <andyrozman@users.sourceforge.net>
-    * moved ggc.gui.PropertiesFrame to ggc.gui.dialogs.PropertiesDialog, and changed internal
+    * moved ggc.gui.PropertiesFrame to ggc.gui.cfg.PropertiesDialog, and changed internal
       workings, so that after properties are done, we can save all setting and not just the 
       current as it was till now. 
     * changed DailyStatsDialog to display graph and ti display error if no row was selected.
@@ -697,7 +697,7 @@
     * Added loading of Hibernate (in seperate thread) and show loading in MainFrame 
     * More usage of DataAccess class, added several functions
     * Add daily values tables in hibernate
-    * Added doctors, doctor_type and appointments tables in hibernate
+    * Added doctors, doctorType and appointments tables in hibernate
     * Implemented methods and classes for working with daily values in Hibernate
     * Removed all database support except hibernate
     * Changed DailyValues and DailyValuesRow
@@ -778,7 +778,7 @@
     * ggc.util.I18nControl:
       - moved header to the top
       - made EN the fallback default locale, as english is the master language file
-    * ggc.gui.MainFrame:
+    * ggc.gui.main.MainFrame:
       - hardcoded skin location in a field at the top of the file instead of somewhere
         in the code, to make this a tiny little bit more flexible
       - changed the path in accordance with cvs repository layout
