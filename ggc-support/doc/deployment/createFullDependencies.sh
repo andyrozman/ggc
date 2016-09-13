@@ -1,7 +1,7 @@
 #!/bin/sh
 
-export GGC_VERSION=0.6
-export GGC_DEPLOY_TARGET=/mnt/d/GGC/deploy
+export GGC_VERSION=0.7
+export GGC_DEPLOY_TARGET=/u01/GGC/deploy
 export GGC_ROOT=/home/andy/workspaces/andy-iplayground4/ggc
 
 
@@ -21,29 +21,29 @@ mkdir dependencies
 cd dependencies
 
 echo ... GGC Core
-cp $GGC_ROOT/ggc-core/target/dependency/*.* .
+cp -R $GGC_ROOT/ggc-core/target/dependency/* .
 
 echo ... GGC Plugin Base
-cp $GGC_ROOT/ggc-plugin_base/target/dependency/*.* .
+cp -R $GGC_ROOT/ggc-plugin_base/target/dependency/* .
 
 echo ... GGC Nutrition
-cp $GGC_ROOT/ggc-nutri/target/dependency/*.* .
+cp -R $GGC_ROOT/ggc-nutri/target/dependency/* .
 
 echo ... GGC Help
-cp $GGC_ROOT/ggc-help/target/dependency/*.* .
+cp -R $GGC_ROOT/ggc-help/target/dependency/* .
 
 echo ... GGC Meter Plugin
-cp $GGC_ROOT/ggc-meter/target/dependency/*.* .
+cp -R $GGC_ROOT/ggc-meter/target/dependency/* .
 
 echo ... GGC Pump Plugin
-cp $GGC_ROOT/ggc-pump/target/dependency/*.* .
+cp -R $GGC_ROOT/ggc-pump/target/dependency/* .
 
 echo ... GGC CGMS Plugin
-cp $GGC_ROOT/ggc-cgm/target/dependency/*.* .
+cp -R $GGC_ROOT/ggc-cgm/target/dependency/* .
 
 echo ... GGC Desktop
-cp $GGC_ROOT/ggc-desktop/target/dependency/*.* .
-
+cp -R $GGC_ROOT/ggc-desktop/target/dependency/* .
+cp $GGC_ROOT/ggc-desktop/target/*.jar .
 
 cd ..
 
@@ -76,6 +76,7 @@ cp -R $GGC_ROOT/ggc-cgm/target/dependency/* .
 
 echo ... GGC Desktop
 cp -R $GGC_ROOT/ggc-desktop/target/dependency/* .
+cp $GGC_ROOT/ggc-desktop/target/*.jar .
 
 
 
@@ -120,6 +121,42 @@ cp $GGC_ROOT/ggc-cgm/doc/* ./plugin-cgms/.
 echo ... GGC Core
 mkdir core
 cp $GGC_ROOT/ggc-core/docs/* ./core/.
+
+cd ..
+
+
+echo Create app
+mkdir app
+cd app
+
+echo ... GGC Core
+cp $GGC_ROOT/ggc-core/target/*.jar .
+
+echo ... GGC Plugin Base
+cp $GGC_ROOT/ggc-plugin_base/target/*.jar .
+
+echo ... GGC Nutrition
+cp $GGC_ROOT/ggc-nutri/target/*.jar .
+
+echo ... GGC Help
+cp $GGC_ROOT/ggc-help/target/*.jar .
+
+echo ... GGC Meter Plugin
+cp $GGC_ROOT/ggc-meter/target/*.jar .
+
+echo ... GGC Pump Plugin
+cp $GGC_ROOT/ggc-pump/target/*.jar .
+
+echo ... GGC CGMS Plugin
+cp $GGC_ROOT/ggc-cgm/target/*.jar .
+
+echo ... GGC Desktop
+cp $GGC_ROOT/ggc-desktop/target/*.jar .
+
+
+cd ..
+cd ..
+
 
 echo All preparation for GGC deployment finished.
 

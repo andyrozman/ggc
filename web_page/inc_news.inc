@@ -19,14 +19,14 @@
                 correctly. I just got news that it might not work anymore on never Linux (it seems that USB 3.0 support
                 broke support for Carelink USB).<br>
                 Changes in this version:<br>
-                - I changed menus a little, different grouping
-                - added graphs from Pen to Pump (this is still work in progress, but at least some things should be working)
-                - added/changed reports, they now contain also CGMS data (Daily Time Sheet report for Pump)
-                - added some daily/weekly graphs for CGMS
+                - I changed menus a little, different grouping<br>
+                - added graphs from Pen to Pump (this is still work in progress, but at least some things should be working)<br>
+                - added/changed reports, they now contain also CGMS data (Daily Time Sheet report for Pump)<br>
+                - added some daily/weekly graphs for CGMS<br>
                 - minor change for Contour USB meters (it seems that library we are using has a bug, so reading of data
-                  takes a long time (about 2 min for all entries)... We are looking to remedy the problem ASAP).
+                  takes a long time (about 2 min for all entries)... We are looking to remedy the problem ASAP).<br>
                   We added development version
-                  of library to our project, so that we can test this and possibly find a solution in near future.
+                  of library to our project, so that we can test this and possibly find a solution in near future.<br>
                 <br>
                 If you find some problems please report and I will try to make a fix release if needed.<br>
                 <br>

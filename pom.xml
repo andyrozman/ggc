@@ -22,8 +22,8 @@
         <module>ggc-plugin_base</module>
         <module>ggc-nutri</module>
         <module>ggc-meter</module>
-        <module>ggc-pump</module>
         <module>ggc-cgm</module>
+        <module>ggc-pump</module>
         <module>ggc-desktop</module>
     </modules>
 

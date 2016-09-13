@@ -19,6 +19,8 @@ mvn dependency:copy-dependencies -Dmdep.useRepositoryLayout=true -DcopyPom=true
 
 4. Compare new dependencies to old one (previous release) and copy them to target deployment directory and
    prepare new GGCUpdate.properties configuration.
+4.a) Copy .m2 respository difference to atech-software.com:
+     scp -P 12488 repository_diff.tar.bz2 andy@188.40.149.16:~/
 
 
 5. Sort copied documentation from step 3
@@ -63,7 +65,8 @@ put <files>
 svn copy svn+ssh://andyrozman@svn.code.sf.net/p/ggc/code/trunk \
       svn+ssh://andyrozman@svn.code.sf.net/p/ggc/code/tags/0.6.0 -m "GGC 0.6.0"
 
-
+svn copy svn+ssh://andyrozman@svn.code.sf.net/p/atech-tools/code/trunk \
+      svn+ssh://andyrozman@svn.code.sf.net/p/atech-tools/code/tags/0.7.13 -m "Atech Tools 0.7.13 for GGC 0.6.1"
 
 --- Useful commands
 
