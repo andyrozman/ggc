@@ -17,14 +17,8 @@
     <modules>
         <module>ggc-plugins-base</module>
         <module>ggc-meter</module>
-
+        <module>ggc-pump</module>
     </modules>
 
-
-    <!--
-    <modules>
-        <module>ggc-help</module>
-    </modules>
--->
 
 </project>

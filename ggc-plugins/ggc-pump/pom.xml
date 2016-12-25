@@ -3,13 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.sf.ggc</groupId>
-        <artifactId>ggc-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../ggc-removed/ggc-master-pom/pom.xml</relativePath>
+        <artifactId>ggc-plugins</artifactId>
+        <version>0.8-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Pump Tool Project</name>
-
+    <name>GGC Plugins - Pump Tool</name>
     <artifactId>ggc-pump-tool</artifactId>
     <version>${ggc-pump-tool.version}</version>
 
