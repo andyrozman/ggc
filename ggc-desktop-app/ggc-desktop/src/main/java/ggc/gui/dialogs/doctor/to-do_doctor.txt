@@ -1,0 +1,30 @@
+
+
+Appointments:  - list
+               - add/edit appointment
+               - display screen appoinment
+
+doctor list:  - add doctor
+              - edit doctor
+              - working time component
+
+
+
+Help: - type selector
+      - type dialog
+      - doctor dialog
+      - doctor list
+
+
+
+DONE:
+=====
+
+Doctor type selector:
+                      - new
+                      - edit
+                      - select
+
+
+doctor type: - add
+                            - edit
