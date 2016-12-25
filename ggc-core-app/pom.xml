@@ -13,10 +13,9 @@
     <artifactId>ggc-core-app</artifactId>
     <packaging>pom</packaging>
 
-    <!--
     <modules>
-        <module>ggc-help</module>
+        <module>ggc-core</module>
+        <module>ggc-doctor-core</module>
     </modules>
-    -->
 
 </project>
