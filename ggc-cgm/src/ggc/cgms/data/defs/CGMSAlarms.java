@@ -65,6 +65,7 @@ public enum CGMSAlarms implements CodeEnumWithTranslation
     static Hashtable<String, CGMSAlarms> translationMapping = new Hashtable<String, CGMSAlarms>();
     static Hashtable<Integer, CGMSAlarms> codeMapping = new Hashtable<Integer, CGMSAlarms>();
 
+
     static
     {
         I18nControlAbstract ic = DataAccessCGMS.getInstance().getI18nControlInstance();
@@ -136,5 +137,10 @@ public enum CGMSAlarms implements CodeEnumWithTranslation
     {
         return codeMapping.values();
     }
+
+    // public CodeEnumWithTranslation[] values()
+    // {
+    // return values();
+    // }
 
 }

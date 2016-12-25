@@ -104,10 +104,13 @@ public class CGMSDevicesIds
     public static final int CGMS_MINIMED_640G = 30007;
 
     /**
-     * CGMS (Minimed) - Minimed RealTime
+     * CGMS (Animas) - Animas Vibe (Dexcom 4 integration)
      */
     public static final int CGMS_ANIMAS_VIBE_DEXCOM_INTEGRATION = 40001;
 
+    /**
+     * CGMS (Tandem) - Tandem G4 (Dexcom 4 integration)
+     */
     public static final int CGMS_TANDEM_TSLIM_G4_DEXCOM_INTEGRATION = 50001;
 
 }

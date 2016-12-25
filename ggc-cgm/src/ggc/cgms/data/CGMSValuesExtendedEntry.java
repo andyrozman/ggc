@@ -1,12 +1,12 @@
 package ggc.cgms.data;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.atech.db.ext.ExtendedHandler;
 import com.atech.misc.statistics.StatisticsItem;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
@@ -427,37 +427,42 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     }
 
 
+    private ExtendedCGMSValueHandler getExtendedHandler()
+    {
+        return (ExtendedCGMSValueHandler) CGMSUtil.getExtendedHandler(this.getDVEName());
+    }
+
+
     private void loadExtended(String extended2)
     {
-        ExtendedHandler handler = CGMSUtil.getExtendedHandler(this.getDVEName());
-        HashMap<String, String> data = handler.loadExtended(extended2);
+        ExtendedCGMSValueHandler handler = getExtendedHandler();
+        Map<ExtendedCGMSValueType, String> data = handler.loadExtended(extended2);
 
-        if (handler.isExtendedValueSet(ExtendedCGMSValuesExtendedEntry.EXTENDED_SUB_TYPE, data))
+        if (handler.isExtendedValueSet(ExtendedCGMSValueType.SubType, data))
         {
-            this.subType = Integer
-                    .parseInt(handler.getExtendedValue(ExtendedCGMSValuesExtendedEntry.EXTENDED_SUB_TYPE, data));
+            this.subType = Integer.parseInt(handler.getExtendedValue(ExtendedCGMSValueType.SubType, data));
         }
 
-        if (handler.isExtendedValueSet(ExtendedCGMSValuesExtendedEntry.EXTENDED_SUB_TYPE, data))
+        if (handler.isExtendedValueSet(ExtendedCGMSValueType.Source, data))
         {
-            this.source = handler.getExtendedValue(ExtendedCGMSValuesExtendedEntry.EXTENDED_SOURCE, data);
+            this.source = handler.getExtendedValue(ExtendedCGMSValueType.Source, data);
         }
     }
 
 
     private String saveExtended()
     {
-        ExtendedHandler handler = CGMSUtil.getExtendedHandler(this.getDVEName());
-        HashMap<String, String> data = new HashMap<String, String>();
+        ExtendedCGMSValueHandler handler = getExtendedHandler();
+        Map<ExtendedCGMSValueType, String> data = new HashMap<ExtendedCGMSValueType, String>();
 
         if (this.subType > 0)
         {
-            handler.setExtendedValue(ExtendedCGMSValuesExtendedEntry.EXTENDED_SUB_TYPE, "" + this.subType, data);
+            handler.setExtendedValue(ExtendedCGMSValueType.SubType, "" + this.subType, data);
         }
 
         if (StringUtils.isNotBlank(this.source))
         {
-            handler.setExtendedValue(ExtendedCGMSValuesExtendedEntry.EXTENDED_SOURCE, this.source, data);
+            handler.setExtendedValue(ExtendedCGMSValueType.Source, this.source, data);
         }
 
         String ext = handler.saveExtended(data);

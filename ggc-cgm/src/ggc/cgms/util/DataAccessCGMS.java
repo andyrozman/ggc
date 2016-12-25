@@ -7,7 +7,7 @@ import java.util.Hashtable;
 import ggc.cgms.data.CGMSDataHandler;
 import ggc.cgms.data.CGMSDataReader;
 import ggc.cgms.data.CGMSValuesEntry;
-import ggc.cgms.data.ExtendedCGMSValuesExtendedEntry;
+import ggc.cgms.data.ExtendedCGMSValueHandler;
 import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
 import ggc.cgms.data.db.GGC_CGMSDb;
 import ggc.cgms.data.graph.v2.CGMSGraphContext;
@@ -389,7 +389,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     public void loadExtendedHandlers()
     {
         this.addExtendedHandler(DataAccessCGMS.EXTENDED_HANDLER_CGMSValuesExtendedEntry,
-            new ExtendedCGMSValuesExtendedEntry(this));
+            new ExtendedCGMSValueHandler());
     }
 
 
