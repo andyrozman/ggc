@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.sf.ggc</groupId>
+        <artifactId>ggc-doctor-app</artifactId>
+        <version>0.8-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <name>GGC Doctor Desktop</name>
+    <description>GGC Doctor's Edition</description>
+    <artifactId>ggc-doctor-desktop</artifactId>
+    <version>0.1-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-doctor-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-desktop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atech-software</groupId>
+            <artifactId>atech-tools</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>8.4-702.jdbc3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <!-- <version>4.11</version> -->
+            <!-- <scope>test</scope> -->
+        </dependency>
+
+
+    </dependencies>
+
+    <properties>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    </properties>
+
+</project>
