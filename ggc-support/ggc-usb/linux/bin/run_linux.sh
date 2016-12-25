@@ -1,32 +1,39 @@
-#!/bin/bash
+#!/bin/sh
+
+# uncomment for debugging
+#set -x
+
+# cd to this script's directory, wherever it is called from
+# if it fails, ignore that failure and hope we're in the right place, anyway
+cd "$(dirname "${0}")" || true
 
 #  **********************************************************************
 #  ********   Set Java Path (calling setenv_java if exists)          ****
 #  **********************************************************************
-if [ -x ./setenv_java_mac.bash ]; then
-   . ./setenv_java_mac.bash
+if [ -f ./setenv_java_linux.sh ]; then
+   . setenv_java_linux.sh
 fi
 
 
 #  **********************************************************************
 #  ********             Set ATech Tools Startup Jar                  ****
 #  **********************************************************************
-. ./setenv_atech.bash
+. setenv_atech.sh
 
 
 #  **********************************************************************
 #  ********                Create Startup Files                      ****
 #  **********************************************************************
-java -classpath $ATECH_TOOLS_STARTUP com.atech.update.startup.BuildStartupFile
+java -classpath "$ATECH_TOOLS_STARTUP" com.atech.update.startup.BuildStartupFile
 
 #  **********************************************************************
 #  ********                  Check Db Version                        ****
 #  **********************************************************************
-# need to fix startup again..
-. ./db_check.bash
+. ./db_check.sh
 
 
 #  **********************************************************************
 #  ********              Run 'GNU Gluco Control'                     ****
 #  **********************************************************************
-. ./run_ggc.bash
+. ./run_ggc.sh
+
