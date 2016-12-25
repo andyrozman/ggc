@@ -4,7 +4,7 @@ TO-DO LIST
 Development of Pump Tools runs totally independent on GGC project
 ==================================================================
 
-        
+    * Refactoring: PumpDataTypeComponent
     
     * Graphs (0.6)
     

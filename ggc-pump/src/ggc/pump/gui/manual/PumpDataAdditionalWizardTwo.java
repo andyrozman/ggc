@@ -176,7 +176,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog
                 this.pumpAdditionalDataType == PumpAdditionalDataType.Urine)
         {
             this.text_1.setText(this.data_object.getValue());
-            // po.setValue(this.text_1.getText());
+            // po.setValue(this.text1.getText());
         }
         else if (this.pumpAdditionalDataType == PumpAdditionalDataType.BloodGlucose)
         {
@@ -476,7 +476,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog
         {
             this.cb_1.setText("  " + m_ic.getMessage("IS_FOOD_AND_CH_SET"));
             l.setText("(" + m_ic.getMessage("FOOD_BY_DESC") + ")");
-            // button_1.setBounds(startx, 175, 120, 25);
+            // button1.setBounds(startx, 175, 120, 25);
         }
     }
 

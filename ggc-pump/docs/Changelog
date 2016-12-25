@@ -2,6 +2,13 @@
 Changes file for GGC Pump Tool
 ==============================
 
+2.0.2 [25.12.2016] [Andy]
+- PumpDataAdditionalWizardTwo
+- PumpDataTypeComponent
+- PumpDataTypeComponent2 added new class for refactoring
+- added handlers for PDT Component 2
+
+
 2.0.1 [26.5.2016] [Andy]
 - refactorings (code, db)
 - graphs for pump (the one from core), not complete yet
