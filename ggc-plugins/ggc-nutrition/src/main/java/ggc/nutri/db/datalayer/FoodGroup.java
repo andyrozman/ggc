@@ -637,7 +637,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject, 
 
         tx.commit();
 
-        return "" + _id.longValue();
+        return "" + _id;
     }
 
 
@@ -724,7 +724,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject, 
     {
         if (this.group_type == 1)
         {
-            this.group_db1 = (FoodGroupH) sess.get(FoodGroupH.class, new Long(this.getId()));
+            this.group_db1 = (FoodGroupH) sess.get(FoodGroupH.class, this.getId());
             sess.update(this.group_db1);
         }
         else

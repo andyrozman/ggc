@@ -3,52 +3,23 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.sf.ggc</groupId>
-        <artifactId>ggc-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../ggc-master-pom/pom.xml</relativePath>
+        <artifactId>ggc-plugins</artifactId>
+        <version>0.8-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>net.sf.ggc</groupId>
-    <name>GGC Connect Tool Project</name>
-
+    <name>GGC Plugins - Connect Tool</name>
     <description>Plugin to connect to other software (import/export) of our data into foreign systems.</description>
-
     <artifactId>ggc-connect-tool</artifactId>
     <version>${ggc-connect-tool.version}</version>
 
 
-    <build>
-        <directory>target</directory>
-        <outputDirectory>target/classes</outputDirectory>
-        <finalName>${project.artifactId}-${project.version}</finalName>
-        <testOutputDirectory>target/test-classes</testOutputDirectory>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <!-- <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory> -->
-
-
-        <testSourceDirectory>src/test/java</testSourceDirectory>
-        <resources>
-            <resource>
-                <directory>src</directory>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-        </testResources>
-    </build>
 
     <dependencies>
         <dependency>
             <groupId>net.sf.ggc</groupId>
             <artifactId>ggc-core</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>com.atech-software</groupId>
@@ -57,9 +28,8 @@
 
         <dependency>
             <groupId>net.sf.ggc</groupId>
-            <artifactId>ggc-plugin-base</artifactId>
+            <artifactId>ggc-plugins-base</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>junit</groupId>
@@ -74,7 +44,6 @@
             <artifactId>postgresql</artifactId>
             <version>8.4-702.jdbc3</version>
         </dependency>
-
 
     </dependencies>
 
