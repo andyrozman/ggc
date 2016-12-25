@@ -1,0 +1,81 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.sf.ggc</groupId>
+        <artifactId>ggc-desktop-app</artifactId>
+        <version>0.8-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <name>GGC Desktop - Little</name>
+    <description>GGC Little (Version of GGC that could always run in background)</description>
+    <artifactId>ggc-desktop-little</artifactId>
+    <version>0.1-SNAPSHOT</version>
+
+    <build>
+        <directory>target</directory>
+        <outputDirectory>target/classes</outputDirectory>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <testOutputDirectory>target/test-classes</testOutputDirectory>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <!-- <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory> -->
+
+
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+        <resources>
+            <resource>
+                <directory>src</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-desktop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atech-software</groupId>
+            <artifactId>atech-tools</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>8.4-702.jdbc3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <!-- <version>4.11</version> -->
+            <!-- <scope>test</scope> -->
+        </dependency>
+
+
+    </dependencies>
+
+    <properties>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    </properties>
+
+</project>

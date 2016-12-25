@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Desktop App</name>
+    <name>GGC Desktop</name>
     <artifactId>ggc-desktop-app</artifactId>
     <packaging>pom</packaging>
 
@@ -21,6 +21,7 @@
 
     <modules>
         <module>ggc-desktop</module>
+        <module>ggc-desktop-little</module>
     </modules>
 
 

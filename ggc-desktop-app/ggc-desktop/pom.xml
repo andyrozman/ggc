@@ -4,39 +4,16 @@
 
     <parent>
         <groupId>net.sf.ggc</groupId>
-        <artifactId>ggc-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../ggc-removed/ggc-master-pom/pom.xml</relativePath>
+        <artifactId>ggc-desktop-app</artifactId>
+        <version>0.8-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Desktop Project</name>
-
+    <name>GGC Desktop - Desktop</name>
     <artifactId>ggc-desktop</artifactId>
     <version>${ggc-desktop.version}</version>
 
-    <build>
-        <directory>target</directory>
-        <outputDirectory>target/classes</outputDirectory>
-        <finalName>${project.artifactId}-${project.version}</finalName>
-        <testOutputDirectory>target/test-classes</testOutputDirectory>
-        <sourceDirectory>src</sourceDirectory>
-        <scriptSourceDirectory>src</scriptSourceDirectory>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
-        <resources>
-            <resource>
-                <directory>src</directory>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-        </testResources>
-    </build>
+
 
     <dependencies>
         <dependency>
