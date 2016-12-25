@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="RegistrationAppWeb">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="Atech-Tools EE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Atech-Tools EE/Atech-Tools EE">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="RegistrationAppEJB.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/RegistrationAppEJB/RegistrationAppEJB">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="RegistrationAppWeb"/>
+        <property name="java-output-path" value="/RegistrationAppWeb/build/classes"/>
+    </wb-module>
+</project-modules>
