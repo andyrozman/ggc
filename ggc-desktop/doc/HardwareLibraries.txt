@@ -48,7 +48,7 @@ Latest Version:    1.3
 OS:                Windows, Linux
 Own version:       Yes
 Comment:           This is old IBM Serial API library used for Bluetooth support for Dana pump. Needs to be replaced,
-                   but at time of implementation, our serial library at that timeRxtx 2.1.7, had problems with BT
+                   but at time of implementation, our serial library at that time Rxtx 2.1.7, had problems with BT
                    devices. Our current NrJavaSerial is actually just extension of RXTX 2.2, so it might actually
                    support this now, but we can't test it at this time (no hardware).
 

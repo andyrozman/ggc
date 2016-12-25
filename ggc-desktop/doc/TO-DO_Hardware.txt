@@ -11,9 +11,13 @@ OT - IQ Verio                  [-]
 PUMPS
 =====
 
-Minimed                        [70%]
+Minimed - Base                 [70%]
 Tandem                         [1%]
-Minimed - ContourNext          [-]
+Minimed CommunicationInterface
+   ContourNext                 [1%]
+   ComlinkCable                [-]  Not supported, not used anymore
+   CareLinkUSB                 [-100%]  Not enabled, since it doesn't work anymore (on newer systems)
+
 
 
 
@@ -22,7 +26,16 @@ CGMS
 ====
 
 Minimed                        [10%]
-Dexcom 7 ??                    [10%]
 Tandem                         [-]
 
+
+
+
+
+CANCELED
+========
+
+CGMS
+====
+Dexcom 7 ??                    [10%] Not used anymore since 2009.
 

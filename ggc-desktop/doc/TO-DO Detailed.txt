@@ -1,45 +1,47 @@
 
-GGC 0.7
-========
-- Startup Feature
+To-DO Details
+**************
 
-- stocks feature
+This file contains more details about planned features, but list of what toi do in each version is more current in TO-DO.txt.
 
-- minimed feature (1, 2, 5a): There should be Pump Support available, to be used with ComLink (Serial cable) and ContourLink (USB)
-      NOT IN SCOPE: CGMS, CountourNextLink (Meter), Carelink file import (Pump or CGMS)
-
-- Upgrade feature
-
-
-- Connect plugin
-
-
-
-
-
-
-
-GGC 0.7 - DONE
-==============
-
-- usb hid
-- contour usb support
-
-BUGS:
-- fix error when database can not be contacted
-- device selector sort
-- device config, switch from one type to another (SmartPix -> Some serial) leaves display wrong
-- daily graph pen/injection fix
-- daily graph pump fix: base new basal type
-
-- reports:
-      - DailyTimesheet I (v2 - add new basal type (Value change), colors)
-      - DailyTimesheet II (I + CGMS)
 
 
 
 GGC 0.8
 ========
+- stocks feature
+- Refactor: - ExtendedDailyValueHandler (add enums)
+
+METER TOOL:
+- menarini
+- arkray
+
+DB-TOOL Feature
+
+
+GGC 0.9
+========
+
+- Startup Feature
+
+
+- Minimed feature: CountorNextLink Support, Pump support With CNL
+      NOT IN SCOPE: CGMS, Carelink file import (Pump or CGMS)
+
+- Upgrade feature
+
+
+
+
+
+GGC 0.9
+=======
+
+- graphs framework v2: read xml file and create graph in viewer
+      NOT IN SCOPE: editor, not all graph types will be supported (we will start with some simple graphs and then extends this in next versions)
+
+
+- Connect plugin
 
 - additional data to pump and P/I: weight, pills, blood preasure
 
@@ -47,9 +49,22 @@ OTHER:
 - comments in CGMS, Pumps and others
 
 
-- graphs framework v2: read xml file and create graph in viewer
-      NOT IN SCOPE: editor, not all graph types will be supported (we will start with some simple graphs and then extends this in next versions)
 
+
+
+
+
+DB-TOOL Feature
+=================
+- Init Db GGC
+- Import GGC
+- Export GGC
+- reafactoring of Backup/Restore for B/R
+
+
+IMPORT/EXPORT Feature
+======================
+- After Db Tool is finished we should have all correct classes, so this will be only GUI to select items
 
 
 
@@ -235,20 +250,21 @@ MINIMED Feature
 1a. ComLink Pump Support                    CANCELED (ComLink will not be supported, too old, nobody uses it anymore)
 1a. ComLink CGMS Support                    CANCELED
 
-2a. Pump Support                            WIP [0.7]
-2a. Pump History Decode                     WIP [0.7]
+5a. Carelink USB support: Pump              CANCELED (is implemented, but can't be used since most of OSes don't support USB 2 devices anymore (RAW access)
+5b. Carelink USB support: CGMS              CANCELED
 
-3. CGMS Support                             0.8 - WIP
-4. CGMS History Decode                      0.8 - WIP
+2a. Pump Support                            WIP [0.7] - Done untested
+2a. Pump History Decode                     WIP [0.7] - Done untested
 
-5a. Carelink USB support: Pump              WIP
-5b. Carelink USB support: CGMS              WIP
+7a. Contour Next Link: Pump                 0.9
+7b. Contour Next Link: CGMS                 0.9
 
 6a. Import Carelink file: Pump              0.8
 6b. Import Carelink file: CGMS              0.8
 
-7a. Contour Next Link: Pump                 0.9
-7b. Contour Next Link: CGMS                 0.9
+3. CGMS Support                             0.8 - WIP
+4. CGMS History Decode                      0.8 - WIP
+
 
 8. Minimed 530G (New One)                   0.10
 
@@ -299,6 +315,29 @@ GRAPHS
 
 
 
+=========================================================
 
+
+
+
+GGC 0.7 - DONE
+==============
+
+- usb hid
+- contour usb support
+
+BUGS:
+- fix error when database can not be contacted
+- device selector sort
+- device config, switch from one type to another (SmartPix -> Some serial) leaves display wrong
+- daily graph pen/injection fix
+- daily graph pump fix: base new basal type
+
+- reports:
+      - DailyTimesheet I (v2 - add new basal type (Value change), colors)
+      - DailyTimesheet II (I + CGMS)
+
+CANCELED- minimed feature (1, 2, 5a): There should be Pump Support available, to be used with ComLink (Serial cable) and ContourLink (USB)
+      NOT IN SCOPE: CGMS, CountourNextLink (Meter), Carelink file import (Pump or CGMS)
 
 

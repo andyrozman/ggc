@@ -6,9 +6,9 @@
 
     <!-- Environment properties read from a file ...-->
     <property file="../../build/AtechTools.properties"/>
-    <property file="../../ggc-core/build/GGCBuild.properties"/>
+    <property file="../../ggc-core-app/ggc-core/build/GGCBuild.properties"/>
     <property file="./GGC_Desktop_Version.properties"/>
-    <property file="../../ggc-core/build/GGC_Core_Version.properties"/>
+    <property file="../../ggc-core-app/ggc-core/build/GGC_Core_Version.properties"/>
     
 
     <!-- These should *not* be modified on the command line! -->
@@ -58,7 +58,7 @@
         </copy>
         <mkdir dir="${build.dir}/icons" />
         <copy todir="${build.dir}/icons" overwrite="true">
-            <fileset dir="${source.dir}/icons" casesensitive="no">
+            <fileset dir="../../ggc-desktop-app/ggc-desktop/src/main/resources/icons" casesensitive="no">
                 <include name="**/*.gif"/>
                 <include name="**/*.jpg"/>
                 <include name="**/*.png"/>

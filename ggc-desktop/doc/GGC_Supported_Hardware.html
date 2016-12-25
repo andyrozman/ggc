@@ -67,35 +67,15 @@ List of supported devices (25), planned (5), partial (1), not tested (1).
             <td width="10%">Support in GGC</td>
             <td width="10%">Since GGC Version</td>
             <td width="10%">Planned Support</td>
+            <td width="10%">Interface</td>
             <td width="10%">Developer</td>
             <td>Comment</td>
         </tr>
 
-        <tr bgcolor="#3cb371">
-            <td>Ascensia/Bayer</td>
-            <td>Contour Link</td>
-            <td>Level 2</td>
-            <td>Done</td>
-            <td>0.3</td>
-            <td>&nbsp;</td>
-            <td>Andy</td>
-            <td>&nbsp;</td>
-        </tr>
 
         <tr bgcolor="#3cb371">
             <td>Ascensia/Bayer</td>
             <td>Contour</td>
-            <td>Level 2</td>
-            <td>Done</td>
-            <td>0.3</td>
-            <td>&nbsp;</td>
-            <td>Andy</td>
-            <td>&nbsp;</td>
-        </tr>
-
-        <tr bgcolor="#3cb371">
-            <td>Ascensia/Bayer</td>
-            <td>Contour Link</td>
             <td>Level 2</td>
             <td>Done</td>
             <td>0.3</td>
@@ -147,7 +127,19 @@ List of supported devices (25), planned (5), partial (1), not tested (1).
             <td></td>
         </tr>
 
-        <tr bgcolor="#6495ed">
+
+        <tr bgcolor="#3cb371">
+            <td>Ascensia/Bayer</td>
+            <td>Contour Link</td>
+            <td>Level 2</td>
+            <td>Done</td>
+            <td>0.3</td>
+            <td>&nbsp;</td>
+            <td>Andy</td>
+            <td>Just meter readings</td>
+        </tr>
+
+        <tr bgcolor="#3cb371">
             <td>Ascensia/Bayer</td>
             <td>Contour USB</td>
             <td>Level 2</td>
@@ -158,7 +150,7 @@ List of supported devices (25), planned (5), partial (1), not tested (1).
             <td>&nbsp;</td>
         </tr>
 
-        <tr bgcolor="#6495ed">
+        <tr bgcolor="#3cb371">
             <td>Ascensia/Bayer</td>
             <td>Contour Next</td>
             <td>Level 2</td>
@@ -169,7 +161,7 @@ List of supported devices (25), planned (5), partial (1), not tested (1).
             <td>&nbsp;</td>
         </tr>
 
-        <tr bgcolor="#6495ed">
+        <tr bgcolor="#3cb371">
             <td>Ascensia/Bayer</td>
             <td>Contour Next USB</td>
             <td>Level 2</td>
@@ -180,7 +172,7 @@ List of supported devices (25), planned (5), partial (1), not tested (1).
             <td>&nbsp;</td>
         </tr>
 
-        <tr bgcolor="#6495ed">
+        <tr bgcolor="#3cb371">
             <td>Ascensia/Bayer</td>
             <td>Contour Next Link</td>
             <td>Level 2</td>
@@ -188,7 +180,7 @@ List of supported devices (25), planned (5), partial (1), not tested (1).
             <td>0.6.1</td>
             <td>&nbsp;</td>
             <td>Andy</td>
-            <td>&nbsp;</td>
+            <td>Just meter readings for now.</td>
         </tr>
 
         <tr bgcolor="#3cb371">
@@ -1031,6 +1023,29 @@ wait and use upper work-around).<br>
 If you get your binary file for Rxtx from some other source than from ours, there might be some
 problems. You need to have librxtxSerial.jnilib and librxtxSerial.dylib present (they are both
 the same, if you have one, you can just make another copy of same file or link)<br>
+<br>
+
+<br>
+<br>
+
+<h3>Appendix C: USB devices with Linux (possibly also Mac)</h3>
+<br>
+1. Add your user into group plugdev<br>
+Add your user into group plugdev (this is the group under which USB devices are loaded as default).
+Please google "udev" for your computer, if this sollutions doesn't work for you.<br>
+<br>
+2. Add rule in /etc/udev/rules.d<br>
+Create file 44-ggc-devices.rules and add entry like this:<br>
+SUBSYSTEM=="usb", ATTR{idVendor}=="1a79", MODE="0666", GROUP="plugdev"<br>
+<br>
+You will need to change ATTR{idVendor} to your device company. You can determine your devices company
+if you execute command 'lsusb' and looking for your device, you should find it... There will be a list
+like this:<br>
+<br>
+<i>Bus 003 Device 011: ID 1a79:7410 Bayer Health Care LLC Contour Next</i><br>
+<br>
+In this case 1a79 is company id (idVendor).<br>
+<br>
 <br>
 
 

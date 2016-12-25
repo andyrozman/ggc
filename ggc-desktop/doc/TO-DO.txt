@@ -24,11 +24,11 @@ II. and III.
 GGC Translations
 ---------------- 
 
-ENGLISH:  Main language
+ENGLISH:   Main language
 Status:    100% (520 words in resource file)
 Help:      Help not written yet.
 
-GERMAN:   Translation into german language.
+GERMAN:    Translation into german language.
 Status:    ?
 Help:      No help available
 
@@ -37,7 +37,7 @@ Status:    100%
 Help:      No help available
 
 FRENCH:   Translation into French language.
-Status:    ?
+Status:    100
 Help:      No help available
 
 
@@ -45,45 +45,69 @@ Help:      No help available
 GGC Meter Tool
 --------------
   See TO-DO_MeterTool.txt (in svn/trunk/ggc-meter)
+  Planned Device (in near future): Menarini, Arkray, Ascensia Contour Next One, Accu-chek Mobile
 
 
 GGC Pump Tool
 -------------
   See TO-DO.txt (in svn/trunk/ggc-pumps)
-  
+  Planned Device (in near future): Minimed, Tandem (just interfaces for now)
 
 
 GGC CGMS Tool
 --------------
   See TO-DO.txt (in svn/trunk/ggc-cgms)
+  Planned Device (in near future): Minimed
   
 
 
 
-II. SORTED BY VERSION  (Updated 16.10.2015)
+II. SORTED BY VERSION  (Updated 16.10.2016)
 ===========================================
 
 We plan to change version to 1.0, when all entries specified with [1.0] are
 finished (Help for english, Upgrade, Db Tool and Support for multiple persons)
 
 
-Version 0.7  [1.4 - 1.7.2016]
+Version 0.8  [1.6.2016 - 2.2.2017]
+=================================
+
+Meanrini support
+
+Arkray support
+
+
+Graphs (v1):
+   Pump:
+    - data retrival: - gluco values
+
+DbTool: - base GGC
+        - init GGC
+        - export GGC
+        - restore GGC
+
+
+Release 0.8: - prepare release
+             - release
+             - webpage
+             - deploy SF
+             - update server - add info
+
+
+
+Version 0.9  [1.4 - 1.7.2016]
 =================================
 
 (1)
 Minimed:
+         - support through Contour Next Link
          - decode pump history data
 
 (2)
 Startup: - fix startup creation (30%)
          - move package
 
-(3)
-Graphs (v1): (make them workable for Pen and add them for Pump)
 
-    Pump:
-    - data retrival: - gluco values
-    - menus
 
 
 
@@ -99,24 +123,13 @@ Release 0.7:  - prepare release
 
 
 
-DONE Version 0.7
-=================
-
-(6)
-Graphs (v2):
-        - CGMS Daily Graph V2
-        - CGMS Weekly Graph
-
-Graphs (v1): (make them workable for Pen and add them for Pump)
-
-    Pen:
-    - cleanup code
-
 
 ================================
 
+GGC 0.9
+========
 
-(3) [EXP:20.2.2016]
+
 Update System v3 [1.0]
     - Software updater
        CLIENT
@@ -141,7 +154,7 @@ Update System v3 [1.0]
     - Db Updater (DbCheck) [1.1.] [EXP:20.2.2016]
 
 
-(4) [EXP:25.2.2016]
+
 VersionCheck: - on start we check if we have newest version (only if we are online)
                   - error: write log
                   - no: no action, write info in log
@@ -158,8 +171,10 @@ GGC Connect Plugin:  - base
                      - import GUI
                      - GGC: - import Pen
                             - import Pump
+                            - import CGMS
                             - export Pen
                             - export Pump
+                            - export CGMS
                      - SiDiary: - export
                                 - import
 
@@ -170,11 +185,6 @@ Doctors module: [Required Db Update functionality]
                               + working hours
                 - add scheduling entry: - dialog
 
-(10)
-Meanrini support
-
-(11)
-Arkray support
 
 
 
@@ -258,7 +268,7 @@ ReportPluginDefinition:
 
 
 **************************************************************************************
-Version 0.8
+Version 0.10
 **************************************************************************************
 
 (6)
@@ -463,418 +473,6 @@ Level 6 (IN NEAR FUTURE):
 
 SUPPORTED:
 * I18n Language: French
-
-
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-===============================================================================
-===============================================================================
-DONE
-===============================================================================
-===============================================================================
-
-* Pump Tool: <Basic pump supports> (manual input, integration, no graphs)
-
-* CGM Tool: <Basic CGM support>
-
-
-Documentation:
-    - How to update
-    - How to USB
-
-* Java Help - Write help pages I.
-            - Load from language jar
-
-
-* Printing: - Food Menu III.
-            - Use abstract class
-            - File generation fix
-
-* Core:   
-    x Extended Ratio
-
-* Restore: 
-   - partitial/update
-
-* Selector: 
-    - Double click on item = select and close 
-
-* Graphs with new library
-
-* Update (client)
-    - Update configuration in DA
-
-
-* Error handling (and logger)
-* Printing error display
-* Meter Tool:
-    - integration
-    - GUI
-    - Configuration
-    - GGC Output
-    - Simple configuration
-* Restore data:
-    - GUI
-    - only full restore
-
-
-
-* Smart Insulin Recommendation (Bolus Helper):
-    - Helper 
-    - Calculate ratios
-    - Change ratios
-
-
-* Documentation:
-    - Readme (in all langs.)
-    - How to help
-
-
-
-* Startup
-    - Run GGC
-    - Db Tool
-    - Db Check
-    
-* Added functiuonality for Nutrition Db: 
-    - Export data
-    - Import data (full)
-    - Nutrition Definition [GI_GL] should be added on init
-
-
-* Add Daily Data support for Meals
-* Db Versioning
-* Daily Values - Check values, Double click edit
-* Update (client side): 
-    - Software updater framework
-    - Db Updater framework
-
-
-* Add new daily data: - Check all parameters for validity (internal java checker)
-                      - Enter is OK (Date component)
-                      //- Tab for switching fields
-                      - 0.0 not displayed in table
-                      - double click edit
-
-
-* USDA: - Main panel
-        - Group panel
-
-* User Nutrition:
-    o  Private nutrition database
-
-* Meals: 
-    o  Config
-    o  GUI Tree
-    o  Database
-    o  Add/Edit/Delete
-
-
-* Printing: 
-    o  Data gather - Extended (MonthlyValues)
-    o  Detailed print sheet
-
-
-* HypersonicSQL Test
-* Nutrition: 
-        o  Database
-        o  Import
-* ANT Build
-* Hibernate for Database handling
-        o  Full Hibernate loading
-        o  Entries (day-values)
-        o  Config
-* Adding support for mmol/l (now we have only mG/DL):
-        o  settings
-* Entering daily data: 
-        o  After add close window
-        o  BG Values must be checked so that comma is also supported and 
-           no exception is thrown
-        o  Edit
-        o  Message when no row selected
-* Bug Fixing:
-        o  decimal check, use both , and .
-        o  edit value
-        o  save value
-* Properties: 
-        o  put them into database
-        o  move some of them from config to code (classes for meters)
-        o  Default database 
-        o  Colors as separate table* Configuration:
-        o  low/high BGs
-	o  no error if no configuration present
-* Printing: 
-    o  Data gather (MonthlyValues)
-    o  Simple print sheet
-    o  Print dialog
-* GGC Little:
-        o  Add/Edit/Delete
-        o  Daily graph
-        o  Show day
-* Configuration
-    o  Temp directory creation on startup   
-    o  New configuration model
-    o  rendering
-    o  colors
-* Look and feel:
-    o  Loading of selected L&F
-* Printing: 
-    o  Use data from configuration (pdf viewer, ...)
-* Configuration:
-    o  display icons on left side and not tree
-    o  printing
-    o  L&F (Config)
-    o  Db Selection 
-    o  Scheme 
-* Nutrition: 
-    o  Db Import
-    o  Config
-    o  View nutrition data in tree
-* Adding support for mmol/l (now we have only mG/DL):
-    o  database (write in database as mg/dl only, and display as what is set)
-* Entering daily data: 
-    o  Time displayed as selectable entry
-    o  Add daily entry must be changed (GUI is very...)
-    o  option in which type we enter
-    o  delete should ask: are you sure?
-* Db Load:
-    o Add levels of loading (1=main(settings, daily stat), 2=Other data(docs,meters,links),3=Nutrition, 4=Finished)
-
-
-* Db:
-    o Private nutrition
-
-* About dialog
-
-- Db Hibernate Redesign !!!
-- About (16.4.-20.4.)
-- Nutrition display in tree
-X   - Configuration: COM
-X   - Printing main
-X   - Enter Daily Data NEW
-X   - rtx COMM API
-X   - Nutrition Display
-
-* Configuration: <moved to meter development tree> 
-    o  Fix setting com port
-
-* Hibernate Db:
-    o  Daily Data        1
-    o  Configuration     1
-    o  Meters            1
-    o  Nutrition         1
-    o  User Nutrition    2
-    o  Meals             3
-    o  Doctors           3
-    o  Appointments      3
-    o  Web Links         2
-
-   - mmol/L support full
-   - Printing extended
-
-* Db Load partitial (progress)
-* Multi person Db
-* Java Help Framework
-* Icons where possible
-
-
-* Pump Tool:
-    - SmartPix v3.01
-    - SmartPix Base
-    - Roche Spirit
-
-* Meter Tool: 
-    - v2 data import
-    - Abbott support finalize
-
-
-* Plugin Base: 
-    - Meter through DeviceAbstract, test Serial
-    - Pump through DeviceAbstract, test Spirit
-    - CGMS through DeviceAbstract, test Dexcom
-
-* Pumps:  + Animas Pump
-
-* CGMS:   - Animas Pump/Dexcom
-          + Dexcom
-
-* Plugin base:   - Device V2 Framework integration and tests
-
-* Java Help - Write help pages II. (finish EN) [1.0] 
-            - Load from language jar  [1.0]
-
-
-
-* PumpDailyTimesheet Report
-     *
-     * + main view table (day, comment, space)    100%
-     * - multiple BG in comment                   100%
-     * - comments                                 100%
-     * - bolus swuare or extended                 100%
-     * + sums                                     100%
-     * - days resolve                             100%
-     * - basal                                    100%
-     *
-     * NOT IMPORTANT FOR NOW:
-     * - Extended and Multiwave in table and comm.        0%
-     *
-     * PROFILES REPORT                             100%
-     *
-     *   I. (v2)
-     * - special pump statues (stopped pump, change
-     *   of pump material, TBR)                         100%
-     * - Color display                                  100%
-     * - Comments types                                 100%
-     * - Extended and Multiwave in comm.                100%
-     * - Basals                                         100%
-     *
-     *
-     *   II. (Base + CGMS)
-     * - CGMS data                                      100%
-     *
-     *   III. (Base + Food)
-     *   - Food data                                      0%
-     *
-     *   IV. (Base + CGMS + Food)
-     *   - Base                                         100%
-     *   - CGMS                                         100%
-     *   - Food                                           0%
-     *
-     */
-
-
-DONE 0.6.2 - 0.7.0:
-===================
-
-Minimed: - carelink support - 2.3
-         - carelink: read pump data - 2.4    (80 , conversion of some config entries in question)
-         - carelink: read pump history data - 2.5
-
-
-Help      : - prepare for Bob - 1.1
-            - send to Bob  - 1.2
-
-Graph: - Show CGMS in Pump Daily
-       - Show CGMS in Pen Daily
-       - Configuration CGMS for displays
-
-Basal Manager: - for reports
-
-Reports: - Daily Time Sheet:  - II - (I + CGMS graphs) for each day
-                              - I (v1) - Basal Value Chnage (Basals in general)
-                              - I (v2) - important pump events, colors
-
-Refactoring: - CommunicationPortComponent
-             - refactor configuration (added ConfigurationManagerWrapper)
-             - Pump -> Manual -> Add -> Profile Selector not available for some Pumps (show message)
-             - DataAccess (PluginBase) -> BG Conversion
-
-Tasks:  - save window size
-
-
-DevicePluginDefinition:  - implement interface    100%
-                      - CGMS                   100%
-                      - Pump                   100%
-                      - Nutri                  100%
-                      - Meter                  100%
-
-
-Graphs (v1):
-Pen:
-+ frequency implement : + other data
-                        + X os
-+- move to correct Menu item
-+- size load
-+- size save (viewer)
-+- data retrival (dates check) : + week
-                                + month
-                                + 3 months
-                                + custom
-                                + whole day?
-- hba1c (start date)
-+ remove old versions, leave TableLayouts only
-
-Pump:
-- data retrival: - hba1c
- - hba1c
-
-
-
-DONE 0.6.1  (8.10.2015)
-========================
-
-Plugins: - USB Hid Api integration
-
-Meters: - Ascensia USB support (through HID Api)
-
-BUGS: - Database can not be contacted
-
-Basal Manager:  - for daily Pump statics on main screen
-                - Device config switch
-                - Device selector sort (v1, v2)
-                - Data: - pump data
-                        - pump profile
-                - for daily statistics in day edit -1
-                - graph - 2
-
-Daily graph Pump: - add basal - 3
-Daily graph Pump: - add extended bolus - 4
-
-BUGS: - Daily graph P/I check/fix
-      - Daily graph Pump check/fix
-
-
-Deploy: - Local Maven Repository
-        - checkin
-        - make release
-        - release Maven Repository
-        - web page
-
-
-CANCELED 0.7
-=============
-
-Minimed: - comlink: read history data from device -2.1
-
-
-
-
-
-==============================
-
-
-
-
-I18N TOOL
-* Check langauge files        
-
-
-STOPED SUB-TASKS
-================
-
-* CONVERT OLD DATA
-    o File
-    o MySQL
-    o HSQL
-
-
 
 
 
