@@ -4,15 +4,15 @@
 
     <parent>
         <groupId>net.sf.ggc</groupId>
-        <artifactId>ggc-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../ggc-master-pom/pom.xml</relativePath>
+        <artifactId>ggc-support</artifactId>
+        <version>0.8-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Help Project</name>
-
+    <name>GGC Help</name>
     <artifactId>ggc-help</artifactId>
     <version>${ggc-help.version}</version>
+
 
 
     <build>

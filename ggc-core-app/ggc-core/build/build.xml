@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
-<project name="GNU Gluco Control" default="build" basedir=".">
+<project name="GNU Gluco Control" default="build" basedir="">
     <description>
         Build file for GGC
     </description>
 
     <!-- Environment properties read from a file ...-->
     <property file="../../build/AtechTools.properties"/>
-    <property file="./GGCBuild.properties"/>
-    <property file="./GGC_Core_Version.properties"/>
+    <property file="GGCBuild.properties"/>
+    <property file="GGC_Core_Version.properties"/>
     
 
     <!-- These should *not* be modified on the command line! -->
