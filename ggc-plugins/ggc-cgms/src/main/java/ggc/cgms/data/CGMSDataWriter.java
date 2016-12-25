@@ -6,8 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
+import com.atech.data.NotImplementedException;
 import com.atech.utils.data.ATechDate;
 
 import ggc.cgms.util.DataAccessCGMS;
@@ -166,7 +165,6 @@ public class CGMSDataWriter extends HashMap<String, DeviceTempValues>
     {
         if (owd instanceof CGMSValuesSubEntry)
         {
-
             CGMSValuesSubEntry cvse = (CGMSValuesSubEntry) owd;
 
             // System.out.println("Value: " + cvse);
@@ -174,7 +172,8 @@ public class CGMSDataWriter extends HashMap<String, DeviceTempValues>
         }
         else
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(this.getClass(),
+                    "writeObject() with value different than CGMSValuesSubEntry.");
         }
 
     }

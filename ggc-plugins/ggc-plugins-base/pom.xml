@@ -11,7 +11,7 @@
     <name>GGC Plugins - Base</name>
 
     <artifactId>ggc-plugins-base</artifactId>
-    <version>${ggc-plugin-base.version}</version>
+    <version>${ggc-plugins-base.version}</version>
 
 
 

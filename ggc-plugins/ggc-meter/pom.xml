@@ -30,7 +30,7 @@
 
         <dependency>
             <groupId>net.sf.ggc</groupId>
-            <artifactId>ggc-plugin-base</artifactId>
+            <artifactId>ggc-plugins-base</artifactId>
         </dependency>
 
         <!--

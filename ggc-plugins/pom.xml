@@ -19,6 +19,7 @@
         <module>ggc-meter</module>
         <module>ggc-pump</module>
         <module>ggc-nutrition</module>
+        <module>ggc-cgms</module>
     </modules>
 
 

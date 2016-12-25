@@ -1,7 +1,6 @@
 package ggc.cgms.data;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
+import com.atech.data.NotImplementedException;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.CodeEnum;
 import com.atech.utils.data.CodeEnumWithTranslation;
@@ -52,7 +51,6 @@ public class CGMSTempValues extends DeviceTempValues
         this(_object_type, _base_type.getCode(), 0, null, isNumericValue);
     }
 
-
     // public CGMSTempValues(int _object_type, CodeEnumWithTranslation
     // _base_type,
     // Boolean isNumericValue)
@@ -66,6 +64,7 @@ public class CGMSTempValues extends DeviceTempValues
     // {
     // this(_object_type, _base_type, 0, null, isNumericValue);
     // }
+
 
     // public CGMSTempValues(int _object_type, CodeEnumWithTranslation
     // _base_type, Boolean isNumericValue)
@@ -128,7 +127,6 @@ public class CGMSTempValues extends DeviceTempValues
         super(objectType, baseType);
     }
 
-
     /**
      * @param objectType
      * @param baseType
@@ -137,6 +135,7 @@ public class CGMSTempValues extends DeviceTempValues
     // {
     // super(objectType.getCode(), baseType.getCode());
     // }
+
 
     /*
      * public void writeObject(OutputWriter ow, String _value)
@@ -165,7 +164,7 @@ public class CGMSTempValues extends DeviceTempValues
 
         if (this.object_type == CGMSObject.Base.getCode())
         {
-            new NotImplementedException();
+            new NotImplementedException(this.getClass(), "getData() with objectType CGMSObject.Base.");
             // CGMSValuesEntry cve = new CGMSValuesEntry();
             //
             // cve.setType(this.base_type);

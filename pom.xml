@@ -228,8 +228,8 @@
 
             <dependency>
                 <groupId>net.sf.ggc</groupId>
-                <artifactId>ggc-plugin-base</artifactId>
-                <version>${ggc-plugin-base.version}</version>
+                <artifactId>ggc-plugins-base</artifactId>
+                <version>${ggc-plugins-base.version}</version>
             </dependency>
 
             <dependency>
@@ -252,8 +252,8 @@
 
             <dependency>
                 <groupId>net.sf.ggc</groupId>
-                <artifactId>ggc-nutri-tool</artifactId>
-                <version>${ggc-nutri-tool.version}</version>
+                <artifactId>ggc-nutrition-tool</artifactId>
+                <version>${ggc-nutrition-tool.version}</version>
             </dependency>
 
             <dependency>
@@ -512,11 +512,11 @@
 
         <!-- GGC Modules versions -->
         <ggc-core.version>0.8.0-SNAPSHOT</ggc-core.version>
-        <ggc-plugin-base.version>1.2.2-SNAPSHOT</ggc-plugin-base.version>
+        <ggc-plugins-base.version>1.2.2-SNAPSHOT</ggc-plugins-base.version>
         <ggc-meter-tool.version>2.4.1-SNAPSHOT</ggc-meter-tool.version>
         <ggc-pump-tool.version>2.0.1-SNAPSHOT</ggc-pump-tool.version>
         <ggc-cgms-tool.version>1.5.1-SNAPSHOT</ggc-cgms-tool.version>
-        <ggc-nutri-tool.version>1.4.1-SNAPSHOT</ggc-nutri-tool.version>
+        <ggc-nutrition-tool.version>1.4.1-SNAPSHOT</ggc-nutrition-tool.version>
         <ggc-connect-tool.version>0.1.0-SNAPSHOT</ggc-connect-tool.version>
         <ggc-desktop.version>0.8.0-SNAPSHOT</ggc-desktop.version>
         <ggc-help.version>0.2.2-SNAPSHOT</ggc-help.version>

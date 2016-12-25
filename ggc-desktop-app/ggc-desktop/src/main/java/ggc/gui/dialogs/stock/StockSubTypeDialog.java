@@ -80,7 +80,7 @@ public class StockSubTypeDialog extends StandardDialogForObject
             subTypeObject = new StockSubTypeH();
         }
 
-        List<String> listFailed = new ArrayList();
+        List<String> listFailed = new ArrayList<String>();
 
         StockTypeBase stb = StockTypeBase.getByDescription((String) comboStockType.getSelectedItem());
 
