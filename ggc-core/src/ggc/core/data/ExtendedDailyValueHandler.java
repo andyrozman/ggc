@@ -1,9 +1,6 @@
 package ggc.core.data;
 
-import java.util.Hashtable;
-
-import com.atech.db.ext.ExtendedHandler;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.db.ext.ExtendedEnumHandler;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -30,7 +27,7 @@ import com.atech.utils.ATDataAccessAbstract;
  *  @author Andy {andy@atech-software.com}
  */
 
-public class ExtendedDailyValueHandler extends ExtendedHandler
+public class ExtendedDailyValueHandler extends ExtendedEnumHandler<ExtendedDailyValueType>
 {
 
     // private String extended;
@@ -40,45 +37,15 @@ public class ExtendedDailyValueHandler extends ExtendedHandler
     // private boolean changed = false;
     // boolean debug = false;
 
-    // FIXME enum
-    public static final int EXTENDED_ACTIVITY = 0;
-    public static final int EXTENDED_URINE = 1;
-    public static final int EXTENDED_FOOD_DESCRIPTION = 2;
-    public static final int EXTENDED_FOOD_CH = 3;
-    public static final int EXTENDED_DECIMAL_PART_INS1 = 4;
-    public static final int EXTENDED_DECIMAL_PART_INS2 = 5;
-    public static final int EXTENDED_INSULIN_3 = 6;
-    public static final int EXTENDED_SOURCE = 7;
-
-    private static final int EXTENDED_MAX = 7;
-
-
-    public ExtendedDailyValueHandler(ATDataAccessAbstract da)
+    public ExtendedDailyValueHandler()
     {
-        super(da);
+        super(ExtendedDailyValueType.None, "DailyValuesRow");
     }
 
-
-    @Override
-    public void initExtended()
-    {
-        ext_mapped_types = new Hashtable<Integer, String>();
-
-        ext_mapped_types.put(ExtendedDailyValueHandler.EXTENDED_URINE, "URINE");
-        ext_mapped_types.put(ExtendedDailyValueHandler.EXTENDED_ACTIVITY, "ACTIVITY");
-        ext_mapped_types.put(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION, "FOOD_DESCRIPTION");
-        ext_mapped_types.put(ExtendedDailyValueHandler.EXTENDED_FOOD_CH, "FOOD_DESC_CH");
-        ext_mapped_types.put(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS1, "DECIMAL_INS1");
-        ext_mapped_types.put(ExtendedDailyValueHandler.EXTENDED_DECIMAL_PART_INS2, "DECIMAL_INS2");
-        ext_mapped_types.put(ExtendedDailyValueHandler.EXTENDED_INSULIN_3, "INSULIN_3");
-        ext_mapped_types.put(ExtendedDailyValueHandler.EXTENDED_SOURCE, "SOURCE");
-    }
-
-
-    @Override
-    public String getExtendedObject()
-    {
-        return "DailyValuesRow";
-    }
+    // @Override
+    // public String getExtendedObject()
+    // {
+    // return "DailyValuesRow";
+    // }
 
 }

@@ -1,12 +1,5 @@
 package ggc.core.db.tool.transfer;
 
-import ggc.core.db.GGCDb;
-import ggc.core.db.datalayer.DailyValue;
-import ggc.core.db.datalayer.SettingsColorScheme;
-import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.db.hibernate.DayValueH;
-import ggc.core.util.DataAccess;
-
 import java.io.File;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -15,11 +8,18 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.atech.db.hibernate.HibernateConfiguration;
+import com.atech.db.hibernate.tool.data.management.common.ImportExportStatusType;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
-import com.atech.db.hibernate.transfer.ImportExportAbstract;
 import com.atech.plugin.PlugInClient;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.datalayer.DailyValue;
+import ggc.core.db.datalayer.SettingsColorScheme;
+import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.DayValueH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -52,6 +52,7 @@ public class GGCExporter extends ExportTool implements Runnable
 
     DataAccess da = DataAccess.getInstance();
 
+
     /**
      * Constructor
      * 
@@ -64,10 +65,11 @@ public class GGCExporter extends ExportTool implements Runnable
         checkPrerequisitesForAutoBackup();
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportStatusType.Special);
 
         // exportAll();
     }
+
 
     /**
      * Constructor
@@ -78,11 +80,12 @@ public class GGCExporter extends ExportTool implements Runnable
     {
         super(cfg);
 
-        this.setTypeOfStatus(ImportExportAbstract.STATUS_DOT);
+        this.setTypeOfStatus(ImportExportStatusType.Dot);
 
         checkPrerequisites();
         exportAll();
     }
+
 
     private void checkPrerequisites()
     {
@@ -103,6 +106,7 @@ public class GGCExporter extends ExportTool implements Runnable
         this.setRootPath("../data/export/");
         this.setFileLastPart("_" + getCurrentDateForFile());
     }
+
 
     private void checkPrerequisitesForAutoBackup()
     {
@@ -131,6 +135,7 @@ public class GGCExporter extends ExportTool implements Runnable
         this.setFileLastPart("");
     }
 
+
     private void exportAll()
     {
         System.out.println("export: all");
@@ -142,6 +147,7 @@ public class GGCExporter extends ExportTool implements Runnable
         }
         // export(_DailyValues();
     }
+
 
     /*
      * private void sleep(long ms) { try { Thread.sleep(ms); } catch(Exception
@@ -157,6 +163,7 @@ public class GGCExporter extends ExportTool implements Runnable
     {
         return 2;
     }
+
 
     private BackupRestoreObject getBackupRestoreObject(String class_name)
     {
@@ -179,6 +186,7 @@ public class GGCExporter extends ExportTool implements Runnable
         return null;
 
     }
+
 
     private BackupRestoreObject getBackupRestoreObject(Object obj, BackupRestoreObject bro)
     {
@@ -206,6 +214,7 @@ public class GGCExporter extends ExportTool implements Runnable
 
     }
 
+
     /**
      * Export Data (object name)
      * 
@@ -215,6 +224,7 @@ public class GGCExporter extends ExportTool implements Runnable
     {
         exportData(this.getBackupRestoreObject(name));
     }
+
 
     /**
      * Export Data (object)
@@ -229,7 +239,7 @@ public class GGCExporter extends ExportTool implements Runnable
 
         openFile(this.getRootPath() + bro.getBackupFile() + this.getFileLastPart() + ".dbe");
 
-        writeHeader(bro, DataAccess.getInstance().current_db_version);
+        writeHeader(bro, GGCDb.CURRENT_DB_VERSION);
 
         Session sess = getSession();
 
@@ -270,6 +280,7 @@ public class GGCExporter extends ExportTool implements Runnable
     boolean running = true;
     String backup_object = null;
 
+
     /**
      * Set Backup Object
      * 
@@ -279,6 +290,7 @@ public class GGCExporter extends ExportTool implements Runnable
     {
         this.backup_object = name;
     }
+
 
     /**
      * Run for Thread
@@ -297,6 +309,7 @@ public class GGCExporter extends ExportTool implements Runnable
         }
     }
 
+
     /**
      * Stop Thread
      */
@@ -304,6 +317,7 @@ public class GGCExporter extends ExportTool implements Runnable
     {
         this.running = false;
     }
+
 
     /**
      * @param args

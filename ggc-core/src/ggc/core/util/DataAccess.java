@@ -78,9 +78,8 @@ public class DataAccess extends ATDataAccessLMAbstract
     public static String CORE_VERSION = "0.7.0";
 
     /**
-     * Current Db Version
+     * Current Db Version (can be found in GGCDb)
      */
-    public String current_db_version = "7";
 
     /**
      * At later time this will be determined by user management part
@@ -1773,7 +1772,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     @Override
     public void loadExtendedHandlers()
     {
-        this.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValueHandler(this));
+        this.addExtendedHandler(DataAccess.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValueHandler());
     }
 
 

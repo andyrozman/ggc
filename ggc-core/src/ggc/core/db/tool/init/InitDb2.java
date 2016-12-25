@@ -25,7 +25,7 @@
  * Author: andyrozman
  */
 
-package ggc.core.db.tool;
+package ggc.core.db.tool.init;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -69,7 +69,7 @@ import ggc.core.util.DataAccess;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class InitDb
+public class InitDb2
 {
 
     String path = "../data/nutrition/";
@@ -91,7 +91,7 @@ public class InitDb
     /**
      * Constructor
      */
-    public InitDb()
+    public InitDb2()
     {
         this(true);
     }
@@ -99,10 +99,10 @@ public class InitDb
 
     /**
      * Constructor
-     * 
+     *
      * @param load_nutr
      */
-    public InitDb(boolean load_nutr)
+    public InitDb2(boolean load_nutr)
     {
         long time_start = System.currentTimeMillis();
 
@@ -800,7 +800,7 @@ public class InitDb
                 + "Please make a backup of your database and it's data, before you attempt to do\n"
                 + " this. If you are sure you will need password to start this process. \n"
                 + "This message is displayed because you didn'y supply password on command line.\n"
-                + "Password is (without spaces): " + InitDb.passWord + "\n"
+                + "Password is (without spaces): " + InitDb2.passWord + "\n"
                 + "now you can either type the password in after prompt, or you can start\n"
                 + "again with right password as parameter. Press CTRL-C to abort.");
     }
@@ -838,18 +838,18 @@ public class InitDb
         // I_Really_Want_To_Do_This
         if (args.length == 1)
         {
-            if (args[0].equals(InitDb.passWord))
+            if (args[0].equals(InitDb2.passWord))
             {
-                new InitDb();
+                new InitDb2();
                 return;
             }
         }
 
-        InitDb.usage();
+        InitDb2.usage();
 
-        if (InitDb.passWord.equals(InitDb.readPassWord()))
+        if (InitDb2.passWord.equals(InitDb2.readPassWord()))
         {
-            new InitDb();
+            new InitDb2();
             return;
         }
 

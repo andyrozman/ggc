@@ -68,7 +68,7 @@ public class GGCDbConfig extends HibernateConfiguration
 
     private static final Logger LOG = LoggerFactory.getLogger(GGCDbConfig.class);
 
-    private String[] db_files = { "GGC_Main.hbm.xml", //
+    private String[] db_files = { "DbInfo.hbm.xml", "GGC_Main.hbm.xml", //
                                   "GGC_Nutrition.hbm.xml", //
                                   "GGC_Other.hbm.xml", //
                                   "GGC_Pump.hbm.xml", //
@@ -88,6 +88,12 @@ public class GGCDbConfig extends HibernateConfiguration
      * @param val
      */
     public GGCDbConfig(boolean val)
+    {
+        super(val);
+    }
+
+
+    public GGCDbConfig(String val)
     {
         super(val);
     }

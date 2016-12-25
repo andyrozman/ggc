@@ -34,8 +34,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
+import com.atech.db.hibernate.tool.data.management.common.ImportExportStatusType;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
-import com.atech.db.hibernate.transfer.ImportExportAbstract;
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.db.hibernate.transfer.RestoreFileInfo;
 import com.atech.utils.ATDataAccessAbstract;
@@ -102,7 +102,7 @@ public class ImportSettings extends ImportTool implements Runnable
 
         m_db = new GGCDb();
         m_db.initDb();
-        setHibernateConfiguration(m_db.getHibernateConfiguration());
+        createHibernateUtil(m_db.getHibernateConfiguration());
         // this.file_name = file_name;
         this.restore_file = new File(file_name);
 
@@ -146,7 +146,7 @@ public class ImportSettings extends ImportTool implements Runnable
         super(DataAccess.getInstance().getDb().getHibernateConfiguration());
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportStatusType.Special);
     }
 
 
@@ -161,7 +161,7 @@ public class ImportSettings extends ImportTool implements Runnable
         super(DataAccess.getInstance().getDb().getHibernateConfiguration(), res);
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportStatusType.Special);
     }
 
 
@@ -195,7 +195,7 @@ public class ImportSettings extends ImportTool implements Runnable
             int dot_mark = 5;
             int count = 0;
 
-            while ((line = this.br_file.readLine()) != null)
+            while ((line = this.bufferedReader.readLine()) != null)
             {
                 if (line.startsWith(";"))
                 {

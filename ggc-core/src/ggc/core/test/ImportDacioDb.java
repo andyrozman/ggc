@@ -38,6 +38,7 @@ import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atech.db.hibernate.tool.data.management.common.ImportExportAbstract;
 import com.atech.db.hibernate.transfer.ImportTool;
 import com.atech.utils.ATDataAccessAbstract;
 
@@ -103,7 +104,7 @@ public class ImportDacioDb extends ImportTool
 
 
     /**
-     * @see com.atech.db.hibernate.transfer.ImportExportAbstract#getActiveSession()
+     * @see ImportExportAbstract#getActiveSession()
      */
     @Override
     public int getActiveSession()
@@ -158,7 +159,7 @@ public class ImportDacioDb extends ImportTool
 
             Session sess = getSession();
 
-            while ((line = this.br_file.readLine()) != null)
+            while ((line = this.bufferedReader.readLine()) != null)
             {
                 if (line.startsWith(";"))
                 {

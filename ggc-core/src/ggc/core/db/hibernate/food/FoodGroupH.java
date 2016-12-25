@@ -6,8 +6,10 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.atech.db.hibernate.HibernateObject;
+
 /** @author Hibernate CodeGenerator */
-public class FoodGroupH implements Serializable
+public class FoodGroupH extends HibernateObject implements Serializable
 {
 
     /**

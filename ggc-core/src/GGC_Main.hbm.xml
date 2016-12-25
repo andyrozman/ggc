@@ -9,7 +9,7 @@
     <!-- ***               Patient Data           **** -->
     <!-- ****************************************** -->
 
-    <!--  Day values -->
+    <!--  DayValueH: last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.DayValueH" table="data_dayvalues">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
@@ -31,7 +31,7 @@
     <!-- ***               Configuration          **** -->
     <!-- ****************************************** -->
 
-
+    <!-- SettingsH:  last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.SettingsH" table="cfg_settings">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
@@ -45,6 +45,7 @@
     </class>
 
 
+    <!-- ColorSchemeH:  last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.ColorSchemeH" table="cfg_colorscheme">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
@@ -63,6 +64,8 @@
         <property name="color_ch" type="int"/>
     </class>
 
+
+    <!--
     <class name="ggc.core.db.hibernate.DbInfoH" table="db_info">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
@@ -70,9 +73,9 @@
         <property name="key" column="el_key" type="string" length="44" not-null="true"/>
         <property name="value" column="el_value" type="string" length="255"/>
         <property name="type" type="int"/>
-        <!-- 1-string, 2-int, 3=float -->
-        <property name="description" type="string" length="255"/>
-    </class>
+        <!  1-string, 2-int, 3=float -->
+        <!-- <property name="description" type="string" length="255"/>
+    </class> -->
 
 
 </hibernate-mapping>

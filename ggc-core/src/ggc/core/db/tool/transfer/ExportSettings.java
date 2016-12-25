@@ -1,9 +1,5 @@
 package ggc.core.db.tool.transfer;
 
-import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.SettingsH;
-import ggc.core.util.DataAccess;
-
 import java.io.File;
 import java.util.Iterator;
 
@@ -11,9 +7,13 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.atech.db.hibernate.HibernateConfiguration;
+import com.atech.db.hibernate.tool.data.management.common.ImportExportStatusType;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
-import com.atech.db.hibernate.transfer.ImportExportAbstract;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.hibernate.SettingsH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -55,10 +55,11 @@ public class ExportSettings extends ExportTool implements Runnable
         checkPrerequisitesForAutoBackup();
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportStatusType.Special);
 
         // exportAll();
     }
+
 
     /**
      * Constructor
@@ -69,11 +70,12 @@ public class ExportSettings extends ExportTool implements Runnable
     {
         super(cfg);
 
-        this.setTypeOfStatus(ImportExportAbstract.STATUS_DOT);
+        this.setTypeOfStatus(ImportExportStatusType.Dot);
 
         checkPrerequisites();
         exportAll();
     }
+
 
     private void checkPrerequisites()
     {
@@ -94,6 +96,7 @@ public class ExportSettings extends ExportTool implements Runnable
         this.setRootPath("../data/export/");
         this.setFileLastPart("_" + getCurrentDateForFile());
     }
+
 
     private void checkPrerequisitesForAutoBackup()
     {
@@ -122,6 +125,7 @@ public class ExportSettings extends ExportTool implements Runnable
         this.setFileLastPart("");
     }
 
+
     /**
      * Get Active Session
      */
@@ -131,10 +135,12 @@ public class ExportSettings extends ExportTool implements Runnable
         return 2;
     }
 
+
     private void exportAll()
     {
         export_Settings();
     }
+
 
     /*
      * private void sleep(long ms) { try { Thread.sleep(ms); } catch(Exception
@@ -148,7 +154,7 @@ public class ExportSettings extends ExportTool implements Runnable
         openFile(this.getRootPath() + "SettingsH" + this.getFileLastPart() + ".dbe");
         // "../data/export/DayValueH_" + getCurrentDateForFile() + ".txt");
         writeHeader("ggc.core.db.hibernate.SettingsH", "id; key; value; type; description; person_id",
-            DataAccess.getInstance().current_db_version);
+            GGCDb.CURRENT_DB_VERSION);
 
         Session sess = getSession();
 
@@ -176,6 +182,7 @@ public class ExportSettings extends ExportTool implements Runnable
         closeFile();
     }
 
+
     /**
      * Run
      */
@@ -183,6 +190,7 @@ public class ExportSettings extends ExportTool implements Runnable
     {
         exportAll();
     }
+
 
     /**
      * @param args

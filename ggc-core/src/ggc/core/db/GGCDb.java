@@ -58,6 +58,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 // HibernateDb
 {
 
+    public static String CURRENT_DB_VERSION = "7";
+
     // public static final int DB_CONFIG_LOADED = 1;
     // public static final int DB_INITIALIZED = 2;
     // public static final int DB_STARTED = 3;
@@ -79,12 +81,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     private DataAccess m_da;
 
     private int m_loadStatus = 0;
-
-    /*
-     * public ArrayList<MeterCompanyH> meter_companies = null; public
-     * Hashtable<String,ArrayList<MeterH>> meters_by_cmp = null; public
-     * Hashtable<String,MeterH> meters_full = null;
-     */
 
 
     // ---
@@ -1357,7 +1353,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
             Criteria criteria = this.getSession().createCriteria(StocktakingH.class);
             setPersonId(criteria);
             // criteria.add(Restrictions.eq("personId", (int)
-            // m_da.getCurrentUserId()));
+            // dataAccess.getCurrentUserId()));
             criteria.setProjection(Projections.max("datetime"));
 
             Object o = criteria.uniqueResult();

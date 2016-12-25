@@ -25,6 +25,7 @@ package ggc.core.data.defs;
  *  Author:    Andy {andy@atech-software.com}
  */
 
+@Deprecated
 public enum DailyValuesExtendedType
 {
     Activity(0), //

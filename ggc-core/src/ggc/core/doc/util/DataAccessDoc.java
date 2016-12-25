@@ -1560,7 +1560,7 @@ public class DataAccessDoc extends DataAccess
     @Override
     public void loadExtendedHandlers()
     {
-        this.addExtendedHandler(DataAccessDoc.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValueHandler(this));
+        this.addExtendedHandler(DataAccessDoc.EXTENDED_HANDLER_DailyValuesRow, new ExtendedDailyValueHandler());
     }
 
 

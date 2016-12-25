@@ -11,7 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
-import com.atech.db.hibernate.transfer.*;
+import com.atech.db.hibernate.tool.data.management.common.ImportExportStatusType;
+import com.atech.db.hibernate.transfer.BackupRestoreObject;
+import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
+import com.atech.db.hibernate.transfer.ImportTool;
+import com.atech.db.hibernate.transfer.RestoreFileInfo;
 import com.atech.plugin.PlugInClient;
 
 import ggc.core.db.GGCDb;
@@ -67,7 +71,7 @@ public class GGCImporter extends ImportTool implements Runnable
         // checkPrerequisitesForResAutoBackup();
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportStatusType.Special);
         this.setRootPath("../data/import/");
 
         // exportAll();
@@ -83,7 +87,7 @@ public class GGCImporter extends ImportTool implements Runnable
     {
         super(cfg);
 
-        this.setTypeOfStatus(ImportExportAbstract.STATUS_DOT);
+        this.setTypeOfStatus(ImportExportStatusType.Dot);
         this.setRootPath("../data/import/");
 
         // checkPrerequisites();
@@ -102,7 +106,7 @@ public class GGCImporter extends ImportTool implements Runnable
         super(DataAccess.getInstance().getDb().getHibernateConfiguration(), res);
 
         this.setStatusReceiver(giver);
-        this.setTypeOfStatus(ImportExportAbstract.STATUS_SPECIAL);
+        this.setTypeOfStatus(ImportExportStatusType.Special);
         this.setRootPath("../data/import/");
     }
 
@@ -284,7 +288,7 @@ public class GGCImporter extends ImportTool implements Runnable
             int count = 0;
             Map<String, String> headers = new HashMap<String, String>();
 
-            while ((line = this.br_file.readLine()) != null)
+            while ((line = this.bufferedReader.readLine()) != null)
             {
                 if (line.startsWith(";") || line.trim().length() == 0)
                 {
