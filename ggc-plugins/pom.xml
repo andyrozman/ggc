@@ -16,6 +16,7 @@
 
     <modules>
         <module>ggc-plugins-base</module>
+        <module>ggc-meter</module>
 
     </modules>
 

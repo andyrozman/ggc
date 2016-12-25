@@ -8,7 +8,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Plugins Base</name>
+    <name>GGC Plugins - Base</name>
 
     <artifactId>ggc-plugins-base</artifactId>
     <version>${ggc-plugin-base.version}</version>
