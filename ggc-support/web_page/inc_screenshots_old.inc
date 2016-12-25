@@ -1,7 +1,10 @@
 <blockquote>
 
-<center><h2 class="header">Screenshots [Pump Tool]</h2></center>
+<center><h2 class="header">Screenshots [Old Screenshots]</h2></center>
 
+
+This are some of old screenshots, which haven't been replaced yet (we are replacing and changing most
+of dialogs)...
 
 <h3>
 
@@ -17,9 +20,9 @@
 
 <a href="index.php?show=screenshots_meter_tool" class="menu">Meter Tool</a><br>
 
-Pump Tool<br>
+<a href="index.php?show=screenshots_pump_tool" class="menu">Pump Tool</a><br>
 
-<a href="index.php?show=screenshots_old" class="menu">Old Screenshots</a><br>
+Old Screenshots<br>
 
 </h3>
 
@@ -28,24 +31,25 @@ Pump Tool<br>
 <hr>
 <br>
 
+
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/daily_stats_pumps.jpg" border="0" alt="Daily Stats Pump View"></td></tr>
-<tr><td>Daily Stats Pump View [preview only]</td></tr>
-</table>
-
-
-<br>
-<br>
-
-<table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/manual_add_pump_data.jpg" border="0" alt="Manual Adding of Pump data"></td></tr>
-<tr><td>Manual Adding of Pump data [preview only]</td></tr>
+<tr><td><img src="images/0.3/main.gif" border="0" alt="Main Window of GGC 0.2.9"></td></tr>
+<tr><td>Main Window of GGC 0.2.9</td></tr>
 </table>
 
 <br>
 <br>
+
+<table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
+<tr><td><img src="images/frequency.jpg" border="0" alt="Frequency Graph"></td></tr>
+<tr><td>Frequency Graph</td></tr>
+</table>
+
+<br>
+<br>
+
 
 
 </blockquote>

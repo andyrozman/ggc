@@ -22,7 +22,7 @@ in SVN, but now they will also be here. Some of them are translated, but not all
 
 
 
-<a href="docs/"></a>
+<a href="docs"></a>
 
 
 <h3>Update</h3>

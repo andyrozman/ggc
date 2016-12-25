@@ -1,0 +1,2062 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet type="text/xsl" href="ACSPIXIP.xsl" ?>
+
+<IMPORT>
+<ACSPIX Type="2106" SN="UI00587071" Ver="3.04.00"/>
+<IP Name="Combo" SN="41026739    " Dt="2014-09-25" Tm="05:23" ActiveProf="5">
+<IPPROFILE Name="1" Active="0" IUday="38.60" >
+<IPTIMESLOT Number="1" IU="2.00" />
+<IPTIMESLOT Number="2" IU="2.50" />
+<IPTIMESLOT Number="3" IU="3.00" />
+<IPTIMESLOT Number="4" IU="2.40" />
+<IPTIMESLOT Number="5" IU="1.80" />
+<IPTIMESLOT Number="6" IU="1.20" />
+<IPTIMESLOT Number="7" IU="1.20" />
+<IPTIMESLOT Number="8" IU="1.20" />
+<IPTIMESLOT Number="9" IU="1.30" />
+<IPTIMESLOT Number="10" IU="1.30" />
+<IPTIMESLOT Number="11" IU="1.30" />
+<IPTIMESLOT Number="12" IU="1.50" />
+<IPTIMESLOT Number="13" IU="1.90" />
+<IPTIMESLOT Number="14" IU="2.00" />
+<IPTIMESLOT Number="15" IU="2.00" />
+<IPTIMESLOT Number="16" IU="1.50" />
+<IPTIMESLOT Number="17" IU="1.30" />
+<IPTIMESLOT Number="18" IU="1.20" />
+<IPTIMESLOT Number="19" IU="1.20" />
+<IPTIMESLOT Number="20" IU="1.20" />
+<IPTIMESLOT Number="21" IU="1.20" />
+<IPTIMESLOT Number="22" IU="1.20" />
+<IPTIMESLOT Number="23" IU="1.40" />
+<IPTIMESLOT Number="24" IU="1.80" />
+</IPPROFILE>
+<IPPROFILE Name="2" Active="0" IUday="38.60" >
+<IPTIMESLOT Number="1" IU="1.40" />
+<IPTIMESLOT Number="2" IU="1.80" />
+<IPTIMESLOT Number="3" IU="2.00" />
+<IPTIMESLOT Number="4" IU="2.50" />
+<IPTIMESLOT Number="5" IU="3.00" />
+<IPTIMESLOT Number="6" IU="2.40" />
+<IPTIMESLOT Number="7" IU="1.80" />
+<IPTIMESLOT Number="8" IU="1.20" />
+<IPTIMESLOT Number="9" IU="1.20" />
+<IPTIMESLOT Number="10" IU="1.20" />
+<IPTIMESLOT Number="11" IU="1.30" />
+<IPTIMESLOT Number="12" IU="1.30" />
+<IPTIMESLOT Number="13" IU="1.30" />
+<IPTIMESLOT Number="14" IU="1.50" />
+<IPTIMESLOT Number="15" IU="1.90" />
+<IPTIMESLOT Number="16" IU="2.00" />
+<IPTIMESLOT Number="17" IU="2.00" />
+<IPTIMESLOT Number="18" IU="1.50" />
+<IPTIMESLOT Number="19" IU="1.30" />
+<IPTIMESLOT Number="20" IU="1.20" />
+<IPTIMESLOT Number="21" IU="1.20" />
+<IPTIMESLOT Number="22" IU="1.20" />
+<IPTIMESLOT Number="23" IU="1.20" />
+<IPTIMESLOT Number="24" IU="1.20" />
+</IPPROFILE>
+<IPPROFILE Name="3" Active="0" IUday="38.60" >
+<IPTIMESLOT Number="1" IU="1.20" />
+<IPTIMESLOT Number="2" IU="1.20" />
+<IPTIMESLOT Number="3" IU="1.40" />
+<IPTIMESLOT Number="4" IU="1.80" />
+<IPTIMESLOT Number="5" IU="2.00" />
+<IPTIMESLOT Number="6" IU="2.50" />
+<IPTIMESLOT Number="7" IU="3.00" />
+<IPTIMESLOT Number="8" IU="2.40" />
+<IPTIMESLOT Number="9" IU="1.80" />
+<IPTIMESLOT Number="10" IU="1.20" />
+<IPTIMESLOT Number="11" IU="1.20" />
+<IPTIMESLOT Number="12" IU="1.20" />
+<IPTIMESLOT Number="13" IU="1.30" />
+<IPTIMESLOT Number="14" IU="1.30" />
+<IPTIMESLOT Number="15" IU="1.30" />
+<IPTIMESLOT Number="16" IU="1.50" />
+<IPTIMESLOT Number="17" IU="1.90" />
+<IPTIMESLOT Number="18" IU="2.00" />
+<IPTIMESLOT Number="19" IU="2.00" />
+<IPTIMESLOT Number="20" IU="1.50" />
+<IPTIMESLOT Number="21" IU="1.30" />
+<IPTIMESLOT Number="22" IU="1.20" />
+<IPTIMESLOT Number="23" IU="1.20" />
+<IPTIMESLOT Number="24" IU="1.20" />
+</IPPROFILE>
+<IPPROFILE Name="4" Active="0" IUday="38.60" >
+<IPTIMESLOT Number="1" IU="1.20" />
+<IPTIMESLOT Number="2" IU="1.20" />
+<IPTIMESLOT Number="3" IU="1.20" />
+<IPTIMESLOT Number="4" IU="1.20" />
+<IPTIMESLOT Number="5" IU="1.40" />
+<IPTIMESLOT Number="6" IU="1.80" />
+<IPTIMESLOT Number="7" IU="2.00" />
+<IPTIMESLOT Number="8" IU="2.50" />
+<IPTIMESLOT Number="9" IU="3.00" />
+<IPTIMESLOT Number="10" IU="2.40" />
+<IPTIMESLOT Number="11" IU="1.80" />
+<IPTIMESLOT Number="12" IU="1.20" />
+<IPTIMESLOT Number="13" IU="1.20" />
+<IPTIMESLOT Number="14" IU="1.20" />
+<IPTIMESLOT Number="15" IU="1.30" />
+<IPTIMESLOT Number="16" IU="1.30" />
+<IPTIMESLOT Number="17" IU="1.30" />
+<IPTIMESLOT Number="18" IU="1.50" />
+<IPTIMESLOT Number="19" IU="1.90" />
+<IPTIMESLOT Number="20" IU="2.00" />
+<IPTIMESLOT Number="21" IU="2.00" />
+<IPTIMESLOT Number="22" IU="1.50" />
+<IPTIMESLOT Number="23" IU="1.30" />
+<IPTIMESLOT Number="24" IU="1.20" />
+</IPPROFILE>
+<IPPROFILE Name="5" Active="1" IUday="38.60" >
+<IPTIMESLOT Number="1" IU="1.20" />
+<IPTIMESLOT Number="2" IU="1.40" />
+<IPTIMESLOT Number="3" IU="1.80" />
+<IPTIMESLOT Number="4" IU="2.00" />
+<IPTIMESLOT Number="5" IU="2.50" />
+<IPTIMESLOT Number="6" IU="3.00" />
+<IPTIMESLOT Number="7" IU="2.40" />
+<IPTIMESLOT Number="8" IU="1.80" />
+<IPTIMESLOT Number="9" IU="1.20" />
+<IPTIMESLOT Number="10" IU="1.20" />
+<IPTIMESLOT Number="11" IU="1.20" />
+<IPTIMESLOT Number="12" IU="1.30" />
+<IPTIMESLOT Number="13" IU="1.30" />
+<IPTIMESLOT Number="14" IU="1.30" />
+<IPTIMESLOT Number="15" IU="1.50" />
+<IPTIMESLOT Number="16" IU="1.90" />
+<IPTIMESLOT Number="17" IU="2.00" />
+<IPTIMESLOT Number="18" IU="2.00" />
+<IPTIMESLOT Number="19" IU="1.50" />
+<IPTIMESLOT Number="20" IU="1.30" />
+<IPTIMESLOT Number="21" IU="1.20" />
+<IPTIMESLOT Number="22" IU="1.20" />
+<IPTIMESLOT Number="23" IU="1.20" />
+<IPTIMESLOT Number="24" IU="1.20" />
+</IPPROFILE>
+</IP>
+<IPDATA>
+<BOLUS Dt="2014-09-25" Tm="" type="" amount="0.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-25" Tm="" type="" amount="14.14" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-09-25" Tm="05:19" cbrf="0.00" remark="Stop" />
+<BASAL Dt="2014-09-25" Tm="05:19" cbrf="3.00" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-25" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-25" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-25" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-25" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<EVENT Dt="2014-09-25" Tm="01:36" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-09-25" Tm="01:36" cbrf="2.10" profile="5" TBRinc="150%" cmd="2" remark="dur 03:43 h" />
+<BASAL Dt="2014-09-25" Tm="01:36" cbrf="1.40" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-25" Tm="01:35" shortinfo="6.30 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-25" Tm="01:33" description="cartridge changed" />
+<BASAL Dt="2014-09-25" Tm="01:18" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-25" Tm="01:18" cbrf="0.00" TBRinc="150%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-09-25" Tm="01:18" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-09-25" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-25" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-24" Tm="" type="" amount="44.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-24" Tm="" type="" amount="100.68" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-09-24" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-24" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-24" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<EVENT Dt="2014-09-24" Tm="17:36" shortinfo="W1" description="cartridge low" />
+<BOLUS Dt="2014-09-24" Tm="16:25" type="Mul" cmd="1" amount="18.00" remark="12.00 / 6.00  0:44 h" />
+<BASAL Dt="2014-09-24" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-24" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-24" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-24" Tm="12:49" type="Mul" cmd="1" amount="14.50" remark="10.50 / 4.00  0:14 h" />
+<BASAL Dt="2014-09-24" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-24" Tm="08:01" cbrf="1.80" profile="5" TBRinc="150%" remark="dur 17:17 h" />
+<BASAL Dt="2014-09-24" Tm="08:01" cbrf="1.20" profile="5" remark="TBR End" />
+<BASAL Dt="2014-09-24" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-24" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-24" Tm="06:04" cbrf="3.60" profile="5" TBRinc="150%" remark="dur 01:57 h" />
+<BASAL Dt="2014-09-24" Tm="06:04" cbrf="2.40" profile="5" remark="TBR End" />
+<BASAL Dt="2014-09-24" Tm="06:00" cbrf="3.36" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-24" Tm="05:00" cbrf="4.20" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-24" Tm="04:00" cbrf="3.50" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-24" Tm="03:00" cbrf="2.80" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-24" Tm="02:00" cbrf="2.52" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-24" Tm="01:59" type="Scr" amount="2.00" cmd="2" />
+<BASAL Dt="2014-09-24" Tm="01:00" cbrf="1.96" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-24" Tm="00:40" type="Std" amount="9.50" cmd="1" />
+<BASAL Dt="2014-09-24" Tm="00:00" cbrf="1.68" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-23" Tm="" type="" amount="58.70" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-23" Tm="" type="" amount="112.73" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-23" Tm="23:02" type="Std" amount="12.50" cmd="1" />
+<BOLUS Dt="2014-09-23" Tm="21:42" type="Scr" amount="0.50" cmd="2" />
+<BOLUS Dt="2014-09-23" Tm="20:12" type="Std" amount="1.20" cmd="1" />
+<BASAL Dt="2014-09-23" Tm="20:00" cbrf="1.68" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="19:00" cbrf="1.82" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="18:00" cbrf="2.10" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="16:00" cbrf="2.80" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="15:00" cbrf="2.66" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-23" Tm="14:17" type="Scr" amount="4.00" cmd="2" />
+<BASAL Dt="2014-09-23" Tm="14:00" cbrf="2.10" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-23" Tm="13:43" type="Mul" cmd="1" amount="18.00" remark="9.00 / 9.00  0:14 h" />
+<BOLUS Dt="2014-09-23" Tm="13:33" type="Std" amount="1.50" cmd="1" />
+<BASAL Dt="2014-09-23" Tm="11:00" cbrf="1.82" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="08:00" cbrf="1.68" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="07:00" cbrf="2.52" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="06:00" cbrf="3.36" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-23" Tm="05:36" type="Mul" cmd="1" amount="21.00" remark="10.00 / 11.00  0:15 h" />
+<BASAL Dt="2014-09-23" Tm="05:00" cbrf="4.20" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="04:00" cbrf="3.50" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="03:00" cbrf="2.80" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="02:00" cbrf="2.52" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="01:00" cbrf="1.96" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-23" Tm="00:00" cbrf="1.68" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-22" Tm="" type="" amount="63.30" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-22" Tm="" type="" amount="115.89" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-09-22" Tm="20:00" cbrf="1.68" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-22" Tm="19:00" cbrf="1.82" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-22" Tm="18:49" type="Std" amount="8.20" cmd="1" />
+<BOLUS Dt="2014-09-22" Tm="18:39" type="Std" amount="6.00" cmd="1" />
+<BASAL Dt="2014-09-22" Tm="18:00" cbrf="2.10" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-22" Tm="16:00" cbrf="2.80" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-22" Tm="15:00" cbrf="2.66" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-22" Tm="14:00" cbrf="2.10" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-22" Tm="13:05" type="Std" amount="5.50" cmd="1" />
+<BOLUS Dt="2014-09-22" Tm="11:50" type="Ext" cmd="1" amount="3.60" remark=" 0:28 h" />
+<BASAL Dt="2014-09-22" Tm="11:00" cbrf="1.82" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-22" Tm="09:49" type="Ext" cmd="1" amount="14.40" remark=" 0:29 h" />
+<BOLUS Dt="2014-09-22" Tm="09:16" type="Mul" cmd="1" amount="24.00" remark="10.00 / 14.00  0:14 h" />
+<BASAL Dt="2014-09-22" Tm="08:00" cbrf="1.68" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-22" Tm="07:00" cbrf="2.52" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-22" Tm="06:01" cbrf="3.36" profile="5" TBRinc="140%" remark="dur 48:03 h" />
+<BASAL Dt="2014-09-22" Tm="06:01" cbrf="2.40" profile="5" remark="Run" />
+<EVENT Dt="2014-09-22" Tm="06:00" shortinfo="0.20 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-22" Tm="05:58" description="cartridge changed" />
+<BASAL Dt="2014-09-22" Tm="05:57" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-22" Tm="05:57" cbrf="0.00" TBRinc="130%" remark="Stop" />
+<EVENT Dt="2014-09-22" Tm="05:57" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-09-22" Tm="05:00" cbrf="3.90" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-09-22" Tm="04:00" cbrf="3.25" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-09-22" Tm="03:00" cbrf="2.60" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-09-22" Tm="02:00" cbrf="2.34" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-09-22" Tm="01:00" cbrf="1.82" profile="5" TBRinc="130%" />
+<BOLUS Dt="2014-09-22" Tm="00:23" type="Std" amount="1.60" cmd="1" />
+<EVENT Dt="2014-09-22" Tm="00:23" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-09-22" Tm="00:00" cbrf="1.56" profile="5" TBRinc="130%" />
+<BOLUS Dt="2014-09-21" Tm="" type="" amount="84.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-21" Tm="" type="" amount="135.29" remark="Bolus+Basal Total"/>
+<EVENT Dt="2014-09-21" Tm="22:09" shortinfo="W2" description="battery low" />
+<BOLUS Dt="2014-09-21" Tm="21:08" type="Scr" amount="5.00" cmd="2" />
+<BASAL Dt="2014-09-21" Tm="20:00" cbrf="1.56" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-09-21" Tm="19:00" cbrf="1.69" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-09-21" Tm="18:00" cbrf="1.95" profile="5" TBRinc="130%" />
+<BOLUS Dt="2014-09-21" Tm="16:59" type="Std" amount="4.70" cmd="1" />
+<BASAL Dt="2014-09-21" Tm="16:00" cbrf="2.60" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-09-21" Tm="15:00" cbrf="2.47" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-09-21" Tm="14:00" cbrf="1.95" profile="5" TBRinc="130%" />
+<BOLUS Dt="2014-09-21" Tm="11:16" type="Scr" amount="1.50" />
+<BOLUS Dt="2014-09-21" Tm="11:11" type="Mul" cmd="1" amount="12.80" remark="8.00 / 4.80  0:13 h" />
+<BASAL Dt="2014-09-21" Tm="11:00" cbrf="1.69" profile="5" TBRinc="130%" />
+<BOLUS Dt="2014-09-21" Tm="09:10" type="Mul" cmd="1" amount="29.00" remark="10.00 / 19.00  0:14 h" />
+<BASAL Dt="2014-09-21" Tm="08:00" cbrf="1.56" profile="5" TBRinc="130%" />
+<BOLUS Dt="2014-09-21" Tm="07:01" type="Std" amount="5.00" cmd="1" />
+<BASAL Dt="2014-09-21" Tm="07:00" cbrf="2.34" profile="5" TBRinc="130%" />
+<BOLUS Dt="2014-09-21" Tm="06:53" type="Mul" cmd="1" amount="25.00" remark="8.00 / 17.00  0:13 h" />
+<BASAL Dt="2014-09-21" Tm="06:00" cbrf="3.12" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-09-21" Tm="05:46" cbrf="3.90" profile="5" TBRinc="130%" remark="dur 24:11 h" />
+<BASAL Dt="2014-09-21" Tm="05:46" cbrf="3.00" profile="5" remark="TBR End" />
+<BASAL Dt="2014-09-21" Tm="05:00" cbrf="4.20" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-21" Tm="04:00" cbrf="3.50" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-21" Tm="03:00" cbrf="2.80" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-21" Tm="02:00" cbrf="2.52" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-21" Tm="01:00" cbrf="1.96" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-21" Tm="00:07" type="Std" amount="1.00" cmd="1" />
+<BASAL Dt="2014-09-21" Tm="00:00" cbrf="1.68" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-20" Tm="" type="" amount="55.30" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-20" Tm="" type="" amount="112.66" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-09-20" Tm="23:50" cbrf="1.68" profile="5" TBRinc="140%" cmd="2" remark="dur 05:56 h" />
+<BASAL Dt="2014-09-20" Tm="23:50" cbrf="1.20" profile="5" remark="TBR End" />
+<BASAL Dt="2014-09-20" Tm="20:36" cbrf="1.80" profile="5" TBRinc="150%" cmd="2" remark="dur 03:14 h" />
+<BASAL Dt="2014-09-20" Tm="20:36" cbrf="1.20" profile="5" cmd="2" remark="Run" />
+<BASAL Dt="2014-09-20" Tm="20:19" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-09-20" Tm="20:19" cbrf="1.20" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-20" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-20" Tm="17:50" type="Std" amount="6.00" cmd="1" />
+<BASAL Dt="2014-09-20" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-20" Tm="10:36" type="Ext" cmd="1" amount="12.00" remark=" 0:15 h" />
+<BOLUS Dt="2014-09-20" Tm="10:29" type="Std" amount="8.30" cmd="1" />
+<BOLUS Dt="2014-09-20" Tm="08:24" type="Std" amount="5.00" cmd="1" />
+<BOLUS Dt="2014-09-20" Tm="08:07" type="Mul" cmd="1" amount="24.00" remark="12.00 / 12.00  0:14 h" />
+<BASAL Dt="2014-09-20" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-20" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-19" Tm="" type="" amount="85.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-19" Tm="" type="" amount="141.36" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-19" Tm="22:42" type="Std" amount="4.50" cmd="1" />
+<BASAL Dt="2014-09-19" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-19" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-19" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-19" Tm="17:17" type="Mul" cmd="1" amount="16.00" remark="10.00 / 6.00  0:13 h" />
+<BASAL Dt="2014-09-19" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-19" Tm="15:41" cbrf="2.85" profile="5" TBRinc="150%" cmd="2" remark="dur 28:38 h" />
+<BASAL Dt="2014-09-19" Tm="15:41" cbrf="1.90" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-19" Tm="15:41" shortinfo="0.70 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-19" Tm="15:41" shortinfo="6.20 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-19" Tm="15:36" description="cartridge changed" />
+<BASAL Dt="2014-09-19" Tm="15:36" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-19" Tm="15:36" cbrf="0.00" TBRinc="150%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-09-19" Tm="15:36" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-09-19" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-19" Tm="14:57" cbrf="2.25" profile="5" TBRinc="150%" cmd="2" remark="dur 00:39 h" />
+<BASAL Dt="2014-09-19" Tm="14:00" cbrf="1.50" profile="5" />
+<BASAL Dt="2014-09-19" Tm="12:20" cbrf="1.30" profile="5" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-09-19" Tm="11:57" shortinfo="W1" description="cartridge low" />
+<BOLUS Dt="2014-09-19" Tm="11:53" type="Mul" cmd="1" amount="23.00" remark="11.00 / 12.00  0:13 h" />
+<BASAL Dt="2014-09-19" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-19" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-19" Tm="07:33" type="Std" amount="12.00" cmd="1" />
+<BOLUS Dt="2014-09-19" Tm="07:27" type="Std" amount="2.90" cmd="1" />
+<BASAL Dt="2014-09-19" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-19" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-19" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-19" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-19" Tm="03:07" type="Mul" cmd="1" amount="20.00" remark="10.00 / 10.00  0:59 h" />
+<BASAL Dt="2014-09-19" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-19" Tm="02:45" type="Std" amount="3.00" cmd="1" />
+<BASAL Dt="2014-09-19" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-19" Tm="01:21" type="Std" amount="4.10" cmd="1" />
+<BASAL Dt="2014-09-19" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-19" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-18" Tm="" type="" amount="69.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-18" Tm="" type="" amount="126.89" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-18" Tm="22:19" type="Scr" amount="3.00" cmd="2" />
+<BOLUS Dt="2014-09-18" Tm="21:34" type="Mul" cmd="1" amount="25.00" remark="8.00 / 17.00  0:14 h" />
+<BOLUS Dt="2014-09-18" Tm="20:54" type="Scr" amount="0.50" cmd="2" />
+<BOLUS Dt="2014-09-18" Tm="20:04" type="Std" amount="2.00" cmd="1" />
+<BASAL Dt="2014-09-18" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-18" Tm="19:51" type="Scr" amount="3.00" cmd="2" />
+<BASAL Dt="2014-09-18" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-18" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-18" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-18" Tm="15:19" type="Scr" amount="1.00" cmd="2" />
+<BASAL Dt="2014-09-18" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-18" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-18" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-18" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-18" Tm="07:13" type="Mul" cmd="1" amount="19.00" remark="13.00 / 6.00  0:14 h" />
+<BASAL Dt="2014-09-18" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-18" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-18" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-18" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-18" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-18" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-18" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-18" Tm="00:29" type="Mul" cmd="1" amount="15.50" remark="10.50 / 5.00  0:13 h" />
+<BASAL Dt="2014-09-18" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-17" Tm="" type="" amount="113.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-17" Tm="" type="" amount="167.63" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-17" Tm="20:05" type="Ext" cmd="1" amount="25.00" remark=" 0:28 h" />
+<BASAL Dt="2014-09-17" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-17" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-17" Tm="18:50" type="Mul" cmd="1" amount="30.00" remark="15.00 / 15.00  0:13 h" />
+<BASAL Dt="2014-09-17" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-17" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-17" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-17" Tm="14:22" cbrf="2.25" profile="5" TBRinc="150%" remark="dur 45:58 h" />
+<BASAL Dt="2014-09-17" Tm="14:22" cbrf="1.50" profile="5" remark="Run" />
+<EVENT Dt="2014-09-17" Tm="14:22" shortinfo="0.50 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-17" Tm="14:19" shortinfo="3.40 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-17" Tm="14:17" description="cartridge changed" />
+<BASAL Dt="2014-09-17" Tm="13:09" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-17" Tm="13:09" cbrf="0.00" TBRinc="140%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-09-17" Tm="13:09" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-09-17" Tm="11:00" cbrf="1.82" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-17" Tm="09:32" type="Scr" amount="2.00" cmd="2" />
+<BASAL Dt="2014-09-17" Tm="08:00" cbrf="1.68" profile="5" TBRinc="140%" />
+<EVENT Dt="2014-09-17" Tm="07:54" shortinfo="W1" description="cartridge low" />
+<BOLUS Dt="2014-09-17" Tm="07:44" type="Mul" cmd="1" amount="32.00" remark="16.00 / 16.00  0:13 h" />
+<BASAL Dt="2014-09-17" Tm="07:13" cbrf="2.52" profile="5" TBRinc="140%" cmd="2" remark="dur 05:56 h" />
+<BASAL Dt="2014-09-17" Tm="07:13" cbrf="1.80" profile="5" remark="TBR End" />
+<BASAL Dt="2014-09-17" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-17" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-17" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-17" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-17" Tm="03:08" type="Mul" cmd="1" amount="24.00" remark="10.00 / 14.00  0:13 h" />
+<BASAL Dt="2014-09-17" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-17" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-17" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-17" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-16" Tm="" type="" amount="52.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-16" Tm="" type="" amount="110.38" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-16" Tm="23:54" type="Std" amount="1.00" cmd="1" />
+<BASAL Dt="2014-09-16" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-16" Tm="18:58" type="Mul" cmd="1" amount="24.00" remark="12.00 / 12.00  0:29 h" />
+<BASAL Dt="2014-09-16" Tm="18:32" cbrf="2.25" profile="5" TBRinc="150%" remark="dur 12:41 h" />
+<BASAL Dt="2014-09-16" Tm="18:31" cbrf="1.50" profile="5" remark="Run" />
+<BASAL Dt="2014-09-16" Tm="18:31" cbrf="0.00" remark="Stop" />
+<BASAL Dt="2014-09-16" Tm="18:31" cbrf="1.50" profile="5" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-09-16" Tm="18:03" type="Scr" amount="0.50" cmd="2" />
+<BASAL Dt="2014-09-16" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-16" Tm="09:15" type="Scr" amount="4.50" cmd="2" />
+<BASAL Dt="2014-09-16" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-16" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-16" Tm="00:33" type="Mul" cmd="1" amount="22.50" remark="5.50 / 17.00  0:27 h" />
+<BASAL Dt="2014-09-16" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-15" Tm="" type="" amount="54.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-15" Tm="" type="" amount="112.00" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-15" Tm="21:07" type="Scr" amount="5.00" cmd="2" />
+<BASAL Dt="2014-09-15" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-15" Tm="19:02" type="Scr" amount="4.00" />
+<BASAL Dt="2014-09-15" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-15" Tm="18:49" type="Mul" cmd="1" amount="18.00" remark="12.00 / 6.00  0:59 h" />
+<BASAL Dt="2014-09-15" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-15" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-15" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-15" Tm="14:02" type="Std" amount="3.70" cmd="1" />
+<BASAL Dt="2014-09-15" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-15" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-15" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-15" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-15" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-15" Tm="05:27" type="Std" amount="13.50" cmd="1" />
+<BOLUS Dt="2014-09-15" Tm="05:10" type="Scr" amount="7.50" cmd="2" />
+<BASAL Dt="2014-09-15" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-15" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-15" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-15" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-15" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-15" Tm="00:32" cbrf="1.80" profile="5" TBRinc="150%" cmd="2" remark="dur 41:59 h" />
+<BASAL Dt="2014-09-15" Tm="00:32" cbrf="1.20" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-15" Tm="00:31" shortinfo="3.60 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-15" Tm="00:29" description="cartridge changed" />
+<BOLUS Dt="2014-09-15" Tm="00:19" type="Scr" amount="2.80" cmd="2" />
+<BASAL Dt="2014-09-15" Tm="00:19" cbrf="0.00" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-09-15" Tm="00:19" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-09-15" Tm="00:19" cbrf="0.00" TBRinc="150%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-09-15" Tm="00:19" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-09-15" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-14" Tm="" type="" amount="122.30" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-14" Tm="" type="" amount="180.19" remark="Bolus+Basal Total"/>
+<EVENT Dt="2014-09-14" Tm="22:33" shortinfo="W1" description="cartridge low" />
+<BOLUS Dt="2014-09-14" Tm="21:29" type="Mul" cmd="1" amount="43.00" remark="13.00 / 30.00  1:28 h" />
+<BASAL Dt="2014-09-14" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-14" Tm="19:48" cbrf="1.95" profile="5" TBRinc="150%" remark="dur 04:31 h" />
+<BASAL Dt="2014-09-14" Tm="19:48" cbrf="1.30" profile="5" remark="TBR End" />
+<BOLUS Dt="2014-09-14" Tm="19:05" type="Mul" cmd="1" amount="35.00" remark="11.00 / 24.00  1:28 h" />
+<BASAL Dt="2014-09-14" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-14" Tm="18:00" type="Std" amount="2.30" cmd="1" />
+<BASAL Dt="2014-09-14" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-14" Tm="17:06" type="Scr" amount="2.50" cmd="2" />
+<BASAL Dt="2014-09-14" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-14" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-14" Tm="14:03" type="Scr" amount="1.50" cmd="2" />
+<BASAL Dt="2014-09-14" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-14" Tm="11:30" type="Std" amount="8.50" cmd="1" />
+<BASAL Dt="2014-09-14" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-14" Tm="10:28" type="Scr" amount="2.00" />
+<BASAL Dt="2014-09-14" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-14" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-14" Tm="06:17" type="Mul" cmd="2"  amount="10.00" remark="5.00 / 5.00  0:13 h" />
+<BOLUS Dt="2014-09-14" Tm="06:16" type="Scr" amount="0.50" cmd="2" />
+<BASAL Dt="2014-09-14" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-14" Tm="05:12" type="Mul" cmd="1" amount="17.00" remark="8.50 / 8.50  1:00 h" />
+<BASAL Dt="2014-09-14" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-14" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-14" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-14" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-14" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-14" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-13" Tm="" type="" amount="30.20" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-13" Tm="" type="" amount="87.75" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-13" Tm="20:26" type="Std" amount="11.50" cmd="1" />
+<BASAL Dt="2014-09-13" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="14:22" cbrf="2.25" profile="5" TBRinc="150%" cmd="2" remark="dur 29:26 h" />
+<BASAL Dt="2014-09-13" Tm="14:22" cbrf="1.50" profile="5" remark="TBR End" />
+<BASAL Dt="2014-09-13" Tm="14:00" cbrf="1.65" profile="5" TBRinc="110%" />
+<BASAL Dt="2014-09-13" Tm="13:46" cbrf="1.43" profile="5" TBRinc="110%" cmd="2" remark="dur 00:36 h" />
+<BASAL Dt="2014-09-13" Tm="13:46" cbrf="1.30" profile="5" remark="TBR End" />
+<BOLUS Dt="2014-09-13" Tm="13:19" type="Std" amount="2.20" cmd="1" />
+<BASAL Dt="2014-09-13" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-13" Tm="04:01" type="Mul" cmd="1" amount="16.50" remark="10.00 / 6.50  0:14 h" />
+<BASAL Dt="2014-09-13" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-13" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-12" Tm="" type="" amount="61.70" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-12" Tm="" type="" amount="121.54" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-12" Tm="23:21" type="Scr" amount="3.00" cmd="2" />
+<BOLUS Dt="2014-09-12" Tm="20:56" type="Mul" cmd="1" amount="16.50" remark="10.00 / 6.50  0:13 h" />
+<BASAL Dt="2014-09-12" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-12" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-12" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-12" Tm="17:50" type="Std" amount="3.20" cmd="1" />
+<BASAL Dt="2014-09-12" Tm="17:48" cbrf="3.00" profile="5" TBRinc="150%" remark="dur 19:58 h" />
+<BASAL Dt="2014-09-12" Tm="17:48" cbrf="2.00" profile="5" remark="Run" />
+<EVENT Dt="2014-09-12" Tm="17:48" shortinfo="5.60 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-12" Tm="17:46" description="cartridge changed" />
+<BASAL Dt="2014-09-12" Tm="17:42" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-12" Tm="17:42" cbrf="0.00" TBRinc="150%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-09-12" Tm="17:42" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-09-12" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-12" Tm="15:50" type="Std" amount="12.00" cmd="1" />
+<EVENT Dt="2014-09-12" Tm="15:49" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-09-12" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-12" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-12" Tm="13:10" cbrf="1.95" profile="5" TBRinc="150%" cmd="2" remark="dur 04:32 h" />
+<BASAL Dt="2014-09-12" Tm="13:10" cbrf="1.30" profile="5" remark="TBR End" />
+<BASAL Dt="2014-09-12" Tm="11:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-12" Tm="08:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-12" Tm="07:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-12" Tm="06:00" cbrf="3.84" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-12" Tm="05:14" type="Std" amount="1.00" cmd="1" />
+<BASAL Dt="2014-09-12" Tm="05:00" cbrf="4.80" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-12" Tm="04:00" cbrf="4.00" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-12" Tm="03:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-12" Tm="02:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-12" Tm="01:00" cbrf="2.24" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-12" Tm="00:49" type="Mul" cmd="1" amount="26.00" remark="10.00 / 16.00  0:44 h" />
+<BASAL Dt="2014-09-12" Tm="00:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-11" Tm="" type="" amount="51.40" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-11" Tm="" type="" amount="109.11" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-11" Tm="20:32" type="Mul" cmd="1" amount="25.50" remark="8.00 / 17.50  0:13 h" />
+<BASAL Dt="2014-09-11" Tm="20:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-11" Tm="19:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-11" Tm="18:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-11" Tm="16:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-11" Tm="15:00" cbrf="3.04" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-11" Tm="14:44" type="Scr" amount="0.50" />
+<BASAL Dt="2014-09-11" Tm="14:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-11" Tm="11:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-11" Tm="09:45" cbrf="1.92" profile="5" TBRinc="160%" cmd="2" remark="dur 27:25 h" />
+<BASAL Dt="2014-09-11" Tm="09:45" cbrf="1.20" profile="5" cmd="2" remark="Run" />
+<BASAL Dt="2014-09-11" Tm="09:27" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-09-11" Tm="09:27" cbrf="1.20" profile="5" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-09-11" Tm="09:27" type="Std" amount="0.70" cmd="2" />
+<BOLUS Dt="2014-09-11" Tm="09:01" type="Std" amount="3.00" cmd="1" />
+<BASAL Dt="2014-09-11" Tm="09:00" cbrf="1.92" profile="5" TBRinc="160%" cmd="2" remark="dur 00:27 h" />
+<BASAL Dt="2014-09-11" Tm="09:00" cbrf="1.20" profile="5" remark="TBR End" />
+<BASAL Dt="2014-09-11" Tm="08:00" cbrf="1.68" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-11" Tm="07:00" cbrf="2.52" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-11" Tm="06:00" cbrf="3.36" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-11" Tm="05:00" cbrf="4.20" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-11" Tm="04:00" cbrf="3.50" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-11" Tm="03:00" cbrf="2.80" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-11" Tm="02:15" type="Mul" cmd="1" amount="20.00" remark="8.00 / 12.00  0:15 h" />
+<BASAL Dt="2014-09-11" Tm="02:00" cbrf="2.52" profile="5" TBRinc="140%" />
+<BASAL Dt="2014-09-11" Tm="01:00" cbrf="1.96" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-11" Tm="00:57" type="Std" amount="1.70" cmd="1" />
+<BASAL Dt="2014-09-11" Tm="00:00" cbrf="1.68" profile="5" TBRinc="140%" />
+<BOLUS Dt="2014-09-10" Tm="" type="" amount="48.40" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-10" Tm="" type="" amount="109.48" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-09-10" Tm="21:11" cbrf="1.68" profile="5" TBRinc="140%" cmd="2" remark="dur 11:49 h" />
+<BASAL Dt="2014-09-10" Tm="21:11" cbrf="1.20" profile="5" remark="TBR End" />
+<BASAL Dt="2014-09-10" Tm="20:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-10" Tm="19:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-10" Tm="18:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-10" Tm="17:58" type="Std" amount="1.70" cmd="1" />
+<BASAL Dt="2014-09-10" Tm="16:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-10" Tm="15:27" type="Mul" cmd="1" amount="7.00" remark="5.50 / 1.50  1:00 h" />
+<BASAL Dt="2014-09-10" Tm="15:00" cbrf="3.04" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-10" Tm="14:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-10" Tm="13:21" type="Std" amount="0.90" cmd="1" />
+<BASAL Dt="2014-09-10" Tm="11:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-10" Tm="10:00" type="Scr" amount="7.00" cmd="2" />
+<BASAL Dt="2014-09-10" Tm="08:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-10" Tm="07:04" type="Mul" cmd="1" amount="30.00" remark="9.00 / 21.00  0:29 h" />
+<BASAL Dt="2014-09-10" Tm="07:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-10" Tm="06:00" cbrf="3.84" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-10" Tm="05:00" cbrf="4.80" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-10" Tm="04:00" cbrf="4.00" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-10" Tm="03:51" type="Std" amount="1.80" cmd="1" />
+<BASAL Dt="2014-09-10" Tm="03:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-10" Tm="02:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-10" Tm="01:00" cbrf="2.24" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-10" Tm="00:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-09" Tm="" type="" amount="33.80" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-09" Tm="" type="" amount="92.48" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-09-09" Tm="23:39" cbrf="1.92" profile="5" TBRinc="160%" cmd="2" remark="dur 21:32 h" />
+<BASAL Dt="2014-09-09" Tm="23:39" cbrf="1.20" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-09" Tm="23:39" shortinfo="5.90 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-09" Tm="23:36" description="cartridge changed" />
+<BASAL Dt="2014-09-09" Tm="23:30" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-09" Tm="23:30" cbrf="0.00" TBRinc="160%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-09-09" Tm="23:30" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-09-09" Tm="20:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="19:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-09" Tm="18:49" type="Std" amount="7.00" cmd="1" />
+<EVENT Dt="2014-09-09" Tm="18:49" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-09-09" Tm="18:41" cbrf="2.40" profile="5" TBRinc="160%" remark="dur 04:49 h" />
+<BASAL Dt="2014-09-09" Tm="18:12" cbrf="1.50" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-09" Tm="18:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="17:17" cbrf="3.20" profile="5" TBRinc="160%" remark="dur 00:55 h" />
+<BASAL Dt="2014-09-09" Tm="17:07" cbrf="2.00" profile="5" remark="Run" />
+<EVENT Dt="2014-09-09" Tm="17:07" shortinfo="0.50 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-09" Tm="17:07" shortinfo="10.40 IU" description="prime infusion set" />
+<BASAL Dt="2014-09-09" Tm="17:06" cbrf="0.00" remark="Stop" />
+<BASAL Dt="2014-09-09" Tm="16:13" cbrf="2.00" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-09" Tm="16:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="15:00" cbrf="3.04" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="14:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="12:23" cbrf="2.08" profile="5" TBRinc="160%" cmd="2" remark="dur 03:50 h" />
+<BASAL Dt="2014-09-09" Tm="12:23" cbrf="1.30" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-09" Tm="12:19" shortinfo="2.70 IU" description="prime infusion set" />
+<BASAL Dt="2014-09-09" Tm="11:56" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-09-09" Tm="11:56" cbrf="1.30" profile="5" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-09-09" Tm="11:53" type="Scr" amount="1.50" cmd="2" />
+<BOLUS Dt="2014-09-09" Tm="11:53" type="Std" amount="1.30" cmd="1" />
+<BASAL Dt="2014-09-09" Tm="11:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-09" Tm="08:29" type="Mul" cmd="1" amount="24.00" remark="3.00 / 21.00  0:28 h" />
+<BASAL Dt="2014-09-09" Tm="08:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="07:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="06:00" cbrf="3.84" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="05:00" cbrf="4.80" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="04:17" cbrf="4.00" profile="5" TBRinc="160%" remark="dur 07:39 h" />
+<BASAL Dt="2014-09-09" Tm="04:16" cbrf="2.50" profile="5" remark="Run" />
+<BASAL Dt="2014-09-09" Tm="04:15" cbrf="0.00" remark="Stop" />
+<BASAL Dt="2014-09-09" Tm="04:15" cbrf="2.50" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-09" Tm="04:00" cbrf="4.00" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="03:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="02:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="01:00" cbrf="2.24" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-09" Tm="00:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-08" Tm="" type="" amount="43.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-08" Tm="" type="" amount="102.27" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-08" Tm="23:22" type="Ext" cmd="1" amount="7.50" remark=" 0:29 h" />
+<BOLUS Dt="2014-09-08" Tm="22:56" type="Mul" cmd="1" amount="11.00" remark="3.50 / 7.50  0:13 h" />
+<BASAL Dt="2014-09-08" Tm="20:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-08" Tm="19:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-08" Tm="18:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-08" Tm="16:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-08" Tm="15:16" type="Std" amount="0.20" cmd="1" />
+<BASAL Dt="2014-09-08" Tm="15:00" cbrf="3.04" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-08" Tm="14:46" cbrf="2.40" profile="5" TBRinc="160%" cmd="2" remark="dur 13:29 h" />
+<BASAL Dt="2014-09-08" Tm="14:46" cbrf="1.50" profile="5" remark="TBR End" />
+<BOLUS Dt="2014-09-08" Tm="14:46" type="Std" amount="0.50" cmd="1" />
+<BASAL Dt="2014-09-08" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-08" Tm="13:30" type="Std" amount="2.20" cmd="1" />
+<BASAL Dt="2014-09-08" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-08" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-08" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-08" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-08" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-08" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-08" Tm="03:54" type="Mul" cmd="1" amount="20.00" remark="3.00 / 17.00  0:15 h" />
+<BOLUS Dt="2014-09-08" Tm="03:35" type="Std" amount="1.60" cmd="1" />
+<BASAL Dt="2014-09-08" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-08" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-08" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-08" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-07" Tm="" type="" amount="87.10" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-07" Tm="" type="" amount="148.13" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-07" Tm="23:13" type="Std" amount="1.30" cmd="1" />
+<BASAL Dt="2014-09-07" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-07" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-07" Tm="18:22" type="Scr" amount="3.00" cmd="2" />
+<BASAL Dt="2014-09-07" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-07" Tm="16:52" type="Mul" cmd="1" amount="26.00" remark="3.50 / 22.50  0:29 h" />
+<BASAL Dt="2014-09-07" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-09-07" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-07" Tm="14:51" type="Scr" amount="0.50" cmd="2" />
+<BOLUS Dt="2014-09-07" Tm="14:14" type="Std" amount="3.10" cmd="1" />
+<BASAL Dt="2014-09-07" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-07" Tm="12:13" type="Mul" cmd="1" amount="8.00" remark="4.00 / 4.00  0:59 h" />
+<BASAL Dt="2014-09-07" Tm="11:51" cbrf="1.95" profile="5" TBRinc="150%" cmd="2" remark="dur 26:55 h" />
+<BASAL Dt="2014-09-07" Tm="11:51" cbrf="1.30" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-07" Tm="11:51" shortinfo="2.50 IU" description="prime infusion set" />
+<BASAL Dt="2014-09-07" Tm="11:51" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-09-07" Tm="11:51" cbrf="1.30" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-07" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-09-07" Tm="09:01" type="Ext" cmd="1" amount="19.00" remark=" 0:14 h" />
+<BASAL Dt="2014-09-07" Tm="08:58" cbrf="1.80" profile="5" TBRinc="150%" cmd="2" remark="dur 02:53 h" />
+<BASAL Dt="2014-09-07" Tm="08:58" cbrf="1.20" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-07" Tm="08:57" shortinfo="3.90 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-07" Tm="08:55" description="cartridge changed" />
+<BASAL Dt="2014-09-07" Tm="08:54" cbrf="0.00" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-09-07" Tm="08:54" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-09-07" Tm="08:54" cbrf="0.00" TBRinc="150%" remark="Stop" />
+<EVENT Dt="2014-09-07" Tm="08:54" shortinfo="E1" description="cartridge empty" />
+<BOLUS Dt="2014-09-07" Tm="08:42" type="Mul" cmd="1" amount="8.70" remark="1.50 / 7.20  0:12 h" />
+<EVENT Dt="2014-09-07" Tm="08:15" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-09-07" Tm="08:09" cbrf="1.80" profile="5" TBRinc="150%" remark="dur 00:45 h" />
+<BASAL Dt="2014-09-07" Tm="08:09" cbrf="1.20" profile="5" remark="TBR End" />
+<BOLUS Dt="2014-09-07" Tm="08:04" type="Mul" cmd="1" amount="17.50" remark="3.00 / 14.50  0:14 h" />
+<BASAL Dt="2014-09-07" Tm="08:00" cbrf="2.04" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-07" Tm="07:00" cbrf="3.06" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-07" Tm="06:00" cbrf="4.08" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-07" Tm="05:00" cbrf="5.10" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-07" Tm="04:00" cbrf="4.25" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-07" Tm="03:00" cbrf="3.40" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-07" Tm="02:00" cbrf="3.06" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-07" Tm="01:00" cbrf="2.38" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-07" Tm="00:00" cbrf="2.04" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-06" Tm="" type="" amount="58.40" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-06" Tm="" type="" amount="119.69" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-09-06" Tm="20:00" cbrf="2.04" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-06" Tm="19:00" cbrf="2.21" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-06" Tm="18:00" cbrf="2.55" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-06" Tm="17:54" type="Mul" cmd="1" amount="20.40" remark="3.90 / 16.50  0:15 h" />
+<BASAL Dt="2014-09-06" Tm="16:00" cbrf="3.40" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-06" Tm="15:28" type="Scr" amount="0.50" cmd="2" />
+<BASAL Dt="2014-09-06" Tm="15:00" cbrf="3.23" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-06" Tm="14:00" cbrf="2.55" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-06" Tm="11:51" type="Mul" cmd="1" amount="16.00" remark="4.00 / 12.00  1:00 h" />
+<BASAL Dt="2014-09-06" Tm="11:35" cbrf="2.21" profile="5" TBRinc="170%" cmd="2" remark="dur 20:34 h" />
+<BASAL Dt="2014-09-06" Tm="11:35" cbrf="1.30" profile="5" remark="TBR End" />
+<BASAL Dt="2014-09-06" Tm="11:00" cbrf="1.56" profile="5" TBRinc="120%" />
+<BOLUS Dt="2014-09-06" Tm="09:04" type="Scr" amount="0.50" cmd="2" />
+<BASAL Dt="2014-09-06" Tm="09:04" cbrf="1.44" profile="5" TBRinc="120%" cmd="2" remark="dur 02:31 h" />
+<BASAL Dt="2014-09-06" Tm="09:04" cbrf="1.20" profile="5" remark="TBR End" />
+<BASAL Dt="2014-09-06" Tm="09:03" cbrf="2.04" profile="5" TBRinc="170%" cmd="2" remark="dur 00:01 h" />
+<BASAL Dt="2014-09-06" Tm="09:03" cbrf="1.20" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-06" Tm="08:58" shortinfo="2.50 IU" description="prime infusion set" />
+<BASAL Dt="2014-09-06" Tm="08:44" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-09-06" Tm="08:44" cbrf="1.20" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-06" Tm="08:00" cbrf="2.04" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-06" Tm="07:05" cbrf="3.06" profile="5" TBRinc="170%" cmd="2" remark="dur 01:39 h" />
+<BASAL Dt="2014-09-06" Tm="07:04" cbrf="1.80" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-06" Tm="06:59" shortinfo="2.60 IU" description="prime infusion set" />
+<BASAL Dt="2014-09-06" Tm="06:32" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-09-06" Tm="06:32" cbrf="2.40" profile="5" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-09-06" Tm="06:17" type="Scr" amount="2.00" cmd="2" />
+<BASAL Dt="2014-09-06" Tm="06:00" cbrf="4.08" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-06" Tm="05:45" type="Mul" cmd="1" amount="19.00" remark="4.80 / 14.20  0:15 h" />
+<BASAL Dt="2014-09-06" Tm="05:00" cbrf="5.10" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-06" Tm="04:00" cbrf="4.25" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-06" Tm="03:00" cbrf="3.40" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-06" Tm="02:00" cbrf="3.06" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-06" Tm="01:00" cbrf="2.38" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-06" Tm="00:00" cbrf="2.04" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-05" Tm="" type="" amount="71.07" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-05" Tm="" type="" amount="135.89" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-05" Tm="21:27" type="Mul" cmd="1" amount="14.00" remark="3.50 / 10.50  0:15 h" />
+<BASAL Dt="2014-09-05" Tm="20:00" cbrf="2.04" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-05" Tm="19:36" type="Ext" cmd="2"  amount="17.50" remark=" 0:45 h" />
+<BASAL Dt="2014-09-05" Tm="19:00" cbrf="2.21" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="18:00" cbrf="2.55" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-05" Tm="17:33" type="Mul" cmd="1" amount="17.50" remark="3.00 / 14.50  0:15 h" />
+<BASAL Dt="2014-09-05" Tm="16:00" cbrf="3.40" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="15:00" cbrf="3.23" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="14:00" cbrf="2.55" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="11:00" cbrf="2.21" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-05" Tm="08:07" type="Mul" cmd="1" amount="20.00" remark="3.00 / 17.00  0:14 h" />
+<BASAL Dt="2014-09-05" Tm="08:00" cbrf="2.04" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="07:00" cbrf="3.06" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="06:00" cbrf="4.08" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="05:00" cbrf="5.10" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="04:00" cbrf="4.25" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="03:00" cbrf="3.40" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="02:00" cbrf="3.06" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="01:51" cbrf="2.38" profile="5" TBRinc="170%" cmd="2" remark="dur 28:41 h" />
+<BASAL Dt="2014-09-05" Tm="01:39" cbrf="1.40" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-05" Tm="01:39" shortinfo="1.40 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-05" Tm="01:36" description="cartridge changed" />
+<BASAL Dt="2014-09-05" Tm="01:24" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-05" Tm="01:24" cbrf="0.00" TBRinc="170%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-09-05" Tm="01:24" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-09-05" Tm="01:00" cbrf="2.38" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-05" Tm="00:00" cbrf="2.04" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-04" Tm="" type="" amount="59.63" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-04" Tm="" type="" amount="124.94" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-04" Tm="23:50" type="Mul" cmd="1" amount="11.50" remark="2.50 / 9.00  0:13 h" />
+<EVENT Dt="2014-09-04" Tm="23:45" shortinfo="W1" description="cartridge low" />
+<BOLUS Dt="2014-09-04" Tm="21:24" type="Mul" cmd="1" amount="9.50" remark="2.00 / 7.50  1:00 h" />
+<BASAL Dt="2014-09-04" Tm="20:00" cbrf="2.04" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-04" Tm="19:49" type="Mul" cmd="1" amount="10.50" remark="3.00 / 7.50  0:14 h" />
+<BASAL Dt="2014-09-04" Tm="19:00" cbrf="2.21" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="18:00" cbrf="2.55" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="16:00" cbrf="3.40" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="15:00" cbrf="3.23" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-04" Tm="14:08" type="Mul" cmd="1" amount="13.00" remark="2.50 / 10.50  0:13 h" />
+<BASAL Dt="2014-09-04" Tm="14:00" cbrf="2.55" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-04" Tm="12:45" type="Ext" cmd="2"  amount="11.50" remark=" 0:15 h" />
+<BASAL Dt="2014-09-04" Tm="12:45" cbrf="2.21" profile="5" TBRinc="170%" cmd="2" remark="dur 12:39 h" />
+<BASAL Dt="2014-09-04" Tm="12:45" cbrf="1.30" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-04" Tm="12:40" shortinfo="2.50 IU" description="prime infusion set" />
+<BASAL Dt="2014-09-04" Tm="12:37" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-09-04" Tm="12:37" cbrf="1.30" profile="5" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-09-04" Tm="12:37" shortinfo="W8" description="bolus cancelled" />
+<BOLUS Dt="2014-09-04" Tm="12:35" type="Mul" cmd="1" amount="5.70" remark="3.00 / 2.70  0:02 h" />
+<BASAL Dt="2014-09-04" Tm="11:00" cbrf="2.21" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="08:00" cbrf="2.04" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="07:00" cbrf="3.06" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="06:00" cbrf="4.08" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="05:00" cbrf="5.10" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="04:00" cbrf="4.25" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="03:00" cbrf="3.40" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="02:00" cbrf="3.06" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="01:00" cbrf="2.38" profile="5" TBRinc="170%" />
+<BASAL Dt="2014-09-04" Tm="00:00" cbrf="2.04" profile="5" TBRinc="170%" />
+<BOLUS Dt="2014-09-03" Tm="" type="" amount="78.20" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-03" Tm="" type="" amount="137.74" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-09-03" Tm="23:11" cbrf="2.04" profile="5" TBRinc="170%" cmd="2" remark="dur 13:26 h" />
+<BASAL Dt="2014-09-03" Tm="23:11" cbrf="1.20" profile="5" remark="TBR End" />
+<BOLUS Dt="2014-09-03" Tm="21:45" type="Mul" cmd="1" amount="14.50" remark="3.50 / 11.00  0:15 h" />
+<BOLUS Dt="2014-09-03" Tm="21:25" type="Mul" cmd="1" amount="13.00" remark="3.00 / 10.00  0:14 h" />
+<BOLUS Dt="2014-09-03" Tm="21:15" type="Std" amount="0.30" cmd="1" />
+<BASAL Dt="2014-09-03" Tm="20:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-03" Tm="19:36" type="Scr" amount="1.00" cmd="2" />
+<BASAL Dt="2014-09-03" Tm="19:35" cbrf="2.08" profile="5" TBRinc="160%" cmd="2" remark="dur 03:36 h" />
+<BASAL Dt="2014-09-03" Tm="19:35" cbrf="1.30" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-03" Tm="19:29" shortinfo="2.70 IU" description="prime infusion set" />
+<BASAL Dt="2014-09-03" Tm="18:34" cbrf="0.00" cmd="2" remark="Stop" />
+<BOLUS Dt="2014-09-03" Tm="18:33" type="Std" amount="1.60" cmd="2" />
+<BASAL Dt="2014-09-03" Tm="18:33" cbrf="1.50" profile="5" cmd="2" remark="Run" />
+<BASAL Dt="2014-09-03" Tm="18:32" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-09-03" Tm="18:32" cbrf="1.50" profile="5" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-09-03" Tm="18:32" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-09-03" Tm="18:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-03" Tm="17:33" type="Ext" cmd="1" amount="11.40" remark=" 0:59 h" />
+<BOLUS Dt="2014-09-03" Tm="17:03" type="Mul" cmd="1" amount="25.00" remark="3.50 / 21.50  0:15 h" />
+<BOLUS Dt="2014-09-03" Tm="16:46" type="Scr" amount="2.50" />
+<BASAL Dt="2014-09-03" Tm="16:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-03" Tm="15:17" type="Std" amount="2.20" cmd="1" />
+<BASAL Dt="2014-09-03" Tm="15:00" cbrf="3.04" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-03" Tm="14:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-03" Tm="13:22" type="Std" amount="1.20" cmd="1" />
+<BOLUS Dt="2014-09-03" Tm="11:47" type="Scr" amount="2.50" cmd="2" />
+<BASAL Dt="2014-09-03" Tm="11:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-03" Tm="08:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-03" Tm="07:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-03" Tm="06:00" cbrf="3.84" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-03" Tm="05:00" cbrf="4.80" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-03" Tm="04:00" cbrf="4.00" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-03" Tm="03:36" type="Scr" amount="3.00" cmd="2" />
+<BASAL Dt="2014-09-03" Tm="03:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-03" Tm="02:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-03" Tm="01:00" cbrf="2.24" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-03" Tm="00:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-02" Tm="" type="" amount="71.10" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-02" Tm="" type="" amount="131.89" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-02" Tm="21:57" type="Mul" cmd="2"  amount="24.00" remark="4.00 / 20.00  0:15 h" />
+<BOLUS Dt="2014-09-02" Tm="20:34" type="Ext" cmd="2"  amount="5.00" remark=" 0:14 h" />
+<BASAL Dt="2014-09-02" Tm="20:34" cbrf="1.92" profile="5" TBRinc="160%" cmd="2" remark="dur 21:58 h" />
+<BASAL Dt="2014-09-02" Tm="20:34" cbrf="1.20" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-02" Tm="20:34" shortinfo="4.50 IU" description="prime infusion set" />
+<EVENT Dt="2014-09-02" Tm="20:31" description="cartridge changed" />
+<BASAL Dt="2014-09-02" Tm="20:30" cbrf="0.00" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-09-02" Tm="20:30" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-09-02" Tm="20:30" cbrf="0.00" TBRinc="160%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-09-02" Tm="20:30" shortinfo="E1" description="cartridge empty" />
+<BOLUS Dt="2014-09-02" Tm="20:25" type="Ext" cmd="2"  amount="5.50" remark=" 0:05 h" />
+<EVENT Dt="2014-09-02" Tm="20:09" shortinfo="W1" description="cartridge low" />
+<BOLUS Dt="2014-09-02" Tm="20:00" type="Mul" cmd="1" amount="24.00" remark="4.00 / 20.00  0:15 h" />
+<BASAL Dt="2014-09-02" Tm="20:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="19:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="18:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-02" Tm="16:02" type="Mul" cmd="1" amount="10.00" remark="4.00 / 6.00  0:13 h" />
+<BASAL Dt="2014-09-02" Tm="16:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="15:29" cbrf="3.04" profile="5" TBRinc="160%" cmd="2" remark="dur 05:01 h" />
+<BASAL Dt="2014-09-02" Tm="15:29" cbrf="1.90" profile="5" cmd="2" remark="Run" />
+<BASAL Dt="2014-09-02" Tm="15:13" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-09-02" Tm="15:13" cbrf="1.90" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-02" Tm="15:13" cbrf="3.04" profile="5" TBRinc="160%" cmd="2" remark="dur 00:00 h" />
+<BASAL Dt="2014-09-02" Tm="15:12" cbrf="1.90" profile="5" cmd="2" remark="Run" />
+<BASAL Dt="2014-09-02" Tm="15:12" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-09-02" Tm="15:12" cbrf="1.90" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-02" Tm="15:00" cbrf="3.04" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="14:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="11:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="08:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="07:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="06:00" cbrf="3.84" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="05:00" cbrf="4.80" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="04:00" cbrf="4.00" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="03:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-02" Tm="02:04" type="Std" amount="2.60" cmd="1" />
+<BASAL Dt="2014-09-02" Tm="02:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="01:00" cbrf="2.24" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-02" Tm="00:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-01" Tm="" type="" amount="95.30" remark="Bolus Total"/>
+<BOLUS Dt="2014-09-01" Tm="" type="" amount="157.02" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-09-01" Tm="22:38" type="Scr" amount="5.50" cmd="2" />
+<BOLUS Dt="2014-09-01" Tm="20:15" type="Scr" amount="3.00" cmd="2" />
+<BASAL Dt="2014-09-01" Tm="20:03" cbrf="1.92" profile="5" TBRinc="160%" cmd="2" remark="dur 19:09 h" />
+<BASAL Dt="2014-09-01" Tm="20:03" cbrf="1.20" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-09-01" Tm="20:02" shortinfo="2.60 IU" description="prime infusion set" />
+<BASAL Dt="2014-09-01" Tm="20:02" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-09-01" Tm="20:02" cbrf="1.20" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-09-01" Tm="20:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-01" Tm="19:49" type="Scr" amount="2.50" cmd="2" />
+<BOLUS Dt="2014-09-01" Tm="19:11" type="Mul" cmd="1" amount="21.30" remark="4.00 / 17.30  0:13 h" />
+<BASAL Dt="2014-09-01" Tm="19:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-01" Tm="18:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-01" Tm="17:12" type="Mul" cmd="1" amount="37.00" remark="3.00 / 34.00  0:30 h" />
+<BASAL Dt="2014-09-01" Tm="16:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-01" Tm="15:58" type="Scr" amount="2.00" cmd="2" />
+<BASAL Dt="2014-09-01" Tm="15:00" cbrf="3.04" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-09-01" Tm="14:31" type="Mul" cmd="1" amount="24.00" remark="3.50 / 20.50  0:14 h" />
+<BASAL Dt="2014-09-01" Tm="14:00" cbrf="2.40" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-01" Tm="11:00" cbrf="2.08" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-01" Tm="08:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-01" Tm="07:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-01" Tm="06:00" cbrf="3.84" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-01" Tm="05:00" cbrf="4.80" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-01" Tm="04:00" cbrf="4.00" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-01" Tm="03:00" cbrf="3.20" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-01" Tm="02:00" cbrf="2.88" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-01" Tm="01:00" cbrf="2.24" profile="5" TBRinc="160%" />
+<BASAL Dt="2014-09-01" Tm="00:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-08-31" Tm="" type="" amount="111.80" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-31" Tm="" type="" amount="170.07" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-08-31" Tm="21:11" type="Mul" cmd="1" amount="26.00" remark="3.00 / 23.00  0:13 h" />
+<BASAL Dt="2014-08-31" Tm="20:00" cbrf="1.92" profile="5" TBRinc="160%" />
+<BOLUS Dt="2014-08-31" Tm="19:36" type="Ext" cmd="2"  amount="17.00" remark=" 0:15 h" />
+<BASAL Dt="2014-08-31" Tm="19:24" cbrf="2.08" profile="5" TBRinc="160%" cmd="2" remark="dur 24:38 h" />
+<BASAL Dt="2014-08-31" Tm="19:23" cbrf="1.30" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-31" Tm="19:23" shortinfo="4.20 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-31" Tm="19:21" description="cartridge changed" />
+<BASAL Dt="2014-08-31" Tm="19:18" cbrf="0.00" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-08-31" Tm="19:18" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-08-31" Tm="19:18" cbrf="0.00" TBRinc="150%" remark="Stop" />
+<EVENT Dt="2014-08-31" Tm="19:18" shortinfo="E1" description="cartridge empty" />
+<BOLUS Dt="2014-08-31" Tm="19:14" type="Mul" cmd="1" amount="8.30" remark="3.00 / 5.30  0:04 h" />
+<BASAL Dt="2014-08-31" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-31" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<EVENT Dt="2014-08-31" Tm="16:39" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-08-31" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-31" Tm="15:35" type="Mul" cmd="1" amount="26.50" remark="5.00 / 21.50  0:13 h" />
+<BASAL Dt="2014-08-31" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-31" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-31" Tm="12:54" type="Mul" cmd="1" amount="14.00" remark="4.50 / 9.50  0:15 h" />
+<BASAL Dt="2014-08-31" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-31" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-31" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-31" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-31" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-31" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-31" Tm="03:59" type="Scr" amount="3.00" cmd="2" />
+<BASAL Dt="2014-08-31" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-31" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-31" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-31" Tm="00:40" type="Mul" cmd="1" amount="17.00" remark="4.50 / 12.50  0:14 h" />
+<BASAL Dt="2014-08-31" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-30" Tm="" type="" amount="69.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-30" Tm="" type="" amount="126.86" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-08-30" Tm="22:53" type="Scr" amount="2.00" cmd="2" />
+<BOLUS Dt="2014-08-30" Tm="21:56" type="Scr" amount="3.00" cmd="2" />
+<BASAL Dt="2014-08-30" Tm="20:45" cbrf="1.80" profile="5" TBRinc="150%" cmd="2" remark="dur 22:33 h" />
+<BASAL Dt="2014-08-30" Tm="20:45" cbrf="1.20" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-30" Tm="20:45" shortinfo="2.60 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-30" Tm="20:44" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-30" Tm="20:44" cbrf="1.20" profile="5" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-08-30" Tm="20:39" type="Scr" amount="3.00" cmd="2" />
+<BASAL Dt="2014-08-30" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-30" Tm="19:43" type="Scr" amount="3.50" cmd="2" />
+<BASAL Dt="2014-08-30" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-30" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-30" Tm="17:53" type="Mul" cmd="1" amount="20.00" remark="5.20 / 14.80  0:13 h" />
+<BASAL Dt="2014-08-30" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-30" Tm="15:00" type="Mul" cmd="1" amount="17.00" remark="4.50 / 12.50  0:15 h" />
+<BASAL Dt="2014-08-30" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-30" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-30" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-30" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-30" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-30" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-30" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-30" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-30" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-30" Tm="02:02" type="Mul" cmd="1" amount="19.50" remark="4.00 / 15.50  0:43 h" />
+<BASAL Dt="2014-08-30" Tm="02:01" cbrf="2.70" profile="5" TBRinc="150%" cmd="2" remark="dur 18:43 h" />
+<BASAL Dt="2014-08-30" Tm="02:01" cbrf="1.80" profile="5" cmd="2" remark="Run" />
+<BASAL Dt="2014-08-30" Tm="02:01" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-30" Tm="02:01" cbrf="1.80" profile="5" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-08-30" Tm="02:01" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-08-30" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-30" Tm="01:46" type="Ext" cmd="1" amount="1.00" remark=" 0:15 h" />
+<BASAL Dt="2014-08-30" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-30" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-29" Tm="" type="" amount="62.70" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-29" Tm="" type="" amount="119.71" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-29" Tm="20:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-29" Tm="19:47" type="Mul" cmd="1" amount="30.00" remark="5.00 / 25.00  0:28 h" />
+<BASAL Dt="2014-08-29" Tm="19:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="18:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-29" Tm="17:57" type="Scr" amount="4.00" cmd="2" />
+<BOLUS Dt="2014-08-29" Tm="16:27" type="Scr" amount="4.50" cmd="2" />
+<BASAL Dt="2014-08-29" Tm="16:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="15:00" cbrf="2.85" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="14:00" cbrf="2.25" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="13:02" cbrf="1.95" profile="5" TBRinc="150%" cmd="2" remark="dur 12:59 h" />
+<BASAL Dt="2014-08-29" Tm="13:02" cbrf="1.30" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-29" Tm="12:46" shortinfo="2.70 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-29" Tm="12:43" description="cartridge changed" />
+<BASAL Dt="2014-08-29" Tm="12:36" cbrf="0.00" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-08-29" Tm="12:36" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-08-29" Tm="12:36" cbrf="0.00" TBRinc="150%" remark="Stop" />
+<EVENT Dt="2014-08-29" Tm="12:36" shortinfo="E1" description="cartridge empty" />
+<EVENT Dt="2014-08-29" Tm="12:24" shortinfo="W1" description="cartridge low" />
+<BOLUS Dt="2014-08-29" Tm="12:21" type="Mul" cmd="1" amount="19.70" remark="4.50 / 15.20  0:15 h" />
+<BASAL Dt="2014-08-29" Tm="11:00" cbrf="1.95" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="10:18" cbrf="1.80" profile="5" TBRinc="150%" remark="dur 02:18 h" />
+<BASAL Dt="2014-08-29" Tm="10:18" cbrf="1.20" profile="5" remark="Run" />
+<BASAL Dt="2014-08-29" Tm="10:17" cbrf="0.00" remark="Stop" />
+<BASAL Dt="2014-08-29" Tm="10:17" cbrf="1.20" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-29" Tm="08:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="07:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="06:00" cbrf="3.60" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="05:00" cbrf="4.50" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="04:00" cbrf="3.75" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="03:00" cbrf="3.00" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="02:00" cbrf="2.70" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-29" Tm="01:54" type="Scr" amount="4.50" cmd="2" />
+<BASAL Dt="2014-08-29" Tm="01:00" cbrf="2.10" profile="5" TBRinc="150%" />
+<BASAL Dt="2014-08-29" Tm="00:00" cbrf="1.80" profile="5" TBRinc="150%" />
+<BOLUS Dt="2014-08-28" Tm="" type="" amount="86.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-28" Tm="" type="" amount="129.78" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-08-28" Tm="23:12" type="Scr" amount="2.50" cmd="2" />
+<BOLUS Dt="2014-08-28" Tm="22:14" type="Mul" cmd="1" amount="13.50" remark="4.00 / 9.50  0:13 h" />
+<BOLUS Dt="2014-08-28" Tm="22:01" type="Scr" amount="4.00" cmd="2" />
+<BASAL Dt="2014-08-28" Tm="21:58" cbrf="1.80" profile="5" TBRinc="150%" cmd="2" remark="dur 12:19 h" />
+<BASAL Dt="2014-08-28" Tm="21:58" cbrf="1.20" profile="5" remark="TBR End" />
+<BOLUS Dt="2014-08-28" Tm="20:54" type="Std" amount="2.80" cmd="1" />
+<BASAL Dt="2014-08-28" Tm="20:00" cbrf="1.56" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-08-28" Tm="19:00" cbrf="1.69" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-08-28" Tm="18:00" cbrf="1.95" profile="5" TBRinc="130%" />
+<BOLUS Dt="2014-08-28" Tm="16:47" type="Std" amount="3.00" cmd="1" />
+<BASAL Dt="2014-08-28" Tm="16:40" cbrf="2.60" profile="5" TBRinc="130%" cmd="2" remark="dur 05:18 h" />
+<BASAL Dt="2014-08-28" Tm="16:40" cbrf="2.00" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-28" Tm="16:40" shortinfo="2.70 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-28" Tm="16:39" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-28" Tm="16:39" cbrf="2.00" profile="5" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-28" Tm="16:00" cbrf="2.60" profile="5" TBRinc="130%" />
+<BOLUS Dt="2014-08-28" Tm="15:05" type="Mul" cmd="1" amount="14.00" remark="3.00 / 11.00  0:13 h" />
+<BASAL Dt="2014-08-28" Tm="15:00" cbrf="2.47" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-08-28" Tm="14:00" cbrf="1.95" profile="5" TBRinc="130%" />
+<BOLUS Dt="2014-08-28" Tm="11:43" type="Mul" cmd="1" amount="36.00" remark="2.70 / 33.30  0:29 h" />
+<BOLUS Dt="2014-08-28" Tm="11:36" type="Std" amount="3.60" cmd="1" />
+<BASAL Dt="2014-08-28" Tm="11:00" cbrf="1.69" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-08-28" Tm="08:00" cbrf="1.56" profile="5" TBRinc="130%" />
+<BASAL Dt="2014-08-28" Tm="07:50" cbrf="2.34" profile="5" TBRinc="130%" cmd="2" remark="dur 08:49 h" />
+<BASAL Dt="2014-08-28" Tm="07:50" cbrf="1.80" profile="5" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-28" Tm="07:43" shortinfo="2.60 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-28" Tm="07:17" cbrf="0.00" remark="4 - 5" />
+<BASAL Dt="2014-08-28" Tm="07:13" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-28" Tm="07:13" cbrf="2.50" profile="4" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-08-28" Tm="07:13" type="Scr" amount="1.50" cmd="2" />
+<BASAL Dt="2014-08-28" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-28" Tm="06:51" type="Std" amount="5.10" cmd="1" />
+<BASAL Dt="2014-08-28" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-28" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-28" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-28" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-27" Tm="" type="" amount="62.20" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-27" Tm="" type="" amount="112.37" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-27" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-27" Tm="22:14" type="Ext" cmd="1" amount="8.60" remark=" 0:28 h" />
+<BASAL Dt="2014-08-27" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-27" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-27" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-27" Tm="18:17" type="Mul" cmd="1" amount="11.50" remark="3.50 / 8.00  0:13 h" />
+<BASAL Dt="2014-08-27" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-27" Tm="17:55" type="Std" amount="0.60" cmd="1" />
+<BASAL Dt="2014-08-27" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-27" Tm="15:06" type="Mul" cmd="1" amount="20.50" remark="5.00 / 15.50  1:30 h" />
+<BASAL Dt="2014-08-27" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-27" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-27" Tm="10:35" type="Std" amount="2.50" cmd="1" />
+<BASAL Dt="2014-08-27" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-27" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-27" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-27" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-27" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-27" Tm="05:33" type="Mul" cmd="1" amount="18.50" remark="3.00 / 15.50  0:15 h" />
+<BASAL Dt="2014-08-27" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-27" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-27" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-26" Tm="" type="" amount="70.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-26" Tm="" type="" amount="119.66" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-26" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-26" Tm="22:06" cbrf="1.69" profile="4" TBRinc="130%" cmd="2" remark="dur 33:07 h" />
+<BASAL Dt="2014-08-26" Tm="22:06" cbrf="1.30" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-26" Tm="22:06" shortinfo="5.70 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-26" Tm="22:01" description="cartridge changed" />
+<BASAL Dt="2014-08-26" Tm="21:51" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-26" Tm="21:51" cbrf="0.00" TBRinc="130%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-08-26" Tm="21:51" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-08-26" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<EVENT Dt="2014-08-26" Tm="20:27" shortinfo="W1" description="cartridge low" />
+<BOLUS Dt="2014-08-26" Tm="20:27" type="Mul" cmd="1" amount="13.50" remark="4.00 / 9.50  1:00 h" />
+<BOLUS Dt="2014-08-26" Tm="19:18" type="Mul" cmd="1" amount="22.50" remark="3.50 / 19.00  0:30 h" />
+<BASAL Dt="2014-08-26" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-26" Tm="18:29" type="Mul" cmd="1" amount="16.50" remark="5.00 / 11.50  0:28 h" />
+<BASAL Dt="2014-08-26" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-26" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-26" Tm="14:39" type="Scr" amount="2.50" cmd="2" />
+<EVENT Dt="2014-08-26" Tm="14:38" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-08-26" Tm="14:30" cbrf="1.69" profile="4" TBRinc="130%" cmd="2" remark="dur 07:21 h" />
+<BASAL Dt="2014-08-26" Tm="14:30" cbrf="1.30" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-26" Tm="14:30" shortinfo="2.90 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-26" Tm="14:28" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-26" Tm="14:28" cbrf="1.30" profile="4" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-08-26" Tm="14:20" type="Std" amount="6.00" cmd="1" />
+<BASAL Dt="2014-08-26" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-26" Tm="13:44" type="Scr" amount="1.00" cmd="2" />
+<BOLUS Dt="2014-08-26" Tm="13:12" type="Mul" cmd="1" amount="8.00" remark="3.50 / 4.50  0:15 h" />
+<BASAL Dt="2014-08-26" Tm="12:37" cbrf="1.56" profile="4" TBRinc="130%" remark="changed 5" />
+<BASAL Dt="2014-08-26" Tm="11:35" cbrf="1.56" profile="4" TBRinc="130%" remark="3 - 4" />
+<BASAL Dt="2014-08-26" Tm="09:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-26" Tm="08:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-26" Tm="07:00" cbrf="3.12" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-26" Tm="06:00" cbrf="3.90" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-26" Tm="05:00" cbrf="3.25" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-26" Tm="04:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-26" Tm="03:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-26" Tm="02:00" cbrf="1.82" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-26" Tm="00:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-25" Tm="" type="" amount="78.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-25" Tm="" type="" amount="128.15" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-08-25" Tm="22:36" type="Mul" cmd="1" amount="8.00" remark="3.50 / 4.50  0:15 h" />
+<BASAL Dt="2014-08-25" Tm="21:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-25" Tm="20:36" type="Mul" cmd="1" amount="13.50" remark="5.50 / 8.00  0:15 h" />
+<BOLUS Dt="2014-08-25" Tm="20:21" type="Std" amount="0.80" cmd="1" />
+<BASAL Dt="2014-08-25" Tm="20:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-25" Tm="19:00" cbrf="1.95" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-25" Tm="17:40" type="Mul" cmd="1" amount="9.00" remark="3.50 / 5.50  0:14 h" />
+<BASAL Dt="2014-08-25" Tm="17:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-25" Tm="16:28" type="Scr" amount="5.00" cmd="2" />
+<BASAL Dt="2014-08-25" Tm="16:00" cbrf="2.47" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-25" Tm="15:00" cbrf="1.95" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-25" Tm="14:45" type="Std" amount="3.90" cmd="1" />
+<BASAL Dt="2014-08-25" Tm="12:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-25" Tm="10:20" type="Mul" cmd="1" amount="29.00" remark="3.00 / 26.00  0:28 h" />
+<BASAL Dt="2014-08-25" Tm="09:59" cbrf="1.56" profile="3" TBRinc="130%" cmd="2" remark="dur 28:29 h" />
+<BASAL Dt="2014-08-25" Tm="09:59" cbrf="1.20" profile="3" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-25" Tm="09:59" shortinfo="2.60 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-25" Tm="09:58" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-25" Tm="09:58" cbrf="1.20" profile="3" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-25" Tm="09:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-25" Tm="08:29" type="Std" amount="2.80" cmd="1" />
+<BASAL Dt="2014-08-25" Tm="08:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-25" Tm="07:00" cbrf="3.12" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-25" Tm="06:00" cbrf="3.90" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-25" Tm="05:00" cbrf="3.25" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-25" Tm="04:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-25" Tm="03:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-25" Tm="02:00" cbrf="1.82" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-25" Tm="00:38" type="Mul" cmd="1" amount="6.00" remark="2.50 / 3.50  0:13 h" />
+<BASAL Dt="2014-08-25" Tm="00:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-24" Tm="" type="" amount="41.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-24" Tm="" type="" amount="90.46" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-24" Tm="21:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-24" Tm="20:31" type="Mul" cmd="1" amount="16.50" remark="3.50 / 13.00  0:14 h" />
+<BOLUS Dt="2014-08-24" Tm="20:13" type="Mul" cmd="1" amount="11.00" remark="3.00 / 8.00  0:14 h" />
+<BASAL Dt="2014-08-24" Tm="20:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-24" Tm="19:00" cbrf="1.95" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-24" Tm="17:01" type="Scr" amount="2.00" />
+<BASAL Dt="2014-08-24" Tm="17:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-24" Tm="16:53" type="Mul" cmd="1" amount="11.00" remark="3.00 / 8.00  0:13 h" />
+<BASAL Dt="2014-08-24" Tm="16:00" cbrf="2.47" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-24" Tm="15:00" cbrf="1.95" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-24" Tm="14:20" cbrf="1.69" profile="3" TBRinc="130%" remark="dur 19:38 h" />
+<BASAL Dt="2014-08-24" Tm="14:19" cbrf="1.30" profile="3" remark="Run" />
+<EVENT Dt="2014-08-24" Tm="14:19" shortinfo="2.30 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-24" Tm="14:16" description="cartridge changed" />
+<BASAL Dt="2014-08-24" Tm="14:15" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-24" Tm="14:15" cbrf="0.00" TBRinc="130%" remark="Stop" />
+<EVENT Dt="2014-08-24" Tm="14:15" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-08-24" Tm="12:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-24" Tm="09:56" type="Scr" amount="0.50" cmd="2" />
+<BASAL Dt="2014-08-24" Tm="09:56" cbrf="1.56" profile="3" TBRinc="130%" cmd="2" remark="dur 04:19 h" />
+<BASAL Dt="2014-08-24" Tm="09:56" cbrf="1.20" profile="3" cmd="2" remark="Run" />
+<BASAL Dt="2014-08-24" Tm="09:33" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-24" Tm="09:33" cbrf="1.20" profile="3" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-24" Tm="09:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-24" Tm="08:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-24" Tm="07:00" cbrf="3.12" profile="3" TBRinc="130%" />
+<EVENT Dt="2014-08-24" Tm="06:42" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-08-24" Tm="06:00" cbrf="3.90" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-24" Tm="05:00" cbrf="3.25" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-24" Tm="04:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-24" Tm="03:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-24" Tm="02:00" cbrf="1.82" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-24" Tm="00:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-23" Tm="" type="" amount="63.70" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-23" Tm="" type="" amount="113.87" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-23" Tm="21:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-23" Tm="20:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-23" Tm="19:37" type="Mul" cmd="1" amount="14.50" remark="3.50 / 11.00  0:14 h" />
+<BASAL Dt="2014-08-23" Tm="19:00" cbrf="1.95" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-23" Tm="17:11" type="Ext" cmd="1" amount="9.00" remark=" 0:13 h" />
+<BASAL Dt="2014-08-23" Tm="17:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-23" Tm="16:02" type="Ext" cmd="2"  amount="15.00" remark=" 0:58 h" />
+<BASAL Dt="2014-08-23" Tm="16:00" cbrf="2.47" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-23" Tm="15:54" type="Scr" amount="3.00" cmd="2" />
+<BASAL Dt="2014-08-23" Tm="15:00" cbrf="1.95" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-23" Tm="12:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-23" Tm="09:08" type="Mul" cmd="1" amount="19.00" remark="2.50 / 16.50  1:28 h" />
+<BASAL Dt="2014-08-23" Tm="09:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-23" Tm="08:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-23" Tm="07:00" cbrf="3.12" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-23" Tm="06:00" cbrf="3.90" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-23" Tm="05:00" cbrf="3.25" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-23" Tm="04:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-23" Tm="03:52" type="Std" amount="3.20" cmd="1" />
+<BASAL Dt="2014-08-23" Tm="03:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-23" Tm="02:00" cbrf="1.82" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-23" Tm="00:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-22" Tm="" type="" amount="76.20" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-22" Tm="" type="" amount="126.24" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-22" Tm="21:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-22" Tm="20:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-22" Tm="19:40" type="Scr" amount="4.50" cmd="2" />
+<BASAL Dt="2014-08-22" Tm="19:00" cbrf="1.95" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-22" Tm="18:40" cbrf="2.60" profile="3" TBRinc="130%" cmd="2" remark="dur 38:53 h" />
+<BASAL Dt="2014-08-22" Tm="18:40" cbrf="2.00" profile="3" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-22" Tm="18:40" shortinfo="2.70 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-22" Tm="18:37" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-22" Tm="18:37" cbrf="2.00" profile="3" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-08-22" Tm="18:31" type="Scr" amount="6.00" cmd="2" />
+<BASAL Dt="2014-08-22" Tm="17:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-22" Tm="16:00" cbrf="2.47" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-22" Tm="15:00" cbrf="1.95" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-22" Tm="14:38" type="Scr" amount="1.00" cmd="2" />
+<BOLUS Dt="2014-08-22" Tm="12:37" type="Mul" cmd="1" amount="27.60" remark="4.00 / 23.60  1:29 h" />
+<BASAL Dt="2014-08-22" Tm="12:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-22" Tm="11:10" type="Mul" cmd="1" amount="11.00" remark="3.00 / 8.00  0:14 h" />
+<BASAL Dt="2014-08-22" Tm="09:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-22" Tm="08:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-22" Tm="07:36" type="Mul" cmd="1" amount="22.00" remark="3.00 / 19.00  0:30 h" />
+<BOLUS Dt="2014-08-22" Tm="07:23" type="Std" amount="4.10" cmd="1" />
+<BASAL Dt="2014-08-22" Tm="07:00" cbrf="3.12" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-22" Tm="06:00" cbrf="3.90" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-22" Tm="05:00" cbrf="3.25" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-22" Tm="04:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-22" Tm="03:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-22" Tm="02:00" cbrf="1.82" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-22" Tm="00:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-21" Tm="" type="" amount="81.30" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-21" Tm="" type="" amount="129.68" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-08-21" Tm="21:18" type="Ext" cmd="1" amount="28.50" remark=" 1:00 h" />
+<BASAL Dt="2014-08-21" Tm="21:17" cbrf="1.56" profile="3" TBRinc="130%" remark="dur 21:20 h" />
+<BASAL Dt="2014-08-21" Tm="21:17" cbrf="1.20" profile="3" remark="Run" />
+<EVENT Dt="2014-08-21" Tm="21:16" shortinfo="5.10 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-21" Tm="21:05" description="cartridge changed" />
+<BOLUS Dt="2014-08-21" Tm="21:05" type="Std" amount="4.60" />
+<BASAL Dt="2014-08-21" Tm="21:05" cbrf="0.00" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-08-21" Tm="21:05" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-08-21" Tm="21:05" cbrf="0.00" TBRinc="130%" remark="Stop" />
+<EVENT Dt="2014-08-21" Tm="21:05" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-08-21" Tm="21:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-21" Tm="20:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-21" Tm="19:00" cbrf="1.95" profile="3" TBRinc="130%" />
+<EVENT Dt="2014-08-21" Tm="17:18" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-08-21" Tm="17:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-21" Tm="16:00" cbrf="2.47" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-21" Tm="15:50" type="Mul" cmd="1" amount="12.00" remark="3.00 / 9.00  1:58 h" />
+<BASAL Dt="2014-08-21" Tm="15:14" cbrf="1.95" profile="3" TBRinc="130%" remark="dur 05:51 h" />
+<BASAL Dt="2014-08-21" Tm="15:14" cbrf="1.50" profile="3" remark="Run" />
+<BASAL Dt="2014-08-21" Tm="14:57" cbrf="0.00" remark="Stop" />
+<BASAL Dt="2014-08-21" Tm="14:57" cbrf="1.30" profile="3" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-21" Tm="14:00" cbrf="1.04" profile="3" TBRdec=" 80%" remark="dur 00:57 h" />
+<BASAL Dt="2014-08-21" Tm="14:00" cbrf="1.30" profile="3" remark="TBR End" />
+<BASAL Dt="2014-08-21" Tm="13:30" cbrf="1.04" profile="3" TBRdec=" 80%" remark="dur 00:30 h" />
+<BASAL Dt="2014-08-21" Tm="13:30" cbrf="1.30" profile="3" remark="TBR End" />
+<BASAL Dt="2014-08-21" Tm="12:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-21" Tm="11:05" type="Ext" cmd="1" amount="3.60" remark=" 0:28 h" />
+<BASAL Dt="2014-08-21" Tm="09:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-21" Tm="08:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-21" Tm="07:36" type="Mul" cmd="1" amount="11.00" remark="2.50 / 8.50  0:15 h" />
+<BOLUS Dt="2014-08-21" Tm="07:11" type="Mul" cmd="1" amount="14.50" remark="2.50 / 12.00  0:13 h" />
+<BASAL Dt="2014-08-21" Tm="07:00" cbrf="3.12" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-21" Tm="06:55" type="Std" amount="5.20" cmd="1" />
+<BASAL Dt="2014-08-21" Tm="06:00" cbrf="3.90" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-21" Tm="05:00" cbrf="3.25" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-21" Tm="04:23" type="Std" amount="1.90" cmd="1" />
+<BASAL Dt="2014-08-21" Tm="04:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-21" Tm="03:00" cbrf="2.34" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-21" Tm="02:00" cbrf="1.82" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-21" Tm="00:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-20" Tm="" type="" amount="56.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-20" Tm="" type="" amount="104.37" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-20" Tm="21:00" cbrf="1.56" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-20" Tm="20:26" type="Scr" amount="1.50" cmd="2" />
+<BASAL Dt="2014-08-20" Tm="20:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-20" Tm="19:00" cbrf="1.95" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-20" Tm="18:08" cbrf="2.60" profile="3" TBRinc="130%" cmd="2" remark="dur 19:22 h" />
+<BASAL Dt="2014-08-20" Tm="18:08" cbrf="2.00" profile="3" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-20" Tm="18:04" shortinfo="2.60 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-20" Tm="18:01" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-20" Tm="18:01" cbrf="2.00" profile="3" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-08-20" Tm="17:37" type="Std" amount="3.00" cmd="1" />
+<BASAL Dt="2014-08-20" Tm="17:00" cbrf="2.60" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-20" Tm="16:00" cbrf="2.47" profile="3" TBRinc="130%" />
+<BASAL Dt="2014-08-20" Tm="15:00" cbrf="1.95" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-20" Tm="13:39" type="Mul" cmd="2"  amount="10.00" remark="4.00 / 6.00  0:15 h" />
+<BASAL Dt="2014-08-20" Tm="12:00" cbrf="1.69" profile="3" TBRinc="130%" />
+<BOLUS Dt="2014-08-20" Tm="11:02" type="Ext" cmd="1" amount="13.00" remark=" 0:13 h" />
+<BOLUS Dt="2014-08-20" Tm="11:01" type="Scr" amount="3.00" cmd="2" />
+<BOLUS Dt="2014-08-20" Tm="09:30" type="Mul" cmd="1" amount="26.00" remark="3.00 / 23.00  0:15 h" />
+<BASAL Dt="2014-08-20" Tm="09:13" cbrf="1.56" profile="3" TBRinc="130%" remark="4 - 3" />
+<BASAL Dt="2014-08-20" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-20" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-20" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-20" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-20" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-20" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-20" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-19" Tm="" type="" amount="44.70" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-19" Tm="" type="" amount="92.40" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-19" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-19" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-19" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-19" Tm="19:48" type="Scr" amount="1.50" cmd="2" />
+<BASAL Dt="2014-08-19" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-19" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-19" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-19" Tm="16:49" type="Mul" cmd="2"  amount="15.30" remark="5.50 / 9.80  1:29 h" />
+<BASAL Dt="2014-08-19" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-19" Tm="13:45" type="Mul" cmd="1" amount="14.00" remark="3.00 / 11.00  1:30 h" />
+<BOLUS Dt="2014-08-19" Tm="13:29" type="Scr" amount="5.00" cmd="2" />
+<BOLUS Dt="2014-08-19" Tm="11:57" type="Scr" amount="4.50" cmd="2" />
+<BASAL Dt="2014-08-19" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-19" Tm="10:52" type="Scr" amount="1.50" cmd="2" />
+<BASAL Dt="2014-08-19" Tm="10:52" cbrf="2.34" profile="4" TBRinc="130%" cmd="2" remark="dur 31:09 h" />
+<BASAL Dt="2014-08-19" Tm="10:00" cbrf="1.80" profile="4" />
+<BASAL Dt="2014-08-19" Tm="09:00" cbrf="2.40" profile="4" />
+<BASAL Dt="2014-08-19" Tm="08:00" cbrf="3.00" profile="4" />
+<BOLUS Dt="2014-08-19" Tm="07:55" type="Std" amount="1.60" cmd="1" />
+<BASAL Dt="2014-08-19" Tm="07:29" cbrf="2.50" profile="4" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-19" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-19" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-19" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-19" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-19" Tm="01:10" type="Std" amount="1.30" cmd="1" />
+<BASAL Dt="2014-08-19" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-18" Tm="" type="" amount="59.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-18" Tm="" type="" amount="107.90" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-18" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-18" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-18" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-18" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-18" Tm="18:36" cbrf="2.47" profile="4" TBRinc="130%" cmd="2" remark="dur 12:53 h" />
+<BASAL Dt="2014-08-18" Tm="18:36" cbrf="1.90" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-18" Tm="18:36" shortinfo="4.80 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-18" Tm="18:34" description="cartridge changed" />
+<BASAL Dt="2014-08-18" Tm="18:30" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-18" Tm="18:30" cbrf="0.00" TBRinc="130%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-08-18" Tm="18:30" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-08-18" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-18" Tm="17:16" type="Scr" amount="1.00" cmd="2" />
+<BASAL Dt="2014-08-18" Tm="17:16" cbrf="1.95" profile="4" TBRinc="130%" cmd="2" remark="dur 01:14 h" />
+<BASAL Dt="2014-08-18" Tm="17:16" cbrf="1.50" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-18" Tm="17:12" shortinfo="2.60 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-18" Tm="16:42" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-18" Tm="16:42" cbrf="1.30" profile="4" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-08-18" Tm="16:27" type="Mul" cmd="1" amount="7.50" remark="2.50 / 5.00  0:15 h" />
+<BASAL Dt="2014-08-18" Tm="16:16" cbrf="1.69" profile="4" TBRinc="130%" remark="dur 00:26 h" />
+<BASAL Dt="2014-08-18" Tm="16:16" cbrf="1.30" profile="4" remark="TBR End" />
+<EVENT Dt="2014-08-18" Tm="16:00" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-08-18" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-18" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-18" Tm="10:50" type="Mul" cmd="1" amount="31.50" remark="2.00 / 29.50  0:28 h" />
+<BOLUS Dt="2014-08-18" Tm="10:18" type="Ext" cmd="1" amount="6.00" remark=" 0:15 h" />
+<BASAL Dt="2014-08-18" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-18" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-18" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-18" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-18" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-18" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-18" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-18" Tm="02:43" type="Mul" cmd="1" amount="13.00" remark="3.50 / 9.50  0:14 h" />
+<BASAL Dt="2014-08-18" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-17" Tm="" type="" amount="61.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-17" Tm="" type="" amount="111.67" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-17" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-17" Tm="15:06" type="Mul" cmd="1" amount="20.50" remark="3.00 / 17.50  0:15 h" />
+<BASAL Dt="2014-08-17" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-17" Tm="05:59" type="Mul" cmd="1" amount="26.00" remark="2.00 / 24.00  0:28 h" />
+<BOLUS Dt="2014-08-17" Tm="05:26" type="Mul" cmd="1" amount="15.00" remark="4.00 / 11.00  0:13 h" />
+<BASAL Dt="2014-08-17" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-17" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-16" Tm="" type="" amount="42.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-16" Tm="" type="" amount="91.89" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-16" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-16" Tm="14:36" type="Mul" cmd="1" amount="13.00" remark="3.50 / 9.50  0:15 h" />
+<BOLUS Dt="2014-08-16" Tm="14:26" type="Scr" amount="3.50" cmd="2" />
+<BASAL Dt="2014-08-16" Tm="14:16" cbrf="1.69" profile="4" TBRinc="130%" cmd="2" remark="dur 50:00 h" />
+<BASAL Dt="2014-08-16" Tm="14:16" cbrf="1.30" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-16" Tm="14:14" shortinfo="2.50 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-16" Tm="13:47" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-16" Tm="13:47" cbrf="1.20" profile="4" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-08-16" Tm="13:29" type="Scr" amount="4.00" cmd="2" />
+<BASAL Dt="2014-08-16" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-16" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-16" Tm="03:36" type="Scr" amount="2.00" cmd="2" />
+<BOLUS Dt="2014-08-16" Tm="03:17" type="Scr" amount="3.00" cmd="2" />
+<BOLUS Dt="2014-08-16" Tm="00:34" type="Mul" cmd="1" amount="17.00" remark="3.70 / 13.30  0:14 h" />
+<BASAL Dt="2014-08-16" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-15" Tm="" type="" amount="30.20" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-15" Tm="" type="" amount="79.42" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-15" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-15" Tm="22:49" cbrf="1.69" profile="4" TBRinc="130%" cmd="2" remark="dur 14:58 h" />
+<BASAL Dt="2014-08-15" Tm="22:49" cbrf="1.30" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-15" Tm="22:49" shortinfo="2.50 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-15" Tm="22:45" description="cartridge changed" />
+<BASAL Dt="2014-08-15" Tm="22:15" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-15" Tm="22:15" cbrf="0.00" TBRinc="130%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-08-15" Tm="22:15" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-08-15" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-15" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-15" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-15" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-15" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<EVENT Dt="2014-08-15" Tm="15:12" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-08-15" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-15" Tm="13:08" type="Scr" amount="3.50" cmd="2" />
+<BASAL Dt="2014-08-15" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-15" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-15" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-15" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-15" Tm="07:28" type="Scr" amount="4.00" cmd="2" />
+<BASAL Dt="2014-08-15" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-15" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-15" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-15" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-15" Tm="00:39" type="Mul" cmd="1" amount="22.70" remark="5.00 / 17.70  0:15 h" />
+<BASAL Dt="2014-08-15" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-14" Tm="" type="" amount="76.70" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-14" Tm="" type="" amount="119.63" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-14" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-14" Tm="22:02" type="Scr" amount="2.50" />
+<BASAL Dt="2014-08-14" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-14" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-14" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-14" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-14" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-14" Tm="15:31" type="Ext" amount="6.00" remark=" 0:14 h" />
+<BASAL Dt="2014-08-14" Tm="15:31" cbrf="1.69" profile="4" TBRinc="130%" remark="dur 30:44 h" />
+<BASAL Dt="2014-08-14" Tm="15:31" cbrf="1.30" profile="4" remark="Run" />
+<EVENT Dt="2014-08-14" Tm="15:30" shortinfo="3.70 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-14" Tm="15:30" cbrf="0.00" remark="Stop" />
+<BASAL Dt="2014-08-14" Tm="15:30" cbrf="1.30" profile="4" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-08-14" Tm="15:30" shortinfo="W8" description="bolus cancelled" />
+<BOLUS Dt="2014-08-14" Tm="14:35" type="Ext" amount="7.00" remark=" 0:55 h" />
+<BASAL Dt="2014-08-14" Tm="14:34" cbrf="1.69" profile="4" TBRinc="130%" remark="dur 00:56 h" />
+<BOLUS Dt="2014-08-14" Tm="14:17" type="Mul" cmd="2"  amount="24.50" remark="5.00 / 19.50  0:13 h" />
+<BASAL Dt="2014-08-14" Tm="14:00" cbrf="1.30" profile="4" />
+<BOLUS Dt="2014-08-14" Tm="12:59" type="Scr" amount="4.00" cmd="2" />
+<BOLUS Dt="2014-08-14" Tm="11:47" type="Scr" amount="5.00" cmd="2" />
+<BASAL Dt="2014-08-14" Tm="11:00" cbrf="1.20" profile="4" />
+<BOLUS Dt="2014-08-14" Tm="10:28" type="Mul" cmd="1" amount="12.00" remark="5.50 / 6.50  0:14 h" />
+<BASAL Dt="2014-08-14" Tm="10:00" cbrf="1.80" profile="4" />
+<BASAL Dt="2014-08-14" Tm="09:00" cbrf="2.40" profile="4" />
+<BASAL Dt="2014-08-14" Tm="08:00" cbrf="3.00" profile="4" />
+<BASAL Dt="2014-08-14" Tm="07:00" cbrf="2.50" profile="4" />
+<BOLUS Dt="2014-08-14" Tm="06:23" type="Mul" cmd="1" amount="9.20" remark="4.00 / 5.20  0:13 h" />
+<BASAL Dt="2014-08-14" Tm="06:00" cbrf="2.00" profile="4" />
+<BASAL Dt="2014-08-14" Tm="05:00" cbrf="1.80" profile="4" />
+<BASAL Dt="2014-08-14" Tm="04:00" cbrf="1.40" profile="4" />
+<BOLUS Dt="2014-08-14" Tm="02:45" type="Scr" amount="3.00" />
+<BOLUS Dt="2014-08-14" Tm="02:27" type="Scr" amount="1.50" />
+<BOLUS Dt="2014-08-14" Tm="00:38" type="Scr" amount="2.00" />
+<BASAL Dt="2014-08-14" Tm="00:00" cbrf="1.20" profile="4" />
+<BOLUS Dt="2014-08-13" Tm="" type="" amount="44.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-13" Tm="" type="" amount="93.01" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-13" Tm="23:00" cbrf="1.20" profile="4" />
+<BASAL Dt="2014-08-13" Tm="22:12" cbrf="1.30" profile="4" remark="Run" />
+<EVENT Dt="2014-08-13" Tm="22:11" shortinfo="2.80 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-13" Tm="22:11" cbrf="0.00" remark="Stop" />
+<BASAL Dt="2014-08-13" Tm="22:11" cbrf="1.30" profile="4" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-13" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-13" Tm="21:00" type="Std" amount="6.00" cmd="1" />
+<BASAL Dt="2014-08-13" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-13" Tm="20:38" type="Mul" cmd="1" amount="15.00" remark="4.00 / 11.00  0:13 h" />
+<BOLUS Dt="2014-08-13" Tm="20:34" type="Scr" amount="2.00" />
+<BASAL Dt="2014-08-13" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-13" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-13" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-13" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-13" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-13" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-13" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-13" Tm="08:56" cbrf="3.90" profile="4" TBRinc="130%" remark="dur 13:15 h" />
+<BASAL Dt="2014-08-13" Tm="08:55" cbrf="3.00" profile="4" remark="Run" />
+<BASAL Dt="2014-08-13" Tm="08:55" cbrf="0.00" remark="power up" />
+<BASAL Dt="2014-08-13" Tm="08:54" cbrf="0.00" remark="power down" />
+<BASAL Dt="2014-08-13" Tm="08:48" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-13" Tm="08:48" cbrf="0.00" TBRinc="130%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-08-13" Tm="08:48" shortinfo="E2" description="battery empty" />
+<BASAL Dt="2014-08-13" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-13" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-13" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-13" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-13" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-13" Tm="03:30" type="Mul" cmd="1" amount="21.00" remark="4.00 / 17.00  0:15 h" />
+<BASAL Dt="2014-08-13" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-12" Tm="" type="" amount="30.70" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-12" Tm="" type="" amount="80.57" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-12" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-12" Tm="22:20" type="Scr" amount="6.00" cmd="2" />
+<BASAL Dt="2014-08-12" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-12" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-12" Tm="20:46" cbrf="2.60" profile="4" TBRinc="130%" cmd="2" remark="dur 12:02 h" />
+<BASAL Dt="2014-08-12" Tm="20:46" cbrf="2.00" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-12" Tm="20:45" shortinfo="4.70 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-12" Tm="20:43" description="cartridge changed" />
+<BASAL Dt="2014-08-12" Tm="20:39" cbrf="0.00" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-12" Tm="20:39" cbrf="0.00" TBRinc="130%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-08-12" Tm="20:39" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-08-12" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-12" Tm="18:24" type="Std" amount="3.70" cmd="1" />
+<BASAL Dt="2014-08-12" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-12" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<EVENT Dt="2014-08-12" Tm="15:30" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-08-12" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-12" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-12" Tm="10:53" type="Mul" cmd="1" amount="13.50" remark="3.50 / 10.00  0:13 h" />
+<BASAL Dt="2014-08-12" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-12" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-12" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-12" Tm="07:14" type="Scr" amount="4.50" cmd="2" />
+<BASAL Dt="2014-08-12" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-12" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-12" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-12" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-12" Tm="03:25" type="Scr" amount="3.00" cmd="2" />
+<BASAL Dt="2014-08-12" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-11" Tm="" type="" amount="45.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-11" Tm="" type="" amount="95.67" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-11" Tm="23:59" cbrf="1.56" profile="4" TBRinc="130%" cmd="2" remark="dur 20:40 h" />
+<BASAL Dt="2014-08-11" Tm="23:58" cbrf="1.20" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-11" Tm="23:58" shortinfo="2.60 IU" description="prime infusion set" />
+<BASAL Dt="2014-08-11" Tm="23:58" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-11" Tm="23:58" cbrf="1.20" profile="4" remark="TBR End (cancelled)" />
+<BASAL Dt="2014-08-11" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-11" Tm="20:04" type="Mul" cmd="1" amount="20.00" remark="4.00 / 16.00  0:14 h" />
+<BASAL Dt="2014-08-11" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-11" Tm="10:50" type="Scr" amount="3.00" cmd="2" />
+<BOLUS Dt="2014-08-11" Tm="10:21" type="Scr" amount="2.00" cmd="2" />
+<BASAL Dt="2014-08-11" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-11" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-11" Tm="03:48" type="Mul" cmd="1" amount="17.00" remark="3.50 / 13.50  0:15 h" />
+<BOLUS Dt="2014-08-11" Tm="02:34" type="Scr" amount="3.50" cmd="2" />
+<BASAL Dt="2014-08-11" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-10" Tm="" type="" amount="60.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-10" Tm="" type="" amount="110.67" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-10" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-10" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-10" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-10" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-10" Tm="18:24" type="Scr" amount="1.50" cmd="2" />
+<BASAL Dt="2014-08-10" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-10" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-10" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-10" Tm="13:31" type="Ext" cmd="1" amount="16.00" remark=" 0:14 h" />
+<BOLUS Dt="2014-08-10" Tm="13:27" type="Scr" amount="4.00" cmd="2" />
+<BASAL Dt="2014-08-10" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-10" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-10" Tm="09:53" type="Scr" amount="1.00" cmd="2" />
+<BASAL Dt="2014-08-10" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-10" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-10" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-10" Tm="06:17" type="Mul" cmd="1" amount="18.50" remark="3.50 / 15.00  0:13 h" />
+<BASAL Dt="2014-08-10" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-10" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-10" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-10" Tm="03:44" type="Mul" cmd="1" amount="15.00" remark="4.00 / 11.00  0:13 h" />
+<BOLUS Dt="2014-08-10" Tm="03:08" type="Scr" amount="4.50" cmd="2" />
+<BASAL Dt="2014-08-10" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-09" Tm="" type="" amount="58.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-09" Tm="" type="" amount="107.65" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-09" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-09" Tm="22:57" type="Mul" cmd="1" amount="22.00" remark="4.00 / 18.00  0:15 h" />
+<BASAL Dt="2014-08-09" Tm="22:55" cbrf="1.69" profile="4" TBRinc="130%" cmd="2" remark="dur 49:03 h" />
+<BASAL Dt="2014-08-09" Tm="22:55" cbrf="1.30" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-09" Tm="22:53" shortinfo="0.10 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-09" Tm="22:49" description="cartridge changed" />
+<BOLUS Dt="2014-08-09" Tm="22:19" type="Scr" amount="1.50" cmd="2" />
+<BASAL Dt="2014-08-09" Tm="22:19" cbrf="0.00" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-08-09" Tm="22:19" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-08-09" Tm="22:19" cbrf="0.00" TBRinc="130%" cmd="2" remark="Stop" />
+<EVENT Dt="2014-08-09" Tm="22:19" shortinfo="E1" description="cartridge empty" />
+<BOLUS Dt="2014-08-09" Tm="22:16" type="Scr" amount="2.50" cmd="2" />
+<BASAL Dt="2014-08-09" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<EVENT Dt="2014-08-09" Tm="21:14" shortinfo="W1" description="cartridge low" />
+<BOLUS Dt="2014-08-09" Tm="21:14" type="Mul" cmd="1" amount="9.50" remark="2.60 / 6.90  0:13 h" />
+<BASAL Dt="2014-08-09" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-09" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-09" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-09" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-09" Tm="15:25" type="Scr" amount="1.00" cmd="2" />
+<BASAL Dt="2014-08-09" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-09" Tm="12:42" cbrf="1.56" profile="4" TBRinc="130%" cmd="2" remark="dur 09:37 h" />
+<BASAL Dt="2014-08-09" Tm="12:41" cbrf="1.20" profile="4" remark="TBR End" />
+<BASAL Dt="2014-08-09" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-09" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-09" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-09" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-09" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-09" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-09" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-09" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-09" Tm="03:38" type="Mul" cmd="1" amount="22.00" remark="6.00 / 16.00  0:13 h" />
+<BASAL Dt="2014-08-09" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-08" Tm="" type="" amount="54.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-08" Tm="" type="" amount="104.67" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-08-08" Tm="23:11" type="Scr" amount="6.00" cmd="2" />
+<BASAL Dt="2014-08-08" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-08" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-08" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-08" Tm="20:49" type="Mul" cmd="1" amount="21.00" remark="5.50 / 15.50  0:14 h" />
+<BASAL Dt="2014-08-08" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-08" Tm="18:36" type="Scr" amount="2.50" cmd="2" />
+<BASAL Dt="2014-08-08" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-08" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-08" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-08" Tm="11:34" type="Mul" cmd="1" amount="20.00" remark="5.00 / 15.00  0:14 h" />
+<BASAL Dt="2014-08-08" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-08" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-08" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-08" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-08" Tm="07:49" type="Scr" amount="3.00" />
+<BASAL Dt="2014-08-08" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-08" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-08" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-08" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-08" Tm="03:36" type="Scr" amount="2.00" />
+<BASAL Dt="2014-08-08" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-07" Tm="" type="" amount="58.10" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-07" Tm="" type="" amount="107.52" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-07" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-07" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-07" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-07" Tm="20:34" type="Scr" amount="4.50" />
+<BOLUS Dt="2014-08-07" Tm="20:00" type="Ext" cmd="2"  amount="15.00" remark=" 0:15 h" />
+<EVENT Dt="2014-08-07" Tm="20:00" shortinfo="W8" description="bolus cancelled" />
+<BOLUS Dt="2014-08-07" Tm="20:00" type="Mul" cmd="1" amount="3.10" remark="3.10 / 0.00  0:00 h" />
+<BASAL Dt="2014-08-07" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-07" Tm="18:35" type="Scr" amount="1.00" cmd="2" />
+<BASAL Dt="2014-08-07" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-07" Tm="17:27" type="Std" amount="6.00" cmd="1" />
+<BASAL Dt="2014-08-07" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-07" Tm="16:21" type="Ext" cmd="1" amount="6.00" remark=" 0:15 h" />
+<BOLUS Dt="2014-08-07" Tm="15:58" type="Mul" cmd="1" amount="11.50" remark="3.00 / 8.50  0:14 h" />
+<BASAL Dt="2014-08-07" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-07" Tm="11:40" type="Std" amount="4.60" cmd="1" />
+<BASAL Dt="2014-08-07" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-07" Tm="10:42" cbrf="2.34" profile="4" TBRinc="130%" cmd="2" remark="dur 49:59 h" />
+<BASAL Dt="2014-08-07" Tm="10:41" cbrf="1.80" profile="4" cmd="2" remark="Run" />
+<BASAL Dt="2014-08-07" Tm="10:22" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-07" Tm="10:22" cbrf="1.80" profile="4" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-08-07" Tm="10:22" type="Scr" amount="1.00" cmd="2" />
+<BOLUS Dt="2014-08-07" Tm="10:02" type="Std" amount="1.40" cmd="1" />
+<BASAL Dt="2014-08-07" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-07" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-07" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-07" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-07" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-07" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-07" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-07" Tm="02:17" type="Scr" amount="4.00" cmd="2" />
+<BASAL Dt="2014-08-07" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-06" Tm="" type="" amount="104.10" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-06" Tm="" type="" amount="153.81" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-06" Tm="23:18" cbrf="1.56" profile="4" TBRinc="130%" cmd="2" remark="dur 11:04 h" />
+<BASAL Dt="2014-08-06" Tm="23:18" cbrf="1.20" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-06" Tm="23:13" shortinfo="2.80 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-06" Tm="23:11" shortinfo="12.00 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-06" Tm="23:08" description="cartridge changed" />
+<BASAL Dt="2014-08-06" Tm="23:00" cbrf="0.00" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-08-06" Tm="23:00" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-08-06" Tm="23:00" cbrf="0.00" TBRinc="130%" remark="Stop" />
+<EVENT Dt="2014-08-06" Tm="23:00" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-08-06" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-06" Tm="22:48" type="Mul" cmd="1" amount="10.00" remark="3.50 / 6.50  0:12 h" />
+<BASAL Dt="2014-08-06" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-06" Tm="21:53" type="Scr" amount="4.00" cmd="2" />
+<EVENT Dt="2014-08-06" Tm="21:53" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-08-06" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-06" Tm="19:23" type="Mul" cmd="1" amount="18.00" remark="3.00 / 15.00  0:13 h" />
+<BASAL Dt="2014-08-06" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-06" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-06" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-06" Tm="16:08" type="Mul" cmd="1" amount="14.00" remark="5.00 / 9.00  0:13 h" />
+<BASAL Dt="2014-08-06" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-06" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-06" Tm="10:48" type="Mul" cmd="1" amount="36.40" remark="5.00 / 31.40  0:15 h" />
+<BOLUS Dt="2014-08-06" Tm="10:18" type="Ext" cmd="1" amount="5.20" remark=" 0:15 h" />
+<BASAL Dt="2014-08-06" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-06" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-06" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-06" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-06" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-06" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-06" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-06" Tm="02:43" type="Std" amount="4.00" cmd="1" />
+<BOLUS Dt="2014-08-06" Tm="02:25" type="Mul" cmd="1" amount="12.50" remark="3.00 / 9.50  0:14 h" />
+<BASAL Dt="2014-08-06" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-05" Tm="" type="" amount="61.00" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-05" Tm="" type="" amount="113.39" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-05" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-05" Tm="22:06" cbrf="1.69" profile="4" TBRinc="130%" cmd="2" remark="dur 24:54 h" />
+<BASAL Dt="2014-08-05" Tm="22:06" cbrf="1.30" profile="4" cmd="2" remark="Run" />
+<BASAL Dt="2014-08-05" Tm="21:39" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-08-05" Tm="21:39" cbrf="1.50" profile="4" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-08-05" Tm="21:39" shortinfo="W8" description="bolus cancelled" />
+<BOLUS Dt="2014-08-05" Tm="21:39" type="Scr" amount="3.00" />
+<BOLUS Dt="2014-08-05" Tm="21:22" type="Mul" cmd="1" amount="9.00" remark="8.00 / 1.00  0:17 h" />
+<BASAL Dt="2014-08-05" Tm="21:00" cbrf="1.80" profile="4" TBRinc="120%" />
+<BASAL Dt="2014-08-05" Tm="20:16" cbrf="2.40" profile="4" TBRinc="120%" remark="dur 01:23 h" />
+<BASAL Dt="2014-08-05" Tm="20:16" cbrf="2.00" profile="4" remark="TBR End" />
+<BASAL Dt="2014-08-05" Tm="19:00" cbrf="2.80" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-05" Tm="18:00" cbrf="2.66" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-05" Tm="17:53" type="Scr" amount="2.50" />
+<BASAL Dt="2014-08-05" Tm="17:00" cbrf="2.10" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-05" Tm="14:00" cbrf="1.82" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-05" Tm="11:00" cbrf="1.68" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-05" Tm="10:00" cbrf="2.52" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-05" Tm="09:00" cbrf="3.36" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-05" Tm="08:00" cbrf="4.20" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-05" Tm="07:00" cbrf="3.50" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-05" Tm="06:35" type="Scr" amount="2.00" />
+<BASAL Dt="2014-08-05" Tm="06:00" cbrf="2.80" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-05" Tm="05:43" type="Scr" amount="3.00" />
+<BASAL Dt="2014-08-05" Tm="05:00" cbrf="2.52" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-05" Tm="04:00" cbrf="1.96" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-05" Tm="03:34" type="Scr" amount="2.00" />
+<BOLUS Dt="2014-08-05" Tm="03:17" type="Scr" amount="4.50" />
+<BOLUS Dt="2014-08-05" Tm="00:41" type="Mul" cmd="1" amount="35.00" remark="4.00 / 31.00  0:58 h" />
+<BASAL Dt="2014-08-05" Tm="00:00" cbrf="1.68" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-04" Tm="" type="" amount="82.70" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-04" Tm="" type="" amount="132.55" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-08-04" Tm="23:31" type="Scr" amount="2.00" cmd="2" />
+<BASAL Dt="2014-08-04" Tm="23:30" cbrf="1.68" profile="4" TBRinc="140%" cmd="2" remark="dur 20:46 h" />
+<BASAL Dt="2014-08-04" Tm="23:00" cbrf="1.20" profile="4" />
+<BASAL Dt="2014-08-04" Tm="22:00" cbrf="1.30" profile="4" />
+<BASAL Dt="2014-08-04" Tm="21:00" cbrf="1.50" profile="4" />
+<BOLUS Dt="2014-08-04" Tm="19:35" type="Ext" cmd="1" amount="17.00" remark=" 0:28 h" />
+<BASAL Dt="2014-08-04" Tm="19:00" cbrf="2.00" profile="4" />
+<BASAL Dt="2014-08-04" Tm="18:00" cbrf="1.90" profile="4" />
+<BOLUS Dt="2014-08-04" Tm="17:48" type="Scr" amount="2.00" cmd="2" />
+<BOLUS Dt="2014-08-04" Tm="17:46" type="Std" amount="7.60" cmd="2" />
+<BASAL Dt="2014-08-04" Tm="17:45" cbrf="1.50" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-04" Tm="17:44" shortinfo="0.30 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-04" Tm="17:37" description="cartridge changed" />
+<BASAL Dt="2014-08-04" Tm="17:36" cbrf="0.00" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-08-04" Tm="17:36" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-08-04" Tm="17:36" cbrf="0.00" TBRinc="140%" remark="Stop" />
+<EVENT Dt="2014-08-04" Tm="17:36" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-08-04" Tm="17:00" cbrf="2.10" profile="4" TBRinc="140%" />
+<EVENT Dt="2014-08-04" Tm="16:51" shortinfo="W1" description="cartridge low" />
+<BOLUS Dt="2014-08-04" Tm="16:39" type="Mul" cmd="1" amount="20.40" remark="4.00 / 16.40  0:57 h" />
+<BASAL Dt="2014-08-04" Tm="14:00" cbrf="1.82" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-04" Tm="12:39" type="Mul" cmd="1" amount="9.70" remark="2.00 / 7.70  0:15 h" />
+<BOLUS Dt="2014-08-04" Tm="12:32" type="Scr" amount="0.50" cmd="2" />
+<BASAL Dt="2014-08-04" Tm="11:00" cbrf="1.68" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-04" Tm="10:44" cbrf="2.52" profile="4" TBRinc="140%" cmd="2" remark="dur 06:52 h" />
+<BASAL Dt="2014-08-04" Tm="10:44" cbrf="1.80" profile="4" remark="TBR End" />
+<BOLUS Dt="2014-08-04" Tm="10:26" type="Std" amount="1.00" cmd="1" />
+<BASAL Dt="2014-08-04" Tm="10:00" cbrf="2.52" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-04" Tm="09:00" cbrf="3.36" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-04" Tm="08:00" cbrf="4.20" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-04" Tm="07:00" cbrf="3.50" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-04" Tm="06:00" cbrf="2.80" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-04" Tm="05:48" type="Scr" amount="2.00" cmd="2" />
+<BASAL Dt="2014-08-04" Tm="05:00" cbrf="2.52" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-04" Tm="04:00" cbrf="1.96" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-04" Tm="02:33" type="Mul" cmd="1" amount="20.50" remark="3.50 / 17.00  0:15 h" />
+<BASAL Dt="2014-08-04" Tm="00:00" cbrf="1.68" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-03" Tm="" type="" amount="57.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-03" Tm="" type="" amount="111.53" remark="Bolus+Basal Total"/>
+<BOLUS Dt="2014-08-03" Tm="23:43" type="Scr" amount="1.50" cmd="2" />
+<BASAL Dt="2014-08-03" Tm="23:00" cbrf="1.68" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-03" Tm="22:00" cbrf="1.82" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-03" Tm="21:01" type="Scr" amount="2.50" cmd="2" />
+<BASAL Dt="2014-08-03" Tm="21:00" cbrf="2.10" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-03" Tm="20:35" type="Scr" amount="5.00" cmd="2" />
+<BASAL Dt="2014-08-03" Tm="19:00" cbrf="2.80" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-03" Tm="18:16" type="Mul" cmd="1" amount="18.00" remark="3.50 / 14.50  0:14 h" />
+<BASAL Dt="2014-08-03" Tm="18:00" cbrf="2.66" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-03" Tm="17:00" cbrf="2.10" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-03" Tm="16:27" type="Scr" amount="0.50" />
+<BASAL Dt="2014-08-03" Tm="14:00" cbrf="1.82" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-03" Tm="13:36" type="Scr" amount="1.00" cmd="2" />
+<BASAL Dt="2014-08-03" Tm="11:00" cbrf="1.68" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-03" Tm="10:00" cbrf="2.52" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-03" Tm="09:00" cbrf="3.36" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-03" Tm="08:00" cbrf="4.20" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-03" Tm="07:00" cbrf="3.50" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-03" Tm="06:00" cbrf="2.80" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-03" Tm="05:00" cbrf="2.52" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-03" Tm="04:00" cbrf="1.96" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-03" Tm="03:21" type="Mul" cmd="1" amount="22.00" remark="2.50 / 19.50  0:15 h" />
+<BOLUS Dt="2014-08-03" Tm="00:13" type="Mul" cmd="1" amount="7.00" remark="3.50 / 3.50  0:14 h" />
+<BASAL Dt="2014-08-03" Tm="00:00" cbrf="1.68" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-02" Tm="" type="" amount="95.90" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-02" Tm="" type="" amount="148.32" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-02" Tm="23:00" cbrf="1.68" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-02" Tm="22:32" type="Mul" cmd="1" amount="31.50" remark="3.50 / 28.00  0:28 h" />
+<BASAL Dt="2014-08-02" Tm="22:00" cbrf="1.82" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-02" Tm="21:00" cbrf="2.10" profile="4" TBRinc="140%" />
+<EVENT Dt="2014-08-02" Tm="19:54" shortinfo="W2" description="battery low" />
+<BOLUS Dt="2014-08-02" Tm="19:32" type="Scr" amount="1.00" cmd="2" />
+<BASAL Dt="2014-08-02" Tm="19:00" cbrf="2.80" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-02" Tm="18:00" cbrf="2.66" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-02" Tm="17:18" type="Mul" cmd="1" amount="20.00" remark="3.50 / 16.50  0:15 h" />
+<BASAL Dt="2014-08-02" Tm="17:00" cbrf="2.10" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-02" Tm="15:06" type="Scr" amount="2.00" cmd="2" />
+<BASAL Dt="2014-08-02" Tm="14:00" cbrf="1.82" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-02" Tm="12:22" type="Mul" cmd="1" amount="12.00" remark="3.00 / 9.00  0:14 h" />
+<BASAL Dt="2014-08-02" Tm="11:00" cbrf="1.68" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-02" Tm="10:00" cbrf="2.52" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-02" Tm="09:00" cbrf="3.36" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-02" Tm="08:44" cbrf="4.20" profile="4" TBRinc="140%" cmd="2" remark="dur 50:00 h" />
+<BASAL Dt="2014-08-02" Tm="08:44" cbrf="3.00" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-08-02" Tm="08:36" shortinfo="2.50 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-02" Tm="08:35" shortinfo="7.70 IU" description="prime infusion set" />
+<EVENT Dt="2014-08-02" Tm="08:30" description="cartridge changed" />
+<BASAL Dt="2014-08-02" Tm="08:21" cbrf="0.00" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-08-02" Tm="08:21" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-08-02" Tm="08:21" cbrf="0.00" TBRinc="140%" remark="Stop" />
+<EVENT Dt="2014-08-02" Tm="08:21" shortinfo="E1" description="cartridge empty" />
+<EVENT Dt="2014-08-02" Tm="08:06" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-08-02" Tm="08:00" cbrf="4.20" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-02" Tm="07:51" type="Mul" cmd="1" amount="29.40" remark="3.00 / 26.40  0:30 h" />
+<BASAL Dt="2014-08-02" Tm="07:00" cbrf="3.50" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-02" Tm="06:03" cbrf="2.80" profile="4" TBRinc="140%" cmd="2" remark="dur 02:18 h" />
+<BASAL Dt="2014-08-02" Tm="06:03" cbrf="2.00" profile="4" remark="TBR End" />
+<BASAL Dt="2014-08-02" Tm="06:00" cbrf="2.80" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-02" Tm="05:00" cbrf="2.52" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-02" Tm="04:00" cbrf="1.96" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-02" Tm="00:00" cbrf="1.68" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-01" Tm="" type="" amount="91.40" remark="Bolus Total"/>
+<BOLUS Dt="2014-08-01" Tm="" type="" amount="142.29" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-08-01" Tm="23:00" cbrf="1.68" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-01" Tm="22:00" cbrf="1.82" profile="4" TBRinc="140%" />
+<BASAL Dt="2014-08-01" Tm="21:00" cbrf="2.10" profile="4" TBRinc="140%" />
+<BOLUS Dt="2014-08-01" Tm="20:46" type="Mul" cmd="1" amount="38.00" remark="3.50 / 34.50  1:29 h" />
+<BOLUS Dt="2014-08-01" Tm="20:15" type="Scr" amount="1.50" cmd="2" />
+<BASAL Dt="2014-08-01" Tm="19:25" cbrf="2.80" profile="4" TBRinc="140%" cmd="2" remark="dur 10:38 h" />
+<BASAL Dt="2014-08-01" Tm="19:25" cbrf="2.00" profile="4" remark="TBR End" />
+<BASAL Dt="2014-08-01" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-01" Tm="18:44" type="Std" amount="1.90" cmd="1" />
+<BASAL Dt="2014-08-01" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-01" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-01" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-01" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-01" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-01" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-01" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-01" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-01" Tm="06:59" type="Mul" cmd="1" amount="18.50" remark="3.00 / 15.50  0:13 h" />
+<BASAL Dt="2014-08-01" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-01" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-08-01" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-08-01" Tm="02:10" type="Mul" cmd="1" amount="9.50" remark="2.50 / 7.00  0:14 h" />
+<BOLUS Dt="2014-08-01" Tm="00:37" type="Mul" cmd="1" amount="22.00" remark="3.50 / 18.50  0:14 h" />
+<BASAL Dt="2014-08-01" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-31" Tm="" type="" amount="86.70" remark="Bolus Total"/>
+<BOLUS Dt="2014-07-31" Tm="" type="" amount="136.54" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-07-31" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-31" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-31" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-31" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-31" Tm="18:35" type="Mul" cmd="1" amount="13.50" remark="3.00 / 10.50  0:13 h" />
+<BOLUS Dt="2014-07-31" Tm="18:20" type="Scr" amount="2.50" cmd="2" />
+<BASAL Dt="2014-07-31" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-31" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-31" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-31" Tm="13:26" type="Mul" cmd="1" amount="35.50" remark="3.00 / 32.50  0:28 h" />
+<BASAL Dt="2014-07-31" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-31" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-31" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-31" Tm="08:22" type="Ext" cmd="1" amount="25.00" remark=" 0:14 h" />
+<BOLUS Dt="2014-07-31" Tm="08:02" type="Scr" amount="2.00" cmd="2" />
+<BASAL Dt="2014-07-31" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-31" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-31" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-31" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-31" Tm="04:03" cbrf="1.82" profile="4" TBRinc="130%" cmd="2" remark="dur 39:22 h" />
+<BASAL Dt="2014-07-31" Tm="04:03" cbrf="1.40" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-07-31" Tm="04:03" shortinfo="0.60 IU" description="prime infusion set" />
+<EVENT Dt="2014-07-31" Tm="03:58" description="cartridge changed" />
+<BOLUS Dt="2014-07-31" Tm="03:58" type="Scr" amount="3.40" cmd="2" />
+<EVENT Dt="2014-07-31" Tm="03:58" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-07-31" Tm="03:58" cbrf="0.00" cmd="2" remark="Stop" />
+<EVENT Dt="2014-07-31" Tm="03:58" shortinfo="E1" description="cartridge empty" />
+<BASAL Dt="2014-07-31" Tm="03:57" cbrf="1.20" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-07-31" Tm="03:53" shortinfo="2.70 IU" description="prime infusion set" />
+<BASAL Dt="2014-07-31" Tm="03:50" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-07-31" Tm="03:50" cbrf="1.20" profile="4" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-07-31" Tm="03:50" shortinfo="W8" description="bolus cancelled" />
+<BOLUS Dt="2014-07-31" Tm="03:45" type="Mul" cmd="1" amount="4.80" remark="2.50 / 2.30  0:05 h" />
+<EVENT Dt="2014-07-31" Tm="01:12" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-07-31" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-30" Tm="" type="" amount="50.70" remark="Bolus Total"/>
+<BOLUS Dt="2014-07-30" Tm="" type="" amount="100.87" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-07-30" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-30" Tm="17:04" type="Ext" cmd="1" amount="20.00" remark=" 0:14 h" />
+<BASAL Dt="2014-07-30" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-30" Tm="14:57" type="Mul" cmd="1" amount="18.00" remark="3.50 / 14.50  0:15 h" />
+<BASAL Dt="2014-07-30" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-30" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-30" Tm="02:52" type="Mul" cmd="1" amount="10.50" remark="3.50 / 7.00  0:14 h" />
+<BOLUS Dt="2014-07-30" Tm="01:55" type="Std" amount="2.20" cmd="1" />
+<BASAL Dt="2014-07-30" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-29" Tm="" type="" amount="72.60" remark="Bolus Total"/>
+<BOLUS Dt="2014-07-29" Tm="" type="" amount="121.74" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-07-29" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-29" Tm="22:39" type="Ext" cmd="1" amount="7.00" remark=" 0:45 h" />
+<BASAL Dt="2014-07-29" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-29" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-29" Tm="20:08" type="Std" amount="5.00" cmd="2" />
+<BASAL Dt="2014-07-29" Tm="20:07" cbrf="2.60" profile="4" TBRinc="130%" cmd="2" remark="dur 31:43 h" />
+<BASAL Dt="2014-07-29" Tm="20:07" cbrf="2.00" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-07-29" Tm="20:02" shortinfo="2.80 IU" description="prime infusion set" />
+<BASAL Dt="2014-07-29" Tm="19:57" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-07-29" Tm="19:57" cbrf="2.00" profile="4" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-07-29" Tm="19:57" shortinfo="W8" description="bolus cancelled" />
+<BOLUS Dt="2014-07-29" Tm="19:46" type="Mul" cmd="1" amount="15.10" remark="3.50 / 11.60  0:11 h" />
+<BASAL Dt="2014-07-29" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-29" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-29" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-29" Tm="15:45" type="Mul" cmd="1" amount="18.50" remark="3.50 / 15.00  0:30 h" />
+<BASAL Dt="2014-07-29" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-29" Tm="11:37" cbrf="1.56" profile="4" TBRinc="130%" cmd="2" remark="dur 08:20 h" />
+<BASAL Dt="2014-07-29" Tm="11:37" cbrf="1.20" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-07-29" Tm="11:34" shortinfo="3.00 IU" description="prime infusion set" />
+<BASAL Dt="2014-07-29" Tm="11:14" cbrf="0.00" cmd="2" remark="Stop" />
+<BASAL Dt="2014-07-29" Tm="11:14" cbrf="1.20" profile="4" remark="TBR End (cancelled)" />
+<BOLUS Dt="2014-07-29" Tm="11:12" type="Scr" amount="0.50" cmd="2" />
+<BASAL Dt="2014-07-29" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-29" Tm="10:02" type="Std" amount="1.50" cmd="1" />
+<BASAL Dt="2014-07-29" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-29" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-29" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-29" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-29" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-29" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-29" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-29" Tm="00:48" type="Mul" cmd="1" amount="25.00" remark="3.50 / 21.50  1:00 h" />
+<BASAL Dt="2014-07-29" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-28" Tm="" type="" amount="51.60" remark="Bolus Total"/>
+<BOLUS Dt="2014-07-28" Tm="" type="" amount="101.44" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-07-28" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-28" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-28" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-28" Tm="19:11" type="Mul" cmd="1" amount="22.50" remark="3.00 / 19.50  0:28 h" />
+<BASAL Dt="2014-07-28" Tm="19:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-28" Tm="18:00" cbrf="2.47" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-28" Tm="17:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-28" Tm="15:46" type="Mul" cmd="1" amount="11.00" remark="3.50 / 7.50  0:14 h" />
+<BOLUS Dt="2014-07-28" Tm="14:23" type="Ext" cmd="1" amount="13.00" remark=" 0:13 h" />
+<BASAL Dt="2014-07-28" Tm="14:22" cbrf="1.69" profile="4" TBRinc="130%" cmd="2" remark="dur 20:52 h" />
+<BASAL Dt="2014-07-28" Tm="14:22" cbrf="1.30" profile="4" cmd="2" remark="Run" />
+<EVENT Dt="2014-07-28" Tm="14:22" shortinfo="1.40 IU" description="prime infusion set" />
+<EVENT Dt="2014-07-28" Tm="14:20" description="cartridge changed" />
+<BASAL Dt="2014-07-28" Tm="14:10" cbrf="0.00" remark="TBR End (cancelled)" />
+<EVENT Dt="2014-07-28" Tm="14:10" shortinfo="W8" description="bolus cancelled" />
+<BASAL Dt="2014-07-28" Tm="14:10" cbrf="0.00" TBRinc="130%" remark="Stop" />
+<EVENT Dt="2014-07-28" Tm="14:10" shortinfo="E1" description="cartridge empty" />
+<BOLUS Dt="2014-07-28" Tm="14:10" type="Mul" cmd="1" amount="2.10" remark="2.10 / 0.00  0:00 h" />
+<BASAL Dt="2014-07-28" Tm="14:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-28" Tm="13:56" type="Scr" amount="2.00" />
+<BOLUS Dt="2014-07-28" Tm="13:51" type="Scr" amount="1.00" />
+<BASAL Dt="2014-07-28" Tm="11:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-28" Tm="10:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<EVENT Dt="2014-07-28" Tm="09:09" shortinfo="W1" description="cartridge low" />
+<BASAL Dt="2014-07-28" Tm="09:00" cbrf="3.12" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-28" Tm="08:00" cbrf="3.90" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-28" Tm="07:00" cbrf="3.25" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-28" Tm="06:00" cbrf="2.60" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-28" Tm="05:00" cbrf="2.34" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-28" Tm="04:00" cbrf="1.82" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-28" Tm="00:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-27" Tm="" type="" amount="51.50" remark="Bolus Total"/>
+<BOLUS Dt="2014-07-27" Tm="" type="" amount="61.60" remark="Bolus+Basal Total"/>
+<BASAL Dt="2014-07-27" Tm="23:00" cbrf="1.56" profile="4" TBRinc="130%" />
+<BASAL Dt="2014-07-27" Tm="22:00" cbrf="1.69" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-27" Tm="21:46" type="Mul" cmd="1" amount="25.00" remark="3.00 / 22.00  0:29 h" />
+<BASAL Dt="2014-07-27" Tm="21:00" cbrf="1.95" profile="4" TBRinc="130%" />
+<BOLUS Dt="2014-07-27" Tm="20:59" type="Scr" amount="2.00" />
+<BASAL Dt="2014-07-27" Tm="20:22" cbrf="2.60" profile="4" TBRinc="130%" remark="dur 17:48 h" />
+<BASAL Dt="2014-07-27" Tm="20:22" cbrf="2.00" profile="4" remark="Run" />
+<EVENT Dt="2014-07-27" Tm="20:20" shortinfo="2.50 IU" description="prime infusion set" />
+<BASAL Dt="2014-07-27" Tm="19:53" cbrf="0.00" remark="Stop" />
+<BOLUS Dt="2014-07-27" Tm="19:20" type="Scr" amount="4.50" />
+<BASAL Dt="2014-07-27" Tm="19:00" cbrf="2.00" profile="4" />
+<BOLUS Dt="2014-07-27" Tm="18:13" type="Ext" amount="20.00" remark=" 1:29 h" />
+</IPDATA>
+<STATISTIC>
+<ST_TIMERANGE Weeks="4" Dt="2014-09-25"/>
+<ST_USETIME_PERCENT Val="99"/>
+<ST_BASAL_IU Val="58.4"/>
+<ST_BASAL_PERCENT Val="46"/>
+<ST_BOLUSFREQ Val="6.5"/>
+<ST_BOLUS_IU Val="67.4"/>
+<ST_BOLUS_PERCENT Val="54"/>
+</STATISTIC>
+<CHECK CRC="B58B"/>
+</IMPORT>

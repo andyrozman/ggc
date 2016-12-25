@@ -1,6 +1,6 @@
 <blockquote>
 
-<center><h2 class="header">Screenshots [Tools (Settings, Db)]</h2></center>
+<center><h2 class="header">Screenshots [Printing]</h2></center>
 
 
 <h3>
@@ -11,9 +11,9 @@
 
 <a href="index.php?show=screenshots_graph" class="menu">Graphs</a><br>
 
-Tools (Settings, Db)<br>
+<a href="index.php?show=screenshots_tools" class="menu">Tools (Settings, Db)</a><br>
 
-<a href="index.php?show=screenshots_print" class="menu">Printing</a><br>
+Printing<br>
 
 <a href="index.php?show=screenshots_meter_tool" class="menu">Meter Tool</a><br>
 
@@ -30,50 +30,40 @@ Tools (Settings, Db)<br>
 
 
 
-<table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/prefs.gif" border="0" alt="Preferences"></td></tr>
-<tr><td>Preferences</td></tr>
-</table>
-
 <br>
 <br>
 
-
-
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/backup_db.jpg" border="0" alt="Backup Database"></td></tr>
-<tr><td>Backup Database</td></tr>
+<tr><td><img src="images/print_report_prepare.jpg" border="0" alt="Printing (prepare)"></td></tr>
+<tr><td>Printing (prepare)</td></tr>
 </table>
+
 
 <br>
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/restore_db_1.jpg" border="0" alt="Restore Database 1"></td></tr>
-<tr><td>Restore Database 1</td></tr>
+<tr><td><img src="images/print_simple.gif" border="0" alt="Printing - Simple report (in Acrobat Viewer)"></td></tr>
+<tr><td>Printing - Simple report (in Acrobat Viewer)</td></tr>
 </table>
 
-<br>
-<br>
 
+<br>
+<br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/restore_db_2.jpg" border="0" alt="Restore Database 2"></td></tr>
-<tr><td>Restore Database 2</td></tr>
+<tr><td><img src="images/print_extended.gif" border="0" alt="Printing - Extended report (in Acrobat Viewer)"></td></tr>
+<tr><td>Printing - Extended report (in Acrobat Viewer)</td></tr>
 </table>
 
+
 <br>
 <br>
-
-
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/update.jpg" border="0" alt="Update GGC"></td></tr>
-<tr><td>Update GGC</td></tr>
+<tr><td><img src="images/print_food_menu_selector.jpg" border="0" alt="Printing - Food Menu Selector"></td></tr>
+<tr><td>Printing - Food Menu Selector</td></tr>
 </table>
-
-<br>
-<br>
 
 
 

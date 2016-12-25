@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<update_file>
+<product>
+<id/>
+<root_path/>
+<version>
+<id>0</id>
+<name/>
+<description/>
+</version>
+</product>
+<db>
+<enabled>false</enabled>
+<required_version>0</required_version>
+<config_class/>
+<update_site/>
+<update_site_version>0</update_site_version>
+<db_apps/>
+</db>
+<component_groups/>
+<components/>
+</update_file>

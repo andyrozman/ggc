@@ -32,7 +32,7 @@ Meter Tool<br>
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/read_meter_1.jpg" border="0" alt="Reading Meter 1"></td></tr>
+<tr><td><img src="images/read_meter_1.jpg" border="0" alt="Reading Meter 1"></td></tr>
 <tr><td>Reading from Meter #1 - Pre-reading</td></tr>
 </table>
 
@@ -40,7 +40,7 @@ Meter Tool<br>
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/read_meter_2.jpg" border="0" alt="Reading Meter 2"></td></tr>
+<tr><td><img src="images/read_meter_2.jpg" border="0" alt="Reading Meter 2"></td></tr>
 <tr><td>Reading from Meter #2 - Reading</td></tr>
 </table>
 
@@ -48,7 +48,7 @@ Meter Tool<br>
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/meter_config.jpg" border="0" alt="Meter Configuration"></td></tr>
+<tr><td><img src="images/meter_config.jpg" border="0" alt="Meter Configuration"></td></tr>
 <tr><td>Meter Configuration</td></tr>
 </table>
 
@@ -56,7 +56,7 @@ Meter Tool<br>
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/meters_list.jpg" border="0" alt="Meters List"></td></tr>
+<tr><td><img src="images/meters_list.jpg" border="0" alt="Meters List"></td></tr>
 <tr><td>Meters List</td></tr>
 </table>
 

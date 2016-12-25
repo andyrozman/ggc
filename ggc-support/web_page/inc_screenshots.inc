@@ -36,7 +36,7 @@ Screenshots Main<br>
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/main_ggc_0_4.gif" border="0" alt="Main Window of GGC 0.4"></td></tr>
+<tr><td><img src="images/main_ggc_0_4.gif" border="0" alt="Main Window of GGC 0.4"></td></tr>
 <tr><td>Main Window of GGC 0.4</td></tr>
 </table>
 

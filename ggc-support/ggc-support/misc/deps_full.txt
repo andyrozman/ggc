@@ -1,0 +1,118 @@
+
+ATECH TOOLS - SPECIAL DEPENDENCIES
+
+[INFO] javax.servlet:servlet-api:jar:2.5:provided
+[INFO] net.sf.jasperreports:jasperreports:jar:3.7.1:compile
+[INFO] commons-beanutils:commons-beanutils:jar:1.8.0:compile
+[INFO] commons-digester:commons-digester:jar:1.7:compile
+[INFO] com.lowagie:itext:jar:2.1.7:compile
+[INFO] |  bouncycastle:bcmail-jdk14:jar:138:compile
+[INFO] |  bouncycastle:bcprov-jdk14:jar:138:compile
+[INFO] |  org.bouncycastle:bctsp-jdk14:jar:1.38:compile
+[INFO] |  |     org.bouncycastle:bcprov-jdk14:jar:1.38:compile
+[INFO] org.bouncycastle:bcmail-jdk14:jar:1.38:compile
+[INFO] jfree:jcommon:jar:1.0.15:compile
+[INFO] xml-apis:xml-apis:jar:1.3.02:compile
+[INFO] eclipse:jdtcore:jar:3.1.0:compile
+[INFO] jfree:jfreechart:jar:1.0.13:compile
+
+
+
+[INFO] \- org.simpleframework:simple-xml:jar:2.7.1:compile
+[INFO]    stax:stax-api:jar:1.0.1:compile
+[INFO]    stax:stax:jar:1.2.0:compile
+[INFO]    \- xpp3:xpp3:jar:1.1.3.3:compile
+
+-------------------
+
+
+antlr:antlr:jar:2.7.6rc1:compile
+asm:asm:jar:1.5.3:compile
+asm:asm-attrs:jar:1.5.3:compile
+
+batik:batik-awt-util:jar:1.6:compile
+batik:batik-dom:jar:1.6:compile
+batik:batik-svg-dom:jar:1.6:compile
+batik:batik-svggen:jar:1.6:compile
+batik:batik-util:jar:1.6:compile
+batik:batik-xml:jar:1.6:compile
+
+com.h2database:h2:jar:1.0.69:runtime
+com.itextpdf:itextpdf:jar:5.1.2:compile
+com.sun.media:jai-codec:jar:1.1.3:compile
+com.ibm.old.comapi:ibm-compapi:jar:1.3:compile
+com.neuronrobotics:nrjavaserial:jar:3.9.3:compile
+cglib:cglib:jar:2.1_3:compile
+commons-logging:commons-logging:jar:1.0.4:compile
+commons-collections:commons-collections:jar:2.1.1:compile
+commons-lang:commons-lang:jar:2.6:compile
+
+dom4j:dom4j:jar:1.6.1:compile
+
+ehcache:ehcache:jar:1.1:compile
+
+javax.help:javahelp:jar:2.0.05:compile
+javax.media:jai-core:jar:1.1.3:compile
+javax.transaction:jta:jar:1.0.1B:compile
+jaxen:jaxen:jar:1.1.6:compile
+jfree:jfreechart:jar:1.0.13:compile
+jfree:jcommon:jar:1.0.16:compile
+
+log4j:log4j:jar:1.2.16:compile
+
+net.java.dev.jna:jna:jar:3.3.0:compile
+net.sf.ggc.pygmy-httpd:pygmy-core:jar:0.2:compile
+net.sf.ggc.pygmy-httpd:pygmy-handlers:jar:0.2:compile
+net.sf.squirrel-sql.thirdparty-non-maven:skinlf:jar:6.7:compile
+
+org.icepdf:icepdf-core:jar:5.0.7:compile
+org.icepdf:icepdf-viewer:jar:5.0.7:compile
+org.hibernate:hibernate:jar:3.1.3:compile
+org.jdom:jdom:jar:1.1:compile
+
+postgresql:postgresql:jar:8.4-702.jdbc3:compile
+
+----
+
+com.atech-software:atech-tools:jar:0.7.11-SNAPSHOT:compile
+
+net.sf.ggc:ggc-cgms-tool:jar:1.3.2-SNAPSHOT
+net.sf.ggc:ggc-core:jar:0.6.0-SNAPSHOT:compile
+net.sf.ggc:ggc-desktop:jar:0.6.0-SNAPSHOT
+net.sf.ggc:ggc-help:jar:0.2-SNAPSHOT:compile
+net.sf.ggc:ggc-meter-tool:jar:2.2.0-SNAPSHOT
+net.sf.ggc:ggc-nutri-tool:jar:1.3.5-SNAPSHOT
+net.sf.ggc:ggc-plugin-base:jar:0.7.1-SNAPSHOT
+net.sf.ggc:ggc-pump-tool:jar:1.5.0-SNAPSHOT
+
+----
+
+
+
+
+
+
+
+The following files have NOT been resolved:
+[INFO]    antlr:antlr:java-source:sources:2.7.6rc1
+[INFO]    asm:asm:java-source:sources:1.5.3
+[INFO]    asm:asm-attrs:java-source:sources:1.5.3
+[INFO]    batik:batik-awt-util:java-source:sources:1.6
+[INFO]    batik:batik-dom:java-source:sources:1.6
+[INFO]    batik:batik-svg-dom:java-source:sources:1.6
+[INFO]    batik:batik-svggen:java-source:sources:1.6
+[INFO]    batik:batik-util:java-source:sources:1.6
+[INFO]    batik:batik-xml:java-source:sources:1.6
+[INFO]    bouncycastle:bcmail-jdk14:java-source:sources:138
+[INFO]    bouncycastle:bcprov-jdk14:java-source:sources:138
+[INFO]    com.sun.media:jai-codec:java-source:sources:1.1.3
+[INFO]    eclipse:jdtcore:java-source:sources:3.1.0
+[INFO]    javax.media:jai-core:java-source:sources:1.1.3
+[INFO]    javax.transaction:jta:java-source:sources:1.0.1B
+[INFO]    jfree:jcommon:java-source:sources:1.0.15
+[INFO]    jfree:jfreechart:java-source:sources:1.0.13
+[INFO]    stax:stax-api:java-source:sources:1.0.1
+[INFO]    xml-apis:xml-apis:java-source:sources:1.3.02
+[INFO]    xpp3:xpp3:java-source:sources:1.1.3.3
+
+

@@ -33,7 +33,7 @@ Graphs<br>
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/daily_graph.jpg" border="0" alt="Daily Graph"></td></tr>
+<tr><td><img src="images/daily_graph.jpg" border="0" alt="Daily Graph"></td></tr>
 <tr><td>Daily Graph</td></tr>
 </table>
 
@@ -41,7 +41,7 @@ Graphs<br>
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/course_graph.jpg" border="0" alt="Course Graph"></td></tr>
+<tr><td><img src="images/course_graph.jpg" border="0" alt="Course Graph"></td></tr>
 <tr><td>Course Graph</td></tr>
 </table>
 
@@ -49,7 +49,7 @@ Graphs<br>
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/spread_graph.jpg" border="0" alt="Spread Graph"></td></tr>
+<tr><td><img src="images/spread_graph.jpg" border="0" alt="Spread Graph"></td></tr>
 <tr><td>Spread Graph</td></tr>
 </table>
 
@@ -57,7 +57,7 @@ Graphs<br>
 <br>
 
 <table cellpadding="0" cellspacing="3" border="0" align="center" class="container">
-<tr><td><img src="./images/calculated_hba1c.jpg" border="0" alt="Calculated HbA1c"></td></tr>
+<tr><td><img src="images/calculated_hba1c.jpg" border="0" alt="Calculated HbA1c"></td></tr>
 <tr><td>Calculated HbA1c</td></tr>
 </table>
 

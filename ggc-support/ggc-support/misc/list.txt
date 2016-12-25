@@ -1,0 +1,71 @@
+atech-tools
+atech-tools-update-server
+atech-update
+atech-upgrade-server
+
+ggc-android-app (net.sf.ggc.android-app)
+
+
+ggc-core-app
+	ggc-core
+	ggc-doctor-core
+
+
+ggc-desktop-app (net.sf.ggc.desktop-app)
+	ggc-desktop
+	ggc-desktop-little
+
+
+ggc-doctor-app (net.sf.ggc.desktop-app)
+	ggc-desktop-doctor
+	ggc-doctor
+	ggc-doctor_server
+	ggc-doctor-server
+
+
+ggc-support (net.sf.ggc.support)
+	ggc-help
+	ggc-language_tool
+	ggc-master-pom (net.sf.ggc)
+	ggc-support
+	ggc-test
+	ggc-usb
+
+
+ggc-plugins (net.sf.ggc.plugins)
+	ggc-plugin_base
+	ggc-cgm
+    ggc-connect
+	ggc-meter
+	ggc-nutri
+	ggc-pump
+
+
+ggc-future
+	android-upl-ki.minimed
+	android-upl-minimed
+	decoding-carelink
+	ggc-device-arkray
+	ggc-device-dexcom7
+	ggc-device-menarini
+	ggc-device-minimed
+	ggc-device-minimed2
+	ggc-device-tandem
+	ggc-device-wellion
+    ggc-sw-healthvault
+    ggc-sw-sidiary
+
+ggc-removed
+	ggc-mobile
+	ggc-ppc
+
+
+
+
+
+
+hibernate-dialects-3.1
+hid4java
+pom.xml
+test_create.xml
+web_page
