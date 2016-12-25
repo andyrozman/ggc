@@ -9,7 +9,7 @@ import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.TimeZoneUtil;
 
-import ggc.core.data.defs.DailyValuesExtendedType;
+import ggc.core.data.ExtendedDailyValueType;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.device.AbstractSerialMeter;
@@ -512,7 +512,7 @@ public class OptiumXceed extends AbstractSerialMeter
         // .format(dataAccess.getBGValueByType(DataAccessPlugInBase.BG_MGDL,
         // DataAccessPlugInBase.BG_MMOL, data)));
 
-        mve.setUrine(DailyValuesExtendedType.Urine_mmolL, dataAccess.getFormatedValue(
+        mve.setUrine(ExtendedDailyValueType.Urine_mmolL, dataAccess.getFormatedValue(
             dataAccess.getBGValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, Float.parseFloat(data)), 1));
 
         this.outputWriter.writeData(mve);

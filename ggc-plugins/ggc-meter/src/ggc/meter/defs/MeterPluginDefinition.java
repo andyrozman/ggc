@@ -127,8 +127,10 @@ public class MeterPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<FeaturesEntry> outList = new ArrayList<FeaturesEntry>();
 
-        outList.add(new FeaturesEntry("LifeScan: Ultra2 (in 2016)"));
-        outList.add(new FeaturesEntry("Wellion: Calla, Luna (in 2016 ?)"));
+        outList.add(new FeaturesEntry("LifeScan: Ultra2 (in 2017)"));
+        outList.add(new FeaturesEntry("Wellion: Calla, Luna (in 2017 ?)"));
+        outList.add(new FeaturesEntry("Menarini: most newer models (in 2017 ?)"));
+        outList.add(new FeaturesEntry("Arkray: some models (in 2017 ?)"));
 
         return outList;
     }

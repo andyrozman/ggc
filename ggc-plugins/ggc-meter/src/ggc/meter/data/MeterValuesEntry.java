@@ -1,18 +1,17 @@
 package ggc.meter.data;
 
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.*;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.atech.db.ext.ExtendedHandler;
+import com.atech.data.GsonUtils;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 
-import ggc.core.data.defs.DailyValuesExtendedType;
+import ggc.core.data.ExtendedDailyValueHandler;
+import ggc.core.data.ExtendedDailyValueType;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.db.hibernate.DayValueH;
 import ggc.meter.util.DataAccessMeter;
@@ -51,7 +50,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
     private static DataAccessMeter da = DataAccessMeter.getInstance();
     private static I18nControlAbstract ic = da.getI18nControlInstance();
-    private static ExtendedHandler extendedDailyValueHandler = da.getExtendedDailyValueHandler();
+    private static ExtendedDailyValueHandler extendedDailyValueHandler = da.getExtendedDailyValueHandler();
 
     private ATechDate datetime;
     private Integer bgOriginal = null;
@@ -59,8 +58,9 @@ public class MeterValuesEntry extends DeviceValuesEntry
     private Hashtable<String, String> params;
     private Float bgMmolL;
     public DayValueH entry_object = null;
-    private HashMap<String, String> extendedMap;
+    private Map<ExtendedDailyValueType, String> extendedMap;
     public MeterValuesEntryDataType extendedType = MeterValuesEntryDataType.None;
+    public List<GlucoseMeterMarkerDto> glucoseMarkers;
 
 
     /**
@@ -811,13 +811,15 @@ public class MeterValuesEntry extends DeviceValuesEntry
             return false;
         }
         else
-            return extendedDailyValueHandler.isExtendedValueSet(DailyValuesExtendedType.Urine.getCode(), extendedMap);
+            return extendedDailyValueHandler.isExtendedValueSet(ExtendedDailyValueType.Urine, extendedMap)
+                    || extendedDailyValueHandler.isExtendedValueSet(ExtendedDailyValueType.Urine_mmolL, extendedMap)
+                    || extendedDailyValueHandler.isExtendedValueSet(ExtendedDailyValueType.Urine_mgdL, extendedMap);
     }
 
 
     public String getUrineValue()
     {
-        return extendedDailyValueHandler.getExtendedValue(DailyValuesExtendedType.Urine.getCode(), extendedMap);
+        return extendedDailyValueHandler.getExtendedValue(ExtendedDailyValueType.Urine, extendedMap);
     }
 
 
@@ -838,32 +840,35 @@ public class MeterValuesEntry extends DeviceValuesEntry
         }
         else
         {
-            this.extendedMap = new HashMap<String, String>();
+            this.extendedMap = new HashMap<ExtendedDailyValueType, String>();
         }
 
-        this.extendedDailyValueHandler.setExtendedValue(DailyValuesExtendedType.Source.getCode(), //
+        loadGlucoseMarkers();
+
+        extendedDailyValueHandler.setExtendedValue(ExtendedDailyValueType.Source, //
             DataAccessMeter.getInstance().getSourceDevice(), this.extendedMap);
     }
 
 
-    public void setUrine(DailyValuesExtendedType entryType, String value)
+    public void setUrine(ExtendedDailyValueType entryType, String value)
     {
-        String valueFull = null;
-        if (entryType == DailyValuesExtendedType.Urine)
-        {
-            valueFull = value;
-        }
-        else if (entryType == DailyValuesExtendedType.Urine_mgdL)
-        {
-            valueFull = value + " " + "mg/dL";
-        }
-        else
-        // if (entryType == DailyValuesExtendedType.Urine_mgdL)
-        {
-            valueFull = value + " " + "mmol/L";
-        }
-
-        extendedDailyValueHandler.setExtendedValue(entryType.getCode(), valueFull, extendedMap);
+        // String valueFull = null;
+        //
+        // if (entryType == ExtendedDailyValueType.Urine)
+        // {
+        // valueFull = value;
+        // }
+        // else if (entryType == ExtendedDailyValueType.Urine_mgdL)
+        // {
+        // valueFull = value + " " + "mg/dL";
+        // }
+        // else
+        // // if (entryType == DailyValuesExtendedType.Urine_mgdL)
+        // {
+        // valueFull = value + " " + "mmol/L";
+        // }
+        //
+        extendedDailyValueHandler.setExtendedValue(entryType, value, extendedMap);
 
         resetExtendedType();
     }
@@ -1007,6 +1012,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
      */
     public String createExtendedValueDailyValuesH()
     {
+        saveGlucoseMarkers();
         return extendedDailyValueHandler.saveExtended(extendedMap);
     }
 
@@ -1168,8 +1174,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
                 break;
 
             case Urine:
-                extendedDailyValueHandler.setExtendedValue(DailyValuesExtendedType.Urine.getCode(), (String) value,
-                    extendedMap);
+                extendedDailyValueHandler.setExtendedValue(ExtendedDailyValueType.Urine, (String) value, extendedMap);
                 break;
 
             default:
@@ -1205,6 +1210,34 @@ public class MeterValuesEntry extends DeviceValuesEntry
     public Float getBgMmolL()
     {
         return bgMmolL;
+    }
+
+
+    public void addGlucoseMeterMarker(GlucoseMeterMarkerDto marker)
+    {
+        if (this.glucoseMarkers == null)
+        {
+            this.glucoseMarkers = new ArrayList<GlucoseMeterMarkerDto>();
+        }
+
+        this.glucoseMarkers.add(marker);
+    }
+
+
+    public void loadGlucoseMarkers()
+    {
+        if (extendedDailyValueHandler.isExtendedValueSet(ExtendedDailyValueType.GlucometerMarkers, extendedMap))
+        {
+            this.glucoseMarkers = GsonUtils.getListOfType( //
+                extendedDailyValueHandler.getExtendedValue(ExtendedDailyValueType.GlucometerMarkers, extendedMap), //
+                GlucoseMeterMarkerDto.class);
+        }
+    }
+
+
+    public void saveGlucoseMarkers()
+    {
+        extendedDailyValueHandler.setExtendedValue(ExtendedDailyValueType.GlucometerMarkers, null, extendedMap);
     }
 
 }

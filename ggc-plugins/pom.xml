@@ -13,6 +13,13 @@
     <artifactId>ggc-plugins</artifactId>
     <packaging>pom</packaging>
 
+
+    <modules>
+        <module>ggc-plugins-base</module>
+
+    </modules>
+
+
     <!--
     <modules>
         <module>ggc-help</module>

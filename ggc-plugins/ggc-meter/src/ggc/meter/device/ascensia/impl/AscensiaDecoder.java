@@ -1,7 +1,5 @@
 package ggc.meter.device.ascensia.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import org.slf4j.Logger;
@@ -12,7 +10,9 @@ import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.TimeZoneUtil;
 
 import ggc.core.data.defs.GlucoseUnitType;
+import ggc.meter.data.GlucoseMeterMarkerDto;
 import ggc.meter.data.MeterValuesEntry;
+import ggc.meter.defs.GlucoseMeterMarker;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.output.OutputWriter;
@@ -128,7 +128,8 @@ public class AscensiaDecoder
 
             String markers = strtok.nextToken();
 
-            mve.addParameter("MARKERS", convertMarkers(markers)); // User Marks
+            // user marks
+            convertMarkers(markers, mve); // User Marks
 
             strtok.nextToken(); // N/A
 
@@ -219,54 +220,52 @@ public class AscensiaDecoder
     }
 
 
-    private String convertMarkers(String markersInput)
+    private void convertMarkers(String markersInput, MeterValuesEntry mve)
     {
-        List<String> markers = new ArrayList<String>();
-
         if (markersInput.contains("<"))
         {
-            markers.add("MARKER_LO");
+            mve.addGlucoseMeterMarker(GlucoseMeterMarkerDto.createMarker(GlucoseMeterMarker.LowGlucose));
         }
         else if (markersInput.contains(">"))
         {
-            markers.add("MARKER_HI");
+            mve.addGlucoseMeterMarker(GlucoseMeterMarkerDto.createMarker(GlucoseMeterMarker.HighGlucose));
         }
 
         if (markersInput.contains("B"))
         {
             if (!markersInput.contains("ZB"))
-                markers.add("MARKER_PRE_MEAL");
+                mve.addGlucoseMeterMarker(GlucoseMeterMarkerDto.createMarker(GlucoseMeterMarker.PreMeal));
         }
         else if (markersInput.contains("A"))
         {
             if (!markersInput.contains("ZA"))
-                markers.add("MARKER_POST_MEAL");
+                mve.addGlucoseMeterMarker(GlucoseMeterMarkerDto.createMarker(GlucoseMeterMarker.PostMeal));
         }
 
         if (markersInput.contains("D"))
         {
-            markers.add("MARKER_DONT_FEEL_RIGHT");
+            mve.addGlucoseMeterMarker(GlucoseMeterMarkerDto.createMarker(GlucoseMeterMarker.DontFeelRight));
         }
 
         if (markersInput.contains("I"))
         {
-            markers.add("MARKER_SICK");
+            mve.addGlucoseMeterMarker(GlucoseMeterMarkerDto.createMarker(GlucoseMeterMarker.Sick));
         }
 
         if (markersInput.contains("S"))
         {
-            markers.add("MARKER_STRESS");
+            mve.addGlucoseMeterMarker(GlucoseMeterMarkerDto.createMarker(GlucoseMeterMarker.Stress));
         }
 
         if (markersInput.contains("X"))
         {
-            markers.add("MARKER_ACTIVITY");
+            mve.addGlucoseMeterMarker(GlucoseMeterMarkerDto.createMarker(GlucoseMeterMarker.Activity));
         }
 
         if (markersInput.contains("C"))
         {
             if (!markersInput.contains("ZC"))
-                markers.add("MARKER_CONTROL_RESULT");
+                mve.addGlucoseMeterMarker(GlucoseMeterMarkerDto.createMarker(GlucoseMeterMarker.ControlResult));
         }
 
         if (markersInput.contains("Z"))
@@ -322,13 +321,9 @@ public class AscensiaDecoder
                 time = "3 h";
             }
 
-            markers.add(String.format(i18nControl.getMessage("MARKER_AFTER_FOOD"), time));
+            mve.addGlucoseMeterMarker(GlucoseMeterMarkerDto.createMarker(GlucoseMeterMarker.AfterFoodWithTime, time));
         }
 
-        if (markers.size() == 0)
-            return null;
-        else
-            return DataAccessMeter.getInstance().createStringRepresentationOfCollection(markers, ",");
     }
 
 

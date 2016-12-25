@@ -482,7 +482,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
         // System.out.println("Load Extended Handler: " + new
         // ExtendedDailyValue(this));
 
-        this.addExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE, new ExtendedDailyValueHandler(this));
+        this.addExtendedHandler(EXTENDED_HANDLER_DAILY_VALUE, new ExtendedDailyValueHandler());
         // this.extended_handlers = new Hashtable<>();
         // this.extended_handlers.put(EXTENDED_HANDLER_DAILY_VALUE, new
         // ExtendedDailyValue(this));

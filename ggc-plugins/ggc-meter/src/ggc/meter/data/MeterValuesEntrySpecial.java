@@ -1,9 +1,9 @@
 package ggc.meter.data;
 
-import ggc.core.data.ExtendedDailyValueHandler;
-import ggc.meter.util.DataAccessMeter;
-
 import java.util.Hashtable;
+
+import ggc.core.data.ExtendedDailyValueType;
+import ggc.meter.util.DataAccessMeter;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -104,6 +104,7 @@ public class MeterValuesEntrySpecial
                                                                              // String>();
     static Hashtable<String, String> allowed_types = null;
 
+
     /**
      * Constructor 
      * 
@@ -124,6 +125,7 @@ public class MeterValuesEntrySpecial
         }
     }
 
+
     /**
      * Get Allowed Pump Mapped Types
      * 
@@ -141,6 +143,7 @@ public class MeterValuesEntrySpecial
 
         return allowed_types;
     }
+
 
     private void processUrine(String value)
     {
@@ -169,23 +172,24 @@ public class MeterValuesEntrySpecial
         }
     }
 
+
     /**
      * Which Special is DVE
-     * 
+     *
      * @param dv_type
      * @return
      */
-    public int whichSpecialIsDVE(int dv_type)
-    {
-        switch (dv_type)
-        {
-            case ExtendedDailyValueHandler.EXTENDED_URINE:
-                return SPECIAL_ENTRY_URINE_COMBINED;
-
-            default:
-                return -1;
-        }
-    }
+    // public int whichSpecialIsDVE(int dv_type)
+    // {
+    // switch (dv_type)
+    // {
+    // case ExtendedDailyValueHandler.EXTENDED_URINE:
+    // return SPECIAL_ENTRY_URINE_COMBINED;
+    //
+    // default:
+    // return -1;
+    // }
+    // }
 
     /**
      * Do we Transfer Units For Special Entry
@@ -197,6 +201,7 @@ public class MeterValuesEntrySpecial
         return special_entries.get("" + this.special_entry_id).transfer_unit;
     }
 
+
     /**
      * Get Pump Mapped Type
      * 
@@ -206,6 +211,7 @@ public class MeterValuesEntrySpecial
     {
         return special_entries.get("" + this.special_entry_id).pump_map;
     }
+
 
     /**
      * Set Date Time 
@@ -217,6 +223,7 @@ public class MeterValuesEntrySpecial
         this.datetime_tag = dt;
     }
 
+
     /**
      * Get Pump Compare Id
      * 
@@ -226,6 +233,7 @@ public class MeterValuesEntrySpecial
     {
         return this.datetime_tag * 100 + "_" + getPumpMappedType();
     }
+
 
     /**
      * Get Special Entry DbEntry
@@ -249,27 +257,29 @@ public class MeterValuesEntrySpecial
         return sb.toString();
     }
 
+
     private void initSpecialEntries()
     {
         if (special_entries == null)
         {
             special_entries = new Hashtable<String, SpecialEntryDefinition>();
             special_entries.put("1", new SpecialEntryDefinition(1, "URINE", "mmol/L", true, 4,
-                    ExtendedDailyValueHandler.EXTENDED_URINE, SpecialEntryDefinition.TYPE_STRING));
+                    ExtendedDailyValueType.Urine_mmolL, SpecialEntryDefinition.TYPE_STRING));
             special_entries.put("2", new SpecialEntryDefinition(2, "URINE", "mg/dL", true, 4,
-                    ExtendedDailyValueHandler.EXTENDED_URINE, SpecialEntryDefinition.TYPE_STRING));
-            special_entries.put("3", new SpecialEntryDefinition(3, "URINE", "", false, 4,
-                    ExtendedDailyValueHandler.EXTENDED_URINE, SpecialEntryDefinition.TYPE_STRING));
-            special_entries.put("4", new SpecialEntryDefinition(4, "CH", "g", false, 5, -1,
-                    SpecialEntryDefinition.TYPE_DECIMAL_1));
-            special_entries.put("-2", new SpecialEntryDefinition(-2, "BG", "", false, 3, -1,
-                    SpecialEntryDefinition.TYPE_INTEGER));
+                    ExtendedDailyValueType.Urine_mgdL, SpecialEntryDefinition.TYPE_STRING));
+            special_entries.put("3", new SpecialEntryDefinition(3, "URINE", "", false, 4, ExtendedDailyValueType.Urine,
+                    SpecialEntryDefinition.TYPE_STRING));
+            special_entries.put("4",
+                new SpecialEntryDefinition(4, "CH", "g", false, 5, null, SpecialEntryDefinition.TYPE_DECIMAL_1));
+            special_entries.put("-2",
+                new SpecialEntryDefinition(-2, "BG", "", false, 3, null, SpecialEntryDefinition.TYPE_INTEGER));
         }
 
         // Hashtable<String, String> special_entry_tags = new Hashtable<String,
         // String>();
 
     }
+
 
     /**
      * Get Packed Value
@@ -287,6 +297,7 @@ public class MeterValuesEntrySpecial
         return v;
     }
 
+
     /**
      * get Value Value
      * @return
@@ -302,15 +313,13 @@ public class MeterValuesEntrySpecial
         }
         else if (special_entries.get("" + this.special_entry_id).type == SpecialEntryDefinition.TYPE_DECIMAL_1)
         {
-            v = ""
-                    + da.getDecimalHandler().getDecimalAsString(
-                        da.getFloatValueFromString(this.special_entry_value.trim(), 0.0f) * 1.0f, 1);
+            v = "" + da.getDecimalHandler()
+                    .getDecimalAsString(da.getFloatValueFromString(this.special_entry_value.trim(), 0.0f) * 1.0f, 1);
         }
         else if (special_entries.get("" + this.special_entry_id).type == SpecialEntryDefinition.TYPE_DECIMAL_2)
         {
-            v = ""
-                    + da.getDecimalHandler().getDecimalAsString(
-                        da.getFloatValueFromString(this.special_entry_value.trim(), 0.0f) * 1.0f, 2);
+            v = "" + da.getDecimalHandler()
+                    .getDecimalAsString(da.getFloatValueFromString(this.special_entry_value.trim(), 0.0f) * 1.0f, 2);
         }
         else
         {
@@ -319,6 +328,7 @@ public class MeterValuesEntrySpecial
 
         return v;
     }
+
 
     /**
      * Get Type Description 
@@ -330,6 +340,7 @@ public class MeterValuesEntrySpecial
         return DataAccessMeter.getInstance().getI18nControlInstance()
                 .getMessage(special_entries.get("" + this.special_entry_id).tag);
     }
+
 
     /**
      * Get Extended Freetype description
@@ -343,18 +354,21 @@ public class MeterValuesEntrySpecial
 
     private class SpecialEntryDefinition
     {
+
         public int id;
         public String tag;
         public String unit;
         boolean transfer_unit;
         public int pump_map;
-        public int dailyvalue_ext_map;
+        public ExtendedDailyValueType dailyValueExtendedMap;
+        // public int dailyvalue_ext_map;
         public int type;
 
         public static final int TYPE_DECIMAL_1 = 1;
         public static final int TYPE_DECIMAL_2 = 2;
         public static final int TYPE_STRING = 3;
         public static final int TYPE_INTEGER = 4;
+
 
         /*
          * public SpecialEntryDefinition(int id_, String tag_, String unit_,
@@ -365,14 +379,14 @@ public class MeterValuesEntrySpecial
          */
 
         public SpecialEntryDefinition(int id_, String tag_, String unit_, boolean transfer_unit_, int pump_map_,
-                int dv_ext_map, int type_)
+                ExtendedDailyValueType dailyValueExtendedMap, int type_)
         {
             this.id = id_;
             this.tag = tag_;
             this.unit = unit_;
             this.transfer_unit = transfer_unit_;
             this.pump_map = pump_map_;
-            this.dailyvalue_ext_map = dv_ext_map;
+            this.dailyValueExtendedMap = dailyValueExtendedMap;
             this.type = type_;
         }
 

@@ -1,15 +1,15 @@
 <?xml version="1.0" ?>
-<project name="GNU PlugIn Base" default="build" basedir=".">
+<project name="GNU PlugIn Base" default="build" basedir="">
     <description>
         Build file for GGC
     </description>
 
     <!-- Environment properties read from a file ...-->
     <property file="../../build/AtechTools.properties"/>
-    <property file="../../ggc-core/build/GGC_Core_Version.properties"/>
-    <property file="../../ggc-plugin_base/build/GGCPlugInBaseBuild.properties"/>
-    <property file="../../ggc-plugin_base/build/GGCPlugInBaseVersion.properties"/>
-    <property file="./GGCMeterToolVersion.properties"/>
+    <property file="../../ggc-core-app/ggc-core/build/GGC_Core_Version.properties"/>
+    <property file="../../ggc-plugins/ggc-plugins-base/build/GGCPlugInBaseBuild.properties"/>
+    <property file="../../ggc-plugins/ggc-plugins-base/build/GGCPlugInBaseVersion.properties"/>
+    <property file="GGCMeterToolVersion.properties"/>
 	
 	
     <!-- These should *not* be modified on the command line! -->
