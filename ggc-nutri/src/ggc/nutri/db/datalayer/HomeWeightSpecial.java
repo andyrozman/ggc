@@ -1,10 +1,9 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.nutri.util.DataAccessNutri;
-
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.i18n.I18nControlAbstract;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -31,8 +30,9 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class HomeWeightSpecial implements SelectableInterface
+public class HomeWeightSpecial implements SelectableInterface, DAOObject
 {
+
     DataAccessNutri m_da = DataAccessNutri.getInstance();
     I18nControlAbstract ic = m_da.getI18nControlInstance();
 
@@ -45,6 +45,7 @@ public class HomeWeightSpecial implements SelectableInterface
     String weight;
     float calculated_weight = 0.0f;
 
+
     /**
      * Constructor
      */
@@ -52,6 +53,7 @@ public class HomeWeightSpecial implements SelectableInterface
     {
 
     }
+
 
     /**
      * Constructor
@@ -64,6 +66,7 @@ public class HomeWeightSpecial implements SelectableInterface
     {
         this(id, name, "1", weight);
     }
+
 
     /**
      * Constructor
@@ -95,6 +98,7 @@ public class HomeWeightSpecial implements SelectableInterface
 
     }
 
+
     /**
      * Constructor
      * 
@@ -112,6 +116,7 @@ public class HomeWeightSpecial implements SelectableInterface
 
         setSearchContext();
     }
+
 
     /*
      * public NutritionHomeWeightType(NutritionHomeWeightTypeH ch) {
@@ -133,6 +138,7 @@ public class HomeWeightSpecial implements SelectableInterface
 
     }
 
+
     /**
      * Get Calculated Weight
      * 
@@ -148,6 +154,7 @@ public class HomeWeightSpecial implements SelectableInterface
         return this.calculated_weight;
     }
 
+
     /**
      * Get Short Description
      * 
@@ -158,6 +165,7 @@ public class HomeWeightSpecial implements SelectableInterface
         // return this.getDescription();
         return this.name + " [" + this.amount + " x " + this.weight + " g]";
     }
+
 
     /**
      * To String
@@ -170,6 +178,7 @@ public class HomeWeightSpecial implements SelectableInterface
         return getShortDescription();
     }
 
+
     /**
      * Get Name
      * 
@@ -179,6 +188,7 @@ public class HomeWeightSpecial implements SelectableInterface
     {
         return this.name;
     }
+
 
     /**
      * getObjectName - returns name of DatabaseObject
@@ -190,6 +200,7 @@ public class HomeWeightSpecial implements SelectableInterface
         return "Home Weight Type";
     }
 
+
     /**
      * isDebugMode - returns debug mode of object
      * 
@@ -199,6 +210,7 @@ public class HomeWeightSpecial implements SelectableInterface
     {
         return debug;
     }
+
 
     /**
      * getAction - returns action that should be done on object 0 = no action 1
@@ -213,6 +225,7 @@ public class HomeWeightSpecial implements SelectableInterface
         return 0;
     }
 
+
     // ---
     // --- SelectorInterface
     // ---
@@ -224,6 +237,7 @@ public class HomeWeightSpecial implements SelectableInterface
     {
         return 4;
     }
+
 
     /**
      * Get Column Name
@@ -246,6 +260,7 @@ public class HomeWeightSpecial implements SelectableInterface
 
         }
     }
+
 
     /**
      * Get Column Value
@@ -270,6 +285,7 @@ public class HomeWeightSpecial implements SelectableInterface
 
     }
 
+
     /**
      * Get Column Value Object
      */
@@ -291,6 +307,7 @@ public class HomeWeightSpecial implements SelectableInterface
 
         }
     }
+
 
     /**
      * Get Column Width
@@ -318,6 +335,7 @@ public class HomeWeightSpecial implements SelectableInterface
 
     }
 
+
     /**
      * Get Item Id
      */
@@ -325,6 +343,7 @@ public class HomeWeightSpecial implements SelectableInterface
     {
         return this.id;
     }
+
 
     /**
      * Is Found
@@ -334,6 +353,7 @@ public class HomeWeightSpecial implements SelectableInterface
         return true;
     }
 
+
     /**
      * Is Found
      */
@@ -341,6 +361,7 @@ public class HomeWeightSpecial implements SelectableInterface
     {
         return true;
     }
+
 
     /**
      * Is Found
@@ -352,6 +373,7 @@ public class HomeWeightSpecial implements SelectableInterface
         else
             return false;
     }
+
 
     /**
      * Set Search Context
@@ -367,6 +389,7 @@ public class HomeWeightSpecial implements SelectableInterface
 
     private ColumnSorter columnSorter = null;
 
+
     /**
      * setColumnSorter - sets class that will help with column sorting
      * 
@@ -376,6 +399,7 @@ public class HomeWeightSpecial implements SelectableInterface
     {
         this.columnSorter = cs;
     }
+
 
     /**
      * Compares this object with the specified object for order. Returns a

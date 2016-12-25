@@ -14,7 +14,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.DayValuesData;
-import ggc.core.data.ExtendedDailyValueHandler;
+import ggc.core.data.ExtendedDailyValueType;
 import ggc.core.util.DataAccess;
 import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
@@ -139,8 +139,8 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
 
                 DailyValuesRow rw = dv.getRow(i);
 
-                if (!this.dataAccessCore.isValueSet(rw.getMealsIds()) && !this.dataAccessCore
-                        .isValueSet(rw.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION)))
+                if (!this.dataAccessCore.isValueSet(rw.getMealsIds())
+                        && !this.dataAccessCore.isValueSet(rw.getExtendedValue(ExtendedDailyValueType.FoodDescription)))
                 {
                     continue;
                 }
@@ -167,8 +167,7 @@ public abstract class PrintFoodMenuAbstract extends PrintAbstractIText
                     }
                 }
 
-                if (this.dataAccessCore
-                        .isValueSet(rw.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION)))
+                if (this.dataAccessCore.isValueSet(rw.getExtendedValue(ExtendedDailyValueType.FoodDescription)))
                 {
                     writeFoodDescData(datatable, rw);
                 }

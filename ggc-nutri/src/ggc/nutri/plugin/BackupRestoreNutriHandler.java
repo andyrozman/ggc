@@ -77,7 +77,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
                 brr.setTask(ic.getMessage("USER_FOOD_GROUPS"));
                 end.export_UserFoodGroups();
                 brr.setStatus(100);
-                // this.done_backup_elements++;
+                // this.doneBackupElements++;
             }
 
             if (brr.isBackupObjectSelected(ic.getMessage("FOODS")))
@@ -86,7 +86,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
                 brr.setTask(ic.getMessage("FOODS"));
                 end.export_UserFoods();
                 brr.setStatus(100);
-                // this.done_backup_elements++;
+                // this.doneBackupElements++;
             }
 
             if (brr.isBackupObjectSelected(ic.getMessage("MEAL_GROUPS")))
@@ -95,7 +95,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
                 brr.setTask(ic.getMessage("MEAL_GROUPS"));
                 end.export_MealGroups();
                 brr.setStatus(100);
-                // this.done_backup_elements++;
+                // this.doneBackupElements++;
             }
 
             if (brr.isBackupObjectSelected(ic.getMessage("MEALS")))
@@ -104,7 +104,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
                 brr.setTask(ic.getMessage("MEALS"));
                 end.export_Meals();
                 brr.setStatus(100);
-                // this.done_backup_elements++;
+                // this.doneBackupElements++;
                 // System.out.println("Meals YES");
             }
         }
@@ -140,7 +140,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
             edv.run();
             // end.export_UserFoodGroups();
             brr.setStatus(100);
-            // this.done_backup_elements++;
+            // this.doneBackupElements++;
         }
 
         if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.food.FoodUserDescriptionH"))
@@ -152,7 +152,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
             edv.run();
             // end.export_UserFoods();
             brr.setStatus(100);
-            // this.done_backup_elements++;
+            // this.doneBackupElements++;
         }
 
         if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.food.MealGroupH"))
@@ -164,7 +164,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
             edv.run();
             // end.export_MealGroups();
             brr.setStatus(100);
-            // this.done_backup_elements++;
+            // this.doneBackupElements++;
         }
 
         if (brr.isRestoreObjectSelected("ggc.core.db.hibernate.food.MealH"))
@@ -175,7 +175,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
             edv.run();
             // end.export_Meals();
             brr.setStatus(100);
-            // this.done_backup_elements++;
+            // this.doneBackupElements++;
         }
 
         // System.out.println("BackupRestoreNutriHandler::doRestore()");

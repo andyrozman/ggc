@@ -34,7 +34,7 @@ import ggc.nutri.util.DataAccessNutri;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class MealPart
+public class MealPart implements DAOObject
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(MealPart.class);

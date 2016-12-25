@@ -3,22 +3,22 @@ package ggc.nutri.db;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.HibernateDb;
+import com.atech.db.hibernate.HibernateObject;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
-import ggc.core.data.DailyValues;
-import ggc.core.data.DailyValuesRow;
-import ggc.core.data.DayValuesData;
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.DayValueH;
 import ggc.core.db.hibernate.food.*;
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.data.GGCTreeRootDyn;
@@ -43,53 +43,20 @@ import ggc.nutri.db.datalayer.*;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     GGCDb  
- *  Description:  Class for working with database (Hibernate)
+ *  Filename:     GGCDbNutri
+ *  Description:  Class for working with database (Hibernate) in Nutrition Plugin
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class GGCDbNutri extends HibernateDb // extends GGCDb
+public class GGCDbNutri extends HibernateDb
 {
 
-    // public static final int DB_CONFIG_LOADED = 1;
-    // public static final int DB_INITIALIZED = 2;
-    // public static final int DB_STARTED = 3;
-
-    private boolean debug = true;
-    // x private boolean db_debug = false;
-
     private static final Logger LOG = LoggerFactory.getLogger(GGCDbNutri.class);
-    // private Session m_session = null;
-    // private Session m_session_2 = null;
-    // private SessionFactory sessions = null;
-    // private int m_errorCode = 0;
-    // private String m_errorDesc = "";
-    // private String m_addId = "";
-
-    // private DataAccessNutri dataAccess;
-
-    private int m_loadStatus = 0;
-
-    // GLOBAL DATA
-
-    /*
-     * public ArrayList<MeterCompanyH> meter_companies = null; public
-     * Hashtable<String,ArrayList<MeterH>> meters_by_cmp = null; public
-     * Hashtable<String,MeterH> meters_full = null;
-     */
-
-    // ---
-    // --- DB Settings
-    // ---
-    /*
-     * protected int db_num = 0; protected String db_hib_dialect = null;
-     * protected String db_driver_class = null; protected String db_conn_name =
-     * null; protected String db_conn_url = null; protected String
-     * db_conn_username = null; protected String db_conn_password = null;
-     */
 
     HibernateConfiguration hib_config;
+    private boolean debug = true;
+    GGCDbCache cache_db = null;
 
 
     /**
@@ -108,16 +75,6 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
-    // *************************************************************
-    // **** SETTINGS ****
-    // *************************************************************
-
-    // *************************************************************
-    // **** SETTINGS ****
-    // *************************************************************
-
-    GGCDbCache cache_db = null;
-
 
     /**
      * Get Db Cache
@@ -129,24 +86,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
         return cache_db;
     }
 
-
     // *************************************************************
     // **** DATABASE INIT METHODS ****
     // *************************************************************
-
-    /**
-     * Load Nutrition Database
-     */
-    public void loadNutritionDatabase()
-    {
-
-        /*
-         * this.loadNutritionDbBase();
-         * this.loadNutritionDb1();
-         * this.loadNutritionDb2();
-         * this.loadMealsDb();
-         */
-    }
 
 
     /**
@@ -205,7 +147,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * @param parent_id 
      * @return
      */
-    public ArrayList<FoodGroup> getFoodGroups(int type, long parent_id)
+    public List<FoodGroup> getFoodGroups(int type, long parent_id)
     {
         if (type == GGCTreeRoot.TREE_USER_NUTRITION)
             return this.getUserFoodGroups(parent_id);
@@ -240,35 +182,83 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * 
      * @return
      */
-    public ArrayList<FoodGroup> getUSDAFoodGroups()
+    public List<FoodGroup> getUSDAFoodGroups()
     {
+        List<FoodGroupH> fgList = getHibernateObjectListByParameter(null, null, Order.asc("name"), FoodGroupH.class, 2);
 
-        logInfo("getUSDAFoodGroups()");
+        return getDAOGroupList(fgList, FoodGroup.class);
+    }
 
-        ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
+
+    public <T extends HibernateObject> T getHibernateObjectByParameter(String parameterName, Long parameterValue,
+            Order orderBy, Class<T> clazz, Integer sessionId)
+    {
+        LOG.info("get " + clazz.getSimpleName() + " (id=" + parameterValue + ")");
 
         try
         {
+            Criteria criteria = this.getSession(sessionId).createCriteria(clazz);
+            criteria.add(Restrictions.eq(parameterName, parameterValue));
 
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.food.FoodGroupH as pst order by pst.name");
+            List list = criteria.list();
 
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
+            if (list.size() > 0)
             {
-                FoodGroupH eh = (FoodGroupH) it.next();
-                list.add(new FoodGroup(eh));
+                return (T) list.get(0);
             }
 
         }
         catch (Exception ex)
         {
-            logException("getUSDAFoodGroups()", ex);
+            LOG.info(
+                "get " + clazz.getSimpleName() + " (id=" + parameterValue + ") problem. Exception: " + ex.getMessage(),
+                ex);
         }
 
-        return list;
+        return (T) null;
+    }
 
+
+    public <T extends HibernateObject> List<T> getHibernateObjectListByParameter(String parameterName,
+            Long parameterValue, Order orderBy, Class<T> clazz, Integer sessionId)
+    {
+        LOG.info("get %s %s", clazz.getSimpleName(), getParameterDebugString(parameterName, parameterValue));
+
+        List<T> outList = new ArrayList<T>();
+
+        try
+        {
+            Criteria criteria = this.getSession(sessionId).createCriteria(clazz);
+
+            if (parameterName != null)
+                criteria.add(Restrictions.eq(parameterName, parameterValue));
+
+            if (orderBy != null)
+            {
+                criteria.addOrder(orderBy);
+            }
+
+            List list = criteria.list();
+
+            for (Object obj : list.toArray())
+            {
+                outList.add((T) obj);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            LOG.error("get %s (%s=%s) problem. Exception: ", clazz.getSimpleName(),
+                getParameterDebugString(parameterName, parameterValue), ex.getMessage(), ex);
+        }
+
+        return outList;
+    }
+
+
+    private String getParameterDebugString(String parameterName, Long parameterValue)
+    {
+        return parameterName != null ? String.format(" (%s=%s)", parameterName, parameterValue) : "";
     }
 
 
@@ -280,33 +270,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      */
     public FoodGroup getUSDAFoodGroup(long id)
     {
+        FoodGroupH fg = getHibernateObjectByParameter("id", id, Order.asc("name"), FoodGroupH.class, 2);
 
-        logInfo("getUSDAFoodGroup(id=)" + id + ")");
-
-        // ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
-
-        try
-        {
-
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.food.FoodGroupH as pst where pst.id=" + id);
-
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
-            {
-                FoodGroupH eh = (FoodGroupH) it.next();
-                return new FoodGroup(eh);
-            }
-
-        }
-        catch (Exception ex)
-        {
-            logException("getUSDAFoodGroups()", ex);
-        }
-
-        return null;
-
+        return fg != null ? new FoodGroup(fg) : null;
     }
 
 
@@ -318,33 +284,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      */
     public FoodGroup getUserFoodGroup(long id)
     {
-        logInfo("getUserFoodGroup(id=" + id + ")");
+        FoodUserGroupH fg = getHibernateObjectByParameter("id", id, Order.asc("name"), FoodUserGroupH.class, 2);
 
-        // ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
-
-        try
-        {
-
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.food.FoodUserGroupH as pst order by pst.name");
-
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
-            {
-                FoodUserGroupH eh = (FoodUserGroupH) it.next();
-                return new FoodGroup(eh);
-            }
-        }
-        catch (Exception ex)
-        {
-            logException("getUserFoodGroup()", ex);
-
-            // LOG.error("Exception on getloadConfigData: " + ex.getMessage(),
-            // ex);
-        }
-
-        return null;
+        return fg != null ? new FoodGroup(fg) : null;
     }
 
 
@@ -353,79 +295,57 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * 
      * @return
      */
-    public ArrayList<FoodGroup> getUserFoodGroups()
+    public List<FoodGroup> getUserFoodGroups()
     {
-        logInfo("getUserFoodGroups()");
+        List<FoodUserGroupH> fgList = getHibernateObjectListByParameter(null, null, Order.asc("name"),
+            FoodUserGroupH.class, 2);
 
-        ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
+        return getDAOGroupList(fgList, FoodGroup.class);
+    }
 
-        try
+
+    private <T extends DAOObject> List<T> getDAOGroupList(List<? extends HibernateObject> fgList, Class<T> clazz)
+    {
+        List<T> outList = new ArrayList<T>();
+
+        for (HibernateObject hibernateObject : fgList)
         {
-
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.food.FoodUserGroupH as pst order by pst.name");
-
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
+            if (hibernateObject instanceof FoodGroupH)
             {
-                FoodUserGroupH eh = (FoodUserGroupH) it.next();
-                list.add(new FoodGroup(eh));
+                outList.add((T) new FoodGroup((FoodGroupH) hibernateObject));
+            }
+            else if (hibernateObject instanceof FoodUserGroupH)
+            {
+                outList.add((T) new FoodGroup((FoodUserGroupH) hibernateObject));
+            }
+            else if (hibernateObject instanceof MealGroupH)
+            {
+                outList.add((T) new MealGroup((MealGroupH) hibernateObject));
+            }
+            else if (hibernateObject instanceof FoodDescriptionH)
+            {
+                outList.add((T) new FoodDescription((FoodDescriptionH) hibernateObject));
             }
 
-            return list;
-        }
-        catch (Exception ex)
-        {
-            logException("getUserFoodGroups()", ex);
-
-            // LOG.error("Exception on getloadConfigData: " + ex.getMessage(),
-            // ex);
         }
 
-        return list;
+        return outList;
     }
 
 
     /**
      * Get Food Groups - User
      * 
-     * @param parent_id 
+     * @param parentId parent Group
      * 
      * @return
      */
-    public ArrayList<FoodGroup> getUserFoodGroups(long parent_id)
+    public List<FoodGroup> getUserFoodGroups(long parentId)
     {
-        logInfo("getUserFoodGroups()");
+        List<FoodUserGroupH> fgList = getHibernateObjectListByParameter("parent_id", parentId, Order.asc("name"),
+            FoodUserGroupH.class, 2);
 
-        ArrayList<FoodGroup> list = new ArrayList<FoodGroup>();
-
-        try
-        {
-
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.food.FoodUserGroupH as pst where pst.parent_id="
-                            + parent_id + " order by pst.name");
-
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
-            {
-                FoodUserGroupH eh = (FoodUserGroupH) it.next();
-                list.add(new FoodGroup(eh));
-            }
-
-            return list;
-        }
-        catch (Exception ex)
-        {
-            logException("getUserFoodGroups()", ex);
-
-            // LOG.error("Exception on getloadConfigData: " + ex.getMessage(),
-            // ex);
-        }
-
-        return list;
+        return getDAOGroupList(fgList, FoodGroup.class);
     }
 
 
@@ -434,73 +354,27 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * 
      * @return
      */
-    public ArrayList<MealGroup> getMealGroups()
+    public List<MealGroup> getMealGroups()
     {
+        List<MealGroupH> fgList = getHibernateObjectListByParameter(null, null, Order.asc("name"), MealGroupH.class, 2);
 
-        logInfo("getMealGroups()");
-
-        ArrayList<MealGroup> list = new ArrayList<MealGroup>();
-
-        try
-        {
-
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.food.MealGroupH as pst order by pst.name");
-
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
-            {
-                MealGroupH eh = (MealGroupH) it.next();
-                list.add(new MealGroup(eh));
-            }
-
-        }
-        catch (Exception ex)
-        {
-            logException("getMealGroups()", ex);
-        }
-
-        return list;
+        return getDAOGroupList(fgList, MealGroup.class);
     }
 
 
     /**
      * Get Meal Groups
      * 
-     * @param parent_id 
+     * @param parentId parentId of groups
      * 
-     * @return
+     * @return List of meal groups
      */
-    public ArrayList<MealGroup> getMealGroups(long parent_id)
+    public List<MealGroup> getMealGroups(long parentId)
     {
+        List<MealGroupH> fgList = getHibernateObjectListByParameter("parent_id", parentId, Order.asc("name"),
+            MealGroupH.class, 2);
 
-        logInfo("getMealGroups()");
-
-        ArrayList<MealGroup> list = new ArrayList<MealGroup>();
-
-        try
-        {
-
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.food.MealGroupH as pst where pst.parent_id="
-                            + parent_id + " order by pst.name");
-
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
-            {
-                MealGroupH eh = (MealGroupH) it.next();
-                list.add(new MealGroup(eh));
-            }
-
-        }
-        catch (Exception ex)
-        {
-            logException("getMealGroups()", ex);
-        }
-
-        return list;
+        return getDAOGroupList(fgList, MealGroup.class);
     }
 
 
@@ -512,7 +386,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * 
      * @return
      */
-    public ArrayList<FoodDescription> getFoodsByParent(int type, long parent_id)
+    public List<FoodDescription> getFoodsByParent(int type, long parent_id)
     {
         logInfo("getFoodsByParent(type=" + type + ",parent_id=" + parent_id + ")");
 
@@ -529,73 +403,28 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * 
      * @return
      */
-    public ArrayList<FoodDescription> getUSDAFoodDescriptions()
+    public List<FoodDescription> getUSDAFoodDescriptions()
     {
-        logInfo("getUSDAFoodDescriptions()");
+        List<FoodDescriptionH> fgList = getHibernateObjectListByParameter(null, null, Order.asc("name"),
+            FoodDescriptionH.class, 2);
 
-        ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
-
-        try
-        {
-
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.food.FoodDescriptionH as pst order by pst.name");
-
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
-            {
-                FoodDescriptionH eh = (FoodDescriptionH) it.next();
-                list.add(new FoodDescription(eh));
-            }
-
-            return list;
-        }
-        catch (Exception ex)
-        {
-            logException("getUSDAFoodDescriptions()", ex);
-        }
-
-        return list;
+        return getDAOGroupList(fgList, FoodDescription.class);
     }
 
 
     /**
-     * Get Food Descriptions - USDA
+     * Get Food Descriptions By Parent - USDA
      * 
-     * @param parent_id 
+     * @param parentId
      * 
      * @return
      */
-    public ArrayList<FoodDescription> getUSDAFoodDescriptionsByParent(long parent_id)
+    public List<FoodDescription> getUSDAFoodDescriptionsByParent(long parentId)
     {
-        logInfo("getUSDAFoodDescriptionsByParent(parent_id=" + parent_id + ")");
+        List<FoodDescriptionH> fgList = getHibernateObjectListByParameter("parent_id", parentId, Order.asc("name"),
+            FoodDescriptionH.class, 2);
 
-        ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
-
-        try
-        {
-
-            Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.food.FoodDescriptionH as pst where pst.group_id=" + parent_id
-                        + " order by pst.name");
-
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
-            {
-                FoodDescriptionH eh = (FoodDescriptionH) it.next();
-                list.add(new FoodDescription(eh));
-            }
-
-            return list;
-        }
-        catch (Exception ex)
-        {
-            logException("getUSDAFoodDescriptions()", ex);
-        }
-
-        return list;
+        return getDAOGroupList(fgList, FoodDescription.class);
     }
 
 
@@ -733,11 +562,11 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * 
      * @return
      */
-    public ArrayList<FoodDescription> getUserFoodDescriptions()
+    public List<FoodDescription> getUserFoodDescriptions()
     {
 
         logInfo("getUserFoodDescriptions()");
-        ArrayList<FoodDescription> list = new ArrayList<FoodDescription>();
+        List<FoodDescription> list = new ArrayList<FoodDescription>();
 
         try
         {
@@ -771,11 +600,11 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * 
      * @return
      */
-    public ArrayList<Meal> getMeals()
+    public List<Meal> getMeals()
     {
         logInfo("getMeals()");
 
-        ArrayList<Meal> list = new ArrayList<Meal>();
+        List<Meal> list = new ArrayList<Meal>();
 
         try
         {
@@ -813,31 +642,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      */
     public Meal getMealById(int type, long meal_id)
     {
-        logInfo("getMealById()");
+        MealH fg = getHibernateObjectByParameter("id", meal_id, null, MealH.class, 2);
 
-        try
-        {
-
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.food.MealH as pst where pst.id=" + meal_id);
-
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
-            {
-                MealH eh = (MealH) it.next();
-                // list.put("" + eh.getId(), new Meal(eh));
-                return new Meal(eh);
-            }
-
-        }
-        catch (Exception ex)
-        {
-            logException("getMealById()", ex);
-        }
-
-        return null;
-
+        return fg != null ? new Meal(fg) : null;
     }
 
 
@@ -848,11 +655,11 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * 
      * @return
      */
-    public ArrayList<Meal> getMealsByParent(long parent_id)
+    public List<Meal> getMealsByParent(long parent_id)
     {
         logInfo("getMealsByParent()");
 
-        ArrayList<Meal> list = new ArrayList<Meal>();
+        List<Meal> list = new ArrayList<Meal>();
 
         try
         {
@@ -890,29 +697,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      */
     public Meal getMealById(long id)
     {
-        logInfo("getMealById(id=" + id + ")");
+        MealH fg = getHibernateObjectByParameter("id", id, null, MealH.class, 2);
 
-        try
-        {
-
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.food.MealH as pst where pst.id=" + id);
-
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
-            {
-                MealH eh = (MealH) it.next();
-                return new Meal(eh);
-            }
-        }
-        catch (Exception ex)
-        {
-            logException("getMealById()", ex);
-        }
-
-        return null;
-
+        return fg != null ? new Meal(fg) : null;
     }
 
 
@@ -924,29 +711,9 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      */
     public MealGroup getMealGroupById(long id)
     {
-        logInfo("getMealGroupById(id=" + id + ")");
+        MealGroupH fg = getHibernateObjectByParameter("id", id, null, MealGroupH.class, 2);
 
-        try
-        {
-
-            Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.food.MealGroupH as pst where pst.id=" + id);
-
-            Iterator<?> it = q.iterate();
-
-            while (it.hasNext())
-            {
-                MealGroupH eh = (MealGroupH) it.next();
-                return new MealGroup(eh);
-            }
-        }
-        catch (Exception ex)
-        {
-            logException("getMealGroupById()", ex);
-        }
-
-        return null;
-
+        return fg != null ? new MealGroup(fg) : null;
     }
 
 
@@ -1077,168 +844,6 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
 
     }
 
-    // *************************************************************
-    // **** GGC Main Data ****
-    // **** Comment: Were implemnted in DataBaseHandler ****
-    // *************************************************************
-
-
-    /**
-     * Get DayValuesData
-     *
-     * @param from
-     * @param till
-     * @return
-     */
-    public DayValuesData getDayValuesData(long from, long till)
-    {
-
-        if (m_loadStatus == DB_CONFIG_LOADED)
-            return null;
-
-        logInfo("getDayValuesData()");
-
-        DayValuesData dvd = new DayValuesData(from, till);
-
-        try
-        {
-            Query q = getSession().createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv "
-                    + "WHERE dv.dt_info >=  " + from + "0000 AND dv.dt_info <= " + till + "2359 ORDER BY dv.dt_info");
-
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                DayValueH dv = (DayValueH) it.next();
-
-                DailyValuesRow dVR = new DailyValuesRow(dv);
-                dvd.addDayValueRow(dVR);
-            }
-
-        }
-        catch (Exception ex)
-        {
-            logException("getDayValuesData()", ex);
-        }
-
-        return dvd;
-
-    }
-
-
-    /**
-     * Save Day Stats
-     *
-     * @param dV
-     */
-    public void saveDayStats(DailyValues dV)
-    {
-
-        if (dV.hasChanged())
-        {
-            logInfo("saveDayStats()");
-
-            logDebug("saveDayStats()", "Data has changed");
-
-            Session sess = getSession();
-
-            try
-            {
-
-                // deleted entries
-
-                if (dV.hasDeletedItems())
-                {
-                    logDebug("saveDayStats()", "Removing deleted entry");
-
-                    Transaction tx = sess.beginTransaction();
-
-                    ArrayList<DayValueH> list = dV.getDeletedItems();
-                    for (int i = 0; i < list.size(); i++)
-                    {
-                        DayValueH d = list.get(i);
-                        sess.delete(d);
-                        tx.commit();
-                    }
-
-                }
-
-                // see if any of elements were changed or added
-
-                for (int i = 0; i < dV.getRowCount(); i++)
-                {
-                    DailyValuesRow dwr = dV.getRow(i);
-
-                    if (dwr.isNew())
-                    {
-                        logDebug("saveDayStats()", "Adding new entry");
-
-                        Transaction tx = sess.beginTransaction();
-
-                        DayValueH dvh = dwr.getHibernateObject();
-                        Long l = (Long) sess.save(dvh);
-
-                        dvh.setId(l.longValue());
-                        tx.commit();
-                    }
-                    else if (dwr.hasChanged())
-                    {
-                        Transaction tx = sess.beginTransaction();
-
-                        logDebug("saveDayStats()", "Changing entry");
-
-                        DayValueH dvh = dwr.getHibernateObject();
-                        sess.update(dvh);
-
-                        tx.commit();
-                    }
-
-                } // for
-
-            }
-            catch (Exception ex)
-            {
-                logException("saveDayStats()", ex);
-            }
-
-        } // hasChanged
-        else
-        {
-            logDebug("saveDayStats()", "No entries changed");
-        }
-
-    }
-
-
-    /**
-     * DateTime Exists
-     * 
-     * @param datetime
-     * @return
-     */
-    public boolean dateTimeExists(long datetime)
-    {
-        if (m_loadStatus == DB_CONFIG_LOADED)
-            return false;
-
-        // if (db_debug)
-        // System.out.println("Hibernate: dateTimeExists()");
-
-        try
-        {
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.nutri.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info = " + datetime);
-
-            return q.list().size() == 1;
-        }
-        catch (Exception ex)
-        {
-            logException("dateTimeExists()", ex);
-            return false;
-        }
-
-    }
-
 
     // *************************************************************
     // **** NUTRITION DATA ****
@@ -1249,7 +854,7 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * 
      * @return
      */
-    public ArrayList<SelectableInterface> getNutritionHomeWeights()
+    public List<SelectableInterface> getNutritionHomeWeights()
     {
         return this.cache_db.homeweight_defs_list;
     }
@@ -1272,61 +877,11 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
      * 
      * @return
      */
-    public ArrayList<SelectableInterface> getNutritionDefinitions()
+    public List<SelectableInterface> getNutritionDefinitions()
     {
         return this.cache_db.nutrition_defs_list;
     }
 
-    // *************************************************************
-    // **** TOOLS Db METHODS ****
-    // *************************************************************
-
-    /*
-     * <class name="ggc.nutri.db.hibernate.GlucoValueH" table="data_dayvalues" >
-     * <id name="id" type="long" unsaved-value="0">
-     * <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-     * </id>
-     * <property name="dt_info" type="long" not-null="true"/>
-     * <property name="bg" type="int" />
-     * <property name="person_id" type="int" not-null="true" />
-     * <property name="changed" type="long" not-null="false" />
-     * </class>
-     */
-
-
-    // *************************************************************
-    // **** U T I L S ****
-    // *************************************************************
-    /*
-     * public String changeCase(String in)
-     * {
-     * StringTokenizer stok = new StringTokenizer(in, " ");
-     * boolean first = true;
-     * String out = "";
-     * while (stok.hasMoreTokens())
-     * {
-     * if (!first)
-     * out += " ";
-     * out += changeCaseWord(stok.nextToken());
-     * first = false;
-     * }
-     * return out;
-     * }
-     * public String changeCaseWord(String in)
-     * {
-     * String t = "";
-     * t = in.substring(0, 1).toUpperCase();
-     * t += in.substring(1).toLowerCase();
-     * return t;
-     * }
-     * public void showByte(byte[] in)
-     * {
-     * for (int i = 0; i < in.length; i++)
-     * {
-     * System.out.println((char) in[i] + " " + in[i]);
-     * }
-     * }
-     */
 
     /**
      * Debug Out
@@ -1415,18 +970,8 @@ public class GGCDbNutri extends HibernateDb // extends GGCDb
     public Session getSession(int session_nr)
     {
         return this.hib_config.getSession(session_nr);
-        /*
-         * if (session_nr == 1)
-         * {
-         * m_session.clear();
-         * return m_session;
-         * }
-         * else
-         * {
-         * m_session_2.clear();
-         * return m_session_2;
-         * }
-         */
     }
+
+    // 1457
 
 }

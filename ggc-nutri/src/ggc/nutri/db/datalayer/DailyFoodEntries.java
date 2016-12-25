@@ -1,13 +1,12 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.nutri.util.DataAccessNutri;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
 import com.atech.i18n.I18nControlAbstract;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -35,8 +34,10 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class DailyFoodEntries // implements SelectableInterface
+public class DailyFoodEntries implements DAOObject // implements
+                                                   // SelectableInterface
 {
+
     String text_idx;
     DataAccessNutri m_da = DataAccessNutri.getInstance();
     I18nControlAbstract ic = m_da.getI18nControlInstance();
@@ -47,6 +48,7 @@ public class DailyFoodEntries // implements SelectableInterface
 
     ArrayList<DailyFoodEntry> entries = null;
 
+
     /**
      * Default constructor
      */
@@ -54,6 +56,7 @@ public class DailyFoodEntries // implements SelectableInterface
     {
         entries = new ArrayList<DailyFoodEntry>();
     }
+
 
     /**
      * Constructor
@@ -70,6 +73,7 @@ public class DailyFoodEntries // implements SelectableInterface
             addDailyFoodEntry(new DailyFoodEntry(strtok.nextToken()));
         }
     }
+
 
     /**
      * Constructor
@@ -92,6 +96,7 @@ public class DailyFoodEntries // implements SelectableInterface
                                                                      */));
         }
     }
+
 
     /**
      * Add Daily Food Entry
@@ -116,6 +121,7 @@ public class DailyFoodEntries // implements SelectableInterface
             this.entries.add(dfe);
         }
     }
+
 
     /**
      * Get Calculated Nutrients
@@ -181,6 +187,7 @@ public class DailyFoodEntries // implements SelectableInterface
         return out_lst;
     }
 
+
     /**
      * Get Elements Count
      * 
@@ -190,6 +197,7 @@ public class DailyFoodEntries // implements SelectableInterface
     {
         return this.entries.size();
     }
+
 
     /**
      * Get Element
@@ -201,6 +209,7 @@ public class DailyFoodEntries // implements SelectableInterface
     {
         return this.entries.get(index);
     }
+
 
     /**
      * To String

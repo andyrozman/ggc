@@ -41,7 +41,7 @@ import ggc.nutri.util.DataAccessNutri;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestoreObject
+public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestoreObject, DAOObject
 {
 
     private static final long serialVersionUID = 3028931713064051809L;

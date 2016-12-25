@@ -6,6 +6,14 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+1.4.2 [25.12.2016] [Andy]
+- GGCTreeRootStatic changed
+- datalayer
+- GGCDbCache, CGCDbNutri
+- backup object
+- print food menu
+
+
 1.4.1 [18.5.2016]
 - db objects refactoring
 - refactorings

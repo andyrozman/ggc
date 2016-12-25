@@ -40,8 +40,8 @@ import ggc.nutri.util.DataAccessNutri;
 
 // backup/restore todo
 
-public class NutritionHomeWeightType extends NutritionHomeWeightTypeH implements DatabaseObjectHibernate,
-        SelectableInterface
+public class NutritionHomeWeightType extends NutritionHomeWeightTypeH
+        implements DatabaseObjectHibernate, SelectableInterface, DAOObject
 {
 
     private static final long serialVersionUID = -2073935312018845795L;

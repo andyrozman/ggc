@@ -42,7 +42,7 @@ import ggc.nutri.util.DataAccessNutri;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreObject
+public class FoodDescription implements DatabaseObjectHibernate, BackupRestoreObject, DAOObject
 {
 
     private boolean debug = false;

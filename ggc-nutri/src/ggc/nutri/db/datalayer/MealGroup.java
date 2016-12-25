@@ -1,6 +1,7 @@
 package ggc.nutri.db.datalayer;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
@@ -43,7 +44,7 @@ import ggc.nutri.util.DataAccessNutri;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, BackupRestoreObject
+public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, BackupRestoreObject, DAOObject
 {
 
     private static final long serialVersionUID = 1123099194144366632L;
@@ -66,18 +67,18 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
     /**
      * Children: Group
      */
-    public ArrayList<MealGroup> children_group = null; // new
-                                                       // ArrayList<MealGroup>();
+    public List<MealGroup> children_group = null; // new
+                                                  // ArrayList<MealGroup>();
 
     /**
      * Children: Meals
      */
-    public ArrayList<Meal> children_meal = null; // new ArrayList<Meal>();
+    public List<Meal> children_meal = null; // new ArrayList<Meal>();
 
     /**
      * Children: All
      */
-    public ArrayList<Object> children = null; // new ArrayList<Object>();
+    public List<Object> children = null; // new ArrayList<Object>();
 
 
     /**

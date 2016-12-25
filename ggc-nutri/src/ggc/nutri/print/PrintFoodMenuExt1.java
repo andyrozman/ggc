@@ -1,12 +1,12 @@
 package ggc.nutri.print;
 
-import ggc.core.data.DailyValuesRow;
-import ggc.core.data.DayValuesData;
-import ggc.core.data.ExtendedDailyValueHandler;
-import ggc.nutri.db.datalayer.DailyFoodEntry;
-
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
+
+import ggc.core.data.DailyValuesRow;
+import ggc.core.data.DayValuesData;
+import ggc.core.data.ExtendedDailyValueType;
+import ggc.nutri.db.datalayer.DailyFoodEntry;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -46,6 +46,7 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
         super(mv);
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -54,6 +55,7 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
     {
         return "FOOD_MENU_EXT_I";
     }
+
 
     // FOOD_MENU_EXT_I=Extended Food Menu I (CH,Ins)
 
@@ -67,6 +69,7 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
         return headerwidths;
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -75,6 +78,7 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
     {
         return 7;
     }
+
 
     /**
      * {@inheritDoc}
@@ -85,6 +89,7 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
         table.addCell(this.createBoldTextPhrase("CH"));
         table.addCell(this.createBoldTextPhrase("INS"));
     }
+
 
     /**
      * {@inheritDoc}
@@ -112,8 +117,11 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
         }
         else
         {
-            table.addCell(new Phrase(mp.getHomeWeightDescription() + " ("
-                    + this.getFormatedValue(mp.getHomeWeightMultiplier() * 100, 0) + " g)", this.textFontNormal));
+            table.addCell(
+                new Phrase(
+                        mp.getHomeWeightDescription() + " ("
+                                + this.getFormatedValue(mp.getHomeWeightMultiplier() * 100, 0) + " g)",
+                        this.textFontNormal));
             value = mp.getNutrientValue(205) * mp.getHomeWeightMultiplier();
         }
 
@@ -122,6 +130,7 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
 
         table.addCell(this.createEmptyTextPhrase());
     }
+
 
     /**
      * {@inheritDoc}
@@ -137,6 +146,7 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
         table.addCell(this.createEmptyTextPhrase());
     }
 
+
     /**
      * {@inheritDoc}
      */
@@ -151,20 +161,21 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
         table.addCell(new Phrase(rw.getIns1AsString(), this.textFontItalic));
     }
 
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void writeFoodDescData(PdfPTable table, DailyValuesRow dvr) throws Exception
     {
-        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_DESCRIPTION),
-                this.textFontNormal));
+        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValueType.FoodDescription), this.textFontNormal));
         table.addCell(this.createNormalTextPhrase("DESCRIPTION"));
         table.addCell(this.createEmptyTextPhrase());
 
-        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValueHandler.EXTENDED_FOOD_CH), this.textFontItalic));
+        table.addCell(new Phrase(dvr.getExtendedValue(ExtendedDailyValueType.FoodCarbohydrate), this.textFontItalic));
         table.addCell(new Phrase(dvr.getIns1AsString(), this.textFontItalic));
     }
+
 
     /**
      * {@inheritDoc}
@@ -174,6 +185,7 @@ public class PrintFoodMenuExt1 extends PrintFoodMenuAbstract
     {
         return "FoodMenuExt1";
     }
+
 
     /**
      * {@inheritDoc}

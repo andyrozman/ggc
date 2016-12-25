@@ -1,9 +1,9 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.nutri.util.DataAccessNutri;
-
 import java.util.Enumeration;
 import java.util.Hashtable;
+
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -31,7 +31,7 @@ import java.util.Hashtable;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class MealNutrition
+public class MealNutrition implements DAOObject
 {
 
     // private boolean debug = false;
@@ -48,6 +48,7 @@ public class MealNutrition
 
     DataAccessNutri m_da = DataAccessNutri.getInstance();
 
+
     /**
      * Constructor (value pack: id=amount)
      * 
@@ -63,14 +64,15 @@ public class MealNutrition
 
         if (load_description)
         {
-            this.nutrition_desc = DataAccessNutri.getInstance().getDbCache().nutrition_defs.get(
-                "" + this.nutrition_type_id).getName();
+            this.nutrition_desc = DataAccessNutri.getInstance().getDbCache().nutrition_defs
+                    .get("" + this.nutrition_type_id).getName();
         }
 
         // System.out.println("Meal Nutrition [id=" + this.nutrition_type_id +
         // ",desc="+ this.nutrition_desc + ",amount=" + this.amount);
         init();
     }
+
 
     /**
      * Constructor
@@ -85,6 +87,7 @@ public class MealNutrition
 
         init();
     }
+
 
     /**
      * Constructor
@@ -103,6 +106,7 @@ public class MealNutrition
         // this.no_desc = true;
     }
 
+
     private void init()
     {
         createId();
@@ -110,10 +114,12 @@ public class MealNutrition
         addMultiplier(this.component_id, this.amount);
     }
 
+
     private void createId()
     {
         this.component_id = m_da.getNewComponentId();
     }
+
 
     /**
      * Add Multiplier
@@ -133,6 +139,7 @@ public class MealNutrition
             this.multiplier.put(id, "" + _multiplier);
         }
     }
+
 
     /**
      * Add Multipliers (Hashtable)
@@ -163,6 +170,7 @@ public class MealNutrition
 
     }
 
+
     /**
      * Get Id
      * @return
@@ -171,6 +179,7 @@ public class MealNutrition
     {
         return this.nutrition_type_id;
     }
+
 
     /**
      * Get Amount
@@ -182,6 +191,7 @@ public class MealNutrition
         return this.amount;
     }
 
+
     /**
      * Set Amount
      * 
@@ -191,6 +201,7 @@ public class MealNutrition
     {
         this.amount = val;
     }
+
 
     /**
      * Add To Calculated Amount
@@ -207,6 +218,7 @@ public class MealNutrition
      * public float getCalculatedAmount() { return this.calculated_amount; }
      */
 
+
     /*
      * public void clearCalculated() { this.calculated_amount = 0.0f; }
      */
@@ -218,6 +230,7 @@ public class MealNutrition
     {
         this.amount_sum = 0.0f;
     }
+
 
     /**
      * Add Amount To Sum
@@ -231,6 +244,7 @@ public class MealNutrition
         this.amount_sum += _amount;
     }
 
+
     /**
      * Get Amount Sum
      * @return
@@ -239,6 +253,7 @@ public class MealNutrition
     {
         return this.amount_sum;
     }
+
 
     /**
      * Get Calculated Amount
@@ -264,6 +279,7 @@ public class MealNutrition
         return f;
     }
 
+
     /**
      * Get Description
      * 
@@ -273,6 +289,7 @@ public class MealNutrition
     {
         return this.nutrition_desc;
     }
+
 
     /*
      * private void loadMealPart()
@@ -289,6 +306,7 @@ public class MealNutrition
     {
         return nutrition_type_id >= 4000 && nutrition_type_id <= 4005;
     }
+
 
     /**
      * To String

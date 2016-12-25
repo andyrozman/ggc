@@ -40,8 +40,8 @@ import ggc.nutri.util.DataAccessNutri;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class NutritionDefinition extends NutritionDefinitionH implements DatabaseObjectHibernate, SelectableInterface,
-        Comparator<NutritionDefinition>
+public class NutritionDefinition extends NutritionDefinitionH
+        implements DatabaseObjectHibernate, SelectableInterface, DAOObject, Comparator<NutritionDefinition>
 {
 
     private static final long serialVersionUID = 3655011406766918193L;

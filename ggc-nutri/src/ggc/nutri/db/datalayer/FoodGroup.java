@@ -1,6 +1,7 @@
 package ggc.nutri.db.datalayer;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
@@ -43,7 +44,7 @@ import ggc.nutri.util.DataAccessNutri;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
+public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject, DAOObject
 {
 
     private boolean debug = false;
@@ -59,19 +60,19 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject
     /**
      * Children - Groups
      */
-    public ArrayList<FoodGroup> children_group = null; // new
-                                                       // ArrayList<FoodGroup>();
+    public List<FoodGroup> children_group = null; // new
+                                                  // ArrayList<FoodGroup>();
 
     /**
      * Children - All
      */
-    public ArrayList<Object> children = null; // new ArrayList<Object>();
+    public List<Object> children = null; // new ArrayList<Object>();
 
     /**
      * Children - Foods
      */
-    public ArrayList<FoodDescription> children_food = null; // new
-                                                            // ArrayList<Meal>();
+    public List<FoodDescription> children_food = null; // new
+                                                       // ArrayList<Meal>();
 
     // public ArrayList<MealGroup> children_group = null; //new
     // ArrayList<MealGroup>();

@@ -27,8 +27,10 @@
 
 package ggc.nutri.db;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
@@ -83,47 +85,47 @@ public class GGCDbCache
     /**
      * Tree Roots
      */
-    public Hashtable<String, GGCTreeRoot> tree_roots = null;
+    public Map<String, GGCTreeRoot> tree_roots = null;
 
     /**
      * Data: Nutrition Definitions (Hashtable)
      */
-    public Hashtable<String, NutritionDefinition> nutrition_defs = null;
+    public Map<String, NutritionDefinition> nutrition_defs = null;
 
     /**
      * Data: Home Weight Definitions (Hashtable)
      */
-    public Hashtable<String, NutritionHomeWeightType> homeweight_defs = null;
+    public Map<String, NutritionHomeWeightType> homeweight_defs = null;
 
     /**
      * Data: Nutrition Definitions (ArrayList)
      */
-    public ArrayList<SelectableInterface> nutrition_defs_list = null;
+    public List<SelectableInterface> nutrition_defs_list = null;
 
     /**
      * Data: Home Weight Definitions (ArrayList)
      */
-    public ArrayList<SelectableInterface> homeweight_defs_list = null;
+    public List<SelectableInterface> homeweight_defs_list = null;
 
     /**
      * Food Groups as Hashtable
      */
-    public Hashtable<String, Hashtable<String, FoodGroup>> food_groups = null;
+    public Map<String, Map<String, FoodGroup>> food_groups = null;
 
     /**
      * Foods as Hashtable
      */
-    public Hashtable<String, Hashtable<String, FoodDescription>> foods = null;
+    public Map<String, Map<String, FoodDescription>> foods = null;
 
     /**
      * Food Groups as Hashtable
      */
-    public Hashtable<String, Hashtable<String, MealGroup>> meal_groups = null;
+    public Map<String, Map<String, MealGroup>> meal_groups = null;
 
     /**
      * Foods as Hashtable
      */
-    public Hashtable<String, Hashtable<String, Meal>> meals = null;
+    public Map<String, Map<String, Meal>> meals = null;
 
 
     /**
@@ -135,18 +137,18 @@ public class GGCDbCache
     {
         this.m_db = db;
 
-        food_groups = new Hashtable<String, Hashtable<String, FoodGroup>>();
+        food_groups = new HashMap<String, Map<String, FoodGroup>>();
         food_groups.put("1", new Hashtable<String, FoodGroup>());
         food_groups.put("2", new Hashtable<String, FoodGroup>());
 
-        foods = new Hashtable<String, Hashtable<String, FoodDescription>>();
+        foods = new Hashtable<String, Map<String, FoodDescription>>();
         foods.put("1", new Hashtable<String, FoodDescription>());
         foods.put("2", new Hashtable<String, FoodDescription>());
 
-        meal_groups = new Hashtable<String, Hashtable<String, MealGroup>>();
+        meal_groups = new Hashtable<String, Map<String, MealGroup>>();
         meal_groups.put("3", new Hashtable<String, MealGroup>());
 
-        meals = new Hashtable<String, Hashtable<String, Meal>>();
+        meals = new Hashtable<String, Map<String, Meal>>();
         meals.put("3", new Hashtable<String, Meal>());
 
         this.tree_roots = new Hashtable<String, GGCTreeRoot>();
@@ -459,7 +461,7 @@ public class GGCDbCache
      * @param parent_id id of parent
      * @return
      */
-    public ArrayList<FoodGroup> getChildrenFoodGroup(int type, long parent_id)
+    public List<FoodGroup> getChildrenFoodGroup(int type, long parent_id)
     {
 
         boolean not_loaded = false;
@@ -483,7 +485,7 @@ public class GGCDbCache
 
         if (not_loaded)
         {
-            ArrayList<FoodGroup> lst = m_db.getFoodGroups(type, parent_id);
+            List<FoodGroup> lst = m_db.getFoodGroups(type, parent_id);
 
             for (int i = 0; i < lst.size(); i++)
             {
@@ -509,7 +511,7 @@ public class GGCDbCache
      * @param parent_id
      * @return
      */
-    public ArrayList<FoodDescription> getChildrenFoods(int type, long parent_id)
+    public List<FoodDescription> getChildrenFoods(int type, long parent_id)
     {
 
         boolean not_loaded = false;
@@ -533,7 +535,7 @@ public class GGCDbCache
 
         if (not_loaded)
         {
-            ArrayList<FoodDescription> lst = m_db.getFoodsByParent(type, parent_id);
+            List<FoodDescription> lst = m_db.getFoodsByParent(type, parent_id);
 
             for (int i = 0; i < lst.size(); i++)
             {
@@ -560,7 +562,7 @@ public class GGCDbCache
      * @param parent_id
      * @return
      */
-    public ArrayList<MealGroup> getChildrenMealGroup(int type, long parent_id)
+    public List<MealGroup> getChildrenMealGroup(int type, long parent_id)
     {
         boolean not_loaded = false;
 
@@ -583,7 +585,7 @@ public class GGCDbCache
 
         if (not_loaded)
         {
-            ArrayList<MealGroup> lst = m_db.getMealGroups(parent_id);
+            List<MealGroup> lst = m_db.getMealGroups(parent_id);
 
             for (int i = 0; i < lst.size(); i++)
             {
@@ -608,7 +610,7 @@ public class GGCDbCache
      * @param parent_id
      * @return
      */
-    public ArrayList<Meal> getChildrenMeals(int type, long parent_id)
+    public List<Meal> getChildrenMeals(int type, long parent_id)
     {
         boolean not_loaded = false;
 
@@ -631,7 +633,7 @@ public class GGCDbCache
 
         if (not_loaded)
         {
-            ArrayList<Meal> lst = m_db.getMealsByParent(parent_id);
+            List<Meal> lst = m_db.getMealsByParent(parent_id);
 
             for (int i = 0; i < lst.size(); i++)
             {

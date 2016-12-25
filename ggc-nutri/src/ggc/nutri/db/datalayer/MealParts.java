@@ -1,13 +1,12 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.nutri.util.DataAccessNutri;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
 import com.atech.i18n.I18nControlAbstract;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -34,7 +33,7 @@ import com.atech.i18n.I18nControlAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class MealParts // implements SelectableInterface
+public class MealParts implements DAOObject// implements SelectableInterface
 {
 
     // private boolean debug = false;
@@ -44,6 +43,7 @@ public class MealParts // implements SelectableInterface
     boolean root_entry = false;
     ArrayList<MealPart> entries = null;
 
+
     /**
      * Constructor
      */
@@ -51,6 +51,7 @@ public class MealParts // implements SelectableInterface
     {
         entries = new ArrayList<MealPart>();
     }
+
 
     /**
      * Constructor
@@ -67,6 +68,7 @@ public class MealParts // implements SelectableInterface
         }
     }
 
+
     /**
      * Add Meal Part
      * 
@@ -82,6 +84,7 @@ public class MealParts // implements SelectableInterface
         this.entries.add(dfe);
         // }
     }
+
 
     /**
      * Get Calculated Nutrients
@@ -133,6 +136,7 @@ public class MealParts // implements SelectableInterface
         return out_lst;
     }
 
+
     /**
      * Get Elements Count
      * 
@@ -142,6 +146,7 @@ public class MealParts // implements SelectableInterface
     {
         return this.entries.size();
     }
+
 
     /**
      * Get Element
@@ -153,6 +158,7 @@ public class MealParts // implements SelectableInterface
     {
         return this.entries.get(index);
     }
+
 
     /**
      * To String

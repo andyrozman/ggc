@@ -27,9 +27,7 @@
 
 package ggc.nutri.data;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,49 +69,49 @@ public class GGCTreeRootStatic extends GGCTreeRoot
 
     private static final Logger LOG = LoggerFactory.getLogger(GGCTreeRootStatic.class);
 
-    private ArrayList<FoodGroup> import1_grp = null;
-    private ArrayList<FoodDescription> import1_foods = null;
+    private List<FoodGroup> import1_grp = null;
+    private List<FoodDescription> import1_foods = null;
 
-    private ArrayList<MealGroup> import2_grp = null;
-    private ArrayList<Meal> import2_foods = null;
+    private List<MealGroup> import2_grp = null;
+    private List<Meal> import2_foods = null;
 
     /**
      * Food Groups
      */
-    public ArrayList<FoodGroup> m_groups = null;
+    public List<FoodGroup> m_groups = null;
 
     /**
      * Food Groups as Hashtable
      */
-    public Hashtable<String, FoodGroup> m_groups_ht = null;
+    public Map<String, FoodGroup> m_groups_ht = null;
 
     /**
      * Food Groups Tree
      */
-    public ArrayList<FoodGroup> m_groups_tree = null;
+    public List<FoodGroup> m_groups_tree = null;
 
     /**
      * Foods Hashtable
      */
-    public Hashtable<String, FoodDescription> m_foods_ht = null;
+    public Map<String, FoodDescription> m_foods_ht = null;
 
     /**
      * Meal Groups
      */
-    public ArrayList<MealGroup> m_meal_groups = null;
+    public List<MealGroup> m_meal_groups = null;
 
     /**
      * Meal Groups Hashtable
      */
-    public Hashtable<String, MealGroup> m_meal_groups_ht = null;
+    public Map<String, MealGroup> m_meal_groups_ht = null;
     /**
      * Meal Groups Tree
      */
-    public ArrayList<MealGroup> m_meal_groups_tree = null;
+    public List<MealGroup> m_meal_groups_tree = null;
     /**
      * Meals Hashtable
      */
-    public Hashtable<String, Meal> m_meals_ht = null;
+    public Map<String, Meal> m_meals_ht = null;
 
     // private boolean debug = true;
     private boolean dev = false;

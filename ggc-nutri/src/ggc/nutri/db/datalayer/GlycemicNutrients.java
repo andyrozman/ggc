@@ -1,11 +1,10 @@
 package ggc.nutri.db.datalayer;
 
-import ggc.nutri.util.DataAccessNutri;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -32,8 +31,9 @@ import com.atech.i18n.I18nControlAbstract;
  * Author: andyrozman {andy@atech-software.com}
  */
 
-public class GlycemicNutrients
+public class GlycemicNutrients implements DAOObject
 {
+
     DataAccessNutri m_da = DataAccessNutri.getInstance();
     I18nControlAbstract ic = m_da.getI18nControlInstance();
     Hashtable<String, ArrayList<MealNutrition>> gly_nutrients;
@@ -45,6 +45,7 @@ public class GlycemicNutrients
     // String amount;
     String weight;
     Hashtable<String, MealNutrition> nutrients = null;
+
 
     /**
      * Constructor
@@ -58,6 +59,7 @@ public class GlycemicNutrients
         processEntry(mn);
     }
 
+
     /**
      * 
      */
@@ -66,6 +68,7 @@ public class GlycemicNutrients
         // TODO: this need to be done
         System.out.println("mergeGlycemicData not implemented");
     }
+
 
     private void loadGI_GL()
     {
@@ -77,6 +80,7 @@ public class GlycemicNutrients
         this.nutrients.put("4005", new MealNutrition(4005, 0.0f, "GL Max"));
     }
 
+
     /**
      * Add Nutrient
      * 
@@ -86,6 +90,7 @@ public class GlycemicNutrients
     {
         this.processEntry(mn);
     }
+
 
     private void processEntry(MealNutrition mn)
     {
@@ -119,6 +124,7 @@ public class GlycemicNutrients
         }
 
     }
+
 
     private void checkGI_GL(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
     {
@@ -165,6 +171,7 @@ public class GlycemicNutrients
 
     }
 
+
     private void checkGI_GL_Max(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
     {
         // GI = 4000, GL = 4001, GI_MIN = 4002, GI_MAX = 4003, GL_MIN = 4004,
@@ -194,6 +201,7 @@ public class GlycemicNutrients
         }
 
     }
+
 
     private void checkGI_GL_Min(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
     {
