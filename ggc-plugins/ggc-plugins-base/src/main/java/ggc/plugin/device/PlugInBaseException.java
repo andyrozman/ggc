@@ -173,6 +173,15 @@ public class PlugInBaseException extends Exception
     }
 
 
+    public PlugInBaseException(PlugInExceptionType exceptionType, String errorDescription, Exception ex)
+    {
+        // FIXME
+        super(PlugInBaseException.createMessage(exceptionType, null));
+
+        this.setExceptionType(exceptionType);
+    }
+
+
     public static String createMessage(PlugInExceptionType exceptionType, Object[] parameters)
     {
         if (parameters != null)

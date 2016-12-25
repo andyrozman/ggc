@@ -16,6 +16,21 @@ public class SerialSettings
     public Boolean rts = true;
 
 
+    public SerialSettings()
+    {
+    }
+
+
+    public SerialSettings(int baudRate, SerialSettingsType dataBits, SerialSettingsType stopBits,
+            SerialSettingsType parity)
+    {
+        this.baudRate = baudRate;
+        this.dataBits = dataBits;
+        this.stopBits = stopBits;
+        this.parity = parity;
+    }
+
+
     @Override
     public String toString()
     {
