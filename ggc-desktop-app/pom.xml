@@ -19,4 +19,9 @@
     </modules>
     -->
 
+    <modules>
+        <module>ggc-desktop</module>
+    </modules>
+
+
 </project>

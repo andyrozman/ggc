@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<project name="GNU Gluco Control" default="build" basedir=".">
+<project name="GNU Gluco Control" default="build" basedir="">
     <description>
         Build file for GGC Desktop
     </description>
@@ -7,7 +7,7 @@
     <!-- Environment properties read from a file ...-->
     <property file="../../build/AtechTools.properties"/>
     <property file="../../ggc-core-app/ggc-core/build/GGCBuild.properties"/>
-    <property file="./GGC_Desktop_Version.properties"/>
+    <property file="GGC_Desktop_Version.properties"/>
     <property file="../../ggc-core-app/ggc-core/build/GGC_Core_Version.properties"/>
     
 
@@ -99,7 +99,7 @@
         <jar jarfile="${binary.dir}/ggc-main-${ggc-main.version}.jar"
              update="false" 
              index="false"
-             manifest="./manifest_ggc.mf">
+             manifest="manifest_ggc.mf">
 
             <fileset dir="${build.dir}">
                 <include name="ggc/GGC.class"/>
@@ -121,7 +121,7 @@
         <jar jarfile="${binary.dir}/ggc-little-${ggc-little.version}.jar"
              update="false" 
              index="false"
-             manifest="./manifest_ggc_little.mf">
+             manifest="manifest_ggc_little.mf">
 
             <fileset dir="${build.dir}">
                 <include name="ggc/gui/little/**"/>
