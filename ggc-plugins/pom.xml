@@ -18,6 +18,7 @@
         <module>ggc-plugins-base</module>
         <module>ggc-meter</module>
         <module>ggc-pump</module>
+        <module>ggc-nutrition</module>
     </modules>
 
 

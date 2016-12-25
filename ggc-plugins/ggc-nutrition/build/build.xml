@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<project name="GNU Pump Tool" default="build" basedir=".">
+<project name="GNU Pump Tool" default="build" basedir="">
     <description>
         Build file for GGC
     </description>
@@ -11,7 +11,7 @@
     <property file="../../ggc-plugin_base/build/GGCPlugInBaseBuild.properties"/> -->
     <property file="../../ggc-plugins/ggc-plugins-base/build/GGCPlugInBaseVersion.properties"/>
     <property file="../../ggc-core-app/ggc-core/build/GGC_Core_Version.properties"/>
-    <property file="./GGCNutriToolVersion.properties"/>
+    <property file="GGCNutriToolVersion.properties"/>
 	
     <!-- These should *not* be modified on the command line! -->
     <property name="build.dir" value="${outdir.dir}/classes"/>
@@ -54,7 +54,7 @@
         </copy>
         <mkdir dir="${binary.dir}/icons" />
         <copy todir="${binary.dir}/icons" overwrite="true">
-            <fileset dir="../src/icons" casesensitive="no">
+            <fileset dir="../../ggc-plugins/ggc-nutrition/src/main/resources/icons" casesensitive="no">
                 <include name="**/*.gif"/>
                 <include name="**/*.jpg"/>
                 <include name="**/*.png"/>
