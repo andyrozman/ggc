@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Doctor App</name>
+    <name>GGC Doctor</name>
     <artifactId>ggc-doctor-app</artifactId>
     <packaging>pom</packaging>
 

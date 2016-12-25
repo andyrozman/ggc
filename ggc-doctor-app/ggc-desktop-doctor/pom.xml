@@ -9,10 +9,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Doctor Desktop</name>
-    <description>GGC Doctor's Edition</description>
+    <name>GGC Doctor - Desktop</name>
+    <description>GGC Doctor's Edition Desktop</description>
     <artifactId>ggc-doctor-desktop</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>${ggc-doctor-desktop.version}</version>
 
     <dependencies>
         <dependency>

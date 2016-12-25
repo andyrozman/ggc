@@ -8,13 +8,10 @@
         <relativePath>../ggc-master-pom/pom.xml</relativePath>
     </parent>
 
-    <groupId>net.sf.ggc</groupId>
-    <name>GGC Software Support - MS Health Vault</name>
-
-    <description>Temporary project for Integration with MS Health Vault software.</description>
-
-    <artifactId>ggc-sw-healthvault</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <name>GGC Doctor - Server</name>
+    <description>GGC Doctor's Edition Server</description>
+    <artifactId>ggc-doctor-server</artifactId>
+    <version>${ggc-doctor-server.version}</version>
 
     <build>
         <directory>target</directory>

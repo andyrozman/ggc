@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Core App</name>
+    <name>GGC Core</name>
     <artifactId>ggc-core-app</artifactId>
     <packaging>pom</packaging>
 

@@ -8,10 +8,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Core Doctor</name>
+    <name>GGC Core - Doctor</name>
     <description>GGC Core for Doctors Edition (mostly just customizations of ggc-core)</description>
-    <artifactId>ggc-core-doctor</artifactId>
-    <version>${ggc-core-doctor.version}</version>
+    <artifactId>ggc-doctor-core</artifactId>
+    <version>${ggc-doctor-core.version}</version>
 
 
 

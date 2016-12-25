@@ -5,7 +5,7 @@
     </description>
 
     <!-- Environment properties read from a file ...-->
-    <property file="../ggc-core/build/GGC_Core_Version.properties"/>
+    <property file="../ggc-core-app/ggc-core/build/GGC_Core_Version.properties"/>
     
 
     <!-- These should *not* be modified on the command line! -->
@@ -65,7 +65,7 @@
     	<echo message="  Start GGC Core build"/>
       	<echo message=""/>
     	<subant target="deploy">
-    		<fileset dir="../ggc-core" includes="*/build.xml" />
+    		<fileset dir="../ggc-core-app/ggc-core" includes="*/build.xml" />
     	</subant>
     </target>
 
@@ -108,7 +108,7 @@
     	<echo message="  Start GGC Meter Plugin build"/>
       	<echo message=""/>
     	<subant target="deploy">
-    		<fileset dir="../ggc-meter" includes="*/build.xml" />
+    		<fileset dir="../ggc-plugins/ggc-meter" includes="*/build.xml" />
     	</subant>
     </target>
 
@@ -117,7 +117,7 @@
     	<echo message="  Start GGC Pump Plugin build"/>
       	<echo message=""/>
     	<subant target="deploy">
-    		<fileset dir="../ggc-pump" includes="*/build.xml" />
+    		<fileset dir="../ggc-plugins/ggc-pump" includes="*/build.xml" />
     	</subant>
     </target>
     	

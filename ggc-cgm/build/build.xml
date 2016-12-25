@@ -54,7 +54,7 @@
         </copy>
         <mkdir dir="${binary.dir}/icons" />
         <copy todir="${binary.dir}/icons" overwrite="true">
-            <fileset dir="../src/icons" casesensitive="no">
+            <fileset dir="../../ggc-plugins/ggc-cgms/src/main/resources/icons" casesensitive="no">
                 <include name="**/*.gif"/>
                 <include name="**/*.jpg"/>
                 <include name="**/*.png"/>
