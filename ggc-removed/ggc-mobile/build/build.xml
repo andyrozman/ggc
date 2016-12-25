@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
-<project name="GGC Mobile" default="build" basedir=".">
+<project name="GGC Mobile" default="build" basedir="">
     <description>
         Build file for GGC
     </description>
 
     <!-- Environment properties read from a file ...-->
-    <property file="./GGCMobileBuild.properties"/>
-    <property file="./GGCMobileVersion.properties"/>
+    <property file="GGCMobileBuild.properties"/>
+    <property file="GGCMobileVersion.properties"/>
 	
     <!-- These should *not* be modified on the command line! -->
     <property name="build.dir" value="${outdir.dir}/classes"/>
