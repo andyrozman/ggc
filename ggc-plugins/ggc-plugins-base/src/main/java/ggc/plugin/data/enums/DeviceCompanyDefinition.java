@@ -2,7 +2,6 @@ package ggc.plugin.data.enums;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Meter Tool (support for Meter devices)
@@ -29,14 +28,15 @@ import ggc.plugin.manager.DeviceImplementationStatus;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public enum DeviceCompanyDefinition {
+public enum DeviceCompanyDefinition
+{
 
     // 1xx = Meter
     Ascensia(101, "Ascensia/Bayer", "", DeviceImplementationStatus.Done), //
+    // AccuChek(102, "Accu-Chek/Roche", "", DeviceImplementationStatus.Done), //
     Lifescan(103, "One Touch/Lifescan", "", DeviceImplementationStatus.Partitial), //
     Menarini(105, "Menarini", "", DeviceImplementationStatus.Planned), //
     Arkray(106, "Arkray", "", DeviceImplementationStatus.Planned), //
-
 
     // 2xx = Pump
     Deltec(205, "Deltec", "", DeviceImplementationStatus.NotAvailable), //
@@ -47,14 +47,13 @@ public enum DeviceCompanyDefinition {
     // 3xx = CGMS
     Dexcom(301, "Dexcom", "", DeviceImplementationStatus.Partitial), //
 
-
     // 4xx = Pump + CGMS
     Animas(401, "Animas", "", DeviceImplementationStatus.Full), //
     Minimed(402, "Minimed", "", DeviceImplementationStatus.Planned), //
     Tandem(403, "Tandem", "", DeviceImplementationStatus.Planned), //
 
     // 5xx = Meter + Pump
-    Roche(202, "AccuChek/Roche", "", DeviceImplementationStatus.Partitial), // Disetronic(2),
+    Roche(202, "AccuChek/Roche", "", DeviceImplementationStatus.Done), // Disetronic(2),
 
     // 6xx = Meter + CGMS
     Abbott(302, "Abbott", "", DeviceImplementationStatus.NotAvailable), //
@@ -69,7 +68,8 @@ public enum DeviceCompanyDefinition {
     DeviceImplementationStatus companyImplementationStatus;
 
 
-    DeviceCompanyDefinition(int id, String name, String description, DeviceImplementationStatus implementationStatus) {
+    DeviceCompanyDefinition(int id, String name, String description, DeviceImplementationStatus implementationStatus)
+    {
         this.id = id;
         this.companyName = name;
         this.companyDescription = description;
@@ -77,22 +77,26 @@ public enum DeviceCompanyDefinition {
     }
 
 
-    public String getName() {
+    public String getName()
+    {
         return this.companyName;
     }
 
 
-    public int getCompanyId() {
+    public int getCompanyId()
+    {
         return this.id;
     }
 
 
-    public String getDescription() {
+    public String getDescription()
+    {
         return this.companyDescription;
     }
 
 
-    public DeviceImplementationStatus getImplementationStatus() {
+    public DeviceImplementationStatus getImplementationStatus()
+    {
         return this.companyImplementationStatus;
     }
 

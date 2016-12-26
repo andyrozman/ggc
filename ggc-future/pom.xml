@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>GGC Future Modules</name>
+    <name>GGC Future</name>
     <artifactId>ggc-future</artifactId>
     <packaging>pom</packaging>
 

@@ -595,6 +595,7 @@
         <module>ggc-core-app</module>
         <module>ggc-plugins</module>
         <module>ggc-support</module>
+        <module>ggc-future</module>
         <module>ggc-desktop-app</module>
         <module>ggc-doctor-app</module>
 

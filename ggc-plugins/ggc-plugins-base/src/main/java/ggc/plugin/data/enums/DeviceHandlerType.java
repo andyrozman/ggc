@@ -37,6 +37,7 @@ public enum DeviceHandlerType
     AscensiaUsbHandler(DownloadSupportType.DownloadData), //
     ArkrayMeterHandler(DownloadSupportType.DownloadData), //
     MenariniMeterHandler(DownloadSupportType.DownloadData), //
+    AccuChekMeterHandler(DownloadSupportType.DownloadData), //
 
     // Pumps
     AnimasV2PumpHandler(DownloadSupportType.Download_Data_Config), //
