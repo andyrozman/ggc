@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.accuchek;
+package ggc.pump.device.accuchek;
 
 import java.io.File;
 import java.util.*;
@@ -20,16 +20,16 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.PumpValuesEntryProfile;
-import main.java.ggc.pump.data.defs.*;
-import main.java.ggc.pump.data.profile.Profile;
-import main.java.ggc.pump.data.profile.ProfileSubEntry;
-import main.java.ggc.pump.data.profile.ProfileSubOther;
-import main.java.ggc.pump.data.profile.ProfileSubPattern;
-import main.java.ggc.pump.device.PumpInterface;
-import main.java.ggc.pump.manager.PumpDevicesIds;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryProfile;
+import ggc.pump.data.defs.*;
+import ggc.pump.data.profile.Profile;
+import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.data.profile.ProfileSubOther;
+import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.device.PumpInterface;
+import ggc.pump.manager.PumpDevicesIds;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump

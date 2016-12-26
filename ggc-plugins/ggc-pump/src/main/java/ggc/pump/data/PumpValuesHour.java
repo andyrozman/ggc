@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data;
+package ggc.pump.data;
 
 import java.util.HashMap;
 
@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ExceptionHandling;
 
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.data.defs.PumpBolusType;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.util.DataAccessPump;
 
 public class PumpValuesHour
 {

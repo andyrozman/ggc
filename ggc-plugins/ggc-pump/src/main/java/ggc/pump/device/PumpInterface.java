@@ -1,10 +1,10 @@
-package main.java.ggc.pump.device;
+package ggc.pump.device;
 
 import java.util.Hashtable;
 
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DeviceInterface;
-import main.java.ggc.pump.data.defs.*;
+import ggc.pump.data.defs.*;
 
 /**
  *  Application:   GGC - GNU Gluco Control

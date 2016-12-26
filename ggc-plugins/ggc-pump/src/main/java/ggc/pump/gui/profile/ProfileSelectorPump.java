@@ -1,4 +1,4 @@
-package main.java.ggc.pump.gui.profile;
+package ggc.pump.gui.profile;
 
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
@@ -16,9 +16,9 @@ import com.atech.graphics.dialogs.selector.SelectorAbstractDialog;
 
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
-import main.java.ggc.pump.manager.PumpManager;
-import main.java.ggc.pump.manager.company.AbstractPumpDeviceCompany;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.manager.PumpManager;
+import ggc.pump.manager.company.AbstractPumpDeviceCompany;
+import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
 /**

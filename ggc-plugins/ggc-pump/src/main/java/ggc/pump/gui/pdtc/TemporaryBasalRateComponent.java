@@ -1,4 +1,4 @@
-package main.java.ggc.pump.gui.pdtc;
+package ggc.pump.gui.pdtc;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -12,7 +12,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
 import ggc.core.data.cfg.ConfigurationManager;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 12/11/16.

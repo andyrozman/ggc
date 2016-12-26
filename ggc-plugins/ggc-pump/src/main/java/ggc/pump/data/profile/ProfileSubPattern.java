@@ -1,9 +1,9 @@
-package main.java.ggc.pump.data.profile;
+package ggc.pump.data.profile;
 
 import com.atech.utils.data.ATechDate;
 
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -57,6 +57,7 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
      */
     public long dt_end;
 
+
     /**
      * The amount.
      */
@@ -68,6 +69,7 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
     public ProfileSubPattern()
     {
     }
+
 
     /**
      * Instantiates a new profile sub entry.
@@ -91,6 +93,7 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
         amount = da.getFloatValueFromString(ss[2]);
     }
 
+
     /**
      * Sets the values.
      *
@@ -103,6 +106,7 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
         this.amount = pse.amount;
     }
 
+
     /**
      * Gets the packed.
      *
@@ -114,6 +118,7 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
         return timeStart + "-" + timeEnd + "=" + DataAccessPlugInBase.Decimal2Format.format(amount);
     }
 
+
     /**
      * toString
      */
@@ -124,6 +129,7 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
                 + ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, timeEnd) + " = "
                 + DataAccessPlugInBase.Decimal2Format.format(amount);
     }
+
 
     /**
      * Compare.
@@ -168,11 +174,13 @@ public class ProfileSubPattern extends ProfileSubEntry // implements
         return ((this.timeStart < fullHour) && (fullHour < this.timeEnd));
     }
 
+
     @Override
     public int getType()
     {
         return ProfileSubEntry.PROFILE_SUB_PATTERN;
     }
+
 
     /**
      * Check Time Presence

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.report;
+package ggc.pump.report;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -18,12 +18,12 @@ import ggc.core.db.GGCDbLoader;
 import ggc.core.db.tool.DbToolApplicationGGC;
 import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesRange;
-import main.java.ggc.pump.data.PumpValuesHourProcessor;
-import main.java.ggc.pump.data.profile.ProfileSubPattern;
-import main.java.ggc.pump.db.GGCPumpDb;
-import main.java.ggc.pump.db.PumpProfile;
-import main.java.ggc.pump.defs.PumpPluginDefinition;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesHourProcessor;
+import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.db.GGCPumpDb;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.defs.PumpPluginDefinition;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

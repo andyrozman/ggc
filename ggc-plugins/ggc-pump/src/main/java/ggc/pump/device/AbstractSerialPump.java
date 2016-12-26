@@ -1,11 +1,11 @@
-package main.java.ggc.pump.device;
+package ggc.pump.device;
 
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.protocol.SerialProtocol;
+import ggc.pump.util.DataAccessPump;
 import gnu.io.SerialPortEvent;
-import main.java.ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,6 +39,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
 
     boolean communication_established = false;
 
+
     /**
      * Constructor
      */
@@ -46,6 +47,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     {
         super(DataAccessPump.getInstance());
     }
+
 
     /**
      * Constructor
@@ -62,6 +64,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
         // i18nControlAbstract = dataAccess.getI18nControlInstance();
     }
 
+
     /**
      * Constructor
      * 
@@ -76,6 +79,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
         this.setDeviceCompany(cmp);
         this.setPumpType(cmp.getName(), getName());
     }
+
 
     /**
      * Set Pump Type
@@ -103,6 +107,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
 
     }
 
+
     // this.m_device_index = device_index;
 
     /**
@@ -114,6 +119,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
 
     }
 
+
     /**
      * Dispose
      */
@@ -122,6 +128,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     {
         this.close();
     }
+
 
     /**
      * Set Communication Settings
@@ -132,6 +139,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     {
         super.setCommunicationSettings(baudrate, databits, stopbits, parity, flow_control, event_type);
     }
+
 
     /*
      * String meter_group = null;
@@ -169,6 +177,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
 
     String serial_port = null;
 
+
     /**
      * Set Serial Port
      * 
@@ -193,6 +202,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
 
     }
 
+
     /**
      * getConnectionPort - connection port data
      * 
@@ -203,6 +213,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
         return this.serial_port;
     }
 
+
     /**
      * Get Serial Port
      * @return
@@ -211,6 +222,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     {
         return this.serial_port;
     }
+
 
     /*
      * public GenericMeter(int meter_type, String portName)
@@ -246,6 +258,7 @@ public abstract class AbstractSerialPump extends SerialProtocol implements PumpI
     {
         return communication_established = super.open();
     }
+
 
     /**
      * Will be called, when the import is ended and freeing resources.

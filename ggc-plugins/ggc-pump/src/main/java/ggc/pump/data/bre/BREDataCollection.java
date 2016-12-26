@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.bre;
+package ggc.pump.data.bre;
 
 import java.util.ArrayList;
 
@@ -39,6 +39,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
      */
     ArrayList<BasalEstimationData> basal_estimation;
 
+
     /**
      * Instantiates a new bRE data collection.
      */
@@ -51,6 +52,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
         ratios_graph = new ArrayList<RatioData>();
         basal_estimation = new ArrayList<BasalEstimationData>();
     }
+
 
     /**
      * Adds the BREData
@@ -86,6 +88,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
 
     }
 
+
     /**
      * Adds the BREData
      * 
@@ -98,6 +101,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
         BREData data = new BREData(time, value, type);
         add(type, data);
     }
+
 
     /**
      * Adds the BREData
@@ -112,6 +116,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
         RatioData data = new RatioData(time_i, ratio_ch_insulin, ratio_bg_insulin, ratio_ch_bg);
         this.ratios.add(data);
     }
+
 
     /**
      * Gets the data by type
@@ -138,6 +143,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
 
     }
 
+
     /**
      * Gets the ratios collection
      * 
@@ -159,6 +165,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
         }
 
     }
+
 
     /**
      * Process ratios
@@ -182,6 +189,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
         }
 
     }
+
 
     /**
      * Process old basals
@@ -207,6 +215,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
 
     }
 
+
     /**
      * Process new basals
      */
@@ -214,6 +223,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
     {
         processBasals(this.basal_new);
     }
+
 
     /**
      * Process basals
@@ -244,6 +254,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
         }
     }
 
+
     /**
      * Sets the basal estimation data
      * 
@@ -253,6 +264,7 @@ public class BREDataCollection // extends ArrayList<BasalRateEstimatorData>
     {
         this.basal_estimation = data;
     }
+
 
     /**
      * Gets the basal estimation data

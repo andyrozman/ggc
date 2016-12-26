@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device;
+package ggc.pump.device;
 
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.v2.DeviceInterfaceV2;
@@ -34,7 +34,6 @@ import ggc.plugin.device.v2.DeviceInterfaceV2;
 public interface PumpInterfaceV2 extends DeviceInterfaceV2
 {
 
-
     // ************************************************
     // *** Meter Identification Methods ***
     // ************************************************
@@ -46,6 +45,7 @@ public interface PumpInterfaceV2 extends DeviceInterfaceV2
      */
     public int getMaxMemoryRecords();
 
+
     /**
      * loadPumpSpecificValues - should be called from constructor of any AbstractPump classes and should
      *      create, AlarmMappings and EventMappings and any other pump constants.
@@ -53,12 +53,12 @@ public interface PumpInterfaceV2 extends DeviceInterfaceV2
     public void loadPumpSpecificValues();
 
 
-
     /**
      * getDeviceInfo - get Device info (firmware and software revision)
      * @return 
      */
     public DeviceIdentification getDeviceInfo();
+
 
     /**
      * Get Temporary Basal Type Definition
@@ -70,12 +70,14 @@ public interface PumpInterfaceV2 extends DeviceInterfaceV2
      */
     public String getTemporaryBasalTypeDefinition();
 
+
     /**
      * Get Bolus Step (precission)
      * 
      * @return
      */
     public float getBolusStep();
+
 
     /**
      * Get Basal Step (precission)
@@ -84,12 +86,14 @@ public interface PumpInterfaceV2 extends DeviceInterfaceV2
      */
     public float getBasalStep();
 
+
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)
      * 
      * @return
      */
     public boolean arePumpSettingsSet();
+
 
     /**
      * How Many Months Of Data Stored

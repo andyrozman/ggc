@@ -1,10 +1,10 @@
-package main.java.ggc.pump.data;
+package ggc.pump.data;
 
 import com.atech.misc.statistics.StatisticsCollection;
 
 import ggc.core.data.defs.GlucoseUnitType;
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

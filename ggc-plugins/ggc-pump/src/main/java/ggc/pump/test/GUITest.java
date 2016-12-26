@@ -1,9 +1,9 @@
-package main.java.ggc.pump.test;
+package ggc.pump.test;
 
 import javax.swing.*;
 
 import ggc.plugin.device.v2.DeviceDefinition;
-import main.java.ggc.pump.gui.profile.ProfileSelectorPump;
+import ggc.pump.gui.profile.ProfileSelectorPump;
 
 /**
  * Created by andy on 17.10.15.

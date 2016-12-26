@@ -1,10 +1,10 @@
-package main.java.ggc.pump.data.dto;
+package ggc.pump.data.dto;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.DecimalPrecission;
 
 import ggc.core.util.DataAccess;
-import main.java.ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.data.defs.PumpBolusType;
 
 /**
  *  Application:   GGC - GNU Gluco Control

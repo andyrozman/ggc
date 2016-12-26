@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.minimed.data.decoder;
+package ggc.pump.device.minimed.data.decoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +17,14 @@ import ggc.plugin.device.impl.minimed.data.decoder.MinimedHistoryDecoder;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.RecordDecodeStatus;
 import ggc.plugin.device.impl.minimed.util.MinimedUtil;
-import main.java.ggc.pump.data.defs.*;
-import main.java.ggc.pump.data.dto.BolusDTO;
-import main.java.ggc.pump.data.dto.BolusWizardDTO;
-import main.java.ggc.pump.data.dto.TemporaryBasalRateDTO;
-import main.java.ggc.pump.data.writer.PumpValuesWriter;
-import main.java.ggc.pump.device.minimed.data.PumpHistoryEntry;
-import main.java.ggc.pump.device.minimed.data.enums.PumpHistoryEntryType;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.*;
+import ggc.pump.data.dto.BolusDTO;
+import ggc.pump.data.dto.BolusWizardDTO;
+import ggc.pump.data.dto.TemporaryBasalRateDTO;
+import ggc.pump.data.writer.PumpValuesWriter;
+import ggc.pump.device.minimed.data.PumpHistoryEntry;
+import ggc.pump.device.minimed.data.enums.PumpHistoryEntryType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -261,7 +261,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
 
         switch ((PumpHistoryEntryType) entry.getEntryType())
         {
-        // not implemented
+            // not implemented
             case ChangeBasalProfile_NewProfile:
             case ChangeBasalProfile_OldProfile:
             case SelectBasalProfile:
@@ -276,14 +276,14 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
             case AndyB4:
                 return RecordDecodeStatus.NotSupported;
 
-                // WORK IN PROGRESS
+            // WORK IN PROGRESS
 
-                // POSSIBLY READY
+            // POSSIBLY READY
 
             case BasalProfileStart:
                 return decodeBasalProfileStart(entry);
 
-                // **** Implemented records ****
+            // **** Implemented records ****
 
             case ChangeTime:
                 changeTimeRecord = entry;
@@ -353,7 +353,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
                 decodePrime(entry);
                 return RecordDecodeStatus.OK;
 
-                // **** Ignored Records - PUMP ****
+            // **** Ignored Records - PUMP ****
             case ClearAlarm:
             case ChangeTimeDisplay:
             case ChangeAlarmNotifyMode: // ChangeUtility:
@@ -364,7 +364,7 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
                 // entry.getEntryType().name());
                 return RecordDecodeStatus.Ignored;
 
-                // **** Ignored Records - CGMS ****
+            // **** Ignored Records - CGMS ****
             case BGReceived: // Ian3F:
             case SensorAlert: // Ian08
 
@@ -384,8 +384,8 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
         if (changeTimeRecord == null)
             return;
 
-        String timeChange = String.format(PumpEventType.DateTimeChanged.getValueTemplate(), this.changeTimeRecord
-                .getATechDate().getDateTimeString(), entry.getATechDate().getDateTimeString());
+        String timeChange = String.format(PumpEventType.DateTimeChanged.getValueTemplate(),
+            this.changeTimeRecord.getATechDate().getDateTimeString(), entry.getATechDate().getDateTimeString());
 
         writeData(PumpBaseType.Event, PumpEventType.DateTimeChanged, timeChange, entry.getATechDate());
 
@@ -410,8 +410,9 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
 
     private void decodeBatteryActivity(PumpHistoryEntry entry)
     {
-        this.writeData(PumpBaseType.Event, entry.getHead()[0] == 0 ? PumpEventType.BatteryRemoved
-                : PumpEventType.BatteryReplaced, entry.getATechDate());
+        this.writeData(PumpBaseType.Event,
+            entry.getHead()[0] == 0 ? PumpEventType.BatteryRemoved : PumpEventType.BatteryReplaced,
+            entry.getATechDate());
     }
 
 
@@ -512,8 +513,8 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
         float amount = bitUtils.toInt(entry.getHead()[2], entry.getHead()[3]) / 10.0f;
         float fixed = bitUtils.toInt(entry.getHead()[0], entry.getHead()[1]) / 10.0f;
 
-        this.writeData(PumpBaseType.Event, PumpEventType.PrimeInfusionSet, fixed > 0 ? getFormattedFloat(fixed, 1)
-                : getFormattedFloat(amount, 1), entry.getATechDate());
+        this.writeData(PumpBaseType.Event, PumpEventType.PrimeInfusionSet,
+            fixed > 0 ? getFormattedFloat(fixed, 1) : getFormattedFloat(amount, 1), entry.getATechDate());
     }
 
 
@@ -564,8 +565,8 @@ public class MinimedPumpHistoryDecoder extends MinimedHistoryDecoder
             bolus.setDuration(data[2] * 30);
         }
 
-        bolus.setBolusType((bolus.getDuration() != null && (bolus.getDuration() > 0)) ? PumpBolusType.Extended
-                : PumpBolusType.Normal);
+        bolus.setBolusType(
+            (bolus.getDuration() != null && (bolus.getDuration() > 0)) ? PumpBolusType.Extended : PumpBolusType.Normal);
         bolus.setATechDate(entry.getATechDate());
 
         if (bolusEntry != null)

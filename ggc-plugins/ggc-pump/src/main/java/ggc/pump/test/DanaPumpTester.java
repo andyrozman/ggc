@@ -1,4 +1,4 @@
-package main.java.ggc.pump.test;
+package ggc.pump.test;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
-import main.java.ggc.pump.device.dana.DanaDiabecare_III_R;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.device.dana.DanaDiabecare_III_R;
+import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
 /**

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.defs.device;
+package ggc.pump.defs.device;
 
 /**
  * Created by andy on 21.10.15.
@@ -35,7 +35,7 @@ public enum PumpTBRDefinition
             0f, 250f, 1f, //
             null, null, null, //
             15, 72 * 60, 1), //
-            ;
+    ;
 
     String definition;
     Float percentMin;

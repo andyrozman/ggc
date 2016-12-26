@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.bre;
+package ggc.pump.data.bre;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -21,6 +21,7 @@ public class BasalEstimationData
      * The insulin_value.
      */
     public double insulin_value;
+
 
     /** 
      * toString

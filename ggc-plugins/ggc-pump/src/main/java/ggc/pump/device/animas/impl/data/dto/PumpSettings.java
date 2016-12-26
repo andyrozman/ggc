@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.animas.impl.data.dto;
+package ggc.pump.device.animas.impl.data.dto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,10 +18,10 @@ import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.*;
 import ggc.plugin.output.OutputWriter;
-import main.java.ggc.pump.data.defs.PumpConfigurationGroup;
-import main.java.ggc.pump.data.defs.RatioType;
-import main.java.ggc.pump.data.dto.RatioDTO;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.data.defs.RatioType;
+import ggc.pump.data.dto.RatioDTO;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

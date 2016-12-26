@@ -1,4 +1,4 @@
-package main.java.ggc.pump.util;
+package ggc.pump.util;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -11,17 +11,17 @@ import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.data.PumpDataHandler;
-import main.java.ggc.pump.data.PumpDataReader;
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.cfg.PumpConfigurationDefinition;
-import main.java.ggc.pump.data.util.PumpBasalManager;
-import main.java.ggc.pump.data.util.PumpBolusManager;
-import main.java.ggc.pump.db.GGCPumpDb;
-import main.java.ggc.pump.defs.PumpPluginDefinition;
-import main.java.ggc.pump.defs.report.PumpReportDefinition;
-import main.java.ggc.pump.graph.PumpGraphContext;
-import main.java.ggc.pump.manager.PumpManager;
+import ggc.pump.data.PumpDataHandler;
+import ggc.pump.data.PumpDataReader;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.cfg.PumpConfigurationDefinition;
+import ggc.pump.data.util.PumpBasalManager;
+import ggc.pump.data.util.PumpBolusManager;
+import ggc.pump.db.GGCPumpDb;
+import ggc.pump.defs.PumpPluginDefinition;
+import ggc.pump.defs.report.PumpReportDefinition;
+import ggc.pump.graph.PumpGraphContext;
+import ggc.pump.manager.PumpManager;
 
 /**
  *  Application:   GGC - GNU Gluco Control

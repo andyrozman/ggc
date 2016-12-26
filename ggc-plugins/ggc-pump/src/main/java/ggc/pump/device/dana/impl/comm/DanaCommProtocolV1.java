@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.dana.impl.comm;
+package ggc.pump.device.dana.impl.comm;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -18,12 +18,12 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.reader.AbstractDeviceReader;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.data.PumpValuesEntryProfile;
-import main.java.ggc.pump.data.defs.PumpAlarms;
-import main.java.ggc.pump.data.defs.PumpConfigurationGroup;
-import main.java.ggc.pump.data.defs.PumpErrors;
-import main.java.ggc.pump.data.profile.ProfileSubPattern;
-import main.java.ggc.pump.device.dana.impl.data.defs.DanaDataType;
+import ggc.pump.data.PumpValuesEntryProfile;
+import ggc.pump.data.defs.PumpAlarms;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.data.defs.PumpErrors;
+import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.device.dana.impl.data.defs.DanaDataType;
 
 /**
  * Communication Protocol as used by Dana_III_R with IBMCommHandler

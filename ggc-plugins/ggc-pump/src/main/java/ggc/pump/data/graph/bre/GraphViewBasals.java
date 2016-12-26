@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.graph.bre;
+package ggc.pump.data.graph.bre;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import main.java.ggc.pump.data.bre.BREData;
-import main.java.ggc.pump.data.bre.BREDataCollection;
+import ggc.pump.data.bre.BREData;
+import ggc.pump.data.bre.BREDataCollection;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -78,6 +78,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
 
     NumberAxis numberAxis;
 
+
     /**
      * Constructor
      */
@@ -85,6 +86,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
     {
         super();
     }
+
 
     /**
      * Get Help Id
@@ -97,6 +99,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
         return null;
     }
 
+
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      * 
@@ -107,6 +110,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
     {
         return new Rectangle(100, 100, 500, 400);
     }
+
 
     /**
      * Load Data
@@ -130,6 +134,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
          */
     }
 
+
     /**
      * Get Data Set
      * 
@@ -139,6 +144,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
     {
         return this.dataset_old;
     }
+
 
     /**
      * Preprocess Data
@@ -267,6 +273,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
 
     }
 
+
     // GregorianCalendar gcx = new GregorianCalendar();
     /*
      * public long getTimeMs(int time)
@@ -288,6 +295,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
     {
         return m_ic.getMessage("DAILYGRAPHFRAME");
     }
+
 
     /*
      * private JFreeChart createCombinedChartOld()
@@ -433,6 +441,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
 
     }
 
+
     /**
      * Creates a combined XYPlot chart.
      *
@@ -488,6 +497,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
 
     }
 
+
     /**
      * Set Data for Graph (all handling done after that)
      */
@@ -500,6 +510,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
 
         // this.setPlot(chart);
     }
+
 
     /**
      * Create Chart
@@ -522,6 +533,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
          */
         // this.setPlot(chart);
     }
+
 
     /**
      * Create Chart Panel

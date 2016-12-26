@@ -1,11 +1,11 @@
-package main.java.ggc.pump.test;
+package ggc.pump.test;
 
 import com.atech.utils.ATDataAccessLMAbstract;
 
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
-import main.java.ggc.pump.defs.PumpPluginDefinition;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.defs.PumpPluginDefinition;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 24.09.15.

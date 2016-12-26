@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.dana;
+package ggc.pump.device.dana;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -21,17 +21,17 @@ import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
+import ggc.pump.data.PumpValuesEntryProfile;
+import ggc.pump.data.PumpWriterValues;
+import ggc.pump.data.defs.*;
+import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.device.AbstractBlueToothPump;
+import ggc.pump.device.dana.impl.data.defs.DanaDataType;
+import ggc.pump.manager.PumpDevicesIds;
+import ggc.pump.manager.company.Sooil;
+import ggc.pump.util.DataAccessPump;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
-import main.java.ggc.pump.data.PumpValuesEntryProfile;
-import main.java.ggc.pump.data.PumpWriterValues;
-import main.java.ggc.pump.data.defs.*;
-import main.java.ggc.pump.data.profile.ProfileSubPattern;
-import main.java.ggc.pump.device.AbstractBlueToothPump;
-import main.java.ggc.pump.device.dana.impl.data.defs.DanaDataType;
-import main.java.ggc.pump.manager.PumpDevicesIds;
-import main.java.ggc.pump.manager.company.Sooil;
-import main.java.ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump

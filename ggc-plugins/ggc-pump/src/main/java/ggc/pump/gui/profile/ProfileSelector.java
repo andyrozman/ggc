@@ -1,4 +1,4 @@
-package main.java.ggc.pump.gui.profile;
+package ggc.pump.gui.profile;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -11,8 +11,8 @@ import com.atech.utils.ATSwingUtils;
 import com.atech.utils.data.ATechDate;
 
 import ggc.core.db.hibernate.pump.PumpProfileH;
-import main.java.ggc.pump.db.PumpProfile;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
 /**

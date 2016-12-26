@@ -1,8 +1,8 @@
-package main.java.ggc.pump.data;
+package ggc.pump.data;
 
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

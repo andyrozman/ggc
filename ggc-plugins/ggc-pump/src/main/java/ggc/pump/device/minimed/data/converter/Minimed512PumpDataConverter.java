@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.minimed.data.converter;
+package ggc.pump.device.minimed.data.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,11 +8,11 @@ import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.util.MinimedUtil;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.data.defs.PumpConfigurationGroup;
-import main.java.ggc.pump.data.defs.RatioType;
-import main.java.ggc.pump.data.dto.RatioDTO;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.data.defs.RatioType;
+import ggc.pump.data.dto.RatioDTO;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -196,8 +196,7 @@ public class Minimed512PumpDataConverter extends Minimed511PumpDataConverter
         int unit = rd[0];
 
         String unitName = unit == 1 ? //
-                GlucoseUnitType.mg_dL.getTranslation()
-                : //
+                GlucoseUnitType.mg_dL.getTranslation() : //
                 GlucoseUnitType.mmol_L.getTranslation();
 
         unitName += " / " + getMessage("CFG_BASE_UNIT_UNIT_SHORT");
@@ -227,8 +226,7 @@ public class Minimed512PumpDataConverter extends Minimed511PumpDataConverter
         int unit = rd[0];
 
         String unitName = unit == 1 ? //
-                GlucoseUnitType.mg_dL.getTranslation()
-                : //
+                GlucoseUnitType.mg_dL.getTranslation() : //
                 GlucoseUnitType.mmol_L.getTranslation();
 
         for (int i = 1, j = 1; i < rd.length; i += 2, j++)

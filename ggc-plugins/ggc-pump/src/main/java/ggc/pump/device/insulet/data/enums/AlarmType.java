@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.insulet.data.enums;
+package ggc.pump.device.insulet.data.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,8 @@ public enum AlarmType
     AlrmPDM_ERROR7(7, "AlrmPDM_ERROR7", "PDM error", null, "Error_PDMError", "PDM Error 7"), //
     AlrmPDM_ERROR8(8, "AlrmPDM_ERROR8", "PDM error", null, "Error_PDMError", "PDM Error 8"), //
     AlrmPDM_ERROR9(9, "AlrmPDM_ERROR9", "PDM error", null, "Error_PDMError", "PDM Error 9"), //
-    AlrmSYSTEM_ERROR10(10, "AlrmSYSTEM_ERROR10", "system error", false, "Error_PDMError", "PDM Error 10 - System error"), //
+    AlrmSYSTEM_ERROR10(10, "AlrmSYSTEM_ERROR10", "system error", false, "Error_PDMError",
+            "PDM Error 10 - System error"), //
     AlrmSYSTEM_ERROR11(11, "AlrmSYSTEM_ERROR12", "system error", null, "Error_PDMError", "PDM Error 11 - System error"), //
     AlrmSYSTEM_ERROR12(12, "AlrmSYSTEM_ERROR12", "system error", null, "Error_PDMError", "PDM Error 12 - System error"), //
     AlrmHAZ_REMOTE(13, "AlrmHAZ_REMOTE", "clock reset alarm", false, "Alarm_ClockReset", null), //

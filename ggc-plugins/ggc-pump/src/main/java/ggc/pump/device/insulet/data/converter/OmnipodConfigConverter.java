@@ -1,11 +1,11 @@
-package main.java.ggc.pump.device.insulet.data.converter;
+package ggc.pump.device.insulet.data.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ggc.plugin.output.OutputWriter;
-import main.java.ggc.pump.device.insulet.data.dto.AbstractRecord;
-import main.java.ggc.pump.device.insulet.data.dto.config.ConfigRecord;
+import ggc.pump.device.insulet.data.dto.AbstractRecord;
+import ggc.pump.device.insulet.data.dto.config.ConfigRecord;
 
 /**
  * Created by andy on 21.05.15.

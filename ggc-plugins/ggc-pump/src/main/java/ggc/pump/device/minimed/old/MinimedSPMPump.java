@@ -1,13 +1,13 @@
-package main.java.ggc.pump.device.minimed.old;
+package ggc.pump.device.minimed.old;
 
 import java.util.Enumeration;
 
 import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.data.PumpValuesEntryProfile;
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.data.profile.ProfileSubPattern;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntryProfile;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump

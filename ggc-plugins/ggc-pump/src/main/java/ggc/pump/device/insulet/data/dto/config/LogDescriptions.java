@@ -1,10 +1,10 @@
-package main.java.ggc.pump.device.insulet.data.dto.config;
+package ggc.pump.device.insulet.data.dto.config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.ggc.pump.device.insulet.data.dto.AbstractRecord;
-import main.java.ggc.pump.device.insulet.data.enums.OmnipodDataType;
+import ggc.pump.device.insulet.data.dto.AbstractRecord;
+import ggc.pump.device.insulet.data.enums.OmnipodDataType;
 
 /**
  * Created by andy on 20.05.15.

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.defs.device;
+package ggc.pump.defs.device;
 
 /**
  * Created by andy on 21.10.15.

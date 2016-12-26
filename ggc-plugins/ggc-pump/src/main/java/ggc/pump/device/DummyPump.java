@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device;
+package ggc.pump.device;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -7,7 +7,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -51,6 +51,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
      */
     I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 
+
     /**
      * Constructor
      */
@@ -58,6 +59,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     {
         super();
     }
+
 
     /**
      * Constructor
@@ -70,6 +72,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         // super(ow);
     }
 
+
     /**
      * Used for opening connection with device.
      * @return boolean - if connection established
@@ -78,6 +81,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     {
         return true;
     }
+
 
     /**
      * Will be called, when the import is ended and freeing resources.
@@ -107,6 +111,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
      */
     public static final int LOG_ERROR = 4;
 
+
     /**
      * Write Log
      * 
@@ -118,6 +123,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         System.out.println("Dummy -> " + text);
     }
 
+
     /**
      * @return
      */
@@ -127,6 +133,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         writeLog(LOG_DEBUG, "getVersion() - End");
         return "Dummy Meter\n" + "v0.1\n" + m_ic.getMessage("DUMMY_INFO_TEXT");
     }
+
 
     /**
      * Get Name
@@ -138,6 +145,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     {
         return "Dummy Meter";
     }
+
 
     // ************************************************
     // *** Available Functionality ***
@@ -153,6 +161,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return false;
     }
 
+
     /**
      * canReadPartitialData - Can Meter class read (partitial) data from device, just from certain data
      * @return 
@@ -163,6 +172,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return false;
     }
 
+
     /**
      * canClearData - Can Meter class clear data from meter.
      * @return 
@@ -171,6 +181,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     {
         return false;
     }
+
 
     // ************************************************
     // *** Test ***
@@ -183,6 +194,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     public void test()
     {
     }
+
 
     /**
      * Is Device Readable (there are some devices that are not actual devices, but are used to get some
@@ -218,7 +230,6 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     }
 
 
-
     /** 
      * dispose
      */
@@ -228,6 +239,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
 
     }
 
+
     /** 
      * getComment
      */
@@ -236,6 +248,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return null;
     }
 
+
     /** 
      * getConnectionPort
      */
@@ -243,6 +256,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     {
         return null;
     }
+
 
     /** 
      * getConnectionProtocol
@@ -261,6 +275,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return null;
     }
 
+
     /** 
      * getDeviceId
      */
@@ -268,6 +283,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     {
         return 0;
     }
+
 
     /** 
      * getDeviceSpecialComment
@@ -278,6 +294,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return "DEVICE_DUMMY_SPECIAL_COMMENT";
     }
 
+
     /** 
      * getIconName
      */
@@ -285,6 +302,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     {
         return null;
     }
+
 
     /** 
      * getImplementationStatus
@@ -294,6 +312,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return DeviceImplementationStatus.NotAvailable;
     }
 
+
     /** 
      * getInstructions
      */
@@ -301,6 +320,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     {
         return null;
     }
+
 
     /** 
      * hasSpecialProgressStatus
@@ -312,6 +332,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return false;
     }
 
+
     /** 
      * isDeviceCommunicating
      */
@@ -320,6 +341,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         // TODO Auto-generated method stub
         return false;
     }
+
 
     /** 
      * readConfiguration
@@ -331,6 +353,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
 
     }
 
+
     /** 
      * readDeviceDataFull
      */
@@ -339,6 +362,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         // TODO Auto-generated method stub
 
     }
+
 
     /** 
      * readDeviceDataPartitial
@@ -350,6 +374,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
 
     }
 
+
     /** 
      * readInfo
      */
@@ -359,6 +384,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         // TODO Auto-generated method stub
 
     }
+
 
     /**
      * Get Temporary Basal Type Definition
@@ -375,6 +401,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return null;
     }
 
+
     /**
      * Get Bolus Step (precission)
      * 
@@ -385,6 +412,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
         return 0.1f;
     }
 
+
     /**
      * Get Basal Step (precission)
      * 
@@ -394,6 +422,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     {
         return 0.1f;
     }
+
 
     /**
      * Are Pump Settings Set (Bolus step, Basal step and TBR settings)

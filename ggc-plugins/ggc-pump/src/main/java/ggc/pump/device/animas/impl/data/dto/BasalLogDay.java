@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.animas.impl.data.dto;
+package ggc.pump.device.animas.impl.data.dto;
 
 import java.util.ArrayList;
 

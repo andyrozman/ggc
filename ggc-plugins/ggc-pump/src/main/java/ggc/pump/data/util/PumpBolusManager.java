@@ -1,10 +1,10 @@
-package main.java.ggc.pump.data.util;
+package ggc.pump.data.util;
 
 import java.util.StringTokenizer;
 
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.defs.PumpBolusType;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 01.10.15.

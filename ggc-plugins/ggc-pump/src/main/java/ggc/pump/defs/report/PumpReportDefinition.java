@@ -1,4 +1,4 @@
-package main.java.ggc.pump.defs.report;
+package ggc.pump.defs.report;
 
 import javax.swing.*;
 
@@ -11,8 +11,8 @@ import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.gui.PluginPrintDialog;
 import ggc.plugin.report.PluginReportDefinition;
-import main.java.ggc.pump.report.*;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.report.*;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 17.10.15.
@@ -58,14 +58,14 @@ public class PumpReportDefinition implements PluginReportDefinition
     {
         System.out.println("Reports def: getReportsNames");
         return new String[] { //
-        this.i18nControl.getMessage("PUMP_DATA_BASE"), //
-                this.i18nControl.getMessage("PUMP_DATA_EXT"), //
-                this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
-                this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
-                this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
-                this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_2"), //
-        // TIMESHEET_3 = 1 + Food
-        // TIMESHEET_4 = 1 + CGMS + Food
+                              this.i18nControl.getMessage("PUMP_DATA_BASE"), //
+                              this.i18nControl.getMessage("PUMP_DATA_EXT"), //
+                              this.i18nControl.getMessage("PUMP_DATA_PROFILES"), //
+                              this.i18nControl.getMessage("PUMP_DATA_BASAL_CHECK"), //
+                              this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_1"), //
+                              this.i18nControl.getMessage("PUMP_DATA_DAILY_TIMESHEET_2"), //
+                // TIMESHEET_3 = 1 + Food
+                // TIMESHEET_4 = 1 + CGMS + Food
         };
     }
 

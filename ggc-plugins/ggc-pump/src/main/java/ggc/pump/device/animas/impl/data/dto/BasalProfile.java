@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.animas.impl.data.dto;
+package ggc.pump.device.animas.impl.data.dto;
 
 import java.util.ArrayList;
 
@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 public class BasalProfile extends ArrayList<BasalProfileEntry>
 {
+
     public int number;
     public String name;
 
@@ -44,9 +45,7 @@ public class BasalProfile extends ArrayList<BasalProfileEntry>
     public boolean checkIfProfileIsSame(BasalLogDay basalDay)
     {
 
-
         return false;
     }
-
 
 }

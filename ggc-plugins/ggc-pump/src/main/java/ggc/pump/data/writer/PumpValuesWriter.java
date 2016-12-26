@@ -1,11 +1,11 @@
-package main.java.ggc.pump.data.writer;
+package ggc.pump.data.writer;
 
 import com.atech.utils.data.CodeEnumWithTranslation;
 
 import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.output.OutputWriter;
-import main.java.ggc.pump.data.PumpWriterValues;
-import main.java.ggc.pump.data.defs.*;
+import ggc.pump.data.PumpWriterValues;
+import ggc.pump.data.defs.*;
 
 /**
  * Created by andy on 08.03.15.

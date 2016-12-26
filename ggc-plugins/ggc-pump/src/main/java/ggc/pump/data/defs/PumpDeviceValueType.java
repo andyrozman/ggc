@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.defs;
+package ggc.pump.data.defs;
 
 import ggc.plugin.data.DeviceValueTypeInterface;
 
@@ -14,19 +14,23 @@ public enum PumpDeviceValueType implements DeviceValueTypeInterface
 
     private String colorKey;
 
+
     private PumpDeviceValueType()
     {
     }
+
 
     private PumpDeviceValueType(String colorKey)
     {
         this.colorKey = colorKey;
     }
 
+
     public String getColorKey()
     {
         return colorKey;
     }
+
 
     public void setColorKey(String colorKey)
     {

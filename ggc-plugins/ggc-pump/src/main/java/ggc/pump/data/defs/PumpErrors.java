@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.defs;
+package ggc.pump.data.defs;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -83,19 +83,19 @@ public enum PumpErrors implements CodeEnumWithTranslation
         }
 
         String[] errors_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), //
-                                    ic.getMessage("ERROR_CARTRIDGE_EMPTY"), //
-                                    ic.getMessage("ERROR_BATTERY_DEPLETED"), //
-                                    ic.getMessage("ERROR_AUTOMATIC_OFF"), //
-                                    ic.getMessage("ERROR_NO_DELIVERY"), //
-                                    ic.getMessage("ERROR_END_OF_OPERATION"), //
-                                    ic.getMessage("ERROR_MECHANICAL_ERROR"), //
-                                    ic.getMessage("ERROR_ELECTRONIC_ERROR"), //
-                                    ic.getMessage("ERROR_POWER_INTERRUPT"), //
-                                    ic.getMessage("ERROR_CARTRIDGE_ERROR"), //
-                                    ic.getMessage("ERROR_SET_NOT_PRIMED"), //
-                                    ic.getMessage("ERROR_DATA_INTERRUPTED"), //
-                                    ic.getMessage("ERROR_LANGUAGE_ERROR"), //
-                                    ic.getMessage("ERROR_INSULIN_CHANGED"), };
+                                     ic.getMessage("ERROR_CARTRIDGE_EMPTY"), //
+                                     ic.getMessage("ERROR_BATTERY_DEPLETED"), //
+                                     ic.getMessage("ERROR_AUTOMATIC_OFF"), //
+                                     ic.getMessage("ERROR_NO_DELIVERY"), //
+                                     ic.getMessage("ERROR_END_OF_OPERATION"), //
+                                     ic.getMessage("ERROR_MECHANICAL_ERROR"), //
+                                     ic.getMessage("ERROR_ELECTRONIC_ERROR"), //
+                                     ic.getMessage("ERROR_POWER_INTERRUPT"), //
+                                     ic.getMessage("ERROR_CARTRIDGE_ERROR"), //
+                                     ic.getMessage("ERROR_SET_NOT_PRIMED"), //
+                                     ic.getMessage("ERROR_DATA_INTERRUPTED"), //
+                                     ic.getMessage("ERROR_LANGUAGE_ERROR"), //
+                                     ic.getMessage("ERROR_INSULIN_CHANGED"), };
 
         errors_desc = errors_desc_lcl;
     }

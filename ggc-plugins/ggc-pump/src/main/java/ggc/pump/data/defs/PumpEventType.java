@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.defs;
+package ggc.pump.data.defs;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -92,7 +92,6 @@ public enum PumpEventType implements CodeEnumWithTranslation
     static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static HashMap<Integer, PumpEventType> codeMapping = new HashMap<Integer, PumpEventType>();
 
-
     static
     {
         I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
@@ -111,15 +110,16 @@ public enum PumpEventType implements CodeEnumWithTranslation
                                       ic.getMessage("EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"),
                                       ic.getMessage("EVENT_SET_BASAL_PATTERN"), ic.getMessage("EVENT_BASAL_RUN"),
 
-                ic.getMessage("EVENT_BASAL_STOP"), ic.getMessage("EVENT_POWER_DOWN"), ic.getMessage("EVENT_POWER_UP"),
-                                      ic.getMessage("EVENT_SELF_TEST"), ic.getMessage("EVENT_DOWNLOAD"),
-                                      ic.getMessage("EVENT_DATETIME_SET"), ic.getMessage("EVENT_DATETIME_CORRECT"),
+                                      ic.getMessage("EVENT_BASAL_STOP"), ic.getMessage("EVENT_POWER_DOWN"),
+                                      ic.getMessage("EVENT_POWER_UP"), ic.getMessage("EVENT_SELF_TEST"),
+                                      ic.getMessage("EVENT_DOWNLOAD"), ic.getMessage("EVENT_DATETIME_SET"),
+                                      ic.getMessage("EVENT_DATETIME_CORRECT"),
 
-                ic.getMessage("EVENT_SET_MAX_BASAL"), //
+                                      ic.getMessage("EVENT_SET_MAX_BASAL"), //
                                       ic.getMessage("EVENT_SET_MAX_BOLUS"), //
                                       ic.getMessage("EVENT_BATERRY_REMOVED"), //
 
-                ic.getMessage("EVENT_BATERRY_REPLACED"), //
+                                      ic.getMessage("EVENT_BATERRY_REPLACED"), //
                                       ic.getMessage("EVENT_BATERRY_LOW"), //
                                       ic.getMessage("EVENT_BATERRY_LOW_DESC"), //
                                       ic.getMessage("EVENT_BG_FROM_METER"), //

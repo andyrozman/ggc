@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.animas.impl.data.dto;
+package ggc.pump.device.animas.impl.data.dto;
 
 import com.atech.utils.data.ATechDate;
 
@@ -30,8 +30,10 @@ import com.atech.utils.data.ATechDate;
 
 public class BasalProfileEntry
 {
+
     public ATechDate time;
     public float amount;
+
 
     public BasalProfileEntry(ATechDate time, float amount)
     {

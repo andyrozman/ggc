@@ -1,4 +1,4 @@
-package main.java.ggc.pump.db;
+package ggc.pump.db;
 
 import java.util.*;
 
@@ -16,8 +16,8 @@ import com.atech.utils.data.ATechDate;
 
 import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.core.util.DataAccess;
-import main.java.ggc.pump.data.profile.ProfileSubPattern;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

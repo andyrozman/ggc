@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.minimed.file;
+package ggc.pump.device.minimed.file;
 
 import java.io.File;
 
@@ -54,10 +54,12 @@ public class FRC_MinimedCarelink extends XmlProtocolFile implements GGCPlugInFil
         super(da, ow);
     }
 
+
     public String getFileDescription()
     {
         return "Carelink Export File";
     }
+
 
     /**
      * Get File Download Panel
@@ -69,20 +71,24 @@ public class FRC_MinimedCarelink extends XmlProtocolFile implements GGCPlugInFil
         return null;
     }
 
+
     public String getFileExtension()
     {
         return ".csv";
     }
+
 
     public String getFullFileDescription()
     {
         return "Carelink Export File (CSV)";
     }
 
+
     public boolean hasSpecialSelectorDialog()
     {
         return false;
     }
+
 
     public void readFile(String filename)
     {
@@ -103,6 +109,7 @@ public class FRC_MinimedCarelink extends XmlProtocolFile implements GGCPlugInFil
     int i = 0;
     String tmp_time;
 
+
     public FileFilter getFileFilter()
     {
 
@@ -118,6 +125,7 @@ public class FRC_MinimedCarelink extends XmlProtocolFile implements GGCPlugInFil
                 return f.getName().toLowerCase().endsWith(getFileExtension());
             }
 
+
             @Override
             public String getDescription()
             {
@@ -128,15 +136,18 @@ public class FRC_MinimedCarelink extends XmlProtocolFile implements GGCPlugInFil
 
     }
 
+
     public void goToNextDialog(JDialog currentDialog)
     {
     }
+
 
     @Override
     public String toString()
     {
         return this.getFullFileDescription();
     }
+
 
     public void setOutputWriter(OutputWriter ow)
     {

@@ -1,6 +1,6 @@
-package main.java.ggc.pump.gui.pdtc;
+package ggc.pump.gui.pdtc;
 
-import main.java.ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpBaseType;
 
 /**
  * Created by andy on 12/11/16.

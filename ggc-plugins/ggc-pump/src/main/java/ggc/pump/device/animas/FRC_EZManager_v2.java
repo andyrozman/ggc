@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.animas;
+package ggc.pump.device.animas;
 
 import java.sql.ResultSet;
 
@@ -14,12 +14,12 @@ import com.atech.utils.file.FileReaderContext;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.DatabaseProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.defs.PumpAdditionalDataType;
-import main.java.ggc.pump.data.defs.PumpBasalType;
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.data.defs.PumpReport;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBasalType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpReport;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

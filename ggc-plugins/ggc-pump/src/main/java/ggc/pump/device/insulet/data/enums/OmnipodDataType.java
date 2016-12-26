@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.insulet.data.enums;
+package ggc.pump.device.insulet.data.enums;
 
 /**
  * Created by andy on 21.05.15.

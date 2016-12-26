@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.util;
+package ggc.pump.data.util;
 
 /**
  * Created by andy on 15.10.15.
@@ -11,11 +11,11 @@ import org.apache.commons.collections.CollectionUtils;
 import com.atech.data.SimpleTimeValueDataDto;
 import com.atech.i18n.I18nControlAbstract;
 
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.defs.PumpBasalType;
-import main.java.ggc.pump.data.defs.PumpBolusType;
-import main.java.ggc.pump.data.defs.PumpEventType;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.defs.PumpBasalType;
+import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.data.defs.PumpEventType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Class is intended to retrieve extra pump data. This can be more info about PumpBolus (in case of datasheet),

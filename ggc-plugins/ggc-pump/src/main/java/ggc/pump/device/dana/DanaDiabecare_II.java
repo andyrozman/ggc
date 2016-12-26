@@ -1,11 +1,11 @@
-package main.java.ggc.pump.device.dana;
+package ggc.pump.device.dana;
 
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.manager.PumpDevicesIds;
+import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control

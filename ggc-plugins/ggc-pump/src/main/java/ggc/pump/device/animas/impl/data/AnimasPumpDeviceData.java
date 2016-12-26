@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.animas.impl.data;
+package ggc.pump.device.animas.impl.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,11 +16,11 @@ import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
 import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
-import main.java.ggc.pump.data.dto.RatioDTO;
-import main.java.ggc.pump.device.animas.impl.data.dto.BasalLogEntry;
-import main.java.ggc.pump.device.animas.impl.data.dto.BasalProfileEntry;
-import main.java.ggc.pump.device.animas.impl.data.dto.BolusEntry;
-import main.java.ggc.pump.device.animas.impl.data.dto.PumpSettings;
+import ggc.pump.data.dto.RatioDTO;
+import ggc.pump.device.animas.impl.data.dto.BasalLogEntry;
+import ggc.pump.device.animas.impl.data.dto.BasalProfileEntry;
+import ggc.pump.device.animas.impl.data.dto.BolusEntry;
+import ggc.pump.device.animas.impl.data.dto.PumpSettings;
 
 /**
  *  Application:   GGC - GNU Gluco Control

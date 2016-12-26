@@ -1,12 +1,12 @@
-package main.java.ggc.pump.manager.company;
+package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.device.accuchek.AccuChekCombo;
-import main.java.ggc.pump.device.accuchek.AccuChekDTron;
-import main.java.ggc.pump.device.accuchek.AccuChekSpirit;
-import main.java.ggc.pump.device.accuchek.DisetronicDTron;
-import main.java.ggc.pump.manager.PumpDevicesIds;
+import ggc.pump.device.accuchek.AccuChekCombo;
+import ggc.pump.device.accuchek.AccuChekDTron;
+import ggc.pump.device.accuchek.AccuChekSpirit;
+import ggc.pump.device.accuchek.DisetronicDTron;
+import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control

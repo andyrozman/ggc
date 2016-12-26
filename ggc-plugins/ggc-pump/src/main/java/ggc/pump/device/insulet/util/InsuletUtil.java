@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.insulet.util;
+package ggc.pump.device.insulet.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +10,10 @@ import ggc.core.data.defs.ClockModeType;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.data.DeviceValueConfigEntry;
 import ggc.plugin.output.OutputWriter;
-import main.java.ggc.pump.data.defs.PumpConfigurationGroup;
-import main.java.ggc.pump.device.insulet.data.dto.config.BasalProgramNames;
-import main.java.ggc.pump.device.insulet.data.enums.ProfileType;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.device.insulet.data.dto.config.BasalProgramNames;
+import ggc.pump.device.insulet.data.enums.ProfileType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 09.05.15.

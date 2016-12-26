@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.defs;
+package ggc.pump.data.defs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,8 +8,8 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import main.java.ggc.pump.data.PumpValuesEntryExt;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -91,9 +91,9 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
         }
 
         String[] addata_desc_lcl = { ic.getMessage("SELECT_ADDITIONAL_DATA"), ic.getMessage("ADD_DATA_ACTIVITY"),
-                                    ic.getMessage("ADD_DATA_COMMENT"), ic.getMessage("ADD_DATA_BG"),
-                                    ic.getMessage("ADD_DATA_URINE"), ic.getMessage("ADD_DATA_CH"),
-                                    ic.getMessage("ADD_DATA_FOOD_DB"), ic.getMessage("ADD_DATA_FOOD_DESC"), };
+                                     ic.getMessage("ADD_DATA_COMMENT"), ic.getMessage("ADD_DATA_BG"),
+                                     ic.getMessage("ADD_DATA_URINE"), ic.getMessage("ADD_DATA_CH"),
+                                     ic.getMessage("ADD_DATA_FOOD_DB"), ic.getMessage("ADD_DATA_FOOD_DESC"), };
 
         addata_desc = addata_desc_lcl;
     }

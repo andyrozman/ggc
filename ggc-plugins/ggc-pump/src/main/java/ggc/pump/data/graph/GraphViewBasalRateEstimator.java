@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.graph;
+package ggc.pump.data.graph;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ import com.atech.graphics.graphs.AbstractGraphViewAndProcessor;
 import com.atech.utils.data.ATechDate;
 
 import ggc.core.data.graph.v1.GGCGraphUtil;
-import main.java.ggc.pump.data.bre.BREData;
-import main.java.ggc.pump.data.bre.BREDataCollection;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.bre.BREData;
+import ggc.pump.data.bre.BREDataCollection;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

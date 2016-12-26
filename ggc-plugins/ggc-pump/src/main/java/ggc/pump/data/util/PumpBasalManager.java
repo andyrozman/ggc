@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.util;
+package ggc.pump.data.util;
 
 import java.util.*;
 
@@ -11,14 +11,14 @@ import com.atech.utils.data.ATechDateType;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesRange;
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.defs.PumpBasalType;
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.data.dto.BasalRatesDayDTO;
-import main.java.ggc.pump.data.dto.BasalStatistics;
-import main.java.ggc.pump.data.profile.ProfileSubPattern;
-import main.java.ggc.pump.db.PumpProfile;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.defs.PumpBasalType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.dto.BasalRatesDayDTO;
+import ggc.pump.data.dto.BasalStatistics;
+import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 24.08.15.

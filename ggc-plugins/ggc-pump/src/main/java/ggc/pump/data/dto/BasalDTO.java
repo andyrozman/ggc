@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.dto;
+package ggc.pump.data.dto;
 
 import java.util.Calendar;
 

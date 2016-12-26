@@ -1,9 +1,9 @@
-package main.java.ggc.pump.device.animas.impl.handler;
+package ggc.pump.device.animas.impl.handler;
 
 import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
 import ggc.plugin.output.OutputWriter;
-import main.java.ggc.pump.data.writer.PumpValuesWriter;
+import ggc.pump.data.writer.PumpValuesWriter;
 
 /**
  *  Application:   GGC - GNU Gluco Control

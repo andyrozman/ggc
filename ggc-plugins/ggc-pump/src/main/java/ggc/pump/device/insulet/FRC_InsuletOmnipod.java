@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.insulet;
+package ggc.pump.device.insulet;
 
 import java.io.File;
 

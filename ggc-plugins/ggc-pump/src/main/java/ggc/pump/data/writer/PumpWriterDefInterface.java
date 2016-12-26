@@ -1,6 +1,6 @@
-package main.java.ggc.pump.data.writer;
+package ggc.pump.data.writer;
 
-import main.java.ggc.pump.data.PumpWriterValues;
+import ggc.pump.data.PumpWriterValues;
 
 /**
  * Created by andy on 10.03.15.

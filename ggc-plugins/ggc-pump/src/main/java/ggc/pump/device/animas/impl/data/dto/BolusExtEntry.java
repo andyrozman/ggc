@@ -1,9 +1,9 @@
-package main.java.ggc.pump.device.animas.impl.data.dto;
+package ggc.pump.device.animas.impl.data.dto;
 
 import ggc.plugin.device.impl.animas.data.AnimasDeviceReplyPacket;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
-import main.java.ggc.pump.device.animas.impl.converter.AnimasBaseDataV2Converter;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.device.animas.impl.converter.AnimasBaseDataV2Converter;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -97,8 +97,8 @@ public class BolusExtEntry
             else
             {
                 float corr = bgLimit / (this.isf * 1.0f);
-                return dataAccessPump.getFloatValueFromString(dataAccessPump.getDecimalHandler()
-                        .getDecimalNumberAsString(corr, 2));
+                return dataAccessPump
+                        .getFloatValueFromString(dataAccessPump.getDecimalHandler().getDecimalNumberAsString(corr, 2));
             }
         }
 
@@ -107,17 +107,20 @@ public class BolusExtEntry
 
     public String toStringFull()
     {
-        return String.format("BolusExtEntry [syncRecordId=%s, i2C=%s, carbs=%s, bg=%s, isf=%s"
-                + ", bgTarget=%s, bgDelta=%s, iobEnabled=%s, iobValue=%s, bgCorrection=%s, IOBDuaration=%s,"
-                + "BolusEntry=%s]", syncRecordId, i2C, carbs, bg, isf, bgTarget, bgDelta, iobEnabled, iobValue,
-            bgCorrection, iobDuration, bolusEntry.toString());
+        return String.format(
+            "BolusExtEntry [syncRecordId=%s, i2C=%s, carbs=%s, bg=%s, isf=%s"
+                    + ", bgTarget=%s, bgDelta=%s, iobEnabled=%s, iobValue=%s, bgCorrection=%s, IOBDuaration=%s,"
+                    + "BolusEntry=%s]",
+            syncRecordId, i2C, carbs, bg, isf, bgTarget, bgDelta, iobEnabled, iobValue, bgCorrection, iobDuration,
+            bolusEntry.toString());
     }
 
 
     public String toString()
     {
-        return String.format("BolusExtEntry [syncRecordId=%s, i2C=%s, carbs=%s, bg=%s, isf=%s"
-                + ", bgTarget=%s, bgDelta=%s, iobEnabled=%s, iobValue=%s, bgCorrection=%s, IOBDuaration=%s" + "]",
+        return String.format(
+            "BolusExtEntry [syncRecordId=%s, i2C=%s, carbs=%s, bg=%s, isf=%s"
+                    + ", bgTarget=%s, bgDelta=%s, iobEnabled=%s, iobValue=%s, bgCorrection=%s, IOBDuaration=%s" + "]",
             syncRecordId, i2C, carbs, bg, isf, bgTarget, bgDelta, iobEnabled, iobValue, bgCorrection, iobDuration);
     }
 

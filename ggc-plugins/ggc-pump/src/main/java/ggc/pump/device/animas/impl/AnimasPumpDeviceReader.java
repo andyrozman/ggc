@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.animas.impl;
+package ggc.pump.device.animas.impl;
 
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.animas.AnimasDeviceReader;
@@ -6,8 +6,8 @@ import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 import ggc.plugin.output.OutputWriter;
-import main.java.ggc.pump.device.animas.impl.handler.AnimasBaseDataV2Handler;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.device.animas.impl.handler.AnimasBaseDataV2Handler;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

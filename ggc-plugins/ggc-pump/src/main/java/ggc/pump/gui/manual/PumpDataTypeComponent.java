@@ -1,4 +1,4 @@
-package main.java.ggc.pump.gui.manual;
+package ggc.pump.gui.manual;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,12 +17,12 @@ import com.atech.utils.ATSwingUtils;
 import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.util.DataAccess;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.*;
+import ggc.pump.gui.profile.ProfileSelectorPump;
+import ggc.pump.util.DataAccessPump;
 import ggc.shared.bolushelper.BolusHelper;
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.PumpValuesEntryExt;
-import main.java.ggc.pump.data.defs.*;
-import main.java.ggc.pump.gui.profile.ProfileSelectorPump;
-import main.java.ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control

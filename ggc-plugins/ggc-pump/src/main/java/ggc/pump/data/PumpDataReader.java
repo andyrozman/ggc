@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data;
+package ggc.pump.data;
 
 import java.util.Hashtable;
 
@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.gui.OldDataReaderAbstract;
-import main.java.ggc.pump.db.GGCPumpDb;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.db.GGCPumpDb;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.animas.impl.data.dto;
+package ggc.pump.device.animas.impl.data.dto;
 
 import com.atech.utils.data.ATechDate;
 
@@ -30,9 +30,11 @@ import com.atech.utils.data.ATechDate;
 
 public class BasalLogEntry
 {
+
     private ATechDate dateTime;
     private float rate;
     private int flag;
+
 
     public BasalLogEntry(ATechDate dateTime, float rate, int flag)
     {
@@ -41,30 +43,36 @@ public class BasalLogEntry
         this.flag = flag;
     }
 
+
     public ATechDate getDateTime()
     {
         return dateTime;
     }
+
 
     public void setDateTime(ATechDate dateTime)
     {
         this.dateTime = dateTime;
     }
 
+
     public float getRate()
     {
         return rate;
     }
+
 
     public void setRate(float rate)
     {
         this.rate = rate;
     }
 
+
     public int getFlag()
     {
         return flag;
     }
+
 
     public void setFlag(int flag)
     {

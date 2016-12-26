@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.minimed.old;
+package ggc.pump.device.minimed.old;
 
 import java.sql.Date;
 import java.sql.ResultSet;

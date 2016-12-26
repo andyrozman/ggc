@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.defs;
+package ggc.pump.data.defs;
 
 import java.util.HashMap;
 
@@ -6,7 +6,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccess;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -47,7 +47,6 @@ public enum PumpBolusType implements CodeEnumWithTranslation
     static String[] bolus_desc;
     static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static HashMap<Integer, PumpBolusType> codeMapping = new HashMap<Integer, PumpBolusType>();
-
 
     static
     {

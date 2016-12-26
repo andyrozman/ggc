@@ -1,4 +1,4 @@
-package main.java.ggc.pump.test.minimed;
+package ggc.pump.test.minimed;
 
 import java.util.Iterator;
 import java.util.List;
@@ -10,11 +10,11 @@ import ggc.plugin.comm.NRSerialCommunicationHandler;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommInterfaceType;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
-import main.java.ggc.pump.defs.device.PumpDeviceDefinition;
-import main.java.ggc.pump.device.minimed.MinimedPumpDeviceHandler;
-import main.java.ggc.pump.device.minimed.old.MinimedSPMPump;
-import main.java.ggc.pump.test.AbstractPumpTest;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.defs.device.PumpDeviceDefinition;
+import ggc.pump.device.minimed.MinimedPumpDeviceHandler;
+import ggc.pump.device.minimed.old.MinimedSPMPump;
+import ggc.pump.test.AbstractPumpTest;
+import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
 
@@ -408,9 +408,9 @@ public class MinimedConsoleTester extends AbstractPumpTest
         try
         {
             if (args.length == 0)
-                new main.java.ggc.pump.test.MinimedConsoleTester(null);
+                new ggc.pump.test.MinimedConsoleTester(null);
             else
-                new main.java.ggc.pump.test.MinimedConsoleTester(args[0]);
+                new ggc.pump.test.MinimedConsoleTester(args[0]);
 
         }
         catch (Exception ex)

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.test;
+package ggc.pump.test;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import com.atech.utils.data.TimeZoneUtil;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
 import ggc.plugin.protocol.SerialProtocol;
-import main.java.ggc.pump.device.minimed.old.MinimedSPMPump;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.device.minimed.old.MinimedSPMPump;
+import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
 /**

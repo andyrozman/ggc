@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.accuchek;
+package ggc.pump.device.accuchek;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +13,9 @@ import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 import ggc.plugin.output.OutputWriter;
-import main.java.ggc.pump.defs.device.PumpDeviceDefinition;
-import main.java.ggc.pump.defs.device.PumpDeviceHandler;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.defs.device.PumpDeviceDefinition;
+import ggc.pump.defs.device.PumpDeviceHandler;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 20.10.15.

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.test.minimed;
+package ggc.pump.test.minimed;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,8 +17,8 @@ import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
 import ggc.plugin.device.impl.minimed.util.MinimedUtil;
 import ggc.plugin.output.ConsoleOutputWriter;
-import main.java.ggc.pump.device.minimed.data.decoder.MinimedPumpHistoryDecoder;
-import main.java.ggc.pump.test.AbstractPumpTest;
+import ggc.pump.device.minimed.data.decoder.MinimedPumpHistoryDecoder;
+import ggc.pump.test.AbstractPumpTest;
 
 /**
  * Created by andy on 27.03.15.

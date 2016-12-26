@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.profile;
+package ggc.pump.data.profile;
 
 import com.atech.utils.data.ATechDate;
 
@@ -46,11 +46,13 @@ public class ProfileSubOther extends ProfileSubEntry
      */
     public int event_type;
 
+
     @Override
     public int getType()
     {
         return ProfileSubEntry.PROFILE_SUB_EVENT;
     }
+
 
     /**
      * Get Change Info
@@ -62,6 +64,7 @@ public class ProfileSubOther extends ProfileSubEntry
         return " Pattern " + this.profileId + " changed at "
                 + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.time_event);
     }
+
 
     /**
      * Compare.
@@ -75,6 +78,7 @@ public class ProfileSubOther extends ProfileSubEntry
     {
         return (int) (pse1.time_event - pse2.time_event);
     }
+
 
     /** 
      * compareTo

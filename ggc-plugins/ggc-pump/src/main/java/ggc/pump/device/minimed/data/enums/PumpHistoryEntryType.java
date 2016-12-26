@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.minimed.data.enums;
+package ggc.pump.device.minimed.data.enums;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -177,7 +177,6 @@ public enum PumpHistoryEntryType implements CodeEnum
     private boolean hasSpecialRules = false;
 
     private static Map<Integer, PumpHistoryEntryType> opCodeMap = new HashMap<Integer, PumpHistoryEntryType>();
-
 
     static
     {

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.defs;
+package ggc.pump.data.defs;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccess;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
@@ -106,19 +106,19 @@ public enum PumpAlarms implements CodeEnumWithTranslation
         }
 
         String[] alarm_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), //
-                                   ic.getMessage("ALARM_CARTRIDGE_LOW"), //
-                                   ic.getMessage("ALARM_BATTERY_LOW"), //
-                                   ic.getMessage("ALARM_REPLACE_BATTERY"), //
-                                   ic.getMessage("ALARM_REVIEW_DATETIME"), //
-                                   ic.getMessage("ALARM_ALARM_CLOCK"),//
-                                   ic.getMessage("ALARM_PUMP_TIMER"),//
-                                   ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"),//
-                                   ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"),//
-                                   ic.getMessage("ALARM_BOLUS_CANCELED"),//
-                                   ic.getMessage("ALARM_NO_DELIVERY"),//
-                                   ic.getMessage("ALARM_EMPTY_CARTRIDGE"),//
-                                   ic.getMessage("ALARM_AUTO_OFF"),//
-                                   ic.getMessage("ALARM_CALL_SERVICE"),//
+                                    ic.getMessage("ALARM_CARTRIDGE_LOW"), //
+                                    ic.getMessage("ALARM_BATTERY_LOW"), //
+                                    ic.getMessage("ALARM_REPLACE_BATTERY"), //
+                                    ic.getMessage("ALARM_REVIEW_DATETIME"), //
+                                    ic.getMessage("ALARM_ALARM_CLOCK"), //
+                                    ic.getMessage("ALARM_PUMP_TIMER"), //
+                                    ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"), //
+                                    ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"), //
+                                    ic.getMessage("ALARM_BOLUS_CANCELED"), //
+                                    ic.getMessage("ALARM_NO_DELIVERY"), //
+                                    ic.getMessage("ALARM_EMPTY_CARTRIDGE"), //
+                                    ic.getMessage("ALARM_AUTO_OFF"), //
+                                    ic.getMessage("ALARM_CALL_SERVICE"),//
         };
 
         alarm_desc = alarm_desc_lcl;

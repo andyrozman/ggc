@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.defs;
+package ggc.pump.data.defs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +7,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -42,7 +42,8 @@ public enum PumpBasalType implements CodeEnumWithTranslation
     Value(1, "BASAL_VALUE"), //
     Profile(2, "BASAL_PROFILE"), //
     TemporaryBasalRate(3, "BASAL_TEMPORARY_BASAL_RATE"), //
-    @Deprecated TemporaryBasalRateProfile(4, "BASAL_TEMPORARY_BASAL_RATE_PROFILE"), //
+    @Deprecated
+    TemporaryBasalRateProfile(4, "BASAL_TEMPORARY_BASAL_RATE_PROFILE"), //
     PumpStatus(5, "BASAL_PUMP_STATUS"), //
     TemporaryBasalRateEnded(6, "BASAL_TEMPORARY_BASAL_RATE_ENDED"), //
     TemporaryBasalRateCanceled(7, "BASAL_TEMPORARY_BASAL_RATE_CANCELED"), //
@@ -66,7 +67,6 @@ public enum PumpBasalType implements CodeEnumWithTranslation
 
     static Map<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static Map<Integer, PumpBasalType> codeMapping = new HashMap<Integer, PumpBasalType>();
-
 
     static
     {

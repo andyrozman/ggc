@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.minimed.data.converter;
+package ggc.pump.device.minimed.data.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,10 +8,10 @@ import com.atech.utils.data.ATechDate;
 
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
-import main.java.ggc.pump.data.defs.PumpConfigurationGroup;
-import main.java.ggc.pump.data.defs.RatioType;
-import main.java.ggc.pump.data.dto.RatioDTO;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.data.defs.RatioType;
+import ggc.pump.data.dto.RatioDTO;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -98,9 +98,10 @@ public class Minimed515PumpDataConverter extends Minimed512PumpDataConverter
 
         LOG.debug("convertCurrentSettings");
 
-        writeSetting("PCFG_MM_RESERVOIR_WARNING_TYPE_TIME",
-            minimedReply.getRawDataAsInt(18) != 0 ? "PCFG_MM_RESERVOIR_WARNING_TYPE_TIME"
-                    : "PCFG_MM_RESERVOIR_WARNING_TYPE_UNITS", PumpConfigurationGroup.Other);
+        writeSetting(
+            "PCFG_MM_RESERVOIR_WARNING_TYPE_TIME", minimedReply.getRawDataAsInt(18) != 0
+                    ? "PCFG_MM_RESERVOIR_WARNING_TYPE_TIME" : "PCFG_MM_RESERVOIR_WARNING_TYPE_UNITS",
+            PumpConfigurationGroup.Other);
 
         writeSetting("PCFG_MM_SRESERVOIR_WARNING_POINT", "" + minimedReply.getRawDataAsInt(19),
             PumpConfigurationGroup.Other);
@@ -186,8 +187,7 @@ public class Minimed515PumpDataConverter extends Minimed512PumpDataConverter
         int unit = rd[0];
 
         String unitName = unit == 1 ? //
-        GlucoseUnitType.mg_dL.getTranslation()
-                : //
+                GlucoseUnitType.mg_dL.getTranslation() : //
                 GlucoseUnitType.mmol_L.getTranslation();
 
         for (int i = 1, j = 1; i < rd.length; i += 3, j++)
@@ -220,8 +220,8 @@ public class Minimed515PumpDataConverter extends Minimed512PumpDataConverter
         int unit = rd[0];
 
         String unitName = unit == 1 ? //
-        getMessage("CFG_BASE_CARBOHYDRATE_UNIT_GRAMS_SHORT") + "/" + //
-                getMessage("CFG_BASE_UNIT_UNIT_SHORT")
+                getMessage("CFG_BASE_CARBOHYDRATE_UNIT_GRAMS_SHORT") + "/" + //
+                        getMessage("CFG_BASE_UNIT_UNIT_SHORT")
                 : //
                 getMessage("CFG_BASE_CARBOHYDRATE_UNIT_EXCH_SHORT") + "/" + //
                         getMessage("CFG_BASE_UNIT_UNIT_SHORT");

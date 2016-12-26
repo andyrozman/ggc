@@ -1,4 +1,4 @@
-package main.java.ggc.pump.gui.manual;
+package ggc.pump.gui.manual;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,16 +23,16 @@ import com.atech.utils.ATSwingUtils;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
-import main.java.ggc.pump.data.PumpDailyStatistics;
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.PumpValuesEntryExt;
-import main.java.ggc.pump.data.defs.PumpAdditionalDataType;
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.data.dto.BasalStatistics;
-import main.java.ggc.pump.data.graph.GraphViewDailyPump;
-import main.java.ggc.pump.data.util.PumpBasalManager;
-import main.java.ggc.pump.db.GGCPumpDb;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpDailyStatistics;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.dto.BasalStatistics;
+import ggc.pump.data.graph.GraphViewDailyPump;
+import ggc.pump.data.util.PumpBasalManager;
+import ggc.pump.db.GGCPumpDb;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

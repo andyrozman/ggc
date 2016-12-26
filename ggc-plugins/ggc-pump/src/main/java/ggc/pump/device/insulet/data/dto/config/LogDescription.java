@@ -1,7 +1,7 @@
-package main.java.ggc.pump.device.insulet.data.dto.config;
+package ggc.pump.device.insulet.data.dto.config;
 
-import main.java.ggc.pump.device.insulet.data.dto.AbstractRecord;
-import main.java.ggc.pump.device.insulet.data.enums.OmnipodDataType;
+import ggc.pump.device.insulet.data.dto.AbstractRecord;
+import ggc.pump.device.insulet.data.enums.OmnipodDataType;
 
 /**
  * Created by andy on 19.05.15.
@@ -19,8 +19,8 @@ public class LogDescription extends AbstractRecord
     Integer first_index;
     Integer last_index;
 
-
     // 18
+
 
     // log_description: { format: '5S2N', fields: [
     // 'log_index', 'backup', 'location', 'has_variable', 'record_size',
@@ -78,7 +78,7 @@ public class LogDescription extends AbstractRecord
         // }
         // return logDescriptions;
 
-        // System.out.println("Not implemented :  " +
+        // System.out.println("Not implemented : " +
         // this.getClass().getSimpleName());
 
     }

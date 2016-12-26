@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.animas.impl.handler;
+package ggc.pump.device.animas.impl.handler;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +15,8 @@ import ggc.plugin.device.impl.animas.enums.AnimasTransferType;
 import ggc.plugin.device.impl.animas.handler.AbstractDeviceDataV2Handler;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 import ggc.plugin.output.OutputWriter;
-import main.java.ggc.pump.device.animas.impl.converter.AnimasBaseDataV2Converter;
-import main.java.ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
+import ggc.pump.device.animas.impl.converter.AnimasBaseDataV2Converter;
+import ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
 
 /**
  *  Application:   GGC - GNU Gluco Control

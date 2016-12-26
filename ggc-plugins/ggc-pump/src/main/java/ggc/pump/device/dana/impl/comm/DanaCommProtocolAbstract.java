@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.dana.impl.comm;
+package ggc.pump.device.dana.impl.comm;
 
 import java.util.GregorianCalendar;
 
@@ -14,10 +14,10 @@ import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.output.AbstractOutputWriter;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.reader.AbstractDeviceReader;
-import main.java.ggc.pump.data.PumpWriterValues;
-import main.java.ggc.pump.data.defs.*;
-import main.java.ggc.pump.device.dana.impl.data.defs.DanaDataType;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpWriterValues;
+import ggc.pump.data.defs.*;
+import ggc.pump.device.dana.impl.data.defs.DanaDataType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 11.03.15.

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.graph.bre;
+package ggc.pump.data.graph.bre;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import com.atech.utils.data.ATechDate;
 
-import main.java.ggc.pump.data.bre.BREData;
-import main.java.ggc.pump.data.bre.BREDataCollection;
-import main.java.ggc.pump.data.bre.BasalEstimationData;
-import main.java.ggc.pump.gui.bre.BasalRateEstimator;
+import ggc.pump.data.bre.BREData;
+import ggc.pump.data.bre.BREDataCollection;
+import ggc.pump.data.bre.BasalEstimationData;
+import ggc.pump.gui.bre.BasalRateEstimator;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -65,6 +65,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
     private XYSeriesCollection insBUDataset = new XYSeriesCollection();
     private int m_type = 0;
 
+
     /**
      * Constructor
      *
@@ -78,6 +79,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
         this.m_type = type;
     }
 
+
     /**
      * Get Help Id
      *
@@ -89,6 +91,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
         return null;
     }
 
+
     /**
      * Get Viewer Dialog Bounds (used by GraphViewer)
      *
@@ -99,6 +102,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
     {
         return new Rectangle(100, 100, 500, 400);
     }
+
 
     /**
      * Load Data
@@ -122,6 +126,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
          */
     }
 
+
     /**
      * Get Data Set
      *
@@ -131,6 +136,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
     {
         return this.dataset;
     }
+
 
     /**
      * Preprocess Data
@@ -194,6 +200,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
 
     }
 
+
     // GregorianCalendar gcx = new GregorianCalendar();
 
     /**
@@ -210,6 +217,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
         return gcx.getTimeInMillis();
     }
 
+
     /**
      * Get Title (used by GraphViewer)
      *
@@ -220,6 +228,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
     {
         return m_ic.getMessage("DAILYGRAPHFRAME");
     }
+
 
     /**
      * Set Plot
@@ -292,6 +301,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
 
     }
 
+
     /**
      * Set Data
      */
@@ -305,6 +315,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
         this.setPlot(chart);
     }
 
+
     /**
      * Create Chart
      */
@@ -317,6 +328,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
 
         this.setPlot(chart);
     }
+
 
     /**
      * Create Chart Panel

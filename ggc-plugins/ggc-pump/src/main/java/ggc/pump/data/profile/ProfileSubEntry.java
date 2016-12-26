@@ -1,9 +1,9 @@
-package main.java.ggc.pump.data.profile;
+package ggc.pump.data.profile;
 
 import com.atech.utils.data.ATechDate;
 
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -65,45 +65,54 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
      */
     public float amount;
 
+
     public String getProfileId()
     {
         return profileId;
     }
+
 
     public void setProfileId(String profileId)
     {
         this.profileId = profileId;
     }
 
+
     public int getTimeStart()
     {
         return timeStart;
     }
+
 
     public void setTimeStart(int timeStart)
     {
         this.timeStart = timeStart;
     }
 
+
     public int getTimeEnd()
     {
         return timeEnd;
     }
+
 
     public void setTimeEnd(int timeEnd)
     {
         this.timeEnd = timeEnd;
     }
 
+
     public float getAmount()
     {
         return amount;
     }
 
+
     public void setAmount(float amount)
     {
         this.amount = amount;
     }
+
 
     /**
      * Instantiates a new profile sub entry.
@@ -111,6 +120,7 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
     public ProfileSubEntry()
     {
     }
+
 
     /**
      * Instantiates a new profile sub entry.
@@ -128,6 +138,7 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
         amount = da.getFloatValueFromString(ss[2]);
     }
 
+
     /**
      * Sets the values.
      *
@@ -140,6 +151,7 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
         this.amount = pse.amount;
     }
 
+
     /**
      * Gets the packed.
      *
@@ -149,6 +161,7 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
     {
         return timeStart + "-" + timeEnd + "=" + DataAccessPlugInBase.Decimal2Format.format(amount);
     }
+
 
     /**
      * toString
@@ -160,6 +173,7 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
                 + ATechDate.getTimeString(ATechDate.FORMAT_TIME_ONLY_MIN, timeEnd) + " = "
                 + DataAccessPlugInBase.Decimal2Format.format(amount);
     }
+
 
     /**
      * Compare.
@@ -181,6 +195,7 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
             return pse1.timeStart - pse2.timeStart;
     }
 
+
     /**
      * compareTo
      */
@@ -188,6 +203,7 @@ public abstract class ProfileSubEntry implements Comparable<ProfileSubEntry>
     {
         return compare(this, pse);
     }
+
 
     /**
      * Get Profile SubEntry Type

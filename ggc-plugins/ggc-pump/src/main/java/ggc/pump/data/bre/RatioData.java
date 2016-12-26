@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.bre;
+package ggc.pump.data.bre;
 
 import com.atech.utils.data.ATechDate;
 
@@ -36,6 +36,7 @@ public class RatioData
      */
     public float ratio_ch_bg = 0.0f;
 
+
     /**
      * Constructor
      * 
@@ -51,6 +52,7 @@ public class RatioData
         this.ratio_bg_insulin = ratio_bg_insulin;
         this.ratio_ch_bg = ratio_ch_bg;
     }
+
 
     /** 
      * toString

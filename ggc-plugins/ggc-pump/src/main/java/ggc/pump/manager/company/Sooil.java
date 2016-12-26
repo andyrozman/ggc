@@ -1,11 +1,11 @@
-package main.java.ggc.pump.manager.company;
+package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.device.dana.DanaDiabecare_II;
-import main.java.ggc.pump.device.dana.DanaDiabecare_III_R;
-import main.java.ggc.pump.device.dana.DanaDiabecare_IIS;
-import main.java.ggc.pump.manager.PumpDevicesIds;
+import ggc.pump.device.dana.DanaDiabecare_II;
+import ggc.pump.device.dana.DanaDiabecare_III_R;
+import ggc.pump.device.dana.DanaDiabecare_IIS;
+import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control

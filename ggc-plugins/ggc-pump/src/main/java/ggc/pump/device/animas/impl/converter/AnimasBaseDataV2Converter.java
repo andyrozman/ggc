@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.animas.impl.converter;
+package ggc.pump.device.animas.impl.converter;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -19,13 +19,13 @@ import ggc.plugin.device.impl.animas.data.AnimasDeviceReplyPacket;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.*;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
-import main.java.ggc.pump.data.defs.RatioType;
-import main.java.ggc.pump.data.dto.RatioDTO;
-import main.java.ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
-import main.java.ggc.pump.device.animas.impl.data.dto.BasalProfileEntry;
-import main.java.ggc.pump.device.animas.impl.data.dto.BolusEntry;
-import main.java.ggc.pump.device.animas.impl.data.dto.BolusExtEntry;
-import main.java.ggc.pump.device.animas.impl.data.dto.PumpSettings;
+import ggc.pump.data.defs.RatioType;
+import ggc.pump.data.dto.RatioDTO;
+import ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
+import ggc.pump.device.animas.impl.data.dto.BasalProfileEntry;
+import ggc.pump.device.animas.impl.data.dto.BolusEntry;
+import ggc.pump.device.animas.impl.data.dto.BolusExtEntry;
+import ggc.pump.device.animas.impl.data.dto.PumpSettings;
 
 /**
  *  Application:   GGC - GNU Gluco Control

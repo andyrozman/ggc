@@ -1,8 +1,8 @@
-package main.java.ggc.pump.defs.device;
+package ggc.pump.defs.device;
 
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.v2.DeviceHandlerAbstract;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 22.10.15.

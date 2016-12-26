@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.dana;
+package ggc.pump.device.dana;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -30,9 +30,11 @@ package main.java.ggc.pump.device.dana;
 
 public class PacketStreamReader
 {
+
     private byte[] buffer;
     private int cursor;
     private int offset;
+
 
     /**
      * Instantiates a new packet stream reader.
@@ -46,6 +48,7 @@ public class PacketStreamReader
         this.reset();
     }
 
+
     /**
      * Encode int2.
      * 
@@ -58,6 +61,7 @@ public class PacketStreamReader
         buffer[offset] = (byte) (val >> 8 & 0xff);
         buffer[offset + 1] = (byte) (val & 0xff);
     }
+
 
     /**
      * Gets the ascii.
@@ -82,6 +86,7 @@ public class PacketStreamReader
         return str;
     }
 
+
     /**
      * Gets the byte.
      * 
@@ -92,6 +97,7 @@ public class PacketStreamReader
         return this.buffer[this.cursor++];
     }
 
+
     /**
      * Gets the command.
      * 
@@ -101,6 +107,7 @@ public class PacketStreamReader
     {
         return this.buffer[4];
     }
+
 
     /**
      * Gets the int.
@@ -114,6 +121,7 @@ public class PacketStreamReader
         return num + (this.buffer[this.cursor++] & 0xff);
     }
 
+
     /**
      * Gets the int1.
      * 
@@ -123,6 +131,7 @@ public class PacketStreamReader
     {
         return this.buffer[this.cursor++];
     }
+
 
     /**
      * Gets the string.
@@ -140,6 +149,7 @@ public class PacketStreamReader
         return str;
     }
 
+
     /**
      * Gets the sub command.
      * 
@@ -150,6 +160,7 @@ public class PacketStreamReader
         return this.buffer[5];
     }
 
+
     /**
      * Reset.
      */
@@ -157,6 +168,7 @@ public class PacketStreamReader
     {
         this.cursor = this.offset;
     }
+
 
     /**
      * Sets the buffer.
@@ -169,6 +181,7 @@ public class PacketStreamReader
         this.reset();
     }
 
+
     /**
      * Sets the byte.
      * 
@@ -178,6 +191,7 @@ public class PacketStreamReader
     {
         this.buffer[this.cursor++] = data;
     }
+
 
     /**
      * Sets the int.
@@ -189,6 +203,7 @@ public class PacketStreamReader
         this.buffer[this.cursor++] = (byte) (data >> 8 & 0xff);
         this.buffer[this.cursor++] = (byte) (data & 0xff);
     }
+
 
     /**
      * Skip.

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.util;
+package ggc.pump.util;
 
 import com.atech.i18n.I18nControlRunner;
 

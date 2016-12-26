@@ -1,13 +1,13 @@
-package main.java.ggc.pump.device.insulet.data.dto.data;
+package ggc.pump.device.insulet.data.dto.data;
 
 // This is not real Abstract record (it's not directly processed by OmniPod), but just Dto for use for PumpAlarms (used by HistoryRecord and also by log record
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 
-import main.java.ggc.pump.device.insulet.data.dto.AbstractRecord;
-import main.java.ggc.pump.device.insulet.data.enums.AlarmType;
-import main.java.ggc.pump.device.insulet.data.enums.OmnipodDataType;
+import ggc.pump.device.insulet.data.dto.AbstractRecord;
+import ggc.pump.device.insulet.data.enums.AlarmType;
+import ggc.pump.device.insulet.data.enums.OmnipodDataType;
 
 public class PumpAlarmRecord extends AbstractRecord
 {

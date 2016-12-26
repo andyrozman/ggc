@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data;
+package ggc.pump.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,10 +7,10 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import ggc.plugin.data.DeviceValuesEntry;
-import main.java.ggc.pump.data.defs.PumpAdditionalDataType;
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.data.defs.PumpDeviceValueType;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpDeviceValueType;
+import ggc.pump.util.DataAccessPump;
 
 public class PumpValuesHourProcessor
 {

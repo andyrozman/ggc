@@ -1,12 +1,12 @@
-package main.java.ggc.pump.device.insulet.data.dto;
+package ggc.pump.device.insulet.data.dto;
 
 import java.util.List;
 
 import com.atech.utils.data.BitUtils;
 
-import main.java.ggc.pump.device.insulet.data.enums.OmnipodDataType;
-import main.java.ggc.pump.device.insulet.util.InsuletUtil;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.device.insulet.data.enums.OmnipodDataType;
+import ggc.pump.device.insulet.util.InsuletUtil;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 19.05.15.

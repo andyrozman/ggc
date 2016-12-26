@@ -1,4 +1,4 @@
-package main.java.ggc.pump.gui.profile;
+package ggc.pump.gui.profile;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,9 +11,9 @@ import com.atech.help.HelpCapable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
-import main.java.ggc.pump.data.profile.ProfileSubEntry;
-import main.java.ggc.pump.data.profile.ProfileSubPattern;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -56,6 +56,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
     ProfileSubEntry m_pse;
     JSpinner sp_amount;
 
+
     /**
      * Constructor 
      * 
@@ -71,6 +72,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         m_pse = new ProfileSubPattern();
         init();
     }
+
 
     /**
      * Constructor
@@ -89,6 +91,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         load();
     }
 
+
     private void load()
     {
         this.tc_from.setTime(m_pse.timeStart);
@@ -96,12 +99,14 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         this.sp_amount.setValue(m_pse.amount);
     }
 
+
     private void save()
     {
         m_pse.timeStart = this.tc_from.getTime();
         m_pse.timeEnd = this.tc_till.getTime();
         m_pse.amount = ((Float) this.sp_amount.getValue()).floatValue();
     }
+
 
     private void init()
     {
@@ -153,8 +158,8 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         tc_till.setBounds(160, 110, 100, 35);
         panel.add(tc_till);
 
-        SpinnerNumberModel model = new SpinnerNumberModel(new Float(0.0f), new Float(0.0f), new Float(
-                m_da.getMaxBasalValue()), new Float(m_da.getBasalStep()));
+        SpinnerNumberModel model = new SpinnerNumberModel(new Float(0.0f), new Float(0.0f),
+                new Float(m_da.getMaxBasalValue()), new Float(m_da.getBasalStep()));
 
         sp_amount = new JSpinner(model);
         sp_amount.setBounds(160, 145, 55, 25);
@@ -166,7 +171,8 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         ATSwingUtils.getButton("  " + m_ic.getMessage("CANCEL"), 140, 200, 100, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
 
-        this.help_button = ATSwingUtils.createHelpButtonByBounds(250, 200, 100, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
+        this.help_button = ATSwingUtils.createHelpButtonByBounds(250, 200, 100, 25, this, ATSwingUtils.FONT_NORMAL,
+            m_da);
         panel.add(this.help_button);
 
         m_da.enableHelp(this);
@@ -202,6 +208,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
          */
     }
 
+
     /**
      * Invoked when an action occurs.
      */
@@ -225,6 +232,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
 
     }
 
+
     /**
      * Was Action Successful
      * 
@@ -235,6 +243,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         return m_action_done;
     }
 
+
     /**
      * Get Result - returns result of this dialog
      * 
@@ -244,6 +253,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
     {
         return this.m_pse;
     }
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
@@ -259,6 +269,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      * 
@@ -269,6 +280,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
         return this.help_button;
     }
 
+
     /**
      * getHelpId - get id for Help
      * 
@@ -278,6 +290,7 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
     {
         return "PumpTool_Profile_Entry_Editor";
     }
+
 
     /**
      * For Test

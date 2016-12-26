@@ -1,4 +1,4 @@
-package main.java.ggc.pump.graph;
+package ggc.pump.graph;
 
 import java.awt.*;
 import java.util.Map;
@@ -20,8 +20,8 @@ import ggc.core.util.DataAccess;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.graph.GGCPluginGraphViewerV2;
 import ggc.plugin.graph.PluginGraphDefinition;
-import main.java.ggc.pump.data.graph.v1.GraphV1DbRetrieverPump;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.graph.v1.GraphV1DbRetrieverPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 19.12.15.

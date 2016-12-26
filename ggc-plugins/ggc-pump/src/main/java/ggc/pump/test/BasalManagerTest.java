@@ -1,4 +1,4 @@
-package main.java.ggc.pump.test;
+package ggc.pump.test;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -7,8 +7,8 @@ import java.util.Map;
 import com.atech.utils.data.ATechDate;
 
 import ggc.core.util.DataAccess;
-import main.java.ggc.pump.data.dto.BasalRatesDayDTO;
-import main.java.ggc.pump.data.util.PumpBasalManager;
+import ggc.pump.data.dto.BasalRatesDayDTO;
+import ggc.pump.data.util.PumpBasalManager;
 
 /**
  * Created by andy on 24.09.15.

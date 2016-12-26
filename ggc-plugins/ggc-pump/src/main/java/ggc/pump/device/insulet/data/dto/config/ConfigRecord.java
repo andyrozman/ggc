@@ -1,8 +1,8 @@
-package main.java.ggc.pump.device.insulet.data.dto.config;
+package ggc.pump.device.insulet.data.dto.config;
 
-import main.java.ggc.pump.data.defs.PumpConfigurationGroup;
-import main.java.ggc.pump.device.insulet.data.dto.AbstractRecord;
-import main.java.ggc.pump.device.insulet.util.InsuletUtil;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.device.insulet.data.dto.AbstractRecord;
+import ggc.pump.device.insulet.util.InsuletUtil;
 
 /**
  * Created by andy on 24.05.15.

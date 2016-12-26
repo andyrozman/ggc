@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.insulet.data.dto.data;
+package ggc.pump.device.insulet.data.dto.data;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 
-import main.java.ggc.pump.device.insulet.data.dto.AbstractRecord;
-import main.java.ggc.pump.device.insulet.data.enums.HistoryRecordType;
-import main.java.ggc.pump.device.insulet.data.enums.LogType;
-import main.java.ggc.pump.device.insulet.data.enums.OmnipodDataType;
+import ggc.pump.device.insulet.data.dto.AbstractRecord;
+import ggc.pump.device.insulet.data.enums.HistoryRecordType;
+import ggc.pump.device.insulet.data.enums.LogType;
+import ggc.pump.device.insulet.data.enums.OmnipodDataType;
 
 /**
  * Created by andy on 19.05.15.

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.gui.manual;
+package ggc.pump.gui.manual;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -21,9 +21,9 @@ import ggc.core.plugins.GGCPluginType;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
 import ggc.shared.fooddesc.FoodDescriptionDialog;
-import main.java.ggc.pump.data.PumpValuesEntryExt;
-import main.java.ggc.pump.data.defs.PumpAdditionalDataType;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

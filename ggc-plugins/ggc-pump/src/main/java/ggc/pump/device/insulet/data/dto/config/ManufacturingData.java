@@ -1,7 +1,7 @@
-package main.java.ggc.pump.device.insulet.data.dto.config;
+package ggc.pump.device.insulet.data.dto.config;
 
-import main.java.ggc.pump.data.defs.PumpConfigurationGroup;
-import main.java.ggc.pump.device.insulet.data.enums.OmnipodDataType;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.device.insulet.data.enums.OmnipodDataType;
 
 /**
  * Created by andy on 19.05.15.

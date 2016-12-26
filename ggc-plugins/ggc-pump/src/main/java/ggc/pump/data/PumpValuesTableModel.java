@@ -1,8 +1,8 @@
-package main.java.ggc.pump.data;
+package ggc.pump.data;
 
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesTableModel;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,7 +40,7 @@ public class PumpValuesTableModel extends DeviceValuesTableModel
      * Constructor
      * 
      * @param ddh 
-
+    
      */
     public PumpValuesTableModel(DeviceDataHandler ddh, String source)
     {

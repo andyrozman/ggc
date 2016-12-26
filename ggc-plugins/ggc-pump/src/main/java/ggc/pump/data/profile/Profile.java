@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.profile;
+package ggc.pump.data.profile;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 
-import main.java.ggc.pump.data.PumpValuesEntryProfile;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntryProfile;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

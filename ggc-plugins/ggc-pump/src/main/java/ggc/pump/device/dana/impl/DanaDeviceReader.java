@@ -1,9 +1,9 @@
-package main.java.ggc.pump.device.dana.impl;
+package ggc.pump.device.dana.impl;
 
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.reader.SerialDeviceReader;
-import main.java.ggc.pump.device.dana.impl.comm.DanaCommProtocolNRSV1;
+import ggc.pump.device.dana.impl.comm.DanaCommProtocolNRSV1;
 
 /**
  * Created by andy on 11.03.15.

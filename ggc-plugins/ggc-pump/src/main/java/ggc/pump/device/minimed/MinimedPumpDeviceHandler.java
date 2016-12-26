@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.minimed;
+package ggc.pump.device.minimed;
 
 import java.util.List;
 
@@ -18,13 +18,13 @@ import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.defs.device.PumpDeviceHandler;
-import main.java.ggc.pump.device.minimed.data.converter.Minimed511PumpDataConverter;
-import main.java.ggc.pump.device.minimed.data.converter.Minimed512PumpDataConverter;
-import main.java.ggc.pump.device.minimed.data.converter.Minimed515PumpDataConverter;
-import main.java.ggc.pump.device.minimed.data.converter.Minimed523PumpDataConverter;
-import main.java.ggc.pump.device.minimed.data.decoder.MinimedPumpHistoryDecoder;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.defs.device.PumpDeviceHandler;
+import ggc.pump.device.minimed.data.converter.Minimed511PumpDataConverter;
+import ggc.pump.device.minimed.data.converter.Minimed512PumpDataConverter;
+import ggc.pump.device.minimed.data.converter.Minimed515PumpDataConverter;
+import ggc.pump.device.minimed.data.converter.Minimed523PumpDataConverter;
+import ggc.pump.device.minimed.data.decoder.MinimedPumpHistoryDecoder;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

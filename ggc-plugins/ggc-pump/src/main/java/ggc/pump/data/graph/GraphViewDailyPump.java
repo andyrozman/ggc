@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.graph;
+package ggc.pump.data.graph;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -29,16 +29,16 @@ import ggc.core.data.graph.v1.view.GraphViewCGMSDailyAbstract;
 import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesDay;
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.PumpValuesEntryExt;
-import main.java.ggc.pump.data.defs.PumpAdditionalDataType;
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.data.defs.PumpBolusType;
-import main.java.ggc.pump.data.dto.BasalRatesDayDTO;
-import main.java.ggc.pump.data.util.PumpBasalManager;
-import main.java.ggc.pump.data.util.PumpBolusManager;
-import main.java.ggc.pump.db.GGCPumpDb;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.data.dto.BasalRatesDayDTO;
+import ggc.pump.data.util.PumpBasalManager;
+import ggc.pump.data.util.PumpBolusManager;
+import ggc.pump.db.GGCPumpDb;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

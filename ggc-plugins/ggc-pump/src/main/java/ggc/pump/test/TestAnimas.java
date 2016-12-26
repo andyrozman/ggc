@@ -1,4 +1,4 @@
-package main.java.ggc.pump.test;
+package ggc.pump.test;
 
 import java.util.GregorianCalendar;
 
@@ -6,8 +6,8 @@ import com.atech.utils.data.ATechDate;
 
 import ggc.plugin.device.impl.animas.enums.AnimasDeviceType;
 import ggc.plugin.output.ConsoleOutputWriter;
-import main.java.ggc.pump.device.animas.impl.AnimasPumpDeviceReader;
-import main.java.ggc.pump.device.animas.impl.handler.AnimasPumpDataWriter;
+import ggc.pump.device.animas.impl.AnimasPumpDeviceReader;
+import ggc.pump.device.animas.impl.handler.AnimasPumpDataWriter;
 
 /**
  *  Application:   GGC - GNU Gluco Control

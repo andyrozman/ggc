@@ -41,7 +41,7 @@
  *
  */
 
-package main.java.ggc.pump.data.graph.bre;
+package ggc.pump.data.graph.bre;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -75,6 +75,7 @@ public class Test extends ApplicationFrame
      */
     private static final long serialVersionUID = 803652765625722610L;
 
+
     /**
      * Constructs a new demonstration application.
      *
@@ -90,6 +91,7 @@ public class Test extends ApplicationFrame
         setContentPane(panel);
 
     }
+
 
     /**
      * Creates a combined XYPlot chart.
@@ -134,6 +136,7 @@ public class Test extends ApplicationFrame
         return new JFreeChart("Combined (Range) XY Plot", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
 
     }
+
 
     // ****************************************************************************
     // * JFREECHART DEVELOPER GUIDE *
@@ -188,6 +191,7 @@ public class Test extends ApplicationFrame
 
     }
 
+
     /**
      * Creates a sample dataset.
      *
@@ -217,6 +221,7 @@ public class Test extends ApplicationFrame
         return new TimeSeriesCollection(series2);
 
     }
+
 
     /**
      * Starting point for the demonstration application.

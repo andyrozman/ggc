@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.insulet.data.dto.config;
+package ggc.pump.device.insulet.data.dto.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,11 +9,11 @@ import org.slf4j.LoggerFactory;
 import com.atech.i18n.I18nControlAbstract;
 
 import ggc.core.util.DataAccess;
-import main.java.ggc.pump.data.defs.PumpConfigurationGroup;
-import main.java.ggc.pump.device.insulet.data.enums.OmnipodDataType;
-import main.java.ggc.pump.device.insulet.data.enums.ProfileType;
-import main.java.ggc.pump.device.insulet.util.InsuletUtil;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.device.insulet.data.enums.OmnipodDataType;
+import ggc.pump.device.insulet.data.enums.ProfileType;
+import ggc.pump.device.insulet.util.InsuletUtil;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 19.05.15.

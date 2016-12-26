@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data;
+package ggc.pump.data;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,8 +18,8 @@ import ggc.plugin.data.DeviceValuesEntryInterface;
 import ggc.plugin.data.enums.DeviceEntryStatus;
 import ggc.plugin.output.OutputWriterType;
 import ggc.plugin.util.DeviceValuesEntryUtil;
-import main.java.ggc.pump.data.profile.ProfileSubEntry;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.plugin;
+package ggc.pump.plugin;
 
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.db.hibernate.transfer.BackupRestoreRunner;
@@ -10,10 +10,10 @@ import ggc.core.db.hibernate.pump.PumpDataH;
 import ggc.core.db.hibernate.pump.PumpProfileH;
 import ggc.core.db.tool.transfer.GGCExporter;
 import ggc.core.db.tool.transfer.GGCImporter;
-import main.java.ggc.pump.db.PumpData;
-import main.java.ggc.pump.db.PumpDataExtended;
-import main.java.ggc.pump.db.PumpProfile;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.db.PumpData;
+import ggc.pump.db.PumpDataExtended;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -49,11 +49,11 @@ public class BackupRestorePumpHandler extends BackupRestorePlugin
     I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
 
     private String[] object_desc = { ic.getMessage("PUMP_DATA"), ic.getMessage("PUMP_DATA_EXTENDED"),
-                                    ic.getMessage("PUMP_PROFILE") };
+                                     ic.getMessage("PUMP_PROFILE") };
 
     private String[] object_name = { "ggc.core.db.hibernate.pump.PumpDataH",
-                                    "ggc.core.db.hibernate.pump.PumpDataExtendedH",
-                                    "ggc.core.db.hibernate.pump.PumpProfileH" };
+                                     "ggc.core.db.hibernate.pump.PumpDataExtendedH",
+                                     "ggc.core.db.hibernate.pump.PumpProfileH" };
 
 
     /**

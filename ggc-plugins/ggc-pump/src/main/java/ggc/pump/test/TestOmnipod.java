@@ -1,10 +1,10 @@
-package main.java.ggc.pump.test;
+package ggc.pump.test;
 
 import java.io.File;
 
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.ConsoleOutputWriter;
-import main.java.ggc.pump.device.insulet.InsuletReader;
+import ggc.pump.device.insulet.InsuletReader;
 
 /**
  * Created by andy on 25.05.15.

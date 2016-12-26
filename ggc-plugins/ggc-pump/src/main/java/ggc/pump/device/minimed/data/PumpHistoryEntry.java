@@ -1,9 +1,9 @@
-package main.java.ggc.pump.device.minimed.data;
+package ggc.pump.device.minimed.data;
 
 import com.atech.utils.data.CodeEnum;
 
 import ggc.plugin.device.impl.minimed.data.MinimedHistoryEntry;
-import main.java.ggc.pump.device.minimed.data.enums.PumpHistoryEntryType;
+import ggc.pump.device.minimed.data.enums.PumpHistoryEntryType;
 
 /**
  *  Application:   GGC - GNU Gluco Control

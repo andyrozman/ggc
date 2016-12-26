@@ -1,8 +1,8 @@
-package main.java.ggc.pump.device.accuchek;
+package ggc.pump.device.accuchek;
 
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.defs.device.PumpDeviceDefinition;
+import ggc.pump.defs.device.PumpDeviceDefinition;
 
 /**
  * Created by andy on 20.10.15.

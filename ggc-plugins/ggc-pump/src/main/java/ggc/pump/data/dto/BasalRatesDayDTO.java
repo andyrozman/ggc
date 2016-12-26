@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.dto;
+package ggc.pump.data.dto;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.profile.ProfileSubPattern;
-import main.java.ggc.pump.db.PumpProfile;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 24.08.15.

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.test;
+package ggc.pump.test;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,7 +10,9 @@ import com.atech.utils.data.HexUtils;
 
 public class MinimedDecoderTester
 {
+
     HexUtils hu = null;
+
 
     public MinimedDecoderTester(int[] data)
     {
@@ -33,6 +35,7 @@ public class MinimedDecoderTester
 
     }
 
+
     private void decodeCurrentTimeStamp(int ai[], int start)
 
     {
@@ -50,7 +53,8 @@ public class MinimedDecoderTester
 
         // m_timeStamp = createTimestamp(j1, i1, l, i, j, k);
         // log.info( (new
-        // StringBuilder()).append("decodeCurrentTimeStamp: current time stamp for device is ").append(m_timeStamp).toString());
+        // StringBuilder()).append("decodeCurrentTimeStamp: current time stamp
+        // for device is ").append(m_timeStamp).toString());
 
         // GregorianCalendar gc = createTimestamp(j1, i1, l, hour, min, year);
 
@@ -67,8 +71,10 @@ public class MinimedDecoderTester
         }
 
         // log.info( (new
-        // StringBuilder()).append("decodeCurrentTimeStamp: current time stamp for device is ").append(m_timeStamp).toString());
+        // StringBuilder()).append("decodeCurrentTimeStamp: current time stamp
+        // for device is ").append(m_timeStamp).toString());
     }
+
 
     /*
      * final Date createTimestamp(int i, int j, int k, int l, int i1, int j1)
@@ -89,6 +95,7 @@ public class MinimedDecoderTester
 
         // return gregoriancalendar.getTime();
     }
+
 
     private int convertYear(int i)
     {
@@ -113,6 +120,7 @@ public class MinimedDecoderTester
         return k;
 
     }
+
 
     public void readFromDisk(int[] dta)
     {
@@ -214,6 +222,7 @@ public class MinimedDecoderTester
         }
 
     }
+
 
     public static void main(String[] args)
     {

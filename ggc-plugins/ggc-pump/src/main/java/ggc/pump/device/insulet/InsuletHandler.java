@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.insulet;
+package ggc.pump.device.insulet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.output.OutputWriter;
-import main.java.ggc.pump.defs.device.PumpDeviceHandler;
+import ggc.pump.defs.device.PumpDeviceHandler;
 
 /**
  * Created by andy on 22.05.15.

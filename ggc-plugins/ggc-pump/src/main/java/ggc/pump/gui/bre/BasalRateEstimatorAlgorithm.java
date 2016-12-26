@@ -1,12 +1,12 @@
-package main.java.ggc.pump.gui.bre;
+package ggc.pump.gui.bre;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import main.java.ggc.pump.data.bre.BREData;
-import main.java.ggc.pump.data.bre.BREDataCollection;
-import main.java.ggc.pump.data.bre.BasalEstimationData;
-import main.java.ggc.pump.data.graph.bre.BREGraphsAbstract;
+import ggc.pump.data.bre.BREData;
+import ggc.pump.data.bre.BREDataCollection;
+import ggc.pump.data.bre.BasalEstimationData;
+import ggc.pump.data.graph.bre.BREGraphsAbstract;
 
 // TODO: Auto-generated Javadoc
 /**

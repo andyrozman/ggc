@@ -1,4 +1,4 @@
-package main.java.ggc.pump.test;
+package ggc.pump.test;
 
 import java.io.File;
 import java.util.List;
@@ -10,10 +10,10 @@ import com.atech.utils.data.TimeZoneUtil;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.output.ConsoleOutputWriter;
 import ggc.plugin.protocol.SerialProtocol;
-import main.java.ggc.pump.device.accuchek.AccuChekCombo;
-import main.java.ggc.pump.device.animas.FRC_EZManager_v2;
-import main.java.ggc.pump.device.dana.DanaDiabecare_III_R;
-import main.java.ggc.pump.device.minimed.file.MinimedCareLinkPump;
+import ggc.pump.device.accuchek.AccuChekCombo;
+import ggc.pump.device.animas.FRC_EZManager_v2;
+import ggc.pump.device.dana.DanaDiabecare_III_R;
+import ggc.pump.device.minimed.file.MinimedCareLinkPump;
 
 // TODO: Auto-generated Javadoc
 /**

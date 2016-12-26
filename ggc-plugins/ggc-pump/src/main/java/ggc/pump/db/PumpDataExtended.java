@@ -1,4 +1,4 @@
-package main.java.ggc.pump.db;
+package ggc.pump.db;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -14,7 +14,7 @@ import com.atech.utils.ATDataAccessAbstract;
 
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.core.util.DataAccess;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

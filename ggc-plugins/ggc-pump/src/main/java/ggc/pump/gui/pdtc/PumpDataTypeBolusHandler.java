@@ -1,10 +1,10 @@
-package main.java.ggc.pump.gui.pdtc;
+package ggc.pump.gui.pdtc;
 
 import java.util.Map;
 
 import javax.swing.*;
 
-import main.java.ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntry;
 
 /**
  * Created by andy on 12/11/16.

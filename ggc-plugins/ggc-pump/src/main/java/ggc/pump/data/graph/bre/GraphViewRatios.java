@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.graph.bre;
+package ggc.pump.data.graph.bre;
 
 import java.util.ArrayList;
 
@@ -11,8 +11,8 @@ import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import main.java.ggc.pump.data.bre.BREData;
-import main.java.ggc.pump.data.bre.RatioData;
+import ggc.pump.data.bre.BREData;
+import ggc.pump.data.bre.RatioData;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -56,6 +56,7 @@ public class GraphViewRatios extends BREGraphsAbstract // implements
     DateAxis dateAxis;
     NumberAxis insBUAxis;
 
+
     // private TimeSeriesCollection insBUDataset = new TimeSeriesCollection();
     // private XYSeriesCollection insBUDataset = new XYSeriesCollection();
 
@@ -67,6 +68,7 @@ public class GraphViewRatios extends BREGraphsAbstract // implements
         super();
     }
 
+
     /**
      * Get Help Id
      * 
@@ -77,6 +79,7 @@ public class GraphViewRatios extends BREGraphsAbstract // implements
     {
         return null;
     }
+
 
     /**
      * Load Data
@@ -100,6 +103,7 @@ public class GraphViewRatios extends BREGraphsAbstract // implements
          */
     }
 
+
     /**
      * Get Data Set
      * 
@@ -109,6 +113,7 @@ public class GraphViewRatios extends BREGraphsAbstract // implements
     {
         return this.dataset;
     }
+
 
     /**
      * Preprocess Data
@@ -152,6 +157,7 @@ public class GraphViewRatios extends BREGraphsAbstract // implements
         dataset.addSeries(ratio_ch_bg);
 
     }
+
 
     /**
      * Set Plot
@@ -224,6 +230,7 @@ public class GraphViewRatios extends BREGraphsAbstract // implements
         // ax insBUAxis.setAutoRangeIncludesZero(true);
 
     }
+
 
     /**
      * Create Chart

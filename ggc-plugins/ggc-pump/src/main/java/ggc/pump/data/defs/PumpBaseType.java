@@ -1,11 +1,11 @@
-package main.java.ggc.pump.data.defs;
+package ggc.pump.data.defs;
 
 import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.bre;
+package ggc.pump.data.bre;
 
 import com.atech.utils.data.ATechDate;
 
@@ -41,6 +41,7 @@ public class BREData
      */
     public static final int BRE_DATA_BASAL_RATIO_GRAPH = 100;
 
+
     /**
      * Constructor
      * 
@@ -75,6 +76,7 @@ public class BREData
      */
     public float value = 0.0f;
 
+
     /**
      * Are we in time range.
      * 
@@ -89,6 +91,7 @@ public class BREData
         else
             return false;
     }
+
 
     /** 
      * toString
@@ -123,7 +126,7 @@ public class BREData
         sb.append("</font></html>");
 
         return sb.toString();
-        // return atd.getTimeString() + "           " +
+        // return atd.getTimeString() + " " +
         // DataAccessPump.Decimal1Format.format(value);
     }
 

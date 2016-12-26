@@ -1,4 +1,4 @@
-package main.java.ggc.pump.test.minimed;
+package ggc.pump.test.minimed;
 
 import com.atech.utils.data.BitUtils;
 
@@ -7,7 +7,7 @@ import ggc.plugin.device.impl.minimed.data.MinimedCommandPacket;
 import ggc.plugin.device.impl.minimed.data.dto.MinimedConnectionParametersDTO;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommInterfaceType;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
-import main.java.ggc.pump.test.AbstractPumpTest;
+import ggc.pump.test.AbstractPumpTest;
 
 /**
  * Created by andy on 29.10.15.

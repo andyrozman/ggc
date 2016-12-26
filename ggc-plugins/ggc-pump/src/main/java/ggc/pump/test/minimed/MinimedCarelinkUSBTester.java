@@ -1,4 +1,4 @@
-package main.java.ggc.pump.test.minimed;
+package ggc.pump.test.minimed;
 
 /**
  * Created by andy on 08.06.15.

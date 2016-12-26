@@ -1,4 +1,4 @@
-package main.java.ggc.pump.defs;
+package ggc.pump.defs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +18,15 @@ import ggc.plugin.device.mgr.DeviceHandlerManager;
 import ggc.plugin.graph.PluginGraphDefinition;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.report.PluginReportDefinition;
-import main.java.ggc.pump.defs.report.PumpReportDefinition;
-import main.java.ggc.pump.device.accuchek.AccuChekPumpHandler;
-import main.java.ggc.pump.device.animas.AnimasIR1200Handler;
-import main.java.ggc.pump.device.dana.DanaPumpHandler;
-import main.java.ggc.pump.device.insulet.InsuletHandler;
-import main.java.ggc.pump.device.minimed.MinimedPumpDeviceHandler;
-import main.java.ggc.pump.graph.PumpGraphDefintion;
-import main.java.ggc.pump.util.DataAccessPump;
-import main.java.ggc.pump.util.GGCPumpICRunner;
+import ggc.pump.defs.report.PumpReportDefinition;
+import ggc.pump.device.accuchek.AccuChekPumpHandler;
+import ggc.pump.device.animas.AnimasIR1200Handler;
+import ggc.pump.device.dana.DanaPumpHandler;
+import ggc.pump.device.insulet.InsuletHandler;
+import ggc.pump.device.minimed.MinimedPumpDeviceHandler;
+import ggc.pump.graph.PumpGraphDefintion;
+import ggc.pump.util.DataAccessPump;
+import ggc.pump.util.GGCPumpICRunner;
 
 /**
  * Created by andy on 18.10.15.

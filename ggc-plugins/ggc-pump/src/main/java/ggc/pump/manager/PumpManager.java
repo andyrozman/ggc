@@ -1,10 +1,10 @@
-package main.java.ggc.pump.manager;
+package ggc.pump.manager;
 
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.manager.DeviceManager;
-import main.java.ggc.pump.defs.device.PumpDeviceDefinition;
-import main.java.ggc.pump.device.PumpDeviceInstanceWithHandler;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.defs.device.PumpDeviceDefinition;
+import ggc.pump.device.PumpDeviceInstanceWithHandler;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

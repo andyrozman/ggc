@@ -1,11 +1,11 @@
-package main.java.ggc.pump.device;
+package ggc.pump.device;
 
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.XmlProtocol;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

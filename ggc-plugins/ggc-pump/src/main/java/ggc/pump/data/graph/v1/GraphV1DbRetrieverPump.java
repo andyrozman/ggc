@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.graph.v1;
+package ggc.pump.data.graph.v1;
 
 import java.util.*;
 
@@ -13,12 +13,12 @@ import ggc.core.data.graph.v1.db.GraphV1DbRetriever;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.DeviceValuesRange;
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.PumpValuesEntryExt;
-import main.java.ggc.pump.data.defs.PumpAdditionalDataType;
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.data.dto.BasalRatesDayDTO;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesEntryExt;
+import ggc.pump.data.defs.PumpAdditionalDataType;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.dto.BasalRatesDayDTO;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 26.01.16.
@@ -29,7 +29,6 @@ public class GraphV1DbRetrieverPump implements GraphV1DbRetriever
     DataAccessPump dataAccess;
     private static List<PumpBaseType> baseTypeFilter = null;
     private static List<PumpAdditionalDataType> additionalTypeFilter = null;
-
 
     static
     {

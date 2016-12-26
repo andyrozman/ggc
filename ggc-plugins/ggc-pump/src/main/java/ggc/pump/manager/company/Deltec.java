@@ -1,10 +1,10 @@
-package main.java.ggc.pump.manager.company;
+package ggc.pump.manager.company;
 
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.device.deltec.DeltecCosmo1700;
-import main.java.ggc.pump.device.deltec.DeltecCosmo1800;
-import main.java.ggc.pump.manager.PumpDevicesIds;
+import ggc.pump.device.deltec.DeltecCosmo1700;
+import ggc.pump.device.deltec.DeltecCosmo1800;
+import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control

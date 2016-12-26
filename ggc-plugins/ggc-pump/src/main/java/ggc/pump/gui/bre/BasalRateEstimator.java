@@ -1,4 +1,4 @@
-package main.java.ggc.pump.gui.bre;
+package ggc.pump.gui.bre;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,14 +11,14 @@ import javax.swing.*;
 import com.atech.graphics.graphs.GraphViewerPanel;
 import com.atech.utils.ATSwingUtils;
 
-import main.java.ggc.pump.data.bre.BREData;
-import main.java.ggc.pump.data.bre.BREDataCollection;
-import main.java.ggc.pump.data.graph.GraphViewBasalRateEstimator;
-import main.java.ggc.pump.data.graph.bre.BREGraphsAbstract;
-import main.java.ggc.pump.data.graph.bre.GraphViewBasalRate;
-import main.java.ggc.pump.data.graph.bre.GraphViewBasals;
-import main.java.ggc.pump.data.graph.bre.GraphViewRatios;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.bre.BREData;
+import ggc.pump.data.bre.BREDataCollection;
+import ggc.pump.data.graph.GraphViewBasalRateEstimator;
+import ggc.pump.data.graph.bre.BREGraphsAbstract;
+import ggc.pump.data.graph.bre.GraphViewBasalRate;
+import ggc.pump.data.graph.bre.GraphViewBasals;
+import ggc.pump.data.graph.bre.GraphViewRatios;
+import ggc.pump.util.DataAccessPump;
 
 // TODO: Auto-generated Javadoc
 /**

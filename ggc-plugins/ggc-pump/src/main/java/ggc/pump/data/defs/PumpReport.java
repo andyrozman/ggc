@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data.defs;
+package ggc.pump.data.defs;
 
 import java.util.HashMap;
 
@@ -6,7 +6,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccess;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -65,10 +65,10 @@ public enum PumpReport implements CodeEnumWithTranslation
         }
 
         String[] report_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), //
-                                    ic.getMessage("REPORT_MISC"), //
-                                    ic.getMessage("REPORT_BOLUS_TOTAL_DAY"), //
-                                    ic.getMessage("REPORT_BASAL_TOTAL_DAY"), //
-                                    ic.getMessage("REPORT_INSULIN_TOTAL_DAY"), };
+                                     ic.getMessage("REPORT_MISC"), //
+                                     ic.getMessage("REPORT_BOLUS_TOTAL_DAY"), //
+                                     ic.getMessage("REPORT_BASAL_TOTAL_DAY"), //
+                                     ic.getMessage("REPORT_INSULIN_TOTAL_DAY"), };
 
         report_desc = report_desc_lcl;
     }

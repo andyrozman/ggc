@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.minimed.file;
+package ggc.pump.device.minimed.file;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -8,9 +8,9 @@ import ggc.plugin.data.DeviceValuesWriter;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.data.PumpWriterValues;
-import main.java.ggc.pump.data.defs.*;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpWriterValues;
+import ggc.pump.data.defs.*;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump

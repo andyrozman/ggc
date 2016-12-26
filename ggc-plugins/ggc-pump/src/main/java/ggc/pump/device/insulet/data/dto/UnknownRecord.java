@@ -1,8 +1,8 @@
-package main.java.ggc.pump.device.insulet.data.dto;
+package ggc.pump.device.insulet.data.dto;
 
 import java.util.List;
 
-import main.java.ggc.pump.device.insulet.data.enums.OmnipodDataType;
+import ggc.pump.device.insulet.data.enums.OmnipodDataType;
 
 /**
  * Created by andy on 20.05.15.

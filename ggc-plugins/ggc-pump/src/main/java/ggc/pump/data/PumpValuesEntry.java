@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data;
+package ggc.pump.data;
 
 import java.util.*;
 
@@ -19,8 +19,8 @@ import ggc.plugin.graph.data.GraphValue;
 import ggc.plugin.graph.data.GraphValuesCapable;
 import ggc.plugin.output.OutputWriterType;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.data.defs.*;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.*;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump

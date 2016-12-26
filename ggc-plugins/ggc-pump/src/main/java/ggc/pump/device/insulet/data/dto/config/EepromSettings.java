@@ -1,10 +1,10 @@
-package main.java.ggc.pump.device.insulet.data.dto.config;
+package ggc.pump.device.insulet.data.dto.config;
 
 import ggc.core.data.defs.GlucoseUnitType;
-import main.java.ggc.pump.data.defs.PumpConfigurationGroup;
-import main.java.ggc.pump.device.insulet.data.enums.OmnipodDataType;
-import main.java.ggc.pump.device.insulet.util.InsuletUtil;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.device.insulet.data.enums.OmnipodDataType;
+import ggc.pump.device.insulet.util.InsuletUtil;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 19.05.15.
@@ -109,10 +109,10 @@ public class EepromSettings extends ConfigRecord
                 + configurationAlert + ", reminderAlert=" + reminderAlert + ", serialNumber='" + serialNumber + '\''
                 + ", \ntemporaryBasalType=" + temporaryBasalType + ", externalBolusType=" + externalBolusType
                 + ", bolusReminder=" + bolusReminder + ", bolusCalculations=" + bolusCalculations
-                + ", bolusCalculationsReverse=" + bolusCalculationsReverse + ", bgSound=" + bgSound + ", bgMin="
-                + bgMin + ", bgGoalLow=" + bgGoalLow + ", bgGoalUp=" + bgGoalUp + ", insulinDuration='"
-                + insulinDuration + '\'' + ", \nalarmRepairCount=" + alarmRepairCount + ", pdmConfig=" + pdmConfig
-                + ", glucoseUnitType=" + glucoseUnitType + ']';
+                + ", bolusCalculationsReverse=" + bolusCalculationsReverse + ", bgSound=" + bgSound + ", bgMin=" + bgMin
+                + ", bgGoalLow=" + bgGoalLow + ", bgGoalUp=" + bgGoalUp + ", insulinDuration='" + insulinDuration + '\''
+                + ", \nalarmRepairCount=" + alarmRepairCount + ", pdmConfig=" + pdmConfig + ", glucoseUnitType="
+                + glucoseUnitType + ']';
     }
 
 

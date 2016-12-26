@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.insulet.data.enums;
+package ggc.pump.device.insulet.data.enums;
 
 import java.util.HashMap;
 import java.util.Map;

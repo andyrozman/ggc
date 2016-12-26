@@ -1,4 +1,4 @@
-package main.java.ggc.pump.manager.company;
+package ggc.pump.manager.company;
 
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.DownloadSupportType;
@@ -6,7 +6,7 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.DeviceImplementationStatus;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
-import main.java.ggc.pump.device.AbstractPump;
+import ggc.pump.device.AbstractPump;
 
 // TODO: Auto-generated Javadoc
 /**

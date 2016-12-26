@@ -1,4 +1,4 @@
-package main.java.ggc.pump.gui.manual;
+package ggc.pump.gui.manual;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -8,7 +8,7 @@ import com.atech.i18n.I18nControlAbstract;
 
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.report;
+package ggc.pump.report;
 
 import java.awt.image.BufferedImage;
 import java.util.*;
@@ -33,17 +33,17 @@ import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.graph.data.CGMSGraphDataHandler;
 import ggc.plugin.report.data.cgms.CGMSDayData;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.PumpValuesHour;
-import main.java.ggc.pump.data.PumpValuesHourProcessor;
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.data.defs.PumpDeviceValueType;
-import main.java.ggc.pump.data.dto.BasalRatesDayDTO;
-import main.java.ggc.pump.data.util.PumpAdditionalDataHandler;
-import main.java.ggc.pump.data.util.PumpBasalManager;
-import main.java.ggc.pump.db.GGCPumpDb;
-import main.java.ggc.pump.defs.PumpPluginDefinition;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.PumpValuesHour;
+import ggc.pump.data.PumpValuesHourProcessor;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpDeviceValueType;
+import ggc.pump.data.dto.BasalRatesDayDTO;
+import ggc.pump.data.util.PumpAdditionalDataHandler;
+import ggc.pump.data.util.PumpBasalManager;
+import ggc.pump.db.GGCPumpDb;
+import ggc.pump.defs.PumpPluginDefinition;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

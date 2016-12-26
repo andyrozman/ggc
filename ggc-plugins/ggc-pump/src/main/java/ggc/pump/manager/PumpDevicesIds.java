@@ -1,4 +1,4 @@
-package main.java.ggc.pump.manager;
+package ggc.pump.manager;
 
 /**
  *  Application:   GGC - GNU Gluco Control

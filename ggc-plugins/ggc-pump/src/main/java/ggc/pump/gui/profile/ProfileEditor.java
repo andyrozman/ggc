@@ -1,4 +1,4 @@
-package main.java.ggc.pump.gui.profile;
+package ggc.pump.gui.profile;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,13 +18,13 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
 import ggc.core.db.hibernate.pump.PumpProfileH;
-import main.java.ggc.pump.data.graph.GraphViewBasalRateEstimator;
-import main.java.ggc.pump.data.graph.GraphViewProfileEditor;
-import main.java.ggc.pump.data.graph.bre.BREGraphsAbstract;
-import main.java.ggc.pump.data.profile.ProfileSubEntry;
-import main.java.ggc.pump.data.profile.ProfileSubPattern;
-import main.java.ggc.pump.db.PumpProfile;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.graph.GraphViewBasalRateEstimator;
+import ggc.pump.data.graph.GraphViewProfileEditor;
+import ggc.pump.data.graph.bre.BREGraphsAbstract;
+import ggc.pump.data.profile.ProfileSubEntry;
+import ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

@@ -1,12 +1,12 @@
-package main.java.ggc.pump.data.cfg;
+package ggc.pump.data.cfg;
 
 import java.util.List;
 
 import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 import ggc.plugin.cfg.DeviceConfigurationDefinition;
-import main.java.ggc.pump.device.DummyPump;
-import main.java.ggc.pump.manager.PumpManager;
+import ggc.pump.device.DummyPump;
+import ggc.pump.manager.PumpManager;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -48,6 +48,7 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
         return "PUMP";
     }
 
+
     /**
      * Only certain devices support manual time fix for application (meters do, other's don't).
      * 
@@ -57,6 +58,7 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
     {
         return false;
     }
+
 
     /**
      * Get path to Configuration file as string
@@ -68,6 +70,7 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
         return "../data/tools/PumpConfiguration.properties";
     }
 
+
     /**
      * Returns Dummy object (needed for some actions)
      * 
@@ -78,6 +81,7 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
         return new DummyPump();
     }
 
+
     /**
      * Returns list of all supported devices for plugin. Needed for device selection
      * 
@@ -85,8 +89,9 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
      */
     public List<SelectableInterface> getSupportedDevices()
     {
-        return PumpManager.getInstance().getSupportedDevicesForSelector(); //.getSupportedDevices();
+        return PumpManager.getInstance().getSupportedDevicesForSelector(); // .getSupportedDevices();
     }
+
 
     /**
      * Returns prefix for help context
@@ -98,11 +103,12 @@ public class PumpConfigurationDefinition implements DeviceConfigurationDefinitio
         return "PumpTool_";
     }
 
+
     public Object getSpecificDeviceInstance(String company, String deviceName)
     {
         Object device = PumpManager.getInstance().getDeviceV2(company, deviceName);
 
-        if (device==null)
+        if (device == null)
         {
             device = PumpManager.getInstance().getDeviceV1(company, deviceName);
         }

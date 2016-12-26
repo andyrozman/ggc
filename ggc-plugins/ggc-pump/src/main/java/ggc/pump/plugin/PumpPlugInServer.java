@@ -1,4 +1,4 @@
-package main.java.ggc.pump.plugin;
+package ggc.pump.plugin;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,15 +20,15 @@ import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.graph.PlugInGraphDialog;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.data.PumpValuesEntry;
-import main.java.ggc.pump.data.dto.BasalStatistics;
-import main.java.ggc.pump.db.PumpData;
-import main.java.ggc.pump.db.PumpDataExtended;
-import main.java.ggc.pump.db.PumpProfile;
-import main.java.ggc.pump.defs.PumpPluginDefinition;
-import main.java.ggc.pump.gui.manual.PumpDataDialog;
-import main.java.ggc.pump.gui.profile.ProfileSelector;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.PumpValuesEntry;
+import ggc.pump.data.dto.BasalStatistics;
+import ggc.pump.db.PumpData;
+import ggc.pump.db.PumpDataExtended;
+import ggc.pump.db.PumpProfile;
+import ggc.pump.defs.PumpPluginDefinition;
+import ggc.pump.gui.manual.PumpDataDialog;
+import ggc.pump.gui.profile.ProfileSelector;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

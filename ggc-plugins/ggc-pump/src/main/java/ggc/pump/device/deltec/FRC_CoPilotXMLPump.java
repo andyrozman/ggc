@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.deltec;
+package ggc.pump.device.deltec;
 
 import java.io.File;
 

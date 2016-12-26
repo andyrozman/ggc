@@ -1,4 +1,4 @@
-package main.java.ggc.pump.report;
+package ggc.pump.report;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -16,7 +16,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesRange;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Application: GGC - GNU Gluco Control

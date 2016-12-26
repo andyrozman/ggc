@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.dana.impl.data.defs;
+package ggc.pump.device.dana.impl.data.defs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,24 +9,18 @@ import java.util.Map;
 public enum DanaDataType
 {
 
-    Connect("Connect", new byte[] { 0x30, 1 }),
-    Disconnect("Disconnect", new byte[] { 0x30, 2 }),
-    Shipping("", new byte[] { 50, 7 }),
-    SettingsBasalPattern("", new byte[] { 50, 2 }),
-    SettingsGeneral("", new byte[] { 50, 3 }),
-    SettingsMaxValues("", new byte[] { 50, 5 }),
-    SettingsBolusHelper("", new byte[] { 50, 4 }),
-    SettingsGlucomode("", new byte[] { 50, 9 }),
+    Connect("Connect", new byte[] { 0x30, 1 }), Disconnect("Disconnect", new byte[] { 0x30, 2 }), Shipping("",
+            new byte[] { 50, 7 }), SettingsBasalPattern("", new byte[] { 50, 2 }), SettingsGeneral("",
+                    new byte[] { 50, 3 }), SettingsMaxValues("", new byte[] { 50, 5 }), SettingsBolusHelper("",
+                            new byte[] { 50, 4 }), SettingsGlucomode("", new byte[] { 50, 9 }),
 
-
-    Alarms("Alarm", new byte[] { 0x31, 5 }), //5
+    Alarms("Alarm", new byte[] { 0x31, 5 }), // 5
     Bolus("Bolus", new byte[] { 0x31, 1 }), // 1
     Carbohydrates("Carbohydrates", new byte[] { 0x31, 7 }), // 8
     DailyInsulin("Daily", new byte[] { 0x31, 2 }), // 2
     Errors("Error", new byte[] { 0x31, 6 }), // 4
     Glucose("Glucose", new byte[] { 0x31, 4 }), // 6
     Prime("Prime", new byte[] { 0x31, 3 }), // 3
-
 
     ;
 
@@ -43,12 +37,6 @@ public enum DanaDataType
         mapByCode.put(8, Carbohydrates);
     }
 
-
-
-
-
-
-
     private String description;
     private byte[] command;
 
@@ -59,20 +47,24 @@ public enum DanaDataType
         this.command = command;
     }
 
+
     public String getDescription()
     {
         return description;
     }
+
 
     public void setDescription(String description)
     {
         this.description = description;
     }
 
+
     public byte[] getCommand()
     {
         return command;
     }
+
 
     public void setCommand(byte[] command)
     {

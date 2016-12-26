@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.dana.impl.comm;
+package ggc.pump.device.dana.impl.comm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.animas.impl.data.dto;
+package ggc.pump.device.animas.impl.data.dto;
 
 import java.math.BigDecimal;
 
@@ -7,8 +7,8 @@ import com.atech.utils.data.ATechDate;
 import ggc.core.util.DataAccess;
 import ggc.plugin.device.impl.animas.data.AnimasDeviceReplyPacket;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
-import main.java.ggc.pump.device.animas.impl.converter.AnimasBaseDataV2Converter;
-import main.java.ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
+import ggc.pump.device.animas.impl.converter.AnimasBaseDataV2Converter;
+import ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -64,7 +64,7 @@ public class BolusEntry
         switch (bolusType)
         {
 
-        // types> Noraml, ezCarb, ezBg, Combo Bolus
+            // types> Noraml, ezCarb, ezBg, Combo Bolus
             case 0: // Normal
                 switch (bolusSubType)
                 {

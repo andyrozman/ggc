@@ -1,10 +1,10 @@
-package main.java.ggc.pump.data.defs;
+package ggc.pump.data.defs;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
 import ggc.plugin.data.enums.ValueType;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,7 +54,6 @@ public enum RatioType implements CodeEnumWithTranslation
     String i18nKey;
     String translation;
     ValueType valueType;
-
 
     static
     {

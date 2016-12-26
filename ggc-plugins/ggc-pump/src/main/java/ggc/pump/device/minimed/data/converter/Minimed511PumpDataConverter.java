@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.minimed.data.converter;
+package ggc.pump.device.minimed.data.converter;
 
 import java.util.GregorianCalendar;
 
@@ -15,9 +15,9 @@ import ggc.plugin.device.impl.minimed.data.converter.MinimedDataConverterAbstrac
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.util.MinimedUtil;
-import main.java.ggc.pump.data.defs.PumpBaseType;
-import main.java.ggc.pump.data.defs.PumpConfigurationGroup;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpBaseType;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

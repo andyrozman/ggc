@@ -1,11 +1,11 @@
-package main.java.ggc.pump.data.dto;
+package ggc.pump.data.dto;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
 
 import ggc.plugin.data.enums.ValueType;
-import main.java.ggc.pump.data.defs.RatioType;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.RatioType;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.dana;
+package ggc.pump.device.dana;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.output.OutputWriter;
-import main.java.ggc.pump.defs.device.PumpDeviceHandler;
-import main.java.ggc.pump.device.dana.impl.DanaDeviceReader;
+import ggc.pump.defs.device.PumpDeviceHandler;
+import ggc.pump.device.dana.impl.DanaDeviceReader;
 
 /**
  * Created by andy on 21.10.15.

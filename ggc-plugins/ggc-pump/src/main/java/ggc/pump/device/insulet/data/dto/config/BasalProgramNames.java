@@ -1,10 +1,10 @@
-package main.java.ggc.pump.device.insulet.data.dto.config;
+package ggc.pump.device.insulet.data.dto.config;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import main.java.ggc.pump.device.insulet.data.enums.OmnipodDataType;
-import main.java.ggc.pump.device.insulet.util.InsuletUtil;
+import ggc.pump.device.insulet.data.enums.OmnipodDataType;
+import ggc.pump.device.insulet.util.InsuletUtil;
 
 /**
  * Created by andy on 19.05.15.

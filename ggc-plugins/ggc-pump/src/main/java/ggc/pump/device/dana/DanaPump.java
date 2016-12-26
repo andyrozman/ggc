@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.dana;
+package ggc.pump.device.dana;
 
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.PlugInBaseException;
@@ -7,7 +7,7 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.DeviceConnectionProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.device.AbstractPump;
+import ggc.pump.device.AbstractPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

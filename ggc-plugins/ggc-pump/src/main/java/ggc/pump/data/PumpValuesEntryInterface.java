@@ -1,4 +1,4 @@
-package main.java.ggc.pump.data;
+package ggc.pump.data;
 
 import ggc.plugin.data.DeviceValuesEntryInterface;
 

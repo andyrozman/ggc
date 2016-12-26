@@ -1,4 +1,4 @@
-package main.java.ggc.pump.test.minimed;
+package ggc.pump.test.minimed;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -227,7 +227,7 @@ public class MinimedDecoderTester
 
         int[] dta = drw.readIntArray();
 
-        new main.java.ggc.pump.test.MinimedDecoderTester(dta);
+        new ggc.pump.test.MinimedDecoderTester(dta);
 
     }
 

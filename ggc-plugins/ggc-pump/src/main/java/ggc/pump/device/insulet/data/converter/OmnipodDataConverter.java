@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.insulet.data.converter;
+package ggc.pump.device.insulet.data.converter;
 
 import java.util.*;
 
@@ -10,20 +10,20 @@ import com.atech.utils.data.BitUtils;
 
 import ggc.core.util.DataAccess;
 import ggc.plugin.output.OutputWriter;
-import main.java.ggc.pump.data.defs.PumpBolusType;
-import main.java.ggc.pump.data.dto.BasalDTO;
-import main.java.ggc.pump.data.dto.BolusDTO;
-import main.java.ggc.pump.data.dto.BolusWizardDTO;
-import main.java.ggc.pump.data.writer.PumpValuesWriter;
-import main.java.ggc.pump.device.insulet.data.dto.AbstractRecord;
-import main.java.ggc.pump.device.insulet.data.dto.data.HistoryRecord;
-import main.java.ggc.pump.device.insulet.data.dto.data.LogRecord;
-import main.java.ggc.pump.device.insulet.data.dto.data.PumpAlarmRecord;
-import main.java.ggc.pump.device.insulet.data.enums.AlarmType;
-import main.java.ggc.pump.device.insulet.data.enums.BGFlags;
-import main.java.ggc.pump.device.insulet.data.enums.LogType;
-import main.java.ggc.pump.device.insulet.util.InsuletUtil;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpBolusType;
+import ggc.pump.data.dto.BasalDTO;
+import ggc.pump.data.dto.BolusDTO;
+import ggc.pump.data.dto.BolusWizardDTO;
+import ggc.pump.data.writer.PumpValuesWriter;
+import ggc.pump.device.insulet.data.dto.AbstractRecord;
+import ggc.pump.device.insulet.data.dto.data.HistoryRecord;
+import ggc.pump.device.insulet.data.dto.data.LogRecord;
+import ggc.pump.device.insulet.data.dto.data.PumpAlarmRecord;
+import ggc.pump.device.insulet.data.enums.AlarmType;
+import ggc.pump.device.insulet.data.enums.BGFlags;
+import ggc.pump.device.insulet.data.enums.LogType;
+import ggc.pump.device.insulet.util.InsuletUtil;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 21.05.15.

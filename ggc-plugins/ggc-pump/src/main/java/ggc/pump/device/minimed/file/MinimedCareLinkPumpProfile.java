@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.minimed.file;
+package ggc.pump.device.minimed.file;
 
 import java.util.Hashtable;
 
@@ -6,8 +6,8 @@ import com.atech.utils.ATDataAccessAbstract;
 
 import ggc.plugin.device.impl.minimed.file.MinimedCareLink;
 import ggc.plugin.device.impl.minimed.file.MinimedCareLinkData;
-import main.java.ggc.pump.data.profile.Profile;
-import main.java.ggc.pump.data.profile.ProfileSubPattern;
+import ggc.pump.data.profile.Profile;
+import ggc.pump.data.profile.ProfileSubPattern;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,6 +38,7 @@ import main.java.ggc.pump.data.profile.ProfileSubPattern;
 public class MinimedCareLinkPumpProfile extends MinimedCareLinkData // extends
                                                                     // ArrayList<MinimedCareLinkPumpData>
 {
+
     @SuppressWarnings("unused")
     private String date_time_full = null;
     @SuppressWarnings("unused")
@@ -46,6 +47,7 @@ public class MinimedCareLinkPumpProfile extends MinimedCareLinkData // extends
     private String pattern_name = null;
     private int num_profiles = 0;
     private Hashtable<String, ProfileSubPattern> entries_index = new Hashtable<String, ProfileSubPattern>();
+
 
     /**
      * Constructor
@@ -58,6 +60,7 @@ public class MinimedCareLinkPumpProfile extends MinimedCareLinkData // extends
         super(mcl);
         this.date_time_full = date_time;
     }
+
 
     // ChangeBasalProfilePattern =
     // "PATTERN_NAME=pattern a, NUM_PROFILES=20, ACTION_REQUESTOR=pump"
@@ -87,7 +90,8 @@ public class MinimedCareLinkPumpProfile extends MinimedCareLinkData // extends
             // "ACTION_REQUESTOR="));
 
             // ChangeBasalProfile =
-            // "PATTERN_DATUM=879228396, PROFILE_INDEX=0, RATE=0, 2, START_TIME=0"
+            // "PATTERN_DATUM=879228396, PROFILE_INDEX=0, RATE=0, 2,
+            // START_TIME=0"
             String index = this.getDataBetween(entry.raw_values, "PROFILE_INDEX=", "RATE=");
             String rate = this.getDataNumber(entry.raw_values, "RATE=", "START_TIME=");
             String start_time = this.getDataDuration(entry.raw_values + ",END", "START_TIME=", "\",END");
@@ -112,6 +116,7 @@ public class MinimedCareLinkPumpProfile extends MinimedCareLinkData // extends
 
     }
 
+
     @Override
     public void processData()
     {
@@ -123,6 +128,7 @@ public class MinimedCareLinkPumpProfile extends MinimedCareLinkData // extends
         this.entries_index.get("" + this.num_profiles).dt_end = 2359;
 
     }
+
 
     /**
      * Get Profile 

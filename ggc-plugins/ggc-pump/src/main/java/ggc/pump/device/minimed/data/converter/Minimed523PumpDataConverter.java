@@ -1,8 +1,8 @@
-package main.java.ggc.pump.device.minimed.data.converter;
+package ggc.pump.device.minimed.data.converter;
 
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
-import main.java.ggc.pump.data.defs.PumpConfigurationGroup;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.PumpConfigurationGroup;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -59,7 +59,8 @@ public class Minimed523PumpDataConverter extends Minimed515PumpDataConverter
     {
         super.decodeCurrentSettings(minimedReply);
 
-        writeSetting("PCFG_BOLUS_SCROLL_STEP_SIZE", "" + minimedReply.getRawDataAsInt(21), PumpConfigurationGroup.Bolus);
+        writeSetting("PCFG_BOLUS_SCROLL_STEP_SIZE", "" + minimedReply.getRawDataAsInt(21),
+            PumpConfigurationGroup.Bolus);
 
         this.decodeEnableSetting("PCFG_CAPTURE_EVENT_ENABLE", minimedReply, 22, PumpConfigurationGroup.Other);
         this.decodeEnableSetting("PCFG_OTHER_DEVICE_ENABLE", minimedReply, 23, PumpConfigurationGroup.Other);

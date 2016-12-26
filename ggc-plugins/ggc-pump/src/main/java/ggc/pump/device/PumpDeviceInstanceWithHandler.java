@@ -1,12 +1,12 @@
-package main.java.ggc.pump.device;
+package ggc.pump.device;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
-import main.java.ggc.pump.defs.device.PumpDeviceDefinition;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.defs.device.PumpDeviceDefinition;
+import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 10.02.15.

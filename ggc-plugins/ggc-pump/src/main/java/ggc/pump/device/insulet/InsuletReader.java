@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device.insulet;
+package ggc.pump.device.insulet;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import ggc.plugin.data.progress.ProgressType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.reader.AbstractDeviceReader;
-import main.java.ggc.pump.device.insulet.data.converter.OmnipodConfigConverter;
-import main.java.ggc.pump.device.insulet.data.converter.OmnipodDataConverter;
-import main.java.ggc.pump.device.insulet.data.dto.AbstractRecord;
-import main.java.ggc.pump.device.insulet.data.dto.config.*;
-import main.java.ggc.pump.device.insulet.data.dto.data.HistoryRecord;
-import main.java.ggc.pump.device.insulet.data.dto.data.LogRecord;
-import main.java.ggc.pump.device.insulet.util.InsuletUtil;
+import ggc.pump.device.insulet.data.converter.OmnipodConfigConverter;
+import ggc.pump.device.insulet.data.converter.OmnipodDataConverter;
+import ggc.pump.device.insulet.data.dto.AbstractRecord;
+import ggc.pump.device.insulet.data.dto.config.*;
+import ggc.pump.device.insulet.data.dto.data.HistoryRecord;
+import ggc.pump.device.insulet.data.dto.data.LogRecord;
+import ggc.pump.device.insulet.util.InsuletUtil;
 
 /**
  * Created by andy on 19.05.15.

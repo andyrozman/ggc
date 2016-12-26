@@ -1,4 +1,4 @@
-package main.java.ggc.pump.graph;
+package ggc.pump.graph;
 
 import java.util.Hashtable;
 
@@ -36,6 +36,7 @@ public class PumpGraphContext extends PlugInGraphContext
 
     Hashtable<Integer, Integer> pump_extended_values_map = null;
 
+
     /**
      * Constructor
      */
@@ -43,6 +44,7 @@ public class PumpGraphContext extends PlugInGraphContext
     {
         super();
     }
+
 
     @Override
     public void loadMappings()
@@ -74,6 +76,7 @@ public class PumpGraphContext extends PlugInGraphContext
      * Object Pump: Profiles
      */
     public static final int OBJECT_PUMP_PROFILES = 3;
+
 
     @Override
     public int getObjectMapping(int object_base_type, int type)

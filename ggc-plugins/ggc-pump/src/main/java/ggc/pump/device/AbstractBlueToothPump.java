@@ -1,4 +1,4 @@
-package main.java.ggc.pump.device;
+package ggc.pump.device;
 
 import java.util.Hashtable;
 
@@ -10,8 +10,8 @@ import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.protocol.BlueToothProtocol;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.data.defs.*;
-import main.java.ggc.pump.util.DataAccessPump;
+import ggc.pump.data.defs.*;
+import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control

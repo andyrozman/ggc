@@ -1,10 +1,10 @@
-package main.java.ggc.pump.device.accuchek;
+package ggc.pump.device.accuchek;
 
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.manager.company.AbstractDeviceCompany;
 import ggc.plugin.output.OutputWriter;
 import ggc.plugin.util.DataAccessPlugInBase;
-import main.java.ggc.pump.manager.PumpDevicesIds;
+import ggc.pump.manager.PumpDevicesIds;
 
 /**
  *  Application:   GGC - GNU Gluco Control
