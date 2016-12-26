@@ -1,6 +1,6 @@
 package ggc.meter.manager;
 
-import ggc.meter.data.defs.MeterDeviceDefinition;
+import ggc.meter.defs.device.MeterDeviceDefinition;
 import ggc.meter.device.MeterDeviceInstanceWithHandler;
 import ggc.meter.manager.company.*;
 import ggc.plugin.device.v2.DeviceDefinition;
@@ -96,7 +96,7 @@ public class MeterManager extends DeviceManager
     public void loadDeviceCompanies()
     {
         addDeviceCompany(new AscensiaBayer());
-        addDeviceCompany(new Roche());
+        // addDeviceCompany(new Roche());
         addDeviceCompany(new LifeScan());
         addDeviceCompany(new Abbott());
         addDeviceCompany(new Menarini());
@@ -108,18 +108,5 @@ public class MeterManager extends DeviceManager
         addDeviceCompany(new USDiagnostic());
         addDeviceCompany(new Wavesense());
     }
-
-    // /**
-    // * Load Supported Devices
-    // */
-    // @Override
-    // public void loadSupportedDevices()
-    // {
-    // this.supported_devices.addAll(new AscensiaBayer().getDevices());
-    // this.supported_devices.addAll(new Roche().getDevices());
-    // this.supported_devices.addAll(new LifeScan().getDevices());
-    // this.supported_devices.addAll(new Abbott().getDevices());
-    // this.supported_devices.addAll(new Menarini().getDevices());
-    // }
 
 }

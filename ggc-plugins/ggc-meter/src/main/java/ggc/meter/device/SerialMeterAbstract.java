@@ -11,7 +11,7 @@ import com.atech.utils.data.ATechDateType;
 
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.MeterValuesEntry;
-import ggc.meter.data.defs.MeterDeviceDefinition;
+import ggc.meter.defs.device.MeterDeviceDefinition;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.comm.NRSerialCommunicationHandler;
 import ggc.plugin.comm.cfg.SerialSettings;

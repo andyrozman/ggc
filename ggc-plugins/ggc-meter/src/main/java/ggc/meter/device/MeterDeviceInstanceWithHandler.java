@@ -1,6 +1,6 @@
 package ggc.meter.device;
 
-import ggc.meter.data.defs.MeterDeviceDefinition;
+import ggc.meter.defs.device.MeterDeviceDefinition;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.DeviceIdentification;
 import ggc.plugin.device.v2.DeviceDefinition;

@@ -1,4 +1,4 @@
-package ggc.meter.data.defs;
+package ggc.meter.defs.device;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import ggc.plugin.protocol.DeviceConnectionProtocol;
  */
 public enum MeterDeviceDefinition implements DeviceDefinition
 {
-
+    // Ascensia
     AscensiaContourUsb(10007, "Contour USB", "ascensia_contour_usb.jpg", //
             "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.Done, //
             DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler, //
@@ -37,10 +37,91 @@ public enum MeterDeviceDefinition implements DeviceDefinition
             2000, MeterDisplayInterfaceType.Simple),
 
     AscensiaContourNextLink(10010, "Contour Next Link", "ascensia_contour_nextlink.jpg", //
-            "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.InProgress, //
+            "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.Done, //
             DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler,
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
             2000, MeterDisplayInterfaceType.Simple),
+
+    // AccuChek
+
+    // FIXME
+    AccuChekSmartPixGeneric(20001, "SmartPix", "ac_active.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_ACTIVE", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 1, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekActive(20002, "Active", "ac_active.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_ACTIVE", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 480, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekAdvantage(20003, "Advantage", "ac_advantage.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_ADVANTAGE", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 480, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekAviva(20004, "Aviva", "ac_aviva.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_AVIVA", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 500, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekComfort(20005, "Comfort", "ac_comfort.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_COMFORT", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 100, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekCompact(20006, "Compact", "ac_compact.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_COMPACT", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 100, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekCompactPlus(20007, "CompactPlus", "ac_compact_plus.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_COMPACTPLUS", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 300, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekGo(20008, "Go", "ac_go.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_GO", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 480, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekIntegra(20009, "Integra", "ac_integra.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_INTEGRA", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 100, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekPerforma(20010, "Performa", "ac_performa.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_PERFORMA", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 500, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekSensor(20011, "Sensor", "ac_sensor.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_SENSOR", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 480, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekNano(20012, "Aviva Nano", "ac_nano.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_NANO", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 500, MeterDisplayInterfaceType.Simple), //
+
+    AccuChekAvivaCombo(20013, "Aviva Combo", "ac_combo.jpg", //
+            "INSTRUCTIONS_ACCUCHEK_AVIVA_COMBO", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
+            DeviceProgressStatus.Normal, "", 500, MeterDisplayInterfaceType.Extended), //
 
     // FIXME - just for testing
     // MenariniGlucoMenReady(100011, "Menarini", null, //
@@ -53,11 +134,24 @@ public enum MeterDeviceDefinition implements DeviceDefinition
 
     ;
 
+    // AccuChekActive.java
+    // AccuChekAdvantage.java
+    // AccuChekAvivaCombo.java
+    // AccuChekAviva.java
+    // AccuChekComfort.java
+    // AccuChekCompact.java
+    // AccuChekCompactPlus.java
+    // AccuChekGo.java
+    // AccuChekIntegra.java
+    // AccuChekMeterHandler.java
+    // AccuChekNano.java
+    // AccuChekPerforma.java
+    // AccuChekSensor.java
+
     // Contour Next EZ, Contour Next Link 2.4, Didget, Contour XT ?
 
     static List<DeviceDefinition> allDevices;
     static List<DeviceDefinition> supportedDevices;
-
 
     static
     {
@@ -242,6 +336,12 @@ public enum MeterDeviceDefinition implements DeviceDefinition
     public MeterDisplayInterfaceType getMeterDisplayInterfaceType()
     {
         return this.displayInterfaceType;
+    }
+
+
+    public int getMaxRecords()
+    {
+        return this.maxRecords;
     }
 
 }

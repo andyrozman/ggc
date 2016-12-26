@@ -11,8 +11,8 @@ import com.atech.utils.data.TimeZoneUtil;
 
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
-import ggc.meter.data.defs.MeterDeviceDefinition;
 import ggc.meter.defs.MeterPluginDefinition;
+import ggc.meter.defs.device.MeterDeviceDefinition;
 import ggc.meter.device.abbott.OptiumXceed;
 import ggc.meter.device.accuchek.AccuChekAvivaCombo;
 import ggc.meter.device.ascensia.AscensiaContour;
