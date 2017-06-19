@@ -3,14 +3,25 @@ package ggc.core.db.tool.transfer;
 import java.io.File;
 import java.util.*;
 
-import com.atech.db.hibernate.transfer.BackupRestoreObject;
+import com.atech.data.mng.DataDefinitionEntry;
+import com.atech.db.hibernate.HibernateObject;
+import com.atech.db.hibernate.tool.data.DatabaseImportStrategy;
+import com.atech.db.hibernate.tool.data.management.impexp.DbExporter;
+import com.atech.db.hibernate.transfer.BackupRestoreBase;
 import com.atech.db.hibernate.transfer.BackupRestoreRunner;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.RestoreFileInfo;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATDataAccessAbstract;
-import com.atech.utils.file.PackFiles;
+import com.atech.utils.file.zip.PackFiles;
+
+import ggc.core.db.hibernate.doc.DoctorAppointmentH;
+import ggc.core.db.hibernate.doc.DoctorH;
+import ggc.core.db.hibernate.doc.DoctorTypeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
+import ggc.core.db.tool.defs.GGCImportExportContext;
+import ggc.core.db.tool.impexp.GGCDbImporter;
 import ggc.core.util.DataAccess;
 
 /**
@@ -41,10 +52,17 @@ import ggc.core.util.DataAccess;
 public class GGCBackupRestoreRunner extends BackupRestoreRunner
 {
 
-    DataAccess da = DataAccess.getInstance();
-    I18nControlAbstract ic = da.getI18nControlInstance();
-    boolean restore_with_append = true;
+    DataAccess dataAccess = DataAccess.getInstance();
+    I18nControlAbstract ic = dataAccess.getI18nControlInstance();
+    boolean restoreWithAppend = false;
     private String lastBackupFile = null;
+
+    Class singleBackupRestoreObjects[] = { //
+                                           ColorSchemeH.class //
+    };
+
+    Map<String, List<Class<? extends HibernateObject>>> groupedBackupRestoreObjects = null;
+    GGCImportExportContext importExportContext = new GGCImportExportContext();
 
 
     /**
@@ -53,7 +71,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
      * @param objects
      * @param giver
      */
-    public GGCBackupRestoreRunner(Map<String, BackupRestoreObject> objects, BackupRestoreWorkGiver giver)
+    public GGCBackupRestoreRunner(Map<String, BackupRestoreBase> objects, BackupRestoreWorkGiver giver)
     {
         super(objects, giver);
         // this.backupObjects = objects;
@@ -76,11 +94,11 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
         {
             if (special.equals("true"))
             {
-                this.restore_with_append = true;
+                this.restoreWithAppend = true;
             }
             else
             {
-                this.restore_with_append = false;
+                this.restoreWithAppend = false;
             }
         }
 
@@ -95,6 +113,8 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
     @Override
     public void executeBackup()
     {
+
+        initGroups();
 
         if (this.isBackupObjectSelected(ic.getMessage("DAILY_VALUES")))
         {
@@ -114,21 +134,69 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             // this.doneBackupElements++;
         }
 
-        if (this.isBackupObjectSelected(ic.getMessage("COLOR_SCHEMES")))
+        // if (this.isBackupObjectSelected(ic.getMessage("COLOR_SCHEMES")))
+        // {
+        // this.setTask(ic.getMessage("COLOR_SCHEMES"));
+        // GGCExporter ge = new GGCExporter(this);
+        // // ge.setBackupObject("ggc.core.db.hibernate.settings.ColorSchemeH");
+        // // ge.export();
+        // ge.exportData("ggc.core.db.hibernate.settings.ColorSchemeH");
+        // // ge.run();
+        // this.setStatus(100);
+        // }
+
+        // single objects
+        for (Class clazz : singleBackupRestoreObjects)
         {
-            this.setTask(ic.getMessage("COLOR_SCHEMES"));
-            GGCExporter ge = new GGCExporter(this);
-            // ge.setBackupObject("ggc.core.db.hibernate.ColorSchemeH");
-            // ge.export();
-            ge.exportData("ggc.core.db.hibernate.ColorSchemeH");
-            // ge.run();
-            this.setStatus(100);
+            DataDefinitionEntry entry = dataAccess.getDataDefinitionManager().getEntry(clazz);
+
+            if (this.isBackupObjectSelected(ic.getMessage(entry.getBackupTargetName())))
+            {
+                this.setTask(ic.getMessage(entry.getBackupTargetName()));
+                DbExporter ge = new DbExporter(dataAccess.getHibernateDb(), this, importExportContext, false);
+                ge.export(clazz, entry);
+                this.setStatus(100);
+            }
         }
 
-        for (Enumeration<String> en = da.getPlugins().keys(); en.hasMoreElements();)
+        // grouped objects
+        for (Map.Entry<String, List<Class<? extends HibernateObject>>> groupEntry : groupedBackupRestoreObjects
+                .entrySet())
+        {
+
+            boolean isGroupSelected = false;
+
+            // check if any selected
+            for (Class clazz : groupEntry.getValue())
+            {
+                DataDefinitionEntry entry = dataAccess.getDataDefinitionManager().getEntry(clazz);
+
+                if (this.isBackupObjectSelected(ic.getMessage(entry.getBackupTargetName())))
+                {
+                    isGroupSelected = true;
+                    break;
+                }
+            }
+
+            if (isGroupSelected)
+            {
+                for (Class clazz : groupEntry.getValue())
+                {
+                    DataDefinitionEntry entry = dataAccess.getDataDefinitionManager().getEntry(clazz);
+
+                    this.setTask(ic.getMessage(entry.getBackupTargetName()));
+                    DbExporter ge = new DbExporter(dataAccess.getHibernateDb(), this, importExportContext, false);
+                    ge.export(clazz, entry);
+                    this.setStatus(100);
+                }
+            }
+        }
+
+        // plugins
+        for (Enumeration<String> en = dataAccess.getPlugins().keys(); en.hasMoreElements();)
         {
             String key = en.nextElement();
-            PlugInClient pic = da.getPlugIn(key);
+            PlugInClient pic = dataAccess.getPlugIn(key);
 
             if (pic.isBackupRestoreEnabled())
             {
@@ -136,52 +204,34 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             }
         }
 
-        // DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION).getBackupRestoreHandler().doBackup(this);
-
-        /*
-         * if (isAnyNutritionBackupObjectSelected())
-         * {
-         * ExportNutritionDb end = new ExportNutritionDb(this);
-         * if (this.isBackupObjectSelected(i18nControl.getMessage(
-         * "USER_FOOD_GROUPS")))
-         * {
-         * this.setStatus(0);
-         * this.setTask(i18nControl.getMessage("USER_FOOD_GROUPS"));
-         * end.export_UserFoodGroups();
-         * this.setStatus(100);
-         * // this.doneBackupElements++;
-         * }
-         * if (this.isBackupObjectSelected(i18nControl.getMessage("FOODS")))
-         * {
-         * this.setStatus(0);
-         * this.setTask(i18nControl.getMessage("FOODS"));
-         * end.export_UserFoods();
-         * this.setStatus(100);
-         * // this.doneBackupElements++;
-         * }
-         * if
-         * (this.isBackupObjectSelected(i18nControl.getMessage("MEAL_GROUPS")))
-         * {
-         * this.setStatus(0);
-         * this.setTask(i18nControl.getMessage("MEAL_GROUPS"));
-         * end.export_MealGroups();
-         * this.setStatus(100);
-         * // this.doneBackupElements++;
-         * }
-         * if (this.isBackupObjectSelected(i18nControl.getMessage("MEALS")))
-         * {
-         * this.setStatus(0);
-         * this.setTask(i18nControl.getMessage("MEALS"));
-         * end.export_Meals();
-         * this.setStatus(100);
-         * // this.doneBackupElements++;
-         * // System.out.println("Meals YES");
-         * }
-         * }
-         */
-
         zipAndRemoveBackupFiles();
 
+    }
+
+
+    private void initGroups()
+    {
+        this.groupedBackupRestoreObjects = new HashMap<String, List<Class<? extends HibernateObject>>>();
+
+        this.groupedBackupRestoreObjects.put("DoctorGroup",
+            createList( //
+                DoctorTypeH.class, //
+                DoctorH.class, //
+                DoctorAppointmentH.class));
+
+    }
+
+
+    private List<Class<? extends HibernateObject>> createList(Class<? extends HibernateObject>... elements)
+    {
+        List<Class<? extends HibernateObject>> listOut = new ArrayList<Class<? extends HibernateObject>>();
+
+        for (Class<? extends HibernateObject> hibernateObject : elements)
+        {
+            listOut.add(hibernateObject);
+        }
+
+        return listOut;
     }
 
 
@@ -240,9 +290,10 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
          * return gc.get(GregorianCalendar.DAY_OF_MONTH) + "." +
          * (gc.get(GregorianCalendar.MONTH) + 1) + "."
          * + gc.get(GregorianCalendar.YEAR) + "  " +
-         * da.getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2)
-         * + "_" + da.getLeadingZero(gc.get(GregorianCalendar.MINUTE), 2) + "_"
-         * + da.getLeadingZero(gc.get(GregorianCalendar.SECOND), 2);
+         * dataAccess.getLeadingZero(gc.get(GregorianCalendar.HOUR_OF_DAY), 2)
+         * + "_" + dataAccess.getLeadingZero(gc.get(GregorianCalendar.MINUTE),
+         * 2) + "_"
+         * + dataAccess.getLeadingZero(gc.get(GregorianCalendar.SECOND), 2);
          */
     }
 
@@ -256,42 +307,94 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
     public void executeRestore()
     {
 
-        if (this.isRestoreObjectSelected("ggc.core.db.hibernate.DayValueH"))
+        if (this.isRestoreObjectSelected("ggc.core.db.hibernate.pen.DayValueH"))
         {
             this.setTask(ic.getMessage("DAILY_VALUES"));
             ImportDailyValues edv = new ImportDailyValues(this,
-                    this.getRestoreObject("ggc.core.db.hibernate.DayValueH"));
-            edv.setImportClean(!this.restore_with_append);
+                    this.getRestoreObject("ggc.core.db.hibernate.pen.DayValueH"));
+            edv.setImportClean(!this.restoreWithAppend);
             edv.run();
             this.setStatus(100);
             // this.doneBackupElements++;
         }
 
-        if (this.isRestoreObjectSelected("ggc.core.db.hibernate.SettingsH"))
+        if (this.isRestoreObjectSelected("ggc.core.db.hibernate.settings.SettingsH"))
         {
             this.setTask(ic.getMessage("SETTINGS"));
-            ImportSettings edv = new ImportSettings(this, this.getRestoreObject("ggc.core.db.hibernate.SettingsH"));
+            ImportSettings edv = new ImportSettings(this,
+                    this.getRestoreObject("ggc.core.db.hibernate.settings.SettingsH"));
             edv.run();
             this.setStatus(100);
             // this.doneBackupElements++;
         }
 
-        if (this.isRestoreObjectSelected("ggc.core.db.hibernate.ColorSchemeH"))
+        // if
+        // (this.isRestoreObjectSelected("ggc.core.db.hibernate.settings.ColorSchemeH"))
+        // {
+        // // System.out.println("in color scheme");
+        // this.setTask(ic.getMessage("COLOR_SCHEMES"));
+        // GGCImporter ge = new GGCImporter(this,
+        // this.getRestoreObject("ggc.core.db.hibernate.settings.ColorSchemeH"));
+        // ge.importData("ggc.core.db.hibernate.settings.ColorSchemeH");
+        // // ge.run();
+        // this.setStatus(100);
+        // }
+
+        // single objects (all objects should be migrated into this code)
+        for (Class clazz : singleBackupRestoreObjects)
         {
-            // System.out.println("in color scheme");
-            this.setTask(ic.getMessage("COLOR_SCHEMES"));
-            GGCImporter ge = new GGCImporter(this, this.getRestoreObject("ggc.core.db.hibernate.ColorSchemeH"));
-            ge.importData("ggc.core.db.hibernate.ColorSchemeH");
-            // ge.run();
-            this.setStatus(100);
+            DataDefinitionEntry entry = dataAccess.getDataDefinitionManager().getEntry(clazz);
+
+            if (this.isBackupObjectSelected(ic.getMessage(entry.getBackupTargetName())))
+            {
+                DatabaseImportStrategy importStrategy = determineImportStrategy(entry);
+                this.setTask(ic.getMessage(entry.getBackupTargetName()));
+                GGCDbImporter ge = new GGCDbImporter(this, importExportContext, this.getRestoreObject(clazz));
+                ge.importData(clazz, entry, importStrategy);
+                this.setStatus(100);
+            }
         }
 
-        // DataAccess.getInstance().getPlugIn(DataAccess.PLUGIN_NUTRITION).getBackupRestoreHandler().doRestore(this);
+        // grouped objects
+        for (Map.Entry<String, List<Class<? extends HibernateObject>>> groupEntry : groupedBackupRestoreObjects
+                .entrySet())
+        {
 
-        for (Enumeration<String> en = da.getPlugins().keys(); en.hasMoreElements();)
+            boolean isGroupSelected = false;
+
+            // check if any selected
+            for (Class clazz : groupEntry.getValue())
+            {
+                DataDefinitionEntry entry = dataAccess.getDataDefinitionManager().getEntry(clazz);
+
+                if (this.isBackupObjectSelected(ic.getMessage(entry.getBackupTargetName())))
+                {
+                    isGroupSelected = true;
+                    break;
+                }
+            }
+
+            if (isGroupSelected)
+            {
+                GGCImporter gi = new GGCImporter(this);
+                gi.importCleanupGroup(groupEntry.getValue());
+
+                for (Class clazz : groupEntry.getValue())
+                {
+                    DataDefinitionEntry entry = dataAccess.getDataDefinitionManager().getEntry(clazz);
+
+                    this.setTask(ic.getMessage(entry.getBackupTargetName()));
+                    GGCDbImporter ge = new GGCDbImporter(this, importExportContext, this.getRestoreObject(clazz));
+                    ge.importData(clazz, entry, DatabaseImportStrategy.DoNotCleanDb);
+                    this.setStatus(100);
+                }
+            }
+        }
+
+        for (Enumeration<String> en = dataAccess.getPlugins().keys(); en.hasMoreElements();)
         {
             String key = en.nextElement();
-            PlugInClient pic = da.getPlugIn(key);
+            PlugInClient pic = dataAccess.getPlugIn(key);
 
             if (pic.isBackupRestoreEnabled())
             {
@@ -299,66 +402,27 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             }
         }
 
-        // dataAccess.getPlugIn(DataAccess.PLUGIN_NUTRITION).getBackupRestoreHandler().doRestore(this);
+    }
 
-        // if (isAnyNutritionRestoreObjectSelected())
-        /*
-         * {
-         * if
-         * (this.isRestoreObjectSelected(
-         * "ggc.core.db.hibernate.food.FoodUserGroupH"
-         * ))
-         * {
-         * this.setStatus(0);
-         * this.setTask(i18nControl.getMessage("USER_FOOD_GROUPS"));
-         * ImportNutrition edv = new ImportNutrition(this,
-         * this.getRestoreObject("ggc.core.db.hibernate.food.FoodUserGroupH"));
-         * edv.run();
-         * //end.export_UserFoodGroups();
-         * this.setStatus(100);
-         * // this.doneBackupElements++;
-         * }
-         * if (this.isRestoreObjectSelected(
-         * "ggc.core.db.hibernate.food.FoodUserDescriptionH"))
-         * {
-         * this.setStatus(0);
-         * this.setTask(i18nControl.getMessage("FOODS"));
-         * ImportNutrition edv = new ImportNutrition(this,
-         * this.getRestoreObject(
-         * "ggc.core.db.hibernate.food.FoodUserDescriptionH"
-         * ));
-         * edv.run();
-         * // end.export_UserFoods();
-         * this.setStatus(100);
-         * // this.doneBackupElements++;
-         * }
-         * if
-         * (this.isRestoreObjectSelected("ggc.core.db.hibernate.food.MealGroupH"
-         * ))
-         * {
-         * this.setStatus(0);
-         * this.setTask(i18nControl.getMessage("MEAL_GROUPS"));
-         * ImportNutrition edv = new ImportNutrition(this,
-         * this.getRestoreObject("ggc.core.db.hibernate.food.MealGroupH"));
-         * edv.run();
-         * // end.export_MealGroups();
-         * this.setStatus(100);
-         * // this.doneBackupElements++;
-         * }
-         * if (this.isRestoreObjectSelected("ggc.core.db.hibernate.food.MealH"))
-         * {
-         * this.setStatus(0);
-         * this.setTask(i18nControl.getMessage("MEALS"));
-         * ImportNutrition edv = new ImportNutrition(this,
-         * this.getRestoreObject("ggc.core.db.hibernate.food.MealH"));
-         * edv.run();
-         * // end.export_Meals();
-         * this.setStatus(100);
-         * // this.doneBackupElements++;
-         * }
-         * }
-         */
 
+    /**
+     * Result can be always only Clean or Append (Clean -> Clean, Append -> Append, CleanOrAppend is determined by
+     * restore with append parameter and can also return Clean or Append).
+     *
+     * @param entry DataDefinitionEntry instance
+     * @return Clean or Append strategy
+     */
+    private DatabaseImportStrategy determineImportStrategy(DataDefinitionEntry entry)
+    {
+        DatabaseImportStrategy databaseImportStrategy = entry.getDatabaseTableConfiguration()
+                .getDatabaseImportStrategy();
+
+        if (databaseImportStrategy == DatabaseImportStrategy.CleanOrAppend)
+        {
+            return (this.restoreWithAppend) ? DatabaseImportStrategy.Append : DatabaseImportStrategy.Clean;
+        }
+
+        return databaseImportStrategy;
     }
 
 

@@ -1,7 +1,7 @@
 package ggc.core.data.cfg;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,7 +119,7 @@ public class ConfigurationManager // extends AbstractConfigurationManager
                                      "USE_CGMS_DATA_IN_DAILY_PEN_DISPLAY", "false", //
     };
 
-    Hashtable<String, Settings> cfg_values = new Hashtable<String, Settings>();
+    Map<String, Settings> cfg_values = new HashMap<String, Settings>();
     DataAccess m_da = null;
 
 
@@ -130,7 +130,7 @@ public class ConfigurationManager // extends AbstractConfigurationManager
     }
 
 
-    public void checkConfiguration(Hashtable<String, Settings> values, GGCDb db)
+    public void checkConfiguration(Map<String, Settings> values, GGCDb db)
     {
         this.cfg_values = values;
 
@@ -192,7 +192,7 @@ public class ConfigurationManager // extends AbstractConfigurationManager
         s.setDescription(m_da.getI18nControlInstance().getMessage("CFG_" + name));
         s.setType(parameterType);
         s.setValue(defaultValue);
-        s.setPerson_id((int) m_da.getCurrentUserId());
+        s.setPersonId((int) m_da.getCurrentUserId());
 
         db.add(s);
 
@@ -382,19 +382,15 @@ public class ConfigurationManager // extends AbstractConfigurationManager
 
         GGCDb db = this.m_da.getDb();
 
-        for (Enumeration<String> en = this.cfg_values.keys(); en.hasMoreElements();)
+        for (Settings setting : this.cfg_values.values())
         {
-            String key = en.nextElement();
-
-            Settings s = this.cfg_values.get(key);
-
-            if (s.isElementAdded())
+            if (setting.isElementAdded())
             {
-                db.add(s);
+                db.add(setting);
             }
-            else if (s.isElementEdited())
+            else if (setting.isElementEdited())
             {
-                db.edit(s);
+                db.edit(setting);
             }
         }
 

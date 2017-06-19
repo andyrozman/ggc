@@ -77,7 +77,7 @@ public class ImportDacioDb extends ImportTool
     // public String file_name;
     private static final Logger LOG = LoggerFactory.getLogger(ImportDacioDb.class);
 
-    DataAccess m_da = DataAccess.getInstance();
+    DataAccess dataAccess = DataAccess.getInstance();
 
 
     /**
@@ -280,7 +280,7 @@ public class ImportDacioDb extends ImportTool
         catch (Exception ex)
         {}
 
-        return DataAccess.Decimal1Format.format(f * 0.238845897f);
+        return dataAccess.getFloatAsString(f * 0.238845897f, 1);
     }
 
 

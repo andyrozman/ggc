@@ -9,7 +9,8 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
-import ggc.core.db.hibernate.DayValueH;
+
+import ggc.core.db.hibernate.pen.DayValueH;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -108,7 +109,7 @@ public class DailyValue implements BackupRestoreObject, DatabaseObjectHibernate
      */
     public String getClassName()
     {
-        return "ggc.core.db.hibernate.DayValueH";
+        return "ggc.core.db.hibernate.pen.DayValueH";
     }
 
 

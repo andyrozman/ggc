@@ -10,6 +10,7 @@ import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+
 import ggc.core.db.hibernate.StockSubTypeH;
 
 public class StockBaseType extends StockSubTypeH
@@ -25,7 +26,7 @@ public class StockBaseType extends StockSubTypeH
     {
         // this.setId(sth.getId());
         // this.setName(sth.getName());
-        // this.setName_i18n(sth.getName_i18n());
+        // this.setNameI18n(sth.getNameI18n());
     }
 
 

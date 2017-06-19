@@ -14,6 +14,36 @@
     <artifactId>ggc-core</artifactId>
     <version>${ggc-core.version}</version>
 
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>maven-replacer-plugin</artifactId>
+            </plugin>
+
+            <!--
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/ggc/core/util/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin> -->
+        </plugins>
+    </build>
+
+
     <dependencies>
         <dependency>
             <groupId>com.atech-software</groupId>
@@ -102,6 +132,12 @@
             <version>8.4-702.jdbc3</version>
         </dependency>
 
-
     </dependencies>
+
+    <properties>
+        <version.file>
+            ${project.build.directory}/generated-sources/ggc/core/util/Version.java
+        </version.file>
+    </properties>
+
 </project>

@@ -6,13 +6,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-/** @author Hibernate CodeGenerator */
 public class DbInfoH implements Serializable
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -6483987777425549082L;
 
     /** identifier field */
@@ -30,6 +26,7 @@ public class DbInfoH implements Serializable
     /** nullable persistent field */
     private String description;
 
+
     /** full constructor 
      * @param key 
      * @param value 
@@ -43,10 +40,12 @@ public class DbInfoH implements Serializable
         this.description = description;
     }
 
+
     /** default constructor */
     public DbInfoH()
     {
     }
+
 
     /** minimal constructor 
      * @param key */
@@ -54,6 +53,7 @@ public class DbInfoH implements Serializable
     {
         this.key = key;
     }
+
 
     /**
      * Get Id
@@ -65,6 +65,7 @@ public class DbInfoH implements Serializable
         return this.id;
     }
 
+
     /**
      * Set Id
      * 
@@ -74,6 +75,7 @@ public class DbInfoH implements Serializable
     {
         this.id = id;
     }
+
 
     /**
      * Get Key 
@@ -85,6 +87,7 @@ public class DbInfoH implements Serializable
         return this.key;
     }
 
+
     /**
      * Set Key
      *  
@@ -94,6 +97,7 @@ public class DbInfoH implements Serializable
     {
         this.key = key;
     }
+
 
     /**
      * Get Value 
@@ -105,6 +109,7 @@ public class DbInfoH implements Serializable
         return this.value;
     }
 
+
     /**
      * Set Extended
      *  
@@ -114,6 +119,7 @@ public class DbInfoH implements Serializable
     {
         this.value = value;
     }
+
 
     /**
      * Get Type 
@@ -125,6 +131,7 @@ public class DbInfoH implements Serializable
         return this.type;
     }
 
+
     /**
      * Set Type
      *  
@@ -134,6 +141,7 @@ public class DbInfoH implements Serializable
     {
         this.type = type;
     }
+
 
     /**
      * Get Description
@@ -145,6 +153,7 @@ public class DbInfoH implements Serializable
         return this.description;
     }
 
+
     /**
      * Set Description
      * 
@@ -154,6 +163,7 @@ public class DbInfoH implements Serializable
     {
         this.description = description;
     }
+
 
     /** 
      * Custom equals implementation
@@ -169,6 +179,7 @@ public class DbInfoH implements Serializable
         return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
+
     /**
      * To String
      * 
@@ -179,6 +190,7 @@ public class DbInfoH implements Serializable
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
+
 
     /**
      * Create Hash Code

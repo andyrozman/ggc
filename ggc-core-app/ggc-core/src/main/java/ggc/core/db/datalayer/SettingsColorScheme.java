@@ -12,7 +12,7 @@ import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 
-import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 import ggc.core.util.DataAccess;
 
 /**
@@ -115,7 +115,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
     /**
      * To String
      * 
-     * @see ggc.core.db.hibernate.ColorSchemeH#toString()
+     * @see ColorSchemeH#toString()
      */
     @Override
     public String toString()
@@ -331,7 +331,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
      */
     public String getClassName()
     {
-        return "ggc.core.db.hibernate.ColorSchemeH";
+        return "ggc.core.db.hibernate.settings.ColorSchemeH";
     }
 
 
@@ -590,7 +590,7 @@ public class SettingsColorScheme extends ColorSchemeH implements DatabaseObjectH
      */
     public String getBackupClassName()
     {
-        return "ggc.core.db.hibernate.ColorSchemeH";
+        return "ggc.core.db.hibernate.settings.ColorSchemeH";
     }
 
 

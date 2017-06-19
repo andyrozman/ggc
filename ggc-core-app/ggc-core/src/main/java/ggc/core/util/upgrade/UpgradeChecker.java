@@ -3,6 +3,7 @@ package ggc.core.util.upgrade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ggc.core.data.defs.GGCObservableType;
 import ggc.core.enums.UpgradeCheckStatus;
 import ggc.core.util.DataAccess;
 
@@ -34,7 +35,8 @@ public class UpgradeChecker extends Thread
 
     public void setStatus(UpgradeCheckStatus status)
     {
-        dataAccess.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, "UPDATE_STATUS=" + status.getCode());
+        dataAccess.getObserverManager().setChangeOnEventSource(GGCObservableType.Status,
+            "UPDATE_STATUS=" + status.getCode());
     }
 
 }

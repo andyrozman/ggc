@@ -10,6 +10,7 @@ import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.graphics.dialogs.selector.ColumnSorter;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+
 import ggc.core.db.hibernate.StockSubTypeH;
 
 public class StockSubType extends StockSubTypeH
@@ -75,14 +76,14 @@ public class StockSubType extends StockSubTypeH
     public boolean isFound(int value)
     {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
 
     public boolean isFound(int from, int till, int state)
     {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
 
@@ -151,7 +152,6 @@ public class StockSubType extends StockSubTypeH
 
     public String getTargetName()
     {
-        // TODO Auto-generated method stub
         return "StockSubType";
     }
 

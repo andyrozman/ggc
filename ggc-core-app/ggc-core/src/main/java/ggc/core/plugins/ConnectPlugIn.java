@@ -28,16 +28,6 @@ import com.atech.i18n.I18nControlAbstract;
 public class ConnectPlugIn extends GGCPluginClient
 {
 
-    private static final String PLUGIN_SERVER_CLASS_NAME = "ggc.connect.plugin.ConnectPlugInServer";
-
-    private static final String PLUGIN_SERVER_SHORT_NAME = "ConnectPlugIn";
-
-    /**
-     * Return Object: Selected Device with parameters
-     */
-    public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
-
-
     /**
      * Constructor
      *
@@ -46,93 +36,10 @@ public class ConnectPlugIn extends GGCPluginClient
      */
     public ConnectPlugIn(Component parent, I18nControlAbstract ic)
     {
-        super((JFrame) parent, ic);
-    }
-
-
-    /**
-     * Constructor
-     */
-    public ConnectPlugIn()
-    {
-        super();
-    }
-
-
-    /**
-     * Check If Installed
-     */
-    // @Override
-    // public void checkIfInstalled()
-    // {
-    // try
-    // {
-    // Class<?> c = Class.forName("ggc.nutri.plugin.NutriPlugInServer");
-    //
-    // this.m_server = (PlugInServer) c.newInstance();
-    // installed = true;
-    //
-    // this.m_server.init(this.parent,
-    // DataAccess.getInstance().getI18nControlInstance().getSelectedLanguage(),
-    // DataAccess.getInstance(), this, DataAccess.getInstance().getDb());
-    //
-    // // System.out.println("Class done");
-    // }
-    // catch (Exception ex)
-    // {
-    // this.installed = false;
-    // // System.out.println("Ex:" + ex);
-    // }
-    // }
-
-    /**
-     * Get Name Base (untranslated)
-     * 
-     * @return name of plugin
-     */
-    @Override
-    public String getNameBase()
-    {
-        return "CONNECT_PLUGIN";
-    }
-
-    // /**
-    // * Get Short Status
-    // *
-    // * @return
-    // */
-    // @Override
-    // public String getShortStatus()
-    // {
-    // if (this.m_server != null)
-    // return String.format(i18nControl.getMessage("STATUS_INSTALLED"),
-    // this.m_server.getVersion());
-    // else
-    // return i18nControl.getMessage("STATUS_NOT_INSTALLED");
-    // }
-
-
-    // /**
-    // * Set Return Data (for getting data from plugin - async)
-    // *
-    // * @param return_data
-    // * @param stat_rep_int
-    // */
-    // @Override
-    // public void setReturnData(Object return_data, StatusReporterInterface
-    // stat_rep_int)
-    // {
-    // }
-
-    public String getServerClassName()
-    {
-        return PLUGIN_SERVER_CLASS_NAME;
-    }
-
-
-    public String getServerShortName()
-    {
-        return PLUGIN_SERVER_SHORT_NAME;
+        super((JFrame) parent, ic, //
+                "CONNECT_PLUGIN", //
+                "ggc.connect.plugin.ConnectPlugInServer", //
+                "ConnectPlugIn");
     }
 
 }

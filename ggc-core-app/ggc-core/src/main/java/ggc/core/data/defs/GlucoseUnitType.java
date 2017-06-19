@@ -41,6 +41,7 @@ public enum GlucoseUnitType implements CodeEnumWithTranslation
     int code;
     String i18nKey;
     String translation;
+    static String[] descriptions;
 
     static Hashtable<Integer, GlucoseUnitType> codeMapping = new Hashtable<Integer, GlucoseUnitType>();
 
@@ -59,10 +60,16 @@ public enum GlucoseUnitType implements CodeEnumWithTranslation
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
         }
+
+        String[] unitDescriptions = { ic.getMessage("GLUCOSE_UNIT_MGDL"), //
+                                     ic.getMessage("GLUCOSE_UNIT_MMOLL"), //
+        };
+
+        descriptions = unitDescriptions;
     }
 
 
-    private GlucoseUnitType(int code, String i18nKey)
+    GlucoseUnitType(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;
@@ -109,6 +116,12 @@ public enum GlucoseUnitType implements CodeEnumWithTranslation
         {
             return GlucoseUnitType.None;
         }
+    }
+
+
+    public static String[] getDescriptions()
+    {
+        return descriptions;
     }
 
 }

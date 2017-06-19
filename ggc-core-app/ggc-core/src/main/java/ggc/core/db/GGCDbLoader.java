@@ -6,10 +6,14 @@ import java.util.GregorianCalendar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atech.graphics.observe.ObserverManager;
+
+import ggc.core.data.defs.DatabaseStatusType;
+import ggc.core.data.defs.GGCObservableType;
+import ggc.core.data.defs.RefreshInfoType;
 import ggc.core.plugins.GGCPluginType;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
-import ggc.core.util.RefreshInfo;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -90,6 +94,8 @@ public class GGCDbLoader extends Thread
     // private boolean real_run = false;
     private boolean run_once = false;
 
+    private ObserverManager observerManager;
+
 
     /**
      * Constructor
@@ -116,10 +122,21 @@ public class GGCDbLoader extends Thread
 
         run_once = true;
 
+        observerManager = m_da.getObserverManager();
+
         if (new File("../data/debug_no_food.txt").exists())
         {
             part_start = true;
         }
+
+        boolean isUserManagementEnabled = m_da.getUserManagement().isEnabled();
+
+        if (isUserManagementEnabled)
+        {
+            boolean autoLogin = m_da.getUserManagement().isAutoLoginEnabled();
+        }
+
+        isUserManagementEnabled = false;
 
         // 1 - init
 
@@ -131,38 +148,36 @@ public class GGCDbLoader extends Thread
 
         try
         {
-            // if (!part_start)
-            {
-                m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS,
-                    "DB_NAME=" + db.getHibernateConfiguration().getConnectionName());
-                /*
-                 * if (m_bar!=null)
-                 * m_bar.setDatabaseName(db.getHibernateConfiguration().
-                 * getConnectionName());
-                 * else
-                 * m_barL.setDatabaseName(db.getHibernateConfiguration().
-                 * getConnectionName());
-                 */
-            }
+
+            observerManager.setChangeOnEventSource(GGCObservableType.Status,
+                "DB_NAME=" + db.getHibernateConfiguration().getConnectionName());
 
             db.initDb();
 
-            setDbStatus(RefreshInfo.DB_INIT_DONE);
+            setDbStatus(DatabaseStatusType.InitDone);
             m_da.setDbLoadingStatus(GGCDbLoader.DB_INIT_DONE);
 
             // 2 - load configuration
-
-            db.loadConfigData();
+            if (isUserManagementEnabled)
+            {
+                // check if autologin
+            }
+            else
+            {
+                db.loadConfigData();
+            }
             db.loadStaticData();
             // dataAccess.setDb(db);
             m_da.setDbLoadingStatus(GGCDbLoader.DB_DATA_BASE);
 
-            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_GENERAL_INFO);
+            observerManager.setChangeOnEventSource(GGCObservableType.InfoPanels, RefreshInfoType.GeneralInfo);
 
             // 3 - init plugins
             m_da.initPlugIns();
 
-            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_PLUGINS_ALL);
+            // m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS,
+            // RefreshInfo.PANEL_GROUP_PLUGINS_ALL);
+            observerManager.setChangeOnEventSource(GGCObservableType.InfoPanels, RefreshInfoType.DevicesConfiguration);
 
             // 4 - load daily data for display, appointments
 
@@ -176,8 +191,12 @@ public class GGCDbLoader extends Thread
             }
 
             // dataAccess.loadSettingsFromDb();
-            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
-            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS,
+            // m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS,
+            // RefreshInfo.PANEL_GROUP_ALL_DATA);
+            observerManager.setChangeOnEventSource(GGCObservableType.InfoPanels, RefreshInfoType.DeviceDataAll);
+            // m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS,
+            // m_da.getI18nControlInstance().getMessage("READY"));
+            observerManager.setChangeOnEventSource(GGCObservableType.Status,
                 m_da.getI18nControlInstance().getMessage("READY"));
 
             // mf.informationPanel.refreshPanels();
@@ -213,7 +232,7 @@ public class GGCDbLoader extends Thread
              * getMessage("READY"));
              * }
              */
-            setDbStatus(RefreshInfo.DB_BASE_DONE);
+            setDbStatus(DatabaseStatusType.BaseDone);
 
             // 5 - Load plugin data
 
@@ -222,7 +241,7 @@ public class GGCDbLoader extends Thread
                 m_da.getPlugIn(GGCPluginType.NutritionToolPlugin).executeCommand(NutriPlugIn.COMMAND_LOAD_DATABASE);
             }
             m_da.setDbLoadingStatus(GGCDbLoader.DB_DATA_PLUGINS);
-            setDbStatus(RefreshInfo.DB_LOADED);
+            setDbStatus(DatabaseStatusType.Loaded);
 
             // refreshMenus();
 
@@ -277,9 +296,8 @@ public class GGCDbLoader extends Thread
         }
         catch (Exception ex)
         {
-
-            m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_DB, ex);
-
+            LOG.error("Error loading database. " + ex.getMessage(), ex);
+            observerManager.setChangeOnEventSource(GGCObservableType.Database, ex);
         }
     }
 
@@ -289,13 +307,14 @@ public class GGCDbLoader extends Thread
      * 
      * @param status
      */
-    public void setDbStatus(int status)
+    public void setDbStatus(DatabaseStatusType status)
     {
         // if (part_start)
         // return;
         // dataAccess.setDbLoadingStatus(status);
 
-        m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, status);
+        // m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_STATUS, status);
+        this.observerManager.setChangeOnEventSource(GGCObservableType.Status, status);
     }
 
 }

@@ -41,7 +41,7 @@ import com.atech.db.hibernate.transfer.RestoreFileInfo;
 import com.atech.utils.ATDataAccessAbstract;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.SettingsH;
+import ggc.core.db.hibernate.settings.SettingsH;
 import ggc.core.util.DataAccess;
 
 /**
@@ -186,7 +186,7 @@ public class ImportSettings extends ImportTool implements Runnable
         try
         {
 
-            this.clearExistingData("ggc.core.db.hibernate.SettingsH");
+            this.clearExistingData("ggc.core.db.hibernate.settings.SettingsH");
 
             System.out.println("\nLoading Settings (5/dot)");
 
@@ -227,11 +227,11 @@ public class ImportSettings extends ImportTool implements Runnable
 
                 if (person_id == 0)
                 {
-                    dvh.setPerson_id(1);
+                    dvh.setPersonId(1);
                 }
                 else
                 {
-                    dvh.setPerson_id(person_id);
+                    dvh.setPersonId(person_id);
                 }
 
                 this.hibernate_util.addHibernate(dvh);

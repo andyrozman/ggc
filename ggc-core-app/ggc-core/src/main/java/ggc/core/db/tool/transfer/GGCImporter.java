@@ -5,12 +5,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atech.data.mng.DataDefinitionEntry;
+import com.atech.db.hibernate.HibernateBackupSelectableObject;
 import com.atech.db.hibernate.HibernateConfiguration;
+import com.atech.db.hibernate.HibernateObject;
 import com.atech.db.hibernate.tool.data.management.common.ImportExportStatusType;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
@@ -21,6 +25,7 @@ import com.atech.plugin.PlugInClient;
 import ggc.core.db.GGCDb;
 import ggc.core.db.datalayer.DailyValue;
 import ggc.core.db.datalayer.SettingsColorScheme;
+import ggc.core.db.hibernate.GGCHibernateBackupSelectableObject;
 import ggc.core.util.DataAccess;
 
 /**
@@ -162,9 +167,9 @@ public class GGCImporter extends ImportTool implements Runnable
             ImportNutrition in = new ImportNutrition(this.file_name, false);
             in.importMealGroups();
         }
-        else if (this.selected_class.equals("ggc.core.db.hibernate.DayValueH"))
+        else if (this.selected_class.equals("ggc.core.db.hibernate.pen.DayValueH"))
         {
-            LOG.debug("File was identified as 'ggc.core.db.hibernate.DayValueH'.");
+            LOG.debug("File was identified as 'ggc.core.db.hibernate.pen.DayValueH'.");
             ImportDailyValues idv = new ImportDailyValues(this.file_name, false);
             idv.importDailyValues();
         }
@@ -215,10 +220,10 @@ public class GGCImporter extends ImportTool implements Runnable
 
     private BackupRestoreObject getBackupRestoreObject(String class_name)
     {
-        if (class_name.equals("ggc.core.db.hibernate.DayValueH"))
+        if (class_name.equals("ggc.core.db.hibernate.pen.DayValueH"))
             // DayValueH eh = (DayValueH)obj;
             return new DailyValue();
-        else if (class_name.equals("ggc.core.db.hibernate.ColorSchemeH"))
+        else if (class_name.equals("ggc.core.db.hibernate.settings.ColorSchemeH"))
             // ColorSchemeH eh = (ColorSchemeH)obj;
             return new SettingsColorScheme();
 
@@ -248,8 +253,20 @@ public class GGCImporter extends ImportTool implements Runnable
 
 
     /**
+     * Import data (object name)
+     *
+     * @param clazz
+     * @param definitionEntry
+     */
+    public void importData(Class clazz, DataDefinitionEntry definitionEntry)
+    {
+        importData(clazz, definitionEntry, true);
+    }
+
+
+    /**
      * Import data (object)
-     * 
+     *
      * @param bro BackupRestoreObject
      */
     public void importData(BackupRestoreObject bro)
@@ -311,6 +328,79 @@ public class GGCImporter extends ImportTool implements Runnable
                 }
 
                 this.hibernate_util.add(bro_new);
+
+                count++;
+                this.writeStatus(dot_mark, count);
+
+            }
+
+            this.closeFile();
+
+        }
+        catch (Exception ex)
+        {
+            LOG.error("Error on importData: \nData: " + line + "\nException: " + ex, ex);
+        }
+
+    }
+
+
+    public void importCleanupGroup(List<Class<? extends HibernateObject>> classes)
+    {
+        for (int i = classes.size() - 1; i >= 0; i--)
+        {
+            clearExistingData(classes.get(i));
+        }
+    }
+
+
+    public void importData(Class<? extends GGCHibernateBackupSelectableObject> clazz,
+            DataDefinitionEntry definitionEntry, boolean clean_db)
+    {
+
+        String line = null;
+        boolean append = false;
+
+        try
+        {
+
+            if (clean_db)
+            {
+                if (definitionEntry.hasToBeCleaned())
+                    this.clearExistingData(clazz.getSimpleName());
+            }
+            else
+            {
+                append = true;
+            }
+
+            this.openFileForReading(new File(this.getRootPath() + clazz.getSimpleName() + ".dbe"));
+
+            int dot_mark = 5;
+            int count = 0;
+            Map<String, String> headers = new HashMap<String, String>();
+
+            while ((line = this.bufferedReader.readLine()) != null)
+            {
+                if (line.startsWith(";") || line.trim().length() == 0)
+                {
+                    addHeaders(headers, line);
+                    continue;
+                }
+
+                HibernateBackupSelectableObject newEntry = clazz.getConstructor().newInstance();
+
+                if (append)
+                {
+                    // this is only for DailyValueH, should be removed
+                    newEntry.dbImport(definitionEntry.getTableVersion(), line, new Object[1]);
+                }
+                else
+                {
+                    newEntry.dbImport(definitionEntry.getTableVersion(), line, headers);
+                }
+
+                this.hibernate_util.add(newEntry);
 
                 count++;
                 this.writeStatus(dot_mark, count);

@@ -7,17 +7,17 @@
 
 package ggc.core.plugins; //com.atech.db;
 
-import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.DayValueH;
-import ggc.core.db.hibernate.pump.PumpDataExtendedH;
-import ggc.core.util.DataAccess;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
 import com.atech.db.DbDataWriterAbstract;
 import com.atech.graphics.components.StatusReporterInterface;
+
+import ggc.core.db.GGCDb;
+import ggc.core.db.hibernate.pen.DayValueH;
+import ggc.core.db.hibernate.pump.PumpDataExtendedH;
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -62,6 +62,7 @@ public class GGCDataWriter extends DbDataWriterAbstract
     protected Hashtable<String, ArrayList<DayValueH>> meter_data;
     protected GGCDb db = null;
 
+
     /**
      * Constructor
      * 
@@ -84,6 +85,7 @@ public class GGCDataWriter extends DbDataWriterAbstract
     }
 
     boolean running = true;
+
 
     /** 
      * Run - method for running thread
@@ -116,15 +118,15 @@ public class GGCDataWriter extends DbDataWriterAbstract
                     if (key.equals("ADD"))
                     {
                         DayValueH dv = lst.get(i);
-                        dv.setPerson_id((int) DataAccess.getInstance().getCurrentUserId());
+                        dv.setPersonId((int) DataAccess.getInstance().getCurrentUserId());
                         db.addHibernate(dv);
 
                         PumpDataExtendedH pde = new PumpDataExtendedH();
-                        pde.setDt_info(dv.getDt_info() * 100);
+                        pde.setDtInfo(dv.getDtInfo() * 100);
                         pde.setType(3); // carefull if this is changed in Pump
                                         // Tool it will need to be changed
                         pde.setValue("" + dv.getBg());
-                        pde.setPerson_id(dv.getPerson_id());
+                        pde.setPersonId(dv.getPersonId());
                         pde.setComment(dv.getComment());
                         pde.setExtended(dv.getExtended());
                         pde.setChanged(dv.getChanged());

@@ -1,11 +1,12 @@
 package ggc.core.data;
 
-import ggc.core.util.DataAccess;
-
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import com.atech.utils.data.ATechDate;
+
+import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -39,12 +40,12 @@ public class CollectionValues extends DailyValues
 {
 
     // private boolean debug = false;
-    // private I18nControlAbstract m_ic =
+    // private I18nControlAbstract i18nControl =
     // DataAccess.getInstance().getI18nControlInstance();
 
     private static final long serialVersionUID = 4415864395080066275L;
 
-    ArrayList<DailyValuesRow> dataRows = new ArrayList<DailyValuesRow>();
+    List<DailyValuesRow> dataRows = new ArrayList<DailyValuesRow>();
 
     long date = 0;
 
@@ -71,6 +72,7 @@ public class CollectionValues extends DailyValues
 
     DataAccess m_da = DataAccess.getInstance();
 
+
     // Hashtable<String,ArrayList>
 
     /**
@@ -85,6 +87,7 @@ public class CollectionValues extends DailyValues
         setDayRange(sDay, eDay);
     }
 
+
     /**
      * Set Day Range
      * 
@@ -95,7 +98,7 @@ public class CollectionValues extends DailyValues
     {
         // long diff = eDay.getTimeInMillis() - sDay.getTimeInMillis();
 
-        ArrayList<DailyValuesRow> lst = DataAccess.getInstance().getDb().getDayValuesRange(sDay, eDay);
+        List<DailyValuesRow> lst = DataAccess.getInstance().getDb().getDayValuesRange(sDay, eDay);
 
         for (int i = 0; i < lst.size(); i++)
         {
@@ -103,6 +106,7 @@ public class CollectionValues extends DailyValues
         }
 
     }
+
 
     /**
      * Reset Changed
@@ -112,6 +116,7 @@ public class CollectionValues extends DailyValues
     {
         changed = false;
     }
+
 
     /**
      * Set Date
@@ -124,6 +129,7 @@ public class CollectionValues extends DailyValues
         this.date = date;
     }
 
+
     /**
      * Set Std Dev
      * @param stdDev
@@ -133,6 +139,7 @@ public class CollectionValues extends DailyValues
     {
         this.stdDev = stdDev;
     }
+
 
     /**
      * Add Row
@@ -148,6 +155,7 @@ public class CollectionValues extends DailyValues
         bOnlyInsert = false;
         refreshStatData();
     }
+
 
     /**
      * Delete Row
@@ -181,6 +189,7 @@ public class CollectionValues extends DailyValues
 
     }
 
+
     /**
      * Get Row Count
      * 
@@ -195,6 +204,7 @@ public class CollectionValues extends DailyValues
             return dataRows.size();
     }
 
+
     /**
      * Get Row
      * 
@@ -206,6 +216,7 @@ public class CollectionValues extends DailyValues
     {
         return this.dataRows.get(index);
     }
+
 
     /**
      * Get Value At
@@ -219,6 +230,7 @@ public class CollectionValues extends DailyValues
     {
         return getRow(row).getValueAt(column);
     }
+
 
     /**
      * Get Day And Month As String
@@ -234,6 +246,7 @@ public class CollectionValues extends DailyValues
         return String.format("%1$02d.%2$02d.", day, month);
     }
 
+
     /**
      * Get Date
      * 
@@ -244,6 +257,7 @@ public class CollectionValues extends DailyValues
     {
         return date;
     }
+
 
     /**
      * Get Date As Localized String
@@ -262,6 +276,7 @@ public class CollectionValues extends DailyValues
             new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, this.date).getGregorianCalendar(), 4);
     }
 
+
     /**
      * Get Date As String
      * 
@@ -272,6 +287,7 @@ public class CollectionValues extends DailyValues
     {
         return getDateAsLocalizedString();
     }
+
 
     /**
      * Get Changed
@@ -284,6 +300,7 @@ public class CollectionValues extends DailyValues
     {
         return getRow(row).hasChanged();
     }
+
 
     /**
      * Get Sum CH Per Day
@@ -298,6 +315,7 @@ public class CollectionValues extends DailyValues
         return this.getSumCH() / this.day_count.size();
     }
 
+
     /**
      * Get CH Count Per Day
      * 
@@ -310,6 +328,7 @@ public class CollectionValues extends DailyValues
 
         return this.getCHCount() / this.day_count.size();
     }
+
 
     /**
      * Get Sum Bolus Per Day
@@ -324,6 +343,7 @@ public class CollectionValues extends DailyValues
         return this.getSumBolus() / this.day_count.size();
     }
 
+
     /**
      * Get Bolus Count Per Day
      * 
@@ -337,6 +357,7 @@ public class CollectionValues extends DailyValues
         return this.getBolusCount() / this.day_count.size();
     }
 
+
     /**
      * Get Sum Basal Per Day
      * 
@@ -349,6 +370,7 @@ public class CollectionValues extends DailyValues
 
         return this.getSumBasal() / this.day_count.size();
     }
+
 
     /**
      * Get Basal Count Per Day

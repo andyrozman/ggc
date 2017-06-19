@@ -27,11 +27,11 @@ package ggc.core.plugins;
 
 public enum GGCPluginType
 {
-    MeterToolPlugin("MetersPlugIn", true), //
-    PumpToolPlugin("PumpsPlugIn", true), //
-    NutritionToolPlugin("NutritionPlugIn", true), //
-    CGMSToolPlugin("CGMSPlugIn", true), //
-    ConnectToolPlugin("ConnectToolPlugin", true), //
+    MeterToolPlugin("Meter Tool Plugin", true), //
+    PumpToolPlugin("Pumps Plugin", true), //
+    NutritionToolPlugin("Nutrition Plugin", true), //
+    CGMSToolPlugin("CGMS Plugin", true), //
+    ConnectToolPlugin("Connect Plugin", true, true), //
 
     // this two are not plugins themselves, but we need it for translation
     // context, so we define them here
@@ -40,13 +40,23 @@ public enum GGCPluginType
     ;
 
     private String key;
+    private String description;
     private boolean isPlugin = false;
+    private boolean enabled = true;
 
 
-    private GGCPluginType(String key, boolean plugin)
+    GGCPluginType(String description, boolean plugin)
     {
-        this.key = key;
+        this(description, plugin, true);
+    }
+
+
+    GGCPluginType(String description, boolean plugin, boolean enabled)
+    {
+        this.key = this.name();
+        this.description = description;
         this.isPlugin = plugin;
+        this.enabled = enabled;
     }
 
 
@@ -65,5 +75,11 @@ public enum GGCPluginType
     public boolean isPlugin()
     {
         return isPlugin;
+    }
+
+
+    public String getDescription()
+    {
+        return description;
     }
 }

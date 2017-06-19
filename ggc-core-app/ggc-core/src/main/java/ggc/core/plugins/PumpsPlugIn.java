@@ -4,12 +4,10 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessLMAbstract;
-import ggc.core.util.RefreshInfo;
+
+import ggc.core.data.defs.RefreshInfoType;
+import ggc.core.data.defs.ReturnActionType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,27 +38,6 @@ import ggc.core.util.RefreshInfo;
 public class PumpsPlugIn extends GGCPluginClient
 {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PumpsPlugIn.class);
-
-    /**
-     * Return Object: Selected Device with parameters
-     */
-    // public static final int RETURN_OBJECT_DEVICE_WITH_PARAMS = 1;
-
-    /**
-     * This is action that needs to be done, after read data.
-     */
-    public static final int RETURN_ACTION_READ_DATA = 1;
-
-    /**
-     * This is action that needs to be done, after config
-     */
-    public static final int RETURN_ACTION_CONFIG = 2;
-
-    private static final String PLUGIN_SERVER_CLASS_NAME = "ggc.pump.plugin.PumpPlugInServer";
-    private static final String PLUGIN_SERVER_SHORT_NAME = "PumpsPlugIn";
-
-
     /**
      * Constructor
      * 
@@ -69,73 +46,23 @@ public class PumpsPlugIn extends GGCPluginClient
      */
     public PumpsPlugIn(Component parent, I18nControlAbstract ic)
     {
-        super((JFrame) parent, ic);
+        super((JFrame) parent, ic, //
+                "PUMPS_PLUGIN", //
+                "ggc.pump.plugin.PumpPlugInServer", //
+                "PumpsPlugIn");
     }
 
 
-    /**
-     * Constructor
-     * 
-     * @param parent
-     * @param da
-     */
-    public PumpsPlugIn(Component parent, ATDataAccessLMAbstract da)
+    public void executeReturnAction(ReturnActionType actionType)
     {
-        super((JFrame) parent, da);
-    }
-
-
-    /**
-     * Constructor
-     */
-    public PumpsPlugIn()
-    {
-        super();
-    }
-
-
-    /**
-     * Get Name Base (untranslated)
-     * 
-     * @return name of plugin
-     */
-    @Override
-    public String getNameBase()
-    {
-        return "PUMPS_PLUGIN";
-    }
-
-
-    /**
-     * This is method which can be used by server side to do certain action. Mainly this will be used
-     * to run refreshes and such actions. This needs to be implemented by Client side, if you wish to
-     * use it.
-     * 
-     * @param action_type
-     */
-    @Override
-    public void executeReturnAction(int action_type)
-    {
-        if (action_type == PumpsPlugIn.RETURN_ACTION_READ_DATA)
+        if (actionType == ReturnActionType.ReadData)
         {
-            refreshPanels(RefreshInfo.PANEL_GROUP_ALL_DATA);
+            refreshPanels(RefreshInfoType.DeviceDataPump);
         }
-        else if (action_type == PumpsPlugIn.RETURN_ACTION_CONFIG)
+        else if (actionType == ReturnActionType.ChangeConfig)
         {
-            refreshPanels(RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES);
+            refreshPanels(RefreshInfoType.DevicesConfiguration);
         }
-    }
-
-
-    public String getServerClassName()
-    {
-        return PLUGIN_SERVER_CLASS_NAME;
-    }
-
-
-    public String getServerShortName()
-    {
-        return PLUGIN_SERVER_SHORT_NAME;
     }
 
 }

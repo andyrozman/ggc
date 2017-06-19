@@ -8,15 +8,16 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 import com.atech.db.hibernate.tool.data.dto.DbInitTaskDto;
+import com.atech.db.hibernate.tool.data.management.common.ImportExportContext;
 import com.atech.db.hibernate.tool.data.management.init.CustomDbInitTasksAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 
-import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.db.hibernate.doc.DoctorTypeH;
 import ggc.core.db.hibernate.food.FoodDescriptionH;
 import ggc.core.db.hibernate.food.FoodGroupH;
 import ggc.core.db.hibernate.food.NutritionDefinitionH;
 import ggc.core.db.hibernate.food.NutritionHomeWeightTypeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 
 public class GGCCustomDbInitTasks extends CustomDbInitTasksAbstract
 {
@@ -25,9 +26,10 @@ public class GGCCustomDbInitTasks extends CustomDbInitTasksAbstract
     String path = "../data/nutrition/";
 
 
-    public GGCCustomDbInitTasks(DbInitTaskDto taskDto, GGCDbToolInitDbRunner runner)
+    public GGCCustomDbInitTasks(DbInitTaskDto taskDto, GGCDbToolInitDbRunner runner,
+            ImportExportContext importExportContext)
     {
-        super(taskDto, runner);
+        super(taskDto, runner, importExportContext);
     }
 
 
@@ -80,7 +82,7 @@ public class GGCCustomDbInitTasks extends CustomDbInitTasksAbstract
 
                 fg.setName(st);
                 // FIXME
-                fg.setName_i18n(ATDataAccessAbstract.makeI18nKeyword(st));
+                fg.setNameI18n(ATDataAccessAbstract.makeI18nKeyword(st));
                 fg.setDescription(st);
 
                 hibernateUtil.addHibernate(fg);
@@ -132,9 +134,9 @@ public class GGCCustomDbInitTasks extends CustomDbInitTasksAbstract
                 FoodDescriptionH fd = new FoodDescriptionH();
 
                 fd.setId(getLong(strtok.nextToken())); // NDB_No
-                fd.setGroup_id(getInt(strtok.nextToken())); // FdGrp_Cd
+                fd.setGroupId(getInt(strtok.nextToken())); // FdGrp_Cd
                 fd.setName(getString(strtok.nextToken())); // Long Desc
-                fd.setName_i18n(getString(strtok.nextToken())); // Short Desc
+                fd.setNameI18n(getString(strtok.nextToken())); // Short Desc
 
                 strtok.nextToken(); // - ComName
                 strtok.nextToken(); // - ManufName
@@ -304,10 +306,10 @@ public class GGCCustomDbInitTasks extends CustomDbInitTasksAbstract
                 NutritionDefinitionH fnd = new NutritionDefinitionH();
 
                 fnd.setId(getLong(strtok.nextToken()));
-                fnd.setWeight_unit(getString(strtok.nextToken()));
+                fnd.setWeightUnit(getString(strtok.nextToken()));
                 fnd.setTag(getString(strtok.nextToken()));
                 fnd.setName(getString(strtok.nextToken()));
-                fnd.setDecimal_places(getString(strtok.nextToken()));
+                fnd.setDecimalPlaces(getString(strtok.nextToken()));
 
                 hibernateUtil.addHibernate(fnd);
 
@@ -435,7 +437,7 @@ public class GGCCustomDbInitTasks extends CustomDbInitTasksAbstract
                 {
                     if (id != -1)
                     {
-                        fd.setHome_weights(data.toString());
+                        fd.setHomeWeights(data.toString());
                         hibernateUtil.editHibernate(fd);
                     }
 
@@ -480,7 +482,7 @@ public class GGCCustomDbInitTasks extends CustomDbInitTasksAbstract
 
             }
 
-            fd.setHome_weights(data.toString());
+            fd.setHomeWeights(data.toString());
             hibernateUtil.editHibernate(fd);
 
         }

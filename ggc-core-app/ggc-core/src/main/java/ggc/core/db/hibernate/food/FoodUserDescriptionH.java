@@ -1,69 +1,46 @@
 package ggc.core.db.hibernate.food;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.atech.db.hibernate.HibernateObject;
 
-/** @author Hibernate CodeGenerator */
-public class FoodUserDescriptionH extends HibernateObject implements Serializable
+public class FoodUserDescriptionH extends HibernateObject
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -4807400056386914224L;
 
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
-    private long group_id;
-
-    /** nullable persistent field */
+    private long groupId;
     private String name;
-
-    /** nullable persistent field */
-    private String name_i18n;
-
-    /** nullable persistent field */
+    private String nameI18n;
     private String description;
-
-    /** nullable persistent field */
     private float refuse;
-
-    /** nullable persistent field */
     private String nutritions;
-
-    /** nullable persistent field */
-    private String home_weights;
-
-    /** nullable persistent field */
+    private String homeWeights;
     private long changed;
 
 
     /** full constructor 
-     * @param group_id 
+     * @param groupId
      * @param name 
-     * @param name_i18n 
+     * @param nameI18n
      * @param description 
      * @param refuse 
      * @param nutritions 
-     * @param home_weights 
+     * @param homeWeights
      * @param changed */
-    public FoodUserDescriptionH(long group_id, String name, String name_i18n, String description, float refuse,
-            String nutritions, String home_weights, long changed)
+    public FoodUserDescriptionH(long groupId, String name, String nameI18n, String description, float refuse,
+            String nutritions, String homeWeights, long changed)
     {
-        this.group_id = group_id;
+        this.groupId = groupId;
         this.name = name;
-        this.name_i18n = name_i18n;
+        this.nameI18n = nameI18n;
         this.description = description;
         this.refuse = refuse;
         this.nutritions = nutritions;
-        this.home_weights = home_weights;
+        this.homeWeights = homeWeights;
         this.changed = changed;
     }
 
@@ -99,22 +76,22 @@ public class FoodUserDescriptionH extends HibernateObject implements Serializabl
     /**
      * Get Group Id
      * 
-     * @return group_id value
+     * @return groupId value
      */
-    public long getGroup_id()
+    public long getGroupId()
     {
-        return this.group_id;
+        return this.groupId;
     }
 
 
     /**
      * Set Group Id
      * 
-     * @param group_id value
+     * @param groupId value
      */
-    public void setGroup_id(long group_id)
+    public void setGroupId(long groupId)
     {
-        this.group_id = group_id;
+        this.groupId = groupId;
     }
 
 
@@ -145,20 +122,20 @@ public class FoodUserDescriptionH extends HibernateObject implements Serializabl
      * 
      * @return name
      */
-    public String getName_i18n()
+    public String getNameI18n()
     {
-        return this.name_i18n;
+        return this.nameI18n;
     }
 
 
     /**
      * Set Name (I18n)
      * 
-     * @param name_i18n as string
+     * @param nameI18n as string
      */
-    public void setName_i18n(String name_i18n)
+    public void setNameI18n(String nameI18n)
     {
-        this.name_i18n = name_i18n;
+        this.nameI18n = nameI18n;
     }
 
 
@@ -231,22 +208,22 @@ public class FoodUserDescriptionH extends HibernateObject implements Serializabl
     /**
      * Get Home Weights
      * 
-     * @return home_weights parameter
+     * @return homeWeights parameter
      */
-    public String getHome_weights()
+    public String getHomeWeights()
     {
-        return this.home_weights;
+        return this.homeWeights;
     }
 
 
     /**
      * Set Home Weights
      * 
-     * @param home_weights parameter
+     * @param homeWeights parameter
      */
-    public void setHome_weights(String home_weights)
+    public void setHomeWeights(String homeWeights)
     {
-        this.home_weights = home_weights;
+        this.homeWeights = homeWeights;
     }
 
 

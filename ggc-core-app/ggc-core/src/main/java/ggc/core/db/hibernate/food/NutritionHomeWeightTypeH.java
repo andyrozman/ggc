@@ -8,32 +8,23 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.atech.db.hibernate.HibernateObject;
 
-/** @author Hibernate CodeGenerator */
 public class NutritionHomeWeightTypeH extends HibernateObject implements Serializable
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 2481733598356516091L;
 
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
     private String name;
-
-    /** nullable persistent field */
-    private int static_entry;
+    private int staticEntry;
 
 
     /** full constructor 
      * @param name 
-     * @param static_entry */
-    public NutritionHomeWeightTypeH(String name, int static_entry)
+     * @param staticEntry */
+    public NutritionHomeWeightTypeH(String name, int staticEntry)
     {
         this.name = name;
-        this.static_entry = static_entry;
+        this.staticEntry = staticEntry;
     }
 
 
@@ -90,22 +81,22 @@ public class NutritionHomeWeightTypeH extends HibernateObject implements Seriali
     /**
      * Get Is Static Entry
      * 
-     * @return static_entry
+     * @return staticEntry
      */
-    public int getStatic_entry()
+    public int getStaticEntry()
     {
-        return this.static_entry;
+        return this.staticEntry;
     }
 
 
     /**
      * Set Is Static Entry
      * 
-     * @param static_entry as string
+     * @param staticEntry as string
      */
-    public void setStatic_entry(int static_entry)
+    public void setStaticEntry(int staticEntry)
     {
-        this.static_entry = static_entry;
+        this.staticEntry = staticEntry;
     }
 
 

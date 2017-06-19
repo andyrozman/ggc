@@ -9,7 +9,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
 
 import ggc.core.data.defs.GlucoseUnitType;
-import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pen.DayValueH;
 import ggc.core.util.DataAccess;
 
 /**
@@ -40,7 +40,7 @@ import ggc.core.util.DataAccess;
  *  @author  Andy {andy@atech-software.com}  
  */
 
-public class DailyValues implements Serializable
+public class DailyValues implements Serializable, DataValuesInterface
 {
 
     private static final long serialVersionUID = -375771912636631298L;
@@ -431,6 +431,18 @@ public class DailyValues implements Serializable
     public String getColumnName(int column)
     {
         return column_names[column] == null ? m_ic.getMessage("NO_NAME") : column_names[column];
+    }
+
+
+    public Class<?> getColumnClass(int row)
+    {
+        return String.class;
+    }
+
+
+    public boolean isCellEditable(int row, int col)
+    {
+        return false;
     }
 
 

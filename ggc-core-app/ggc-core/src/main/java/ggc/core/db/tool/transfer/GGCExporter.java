@@ -3,10 +3,15 @@ package ggc.core.db.tool.transfer;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 
+import com.atech.data.mng.DataDefinitionEntry;
+import com.atech.db.hibernate.HibernateBackupSelectableObject;
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.tool.data.management.common.ImportExportStatusType;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
@@ -17,8 +22,8 @@ import com.atech.plugin.PlugInClient;
 import ggc.core.db.GGCDb;
 import ggc.core.db.datalayer.DailyValue;
 import ggc.core.db.datalayer.SettingsColorScheme;
-import ggc.core.db.hibernate.ColorSchemeH;
-import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pen.DayValueH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 import ggc.core.util.DataAccess;
 
 /**
@@ -168,10 +173,9 @@ public class GGCExporter extends ExportTool implements Runnable
     private BackupRestoreObject getBackupRestoreObject(String class_name)
     {
         // core
-        if (class_name.equals("ggc.core.db.hibernate.DayValueH"))
+        if (class_name.equals("ggc.core.db.hibernate.pen.DayValueH"))
             return new DailyValue();
-        // return null;
-        else if (class_name.equals("ggc.core.db.hibernate.ColorSchemeH"))
+        else if (class_name.equals("ggc.core.db.hibernate.settings.ColorSchemeH"))
             return new SettingsColorScheme();
 
         for (Enumeration<String> en = da.getPlugins().keys(); en.hasMoreElements();)
@@ -184,18 +188,17 @@ public class GGCExporter extends ExportTool implements Runnable
         }
 
         return null;
-
     }
 
 
     private BackupRestoreObject getBackupRestoreObject(Object obj, BackupRestoreObject bro)
     {
-        if (bro.getBackupClassName().equals("ggc.core.db.hibernate.DayValueH"))
+        if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pen.DayValueH"))
         {
             DayValueH eh = (DayValueH) obj;
             return new DailyValue(eh);
         }
-        else if (bro.getBackupClassName().equals("ggc.core.db.hibernate.ColorSchemeH"))
+        else if (bro.getBackupClassName().equals("ggc.core.db.hibernate.settings.ColorSchemeH"))
         {
             ColorSchemeH eh = (ColorSchemeH) obj;
             return new SettingsColorScheme(eh);
@@ -225,6 +228,17 @@ public class GGCExporter extends ExportTool implements Runnable
         exportData(this.getBackupRestoreObject(name));
     }
 
+
+    // /**
+    // * Export Data (clazz)
+    // *
+    // * @param clazz
+    // */
+    // public <E extends HibernateBackupSelectableObject> void
+    // exportData(Class<E> clazz)
+    // {
+    // exportData(clazz, true);
+    // }
 
     /**
      * Export Data (object)
@@ -262,14 +276,59 @@ public class GGCExporter extends ExportTool implements Runnable
             this.writeToFile(bt);
 
             /*
-             * this.writeToFile(eh.getId() + "|" + eh.getDt_info() + "|" +
+             * this.writeToFile(eh.getId() + "|" + eh.getDtInfo() + "|" +
              * eh.getBg() + "|" + eh.getIns1() + "|"
-             * + eh.getIns2() + "|" + eh.getCh() + "|" + eh.getMeals_ids() + "|"
+             * + eh.getIns2() + "|" + eh.getCh() + "|" + eh.getMealsIds() + "|"
              * + eh.getExtended() + "|"
-             * + eh.getPerson_id() + "|" + eh.getComment() + "|" +
+             * + eh.getPersonId() + "|" + eh.getComment() + "|" +
              * eh.getChanged() + "\n");
              */
             // sleep(25);
+            count++;
+            this.writeStatus(dot_mark, count);
+        }
+
+        closeFile();
+    }
+
+
+    /**
+     * Export Data (object)
+     *
+     */
+    public <E extends HibernateBackupSelectableObject> void exportData(Class<E> clazz,
+            DataDefinitionEntry defintionEntry)
+    {
+        // System.out.println("export: first");
+
+        // System.out.println("BRO: " + bro);
+
+        openFile(this.getRootPath() + clazz.getSimpleName() + this.getFileLastPart() + ".dbe");
+
+        writeHeader(defintionEntry, GGCDb.CURRENT_DB_VERSION);
+
+        Session sess = getSession();
+
+        Criteria criteria = getSession().createCriteria(clazz).addOrder(Order.asc("id"));
+
+        List resultsData = criteria.list();
+
+        this.statusSetMaxEntry(resultsData.size());
+
+        Iterator it = resultsData.iterator();
+
+        int dot_mark = 5;
+        int count = 0;
+
+        while (it.hasNext())
+        {
+            // System.out.println("export: next");
+            HibernateBackupSelectableObject bt = (E) it.next();
+
+            // DayValueH eh = (DayValueH) it.next();
+
+            this.writeToFile(bt);
+
             count++;
             this.writeStatus(dot_mark, count);
         }

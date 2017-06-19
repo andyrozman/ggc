@@ -8,36 +8,25 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.atech.db.hibernate.HibernateObject;
 
-/** @author Hibernate CodeGenerator */
 public class FoodGroupH extends HibernateObject implements Serializable
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 5806121161463589856L;
 
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
     private String name;
-
-    /** nullable persistent field */
-    private String name_i18n;
-
-    /** nullable persistent field */
+    private String nameI18n;
     private String description;
 
 
     /** full constructor 
      * @param name 
-     * @param name_i18n 
+     * @param nameI18n
      * @param description */
-    public FoodGroupH(String name, String name_i18n, String description)
+    public FoodGroupH(String name, String nameI18n, String description)
     {
         this.name = name;
-        this.name_i18n = name_i18n;
+        this.nameI18n = nameI18n;
         this.description = description;
     }
 
@@ -97,20 +86,20 @@ public class FoodGroupH extends HibernateObject implements Serializable
      * 
      * @return name
      */
-    public String getName_i18n()
+    public String getNameI18n()
     {
-        return this.name_i18n;
+        return this.nameI18n;
     }
 
 
     /**
      * Set Name (I18n)
      * 
-     * @param name_i18n as string
+     * @param nameI18n as string
      */
-    public void setName_i18n(String name_i18n)
+    public void setNameI18n(String nameI18n)
     {
-        this.name_i18n = name_i18n;
+        this.nameI18n = nameI18n;
     }
 
 

@@ -60,7 +60,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable,
 
     private JButton helpButton;
 
-    private DataAccess m_da = null;
+    private DataAccess dataAccess = null;
     private I18nControlAbstract m_ic = null;
 
     GraphViewHbA1c graphView;
@@ -74,11 +74,6 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable,
     private JButton drawButton;
 
 
-    // public HbA1cDialog()
-    // {
-    // init();
-    // }
-
     /**
      * Constructor
      * 
@@ -87,9 +82,9 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable,
     public HbA1cDialog(DataAccess da, GraphV1DbRetriever dbRetriever)
     {
         super(da.getMainParent(), "HbA1c", true);
-        this.m_da = da;
+        this.dataAccess = da;
         this.m_ic = da.getI18nControlInstance();
-        m_da.addComponent(this);
+        dataAccess.addComponent(this);
 
         this.calendarSelected = new GregorianCalendar();
         graphView = new GraphViewHbA1c(dbRetriever);
@@ -99,8 +94,8 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable,
         init();
         updateValueLabels();
 
-        this.m_da.enableHelp(this);
-        this.m_da.centerJDialog(this);
+        this.dataAccess.enableHelp(this);
+        this.dataAccess.centerJDialog(this);
 
         this.setVisible(true);
     }
@@ -108,11 +103,11 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable,
 
     private void updateValueLabels()
     {
-        setValueLabel("HBA1C_VALUE", DataAccess.Decimal2Format.format(getHbA1cValue()) + " %");
+        setValueLabel("HBA1C_VALUE", dataAccess.getFloatAsString(getHbA1cValue(), 2) + " %");
         setValueLabel("VALUATION", hbValues.getValuation());
-        setValueLabel("BG_AVG", DataAccess.Decimal2Format.format(hbValues.getAvgBG()));
+        setValueLabel("BG_AVG", dataAccess.getFloatAsString(hbValues.getAvgBG(), 2));
         setValueLabel("READINGS", hbValues.getReadings() + "");
-        setValueLabel("READINGS_SLASH_DAY", DataAccess.Decimal2Format.format(hbValues.getReadingsPerDay()));
+        setValueLabel("READINGS_SLASH_DAY", dataAccess.getFloatAsString(hbValues.getReadingsPerDay(), 2));
     }
 
 
@@ -248,13 +243,13 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable,
         panelButtons.setLayout(new TableLayout(sizes2));
 
         button = new JButton(" " + m_ic.getMessage("CLOSE"));
-        button.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, m_da));
+        button.setIcon(ATSwingUtils.getImageIcon_22x22("cancel.png", this, dataAccess));
         button.addActionListener(this);
         button.setActionCommand("close");
 
         panelButtons.add(button, "1, 1");
 
-        this.helpButton = ATSwingUtils.createHelpButton(this, m_da);
+        this.helpButton = ATSwingUtils.createHelpButton(this, dataAccess);
 
         panelButtons.add(this.helpButton, "3, 1");
 
@@ -266,14 +261,14 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable,
 
     private void setEndDate()
     {
-        System.out.println("DateRangeSelectorPanel: " + m_da.getGregorianCalendarDateAsString(calendarSelected));
+        System.out.println("DateRangeSelectorPanel: " + dataAccess.getGregorianCalendarDateAsString(calendarSelected));
 
         // endSpinnerDateModel.setValue(calendarSelected.getTime());
 
         GregorianCalendar calStart = (GregorianCalendar) calendarSelected.clone();
         calStart.add(Calendar.MONTH, -3);
 
-        setValueLabel("STARTING_DATE", m_da.getGregorianCalendarDateAsString(calStart));
+        setValueLabel("STARTING_DATE", dataAccess.getGregorianCalendarDateAsString(calStart));
     }
 
 
@@ -296,7 +291,7 @@ public class HbA1cDialog extends JDialog implements ActionListener, HelpCapable,
     {
         graphView = null;
         this.dispose();
-        m_da.removeComponent(this);
+        dataAccess.removeComponent(this);
     }
 
 

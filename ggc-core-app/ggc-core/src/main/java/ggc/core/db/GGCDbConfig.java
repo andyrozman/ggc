@@ -30,11 +30,16 @@ package ggc.core.db;
  * Author: andyrozman {andy@atech-software.com}
  */
 
+import javax.swing.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
+
 import ggc.core.util.DataAccess;
+
+import java.util.HashMap;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -68,13 +73,16 @@ public class GGCDbConfig extends HibernateConfiguration
 
     private static final Logger LOG = LoggerFactory.getLogger(GGCDbConfig.class);
 
-    private String[] db_files = { "DbInfo.hbm.xml", "GGC_Main.hbm.xml", //
+    private static String[] db_files = { "DbInfo.hbm.xml", //
+                                  "GGC_Main.hbm.xml", //
                                   "GGC_Nutrition.hbm.xml", //
                                   "GGC_Other.hbm.xml", //
                                   "GGC_Pump.hbm.xml", //
                                   "GGC_CGMS.hbm.xml" };
 
-    private String[] db_files_debug = { "GGC_Main.hbm.xml", //
+    private static String[] db_files_debug = { "DbInfo.hbm.xml", //
+                                        "GGC_Main.hbm.xml", //
+                                        "com/atech/db/hibernate/hbm/User.hbm.xml", //
                                         "GGC_Nutrition.hbm.xml", //
                                         "GGC_Other.hbm.xml", //
                                         "GGC_Pump.hbm.xml", //
@@ -126,7 +134,7 @@ public class GGCDbConfig extends HibernateConfiguration
     @Override
     public String[] getResourceFiles()
     {
-        return (DataAccess.getInstance().getDeveloperMode()) ? db_files_debug : db_files;
+        return (DataAccess.developerMode) ? db_files_debug : db_files;
     }
 
 
@@ -202,6 +210,34 @@ public class GGCDbConfig extends HibernateConfiguration
     public String getShemaChangeType()
     {
         return null;
+    }
+
+
+    @Override
+    public void initVersionToResourceFileMapping()
+    {
+        this.defaultVersion = 7;
+        this.versionToResourceMap = new HashMap<String, Integer>();
+        this.versionToResourceMap.put("17f84910f226c9d9bf6c8218fc824c6d2a01d05b", 7); // 0.8 -19.6.
+        this.versionToResourceMap.put("2916075f381e81835b94ad03dc89622ceaa1dd57", 8); // not released, just for testing
+    }
+
+
+    public static void main(String[] args)
+    {
+        // ChecksumSHA1 checksumSHA1 = new ChecksumSHA1();
+
+        JFrame jFrame = new JFrame();
+
+        DataAccess da = DataAccess.createInstance(jFrame);
+
+        da.setDeveloperMode(false);
+
+        GGCDbConfig dbConfig = new GGCDbConfig(true);
+
+        String sha1 = dbConfig.getResourcesSHA1();
+
+        System.out.println("SHA1: normal: " + sha1);
     }
 
 }

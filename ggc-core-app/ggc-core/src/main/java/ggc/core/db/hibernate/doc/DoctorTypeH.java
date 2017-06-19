@@ -1,33 +1,28 @@
 package ggc.core.db.hibernate.doc;
 
-import java.util.Map;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 
-import com.atech.db.hibernate.HibernateBackupSelectableObject;
+import com.atech.db.hibernate.HibernateSelectableObject;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
+import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.db.hibernate.GGCHibernateSelectableObject;
 import ggc.core.util.DataAccess;
 
-/** @author Hibernate CodeGenerator */
-public class DoctorTypeH extends HibernateBackupSelectableObject
+public class DoctorTypeH extends GGCHibernateSelectableObject
 {
 
     private static final long serialVersionUID = 8775376037164641226L;
     private static final int TABLE_VERSION = 1;
 
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
     private String name;
-
-    /** nullable persistent field */
     private int predefined;
 
-    // non persistent field
+    // Non Hibernate fields
     private String nameTranslated;
-
-    // non persistent field
     private String predefinedTranslated;
 
 
@@ -42,8 +37,17 @@ public class DoctorTypeH extends HibernateBackupSelectableObject
     }
 
 
+    public DoctorTypeH(I18nControlAbstract i18nControl)
+    {
+        super(i18nControl);
+    }
+
+
     public String getNameTranslated()
     {
+        if (nameTranslated == null)
+            setNameTranslated();
+
         return this.nameTranslated;
     }
 
@@ -164,22 +168,18 @@ public class DoctorTypeH extends HibernateBackupSelectableObject
     }
 
 
-    public int getColumnCount()
+    @Override
+    public String toStringDescriptive()
     {
-        return 2;
+        return String.format(getBaseForDescriptiveString(), ("name=" + this.name));
     }
 
 
-    public String getColumnName(int num)
+    @Override
+    public Criteria getChildrenCriteria(Session session, HibernateSelectableObject object)
     {
-        switch (num)
-        {
-            case 2:
-                return "DTCMP_PREDEFINED";
-
-            default:
-                return "DOCTOR_TYPE";
-        }
+        // not used
+        return null;
     }
 
 
@@ -187,11 +187,14 @@ public class DoctorTypeH extends HibernateBackupSelectableObject
     {
         switch (num)
         {
-            case 2:
+            case 0:
+                return this.nameTranslated;
+
+            case 1:
                 return this.predefinedTranslated;
 
             default:
-                return this.nameTranslated;
+                return null;
         }
     }
 
@@ -199,19 +202,6 @@ public class DoctorTypeH extends HibernateBackupSelectableObject
     public Object getColumnValueObject(int num)
     {
         return getColumnValue(num);
-    }
-
-
-    public int getColumnWidth(int num, int width)
-    {
-        switch (num)
-        {
-            case 2:
-                return (int) (width * 0.2);
-
-            default:
-                return (int) (width * 0.8);
-        }
     }
 
 
@@ -242,35 +232,18 @@ public class DoctorTypeH extends HibernateBackupSelectableObject
 
     }
 
-
-    @Override
-    protected String getColumnNames(int tableVersion)
-    {
-        return null;
-    }
-
-
-    public String getTargetName()
-    {
-        return DataAccess.getInstance().getI18nControlInstance().getMessage("DOCTOR_TYPES");
-    }
-
-
-    public int getTableVersion()
-    {
-        return TABLE_VERSION;
-    }
-
-
-    public String dbExport(int table_version) throws Exception
-    {
-        return null;
-    }
-
-
-    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
-    {
-
-    }
+    // public String dbExport(int table_version) throws Exception
+    // {
+    // StringBuilder sb = new StringBuilder();
+    //
+    // sb.append(this.getId());
+    // writeDelimiter(sb);
+    // sb.append(this.getName());
+    // writeDelimiter(sb);
+    // sb.append(this.getPredefined());
+    // sb.append("\n");
+    //
+    // return sb.toString();
+    // }
 
 }

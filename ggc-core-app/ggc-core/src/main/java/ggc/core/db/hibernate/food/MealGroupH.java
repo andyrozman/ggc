@@ -8,46 +8,31 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.atech.db.hibernate.HibernateObject;
 
-/** @author Hibernate CodeGenerator */
 public class MealGroupH extends HibernateObject implements Serializable
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -6895815504898328042L;
 
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
     private String name;
-
-    /** nullable persistent field */
-    private String name_i18n;
-
-    /** nullable persistent field */
+    private String nameI18n;
     private String description;
-
-    /** nullable persistent field */
-    private long parent_id;
-
-    /** nullable persistent field */
+    private long parentId;
     private long changed;
 
 
     /** full constructor 
      * @param name 
-     * @param name_i18n 
+     * @param nameI18n
      * @param description 
-     * @param parent_id 
+     * @param parentId
      * @param changed */
-    public MealGroupH(String name, String name_i18n, String description, long parent_id, long changed)
+    public MealGroupH(String name, String nameI18n, String description, long parentId, long changed)
     {
         this.name = name;
-        this.name_i18n = name_i18n;
+        this.nameI18n = nameI18n;
         this.description = description;
-        this.parent_id = parent_id;
+        this.parentId = parentId;
         this.changed = changed;
     }
 
@@ -107,20 +92,20 @@ public class MealGroupH extends HibernateObject implements Serializable
      * 
      * @return name
      */
-    public String getName_i18n()
+    public String getNameI18n()
     {
-        return this.name_i18n;
+        return this.nameI18n;
     }
 
 
     /**
      * Set Name (I18n)
      * 
-     * @param name_i18n as string
+     * @param nameI18n as string
      */
-    public void setName_i18n(String name_i18n)
+    public void setNameI18n(String nameI18n)
     {
-        this.name_i18n = name_i18n;
+        this.nameI18n = nameI18n;
     }
 
 
@@ -149,22 +134,22 @@ public class MealGroupH extends HibernateObject implements Serializable
     /**
      * Get Parent Id
      * 
-     * @return parent_id parameter
+     * @return parentId parameter
      */
-    public long getParent_id()
+    public long getParentId()
     {
-        return this.parent_id;
+        return this.parentId;
     }
 
 
     /**
      * Set Parent Id
      * 
-     * @param parent_id parameter
+     * @param parentId parameter
      */
-    public void setParent_id(long parent_id)
+    public void setParentId(long parentId)
     {
-        this.parent_id = parent_id;
+        this.parentId = parentId;
     }
 
 

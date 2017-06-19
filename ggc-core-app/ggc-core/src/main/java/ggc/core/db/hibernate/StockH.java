@@ -1,15 +1,14 @@
 package ggc.core.db.hibernate;
 
 import java.io.Serializable;
-import java.util.GregorianCalendar;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-
 public class StockH implements Serializable
 {
+
     private static final long serialVersionUID = -3068125166287873609L;
 
     private long id;
@@ -31,7 +30,6 @@ public class StockH implements Serializable
     }
 
 
-
     /**
      * Get Id
      * 
@@ -41,6 +39,7 @@ public class StockH implements Serializable
     {
         return this.id;
     }
+
 
     /**
      * Set Id
@@ -53,8 +52,6 @@ public class StockH implements Serializable
     }
 
 
-
-
     /**
      * Get Amount
      * 
@@ -64,6 +61,7 @@ public class StockH implements Serializable
     {
         return this.amount;
     }
+
 
     /**
      * Set Amount
@@ -81,40 +79,48 @@ public class StockH implements Serializable
         return stockSubtypeId;
     }
 
+
     public void setStockSubtypeId(long stockSubtypeId)
     {
         this.stockSubtypeId = stockSubtypeId;
     }
+
 
     public long getStocktakingId()
     {
         return stocktakingId;
     }
 
+
     public void setStocktakingId(long stocktakingId)
     {
         this.stocktakingId = stocktakingId;
     }
+
 
     public String getLocation()
     {
         return location;
     }
 
+
     public void setLocation(String location)
     {
         this.location = location;
     }
+
 
     public int getPersonId()
     {
         return personId;
     }
 
+
     public void setPersonId(int personId)
     {
         this.personId = personId;
     }
+
 
     /**
      * Get Extended 
@@ -126,6 +132,7 @@ public class StockH implements Serializable
         return this.extended;
     }
 
+
     /**
      * Set Extended
      *  
@@ -136,6 +143,7 @@ public class StockH implements Serializable
         this.extended = extended;
     }
 
+
     /**
      * Get Comment
      * 
@@ -145,6 +153,7 @@ public class StockH implements Serializable
     {
         return this.comment;
     }
+
 
     /**
      * Set Comment
@@ -157,26 +166,29 @@ public class StockH implements Serializable
     }
 
 
-
     public Long getValidFrom()
     {
         return validFrom;
     }
+
 
     public void setValidFrom(Long validFrom)
     {
         this.validFrom = validFrom;
     }
 
+
     public Long getValidTill()
     {
         return validTill;
     }
 
+
     public void setValidTill(Long validTill)
     {
         this.validTill = validTill;
     }
+
 
     /**
      * Custom equals implementation
@@ -192,6 +204,7 @@ public class StockH implements Serializable
         return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
+
     /**
      * To String
      *
@@ -202,6 +215,7 @@ public class StockH implements Serializable
     {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
+
 
     /**
      * Create Hash Code
@@ -219,6 +233,7 @@ public class StockH implements Serializable
     {
         return stockSubtype;
     }
+
 
     public void setStockSubtype(StockSubTypeH stockSubtype)
     {

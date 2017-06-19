@@ -6,58 +6,40 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.atech.db.hibernate.HibernateObject;
 
-/** @author Hibernate CodeGenerator */
 public class PumpDataH extends HibernateObject
 {
 
     private static final long serialVersionUID = -3935397524396978150L;
 
-    /** identifier field */
     private long id;
-
-    /** persistent field */
-    private long dt_info;
-
-    /** nullable persistent field */
-    private int base_type;
-
-    /** nullable persistent field */
-    private int sub_type;
-
-    /** nullable persistent field */
+    private long dtInfo;
+    private int baseType;
+    private int subType;
     private String value;
-
-    /** nullable persistent field */
     private String extended;
-
-    /** persistent field */
-    private int person_id;
-
-    /** nullable persistent field */
+    private int personId;
     private String comment;
-
-    /** nullable persistent field */
     private long changed;
 
 
     /** full constructor 
-     * @param dt_info 
-     * @param base_type 
-     * @param sub_type 
+     * @param dtInfo
+     * @param baseType
+     * @param subType
      * @param value 
      * @param extended 
-     * @param person_id 
+     * @param personId
      * @param comment 
      * @param changed */
-    public PumpDataH(long dt_info, int base_type, int sub_type, String value, String extended, int person_id,
+    public PumpDataH(long dtInfo, int baseType, int subType, String value, String extended, int personId,
             String comment, long changed)
     {
-        this.dt_info = dt_info;
-        this.base_type = base_type;
-        this.sub_type = sub_type;
+        this.dtInfo = dtInfo;
+        this.baseType = baseType;
+        this.subType = subType;
         this.value = value;
         this.extended = extended;
-        this.person_id = person_id;
+        this.personId = personId;
         this.comment = comment;
         this.changed = changed;
     }
@@ -70,12 +52,12 @@ public class PumpDataH extends HibernateObject
 
 
     /** minimal constructor 
-     * @param dt_info 
-     * @param person_id */
-    public PumpDataH(long dt_info, int person_id)
+     * @param dtInfo
+     * @param personId */
+    public PumpDataH(long dtInfo, int personId)
     {
-        this.dt_info = dt_info;
-        this.person_id = person_id;
+        this.dtInfo = dtInfo;
+        this.personId = personId;
     }
 
 
@@ -105,64 +87,64 @@ public class PumpDataH extends HibernateObject
      * Get Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * @return
      */
-    public long getDt_info()
+    public long getDtInfo()
     {
-        return this.dt_info;
+        return this.dtInfo;
     }
 
 
     /**
      * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * 
-     * @param dt_info 
+     * @param dtInfo
      */
-    public void setDt_info(long dt_info)
+    public void setDtInfo(long dtInfo)
     {
-        this.dt_info = dt_info;
+        this.dtInfo = dtInfo;
     }
 
 
     /**
      * Get Base Type 
      * 
-     * @return base_type value
+     * @return baseType value
      */
-    public int getBase_type()
+    public int getBaseType()
     {
-        return this.base_type;
+        return this.baseType;
     }
 
 
     /**
      * Set Base Type 
      * 
-     * @param base_type value
+     * @param baseType value
      */
-    public void setBase_type(int base_type)
+    public void setBaseType(int baseType)
     {
-        this.base_type = base_type;
+        this.baseType = baseType;
     }
 
 
     /**
      * Get Sub Type 
      * 
-     * @return sub_type value
+     * @return subType value
      */
-    public int getSub_type()
+    public int getSubType()
     {
-        return this.sub_type;
+        return this.subType;
     }
 
 
     /**
      * Set Sub Type 
      * 
-     * @param sub_type value
+     * @param subType value
      */
-    public void setSub_type(int sub_type)
+    public void setSubType(int subType)
     {
-        this.sub_type = sub_type;
+        this.subType = subType;
     }
 
 
@@ -215,20 +197,20 @@ public class PumpDataH extends HibernateObject
      * 
      * @return person id parameter
      */
-    public int getPerson_id()
+    public int getPersonId()
     {
-        return this.person_id;
+        return this.personId;
     }
 
 
     /**
      * Set Person Id
      * 
-     * @param person_id parameter
+     * @param personId parameter
      */
-    public void setPerson_id(int person_id)
+    public void setPersonId(int personId)
     {
-        this.person_id = person_id;
+        this.personId = personId;
     }
 
 

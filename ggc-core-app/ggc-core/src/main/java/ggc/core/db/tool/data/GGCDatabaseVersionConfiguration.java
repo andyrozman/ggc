@@ -73,10 +73,8 @@ public enum GGCDatabaseVersionConfiguration implements DatabaseVersionConfigurat
 
     GGCDatabaseVersionConfiguration(String key)
     {
+        dbVersionText = key;
     }
-
-    public static String DATABASE_V7 = "7";
-    public static String DATABASE_V8 = "8";
 
 
     public List<DatabaseTableConfiguration> getTablesForDatabase(String key)
@@ -90,4 +88,11 @@ public enum GGCDatabaseVersionConfiguration implements DatabaseVersionConfigurat
         }
         return null;
     }
+
+
+    public String getVersion()
+    {
+        return this.dbVersionText;
+    }
+
 }

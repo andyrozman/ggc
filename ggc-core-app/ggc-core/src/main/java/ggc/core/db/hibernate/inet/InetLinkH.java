@@ -1,30 +1,19 @@
 package ggc.core.db.hibernate.inet;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-/** @author Hibernate CodeGenerator */
-public class InetLinkH implements Serializable
+import com.atech.db.hibernate.HibernateObject;
+
+public class InetLinkH extends HibernateObject
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1649198412448022004L;
 
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
     private String name;
-
-    /** nullable persistent field */
     private String description;
-
-    /** nullable persistent field */
     private String comment;
 
 

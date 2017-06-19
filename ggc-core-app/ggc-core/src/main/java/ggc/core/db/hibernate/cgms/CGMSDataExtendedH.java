@@ -1,74 +1,60 @@
 package ggc.core.db.hibernate.cgms;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
-/** @author Hibernate CodeGenerator */
-public class CGMSDataExtendedH implements Serializable
+import com.atech.db.hibernate.HibernateObject;
+
+public class CGMSDataExtendedH extends HibernateObject
 {
 
     private static final long serialVersionUID = -8690831306276025195L;
 
-    /** identifier field */
     private long id;
-
-    /** persistent field */
-    private long dt_info;
-
-    /** nullable persistent field */
+    private long dtInfo;
     private int type;
-
-    /** nullable persistent field */
     private String value;
-
-    /** nullable persistent field */
     private String extended;
-
-    /** persistent field */
-    private int person_id;
-
-    /** nullable persistent field */
+    private int personId;
     private String comment;
-
-    /** nullable persistent field */
     private long changed;
 
+
     /** full constructor 
-     * @param dt_info 
+     * @param dtInfo
      * @param type 
      * @param value 
      * @param extended 
-     * @param person_id 
+     * @param personId
      * @param comment 
      * @param changed */
-    public CGMSDataExtendedH(long dt_info, int type, String value, String extended, int person_id, String comment,
+    public CGMSDataExtendedH(long dtInfo, int type, String value, String extended, int personId, String comment,
             long changed)
     {
-        this.dt_info = dt_info;
+        this.dtInfo = dtInfo;
         this.type = type;
         this.value = value;
         this.extended = extended;
-        this.person_id = person_id;
+        this.personId = personId;
         this.comment = comment;
         this.changed = changed;
     }
+
 
     /** default constructor */
     public CGMSDataExtendedH()
     {
     }
 
+
     /** minimal constructor 
-     * @param dt_info 
-     * @param person_id */
-    public CGMSDataExtendedH(long dt_info, int person_id)
+     * @param dtInfo
+     * @param personId */
+    public CGMSDataExtendedH(long dtInfo, int personId)
     {
-        this.dt_info = dt_info;
-        this.person_id = person_id;
+        this.dtInfo = dtInfo;
+        this.personId = personId;
     }
+
 
     /**
      * Get Id
@@ -80,6 +66,7 @@ public class CGMSDataExtendedH implements Serializable
         return this.id;
     }
 
+
     /**
      * Set Id
      * 
@@ -90,24 +77,27 @@ public class CGMSDataExtendedH implements Serializable
         this.id = id;
     }
 
+
     /**
      * Get Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * @return
      */
-    public long getDt_info()
+    public long getDtInfo()
     {
-        return this.dt_info;
+        return this.dtInfo;
     }
+
 
     /**
      * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * 
-     * @param dt_info 
+     * @param dtInfo
      */
-    public void setDt_info(long dt_info)
+    public void setDtInfo(long dtInfo)
     {
-        this.dt_info = dt_info;
+        this.dtInfo = dtInfo;
     }
+
 
     /**
      * Get Type 
@@ -119,6 +109,7 @@ public class CGMSDataExtendedH implements Serializable
         return this.type;
     }
 
+
     /**
      * Set Type
      *  
@@ -128,6 +119,7 @@ public class CGMSDataExtendedH implements Serializable
     {
         this.type = type;
     }
+
 
     /**
      * Get Value 
@@ -139,6 +131,7 @@ public class CGMSDataExtendedH implements Serializable
         return this.value;
     }
 
+
     /**
      * Set Extended
      *  
@@ -148,6 +141,7 @@ public class CGMSDataExtendedH implements Serializable
     {
         this.value = value;
     }
+
 
     /**
      * Get Extended 
@@ -159,6 +153,7 @@ public class CGMSDataExtendedH implements Serializable
         return this.extended;
     }
 
+
     /**
      * Set Extended
      *  
@@ -169,25 +164,28 @@ public class CGMSDataExtendedH implements Serializable
         this.extended = extended;
     }
 
+
     /**
      * Get Person Id
      * 
      * @return person id parameter
      */
-    public int getPerson_id()
+    public int getPersonId()
     {
-        return this.person_id;
+        return this.personId;
     }
+
 
     /**
      * Set Person Id
      * 
-     * @param person_id parameter
+     * @param personId parameter
      */
-    public void setPerson_id(int person_id)
+    public void setPersonId(int personId)
     {
-        this.person_id = person_id;
+        this.personId = personId;
     }
+
 
     /**
      * Get Comment
@@ -199,6 +197,7 @@ public class CGMSDataExtendedH implements Serializable
         return this.comment;
     }
 
+
     /**
      * Set Comment
      * 
@@ -208,6 +207,7 @@ public class CGMSDataExtendedH implements Serializable
     {
         this.comment = comment;
     }
+
 
     /**
      * Get Changed
@@ -219,6 +219,7 @@ public class CGMSDataExtendedH implements Serializable
         return this.changed;
     }
 
+
     /**
      * Set Changed
      * 
@@ -228,6 +229,7 @@ public class CGMSDataExtendedH implements Serializable
     {
         this.changed = changed;
     }
+
 
     /**
      * Equals - method to check equalicy of object
@@ -241,28 +243,6 @@ public class CGMSDataExtendedH implements Serializable
             return false;
         CGMSDataExtendedH castOther = (CGMSDataExtendedH) other;
         return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
-    }
-
-    /**
-     * To String
-     * 
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return new ToStringBuilder(this).append("id", getId()).toString();
-    }
-
-    /**
-     * Create Hash Code
-     * 
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

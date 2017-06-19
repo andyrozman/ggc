@@ -41,7 +41,7 @@ import com.atech.db.hibernate.transfer.RestoreFileInfo;
 import com.atech.utils.ATDataAccessAbstract;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pen.DayValueH;
 import ggc.core.util.DataAccess;
 
 /**
@@ -197,7 +197,7 @@ public class ImportDailyValues extends ImportTool implements Runnable
 
             if (clean_db)
             {
-                this.clearExistingData("ggc.core.db.hibernate.DayValueH");
+                this.clearExistingData("ggc.core.db.hibernate.pen.DayValueH");
             }
             else
             {
@@ -250,23 +250,23 @@ public class ImportDailyValues extends ImportTool implements Runnable
                     strtok.nextToken();
                 }
 
-                dvh.setDt_info(getLong(strtok.nextToken()));
+                dvh.setDtInfo(getLong(strtok.nextToken()));
                 dvh.setBg(getInt(strtok.nextToken()));
                 dvh.setIns1((int) getFloat(strtok.nextToken()));
                 dvh.setIns2((int) getFloat(strtok.nextToken()));
                 dvh.setCh(getFloat(strtok.nextToken()));
-                dvh.setMeals_ids(getString(strtok.nextToken()));
+                dvh.setMealsIds(getString(strtok.nextToken()));
                 dvh.setExtended(getString(strtok.nextToken()));
 
                 int person_id = this.getInt(strtok.nextToken());
 
                 if (person_id == 0)
                 {
-                    dvh.setPerson_id(1);
+                    dvh.setPersonId(1);
                 }
                 else
                 {
-                    dvh.setPerson_id(person_id);
+                    dvh.setPersonId(person_id);
                 }
 
                 dvh.setComment(getString(strtok.nextToken()));

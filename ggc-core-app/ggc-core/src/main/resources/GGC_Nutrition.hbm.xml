@@ -2,103 +2,128 @@
 <!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
 
-    <!-- ***************** GGC::Nutrition SCHEMA  ******************* -->
+
+    <!-- ********************************************* -->
+    <!-- ***                Nutritions            **** -->
+    <!-- ********************************************* -->
 
 
-    <!--  Nutrition Definition - Global -->
+    <!-- ********************************************* -->
+    <!-- ***         Global Nutrition Data        **** -->
+    <!-- ********************************************* -->
+
+    <!--  Nutrition Definition: last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.food.NutritionDefinitionH" table="nutrition_definition">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
-        <property name="weight_unit" type="string" length="50"/>
+        <property name="weightUnit" column="weight_unit" type="string" length="50"/>
         <property name="tag" type="string" length="50"/>
         <property name="name" type="string" length="100"/>
-        <property name="decimal_places" type="text" length="10"/>
-        <property name="static_entry" type="int"/>
+        <property name="decimalPlaces" column="decimal_places" type="text" length="10"/>
+        <property name="staticEntry" column="static_entry" type="int"/>
     </class>
 
-    <!--  Nutrition Home Weight Type - Global -->
+
+    <!--  Nutrition Home Weight Type: last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.food.NutritionHomeWeightTypeH" table="nutrition_home_weight_type">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
         <property name="name" type="string" length="255"/>
-        <property name="static_entry" type="int"/>
+        <property name="staticEntry" column="static_entry" type="int"/>
     </class>
 
 
-    <!--  Food Group - Nutrition 1 -->
+    <!-- ********************************************* -->
+    <!-- ***   US Department of Agriculture Db     *** -->
+    <!-- ********************************************* -->
+
+    <!--  USDA Food Group: last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.food.FoodGroupH" table="nutrition_usda_food_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
         <property name="name" type="string" length="255"/>
-        <property name="name_i18n" type="string" length="255"/>
+        <property name="nameI18n" column="name_i18n" type="string" length="255"/>
         <property name="description" type="string" length="1000"/>
     </class>
 
 
-    <!--  Food Description - - Nutrition 1-->
+    <!--  USDA Food Description: last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.food.FoodDescriptionH" table="nutrition_usda_food_description">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
-        <property name="group_id" type="long"/>
+        <property name="groupId" column="group_id" type="long"/>
         <property name="name" type="string" length="255"/>
-        <property name="name_i18n" type="string" length="255"/>
+        <property name="nameI18n" column="name_i18n" type="string" length="255"/>
         <property name="refuse" type="float"/>
         <property name="nutritions" type="text"/>
-        <property name="home_weights" type="text"/>
+        <property name="homeWeights" column="home_weights" type="text"/>
     </class>
 
 
-    <!--  Food Group - Nutrition 2 -->
+    <!-- ************************************* -->
+    <!-- ***      User Nutrition Db        *** -->
+    <!-- ************************************* -->
+
+
+    <!--  User Food Group: last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.food.FoodUserGroupH" table="nutrition_user_food_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
         <property name="name" type="string" length="255"/>
-        <property name="name_i18n" type="string" length="255"/>
+        <property name="nameI18n" column="name_i18n" type="string" length="255"/>
         <property name="description" type="string" length="1000"/>
-        <property name="parent_id" type="long"/>
+        <property name="parentId" column="parent_id" type="long"/>
         <property name="changed" type="long" not-null="false"/>
     </class>
 
 
-    <!--  Food Description - - Nutrition 2-->
+    <!-- User Food Description: last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.food.FoodUserDescriptionH" table="nutrition_user_food_description">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
-        <property name="group_id" type="long"/>
+        <property name="groupId" column="group_id" type="long"/>
         <property name="name" type="string" length="255"/>
-        <property name="name_i18n" type="string" length="255"/>
+        <property name="nameI18n" column="name_i18n" type="string" length="255"/>
         <property name="description" type="string" length="1000"/>
         <property name="refuse" type="float"/>
         <property name="nutritions" type="text"/>
-        <property name="home_weights" type="text"/>
+        <property name="homeWeights" column="home_weights" type="text"/>
         <property name="changed" type="long" not-null="false"/>
     </class>
 
 
+    <!-- ************************************* -->
+    <!-- ***            Meal Db            *** -->
+    <!-- ************************************* -->
+
+
+    <!--  Meal Group: last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.food.MealGroupH" table="meal_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
         <property name="name" type="string" length="255"/>
-        <property name="name_i18n" type="string" length="255"/>
+        <property name="nameI18n" column="name_i18n" type="string" length="255"/>
         <property name="description" type="string" length="2000"/>
-        <property name="parent_id" type="long"/>
+        <property name="parentId" column="parent_id" type="long"/>
         <property name="changed" type="long" not-null="false"/>
     </class>
 
+
+    <!--  Meal Description: last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.food.MealH" table="meal_meal">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
-        <property name="group_id" type="long"/>
+        <property name="groupId" column="group_id" type="long"/>
         <property name="name" type="string" length="255"/>
-        <property name="name_i18n" type="string" length="255"/>
+        <property name="nameI18n" column="name_i18n" type="string" length="255"/>
         <property name="description" type="string" length="2000"/>
         <property name="parts" type="text"/>
         <!--  1:x=1.0;2:y;1:z   -->

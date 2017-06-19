@@ -94,7 +94,8 @@ public class GGCDbToolInitDbRunner extends DbToolInitDbRunner
             if (dbInitTaskDto != null)
             {
                 this.setTask(ic.getMessage(task));
-                GGCCustomDbInitTasks taskRunner = new GGCCustomDbInitTasks(this.dbInitTasks.get(task), this);
+                GGCCustomDbInitTasks taskRunner = new GGCCustomDbInitTasks(this.dbInitTasks.get(task), this,
+                        applicationInterface.getImportExportContext());
                 taskRunner.run();
                 this.setStatus(100);
             }

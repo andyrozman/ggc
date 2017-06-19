@@ -12,7 +12,7 @@ import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.SettingsH;
+import ggc.core.db.hibernate.settings.SettingsH;
 import ggc.core.util.DataAccess;
 
 /**
@@ -153,7 +153,7 @@ public class ExportSettings extends ExportTool implements Runnable
     {
         openFile(this.getRootPath() + "SettingsH" + this.getFileLastPart() + ".dbe");
         // "../data/export/DayValueH_" + getCurrentDateForFile() + ".txt");
-        writeHeader("ggc.core.db.hibernate.SettingsH", "id; key; value; type; description; person_id",
+        writeHeader("ggc.core.db.hibernate.settings.SettingsH", "id; key; value; type; description; person_id",
             GGCDb.CURRENT_DB_VERSION);
 
         Session sess = getSession();
@@ -172,7 +172,7 @@ public class ExportSettings extends ExportTool implements Runnable
             SettingsH eh = (SettingsH) it.next();
 
             this.writeToFile(eh.getId() + "|" + eh.getKey() + "|" + eh.getValue() + "|" + eh.getType() + "|"
-                    + eh.getDescription() + "|" + eh.getPerson_id() + "\n");
+                    + eh.getDescription() + "|" + eh.getPersonId() + "\n");
 
             // sleep(25);
             count++;

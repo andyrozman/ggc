@@ -3,58 +3,39 @@ package ggc.core.db.hibernate.food;
 import java.io.Serializable;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.atech.db.hibernate.HibernateObject;
 
-/** @author Hibernate CodeGenerator */
 public class FoodDescriptionH extends HibernateObject implements Serializable
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 7477410336917496421L;
 
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
-    private long group_id;
-
-    /** nullable persistent field */
+    private long groupId;
     private String name;
-
-    /** nullable persistent field */
-    private String name_i18n;
-
-    /** nullable persistent field */
+    private String nameI18n;
     private float refuse;
-
-    /** nullable persistent field */
     private String nutritions;
-
-    /** nullable persistent field */
-    private String home_weights;
+    private String homeWeights;
 
 
     /** full constructor 
-     * @param group_id 
+     * @param groupId
      * @param name 
-     * @param name_i18n 
+     * @param nameI18n
      * @param refuse 
      * @param nutritions 
-     * @param home_weights */
-    public FoodDescriptionH(long group_id, String name, String name_i18n, float refuse, String nutritions,
-            String home_weights)
+     * @param homeWeights */
+    public FoodDescriptionH(long groupId, String name, String nameI18n, float refuse, String nutritions,
+            String homeWeights)
     {
-        this.group_id = group_id;
+        this.groupId = groupId;
         this.name = name;
-        this.name_i18n = name_i18n;
+        this.nameI18n = nameI18n;
         this.refuse = refuse;
         this.nutritions = nutritions;
-        this.home_weights = home_weights;
+        this.homeWeights = homeWeights;
     }
 
 
@@ -89,22 +70,22 @@ public class FoodDescriptionH extends HibernateObject implements Serializable
     /**
      * Get Group Id
      * 
-     * @return group_id value
+     * @return groupId value
      */
-    public long getGroup_id()
+    public long getGroupId()
     {
-        return this.group_id;
+        return this.groupId;
     }
 
 
     /**
      * Set Group Id
      * 
-     * @param group_id value
+     * @param groupId value
      */
-    public void setGroup_id(long group_id)
+    public void setGroupId(long groupId)
     {
-        this.group_id = group_id;
+        this.groupId = groupId;
     }
 
 
@@ -135,20 +116,20 @@ public class FoodDescriptionH extends HibernateObject implements Serializable
      * 
      * @return name
      */
-    public String getName_i18n()
+    public String getNameI18n()
     {
-        return this.name_i18n;
+        return this.nameI18n;
     }
 
 
     /**
      * Set Name (I18n)
      * 
-     * @param name_i18n as string
+     * @param nameI18n as string
      */
-    public void setName_i18n(String name_i18n)
+    public void setNameI18n(String nameI18n)
     {
-        this.name_i18n = name_i18n;
+        this.nameI18n = nameI18n;
     }
 
 
@@ -199,22 +180,22 @@ public class FoodDescriptionH extends HibernateObject implements Serializable
     /**
      * Get Home Weights
      * 
-     * @return home_weights parameter
+     * @return homeWeights parameter
      */
-    public String getHome_weights()
+    public String getHomeWeights()
     {
-        return this.home_weights;
+        return this.homeWeights;
     }
 
 
     /**
      * Set Home Weights
      * 
-     * @param home_weights parameter
+     * @param homeWeights parameter
      */
-    public void setHome_weights(String home_weights)
+    public void setHomeWeights(String homeWeights)
     {
-        this.home_weights = home_weights;
+        this.homeWeights = homeWeights;
     }
 
 
@@ -230,30 +211,6 @@ public class FoodDescriptionH extends HibernateObject implements Serializable
             return false;
         FoodDescriptionH castOther = (FoodDescriptionH) other;
         return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
-    }
-
-
-    /**
-     * To String
-     * 
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-        return new ToStringBuilder(this).append("id", getId()).toString();
-    }
-
-
-    /**
-     * Create Hash Code
-     * 
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        return new HashCodeBuilder().append(getId()).toHashCode();
     }
 
 }

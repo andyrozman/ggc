@@ -294,7 +294,7 @@ public class ImportNutrition extends ImportTool implements Runnable
                 }
 
                 fud.setName(getString(strtok.nextToken()));
-                fud.setName_i18n(getString(strtok.nextToken()));
+                fud.setNameI18n(getString(strtok.nextToken()));
 
                 int group = getInt(strtok.nextToken());
 
@@ -303,11 +303,11 @@ public class ImportNutrition extends ImportTool implements Runnable
                     group = 1;
                 }
 
-                fud.setGroup_id(group);
+                fud.setGroupId(group);
 
                 fud.setRefuse(getFloat(strtok.nextToken()));
                 fud.setDescription(getString(strtok.nextToken()));
-                fud.setHome_weights(getString(strtok.nextToken()));
+                fud.setHomeWeights(getString(strtok.nextToken()));
                 fud.setNutritions(getString(strtok.nextToken()));
                 fud.setChanged(getLong(strtok.nextToken()));
 
@@ -378,7 +378,7 @@ public class ImportNutrition extends ImportTool implements Runnable
                 }
 
                 fug.setName(getString(strtok.nextToken()));
-                fug.setName_i18n(getString(strtok.nextToken()));
+                fug.setNameI18n(getString(strtok.nextToken()));
                 fug.setDescription(getString(strtok.nextToken()));
 
                 int parent_id = getInt(strtok.nextToken());
@@ -386,7 +386,7 @@ public class ImportNutrition extends ImportTool implements Runnable
                 // if (group==0) // root can't have elements
                 // group=1;
 
-                fug.setParent_id(parent_id);
+                fug.setParentId(parent_id);
                 fug.setChanged(getLong(strtok.nextToken()));
 
                 this.hibernate_util.addHibernate(fug);
@@ -455,7 +455,7 @@ public class ImportNutrition extends ImportTool implements Runnable
                 }
 
                 ml.setName(getString(strtok.nextToken()));
-                ml.setName_i18n(getString(strtok.nextToken()));
+                ml.setNameI18n(getString(strtok.nextToken()));
 
                 int group = getInt(strtok.nextToken());
 
@@ -464,7 +464,7 @@ public class ImportNutrition extends ImportTool implements Runnable
                     group = 1;
                 }
 
-                ml.setGroup_id(group);
+                ml.setGroupId(group);
 
                 ml.setDescription(getString(strtok.nextToken()));
                 ml.setParts(getString(strtok.nextToken()));
@@ -540,7 +540,7 @@ public class ImportNutrition extends ImportTool implements Runnable
                 }
 
                 mg.setName(getString(strtok.nextToken()));
-                mg.setName_i18n(getString(strtok.nextToken()));
+                mg.setNameI18n(getString(strtok.nextToken()));
                 mg.setDescription(getString(strtok.nextToken()));
 
                 int parent_id = getInt(strtok.nextToken());
@@ -548,7 +548,7 @@ public class ImportNutrition extends ImportTool implements Runnable
                 // if (group==0) // root can't have elements
                 // group=1;
 
-                mg.setParent_id(parent_id);
+                mg.setParentId(parent_id);
                 mg.setChanged(getLong(strtok.nextToken()));
 
                 this.hibernate_util.addHibernate(mg);

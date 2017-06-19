@@ -1,37 +1,29 @@
 package ggc.core.db.hibernate.inet;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.atech.db.hibernate.HibernateObject;
+
 /** @author Hibernate CodeGenerator */
-public class InetLinkGroupH implements Serializable
+public class InetLinkGroupH extends HibernateObject
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 8120450189760694491L;
 
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
-    private String group_id;
-
-    /** nullable persistent field */
-    private String link_id;
+    private String groupId;
+    private String linkId;
 
 
     /** full constructor 
-     * @param group_id 
-     * @param link_id */
-    public InetLinkGroupH(String group_id, String link_id)
+     * @param groupId
+     * @param linkId */
+    public InetLinkGroupH(String groupId, String linkId)
     {
-        this.group_id = group_id;
-        this.link_id = link_id;
+        this.groupId = groupId;
+        this.linkId = linkId;
     }
 
 
@@ -66,44 +58,44 @@ public class InetLinkGroupH implements Serializable
     /**
      * Get Group Id
      * 
-     * @return group_id value
+     * @return groupId value
      */
-    public String getGroup_id()
+    public String getGroupId()
     {
-        return this.group_id;
+        return this.groupId;
     }
 
 
     /**
      * Set Group Id
      * 
-     * @param group_id value
+     * @param groupId value
      */
-    public void setGroup_id(String group_id)
+    public void setGroupId(String groupId)
     {
-        this.group_id = group_id;
+        this.groupId = groupId;
     }
 
 
     /**
      * Get Link
      * 
-     * @return link_id value
+     * @return linkId value
      */
-    public String getLink_id()
+    public String getLinkId()
     {
-        return this.link_id;
+        return this.linkId;
     }
 
 
     /**
      * Set Link
      * 
-     * @param link_id value
+     * @param linkId value
      */
-    public void setLink_id(String link_id)
+    public void setLinkId(String linkId)
     {
-        this.link_id = link_id;
+        this.linkId = linkId;
     }
 
 

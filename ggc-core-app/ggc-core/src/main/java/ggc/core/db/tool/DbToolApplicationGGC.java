@@ -7,9 +7,11 @@ import com.atech.db.hibernate.tool.app.DbToolApplicationInitDb;
 import com.atech.db.hibernate.tool.app.DbToolApplicationInterface;
 import com.atech.db.hibernate.tool.app.DbToolApplicationLAF;
 import com.atech.db.hibernate.tool.data.DatabaseConfiguration;
+import com.atech.db.hibernate.tool.data.management.common.ImportExportContext;
 
 import ggc.core.db.GGCDb;
 import ggc.core.db.GGCDbConfig;
+import ggc.core.db.tool.defs.GGCImportExportContext;
 import ggc.core.db.tool.init.DbToolApplicationInitDbGGC;
 
 /*
@@ -57,6 +59,7 @@ public class DbToolApplicationGGC extends DbToolApplicationLAF implements DbTool
     private boolean m_changed = false;
     private HibernateConfiguration hibernateConfiguration;
     DbToolApplicationInitDb dbToolApplicationInitDb;
+    ImportExportContext importExportContext;
 
 
     /**
@@ -176,6 +179,15 @@ public class DbToolApplicationGGC extends DbToolApplicationLAF implements DbTool
     public String getCurrentDatabaseVersion()
     {
         return GGCDb.CURRENT_DB_VERSION;
+    }
+
+
+    public ImportExportContext getImportExportContext()
+    {
+        if (this.importExportContext == null)
+            this.importExportContext = new GGCImportExportContext();
+
+        return this.importExportContext;
     }
 
 

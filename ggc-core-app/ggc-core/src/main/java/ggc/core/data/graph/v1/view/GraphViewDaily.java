@@ -25,7 +25,7 @@ import com.atech.utils.data.TimeZoneUtil;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.GlucoValues;
 import ggc.core.data.defs.GlucoseUnitType;
-import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 import ggc.core.util.DataAccess;
 
 /**

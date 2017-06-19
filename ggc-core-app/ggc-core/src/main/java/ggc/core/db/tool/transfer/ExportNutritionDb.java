@@ -176,8 +176,8 @@ public class ExportNutritionDb extends ExportTool
         {
             FoodUserGroupH eh = (FoodUserGroupH) it.next();
 
-            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + eh.getName_i18n() + "|" + eh.getDescription() + "|"
-                    + eh.getParent_id() + "|" + eh.getChanged() + "\n");
+            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + eh.getNameI18n() + "|" + eh.getDescription() + "|"
+                    + eh.getParentId() + "|" + eh.getChanged() + "\n");
 
             count++;
             this.writeStatus(dot_mark, count);
@@ -225,8 +225,8 @@ public class ExportNutritionDb extends ExportTool
                 nutr = nutr.replace(",", ".");
             }
 
-            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + eh.getName_i18n() + "|" + eh.getGroup_id() + "|"
-                    + eh.getRefuse() + "|" + eh.getDescription() + "|" + eh.getHome_weights() + "|" + nutr + "|"
+            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + eh.getNameI18n() + "|" + eh.getGroupId() + "|"
+                    + eh.getRefuse() + "|" + eh.getDescription() + "|" + eh.getHomeWeights() + "|" + nutr + "|"
                     + eh.getChanged() + "\n");
 
             count++;
@@ -263,8 +263,8 @@ public class ExportNutritionDb extends ExportTool
         {
             MealGroupH eh = (MealGroupH) it.next();
 
-            writeToFile(eh.getId() + "|" + eh.getName() + "|" + eh.getName_i18n() + "|" + eh.getDescription() + "|"
-                    + eh.getParent_id() + "|" + eh.getChanged() + "\n");
+            writeToFile(eh.getId() + "|" + eh.getName() + "|" + eh.getNameI18n() + "|" + eh.getDescription() + "|"
+                    + eh.getParentId() + "|" + eh.getChanged() + "\n");
 
             count++;
             this.writeStatus(dot_mark, count);
@@ -301,7 +301,7 @@ public class ExportNutritionDb extends ExportTool
         {
             MealH eh = (MealH) it.next();
 
-            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + eh.getName_i18n() + "|" + eh.getGroup_id() + "|"
+            this.writeToFile(eh.getId() + "|" + eh.getName() + "|" + eh.getNameI18n() + "|" + eh.getGroupId() + "|"
                     + eh.getDescription() + "|" + eh.getParts() + "|" + eh.getNutritions() + "|" + eh.getExtended()
                     + "|" + eh.getComment() + "|" + eh.getChanged() + "\n");
 

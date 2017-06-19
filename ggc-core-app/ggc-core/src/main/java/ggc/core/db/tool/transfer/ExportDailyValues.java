@@ -13,7 +13,7 @@ import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.ExportTool;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pen.DayValueH;
 import ggc.core.util.DataAccess;
 
 /**
@@ -156,7 +156,7 @@ public class ExportDailyValues extends ExportTool implements Runnable
     {
         openFile(this.getRootPath() + "DayValueH" + this.getFileLastPart() + ".dbe");
         // "../data/export/DayValueH_" + getCurrentDateForFile() + ".txt");
-        writeHeader("ggc.core.db.hibernate.DayValueH",
+        writeHeader("ggc.core.db.hibernate.pen.DayValueH",
             "id; dt_info; bg; ins1; ins2; ch; meals_ids; extended; person_id; comment; changed",
             GGCDb.CURRENT_DB_VERSION);
 
@@ -175,9 +175,9 @@ public class ExportDailyValues extends ExportTool implements Runnable
         {
             DayValueH eh = (DayValueH) it.next();
 
-            this.writeToFile(eh.getId() + "|" + eh.getDt_info() + "|" + eh.getBg() + "|" + eh.getIns1() + "|"
-                    + eh.getIns2() + "|" + eh.getCh() + "|" + eh.getMeals_ids() + "|" + eh.getExtended() + "|"
-                    + eh.getPerson_id() + "|" + eh.getComment() + "|" + eh.getChanged() + "\n");
+            this.writeToFile(eh.getId() + "|" + eh.getDtInfo() + "|" + eh.getBg() + "|" + eh.getIns1() + "|"
+                    + eh.getIns2() + "|" + eh.getCh() + "|" + eh.getMealsIds() + "|" + eh.getExtended() + "|"
+                    + eh.getPersonId() + "|" + eh.getComment() + "|" + eh.getChanged() + "\n");
 
             // sleep(25);
             count++;

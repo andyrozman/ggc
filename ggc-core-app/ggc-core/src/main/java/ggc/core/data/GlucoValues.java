@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.TimeZoneUtil;
+
 import ggc.core.util.DataAccess;
 
 /**
@@ -38,7 +39,7 @@ public class GlucoValues // extends DailyValues
 
     // private static final long serialVersionUID = 3904480643937213485L;
     Vector<DailyValues> dayValues = null;
-    ArrayList<DailyValuesRow> dayValuesRows = null;
+    List<DailyValuesRow> dayValuesRows = null;
     // private DataAccess dataAccess = DataAccess.getInstance();
     GregorianCalendar from_date;
     GregorianCalendar to_date;

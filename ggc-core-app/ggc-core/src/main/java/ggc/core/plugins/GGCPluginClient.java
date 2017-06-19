@@ -13,15 +13,19 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.PlugInClient;
 import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessLMAbstract;
+
+import ggc.core.data.defs.GGCObservableType;
+import ggc.core.data.defs.RefreshInfoType;
 import ggc.core.util.DataAccess;
 
-/**
- * Created by andy on 22.02.15.
- */
 public abstract class GGCPluginClient extends PlugInClient
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(GGCPluginClient.class);
+
+    protected String baseName;
+    protected String className;
+    protected String shortName;
 
 
     /**
@@ -30,9 +34,10 @@ public abstract class GGCPluginClient extends PlugInClient
      * @param parent
      * @param ic
      */
-    public GGCPluginClient(Component parent, I18nControlAbstract ic)
+    public GGCPluginClient(Component parent, I18nControlAbstract ic, String baseName, String className,
+            String shortName)
     {
-        super((JFrame) parent, ic);
+        super((JFrame) parent, ic, baseName, className, shortName);
     }
 
 
@@ -42,9 +47,10 @@ public abstract class GGCPluginClient extends PlugInClient
      * @param parent
      * @param da
      */
-    public GGCPluginClient(Component parent, ATDataAccessLMAbstract da)
+    public GGCPluginClient(Component parent, ATDataAccessLMAbstract da, String baseName, String className,
+            String shortName)
     {
-        super((JFrame) parent, da);
+        super((JFrame) parent, da, baseName, className, shortName);
     }
 
 
@@ -133,9 +139,16 @@ public abstract class GGCPluginClient extends PlugInClient
     }
 
 
-    protected void refreshPanels(int mask)
+    // protected void refreshPanels(int mask)
+    // {
+    // DataAccess.getInstance().setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS,
+    // mask);
+    // }
+
+    protected void refreshPanels(RefreshInfoType refreshInfoType)
     {
-        DataAccess.getInstance().setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, mask);
+        DataAccess.getInstance().getObserverManager().setChangeOnEventSource(GGCObservableType.InfoPanels,
+            refreshInfoType);
     }
 
 
@@ -161,11 +174,5 @@ public abstract class GGCPluginClient extends PlugInClient
     public void setReturnData(Object return_data, StatusReporterInterface stat_rep_int)
     {
     }
-
-
-    public abstract String getServerClassName();
-
-
-    public abstract String getServerShortName();
 
 }

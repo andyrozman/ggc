@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import com.atech.db.hibernate.transfer.BackupRestoreBase;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
-import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.upgrade.client.data.UpgradeApplicationContextAbstract;
 
@@ -70,7 +70,7 @@ public class GGCUpgradeApplicationContext extends UpgradeApplicationContextAbstr
 
 
     public String runBackupRestoreRunner(BackupRestoreWorkGiver backupRestoreWorkGiver,
-            Map<String, BackupRestoreObject> backupObjects)
+            Map<String, BackupRestoreBase> backupObjects)
     {
         GGCBackupRestoreRunner runner = new GGCBackupRestoreRunner(backupObjects, backupRestoreWorkGiver);
         runner.executeBackup();

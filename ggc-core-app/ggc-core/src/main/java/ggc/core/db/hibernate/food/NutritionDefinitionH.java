@@ -8,47 +8,32 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.atech.db.hibernate.HibernateObject;
 
-/** @author Hibernate CodeGenerator */
 public class NutritionDefinitionH extends HibernateObject implements Serializable
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -587797287729046076L;
 
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
-    private String weight_unit;
-
-    /** nullable persistent field */
+    private String weightUnit;
     private String tag;
-
-    /** nullable persistent field */
     private String name;
-
-    /** nullable persistent field */
-    private String decimal_places;
-
-    /** nullable persistent field */
-    private int static_entry;
+    private String decimalPlaces;
+    private int staticEntry;
 
 
     /** full constructor 
-     * @param weight_unit 
+     * @param weightUnit
      * @param tag 
      * @param name 
-     * @param decimal_places 
-     * @param static_entry */
-    public NutritionDefinitionH(String weight_unit, String tag, String name, String decimal_places, int static_entry)
+     * @param decimalPlaces
+     * @param staticEntry */
+    public NutritionDefinitionH(String weightUnit, String tag, String name, String decimalPlaces, int staticEntry)
     {
-        this.weight_unit = weight_unit;
+        this.weightUnit = weightUnit;
         this.tag = tag;
         this.name = name;
-        this.decimal_places = decimal_places;
-        this.static_entry = static_entry;
+        this.decimalPlaces = decimalPlaces;
+        this.staticEntry = staticEntry;
     }
 
 
@@ -85,20 +70,20 @@ public class NutritionDefinitionH extends HibernateObject implements Serializabl
      * 
      * @return
      */
-    public String getWeight_unit()
+    public String getWeightUnit()
     {
-        return this.weight_unit;
+        return this.weightUnit;
     }
 
 
     /**
      * Set Weight Unit
      * 
-     * @param weight_unit 
+     * @param weightUnit
      */
-    public void setWeight_unit(String weight_unit)
+    public void setWeightUnit(String weightUnit)
     {
-        this.weight_unit = weight_unit;
+        this.weightUnit = weightUnit;
     }
 
 
@@ -151,20 +136,20 @@ public class NutritionDefinitionH extends HibernateObject implements Serializabl
      * 
      * @return
      */
-    public String getDecimal_places()
+    public String getDecimalPlaces()
     {
-        return this.decimal_places;
+        return this.decimalPlaces;
     }
 
 
     /**
      * Set Decimal Places
      * 
-     * @param decimal_places 
+     * @param decimalPlaces
      */
-    public void setDecimal_places(String decimal_places)
+    public void setDecimalPlaces(String decimalPlaces)
     {
-        this.decimal_places = decimal_places;
+        this.decimalPlaces = decimalPlaces;
     }
 
 
@@ -173,20 +158,20 @@ public class NutritionDefinitionH extends HibernateObject implements Serializabl
      * 
      * @return
      */
-    public int getStatic_entry()
+    public int getStaticEntry()
     {
-        return this.static_entry;
+        return this.staticEntry;
     }
 
 
     /**
      * Set Is Static Entry (non user supplied)
      * 
-     * @param static_entry 
+     * @param staticEntry
      */
-    public void setStatic_entry(int static_entry)
+    public void setStaticEntry(int staticEntry)
     {
-        this.static_entry = static_entry;
+        this.staticEntry = staticEntry;
     }
 
 

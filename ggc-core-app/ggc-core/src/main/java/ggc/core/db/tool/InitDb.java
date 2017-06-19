@@ -35,13 +35,13 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.ColorSchemeH;
 import ggc.core.db.hibernate.DbInfoH;
 import ggc.core.db.hibernate.doc.DoctorTypeH;
 import ggc.core.db.hibernate.food.FoodDescriptionH;
 import ggc.core.db.hibernate.food.FoodGroupH;
 import ggc.core.db.hibernate.food.NutritionDefinitionH;
 import ggc.core.db.hibernate.food.NutritionHomeWeightTypeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 import ggc.core.util.DataAccess;
 
 /**
@@ -245,7 +245,7 @@ public class InitDb
                 String st = getString(strtok.nextToken()); // name
 
                 fg.setName(st);
-                fg.setName_i18n(m_da.makeI18nKeyword(st));
+                fg.setNameI18n(m_da.makeI18nKeyword(st));
                 fg.setDescription(st);
 
                 m_db.addHibernate(fg);
@@ -295,9 +295,9 @@ public class InitDb
                 FoodDescriptionH fd = new FoodDescriptionH();
 
                 fd.setId(getLong(strtok.nextToken())); // NDB_No
-                fd.setGroup_id(getInt(strtok.nextToken())); // FdGrp_Cd
+                fd.setGroupId(getInt(strtok.nextToken())); // FdGrp_Cd
                 fd.setName(getString(strtok.nextToken())); // Long Desc
-                fd.setName_i18n(getString(strtok.nextToken())); // Short Desc
+                fd.setNameI18n(getString(strtok.nextToken())); // Short Desc
 
                 strtok.nextToken(); // - ComName
                 strtok.nextToken(); // - ManufName
@@ -464,10 +464,10 @@ public class InitDb
                 NutritionDefinitionH fnd = new NutritionDefinitionH();
 
                 fnd.setId(getLong(strtok.nextToken()));
-                fnd.setWeight_unit(getString(strtok.nextToken()));
+                fnd.setWeightUnit(getString(strtok.nextToken()));
                 fnd.setTag(getString(strtok.nextToken()));
                 fnd.setName(getString(strtok.nextToken()));
-                fnd.setDecimal_places(getString(strtok.nextToken()));
+                fnd.setDecimalPlaces(getString(strtok.nextToken()));
 
                 m_db.addHibernate(fnd);
 
@@ -594,7 +594,7 @@ public class InitDb
                 {
                     if (id != -1)
                     {
-                        fd.setHome_weights(data.toString());
+                        fd.setHomeWeights(data.toString());
                         m_db.editHibernate(fd);
                     }
 
@@ -639,7 +639,7 @@ public class InitDb
 
             }
 
-            fd.setHome_weights(data.toString());
+            fd.setHomeWeights(data.toString());
             m_db.editHibernate(fd);
 
         }

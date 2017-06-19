@@ -6,63 +6,43 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.atech.db.hibernate.HibernateObject;
 
-/** @author Hibernate CodeGenerator */
 public class PumpProfileH extends HibernateObject
 {
 
     private static final long serialVersionUID = 8212384538572472772L;
 
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
     private String name;
-
-    /** nullable persistent field */
-    private float basal_base;
-
-    /** nullable persistent field */
-    private String basal_diffs;
-
-    /** nullable persistent field */
-    private long active_from;
-
-    /** nullable persistent field */
-    private long active_till;
-
-    /** nullable persistent field */
+    private float basalBase;
+    private String basalDiffs;
+    private long activeFrom;
+    private long activeTill;
     private String extended;
-
-    /** persistent field */
-    private int person_id;
-
-    /** nullable persistent field */
+    private int personId;
     private String comment;
-
-    /** nullable persistent field */
     private long changed;
 
 
     /** full constructor 
      * @param name 
-     * @param basal_base 
-     * @param basal_diffs 
-     * @param active_from 
-     * @param active_till 
+     * @param basalBase
+     * @param basalDiffs
+     * @param activeFrom
+     * @param activeTill
      * @param extended 
-     * @param person_id 
+     * @param personId
      * @param comment 
      * @param changed */
-    public PumpProfileH(String name, float basal_base, String basal_diffs, long active_from, long active_till,
-            String extended, int person_id, String comment, long changed)
+    public PumpProfileH(String name, float basalBase, String basalDiffs, long activeFrom, long activeTill,
+            String extended, int personId, String comment, long changed)
     {
         this.name = name;
-        this.basal_base = basal_base;
-        this.basal_diffs = basal_diffs;
-        this.active_from = active_from;
-        this.active_till = active_till;
+        this.basalBase = basalBase;
+        this.basalDiffs = basalDiffs;
+        this.activeFrom = activeFrom;
+        this.activeTill = activeTill;
         this.extended = extended;
-        this.person_id = person_id;
+        this.personId = personId;
         this.comment = comment;
         this.changed = changed;
     }
@@ -75,10 +55,10 @@ public class PumpProfileH extends HibernateObject
 
 
     /** minimal constructor 
-     * @param person_id */
-    public PumpProfileH(int person_id)
+     * @param personId */
+    public PumpProfileH(int personId)
     {
-        this.person_id = person_id;
+        this.personId = personId;
     }
 
 
@@ -129,88 +109,88 @@ public class PumpProfileH extends HibernateObject
     /**
      * Get Basal Rate - Base
      * 
-     * @return basal_base value
+     * @return basalBase value
      */
-    public float getBasal_base()
+    public float getBasalBase()
     {
-        return this.basal_base;
+        return this.basalBase;
     }
 
 
     /**
      * Set Basal Rate - Base
      * 
-     * @param basal_base value
+     * @param basalBase value
      */
-    public void setBasal_base(float basal_base)
+    public void setBasalBase(float basalBase)
     {
-        this.basal_base = basal_base;
+        this.basalBase = basalBase;
     }
 
 
     /**
      * Get Basal Rate - Diffs (example: 1100-1230=1.26;1330-1430=1.35)
      * 
-     * @return basal_diffs value
+     * @return basalDiffs value
      */
-    public String getBasal_diffs()
+    public String getBasalDiffs()
     {
-        return this.basal_diffs;
+        return this.basalDiffs;
     }
 
 
     /**
      * Set Basal Rate - Diffs (example: 1100-1230=1.26;1330-1430=1.35)
      * 
-     * @param basal_diffs value
+     * @param basalDiffs value
      */
-    public void setBasal_diffs(String basal_diffs)
+    public void setBasalDiffs(String basalDiffs)
     {
-        this.basal_diffs = basal_diffs;
+        this.basalDiffs = basalDiffs;
     }
 
 
     /**
      * Get Active From
      * 
-     * @return active_from value
+     * @return activeFrom value
      */
-    public long getActive_from()
+    public long getActiveFrom()
     {
-        return this.active_from;
+        return this.activeFrom;
     }
 
 
     /**
      * Set Active From
      * 
-     * @param active_from value
+     * @param activeFrom value
      */
-    public void setActive_from(long active_from)
+    public void setActiveFrom(long activeFrom)
     {
-        this.active_from = active_from;
+        this.activeFrom = activeFrom;
     }
 
 
     /**
      * Get Active Till
      * 
-     * @return active_till value
+     * @return activeTill value
      */
-    public long getActive_till()
+    public long getActiveTill()
     {
-        return this.active_till;
+        return this.activeTill;
     }
 
 
     /**
      * Set Active Till
      * 
-     * @param active_till value
+     * @param activeTill value
      */
-    public void setActive_till(long active_till)
+    public void setActiveTill(long activeTill)
     {
-        this.active_till = active_till;
+        this.activeTill = activeTill;
     }
 
 
@@ -241,20 +221,20 @@ public class PumpProfileH extends HibernateObject
      * 
      * @return person id parameter
      */
-    public int getPerson_id()
+    public int getPersonId()
     {
-        return this.person_id;
+        return this.personId;
     }
 
 
     /**
      * Set Person Id
      * 
-     * @param person_id parameter
+     * @param personId parameter
      */
-    public void setPerson_id(int person_id)
+    public void setPersonId(int personId)
     {
-        this.person_id = person_id;
+        this.personId = personId;
     }
 
 

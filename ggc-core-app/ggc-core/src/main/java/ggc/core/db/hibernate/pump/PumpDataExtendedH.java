@@ -6,53 +6,37 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.atech.db.hibernate.HibernateObject;
 
-/** @author Hibernate CodeGenerator */
 public class PumpDataExtendedH extends HibernateObject
 {
 
     private static final long serialVersionUID = -5755359170220045869L;
 
-    /** identifier field */
     private long id;
-
-    /** persistent field */
-    private long dt_info;
-
-    /** nullable persistent field */
+    private long dtInfo;
     private int type;
-
-    /** nullable persistent field */
     private String value;
-
-    /** nullable persistent field */
     private String extended;
-
-    /** persistent field */
-    private int person_id;
-
-    /** nullable persistent field */
+    private int personId;
     private String comment;
-
-    /** nullable persistent field */
     private long changed;
 
 
     /** full constructor 
-     * @param dt_info 
+     * @param dtInfo
      * @param type 
      * @param value 
      * @param extended 
-     * @param person_id 
+     * @param personId
      * @param comment 
      * @param changed */
-    public PumpDataExtendedH(long dt_info, int type, String value, String extended, int person_id, String comment,
+    public PumpDataExtendedH(long dtInfo, int type, String value, String extended, int personId, String comment,
             long changed)
     {
-        this.dt_info = dt_info;
+        this.dtInfo = dtInfo;
         this.type = type;
         this.value = value;
         this.extended = extended;
-        this.person_id = person_id;
+        this.personId = personId;
         this.comment = comment;
         this.changed = changed;
     }
@@ -65,12 +49,12 @@ public class PumpDataExtendedH extends HibernateObject
 
 
     /** minimal constructor 
-     * @param dt_info 
-     * @param person_id */
-    public PumpDataExtendedH(long dt_info, int person_id)
+     * @param dtInfo
+     * @param personId */
+    public PumpDataExtendedH(long dtInfo, int personId)
     {
-        this.dt_info = dt_info;
-        this.person_id = person_id;
+        this.dtInfo = dtInfo;
+        this.personId = personId;
     }
 
 
@@ -100,20 +84,20 @@ public class PumpDataExtendedH extends HibernateObject
      * Get Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * @return
      */
-    public long getDt_info()
+    public long getDtInfo()
     {
-        return this.dt_info;
+        return this.dtInfo;
     }
 
 
     /**
      * Set Date/Time Info (this is long packed as AtechDateTime yyyymmddhhss)
      * 
-     * @param dt_info 
+     * @param dtInfo
      */
-    public void setDt_info(long dt_info)
+    public void setDtInfo(long dtInfo)
     {
-        this.dt_info = dt_info;
+        this.dtInfo = dtInfo;
     }
 
 
@@ -188,20 +172,20 @@ public class PumpDataExtendedH extends HibernateObject
      * 
      * @return person id parameter
      */
-    public int getPerson_id()
+    public int getPersonId()
     {
-        return this.person_id;
+        return this.personId;
     }
 
 
     /**
      * Set Person Id
      * 
-     * @param person_id parameter
+     * @param personId parameter
      */
-    public void setPerson_id(int person_id)
+    public void setPersonId(int personId)
     {
-        this.person_id = person_id;
+        this.personId = personId;
     }
 
 

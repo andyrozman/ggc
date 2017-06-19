@@ -10,7 +10,8 @@ import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.transfer.BackupRestoreObject;
 import com.atech.graphics.components.tree.CheckBoxTreeNodeInterface;
 import com.atech.i18n.I18nControlAbstract;
-import ggc.core.db.hibernate.SettingsH;
+
+import ggc.core.db.hibernate.settings.SettingsH;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -92,7 +93,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
         this.setValue(ch.getValue());
         this.setType(ch.getType());
         this.setDescription(ch.getDescription());
-        this.setPerson_id(ch.getPerson_id());
+        this.setPersonId(ch.getPersonId());
     }
 
 
@@ -110,7 +111,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
     /**
      * To String
      * 
-     * @see ggc.core.db.hibernate.SettingsH#toString()
+     * @see SettingsH#toString()
      */
     @Override
     public String toString()
@@ -183,7 +184,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
         ch.setValue(this.getValue());
         ch.setType(this.getType());
         ch.setDescription(this.getDescription());
-        ch.setPerson_id(this.getPerson_id());
+        ch.setPersonId(this.getPersonId());
 
         Long id = (Long) sess.save(ch);
 
@@ -217,7 +218,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
         ch.setValue(this.getValue());
         ch.setType(this.getType());
         ch.setDescription(this.getDescription());
-        ch.setPerson_id(this.getPerson_id());
+        ch.setPersonId(this.getPersonId());
 
         sess.update(ch);
         tx.commit();
@@ -288,7 +289,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
         this.setValue(ch.getValue());
         this.setType(ch.getType());
         this.setDescription(ch.getDescription());
-        this.setPerson_id(ch.getPerson_id());
+        this.setPersonId(ch.getPersonId());
 
         return true;
     }
@@ -352,7 +353,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
      */
     public String getClassName()
     {
-        return "ggc.core.db.hibernate.SettingsH";
+        return "ggc.core.db.hibernate.settings.SettingsH";
     }
 
 
@@ -555,7 +556,7 @@ public class Settings extends SettingsH implements DatabaseObjectHibernate, Back
      */
     public String getBackupClassName()
     {
-        return "ggc.core.db.hibernate.SettingsH";
+        return "ggc.core.db.hibernate.settings.SettingsH";
     }
 
 

@@ -1,16 +1,21 @@
 package ggc.core.db.hibernate;
 
-import java.io.Serializable;
+import java.util.Map;
 
-import ggc.core.data.defs.StockTypeBase;
-import ggc.core.data.defs.StockUsageUnit;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 
+import com.atech.db.hibernate.HibernateBackupSelectableObject;
+import com.atech.graphics.dialogs.selector.SelectableInterface;
 
-public class StockSubTypeH implements Serializable
+import ggc.core.data.defs.InventoryItemUsageUnit;
+import ggc.core.data.defs.StockTypeBase;
+
+public class StockSubTypeH extends HibernateBackupSelectableObject
 {
+
     private static final long serialVersionUID = -7076410510425754609L;
 
     private long id;
@@ -28,11 +33,11 @@ public class StockSubTypeH implements Serializable
     private String comment;
 
 
-
     /** default constructor */
     public StockSubTypeH()
     {
     }
+
 
     /**
      * Get Id
@@ -43,6 +48,7 @@ public class StockSubTypeH implements Serializable
     {
         return this.id;
     }
+
 
     /**
      * Set Id
@@ -65,6 +71,7 @@ public class StockSubTypeH implements Serializable
         return this.name;
     }
 
+
     /**
      * Set Name
      * 
@@ -75,6 +82,7 @@ public class StockSubTypeH implements Serializable
         this.name = name;
     }
 
+
     /**
      * Get Description
      * 
@@ -84,6 +92,7 @@ public class StockSubTypeH implements Serializable
     {
         return this.description;
     }
+
 
     /**
      * Set Description
@@ -101,11 +110,11 @@ public class StockSubTypeH implements Serializable
         return stockTypeId;
     }
 
+
     public StockTypeBase getStockType()
     {
-        return StockTypeBase.getByCode((int)this.stockTypeId);
+        return StockTypeBase.getByCode((int) this.stockTypeId);
     }
-
 
 
     public void setStockTypeId(long stockTypeId)
@@ -113,20 +122,24 @@ public class StockSubTypeH implements Serializable
         this.stockTypeId = stockTypeId;
     }
 
+
     public long getPackageContent()
     {
         return packageContent;
     }
+
 
     public void setPackageContent(long packageContent)
     {
         this.packageContent = packageContent;
     }
 
+
     public String getPackageContentUnit()
     {
         return packageContentUnit;
     }
+
 
     public void setPackageContentUnit(String packageContentUnit)
     {
@@ -134,61 +147,72 @@ public class StockSubTypeH implements Serializable
     }
 
 
-
     public int getUsageMin()
     {
         return usageMin;
     }
+
 
     public void setUsageMin(int usageMin)
     {
         this.usageMin = usageMin;
     }
 
+
     public int getUsageMax()
     {
         return usageMax;
     }
+
 
     public void setUsageMax(int usageMax)
     {
         this.usageMax = usageMax;
     }
 
+
     public boolean isActive()
     {
         return active;
     }
+
 
     public void setActive(boolean active)
     {
         this.active = active;
     }
 
+
     public int getPersonId()
     {
         return personId;
     }
+
 
     public void setPersonId(int personId)
     {
         this.personId = personId;
     }
 
+
     public String getExtended()
     {
         return extended;
     }
+
 
     public void setExtended(String extended)
     {
         this.extended = extended;
     }
 
+
     public String getUsageDescription()
     {
-        return "" + this.usageMin + " - " + this.usageMax + " / " + StockUsageUnit.getByCode(this.getUsageUnit()).getTranslation();
+        return "" + this.usageMin + " - " + this.usageMax + " / "
+                + InventoryItemUsageUnit.getByCode(this.getUsageUnit()).getTranslation();
     }
+
 
     /**
      * Get Comment
@@ -200,6 +224,7 @@ public class StockSubTypeH implements Serializable
         return this.comment;
     }
 
+
     /**
      * Set Comment
      * 
@@ -209,6 +234,19 @@ public class StockSubTypeH implements Serializable
     {
         this.comment = comment;
     }
+
+
+    public int getUsageUnit()
+    {
+        return usageUnit;
+    }
+
+
+    public void setUsageUnit(int usageUnit)
+    {
+        this.usageUnit = usageUnit;
+    }
+
 
     /** 
      * Custom equals implementation
@@ -224,6 +262,7 @@ public class StockSubTypeH implements Serializable
         return new EqualsBuilder().append(this.getId(), castOther.getId()).isEquals();
     }
 
+
     /**
      * To String
      * 
@@ -235,25 +274,102 @@ public class StockSubTypeH implements Serializable
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
 
-    /**
-     * Create Hash Code
-     * 
-     * @see java.lang.Object#hashCode()
-     */
+
+    // Backup Object
+
     @Override
-    public int hashCode()
+    protected String getColumnNames(int tableVersion)
     {
-        return new HashCodeBuilder().append(getId()).toHashCode();
+        return null;
     }
 
 
-    public int getUsageUnit()
+    public String getTargetName()
     {
-        return usageUnit;
+        return null;
     }
 
-    public void setUsageUnit(int usageUnit)
+
+    public int getTableVersion()
     {
-        this.usageUnit = usageUnit;
+        return 0;
     }
+
+
+    public String dbExport(int table_version) throws Exception
+    {
+        return null;
+    }
+
+
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+
+    }
+
+
+    // Selectable Interface
+
+    public String getColumnValue(int num)
+    {
+        switch (num)
+        {
+            case 0:
+                return getStockType().getTranslation();
+
+            case 1:
+                return getName();
+
+            case 2:
+                return getDescription();
+
+            default:
+                return "invalid data";
+
+        }
+    }
+
+
+    public Object getColumnValueObject(int num)
+    {
+        return getColumnValue(num);
+    }
+
+
+    public int compareTo(SelectableInterface o)
+    {
+        return 0;
+    }
+
+
+    @Override
+    protected void initTypeDisplayDefintion()
+    {
+        // typeDisplayDefintion =
+        // DataAccess.getInstance().getDataDefinitionManager().getEntry("StockSubTypeDto");
+    }
+
+
+    @Override
+    public boolean isFoundString(String findString)
+    {
+        return this.name.toLowerCase().contains(findString.toLowerCase())
+                || this.description.toLowerCase().contains(findString.toLowerCase());
+    }
+
+
+    @Override
+    public String toStringDescriptive()
+    {
+        return String.format(getBaseForDescriptiveString(), ("name=" + this.name));
+    }
+
+
+    @Override
+    public Criteria getChildrenCriteria(Session session, HibernateBackupSelectableObject object)
+    {
+        throw new RuntimeException();
+        // return null;
+    }
+
 }

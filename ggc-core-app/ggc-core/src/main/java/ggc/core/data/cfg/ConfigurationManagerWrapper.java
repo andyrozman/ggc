@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.graphics.graphs.GraphConfigProperties;
+
 import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.util.GGCSoftwareMode;
 
 /**
  * Created by andy on 10.10.15.
@@ -1076,6 +1078,12 @@ public class ConfigurationManagerWrapper implements GraphConfigProperties
     public int getSoftwareMode()
     {
         return getIntValue("SW_MODE");
+    }
+
+
+    public GGCSoftwareMode getSoftwareModeType()
+    {
+        return GGCSoftwareMode.getEnum(getIntValue("SW_MODE"));
     }
 
 

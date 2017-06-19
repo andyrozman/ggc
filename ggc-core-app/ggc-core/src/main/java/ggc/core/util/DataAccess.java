@@ -3,7 +3,6 @@ package ggc.core.util;
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
-import java.text.DecimalFormat;
 import java.util.*;
 
 import javax.swing.*;
@@ -11,36 +10,46 @@ import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pygmy.core.Server;
-
+import com.atech.data.enums.InternalSetting;
 import com.atech.db.hibernate.HibernateDb;
 import com.atech.db.hibernate.transfer.BackupRestoreCollection;
 import com.atech.graphics.components.DialogSizePersistInterface;
+import com.atech.graphics.observe.EventSource;
+import com.atech.graphics.observe.ObserverManager;
 import com.atech.help.HelpContext;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.I18nControlLangMgr;
 import com.atech.i18n.I18nControlLangMgrDual;
 import com.atech.i18n.mgr.LanguageManager;
-import com.atech.misc.refresh.EventObserverInterface;
-import com.atech.misc.refresh.EventSource;
 import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
 import com.atech.utils.data.Rounding;
+import com.atech.utils.java.VersionResolver;
 import com.atech.utils.logs.RedirectScreen;
 
 import ggc.core.data.*;
 import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.data.cfg.ConfigurationManagerWrapper;
-import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.data.defs.*;
 import ggc.core.data.graph.v2.GGCGraphContext;
 import ggc.core.db.GGCDb;
 import ggc.core.db.GGCDbLoader;
 import ggc.core.db.datalayer.DailyValue;
 import ggc.core.db.datalayer.Settings;
 import ggc.core.db.datalayer.SettingsColorScheme;
+import ggc.core.db.hibernate.doc.DoctorAppointmentH;
+import ggc.core.db.hibernate.doc.DoctorH;
+import ggc.core.db.hibernate.doc.DoctorTypeH;
+import ggc.core.db.hibernate.inventory.InventoryH;
+import ggc.core.db.hibernate.inventory.InventoryItemH;
+import ggc.core.db.hibernate.inventory.InventoryItemTypeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 import ggc.core.db.tool.DbToolApplicationGGC;
+import ggc.core.db.tool.data.GGCDatabaseTableConfiguration;
 import ggc.core.plugins.*;
+import ggc.gui.dialogs.selector.GGCSelectorConfiguration;
+import pygmy.core.Server;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -108,32 +117,32 @@ public class DataAccess extends ATDataAccessLMAbstract
     protected DbToolApplicationGGC m_configFile = null;
     protected ConfigurationManager m_cfgMgr = null;
 
-    /**
-     * Decimal with zero decimals
-     */
-    public static DecimalFormat Decimal0Format = new DecimalFormat("#0");
-
-    /**
-     * Decimal with 1 decimal
-     */
-    public static DecimalFormat Decimal1Format = new DecimalFormat("#0.0");
-
-    /**
-     * Decimal with 2 decimal
-     */
-    public static DecimalFormat Decimal2Format = new DecimalFormat("#0.00");
-
-    /**
-     * Decimal with 3 decimal
-     */
-    public static DecimalFormat Decimal3Format = new DecimalFormat("#0.000");
+    // /**
+    // * Decimal with zero decimals
+    // */
+    // public static DecimalFormat Decimal0Format = new DecimalFormat("#0");
+    //
+    // /**
+    // * Decimal with 1 decimal
+    // */
+    // public static DecimalFormat Decimal1Format = new DecimalFormat("#0.0");
+    //
+    // /**
+    // * Decimal with 2 decimal
+    // */
+    // public static DecimalFormat Decimal2Format = new DecimalFormat("#0.00");
+    //
+    // /**
+    // * Decimal with 3 decimal
+    // */
+    // public static DecimalFormat Decimal3Format = new DecimalFormat("#0.000");
 
     /**
      * Which BG unit is used: BG_MGDL = mg/dl, BG_MMOL = mmol/l
      */
     // public int m_BG_unit = BG_MGDL;
 
-    private String[] availableLanguages = { "English", "Deutsch", "Slovenski", "Fran\u00e7ais", "Language Tool" };
+    private String[] availableLanguages = { "English", "Deutsch", "Slovensko", "Fran\u00e7ais", "Language Tool" };
 
     /**
      * Available Language Extensions (posfixes)
@@ -145,12 +154,12 @@ public class DataAccess extends ATDataAccessLMAbstract
     /**
      * BG Units
      */
-    public String[] bg_units = { "", "mg/dl", "mmol/l" };
+    // public String[] bg_units = { "", "mg/dl", "mmol/l" };
 
     /**
      * BG Units for configuration
      */
-    public String[] bg_units_config = { "mg/dl", "mmol/l" };
+    // public String[] bg_units_config = { "mg/dl", "mmol/l" };
 
     /**
      * Config Icons 
@@ -176,6 +185,8 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     // private int current_person_id = 1;
     // NutriI18nControl m_nutri_i18n = NutriI18nControl.getInstance();
+
+    public static boolean dontLoadIcons = false;
 
     /**
      * Developer Version
@@ -210,7 +221,6 @@ public class DataAccess extends ATDataAccessLMAbstract
     public void initSpecial()
     {
         doTest();
-        this.initObservable();
 
         loadLanguageIntoContext();
 
@@ -237,7 +247,11 @@ public class DataAccess extends ATDataAccessLMAbstract
         this.startWebServer();
         // this.loadSpecialParameters(); this will be loaded with GGCDbLoader
         this.loadConverters();
-        loadGraphContext();
+        this.loadGraphContext();
+
+        this.loadVersion();
+
+        this.translateEnums();
 
         /*
          * System.out.println(Locale.getAvailableLocales());
@@ -250,6 +264,22 @@ public class DataAccess extends ATDataAccessLMAbstract
          */
 
         // this.loadBackupRestoreCollection();
+    }
+
+
+    private void translateEnums()
+    {
+        GlucoseUnitType.translateKeywords(this.m_i18n);
+        GGCSoftwareMode.translateKeywords(this.m_i18n);
+        InventoryItemUnit.translateKeywords(this.m_i18n);
+        InventoryGroupType.translateKeywords(this.m_i18n);
+    }
+
+
+    private void loadVersion()
+    {
+        CORE_VERSION = VersionResolver.getVersion("ggc.core.util.Version", this.getClass().getSimpleName());
+        // System.out.println("Core Version: " + CORE_VERSION);
     }
 
 
@@ -503,12 +533,12 @@ public class DataAccess extends ATDataAccessLMAbstract
      * Get Float As String
      * 
      * @param f
-     * @param decimal_places
+     * @param decimalPlaces
      * @return
      */
-    public static String getFloatAsString(float f, String decimal_places)
+    public String getFloatAsString(float f, String decimalPlaces)
     {
-        return DataAccess.getFloatAsString(f, Integer.parseInt(decimal_places));
+        return getFloatAsString(f, Integer.parseInt(decimalPlaces));
     }
 
 
@@ -516,25 +546,12 @@ public class DataAccess extends ATDataAccessLMAbstract
      * Get Float As String
      * 
      * @param f
-     * @param decimal_places
+     * @param decimalPlaces
      * @return
      */
-    public static String getFloatAsString(float f, int decimal_places)
+    public String getFloatAsString(float f, int decimalPlaces)
     {
-        switch (decimal_places)
-        {
-            case 1:
-                return DataAccess.Decimal1Format.format(f);
-
-            case 2:
-                return DataAccess.Decimal2Format.format(f);
-
-            case 3:
-                return DataAccess.Decimal3Format.format(f);
-
-            default:
-                return DataAccess.Decimal0Format.format(f);
-        }
+        return getDecimalHandler().getDecimalNumberAsString(f, decimalPlaces);
     }
 
 
@@ -648,12 +665,16 @@ public class DataAccess extends ATDataAccessLMAbstract
         BackupRestoreCollection brc_full = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
         brc_full.addNodeChild(new DailyValue(this.m_i18n));
 
-        BackupRestoreCollection brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
+        BackupRestoreCollection brc1 = new BackupRestoreCollection("DOC_APPOINTMENT_BACKUP", this.m_i18n, true);
+        brc1.addNodeChild(new DoctorTypeH(this.m_i18n));
+        brc1.addNodeChild(new DoctorH(this.m_i18n));
+        brc1.addNodeChild(new DoctorAppointmentH(this.m_i18n));
+        brc_full.addNodeChild(brc1);
+
+        brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
         brc1.addNodeChild(new Settings(this.m_i18n));
         brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
         brc_full.addNodeChild(brc1);
-
-        // for(int i=0; i<)
 
         for (Enumeration<String> en = this.plugins.keys(); en.hasMoreElements();)
         {
@@ -663,17 +684,9 @@ public class DataAccess extends ATDataAccessLMAbstract
             {
                 brc_full.addNodeChild(pic.getBackupObjects());
             }
-
-            /*
-             * BackupRestoreCollection brc = pic.getBackupObjects();
-             * if (brc!=null)
-             * brc_full.addNodeChild(brc);
-             */
         }
 
         return brc_full;
-
-        // return null;
     }
 
 
@@ -694,16 +707,21 @@ public class DataAccess extends ATDataAccessLMAbstract
 
     private void loadIcons()
     {
-        config_icons = new ImageIcon[9];
-        config_icons[0] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_mode.png", m_main));
-        config_icons[1] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_general.png", m_main));
-        config_icons[2] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_medical.png", m_main));
-        config_icons[3] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_colors.png", m_main));
-        config_icons[4] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_render.png", m_main));
-        config_icons[5] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_print.png", m_main));
-        config_icons[6] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_lang.png", m_main));
-        config_icons[7] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_pump.png", m_main));
-        config_icons[8] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_cgms.png", m_main));
+        if (config_icons == null)
+        {
+            config_icons = new ImageIcon[11];
+            config_icons[0] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_global.png", m_main));
+            config_icons[1] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_mode.png", m_main));
+            config_icons[2] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_general.png", m_main));
+            config_icons[3] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_medical.png", m_main));
+            config_icons[4] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_colors.png", m_main));
+            config_icons[5] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_render.png", m_main));
+            config_icons[6] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_print.png", m_main));
+            config_icons[7] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_lang.png", m_main));
+            config_icons[8] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_pump.png", m_main));
+            config_icons[9] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_cgms.png", m_main));
+            config_icons[10] = new ImageIcon(ATSwingUtils.getImage("/icons/cfg_users.png", m_main));
+        }
     }
 
 
@@ -777,25 +795,29 @@ public class DataAccess extends ATDataAccessLMAbstract
     public void initPlugIns()
     {
 
-        LOG.debug("init Plugins: Meter Tool");
+        LOG.debug("Init Plugin: Meter Tool");
         addPlugIn(GGCPluginType.MeterToolPlugin.getKey(), //
             new MetersPlugIn(this.m_main, this.ggci18nControl));
 
-        LOG.debug("init Plugins: Pumps Tool");
+        LOG.debug("Init Plugin: Pumps Tool");
         addPlugIn(GGCPluginType.PumpToolPlugin.getKey(), //
             new PumpsPlugIn(this.m_main, this.ggci18nControl));
 
-        LOG.debug("init Plugins: CGMS Tool");
+        LOG.debug("Init Plugin: CGMS Tool");
         addPlugIn(GGCPluginType.CGMSToolPlugin.getKey(), //
             new CGMSPlugIn(this.m_main, this.ggci18nControl));
 
-        LOG.debug("init Plugins: Nutrition Tool");
+        LOG.debug("Init Plugin: Nutrition Tool");
         addPlugIn(GGCPluginType.NutritionToolPlugin.getKey(), //
             new NutriPlugIn(this.m_main, this.ggci18nControl));
 
-        // LOG.debug("init Plugins: Connect Tool");
-        // addPlugIn(GGCPluginType.ConnectToolPlugin.getKey(), //
-        // new ConnectPlugIn(this.m_main, this.ggci18nControl));
+        LOG.debug("init Plugin: Connect Tool");
+        addPlugIn(GGCPluginType.ConnectToolPlugin.getKey(), //
+            new ConnectPlugIn(this.m_main, this.ggci18nControl));
+
+        // dynamically load all device handlers
+
+        observerManager.setChangeOnEventSource(GGCObservableType.InfoPanels, RefreshInfoType.PluginsAll);
 
     }
 
@@ -825,96 +847,15 @@ public class DataAccess extends ATDataAccessLMAbstract
     // ****** Observer/Observable *****
     // ********************************************************
 
-    /**
-     * Observable: Panels
-     */
-    public static final int OBSERVABLE_PANELS = 1;
 
-    /**
-     * Observable: Status
-     */
-    public static final int OBSERVABLE_STATUS = 2;
-
-    /**
-     * Observable: Db
-     */
-    public static final int OBSERVABLE_DB = 3;
-
-
-    /**
-     * Init Observable
-     */
-    public void initObservable()
+    @Override
+    public void initObserverManager()
     {
-        observables = new Hashtable<String, EventSource>();
-
-        observables.put("" + OBSERVABLE_PANELS, new EventSource());
-        observables.put("" + OBSERVABLE_STATUS, new EventSource());
-        observables.put("" + OBSERVABLE_DB, new EventSource());
-    }
-
-
-    /**
-     * Start To Observe
-     */
-    public void startToObserve()
-    {
-        /*
-         * // starts the event thread
-         * Thread thread = new Thread(observables.get("1"));
-         * thread.start();
-         * thread = new Thread(observables.get("2"));
-         * thread.start();
-         */
-
-    }
-
-
-    /**
-     * Add Observer 
-     * 
-     * @param observable_id
-     * @param inst
-     */
-    public void addObserver(int observable_id, EventObserverInterface inst)
-    {
-        observables.get("" + observable_id).addObserver(inst);
-    }
-
-
-    /**
-     * Set Change On Event Source
-     * 
-     * @param type
-     * @param value
-     */
-    public void setChangeOnEventSource(int type, int value)
-    {
-        observables.get("" + type).sendChangeNotification(value);
-    }
-
-
-    /**
-     * Set Change On Event Source
-     * 
-     * @param type
-     * @param value
-     */
-    public void setChangeOnEventSource(int type, String value)
-    {
-        observables.get("" + type).sendChangeNotification(value);
-    }
-
-
-    /**
-     * Set Change On Event Source
-     *
-     * @param type
-     * @param value
-     */
-    public void setChangeOnEventSource(int type, Object value)
-    {
-        observables.get("" + type).sendChangeNotification(value);
+        this.observerManager = new ObserverManager(false);
+        this.observerManager.initObserverManager( //
+            GGCObservableType.InfoPanels, //
+            GGCObservableType.Database, //
+            GGCObservableType.Status);
     }
 
 
@@ -984,10 +925,10 @@ public class DataAccess extends ATDataAccessLMAbstract
         return 0;
     }
 
+
     // ********************************************************
     // ****** BG Measurement Type *****
     // ********************************************************
-
 
     /**
      * Depending on the return value of <code>getBGMeasurmentType()</code>,
@@ -1049,11 +990,12 @@ public class DataAccess extends ATDataAccessLMAbstract
         switch (this.getGlucoseUnitType())
         {
             case mmol_L:
-                return Decimal1Format.format(bgValue);
+                return getDecimalHandler().getDecimalNumberAsString(bgValue, 1);
+
             case None:
             case mg_dL:
             default:
-                return Decimal0Format.format(bgValue);
+                return getDecimalHandler().getDecimalNumberAsString(bgValue, 0);
         }
     }
 
@@ -1124,7 +1066,8 @@ public class DataAccess extends ATDataAccessLMAbstract
     public void setParent(Component main)
     {
         m_main = main;
-        loadIcons();
+        if (!dontLoadIcons)
+            loadIcons();
     }
 
 
@@ -1527,6 +1470,70 @@ public class DataAccess extends ATDataAccessLMAbstract
     }
 
 
+    @Override
+    protected void initDataDefinitionManager()
+    {
+        // TODO
+        // addDisplayManagerEntry(StockSubTypeDto.class,
+        // "STOCK_TYPE,NAME,DESCRIPTION", "20,40,40", "", 1, "");
+
+        // OK
+
+        addDisplayManagerEntry(ColorSchemeH.class, //
+            GGCSelectorConfiguration.None, GGCDatabaseTableConfiguration.ColorSchemeH);
+
+        // DOCTOR / APPOINTMENT
+        addDisplayManagerEntry(DoctorH.class, //
+            GGCSelectorConfiguration.DoctorH, GGCDatabaseTableConfiguration.DoctorH);
+
+        addDisplayManagerEntry(DoctorTypeH.class, //
+            GGCSelectorConfiguration.DoctorTypeH, GGCDatabaseTableConfiguration.DoctorTypeH);
+
+        addDisplayManagerEntry(DoctorAppointmentH.class, //
+            GGCSelectorConfiguration.DoctorAppointmentH, GGCDatabaseTableConfiguration.DoctorAppointmentH);
+
+        // INVENTORY
+        addDisplayManagerEntry(InventoryH.class, //
+            GGCSelectorConfiguration.InventoryH, null);
+
+        addDisplayManagerEntry(InventoryItemH.class, //
+            GGCSelectorConfiguration.InventoryItemH, null);
+
+        addDisplayManagerEntry(InventoryItemTypeH.class, //
+            GGCSelectorConfiguration.InventoryItemTypeH, null);
+
+        // // nutrition
+        // FoodGroupH(1, FoodGroupH.class, //
+        // "id, name, name_i18n, description"), //
+        // FoodDescriptionH(1, FoodDescriptionH.class, //
+        // "id, group_id, name, name_i18n, refuse, nutritions, home_weights"),
+        // //
+        // FoodUserGroupH(1, FoodUserGroupH.class, //
+        // "id; name; name_i18n; description; parent_id; changed"), //
+        // FoodUserDescriptionH(1, FoodUserDescriptionH.class, //
+        // "id; name; name_i18n; group_id; refuse; description; home_weights;
+        // nutritions; changed"), //
+        // MealH(1, MealH.class, //
+        // "id; name; name_i18n; group_id; description; parts; nutritions;
+        // extended; comment; changed"), //
+        // MealGroupH(1, MealGroupH.class, //
+        // "id; name; name_i18n; description; parent_id; changed"), //
+        // NutritionDefinitionH(1, NutritionDefinitionH.class, //
+        // "id; weight_unit; tag; name; decimal_places; static_entry"), //
+        // NutritionHomeWeightTypeH(1, NutritionHomeWeightTypeH.class, //
+        // "id; name; static_entry"), //
+
+    }
+
+
+    @Override
+    protected void initInternalSettings()
+    {
+        // FIXME
+        this.internalSetting.put(InternalSetting.Help_Settings_UserAddEdit, "unknownKey");
+    }
+
+
     /**
      * Console message Not Implemented
      * @param source
@@ -1573,32 +1580,31 @@ public class DataAccess extends ATDataAccessLMAbstract
      */
     public static final int INSULIN_PUMP = 1;
 
+    /**
+     * @param mode
+     * @param value
+     * @return
+     */
+    // public float getCorrectDecimalValueForInsulinFloat(int mode, float value)
+    // {
+    // // 1, 0.5, 0.1
+    // // 1, 0.5, 0.1, 0.05, 0.01, 0.005, 0.001
+    // return value;
+    // }
+
 
     /**
      * @param mode
      * @param value
      * @return
      */
-    public float getCorrectDecimalValueForInsulinFloat(int mode, float value)
-    {
-        // 1, 0.5, 0.1
-        // 1, 0.5, 0.1, 0.05, 0.01, 0.005, 0.001
-        return value;
-    }
-
-
-    /**
-     * @param mode
-     * @param value
-     * @return
-     */
-    public String getCorrectDecimalValueForInsulinString(int mode, float value)
-    {
-        // 1, 0.5, 0.1
-        // return value;
-        return null;
-    }
-
+    // public String getCorrectDecimalValueForInsulinString(int mode, float
+    // value)
+    // {
+    // // 1, 0.5, 0.1
+    // // return value;
+    // return null;
+    // }
 
     /** 
      * Load PlugIns
@@ -1862,6 +1868,15 @@ public class DataAccess extends ATDataAccessLMAbstract
         Dimension dimension = dialogSizePersistInterface.getContainer().getSize();
 
         this.configurationManagerWrapper.setDimensionToParameter(dialogSizePersistInterface.getSettingKey(), dimension);
+    }
+
+
+    public void loadUserTypes()
+    {
+        this.user_types = new String[5];
+
+        this.user_types[0] = this.m_i18n.getMessage("SELECT");
+        this.user_types[1] = m_i18n.getMessage("USER_NORMAL");
     }
 
 }

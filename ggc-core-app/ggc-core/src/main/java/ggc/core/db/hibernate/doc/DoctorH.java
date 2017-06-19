@@ -1,19 +1,20 @@
 package ggc.core.db.hibernate.doc;
 
-import java.util.Map;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
-import com.atech.db.hibernate.HibernateBackupSelectableObject;
+import com.atech.db.hibernate.HibernateSelectableObject;
 import com.atech.graphics.dialogs.selector.SelectableInterface;
-import ggc.core.util.DataAccess;
+import com.atech.i18n.I18nControlAbstract;
 
-/** @author Hibernate CodeGenerator */
-public class DoctorH extends HibernateBackupSelectableObject
+import ggc.core.db.hibernate.GGCHibernateSelectableObject;
+
+public class DoctorH extends GGCHibernateSelectableObject
 {
 
     private static final long serialVersionUID = -203432582979938654L;
-    private static final int TABLE_VERSION = 1;
 
     private long id;
     private String name;
@@ -66,6 +67,12 @@ public class DoctorH extends HibernateBackupSelectableObject
     /** default constructor */
     public DoctorH()
     {
+    }
+
+
+    public DoctorH(I18nControlAbstract i18nControl)
+    {
+        super(i18nControl);
     }
 
 
@@ -385,34 +392,18 @@ public class DoctorH extends HibernateBackupSelectableObject
     }
 
 
-    public int getColumnCount()
-    {
-        return 2;
-    }
-
-
-    public String getColumnName(int num)
-    {
-        switch (num)
-        {
-            case 2:
-                return "TYPE";
-
-            default:
-                return "NAME";
-        }
-    }
-
-
     public String getColumnValue(int num)
     {
         switch (num)
         {
-            case 2:
+            case 0:
+                return this.getName();
+
+            case 1:
                 return this.getDoctorType().getNameTranslated();
 
             default:
-                return this.getName();
+                return null;
         }
 
     }
@@ -424,19 +415,6 @@ public class DoctorH extends HibernateBackupSelectableObject
     }
 
 
-    public int getColumnWidth(int num, int width)
-    {
-        switch (num)
-        {
-            case 2:
-                return (int) (0.3f * width);
-
-            default:
-                return (int) (0.7f * width);
-        }
-    }
-
-
     @Override
     public boolean isFoundString(String text)
     {
@@ -445,86 +423,94 @@ public class DoctorH extends HibernateBackupSelectableObject
 
     }
 
+    // public String dbExport(int table_version) throws Exception
+    // {
+    // StringBuilder sb = new StringBuilder();
+    //
+    // sb.append(this.getId());
+    // writeDelimiter(sb);
+    // sb.append(this.getName());
+    // writeDelimiter(sb);
+    // sb.append(this.getDoctorType().getId());
+    // writeDelimiter(sb);
+    // sb.append(this.getAddress());
+    // writeDelimiter(sb);
+    // sb.append(this.getPhone());
+    // writeDelimiter(sb);
+    // sb.append(this.getPhoneGsm());
+    // writeDelimiter(sb);
+    // sb.append(this.getEmail());
+    // writeDelimiter(sb);
+    // sb.append(XmlPrettyPrintUtil.unPrettyPrint(this.getWorkingTime()));
+    // writeDelimiter(sb);
+    // sb.append(this.getActiveFrom());
+    // writeDelimiter(sb);
+    // sb.append(this.getActiveTill());
+    // writeDelimiter(sb);
+    // sb.append(this.getPersonId());
+    // writeDelimiter(sb);
+    // sb.append(this.getExtended());
+    // writeDelimiter(sb);
+    // sb.append(this.getComment());
+    // writeDelimiter(sb);
+    // sb.append("\n");
+    //
+    // return sb.toString();
+    // }
 
-    public String getTargetName()
+    // @Override
+    // protected String getColumnNames(int tableVersion)
+    // {
+    // return "id; name; doctor_type_id; address; phone; phone_gsm; email;
+    // working_time; active_from; "
+    // + "active_till; person_id; extended; comment";
+    // }
+
+
+    // public void dbImport(int tableVersion, String valueEntry, Map<String,
+    // String> headers) throws Exception
+    // {
+    // DataAccess da = DataAccess.getInstance();
+    //
+    // String[] arr = getSplittedValues(valueEntry);
+    //
+    // this.setId(da.getLongValueFromString(arr[0]));
+    // this.setName(arr[1]);
+    //
+    // long doctorTypeId = da.getLongValueFromString(arr[2]);
+    //
+    // this.setAddress(arr[3]);
+    // this.setPhone(arr[4]);
+    // this.setPhoneGsm(arr[5]);
+    // this.setEmail(arr[6]);
+    // this.setWorkingTime(XmlPrettyPrintUtil.prettyPrint(arr[7]));
+    // this.setActiveFrom(da.getLongValueFromString(arr[8]));
+    // this.setActiveTill(da.getLongValueFromString(arr[9]));
+    // this.setPersonId(da.getIntValueFromString(arr[10]));
+    // this.setExtended(arr[11]);
+    // this.setComment(arr[12]);
+    //
+    // this.setDoctorType(da.getDb().getCachedObject(DoctorTypeH.class,
+    // doctorTypeId));
+    // }
+
+    @Override
+    public String toStringDescriptive()
     {
-        return DataAccess.getInstance().getI18nControlInstance().getMessage("DOCTORS");
-    }
-
-
-    public int getTableVersion()
-    {
-        return TABLE_VERSION;
-    }
-
-
-    public String dbExport(int table_version) throws Exception
-    {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(this.getId());
-        writeDelimiter(sb);
-        sb.append(this.getName());
-        writeDelimiter(sb);
-        sb.append(this.getDoctorType().getId());
-        writeDelimiter(sb);
-        sb.append(this.getAddress());
-        writeDelimiter(sb);
-        sb.append(this.getPhone());
-        writeDelimiter(sb);
-        sb.append(this.getPhoneGsm());
-        writeDelimiter(sb);
-        sb.append(this.getEmail());
-        writeDelimiter(sb);
-        sb.append(this.getWorkingTime());
-        writeDelimiter(sb);
-        sb.append(this.getActiveFrom());
-        writeDelimiter(sb);
-        sb.append(this.getActiveTill());
-        writeDelimiter(sb);
-        sb.append(this.getPersonId());
-        writeDelimiter(sb);
-        sb.append(this.getExtended());
-        writeDelimiter(sb);
-        sb.append(this.getComment());
-        writeDelimiter(sb);
-        sb.append("\n");
-
-        return sb.toString();
+        return String.format(getBaseForDescriptiveString(), ("name=" + this.name));
     }
 
 
     @Override
-    protected String getColumnNames(int tableVersion)
+    public Criteria getChildrenCriteria(Session session, HibernateSelectableObject object)
     {
-        return "id; name; doctor_type_id; address; phone; phone_gsm; email; working_time; active_from; "
-                + "active_till; person_id; extended; comment";
-    }
+        DoctorH doctor = (DoctorH) object;
 
+        Criteria criteria = session.createCriteria(DoctorAppointmentH.class);
+        criteria.add(Restrictions.eq("personId", doctor.getPersonId()));
+        criteria.add(Restrictions.eq("doctor", doctor));
 
-    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
-    {
-        DataAccess da = DataAccess.getInstance();
-
-        String[] arr = getSplittedValues(valueEntry);
-
-        this.setId(da.getLongValueFromString(arr[0]));
-        this.setName(arr[1]);
-
-        long doctorTypeId = da.getLongValueFromString(arr[2]);
-
-        this.setAddress(arr[3]);
-        this.setPhone(arr[4]);
-        this.setPhoneGsm(arr[5]);
-        this.setEmail(arr[6]);
-        this.setWorkingTime(arr[7]);
-        this.setActiveFrom(da.getLongValueFromString(arr[8]));
-        this.setActiveTill(da.getLongValueFromString(arr[9]));
-        this.setPersonId(da.getIntValueFromString(arr[10]));
-        this.setExtended(arr[11]);
-        this.setComment(arr[12]);
-
-        this.setDoctorType(da.getDb().getDoctorType(doctorTypeId));
+        return criteria;
     }
 
 }

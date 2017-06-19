@@ -1,12 +1,11 @@
 package ggc.core.data.cfg;
 
+import java.awt.*;
+
+import javax.swing.*;
+
+import ggc.core.enums.PropertiesDialogType;
 import ggc.core.util.DataAccess;
-
-import java.awt.Component;
-
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JList;
-import javax.swing.SwingConstants;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,6 +37,15 @@ public class ConfigCellRenderer extends DefaultListCellRenderer
 
     private static final long serialVersionUID = -2728552153803274776L;
     DataAccess da = DataAccess.getInstance();
+    PropertiesDialogType propertiesDialogType;
+
+
+    public ConfigCellRenderer(PropertiesDialogType propertiesDialogType)
+    {
+        super();
+        this.propertiesDialogType = propertiesDialogType;
+    }
+
 
     @Override
     @SuppressWarnings("rawtypes")
@@ -49,7 +57,11 @@ public class ConfigCellRenderer extends DefaultListCellRenderer
             boolean chf) // the list and the cell have the focus
     {
         super.getListCellRendererComponent(list, value, index, iss, chf);
-        setIcon(da.config_icons[index]);
+        if (propertiesDialogType == PropertiesDialogType.Standard)
+            setIcon(da.config_icons[index]);
+        else
+            setIcon(da.config_icons[index == 1 ? 10 : 0]); // we have only two
+                                                           // icons here
         this.setHorizontalTextPosition(SwingConstants.CENTER);
         this.setHorizontalAlignment(SwingConstants.CENTER);
         this.setVerticalTextPosition(SwingConstants.BOTTOM);

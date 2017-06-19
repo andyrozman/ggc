@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.graph.v1.GGCGraphType;
 import ggc.core.data.graph.v1.db.GraphV1DbRetriever;
-import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 import ggc.core.util.DataAccess;
 import ggc.core.util.MathUtils;
 

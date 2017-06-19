@@ -6,7 +6,6 @@ import java.util.Map;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
-import ggc.core.util.DataAccess;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -32,7 +31,7 @@ import ggc.core.util.DataAccess;
  *
  *  Author:    Andy {andy@atech-software.com}
  */
-
+@Deprecated
 public enum StockTypeBase implements CodeEnumWithTranslation
 {
     None(0, "NONE"), //
@@ -49,24 +48,11 @@ public enum StockTypeBase implements CodeEnumWithTranslation
 
     static
     {
-        I18nControlAbstract ic = DataAccess.getInstance().getI18nControlInstance();
-
         for (StockTypeBase pbt : values())
         {
-            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
-            translationMapping.put(pbt.getTranslation(), pbt);
             codeMapping.put(pbt.code, pbt);
         }
 
-        String[] basal_desc_lcl = { ic.getMessage("SELECT_STOCK_TYPE"), //
-                                   ic.getMessage("STOCKTYPE_INSULIN"), //
-                                   ic.getMessage("STOCKTYPE_BG"), //
-                                   ic.getMessage("STOCKTYPE_PEN"), //
-                                   ic.getMessage("STOCKTYPE_PUMP"), //
-                                   ic.getMessage("STOCKTYPE_CGMS"), //
-        };
-
-        descriptions = basal_desc_lcl;
     }
 
     int code;
@@ -74,10 +60,30 @@ public enum StockTypeBase implements CodeEnumWithTranslation
     String translation;
 
 
-    private StockTypeBase(int code, String i18nKey)
+    StockTypeBase(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;
+    }
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        for (StockTypeBase pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMapping.put(pbt.getTranslation(), pbt);
+        }
+
+        String[] stockTypeDescriptions = { ic.getMessage("STOCKTYPE_ANY"), //
+                                           ic.getMessage("STOCKTYPE_INSULIN"), //
+                                           ic.getMessage("STOCKTYPE_BG"), //
+                                           ic.getMessage("STOCKTYPE_PEN"), //
+                                           ic.getMessage("STOCKTYPE_PUMP"), //
+                                           ic.getMessage("STOCKTYPE_CGMS"), //
+        };
+
+        descriptions = stockTypeDescriptions;
     }
 
 

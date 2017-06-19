@@ -2,8 +2,12 @@
 <!DOCTYPE hibernate-mapping SYSTEM "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
 
-    <!-- ***************** ggc::Other SCHEMA  ******************* -->
 
+    <!-- ************************************************************** -->
+    <!-- ***    Internet Data (not used for now and also invalid)   *** -->
+    <!-- ************************************************************** -->
+
+    <!-- Inet Group: last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.inet.InetGroupH" table="inet_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
@@ -11,30 +15,32 @@
         <property name="parent" type="string" length="255"/>
 
         <property name="name" type="string" length="255"/>
-        <property name="name_i18n" type="string" length="255"/>
+        <property name="nameI18n" column="name_i18n" type="string" length="255"/>
         <property name="description" type="string" length="2000"/>
         <property name="comment" type="string" length="2000"/>
     </class>
 
-
+    <!-- : last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.inet.InetTypeH" table="inet_type">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
         <property name="name" type="string" length="255"/>
-        <property name="name_i18n" type="string" length="255"/>
+        <property name="nameI18n" column="name_i18n" type="string" length="255"/>
         <property name="description" type="string" length="2000"/>
         <property name="comment" type="string" length="2000"/>
     </class>
 
+    <!-- : last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.inet.InetLinkGroupH" table="inet_link_group">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
-        <property name="group_id" type="string" length="1000"/>
-        <property name="link_id" type="string" length="1000"/>
+        <property name="groupId" column="group_id" type="string" length="1000"/>
+        <property name="linkId" column="link_id" type="string" length="1000"/>
     </class>
 
+    <!-- : last_change=[db=7] -->
     <class name="ggc.core.db.hibernate.inet.InetLinkH" table="inet_link">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>

@@ -5,48 +5,48 @@
     <!-- ***************** ggc::Main SCHEMA  ******************* -->
 
 
-    <!-- ****************************************** -->
-    <!-- ***               Patient Data           **** -->
-    <!-- ****************************************** -->
+    <!-- ********************************************* -->
+    <!-- ***         Pen/Injection Data           **** -->
+    <!-- ********************************************* -->
 
     <!--  DayValueH: last_change=[db=7] -->
-    <class name="ggc.core.db.hibernate.DayValueH" table="data_dayvalues">
+    <class name="ggc.core.db.hibernate.pen.DayValueH" table="data_dayvalues">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
-        <property name="dt_info" type="long" not-null="true"/>
+        <property name="dtInfo" column="dt_info" type="long" not-null="true"/>
         <property name="bg" type="int"/>
         <property name="ins1" type="int"/>
         <property name="ins2" type="int"/>
         <property name="ch" type="float"/>
-        <property name="meals_ids" type="text"/>
+        <property name="mealsIds" column="meals_ids" type="text"/>
         <property name="extended" type="text"/>
-        <property name="person_id" type="int" not-null="true"/>
+        <property name="personId" column="person_id" type="int" not-null="true"/>
         <property name="comment" type="string" length="2000"/>
         <property name="changed" type="long" not-null="false"/>
     </class>
 
 
     <!-- ****************************************** -->
-    <!-- ***               Configuration          **** -->
+    <!-- ***             Configuration         **** -->
     <!-- ****************************************** -->
 
-    <!-- SettingsH:  last_change=[db=7] -->
-    <class name="ggc.core.db.hibernate.SettingsH" table="cfg_settings">
+    <!-- SettingsH: last_change=[db=7] -->
+    <class name="ggc.core.db.hibernate.settings.SettingsH" table="cfg_settings">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
         <property name="key" column="el_key" type="string" length="44" not-null="true"/>
         <property name="value" column="el_value" type="string" length="255"/>
+        <!-- type: 1-string, 2-int, 3=float -->
         <property name="type" type="int"/>
-        <!-- 1-string, 2-int, 3=float -->
         <property name="description" type="string" length="255"/>
-        <property name="person_id" type="int" not-null="true"/>
+        <property name="personId" column="person_id" type="int" not-null="true"/>
     </class>
 
 
     <!-- ColorSchemeH:  last_change=[db=7] -->
-    <class name="ggc.core.db.hibernate.ColorSchemeH" table="cfg_colorscheme">
+    <class name="ggc.core.db.hibernate.settings.ColorSchemeH" table="cfg_colorscheme">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
@@ -63,19 +63,6 @@
         <property name="color_ins_perbu" type="int"/>
         <property name="color_ch" type="int"/>
     </class>
-
-
-    <!--
-    <class name="ggc.core.db.hibernate.DbInfoH" table="db_info">
-        <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>
-        <property name="key" column="el_key" type="string" length="44" not-null="true"/>
-        <property name="value" column="el_value" type="string" length="255"/>
-        <property name="type" type="int"/>
-        <!  1-string, 2-int, 3=float -->
-        <!-- <property name="description" type="string" length="255"/>
-    </class> -->
 
 
 </hibernate-mapping>

@@ -1,6 +1,5 @@
 package ggc.core.db;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import org.hibernate.Criteria;
@@ -8,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
@@ -16,17 +16,27 @@ import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.HibernateConfiguration;
 import com.atech.db.hibernate.HibernateDb;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.db.hibernate.HibernateObject;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 
 import ggc.core.data.*;
 import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.db.datalayer.Settings;
+import ggc.core.db.dto.StockSubTypeDto;
 import ggc.core.db.dto.StocktakingDTO;
-import ggc.core.db.hibernate.*;
+import ggc.core.db.hibernate.StockH;
+import ggc.core.db.hibernate.StockSubTypeH;
+import ggc.core.db.hibernate.StocktakingH;
 import ggc.core.db.hibernate.doc.DoctorAppointmentH;
 import ggc.core.db.hibernate.doc.DoctorH;
 import ggc.core.db.hibernate.doc.DoctorTypeH;
+import ggc.core.db.hibernate.inventory.InventoryH;
+import ggc.core.db.hibernate.inventory.InventoryItemH;
+import ggc.core.db.hibernate.inventory.InventoryItemTypeH;
+import ggc.core.db.hibernate.pen.DayValueH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
+import ggc.core.db.hibernate.settings.SettingsH;
 import ggc.core.util.DataAccess;
 
 /**
@@ -54,8 +64,7 @@ import ggc.core.util.DataAccess;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class GGCDb extends HibernateDb // implements DbCheckInterface
-// HibernateDb
+public class GGCDb extends HibernateDb
 {
 
     public static String CURRENT_DB_VERSION = "7";
@@ -75,10 +84,12 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     // private String m_errorDesc = "";
     // private String m_addId = "";
 
-    protected GGCDbConfig hib_config = null;
-    protected Configuration m_cfg = null;
+    // protected GGCDbConfig hib_config = null;
+    // protected Configuration m_cfg = null;
 
-    private DataAccess m_da;
+    // private DataAccess dataAccess;
+
+    DataAccess dataAccessLocal = null;
 
     private int m_loadStatus = 0;
 
@@ -96,20 +107,24 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     /**
      * Constructor 
      * 
-     * @param da
+     * @param dataAccess
      */
-    public GGCDb(DataAccess da)
+    public GGCDb(DataAccess dataAccess)
     {
-        /* m_cfg = */createConfiguration();
-        m_da = da;
+        super(dataAccess);
+        /* m_cfg = */
+        // xxx createConfiguration();
+        // dataAccess = da;
 
         // System.out.println("GGCDb");
         // System.out.println("dataAccess: " + dataAccess);
         // System.out.println("dataAccess.getSettings(): " +
         // dataAccess.getSettings());
 
-        m_loadStatus = DB_CONFIG_LOADED;
+        // m_loadStatus = DB_CONFIG_LOADED;
         // debugConfig();
+
+        dataAccessLocal = dataAccess;
     }
 
 
@@ -118,10 +133,14 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      */
     public GGCDb()
     {
+        super(DataAccess.getInstance());
         /* m_cfg = */
-        createConfiguration();
-        m_loadStatus = DB_CONFIG_LOADED;
+        // createConfiguration();
+        // m_loadStatus = DB_CONFIG_LOADED;
         // debugConfig();
+
+        dataAccessLocal = DataAccess.getInstance();
+
     }
 
 
@@ -131,7 +150,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     @Override
     public Configuration getConfiguration()
     {
-        return this.m_cfg;
+        return this.config.getConfiguration();
     }
 
 
@@ -173,7 +192,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     @Override
     public void closeDb()
     {
-        this.hib_config.closeDb();
+        this.config.closeDb();
         m_loadStatus = DB_CONFIG_LOADED;
     }
 
@@ -182,9 +201,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * Get Hibernate Configuration
      */
     @Override
-    public GGCDbConfig getHibernateConfiguration()
+    public HibernateConfiguration getHibernateConfiguration()
     {
-        return this.hib_config;
+        return this.config;
     }
 
 
@@ -194,7 +213,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     @Override
     public void openHibernateSimple()
     {
-        this.hib_config.createSessionFactory();
+        this.config.createSessionFactory();
         /*
          * logInfo("openHibernateSimple", "Start");
          * // getStartStatus();
@@ -280,7 +299,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      */
     public Session getSession(int session_nr)
     {
-        return this.hib_config.getSession(session_nr);
+        return this.config.getSession(session_nr);
         /*
          * if (session_nr == 1)
          * {
@@ -306,251 +325,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         new SchemaExport(this.getHibernateConfiguration().getConfiguration()).create(true, true);
     }
 
-    // *************************************************************
-    // **** SETTINGS ****
-    // *************************************************************
-
-    // ---
-    // --- BASIC METHODS (Hibernate and DataLayer processing)
-    // ---
-    /*
-     * public boolean add(Object obj)
-     * {
-     * if (obj instanceof DatabaseObjectHibernate)
-     * {
-     * DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-     * LOG.info(doh.getObjectName() + "::DbAdd");
-     * try
-     * {
-     * String id = doh.DbAdd(getSession()); // getSession());
-     * this.m_addId = id;
-     * return true;
-     * }
-     * catch (SQLException ex)
-     * {
-     * setError(1, ex.getMessage(), doh.getObjectName());
-     * LOG.error("SQLException on add: " + ex, ex);
-     * Exception eee = ex.getNextException();
-     * if (eee != null)
-     * {
-     * LOG.error("Nested Exception on add: " + eee.getMessage(), eee);
-     * }
-     * return false;
-     * }
-     * catch (Exception ex)
-     * {
-     * setError(1, ex.getMessage(), doh.getObjectName());
-     * LOG.error("Exception on add: " + ex, ex);
-     * return false;
-     * }
-     * }
-     * else
-     * {
-     * setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-     * LOG.error("Internal error on add: " + obj);
-     * return false;
-     * }
-     * }
-     * public long addHibernate(Object obj)
-     * {
-     * return addHibernate(obj,1);
-     * }
-     * // this method is used for direct use with hibernate objects (unlike use
-     * // with our
-     * // datalayer classes)
-     * public long addHibernate(Object obj, int session_id)
-     * {
-     * LOG.info("addHibernate::" + obj.toString());
-     * try
-     * {
-     * Session sess = getSession(session_id);
-     * Transaction tx = sess.beginTransaction();
-     * Long val = (Long) sess.save(obj);
-     * tx.commit();
-     * return val.longValue();
-     * }
-     * catch (Exception ex)
-     * {
-     * LOG.error("Exception on addHibernate: " + ex, ex);
-     * return -1;
-     * }
-     * }
-     * public boolean edit(Object obj)
-     * {
-     * if (obj instanceof DatabaseObjectHibernate)
-     * {
-     * DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-     * LOG.info(doh.getObjectName() + "::DbEdit");
-     * try
-     * {
-     * doh.DbEdit(getSession());
-     * return true;
-     * }
-     * catch (SQLException ex)
-     * {
-     * setError(1, ex.getMessage(), doh.getObjectName());
-     * LOG.error("SQLException on edit: " + ex, ex);
-     * Exception eee = ex.getNextException();
-     * if (eee != null)
-     * {
-     * LOG.error("Nested Exception on edit: " + eee.getMessage(), eee);
-     * }
-     * return false;
-     * }
-     * catch (Exception ex)
-     * {
-     * setError(1, ex.getMessage(), doh.getObjectName());
-     * LOG.error("Exception on edit: " + ex, ex);
-     * return false;
-     * }
-     * }
-     * else
-     * {
-     * setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-     * LOG.error("Internal error on edit: " + obj);
-     * return false;
-     * }
-     * }
-     * public boolean editHibernate(Object obj)
-     * {
-     * return editHibernate(obj,1);
-     * }
-     * // this method is used for direct use with hibernate objects (unlike use
-     * // with our
-     * // datalayer classes)
-     * public boolean editHibernate(Object obj, int session_id)
-     * {
-     * LOG.info("editHibernate::" + obj.toString());
-     * try
-     * {
-     * Session sess = getSession(session_id);
-     * Transaction tx = sess.beginTransaction();
-     * sess.update(obj);
-     * tx.commit();
-     * return true;
-     * }
-     * catch (Exception ex)
-     * {
-     * LOG.error("Exception on editHibernate: " + ex, ex);
-     * // ex.printStackTrace();
-     * return false;
-     * }
-     * }
-     * public boolean deleteHibernate(Object obj)
-     * {
-     * LOG.info("deleteHibernate::" + obj.toString());
-     * try
-     * {
-     * Session sess = getSession();
-     * Transaction tx = sess.beginTransaction();
-     * sess.delete(obj);
-     * tx.commit();
-     * return true;
-     * }
-     * catch (Exception ex)
-     * {
-     * LOG.error("Exception on deleteHibernate: " + ex, ex);
-     * // ex.printStackTrace();
-     * return false;
-     * }
-     * }
-     * public boolean get(Object obj)
-     * {
-     * if (obj instanceof DatabaseObjectHibernate)
-     * {
-     * DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-     * LOG.info(doh.getObjectName() + "::DbGet");
-     * try
-     * {
-     * doh.DbGet(getSession());
-     * return true;
-     * }
-     * catch (SQLException ex)
-     * {
-     * setError(1, ex.getMessage(), doh.getObjectName());
-     * LOG.error("SQLException on get: " + ex, ex);
-     * Exception eee = ex.getNextException();
-     * if (eee != null)
-     * {
-     * LOG.error("Nested Exception on get: " + eee.getMessage(), eee);
-     * }
-     * return false;
-     * }
-     * catch (Exception ex)
-     * {
-     * setError(1, ex.getMessage(), doh.getObjectName());
-     * LOG.error("Exception on get: " + ex, ex);
-     * return false;
-     * }
-     * }
-     * else
-     * {
-     * setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-     * LOG.error("Internal error on get: " + obj);
-     * return false;
-     * }
-     * }
-     * public boolean delete(Object obj)
-     * {
-     * if (obj instanceof DatabaseObjectHibernate)
-     * {
-     * DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-     * LOG.info(doh.getObjectName() + "::DbDelete");
-     * try
-     * {
-     * if (doh.DbHasChildren(getSession()))
-     * {
-     * setError(-3, "Object has children object", doh.getObjectName());
-     * LOG.error(doh.getObjectName() + " had Children objects");
-     * return false;
-     * }
-     * doh.DbDelete(getSession());
-     * return true;
-     * }
-     * catch (SQLException ex)
-     * {
-     * setError(1, ex.getMessage(), doh.getObjectName());
-     * LOG.error("SQLException on delete: " + ex, ex);
-     * Exception eee = ex.getNextException();
-     * if (eee != null)
-     * {
-     * LOG.error("Nested Exception on delete: " + eee.getMessage(), eee);
-     * }
-     * return false;
-     * }
-     * catch (Exception ex)
-     * {
-     * setError(1, ex.getMessage(), doh.getObjectName());
-     * LOG.error("Exception on delete: " + ex, ex);
-     * return false;
-     * }
-     * }
-     * else
-     * {
-     * setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-     * LOG.error("Internal error on delete: " + obj);
-     * return false;
-     * }
-     * }
-     * public String addGetId()
-     * {
-     * return this.m_addId;
-     * }
-     * public int getErrorCode()
-     * {
-     * return this.m_errorCode;
-     * }
-     * public String getErrorDescription()
-     * {
-     * return this.m_errorDesc;
-     * }
-     * public void setError(int code, String desc, String source)
-     * {
-     * this.m_errorCode = code;
-     * this.m_errorDesc = source + " : " + desc;
-     * }
-     */
-
 
     // *************************************************************
     // **** SETTINGS ****
@@ -563,12 +337,12 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     public HibernateConfiguration createConfiguration()
     {
         logInfo("createConfiguration()");
-        this.hib_config = new GGCDbConfig(true);
-        this.hib_config.getConfiguration();
+        this.config = new GGCDbConfig(true);
+        this.config.getConfiguration();
 
         // cache_db = new GGCDbCache(this);
 
-        return this.hib_config;
+        return this.config;
     }
 
     /**
@@ -638,20 +412,17 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         {
             Session sess = getSession(2);
 
-            Hashtable<String, Settings> table = new Hashtable<String, Settings>();
+            Map<String, Settings> table = new HashMap<String, Settings>();
 
-            Query q = sess.createQuery(
-                "select cfg from ggc.core.db.hibernate.SettingsH as cfg where cfg.person_id=" + m_da.current_user_id);
+            List<SettingsH> settingsList = getHibernateData(SettingsH.class,
+                Arrays.asList(Restrictions.eq("personId", (int) dataAccess.getCurrentUserId())));
 
-            Iterator it = q.iterate();
-
-            while (it.hasNext())
+            for (SettingsH settings : settingsList)
             {
-                SettingsH eh = (SettingsH) it.next();
-                table.put(eh.getKey(), new Settings(eh));
+                table.put(settings.getKey(), new Settings(settings));
             }
 
-            m_da.getConfigurationManager().checkConfiguration(table, this);
+            dataAccessLocal.getConfigurationManager().checkConfiguration(table, this);
         }
         catch (Exception ex)
         {
@@ -676,8 +447,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
             Hashtable<String, String> table = new Hashtable<String, String>();
 
             Query q = sess.createQuery(
-                "SELECT cfg FROM ggc.core.db.hibernate.SettingsH as cfg WHERE cfg.key LIKE 'EXTENDED_RATIO%' AND cfg.person_id="
-                        + m_da.current_user_id);
+                "SELECT cfg FROM ggc.core.db.hibernate.SettingsH as cfg WHERE cfg.key LIKE 'EXTENDED_RATIO%' AND cfg.personId="
+                        + dataAccess.current_user_id);
 
             Iterator<SettingsH> it = q.iterate();
 
@@ -715,7 +486,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * try
      * {
      * sql =
-     * "SELECT st FROM ggc.core.db.hibernate.SettingsH as st WHERE st.key LIKE 'EXTENDED_RATIO%' AND st.person_id="
+     * "SELECT st FROM ggc.core.db.hibernate.settings.SettingsH as st WHERE st.key LIKE 'EXTENDED_RATIO%' AND st.person_id="
      * + dataAccess.current_user_id ;
      * sql += " ORDER BY st.key";
      * Query q = getSession().createQuery(sql);
@@ -740,8 +511,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         // delete current settings
 
-        String sql = "DELETE FROM ggc.core.db.hibernate.SettingsH as st WHERE st.key LIKE 'EXTENDED_RATIO%' AND st.person_id="
-                + m_da.current_user_id;
+        String sql = "DELETE FROM ggc.core.db.hibernate.SettingsH as st WHERE st.key LIKE 'EXTENDED_RATIO%' AND st.personId="
+                + dataAccess.current_user_id;
 
         Query q = getSession().createQuery(sql);
         q.executeUpdate();
@@ -753,7 +524,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         if (coll.size() == 0)
             return true;
 
-        ConfigurationManager cfg_mgr = this.m_da.getConfigurationManager();
+        ConfigurationManager cfg_mgr = dataAccessLocal.getConfigurationManager();
 
         cfg_mgr.addNewValue("EXTENDED_RATIO_COUNT", "" + coll.size(), 1, this, false);
 
@@ -773,7 +544,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     public void saveConfigData()
     {
         logInfo("saveConfigDataEntries()");
-        m_da.getConfigurationManager().saveConfig();
+        dataAccessLocal.getConfigurationManager().saveConfig();
     }
 
 
@@ -782,26 +553,18 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     {
         try
         {
-
             logInfo("loadColorSchemes()");
 
-            Hashtable<String, ColorSchemeH> table = new Hashtable<String, ColorSchemeH>();
+            Map<String, ColorSchemeH> outMap = new HashMap<String, ColorSchemeH>();
 
-            Query q = sess.createQuery("select pst from ggc.core.db.hibernate.ColorSchemeH as pst");
+            List<ColorSchemeH> colorSchemes = getHibernateData(ColorSchemeH.class, null);
 
-            Iterator it = q.iterate();
-
-            while (it.hasNext())
+            for (ColorSchemeH colorScheme : colorSchemes)
             {
-                ColorSchemeH eh = (ColorSchemeH) it.next();
-                table.put(eh.getName(), eh);
+                outMap.put(colorScheme.getName(), colorScheme);
             }
 
-            // System.out.println("dataAccess: " + dataAccess);
-            // System.out.println("dataAccess.getSettings(): " +
-            // dataAccess.getSettings());
-
-            m_da.getSettings().setColorSchemes(table, false);
+            dataAccessLocal.getSettings().setColorSchemes(outMap, false);
         }
         catch (Exception ex)
         {
@@ -812,13 +575,8 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
     }
 
-    /*
-     * private void saveColorSchemes(Session sess) {
-     * DataAccess.notImplemented("GGCDb::saveColorSchemes()"); }
-     */
-
     // *************************************************************
-    // **** NUTRITION DATA ****
+    /* **** NUTRITION DATA **** */
     // *************************************************************
 
     // *************************************************************
@@ -867,6 +625,27 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     }
 
 
+    private List<DayValueH> getDayValueData(GregorianCalendar from, GregorianCalendar till)
+    {
+        long sDay = ATechDate.getATDateTimeFromGC(from, ATechDateType.DateOnly) * 10000L;
+        long eDay = (ATechDate.getATDateTimeFromGC(till, ATechDateType.DateOnly) * 10000L) + 2359;
+
+        return getDayValueData(sDay, eDay);
+    }
+
+
+    private List<DayValueH> getDayValueData(long from, long till)
+    {
+        List<DayValueH> hibernateData = getHibernateData(DayValueH.class, //
+            Arrays.asList(Restrictions.ge("dtInfo", from), //
+                Restrictions.le("dtInfo", till), //
+                Restrictions.eq("personId", (int) dataAccessLocal.getCurrentUserId())), //
+            Arrays.asList(Order.asc("dtInfo")));
+
+        return hibernateData;
+    }
+
+
     /**
      * Load HbA1c
      * 
@@ -890,20 +669,19 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
             GregorianCalendar gc1 = (GregorianCalendar) day.clone();
             gc1.add(Calendar.MONTH, -3);
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-            String eDay = sdf.format(day.getTime()) + "2359";
-            String sDay = sdf.format(gc1.getTime()) + "0000";
+            long from = ATechDate.getATDateTimeFromGC(gc1, ATechDateType.DateOnly) * 10000L;
+            long till = (ATechDate.getATDateTimeFromGC(day, ATechDateType.DateOnly) * 10000L) + 2359;
 
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.bg > 0 AND dv.dt_info >=  "
-                        + sDay + " AND dv.dt_info <= " + eDay + " ORDER BY dv.dt_info");
+            List<DayValueH> dayValueList = getHibernateData(DayValueH.class, //
+                Arrays.asList(Restrictions.ge("dtInfo", from), //
+                    Restrictions.le("dtInfo", till), //
+                    Restrictions.gt("bg", 0), //
+                    Restrictions.eq("personId", (int) dataAccessLocal.getCurrentUserId())), //
+                Arrays.asList(Order.asc("dtInfo")));
 
-            Iterator it = q.list().iterator();
-
-            while (it.hasNext())
+            for (DayValueH dayValueH : dayValueList)
             {
-                DayValueH dv = (DayValueH) it.next();
-                hbVal.addDayValueRow(new DailyValuesRow(dv));
+                hbVal.addDayValueRow(new DailyValuesRow(dayValueH));
             }
 
             hbVal.processDayValues();
@@ -938,29 +716,17 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         logInfo("getDayStats()");
 
         DailyValues dV = new DailyValues();
-        // dV.setDate(dataAccess.getDateTimeFromDateObject(day.getTime()) /
-        // 10000);
-
-        dV.setDate(ATechDate.getATDateTimeFromGC(day, ATechDate.FORMAT_DATE_ONLY));
+        dV.setDate(ATechDate.getATDateTimeFromGC(day, ATechDateType.DateOnly));
 
         try
         {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-            String sDay = sdf.format(day.getTime());
+            List<DayValueH> dayValueList = getDayValueData(day, day);
 
-            Query q = getSession().createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv "
-                    + "WHERE dv.dt_info >=  " + sDay + "0000 AND dv.dt_info <= " + sDay + "2359 ORDER BY dv.dt_info");
-
-            Iterator it = q.list().iterator();
-
-            while (it.hasNext())
+            for (DayValueH dayValueH : dayValueList)
             {
-                DayValueH dv = (DayValueH) it.next();
-
-                DailyValuesRow dVR = new DailyValuesRow(dv);
+                DailyValuesRow dVR = new DailyValuesRow(dayValueH);
                 dV.addRow(dVR);
             }
-
         }
         catch (Exception ex)
         {
@@ -991,30 +757,17 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         try
         {
-            String sDay = "" + ATechDate.getATDateTimeFromGC(start, ATechDate.FORMAT_DATE_ONLY);
-            String eDay = "" + ATechDate.getATDateTimeFromGC(end, ATechDate.FORMAT_DATE_ONLY);
-            // String sDay =
-            // dataAccess.getDateTimeStringFromGregorianCalendar(start,
-            // 1);
-            // String eDay =
-            // dataAccess.getDateTimeStringFromGregorianCalendar(end,
-            // 1);
+            LOG.debug("getDayStatsRange(): {} - {}", //
+                ATechDate.getATDateTimeFromGC(start, ATechDateType.DateOnly), //
+                ATechDate.getATDateTimeFromGC(end, ATechDateType.DateOnly));
 
-            logDebug("getDayStatsRange()", sDay + " - " + eDay);
+            List<DayValueH> dayValueList = getDayValueData(start, end);
 
-            Query q = getSession().createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv "
-                    + "WHERE dv.dt_info >=  " + sDay + "0000 AND dv.dt_info <= " + eDay + "2359 ORDER BY dv.dt_info");
-
-            Iterator it = q.list().iterator();
-
-            while (it.hasNext())
+            for (DayValueH dayValueH : dayValueList)
             {
-                DayValueH dv = (DayValueH) it.next();
-
-                DailyValuesRow dVR = new DailyValuesRow(dv);
+                DailyValuesRow dVR = new DailyValuesRow(dayValueH);
                 wv.addDayValueRow(dVR);
             }
-
         }
         catch (Exception ex)
         {
@@ -1032,46 +785,25 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
      * @param end
      * @return
      */
-    @SuppressWarnings("unchecked")
-    public ArrayList<DailyValuesRow> getDayValuesRange(GregorianCalendar start, GregorianCalendar end)
+    public List<DailyValuesRow> getDayValuesRange(GregorianCalendar start, GregorianCalendar end)
     {
 
         logInfo("getDayValuesRange()");
 
-        ArrayList<DailyValuesRow> lst = new ArrayList<DailyValuesRow>();
-
-        // WeeklyValues wv = new WeeklyValues();
+        List<DailyValuesRow> outList = new ArrayList<DailyValuesRow>();
 
         try
         {
-            String sDay = "" + ATechDate.getATDateTimeFromGC(start, ATechDate.FORMAT_DATE_ONLY);
-            String eDay = "" + ATechDate.getATDateTimeFromGC(end, ATechDate.FORMAT_DATE_ONLY);
+            LOG.debug("getDayValuesRange(): {} - {}", //
+                ATechDate.getATDateTimeFromGC(start, ATechDateType.DateOnly), //
+                ATechDate.getATDateTimeFromGC(end, ATechDateType.DateOnly));
 
-            // String sDay =
-            // dataAccess.getDateTimeStringFromGregorianCalendar(start,
-            // 1);
-            // String eDay =
-            // dataAccess.getDateTimeStringFromGregorianCalendar(end,
-            // 1);
+            List<DayValueH> dayValueList = getDayValueData(start, end);
 
-            logDebug("getDayStatsRange()", sDay + " - " + eDay);
-
-            Query q = getSession().createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv "
-                    + "WHERE dv.dt_info >=  " + sDay + "0000 AND dv.dt_info <= " + eDay + "2359 ORDER BY dv.dt_info");
-
-            // System.out.println("SELECT dv from " +
-            // "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info <= "
-            // + sDay + "0000 AND dv.dt_info <= " + eDay + "2359 ORDER BY
-            // dv.dt_info");
-
-            Iterator it = q.list().iterator();
-
-            while (it.hasNext())
+            for (DayValueH dayValueH : dayValueList)
             {
-                DayValueH dv = (DayValueH) it.next();
-
-                DailyValuesRow dVR = new DailyValuesRow(dv);
-                lst.add(dVR);
+                DailyValuesRow dVR = new DailyValuesRow(dayValueH);
+                outList.add(dVR);
             }
 
         }
@@ -1080,7 +812,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
             logException("getDayStatsRange()", ex);
         }
 
-        return lst;
+        return outList;
     }
 
 
@@ -1094,7 +826,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     @SuppressWarnings("unchecked")
     public MonthlyValues getMonthlyValues(int year, int month)
     {
-
         if (m_loadStatus == DB_CONFIG_LOADED)
             return null;
 
@@ -1104,22 +835,15 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         try
         {
-            String days = year + "" + ATDataAccessAbstract.getLeadingZero(month, 2);
+            long dayLong = ATechDate.getATDateTimeFromDateParts(01, month, year) * 10000;
 
-            Query q = getSession()
-                    .createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info >=  "
-                            + days + "010000 AND dv.dt_info <= " + days + "312359 ORDER BY dv.dt_info");
+            List<DayValueH> dayValueList = getDayValueData(dayLong, dayLong + 302359);
 
-            Iterator it = q.list().iterator();
-
-            while (it.hasNext())
+            for (DayValueH dayValueH : dayValueList)
             {
-                DayValueH dv = (DayValueH) it.next();
-
-                DailyValuesRow dVR = new DailyValuesRow(dv);
+                DailyValuesRow dVR = new DailyValuesRow(dayValueH);
                 mv.addDayValueRow(dVR);
             }
-
         }
         catch (Exception ex)
         {
@@ -1127,7 +851,6 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         }
 
         return mv;
-
     }
 
 
@@ -1151,19 +874,13 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         try
         {
-            Query q = getSession().createQuery("SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv "
-                    + "WHERE dv.dt_info >=  " + from + "0000 AND dv.dt_info <= " + till + "2359 ORDER BY dv.dt_info");
+            List<DayValueH> dayValueList = getDayValueData(from * 10000, (till * 10000) + 2359);
 
-            Iterator it = q.list().iterator();
-
-            while (it.hasNext())
+            for (DayValueH dayValueH : dayValueList)
             {
-                DayValueH dv = (DayValueH) it.next();
-
-                DailyValuesRow dVR = new DailyValuesRow(dv);
+                DailyValuesRow dVR = new DailyValuesRow(dayValueH);
                 dvd.addDayValueRow(dVR);
             }
-
         }
         catch (Exception ex)
         {
@@ -1258,41 +975,58 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
     }
 
-
-    /**
-     * DateTime Exists
-     * 
-     * @param datetime
-     * @return
-     */
-    public boolean dateTimeExists(long datetime)
-    {
-        if (m_loadStatus == DB_CONFIG_LOADED)
-            return false;
-
-        // if (db_debug)
-        // System.out.println("Hibernate: dateTimeExists()");
-
-        try
-        {
-            Query q = getSession().createQuery(
-                "SELECT dv from " + "ggc.core.db.hibernate.DayValueH as dv " + "WHERE dv.dt_info = " + datetime);
-
-            return q.list().size() == 1;
-        }
-        catch (Exception ex)
-        {
-            logException("dateTimeExists()", ex);
-            return false;
-        }
-
-    }
+    // /**
+    // * DateTime Exists
+    // *
+    // * @param datetime
+    // * @return
+    // */
+    // public boolean dateTimeExists(long datetime)
+    // {
+    // if (m_loadStatus == DB_CONFIG_LOADED)
+    // return false;
+    //
+    // // if (db_debug)
+    // // System.out.println("Hibernate: dateTimeExists()");
+    //
+    // try
+    // {
+    // Query q = getSession().createQuery(
+    // "SELECT dv from " + "ggc.core.db.hibernate.pen.DayValueH as dv " + "WHERE
+    // dv.dt_info = " + datetime);
+    //
+    // return q.list().size() == 1;
+    // }
+    // catch (Exception ex)
+    // {
+    // logException("dateTimeExists()", ex);
+    // return false;
+    // }
+    //
+    // }
 
 
     // *************************************************************
     // **** S t o c k s ****
     // *************************************************************
 
+    @Deprecated
+    public List<StockSubTypeDto> getStockTypesForSelector()
+    {
+        List<StockSubTypeH> types = getStockTypes();
+
+        List<StockSubTypeDto> list = new ArrayList<StockSubTypeDto>();
+
+        for (StockSubTypeH type : types)
+        {
+            list.add(new StockSubTypeDto(type));
+        }
+
+        return list;
+    }
+
+
+    @Deprecated
     public List<StockSubTypeH> getStockTypes()
     {
         List<StockSubTypeH> list = new ArrayList<StockSubTypeH>();
@@ -1321,6 +1055,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     }
 
 
+    @Deprecated
     public StocktakingDTO getLatestStocktakingDTO()
     {
         StocktakingDTO dto = new StocktakingDTO();
@@ -1343,6 +1078,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     }
 
 
+    @Deprecated
     private StocktakingH getLastStocktaking()
     {
         try
@@ -1365,7 +1101,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
                 try
                 {
                     Query q = getSession().createQuery("SELECT dv from ggc.core.db.hibernate.StocktakingH as dv "
-                            + "where datetime=" + m_da.getLongValue(o));
+                            + "where datetime=" + dataAccess.getLongValue(o));
 
                     Iterator it = q.list().iterator();
 
@@ -1452,6 +1188,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     }
 
 
+    @Deprecated
     public boolean isStockSubTypeUsed(StockSubTypeH stockType)
     {
         Criteria criteria = this.getSession().createCriteria(StockH.class);
@@ -1466,7 +1203,7 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
 
         if (o != null)
         {
-            long count = m_da.getLongValue(o);
+            long count = dataAccess.getLongValue(o);
 
             System.out.println("Count: " + count);
 
@@ -1565,84 +1302,74 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     // }
 
     // *************************************************************
-    // **** D O C T O R S ****
+    // **** DOCTORS and APPOINTMENTS ****
     // *************************************************************
 
-    Map<Long, DoctorTypeH> doctorTypeMap;
 
+    // public DoctorTypeH getDoctorType(long doctorTypeId)
+    // {
+    // if (!mapOfCachedObjects.containsKey(DoctorTypeH.class))
+    // getAllTypedHibernateData(DoctorTypeH.class);
+    //
+    // return (DoctorTypeH)
+    // mapOfCachedObjects.get(DoctorTypeH.class).get(doctorTypeId);
+    // }
 
-    public List<DoctorTypeH> getDoctorTypes()
-    {
-        if (doctorTypeMap != null)
-        {
-            return (List<DoctorTypeH>) doctorTypeMap.values();
-        }
-        else
-        {
-            doctorTypeMap = new HashMap<Long, DoctorTypeH>();
-        }
-
-        Criteria criteria = this.getSession().createCriteria(DoctorTypeH.class);
-
-        List results = criteria.list();
-
-        List<DoctorTypeH> doctorTypeList = new ArrayList<DoctorTypeH>();
-
-        for (Object o : results)
-        {
-            DoctorTypeH doctorTypeH = (DoctorTypeH) o;
-            doctorTypeList.add(doctorTypeH);
-            doctorTypeMap.put(doctorTypeH.getId(), doctorTypeH);
-        }
-
-        return doctorTypeList;
-    }
-
-
-    public DoctorTypeH getDoctorType(long doctorTypeId)
-    {
-        if (doctorTypeMap == null)
-            getDoctorTypes();
-
-        return doctorTypeMap.get(doctorTypeId);
-    }
-
-
-    public List<DoctorH> getDoctors()
-    {
-        Criteria criteria = this.getSession().createCriteria(DoctorH.class);
-        setPersonId(criteria);
-
-        List results = criteria.list();
-
-        List<DoctorH> doctorsList = new ArrayList<DoctorH>();
-
-        for (Object o : results)
-        {
-            doctorsList.add((DoctorH) o);
-        }
-
-        return doctorsList;
-    }
-
-
-    public List<DoctorAppointmentH> getDoctorAppointments()
+    public List<DoctorAppointmentH> getActiveAppointments()
     {
         Criteria criteria = this.getSession().createCriteria(DoctorAppointmentH.class);
-        setPersonId(criteria);
+        specialFilteringOfCriteria(DoctorAppointmentH.class, criteria);
 
-        List results = criteria.list();
+        List<DoctorAppointmentH> appointmentsList = new ArrayList<DoctorAppointmentH>();
 
-        List<DoctorAppointmentH> doctorAppointmentList = new ArrayList<DoctorAppointmentH>();
+        criteria.add(Restrictions.ge("appointmentDateTime",
+            ATechDate.getATDateTimeFromGC(new GregorianCalendar(), ATechDateType.DateAndTimeMin)));
 
-        for (Object o : results)
+        List fullList = criteria.list();
+
+        for (Object element : fullList)
         {
-            doctorAppointmentList.add((DoctorAppointmentH) o);
+            appointmentsList.add((DoctorAppointmentH) element);
         }
 
-        return doctorAppointmentList;
+        return appointmentsList;
     }
 
+
+    // *************************************************************
+    // **** CACHED DATA and ALL DATA RETRIEVAL ****
+    // *************************************************************
+
+    @Override
+    protected void initDataTransformer()
+    {
+        this.dataTransformer = new GGCDataTransformer();
+    }
+
+
+    protected <E extends HibernateObject> boolean isTypeCached(Class<E> clazz)
+    {
+        return ((clazz == DoctorH.class) || //
+                (clazz == DoctorTypeH.class) || //
+                (clazz == InventoryItemTypeH.class) //
+        );
+    }
+
+
+    protected <E extends HibernateObject> void specialFilteringOfCriteria(Class<E> clazz, Criteria criteria)
+    {
+        if ((clazz == DoctorH.class) || //
+                (clazz == InventoryItemTypeH.class) //
+        )
+        {
+            setPersonId(criteria);
+        }
+    }
+
+
+    // *************************************************************
+    // **** U T I L S ****
+    // *************************************************************
 
     private boolean isDbRunning()
     {
@@ -1657,43 +1384,9 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
     }
 
 
-    // *************************************************************
-    // **** U T I L S ****
-    // *************************************************************
-    /*
-     * public String changeCase(String in)
-     * {
-     * StringTokenizer stok = new StringTokenizer(in, " ");
-     * boolean first = true;
-     * String out = "";
-     * while (stok.hasMoreTokens())
-     * {
-     * if (!first)
-     * out += " ";
-     * out += changeCaseWord(stok.nextToken());
-     * first = false;
-     * }
-     * return out;
-     * }
-     * public String changeCaseWord(String in)
-     * {
-     * String t = "";
-     * t = in.substring(0, 1).toUpperCase();
-     * t += in.substring(1).toLowerCase();
-     * return t;
-     * }
-     * public void showByte(byte[] in)
-     * {
-     * for (int i = 0; i < in.length; i++)
-     * {
-     * System.out.println((char) in[i] + " " + in[i]);
-     * }
-     * }
-     */
-
     public void setPersonId(Criteria criteria)
     {
-        criteria.add(Restrictions.eq("personId", (int) m_da.getCurrentUserId()));
+        criteria.add(Restrictions.eq("personId", (int) dataAccess.getCurrentUserId()));
     }
 
 
@@ -1729,4 +1422,21 @@ public class GGCDb extends HibernateDb // implements DbCheckInterface
         return "ggc";
     }
 
+
+    public InventoryH getInventory(long inventoryId)
+    {
+        InventoryH inventory = (InventoryH) this.getSession().get(InventoryH.class, inventoryId);
+
+        Criteria criteria = this.getSession().createCriteria(InventoryItemH.class);
+        criteria.add(Restrictions.eq("inventoryId", inventory.getId()));
+
+        List list = criteria.list();
+
+        for (Object item : list)
+        {
+            inventory.addItem((InventoryItemH) item);
+        }
+
+        return inventory;
+    }
 }

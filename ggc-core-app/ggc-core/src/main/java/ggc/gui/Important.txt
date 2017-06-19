@@ -1,0 +1,5 @@
+This package is intended for GUI items which will be shared
+by core functionality and plugin(s). It should contains items
+that will be shared by core and plugin (if it's just shared
+between 2 different plugins it should go into
+ggc-plugins-base).

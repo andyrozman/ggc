@@ -15,7 +15,7 @@ import com.atech.utils.ATDataAccessAbstract;
 
 import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.data.defs.GlucoseUnitType;
-import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
 

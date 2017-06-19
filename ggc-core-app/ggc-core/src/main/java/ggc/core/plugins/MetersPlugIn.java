@@ -1,13 +1,14 @@
 package ggc.core.plugins;
 
-import ggc.core.util.RefreshInfo;
+import java.awt.*;
 
-import java.awt.Component;
-
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import com.atech.graphics.components.StatusReporterInterface;
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.core.data.defs.RefreshInfoType;
+import ggc.core.data.defs.ReturnActionType;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -38,22 +39,6 @@ public class MetersPlugIn extends GGCPluginClient
 {
 
     /**
-     * This is action that needs to be done, after read data.
-     */
-    public static final int RETURN_ACTION_READ_DATA = 1;
-
-    /**
-     * This is action that needs to be done, after config
-     */
-    public static final int RETURN_ACTION_CONFIG = 2;
-
-
-    private static final String PLUGIN_SERVER_CLASS_NAME = "ggc.meter.plugin.MeterPlugInServer";
-
-    private static final String PLUGIN_SERVER_SHORT_NAME = "MetersPlugIn";
-
-
-    /**
      * Constructor
      * 
      * @param parent
@@ -61,28 +46,10 @@ public class MetersPlugIn extends GGCPluginClient
      */
     public MetersPlugIn(Component parent, I18nControlAbstract ic)
     {
-        super((JFrame) parent, ic);
-    }
-
-
-    /**
-     * Constructor
-     */
-    public MetersPlugIn()
-    {
-        super();
-    }
-
-
-    /**
-     * Get Name Base (untranslated)
-     * 
-     * @return name of plugin
-     */
-    @Override
-    public String getNameBase()
-    {
-        return "METERS_PLUGIN";
+        super((JFrame) parent, ic, //
+                "METERS_PLUGIN", //
+                "ggc.meter.plugin.MeterPlugInServer", //
+                "MetersPlugIn");
     }
 
 
@@ -100,36 +67,16 @@ public class MetersPlugIn extends GGCPluginClient
     }
 
 
-    /**
-     * This is method which can be used by server side to do certain action. Mainly this will be used
-     * to run refreshes and such actions. This needs to be implemented by Client side, if you wish to use
-     * it.
-     * 
-     * @param action_type
-     */
-    @Override
-    public void executeReturnAction(int action_type)
+    public void executeReturnAction(ReturnActionType actionType)
     {
-        if (action_type == MetersPlugIn.RETURN_ACTION_READ_DATA)
+        if (actionType == ReturnActionType.ReadData)
         {
-            refreshPanels(RefreshInfo.PANEL_GROUP_ALL_DATA);
+            refreshPanels(RefreshInfoType.DeviceDataMeter);
         }
-        else if (action_type == MetersPlugIn.RETURN_ACTION_CONFIG)
+        else if (actionType == ReturnActionType.ChangeConfig)
         {
-            refreshPanels(RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES);
+            refreshPanels(RefreshInfoType.DevicesConfiguration);
         }
-    }
-
-
-    public String getServerClassName()
-    {
-        return PLUGIN_SERVER_CLASS_NAME;
-    }
-
-
-    public String getServerShortName()
-    {
-        return PLUGIN_SERVER_SHORT_NAME;
     }
 
 }

@@ -10,7 +10,7 @@
 
 
     <!-- ****************************************** -->
-    <!-- ***               Stocks              **** -->
+    <!-- ***              Inventory            **** -->
     <!-- ****************************************** -->
 
     <!--  Stock types -->
@@ -20,16 +20,30 @@
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
         <property name="name"  type="string" length="1000" />
-        <property name="name_i18n"  type="string" length="1000" />
+        <property name="nameI18n"  type="string" length="1000" />
     </class>
     -->
 
 
-    <class name="ggc.core.db.hibernate.StockSubTypeH" table="stock_subtypes">
+    <class name="ggc.core.db.hibernate.inventory.InventoryH" table="inv_inventory">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
-        <property name="stockTypeId" column="stock_type_id" type="java.lang.Long"/>
+        <property name="datetime" column="dt_stocktaking" type="java.lang.Long"/>
+        <property name="description" type="java.lang.String" length="2000"/>
+
+        <property name="personId" column="person_id" type="java.lang.Integer" not-null="true"/>
+        <property name="extended" type="text"/>
+        <property name="comment" type="java.lang.String" length="2000"/>
+        <!-- <property name="changed" type="java.lang.Long"/> -->
+    </class>
+
+
+    <class name="ggc.core.db.hibernate.inventory.InventoryItemTypeH" table="inv_inventory_item_type">
+        <id name="id" type="long" unsaved-value="0">
+            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
+        </id>
+        <property name="inventoryGroupId" column="inventory_group_id" type="java.lang.Integer"/>
         <property name="name" type="java.lang.String" length="512"/>
         <property name="description" type="java.lang.String" length="2000"/>
         <property name="packageContent" column="package_content" type="java.lang.Long"/>
@@ -43,22 +57,21 @@
         <property name="comment" type="java.lang.String" length="2000"/>
     </class>
 
-    <class name="ggc.core.db.hibernate.StockH" table="stock_stocks">
+    <class name="ggc.core.db.hibernate.inventory.InventoryItemH" table="inv_inventory_item">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
 
-        <!--        <property name="stockSubtypeId" column="stock_subtype_id"  type="java.lang.Long"  /> -->
-
-        <many-to-one name="stockSubtype" class="ggc.core.db.hibernate.StockSubTypeH" fetch="select">
-            <column name="stock_subtype_id" not-null="true"/>
+        <many-to-one name="inventoryItemType" class="ggc.core.db.hibernate.inventory.InventoryItemTypeH" fetch="select">
+            <column name="inventory_type_id" not-null="true"/>
         </many-to-one>
 
-        <property name="stocktakingId" column="stocktaking_id" type="java.lang.Long"/>
+        <property name="inventoryId" column="inventory_id" type="java.lang.Long"/>
         <property name="amount" type="java.lang.Long"/>
         <property name="location" type="java.lang.String" length="1000"/>
-        <property name="validFrom" column="valid_from" type="java.lang.Long"/>
-        <property name="validTill" column="valid_till" type="java.lang.Long"/>
+        <property name="itemChanged" column="item_changed" type="java.lang.Long"/>
+        <property name="itemUsedTillMin" column="item_used_till_min" type="java.lang.Long"/>
+        <property name="itemUsedTillMax" column="item_used_till_max" type="java.lang.Long"/>
 
         <property name="personId" column="person_id" type="java.lang.Integer" not-null="true"/>
         <property name="extended" type="text"/>
@@ -66,26 +79,12 @@
     </class>
 
 
-    <class name="ggc.core.db.hibernate.StocktakingH" table="stock_stocktaking">
-        <id name="id" type="long" unsaved-value="0">
-            <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
-        </id>
-        <property name="datetime" column="dt_stocktaking" type="java.lang.Long"/>
-        <property name="description" type="java.lang.String" length="2000"/>
-
-        <property name="personId" column="person_id" type="java.lang.Integer" not-null="true"/>
-        <property name="extended" type="text"/>
-        <property name="comment" type="java.lang.String" length="2000"/>
-        <property name="changed" type="java.lang.Long"/>
-    </class>
-
-
     <!-- ****************************************** -->
-    <!-- ***                  Doctors              **** -->
+    <!-- ***                Doctor / Appointments            **** -->
     <!-- ****************************************** -->
 
 
-    <!--  Doctor types -->
+    <!--  Doctor types: last_change=[db=8] -->
     <class name="ggc.core.db.hibernate.doc.DoctorTypeH" table="doc_types">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
@@ -94,7 +93,8 @@
         <property name="predefined" type="int"/>
     </class>
 
-    <!--  Doctor -->
+
+    <!--  Doctor: last_change=[db=8] -->
     <class name="ggc.core.db.hibernate.doc.DoctorH" table="doc_doctors">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
@@ -114,14 +114,14 @@
         <property name="comment" type="string" length="4000"/>
     </class>
 
-    <!--  Appointment -->
+    <!--  Appointment: last_change=[db=8] -->
     <class name="ggc.core.db.hibernate.doc.DoctorAppointmentH" table="doc_appointment">
         <id name="id" type="long" unsaved-value="0">
             <generator class="org.hibernate.id.AssignedIncrementGenerator"/>
         </id>
         <many-to-one name="doctor" class="ggc.core.db.hibernate.doc.DoctorH" lazy="false"/>
-        <property name="dt_apoint" type="long" not-null="true"/>
-        <property name="apoint_text" type="string" length="1000"/>
+        <property name="appointmentDateTime" column="dt_apoint" type="long" not-null="true"/>
+        <property name="appointmentText" column="apoint_text" type="string" length="1000"/>
         <property name="extended" type="text"/>
         <property name="personId" column="person_id" type="int" not-null="true"/>
         <property name="comment" type="string" length="4000"/>

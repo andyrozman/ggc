@@ -30,10 +30,11 @@
 package ggc.core.util;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.db.GGCDb;
-import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 import ggc.core.db.tool.DbToolApplicationGGC;
 
 /**
@@ -73,7 +74,7 @@ public class GGCProperties // implements GraphConfigProperties // extends
     private boolean changed_config = false;
     // private boolean changed_scheme = false;
     // private ConfigurationManager m_cfg_mgr = null;
-    private Hashtable<String, ColorSchemeH> m_color_schemes = null;
+    private Map<String, ColorSchemeH> m_color_schemes = null;
 
     private ColorSchemeH m_colors = null;
     DbToolApplicationGGC m_config = null;
@@ -251,7 +252,7 @@ public class GGCProperties // implements GraphConfigProperties // extends
      * @param table
      * @param isnew
      */
-    public void setColorSchemes(Hashtable<String, ColorSchemeH> table, boolean isnew)
+    public void setColorSchemes(Map<String, ColorSchemeH> table, boolean isnew)
     {
         this.m_color_schemes = table;
         // this.changed_scheme = isnew;
@@ -262,7 +263,7 @@ public class GGCProperties // implements GraphConfigProperties // extends
      * Get Color Schemes
      * @return
      */
-    public Hashtable<String, ColorSchemeH> getColorSchemes()
+    public Map<String, ColorSchemeH> getColorSchemes()
     {
         return this.m_color_schemes;
     }

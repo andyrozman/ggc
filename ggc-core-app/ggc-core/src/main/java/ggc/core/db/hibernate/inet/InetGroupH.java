@@ -1,50 +1,35 @@
 package ggc.core.db.hibernate.inet;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-/** @author Hibernate CodeGenerator */
-public class InetGroupH implements Serializable
+import com.atech.db.hibernate.HibernateObject;
+
+public class InetGroupH extends HibernateObject
 {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 2162686900534669008L;
 
-    /** identifier field */
     private long id;
-
-    /** nullable persistent field */
     private String parent;
-
-    /** nullable persistent field */
     private String name;
-
-    /** nullable persistent field */
-    private String name_i18n;
-
-    /** nullable persistent field */
+    private String nameI18n;
     private String description;
-
-    /** nullable persistent field */
     private String comment;
 
 
     /** full constructor 
      * @param parent 
      * @param name 
-     * @param name_i18n 
+     * @param nameI18n
      * @param description 
      * @param comment */
-    public InetGroupH(String parent, String name, String name_i18n, String description, String comment)
+    public InetGroupH(String parent, String name, String nameI18n, String description, String comment)
     {
         this.parent = parent;
         this.name = name;
-        this.name_i18n = name_i18n;
+        this.nameI18n = nameI18n;
         this.description = description;
         this.comment = comment;
     }
@@ -127,20 +112,20 @@ public class InetGroupH implements Serializable
      * 
      * @return name
      */
-    public String getName_i18n()
+    public String getNameI18n()
     {
-        return this.name_i18n;
+        return this.nameI18n;
     }
 
 
     /**
      * Set Name (I18n)
      * 
-     * @param name_i18n as string
+     * @param nameI18n as string
      */
-    public void setName_i18n(String name_i18n)
+    public void setNameI18n(String nameI18n)
     {
-        this.name_i18n = name_i18n;
+        this.nameI18n = nameI18n;
     }
 
 

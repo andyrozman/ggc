@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import ggc.core.util.DataAccess;
-import ggc.shared.ratio.RatioEntry;
+import ggc.gui.dialogs.ratio.RatioEntry;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,10 +36,12 @@ public class ExtendedRatioCollection extends ArrayList<RatioEntry>
 
     DataAccess m_da = DataAccess.getInstance();
 
+
     public ExtendedRatioCollection()
     {
         super();
     }
+
 
     public void load()
     {
@@ -75,6 +77,7 @@ public class ExtendedRatioCollection extends ArrayList<RatioEntry>
         }
     }
 
+
     public RatioEntry getRatioEntryByTime(String time)
     {
         long t = Long.parseLong(time.replace(":", ""));
@@ -87,6 +90,7 @@ public class ExtendedRatioCollection extends ArrayList<RatioEntry>
 
         return null;
     }
+
 
     public boolean save()
     {
