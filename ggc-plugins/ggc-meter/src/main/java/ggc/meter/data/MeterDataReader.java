@@ -1,6 +1,6 @@
 package ggc.meter.data;
 
-import java.util.Hashtable;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +67,7 @@ public class MeterDataReader extends OldDataReaderAbstract
     public void getMaxEntries()
     {
         db = m_da.getDb();
-        this.all_entries = db.getAllElementsCount();
+        this.allEntries = db.getAllElementsCount();
     }
 
 
@@ -75,7 +75,7 @@ public class MeterDataReader extends OldDataReaderAbstract
      * Read Old entries
      */
     @Override
-    public Hashtable<String, DeviceValuesEntryInterface> readOldEntries()
+    public Map<String, DeviceValuesEntryInterface> readOldEntries()
     {
         return db.getMeterValues(this);
         // TODO Auto-generated method stub
@@ -100,19 +100,19 @@ public class MeterDataReader extends OldDataReaderAbstract
     {
         if (current_entry == -1)
         {
-            this.m_drr.setOldDataReadingProgress(0);
+            this.deviceReaderRunner.setOldDataReadingProgress(0);
             LOG.debug("Old Data reading progress [" + m_da.getApplicationName() + "]: 0% not started");
         }
         else if (current_entry == 0)
         {
-            this.m_drr.setOldDataReadingProgress(40);
+            this.deviceReaderRunner.setOldDataReadingProgress(40);
             LOG.debug("Old Data reading progress [" + m_da.getApplicationName() + "]: 40% read from database");
             LOG.debug("Old Data reading progress [" + m_da.getApplicationName()
                     + "]: Started to sort through data (progress will not be displayed)");
         }
         else if (current_entry == -2)
         {
-            this.m_drr.setOldDataReadingProgress(100);
+            this.deviceReaderRunner.setOldDataReadingProgress(100);
         }
         else
         {
@@ -123,7 +123,7 @@ public class MeterDataReader extends OldDataReaderAbstract
 
             // LOG.debug("Old Data reading progress [" +
             // dataAccess.getApplicationName() + "]: " + proc_total_i + " %" );
-            this.m_drr.setOldDataReadingProgress(proc_total_i);
+            this.deviceReaderRunner.setOldDataReadingProgress(proc_total_i);
 
             /*
              * try

@@ -2,9 +2,8 @@ package ggc.meter.data.db;
 
 import java.util.*;
 
-import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,7 @@ import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.graphs.v2.data.GraphDefinitionDto;
 import com.atech.graphics.graphs.v2.data.GraphTimeDataCollection;
 
-import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pen.DayValueH;
 import ggc.core.db.hibernate.pump.PumpDataExtendedH;
 import ggc.meter.data.MeterDataReader;
 import ggc.meter.data.MeterValuesEntry;
@@ -42,8 +41,8 @@ import ggc.plugin.db.PluginDb;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:     GGCMeterDb
+ *  Description:  Database handler for Meter Plugin
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -62,9 +61,7 @@ public class GGCMeterDb extends PluginDb
      */
     public GGCMeterDb(HibernateDb db)
     {
-        super(db);
-
-        // getAllElementsCount();
+        super(db, DataAccessMeter.getInstance());
     }
 
 
@@ -75,31 +72,15 @@ public class GGCMeterDb extends PluginDb
      */
     public int getAllElementsCount()
     {
-        try
-        {
-            Integer in = null;
-            int sum_all = 0;
 
-            Criteria criteria = this.getSession().createCriteria(DayValueH.class);
-            criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
-            criteria.add(Restrictions.or(
-                Restrictions.or(Restrictions.gt("bg", 0), Restrictions.like("extended", "%URINE%")),
-                Restrictions.gt("ch", 0.0f)));
-            criteria.add(Restrictions.like("extended", "%" + m_da.getSourceDevice() + "%"));
-            criteria.setProjection(Projections.rowCount());
-            in = (Integer) criteria.list().get(0);
-            sum_all = in.intValue();
+        int sumAll = getAllElementsCount(DayValueH.class, //
+            Arrays.asList(
+                Restrictions.or(Restrictions.or(Restrictions.gt("bg", 0), Restrictions.like("extended", "%URINE%")),
+                    Restrictions.gt("ch", 0.0f))));
 
-            LOG.debug("Old Meter Data in Db: " + in.intValue());
+        LOG.debug("Old Meter Data in Db: " + sumAll);
 
-            return sum_all;
-        }
-        catch (Exception ex)
-        {
-            LOG.error("getAllElementsCount: " + ex, ex);
-            ex.printStackTrace();
-            return 0;
-        }
+        return sumAll;
     }
 
 
@@ -110,9 +91,9 @@ public class GGCMeterDb extends PluginDb
      * 
      * @return
      */
-    public Hashtable<String, DeviceValuesEntryInterface> getMeterValues(MeterDataReader mdr)
+    public Map<String, DeviceValuesEntryInterface> getMeterValues(MeterDataReader mdr)
     {
-        Hashtable<String, DeviceValuesEntryInterface> ht = new Hashtable<String, DeviceValuesEntryInterface>();
+        Map<String, DeviceValuesEntryInterface> ht = new HashMap<String, DeviceValuesEntryInterface>();
 
         LOG.info("getMeterValues()");
 
@@ -120,30 +101,28 @@ public class GGCMeterDb extends PluginDb
 
         try
         {
-
             LOG.debug("getMeterValues() - Process");
 
-            Query q = this.getSession().createQuery(" SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + //
-                    " WHERE ((dv.bg>0) OR (dv.extended LIKE '%URINE%') OR (dv.ch>0)) " + //
-                    " AND person_id=" + m_da.getCurrentUserId() + //
-                    " AND dv.extended like '%" + m_da.getSourceDevice() + "%' " + //
-                    " ORDER BY dv.dt_info ASC");
-
-            // System.out.println("Found elements: " + q.list().size());
-
-            Iterator<?> it = q.list().iterator();
+            List<DayValueH> hibernateData = getHibernateData(DayValueH.class, //
+                Arrays.asList(Restrictions.eq("personId", (int) m_da.getCurrentUserId()), //
+                    Restrictions.or(
+                        Restrictions.or(Restrictions.gt("bg", 0), //
+                            Restrictions.like("extended", "%URINE%")), //
+                        Restrictions.gt("ch", 0.0f)), //
+                    Restrictions.like("extended", "%" + m_da.getSourceDevice() + "%")), //
+                Arrays.asList(Order.asc("dtInfo")));
 
             int counter = 0;
 
             mdr.writeStatus(counter);
 
-            while (it.hasNext())
+            for (DayValueH dayValueH : hibernateData)
             {
                 counter++;
 
-                MeterValuesEntry mves = new MeterValuesEntry((DayValueH) it.next());
+                MeterValuesEntry mves = new MeterValuesEntry(dayValueH);
 
-                ht.put("" + mves.getSpecialId(), mves);
+                ht.put(mves.getSpecialId(), mves);
 
                 mdr.writeStatus(counter);
             }
@@ -168,8 +147,7 @@ public class GGCMeterDb extends PluginDb
      * @param timeMarks
      * @return
      */
-    public Hashtable<String, PumpDataExtendedH> getPumpData(
-            HashMap<Long, HashMap<MeterValuesEntryDataType, Object>> timeMarks)
+    public Map<String, PumpDataExtendedH> getPumpData(Map<Long, HashMap<MeterValuesEntryDataType, Object>> timeMarks)
     {
         Hashtable<String, PumpDataExtendedH> pumpData = new Hashtable<String, PumpDataExtendedH>();
 
@@ -180,6 +158,7 @@ public class GGCMeterDb extends PluginDb
         {
             LOG.debug("getPumpData() - Process");
 
+            // FIXME
             Query q = this.getSession().createQuery(
                 " SELECT dv FROM ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + " WHERE dv.person_id="
                         + m_da.getCurrentUserId() + " AND dv.dt_info IN " + getDataListForSQL(timeMarks)
@@ -192,8 +171,8 @@ public class GGCMeterDb extends PluginDb
             {
                 PumpDataExtendedH pde = (PumpDataExtendedH) it.next();
 
-                int time = (int) (pde.getDt_info() / 100); // same time as in
-                                                           // DailyValueH
+                int time = (int) (pde.getDtInfo() / 100); // same time as in
+                                                          // DailyValueH
                 pumpData.put(time + "_" + pde.getType(), pde);
             }
 
@@ -214,10 +193,10 @@ public class GGCMeterDb extends PluginDb
      * @return
      * @deprecated 
      */
-    public Hashtable<Long, MeterValuesEntry> getMeterData(Hashtable<Long, String> timeMarks)
+    public Map<Long, MeterValuesEntry> getMeterData(Hashtable<Long, String> timeMarks)
     {
 
-        Hashtable<Long, MeterValuesEntry> meter_data = new Hashtable<Long, MeterValuesEntry>();
+        Map<Long, MeterValuesEntry> meter_data = new HashMap<Long, MeterValuesEntry>();
 
         if (timeMarks.size() == 0)
             return meter_data;
@@ -227,7 +206,7 @@ public class GGCMeterDb extends PluginDb
             LOG.debug("getMeterData() - Process");
 
             Query q = this.getSession().createQuery( //
-                " SELECT dv from ggc.core.db.hibernate.DayValueH as dv " + //
+                " SELECT dv from ggc.core.db.hibernate.pen.DayValueH as dv " + //
                         " WHERE person_id=" + m_da.getCurrentUserId() + //
                         " AND dv.dt_info IN " + getDataListForSQL(timeMarks) + //
                         " ORDER BY dv.dt_info ASC");
@@ -251,21 +230,20 @@ public class GGCMeterDb extends PluginDb
     }
 
 
-    private String getDataListForSQL(Hashtable<?, ?> ht)
-    {
-        StringBuffer sb = new StringBuffer();
-        sb.append(" (");
+    // private String getDataListForSQL(Map<?, ?> ht)
+    // {
+    // StringBuffer sb = new StringBuffer();
+    // sb.append(" (");
+    //
+    // for (Enumeration<?> en = ht.keys(); en.hasMoreElements();)
+    // {
+    // sb.append(en.nextElement() + ", ");
+    // }
+    //
+    // return sb.substring(0, sb.length() - 2) + ")";
+    // }
 
-        for (Enumeration<?> en = ht.keys(); en.hasMoreElements();)
-        {
-            sb.append(en.nextElement() + ", ");
-        }
-
-        return sb.substring(0, sb.length() - 2) + ")";
-    }
-
-
-    private String getDataListForSQL(HashMap<?, ?> ht)
+    private String getDataListForSQL(Map<?, ?> ht)
     {
         StringBuffer sb = new StringBuffer();
         sb.append(" (");

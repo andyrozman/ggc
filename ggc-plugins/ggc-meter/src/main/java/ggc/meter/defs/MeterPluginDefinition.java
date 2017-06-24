@@ -3,6 +3,9 @@ package ggc.meter.defs;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.atech.app.data.about.CreditsEntry;
 import com.atech.app.data.about.CreditsGroup;
 import com.atech.app.data.about.FeaturesEntry;
@@ -10,10 +13,8 @@ import com.atech.app.data.about.LibraryInfoEntry;
 import com.atech.i18n.mgr.LanguageManager;
 
 import ggc.core.plugins.GGCPluginType;
-import ggc.meter.device.ascensia.AscensiaUsbMeterHandler;
 import ggc.meter.util.GGCMeterICRunner;
 import ggc.plugin.defs.DevicePluginDefinitionAbstract;
-import ggc.plugin.device.mgr.DeviceHandlerManager;
 import ggc.plugin.graph.PluginGraphDefinition;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.report.PluginReportDefinition;
@@ -24,13 +25,20 @@ import ggc.plugin.report.PluginReportDefinition;
 public class MeterPluginDefinition extends DevicePluginDefinitionAbstract
 {
 
-    String PLUGIN_VERSION = "2.4.1";
-    String PLUGIN_NAME = "GGC Meter Plugin";
+    private static final Logger LOG = LoggerFactory.getLogger(MeterPluginDefinition.class);
+
+    private static String PLUGIN_NAME = "GGC Meter Plugin";
 
 
     public MeterPluginDefinition(LanguageManager languageManager)
     {
-        super(languageManager, new GGCMeterICRunner());
+        super(languageManager, //
+                new GGCMeterICRunner(), //
+                PLUGIN_NAME, //
+                GGCPluginType.MeterToolPlugin, //
+                "meters_", //
+                "ggc.meter.defs.Version");
+
     }
 
 
@@ -118,6 +126,8 @@ public class MeterPluginDefinition extends DevicePluginDefinitionAbstract
         outList.add(new FeaturesEntry("Accu-Chek/Roche: All supported by SmartPix 3.x"));
         outList.add(new FeaturesEntry("LifeScan: Ultra, Profile, Easy, UltraSmart"));
         outList.add(new FeaturesEntry("Abbott: Optium Xceeed, PrecisionXtra, Frestyle"));
+        outList.add(new FeaturesEntry("Menarini: most newer models (NOT TESTED)"));
+        outList.add(new FeaturesEntry("Arkray: some models (NOT TESTED)"));
 
         return outList;
     }
@@ -127,30 +137,12 @@ public class MeterPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<FeaturesEntry> outList = new ArrayList<FeaturesEntry>();
 
-        outList.add(new FeaturesEntry("LifeScan: Ultra2 (in 2017)"));
-        outList.add(new FeaturesEntry("Wellion: Calla, Luna (in 2017 ?)"));
-        outList.add(new FeaturesEntry("Menarini: most newer models (in 2017 ?)"));
-        outList.add(new FeaturesEntry("Arkray: some models (in 2017 ?)"));
+        outList.add(new FeaturesEntry("LifeScan: Ultra2 (in 2018)"));
+        outList.add(new FeaturesEntry("Wellion: Calla, Luna (in 2017-18)"));
+        //outList.add(new FeaturesEntry("Menarini: most newer models (in 2017 ?)"));
+        //outList.add(new FeaturesEntry("Arkray: some models (in 2017 ?)"));
 
         return outList;
-    }
-
-
-    public String getPluginVersion()
-    {
-        return this.PLUGIN_VERSION;
-    }
-
-
-    public String getPluginName()
-    {
-        return this.PLUGIN_NAME;
-    }
-
-
-    public GGCPluginType getPluginType()
-    {
-        return GGCPluginType.MeterToolPlugin;
     }
 
 
@@ -178,13 +170,6 @@ public class MeterPluginDefinition extends DevicePluginDefinitionAbstract
 
 
     @Override
-    public String getWebListerDescription()
-    {
-        return this.i18nControl.getMessage("DEVICE_LIST_WEB_DESC");
-    }
-
-
-    @Override
     public PluginReportDefinition getReportsDefinition()
     {
         // no reports for this plugin
@@ -197,21 +182,6 @@ public class MeterPluginDefinition extends DevicePluginDefinitionAbstract
     {
         // no graphs for this plugin
         return null;
-    }
-
-
-    @Override
-    public String getPluginActionsPrefix()
-    {
-        return "meters_";
-    }
-
-
-    @Override
-    public void registerDeviceHandlers()
-    {
-        // Ascensia
-        DeviceHandlerManager.getInstance().addDeviceHandler(new AscensiaUsbMeterHandler());
     }
 
 }

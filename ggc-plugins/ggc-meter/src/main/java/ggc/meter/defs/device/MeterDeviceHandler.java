@@ -1,5 +1,6 @@
 package ggc.meter.defs.device;
 
+import ggc.core.plugins.GGCPluginType;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.v2.DeviceHandlerAbstract;
@@ -35,6 +36,22 @@ public abstract class MeterDeviceHandler extends DeviceHandlerAbstract
     {
         if (dataAccessMeter == null)
             dataAccessMeter = DataAccessMeter.getInstance();
+    }
+
+
+    protected DataAccessMeter getDataAccess()
+    {
+        checkIfDataAccessSet();
+        return dataAccessMeter;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public GGCPluginType getGGCPluginType()
+    {
+        return GGCPluginType.MeterToolPlugin;
     }
 
 }

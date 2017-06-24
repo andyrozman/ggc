@@ -63,6 +63,14 @@ public class AccuChekMeterHandler extends MeterDeviceHandler
     /**
      * {@inheritDoc}
      */
+    public void closeDevice() throws PlugInBaseException
+    {
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
     public List<GGCPlugInFileReaderContext> getFileDownloadContexts(DownloadSupportType downloadSupportType)
     {
         checkIfDataAccessSet();

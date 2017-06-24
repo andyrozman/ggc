@@ -13,13 +13,39 @@ import ggc.core.data.defs.GlucoseUnitType;
 import ggc.meter.data.GlucoseMeterMarkerDto;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.defs.GlucoseMeterMarker;
+import ggc.meter.defs.device.MeterDeviceDefinition;
 import ggc.meter.util.DataAccessMeter;
+import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.DeviceIdentification;
+import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 
 /**
- * Created by andy on 22.09.15.
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Meter Tool (support for Meter devices)
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     AscensiaDecoder
+ *  Description:  Ascensia Meter Decoder
+ *
+ *  Author: Andy {andy@atech-software.com}
  */
+
 public class AscensiaDecoder
 {
 
@@ -28,17 +54,20 @@ public class AscensiaDecoder
     private OutputWriter outputWriter;
     private I18nControlAbstract i18nControl;
     protected TimeZoneUtil tzu = TimeZoneUtil.getInstance();
+    private MeterDeviceDefinition meterDeviceDefinition;
 
 
-    public AscensiaDecoder(OutputWriter writer)
+    public AscensiaDecoder(OutputWriter writer, MeterDeviceDefinition meterDeviceDefinition)
     {
         this.outputWriter = writer;
         i18nControl = DataAccessMeter.getInstance().getI18nControlInstance();
+        this.meterDeviceDefinition = meterDeviceDefinition;
     }
 
 
-    public String decode(String textToDecode)
+    public String decode(String textToDecode) throws PlugInBaseException
     {
+
         int idx = textToDecode.indexOf("|");
 
         if (idx == -1)
@@ -50,6 +79,7 @@ public class AscensiaDecoder
 
         String code = textToDecode.substring(0, 1);
 
+        //
         // LOG.info("Code: " + code);
 
         if (code.equals("P"))
@@ -80,6 +110,7 @@ public class AscensiaDecoder
     private void decodeTermination(String text)
     {
         // ignored for now
+        // System.out.println("TERMINATION RECORD");
     }
 
 
@@ -89,7 +120,7 @@ public class AscensiaDecoder
     }
 
 
-    private void decodeResult(String input)
+    private void decodeResult(String input) throws PlugInBaseException
     {
         try
         {
@@ -114,6 +145,7 @@ public class AscensiaDecoder
                 return;
 
             // R|5|^^^Glucose|7.9|mmol/L^P||B||201102241308 (Contour USB)
+            // R|261|^^^Glucose|441|mg/dL^P||M0/T1||201507220919
 
             MeterValuesEntry mve = new MeterValuesEntry();
 
@@ -135,6 +167,11 @@ public class AscensiaDecoder
 
             String time = strtok.nextToken(); // datetime
 
+            if (meterDeviceDefinition == MeterDeviceDefinition.AscensiaContourNextOne)
+            {
+                time = time.substring(0, time.length() - 2);
+            }
+
             setBgData(mve, time, val, unit);
 
             this.outputWriter.writeData(mve);
@@ -142,7 +179,10 @@ public class AscensiaDecoder
         }
         catch (Exception ex)
         {
-            LOG.error("Problem decoding result data. Ex.: " + ex);
+            LOG.error("Problem decoding result data. Ex.: " + ex, ex);
+
+            throw new PlugInBaseException(PlugInExceptionType.ParsingError, new Object[] { ex.getLocalizedMessage() },
+                    ex);
         }
 
     }
@@ -214,7 +254,7 @@ public class AscensiaDecoder
         }
         catch (Exception ex)
         {
-            LOG.error("Problem decoding result data. Ex.: " + ex);
+            LOG.error("Problem decoding result data. Ex.: " + ex, ex);
         }
 
     }
@@ -427,6 +467,10 @@ public class AscensiaDecoder
         else if (id.equals("Bayer6300") || id.equals("Bayer6200"))
         {
             tmp = "Contour Next Link Family (";
+        }
+        else if (id.equals("Contour7800"))
+        {
+            tmp = "Contour Next One Family (";
         }
         else
         {

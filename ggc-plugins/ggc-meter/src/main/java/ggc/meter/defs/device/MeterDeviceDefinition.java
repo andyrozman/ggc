@@ -3,6 +3,9 @@ package ggc.meter.defs.device;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.meter.device.MeterDisplayInterfaceType;
 import ggc.plugin.data.enums.DeviceCompanyDefinition;
 import ggc.plugin.data.enums.DeviceHandlerType;
@@ -17,7 +20,10 @@ import ggc.plugin.protocol.DeviceConnectionProtocol;
  */
 public enum MeterDeviceDefinition implements DeviceDefinition
 {
+
+    // --------------------
     // Ascensia
+    // --------------------
     AscensiaContourUsb(10007, "Contour USB", "ascensia_contour_usb.jpg", //
             "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.Done, //
             DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler, //
@@ -42,9 +48,19 @@ public enum MeterDeviceDefinition implements DeviceDefinition
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
             2000, MeterDisplayInterfaceType.Simple),
 
-    // AccuChek
+    AscensiaContourNextOne(10011, "Contour Next One", "ascensia_contour_next_one.png", //
+            "INSTRUCTIONS_ASCENSIA_CONTOUR_USB", null, DeviceImplementationStatus.Done, //
+            DeviceCompanyDefinition.Ascensia, DeviceHandlerType.AscensiaUsbHandler,
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
+            2000, MeterDisplayInterfaceType.Simple),
 
-    // FIXME
+    // -- Missing: Contour Next EZ, Contour Next Link 2.4, Didget, Contour XT ?
+    // -- Planned: Contour Next Link 2.4 (Test with current usb code)
+    // -- Not planned: Contour Next EZ, Didget, Contour XT (this might actually work without any changes)
+
+    // --------------------
+    // AccuChek
+    // --------------------
     AccuChekSmartPixGeneric(20001, "SmartPix", "ac_active.jpg", //
             "INSTRUCTIONS_ACCUCHEK_ACTIVE", null, DeviceImplementationStatus.Done, //
             DeviceCompanyDefinition.Roche, DeviceHandlerType.AccuChekMeterHandler, //
@@ -123,35 +139,139 @@ public enum MeterDeviceDefinition implements DeviceDefinition
             DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.MassStorageXML, //
             DeviceProgressStatus.Normal, "", 500, MeterDisplayInterfaceType.Extended), //
 
-    // FIXME - just for testing
-    // MenariniGlucoMenReady(100011, "Menarini", null, //
-    // "instructions", null, DeviceImplementationStatus.Planned,
-    // DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler,
-    // //
-    // DevicePortParameterType.SimpleParameter,
-    // DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special, "",
-    // 200, MeterDisplayInterfaceType.Simple), //
+    // -- Missing: Mobile, Connect, ...Connect
+
+
+    // --------------------
+    // Meanrini
+    // --------------------
+    MenariniGlucoFixId(50003, "GlucoFix ID", "mn_glucofix_id.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Planned, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 250, MeterDisplayInterfaceType.Simple), //
+
+    MenariniGlucoFixMio(50001, "GlucoFix Mio", "mn_glucofix_mio_plus.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Planned, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 400, MeterDisplayInterfaceType.Simple), //
+
+    MenariniGlucoFixMioPlus(50002, "GlucoFix Mio Plus", "mn_glucofix_mio_plus.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Planned, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 400, MeterDisplayInterfaceType.Extended), // ket,
+
+    MenariniGlucoFixPremium(50004, "GlucoFix Premium", "mn_glucofix_premium.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Planned, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 400, MeterDisplayInterfaceType.Extended), // ket,
+
+    MenariniGlucoFixTech(50005, "GlucoFix Tech", "mn_glucofix_tech.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Planned, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 730, MeterDisplayInterfaceType.Simple), //
+
+    MenariniGlucoMenVisio(50006, "GlucoMen Visio", "mn_glucomen_visio.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Planned, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 250, MeterDisplayInterfaceType.Simple), //
+
+    MenariniGlucoMenGM(50007, "GlucoMen GM", "mn_glucomen_gm.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 250, MeterDisplayInterfaceType.Simple), //
+
+    MenariniGlucoMenPC(50014, "GlucoMen PC", "mn_glucomen_gm.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 250, MeterDisplayInterfaceType.Simple), //
+
+    MenariniGlucoMenLxPlus(50008, "GlucoMen Lx Plus", "mn_glucomen_lx_plus.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 400, MeterDisplayInterfaceType.Extended), // ket,
+
+    MenariniGlucoMenLx2(50009, "GlucoMen Lx 2", "mn_glucomen_lx2.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 400, MeterDisplayInterfaceType.Extended), // ket
+
+    MenariniGlucoMenMendor(50010, "GlucoMen Mendor", "mn_glucomen_ready.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 500, MeterDisplayInterfaceType.Simple), //
+
+    MenariniGlucoMenReady(50011, "GlucoMen Ready", "mn_glucomen_ready.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 500, MeterDisplayInterfaceType.Simple), //
+
+    MenariniGlucoMenAreo(50012, "GlucoMen Areo", "mn_glucomen_areo.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 730, MeterDisplayInterfaceType.Simple), //
+
+    MenariniGlucoMenAreo2k(50013, "GlucoMen Areo 2K", "mn_glucomen_areo_2k.png", //
+            "INSTRUCTIONS_MENARINI", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Menarini, DeviceHandlerType.MenariniMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 830, MeterDisplayInterfaceType.Extended), // ket,
+
+
+    // --------------------
+    // Arkray
+    // --------------------
+    ArkrayGlucoXMeter(60003, "Arkray Glucocard X-Meter", "ark_glucocard_sm.png", //
+            "INSTRUCTIONS_ARKRAY", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Arkray, DeviceHandlerType.ArkrayMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, //
+            DeviceProgressStatus.Special, "", 0, MeterDisplayInterfaceType.Simple), //
+
+    ArkrayGT_1810(60004, "Arkray Glucocard G+ (1810)", "ark_glucocard_gplus.png", //
+            "INSTRUCTIONS_ARKRAY", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Arkray, DeviceHandlerType.ArkrayMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 450, MeterDisplayInterfaceType.Simple), //
+
+    ArkrayGT_1820(60005, "Arkray Glucocard G+ (1820)", "ark_glucocard_gplus.png", //
+            "INSTRUCTIONS_ARKRAY", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Arkray, DeviceHandlerType.ArkrayMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 450, MeterDisplayInterfaceType.Simple), //
+
+    ArkrayGlucoCardMX(60006, "Arkray Glucocard MX", "ark_glucocard_mx.png", //
+            "INSTRUCTIONS_ARKRAY", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Arkray, DeviceHandlerType.ArkrayMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, "", 500, MeterDisplayInterfaceType.Simple), //
+
+    ArkrayGlucoCardSM(60007, "Arkray Glucocard SM", "ark_glucocard_sm.png", //
+            "INSTRUCTIONS_ARKRAY", null, DeviceImplementationStatus.Testing, //
+            DeviceCompanyDefinition.Arkray, DeviceHandlerType.ArkrayMeterHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, //
+            DeviceProgressStatus.Special, "", 500, MeterDisplayInterfaceType.Simple), //
+
+    // Missing: Implementations there but incomplete: ArkrayGlucoCardPlus() [450], ArkrayGlucoCard(), ArkrayGlucoCardMemoryPC(),
+
+
 
     ;
 
-    // AccuChekActive.java
-    // AccuChekAdvantage.java
-    // AccuChekAvivaCombo.java
-    // AccuChekAviva.java
-    // AccuChekComfort.java
-    // AccuChekCompact.java
-    // AccuChekCompactPlus.java
-    // AccuChekGo.java
-    // AccuChekIntegra.java
-    // AccuChekMeterHandler.java
-    // AccuChekNano.java
-    // AccuChekPerforma.java
-    // AccuChekSensor.java
-
-    // Contour Next EZ, Contour Next Link 2.4, Didget, Contour XT ?
-
     static List<DeviceDefinition> allDevices;
     static List<DeviceDefinition> supportedDevices;
+    private static final Logger LOG = LoggerFactory.getLogger(MeterDeviceDefinition.class);
 
     static
     {
@@ -168,19 +288,19 @@ public enum MeterDeviceDefinition implements DeviceDefinition
             }
         }
 
-        System.out.println(
-            "Meter Devices V2 (registered: " + allDevices.size() + ", supported: " + supportedDevices.size() + ")");
+        // LOG.info("Meter Devices V2 (registered: " + allDevices.size() +
+        // ", supported: " + supportedDevices.size() + ")");
     }
 
     // we need to extend this to all values currently in DeviceImplementation
     int deviceId;
-    String deviceName;
+    String deviceName = "no name";
     String iconName;
     String instructions;
     Object internalDefintion;
     DeviceImplementationStatus implementationStatus;
     DeviceCompanyDefinition companyDefinition;
-    DeviceHandlerType deviceHandlerType;
+    DeviceHandlerType deviceHandlerType = DeviceHandlerType.NullHandler;
     DevicePortParameterType devicePortParameterType;
     DeviceConnectionProtocol deviceConnectionProtocol;
     DeviceProgressStatus deviceProgressStatus;
@@ -188,8 +308,14 @@ public enum MeterDeviceDefinition implements DeviceDefinition
     int maxRecords;
     MeterDisplayInterfaceType displayInterfaceType;
 
+    @Deprecated
+    MeterDeviceDefinition()
+    {
 
-    private MeterDeviceDefinition(int id, String name, String iconName, String instructions, Object internalDefinition,
+    }
+
+
+    MeterDeviceDefinition(int id, String name, String iconName, String instructions, Object internalDefinition,
             DeviceImplementationStatus implementationStatus, DeviceCompanyDefinition companyDefinition,
             DeviceHandlerType deviceHandlerType, DevicePortParameterType portParameterType,
             DeviceConnectionProtocol connectionProtocol, DeviceProgressStatus progressStatus, String specialComment,

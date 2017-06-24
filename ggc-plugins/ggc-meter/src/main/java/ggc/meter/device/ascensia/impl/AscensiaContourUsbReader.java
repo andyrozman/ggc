@@ -10,12 +10,35 @@ import com.atech.utils.data.BitUtils;
 
 import ggc.meter.device.ascensia.AscensiaUsbMeterHandler;
 import ggc.plugin.comm.Hid4JavaCommunicationHandler;
+import ggc.plugin.data.enums.ASCII;
 import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.output.OutputWriter;
 
 /**
- * Created by andy on 21.09.15.
+ *  Application:   GGC - GNU Gluco Control
+ *  Plug-in:       Meter Tool (support for Meter devices)
+ *
+ *  See AUTHORS for copyright information.
+ *
+ *  This program is free software; you can redistribute it and/or modify it under
+ *  the terms of the GNU General Public License as published by the Free Software
+ *  Foundation; either version 2 of the License, or (at your option) any later
+ *  version.
+ *
+ *  This program is distributed in the hope that it will be useful, but WITHOUT
+ *  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ *  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ *  details.
+ *
+ *  You should have received a copy of the GNU General Public License along with
+ *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ *  Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ *  Filename:     AscensiaContourUsbReader
+ *  Description:  Ascensia Contour Usb Reader
+ *
+ *  Author: Andy {andy@atech-software.com}
  */
 public class AscensiaContourUsbReader
 {
@@ -28,15 +51,17 @@ public class AscensiaContourUsbReader
     private boolean communicationStopped = false;
     private AscensiaDecoder decoder;
     private AscensiaUsbMeterHandler handler;
+    private OutputWriter outputWriter;
 
 
     public AscensiaContourUsbReader(AscensiaUsbMeterHandler handler, String selectedDevice, OutputWriter outputWriter)
     {
-        decoder = new AscensiaDecoder(outputWriter);
+        decoder = new AscensiaDecoder(outputWriter, handler.getMeterDefinition());
         communicationHandler = new Hid4JavaCommunicationHandler();
         communicationHandler.setTargetDevice(selectedDevice);
         communicationHandler.setAllowedDevices(handler.getAllowedDevicesList());
         communicationHandler.setDelayForTimedReading(100);
+        this.outputWriter = outputWriter;
         this.handler = handler;
     }
 
@@ -54,7 +79,7 @@ public class AscensiaContourUsbReader
             sendDataToDevice(whatToSend);
             List<Byte> data = readDataFromDevice();
 
-            if (communicationStopped)
+            if (communicationStopped || outputWriter.isReadingStopped())
             {
                 break;
             }
@@ -158,9 +183,21 @@ public class AscensiaContourUsbReader
 
     private boolean containsSTX(byte[] data)
     {
+        return contains(ASCII.STX, data);
+    }
+
+
+    private boolean containsETX(byte[] data)
+    {
+        return contains(ASCII.ETX, data);
+    }
+
+
+    private boolean contains(ASCII asciiChar, byte[] data)
+    {
         for (byte b : data)
         {
-            if (b == 0x02)
+            if (b == asciiChar.getValue())
             {
                 return true;
             }
@@ -176,11 +213,11 @@ public class AscensiaContourUsbReader
 
         for (byte b : data)
         {
-            if (b == 0x0d)
+            if (b == ASCII.CR.getValue())
             {
                 data0d = true;
             }
-            else if ((data0d) && (b == 0x0a))
+            else if ((data0d) && (b == ASCII.LF.getValue()))
             {
                 return true;
             }
@@ -198,12 +235,13 @@ public class AscensiaContourUsbReader
 
         for (byte b : data)
         {
-            if (b == 0x02)
+
+            if (b == ASCII.STX.getValue())
             {
                 text = true;
             }
 
-            if (b == 0x0d)
+            if (b == ASCII.CR.getValue())
             {
                 text = false;
             }
@@ -251,10 +289,16 @@ public class AscensiaContourUsbReader
             {
                 if (dataOut.size() == 0)
                 {
+                    // System.out.println("before ProcessLine: "
+                    // + bitUtils.toString(dataOut, OutputMode.AsHex,
+                    // OutputMode.DelimitedSpaceInBrackets));
                     processLine(data);
                 }
                 else
                 {
+                    // System.out.println("before ProcessLine(concat): "
+                    // + bitUtils.toString(dataOut, OutputMode.AsHex,
+                    // OutputMode.DelimitedSpaceInBrackets));
                     bitUtils.addByteArrayToList(dataOut, data);
                     processLine(bitUtils.getByteArrayFromList(dataOut));
                     dataOut.clear();
@@ -262,8 +306,22 @@ public class AscensiaContourUsbReader
             }
             else
             {
+                // System.out.println(
+                // "before add: " + bitUtils.toString(dataOut, OutputMode.AsHex,
+                // OutputMode.DelimitedSpaceInBrackets));
                 dataOut.addAll(bitUtils.getListFromByteArray(data));
+                // System.out.println(
+                // "after add: " + bitUtils.toString(dataOut, OutputMode.AsHex,
+                // OutputMode.DelimitedSpaceInBrackets));
+
             }
+
+            // if (containsETX(data))
+            // {
+            // System.out.println("!!!!!!!!!!!!!!! ETX FOUND
+            // !!!!!!!!!!!!!!!!!!!!");
+            // communicationStopped = true;
+            // }
 
             if (data.length <= 36) // 36
                 break;
@@ -273,15 +331,17 @@ public class AscensiaContourUsbReader
     }
 
 
-    public void processLine(byte[] data)
+    public void processLine(byte[] data) throws PlugInBaseException
     {
         if (containsSTX(data))
         {
             String text = getText(data);
             String code = decoder.decode(text);
 
-            if (code.equals("T"))
+            if (code.equals("L"))
+            {
                 communicationStopped = true;
+            }
         }
         else
         {

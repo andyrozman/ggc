@@ -3,6 +3,7 @@ package ggc.meter.util;
 import ggc.core.data.ExtendedDailyValueHandler;
 import ggc.meter.data.MeterDataHandler;
 import ggc.meter.data.MeterDataReader;
+import ggc.meter.data.MeterValuesEntryDataType;
 import ggc.meter.data.cfg.MeterConfigurationDefinition;
 import ggc.meter.data.db.GGCMeterDb;
 import ggc.meter.defs.MeterPluginDefinition;
@@ -104,6 +105,7 @@ public class DataAccessMeter extends DataAccessPlugInBase
     public void prepareTranslationForEnums()
     {
         DeviceEntryStatus.translateKeywords(this.getI18nControlInstance());
+        MeterValuesEntryDataType.translateKeywords(this.getI18nControlInstance());
     }
 
 
@@ -350,6 +352,9 @@ public class DataAccessMeter extends DataAccessPlugInBase
         // this.extended_handlers = new Hashtable<>();
         // this.extended_handlers.put(EXTENDED_HANDLER_DAILY_VALUE, new
         // ExtendedDailyValue(this));
+
+        System.out.println("!!!!!!!!!!!!!! LoadExtendedHandler: " + extended_handlers);
+
     }
 
 }

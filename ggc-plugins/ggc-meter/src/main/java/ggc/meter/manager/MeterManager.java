@@ -1,8 +1,12 @@
 package ggc.meter.manager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.meter.defs.device.MeterDeviceDefinition;
 import ggc.meter.device.MeterDeviceInstanceWithHandler;
 import ggc.meter.manager.company.*;
+import ggc.plugin.data.enums.DeviceHandlerType;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.manager.DeviceManager;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -36,6 +40,8 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public class MeterManager extends DeviceManager
 {
 
+    private static final Logger LOG = LoggerFactory.getLogger(MeterManager.class);
+
     /**
      * Singleton instance
      */
@@ -58,11 +64,17 @@ public class MeterManager extends DeviceManager
         {
             MeterDeviceDefinition pdd = (MeterDeviceDefinition) dd;
 
+            if (pdd.getDeviceHandlerKey() == DeviceHandlerType.NullHandler)
+                continue;
+
             MeterDeviceInstanceWithHandler di = new MeterDeviceInstanceWithHandler(pdd);
 
             this.supportedDevicesV2.put(di.getCompany().getName() + "_" + di.getName(), di);
             this.supportedDevicesForSelector.add(di);
         }
+
+        LOG.info("Meter Devices V2 (registered: " + MeterDeviceDefinition.getAllDevices().size() + ", supported: "
+                + this.supportedDevicesV2.size() + ")");
     }
 
 
@@ -107,6 +119,9 @@ public class MeterManager extends DeviceManager
         addDeviceCompany(new Sanvita());
         addDeviceCompany(new USDiagnostic());
         addDeviceCompany(new Wavesense());
+
+        LOG.info("Meter Devices V1 (registered: " + this.getLoadedDevicesV1Count() + ", supported: "
+                + this.supportedDevicesV1.size() + ")");
     }
 
 }

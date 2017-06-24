@@ -1,6 +1,7 @@
 package ggc.meter.device;
 
 import java.io.EOFException;
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -9,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 
+import ggc.core.data.ExtendedDailyValueType;
 import ggc.core.data.defs.GlucoseUnitType;
+import ggc.meter.data.GlucoseMeterMarkerDto;
 import ggc.meter.data.MeterValuesEntry;
 import ggc.meter.defs.device.MeterDeviceDefinition;
 import ggc.meter.util.DataAccessMeter;
@@ -29,6 +32,17 @@ public abstract class SerialMeterAbstract
 
     private static final Logger LOG = LoggerFactory.getLogger(SerialMeterAbstract.class);
 
+    public static final char STX = '\002';
+    public static final char ETX = '\003';
+    public static final char EOT = '\004';
+    public static final char ENQ = '\005';
+    public static final char ACK = '\006';
+    public static final char ETB = '\027';
+    public static final char LF = '\n';
+    public static final char CR = '\r';
+    public static final char NAK = '\025';
+    public static final char CAN = '\030';
+
     protected DataAccessMeter dataAccess;
     protected OutputWriter outputWriter;
     protected NRSerialCommunicationHandler communicationHandler;
@@ -36,7 +50,7 @@ public abstract class SerialMeterAbstract
     protected boolean active = false;
     protected String serialNumber;
     protected MeterDeviceDefinition deviceDefinition;
-    protected GlucoseUnitType glucoseUnitType;
+    protected GlucoseUnitType glucoseUnitType = GlucoseUnitType.mg_dL;
     private int receiveTimeout;
 
 
@@ -64,6 +78,12 @@ public abstract class SerialMeterAbstract
         communicationHandler = new NRSerialCommunicationHandler(portName, getSerialSettings());
         communicationHandler.connectAndInitDevice();
         this.active = true;
+    }
+
+
+    public void closeDevice()
+    {
+        this.communicationHandler.disconnectDevice();
     }
 
 
@@ -141,7 +161,7 @@ public abstract class SerialMeterAbstract
     }
 
 
-    protected char readChar() throws Exception
+    protected char readChar() throws PlugInBaseException
     {
         int rv = -1;
 
@@ -158,10 +178,10 @@ public abstract class SerialMeterAbstract
         {
             if (this.active)
             {
-                throw new EOFException("Serial port timeout on " + this.portName);
+                throw new PlugInBaseException("Serial port timeout on " + this.portName);
             }
 
-            throw new InterruptedException();
+            throw new PlugInBaseException(PlugInExceptionType.TimeoutReadingData);
         }
         return (char) rv;
     }
@@ -174,6 +194,7 @@ public abstract class SerialMeterAbstract
     {
         if (s == null)
             return null;
+
         if (s.length() <= size)
         {
             return s;
@@ -203,7 +224,8 @@ public abstract class SerialMeterAbstract
 
     protected void disconnectDevice()
     {
-        this.communicationHandler.disconnectDevice();
+        if (this.communicationHandler != null)
+            this.communicationHandler.disconnectDevice();
         this.active = false;
     }
 
@@ -226,6 +248,18 @@ public abstract class SerialMeterAbstract
     }
 
 
+    protected void writeDeviceIdentification(String serialNumber)
+    {
+        DeviceIdentification deviceIdentification = new DeviceIdentification(dataAccess.getI18nControlInstanceBase());
+        deviceIdentification.setDeviceDefinition(this.deviceDefinition);
+        deviceIdentification.device_serial_number = serialNumber;
+        this.serialNumber = serialNumber;
+
+        outputWriter.setDeviceIdentification(deviceIdentification);
+        outputWriter.writeDeviceIdentification();
+    }
+
+
     public void setGlucoseUnitType(GlucoseUnitType glucoseUnitType)
     {
         this.glucoseUnitType = glucoseUnitType;
@@ -242,6 +276,77 @@ public abstract class SerialMeterAbstract
     }
 
 
+    public void writeBGData(float bg, ATechDate aTechDate)
+    {
+        MeterValuesEntry mve = new MeterValuesEntry();
+        mve.setBgValue(bg, glucoseUnitType);
+        mve.setDateTimeObject(aTechDate);
+
+        this.outputWriter.writeData(mve);
+    }
+
+
+    public void writeBGData(float bg, GlucoseUnitType unitType, ATechDate aTechDate)
+    {
+        MeterValuesEntry mve = new MeterValuesEntry();
+        mve.setBgValue(bg, unitType);
+        mve.setDateTimeObject(aTechDate);
+
+        this.outputWriter.writeData(mve);
+    }
+
+
+    public void writeBGData(float bg, GlucoseUnitType unitType, ATechDate aTechDate,
+            List<GlucoseMeterMarkerDto> markers)
+    {
+        MeterValuesEntry mve = new MeterValuesEntry();
+        mve.setBgValue(bg, unitType);
+        mve.setDateTimeObject(aTechDate);
+
+        for (GlucoseMeterMarkerDto marker : markers)
+            mve.addGlucoseMeterMarker(marker);
+
+        this.outputWriter.writeData(mve);
+    }
+
+
+    public void writeUrineData(Float value, GlucoseUnitType unitType, ATechDate adt)
+    {
+        if (value == null)
+            return;
+
+        MeterValuesEntry mve = new MeterValuesEntry();
+
+        mve.setDateTimeObject(adt);
+
+        float urineMmoL = value;
+
+        if (unitType == GlucoseUnitType.mg_dL)
+        {
+            urineMmoL = dataAccess.getBGValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, value);
+        }
+
+        mve.setUrine(ExtendedDailyValueType.Urine_mmolL, dataAccess.getFormatedValue(urineMmoL, 1));
+
+        this.outputWriter.writeData(mve);
+
+    }
+
+
+    public void writeBGData(float bg, int year, int month, int day, int hour, int minute,
+            List<GlucoseMeterMarkerDto> markers)
+    {
+        MeterValuesEntry mve = new MeterValuesEntry();
+        mve.setBgValue(bg, glucoseUnitType);
+        mve.setDateTimeObject(getATechDate(year, month, day, hour, minute));
+
+        for (GlucoseMeterMarkerDto marker : markers)
+            mve.addGlucoseMeterMarker(marker);
+
+        this.outputWriter.writeData(mve);
+    }
+
+
     public ATechDate getATechDate(int year, int month, int day, int hour, int minute)
     {
         return new ATechDate(day, month, year, hour, minute, ATechDateType.DateAndTimeMin);
@@ -251,6 +356,21 @@ public abstract class SerialMeterAbstract
     protected void read(int[] data) throws PlugInBaseException
     {
         communicationHandler.read(data);
+    }
+
+
+    public void readUntilCharacterReceived(char character) throws PlugInBaseException
+    {
+        char c;
+
+        while ((c = readChar()) != character)
+            ;
+    }
+
+
+    public void readUntilACKReceived() throws PlugInBaseException
+    {
+        readUntilCharacterReceived(ACK);
     }
 
 }

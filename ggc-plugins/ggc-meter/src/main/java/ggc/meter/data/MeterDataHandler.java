@@ -2,7 +2,6 @@ package ggc.meter.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -130,7 +129,7 @@ public class MeterDataHandler extends DeviceDataHandler
         }
 
         // 4. get pump data (for specific items)
-        Hashtable<String, PumpDataExtendedH> pumpData = db.getPumpData(timeMarksWithChangedData);
+        Map<String, PumpDataExtendedH> pumpData = db.getPumpData(timeMarksWithChangedData);
         this.setCustomStatus(1, 10);
 
         // 5. add/edit pump items
@@ -155,10 +154,10 @@ public class MeterDataHandler extends DeviceDataHandler
                     // add
                     PumpDataExtendedH pdeh = new PumpDataExtendedH();
 
-                    pdeh.setDt_info(timeData.getKey() * 100);
+                    pdeh.setDtInfo(timeData.getKey() * 100);
                     pdeh.setType(mvedt.getKey().pumpExtCode);
                     pdeh.setValue(getValueAsString(mvedt.getValue()));
-                    pdeh.setPerson_id((int) m_da.getCurrentUserId());
+                    pdeh.setPersonId((int) m_da.getCurrentUserId());
                     pdeh.setExtended("SOURCE=" + m_da.getSourceDevice());
                     pdeh.setChanged(System.currentTimeMillis());
 

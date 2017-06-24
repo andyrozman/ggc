@@ -2,6 +2,8 @@ package ggc.meter.data;
 
 import java.util.HashMap;
 
+import com.atech.i18n.I18nControlAbstract;
+
 /**
  * Created by andy on 02.05.15.
  */
@@ -20,6 +22,22 @@ public enum MeterValuesEntryDataType
     static HashMap<Integer, String> allowedPumpTypes;
     static HashMap<MeterValuesEntryDataType, String> processorTypes;
     boolean isProcessor;
+    String translation;
+    static boolean translated = false;
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        if (translated)
+            return;
+
+        for (MeterValuesEntryDataType pbt : values())
+        {
+            pbt.translation = ic.getMessage(pbt.description);
+        }
+
+        translated = true;
+    }
 
 
     MeterValuesEntryDataType(String description, Integer pumpExtCode, boolean isProcessor)
@@ -71,5 +89,11 @@ public enum MeterValuesEntryDataType
     public String getDescription()
     {
         return description;
+    }
+
+
+    public String getTranslation()
+    {
+        return this.translation;
     }
 }

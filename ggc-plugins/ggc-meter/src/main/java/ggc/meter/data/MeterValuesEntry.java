@@ -6,14 +6,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.atech.data.GsonUtils;
-import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 
 import ggc.core.data.ExtendedDailyValueHandler;
 import ggc.core.data.ExtendedDailyValueType;
 import ggc.core.data.defs.GlucoseUnitType;
-import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pen.DayValueH;
 import ggc.meter.util.DataAccessMeter;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.enums.DeviceEntryStatus;
@@ -48,9 +47,8 @@ import ggc.plugin.output.OutputWriterType;
 public class MeterValuesEntry extends DeviceValuesEntry
 {
 
-    private static DataAccessMeter da = DataAccessMeter.getInstance();
-    private static I18nControlAbstract ic = da.getI18nControlInstance();
-    private static ExtendedDailyValueHandler extendedDailyValueHandler = da.getExtendedDailyValueHandler();
+    private static DataAccessMeter da; // = DataAccessMeter.getInstance();
+    private static ExtendedDailyValueHandler extendedDailyValueHandler;
 
     private ATechDate datetime;
     private Integer bgOriginal = null;
@@ -69,7 +67,12 @@ public class MeterValuesEntry extends DeviceValuesEntry
     public MeterValuesEntry()
     {
         super();
-        this.source = DataAccessMeter.getInstance().getSourceDevice();
+        if (da == null)
+            da = DataAccessMeter.getInstance();
+
+        this.source = da.getSourceDevice();
+        if (extendedDailyValueHandler == null)
+            extendedDailyValueHandler = da.getExtendedDailyValueHandler();
         this.loadExtendedEntries(null);
         resetExtendedType();
     }
@@ -82,11 +85,12 @@ public class MeterValuesEntry extends DeviceValuesEntry
     public MeterValuesEntry(DayValueH dv)
     {
         super();
-        this.datetime = new ATechDate(this.getDateTimeFormat(), dv.getDt_info());
+        this.datetime = new ATechDate(this.getDateTimeFormat(), dv.getDtInfo());
         this.setBgValue("" + dv.getBg(), GlucoseUnitType.mg_dL);
         this.entry_object = dv;
         this.object_status = DeviceValuesEntry.OBJECT_STATUS_OLD;
         this.ch = dv.getCh();
+        extendedDailyValueHandler = da.getExtendedDailyValueHandler();
 
         this.loadExtendedEntries(dv.getExtended());
 
@@ -596,8 +600,8 @@ public class MeterValuesEntry extends DeviceValuesEntry
         this.entry_object.setIns1(0);
         this.entry_object.setIns2(0);
         this.entry_object.setCh(0.0f);
-        this.entry_object.setPerson_id((int) DataAccessMeter.getInstance().getCurrentUserId());
-        this.entry_object.setDt_info(this.getDateTime());
+        this.entry_object.setPersonId((int) DataAccessMeter.getInstance().getCurrentUserId());
+        this.entry_object.setDtInfo(this.getDateTime());
     }
 
 
@@ -613,7 +617,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
         this.entry_object.setChanged(System.currentTimeMillis());
         this.entry_object.setComment(createComment());
-        this.entry_object.setPerson_id((int) DataAccessMeter.getInstance().getCurrentUserId());
+        this.entry_object.setPersonId((int) DataAccessMeter.getInstance().getCurrentUserId());
         // log.debug("Updated. Status was Edit. Action was: " + act);
     }
 
@@ -804,6 +808,13 @@ public class MeterValuesEntry extends DeviceValuesEntry
     }
 
 
+    private ExtendedDailyValueHandler getExtendedHandler()
+    {
+        // FIXME
+        return null;
+    }
+
+
     public boolean hasUrine()
     {
         if (extendedMap == null)
@@ -924,7 +935,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
      */
     public String getExtendedTypeDescription()
     {
-        return ic.getMessage(extendedType.getDescription()); // extendedTypeDescription;
+        return extendedType.getTranslation(); // extendedTypeDescription;
     }
 
 
@@ -959,7 +970,7 @@ public class MeterValuesEntry extends DeviceValuesEntry
             default:
             case InvalidData:
             case None:
-                return ic.getMessage(MeterValuesEntryDataType.InvalidData.getDescription());
+                return MeterValuesEntryDataType.InvalidData.getTranslation();
         }
 
     }
@@ -977,17 +988,17 @@ public class MeterValuesEntry extends DeviceValuesEntry
 
         if (this.hasBGEntry())
         {
-            values.put(ic.getMessage("BG") + ": ", getDisplayableBgValueWithUnit());
+            values.put(MeterValuesEntryDataType.BG.getTranslation() + ": ", getDisplayableBgValueWithUnit());
         }
 
         if (this.hasCHEntry())
         {
-            values.put(ic.getMessage("CH") + ": ", da.getFormatedValue(this.ch, 1));
+            values.put(MeterValuesEntryDataType.CH.getTranslation() + ": ", da.getFormatedValue(this.ch, 1));
         }
 
         if (this.hasUrine())
         {
-            values.put(ic.getMessage("URINE") + ": ", //
+            values.put(MeterValuesEntryDataType.Urine.getTranslation() + ": ", //
                 getUrineValue());
         }
 

@@ -22,11 +22,13 @@ package ggc.meter.manager;
  * 
  *  Filename:     MeterDevicesIds  
  *  Description:  This class contains all ids from this plugins. This means companies and meter devices,
- *                all classes should use Ids from here, so that Ids can change globally. 
+ *                all classes should use Ids from here, so that Ids can change globally.
+ *                NOT USED ANYMORE (SHOULD BE REMOVED WHEN ALL METERS ARE AT MeterInterface V2), JUST FOR NUMBERS
+ *                STORING. See MeterDeviceDefintion instead.
  * 
  *  Author: Andy {andy@atech-software.com}
  */
-
+@Deprecated
 public class MeterDevicesIds
 {
 
@@ -54,150 +56,46 @@ public class MeterDevicesIds
      * Meter Company: Menarini
      */
     public static final int COMPANY_MENARINI = 5;
-
-    /**
-     * Meter Company: Diabetic Supply Of Suncoast
-     * 
-     */
-    public static final int COMPANY_DIABETIC_SUPPLY_OF_SUNCOAST = 6;
-
-    /**
-     * Meter Company: Hipoguard
-     * 
-     */
+    public static final int COMPANY_ARKRAY = 6;
     public static final int COMPANY_HIPOGUARD = 7;
-
-    /**
-     * Meter Company: Home Diagnostics
-     * 
-     */
     public static final int COMPANY_HOME_DIAGNOSTICS = 8;
-
-    /**
-     * Meter Company: Prodigy
-     * 
-     */
     public static final int COMPANY_PRODIGY = 9;
-
-    /**
-     * Meter Company: Sanvita
-     * 
-     */
     public static final int COMPANY_SANVITA = 10;
-
-    /**
-     * Meter Company: US Diagnostics
-     * 
-     */
     public static final int COMPANY_US_DIAGNOSTICS = 11;
-
-    /**
-     * Meter Company: Wavesense
-     * 
-     */
     public static final int COMPANY_WAVESENSE = 12;
+    public static final int COMPANY_DIABETIC_SUPPLY_OF_SUNCOAST = 13;
 
     /**
-     * Meter: Ascensia/Bayer Elite XL
+     *  Ascensia/Bayer
      */
     public static final int METER_ASCENSIA_ELITE_XL = 10001;
-
-    /**
-     * Meter: Ascensia/Bayer Dex
-     */
     public static final int METER_ASCENSIA_DEX = 10002;
-
-    /**
-     * Meter: Ascensia/Bayer Breeze
-     */
     public static final int METER_ASCENSIA_BREEZE = 10003;
-
-    /**
-     * Meter: Ascensia/Bayer Contour
-     */
     public static final int METER_ASCENSIA_CONTOUR = 10004;
-
-    /**
-     * Meter: Ascensia/Bayer Breeze 2
-     */
     public static final int METER_ASCENSIA_BREEZE2 = 10005;
 
-    /**
-     * Meter: Ascensia/Bayer Contour Link
-     */
+    // V2
     public static final int METER_ASCENSIA_CONTOUR_LINK = 10006;
-
     public static final int METER_ASCENSIA_USB = 10007;
-
     public static final int METER_ASCENSIA_NEXT = 10008;
-
     public static final int METER_ASCENSIA_NEXT_USB = 10009;
-
     public static final int METER_ASCENSIA_NEXT_LINK = 10010;
 
     /**
      * Meter Device: SmartPix
      */
     public static final int METER_ROCHE_SMARTPIX_DEVICE = 20001;
-
-    /**
-     * Meter Device: Accu Chek Active
-     */
     public static final int METER_ACCUCHEK_ACTIVE = 20002;
-
-    /**
-     * Meter Device: Accu Chek Advantage
-     */
     public static final int METER_ACCUCHEK_ADVANTAGE = 20003;
-
-    /**
-     * Meter Device: Accu Chek Aviva
-     */
     public static final int METER_ACCUCHEK_AVIVA = 20004;
-
-    /**
-     * Meter Device: Accu Chek Comfort
-     */
     public static final int METER_ACCUCHEK_COMFORT = 20005;
-
-    /**
-     * Meter Device: Accu Chek Compact
-     */
     public static final int METER_ACCUCHEK_COMPACT = 20006;
-
-    /**
-     * Meter Device: Accu Chek Compact Plus
-     */
     public static final int METER_ACCUCHEK_COMPACT_PLUS = 20007;
-
-    /**
-     * Meter Device: Accu Chek Go
-     */
     public static final int METER_ACCUCHEK_GO = 20008;
-
-    /**
-     * Meter Device: Accu Chek Integra
-     */
     public static final int METER_ACCUCHEK_INTEGRA = 20009;
-
-    /**
-     * Meter Device: Accu Chek Performa
-     */
     public static final int METER_ACCUCHEK_PERFORMA = 20010;
-
-    /**
-     * Meter Device: Accu Chek Sensor
-     */
     public static final int METER_ACCUCHEK_SENSOR = 20011;
-
-    /**
-     * Meter Device: Accu Chek Nano
-     */
     public static final int METER_ACCUCHEK_NANO = 20012;
-
-    /**
-     * Meter Device: Accu Chek Nano
-     */
     public static final int METER_ACCUCHEK_AVIVA_COMBO = 20013;
 
     /**
@@ -268,13 +166,9 @@ public class MeterDevicesIds
     /**
      * * */
     public static final int METER_ABBOTT_FREESTYLE = 40001; // Not tested yet
-    /** * */
     public static final int METER_ABBOTT_FREESTYLE_LITE = 40002; // NS
-    /** * */
     public static final int METER_ABBOTT_FREESTYLE_FREEDOM = 40003; // NS
-    /** * */
     public static final int METER_ABBOTT_FREESTYLE_FREEDOM_LITE = 40004; // NS
-    /** * */
     public static final int METER_ABBOTT_FREESTYLE_FLASH = 40005; // NS
     public static final int METER_ABBOTT_PRECISION_XTRA = 40006;
     public static final int METER_ABBOTT_OPTIUM_XCEED = 40007;
@@ -282,19 +176,29 @@ public class MeterDevicesIds
     /**
      * Menarini Devices
      */
-
-    /** * */
     public static final int METER_MENARINI_GLUCOFIX_MIO = 50001;
     public static final int METER_MENARINI_GLUCOFIX_MIO_PLUS = 50002;
+    public static final int METER_MENARINI_GLUCOFIX_ID = 50003;
+    public static final int METER_MENARINI_GLUCOFIX_PREMIUM = 50004;
+    public static final int METER_MENARINI_GLUCOFIX_TECH = 50005;
+    public static final int METER_MENARINI_GLUCOMEN_VISIO = 50006;
+    public static final int METER_MENARINI_GLUCOMEN_GM = 50007;
+    public static final int METER_MENARINI_GLUCOMEN_LX_PLUS = 50008;
+    public static final int METER_MENARINI_GLUCOMEN_LX_2 = 50009;
+    public static final int METER_MENARINI_GLUCOMEN_MENDOR = 50010;
+    public static final int METER_MENARINI_GLUCOMEN_READY = 50011;
+    public static final int METER_MENARINI_GLUCOMEN_AREO = 50012;
+    public static final int METER_MENARINI_GLUCOMEN_AREO_2K = 50013;
 
+    // COMPANY_ARKRAY
 
-
-
-
+    // MenariniGlucoCardSM(), // 500
+    // MenariniGlucoCardMX(), // 500
+    //
+    // ArkrayGlucoCardPlus(), // 450
 
     /**
      * Arkray Devices
      */
-
 
 }

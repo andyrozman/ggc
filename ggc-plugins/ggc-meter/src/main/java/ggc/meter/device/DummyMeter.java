@@ -43,7 +43,7 @@ public class DummyMeter extends AbstractMeter // implements MeterInterface
     }
 
     // DataAccessMeter dataAccess = DataAccessMeter.getInstance();
-    // I18nControlAbstract m_ic = dataAccess.getI18nControlInstance();
+    // I18nControlAbstract i18nControl = dataAccess.getI18nControlInstance();
 
     /**
      * This is method for reading data from device. All reading from actual device should be done from here.

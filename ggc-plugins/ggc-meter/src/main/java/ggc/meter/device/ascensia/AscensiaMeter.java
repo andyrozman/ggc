@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.TimeZoneUtil;
 
+import ggc.meter.defs.device.MeterDeviceDefinition;
 import ggc.meter.device.AbstractSerialMeter;
 import ggc.meter.device.ascensia.impl.AscensiaDecoder;
 import ggc.meter.manager.company.AscensiaBayer;
@@ -116,7 +117,7 @@ public abstract class AscensiaMeter extends AbstractSerialMeter
     {
         super(comm_parameters, writer, da);
 
-        decoder = new AscensiaDecoder(writer);
+        decoder = new AscensiaDecoder(writer, MeterDeviceDefinition.AscensiaContourNext);
 
         // communcation settings for this meter(s)
         this.setCommunicationSettings(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE,
