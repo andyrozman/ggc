@@ -2,6 +2,9 @@
 Changelog for GGC Help (Help for GGC)
 =====================================
 
+0.2.3 [16.2.2017] [Andy]
+- added Appointment pages
+
 0.2.2 [18.5.2016] [Andy]
 - added pages for Doctors module (WIP)
 - added pages for Graph_CGMS

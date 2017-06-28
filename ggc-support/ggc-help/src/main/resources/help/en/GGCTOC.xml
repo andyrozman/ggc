@@ -97,6 +97,11 @@
                 <tocitem text="Add/Edit Working Time" target="Doc_WorkingTimeDialog"/>
                 <tocitem text="Add/Edit Time (from Working Time)" target="Doc_WorkingTimeTimeDialog"/>
             </tocitem>
+            <tocitem text="Appointments">
+                <tocitem text="Appointment's List" target="Appointment_AppointmentList"/>
+                <tocitem text="Add/Edit Doctor's Appointment" target="Appointment_AppointmentDialog"/>
+                <tocitem text="Doctor Selector" target="Appointment_DoctorSelector"/>
+            </tocitem>
         </tocitem>
 
 

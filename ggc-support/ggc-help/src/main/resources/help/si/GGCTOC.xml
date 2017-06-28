@@ -134,11 +134,11 @@
          	</tocitem>
 	     
 			     
-		   	<tocitem text="HbA1c ">
+		   	<tocitem text="HbA1c">
 		    	<tocitem text="HbA1c View " target="GGC_BG_HbA1c"/>
 		   	</tocitem>
 
-		   	<tocitem text="Ratio ">
+		   	<tocitem text="Ratio">
 		    	<tocitem text="Base Ratio" target="GGC_Ratio_Base"/>
 		    	<tocitem text="Extended Ratio" target="GGC_Ratio_Extended"/>
 		    	<tocitem text="Ratio Calculator" target="GGC_Ratio_Calculator"/>
