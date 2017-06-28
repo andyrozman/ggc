@@ -30,6 +30,7 @@ import ggc.plugin.device.DownloadSupportType;
 
 public enum DeviceHandlerType
 {
+    NullHandler(DownloadSupportType.NotSupportedByGGC), //
     NoHandler(DownloadSupportType.NotSupportedByGGC), //
     NoSupportInDevice(DownloadSupportType.NotSupportedByDevice), //
 

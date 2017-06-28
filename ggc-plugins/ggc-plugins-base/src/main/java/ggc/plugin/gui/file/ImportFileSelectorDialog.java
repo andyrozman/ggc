@@ -47,7 +47,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
 
     private static final long serialVersionUID = -4620972246237384499L;
     // DataAccessPlugInBase dataAccess = null;
-    // I18nControlAbstract m_ic = null;
+    // I18nControlAbstract i18nControl = null;
     // JDialog dialogParent = null;
     // JPanel previous = null;
 
@@ -70,7 +70,7 @@ public class ImportFileSelectorDialog extends AbstractFileSelectorDialog
     {
         super(da, ddh, previous_parent, downloadSupportType);
         // dataAccess = da;
-        // m_ic = da.getI18nControlInstance();
+        // i18nControl = da.getI18nControlInstance();
         // this.dialogParent = dialog;
         // this.previous = previous_panel;
         // this.m_frc = frc;

@@ -1,22 +1,28 @@
 package ggc.plugin.db;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.db.hibernate.DatabaseObjectHibernate;
 import com.atech.db.hibernate.HibernateDb;
+import com.atech.db.hibernate.HibernateObject;
 import com.atech.graphics.graphs.v2.data.GraphDbDataRetriever;
 import com.atech.utils.data.ATechDate;
+
 import ggc.core.db.hibernate.cgms.CGMSDataH;
+import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -52,10 +58,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
     private static final Logger LOG = LoggerFactory.getLogger(PluginDb.class);
 
     protected HibernateDb db;
-
-    private int m_errorCode = 0;
-    private String m_errorDesc = "";
-    private String m_addId = "";
+    protected DataAccessPlugInBase dataAccess = null;
 
 
     /**
@@ -63,9 +66,10 @@ public abstract class PluginDb implements GraphDbDataRetriever
      * 
      * @param db
      */
-    public PluginDb(HibernateDb db)
+    public PluginDb(HibernateDb db, DataAccessPlugInBase dataAccess)
     {
         this.db = db;
+        this.dataAccess = dataAccess;
     }
 
 
@@ -92,48 +96,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
      */
     public boolean add(Object obj)
     {
-
-        if (obj instanceof DatabaseObjectHibernate)
-        {
-            DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-
-            LOG.info(doh.getObjectName() + "::DbAdd");
-
-            try
-            {
-                String id = doh.DbAdd(getSession()); // getSession());
-                this.m_addId = id;
-                // System.out.println("Add:" + doh);
-                return true;
-            }
-            catch (SQLException ex)
-            {
-                setError(1, ex.getMessage(), doh.getObjectName());
-                LOG.error("SQLException on add: " + ex, ex);
-                Exception eee = ex.getNextException();
-
-                if (eee != null)
-                {
-                    LOG.error("Nested Exception on add: " + eee.getMessage(), eee);
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                setError(1, ex.getMessage(), doh.getObjectName());
-                LOG.error("Exception on add: " + ex, ex);
-                return false;
-            }
-
-        }
-        else
-        {
-            setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-
-            LOG.error("Internal error on add: " + obj);
-            return false;
-        }
-
+        return this.db.add(obj);
     }
 
 
@@ -166,25 +129,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
      */
     public long addHibernate(Object obj)
     {
-
-        LOG.info("addHibernate::" + obj.toString());
-
-        try
-        {
-            Session sess = getSession();
-            Transaction tx = sess.beginTransaction();
-
-            Long val = (Long) sess.save(obj);
-            tx.commit();
-
-            return val.longValue();
-        }
-        catch (Exception ex)
-        {
-            LOG.error("Exception on addHibernate: " + ex, ex);
-            return -1;
-        }
-
+        return this.db.addHibernate(obj);
     }
 
 
@@ -196,45 +141,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
      */
     public boolean edit(Object obj)
     {
-
-        if (obj instanceof DatabaseObjectHibernate)
-        {
-            DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-
-            LOG.info(doh.getObjectName() + "::DbEdit");
-
-            try
-            {
-                doh.DbEdit(getSession());
-                // System.out.println("Edit:" + doh);
-                return true;
-            }
-            catch (SQLException ex)
-            {
-                setError(1, ex.getMessage(), doh.getObjectName());
-                LOG.error("SQLException on edit: " + ex, ex);
-                Exception eee = ex.getNextException();
-
-                if (eee != null)
-                {
-                    LOG.error("Nested Exception on edit: " + eee.getMessage(), eee);
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                setError(1, ex.getMessage(), doh.getObjectName());
-                LOG.error("Exception on edit: " + ex, ex);
-                return false;
-            }
-        }
-        else
-        {
-            setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-            LOG.error("Internal error on edit: " + obj);
-            return false;
-        }
-
+        return this.db.edit(obj);
     }
 
 
@@ -246,27 +153,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
      */
     public boolean editHibernate(Object obj)
     {
-
-        LOG.info("editHibernate::" + obj.toString());
-
-        try
-        {
-            Session sess = getSession();
-            Transaction tx = sess.beginTransaction();
-
-            sess.update(obj);
-
-            tx.commit();
-
-            return true;
-        }
-        catch (Exception ex)
-        {
-            LOG.error("Exception on editHibernate: " + ex, ex);
-            // ex.printStackTrace();
-            return false;
-        }
-
+        return this.db.editHibernate(obj);
     }
 
 
@@ -278,27 +165,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
      */
     public boolean deleteHibernate(Object obj)
     {
-
-        LOG.info("deleteHibernate::" + obj.toString());
-
-        try
-        {
-            Session sess = getSession();
-            Transaction tx = sess.beginTransaction();
-
-            sess.delete(obj);
-
-            tx.commit();
-
-            return true;
-        }
-        catch (Exception ex)
-        {
-            LOG.error("Exception on deleteHibernate: " + ex, ex);
-            // ex.printStackTrace();
-            return false;
-        }
-
+        return this.db.deleteHibernate(obj);
     }
 
 
@@ -310,45 +177,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
      */
     public boolean get(Object obj)
     {
-
-        if (obj instanceof DatabaseObjectHibernate)
-        {
-            DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-
-            LOG.info(doh.getObjectName() + "::DbGet");
-
-            try
-            {
-                doh.DbGet(getSession());
-                return true;
-            }
-            catch (SQLException ex)
-            {
-                setError(1, ex.getMessage(), doh.getObjectName());
-                LOG.error("SQLException on get: " + ex, ex);
-                Exception eee = ex.getNextException();
-
-                if (eee != null)
-                {
-                    LOG.error("Nested Exception on get: " + eee.getMessage(), eee);
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                setError(1, ex.getMessage(), doh.getObjectName());
-                LOG.error("Exception on get: " + ex, ex);
-                return false;
-            }
-
-        }
-        else
-        {
-            setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-            LOG.error("Internal error on get: " + obj);
-            return false;
-        }
-
+        return this.db.get(obj);
     }
 
 
@@ -360,54 +189,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
      */
     public boolean delete(Object obj)
     {
-
-        if (obj instanceof DatabaseObjectHibernate)
-        {
-            DatabaseObjectHibernate doh = (DatabaseObjectHibernate) obj;
-
-            LOG.info(doh.getObjectName() + "::DbDelete");
-
-            try
-            {
-
-                if (doh.DbHasChildren(getSession()))
-                {
-                    setError(-3, "Object has children object", doh.getObjectName());
-                    LOG.error(doh.getObjectName() + " had Children objects");
-                    return false;
-                }
-
-                doh.DbDelete(getSession());
-
-                return true;
-            }
-            catch (SQLException ex)
-            {
-                setError(1, ex.getMessage(), doh.getObjectName());
-                LOG.error("SQLException on delete: " + ex, ex);
-                Exception eee = ex.getNextException();
-
-                if (eee != null)
-                {
-                    LOG.error("Nested Exception on delete: " + eee.getMessage(), eee);
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                setError(1, ex.getMessage(), doh.getObjectName());
-                LOG.error("Exception on delete: " + ex, ex);
-                return false;
-            }
-
-        }
-        else
-        {
-            setError(-2, "Object is not DatabaseObjectHibernate instance", "GGCDb");
-            LOG.error("Internal error on delete: " + obj);
-            return false;
-        }
-
+        return this.db.delete(obj);
     }
 
 
@@ -417,7 +199,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
      */
     public String addGetId()
     {
-        return this.m_addId;
+        return this.db.addGetId();
     }
 
 
@@ -428,7 +210,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
      */
     public int getErrorCode()
     {
-        return this.m_errorCode;
+        return this.db.getErrorCode();
     }
 
 
@@ -439,7 +221,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
      */
     public String getErrorDescription()
     {
-        return this.m_errorDesc;
+        return this.db.getErrorDescription();
     }
 
 
@@ -452,8 +234,7 @@ public abstract class PluginDb implements GraphDbDataRetriever
      */
     public void setError(int code, String desc, String source)
     {
-        this.m_errorCode = code;
-        this.m_errorDesc = source + " : " + desc;
+        this.db.setError(code, desc, source);
     }
 
 
@@ -500,6 +281,72 @@ public abstract class PluginDb implements GraphDbDataRetriever
         LOG.debug("Found " + listCGMSData.size() + " entries.");
 
         return listCGMSData;
+    }
+
+
+    public <E extends HibernateObject> List<E> getHibernateData(Class<E> clazz, //
+            List<? extends Criterion> criterionList, //
+            int sessionNumber)
+    {
+        return getHibernateData(clazz, criterionList, null, sessionNumber);
+    }
+
+
+    public <E extends HibernateObject> List<E> getHibernateData(Class<E> clazz, //
+            List<? extends Criterion> criterionList)
+    {
+        return getHibernateData(clazz, criterionList, null, 1);
+    }
+
+
+    public <E extends HibernateObject> List<E> getHibernateData(Class<E> clazz, //
+            List<? extends Criterion> criterionList, //
+            List<Order> orderList)
+    {
+        return getHibernateData(clazz, criterionList, orderList, 1);
+    }
+
+
+    public <E extends HibernateObject> List<E> getHibernateData(Class<E> clazz, //
+            List<? extends Criterion> criterionList, //
+            List<Order> orderList, //
+            int sessionNumber)
+    {
+        return this.db.getHibernateData(clazz, criterionList, orderList, sessionNumber);
+    }
+
+
+    /**
+     * Get All Elements Count
+     *
+     * @return
+     */
+    public int getAllElementsCount(Class<? extends HibernateObject> hibernateClazz, //
+            List<? extends Criterion> criterionList)
+    {
+        try
+        {
+            int sum_all = 0;
+
+            Criteria criteria = this.getSession().createCriteria(hibernateClazz);
+            criteria.add(Restrictions.eq("personId", (int) dataAccess.getCurrentUserId()));
+            criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
+
+            for (Criterion criterion : criterionList)
+            {
+                criteria.add(criterion);
+            }
+
+            criteria.setProjection(Projections.rowCount());
+            Integer in = (Integer) criteria.list().get(0);
+            return in.intValue();
+        }
+        catch (Exception ex)
+        {
+            LOG.error("getAllElementsCount: " + ex, ex);
+            ex.printStackTrace();
+            return 0;
+        }
     }
 
 }

@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
 
+import ggc.plugin.device.impl.minimed.data.MinimedCommandTypeInterface;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       GGC PlugIn Base (base class for all plugins)
@@ -35,7 +37,7 @@ import org.apache.commons.lang.NotImplementedException;
 
 // Lot of stuff in here is legacy stuff for CareLink(1). We should remove it in
 // future.
-public enum MinimedCommandType implements Serializable
+public enum MinimedCommandType implements Serializable, MinimedCommandTypeInterface
 {
     // All (9)
     CommandAck(6, "Acknowledge", MinimedTargetType.ActionCommand, MinimedDeviceType.All,
@@ -86,7 +88,7 @@ public enum MinimedCommandType implements Serializable
             MinimedCommandParameterType.NoParameters), // init
 
     RealTimeClock(112, "Real Time Clock", MinimedTargetType.PumpConfiguration, MinimedDeviceType.All,
-            MinimedCommandParameterType.NoParameters), //
+            MinimedCommandParameterType.NoParameters), // 0x70
 
     BatteryStatus(127, "Read Battery Status", MinimedTargetType.PumpConfiguration, MinimedDeviceType.All,
             MinimedCommandParameterType.NoParameters), //
@@ -98,7 +100,7 @@ public enum MinimedCommandType implements Serializable
             MinimedCommandParameterType.NoParameters), //
 
     HistoryData_511(128, "History data", MinimedTargetType.PumpData, MinimedDeviceType.Minimed_511,
-            MinimedCommandParameterType.SubCommands, 1024, 32, 0), //
+            MinimedCommandParameterType.SubCommands, 1024, 32, 0), // 0x80
 
     Profile_STD_511(122, "Profile Standard", MinimedTargetType.PumpDataAndConfiguration, MinimedDeviceType.Minimed_511,
             MinimedCommandParameterType.NoParameters, 128, 1, 8), // FIXME_
@@ -115,12 +117,12 @@ public enum MinimedCommandType implements Serializable
 
     SetTemporaryBasal(76, "Set Temp Basal Rate (bolus detection only)", MinimedTargetType.InitCommand,
             MinimedDeviceType.Minimed_512andHigher, MinimedCommandParameterType.NoParameters, getByteArray(0, 0, 0)),
-            // util.getCommand(MinimedCommand.SET_TEMPORARY_BASAL).allowedRetries
-            // = 0;
+    // util.getCommand(MinimedCommand.SET_TEMPORARY_BASAL).allowedRetries
+    // = 0;
 
     // 512 Config
     PumpModel(141, "Pump Model", MinimedTargetType.PumpConfiguration, MinimedDeviceType.Minimed_512andHigher,
-            MinimedCommandParameterType.NoParameters), //
+            MinimedCommandParameterType.NoParameters), // 0x8D
 
     BGTargets_512(140, "BG Targets", MinimedTargetType.PumpConfiguration, MinimedDeviceType.Minimed_512_712,
             MinimedCommandParameterType.NoParameters), //
@@ -148,7 +150,7 @@ public enum MinimedCommandType implements Serializable
 
     // 512 Data
     HistoryData(128, "History data", MinimedTargetType.PumpData, MinimedDeviceType.Minimed_512andHigher,
-            MinimedCommandParameterType.SubCommands, 1024, 36, 0), //
+            MinimedCommandParameterType.SubCommands, 1024, 36, 0), // 0x80
     // new MinimedCommandHistoryData(36)
 
     Profile_STD(146, "Profile Standard", MinimedTargetType.PumpConfiguration, MinimedDeviceType.Minimed_512andHigher,
@@ -223,6 +225,24 @@ public enum MinimedCommandType implements Serializable
     // 553
     // 554
 
+    // var MESSAGES = {
+    // READ_TIME : 0x70,
+    // READ_BATTERY_STATUS: 0x72,
+    // READ_HISTORY : 0x80,
+    // READ_CARB_RATIOS : 0x8A,
+    // READ_INSULIN_SENSITIVITIES: 0x8B,
+    // READ_MODEL : 0x8D,
+    // READ_PROFILE_STD : 0x92,
+    // READ_PROFILE_A : 0x93,
+    // READ_PROFILE_B : 0x94,
+    // READ_CBG_HISTORY: 0x9A,
+    // READ_ISIG_HISTORY: 0x9B,
+    // READ_CURRENT_PAGE : 0x9D,
+    // READ_BG_TARGETS : 0x9F,
+    // READ_SETTINGS : 0xC0, 192
+    // READ_CURRENT_CBG_PAGE : 0xCD
+    // };
+
     ;
 
     public int commandCode = 0;
@@ -261,7 +281,6 @@ public enum MinimedCommandType implements Serializable
     public int minimalBufferSizeToStartReading = 14;
 
     public byte weirdByte;
-
 
     // public boolean hasSubCommands = false;
 

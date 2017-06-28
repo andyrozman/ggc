@@ -83,4 +83,16 @@ public abstract class SerialDeviceReader extends AbstractDeviceReader
 
     }
 
+
+    public String getPortName()
+    {
+        return this.portName;
+    }
+
+
+    public OutputWriter getOutputWriter()
+    {
+        return this.outputWriter;
+    }
+
 }

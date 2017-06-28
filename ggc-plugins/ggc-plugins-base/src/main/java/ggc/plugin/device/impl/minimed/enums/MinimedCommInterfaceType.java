@@ -47,8 +47,9 @@ public enum MinimedCommInterfaceType
     CareLinkUSB("Medtronic CareLink USB", true), //
 
     // Contour Next Link
-    ContourUSBNextLink("Contour Next Link", false), //
-    ContourUSBNextLink24("Contour Next Link 2.4", false), //
+    ContourNextLink1("Contour Next Link 1", false), //
+    ContourNextLink2("Contour Next Link 2", false), //
+    ContourNextLink24("Contour Next Link 2.4", false), //
     ;
 
     static Map<String, MinimedCommInterfaceType> mapByName;
@@ -56,7 +57,6 @@ public enum MinimedCommInterfaceType
     static List<MinimedCommInterfaceType> supportedInterfaces;
     String description;
     boolean supported;
-
 
     static
     {

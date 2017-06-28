@@ -88,7 +88,7 @@ public class IBMCommunicationHandler extends SerialCommunicationAbstract impleme
 
     private static final Logger LOG = LoggerFactory.getLogger(IBMCommunicationHandler.class);
 
-    // protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
+    // protected I18nControlAbstract i18nControl = null; //I18nControl.getInstance();
     // protected DataAccessPlugInBase dataAccess = null;
     // //DataAccessMeter.getInstance();
 
@@ -249,7 +249,7 @@ public class IBMCommunicationHandler extends SerialCommunicationAbstract impleme
             return isPortOpen;
 
         // if (portIdentifier == null)
-        // throw new ImportException(m_ic.getMessage("NO_COM_PORT_SPECIFIED"));
+        // throw new ImportException(i18nControl.getMessage("NO_COM_PORT_SPECIFIED"));
 
         try
         {

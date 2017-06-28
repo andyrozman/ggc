@@ -88,7 +88,7 @@ public class DeviceIdentification
     // DataAccessPlugInBase da
 
 
-    // I18nControlAbstract m_ic;
+    // I18nControlAbstract i18nControl;
 
     /**
      * Constructor 
@@ -121,7 +121,7 @@ public class DeviceIdentification
     public String getInformation(String prefix)
     {
         StringBuffer sb = new StringBuffer();
-        // I18nControlAbstract m_ic =
+        // I18nControlAbstract i18nControl =
         // DataAccess.getInstance().getI18nControlInstance();
 
         sb.append(prefix);
@@ -165,7 +165,7 @@ public class DeviceIdentification
             return this.getShortInformationFile();
 
         StringBuffer sb = new StringBuffer();
-        // I18nControlAbstract m_ic =
+        // I18nControlAbstract i18nControl =
         // DataAccess.getInstance().getI18nControlInstance();
 
         sb.append(this.company);
@@ -205,7 +205,7 @@ public class DeviceIdentification
     private String getShortInformationFile()
     {
         StringBuffer sb = new StringBuffer();
-        // I18nControlAbstract m_ic =
+        // I18nControlAbstract i18nControl =
         // DataAccess.getInstance().getI18nControlInstance();
 
         sb.append(this.company);

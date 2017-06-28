@@ -48,7 +48,7 @@ import ggc.core.data.DailyValuesRow;
 import ggc.core.data.GlucoValues;
 import ggc.core.data.PlotData;
 import ggc.core.data.ReadablePlotData;
-import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 import ggc.core.util.MathUtils;
 
 /**

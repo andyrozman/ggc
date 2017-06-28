@@ -30,6 +30,7 @@ import ggc.plugin.manager.DeviceImplementationStatus;
 
 public enum DeviceCompanyDefinition
 {
+    NoCompany(0, "No Company", "", DeviceImplementationStatus.NotAvailable), //
 
     // 1xx = Meter
     Ascensia(101, "Ascensia/Bayer", "", DeviceImplementationStatus.Done), //

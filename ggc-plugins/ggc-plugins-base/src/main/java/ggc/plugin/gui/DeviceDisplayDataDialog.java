@@ -80,18 +80,18 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     boolean indeterminate = false;
 
     /*
-     * public String statuses[] = { m_ic.getMessage("STATUS_NONE"),
-     * m_ic.getMessage("STATUS_READY"), m_ic.getMessage("STATUS_DOWNLOADING"),
-     * m_ic.getMessage("STATUS_STOPPED_DEVICE"),
-     * m_ic.getMessage("STATUS_STOPPED_USER"),
-     * m_ic.getMessage("STATUS_DOWNLOAD_FINISHED"),
-     * m_ic.getMessage("STATUS_READER_ERROR"), };
+     * public String statuses[] = { i18nControl.getMessage("STATUS_NONE"),
+     * i18nControl.getMessage("STATUS_READY"), i18nControl.getMessage("STATUS_DOWNLOADING"),
+     * i18nControl.getMessage("STATUS_STOPPED_DEVICE"),
+     * i18nControl.getMessage("STATUS_STOPPED_USER"),
+     * i18nControl.getMessage("STATUS_DOWNLOAD_FINISHED"),
+     * i18nControl.getMessage("STATUS_READER_ERROR"), };
      */
 
 
     /*
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da) { super();
-     * this.dataAccess = da; this.m_ic = da.getI18nControlInstance();
+     * this.dataAccess = da; this.i18nControl = da.getI18nControlInstance();
      * //this.loadConfiguration();
      * this.mrr = new DeviceReaderRunner(dataAccess, this.configured_meter,
      * this);
@@ -135,7 +135,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * {
      * super(parent, "", true);
      * this.dataAccess = da;
-     * this.m_ic = da.getI18nControlInstance();
+     * this.i18nControl = da.getI18nControlInstance();
      * //this.m_parent_d = parent;
      * this.deviceDataHandler = ddh;
      * this.deviceDataHandler.dialog_data = this;
@@ -172,7 +172,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     /*
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry
      * mce) { super();
-     * this.dataAccess = da; this.m_ic = da.getI18nControlInstance();
+     * this.dataAccess = da; this.i18nControl = da.getI18nControlInstance();
      * this.configured_meter = mce;
      * this.mrr = new DeviceReaderRunner(dataAccess, this.configured_meter,
      * this);
@@ -184,7 +184,7 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
      * public DeviceDisplayDataDialog(DataAccessPlugInBase da, DeviceConfigEntry
      * mce, Hashtable<String,?> meter_data, DevicePlugInServer server) {
      * super();
-     * this.dataAccess = da; this.m_ic = da.getI18nControlInstance();
+     * this.dataAccess = da; this.i18nControl = da.getI18nControlInstance();
      * this.configured_meter = mce; this.meter_data = meter_data;
      * this.mrr = new DeviceReaderRunner(dataAccess, this.configured_meter,
      * this);
@@ -400,11 +400,11 @@ public class DeviceDisplayDataDialog extends JDialog implements ActionListener, 
     public static final int FILTER_ALL_BUT_EXISTING = 6;
 
     /*
-     * String[] filter_states = { m_ic.getMessage("FILTER_ALL"),
-     * m_ic.getMessage("FILTER_NEW"), m_ic.getMessage("FILTER_CHANGED"),
-     * m_ic.getMessage("FILTER_EXISTING"), m_ic.getMessage("FILTER_UNKNOWN"),
-     * m_ic.getMessage("FILTER_NEW_CHANGED"),
-     * m_ic.getMessage("FILTER_ALL_BUT_EXISTING") };
+     * String[] filter_states = { i18nControl.getMessage("FILTER_ALL"),
+     * i18nControl.getMessage("FILTER_NEW"), i18nControl.getMessage("FILTER_CHANGED"),
+     * i18nControl.getMessage("FILTER_EXISTING"), i18nControl.getMessage("FILTER_UNKNOWN"),
+     * i18nControl.getMessage("FILTER_NEW_CHANGED"),
+     * i18nControl.getMessage("FILTER_ALL_BUT_EXISTING") };
      */
     JComboBox filter_combo;
     JButton sel_all, unsel_all;

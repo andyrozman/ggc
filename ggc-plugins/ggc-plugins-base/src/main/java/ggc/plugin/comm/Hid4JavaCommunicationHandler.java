@@ -25,16 +25,24 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
 
     List<USBDevice> allowedDevices;
     HidDevice hidDevice = null;
-    USBDevice selectedDevice;
+    private USBDevice selectedDevice;
     int timeoutMs = 100;
-    private USBDevice targetDevice;
+    private USBDevice targetDevice; // FIXME we may need to support serialNumber
+                                    // of device in future
+    HidServices hidServices;
 
 
     public boolean connectAndInitDevice() throws PlugInBaseException
     {
         LOG.debug("connectAndInitDevice - USB/Hid");
 
-        HidServices hidServices;
+        // 0.5
+        // HidServicesSpecification hidServicesSpecification = new
+        // HidServicesSpecification();
+        // hidServicesSpecification.setAutoShutdown(true);
+        // hidServicesSpecification.setScanInterval(500);
+        // hidServicesSpecification.setPauseInterval(5000);
+        // hidServicesSpecification.setScanMode(ScanMode.SCAN_AT_FIXED_INTERVAL_WITH_PAUSE_AFTER_WRITE);
 
         try
         {
@@ -61,44 +69,14 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
 
     private HidDevice findHidDevice(HidServices hidServices) throws PlugInBaseException
     {
-        // // 0.3.1
-        //
-        // HidDeviceInfo selHidDeviceInfo = null;
-        //
-        // // Provide a list of attached devices
-        // for (HidDeviceInfo hidDeviceInfo :
-        // hidServices.getAttachedHidDevices())
-        // {
-        // if (isCorrectDevice(hidDeviceInfo.getVendorId(),
-        // hidDeviceInfo.getProductId()))
-        // {
-        // selHidDeviceInfo = hidDeviceInfo;
-        // }
-        // }
-        //
-        // if (selHidDeviceInfo == null)
-        // {
-        // throw new PlugInBaseException(PlugInExceptionType.DeviceNotFound);
-        // }
-        //
-        // hidDevice = hidServices.getHidDevice(selectedDevice.getVendorId(),
-        // selectedDevice.getProductId(), null);
-        //
-        // if (hidDevice == null)
-        // {
-        // LOG.error("Device could not be opened.");
-        // throw new
-        // PlugInBaseException(PlugInExceptionType.DeviceCouldNotBeContacted);
-        // }
-
         // 0.4.x
         HidDevice selHidDeviceInfo = null;
 
         // Provide a list of attached devices
         for (HidDevice hidDeviceInfo : hidServices.getAttachedHidDevices())
         {
-            System.out.println(hidDeviceInfo);
-            if (isInAllowedDevicesList(hidDeviceInfo.getVendorId(), hidDeviceInfo.getProductId()))
+            LOG.debug("Attached USB Device: " + hidDeviceInfo);
+            if (isCorrectDevice(hidDeviceInfo.getVendorId(), hidDeviceInfo.getProductId()))
             {
                 selHidDeviceInfo = hidDeviceInfo;
             }
@@ -107,6 +85,10 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
         if (selHidDeviceInfo == null)
         {
             throw new PlugInBaseException(PlugInExceptionType.DeviceNotFound);
+        }
+        else
+        {
+            LOG.info("Device Selected: " + selHidDeviceInfo);
         }
 
         hidDevice = selHidDeviceInfo;
@@ -169,8 +151,17 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
 
     public void disconnectDevice()
     {
-        this.hidDevice.close();
-        this.hidDevice = null;
+        if (this.hidDevice != null)
+        {
+            this.hidDevice.close();
+
+            this.hidDevice = null;
+
+        }
+
+        if (this.hidServices != null)
+            this.hidServices.shutdown(); // clean shutdown
+
     }
 
 
@@ -198,6 +189,12 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
     }
 
 
+    public int read(byte[] buffer, int timeout) throws PlugInBaseException
+    {
+        return this.hidDevice.read(buffer, timeout);
+    }
+
+
     public int read(byte[] b, int off, int len) throws PlugInBaseException
     {
         return 0;
@@ -211,6 +208,7 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
 
     public void write(byte[] buffer) throws PlugInBaseException
     {
+        this.hidDevice.write(buffer, buffer.length, this.selectedDevice.getReportId());
     }
 
 
@@ -331,5 +329,11 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
             LOG.debug("Target device address is invalid: " + targetDevice);
         }
 
+    }
+
+
+    public USBDevice getSelectedDevice()
+    {
+        return selectedDevice;
     }
 }

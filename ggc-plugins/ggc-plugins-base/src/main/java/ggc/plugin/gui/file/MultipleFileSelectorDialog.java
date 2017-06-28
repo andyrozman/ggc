@@ -89,10 +89,10 @@ public class MultipleFileSelectorDialog extends AbstractFileSelectorDialog
         this.helpButton = ATSwingUtils.createHelpIconByBounds(50, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
         this.add(helpButton); // 60, 25
 
-        ATSwingUtils.getButton("" /* m_ic.getMessage("CANCEL") */, 120, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL,
+        ATSwingUtils.getButton("" /* i18nControl.getMessage("CANCEL") */, 120, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
 
-        ATSwingUtils.getButton("" /* m_ic.getMessage("NEXT") */, 290, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL,
+        ATSwingUtils.getButton("" /* i18nControl.getMessage("NEXT") */, 290, 230, 60, 25, this, ATSwingUtils.FONT_NORMAL,
             "nav_right_blue.png", "next", this, m_da);
 
         this.setBounds(0, 0, 400, 320);

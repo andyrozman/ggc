@@ -71,6 +71,7 @@ public class MinimedUtil
     private static Map<MinimedConverterType, MinimedDataConverter> pumpConverterMap = new HashMap<MinimedConverterType, MinimedDataConverter>();
     private static Map<MinimedConverterType, MinimedDataConverter> cgmsConverterMap = new HashMap<MinimedConverterType, MinimedDataConverter>();
     private static Map<MinimedTargetType, MinimedHistoryDecoder> recordsDecoderMap = new HashMap<MinimedTargetType, MinimedHistoryDecoder>();
+    // private static MedtronicCnlSession medtronicCnlSession;
 
 
     public static OutputWriter getOutputWriter()
@@ -128,6 +129,11 @@ public class MinimedUtil
                 || (connectionParameters.interfaceType == MinimedCommInterfaceType.ParadigmLinkUSB))
         {
             paradigmLink = true;
+        }
+        else if ((connectionParameters.interfaceType == MinimedCommInterfaceType.ContourNextLink2)
+                || (connectionParameters.interfaceType == MinimedCommInterfaceType.ContourNextLink24))
+        {
+            bitUtils.computeCRC8WithPolynomialInit(0x9b, 0, null);
         }
 
         serialNumber = connectionParameters.serialNumber;
@@ -404,4 +410,16 @@ public class MinimedUtil
     {
         MinimedUtil.lowLevelDebugData = lowLevelDebugData;
     }
+
+    // public static void setMedtronicCnlSession(
+    // MedtronicCnlSession medtronicCnlSession)
+    // {
+    // MinimedUtil.medtronicCnlSession = medtronicCnlSession;
+    // }
+    //
+    //
+    // public static MedtronicCnlSession getMedtronicCnlSession()
+    // {
+    // return medtronicCnlSession;
+    // }
 }

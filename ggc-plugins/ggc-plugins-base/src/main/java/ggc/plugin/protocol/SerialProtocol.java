@@ -224,7 +224,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
      * if (isPortOpen)
      * return isPortOpen;
      * //if (portIdentifier == null)
-     * // throw new ImportException(m_ic.getMessage("NO_COM_PORT_SPECIFIED"));
+     * // throw new ImportException(i18nControl.getMessage("NO_COM_PORT_SPECIFIED"));
      * try
      * {
      * System.out.println("SerialProtocol: open() - Start");
@@ -319,7 +319,7 @@ public abstract class SerialProtocol extends DeviceAbstract implements SerialPor
             return isPortOpen;
 
         // if (portIdentifier == null)
-        // throw new ImportException(m_ic.getMessage("NO_COM_PORT_SPECIFIED"));
+        // throw new ImportException(i18nControl.getMessage("NO_COM_PORT_SPECIFIED"));
 
         try
         {

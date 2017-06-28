@@ -217,8 +217,8 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
         // Info
         /*
-         * label = new JLabel(String.format(m_ic.getMessage("DEVICE_INFO"),
-         * m_ic.getMessage("DEVICE_NAME_BIG")) + ":");
+         * label = new JLabel(String.format(i18nControl.getMessage("DEVICE_INFO"),
+         * i18nControl.getMessage("DEVICE_NAME_BIG")) + ":");
          * label.setBounds(30, 310, 310, 25);
          * label.setFont(normal_b);
          * panel.add(label);
@@ -226,7 +226,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
 
         /*
          * // reading old data
-         * label = new JLabel(m_ic.getMessage("READING_OLD_DATA") + ":");
+         * label = new JLabel(i18nControl.getMessage("READING_OLD_DATA") + ":");
          * label.setBounds(30, 425, 250, 25); // 420
          * label.setFont(normal_b);
          * panel.add(label);
@@ -272,7 +272,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
         bt_close.addActionListener(this);
         panel.add(bt_close);
         /*
-         * bt_import = new JButton(m_ic.getMessage("EXPORT_DATA"));
+         * bt_import = new JButton(i18nControl.getMessage("EXPORT_DATA"));
          * bt_import.setBounds(270+wide_add, 300, 170, 25); // 270
          * bt_import.setActionCommand("export_data");
          * bt_import.addActionListener(this);
@@ -626,7 +626,7 @@ public class DeviceDisplayConfigDialog extends JDialog implements ActionListener
      */
     public void setDeviceComment(String text)
     {
-        // this.lbl_comment.setText(m_ic.getMessage(text));
+        // this.lbl_comment.setText(i18nControl.getMessage(text));
     }
 
 

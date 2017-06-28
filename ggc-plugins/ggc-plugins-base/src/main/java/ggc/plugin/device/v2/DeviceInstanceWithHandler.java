@@ -206,14 +206,51 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
     public void readDeviceData(Object connectionParameters, OutputWriter outputWriter) throws PlugInBaseException
     {
         checkIfOperationIsAllowed(DownloadSupportType.DownloadData);
-        this.deviceHandler.readDeviceData(getDeviceDefinitionBase(), connectionParameters, outputWriter);
+
+        try
+        {
+            this.deviceHandler.readDeviceData(getDeviceDefinitionBase(), connectionParameters, outputWriter);
+        }
+        catch (PlugInBaseException e)
+        {
+            throw e;
+        }
+        finally
+        {
+            this.closeDevice();
+        }
     }
 
 
     public void readConfiguration(Object connectionParameters, OutputWriter outputWriter) throws PlugInBaseException
     {
         checkIfOperationIsAllowed(DownloadSupportType.DownloadConfig);
-        this.deviceHandler.readConfiguration(getDeviceDefinitionBase(), connectionParameters, outputWriter);
+        try
+        {
+            this.deviceHandler.readConfiguration(getDeviceDefinitionBase(), connectionParameters, outputWriter);
+        }
+        catch (PlugInBaseException e)
+        {
+            throw e;
+        }
+        finally
+        {
+            this.closeDevice();
+        }
+    }
+
+
+    public void closeDevice()
+    {
+        try
+        {
+            this.deviceHandler.closeDevice();
+        }
+        catch (PlugInBaseException ex)
+        {
+            LOG.warn("Error closing device: {}", ex.getMessage(), ex);
+        }
+
     }
 
 

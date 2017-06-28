@@ -251,12 +251,12 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     protected GraphContext graphContext;
     protected DevicePluginDefinitionAbstract pluginDefinition;
 
-
     // protected DevicePluginDefinitionAbstract devicePluginDefinition;
 
     // ********************************************************
     // ****** Constructors and Access methods *****
     // ********************************************************
+
 
     // Constructor: DataAccessPlugInBase
     /**
@@ -298,6 +298,13 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
 
         loadIcons();
         this.loadWebLister();
+    }
+
+
+    @Override
+    protected void initDataDefinitionManager()
+    {
+
     }
 
 
@@ -1246,8 +1253,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
 
                 if (this.selectedDeviceInstanceV2 == null)
                 {
-                    this.selectedDeviceInstanceV1 = this.getManager()
-                            .getDeviceV1(dce.device_company, dce.device_device);
+                    this.selectedDeviceInstanceV1 = this.getManager().getDeviceV1(dce.device_company,
+                        dce.device_device);
                 }
 
                 this.deviceSource = dce.device_company + " " + dce.device_device;
@@ -1594,6 +1601,9 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
                 "Helper Library for Swing/Hibernate/SQL...", //
                 "Copyright (c) 2006-2015 Atech Software Ltd. All rights reserved."));
 
+        if (!pluginDefinition.isUseBaseLibraries())
+            return lst_libs;
+
         lst_libs.add(new LibraryInfoEntry("dom4j", //
                 "1.6.1", //
                 "http://www.dom4j.org/", //
@@ -1716,7 +1726,6 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
         return this.getPlugInDb();
     }
 
-
     /**
      * Get Graph Context
      *
@@ -1726,6 +1735,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     // {
     // return this.graph_context;
     // }
+
 
     // ********************************************************
     // ****** New Implementations *****
@@ -1770,4 +1780,42 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
 
     }
 
+
+    @Override
+    public void initObserverManager()
+    {
+    }
+
+
+    /**
+     * Get Float As String
+     *
+     * @param f
+     * @param decimalPlaces
+     * @return
+     */
+    public String getFloatAsString(float f, String decimalPlaces)
+    {
+        return getFloatAsString(f, Integer.parseInt(decimalPlaces));
+    }
+
+
+    /**
+     * Get Float As String
+     *
+     * @param f
+     * @param decimalPlaces
+     * @return
+     */
+    public String getFloatAsString(float f, int decimalPlaces)
+    {
+        return getDecimalHandler().getDecimalNumberAsString(f, decimalPlaces);
+    }
+
+
+    @Override
+    protected void initInternalSettings()
+    {
+
+    }
 }

@@ -2,6 +2,17 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+1.2.4 [26.6.2017]
+- extended Hid4Java Communication handler
+- extended IBMCommunicationHandler
+- extended DeviceCompanyDefinition and DeviceHandlerType with None option
+- added ASCII enum
+- refactor PluginDb o not to duplicate code from HibernateDb
+- extended Minimed implementation for new modules
+- extended some of Readers
+- refactorings
+
+
 1.2.3 [25.12.2016]
 - refactoring AccuChek meters to MeterInterface V2
 

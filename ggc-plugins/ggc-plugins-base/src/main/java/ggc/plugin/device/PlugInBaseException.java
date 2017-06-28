@@ -138,12 +138,17 @@ public class PlugInBaseException extends Exception
     }
 
 
-    public PlugInBaseException(PlugInExceptionType exceptionType, Exception ex)
+    public PlugInBaseException(PlugInExceptionType exceptionType, Throwable ex)
     {
         super(PlugInBaseException.createMessage(exceptionType, null), ex);
         this.setExceptionType(exceptionType);
     }
 
+    public PlugInBaseException(PlugInExceptionType exceptionType, Exception ex)
+    {
+        super(PlugInBaseException.createMessage(exceptionType, null), ex);
+        this.setExceptionType(exceptionType);
+    }
 
     public PlugInBaseException(PlugInExceptionType exceptionType, Object[] parameters)
     {

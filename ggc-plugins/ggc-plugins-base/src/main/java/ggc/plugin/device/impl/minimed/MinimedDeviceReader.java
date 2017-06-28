@@ -135,6 +135,13 @@ public class MinimedDeviceReader extends AbstractDeviceReader
     }
 
 
+    @Override
+    public void closeDevice() throws PlugInBaseException
+    {
+        // close is handled internally
+    }
+
+
     public void customInitAndChecks() throws PlugInBaseException
     {
     }

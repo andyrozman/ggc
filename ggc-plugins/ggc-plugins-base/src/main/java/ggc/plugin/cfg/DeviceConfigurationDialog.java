@@ -189,7 +189,7 @@ public class DeviceConfigurationDialog extends JDialog
         showDevice();
 
         // FIXME
-        // this.comm_port_comp.setCommunicationPort(m_ic.getMessage("NOT_SET"));
+        // this.comm_port_comp.setCommunicationPort(i18nControl.getMessage("NOT_SET"));
         this.comm_settings.setParameters(null);
 
         if (!dcd.doesDeviceSupportTimeFix())
@@ -292,7 +292,7 @@ public class DeviceConfigurationDialog extends JDialog
         /*
          * JPanel pan_comm_settings = ATSwingUtils.getPanel(20, 250, 410, 80,
          * null,
-         * new TitledBorder(m_ic.getMessage("COMMUNICATION_SETTINGS")),
+         * new TitledBorder(i18nControl.getMessage("COMMUNICATION_SETTINGS")),
          * main_panel);
          * this.comm_port_comp = new CommunicationPortComponent(dataAccess,
          * this);

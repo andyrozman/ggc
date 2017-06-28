@@ -141,6 +141,13 @@ public interface DeviceInterfaceV2 extends SelectableInterfaceV2
 
 
     /**
+     * Close device (it should be used internaly only, by readDeviceData or readConfiguration) in
+     * case of exception.
+     */
+    void closeDevice();
+
+
+    /**
      * getDeviceSpecialComment - special comment for device (this is needed in case that we need to display
      *    special comment about device (for example pix device, doesn't display anything till the end, which
      *    would be nice if user knew. 
@@ -274,6 +281,6 @@ public interface DeviceInterfaceV2 extends SelectableInterfaceV2
     /**
      * Pre Init Device - Does preinit
      */
-    void preInitDevice();
+    void preInitDevice() throws PlugInBaseException;
 
 }

@@ -1,9 +1,6 @@
 package ggc.plugin.data;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import com.atech.db.DbDataReaderAbstract;
 import com.atech.db.DbDataReadingFinishedInterface;
@@ -56,7 +53,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
     protected OutputWriter m_output_writer;
     protected DeviceConfigEntry configured_device;
     protected DbDataReaderAbstract m_reader;
-    protected Hashtable<String, DeviceValuesEntryInterface> old_data;
+    protected Map<String, DeviceValuesEntryInterface> old_data;
     protected StatusReporterInterface export_dialog;
     DbDataReadingFinishedInterface m_reading_inst = null;
     protected DeviceValuesTableModel m_model;
@@ -221,7 +218,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      * 
      * @return Hashtable with old data
      */
-    public Hashtable<String, DeviceValuesEntryInterface> getOldData()
+    public Map<String, DeviceValuesEntryInterface> getOldData()
     {
         return this.old_data;
     }
@@ -356,7 +353,7 @@ public abstract class DeviceDataHandler implements DbDataReadingFinishedInterfac
      * 
      * @param data data as Hashtable<String,?> data
      */
-    public void setDeviceData(Hashtable<String, DeviceValuesEntryInterface> data)
+    public void setDeviceData(Map<String, DeviceValuesEntryInterface> data)
     {
         if (data == null || data.size() == 0)
         {

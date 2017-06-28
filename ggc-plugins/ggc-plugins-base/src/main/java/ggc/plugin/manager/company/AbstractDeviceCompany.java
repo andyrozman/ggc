@@ -38,7 +38,7 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
                                                                               // SelectableInterface
 {
 
-    // protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
+    // protected I18nControlAbstract i18nControl = null; //I18nControl.getInstance();
 
     protected String id = "";
     protected String name = "";
@@ -60,7 +60,7 @@ public abstract class AbstractDeviceCompany implements DeviceCompanyInterface //
      */
     public AbstractDeviceCompany(/* I18nControlAbstract i18nControlAbstract */)
     {
-        // this.m_ic = i18nControlAbstract;
+        // this.i18nControl = i18nControlAbstract;
     }
 
     /**

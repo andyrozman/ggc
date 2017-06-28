@@ -53,4 +53,10 @@ public abstract class DeviceHandlerAbstract implements DeviceHandler
         return null;
     }
 
+
+    public boolean isEnabled()
+    {
+        return true;
+    }
+
 }

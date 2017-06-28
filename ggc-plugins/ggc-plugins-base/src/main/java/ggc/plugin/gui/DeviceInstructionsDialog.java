@@ -109,7 +109,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
      * {
      * super();
      * this.dataAccess = da;
-     * this.m_ic = da.getI18nControlInstance();
+     * this.i18nControl = da.getI18nControlInstance();
      * //this.m_dtd = DeviceTransferData.getInstance();
      * this.deviceDataHandler = dataAccess.getDeviceDataHandler();
      * this.deviceDataHandler.setTransferType(continued_type);
@@ -238,7 +238,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         // DownloadSupportType.DOWNLOAD_SUPPORT_NA_DEVICE))
         // {
         // String msg =
-        // String.format(m_ic.getMessage("DEVICE_HAS_NO_DOWNLOAD_SUPPORT"),
+        // String.format(i18nControl.getMessage("DEVICE_HAS_NO_DOWNLOAD_SUPPORT"),
         // this.configured_device.device_device,
         // this.configured_device.device_company);
         // showWarningDialog(msg);
@@ -255,7 +255,7 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         // else if (DownloadSupportType.isOptionSet(status,
         // DownloadSupportType.DOWNLOAD_SUPPORT_NA_GENERIC_DEVICE))
         // {
-        // showWarningDialog(m_ic.getMessage("DEVICE_DOWNLOAD_NOT_SUPPORTED_GENERIC"));
+        // showWarningDialog(i18nControl.getMessage("DEVICE_DOWNLOAD_NOT_SUPPORTED_GENERIC"));
         // return true;
         // }
 
@@ -557,8 +557,8 @@ public class DeviceInstructionsDialog extends JDialog implements ActionListener,
         }
         else
         {
-            // label.setText(m_ic.getMessage("DEVICE_DOESNT_SUPPORT_DS_FIX"));
-            // label.setToolTipText(m_ic.getMessage("DEVICE_DOESNT_SUPPORT_DS_FIX"));
+            // label.setText(i18nControl.getMessage("DEVICE_DOESNT_SUPPORT_DS_FIX"));
+            // label.setToolTipText(i18nControl.getMessage("DEVICE_DOESNT_SUPPORT_DS_FIX"));
             label.setVisible(false);
             dsFixName.setVisible(false);
         }

@@ -231,7 +231,7 @@ public class PlugInDeviceUtil
             device_columns[3] = this.m_ic_core.getMessage("DEVICE_DOWNLOAD");
         }
 
-        return device_columns[num - 1];
+        return device_columns[num];
     }
 
 
@@ -244,7 +244,7 @@ public class PlugInDeviceUtil
      */
     public int getColumnWidth(int num, int width)
     {
-        return (int) (this.device_columns_width[num - 1] * width);
+        return (int) (this.device_columns_width[num] * width);
     }
 
 

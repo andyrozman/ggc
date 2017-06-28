@@ -48,6 +48,7 @@ public enum PlugInExceptionType
     DeviceNAKOrInvalidCRCDesc("Device reported NAK or an invalid CRC error. (%s)"), //
 
     DeviceNAK("Device reported NAK error [%s]."), //
+    DeviceSerialNumberCouldNotBeRead("Serial number was not read from device."), //
 
     DeviceInvalidCommand("Device reported an invalid command error."), //
     DeviceInvalidParameterDesc("Device reported an invalid parameter error for parameter %s."), //
@@ -84,6 +85,7 @@ public enum PlugInExceptionType
     ParsingErrorUnsupportedDataLenth("EXC_PARSING_ERROR_UNSUPP_DATA_LENGTH"), //
     FailedCRCCheck("EXC_FAILED_CRC_CHECK"), //
     FailedCRCCheckInPacket("Failed CRC check in packet."), //
+    FailedEncryptionDecryption("Failure on encrypt/decrypt of data."), //
     UnsupportedTypeOfParametersForCommand("EXC_UNSUPPORTED_TYPE_OF_PARAMS_FOR_CMD"), //
 
     // Handler
@@ -94,6 +96,7 @@ public enum PlugInExceptionType
 
     DeviceInvalidResponse("Device returned invalid response. Expected: %s, Received: %s"), //
     DeviceCommandInvalidResponse("Device was sent command [%s], but it responded with [%s], instead of [%s]"), //
+    DeviceUnexpectedResponse("Device returned unexpected response. Received: %s"), //
 
     DeviceReturnedError("Device returned error [command=%s, errorCode=%s, errorDescription=%s, returnedData=%s]"), //
 

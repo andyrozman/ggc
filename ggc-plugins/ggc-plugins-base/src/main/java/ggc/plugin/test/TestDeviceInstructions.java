@@ -65,7 +65,7 @@ public class TestDeviceInstructions implements ActionListener
         label_ins.setBackground(Color.green);
 
         // label =
-        // ATSwingUtils.getLabel(m_ic.getMessage(getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_INSTRUCTIONS)),
+        // ATSwingUtils.getLabel(i18nControl.getMessage(getDeviceInterfaceParameter(DEVICE_INTERFACE_PARAM_INSTRUCTIONS)),
         // 5, 0, 280, 180,
         // panel_instruct, ATSwingUtils.FONT_NORMAL_SMALLER);
         // label.setVerticalAlignment(SwingConstants.TOP);

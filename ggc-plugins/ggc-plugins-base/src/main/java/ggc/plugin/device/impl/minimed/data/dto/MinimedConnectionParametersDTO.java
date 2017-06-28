@@ -36,6 +36,7 @@ public class MinimedConnectionParametersDTO
     public MinimedCommInterfaceType interfaceType;
     public String serialNumber;
     public int[] serialNumberBCD;
+    private String nextLinkConnector;
 
 
     public MinimedConnectionParametersDTO(String communicationParameters)
@@ -61,5 +62,17 @@ public class MinimedConnectionParametersDTO
     {
         String[] val = value.split("!=");
         return val[1];
+    }
+
+
+    public void setNextLinkConnector(String nextLinkConnector)
+    {
+        this.nextLinkConnector = nextLinkConnector;
+    }
+
+
+    public String getNextLinkConnector()
+    {
+        return nextLinkConnector;
     }
 }

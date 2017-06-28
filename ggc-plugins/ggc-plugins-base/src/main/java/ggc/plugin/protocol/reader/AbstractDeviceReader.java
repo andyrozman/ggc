@@ -112,10 +112,28 @@ public abstract class AbstractDeviceReader implements ProgressReportInterface
     }
 
 
+    /**
+     * Read data
+     * 
+     * @throws PlugInBaseException
+     */
     public abstract void readData() throws PlugInBaseException;
 
 
+    /**
+     * Read configuration
+     * 
+     * @throws PlugInBaseException
+     */
     public abstract void readConfiguration() throws PlugInBaseException;
+
+
+    /**
+     * Close device
+     * 
+     * @throws PlugInBaseException
+     */
+    public abstract void closeDevice() throws PlugInBaseException;
 
 
     /**

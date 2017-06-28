@@ -78,7 +78,7 @@ public class MinimedDataHandler
      */
     public MinimedDataHandler(DataAccessPlugInBase dataAccess, MinimedConnectionParametersDTO connectionParametersDTO,
             MinimedDeviceType deviceType, MinimedDeviceReader deviceReader, OutputWriter writer)
-                    throws PlugInBaseException
+            throws PlugInBaseException
     {
         this.dataAccess = dataAccess;
         initDataHandler(connectionParametersDTO, deviceType, deviceReader, writer);
@@ -120,10 +120,13 @@ public class MinimedDataHandler
                     communicationProtocol = new MinimedCommunicationCareLinkUSB(dataAccess, this);
                 }
                 break;
-            case ContourUSBNextLink:
+            case ContourNextLink2:
                 {
-                    throw new PlugInBaseException(PlugInExceptionType.YetUnsupportedInterface,
-                            new Object[] { connectionParametersDTO.interfaceType.name() });
+                    // throw new
+                    // PlugInBaseException(PlugInExceptionType.YetUnsupportedInterface,
+                    // new Object[] {
+                    // connectionParametersDTO.interfaceType.name() });
+                    break;
                 }
 
             case None:

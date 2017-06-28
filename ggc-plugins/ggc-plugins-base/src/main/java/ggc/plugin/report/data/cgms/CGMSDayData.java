@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
+
 import ggc.core.db.hibernate.cgms.CGMSDataH;
 
 /**
@@ -80,10 +81,10 @@ public class CGMSDayData
         super();
         list = new ArrayList<CGMSDayDataEntry>();
         this.id = pdh.getId();
-        this.datetime = pdh.getDt_info();
-        this.type = pdh.getBase_type();
+        this.datetime = pdh.getDtInfo();
+        this.type = pdh.getBaseType();
         loadExtended(pdh.getExtended());
-        this.person_id = pdh.getPerson_id();
+        this.person_id = pdh.getPersonId();
     }
 
 

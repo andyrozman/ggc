@@ -90,7 +90,7 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
 
     private static final Logger LOG = LoggerFactory.getLogger(BlueToothProtocol.class);
 
-    // protected I18nControlAbstract m_ic = null; //I18nControl.getInstance();
+    // protected I18nControlAbstract i18nControl = null; //I18nControl.getInstance();
     // protected DataAccessPlugInBase dataAccess = null;
     // //DataAccessMeter.getInstance();
 
@@ -245,7 +245,7 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
      * if (isPortOpen)
      * return isPortOpen;
      * //if (portIdentifier == null)
-     * // throw new ImportException(m_ic.getMessage("NO_COM_PORT_SPECIFIED"));
+     * // throw new ImportException(i18nControl.getMessage("NO_COM_PORT_SPECIFIED"));
      * try
      * {
      * System.out.println("SerialProtocol: open() - Start");
@@ -340,7 +340,7 @@ public abstract class BlueToothProtocol extends DeviceAbstract implements Serial
             return isPortOpen;
 
         // if (portIdentifier == null)
-        // throw new ImportException(m_ic.getMessage("NO_COM_PORT_SPECIFIED"));
+        // throw new ImportException(i18nControl.getMessage("NO_COM_PORT_SPECIFIED"));
 
         try
         {

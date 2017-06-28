@@ -11,6 +11,7 @@ import com.atech.plugin.PlugInServer;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.ATDataAccessLMAbstract;
 
+import ggc.core.data.defs.ReturnActionType;
 import ggc.core.util.DataAccess;
 import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.data.DeviceDataHandler;
@@ -141,7 +142,7 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
         if (command.equals("plugin_read_data"))
         {
             new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this, DeviceDataHandler.TRANSFER_READ_DATA);
-            this.client.executeReturnAction(RETURN_ACTION_READ_DATA);
+            this.client.executeReturnAction(ReturnActionType.ReadData);
         }
         else if (command.equals("plugin_read_config"))
         {
@@ -156,19 +157,19 @@ public abstract class DevicePlugInServer extends PlugInServer implements ActionL
         {
             new DeviceConfigurationDialog((JFrame) this.parent, dataAccessPlugIn);
             refreshMenusAfterConfig();
-            this.client.executeReturnAction(RETURN_ACTION_CONFIG);
+            this.client.executeReturnAction(ReturnActionType.ChangeConfig);
         }
         else if (command.equals("plugin_read_data_file"))
         {
             new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this,
                     DeviceDataHandler.TRANSFER_READ_DATA_FILE);
-            this.client.executeReturnAction(RETURN_ACTION_READ_DATA);
+            this.client.executeReturnAction(ReturnActionType.ReadData);
         }
         else if (command.equals("plugin_read_config_file"))
         {
             new DeviceInstructionsDialog(this.parent, dataAccessPlugIn, this,
                     DeviceDataHandler.TRANSFER_READ_CONFIGURATION_FILE);
-            this.client.executeReturnAction(RETURN_ACTION_READ_DATA);
+            this.client.executeReturnAction(ReturnActionType.ReadData);
         }
         else if (command.equals("plugin_about"))
         {
