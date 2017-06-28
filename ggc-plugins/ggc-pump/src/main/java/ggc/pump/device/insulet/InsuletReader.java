@@ -200,6 +200,13 @@ public class InsuletReader extends AbstractDeviceReader
     }
 
 
+    @Override
+    public void closeDevice() throws PlugInBaseException
+    {
+        // not used
+    }
+
+
     private void readConfigurationInternal(boolean convert)
     {
         processRecord(new IbfVersion(), getRecord(dataPage, offset), convert);

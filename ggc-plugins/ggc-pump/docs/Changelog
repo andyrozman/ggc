@@ -2,6 +2,12 @@
 Changes file for GGC Pump Tool
 ==============================
 
+2.0.3 [26.6.2017]
+- changed enums, so that translation are changed from withing DataAccess
+- refactorings
+- changes to Db Objects
+
+
 2.0.2 [25.12.2016] [Andy]
 - PumpDataAdditionalWizardTwo
 - PumpDataTypeComponent

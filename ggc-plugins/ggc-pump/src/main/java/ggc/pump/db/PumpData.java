@@ -69,12 +69,12 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     public PumpData(PumpDataH ch)
     {
         this.setId(ch.getId());
-        this.setDt_info(ch.getDt_info());
-        this.setBase_type(ch.getBase_type());
-        this.setSub_type(ch.getSub_type());
+        this.setDtInfo(ch.getDtInfo());
+        this.setBaseType(ch.getBaseType());
+        this.setSubType(ch.getSubType());
         this.setValue(ch.getValue());
         this.setExtended(ch.getExtended());
-        this.setPerson_id(ch.getPerson_id());
+        this.setPersonId(ch.getPersonId());
         this.setComment(ch.getComment());
         this.setChanged(ch.getChanged());
     }
@@ -88,12 +88,12 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
     public PumpData(PumpValuesEntry pve)
     {
         this.setId(0L);
-        this.setDt_info(pve.getDateTime());
-        this.setBase_type(pve.getBaseType().getCode());
-        this.setSub_type(pve.getSubType());
+        this.setDtInfo(pve.getDateTime());
+        this.setBaseType(pve.getBaseType().getCode());
+        this.setSubType(pve.getSubType());
         this.setValue(pve.getValue());
         this.setExtended("");
-        this.setPerson_id((int) DataAccessPump.getInstance().getCurrentUserId());
+        this.setPersonId((int) DataAccessPump.getInstance().getCurrentUserId());
         this.setComment(pve.getComment());
         this.setChanged(System.currentTimeMillis());
     }
@@ -219,12 +219,12 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         PumpDataH ch = new PumpDataH();
 
         ch.setId(this.getId());
-        ch.setDt_info(this.getDt_info());
-        ch.setBase_type(this.getBase_type());
-        ch.setSub_type(this.getSub_type());
+        ch.setDtInfo(this.getDtInfo());
+        ch.setBaseType(this.getBaseType());
+        ch.setSubType(this.getSubType());
         ch.setValue(this.getValue());
         ch.setExtended(this.getExtended());
-        ch.setPerson_id(this.getPerson_id());
+        ch.setPersonId(this.getPersonId());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
 
@@ -270,12 +270,12 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.getId()));
 
         ch.setId(this.getId());
-        ch.setDt_info(this.getDt_info());
-        ch.setBase_type(this.getBase_type());
-        ch.setSub_type(this.getSub_type());
+        ch.setDtInfo(this.getDtInfo());
+        ch.setBaseType(this.getBaseType());
+        ch.setSubType(this.getSubType());
         ch.setValue(this.getValue());
         ch.setExtended(this.getExtended());
-        ch.setPerson_id(this.getPerson_id());
+        ch.setPersonId(this.getPersonId());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
 
@@ -298,12 +298,12 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         PumpDataH ch = (PumpDataH) sess.get(PumpDataH.class, new Long(this.getId()));
 
         this.setId(ch.getId());
-        this.setDt_info(ch.getDt_info());
-        this.setBase_type(ch.getBase_type());
-        this.setSub_type(ch.getSub_type());
+        this.setDtInfo(ch.getDtInfo());
+        this.setBaseType(ch.getBaseType());
+        this.setSubType(ch.getSubType());
         this.setValue(ch.getValue());
         this.setExtended(ch.getExtended());
-        this.setPerson_id(ch.getPerson_id());
+        this.setPersonId(ch.getPersonId());
         this.setComment(ch.getComment());
         this.setChanged(ch.getChanged());
 
@@ -363,17 +363,17 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
 
         sb.append(this.getId());
         sb.append("|");
-        sb.append(this.getDt_info());
+        sb.append(this.getDtInfo());
         sb.append("|");
-        sb.append(this.getBase_type());
+        sb.append(this.getBaseType());
         sb.append("|");
-        sb.append(this.getSub_type());
+        sb.append(this.getSubType());
         sb.append("|");
         sb.append(this.getValue());
         sb.append("|");
         sb.append(this.getExtended());
         sb.append("|");
-        sb.append(this.getPerson_id());
+        sb.append(this.getPersonId());
         sb.append("|");
         sb.append(this.getComment());
         sb.append("|");
@@ -449,12 +449,12 @@ public class PumpData extends PumpDataH implements BackupRestoreObject, Database
         String[] arr = da.splitString(value_entry, "|");
 
         this.setId(da.getLongValueFromString(arr[0]));
-        this.setDt_info(da.getLongValueFromString(arr[1]));
-        this.setBase_type(da.getIntValueFromString(arr[2]));
-        this.setSub_type(da.getIntValueFromString(arr[3]));
+        this.setDtInfo(da.getLongValueFromString(arr[1]));
+        this.setBaseType(da.getIntValueFromString(arr[2]));
+        this.setSubType(da.getIntValueFromString(arr[3]));
         this.setValue(arr[4]);
         this.setExtended(arr[5]);
-        this.setPerson_id(da.getIntValueFromString(arr[6]));
+        this.setPersonId(da.getIntValueFromString(arr[6]));
         this.setComment(arr[7]);
         this.setChanged(da.getLongValueFromString(arr[8]));
 

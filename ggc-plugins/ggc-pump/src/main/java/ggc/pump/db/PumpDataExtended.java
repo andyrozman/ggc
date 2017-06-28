@@ -70,11 +70,11 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
     public PumpDataExtended(PumpDataExtendedH ch)
     {
         this.setId(ch.getId());
-        this.setDt_info(ch.getDt_info());
+        this.setDtInfo(ch.getDtInfo());
         this.setType(ch.getType());
         this.setValue(ch.getValue());
         this.setExtended(ch.getExtended());
-        this.setPerson_id(ch.getPerson_id());
+        this.setPersonId(ch.getPersonId());
         this.setComment(ch.getComment());
         this.setChanged(ch.getChanged());
     }
@@ -200,11 +200,11 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         PumpDataExtendedH ch = new PumpDataExtendedH();
 
         ch.setId(this.getId());
-        ch.setDt_info(this.getDt_info());
+        ch.setDtInfo(this.getDtInfo());
         ch.setType(this.getType());
         ch.setValue(this.getValue());
         ch.setExtended(this.getExtended());
-        ch.setPerson_id(this.getPerson_id());
+        ch.setPersonId(this.getPersonId());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
 
@@ -251,11 +251,11 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         PumpDataExtendedH ch = (PumpDataExtendedH) sess.get(PumpDataExtendedH.class, new Long(this.getId()));
 
         ch.setId(this.getId());
-        ch.setDt_info(this.getDt_info());
+        ch.setDtInfo(this.getDtInfo());
         ch.setType(this.getType());
         ch.setValue(this.getValue());
         ch.setExtended(this.getExtended());
-        ch.setPerson_id(this.getPerson_id());
+        ch.setPersonId(this.getPersonId());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
 
@@ -279,11 +279,11 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         PumpDataExtendedH ch = (PumpDataExtendedH) sess.get(PumpDataExtendedH.class, new Long(this.getId()));
 
         this.setId(ch.getId());
-        this.setDt_info(ch.getDt_info());
+        this.setDtInfo(ch.getDtInfo());
         this.setType(ch.getType());
         this.setValue(ch.getValue());
         this.setExtended(ch.getExtended());
-        this.setPerson_id(ch.getPerson_id());
+        this.setPersonId(ch.getPersonId());
         this.setComment(ch.getComment());
         this.setChanged(ch.getChanged());
 
@@ -343,7 +343,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
 
         sb.append(this.getId());
         sb.append("|");
-        sb.append(this.getDt_info());
+        sb.append(this.getDtInfo());
         sb.append("|");
         sb.append(this.getType());
         sb.append("|");
@@ -351,7 +351,7 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         sb.append("|");
         sb.append(this.getExtended());
         sb.append("|");
-        sb.append(this.getPerson_id());
+        sb.append(this.getPersonId());
         sb.append("|");
         sb.append(this.getComment());
         sb.append("|");
@@ -418,11 +418,11 @@ public class PumpDataExtended extends PumpDataExtendedH implements BackupRestore
         String[] arr = da.splitString(value_entry, "|");
 
         this.setId(da.getLongValueFromString(arr[0]));
-        this.setDt_info(da.getLongValueFromString(arr[1]));
+        this.setDtInfo(da.getLongValueFromString(arr[1]));
         this.setType(da.getIntValueFromString(arr[2]));
         this.setValue(arr[3]);
         this.setExtended(arr[4]);
-        this.setPerson_id(da.getIntValueFromString(arr[5]));
+        this.setPersonId(da.getIntValueFromString(arr[5]));
         this.setComment(arr[6]);
         this.setChanged(da.getLongValueFromString(arr[7]));
     }

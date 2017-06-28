@@ -21,6 +21,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
 
 import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.pump.data.PumpDailyStatistics;
@@ -220,14 +221,16 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
         insulinPanel.add(sumIns2 = new JLabel());
         insulinPanel.add(new JLabel(m_ic.getMessage("AVG") + " " + getIns2Abbr() + ":"));
         insulinPanel.add(avgIns2 = new JLabel());
-        insulinPanel.add(new JLabel()); // m_ic.getMessage("DOSE") + " " +
+        insulinPanel.add(new JLabel()); // i18nControl.getMessage("DOSE") + " "
+                                        // +
                                         // getIns2Abbr() + ":"
         insulinPanel.add(doseIns2 = new JLabel());
         doseIns2.setVisible(false);
 
         insulinPanel.add(new JLabel(m_ic.getMessage("TOTAL") + ":"));
         insulinPanel.add(sumIns = new JLabel());
-        insulinPanel.add(new JLabel("")); // m_ic.getMessage("AVG_INS") + ":"));
+        insulinPanel.add(new JLabel("")); // i18nControl.getMessage("AVG_INS") +
+                                          // ":"));
         insulinPanel.add(avgIns = new JLabel());
         insulinPanel.add(new JLabel(m_ic.getMessage("DOSE_INS") + ":"));
         insulinPanel.add(doseIns = new JLabel());
@@ -344,6 +347,8 @@ public class PumpDataDialog extends JDialog implements ActionListener, HelpCapab
             }
 
         });
+
+        DataAccess.getSkinManager().reSkinifyComponent(table);
 
         resultsPane = new JScrollPane(table);
 

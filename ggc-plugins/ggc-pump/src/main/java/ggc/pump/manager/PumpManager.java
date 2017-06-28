@@ -1,5 +1,8 @@
 package ggc.pump.manager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.manager.DeviceManager;
 import ggc.pump.defs.device.PumpDeviceDefinition;
@@ -35,6 +38,8 @@ import ggc.pump.util.DataAccessPump;
 public class PumpManager extends DeviceManager
 {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PumpManager.class);
+
     /**
      * Singleton instance
      */
@@ -55,13 +60,20 @@ public class PumpManager extends DeviceManager
     {
         for (DeviceDefinition dd : PumpDeviceDefinition.getAllDevices())
         {
+
             PumpDeviceDefinition pdd = (PumpDeviceDefinition) dd;
+
+            // if (pdd.isSupportedDevice())
+            // continue;
 
             PumpDeviceInstanceWithHandler di = new PumpDeviceInstanceWithHandler(pdd);
 
             this.supportedDevicesV2.put(di.getCompany().getName() + "_" + di.getName(), di);
             this.supportedDevicesForSelector.add(di);
         }
+
+        LOG.info("Pump Devices V2 (registered: " + PumpDeviceDefinition.getAllDevices().size() + ", supported: "
+                + this.supportedDevicesV2.size() + ")");
     }
 
 
@@ -104,6 +116,8 @@ public class PumpManager extends DeviceManager
         // addDeviceCompany(new Minimed());
         // addDeviceCompany(new Roche(dataAccessPlugInBase));
         // addDeviceCompany(new Sooil(dataAccessPlugInBase));
+
+        LOG.info("Pump Devices V1 (all migrated to V2)");
     }
 
 }

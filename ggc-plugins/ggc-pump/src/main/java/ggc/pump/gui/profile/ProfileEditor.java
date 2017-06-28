@@ -78,6 +78,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     JSpinner sp_base;
     GraphViewProfileEditor graphview_pe;
 
+
     /**
      * Constructor
      * 
@@ -95,6 +96,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
 
         this.setSize(780, 565);
     }
+
 
     /**
      * Constructor
@@ -116,12 +118,13 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         this.setSize(780, 565);
     }
 
+
     private void load()
     {
         this.tf_name.setText(this.m_profile.getName());
-        this.dtc_from.setDateTime(getDateCorrected(this.m_profile.getActive_from()));
+        this.dtc_from.setDateTime(getDateCorrected(this.m_profile.getActiveFrom()));
 
-        if (this.m_profile.getActive_till() <= 0)
+        if (this.m_profile.getActiveTill() <= 0)
         {
             this.cb_enabled_till.setSelected(false);
             this.dtc_till.setDateTimeAsCurrent();
@@ -129,11 +132,11 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         else
         {
             this.cb_enabled_till.setSelected(true);
-            this.dtc_till.setDateTime(getDateCorrected(this.m_profile.getActive_till()));
+            this.dtc_till.setDateTime(getDateCorrected(this.m_profile.getActiveTill()));
         }
 
-        this.sp_base.setValue(this.m_profile.getBasal_base());
-        this.loadSubEntries(this.m_profile.getBasal_diffs());
+        this.sp_base.setValue(this.m_profile.getBasalBase());
+        this.loadSubEntries(this.m_profile.getBasalDiffs());
 
         if (this.m_profile.getComment() != null && !this.m_profile.getComment().equals("null"))
         {
@@ -143,6 +146,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         graphview_pe.refreshData();
 
     }
+
 
     private long getDateCorrected(long dt)
     {
@@ -162,6 +166,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
 
     }
 
+
     private void loadSubEntries(String subs)
     {
         // 0-400=0.2;400-600=1.7
@@ -177,22 +182,23 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         this.refreshList(1, list_data);
     }
 
+
     private void save()
     {
         this.m_profile.setName(this.tf_name.getText());
-        this.m_profile.setActive_from(this.dtc_from.getDateTime());
+        this.m_profile.setActiveFrom(this.dtc_from.getDateTime());
 
         if (this.cb_enabled_till.isSelected())
         {
-            this.m_profile.setActive_till(this.dtc_till.getDateTime());
+            this.m_profile.setActiveTill(this.dtc_till.getDateTime());
         }
         else
         {
-            this.m_profile.setActive_till(-1L);
+            this.m_profile.setActiveTill(-1L);
         }
 
-        this.m_profile.setBasal_base(m_da.getFloatValue(this.sp_base.getValue()));
-        this.m_profile.setBasal_diffs(getSubEntries());
+        this.m_profile.setBasalBase(m_da.getFloatValue(this.sp_base.getValue()));
+        this.m_profile.setBasalDiffs(getSubEntries());
         this.m_profile.setComment(this.tf_com.getText());
 
         PumpProfile pp = new PumpProfile(this.m_profile);
@@ -208,6 +214,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
 
         this.m_profile.setId(pp.getId());
     }
+
 
     private String getSubEntries()
     {
@@ -226,6 +233,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         return sb.toString();
     }
 
+
     /**
      * Get Profile Entries (as ArrayList)
      * @return
@@ -234,6 +242,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     {
         return this.list_data;
     }
+
 
     private void init()
     {
@@ -245,8 +254,8 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         panel.setLayout(null);
         this.add(panel);
 
-        ATSwingUtils
-                .getTitleLabel(m_ic.getMessage("PROFILE_EDITOR"), 0, 20, 780, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
+        ATSwingUtils.getTitleLabel(m_ic.getMessage("PROFILE_EDITOR"), 0, 20, 780, 35, panel,
+            ATSwingUtils.FONT_BIG_BOLD);
 
         ATSwingUtils.getLabel(m_ic.getMessage("NAME") + ":", 80, 75, 120, 25, panel, ATSwingUtils.FONT_NORMAL_BOLD);
 
@@ -356,7 +365,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
          * bt_item_3.setBounds(685, 470, 30, 30);
          * panel.add(bt_item_3);
          * document_exchange.png
-         * ATSwingUtils.getButton("   " + m_ic.getMessage("IMPORT"),
+         * ATSwingUtils.getButton("   " + i18nControl.getMessage("IMPORT"),
          * 570, 445, 160, 22, panel,
          * ATSwingUtils.FONT_NORMAL, null, "import_profile", this, dataAccess);
          */
@@ -367,12 +376,14 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         ATSwingUtils.getButton("   " + m_ic.getMessage("CANCEL"), 610, 110, 120, 25, panel, ATSwingUtils.FONT_NORMAL,
             "cancel.png", "cancel", this, m_da);
 
-        this.help_button = ATSwingUtils.createHelpButtonByBounds(610, 145, 120, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
+        this.help_button = ATSwingUtils.createHelpButtonByBounds(610, 145, 120, 25, this, ATSwingUtils.FONT_NORMAL,
+            m_da);
         panel.add(this.help_button);
 
         m_da.enableHelp(this);
 
     }
+
 
     private void refreshList(int type, ArrayList<?> lst)
     {
@@ -388,6 +399,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         this.lst_basals.setModel(listModel);
         this.graphview_pe.refreshData();
     }
+
 
     /**
      * Action Performed
@@ -481,7 +493,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
             if (ps.wasAction())
             {
                 PumpProfile p = (PumpProfile) ps.getSelectedObject();
-                loadSubEntries(p.getBasal_diffs());
+                loadSubEntries(p.getBasalDiffs());
             }
         }
         else
@@ -489,6 +501,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
             System.out.println(e.getActionCommand() + " is currently not supported.");
         }
     }
+
 
     /**
      * State Changed - of check box
@@ -498,6 +511,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         JCheckBox cb = (JCheckBox) e.getSource();
         dtc_till.setEnabled(cb.isSelected());
     }
+
 
     /**
      * Was Action Successful
@@ -509,6 +523,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         return m_action_done;
     }
 
+
     /**
      * Get Result - returns result of this dialog
      * 
@@ -518,6 +533,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     {
         return this.m_profile;
     }
+
 
     // ****************************************************************
     // ****** HelpCapable Implementation *****
@@ -533,6 +549,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
         return this.getRootPane();
     }
 
+
     /**
      * getHelpButton - get Help button
      * 
@@ -542,6 +559,7 @@ public class ProfileEditor extends JDialog implements ActionListener, ChangeList
     {
         return this.help_button;
     }
+
 
     /**
      * getHelpId - get id for Help

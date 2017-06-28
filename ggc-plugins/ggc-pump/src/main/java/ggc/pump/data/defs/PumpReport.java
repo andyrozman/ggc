@@ -6,8 +6,6 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccess;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import ggc.pump.util.DataAccessPump;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -48,37 +46,49 @@ public enum PumpReport implements CodeEnumWithTranslation
     /**
      * Report Descriptions
      */
-    public static String[] report_desc = null;
+    public static String[] descriptions = null;
 
     static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static HashMap<Integer, PumpReport> codeMapping = new HashMap<Integer, PumpReport>();
 
     static
     {
-        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+        for (PumpReport pbt : values())
+        {
+            codeMapping.put(pbt.code, pbt);
+        }
+    }
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        if (translated)
+            return;
 
         for (PumpReport pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
             translationMapping.put(pbt.getTranslation(), pbt);
-            codeMapping.put(pbt.code, pbt);
         }
 
-        String[] report_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), //
-                                     ic.getMessage("REPORT_MISC"), //
-                                     ic.getMessage("REPORT_BOLUS_TOTAL_DAY"), //
-                                     ic.getMessage("REPORT_BASAL_TOTAL_DAY"), //
-                                     ic.getMessage("REPORT_INSULIN_TOTAL_DAY"), };
+        String[] reportDescriptions = { ic.getMessage("SELECT_SUBTYPE"), //
+                                       ic.getMessage("REPORT_MISC"), //
+                                       ic.getMessage("REPORT_BOLUS_TOTAL_DAY"), //
+                                       ic.getMessage("REPORT_BASAL_TOTAL_DAY"), //
+                                       ic.getMessage("REPORT_INSULIN_TOTAL_DAY"), };
 
-        report_desc = report_desc_lcl;
+        descriptions = reportDescriptions;
+
+        translated = true;
     }
 
     int code;
     String i18nKey;
     String translation;
+    static boolean translated = false;
 
 
-    private PumpReport(int code, String i18nKey)
+    PumpReport(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;
@@ -148,7 +158,7 @@ public enum PumpReport implements CodeEnumWithTranslation
      */
     public static String[] getDescriptions()
     {
-        return report_desc;
+        return descriptions;
     }
 
 }

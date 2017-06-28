@@ -7,8 +7,6 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import ggc.pump.util.DataAccessPump;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -56,48 +54,60 @@ public enum PumpBasalType implements CodeEnumWithTranslation
 
     public static boolean isTemporaryBasalType(PumpBasalType type)
     {
-        return (type == TemporaryBasalRate || type == TemporaryBasalRateProfile || type == TemporaryBasalRateCanceled
-                || type == TemporaryBasalRateEnded);
+        return (type == TemporaryBasalRate || type == TemporaryBasalRateProfile || type == TemporaryBasalRateCanceled || type == TemporaryBasalRateEnded);
     }
 
     /**
      * Basal Descriptions
      */
-    public static String[] basal_desc = null;
+    public static String[] descriptions = null;
 
     static Map<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static Map<Integer, PumpBasalType> codeMapping = new HashMap<Integer, PumpBasalType>();
 
     static
     {
-        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+        for (PumpBasalType pbt : values())
+        {
+            codeMapping.put(pbt.code, pbt);
+        }
+    }
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        if (translated)
+            return;
 
         for (PumpBasalType pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
             translationMapping.put(pbt.getTranslation(), pbt);
-            codeMapping.put(pbt.code, pbt);
         }
 
-        String[] basal_desc_lcl = { ic.getMessage("SELECT_BASAL_TYPE"), ic.getMessage("BASAL_VALUE"), //
-                                    ic.getMessage("BASAL_PROFILE"), //
-                                    ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"), //
-                                    ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"), //
-                                    ic.getMessage("BASAL_PUMP_STATUS"), //
-                                    ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_ENDED"), //
-                                    ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_CANCELED"),
-                                    ic.getMessage("BASAL_VALUE_CHANGE"), //
+        String[] basalDescriptions = { ic.getMessage("SELECT_BASAL_TYPE"),
+                                      ic.getMessage("BASAL_VALUE"), //
+                                      ic.getMessage("BASAL_PROFILE"), //
+                                      ic.getMessage("BASAL_TEMPORARY_BASAL_RATE"), //
+                                      ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_PROFILE"), //
+                                      ic.getMessage("BASAL_PUMP_STATUS"), //
+                                      ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_ENDED"), //
+                                      ic.getMessage("BASAL_TEMPORARY_BASAL_RATE_CANCELED"),
+                                      ic.getMessage("BASAL_VALUE_CHANGE"), //
         };
 
-        basal_desc = basal_desc_lcl;
+        descriptions = basalDescriptions;
+
+        translated = true;
     }
 
     int code;
     String i18nKey;
     String translation;
+    static boolean translated = false;
 
 
-    private PumpBasalType(int code, String i18nKey)
+    PumpBasalType(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;
@@ -167,7 +177,7 @@ public enum PumpBasalType implements CodeEnumWithTranslation
      */
     public static String[] getDescriptions()
     {
-        return basal_desc;
+        return descriptions;
     }
 
 }

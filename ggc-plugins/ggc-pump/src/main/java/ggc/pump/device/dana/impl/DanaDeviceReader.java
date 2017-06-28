@@ -34,6 +34,13 @@ public class DanaDeviceReader extends SerialDeviceReader
 
 
     @Override
+    public void closeDevice() throws PlugInBaseException
+    {
+        // not used - we have internal handling of closing
+    }
+
+
+    @Override
     public void customInitAndChecks() throws PlugInBaseException
     {
 

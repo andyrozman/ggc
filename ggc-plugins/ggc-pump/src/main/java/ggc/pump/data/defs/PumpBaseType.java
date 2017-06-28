@@ -5,8 +5,6 @@ import java.util.Hashtable;
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import ggc.pump.util.DataAccessPump;
-
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
  * devices)
@@ -54,12 +52,8 @@ public enum PumpBaseType implements CodeEnumWithTranslation
 
     static
     {
-        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
-
         for (PumpBaseType pbt : values())
         {
-            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
-            basetypeTranslationMapping.put(pbt.getTranslation(), pbt);
             basetypeCodeMapping.put(pbt.code, pbt);
         }
     }
@@ -67,6 +61,22 @@ public enum PumpBaseType implements CodeEnumWithTranslation
     int code;
     String i18nKey;
     String translation;
+    static boolean translated = false;
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        if (translated)
+            return;
+
+        for (PumpBaseType pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            basetypeTranslationMapping.put(pbt.getTranslation(), pbt);
+        }
+
+        translated = true;
+    }
 
 
     public String getTranslation()
@@ -99,7 +109,7 @@ public enum PumpBaseType implements CodeEnumWithTranslation
     }
 
 
-    private PumpBaseType(int code, String i18nKey)
+    PumpBaseType(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;

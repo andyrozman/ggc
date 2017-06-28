@@ -96,6 +96,12 @@ public class MinimedPumpDeviceHandler extends PumpDeviceHandler implements Minim
     }
 
 
+    public void closeDevice() throws PlugInBaseException
+    {
+        // handled internally
+    }
+
+
     // TODO add Carelink Import
     public List<GGCPlugInFileReaderContext> getFileDownloadContexts(DownloadSupportType downloadSupportType)
     {

@@ -47,7 +47,7 @@ public class DummyPump extends AbstractPump // implements PumpInterface
     DataAccessPump m_da = DataAccessPump.getInstance();
 
     /**
-     * The m_ic.
+     * The i18nControl.
      */
     I18nControlAbstract m_ic = m_da.getI18nControlInstance();
 

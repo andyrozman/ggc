@@ -64,7 +64,7 @@ public class PumpDataReader extends OldDataReaderAbstract
     public void getMaxEntries()
     {
         db = m_da.getDb();
-        this.all_entries = db.getAllElementsCount();
+        this.allEntries = db.getAllElementsCount();
     }
 
 
@@ -110,7 +110,7 @@ public class PumpDataReader extends OldDataReaderAbstract
         float proc_total = (proc * 1.0f + db_reading) / 160.0f * 100.0f;
         int proc_total_i = (int) proc_total;
 
-        this.m_drr.setOldDataReadingProgress(proc_total_i);
+        this.deviceReaderRunner.setOldDataReadingProgress(proc_total_i);
 
         /*
          * try

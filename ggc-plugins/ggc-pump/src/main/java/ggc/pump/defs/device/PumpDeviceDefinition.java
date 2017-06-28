@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ggc.plugin.data.enums.DeviceCompanyDefinition;
 import ggc.plugin.data.enums.DeviceHandlerType;
@@ -209,6 +211,7 @@ public enum PumpDeviceDefinition implements DeviceDefinition
 
     static List<DeviceDefinition> allDevices;
     static List<DeviceDefinition> supportedDevices;
+    private static final Logger LOG = LoggerFactory.getLogger(PumpDeviceDefinition.class);
 
     static
     {
@@ -225,8 +228,8 @@ public enum PumpDeviceDefinition implements DeviceDefinition
             }
         }
 
-        System.out.println(
-            "Pump Devices V2 (registered: " + allDevices.size() + ", supported: " + supportedDevices.size() + ")");
+        // LOG.info("Pump Devices V2 (registered: " + allDevices.size() +
+        // ", supported: " + supportedDevices.size() + ")");
 
     }
 
@@ -238,7 +241,7 @@ public enum PumpDeviceDefinition implements DeviceDefinition
     Object internalDefintion;
     DeviceImplementationStatus implementationStatus;
     DeviceCompanyDefinition companyDefinition;
-    DeviceHandlerType deviceHandlerType;
+    DeviceHandlerType deviceHandlerType = DeviceHandlerType.NullHandler;
     DevicePortParameterType devicePortParameterType;
     DeviceConnectionProtocol deviceConnectionProtocol;
     DeviceProgressStatus deviceProgressStatus;

@@ -95,7 +95,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH
     public PumpValuesEntryExt(String src)
     {
         this.source = (src == null) ? da.getSourceDevice() : src;
-        this.setPerson_id(da.getCurrentUserIdAsInt());
+        this.setPersonId(da.getCurrentUserIdAsInt());
     }
 
 
@@ -109,12 +109,12 @@ public class PumpValuesEntryExt extends PumpDataExtendedH
         // pumpAdditionalDataType = new PumpAdditionalDataType();
 
         this.setId(pd.getId());
-        this.setDt_info(pd.getDt_info());
+        this.setDtInfo(pd.getDtInfo());
         this.setType(pd.getType());
 
         this.setValue(pd.getValue());
         this.setExtended(pd.getExtended());
-        this.setPerson_id(pd.getPerson_id());
+        this.setPersonId(pd.getPersonId());
         this.setComment(pd.getComment());
         this.setChanged(pd.getChanged());
 
@@ -157,7 +157,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH
      */
     public ATechDate getDateTimeObject()
     {
-        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.getDt_info());
+        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.getDtInfo());
     }
 
 
@@ -266,11 +266,11 @@ public class PumpValuesEntryExt extends PumpDataExtendedH
         PumpDataExtendedH ch = new PumpDataExtendedH();
 
         // ch.setId(id);
-        ch.setDt_info(this.getDt_info());
+        ch.setDtInfo(this.getDtInfo());
         ch.setType(this.getType());
         ch.setValue(this.getValue());
         ch.setExtended("SOURCE=" + this.source);
-        ch.setPerson_id(this.getPerson_id());
+        ch.setPersonId(this.getPersonId());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
 
@@ -312,11 +312,11 @@ public class PumpValuesEntryExt extends PumpDataExtendedH
 
         // TODO: changed check
         // ch.setId(id);
-        ch.setDt_info(this.getDt_info());
+        ch.setDtInfo(this.getDtInfo());
         ch.setType(this.getType());
         ch.setValue(this.getValue());
         ch.setExtended(this.getExtended());
-        ch.setPerson_id(this.getPerson_id());
+        ch.setPersonId(this.getPersonId());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
 
@@ -393,11 +393,11 @@ public class PumpValuesEntryExt extends PumpDataExtendedH
      * @param dt_info 
      */
     @Override
-    public void setDt_info(long dt_info)
+    public void setDtInfo(long dt_info)
     {
-        if (dt_info != getDt_info())
+        if (dt_info != getDtInfo())
         {
-            super.setDt_info(dt_info);
+            super.setDtInfo(dt_info);
             changed = true;
         }
     }
@@ -426,7 +426,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH
      */
     public long getDateTime()
     {
-        return this.getDt_info();
+        return this.getDtInfo();
     }
 
 
@@ -448,7 +448,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH
      */
     public void setDateTimeObject(ATechDate dt)
     {
-        this.setDt_info(dt.getATDateTimeAsLong());
+        this.setDtInfo(dt.getATDateTimeAsLong());
 
     }
 
@@ -524,7 +524,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH
      */
     public String getSpecialId()
     {
-        return "PE_" + this.getDt_info() + "_" + this.getType();
+        return "PE_" + this.getDtInfo() + "_" + this.getType();
     }
 
 
@@ -840,7 +840,7 @@ public class PumpValuesEntryExt extends PumpDataExtendedH
         // this.getType());
         //
         // if (map != -1)
-        // return new GraphValue(this.getDt_info(), map, this.getValue());
+        // return new GraphValue(this.getDtInfo(), map, this.getValue());
         // else
         return null;
     }

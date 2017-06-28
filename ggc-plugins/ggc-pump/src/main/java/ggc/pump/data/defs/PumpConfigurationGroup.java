@@ -7,7 +7,6 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
 import ggc.plugin.data.enums.DeviceConfigurationGroup;
-import ggc.pump.util.DataAccessPump;
 
 /**
  * Created by andy on 27.02.15.
@@ -31,18 +30,14 @@ public enum PumpConfigurationGroup implements DeviceConfigurationGroup
     int code;
     String i18nKey;
     String translation;
+    static boolean translated;
 
     static
     {
-        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
-
         for (PumpConfigurationGroup pbt : values())
         {
-            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
-            translationMapping.put(pbt.getTranslation(), pbt);
             codeMapping.put(pbt.code, pbt);
         }
-
     }
 
 
@@ -50,6 +45,21 @@ public enum PumpConfigurationGroup implements DeviceConfigurationGroup
     {
         this.code = code;
         this.i18nKey = i18nKey;
+    }
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        if (translated)
+            return;
+
+        for (PumpConfigurationGroup pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMapping.put(pbt.getTranslation(), pbt);
+        }
+
+        translated = true;
     }
 
 

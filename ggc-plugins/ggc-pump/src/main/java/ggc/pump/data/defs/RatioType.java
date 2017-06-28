@@ -4,7 +4,6 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
 import ggc.plugin.data.enums.ValueType;
-import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -54,15 +53,20 @@ public enum RatioType implements CodeEnumWithTranslation
     String i18nKey;
     String translation;
     ValueType valueType;
+    static boolean translated = false;
 
-    static
+
+    public static void translateKeywords(I18nControlAbstract ic)
     {
-        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+        if (translated)
+            return;
 
         for (RatioType pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
         }
+
+        translated = true;
     }
 
 

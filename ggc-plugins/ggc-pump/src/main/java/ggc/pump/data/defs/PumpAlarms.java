@@ -8,8 +8,6 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccess;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import ggc.pump.util.DataAccessPump;
-
 /**
  * Application: GGC - GNU Gluco Control Plug-in: Pump Tool (support for Pump
  * devices)
@@ -59,6 +57,59 @@ public enum PumpAlarms implements CodeEnumWithTranslation
     int code;
     String i18nKey;
     String translation;
+    static boolean translated = false;
+
+    static Map<Integer, PumpAlarms> alarmCodeMapping = new HashMap<Integer, PumpAlarms>();
+    static Map<String, CodeEnumWithTranslation> translationMap = new HashMap<String, CodeEnumWithTranslation>();
+    static String[] descriptions;
+
+    static
+    {
+        for (PumpAlarms pbt : values())
+        {
+            alarmCodeMapping.put(pbt.code, pbt);
+        }
+    }
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        if (translated)
+            return;
+
+        for (PumpAlarms pbt : values())
+        {
+            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
+            translationMap.put(pbt.getTranslation(), pbt);
+        }
+
+        String[] alarmDescriptions = { ic.getMessage("SELECT_SUBTYPE"), //
+                                      ic.getMessage("ALARM_CARTRIDGE_LOW"), //
+                                      ic.getMessage("ALARM_BATTERY_LOW"), //
+                                      ic.getMessage("ALARM_REPLACE_BATTERY"), //
+                                      ic.getMessage("ALARM_REVIEW_DATETIME"), //
+                                      ic.getMessage("ALARM_ALARM_CLOCK"), //
+                                      ic.getMessage("ALARM_PUMP_TIMER"), //
+                                      ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"), //
+                                      ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"), //
+                                      ic.getMessage("ALARM_BOLUS_CANCELED"), //
+                                      ic.getMessage("ALARM_NO_DELIVERY"), //
+                                      ic.getMessage("ALARM_EMPTY_CARTRIDGE"), //
+                                      ic.getMessage("ALARM_AUTO_OFF"), //
+                                      ic.getMessage("ALARM_CALL_SERVICE"),//
+        };
+
+        descriptions = alarmDescriptions;
+
+        translated = true;
+    }
+
+
+    PumpAlarms(int code, String i18nKey)
+    {
+        this.code = code;
+        this.i18nKey = i18nKey;
+    }
 
 
     public int getCode()
@@ -90,48 +141,6 @@ public enum PumpAlarms implements CodeEnumWithTranslation
         return this.name();
     }
 
-    static Map<Integer, PumpAlarms> alarmCodeMapping = new HashMap<Integer, PumpAlarms>();
-    static Map<String, CodeEnumWithTranslation> translationMap = new HashMap<String, CodeEnumWithTranslation>();
-    static String[] alarm_desc;
-
-    static
-    {
-        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
-
-        for (PumpAlarms pbt : values())
-        {
-            pbt.setTranslation(ic.getMessage(pbt.i18nKey));
-            translationMap.put(pbt.getTranslation(), pbt);
-            alarmCodeMapping.put(pbt.code, pbt);
-        }
-
-        String[] alarm_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), //
-                                    ic.getMessage("ALARM_CARTRIDGE_LOW"), //
-                                    ic.getMessage("ALARM_BATTERY_LOW"), //
-                                    ic.getMessage("ALARM_REPLACE_BATTERY"), //
-                                    ic.getMessage("ALARM_REVIEW_DATETIME"), //
-                                    ic.getMessage("ALARM_ALARM_CLOCK"), //
-                                    ic.getMessage("ALARM_PUMP_TIMER"), //
-                                    ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_CANCELED"), //
-                                    ic.getMessage("ALARM_TEMPORARY_BASAL_RATE_OVER"), //
-                                    ic.getMessage("ALARM_BOLUS_CANCELED"), //
-                                    ic.getMessage("ALARM_NO_DELIVERY"), //
-                                    ic.getMessage("ALARM_EMPTY_CARTRIDGE"), //
-                                    ic.getMessage("ALARM_AUTO_OFF"), //
-                                    ic.getMessage("ALARM_CALL_SERVICE"),//
-        };
-
-        alarm_desc = alarm_desc_lcl;
-
-    }
-
-
-    private PumpAlarms(int code, String i18nKey)
-    {
-        this.code = code;
-        this.i18nKey = i18nKey;
-    }
-
 
     public static PumpAlarms getByCode(int code)
     {
@@ -148,7 +157,7 @@ public enum PumpAlarms implements CodeEnumWithTranslation
 
     public static String[] getDescriptions()
     {
-        return alarm_desc;
+        return descriptions;
     }
 
 

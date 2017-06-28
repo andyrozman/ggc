@@ -68,8 +68,6 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     private static final Logger LOG = LoggerFactory.getLogger(GGCPumpDb.class);
 
-    DataAccessPump dataAccess = DataAccessPump.getInstance();
-
 
     /**
      * Constructor
@@ -78,7 +76,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
      */
     public GGCPumpDb(HibernateDb db)
     {
-        super(db);
+        super(db, DataAccessPump.getInstance());
 
         // getAllElementsCount();
     }
@@ -327,7 +325,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         try
         {
 
-            List<?> dataList = getListOfDatabaseObjectsRange(PumpDataH.class, from, to, "base_type", filterBase);
+            List<?> dataList = getListOfDatabaseObjectsRange(PumpDataH.class, from, to, "baseType", filterBase);
 
             for (Object dataEntry : dataList)
             {
@@ -356,15 +354,15 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         try
         {
             criteria = this.db.getSession().createCriteria(clazz);
-            criteria.add(Restrictions.between("dt_info", getDate(from, true), getDate(to, false)));
-            criteria.add(Restrictions.eq("person_id", (int) dataAccess.getCurrentUserId()));
+            criteria.add(Restrictions.between("dtInfo", getDate(from, true), getDate(to, false)));
+            criteria.add(Restrictions.eq("personId", (int) dataAccess.getCurrentUserId()));
 
             if ((CollectionUtils.isNotEmpty(filter)) && (StringUtils.isNotBlank(propertyToFilter)))
             {
                 criteria.add(createOrCriterionsForList(propertyToFilter, filter));
             }
 
-            criteria.addOrder(Property.forName("dt_info").asc());
+            criteria.addOrder(Property.forName("dtInfo").asc());
 
             return criteria.list();
         }
@@ -615,17 +613,17 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
         {
             PumpValuesEntryExt pvex = lst_ext.get(i);
 
-            // System.out.println(pvex.getDt_info());
+            // System.out.println(pvex.getDtInfo());
 
-            if (dV.isEntryAvailable(pvex.getDt_info()))
+            if (dV.isEntryAvailable(pvex.getDtInfo()))
             {
-                PumpValuesEntry pve = (PumpValuesEntry) dV.getEntry(pvex.getDt_info());
+                PumpValuesEntry pve = (PumpValuesEntry) dV.getEntry(pvex.getDtInfo());
                 pve.addAdditionalData(pvex);
             }
             else
             {
                 PumpValuesEntry pve = new PumpValuesEntry();
-                pve.setDateTimeObject(new ATechDate(ATechDateType.DateAndTimeSec, pvex.getDt_info()));
+                pve.setDateTimeObject(new ATechDate(ATechDateType.DateAndTimeSec, pvex.getDtInfo()));
                 pve.setBaseType(PumpBaseType.AdditionalData.getCode());
 
                 pve.addAdditionalData(pvex);
@@ -650,31 +648,31 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
             DeviceValuesDay dvd;
 
-            if (dvr.isDayEntryAvailable(pvex.getDt_info()))
+            if (dvr.isDayEntryAvailable(pvex.getDtInfo()))
             {
                 // System.out.println("DeviceValuesDay Found");
-                dvd = dvr.getDayEntry(pvex.getDt_info());
+                dvd = dvr.getDayEntry(pvex.getDtInfo());
             }
             else
             {
                 // System.out.println("DeviceValuesDay Created");
-                ATechDate atd = new ATechDate(ATechDateType.DateAndTimeSec, pvex.getDt_info());
+                ATechDate atd = new ATechDate(ATechDateType.DateAndTimeSec, pvex.getDtInfo());
                 dvd = new DeviceValuesDay(dataAccess, atd.getGregorianCalendar());
                 dvr.addEntry(dvd);
             }
 
-            if (dvd.isEntryAvailable(pvex.getDt_info()))
+            if (dvd.isEntryAvailable(pvex.getDtInfo()))
             {
                 // System.out.println("PumpValuesEntry Found");
 
-                PumpValuesEntry pve = (PumpValuesEntry) dvd.getEntry(pvex.getDt_info());
+                PumpValuesEntry pve = (PumpValuesEntry) dvd.getEntry(pvex.getDtInfo());
                 pve.addAdditionalData(pvex);
             }
             else
             {
                 // System.out.println("PumpValuesEntry Created");
                 PumpValuesEntry pve = new PumpValuesEntry();
-                pve.setDateTimeObject(new ATechDate(ATechDateType.DateAndTimeSec, pvex.getDt_info()));
+                pve.setDateTimeObject(new ATechDate(ATechDateType.DateAndTimeSec, pvex.getDtInfo()));
                 pve.setBaseType(PumpBaseType.AdditionalData.getCode());
 
                 pve.addAdditionalData(pvex);
@@ -792,9 +790,9 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
                     "where (dv.active_from > " + dtFrom + //
                     " and dv.active_from <> 0 )" + //
                     " or dv.active_till > " + dtFrom + //
-            // " and dv.active_till < " + dtTill +
-            // " and dv.active_till > " + dtFrom +
-            " or (dv.active_till = 0) " + //
+                    // " and dv.active_till < " + dtTill +
+                    // " and dv.active_till > " + dtFrom +
+                    " or (dv.active_till = 0) " + //
                     " and dv.person_id=" + dataAccess.getCurrentUserId();
 
             // " and (dv.active_till < " + dtFrom +
@@ -863,9 +861,9 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
     private String prepareSqlForProfiles(GregorianCalendar gcFrom, GregorianCalendar gcTill)
     {
         String sql = " SELECT dv " //
-                + " from ggc.core.db.hibernate.pump.PumpProfileH as dv " + " where dv.person_id="
+                + " from ggc.core.db.hibernate.pump.PumpProfileH as dv " + " where dv.personId="
                 + dataAccess.getCurrentUserId() //
-                + " and dv.active_from <> 0 and dv.active_till <> 0" + //
+                + " and dv.activeFrom <> 0 and dv.activeTill <> 0" + //
                 " and ( ";
 
         int days = dataAccess.getDaysInInterval(gcFrom, gcTill);
@@ -884,7 +882,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
             for (int j = 0; j < 24; j++)
             {
                 String dt = date + DataAccessPump.getLeadingZero(j, 2) + "0000";
-                sb.append("(dv.active_from <= " + dt + " and dv.active_till >=" + dt + ") or ");
+                sb.append("(dv.activeFrom <= " + dt + " and dv.activeTill >=" + dt + ") or ");
             }
         }
 

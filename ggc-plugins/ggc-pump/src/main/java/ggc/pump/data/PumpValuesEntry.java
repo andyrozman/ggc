@@ -86,7 +86,7 @@ public class PumpValuesEntry extends DeviceValuesEntry
     public PumpValuesEntry(boolean tr)
     {
         // dataAccess = DataAccessPump.getInstance();
-        // m_ic = dataAccess.getI18nControlInstance();
+        // i18nControl = dataAccess.getI18nControlInstance();
     }
 
 
@@ -158,13 +158,13 @@ public class PumpValuesEntry extends DeviceValuesEntry
         // this.entry_object = pdh;
         this.id = pdh.getId();
         this.old_id = pdh.getId();
-        this.datetime = new ATechDate(ATechDateType.DateAndTimeSec, pdh.getDt_info());
-        this.baseType = PumpBaseType.getByCode(pdh.getBase_type());
-        this.sub_type = pdh.getSub_type();
+        this.datetime = new ATechDate(ATechDateType.DateAndTimeSec, pdh.getDtInfo());
+        this.baseType = PumpBaseType.getByCode(pdh.getBaseType());
+        this.sub_type = pdh.getSubType();
         this.value = pdh.getValue();
         this.extended = pdh.getExtended();
         // loadExtended(pdh.getExtended());
-        this.person_id = pdh.getPerson_id();
+        this.person_id = pdh.getPersonId();
         this.comment = pdh.getComment();
 
     }
@@ -756,7 +756,7 @@ public class PumpValuesEntry extends DeviceValuesEntry
     // * this.entry_object = new DayValueH(); this.entry_object.setIns1(0);
     // * this.entry_object.setIns2(0); this.entry_object.setCh(0.0f);
     // * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil.
-    // * BG_MGDL))); this.entry_object.setDt_info(this.datetime);
+    // * BG_MGDL))); this.entry_object.setDtInfo(this.datetime);
     // * this.entry_object.setChanged(System.currentTimeMillis());
     // * this.entry_object.setComment(createComment()); }
     // */
@@ -829,12 +829,12 @@ public class PumpValuesEntry extends DeviceValuesEntry
         PumpDataH pdh = new PumpDataH();
 
         pdh.setId(this.id);
-        pdh.setDt_info(this.datetime.getATDateTimeAsLong());
-        pdh.setBase_type(this.baseType.getCode());
-        pdh.setSub_type(this.sub_type);
+        pdh.setDtInfo(this.datetime.getATDateTimeAsLong());
+        pdh.setBaseType(this.baseType.getCode());
+        pdh.setSubType(this.sub_type);
         pdh.setValue(this.value);
         pdh.setExtended("SOURCE=" + this.source);
-        pdh.setPerson_id((int) this.person_id);
+        pdh.setPersonId((int) this.person_id);
         pdh.setComment(this.comment);
         pdh.setChanged(System.currentTimeMillis());
         pdh.setChanged(System.currentTimeMillis());
@@ -887,12 +887,12 @@ public class PumpValuesEntry extends DeviceValuesEntry
         // System.out.println("PumpDataH: " + pdh);
 
         pdh.setId(this.old_id);
-        pdh.setDt_info(this.datetime.getATDateTimeAsLong());
-        pdh.setBase_type(this.baseType.getCode());
-        pdh.setSub_type(this.sub_type);
+        pdh.setDtInfo(this.datetime.getATDateTimeAsLong());
+        pdh.setBaseType(this.baseType.getCode());
+        pdh.setSubType(this.sub_type);
         pdh.setValue(this.value);
         pdh.setExtended(this.extended);
-        pdh.setPerson_id((int) this.person_id);
+        pdh.setPersonId((int) this.person_id);
         pdh.setComment(this.comment);
         pdh.setChanged(System.currentTimeMillis());
 
@@ -917,12 +917,12 @@ public class PumpValuesEntry extends DeviceValuesEntry
         PumpDataH pdh = (PumpDataH) sess.get(PumpDataH.class, this.id);
 
         this.id = pdh.getId();
-        this.datetime = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pdh.getDt_info());
-        this.baseType = PumpBaseType.getByCode(pdh.getBase_type());
-        this.sub_type = pdh.getSub_type();
+        this.datetime = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, pdh.getDtInfo());
+        this.baseType = PumpBaseType.getByCode(pdh.getBaseType());
+        this.sub_type = pdh.getSubType();
         this.value = pdh.getValue();
         this.extended = pdh.getExtended();
-        this.person_id = pdh.getPerson_id();
+        this.person_id = pdh.getPersonId();
         this.comment = pdh.getComment();
 
         return true;

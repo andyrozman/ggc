@@ -38,8 +38,8 @@ import ggc.pump.util.DataAccessPump;
 public class AnimasPumpDeviceReader extends AnimasDeviceReader
 {
 
-
-    public AnimasPumpDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter) throws PlugInBaseException
+    public AnimasPumpDeviceReader(String portName, AnimasDeviceType animasDevice, OutputWriter outputWriter)
+            throws PlugInBaseException
     {
         super(portName, animasDevice, outputWriter);
         AnimasUtils.setDataAccessInstance(DataAccessPump.getInstance());
@@ -57,6 +57,13 @@ public class AnimasPumpDeviceReader extends AnimasDeviceReader
     {
         AnimasBaseDataV2Handler handler = new AnimasBaseDataV2Handler(portName, animasDevice, this, outputWriter);
         handler.startAction(AnimasTransferType.DownloadPumpSettings);
+    }
+
+
+    @Override
+    public void closeDevice() throws PlugInBaseException
+    {
+        // close is done internally in handler
     }
 
 }

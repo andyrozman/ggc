@@ -62,6 +62,12 @@ public class AccuChekPumpHandler extends PumpDeviceHandler
     }
 
 
+    public void closeDevice() throws PlugInBaseException
+    {
+        // not used for xml reading
+    }
+
+
     /**
      * {@inheritDoc}
      */

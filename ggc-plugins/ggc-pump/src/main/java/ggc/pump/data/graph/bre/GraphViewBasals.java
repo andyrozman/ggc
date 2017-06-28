@@ -163,7 +163,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
         XYSeries basals_new = new XYSeries(this.m_ic.getMessage("BG_INS_RATIO"), true, true); // ,
                                                                                               // Hour.class);
         // XYSeries ratio_ch_bg = new
-        // XYSeries(this.m_ic.getMessage("CH_BG_RATIO"), true, true); //,
+        // XYSeries(this.i18nControl.getMessage("CH_BG_RATIO"), true, true); //,
         // Hour.class);
 
         ArrayList<BREData> lst = this.data_coll.getDataByType(BREData.BRE_DATA_BASAL_OLD);
@@ -259,15 +259,15 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
          * + hbValues.getPercentOfDaysInClass(2) + "\n" +
          * hbValues.getPercentOfDaysInClass(3) + "\n"
          * + hbValues.getPercentOfDaysInClass(4));
-         * dataset.insertValue(0, m_ic.getMessage("DAYS_WITH_READINGS_0_1"),
+         * dataset.insertValue(0, i18nControl.getMessage("DAYS_WITH_READINGS_0_1"),
          * hbValues.getPercentOfDaysInClass(0));
-         * dataset.insertValue(1, m_ic.getMessage("DAYS_WITH_READINGS_2_3"),
+         * dataset.insertValue(1, i18nControl.getMessage("DAYS_WITH_READINGS_2_3"),
          * hbValues.getPercentOfDaysInClass(1));
-         * dataset.insertValue(2, m_ic.getMessage("DAYS_WITH_READINGS_4_5"),
+         * dataset.insertValue(2, i18nControl.getMessage("DAYS_WITH_READINGS_4_5"),
          * hbValues.getPercentOfDaysInClass(2));
-         * dataset.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"),
+         * dataset.insertValue(3, i18nControl.getMessage("DAYS_WITH_READINGS_6_7"),
          * hbValues.getPercentOfDaysInClass(3));
-         * dataset.insertValue(4, m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"),
+         * dataset.insertValue(4, i18nControl.getMessage("DAYS_WITH_READINGS_MORE_7"),
          * hbValues.getPercentOfDaysInClass(4));
          */
 
@@ -424,7 +424,7 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
         // insBURenderer.setSeriesShapesVisible(2, true);
 
         // AX dateAxis.setDateFormatOverride(new
-        // SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS")));
+        // SimpleDateFormat(i18nControl.getMessage("FORMAT_DATE_HOURS")));
         // AX dateAxis.setAutoRange(false);
         /*
          * dateAxis.setRange(this.gluco_values.getRangeFrom().getTime(),
@@ -435,8 +435,8 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
          */
         // BGAxis.setAutoRangeIncludesZero(true);
 
-        // ax insBUAxis.setLabel(m_ic.getMessage("CH_LONG") + " / " +
-        // m_ic.getMessage("INSULIN"));
+        // ax insBUAxis.setLabel(i18nControl.getMessage("CH_LONG") + " / " +
+        // i18nControl.getMessage("INSULIN"));
         // ax insBUAxis.setAutoRangeIncludesZero(true);
 
     }
@@ -522,8 +522,8 @@ public class GraphViewBasals extends BREGraphsAbstract // implements
 
         /*
          * chart = ChartFactory.createTimeSeriesChart(null,
-         * this.m_ic.getMessage("AXIS_TIME_LABEL"),
-         * String.format(this.m_ic.getMessage("AXIS_VALUE_LABEL"),
+         * this.i18nControl.getMessage("AXIS_TIME_LABEL"),
+         * String.format(this.i18nControl.getMessage("AXIS_VALUE_LABEL"),
          * this.graph_util.getUnitLabel()),
          * dataset_old,
          * false,

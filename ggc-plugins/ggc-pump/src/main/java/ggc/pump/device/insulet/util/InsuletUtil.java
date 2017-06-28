@@ -27,12 +27,19 @@ public class InsuletUtil
     private static BitUtils bitUtils = new BitUtils();
     private static ClockModeType clockMode;
     private static GlucoseUnitType glucoseUnitType;
-    private static DataAccessPump dataAccess = DataAccessPump.getInstance();
-    private static I18nControlAbstract i18nControl = dataAccess.getI18nControlInstance();
+    private static DataAccessPump dataAccess;
+    private static I18nControlAbstract i18nControl;
     private static String yesValue;
     private static String noValue;
     private static boolean translatedTypes = false;
     private static BasalProgramNames basalProgramNames;
+
+
+    public static void setDataAccess(DataAccessPump dataAccess_)
+    {
+        dataAccess = dataAccess_;
+        i18nControl = dataAccess.getI18nControlInstance();
+    }
 
 
     public static OutputWriter getOutputWriter()

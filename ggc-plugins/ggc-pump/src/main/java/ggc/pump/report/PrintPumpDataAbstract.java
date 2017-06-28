@@ -41,7 +41,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
 {
 
     protected DeviceValuesRange deviceValuesRange;
-    protected DataAccessPump da_local = null;
+    protected DataAccessPump dataAccessPump = null;
 
 
     /**
@@ -54,7 +54,7 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
         super(DataAccessPump.getInstance(), false);
 
         deviceValuesRange = dvr;
-        da_local = DataAccessPump.getInstance();
+        dataAccessPump = DataAccessPump.getInstance();
 
         init();
     }
@@ -134,9 +134,10 @@ public abstract class PrintPumpDataAbstract extends PrintAbstractIText
     @Override
     public String getFileNameRange()
     {
-        ATechDate atd1 = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(),
+        ATechDate atd1 = new ATechDate(dataAccessPump.getDataEntryObject().getDateTimeFormat(),
                 deviceValuesRange.getStartGC());
-        ATechDate atd2 = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), deviceValuesRange.getEndGC());
+        ATechDate atd2 = new ATechDate(dataAccessPump.getDataEntryObject().getDateTimeFormat(),
+                deviceValuesRange.getEndGC());
 
         return atd1.getDateFilenameString() + "-" + atd2.getDateFilenameString();
     }

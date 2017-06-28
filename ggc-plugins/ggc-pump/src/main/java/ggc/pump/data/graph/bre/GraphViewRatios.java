@@ -214,7 +214,7 @@ public class GraphViewRatios extends BREGraphsAbstract // implements
         // insBURenderer.setSeriesShapesVisible(2, true);
 
         // AX dateAxis.setDateFormatOverride(new
-        // SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS")));
+        // SimpleDateFormat(i18nControl.getMessage("FORMAT_DATE_HOURS")));
         // AX dateAxis.setAutoRange(false);
         /*
          * dateAxis.setRange(this.gluco_values.getRangeFrom().getTime(),
@@ -225,8 +225,8 @@ public class GraphViewRatios extends BREGraphsAbstract // implements
          */
         // BGAxis.setAutoRangeIncludesZero(true);
 
-        // ax insBUAxis.setLabel(m_ic.getMessage("CH_LONG") + " / " +
-        // m_ic.getMessage("INSULIN"));
+        // ax insBUAxis.setLabel(i18nControl.getMessage("CH_LONG") + " / " +
+        // i18nControl.getMessage("INSULIN"));
         // ax insBUAxis.setAutoRangeIncludesZero(true);
 
     }

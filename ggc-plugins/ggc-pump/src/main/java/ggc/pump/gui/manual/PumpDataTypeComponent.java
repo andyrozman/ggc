@@ -17,12 +17,12 @@ import com.atech.utils.ATSwingUtils;
 import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.util.DataAccess;
+import ggc.gui.dialogs.bolushelper.BolusHelper;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.*;
 import ggc.pump.gui.profile.ProfileSelectorPump;
 import ggc.pump.util.DataAccessPump;
-import ggc.shared.bolushelper.BolusHelper;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -417,7 +417,7 @@ public class PumpDataTypeComponent extends JPanel implements ActionListener
         this.combo_1.setBounds(110, 15, 220, 25);
         this.combo_1.setVisible(true);
         this.combo_1.setActionCommand("basal");
-        addAllItems(this.combo_1, PumpBasalType.basal_desc); // this.dataAccess.getBasalSubTypes().getDescriptions());
+        addAllItems(this.combo_1, PumpBasalType.descriptions); // this.dataAccess.getBasalSubTypes().getDescriptions());
 
         this.label_2.setBounds(0, 57, 150, 25);
         this.label_2.setVisible(true);

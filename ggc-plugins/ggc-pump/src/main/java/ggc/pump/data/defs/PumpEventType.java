@@ -7,8 +7,6 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import ggc.pump.util.DataAccessPump;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -78,10 +76,9 @@ public enum PumpEventType implements CodeEnumWithTranslation
     BgFromMeter(70, "EVENT_BG_FROM_METER"), //
     BolusCancelled(80, "ALARM_BOLUS_CANCELED"), //
 
-    BolusWizard(81, "EVENT_BOLUS_WIZARD",
-            "BG=%s;CH=%s;CH_UNIT=%s;"
-                    + "CH_INS_RATIO=%s;BG_INS_RATIO=%s;BG_TARGET_LOW=%s;BG_TARGET_HIGH=%s;BOLUS_TOTAL=%s;"
-                    + "BOLUS_CORRECTION=%s;BOLUS_FOOD=%s;UNABSORBED_INSULIN=%s"), //
+    BolusWizard(81, "EVENT_BOLUS_WIZARD", "BG=%s;CH=%s;CH_UNIT=%s;"
+            + "CH_INS_RATIO=%s;BG_INS_RATIO=%s;BG_TARGET_LOW=%s;BG_TARGET_HIGH=%s;BOLUS_TOTAL=%s;"
+            + "BOLUS_CORRECTION=%s;BOLUS_FOOD=%s;UNABSORBED_INSULIN=%s"), //
 
     ChangeRemoteId(90, "EVENT_CHANGE_REMOTE_ID"), //
 
@@ -94,55 +91,67 @@ public enum PumpEventType implements CodeEnumWithTranslation
 
     static
     {
-        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+        for (PumpEventType pbt : values())
+        {
+            codeMapping.put(pbt.code, pbt);
+        }
+    }
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        if (translated)
+            return;
 
         for (PumpEventType pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
             translationMapping.put(pbt.getTranslation(), pbt);
-            codeMapping.put(pbt.code, pbt);
         }
 
         String[] descriptions_lcl = { ic.getMessage("SELECT_SUBTYPE"), ic.getMessage("EVENT_PRIME_INFUSION_SET"),
-                                      ic.getMessage("EVENT_CARTRIDGE_CHANGED"),
-                                      ic.getMessage("EVENT_REWIND_INFUSION_SET"), ic.getMessage("EVENT_RESERVOIR_LOW"),
-                                      ic.getMessage("EVENT_RESERVOIR_LOW_DESC"), ic.getMessage("EVENT_FILL_CANNULA"),
-                                      ic.getMessage("EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"),
-                                      ic.getMessage("EVENT_SET_BASAL_PATTERN"), ic.getMessage("EVENT_BASAL_RUN"),
+                                     ic.getMessage("EVENT_CARTRIDGE_CHANGED"),
+                                     ic.getMessage("EVENT_REWIND_INFUSION_SET"), ic.getMessage("EVENT_RESERVOIR_LOW"),
+                                     ic.getMessage("EVENT_RESERVOIR_LOW_DESC"), ic.getMessage("EVENT_FILL_CANNULA"),
+                                     ic.getMessage("EVENT_SET_TEMPORARY_BASAL_RATE_TYPE"),
+                                     ic.getMessage("EVENT_SET_BASAL_PATTERN"), ic.getMessage("EVENT_BASAL_RUN"),
 
-                                      ic.getMessage("EVENT_BASAL_STOP"), ic.getMessage("EVENT_POWER_DOWN"),
-                                      ic.getMessage("EVENT_POWER_UP"), ic.getMessage("EVENT_SELF_TEST"),
-                                      ic.getMessage("EVENT_DOWNLOAD"), ic.getMessage("EVENT_DATETIME_SET"),
-                                      ic.getMessage("EVENT_DATETIME_CORRECT"),
+                                     ic.getMessage("EVENT_BASAL_STOP"), ic.getMessage("EVENT_POWER_DOWN"),
+                                     ic.getMessage("EVENT_POWER_UP"), ic.getMessage("EVENT_SELF_TEST"),
+                                     ic.getMessage("EVENT_DOWNLOAD"), ic.getMessage("EVENT_DATETIME_SET"),
+                                     ic.getMessage("EVENT_DATETIME_CORRECT"),
 
-                                      ic.getMessage("EVENT_SET_MAX_BASAL"), //
-                                      ic.getMessage("EVENT_SET_MAX_BOLUS"), //
-                                      ic.getMessage("EVENT_BATERRY_REMOVED"), //
+                                     ic.getMessage("EVENT_SET_MAX_BASAL"), //
+                                     ic.getMessage("EVENT_SET_MAX_BOLUS"), //
+                                     ic.getMessage("EVENT_BATERRY_REMOVED"), //
 
-                                      ic.getMessage("EVENT_BATERRY_REPLACED"), //
-                                      ic.getMessage("EVENT_BATERRY_LOW"), //
-                                      ic.getMessage("EVENT_BATERRY_LOW_DESC"), //
-                                      ic.getMessage("EVENT_BG_FROM_METER"), //
-                                      ic.getMessage("ALARM_BOLUS_CANCELED"), //
-                                      ic.getMessage("EVENT_BOLUS_WIZARD") };
+                                     ic.getMessage("EVENT_BATERRY_REPLACED"), //
+                                     ic.getMessage("EVENT_BATERRY_LOW"), //
+                                     ic.getMessage("EVENT_BATERRY_LOW_DESC"), //
+                                     ic.getMessage("EVENT_BG_FROM_METER"), //
+                                     ic.getMessage("ALARM_BOLUS_CANCELED"), //
+                                     ic.getMessage("EVENT_BOLUS_WIZARD") };
 
         descriptions = descriptions_lcl;
+
+        translated = true;
     }
 
     int code;
     String i18nKey;
     String translation;
     private String valueTemplate;
+    static boolean translated = false;
 
 
-    private PumpEventType(int code, String i18nKey)
+    PumpEventType(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;
     }
 
 
-    private PumpEventType(int code, String i18nKey, String valueTemplate)
+    PumpEventType(int code, String i18nKey, String valueTemplate)
     {
         this.code = code;
         this.i18nKey = i18nKey;

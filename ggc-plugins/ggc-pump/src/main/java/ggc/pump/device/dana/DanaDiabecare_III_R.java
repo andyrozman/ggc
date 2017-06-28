@@ -128,7 +128,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
 
         loadPumpSpecificValues();
 
-        // this.m_ic = DataAccessPump.getInstance().getI18nControlInstance();
+        // this.i18nControl =
+        // DataAccessPump.getInstance().getI18nControlInstance();
 
         this.error_count = 0;
 
@@ -1014,8 +1015,8 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
             pvep.setName("" + this.current_basal_profile);
 
             ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, new GregorianCalendar());
-            pvep.setActive_from(atd.getATDateTimeAsLong());
-            pvep.setActive_till(atd.getATDateTimeAsLong());
+            pvep.setActiveFrom(atd.getATDateTimeAsLong());
+            pvep.setActiveTill(atd.getATDateTimeAsLong());
 
             for (int i = 0; i < 24; i++)
             {
@@ -1322,7 +1323,7 @@ public class DanaDiabecare_III_R extends AbstractBlueToothPump
                 config_group);
         this.outputWriter.writeConfigurationData(pvec);
 
-        // System.out.println(m_ic.getMessage(key) + " = " + value);
+        // System.out.println(i18nControl.getMessage(key) + " = " + value);
     }
 
 

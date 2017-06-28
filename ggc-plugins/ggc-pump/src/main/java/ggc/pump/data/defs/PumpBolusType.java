@@ -6,8 +6,6 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccess;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import ggc.pump.util.DataAccessPump;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -44,36 +42,40 @@ public enum PumpBolusType implements CodeEnumWithTranslation
 
     ;
 
-    static String[] bolus_desc;
+    static String[] descriptions;
     static HashMap<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
     static HashMap<Integer, PumpBolusType> codeMapping = new HashMap<Integer, PumpBolusType>();
+    private static boolean translated;
 
     static
     {
-        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+        for (PumpBolusType pbt : values())
+        {
+            codeMapping.put(pbt.code, pbt);
+        }
+    }
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        if (translated)
+            return;
 
         for (PumpBolusType pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
             translationMapping.put(pbt.getTranslation(), pbt);
-            codeMapping.put(pbt.code, pbt);
-
-            // System.out.println("Tr: " + i18nControl.getMessage(pbt.i18nKey));
         }
 
-        String[] bolus_desc_lcl = { ic.getMessage("SELECT_BOLUS_TYPE"), //
-                                    ic.getMessage("BOLUS_STANDARD"), //
-                                    ic.getMessage("BOLUS_AUDIO"), //
-                                    ic.getMessage("BOLUS_SQUARE"), //
-                                    ic.getMessage("BOLUS_MULTIWAVE"), };
+        String[] bolusDescriptions = { ic.getMessage("SELECT_BOLUS_TYPE"), //
+                                      ic.getMessage("BOLUS_STANDARD"), //
+                                      ic.getMessage("BOLUS_AUDIO"), //
+                                      ic.getMessage("BOLUS_SQUARE"), //
+                                      ic.getMessage("BOLUS_MULTIWAVE"), };
 
-        bolus_desc = bolus_desc_lcl;
+        descriptions = bolusDescriptions;
 
-        // for(String s : bolus_desc_lcl)
-        // {
-        // System.out.println("Tr: " + s);
-        // }
-
+        translated = true;
     }
 
     int code;
@@ -82,14 +84,14 @@ public enum PumpBolusType implements CodeEnumWithTranslation
     String valueTemplate;
 
 
-    private PumpBolusType(int code, String i18nKey)
+    PumpBolusType(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;
     }
 
 
-    private PumpBolusType(int code, String i18nKey, String valueTemplate)
+    PumpBolusType(int code, String i18nKey, String valueTemplate)
     {
         this.code = code;
         this.i18nKey = i18nKey;
@@ -160,6 +162,6 @@ public enum PumpBolusType implements CodeEnumWithTranslation
      */
     public static String[] getDescriptions()
     {
-        return bolus_desc;
+        return descriptions;
     }
 }

@@ -11,7 +11,6 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPTable;
 
 import ggc.core.data.DailyValuesRow;
-import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesRange;
 import ggc.pump.data.PumpValuesEntry;
@@ -90,7 +89,7 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
         do
         {
 
-            ATechDate atd = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(), gc_current);
+            ATechDate atd = new ATechDate(dataAccessPump.getDataEntryObject().getDateTimeFormat(), gc_current);
 
             if (deviceValuesRange.isDayEntryAvailable(atd.getATDateTimeAsLong()))
             {
@@ -105,7 +104,7 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
 
                     PumpValuesEntry pve = (PumpValuesEntry) dvd.getList().get(i);
 
-                    ATechDate atdx = new ATechDate(da_local.getDataEntryObject().getDateTimeFormat(),
+                    ATechDate atdx = new ATechDate(dataAccessPump.getDataEntryObject().getDateTimeFormat(),
                             pve.getDateTime());
 
                     if (i != 0)
@@ -248,7 +247,7 @@ public class PrintPumpDataExt extends PrintPumpDataAbstract
         table.addCell(this.createEmptyTextPhrase());
         table.addCell(this.createEmptyTextPhrase());
 
-        table.addCell(new Phrase(DataAccess.Decimal2Format.format(rw.getCH()), this.textFontItalic));
+        table.addCell(new Phrase(dataAccessPump.getFloatAsString(rw.getCH(), 2), this.textFontItalic));
     }
 
 

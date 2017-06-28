@@ -9,7 +9,6 @@ import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
 import ggc.pump.data.PumpValuesEntryExt;
-import ggc.pump.util.DataAccessPump;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -51,7 +50,7 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
     /**
      * Additional data description
      */
-    public static String[] addata_desc = null;
+    public static String[] descriptions = null;
 
 
     /**
@@ -62,7 +61,7 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
      */
     public String getTypeDescription(int idx)
     {
-        return this.addata_desc[idx];
+        return this.descriptions[idx];
     }
 
 
@@ -73,7 +72,7 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
      */
     public String[] getDescriptions()
     {
-        return this.addata_desc;
+        return this.descriptions;
     }
 
     static Map<String, CodeEnumWithTranslation> translationMapping = new HashMap<String, CodeEnumWithTranslation>();
@@ -81,26 +80,42 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
 
     static
     {
-        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+        for (PumpAdditionalDataType pbt : values())
+        {
+            codeMapping.put(pbt.code, pbt);
+        }
+    }
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        if (translated)
+            return;
 
         for (PumpAdditionalDataType pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
             translationMapping.put(pbt.getTranslation(), pbt);
-            codeMapping.put(pbt.code, pbt);
         }
 
-        String[] addata_desc_lcl = { ic.getMessage("SELECT_ADDITIONAL_DATA"), ic.getMessage("ADD_DATA_ACTIVITY"),
-                                     ic.getMessage("ADD_DATA_COMMENT"), ic.getMessage("ADD_DATA_BG"),
-                                     ic.getMessage("ADD_DATA_URINE"), ic.getMessage("ADD_DATA_CH"),
-                                     ic.getMessage("ADD_DATA_FOOD_DB"), ic.getMessage("ADD_DATA_FOOD_DESC"), };
+        String[] additionalDataDescriptions = { ic.getMessage("SELECT_ADDITIONAL_DATA"), //
+                                               ic.getMessage("ADD_DATA_ACTIVITY"), //
+                                               ic.getMessage("ADD_DATA_COMMENT"), //
+                                               ic.getMessage("ADD_DATA_BG"), //
+                                               ic.getMessage("ADD_DATA_URINE"), //
+                                               ic.getMessage("ADD_DATA_CH"), //
+                                               ic.getMessage("ADD_DATA_FOOD_DB"), //
+                                               ic.getMessage("ADD_DATA_FOOD_DESC"), };
 
-        addata_desc = addata_desc_lcl;
+        descriptions = additionalDataDescriptions;
+
+        translated = true;
     }
 
     int code;
     String i18nKey;
     String translation;
+    static boolean translated = false;
 
 
     private PumpAdditionalDataType(int code, String i18nKey)
@@ -170,11 +185,11 @@ public enum PumpAdditionalDataType implements CodeEnumWithTranslation
     {
         ArrayList<String> items = new ArrayList<String>();
 
-        for (int i = 1; i < addata_desc.length; i++)
+        for (int i = 1; i < descriptions.length; i++)
         {
-            if (!old_data.containsKey(addata_desc[i]))
+            if (!old_data.containsKey(descriptions[i]))
             {
-                items.add(addata_desc[i]);
+                items.add(descriptions[i]);
             }
         }
 

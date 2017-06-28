@@ -123,12 +123,12 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     {
         this.setId(pd.getId());
         this.setName(pd.getName());
-        this.setBasal_base(pd.getBasal_base());
-        this.setBasal_diffs(pd.getBasal_diffs());
-        this.setActive_from(pd.getActive_from());
-        this.setActive_till(pd.getActive_till());
+        this.setBasalBase(pd.getBasalBase());
+        this.setBasalDiffs(pd.getBasalDiffs());
+        this.setActiveFrom(pd.getActiveFrom());
+        this.setActiveTill(pd.getActiveTill());
         this.setExtended(pd.getExtended());
-        this.setPerson_id(pd.getPerson_id());
+        this.setPersonId(pd.getPersonId());
         this.setComment(pd.getComment());
         this.setChanged(pd.getChanged());
     }
@@ -163,7 +163,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      */
     public ATechDate getDateTimeObject()
     {
-        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActive_from());
+        return new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActiveFrom());
     }
 
     /*
@@ -232,7 +232,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
          * //
          * this.entry_object.setBg(Integer.parseInt(this.getBGValue(OutputUtil
          * .BG_MGDL)));
-         * // this.entry_object.setDt_info(this.datetime);
+         * // this.entry_object.setDtInfo(this.datetime);
          * this.entry_object.setChanged(System.currentTimeMillis());
          * // this.entry_object.setComment(createComment());
          * }
@@ -310,7 +310,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
         this.value_multiline = s_multi;
 
-        this.setBasal_diffs(s);
+        this.setBasalDiffs(s);
 
     }
 
@@ -331,7 +331,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     public String toString()
     {
         // OutputUtil o= null;
-        return "PumpValueEntryProfile [id=" + this.getId() + "] " + this.getBasal_diffs();
+        return "PumpValueEntryProfile [id=" + this.getId() + "] " + this.getBasalDiffs();
     }
 
 
@@ -346,12 +346,12 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
         pd.setId(this.getId());
         pd.setName(this.getName());
-        pd.setBasal_base(this.getBasal_base());
-        pd.setBasal_diffs(this.getBasal_diffs());
-        pd.setActive_from(this.getActive_from());
-        pd.setActive_till(this.getActive_till());
+        pd.setBasalBase(this.getBasalBase());
+        pd.setBasalDiffs(this.getBasalDiffs());
+        pd.setActiveFrom(this.getActiveFrom());
+        pd.setActiveTill(this.getActiveTill());
         pd.setExtended("SOURCE=" + this.source);
-        pd.setPerson_id(this.getPerson_id());
+        pd.setPersonId(this.getPersonId());
         pd.setComment(this.getComment());
         pd.setChanged(System.currentTimeMillis());
 
@@ -391,12 +391,12 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
         // pd.setId(this.getId());
         pd.setName(this.getName());
-        pd.setBasal_base(this.getBasal_base());
-        pd.setBasal_diffs(this.getBasal_diffs());
-        pd.setActive_from(this.getActive_from());
-        pd.setActive_till(this.getActive_till());
+        pd.setBasalBase(this.getBasalBase());
+        pd.setBasalDiffs(this.getBasalDiffs());
+        pd.setActiveFrom(this.getActiveFrom());
+        pd.setActiveTill(this.getActiveTill());
         pd.setExtended(this.getExtended());
-        pd.setPerson_id(this.getPerson_id());
+        pd.setPersonId(this.getPersonId());
         pd.setComment(this.getComment());
         pd.setChanged(System.currentTimeMillis());
 
@@ -414,12 +414,12 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
         this.setId(pd.getId());
         this.setName(pd.getName());
-        this.setBasal_base(pd.getBasal_base());
-        this.setBasal_diffs(pd.getBasal_diffs());
-        this.setActive_from(pd.getActive_from());
-        this.setActive_till(pd.getActive_till());
+        this.setBasalBase(pd.getBasalBase());
+        this.setBasalDiffs(pd.getBasalDiffs());
+        this.setActiveFrom(pd.getActiveFrom());
+        this.setActiveTill(pd.getActiveTill());
         this.setExtended(pd.getExtended());
-        this.setPerson_id(pd.getPerson_id());
+        this.setPersonId(pd.getPersonId());
         this.setComment(pd.getComment());
         this.setChanged(pd.getChanged());
 
@@ -524,7 +524,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
 
             case 3:
                 return ""; // ATechDate.getDateTimeString(this.getDateTimeFormat(),
-                           // this.getActive_till());
+                           // this.getActiveTill());
 
             case 4:
                 return this.getValue();
@@ -554,9 +554,9 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
             case OutputWriterType.CONSOLE:
             case OutputWriterType.FILE:
                 return "Profile=" + this.getName() + ", From="
-                        + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActive_from())
+                        + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActiveFrom())
                         + ", Till="
-                        + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActive_till());
+                        + ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_S, this.getActiveTill());
 
             case OutputWriterType.GGC_FILE_EXPORT:
                 {
@@ -590,7 +590,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      */
     public String getSpecialId()
     {
-        return "PP_" + this.getActive_from() + "_" + this.getName();
+        return "PP_" + this.getActiveFrom() + "_" + this.getName();
     }
 
 
@@ -613,7 +613,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
     public String getValue()
     {
         // this.processProfileSubEntries(1);
-        return this.getBasal_diffs();
+        return this.getBasalDiffs();
     }
 
 
@@ -624,7 +624,7 @@ public class PumpValuesEntryProfile extends PumpProfileH implements PumpValuesEn
      */
     public long getDateTime()
     {
-        return this.getActive_from();
+        return this.getActiveFrom();
     }
 
 

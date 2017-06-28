@@ -397,11 +397,11 @@ public class Profile implements Comparable<Profile>
         PumpValuesEntryProfile p = new PumpValuesEntryProfile();
 
         p.setName(this.profile_id);
-        p.setBasal_base(0);
-        p.setBasal_diffs(createBasalDiffs());
-        p.setActive_from(this.profile_active_from);
-        p.setActive_till(this.profile_active_till);
-        p.setPerson_id((int) DataAccessPump.getInstance().getCurrentUserId());
+        p.setBasalBase(0);
+        p.setBasalDiffs(createBasalDiffs());
+        p.setActiveFrom(this.profile_active_from);
+        p.setActiveTill(this.profile_active_till);
+        p.setPersonId((int) DataAccessPump.getInstance().getCurrentUserId());
         p.setComment("");
         p.setChanged(System.currentTimeMillis());
 

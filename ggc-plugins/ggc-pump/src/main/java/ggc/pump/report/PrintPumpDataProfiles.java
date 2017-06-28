@@ -184,8 +184,8 @@ public class PrintPumpDataProfiles extends PrintAbstractITextWithDataRead
     {
 
         table.addCell(this.createNormalTextPhrase(profile.getName()));
-        table.addCell(this.createNormalTextPhraseSmall(getDateTime(profile.getActive_from())));
-        table.addCell(this.createNormalTextPhraseSmall(getDateTime(profile.getActive_till())));
+        table.addCell(this.createNormalTextPhraseSmall(getDateTime(profile.getActiveFrom())));
+        table.addCell(this.createNormalTextPhraseSmall(getDateTime(profile.getActiveTill())));
 
         // table.addCell(this.createNormalTextPhraseSmall(dataAccessPump.getFormatedBasalValue(value)));
 

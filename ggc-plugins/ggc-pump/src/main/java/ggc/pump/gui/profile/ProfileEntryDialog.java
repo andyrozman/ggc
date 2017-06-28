@@ -179,11 +179,11 @@ public class ProfileEntryDialog extends JDialog implements ActionListener, HelpC
 
         /*
          * String button_command[] = { "update_ch",
-         * m_ic.getMessage("UPDATE_FROM_FOOD"),
-         * "edit", m_ic.getMessage("EDIT"),
-         * "ok", m_ic.getMessage("OK"),
-         * "cancel", m_ic.getMessage("CANCEL"),
-         * "help", m_ic.getMessage("HELP")
+         * i18nControl.getMessage("UPDATE_FROM_FOOD"),
+         * "edit", i18nControl.getMessage("EDIT"),
+         * "ok", i18nControl.getMessage("OK"),
+         * "cancel", i18nControl.getMessage("CANCEL"),
+         * "help", i18nControl.getMessage("HELP")
          * };
          * int button_coord[] = { 210, 228, 120, 0,
          * 230, 258, 100, 0,

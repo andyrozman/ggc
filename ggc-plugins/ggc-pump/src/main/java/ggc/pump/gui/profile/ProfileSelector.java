@@ -117,11 +117,11 @@ public class ProfileSelector extends SelectorAbstractDialog
             PumpProfileH pr = pe.getResult();
 
             // System.out.println("PumpProfile: " + pr);
-            // System.out.println("PumpProfile(till=" + pr.getActive_till());
+            // System.out.println("PumpProfile(till=" + pr.getActiveTill());
 
             boolean added = false;
 
-            if (pr.getActive_till() == -1)
+            if (pr.getActiveTill() == -1)
             {
                 // if this one should be last, we need to close previous last
 
@@ -131,16 +131,16 @@ public class ProfileSelector extends SelectorAbstractDialog
 
                 if (pr_other != null)
                 {
-                    if (pr_other.getActive_from() < pr.getActive_from())
+                    if (pr_other.getActiveFrom() < pr.getActiveFrom())
                     {
-                        ATechDate at = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, pr.getActive_from());
+                        ATechDate at = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_MIN, pr.getActiveFrom());
                         at.add(Calendar.MINUTE, -1);
 
-                        pr_other.setActive_till(at.getATDateTimeAsLong());
+                        pr_other.setActiveTill(at.getATDateTimeAsLong());
                     }
                     else
                     {
-                        pr.setActive_till(pr_other.getActive_from());
+                        pr.setActiveTill(pr_other.getActiveFrom());
                     }
 
                     this.full.add(new PumpProfile(pr));
@@ -168,7 +168,7 @@ public class ProfileSelector extends SelectorAbstractDialog
         {
             PumpProfile pp = (PumpProfile) this.full.get(i);
 
-            if (pp.getActive_till() == -1 && pp.getName().equals(name))
+            if (pp.getActiveTill() == -1 && pp.getName().equals(name))
                 return pp;
         }
         return null;

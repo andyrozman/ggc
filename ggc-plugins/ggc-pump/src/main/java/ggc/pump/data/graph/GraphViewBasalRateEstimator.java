@@ -186,16 +186,16 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
          * + hbValues.getPercentOfDaysInClass(2) + "\n" +
          * hbValues.getPercentOfDaysInClass(3) + "\n"
          * + hbValues.getPercentOfDaysInClass(4));
-         * datasetBG.insertValue(0, m_ic.getMessage("DAYS_WITH_READINGS_0_1"),
+         * datasetBG.insertValue(0, i18nControl.getMessage("DAYS_WITH_READINGS_0_1"),
          * hbValues.getPercentOfDaysInClass(0));
-         * datasetBG.insertValue(1, m_ic.getMessage("DAYS_WITH_READINGS_2_3"),
+         * datasetBG.insertValue(1, i18nControl.getMessage("DAYS_WITH_READINGS_2_3"),
          * hbValues.getPercentOfDaysInClass(1));
-         * datasetBG.insertValue(2, m_ic.getMessage("DAYS_WITH_READINGS_4_5"),
+         * datasetBG.insertValue(2, i18nControl.getMessage("DAYS_WITH_READINGS_4_5"),
          * hbValues.getPercentOfDaysInClass(2));
-         * datasetBG.insertValue(3, m_ic.getMessage("DAYS_WITH_READINGS_6_7"),
+         * datasetBG.insertValue(3, i18nControl.getMessage("DAYS_WITH_READINGS_6_7"),
          * hbValues.getPercentOfDaysInClass(3));
          * datasetBG.insertValue(4,
-         * m_ic.getMessage("DAYS_WITH_READINGS_MORE_7"),
+         * i18nControl.getMessage("DAYS_WITH_READINGS_MORE_7"),
          * hbValues.getPercentOfDaysInClass(4));
          */
 
@@ -204,8 +204,8 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
 
         /*
          * TimeSeries BGSeries = new
-         * TimeSeries(this.m_ic.getMessage("BLOOD_GLUCOSE"), Hour.class);
-         * TimeSeries CHSeries = new TimeSeries(this.m_ic.getMessage("CH_LONG"),
+         * TimeSeries(this.i18nControl.getMessage("BLOOD_GLUCOSE"), Hour.class);
+         * TimeSeries CHSeries = new TimeSeries(this.i18nControl.getMessage("CH_LONG"),
          * Hour.class);
          * TimeSeries ins1Series = new
          * TimeSeries(dataAccessPump.getSettings().getIns1Name(), Hour.class);
@@ -216,7 +216,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
         XYSeries bg = new XYSeries(this.m_ic.getMessage("MEASURED_BASAL_BG"), true, true); // ,
                                                                                            // Hour.class);
 
-        // XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"),
+        // XYSeries CHSeries = new XYSeries(this.i18nControl.getMessage("CH_LONG"),
         // true, true); //, Hour.class);
         // XYSeries ins1Series = new
         // XYSeries(dataAccessPump.getSettings().getIns1Name(), true, true); //,
@@ -412,7 +412,7 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
         insBURenderer.setSeriesShapesVisible(2, true);
 
         // AX dateAxis.setDateFormatOverride(new
-        // SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS")));
+        // SimpleDateFormat(i18nControl.getMessage("FORMAT_DATE_HOURS")));
         // AX dateAxis.setAutoRange(false);
         /*
          * dateAxis.setRange(this.gluco_values.getRangeFrom().getTime(),
@@ -423,8 +423,8 @@ public class GraphViewBasalRateEstimator extends AbstractGraphViewAndProcessor /
          */
         // BGAxis.setAutoRangeIncludesZero(true);
 
-        // ax insBUAxis.setLabel(m_ic.getMessage("CH_LONG") + " / " +
-        // m_ic.getMessage("INSULIN"));
+        // ax insBUAxis.setLabel(i18nControl.getMessage("CH_LONG") + " / " +
+        // i18nControl.getMessage("INSULIN"));
         // ax insBUAxis.setAutoRangeIncludesZero(true);
 
     }

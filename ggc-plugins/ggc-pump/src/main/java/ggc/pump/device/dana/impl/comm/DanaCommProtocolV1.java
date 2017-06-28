@@ -473,8 +473,8 @@ public class DanaCommProtocolV1 extends DanaCommProtocolAbstract
             pvep.setName("" + this.current_basal_profile);
 
             ATechDate atd = new ATechDate(ATechDate.FORMAT_DATE_AND_TIME_S, new GregorianCalendar());
-            pvep.setActive_from(atd.getATDateTimeAsLong());
-            pvep.setActive_till(atd.getATDateTimeAsLong());
+            pvep.setActiveFrom(atd.getATDateTimeAsLong());
+            pvep.setActiveTill(atd.getATDateTimeAsLong());
 
             for (int i = 0; i < 24; i++)
             {
@@ -698,7 +698,7 @@ public class DanaCommProtocolV1 extends DanaCommProtocolAbstract
         DeviceValueConfigEntry pvec = new DeviceValueConfigEntry(i18nControl.getMessage(key), value, config_group);
         this.outputWriter.writeConfigurationData(pvec);
 
-        // System.out.println(m_ic.getMessage(key) + " = " + value);
+        // System.out.println(i18nControl.getMessage(key) + " = " + value);
     }
 
 }

@@ -1,5 +1,6 @@
 package ggc.pump.device.dana;
 
+import java.io.File;
 import java.util.List;
 
 import ggc.plugin.data.GGCPlugInFileReaderContext;
@@ -21,7 +22,7 @@ public class DanaPumpHandlerV2 extends PumpDeviceHandler
 
     public DeviceHandlerType getDeviceHandlerKey()
     {
-        return DeviceHandlerType.DanaPumpHandlerV2;
+        return DeviceHandlerType.DanaPumpHandler;
     }
 
 
@@ -44,5 +45,19 @@ public class DanaPumpHandlerV2 extends PumpDeviceHandler
     public List<GGCPlugInFileReaderContext> getFileDownloadContexts(DownloadSupportType downloadSupportType)
     {
         return null;
+    }
+
+
+    public void closeDevice() throws PlugInBaseException
+    {
+        // not used - we have internal handling of closing
+    }
+
+
+    public boolean isEnabled()
+    {
+        File file = new File("../data/tools/DanaOld.cfg");
+
+        return (!file.exists());
     }
 }

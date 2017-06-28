@@ -81,12 +81,12 @@ public class PumpProfile extends PumpProfileH
     {
         this.setId(ch.getId());
         this.setName(ch.getName());
-        this.setBasal_base(ch.getBasal_base());
-        this.setBasal_diffs(ch.getBasal_diffs());
-        this.setActive_from(ch.getActive_from());
-        this.setActive_till(ch.getActive_till());
+        this.setBasalBase(ch.getBasalBase());
+        this.setBasalDiffs(ch.getBasalDiffs());
+        this.setActiveFrom(ch.getActiveFrom());
+        this.setActiveTill(ch.getActiveTill());
         this.setExtended(ch.getExtended());
-        this.setPerson_id(ch.getPerson_id());
+        this.setPersonId(ch.getPersonId());
         this.setComment(ch.getComment());
         this.setChanged(ch.getChanged());
     }
@@ -221,12 +221,12 @@ public class PumpProfile extends PumpProfileH
 
         ch.setId(this.getId());
         ch.setName(this.getName());
-        ch.setBasal_base(this.getBasal_base());
-        ch.setBasal_diffs(this.getBasal_diffs());
-        ch.setActive_from(this.getActive_from());
-        ch.setActive_till(this.getActive_till());
+        ch.setBasalBase(this.getBasalBase());
+        ch.setBasalDiffs(this.getBasalDiffs());
+        ch.setActiveFrom(this.getActiveFrom());
+        ch.setActiveTill(this.getActiveTill());
         ch.setExtended(this.getExtended());
-        ch.setPerson_id(this.getPerson_id());
+        ch.setPersonId(this.getPersonId());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
 
@@ -274,12 +274,12 @@ public class PumpProfile extends PumpProfileH
 
         ch.setId(this.getId());
         ch.setName(this.getName());
-        ch.setBasal_base(this.getBasal_base());
-        ch.setBasal_diffs(this.getBasal_diffs());
-        ch.setActive_from(this.getActive_from());
-        ch.setActive_till(this.getActive_till());
+        ch.setBasalBase(this.getBasalBase());
+        ch.setBasalDiffs(this.getBasalDiffs());
+        ch.setActiveFrom(this.getActiveFrom());
+        ch.setActiveTill(this.getActiveTill());
         ch.setExtended(this.getExtended());
-        ch.setPerson_id(this.getPerson_id());
+        ch.setPersonId(this.getPersonId());
         ch.setComment(this.getComment());
         ch.setChanged(System.currentTimeMillis());
 
@@ -303,12 +303,12 @@ public class PumpProfile extends PumpProfileH
 
         this.setId(ch.getId());
         this.setName(ch.getName());
-        this.setBasal_base(ch.getBasal_base());
-        this.setBasal_diffs(ch.getBasal_diffs());
-        this.setActive_from(ch.getActive_from());
-        this.setActive_till(ch.getActive_till());
+        this.setBasalBase(ch.getBasalBase());
+        this.setBasalDiffs(ch.getBasalDiffs());
+        this.setActiveFrom(ch.getActiveFrom());
+        this.setActiveTill(ch.getActiveTill());
         this.setExtended(ch.getExtended());
-        this.setPerson_id(ch.getPerson_id());
+        this.setPersonId(ch.getPersonId());
         this.setComment(ch.getComment());
         this.setChanged(ch.getChanged());
 
@@ -370,17 +370,17 @@ public class PumpProfile extends PumpProfileH
         sb.append("|");
         sb.append(this.getName());
         sb.append("|");
-        sb.append(this.getBasal_base());
+        sb.append(this.getBasalBase());
         sb.append("|");
-        sb.append(this.getBasal_diffs());
+        sb.append(this.getBasalDiffs());
         sb.append("|");
-        sb.append(this.getActive_from());
+        sb.append(this.getActiveFrom());
         sb.append("|");
-        sb.append(this.getActive_till());
+        sb.append(this.getActiveTill());
         sb.append("|");
         sb.append(this.getExtended());
         sb.append("|");
-        sb.append(this.getPerson_id());
+        sb.append(this.getPersonId());
         sb.append("|");
         sb.append(this.getComment());
         sb.append("|");
@@ -448,12 +448,12 @@ public class PumpProfile extends PumpProfileH
 
         this.setId(da.getLongValueFromString(arr[0]));
         this.setName(arr[1]);
-        this.setBasal_base(da.getFloatValue(arr[2]));
-        this.setBasal_diffs(arr[3]);
-        this.setActive_from(da.getLongValueFromString(arr[4]));
-        this.setActive_till(da.getLongValueFromString(arr[5]));
+        this.setBasalBase(da.getFloatValue(arr[2]));
+        this.setBasalDiffs(arr[3]);
+        this.setActiveFrom(da.getLongValueFromString(arr[4]));
+        this.setActiveTill(da.getLongValueFromString(arr[5]));
         this.setExtended(arr[6]);
-        this.setPerson_id(da.getIntValueFromString(arr[7]));
+        this.setPersonId(da.getIntValueFromString(arr[7]));
         this.setComment(arr[8]);
         this.setChanged(da.getLongValueFromString(arr[9]));
     }
@@ -578,21 +578,21 @@ public class PumpProfile extends PumpProfileH
                 return this.getName();
 
             case 2:
-                return getDateDisplay(this.getActive_till());
+                return getDateDisplay(this.getActiveTill());
             /*
-             * if (this.getActive_till() <= 0)
+             * if (this.getActiveTill() <= 0)
              * return "";
              * else
              * return
              * ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN
-             * , this.getActive_till());
+             * , this.getActiveTill());
              */
 
             default:
-                return getDateDisplay(this.getActive_from());
+                return getDateDisplay(this.getActiveFrom());
             // return
             // ATechDate.getDateTimeString(ATechDate.FORMAT_DATE_AND_TIME_MIN,
-            // this.getActive_from());
+            // this.getActiveFrom());
 
         }
     }
@@ -689,10 +689,10 @@ public class PumpProfile extends PumpProfileH
         switch (state)
         {
             case 2:
-                return this.getActive_from() >= from * 1000 & this.getActive_till() <= till * 1000;
+                return this.getActiveFrom() >= from * 1000 & this.getActiveTill() <= till * 1000;
 
             case 1:
-                return this.getActive_from() >= from * 1000;
+                return this.getActiveFrom() >= from * 1000;
 
             default:
                 return true;
@@ -784,7 +784,7 @@ public class PumpProfile extends PumpProfileH
     {
         if (this.patterns == null)
         {
-            String basalPatts = this.getBasal_diffs();
+            String basalPatts = this.getBasalDiffs();
 
             StringTokenizer strTok = new StringTokenizer(basalPatts, ";");
 
@@ -810,7 +810,7 @@ public class PumpProfile extends PumpProfileH
 
         long dt = ATechDate.getATDateTimeFromGC(gc, ATechDate.FORMAT_DATE_AND_TIME_S);
 
-        return ((this.getActive_from() < dt) && (dt < this.getActive_till()));
+        return ((this.getActiveFrom() < dt) && (dt < this.getActiveTill()));
     }
 
 
@@ -833,8 +833,8 @@ public class PumpProfile extends PumpProfileH
 
     public boolean isInProfileRange(long dateTimeAtechDateLong)
     {
-        return ((this.getActive_from() <= dateTimeAtechDateLong) && //
-                (this.getActive_till() >= dateTimeAtechDateLong));
+        return ((this.getActiveFrom() <= dateTimeAtechDateLong) && //
+                (this.getActiveTill() >= dateTimeAtechDateLong));
     }
 
 }

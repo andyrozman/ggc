@@ -8,8 +8,6 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
-import ggc.pump.util.DataAccessPump;
-
 /**
  *  Application:   GGC - GNU Gluco Control
  *  Plug-in:       Pump Tool (support for Pump devices)
@@ -73,36 +71,48 @@ public enum PumpErrors implements CodeEnumWithTranslation
 
     static
     {
-        I18nControlAbstract ic = DataAccessPump.getInstance().getI18nControlInstance();
+        for (PumpErrors pbt : values())
+        {
+            codeMapping.put(pbt.code, pbt);
+        }
+    }
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        if (translated)
+            return;
 
         for (PumpErrors pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
             translationMapping.put(pbt.getTranslation(), pbt);
-            codeMapping.put(pbt.code, pbt);
         }
 
         String[] errors_desc_lcl = { ic.getMessage("SELECT_SUBTYPE"), //
-                                     ic.getMessage("ERROR_CARTRIDGE_EMPTY"), //
-                                     ic.getMessage("ERROR_BATTERY_DEPLETED"), //
-                                     ic.getMessage("ERROR_AUTOMATIC_OFF"), //
-                                     ic.getMessage("ERROR_NO_DELIVERY"), //
-                                     ic.getMessage("ERROR_END_OF_OPERATION"), //
-                                     ic.getMessage("ERROR_MECHANICAL_ERROR"), //
-                                     ic.getMessage("ERROR_ELECTRONIC_ERROR"), //
-                                     ic.getMessage("ERROR_POWER_INTERRUPT"), //
-                                     ic.getMessage("ERROR_CARTRIDGE_ERROR"), //
-                                     ic.getMessage("ERROR_SET_NOT_PRIMED"), //
-                                     ic.getMessage("ERROR_DATA_INTERRUPTED"), //
-                                     ic.getMessage("ERROR_LANGUAGE_ERROR"), //
-                                     ic.getMessage("ERROR_INSULIN_CHANGED"), };
+                                    ic.getMessage("ERROR_CARTRIDGE_EMPTY"), //
+                                    ic.getMessage("ERROR_BATTERY_DEPLETED"), //
+                                    ic.getMessage("ERROR_AUTOMATIC_OFF"), //
+                                    ic.getMessage("ERROR_NO_DELIVERY"), //
+                                    ic.getMessage("ERROR_END_OF_OPERATION"), //
+                                    ic.getMessage("ERROR_MECHANICAL_ERROR"), //
+                                    ic.getMessage("ERROR_ELECTRONIC_ERROR"), //
+                                    ic.getMessage("ERROR_POWER_INTERRUPT"), //
+                                    ic.getMessage("ERROR_CARTRIDGE_ERROR"), //
+                                    ic.getMessage("ERROR_SET_NOT_PRIMED"), //
+                                    ic.getMessage("ERROR_DATA_INTERRUPTED"), //
+                                    ic.getMessage("ERROR_LANGUAGE_ERROR"), //
+                                    ic.getMessage("ERROR_INSULIN_CHANGED"), };
 
         errors_desc = errors_desc_lcl;
+
+        translated = true;
     }
 
     int code;
     String i18nKey;
     String translation;
+    static boolean translated = false;
 
 
     private PumpErrors(int code, String i18nKey)

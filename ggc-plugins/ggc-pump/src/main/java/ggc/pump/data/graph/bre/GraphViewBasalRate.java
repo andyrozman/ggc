@@ -156,7 +156,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
         XYSeries calc_basal = new XYSeries(this.m_ic.getMessage("CALCULATED_BASAL"), true, true); // ,
                                                                                                   // Hour.class);
 
-        // XYSeries CHSeries = new XYSeries(this.m_ic.getMessage("CH_LONG"),
+        // XYSeries CHSeries = new XYSeries(this.i18nControl.getMessage("CH_LONG"),
         // true, true); //, Hour.class);
 
         // int BGUnit = 1; // AAA da_local.getSettings().getBG_unit();
@@ -284,7 +284,7 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
         insBURenderer.setSeriesShapesVisible(2, true);
 
         // AX dateAxis.setDateFormatOverride(new
-        // SimpleDateFormat(m_ic.getMessage("FORMAT_DATE_HOURS")));
+        // SimpleDateFormat(i18nControl.getMessage("FORMAT_DATE_HOURS")));
         // AX dateAxis.setAutoRange(false);
         /*
          * dateAxis.setRange(this.gluco_values.getRangeFrom().getTime(),
@@ -295,8 +295,8 @@ public class GraphViewBasalRate extends BREGraphsAbstract // implements
          */
         // BGAxis.setAutoRangeIncludesZero(true);
 
-        // ax insBUAxis.setLabel(m_ic.getMessage("CH_LONG") + " / " +
-        // m_ic.getMessage("INSULIN"));
+        // ax insBUAxis.setLabel(i18nControl.getMessage("CH_LONG") + " / " +
+        // i18nControl.getMessage("INSULIN"));
         // ax insBUAxis.setAutoRangeIncludesZero(true);
 
     }

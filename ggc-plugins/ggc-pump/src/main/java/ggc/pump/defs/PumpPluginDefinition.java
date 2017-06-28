@@ -19,10 +19,6 @@ import ggc.plugin.graph.PluginGraphDefinition;
 import ggc.plugin.list.BaseListEntry;
 import ggc.plugin.report.PluginReportDefinition;
 import ggc.pump.defs.report.PumpReportDefinition;
-import ggc.pump.device.accuchek.AccuChekPumpHandler;
-import ggc.pump.device.animas.AnimasIR1200Handler;
-import ggc.pump.device.dana.DanaPumpHandler;
-import ggc.pump.device.insulet.InsuletHandler;
 import ggc.pump.device.minimed.MinimedPumpDeviceHandler;
 import ggc.pump.graph.PumpGraphDefintion;
 import ggc.pump.util.DataAccessPump;
@@ -36,8 +32,7 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
 
     private static final Logger LOG = LoggerFactory.getLogger(PumpPluginDefinition.class);
 
-    String PLUGIN_VERSION = "2.0.1";
-    String PLUGIN_NAME = "GGC Pump Plugin";
+    private static final String PLUGIN_NAME = "GGC Pump Plugin";
 
     PumpReportDefinition reportsPumpDefinition;
     PumpGraphDefintion graphsPumpDefinition;
@@ -45,7 +40,12 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
 
     public PumpPluginDefinition(LanguageManager languageManager)
     {
-        super(languageManager, new GGCPumpICRunner());
+        super(languageManager, //
+                new GGCPumpICRunner(), //
+                PLUGIN_NAME, //
+                GGCPluginType.PumpToolPlugin, //
+                "pumps_", //
+                "ggc.pump.defs.Version");
     }
 
 
@@ -159,29 +159,6 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
     }
 
 
-    public String getPluginVersion()
-    {
-        return this.PLUGIN_VERSION;
-    }
-
-
-    /**
-     * Get Name of Plugin (for internal use)
-     *
-     * @return
-     */
-    public String getPluginName()
-    {
-        return this.PLUGIN_NAME;
-    }
-
-
-    public GGCPluginType getPluginType()
-    {
-        return GGCPluginType.PumpToolPlugin;
-    }
-
-
     @Override
     public List<BaseListEntry> getWebListerItems()
     {
@@ -197,13 +174,6 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
         weblister_items.add(new BaseListEntry("Tandem", "/pumps/tandem.html", BaseListEntry.STATUS_PLANNED));
 
         return weblister_items;
-    }
-
-
-    @Override
-    public String getWebListerDescription()
-    {
-        return this.i18nControl.getMessage("DEVICE_LIST_WEB_DESC");
     }
 
 
@@ -232,31 +202,14 @@ public class PumpPluginDefinition extends DevicePluginDefinitionAbstract
 
 
     @Override
-    public String getPluginActionsPrefix()
-    {
-        return "pumps_";
-    }
-
-
-    @Override
     public void registerDeviceHandlers()
     {
         DeviceHandlerManager deviceHandlerManager = DeviceHandlerManager.getInstance();
 
-        // Animas
-        deviceHandlerManager.addDeviceHandler(new AnimasIR1200Handler());
-
-        // Insulet
-        deviceHandlerManager.addDeviceHandler(new InsuletHandler());
-
-        // Accu-Chek/Roche
-        deviceHandlerManager.addDeviceHandler(new AccuChekPumpHandler());
-
-        // Dana
-        deviceHandlerManager.addDeviceHandler(new DanaPumpHandler());
-
-        // Minimed
+        // Minimed (this one can't be loaded dynamically)
         deviceHandlerManager.addDeviceHandler(new MinimedPumpDeviceHandler((DataAccessPump) this.dataAccess));
 
+        // register dynamic handlers
+        DeviceHandlerManager.getInstance().registerDeviceHandlersDynamically(getPluginType());
     }
 }

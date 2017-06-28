@@ -1,5 +1,6 @@
 package ggc.pump.defs.device;
 
+import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.device.v2.DeviceHandlerAbstract;
 import ggc.pump.util.DataAccessPump;
@@ -35,6 +36,15 @@ public abstract class PumpDeviceHandler extends DeviceHandlerAbstract
     {
         if (dataAccessPump == null)
             dataAccessPump = DataAccessPump.getInstance();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public GGCPluginType getGGCPluginType()
+    {
+        return GGCPluginType.PumpToolPlugin;
     }
 
 }

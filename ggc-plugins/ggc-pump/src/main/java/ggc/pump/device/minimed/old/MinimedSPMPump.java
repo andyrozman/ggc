@@ -85,7 +85,7 @@ public class MinimedSPMPump extends MinimedSPM
 
             System.out.println("Data name: " + data.value_str);
 
-            pvep.setActive_from(data.datetime);
+            pvep.setActiveFrom(data.datetime);
 
             for (Enumeration<Long> en = data.profiles.keys(); en.hasMoreElements();)
             {
@@ -116,9 +116,9 @@ public class MinimedSPMPump extends MinimedSPM
             else
             {
                 PumpDataH pdh = new PumpDataH();
-                pdh.setDt_info(data.datetime);
-                pdh.setBase_type(data.base_type);
-                pdh.setSub_type(data.sub_type);
+                pdh.setDtInfo(data.datetime);
+                pdh.setBaseType(data.base_type);
+                pdh.setSubType(data.sub_type);
 
                 pdh.setValue("" + data.getValue());
 
@@ -130,8 +130,8 @@ public class MinimedSPMPump extends MinimedSPM
          * if ((data.base_type==PumpBaseType.PUMP_DATA_REPORT) || //
          * PUMP_DATA_REPORT (data.base_type==PumpBaseType.PUMP_DATA_EVENT)) //
          * primes { PumpDataH pdh = new PumpDataH();
-         * pdh.setDt_info(data.datetime); pdh.setBase_type(data.base_type);
-         * pdh.setSub_type(data.sub_type); pdh.setValue("" + data.value_dbl); }
+         * pdh.setDtInfo(data.datetime); pdh.setBaseType(data.base_type);
+         * pdh.setSubType(data.sub_type); pdh.setValue("" + data.value_dbl); }
          * else if (data.base_type==PumpBaseType.PUMP_DATA_EVENT) // primes {
          * //if (sub_type == ) } else if (data.base_type==4) { }
          */

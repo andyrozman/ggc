@@ -632,9 +632,11 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, HelpCa
 
     /*
      * String button_command[] = { "update_ch",
-     * m_ic.getMessage("UPDATE_FROM_FOOD"), "edit_food",
-     * m_ic.getMessage("EDIT_FOOD"), "ok", m_ic.getMessage("OK"), "cancel",
-     * m_ic.getMessage("CANCEL"), // "help", m_ic.getMessage("HELP")
+     * i18nControl.getMessage("UPDATE_FROM_FOOD"), "edit_food",
+     * i18nControl.getMessage("EDIT_FOOD"), "ok", i18nControl.getMessage("OK"),
+     * "cancel",
+     * i18nControl.getMessage("CANCEL"), // "help",
+     * i18nControl.getMessage("HELP")
      */
 
     private void cmdOk()
@@ -673,7 +675,7 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, HelpCa
         for (int i = 0; i < this.list_data.size(); i++)
         {
             PumpValuesEntryExt ext = this.list_data.get(i);
-            ext.setDt_info(dt);
+            ext.setDtInfo(dt);
             // FIXME
             m_da.getDb().commit(ext);
 

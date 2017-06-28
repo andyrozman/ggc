@@ -144,6 +144,7 @@ public class AnimasBaseDataV2Handler extends AbstractDeviceDataV2Handler
             }
             catch (Exception ex2)
             {}
+
         }
 
     }

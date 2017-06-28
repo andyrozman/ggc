@@ -26,7 +26,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.TimeZoneUtil;
 
 import ggc.core.data.graph.v1.view.GraphViewCGMSDailyAbstract;
-import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.pump.data.PumpValuesEntry;

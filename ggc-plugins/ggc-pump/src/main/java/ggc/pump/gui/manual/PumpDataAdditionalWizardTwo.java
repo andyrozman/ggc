@@ -20,7 +20,7 @@ import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.plugins.GGCPluginType;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
-import ggc.shared.fooddesc.FoodDescriptionDialog;
+import ggc.gui.dialogs.fooddesc.FoodDescriptionDialog;
 import ggc.pump.data.PumpValuesEntryExt;
 import ggc.pump.data.defs.PumpAdditionalDataType;
 import ggc.pump.util.DataAccessPump;
@@ -59,8 +59,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog
 
     private static final long serialVersionUID = 6600123145384610341L;
 
-    private DataAccessPump m_da = DataAccessPump.getInstance();
-    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
+    private DataAccessPump dataAccessPump = DataAccessPump.getInstance();
+    private I18nControlAbstract m_ic = dataAccessPump.getI18nControlInstance();
     JLabel label_title = new JLabel();
 
     boolean debug = true;
@@ -198,7 +198,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog
 
             if (this.data_object2 != null)
             {
-                food_ch = m_da.getFloatValueFromString(this.data_object2.getValue());
+                food_ch = dataAccessPump.getFloatValueFromString(this.data_object2.getValue());
                 if (food_ch > 0)
                 {
                     this.cb_1.setSelected(true);
@@ -209,7 +209,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog
                 food_ch = 0.0f;
             }
 
-            this.num_1.setText(DataAccess.getFloatAsString(food_ch, 2));
+            this.num_1.setText(dataAccessPump.getFloatAsString(food_ch, 2));
 
         }
         else if (this.pumpAdditionalDataType == PumpAdditionalDataType.FoodDb)
@@ -218,7 +218,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog
 
             if (this.data_object2 != null)
             {
-                food_ch = m_da.getFloatValueFromString(this.data_object2.getValue());
+                food_ch = dataAccessPump.getFloatValueFromString(this.data_object2.getValue());
 
                 if (food_ch > 0)
                 {
@@ -231,7 +231,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog
                 this.num_1.setText("" + food_ch);
             }
 
-            this.num_1.setText(DataAccess.getFloatAsString(food_ch, 2));
+            this.num_1.setText(dataAccessPump.getFloatAsString(food_ch, 2));
 
         }
         else
@@ -253,7 +253,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog
 
         this.setSize(width, height);
 
-        m_da.addComponent(this);
+        dataAccessPump.addComponent(this);
         ATSwingUtils.centerJDialog(this, this.m_parent);
 
         JPanel panel = new JPanel();
@@ -272,7 +272,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog
         setTitle(m_ic.getMessage("ADD_PARAMETER2"));
 
         String button_command[] = { "cancel", m_ic.getMessage("CANCEL"), "ok", m_ic.getMessage("OK"),
-                // "help", m_ic.getMessage("HELP")
+                // "help", i18nControl.getMessage("HELP")
         };
 
         // button
@@ -297,7 +297,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog
 
             if (button_icon[k] != null)
             {
-                button.setIcon(ATSwingUtils.getImageIcon_22x22(button_icon[k], this, m_da));
+                button.setIcon(ATSwingUtils.getImageIcon_22x22(button_icon[k], this, dataAccessPump));
             }
 
             if (button_coord[i + 3] == 0)
@@ -316,10 +316,10 @@ public class PumpDataAdditionalWizardTwo extends JDialog
         }
 
         help_button = ATSwingUtils.createHelpButtonByBounds(startx + 140, 195, 120, 25, this, ATSwingUtils.FONT_NORMAL,
-            m_da);
+            dataAccessPump);
         panel.add(help_button);
 
-        m_da.enableHelp(this);
+        dataAccessPump.enableHelp(this);
 
         initType();
 
@@ -452,21 +452,23 @@ public class PumpDataAdditionalWizardTwo extends JDialog
             ATSwingUtils.FONT_NORMAL_BOLD_P2);
         l.setHorizontalAlignment(SwingConstants.CENTER);
         // label_title =
-        // ATSwingUtils.getTitleLabel(m_ic.getMessage("ADD_PARAMETER2"), 0, 35,
+        // ATSwingUtils.getTitleLabel(i18nControl.getMessage("ADD_PARAMETER2"),
+        // 0, 35,
         // width, 35, panel, ATSwingUtils.FONT_BIG_BOLD);
 
-        this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
+        this.num_1 = ATSwingUtils.getNumericTextField(0, new Integer(0), startx + 180, 108, 55, 25, this.main_panel);
         this.num_1.setEditable(false);
 
         button_1 = ATSwingUtils.getButton(m_ic.getMessage("SET"), startx, 175, 120, 25, this.main_panel,
-            ATSwingUtils.FONT_NORMAL, null, "food_desc", this, m_da);
+            ATSwingUtils.FONT_NORMAL, null, "food_desc", this, dataAccessPump);
 
         ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", startx + 10, 110, 100, 25, main_panel);
 
         if (this.pumpAdditionalDataType == PumpAdditionalDataType.FoodDb)
         {
             this.cb_1.setText("  " + m_ic.getMessage("IS_FOOD_SET"));
-            // ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", startx +
+            // ATSwingUtils.getLabel(i18nControl.getMessage("CH_LONG") + ":",
+            // startx +
             // 20, 108, 100, 25, main_panel);
             // this.num_1 = ATSwingUtils.getNumericTextField(2, 0, new
             // Integer(0), startx + 180, 108, 55, 25, this.main_panel);
@@ -503,12 +505,12 @@ public class PumpDataAdditionalWizardTwo extends JDialog
         {
             // System.out.println("wizard_2 [cancel]");
             this.was_action = false;
-            m_da.removeComponent(this);
+            dataAccessPump.removeComponent(this);
             this.dispose();
         }
         else if (action.equals("ok"))
         {
-            m_da.removeComponent(this);
+            dataAccessPump.removeComponent(this);
             cmdOk();
         }
         else if (action.equals("check"))
@@ -527,12 +529,12 @@ public class PumpDataAdditionalWizardTwo extends JDialog
                 if (td.wasAction())
                 {
                     this.internal_data = td.getResultValuesString();
-                    float f = m_da.getFloatValue(this.internal_data[1]);
+                    float f = dataAccessPump.getFloatValue(this.internal_data[1]);
                     this.cb_1.setSelected(f > 0);
 
                     food_data = this.internal_data[0];
                     food_ch = f;
-                    this.num_1.setText(DataAccess.getFloatAsString(food_ch, 2));
+                    this.num_1.setText(dataAccessPump.getFloatAsString(food_ch, 2));
                 }
 
             }
@@ -558,7 +560,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog
                         this.internal_data[0] = food_data;
                         this.internal_data[1] = (String) data[1];
 
-                        this.num_1.setText(DataAccess.getFloatAsString(food_ch, 2));
+                        this.num_1.setText(dataAccessPump.getFloatAsString(food_ch, 2));
                     }
                 }
             }
@@ -652,13 +654,13 @@ public class PumpDataAdditionalWizardTwo extends JDialog
             else if (this.pumpAdditionalDataType == PumpAdditionalDataType.BloodGlucose)
             {
                 // po.setValue(this.num_1.getValue().toString());
-                po.setValue("" + m_da.getFloatValue(this.spin_1.getValue()));
+                po.setValue("" + dataAccessPump.getFloatValue(this.spin_1.getValue()));
             }
             else if (this.pumpAdditionalDataType == PumpAdditionalDataType.Carbohydrates)
             {
                 // System.out.println("val: " + this.num_1.getValue());
                 // po.setValue(this.num_1.getValue().toString());
-                po.setValue("" + m_da.getFloatValue(this.spin_1.getValue()));
+                po.setValue("" + dataAccessPump.getFloatValue(this.spin_1.getValue()));
             }
             else
             {
@@ -745,7 +747,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog
 
             // System.out.println("Bg Conv: ")
 
-            float v_2 = m_da.getBGConverter().getValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L, val);
+            float v_2 = dataAccessPump.getBGConverter().getValueByType(GlucoseUnitType.mg_dL, GlucoseUnitType.mmol_L,
+                val);
             // float v_2 =
             // dataAccess.getBGValueDifferent(DataAccessPump.BG_MGDL,
             // val);
@@ -763,7 +766,8 @@ public class PumpDataAdditionalWizardTwo extends JDialog
 
             // System.out.println("focus lost: bg2");
             float val = ATSwingUtils.getJFormatedTextValueFloat(this.num_2);
-            int v_2 = (int) m_da.getBGConverter().getValueByType(GlucoseUnitType.mmol_L, GlucoseUnitType.mg_dL, val);
+            int v_2 = (int) dataAccessPump.getBGConverter().getValueByType(GlucoseUnitType.mmol_L,
+                GlucoseUnitType.mg_dL, val);
             // int v_2 = (int)
             // dataAccess.getBGValueDifferent(DataAccessPump.BG_MMOL,
             // val);
@@ -903,7 +907,7 @@ public class PumpDataAdditionalWizardTwo extends JDialog
             // this.spinner_arr[4].getValue());
 
             // .ftf_bg1.getText().trim().length()
-            if (this.m_da.getFloatValue(this.spin_1.getValue()) == 0.0f)
+            if (this.dataAccessPump.getFloatValue(this.spin_1.getValue()) == 0.0f)
             {
                 // this.ftf_bg2.setValue(new Float(0.0f));
                 this.spin_2.setValue(0.0f);
@@ -913,13 +917,13 @@ public class PumpDataAdditionalWizardTwo extends JDialog
 
             // System.out.println("focus lost: bg1 (spinner[4]). mg/dL: " +
             // this.spinner_arr[4].getValue());
-            float val = this.m_da.getFloatValue(this.spin_1.getValue());
+            float val = this.dataAccessPump.getFloatValue(this.spin_1.getValue());
             // dataAccess.getJFormatedTextValueInt(ftf_bg1);
             // float v_2 = dataAccess.getBGValueDifferent(DataAccess.BG_MGDL,
             // val);
-            float v_2 = m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mg_dL,
+            float v_2 = dataAccessPump.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mg_dL,
                 Converter_mgdL_mmolL.UNIT_mmol_L, val);
-                // this.ftf_bg2.setValue(new Float(v_2));
+            // this.ftf_bg2.setValue(new Float(v_2));
 
             // System.out.println("focus lost: bg1 (spinner[4]). mmol/L: " +
             // v_2);
@@ -930,9 +934,9 @@ public class PumpDataAdditionalWizardTwo extends JDialog
         {
             // System.out.println("text2: " + this.ftf_bg2.getText());
 
-            if (this.m_da.getFloatValue(this.spin_2.getValue()) == 0.0f) // (this.ftf_bg2.getText().trim().length()
-                                                                         // ==
-                                                                         // 0)
+            if (this.dataAccessPump.getFloatValue(this.spin_2.getValue()) == 0.0f) // (this.ftf_bg2.getText().trim().length()
+            // ==
+            // 0)
             {
                 this.spin_1.setValue(0);
                 // this.ftf_bg1.setValue(new Integer(0));
@@ -943,12 +947,12 @@ public class PumpDataAdditionalWizardTwo extends JDialog
             // System.out.println("focus lost: bg2 (spinner[5])");
 
             // System.out.println("focus lost: bg2");
-            float val = this.m_da.getFloatValue(this.spin_2.getValue());
+            float val = this.dataAccessPump.getFloatValue(this.spin_2.getValue());
             // dataAccess.getJFormatedTextValueFloat(ftf_bg2);
             // int v_2 = (int)
             // dataAccess.getBGValueDifferent(DataAccess.BG_MMOL,
             // val);
-            int v_2 = (int) m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mmol_L,
+            int v_2 = (int) dataAccessPump.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mmol_L,
                 Converter_mgdL_mmolL.UNIT_mg_dL, val);
             // this.ftf_bg1.setValue(new Integer(v_2));
             this.spin_1.setValue(v_2);

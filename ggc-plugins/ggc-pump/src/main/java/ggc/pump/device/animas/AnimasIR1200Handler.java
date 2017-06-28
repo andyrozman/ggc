@@ -54,6 +54,12 @@ public class AnimasIR1200Handler extends PumpDeviceHandler
     }
 
 
+    public void closeDevice() throws PlugInBaseException
+    {
+        // this is done internally
+    }
+
+
     public List<GGCPlugInFileReaderContext> getFileDownloadContexts(DownloadSupportType downloadSupportType)
     {
         return null;

@@ -54,6 +54,12 @@ public class InsuletHandler extends PumpDeviceHandler
     }
 
 
+    public void closeDevice() throws PlugInBaseException
+    {
+        // not used for files
+    }
+
+
     public List<GGCPlugInFileReaderContext> getFileDownloadContexts(DownloadSupportType downloadSupportType)
     {
         return this.fileContexts.get(downloadSupportType);

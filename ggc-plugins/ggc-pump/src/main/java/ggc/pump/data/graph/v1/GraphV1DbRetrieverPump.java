@@ -200,7 +200,7 @@ public class GraphV1DbRetrieverPump implements GraphV1DbRetriever
 
     private long getStripedTime(PumpDataExtendedH pde)
     {
-        return ATechDate.convertATDate(pde.getDt_info(), ATechDateType.DateAndTimeSec, ATechDateType.DateAndTimeMin);
+        return ATechDate.convertATDate(pde.getDtInfo(), ATechDateType.DateAndTimeSec, ATechDateType.DateAndTimeMin);
     }
 
 }

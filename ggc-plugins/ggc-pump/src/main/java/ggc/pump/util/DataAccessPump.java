@@ -15,11 +15,13 @@ import ggc.pump.data.PumpDataHandler;
 import ggc.pump.data.PumpDataReader;
 import ggc.pump.data.PumpValuesEntry;
 import ggc.pump.data.cfg.PumpConfigurationDefinition;
+import ggc.pump.data.defs.*;
 import ggc.pump.data.util.PumpBasalManager;
 import ggc.pump.data.util.PumpBolusManager;
 import ggc.pump.db.GGCPumpDb;
 import ggc.pump.defs.PumpPluginDefinition;
 import ggc.pump.defs.report.PumpReportDefinition;
+import ggc.pump.device.insulet.util.InsuletUtil;
 import ggc.pump.graph.PumpGraphContext;
 import ggc.pump.manager.PumpManager;
 
@@ -116,6 +118,8 @@ public class DataAccessPump extends DataAccessPlugInBase
 
         loadExternalLibrariesInDevelopment();
 
+        InsuletUtil.setDataAccess(this);
+
     }
 
 
@@ -158,6 +162,16 @@ public class DataAccessPump extends DataAccessPlugInBase
         ClockModeType.translateKeywords(this.getI18nControlInstance());
         AnimasSoundType.translateKeywords(this.getI18nControlInstance(), this.getPluginType());
         DeviceEntryStatus.translateKeywords(this.getI18nControlInstance());
+        PumpConfigurationGroup.translateKeywords(this.getI18nControlInstance());
+        PumpBaseType.translateKeywords(this.getI18nControlInstance());
+        PumpReport.translateKeywords(this.getI18nControlInstance());
+        PumpAlarms.translateKeywords(this.getI18nControlInstance());
+        RatioType.translateKeywords(this.getI18nControlInstance());
+        PumpAdditionalDataType.translateKeywords(this.getI18nControlInstance());
+        PumpBasalType.translateKeywords(this.getI18nControlInstance());
+        PumpErrors.translateKeywords(this.getI18nControlInstance());
+        PumpEventType.translateKeywords(this.getI18nControlInstance());
+        PumpBolusType.translateKeywords(this.getI18nControlInstance());
     }
 
 
