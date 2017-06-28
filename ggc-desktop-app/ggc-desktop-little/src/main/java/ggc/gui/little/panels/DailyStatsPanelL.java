@@ -53,7 +53,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel
     {
         super(null);
 
-        setTitle(m_ic.getMessage("DAILY_VALUES") + ": (" + m_da.getCurrentDateString() + ")");
+        setTitle(i18nControl.getMessage("DAILY_VALUES") + ": (" + dataAccess.getCurrentDateString() + ")");
         init();
     }
 
@@ -89,7 +89,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel
     @Override
     public InfoPanelType getPanelType()
     {
-        return InfoPanelType.DailyValues;
+        return InfoPanelType.DailyValuesStats;
     }
 
 
@@ -117,7 +117,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel
 
     private void refreshDayData()
     {
-        DailyValues dv = m_da.getDayStats(new GregorianCalendar());
+        DailyValues dv = dataAccess.getDayStats(new GregorianCalendar());
 
         if (dv != null)
         {
@@ -132,7 +132,7 @@ public class DailyStatsPanelL extends AbstractInfoPanel
     {
         this.setLayout(new GridLayout(1, 1));
 
-        dayData = m_da.getDayStats(new GregorianCalendar());
+        dayData = dataAccess.getDayStats(new GregorianCalendar());
 
         // if (dayData==null)
         // dayData = DataAccess.getInstance().getDayStats(new

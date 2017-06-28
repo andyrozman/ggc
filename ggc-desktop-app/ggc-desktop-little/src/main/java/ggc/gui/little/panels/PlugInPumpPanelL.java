@@ -55,7 +55,7 @@ public class PlugInPumpPanelL extends AbstractInfoPanel
     private void init()
     {
         String text = "<html><body>";
-        text += String.format(m_ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
+        text += String.format(i18nControl.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
         text += "</body></html>";
 
         add(new JLabel(text));

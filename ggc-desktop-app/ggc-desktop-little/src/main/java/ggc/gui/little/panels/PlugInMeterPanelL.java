@@ -26,28 +26,25 @@ import ggc.gui.main.panels.InfoPanelType;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     GeneralInfoPanelL  
- *  Description:  Panel for General Info
+ *  Filename:     PlugInMeterPanelL  
+ *  Description:  Panel for Meter Plugin
  *
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class GeneralInfoPanelL extends AbstractInfoPanel
+public class PlugInMeterPanelL extends AbstractInfoPanel
 {
 
-    private static final long serialVersionUID = 1872339281254813097L;
-    private JLabel lblName = new JLabel();
-    private JLabel lblIns1 = new JLabel();
-    private JLabel lblIns2 = new JLabel();
-    private JLabel lblUnit = new JLabel();
+    private static final long serialVersionUID = 8602621885397419968L;
 
 
     /**
      * Constructor
      */
-    public GeneralInfoPanelL()
+    public PlugInMeterPanelL()
     {
-        super("GENERAL_INFORMATION");
+        super("METERS_PLUGIN");
+        setLayout(new GridLayout(0, 1));
         init();
         refreshInfo();
     }
@@ -55,25 +52,27 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
 
     private void init()
     {
-        setLayout(new GridLayout(0, 2));
+        String text = "<html><body>";
+        text += String.format(i18nControl.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
+        text += "</body></html>";
 
-        add(new JLabel(m_ic.getMessage("YOUR_NAME") + ":"));
-        add(lblName);
-        add(new JLabel(m_ic.getMessage("BOLUS_INSULIN") + ":"));
-        add(lblIns1);
-        add(new JLabel(m_ic.getMessage("BASAL_INSULIN") + ":"));
-        add(lblIns2);
-        add(new JLabel(m_ic.getMessage("BG_UNIT") + ":"));
-        add(lblUnit);
+        add(new JLabel(text));
+    }
 
+
+    /**
+     * Refresh Information 
+     */
+    @Override
+    public void refreshInfo()
+    {
     }
 
 
     @Override
     public InfoPanelType getPanelType()
     {
-
-        return InfoPanelType.General;
+        return InfoPanelType.PluginMeter;
     }
 
 
@@ -83,15 +82,6 @@ public class GeneralInfoPanelL extends AbstractInfoPanel
     @Override
     public void doRefresh()
     {
-        if (this.m_da.isDatabaseInitialized())
-        {
-            lblName.setText(configurationManagerWrapper.getUserName());
-            lblIns1.setText(
-                configurationManagerWrapper.getIns1Name() + "  (" + configurationManagerWrapper.getIns1Abbr() + ")");
-            lblIns2.setText(
-                configurationManagerWrapper.getIns2Name() + "  (" + configurationManagerWrapper.getIns2Abbr() + ")");
-            lblUnit.setText(configurationManagerWrapper.getGlucoseUnit().getTranslation());
-        }
     }
 
 }

@@ -1,0 +1,12 @@
+
+Changes for Desktop Little
+===========================
+
+0.3.1 [26.6.2017]
+- created new project under maven
+- moved files from desktop module
+- refactoring a little
+
+
+0.3.0
+- before changes

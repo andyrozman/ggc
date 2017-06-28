@@ -53,8 +53,8 @@ public class StocksInfoPanelL extends AbstractInfoPanel
     private void init()
     {
         add(new JLabel());
-        add(new JLabel(m_ic.getMessage("STOCK_DATA_HERE") + ":"));
-        add(new JLabel(m_ic.getMessage("STO_WILL_BE_FOUND_HERE") + "..." + m_ic.getMessage("NOT_YET")));
+        add(new JLabel(i18nControl.getMessage("STOCK_DATA_HERE") + ":"));
+        add(new JLabel(i18nControl.getMessage("STO_WILL_BE_FOUND_HERE") + "..." + i18nControl.getMessage("NOT_YET")));
         add(new JLabel());
     }
 
@@ -62,7 +62,7 @@ public class StocksInfoPanelL extends AbstractInfoPanel
     @Override
     public InfoPanelType getPanelType()
     {
-        return InfoPanelType.Stocks;
+        return InfoPanelType.Inventory;
     }
 
 

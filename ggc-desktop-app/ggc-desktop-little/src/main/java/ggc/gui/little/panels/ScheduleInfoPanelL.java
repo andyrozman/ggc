@@ -26,24 +26,25 @@ import ggc.gui.main.panels.InfoPanelType;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     PlugInMeterPanelL  
- *  Description:  Panel for Meter Plugin
+ *  Filename:     ScheduleInfoPanelL
+ *  Description:  This Panel contains information on your Schedule. Like your
+ *                next check, when you see your doctor again, ...
  *
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class PlugInMeterPanelL extends AbstractInfoPanel
+public class ScheduleInfoPanelL extends AbstractInfoPanel
 {
 
-    private static final long serialVersionUID = 8602621885397419968L;
+    private static final long serialVersionUID = -4785287187015409811L;
 
 
     /**
      * Constructor
      */
-    public PlugInMeterPanelL()
+    public ScheduleInfoPanelL()
     {
-        super("METERS_PLUGIN");
+        super("SCHEDULE");
         setLayout(new GridLayout(0, 1));
         init();
         refreshInfo();
@@ -52,27 +53,17 @@ public class PlugInMeterPanelL extends AbstractInfoPanel
 
     private void init()
     {
-        String text = "<html><body>";
-        text += String.format(m_ic.getMessage("PLUGIN_IMPLEMENTED_VERSION"), "0.5");
-        text += "</body></html>";
-
-        add(new JLabel(text));
-    }
-
-
-    /**
-     * Refresh Information 
-     */
-    @Override
-    public void refreshInfo()
-    {
+        add(new JLabel());
+        add(new JLabel(i18nControl.getMessage("YOUR_NEXT_APPOINTMENT") + ":"));
+        add(new JLabel(i18nControl.getMessage("APP_WILL_BE_FOUND_HERE") + "..." + i18nControl.getMessage("NOT_YET")));
+        add(new JLabel());
     }
 
 
     @Override
     public InfoPanelType getPanelType()
     {
-        return InfoPanelType.PluginMeter;
+        return InfoPanelType.Appointments;
     }
 
 
