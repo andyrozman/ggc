@@ -39,7 +39,7 @@ public class GGCConnectICRunner extends I18nControlRunner
     @Override
     public String getLanguageFileRoot()
     {
-        return "GGC_CGMSTool";
+        return "GGCConnectTool";
     }
 
 }

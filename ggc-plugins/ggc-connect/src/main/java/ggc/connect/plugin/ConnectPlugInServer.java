@@ -238,11 +238,9 @@ public class ConnectPlugInServer extends DevicePlugInServer implements ActionLis
         //
         // menu_cgms.addSeparator();
         //
-        // ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_ABOUT", //
-        // "MN_CGMS_ABOUT_DESC", "plugin_about", this, null, ic_local,
-        // DataAccessCGMS.getInstance(), parent);
-        //
-        // return menu_cgms;
+        ATSwingUtils.createMenuItem(menuConnect, "MN_CGMS_ABOUT", //
+            "MN_CGMS_ABOUT_DESC", "plugin_about", //
+            this, null, ic_local, DataAccessConnect.getInstance(), parent);
 
         return menuConnect;
     }

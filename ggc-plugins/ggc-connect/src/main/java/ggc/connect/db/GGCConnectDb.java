@@ -52,8 +52,8 @@ public class GGCConnectDb extends PluginDb // implements GraphDbDataRetriever
      */
     public GGCConnectDb(HibernateDb db)
     {
-        super(db);
-        LOG.debug("Created GGCConnectDb");
+        super(db, DataAccessConnect.getInstance());
+        // LOG.debug("Created GGCConnectDb");
         // getAllElementsCount();
     }
 

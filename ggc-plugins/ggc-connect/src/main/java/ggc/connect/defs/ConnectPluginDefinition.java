@@ -46,19 +46,25 @@ import ggc.plugin.report.PluginReportDefinition;
 public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
 {
 
-    String PLUGIN_VERSION = "0.1.0";
-    String PLUGIN_NAME = "GGC Connect Plugin";
+    // String PLUGIN_VERSION = "0.1.0";
+    static String PLUGIN_NAME = "GGC Connect Plugin";
 
 
     public ConnectPluginDefinition(LanguageManager languageManager)
     {
-        super(languageManager, new GGCConnectICRunner());
+        super(languageManager, //
+                new GGCConnectICRunner(), //
+                PLUGIN_NAME, //
+                GGCPluginType.ConnectToolPlugin, //
+                "connect_", //
+                "ggc.connect.defs.Version");
+        this.useBaseLibraries = false;
     }
 
 
     public int getCopyrightFrom()
     {
-        return 2016;
+        return 2017;
     }
 
 
@@ -129,35 +135,30 @@ public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
     {
         List<FeaturesEntry> outList = new ArrayList<FeaturesEntry>();
 
-        outList.add(new FeaturesEntry("SiDiary (2016)"));
-        outList.add(new FeaturesEntry("MS Health (2016-17)"));
+        outList.add(new FeaturesEntry("SiDiary (2017)"));
+        outList.add(new FeaturesEntry("MS Health (2018)"));
+        outList.add(new FeaturesEntry("Libra (2018)"));
+        outList.add(new FeaturesEntry("Open Platform for Clinical Nutrition (2018)"));
 
         return outList;
     }
 
 
-    public String getPluginVersion()
-    {
-        return this.PLUGIN_VERSION;
-    }
-
-
-    /**
-     * Get Name of Plugin (for internal use)
-     *
-     * @return
-     */
-    public String getPluginName()
-    {
-        return this.PLUGIN_NAME;
-    }
-
-
-    public GGCPluginType getPluginType()
-    {
-        return GGCPluginType.ConnectToolPlugin;
-    }
-
+    // /**
+    // * Get Name of Plugin (for internal use)
+    // *
+    // * @return
+    // */
+    // public String getPluginName()
+    // {
+    // return this.PLUGIN_NAME;
+    // }
+    //
+    //
+    // public GGCPluginType getPluginType()
+    // {
+    // return GGCPluginType.ConnectToolPlugin;
+    // }
 
     @Override
     public List<BaseListEntry> getWebListerItems()
@@ -166,12 +167,11 @@ public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
     }
 
 
-    @Override
-    public String getWebListerDescription()
-    {
-        return this.i18nControl.getMessage("DEVICE_LIST_WEB_DESC");
-    }
-
+    // @Override
+    // public String getWebListerDescription()
+    // {
+    // return this.i18nControl.getMessage("DEVICE_LIST_WEB_DESC");
+    // }
 
     @Override
     public PluginReportDefinition getReportsDefinition()
@@ -202,12 +202,11 @@ public class ConnectPluginDefinition extends DevicePluginDefinitionAbstract
     }
 
 
-    @Override
-    public String getPluginActionsPrefix()
-    {
-        return "connect_";
-    }
-
+    // @Override
+    // public String getPluginActionsPrefix()
+    // {
+    // return "connect_";
+    // }
 
     @Override
     public void registerDeviceHandlers()

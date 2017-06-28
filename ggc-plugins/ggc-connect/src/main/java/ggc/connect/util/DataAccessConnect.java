@@ -6,8 +6,6 @@ import java.util.Hashtable;
 
 import ggc.connect.db.GGCConnectDb;
 import ggc.connect.defs.ConnectPluginDefinition;
-import ggc.plugin.data.enums.DeviceEntryStatus;
-import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.util.DataAccessPlugInBase;
 
 /**
@@ -39,7 +37,8 @@ import ggc.plugin.util.DataAccessPlugInBase;
 public class DataAccessConnect extends DataAccessPlugInBase
 {
 
-    private static final String EXTENDED_HANDLER_CGMSValuesExtendedEntry = "CGMSValuesExtendedEntry";
+    // private static final String EXTENDED_HANDLER_CGMSValuesExtendedEntry =
+    // "CGMSValuesExtendedEntry";
 
     private static DataAccessConnect s_da = null; // This is handle to unique
 
@@ -94,8 +93,7 @@ public class DataAccessConnect extends DataAccessPlugInBase
 
     private void prepareTranslationForEnums()
     {
-        AnimasSoundType.translateKeywords(this.getI18nControlInstance(), this.getPluginType());
-        DeviceEntryStatus.translateKeywords(this.getI18nControlInstance());
+
     }
 
 

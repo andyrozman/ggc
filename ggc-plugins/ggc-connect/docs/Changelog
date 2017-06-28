@@ -1,0 +1,7 @@
+CONNECT PLUGIN
+================
+
+0.1.0 - 28.6.2017
+- added some framework files for Connect Plugin
+- added LibraScale (as Other Hardware), no implementation yet
+- added OpenPlatformForClinicalNutritionHandler (as remote service), no implementation yet
