@@ -45,7 +45,7 @@ Help:      No help available
 GGC Meter Tool
 --------------
   See TO-DO_MeterTool.txt (in svn/trunk/ggc-meter)
-  Planned Device (in near future): Menarini, Arkray, Ascensia Contour Next One, Accu-chek Mobile
+  Planned Device (in near future): Menarini f., Arkray f., Ascensia Contour Next One, Accu-chek Mobile
 
 
 GGC Pump Tool
@@ -62,30 +62,25 @@ GGC CGMS Tool
 
 
 
-II. SORTED BY VERSION  (Updated 16.10.2016)
+II. SORTED BY VERSION  (Updated 17.05.2017)
 ===========================================
 
 We plan to change version to 1.0, when all entries specified with [1.0] are
 finished (Help for english, Upgrade, Db Tool and Support for multiple persons)
 
 
-Version 0.8  [1.6.2016 - 2.2.2017]
+Version 0.8  [x.6.2017]
 =================================
 
-Meanrini support
+Contour ONE: - check if works
 
-Arkray support
+Menarini support: + implement
+                  + integrate
 
+Arkray support:  + implement
+                 + integrate
 
-Graphs (v1):
-   Pump:
-    - data retrival: - gluco values
-
-DbTool: - base GGC
-        - init GGC
-        - export GGC
-        - restore GGC
-
+Db Version: + determine version from resource file contents
 
 Release 0.8: - prepare release
              - release
@@ -95,8 +90,28 @@ Release 0.8: - prepare release
 
 
 
-Version 0.9  [1.4 - 1.7.2016]
+Version 0.9  [x.12.2017]
 =================================
+
+Add to List:  - Meter (Ascensia One ?, Menarini, Arkray)
+
+
+Refactor: - Meter Db
+
+Graphs (v1):
+   Pump:
+    - data retrival: - gluco values
+
+DbTool(?): - base GGC
+           - init GGC
+           - export GGC
+           - restore GGC
+
+Menarini support: - test
+
+Arkray support: - test
+
+HbA1c: - for Pump
 
 (1)
 Minimed:
@@ -108,27 +123,48 @@ Startup: - fix startup creation (30%)
          - move package
 
 
+Inventory: - implement
+           - integrate [Required Db Update functionality]
 
+Doctors:  - integrate [Required Db Update functionality]
 
 
 Graph: - Configuration CGMS for Graph (Low, High Value)
 
 
+
+Hid4Java: - use version 0.5
+          - use serialNumber to access devices
+          - changes to code (disable USB scanner)
+
 (4)
-Release 0.7:  - prepare release
+Release 0.9:  - prepare release
               - release
               - upgrade configuration
               - upgrade server deploy
 
 
+================================
+1.0 Milestones
+================================
+
+* Db Tools Integration:  - InitDb [1.0]
+* Update (server) [1.0]
+* Java Help: - Write help pages II. (finish EN) [1.0]
+             - Load from language jar  [1.0]
+* Support for multiple persons [1.0]
+
 
 
 
 ================================
+WAITING LIST / WISH LIST
+================================
 
-GGC 0.9
-========
 
+-------------------------------------------------------------------------
+CORE
+-------------------------------------------------------------------------
 
 Update System v3 [1.0]
     - Software updater
@@ -162,11 +198,47 @@ VersionCheck: - on start we check if we have newest version (only if we are onli
                 Fix: UpgradeCheckStatus class, and Statusbar
 
 
+Graphs: - Framework v2  (ON HOLD FOR NOW)
+        - read XML definition
+        - graphs type support: - line
+                               - bar
+                               - ...
+        - CGMS Daily Graph V2
+        - CGMS Weekly Graph
+     - GRAPH EDITOR (Graph Framework 3.0) (ON HOLD FOR NOW)
+     - Predefined graphs for GE (we need to create some usable graphs for end users, and convert all old)
 
-(8)
+
+DeviceSelector: - resize possibility (ZeroLayout2)
+                - color (just enabled - supported, disabled for now - not supported)
+
+
+* Db Tools Integration:  - InitDb [1.0]
+* Support for multiple persons [1.0]
+* Update for Database IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+* DeviceValuesTableModel - problem with existing data if data changes (manual change and then
+  again import)
+
+
+
+-------------------------------------------------------------------------
+PEN/INJECTION
+-------------------------------------------------------------------------
+
+
+Pen/Injection: - Additional data: BP, Weight, Pills
+
+
+-------------------------------------------------------------------------
+PLUGINS - CONNECT
+-------------------------------------------------------------------------
+
 GGC Connect Plugin:  - base
                      - about
                      - display version
+                     - integrate
                      - export GUI
                      - import GUI
                      - GGC: - import Pen
@@ -177,20 +249,106 @@ GGC Connect Plugin:  - base
                             - export CGMS
                      - SiDiary: - export
                                 - import
+                     - connect to Nutrition SLO Db
 
-(9)
-Doctors module: [Required Db Update functionality]
-                - add doctor: - dialog
-                              - working days
-                              + working hours
-                - add scheduling entry: - dialog
+* Import of data from SiDiary Desktop application. SiDiary has its sister
+    applications running on many small devices (PocketPC, Palms, SmartPhones,
+    Java Phones), and it has import for a lot of Meters and also some pumps...
 
 
+-------------------------------------------------------------------------
+PLUGINS - PUMP & CGMS
+-------------------------------------------------------------------------
+
+
+Minimed: x comlink: read CGMS data
+         - decode CGMS history data
+         x carelink: read CGMS data
+         x carelink: read CGMS history data
+         - add support for contour next link
+         - contourNextLink: read pump data
+         - contourNextLink: read pump history data
+         - contourNextLink: read CGMS data
+         - contourNextLink: read CGMS history data
+         - support 640G? (ContourNextLink 2.4)?
+
+
+Tandem: - ???
+
+
+-------------------------------------------------------------------------
+PLUGINS - PUMP
+-------------------------------------------------------------------------
+
+
+Pump: - Additional data: BP, Weight, Pills
+
+* Tandem support ??
 
 
 
-REFACTORING 0.7 or later
-=========================
+-------------------------------------------------------------------------
+PLUGINS - NUTRITION
+-------------------------------------------------------------------------
+
+* Nutrition Db in DataAccess fix (works ok, just outside confines of framework) - 5
+
+
+* Added functionality for Nutrition Db:
+    - Import data (selective)
+    - Import Entry
+    - Duplicate
+    - Create Nutrition
+    - Create Home Weight
+    - Column Sorting in meal
+    - Column Sorting in Food
+    - Glycemic data change
+    - Foods tree, we need to see about dynamic loading, since it takes a lot of memory to hold this information
+
+
+* External foods database
+
+
+
+-------------------------------------------------------------------------
+CORE FUNCTIONALITIES
+-------------------------------------------------------------------------
+
+* Activity Manager
+
+* Server Error Resolution (exceptions thrown by application, that help can be found on internet).
+
+* Synchronization
+
+* GGC Network
+
+* Internet data (links for pages, forums, blogs - informational)
+    - AED Inet Group
+    - AED Inet Type
+    - AED Inet Links
+
+* GGC Network - Support for multiple instances of GGC and their communication
+
+
+-------------------------------------------------------------------------
+OTHER
+-------------------------------------------------------------------------
+
+
+* GGC Little
+
+
+* GGC: - Android (??)
+       - Iphone
+
+
+
+
+
+
+================================
+REFACTORING
+================================
 
 GUI Refacoring:  - main window
                  - pen: ?
@@ -200,17 +358,18 @@ GUI Refacoring:  - main window
                  - ...
 
 Project refactoring:  - add doctors project as maven:
-                                    - core
+                                    + core
                                     - desktop
                                     - server (?)
                       - add desktop little as separate project
-                      - create correct maven structure:   - core
-                                                          - desktop
-                                                          - plugin_base (rename ?)
-                                                          - cgms
-                                                          - pump
-                                                          - meter
-                                                          - nutrition
+                      - create correct maven structure:   + core
+                                                          + desktop
+                                                          + plugin_base (rename ?)
+                                                          + cgms
+                                                          + pump
+                                                          + meter
+                                                          + nutrition
+                                                          - atech-tools
 
 
 GGC Help:
@@ -226,11 +385,13 @@ GGC Help:
     *     Printing                *     0    *     3      *     3   ***
     *     Graphs                  *          *            *     ?   ***
     *     Plugin - Core           *     0    *    10      *         ***
-    *     Meter                   *          *            *         ***
+    *     Meter                   *          *     0      *         ***
     *     Pump                    *     0    *     9      *     4   ***
     *     CGMS                    *     0    *     0      *         ***
     *     Tools                   *     0    *    10      *         ***
     *     Help                    *     0    *     1      *     1   ***
+    *******************************************************************
+    *     Together                *     0    *     0      *         ***
     *******************************************************************
 
 
@@ -247,6 +408,7 @@ Refactoring: - DataAccess -> Languages
              - Pump Profile (??) - rethinking after Minimed is finished, possible removal
              - in configuration we use old Graph for display of settings, reimplet with new Graph v1
                (Atech Graph V1) and then remove all of pre V1 implementation (rumbi's Jchart preview).
+
 
 
 Tasks:       - configuration of colors for Daily TimeSheet report (hardcoded)
@@ -267,205 +429,19 @@ ReportPluginDefinition:
 
 
 
-**************************************************************************************
-Version 0.10
-**************************************************************************************
 
-(6)
-Stocks: ...  [?]
 
-Graphs: - Framework v2
-        - read XML definition
-        - graphs type support: - line
-                               - bar
-                               - ...
-        - CGMS Daily Graph V2
-        - CGMS Weekly Graph
 
-HbA1c: - for Pump
 
-Minimed: - comlink: read CGMS data
-         - decode CGMS history data
-         - carelink: read CGMS data
-         - carelink: read CGMS history data
-         - add support for contour next link
-         - contourNextLink: read pump data
-         - contourNextLink: read pump history data
-         - contourNextLink: read CGMS data
-         - contourNextLink: read CGMS history data
-         - support 5306??
+III. LANGUAGE SUPPORT
+======================
 
-DeviceSelector: - resize possibility (ZeroLayout2)
-                - color (just enabled - supported, disabled for now - not supported)
+LANGUAGE           STATUS        LAST UPDATE
+---------------------------------------------
+German            WIP (50%)          -
+Slovenian         WIP (75%)          -
+French:            DONE             0.5
 
-
-
-Pump: - Additional data: BP, Weight, Pills
-
-Pen/Injection: - Additional data: BP, Weight, Pills
-
-
-
-0.9
-====
-
-* Graphs: 
-     - Graphs
-     - GRAPH EDITOR (Graph Framework 3.0)
-     - Predefined graphs for GE (we need to create some usable graphs for end users, and convert all old)
-
-
-* Db Tools Integration:  - InitDb [1.0]  
-
-* Support for multiple persons [1.0] 
-
-
-
-* Update for Database IMPORTANT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-Bugs:
-* Nutrition Db in DataAccess fix (works ok, just outside confines of framework) - 5
-* DeviceValuesTableModel - problem with existing data if data changes (manual change and then
-  again import)
-
-
-GGC 0.10
-=======
-
-* External foods database
-
-* Added functionality for Nutrition Db:
-    - Import data (selective)
-    - Import Entry
-    - Duplicate
-    - Create Nutrition
-    - Create Home Weight
-    - Column Sorting in meal
-    - Column Sorting in Food
-    - Glycemic data change
-    - Foods tree, we need to see about dynamic loading, since it takes a lot of memory to hold this information
-
-* Stocks
-    - AED subtypes
-    - AED stocks
-
-* Tandem support ??
-
-
-GGC 0.11 and later
-==================
-
-
-* GGC Little
-* Server Error Resolution (exceptions thrown by application, that help can be found on internet).
-* Activity Manager
-* Synchronization
-* GGC Network
-* Internet data (links for pages, forums, blogs - informational)
-    - AED Inet Group
-    - AED Inet Type
-    - AED Inet Links
-* GGC PPC (??)
-* Appoinmtments Mngr
-    - AED doctor
-    - AED appointment
-
-
-* GGC Network - Support for multiple instances of GGC and their communication
-* Import of data from SiDiary Desktop application. SiDiary has its sister 
-    applications running on many small devices (PocketPC, Palms, SmartPhones, 
-    Java Phones), and it has import for a lot of Meters and also some pumps...
-
-----
-
-
-
-
-
-
-1.0 Milestones
-==============
-
-* Db Tools Integration:  - InitDb [1.0]  
-* Update (server) [1.0] 
-* Java Help - Write help pages II. (finish EN) [1.0] 
-            - Load from language jar  [1.0] 
-* Support for multiple persons [1.0] 
-
-
-
-
-
-III. SORTED BY LEVELS OF PRIORITY  (not updated !!!)
-=================================
-
-Level 1 (High Priority): 
-----------------------------
-
-
-Level 2 (Medium 1 Priority):
-----------------------------
-
-
-* Import/Export Tool (old data):
-//    o  Export old data (daily values, with conversion of BS format, in db can be only in mg/Dl)
-//    o  Import old data (daily values)
-    o  Db Maintainance GUI
-
-* Add external library for graphs (something with pictures creations, so we can use it in pdfs)
-
-
-Level 3 (Medium 2 Priority):
-----------------------------
-
-* DB TOOL
-    o ???
-    o  Nutrition data Init
-    o  Basic Data Init
-
-
-* Import/Export Tool (for real time):
-    o  Backup
-    o  Restore
-
-
-Level 4 (Medium 3 Priority):
-----------------------------
-
-
-* Entering daily data: 
-    o  Add CH entry through meals
-    
-* Java Help:
-    x  Integration
-    o  Write English help
-
-
-Level 5 (Low Priority):
-----------------------------
-
-* Appointments/Doctors: 
-    o  Create GUI
-    o  Database entries
-    o  Add/Edit/Delete
-    o  View
-* GGC Little: 
-    o  GUI
-    o  about
-    o  meter import, add/edit should be centered
-* Adding support for mmol/l (now we have only mG/DL):
-    o  graphs
-* Web Links:
-    o  Db
-
-
-
-Level 6 (IN NEAR FUTURE):
--------------------------
-
-* I18n Language: German (work in progress)
-* I18n Language: Slovenian (work in progress 74% done)
 
 
 * I18n Language: Italian

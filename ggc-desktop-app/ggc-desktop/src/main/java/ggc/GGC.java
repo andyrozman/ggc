@@ -41,6 +41,7 @@ public class GGC
     private static GGC s_theApp;
     private static MainFrame s_mainWindow;
 
+
     // Version information
     /**
      * Version of application
@@ -50,8 +51,7 @@ public class GGC
     /**
      * Full Version
      */
-    public static String full_version = "v" + DataAccess.CORE_VERSION;
-
+    // public static String full_version = "v" + DataAccess.CORE_VERSION;
 
     /**
      * Version Date 
@@ -67,8 +67,8 @@ public class GGC
     {
         GGCDbConfig conf = new GGCDbConfig(true);
 
-        DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(),
-                DataAccess.getInstance().getI18nControlInstance());
+        DbCheckReport dcr = new DbCheckReport(conf.getDbInfoReportFilename(), DataAccess.getInstance()
+                .getI18nControlInstance());
 
         if (dcr.canApplicationStart())
             return true;

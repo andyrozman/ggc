@@ -1,4 +1,4 @@
-package ggc.gui.cfg;
+package ggc.gui.dialogs.config;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,8 +15,9 @@ import com.atech.utils.ATSwingUtils;
 
 import ggc.core.data.cfg.ConfigCellRenderer;
 import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.enums.PropertiesDialogType;
 import ggc.core.util.DataAccess;
-import ggc.gui.cfg.panels.*;
+import ggc.gui.dialogs.config.panels.*;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -65,11 +66,13 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     private PrefFontsAndColorPane fontsAndColorPane = null;
     private PrefRenderingQualityPane renderingQualityPane = null;
     AbstractPrefOptionsPanel selectedPanel = null;
+    PropertiesDialogType propertiesDialogType;
 
     /**
      * Config types
      */
     public String configTypes[] = { //
+                                    i18nControl.getMessage("GLOBAL"), //
                                     i18nControl.getMessage("MODE"), //
                                     i18nControl.getMessage("GENERAL"), //
                                     i18nControl.getMessage("MEDICAL_DATA"), //
@@ -78,8 +81,15 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
                                     i18nControl.getMessage("PRINTING"), //
                                     i18nControl.getMessage("LANGUAGE"), //
                                     i18nControl.getMessage("PUMP"), //
-                                    i18nControl.getMessage("CGMS") //
-    };
+                                    i18nControl.getMessage("CGMS"), //
+                                    i18nControl.getMessage("USERS") };
+
+    /**
+     * Config types
+     */
+    public String configTypesMinimal[] = { //
+                                           i18nControl.getMessage("GLOBAL"), //
+                                           i18nControl.getMessage("USERS") };
 
 
     /**
@@ -89,10 +99,23 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
      */
     public PropertiesDialog(DataAccess da)
     {
+        this(da, PropertiesDialogType.Standard);
+    }
+
+
+    /**
+     * Constructor
+     *
+     * @param da
+     */
+    public PropertiesDialog(DataAccess da, PropertiesDialogType propertiesDialogType)
+    {
         super(da.getMainParent(), "", true);
 
+        this.propertiesDialogType = propertiesDialogType;
+
         setSize(640, 480);
-        setTitle(i18nControl.getMessage("PREFERENCES"));
+        setTitle(i18nControl.getMessage("PREFERENCES_DEFAULT"));
 
         ATSwingUtils.initLibrary();
 
@@ -113,9 +136,9 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     {
         Dimension dim = new Dimension(120, 25);
 
-        list = new JList(configTypes);
+        list = new JList(getConfigTypes());
         list.addListSelectionListener(this);
-        ConfigCellRenderer renderer = new ConfigCellRenderer();
+        ConfigCellRenderer renderer = new ConfigCellRenderer(this.propertiesDialogType);
         renderer.setPreferredSize(new Dimension(100, 75));
         list.setCellRenderer(renderer);
         list.setSelectedIndex(0);
@@ -174,45 +197,34 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
         panels = new ArrayList<AbstractPrefOptionsPanel>();
         // panel_id = new Hashtable<String, String>();
 
-        // addPanel(i18nControl.getMessage("PREFERENCES"), this.PANEL_MAIN, new
-        // PrefMainPane());
-        // addPanel(i18nControl.getMessage("MODE"), PANEL_MODE, new
-        // PrefModePane(this));
-        // addPanel(i18nControl.getMessage("GENERAL"), this.PANEL_GENERAL, new
-        // PrefGeneralPane(this));
-        // addPanel(i18nControl.getMessage("MEDICAL_DATA"),
-        // this.PANEL_MEDICAL_DATA, new PrefMedicalDataPane(this));
-        // fontsAndColorPane = new PrefFontsAndColorPane(this); // to be able to
-        // use
-        // // updateGraphView with an
-        // // instance later.
-        // addPanel(i18nControl.getMessage("COLORS_AND_FONTS"), PANEL_COLORS,
-        // fontsAndColorPane); //
-        // renderingQualityPane = new PrefRenderingQualityPane(this);// to be
-        // able to use
-        // // updateGraphView with an
-        // // instance later.
-        // addPanel(i18nControl.getMessage("RENDERING_QUALITY"),
-        // PANEL_RENDERING, renderingQualityPane);
-        // addPanel(i18nControl.getMessage("PRINTING"), PANEL_PRINTING, new
-        // PrefPrintingPane(this));
-        // addPanel(i18nControl.getMessage("LANGUAGE"), PANEL_LANGUAGE, new
-        // PrefLanguagePane(this));
-        //
-        // addPanel(i18nControl.getMessage("PUMP"), PANEL_PUMP, new
-        // ConfigPumpPanel(this));
-        // addPanel(i18nControl.getMessage("CGMS"), PANEL_CGMS, new
-        // ConfigCGMSPanel(this));
+        if (this.propertiesDialogType == PropertiesDialogType.Standard)
+        {
+            addPanel(new PrefGlobalPane(this));
+            addPanel(new PrefModePane(this));
+            addPanel(new PrefGeneralPane(this));
+            addPanel(new PrefMedicalDataPane(this));
+            addPanel(fontsAndColorPane = new PrefFontsAndColorPane(this)); //
+            addPanel(renderingQualityPane = new PrefRenderingQualityPane(this));
+            addPanel(new PrefPrintingPane(this));
+            addPanel(new PrefLanguagePane(this));
+            addPanel(new ConfigPumpPanel(this));
+            addPanel(new ConfigCGMSPanel(this));
+            addPanel(new ConfigUsersPanel(this));
+        }
+        else
+        {
+            addPanel(new PrefGlobalPane(this));
+            addPanel(new ConfigUsersPanel(this));
+        }
+    }
 
-        addPanel(new PrefModePane(this));
-        addPanel(new PrefGeneralPane(this));
-        addPanel(new PrefMedicalDataPane(this));
-        addPanel(fontsAndColorPane = new PrefFontsAndColorPane(this)); //
-        addPanel(renderingQualityPane = new PrefRenderingQualityPane(this));
-        addPanel(new PrefPrintingPane(this));
-        addPanel(new PrefLanguagePane(this));
-        addPanel(new ConfigPumpPanel(this));
-        addPanel(new ConfigCGMSPanel(this));
+
+    protected String[] getConfigTypes()
+    {
+        if (this.propertiesDialogType == PropertiesDialogType.Standard)
+            return configTypes;
+        else
+            return configTypesMinimal;
     }
 
 
@@ -391,5 +403,7 @@ public class PropertiesDialog extends JDialog implements ListSelectionListener, 
     {
         return this.selectedPanel.getHelpId();
     }
+
+    // ---
 
 }

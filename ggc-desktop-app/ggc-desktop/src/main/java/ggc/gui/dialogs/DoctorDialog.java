@@ -72,7 +72,7 @@ import ggc.core.util.DataAccess;
  */
 
 // fix this
-
+@Deprecated
 public class DoctorDialog extends JDialog implements ActionListener
 {
 
@@ -226,7 +226,9 @@ public class DoctorDialog extends JDialog implements ActionListener
         dtc.setBounds(140, 75, 100, 35);
         panel.add(dtc);
 
-        addComponent(cob_bg_type = new JComboBox(this.m_da.bg_units), 220, 138, 80, panel);
+        // addComponent(cob_bg_type = new JComboBox(this.dataAccess.bg_units),
+        // 220,
+        // 138, 80, panel);
         addComponent(BGField = new JTextField(), 140, 138, 55, panel);
         addComponent(Ins1Field = new JTextField(), 140, 168, 55, panel);
         addComponent(Ins2Field = new JTextField(), 140, 198, 55, panel);

@@ -5,55 +5,54 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.net.URL;
 import java.util.*;
 import java.util.List;
 
-import javax.help.CSH;
-import javax.help.HelpBroker;
-import javax.help.HelpSet;
-import javax.help.HelpSetException;
 import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.atech.db.hibernate.HibernateConfiguration;
+import com.atech.db.hibernate.hdb_object.UserH;
 import com.atech.graphics.components.DialogSizePersistInterface;
 import com.atech.graphics.dialogs.guilist.GUIListDialog;
 import com.atech.graphics.graphs.GraphViewer;
-import com.atech.help.HelpContext;
+import com.atech.graphics.observe.EventObserverInterface;
+import com.atech.gui_fw.user.UserManagementCapableInterface;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.plugin.PlugInClient;
 import com.atech.upgrade.client.gui.UpgradeDialog;
 import com.atech.utils.ATSwingUtils;
 import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 
-import ggc.GGC;
+import ggc.core.data.defs.DatabaseStatusType;
+import ggc.core.data.defs.GGCObservableType;
+import ggc.core.data.defs.RefreshInfoType;
 import ggc.core.data.graph.v1.db.GraphV1DbRetrieverCore;
 import ggc.core.data.graph.v1.gui.HbA1cDialog;
 import ggc.core.data.graph.v1.view.GraphViewAbstract;
 import ggc.core.data.graph.v1.view.GraphViewCourse;
 import ggc.core.data.graph.v1.view.GraphViewFrequency;
 import ggc.core.data.graph.v1.view.GraphViewSpread;
-import ggc.core.db.GGCDbLoader;
 import ggc.core.db.tool.transfer.BackupDialog;
 import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
+import ggc.core.enums.GGCFunctionality;
+import ggc.core.enums.PropertiesDialogType;
+import ggc.core.gui.GGCGuiHelper;
 import ggc.core.plugins.GGCPluginType;
 import ggc.core.util.DataAccess;
-import ggc.core.util.RefreshInfo;
 import ggc.core.util.upgrade.GGCUpgradeApplicationContext;
-import ggc.gui.cfg.PropertiesDialog;
 import ggc.gui.dialogs.AboutGGCDialog;
+import ggc.gui.dialogs.GGCCoreDesktopDialogCreator;
 import ggc.gui.dialogs.PrintingDialog;
+import ggc.gui.dialogs.config.PropertiesDialog;
 import ggc.gui.dialogs.doctor.DoctorListDef;
 import ggc.gui.dialogs.doctor.appointment.AppointmentListDef;
-import ggc.gui.dialogs.stock.def.StockListDef;
+import ggc.gui.dialogs.inventory.def.InventoryListDef;
+import ggc.gui.dialogs.ratio.RatioBaseDialog;
+import ggc.gui.dialogs.ratio.RatioExtendedDialog;
 import ggc.gui.main.panels.MainWindowInfoPanel;
 import ggc.gui.pen.DailyStatsDialog;
-import ggc.shared.ratio.RatioBaseDialog;
-import ggc.shared.ratio.RatioExtendedDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -81,21 +80,26 @@ import ggc.shared.ratio.RatioExtendedDialog;
  *          Andy {andy@atech-software.com}  
  */
 
-public class MainFrame extends JFrame implements EventObserverInterface, ActionListener, DialogSizePersistInterface
+public class MainFrame extends JFrame
+        implements EventObserverInterface, ActionListener, DialogSizePersistInterface, UserManagementCapableInterface
 {
 
     private static final long serialVersionUID = -8971779470148201332L;
     private static final String skinLFdir = "../data/skinlf_themes/";
+
+    private static final Logger LOG = LoggerFactory.getLogger(MainFrame.class);
+
     /**
      * Skin Look and Feel
      */
     public static SkinLookAndFeel s_skinlf;
 
+    private static GGCGuiHelper guiHelper = null; // new GGCGuiHelper(LOG);
+
     /**
      * Developer version 
      */
     public static boolean developer_version = false;
-    private static Logger LOG = LoggerFactory.getLogger(MainFrame.class);
 
     private GraphV1DbRetrieverCore graphV1DbRetrieverCore;
 
@@ -117,96 +121,30 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
      */
     private Hashtable<GGCToolbarType, JToolBar> toolbars = null;
     private DataAccess dataAccess = null;
-    private I18nControlAbstract i18Control = null;
+    private I18nControlAbstract i18nControl = null;
     private Map<String, JMenu> menus = null;
     private Map<String, JMenuItem> actions = null;
     private Map<GGCToolbarType, Map<String, JButton>> toolbarItems = new HashMap<GGCToolbarType, Map<String, JButton>>();
 
     private GGCToolbarType current_toolbar = GGCToolbarType.None;
-    private String nextVersion = "0.8";
-
+    private String nextVersion = "0.9";
 
     /**
      * Static definitions (Look and Feel)
      */
     static
     {
-        MainFrame.setLookAndFeel();
+        GGCGuiHelper.setLog(LOG);
+        GGCGuiHelper.setLookAndFeel();
+        DataAccess.getSkinManager().setSkinLfOverrides(guiHelper.getSkinLfOverrides());
+        //
+        // JFrame.setDefaultLookAndFeelDecorated(true);
+        // JDialog.setDefaultLookAndFeelDecorated(true);
     }
 
-
-    /**
-     * Constructor
-     * 
-     * @param title
-     * @param developer_version
-     */
-    public MainFrame(String title, boolean developer_version)
-    {
-        dataAccess = DataAccess.createInstance(this);
-
-        i18Control = dataAccess.getI18nControlInstance();
-
-        dataAccess.addComponent(this);
-
-        dataAccess.setDeveloperMode(developer_version);
-
-        statusPanel = new StatusBar(this);
-
-        this.actions = new Hashtable<String, JMenuItem>();
-        graphV1DbRetrieverCore = new GraphV1DbRetrieverCore();
-        MainFrame.developer_version = developer_version;
-
-        String title_full = "  GGC - GNU Gluco Control (" + GGC.full_version + ")";
-
-        if (developer_version)
-        {
-            title_full += " - Developer edition";
-        }
-
-        setTitle(title_full);
-
-        this.setIconImage(ATSwingUtils.getImageIcon_22x22("diabetesbluecircle.png", this, dataAccess).getImage());
-
-        setJMenuBar(menuBar);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter()
-        {
-
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-                close();
-            }
-        });
-
-        helpInit();
-
-        // menus, toolbars
-        createMenus();
-        createToolBars();
-        this.setSoftwareMode();
-        dataAccess.addObserver(DataAccess.OBSERVABLE_STATUS, this);
-        dataAccess.addObserver(DataAccess.OBSERVABLE_DB, this);
-
-        // getContentPane().add(this.toolbars.get("TOOLBAR_PEN"),
-        // BorderLayout.NORTH);
-        getContentPane().add(statusPanel, BorderLayout.SOUTH);
-
-        dataAccess.startDb();
-
-        statusPanel.setStatusMessage(i18Control.getMessage("INIT"));
-
-        // information panel
-        informationPanel = new MainWindowInfoPanel();
-        getContentPane().add(informationPanel, BorderLayout.CENTER);
-
-        setMenusByDbLoad(StatusBar.DB_STOPPED);
-
-        dataAccess.startToObserve();
-        this.setVisible(true);
-
-    }
+    // private static String skinLFdir = "../data/skinlf_themes/";
+    // public static SkinLookAndFeel s_skinlf;
+    private static Map<String, Object> skinLfOverrides;
 
 
     /**
@@ -214,6 +152,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
      */
     public static void setLookAndFeel()
     {
+        // String skinLFdir = "../data/skinlf_themes/";
+        // SkinLookAndFeel s_skinlf;
 
         try
         {
@@ -226,6 +166,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             {
                 if (data[0].equals("com.l2fprod.gui.plaf.skin.SkinLookAndFeel"))
                 {
+                    // skinLFdir = "../data/skinlf_themes/";
+
                     SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack(skinLFdir + data[1]));
 
                     s_skinlf = new com.l2fprod.gui.plaf.skin.SkinLookAndFeel();
@@ -249,8 +191,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     }
 
-    private static Map<String, Object> skinLfOverrides;
-
 
     public static void setExceptionsForLookAndFeel(String skinName, SkinLookAndFeel skinLookAndFeel)
     {
@@ -262,8 +202,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
             skinLfOverrides.put("JTableHeader.backgroundColor", new Color(102, 178, 255));
             skinLfOverrides.put("JTableHeader.borderColor", Color.gray);
-
-            DataAccess.setSkinLfOverrides(skinLfOverrides);
         }
 
         // for (Object keyo : skinLookAndFeel.getDefaults().keySet())
@@ -275,6 +213,91 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         // System.out.println("Key2: " + key);
         // }
         // }
+
+    }
+
+
+    /**
+     * Constructor
+     * 
+     * @param title
+     * @param developer_version
+     */
+    public MainFrame(String title, boolean developer_version)
+    {
+
+        guiHelper = new GGCGuiHelper();
+
+        dataAccess = DataAccess.createInstance(this);
+
+        i18nControl = dataAccess.getI18nControlInstance();
+
+        dataAccess.addComponent(this);
+
+        dataAccess.setDeveloperMode(developer_version);
+
+        guiHelper.setDataAccess(dataAccess);
+
+        statusPanel = new StatusBar(this);
+
+        this.actions = new Hashtable<String, JMenuItem>();
+        graphV1DbRetrieverCore = new GraphV1DbRetrieverCore();
+        MainFrame.developer_version = developer_version;
+
+        String title_full = "  GGC - GNU Gluco Control (" + "v" + DataAccess.CORE_VERSION + ")";
+
+        if (developer_version)
+        {
+            title_full += " - Developer edition";
+        }
+
+        setTitle(title_full);
+
+        guiHelper.setApplicationIcon(this);
+
+        // this.setIconImage(ATSwingUtils.getImageIcon_22x22("diabetesbluecircle.png",
+        // this, dataAccess).getImage());
+
+        setJMenuBar(menuBar);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter()
+        {
+
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                close();
+            }
+        });
+
+        guiHelper.helpInit();
+
+        // menus, toolbars
+        createMenus();
+        createToolBars();
+        this.setSoftwareMode();
+        dataAccess.getObserverManager().addObserver(GGCObservableType.Status, this);
+        dataAccess.getObserverManager().addObserver(GGCObservableType.Database, this);
+
+        // getContentPane().add(this.toolbars.get("TOOLBAR_PEN"),
+        // BorderLayout.NORTH);
+        getContentPane().add(statusPanel, BorderLayout.SOUTH);
+
+        dataAccess.startDb();
+
+        statusPanel.setStatusMessage(i18nControl.getMessage("INIT"));
+
+        // information panel
+        informationPanel = new MainWindowInfoPanel();
+        getContentPane().add(informationPanel, BorderLayout.CENTER);
+
+        setMenusByDbLoad(StatusBar.DB_STOPPED);
+
+        dataAccess.getObserverManager().startToObserve();
+
+        dataAccess.registerDialogCreator(new GGCCoreDesktopDialogCreator());
+
+        this.setVisible(true);
 
     }
 
@@ -292,7 +315,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
      */
     public String getSoftwareMode()
     {
-        return " [" + i18Control.getMessage(dataAccess.getSoftwareModeDescription()) + "]";
+        return " [" + i18nControl.getMessage(dataAccess.getSoftwareModeDescription()) + "]";
     }
 
 
@@ -307,7 +330,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         // if (dataAccess.getSoftwareMode() == -1)
         // return;
 
-        String title_full = "  GGC - GNU Gluco Control (" + GGC.full_version + ")";
+        String title_full = "  GGC - GNU Gluco Control (" + "v" + DataAccess.CORE_VERSION + ")";
 
         if (developer_version)
         {
@@ -421,10 +444,17 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         this.createMenuItem(menuxsub, "MN_DB_BACKUP", "MN_DB_BACKUP_DESC", "tools_db_backup", "export1.png");
         this.createMenuItem(menuxsub, "MN_DB_RESTORE", "MN_DB_RESTORE_DESC", "tools_db_restore", "import1.png");
 
-        menux.addSeparator();
-        this.createMenuItem(menux, "MN_MISC_SYNCHRONIZE", "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
-
         this.menus.put("MENU_TOOLS", menux);
+
+        // menux.addSeparator();
+        // this.createMenuItem(menux, "MN_MISC_SYNCHRONIZE",
+        // "MN_MISC_SYNCHRONIZE_DESC", "misc_synchronize", null);
+
+        menux = this.createMenu("MN_TOOLS", null);
+        this.createMenuItem(menux, "MN_PREFERENCES", "MN_PREFERENCES_DESC", "tools_pref_admin", "preferences.png");
+        menux.addSeparator();
+
+        this.menus.put("MENU_TOOLS_ADMIN", menux);
 
         // help menu
         menux = this.createMenu("MN_HELP", null);
@@ -447,14 +477,34 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void refreshMenus()
     {
-        refreshMenus(true);
+        refreshMenus(true, 2);
     }
 
 
-    private void refreshMenus(boolean refresh_init)
+    private void refreshMenus(boolean refresh_init, int userType)
     {
         // System.out.println("Refresh Menus: " + refresh_init);
         this.menuBar.removeAll();
+
+        if (userType == 0)
+        {
+            return;
+        }
+        else if (userType == 1)
+        {
+            // file
+            this.menuBar.add(this.menus.get("MENU_FILE"));
+
+            // tools
+            this.menuBar.add(this.menus.get("MENU_TOOLS_ADMIN"));
+
+            // help
+            this.menuBar.add(this.menus.get("MENU_HELP"));
+
+            this.setJMenuBar(this.menuBar);
+
+            return;
+        }
 
         // file
         this.menuBar.add(this.menus.get("MENU_FILE"));
@@ -477,14 +527,10 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
                 if (pic.getPlugInMainMenu() != null)
                 {
-                    JMenu menuTmp = pic.getPlugInMainMenu();
+                    JMenu menu = pic.getPlugInMainMenu();
 
-                    if (key == GGCPluginType.PumpToolPlugin)
-                    {
-                        // addRatioMenu(menuTmp, true);
-                    }
-
-                    this.menuBar.add(menuTmp);
+                    this.menuBar.add(menu);
+                    this.menus.put(key.getKey(), menu);
                 }
             }
         }
@@ -511,7 +557,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private JMenuItem createTextMenuItem(String text)
     {
-        JMenuItem mi = new JMenuItem(i18Control.getMessageWithoutMnemonic(text));
+        JMenuItem mi = new JMenuItem(i18nControl.getMessageWithoutMnemonic(text));
         mi.setFont(ATSwingUtils.getFont(ATSwingUtils.FONT_NORMAL_BOLD));
 
         return mi;
@@ -602,8 +648,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private JMenu createMenu(String name, String tool_tip)
     {
-        JMenu item = new JMenu(i18Control.getMessageWithoutMnemonic(name));
-        item.setMnemonic(i18Control.getMnemonic(name));
+        JMenu item = new JMenu(i18nControl.getMessageWithoutMnemonic(name));
+        item.setMnemonic(i18nControl.getMnemonic(name));
 
         if (tool_tip != null)
         {
@@ -622,12 +668,12 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private JMenu createMenu(JMenu parent, String name, String tool_tip)
     {
-        JMenu item = new JMenu(i18Control.getMessageWithoutMnemonic(name));
-        item.setMnemonic(i18Control.getMnemonic(name));
+        JMenu item = new JMenu(i18nControl.getMessageWithoutMnemonic(name));
+        item.setMnemonic(i18nControl.getMnemonic(name));
 
         if (tool_tip != null)
         {
-            item.setToolTipText(i18Control.getMessage(tool_tip));
+            item.setToolTipText(i18nControl.getMessage(tool_tip));
         }
 
         parent.add(item);
@@ -792,7 +838,11 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void loadInitialSize()
     {
+        // FIXME
         dataAccess.loadWindowSize(this);
+
+        // FIXME
+        GGCGuiHelper.resetLookAndFeel();
     }
 
 
@@ -822,11 +872,11 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     {
 
         JButton button = new JButton();
-        button.setName(i18Control.getMessageWithoutMnemonic(name));
+        button.setName(i18nControl.getMessageWithoutMnemonic(name));
 
         if (toolTip != null)
         {
-            button.setToolTipText(i18Control.getMessage(toolTip));
+            button.setToolTipText(i18nControl.getMessage(toolTip));
         }
 
         if (actionCommand != null)
@@ -859,18 +909,18 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void createMenuItem(JMenu menu, String name, String toolTip, String actionCommand, String iconSmall)
     {
-        JMenuItem item = new JMenuItem(i18Control.getMessageWithoutMnemonic(name));
+        JMenuItem item = new JMenuItem(i18nControl.getMessageWithoutMnemonic(name));
         // item.setName(i18nControl.getMessageWithoutMnemonic(name));
 
-        if (i18Control.hasMnemonic(name))
+        if (i18nControl.hasMnemonic(name))
         {
-            char ch = i18Control.getMnemonic(name);
+            char ch = i18nControl.getMnemonic(name);
             item.setAccelerator(KeyStroke.getKeyStroke(ch, Event.CTRL_MASK));
         }
 
         if (toolTip != null)
         {
-            item.setToolTipText(i18Control.getMessage(toolTip));
+            item.setToolTipText(i18nControl.getMessage(toolTip));
         }
 
         if (actionCommand != null)
@@ -976,73 +1026,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     }
 
 
-    private void helpInit()
-    {
-        LOG.debug("JavaHelp - START");
-
-        HelpContext hc = dataAccess.getHelpContext();
-
-        LOG.debug("JavaHelp - HelpContext: " + hc);
-
-        JMenuItem helpItem = new JMenuItem(i18Control.getMessage("HELP") + "...");
-        helpItem.setIcon(new ImageIcon(getClass().getResource("/icons/help.gif")));
-        hc.setHelpItem(helpItem);
-
-        String mainHelpSetName = "/" + dataAccess.getLanguageManager().getHelpSet();
-
-        LOG.debug("JavaHelp - MainHelpSetName: " + mainHelpSetName);
-
-        hc.setMainHelpSetName(mainHelpSetName);
-
-        // try to find the helpset and create a HelpBroker object
-        if (hc.getMainHelpBroker() == null)
-        {
-            HelpSet main_help_set = null;
-
-            try
-            {
-                URL hsURL = getClass().getResource(mainHelpSetName);
-                main_help_set = new HelpSet(null, hsURL);
-            }
-            catch (HelpSetException ex)
-            {
-                LOG.error("HelpSet " + mainHelpSetName + " could not be opened.", ex);
-            }
-
-            HelpBroker main_help_broker = null;
-
-            if (main_help_set != null)
-            {
-                LOG.debug("JavaHelp - Main Help Set present, creating broker.");
-                main_help_broker = main_help_set.createHelpBroker();
-            }
-
-            CSH.DisplayHelpFromSource csh = null;
-
-            if (main_help_broker != null)
-            {
-                // CSH.DisplayHelpFromSource is a convenience class to display
-                // the helpset
-                csh = new CSH.DisplayHelpFromSource(main_help_broker);
-
-                if (csh != null)
-                {
-                    // listen to ActionEvents from the helpItem
-                    hc.getHelpItem().addActionListener(csh);
-                }
-            }
-
-            hc.setDisplayHelpFromSourceInstance(csh);
-            hc.setMainHelpBroker(main_help_broker);
-            hc.setMainHelpSet(main_help_set);
-
-            CSH.trackCSEvents();
-        }
-
-        LOG.debug("JavaHelp - END");
-    }
-
-
     private void close()
     {
 
@@ -1119,6 +1102,10 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
                 informationPanel.refreshPanels();
             }
         }
+        else if (command.equals("tools_pref_admin"))
+        {
+            PropertiesDialog pd = new PropertiesDialog(dataAccess, PropertiesDialogType.ApplicationAdmin);
+        }
         else if (command.equals("hlp_about"))
         {
             new AboutGGCDialog(this);
@@ -1153,7 +1140,8 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
             // update main panels
             DataAccess.getInstance().loadDailySettings(new GregorianCalendar(), true);
-            dataAccess.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
+            dataAccess.getObserverManager().setChangeOnEventSource(GGCObservableType.InfoPanels,
+                RefreshInfoType.DeviceDataAll);
         }
         else if (command.equals("report_pdf_simple"))
         {
@@ -1189,9 +1177,15 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             }
 
         }
-        else if (command.equals("file_login") || command.equals("file_logout"))
+        else if (command.equals("file_login"))
         {
-            featureNotImplemented(command, nextVersion);
+            if (GGCFunctionality.UserManagement.isEnabled())
+                dataAccess.getUserManagement().loginAction();
+        }
+        else if (command.equals("file_logout"))
+        {
+            if (GGCFunctionality.UserManagement.isEnabled())
+                dataAccess.getUserManagement().logoutAction();
         }
         else if (command.equals("misc_synchronize")) // ||
         // (command.equals("doc_stocks")))
@@ -1202,7 +1196,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         {
             if (MainFrame.developer_version)
             {
-                new GUIListDialog(MainFrame.this, new StockListDef(), dataAccess);
+                new GUIListDialog(MainFrame.this, new InventoryListDef(1L), dataAccess);
             }
             else
             {
@@ -1383,13 +1377,13 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void featureNotImplemented(String cmd, String version)
     {
-        String text = i18Control.getMessage("FEATURE");
+        String text = i18nControl.getMessage("FEATURE");
 
         text += " '" + this.actions.get(cmd).getName() + "' ";
-        text += String.format(i18Control.getMessage("IMPLEMENTED_VERSION"), version);
+        text += String.format(i18nControl.getMessage("IMPLEMENTED_VERSION"), version);
         text += "!";
 
-        JOptionPane.showMessageDialog(MainFrame.this, text, i18Control.getMessage("INFORMATION"),
+        JOptionPane.showMessageDialog(MainFrame.this, text, i18nControl.getMessage("INFORMATION"),
             JOptionPane.INFORMATION_MESSAGE);
 
     }
@@ -1397,13 +1391,13 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
 
     private void featureNotImplementedDescription(String desc, String version)
     {
-        String text = i18Control.getMessage("FEATURE");
+        String text = i18nControl.getMessage("FEATURE");
 
         text += " '" + desc + "' ";
-        text += String.format(i18Control.getMessage("IMPLEMENTED_VERSION"), version);
+        text += String.format(i18nControl.getMessage("IMPLEMENTED_VERSION"), version);
         text += "!";
 
-        JOptionPane.showMessageDialog(MainFrame.this, text, i18Control.getMessage("INFORMATION"),
+        JOptionPane.showMessageDialog(MainFrame.this, text, i18nControl.getMessage("INFORMATION"),
             JOptionPane.INFORMATION_MESSAGE);
 
     }
@@ -1427,13 +1421,14 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     public void update(Observable obj, Object arg)
     {
         // System.out.println("update");
-        if (arg instanceof Integer)
+
+        if (arg instanceof RefreshInfoType)
         {
-            Integer i = (Integer) arg;
+            RefreshInfoType refreshInfoType = (RefreshInfoType) arg;
 
             if (!title_set)
             {
-                if (i >= RefreshInfo.PANEL_GROUP_GENERAL_INFO)
+                if (refreshInfoType.getCode() >= RefreshInfoType.GeneralInfo.getCode())
                 {
                     title_set = true;
                     this.setSoftwareMode();
@@ -1441,16 +1436,18 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             }
 
             // Integer i = (Integer)arg;
-            setMenusByDbLoad(i.intValue());
 
-            if (dataAccess.getDbLoadingStatus() >= GGCDbLoader.DB_DATA_BASE)
-            {
-                ;
-            }
-            this.setSoftwareMode();
+            // this.setSoftwareMode();
             // this.setTitle();
 
-            if (i == RefreshInfo.DB_LOADED)
+        }
+        else if (arg instanceof DatabaseStatusType)
+        {
+            DatabaseStatusType databaseStatusType = (DatabaseStatusType) arg;
+
+            setMenusByDbLoad(databaseStatusType.getCode());
+
+            if (databaseStatusType == DatabaseStatusType.Loaded)
             {
                 refreshMenus();
             }
@@ -1460,47 +1457,17 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
             Exception ex = (Exception) arg;
             LOG.error("Error connecting to Database: " + ex.getMessage(), ex);
 
-            dataAccess.createErrorDialog("Main", "Opening Db", ex, getDbSettingsAndCause(false), //
-                getDbSettingsAndCause(true), //
-                i18Control.getMessage("DB_PROBLEM_NOT_CONNECTED_SOLUTION"), //
-                i18Control.getMessage("DB_PROBLEM_NOT_CONNECTED_SOLUTION_TOOLTIP"));
+            dataAccess.createErrorDialog("Main", "Opening Db", ex, guiHelper.getDbSettingsAndCause(false), //
+                guiHelper.getDbSettingsAndCause(true), //
+                i18nControl.getMessage("DB_PROBLEM_NOT_CONNECTED_SOLUTION"), //
+                i18nControl.getMessage("DB_PROBLEM_NOT_CONNECTED_SOLUTION_TOOLTIP"));
 
             System.exit(1);
         }
-    }
-
-
-    private String getDbSettingsAndCause(boolean forToolTip)
-    {
-        HibernateConfiguration hc = dataAccess.getDb().getHibernateConfiguration();
-
-        StringBuilder sb = new StringBuilder();
-
-        if (!forToolTip)
-        {
-            return String.format(i18Control.getMessage("DB_PROBLEM_NOT_CONNECTED"), hc.db_num, hc.db_conn_name,
-                hc.db_driver_class);
-        }
         else
         {
-            // sb.append(
-            // "There was problem connecting/getting metadata from you database.
-            // Likely cause of this might be misconfiguration of your database
-            // connection and/or missing database driver (JDBC).");
-            // sb.append("<br><b>Currently selected configuration is: </b>");
-            // sb.append(hc.db_num);
-            // sb.append(" - " + hc.db_conn_name);
-            // sb.append("<br><b>Driver Class:</b> " + hc.db_driver_class);
-            // sb.append("<br>Connection: " + hc.db_conn_url);
-            // sb.append("<br>Username: " + hc.db_conn_username);
-            // sb.append("<br>Password: " + hc.db_conn_password);
-            // sb.append("<br>Dialect: " + hc.db_hib_dialect);
-
-            return String.format(i18Control.getMessage("DB_PROBLEM_NOT_CONNECTED_TOOLTIP"), hc.db_num, hc.db_conn_name,
-                hc.db_driver_class, hc.db_conn_url, hc.db_conn_username, hc.db_conn_password, hc.db_hib_dialect);
+            LOG.error("Unallowed update type ({}).", arg.getClass().getSimpleName());
         }
-        //
-        // return sb.toString();
     }
 
 
@@ -1510,7 +1477,7 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
     // FIXME
     public void refreshMenusPlugins()
     {
-        this.refreshMenus(false);
+        this.refreshMenus(false, 2);
     }
 
 
@@ -1549,6 +1516,70 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         return this;
     }
 
+
+    public void quitApplication()
+    {
+        this.dispose();
+    }
+
+
+    public String getHelpKeyword(String key, String defaultIfNotfound)
+    {
+        if (key.equals("Application.Login"))
+        {
+            return "";
+        }
+        else
+            return defaultIfNotfound;
+    }
+
+
+    public void processLogin(UserH user)
+    {
+        refreshMenus(false, 0);
+
+        // if (user == null) {
+        // disableMenus();
+        // }
+
+        if (user != null)
+        {
+            refreshMenus(false, user.getUser_type());
+            // enableMenus(user.getUser_type());
+        }
+
+        // setSoftwareMode(true);
+
+    }
+
+
+    private void disableMenus()
+    {
+        for (JMenu mi : menus.values())
+        {
+            mi.setEnabled(false);
+        }
+    }
+
+
+    private void enableMenus(int type)
+    {
+        if (type == 1) // default user
+        {
+            this.menus.get("MENU_TOOLS").setEnabled(true);
+            // this.actions.get("tools_pref").setEnabled(true);
+
+            menus.get("MENU_HELP").setEnabled(true);
+        }
+        else
+        {
+            for (JMenu mi : menus.values())
+            {
+                mi.setEnabled(true);
+            }
+        }
+    }
+
     enum GGCToolbarType
     {
         PenInjection, //
@@ -1556,7 +1587,6 @@ public class MainFrame extends JFrame implements EventObserverInterface, ActionL
         None;
 
         private static List<GGCToolbarType> activeValues;
-
 
         static
         {

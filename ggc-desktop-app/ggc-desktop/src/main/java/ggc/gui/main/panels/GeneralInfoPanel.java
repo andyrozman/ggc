@@ -78,17 +78,17 @@ public class GeneralInfoPanel extends AbstractInfoPanel
         setLayout(new GridLayout(0, 2));
         elementsMap = new HashMap<String, JLabel>();
 
-        addToList("name", new JLabel(m_ic.getMessage("YOUR_NAME") + ":"));
+        addToList("name", new JLabel(i18nControl.getMessage("YOUR_NAME") + ":"));
         addToList("name_value", lblName);
-        addToList("bolus", new JLabel(m_ic.getMessage("BOLUS_INSULIN") + ":"));
+        addToList("bolus", new JLabel(i18nControl.getMessage("BOLUS_INSULIN") + ":"));
         addToList("bolus_value", lblIns1);
-        addToList("basal", new JLabel(m_ic.getMessage("BASAL_INSULIN") + ":"));
+        addToList("basal", new JLabel(i18nControl.getMessage("BASAL_INSULIN") + ":"));
         addToList("basal_value", lblIns2);
-        addToList("bg_unit", new JLabel(m_ic.getMessage("BG_UNIT") + ":"));
+        addToList("bg_unit", new JLabel(i18nControl.getMessage("BG_UNIT") + ":"));
         addToList("bg_unit_value", lblUnit);
-        addToList("bg_target", new JLabel(m_ic.getMessage("BG_TARGET") + ":"));
+        addToList("bg_target", new JLabel(i18nControl.getMessage("BG_TARGET") + ":"));
         addToList("bg_target_value", lblTarget);
-        addToList("pump_insulin", new JLabel(m_ic.getMessage("PUMP_INSULIN") + ":"));
+        addToList("pump_insulin", new JLabel(i18nControl.getMessage("PUMP_INSULIN") + ":"));
         addToList("pump_insulin_value", this.lblPumpInsulin);
 
         changeMode(GGCSoftwareMode.PEN_INJECTION_MODE);
@@ -179,7 +179,7 @@ public class GeneralInfoPanel extends AbstractInfoPanel
     @Override
     public void doRefresh()
     {
-        if (!this.m_da.isDatabaseInitialized())
+        if (!this.dataAccess.isDatabaseInitialized())
             return;
 
         lblName.setText(configurationManagerWrapper.getUserName());
@@ -205,8 +205,9 @@ public class GeneralInfoPanel extends AbstractInfoPanel
 
         float avg = (float) ((min + max) / 2.0);
 
-        lblTarget.setText(DataAccess.Decimal1Format.format(min) + " - " + DataAccess.Decimal1Format.format(max) + " ["
-                + DataAccess.Decimal1Format.format(avg) + "]");
+        lblTarget.setText(dataAccess.getFloatAsString(min, glucoseUnitType == GlucoseUnitType.mg_dL ? 0 : 1) //
+                + " - " + dataAccess.getFloatAsString(max, glucoseUnitType == GlucoseUnitType.mg_dL ? 0 : 1) //
+                + " [" + dataAccess.getFloatAsString(avg, glucoseUnitType == GlucoseUnitType.mg_dL ? 0 : 1) + "]");
 
         this.lblPumpInsulin.setText(configurationManagerWrapper.getPumpInsulin());
 

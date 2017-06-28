@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -18,8 +17,9 @@ import com.atech.utils.ATSwingUtils;
 import ggc.core.data.defs.StockTypeBase;
 import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.StockSubTypeH;
+import ggc.core.db.hibernate.doc.DoctorH;
 import ggc.core.util.DataAccess;
-import ggc.gui.dialogs.stock.StockSubTypeDialog;
+import ggc.gui.dialogs.inventory.InventoryItemTypeDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,9 +45,11 @@ import ggc.gui.dialogs.stock.StockSubTypeDialog;
  *
  *  Author: andyrozman {andy@atech-software.com}
  */
-
+@Deprecated
 public class StockTypeListDef extends GUIListDefAbstract
 {
+
+    // USED: 70%
 
     DataAccess dataAccess = DataAccess.getInstance();
     I18nControlAbstract i18nControl = dataAccess.getI18nControlInstance();
@@ -58,7 +60,7 @@ public class StockTypeListDef extends GUIListDefAbstract
     GGCDb database;
 
     AbstractTableModel model;
-    StockTypeBase filterType = StockTypeBase.None;
+    StockTypeBase filterStockType = StockTypeBase.None;
     String filterText = "";
 
 
@@ -67,8 +69,18 @@ public class StockTypeListDef extends GUIListDefAbstract
      */
     public StockTypeListDef()
     {
-        this.database = dataAccess.getDb();
-        init();
+
+        super(DataAccess.getInstance(), //
+                new DoctorH(), // object listed
+                "STOCK_TYPE_LIST", // title
+                "StockTypeListDef", // defintion name
+                "Doc_DocList", // help Id
+                new Rectangle(40, 0, 580, 250), // table bounds
+                new Dimension(800, 500) // size
+        );
+
+        // this.database = dataAccess.getDb();
+        // init();
     }
 
 
@@ -77,7 +89,7 @@ public class StockTypeListDef extends GUIListDefAbstract
     {
         if (action.equals("add_stocktype"))
         {
-            StockSubTypeDialog dialog = new StockSubTypeDialog(this.getParentDialog());
+            InventoryItemTypeDialog dialog = new InventoryItemTypeDialog(this.getParentDialog());
 
             if (dialog.wasOperationSuccessful())
             {
@@ -105,12 +117,13 @@ public class StockTypeListDef extends GUIListDefAbstract
 
                 if (database.isStockSubTypeUsed(stockType))
                 {
-                    System.out.println("USED");
+                    dataAccess.showMessageDialog(this.getParentDialog(), ATSwingUtils.DialogType.Error,
+                        "STOCK_SUB_TYPE_IN_USE");
                 }
                 else
                 {
-                    System.out.println("NOT USED");
-                    // loadData();
+                    database.deleteHibernate(stockType);
+                    loadData();
                 }
 
             }
@@ -122,13 +135,20 @@ public class StockTypeListDef extends GUIListDefAbstract
     }
 
 
-    private void refreshDataFromDb()
+    @Override
+    public boolean doCustomTableAction(String action)
     {
-        this.dbList = database.getStockTypes();
+        return false;
     }
 
 
-    private void refreshFilter()
+    // private void refreshDataFromDb()
+    // {
+    // this.dbList = database.getStockTypes();
+    // }
+
+    @Override
+    public void filterData()
     {
         if (this.filteredList == null)
         {
@@ -141,11 +161,11 @@ public class StockTypeListDef extends GUIListDefAbstract
 
         List<StockSubTypeH> found = new ArrayList<StockSubTypeH>();
 
-        if (this.filterType != StockTypeBase.None)
+        if (this.filterStockType != StockTypeBase.None)
         {
             for (StockSubTypeH entry : this.dbList)
             {
-                if (entry.getStockType() == this.filterType)
+                if (entry.getStockType() == this.filterStockType)
                 {
                     found.add(entry);
                 }
@@ -179,120 +199,122 @@ public class StockTypeListDef extends GUIListDefAbstract
         }
     }
 
+    // @Override
+    // public JTable getJTable()
+    // {
+    //
+    // if (this.table == null)
+    // {
+    //
+    // this.table = new JTable(model = new AbstractTableModel()
+    // {
+    //
+    // private static final long serialVersionUID = -9188128586566579737L;
+    //
+    //
+    // public int getColumnCount()
+    // {
+    //
+    // return 5;
+    // }
+    //
+    //
+    // public int getRowCount()
+    // {
+    // return filteredList.size();
+    // }
+    //
+    //
+    // public Object getValueAt(int row, int column)
+    // {
+    // StockSubTypeH sst = filteredList.get(row);
+    //
+    // switch (column)
+    // {
+    // case 0:
+    // return StockTypeBase.getByCode((int)
+    // sst.getStockTypeId()).getTranslation();
+    //
+    // case 1:
+    // return sst.getName();
+    //
+    // case 2:
+    // return sst.getDescription();
+    //
+    // case 3:
+    // return sst.getPackageContent() + " " +
+    // i18nControl.getMessage(sst.getPackageContentUnit());
+    //
+    // case 4:
+    // return sst.getUsageDescription();
+    //
+    // }
+    //
+    // return null;
+    // }
+    //
+    // });
+    //
+    // // FIXME
+    // String[] columns = { "STOCK_GROUP", "NAME", "DESCRIPTION",
+    // "PACKAGE_CONTENT_SHORT", "STOCK_USAGE" };
+    // int[] cwidths = { 100, 120, 160, 100, 100 }; // 480
+    // int cwidth = 0;
+    //
+    // TableColumnModel cm = table.getColumnModel();
+    //
+    // for (int i = 0; i < columns.length; i++)
+    // {
+    // cm.getColumn(i).setHeaderValue(this.i18nControl.getMessage(columns[i]));
+    //
+    // cwidth = cwidths[i];
+    //
+    // if (cwidth > 0)
+    // {
+    // cm.getColumn(i).setPreferredWidth(cwidth);
+    // }
+    // }
+    //
+    // //
+    // // stock_type_id bigint,
+    // // name character varying(512),
+    // // description character varying(2000),
+    // // content_pkg bigint,
+    // // usage_type integer,
+    // // usage_min integer,
+    // // usage_max integer,
+    // // active boolean,
+    // // extended text,
+    // // comment character varying(2000),
+    //
+    // }
+    //
+    // return this.table;
+    //
+    // }
 
-    @Override
-    public JTable getJTable()
-    {
 
-        if (this.table == null)
-        {
-
-            this.table = new JTable(model = new AbstractTableModel()
-            {
-
-                private static final long serialVersionUID = -9188128586566579737L;
-
-
-                public int getColumnCount()
-                {
-
-                    return 5;
-                }
-
-
-                public int getRowCount()
-                {
-                    return filteredList.size();
-                }
-
-
-                public Object getValueAt(int row, int column)
-                {
-                    StockSubTypeH sst = filteredList.get(row);
-
-                    switch (column)
-                    {
-                        case 0:
-                            return StockTypeBase.getByCode((int) sst.getStockTypeId()).getTranslation();
-
-                        case 1:
-                            return sst.getName();
-
-                        case 2:
-                            return sst.getDescription();
-
-                        case 3:
-                            return sst.getPackageContent() + " " + sst.getPackageContentUnit();
-
-                        case 4:
-                            return sst.getUsageDescription();
-
-                    }
-
-                    return null;
-                }
-
-            });
-
-            String[] columns = { "Base Type", "Name", "Description", "Pkg Content", "Usage" };
-            int[] cwidths = { 100, 100, 100, 100, 180 }; // 480
-            int cwidth = 0;
-
-            TableColumnModel cm = table.getColumnModel();
-
-            for (int i = 0; i < columns.length; i++)
-            {
-                cm.getColumn(i).setHeaderValue(ic.getMessage(columns[i]));
-
-                cwidth = cwidths[i];
-
-                if (cwidth > 0)
-                {
-                    cm.getColumn(i).setPreferredWidth(cwidth);
-                }
-            }
-
-            //
-            // stock_type_id bigint,
-            // name character varying(512),
-            // description character varying(2000),
-            // content_pkg bigint,
-            // usage_type integer,
-            // usage_min integer,
-            // usage_max integer,
-            // active boolean,
-            // extended text,
-            // comment character varying(2000),
-
-        }
-
-        return this.table;
-
-    }
-
-
-    @Override
-    public String getTitle()
-    {
-        return i18nControl.getMessage("STOCK_TYPE_LIST");
-    }
-
+    // @Override
+    // public String getTitle()
+    // {
+    // return i18nControl.getMessage("STOCK_TYPE_LIST");
+    // }
 
     @Override
     public void init()
     {
-        this.ic = DataAccess.getInstance().getI18nControlInstance();
-        this.translation_root = "STOCKTYPE";
+        this.i18nControl = DataAccess.getInstance().getI18nControlInstance();
+        this.translationRoot = "STOCKTYPE";
 
-        // this.setCustomDisplayHeader(true);
+        // this.setCustomDisplayHeaderEnabled(true);
         // this.filter_type = FILTER_NONE;
         // this.filter_enabled = true;
 
-        this.filter_type = GUIListDefAbstract.FILTER_COMBO_AND_TEXT;
+        this.filterType = GUIListDefAbstract.GuiListFilterType.ComboAndText;
         // this.filter_text = i18nControlAbstract.getMessage("FILTER") + ":";
 
-        String s1[] = { ic.getMessage("STOCK_GROUP") + ":", ic.getMessage("NAME") + ":" };
-        this.filter_texts = s1;
+        String s1[] = { this.i18nControl.getMessage("STOCK_GROUP") + ":", this.i18nControl.getMessage("NAME") + ":" };
+        this.filterDescriptionTexts = s1;
 
         // String s[] = { i18nControl.getMessage("FILTER_ACTIVE"),
         // i18nControl.getMessage("FILTER_ACTIVE_1_MONTH_USED"),
@@ -301,9 +323,9 @@ public class StockTypeListDef extends GUIListDefAbstract
         // i18nControl.getMessage("FILTER_ACTIVE_6M_MONTH_USED"),
         // i18nControl.getMessage("FILTER_ALL") };
 
-        this.filter_options_combo1 = StockTypeBase.getDescriptions();
+        this.filterOptionsCombo1 = StockTypeBase.getDescriptions();
 
-        this.button_defs = new ArrayList<ButtonDef>();
+        this.buttonDefintions = new ArrayList<ButtonDef>();
         // this.button_defs.add(new
         // LabelDef(this.i18nControl.getMessage("STOCK_SUBTYPES"),
         // LabelDef.FONT_BOLD));
@@ -323,12 +345,12 @@ public class StockTypeListDef extends GUIListDefAbstract
         // LabelDef(this.i18nControl.getMessage("STOCKTAKING"),
         // LabelDef.FONT_BOLD));
 
-        this.button_defs.add(
-            new ButtonDef(this.ic.getMessage("ADD"), "add_stocktype", "STOCKS_TABLE_VIEW_DESC", "table_add.png"));
-        this.button_defs.add(
-            new ButtonDef(this.ic.getMessage("EDIT"), "edit_stocktype", "STOCKS_TABLE_VIEW_DESC", "table_edit.png"));
-        this.button_defs.add(new ButtonDef(this.ic.getMessage("DELETE"), "delete_stocktype", "STOCKS_TABLE_VIEW_DESC",
-                "table_delete.png"));
+        this.buttonDefintions.add(new ButtonDef(this.i18nControl.getMessage("ADD"), "add_stocktype",
+                "STOCKS_TABLE_VIEW_DESC", "table_add.png"));
+        this.buttonDefintions.add(new ButtonDef(this.i18nControl.getMessage("EDIT"), "edit_stocktype",
+                "STOCKS_TABLE_VIEW_DESC", "table_edit.png"));
+        this.buttonDefintions.add(new ButtonDef(this.i18nControl.getMessage("DELETE"), "delete_stocktype",
+                "STOCKS_TABLE_VIEW_DESC", "table_delete.png"));
         // this.button_defs.add(new DividerDef());
         // this.button_defs.add(new
         // ButtonDef(this.i18nControl.getMessage("EDIT_LIST"), "edit_list",
@@ -339,64 +361,59 @@ public class StockTypeListDef extends GUIListDefAbstract
         this.defaultParameters[0] = "Test 1";
         this.defaultParameters[1] = "Test 2";
 
-        loadData();
+        // loadData();
 
     }
 
+    // public void loadData()
+    // {
+    // refreshDataFromDb();
+    // refreshFilter();
+    // }
 
-    public void loadData()
-    {
-        refreshDataFromDb();
-        refreshFilter();
-
-    }
-
-
-    @Override
-    public String getDefName()
-    {
-        return "StockTypeListDef";
-    }
-
-
-    @Override
-    public Rectangle getTableSize(int pos_y)
-    {
-        return new Rectangle(40, pos_y, 580, 250);
-    }
-
-
-    @Override
-    public Dimension getWindowSize()
-    {
-        return new Dimension(800, 500);
-    }
+    // @Override
+    // public String getDefName()
+    // {
+    // return "StockTypeListDef";
+    // }
+    //
+    //
+    // @Override
+    // public Rectangle getTableSize(int pos_y)
+    // {
+    // return new Rectangle(40, pos_y, 580, 250);
+    // }
+    //
+    //
+    // @Override
+    // public Dimension getWindowSize()
+    // {
+    // return new Dimension(800, 500);
+    // }
 
 
-    @Override
-    public void setFilterCombo(String val)
-    {
-        filterType = StockTypeBase.getByDescription(val);
-        this.refreshFilter();
-    }
+    // @Override
+    // public void setFilterCombo(String val)
+    // {
+    // filterStockType = StockTypeBase.getByDescription(val);
+    // this.refreshFilter();
+    // }
+    //
+    //
+    // @Override
+    // public void setFilterText(String val)
+    // {
+    // filterText = val;
+    // this.refreshFilter();
+    // }
+    //
+    //
+    // @Override
+    // public void setFilterCombo2(String val)
+    // {
+    // }
 
-
-    @Override
-    public void setFilterText(String val)
-    {
-        filterText = val;
-        this.refreshFilter();
-    }
-
-
-    @Override
-    public void setFilterCombo_2(String val)
-    {
-    }
-
-
-    @Override
-    public JPanel getCustomDisplayHeader()
+    public JPanel initCustomDisplayHeader()
     {
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -416,31 +433,23 @@ public class StockTypeListDef extends GUIListDefAbstract
         return panel;
     }
 
-
-    @Override
-    public void editTableRow()
-    {
-        int index = this.getParentDialog().getSelectedObjectIndexFromTable();
-
-        if (index > -1)
-        {
-            StockSubTypeH stockType = this.filteredList.get(index);
-
-            StockSubTypeDialog dialog = new StockSubTypeDialog(this.getParentDialog(), stockType);
-
-            if (dialog.wasOperationSuccessful())
-            {
-                loadData();
-            }
-        }
-    }
-
-
-    @Override
-    public String getHelpId()
-    {
-        // TODO
-        return null;
-    }
+    // @Override
+    // public void editTableRow()
+    // {
+    // int index = this.getParentDialog().getSelectedObjectIndexFromTable();
+    //
+    // if (index > -1)
+    // {
+    // StockSubTypeH stockType = this.filteredList.get(index);
+    //
+    // InventoryItemTypeDialog dialog = new
+    // InventoryItemTypeDialog(this.getParentDialog(), stockType);
+    //
+    // if (dialog.wasOperationSuccessful())
+    // {
+    // loadData();
+    // }
+    // }
+    // }
 
 }

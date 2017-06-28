@@ -1,11 +1,12 @@
-package ggc.gui.cfg.panels;
+package ggc.gui.dialogs.config.panels;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.utils.ATSwingUtils;
-import ggc.gui.cfg.PropertiesDialog;
+
+import ggc.gui.dialogs.config.PropertiesDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -108,14 +109,14 @@ public class ConfigPumpPanel extends AbstractPrefOptionsPanel
         ATSwingUtils.getLabel(i18nControl.getMessage("MAX_BASAL") + ": ", 290, 27, 130, 25, p3,
             ATSwingUtils.FONT_NORMAL);
 
-        numericFields[PUMP_MAX_BASAL] = ATSwingUtils.getNumericTextField(3, 1,
+        numericFields[PUMP_MAX_BASAL] = ATSwingUtils.getNumericTextField(1,
             configurationManagerWrapper.getPumpMaxBasal(), 400, 25, 60, 25, p3);
 
         // pump max bolus
         ATSwingUtils.getLabel(i18nControl.getMessage("MAX_BOLUS") + ": ", 290, 57, 130, 25, p3,
             ATSwingUtils.FONT_NORMAL);
 
-        numericFields[PUMP_MAX_BOLUS] = ATSwingUtils.getNumericTextField(3, 1,
+        numericFields[PUMP_MAX_BOLUS] = ATSwingUtils.getNumericTextField(1,
             configurationManagerWrapper.getPumpMaxBolus(), 400, 55, 60, 25, p3);
 
         // pump tbr type selector
@@ -136,21 +137,21 @@ public class ConfigPumpPanel extends AbstractPrefOptionsPanel
         ATSwingUtils.getLabel(i18nControl.getMessage("TASK_MIN") + ": ", 110, 117, 200, 25, p3,
             ATSwingUtils.FONT_NORMAL);
 
-        numericFields[PUMP_UNIT_MIN] = ATSwingUtils.getNumericTextField(3, 1,
-            configurationManagerWrapper.getTBRUnitMin(), 160, 117, 40, 25, p3);
+        numericFields[PUMP_UNIT_MIN] = ATSwingUtils.getNumericTextField(1, configurationManagerWrapper.getTBRUnitMin(),
+            160, 117, 40, 25, p3);
 
         // pump max unit
         ATSwingUtils.getLabel(i18nControl.getMessage("TASK_MAX") + ": ", 230, 117, 200, 25, p3,
             ATSwingUtils.FONT_NORMAL);
 
-        numericFields[PUMP_UNIT_MAX] = ATSwingUtils.getNumericTextField(3, 1,
-            configurationManagerWrapper.getTBRUnitMax(), 280, 117, 40, 25, p3);
+        numericFields[PUMP_UNIT_MAX] = ATSwingUtils.getNumericTextField(1, configurationManagerWrapper.getTBRUnitMax(),
+            280, 117, 40, 25, p3);
 
         // pump step unit
         ATSwingUtils.getLabel(i18nControl.getMessage("TASK_STEP") + ": ", 350, 117, 200, 25, p3,
             ATSwingUtils.FONT_NORMAL);
 
-        numericFields[PUMP_UNIT_STEP] = ATSwingUtils.getNumericTextField(3, 1,
+        numericFields[PUMP_UNIT_STEP] = ATSwingUtils.getNumericTextField(1,
             configurationManagerWrapper.getTBRUnitStep(), 420, 117, 40, 25, p3);
 
         ATSwingUtils.getLabel(i18nControl.getMessage("TBR_TYPE_PROC") + ": ", 20, 147, 200, 25, p3,
@@ -160,21 +161,21 @@ public class ConfigPumpPanel extends AbstractPrefOptionsPanel
             ATSwingUtils.FONT_NORMAL);
 
         // min proc
-        numericFields[PUMP_PROC_MIN] = ATSwingUtils.getNumericTextField(3, 1,
+        numericFields[PUMP_PROC_MIN] = ATSwingUtils.getNumericTextField(1,
             configurationManagerWrapper.getTBRProcentMin(), 160, 147, 40, 25, p3);
 
         ATSwingUtils.getLabel(i18nControl.getMessage("TASK_MAX") + ": ", 230, 147, 200, 25, p3,
             ATSwingUtils.FONT_NORMAL);
 
         // max proc
-        numericFields[PUMP_PROC_MAX] = ATSwingUtils.getNumericTextField(3, 1,
+        numericFields[PUMP_PROC_MAX] = ATSwingUtils.getNumericTextField(1,
             configurationManagerWrapper.getTBRProcentMax(), 280, 147, 40, 25, p3);
 
         ATSwingUtils.getLabel(i18nControl.getMessage("TASK_STEP") + ": ", 350, 147, 200, 25, p3,
             ATSwingUtils.FONT_NORMAL);
 
         // step proc
-        numericFields[PUMP_PROC_STEP] = ATSwingUtils.getNumericTextField(3, 1,
+        numericFields[PUMP_PROC_STEP] = ATSwingUtils.getNumericTextField(1,
             configurationManagerWrapper.getTBRProcentStep(), 420, 147, 40, 25, p3);
 
         this.add(p3);

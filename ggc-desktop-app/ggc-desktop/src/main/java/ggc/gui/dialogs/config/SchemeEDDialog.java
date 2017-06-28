@@ -1,4 +1,4 @@
-package ggc.gui.cfg;
+package ggc.gui.dialogs.config;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,6 +10,7 @@ import javax.swing.*;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
+
 import ggc.core.util.DataAccess;
 
 /**

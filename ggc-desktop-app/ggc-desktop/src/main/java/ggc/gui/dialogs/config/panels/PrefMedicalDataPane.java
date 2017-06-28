@@ -1,4 +1,4 @@
-package ggc.gui.cfg.panels;
+package ggc.gui.dialogs.config.panels;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -10,7 +10,7 @@ import com.atech.i18n.I18nControlAbstract;
 
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.util.DataAccess;
-import ggc.gui.cfg.PropertiesDialog;
+import ggc.gui.dialogs.config.PropertiesDialog;
 
 /**
  * Application: GGC - GNU Gluco Control
@@ -150,7 +150,7 @@ public class PrefMedicalDataPane extends AbstractPrefOptionsPanel
         JPanel d = new JPanel(new GridLayout(0, 2));
         d.setBorder(new TitledBorder(i18nControl.getMessage("BLOOD_GLUCOSE_UNIT_SETTING")));
         d.add(new JLabel(i18nControl.getMessage("BG_UNIT") + ":"));
-        d.add(cbUnit = new JComboBox(dataAccess.bg_units_config));
+        d.add(cbUnit = new JComboBox(GlucoseUnitType.getDescriptions())); // dataAccess.bg_units_config
 
         GlucoseUnitType glucoseUnitType = configurationManagerWrapper.getGlucoseUnit();
 

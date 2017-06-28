@@ -244,8 +244,8 @@ public class WorkingTimeDialog extends StandardDialogForObject implements Action
     // {
     // if (this.listTimes.isSelectionEmpty())
     // {
-    // JOptionPane.showConfirmDialog(this, m_ic.getMessage("SELECT_ITEM_FIRST"),
-    // m_ic.getMessage("ERROR"),
+    // JOptionPane.showConfirmDialog(this, i18nControl.getMessage("SELECT_ITEM_FIRST"),
+    // i18nControl.getMessage("ERROR"),
     // JOptionPane.CLOSED_OPTION);
     // return;
     // }
@@ -256,15 +256,15 @@ public class WorkingTimeDialog extends StandardDialogForObject implements Action
     // {
     // if (this.m_list_data.isSelectionEmpty())
     // {
-    // JOptionPane.showConfirmDialog(this, m_ic.getMessage("SELECT_ITEM_FIRST"),
-    // m_ic.getMessage("ERROR"),
+    // JOptionPane.showConfirmDialog(this, i18nControl.getMessage("SELECT_ITEM_FIRST"),
+    // i18nControl.getMessage("ERROR"),
     // JOptionPane.CLOSED_OPTION);
     // return;
     // }
     //
     // int ii = JOptionPane.showConfirmDialog(this,
-    // m_ic.getMessage("ARE_YOU_SURE_DELETE"),
-    // m_ic.getMessage("ERROR"), JOptionPane.YES_NO_OPTION);
+    // i18nControl.getMessage("ARE_YOU_SURE_DELETE"),
+    // i18nControl.getMessage("ERROR"), JOptionPane.YES_NO_OPTION);
     //
     // if (ii == JOptionPane.YES_OPTION)
     // {

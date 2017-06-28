@@ -9,10 +9,12 @@ import java.util.Observable;
 
 import javax.swing.*;
 
+import com.atech.graphics.observe.EventObserverInterface;
 import com.atech.i18n.I18nControlAbstract;
-import com.atech.misc.refresh.EventObserverInterface;
 import com.atech.utils.ATSwingUtils;
 
+import ggc.core.data.defs.DatabaseStatusType;
+import ggc.core.data.defs.GGCObservableType;
 import ggc.core.enums.UpgradeCheckStatus;
 import ggc.core.util.DataAccess;
 import info.clearthought.layout.TableLayout;
@@ -70,7 +72,19 @@ public class StatusBar extends JPanel implements EventObserverInterface, ActionL
         initIcons();
         initStatusBars();
 
-        dataAccess.addObserver(DataAccess.OBSERVABLE_STATUS, this);
+        dataAccess.getObserverManager().addObserver(GGCObservableType.Status, this);
+    }
+
+
+    public StatusBar()
+    {
+        // this.m_frame = frame;
+        ATSwingUtils.initLibrary();
+
+        initIcons();
+        initStatusBars();
+
+        dataAccess.getObserverManager().addObserver(GGCObservableType.Status, this);
     }
 
 
@@ -280,11 +294,12 @@ public class StatusBar extends JPanel implements EventObserverInterface, ActionL
     {
         // System.out.println("update status: " + arg);
 
-        if (arg instanceof Integer)
+        if (arg instanceof DatabaseStatusType)
         {
-            Integer i = (Integer) arg;
-            this.setDbStatus(i.intValue());
+            DatabaseStatusType databaseStatusType = (DatabaseStatusType) arg;
+            this.setDbStatus(databaseStatusType.getCode());
         }
+
         else
         {
             String s = (String) arg;

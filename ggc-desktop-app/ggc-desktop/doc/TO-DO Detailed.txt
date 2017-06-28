@@ -9,10 +9,10 @@ This file contains more details about planned features, but list of what toi do 
 
 GGC 0.8
 ========
-- stocks feature
+
 - Refactor: - ExtendedDailyValueHandler (add enums)
 
-METER TOOL:
+METER TOOL: (not tested)
 - menarini
 - arkray
 
@@ -21,6 +21,8 @@ DB-TOOL Feature
 
 GGC 0.9
 ========
+
+- stocks feature (req. new DB)
 
 - Startup Feature
 

@@ -60,7 +60,7 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
         // "CONNECT_PLUGIN"
         );
 
-        notFoundString = m_ic.getMessage("STATUS_NOT_INSTALLED");
+        notFoundString = i18nControl.getMessage("STATUS_NOT_INSTALLED");
     }
 
 
@@ -80,8 +80,8 @@ public class PlugInsInfoPanel extends AbstractInfoPanel
 
     private void setPluginStatus(GGCPluginType pluginType, String i18nKey)
     {
-        if (m_da.isPluginAvailable(pluginType))
-            this.setValueOnDisplayLabel(i18nKey, m_da.getPlugIn(pluginType).getShortStatus());
+        if (dataAccess.isPluginAvailable(pluginType))
+            this.setValueOnDisplayLabel(i18nKey, dataAccess.getPlugIn(pluginType).getShortStatus());
         else
             this.setValueOnDisplayLabel(i18nKey, notFoundString);
     }

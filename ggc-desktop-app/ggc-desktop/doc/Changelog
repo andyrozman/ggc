@@ -6,6 +6,15 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+0.8.0 [26.6.2017]
+- little update to documentation
+- Apointments Implementation
+- Doctors Implementation
+- Stock/Inventory implementation started
+- refactoring a little
+- added DialogCreator
+
+
 
 0.7.0 [2.2.2016] [Andy]
 - table layout:

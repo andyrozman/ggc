@@ -1,11 +1,12 @@
-package ggc.gui.cfg.panels;
+package ggc.gui.dialogs.config.panels;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import com.atech.graphics.components.JDecimalTextField;
 import com.atech.utils.ATSwingUtils;
-import ggc.gui.cfg.PropertiesDialog;
+
+import ggc.gui.dialogs.config.PropertiesDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -115,14 +116,14 @@ public class PrefModePane extends AbstractPrefOptionsPanel
         ATSwingUtils.getLabel(i18nControl.getMessage("MAX_BASAL") + ": ", 290, 27, 130, 25, p2,
             ATSwingUtils.FONT_NORMAL);
 
-        numericFields[PEN_MAX_BASAL] = ATSwingUtils.getNumericTextField(3, 1,
-            configurationManagerWrapper.getPenMaxBasal(), 400, 25, 60, 25, p2);
+        numericFields[PEN_MAX_BASAL] = ATSwingUtils.getNumericTextField(1, configurationManagerWrapper.getPenMaxBasal(),
+            400, 25, 60, 25, p2);
 
         ATSwingUtils.getLabel(i18nControl.getMessage("MAX_BOLUS") + ": ", 290, 57, 130, 25, p2,
             ATSwingUtils.FONT_NORMAL);
 
-        numericFields[PEN_MAX_BOLUS] = ATSwingUtils.getNumericTextField(3, 1,
-            configurationManagerWrapper.getPenMaxBolus(), 400, 55, 60, 25, p2);
+        numericFields[PEN_MAX_BOLUS] = ATSwingUtils.getNumericTextField(1, configurationManagerWrapper.getPenMaxBolus(),
+            400, 55, 60, 25, p2);
 
         this.add(p2);
 

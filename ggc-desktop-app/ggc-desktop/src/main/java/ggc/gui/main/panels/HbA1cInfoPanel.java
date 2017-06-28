@@ -31,17 +31,10 @@ import info.clearthought.layout.TableLayout;
  *
  *  Author: schultd, andyrozman
  */
-
-@Deprecated
 public class HbA1cInfoPanel extends AbstractInfoPanel
 {
 
     private static final long serialVersionUID = -8750479135671337356L;
-    // private JLabel lblHbA1c;
-    // private JLabel lblVal;
-    // private JLabel lblAvgBG;
-    // private JLabel lblReadings;
-    // private JLabel lblReadingsPerDay;
 
 
     /**
@@ -66,42 +59,8 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
             "AVG_BG", //
             "READINGS", //
             "READINGS_SLASH_DAY");
-
-        // setLayout(new TableLayout(sizes));
-        //
-        // valueLabels = new HashMap<String, JLabel>();
-        //
-        // addDisplayLabelsToPanel("YOUR_CURRENT_HBA1C");
-        // valueLabels.get("YOUR_CURRENT_HBA1C").setFont(new Font("Dialog",
-        // Font.BOLD, 14));
-        //
-        // addDisplayLabelsToPanel("VALUATION");
-        // addDisplayLabelsToPanel("AVG_BG");
-        // addDisplayLabelsToPanel("READINGS");
-        // addDisplayLabelsToPanel("READINGS_SLASH_DAY");
     }
 
-
-    // private void init_old()
-    // {
-    // setLayout(new BorderLayout());
-    //
-    // JPanel lblPanel = new JPanel(new GridLayout(5, 2));
-    // lblPanel.setBackground(Color.white);
-    // lblPanel.add(new JLabel(m_ic.getMessage("YOUR_CURRENT_HBA1C") + ":"));
-    // lblPanel.add(lblHbA1c = new JLabel());
-    // lblHbA1c.setFont(new Font("Dialog", Font.BOLD, 14));
-    // lblPanel.add(new JLabel(m_ic.getMessage("VALUATION") + ":"));
-    // lblPanel.add(lblVal = new JLabel());
-    // lblPanel.add(new JLabel(m_ic.getMessage("AVG_BG") + ":"));
-    // lblPanel.add(lblAvgBG = new JLabel());
-    // lblPanel.add(new JLabel(m_ic.getMessage("READINGS") + ":"));
-    // lblPanel.add(lblReadings = new JLabel());
-    // lblPanel.add(new JLabel(m_ic.getMessage("READINGS_SLASH_DAY") + ":"));
-    // lblPanel.add(lblReadingsPerDay = new JLabel());
-    //
-    // add(lblPanel, BorderLayout.NORTH);
-    // }
 
     /**
      * Do Refresh - This method can do Refresh
@@ -111,11 +70,11 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
     {
         HbA1cValues hbVal = null;
 
-        GGCDb db = m_da.getDb();
+        GGCDb db = dataAccess.getDb();
 
         if (db != null && db.isDbStarted())
         {
-            hbVal = m_da.getHbA1c(new GregorianCalendar());
+            hbVal = dataAccess.getHbA1c(new GregorianCalendar());
         }
 
         DecimalFormat df = new DecimalFormat("#0.00");
@@ -124,7 +83,7 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
         {
             if (hbVal.getReadings() == 0)
             {
-                setValueOnDisplayLabel("YOUR_CURRENT_HBA1C", m_ic.getMessage("NO_READINGS"));
+                setValueOnDisplayLabel("YOUR_CURRENT_HBA1C", i18nControl.getMessage("NO_READINGS"));
             }
             else
             {
@@ -144,33 +103,6 @@ public class HbA1cInfoPanel extends AbstractInfoPanel
             setValueOnDisplayLabel("READINGS", "");
             setValueOnDisplayLabel("READINGS_SLASH_DAY", "");
         }
-
-        // if (hbVal != null)
-        // {
-        // if (hbVal.getReadings() == 0)
-        // {
-        // lblHbA1c.setText(m_ic.getMessage("NO_READINGS"));
-        // }
-        // else
-        // {
-        // lblHbA1c.setText(df.format(hbVal.getHbA1c_Method3()) + " %");
-        // }
-        //
-        // // lblHbA1c.setText(df.format(hbVal.getHbA1c_Method1()) + " %");
-        //
-        // lblVal.setText(hbVal.getValuation());
-        // lblAvgBG.setText(df.format(hbVal.getAvgBG()));
-        // lblReadings.setText(hbVal.getReadings() + "");
-        // lblReadingsPerDay.setText(df.format(hbVal.getReadingsPerDay()));
-        // }
-        // else
-        // {
-        // lblHbA1c.setText(m_ic.getMessage("NO_DATASOURCE"));
-        // lblVal.setText("");
-        // lblAvgBG.setText("");
-        // lblReadings.setText("");
-        // lblReadingsPerDay.setText("");
-        // }
 
     }
 

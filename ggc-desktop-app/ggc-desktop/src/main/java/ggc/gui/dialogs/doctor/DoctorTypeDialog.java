@@ -2,6 +2,7 @@ package ggc.gui.dialogs.doctor;
 
 import javax.swing.*;
 
+import com.atech.db.hibernate.HibernateObject;
 import com.atech.graphics.dialogs.StandardDialogForObject;
 import com.atech.utils.ATSwingUtils;
 
@@ -48,7 +49,17 @@ public class DoctorTypeDialog extends StandardDialogForObject
     }
 
 
-    public DoctorTypeDialog(JDialog dialog, DoctorTypeH doctorObject, boolean editValue)
+    // public DoctorTypeDialog(JDialog dialog, DoctorTypeH doctorObject, boolean
+    // editValue)
+    // {
+    // super(dialog, DataAccess.getInstance(), doctorObject, false);
+    //
+    // this.editValue = editValue;
+    //
+    // init(doctorObject);
+    // }
+
+    public DoctorTypeDialog(JDialog dialog, HibernateObject doctorObject, boolean editValue)
     {
         super(dialog, DataAccess.getInstance(), doctorObject, false);
 

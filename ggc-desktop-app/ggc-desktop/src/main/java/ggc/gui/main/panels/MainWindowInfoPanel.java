@@ -6,10 +6,14 @@ import java.util.Observable;
 
 import javax.swing.*;
 
-import com.atech.misc.refresh.EventObserverInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.atech.graphics.observe.EventObserverInterface;
+
+import ggc.core.data.defs.GGCObservableType;
+import ggc.core.data.defs.RefreshInfoType;
 import ggc.core.util.DataAccess;
-import ggc.core.util.RefreshInfo;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -41,8 +45,11 @@ public class MainWindowInfoPanel extends JPanel implements EventObserverInterfac
 {
 
     private static final long serialVersionUID = -8288632669830259690L;
+
+    private static Logger LOG = LoggerFactory.getLogger(MainWindowInfoPanel.class);
+
     private ArrayList<AbstractInfoPanel> vInfoPanels = new ArrayList<AbstractInfoPanel>();
-    DataAccess m_da = DataAccess.getInstance();
+    DataAccess dataAccess = DataAccess.getInstance();
 
 
     /**
@@ -55,12 +62,12 @@ public class MainWindowInfoPanel extends JPanel implements EventObserverInterfac
 
         vInfoPanels.add(new SplittedInfoPanel(new GeneralInfoPanel(), new HbA1cInfoPanel()));
         vInfoPanels.add(new SplittedInfoPanel(new PlugInsInfoPanel(), new DeviceInfoPanel()));
-        vInfoPanels.add(new SplittedInfoPanel(new ScheduleInfoPanel(), new StocksInfoPanel()));
+        vInfoPanels.add(new SplittedInfoPanel(new AppointmentsInfoPanel(), new InventoryInfoPanel()));
         vInfoPanels.add(new StatisticsInfoPanel());
 
         addPanels();
 
-        m_da.addObserver(DataAccess.OBSERVABLE_PANELS, this);
+        dataAccess.getObserverManager().addObserver(GGCObservableType.InfoPanels, this);
     }
 
 
@@ -102,27 +109,33 @@ public class MainWindowInfoPanel extends JPanel implements EventObserverInterfac
     /**
      * Refresh Group
      * 
-     * @param type
+     * @param refreshInfoType
      */
-    public void refreshGroup(int type)
+    public void refreshGroup(RefreshInfoType refreshInfoType)
     {
-        // TODO groups as enums if possible
-
-        if (type == RefreshInfo.PANEL_GROUP_PLUGINS_DEVICES)
+        if (refreshInfoType == RefreshInfoType.DevicesConfiguration)
         {
             this.refreshPanels(InfoPanelType.ConfiguredDevices);
         }
-        else if (type == RefreshInfo.PANEL_GROUP_ALL_DATA)
+        else if (refreshInfoType == RefreshInfoType.DeviceDataAll)
         {
             this.refreshPanels(InfoPanelType.HbA1c, InfoPanelType.Statistics);
         }
-        else if (type == RefreshInfo.PANEL_GROUP_GENERAL_INFO)
+        else if (refreshInfoType == RefreshInfoType.GeneralInfo)
         {
-            this.refreshPanels(InfoPanelType.General);
+            this.refreshPanels(InfoPanelType.General, InfoPanelType.Appointments);
         }
-        else if (type == RefreshInfo.PANEL_GROUP_PLUGINS_ALL)
+        else if (refreshInfoType == RefreshInfoType.PluginsAll)
         {
             this.refreshPanels(InfoPanelType.Plugins, InfoPanelType.ConfiguredDevices);
+        }
+        else if (refreshInfoType == RefreshInfoType.Appointments)
+        {
+            this.refreshPanels(InfoPanelType.Appointments);
+        }
+        else if (refreshInfoType == RefreshInfoType.Inventory)
+        {
+            this.refreshPanels(InfoPanelType.Inventory);
         }
     }
 
@@ -132,10 +145,14 @@ public class MainWindowInfoPanel extends JPanel implements EventObserverInterfac
      */
     public void update(Observable obj, Object arg)
     {
-        if (arg instanceof Integer)
+        if (arg instanceof RefreshInfoType)
         {
-            Integer i = (Integer) arg;
-            this.refreshGroup(i.intValue());
+            RefreshInfoType refreshInfoType = (RefreshInfoType) arg;
+            this.refreshGroup(refreshInfoType);
+        }
+        else
+        {
+            LOG.error("Unallowed update type ({}).", arg.getClass().getSimpleName());
         }
     }
 

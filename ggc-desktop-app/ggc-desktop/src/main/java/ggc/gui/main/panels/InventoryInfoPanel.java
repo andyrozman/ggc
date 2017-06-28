@@ -23,13 +23,13 @@ import javax.swing.*;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     StocksInfoPanel  
+ *  Filename:     InventoryInfoPanel
  *  Description:  Panel for displaying stocks
  *
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class StocksInfoPanel extends AbstractInfoPanel
+public class InventoryInfoPanel extends AbstractInfoPanel
 {
 
     private static final long serialVersionUID = -6551579241451753792L;
@@ -38,9 +38,9 @@ public class StocksInfoPanel extends AbstractInfoPanel
     /**
      * Constructor
      */
-    public StocksInfoPanel()
+    public InventoryInfoPanel()
     {
-        super("STOCK");
+        super("INVENTORY_TITLE");
         init();
         refreshInfo();
     }
@@ -49,8 +49,8 @@ public class StocksInfoPanel extends AbstractInfoPanel
     private void init()
     {
         setLayout(new GridLayout(0, 2));
-        add(new JLabel(m_ic.getMessage("STOCK_DATA_HERE") + ":"));
-        add(new JLabel(m_ic.getMessage("STO_WILL_BE_FOUND_HERE") + "..." + m_ic.getMessage("NOT_YET")));
+        add(new JLabel(i18nControl.getMessage("STOCK_DATA_HERE") + ":"));
+        add(new JLabel(i18nControl.getMessage("STO_WILL_BE_FOUND_HERE") + "..." + i18nControl.getMessage("NOT_YET")));
     }
 
 
@@ -66,7 +66,7 @@ public class StocksInfoPanel extends AbstractInfoPanel
     @Override
     public InfoPanelType getPanelType()
     {
-        return InfoPanelType.Stocks;
+        return InfoPanelType.Inventory;
     }
 
 }

@@ -1,10 +1,6 @@
 package ggc.gui.main.panels;
 
-import java.awt.*;
-
 import javax.swing.*;
-
-import org.sun.swing.layout.SpringUtilities;
 
 import com.atech.plugin.PlugInClient;
 
@@ -36,14 +32,15 @@ import info.clearthought.layout.TableLayout;
  *
  *  Author: andyrozman {andy@atech-software.com}  
  */
-@Deprecated
 public class DeviceInfoPanel extends AbstractInfoPanel
 {
 
     private static final long serialVersionUID = -4862594518423924680L;
-    private JLabel lblMeter;
-    private JLabel lblPump;
-    private JLabel lblCgms;
+
+    GGCPluginType[] pluginTypes = { GGCPluginType.MeterToolPlugin, //
+                                    GGCPluginType.PumpToolPlugin, //
+                                    GGCPluginType.CGMSToolPlugin };
+    JLabel[] deviceLabels = null;
 
 
     /**
@@ -62,50 +59,23 @@ public class DeviceInfoPanel extends AbstractInfoPanel
         double sizes[][] = { { 10, 0.20, 10, TableLayout.FILL, 10 }, //
                              { 0.10, 0.27, 0.27, 0.27, TableLayout.FILL }, };
 
+        JLabel lblMeter, lblPump, lblCgms;
+
         setLayout(new TableLayout(sizes));
 
-        add(new JLabel(m_ic.getMessage("DEVICE_METER") + ":"), "1, 1");
-        add(this.lblMeter = new JLabel("N/A"), "3, 1");
+        add(new JLabel(i18nControl.getMessage("DEVICE_METER") + ":"), "1, 1");
+        add(lblMeter = new JLabel("N/A"), "3, 1");
 
-        add(new JLabel(m_ic.getMessage("DEVICE_PUMP") + ":"), "1, 2");
-        add(this.lblPump = new JLabel("N/A"), "3, 2");
+        add(new JLabel(i18nControl.getMessage("DEVICE_PUMP") + ":"), "1, 2");
+        add(lblPump = new JLabel("N/A"), "3, 2");
 
-        add(new JLabel(m_ic.getMessage("DEVICE_CGMS") + ":"), "1, 3");
-        add(this.lblCgms = new JLabel("N/A"), "3, 3");
-    }
+        add(new JLabel(i18nControl.getMessage("DEVICE_CGMS") + ":"), "1, 3");
+        add(lblCgms = new JLabel("N/A"), "3, 3");
 
+        JLabel[] labels = { lblMeter, lblPump, lblCgms };
 
-    private void init_old()
-    {
-        setLayout(new BorderLayout());
+        this.deviceLabels = labels;
 
-        JPanel lblPanel = new JPanel(new SpringLayout()); // new GridLayout(6,
-                                                          // 2));
-        lblPanel.setBackground(Color.white);
-
-        // lblPanel.add(new JLabel(" ", JLabel.TRAILING));
-        // lblPanel.add(new JLabel());
-
-        lblPanel.add(new JLabel(m_ic.getMessage("DEVICE_METER") + ":", SwingConstants.LEADING));
-        lblPanel.add(this.lblMeter = new JLabel("N/A"));
-
-        lblPanel.add(new JLabel("", SwingConstants.TRAILING));
-        lblPanel.add(new JLabel());
-
-        lblPanel.add(new JLabel(m_ic.getMessage("DEVICE_PUMP") + ":", SwingConstants.LEADING));
-        lblPanel.add(this.lblPump = new JLabel("N/A"));
-
-        lblPanel.add(new JLabel("", SwingConstants.TRAILING));
-        lblPanel.add(new JLabel());
-
-        lblPanel.add(new JLabel(m_ic.getMessage("DEVICE_CGMS") + ":", SwingConstants.LEADING));
-        lblPanel.add(this.lblCgms = new JLabel("N/A"));
-
-        SpringUtilities.makeCompactGrid(lblPanel, 5, 2, // rows, cols
-            10, 8, // initX, initY
-            40, 6); // xPad, yPad
-
-        add(lblPanel, BorderLayout.NORTH);
     }
 
 
@@ -116,9 +86,9 @@ public class DeviceInfoPanel extends AbstractInfoPanel
         if (st == null)
         {
             if (!cl.isPlugInInstalled())
-                return m_ic.getMessage("PLUGIN_NA");
+                return i18nControl.getMessage("PLUGIN_NA");
             else
-                return m_ic.getMessage("PLUGIN_NO_FUNCTIONALITY");
+                return i18nControl.getMessage("PLUGIN_NO_FUNCTIONALITY");
             // else
             // return i18nControl.getMessage("PLUGIN_NOT_INSTALLED");
         }
@@ -134,17 +104,17 @@ public class DeviceInfoPanel extends AbstractInfoPanel
     @Override
     public void doRefresh()
     {
-        if (m_da.isPluginAvailable(GGCPluginType.MeterToolPlugin))
+        for (int i = 0; i < deviceLabels.length; i++)
         {
-            lblMeter.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.MeterToolPlugin)));
-        }
-        if (m_da.isPluginAvailable(GGCPluginType.PumpToolPlugin))
-        {
-            lblPump.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.PumpToolPlugin)));
-        }
-        if (m_da.isPluginAvailable(GGCPluginType.CGMSToolPlugin))
-        {
-            lblCgms.setText(getDeviceInfo(m_da.getPlugIn(GGCPluginType.CGMSToolPlugin)));
+            GGCPluginType pluginType = pluginTypes[i];
+
+            if (dataAccess.isPluginAvailable(pluginType))
+            {
+                String deviceInfo = getDeviceInfo(dataAccess.getPlugIn(pluginType));
+
+                deviceLabels[i].setText(deviceInfo);
+                deviceLabels[i].setToolTipText(deviceInfo);
+            }
         }
     }
 

@@ -11,6 +11,7 @@ import javax.swing.event.ChangeListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atech.db.hibernate.HibernateObject;
 import com.atech.graphics.components.DateComponent;
 import com.atech.graphics.components.jlist.JListControler;
 import com.atech.graphics.dialogs.StandardDialogForObject;
@@ -24,6 +25,8 @@ import ggc.core.db.hibernate.doc.DoctorH;
 import ggc.core.db.hibernate.doc.DoctorTypeH;
 import ggc.core.util.DataAccess;
 import ggc.gui.dialogs.doctor.worktime.ListControlerActionsSettings4WorkTime;
+import ggc.gui.dialogs.selector.GGCSelectorConfiguration;
+import ggc.gui.dialogs.selector.GGCSelectorDialog;
 import info.clearthought.layout.TableLayout;
 
 /**
@@ -85,7 +88,7 @@ public class DoctorDialog extends StandardDialogForObject
     }
 
 
-    public DoctorDialog(JDialog dialog, DoctorH doctor, boolean editValue)
+    public DoctorDialog(JDialog dialog, HibernateObject doctor, boolean editValue)
     {
         super(dialog, DataAccess.getInstance(), doctor, false);
 
@@ -128,6 +131,7 @@ public class DoctorDialog extends StandardDialogForObject
         }
 
         this.setText(this.taComment, this.doctorH.getComment());
+
     }
 
 
@@ -154,7 +158,13 @@ public class DoctorDialog extends StandardDialogForObject
         this.doctorH.setEmail(getText(this.tfEmail));
 
         // working time
-        this.doctorH.setWorkingTime(XStreamUtil.getStringFromObject(this.jListWithControlButtons.getData()));
+
+        List data = this.jListWithControlButtons.getData();
+
+        if (data.size() > 0)
+        {
+            this.doctorH.setWorkingTime(XStreamUtil.getStringFromObject(this.jListWithControlButtons.getData()));
+        }
 
         // other
         this.doctorH.setActiveFrom(this.dcFrom.getDate());
@@ -266,8 +276,8 @@ public class DoctorDialog extends StandardDialogForObject
 
             public void actionPerformed(ActionEvent e)
             {
-                DoctorTypeSelector selector = new DoctorTypeSelector(DoctorDialog.this);
-                selector.setVisible(true);
+                GGCSelectorDialog selector = new GGCSelectorDialog(DoctorDialog.this,
+                        GGCSelectorConfiguration.DoctorTypeH);
 
                 if (selector.wasAction())
                 {

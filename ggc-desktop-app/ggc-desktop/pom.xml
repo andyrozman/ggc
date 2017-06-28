@@ -14,8 +14,10 @@
     <version>${ggc-desktop.version}</version>
 
 
-
     <dependencies>
+
+        <!-- GGC Dependencies -->
+
         <dependency>
             <groupId>com.atech-software</groupId>
             <artifactId>atech-tools</artifactId>
@@ -57,12 +59,22 @@
             <artifactId>ggc-nutrition-tool</artifactId>
         </dependency>
 
-        <!--
+
         <dependency>
             <groupId>net.sf.ggc</groupId>
             <artifactId>ggc-connect-tool</artifactId>
         </dependency>
--->
+        
+
+        <!-- GGC Temporary Dependecies (testing only) -->
+
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-device-menarini</artifactId>
+        </dependency>
+
+
+        <!-- Support Libraries -->
 
         <dependency>
             <groupId>javax.help</groupId>
@@ -74,12 +86,6 @@
             <artifactId>skinlf</artifactId>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-        </dependency>
--->
         <dependency>
             <groupId>jfree</groupId>
             <artifactId>jfreechart</artifactId>
@@ -111,24 +117,15 @@
         </dependency>
 
 
-        <!--
-        <dependency>
-            <groupId>info.clearthought</groupId>
-            <artifactId>table-layout-j15</artifactId>
-            <version>1.0</version>
-        </dependency>
-        -->
-
         <dependency>
             <groupId>info.clearthought</groupId>
             <artifactId>table-layout</artifactId>
         </dependency>
 
-
-        <!-- <dependency> <groupId>org.swinglabs</groupId> <artifactId>pdf-renderer</artifactId>
-            </dependency> <dependency> <groupId>com.google.guava</groupId> <artifactId>guava</artifactId>
-            </dependency> -->
-
+        <dependency>
+            <groupId>javax.jmdns</groupId>
+            <artifactId>jmdns</artifactId>
+        </dependency>
 
     </dependencies>
 </project>

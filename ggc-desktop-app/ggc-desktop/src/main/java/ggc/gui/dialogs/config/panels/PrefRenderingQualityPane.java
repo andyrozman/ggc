@@ -1,4 +1,4 @@
-package ggc.gui.cfg.panels;
+package ggc.gui.dialogs.config.panels;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -6,8 +6,8 @@ import java.awt.event.ItemEvent;
 import javax.swing.*;
 
 import ggc.core.data.defs.GlucoseUnitType;
-import ggc.gui.cfg.PropertiesDialog;
-import ggc.gui.cfg.graph.DailyGraphView;
+import ggc.gui.dialogs.config.PropertiesDialog;
+import ggc.gui.dialogs.config.graph.DailyGraphView;
 
 /**
  *  Application:   GGC - GNU Gluco Control

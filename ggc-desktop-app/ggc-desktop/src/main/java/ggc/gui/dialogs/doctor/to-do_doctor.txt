@@ -1,20 +1,11 @@
 
+Backup: - DoctorAppointmentH
+        - DoctorH
+        - DoctorTypeH
 
-Appointments:  - list
-               - add/edit appointment
-               - display screen appoinment
+Integration: - after db update
 
-doctor list:  - add doctor
-              - edit doctor
-              - working time component
-
-
-
-Help: - type selector
-      - type dialog
-      - doctor dialog
-      - doctor list
-
+Help:
 
 
 DONE:
@@ -28,3 +19,17 @@ Doctor type selector:
 
 doctor type: - add
                             - edit
+
+
+Help: - type selector
+      - type dialog
+      - doctor dialog
+      - doctor list
+
+doctor list:  - add doctor
+              - edit doctor
+              - working time component
+
+Appointments:  - list
+               - add/edit appointment
+               - display screen appoinment

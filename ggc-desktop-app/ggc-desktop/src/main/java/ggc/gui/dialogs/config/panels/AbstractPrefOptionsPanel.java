@@ -1,4 +1,4 @@
-package ggc.gui.cfg.panels;
+package ggc.gui.dialogs.config.panels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +20,7 @@ import com.atech.i18n.I18nControlAbstract;
 import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.util.DataAccess;
 import ggc.core.util.GGCProperties;
-import ggc.gui.cfg.PropertiesDialog;
+import ggc.gui.dialogs.config.PropertiesDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -233,5 +233,11 @@ public abstract class AbstractPrefOptionsPanel extends JPanel
             changed = true;
             System.out.println("Changed");
         }
+    }
+
+
+    public JDialog getParentDialog()
+    {
+        return this.parent;
     }
 }

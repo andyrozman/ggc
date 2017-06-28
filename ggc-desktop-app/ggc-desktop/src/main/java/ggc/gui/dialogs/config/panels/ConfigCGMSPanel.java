@@ -1,10 +1,11 @@
-package ggc.gui.cfg.panels;
+package ggc.gui.dialogs.config.panels;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import com.atech.utils.ATSwingUtils;
-import ggc.gui.cfg.PropertiesDialog;
+
+import ggc.gui.dialogs.config.PropertiesDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control

@@ -1,10 +1,9 @@
-package ggc.gui.cfg.panels;
+package ggc.gui.dialogs.config.panels;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.*;
@@ -16,12 +15,12 @@ import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
 import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.data.defs.GlucoseUnitType;
-import ggc.core.db.hibernate.ColorSchemeH;
+import ggc.core.db.hibernate.settings.ColorSchemeH;
 import ggc.core.util.DataAccess;
-import ggc.gui.cfg.PropertiesDialog;
-import ggc.gui.cfg.SchemeDialog;
-import ggc.gui.cfg.SchemeEDDialog;
-import ggc.gui.cfg.graph.DailyGraphView;
+import ggc.gui.dialogs.config.PropertiesDialog;
+import ggc.gui.dialogs.config.SchemeDialog;
+import ggc.gui.dialogs.config.SchemeEDDialog;
+import ggc.gui.dialogs.config.graph.DailyGraphView;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -61,7 +60,7 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel
     private JButton bt_new_scheme, bt_edit_scheme;
     private JComboBox cb_scheme = null;
 
-    private Hashtable<String, ColorSchemeH> color_schemes = null;
+    private Map<String, ColorSchemeH> color_schemes = null;
     private ColorSchemeH selected_sheme = null;
     private String[] av_schemes_names = null;
 
@@ -561,27 +560,22 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel
 
                         refreshColorSchemeList(true, true);
                     }
-
                 }
             }
-
         }
-
     }
 
 
     private void refreshColorSchemeList(boolean force_update_to_combo, boolean action_delete)
     {
-
         item_changed_status = true;
 
         av_schemes_names = new String[color_schemes.size()];
 
         int i = 0;
-        for (Enumeration<String> en = this.color_schemes.keys(); en.hasMoreElements();)
+        for (ColorSchemeH colorScheme : this.color_schemes.values())
         {
-            ColorSchemeH cs = color_schemes.get(en.nextElement());
-            av_schemes_names[i] = cs.getName();
+            av_schemes_names[i] = colorScheme.getName();
             i++;
         }
 
@@ -617,21 +611,17 @@ public class PrefFontsAndColorPane extends AbstractPrefOptionsPanel
     @Override
     public void saveProps()
     {
-
-        for (Enumeration<String> en = this.color_schemes.keys(); en.hasMoreElements();)
+        for (ColorSchemeH colorScheme : this.color_schemes.values())
         {
-            String key = en.nextElement();
-            ColorSchemeH cs = this.color_schemes.get(key);
-
-            if (cs.getCustom_type() == 1)
+            if (colorScheme.getCustom_type() == 1)
             {
-                if (cs.getId() == 0)
+                if (colorScheme.getId() == 0)
                 {
-                    cs.setId(dataAccess.getDb().addHibernate(cs));
+                    colorScheme.setId(dataAccess.getDb().addHibernate(colorScheme));
                 }
                 else
                 {
-                    dataAccess.getDb().editHibernate(cs);
+                    dataAccess.getDb().editHibernate(colorScheme);
                 }
             }
         }

@@ -1,8 +1,8 @@
 package ggc.gui.test;
 
-import ggc.core.util.DataAccess;
-
 import java.math.BigDecimal;
+
+import ggc.core.util.DataAccess;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -14,6 +14,8 @@ public class Testing
     private String ins_pen = "1";
     private String ins_pump = "0.01";
 
+    DataAccess dataAccess = DataAccess.createInstance(null);
+
     /**
      * The Constant INSULIN_PEN_INJECTION.
      */
@@ -23,6 +25,7 @@ public class Testing
      * The Constant INSULIN_PUMP.
      */
     public static final int INSULIN_PUMP = 2;
+
 
     /**
      * Gets the correct decimal value for insulin float.
@@ -48,6 +51,7 @@ public class Testing
         // return value;
     }
 
+
     /**
      * Gets the correct decimal value for insulin string.
      * 
@@ -60,24 +64,10 @@ public class Testing
     {
         int dec = getDecimalCount(mode);
 
-        switch (dec)
-        {
-            case 0:
-                return DataAccess.Decimal0Format.format(getCorrectDecimalValueForInsulinFloat(mode, value));
-
-            case 2:
-                return DataAccess.Decimal2Format.format(getCorrectDecimalValueForInsulinFloat(mode, value));
-
-            case 3:
-                return DataAccess.Decimal3Format.format(getCorrectDecimalValueForInsulinFloat(mode, value));
-
-            case 1:
-            default:
-                return DataAccess.Decimal1Format.format(getCorrectDecimalValueForInsulinFloat(mode, value));
-
-        }
+        return dataAccess.getFloatAsString(value, dec);
 
     }
+
 
     /**
      * Gets the decimal count.
@@ -94,6 +84,7 @@ public class Testing
             return getDecimalCount(ins_pump);
     }
 
+
     /**
      * Gets the decimal count.
      * 
@@ -108,6 +99,7 @@ public class Testing
         else
             return val.substring(val.indexOf(".") + 1).length();
     }
+
 
     /**
      * The main method.

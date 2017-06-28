@@ -1,19 +1,24 @@
 package ggc.gui.dialogs.doctor.appointment;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.atech.db.hibernate.HibernateObject;
 import com.atech.graphics.components.DateTimeComponent;
 import com.atech.graphics.dialogs.StandardDialogForObject;
 import com.atech.graphics.layout.TableLayoutUtil;
 import com.atech.utils.ATSwingUtils;
 
+import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.doc.DoctorAppointmentH;
 import ggc.core.db.hibernate.doc.DoctorH;
 import ggc.core.util.DataAccess;
+import ggc.gui.dialogs.selector.GGCSelectorConfiguration;
+import ggc.gui.dialogs.selector.GGCSelectorDialog;
 import info.clearthought.layout.TableLayout;
 
 /**
@@ -35,37 +40,24 @@ import info.clearthought.layout.TableLayout;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:     zzz  
- *  Description:  zzz
+ *  Filename:     AppointmentDialog
+ *  Description:  Dialog for Appointments
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-// fix this
-@Deprecated
 public class AppointmentDialog extends StandardDialogForObject
 {
 
-    private static final long serialVersionUID = -3472108488117880600L;
-
-    // private DataAccess dataAccess = DataAccess.getInstance();
-    // private I18nControlAbstract i18nControl =
-    // dataAccess.getI18nControlInstance();
-
-    // private boolean m_actionDone = false;
-
-    // x private String[] schemes_names = null;
-
-    // GregorianCalendar gc = null;
-    // JSpinner sl_year = null, sl_month = null;
-
-    // NEW
+    private static final long serialVersionUID = -8705718295028204845L;
 
     JLabel lblDoctor;
     JTextField tfAppointment;
     JTextArea taComment;
     DateTimeComponent dtAppointment;
     DoctorH doctorH;
+    DoctorAppointmentH doctorAppointmentH;
+    long currentTime;
 
 
     /**
@@ -79,7 +71,7 @@ public class AppointmentDialog extends StandardDialogForObject
     }
 
 
-    public AppointmentDialog(JDialog dialog, DoctorAppointmentH doctorAppointment, boolean editValue)
+    public AppointmentDialog(JDialog dialog, HibernateObject doctorAppointment, boolean editValue)
     {
         super(dialog, DataAccess.getInstance(), doctorAppointment, false);
 
@@ -94,14 +86,14 @@ public class AppointmentDialog extends StandardDialogForObject
     {
         ATSwingUtils.initLibrary();
 
-        int x = 0;
-        int y = 0;
+        // int x = 0;
+        // int y = 0;
         int width = 500;
         int height = 450;
 
-        this.positionXForEntryLabel = 60;
+        // this.positionXForEntryLabel = 60;
 
-        this.setBounds(x, y, width, height);
+        this.setBounds(0, 0, width, height);
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, width, height);
@@ -131,8 +123,8 @@ public class AppointmentDialog extends StandardDialogForObject
 
             public void actionPerformed(ActionEvent e)
             {
-                DoctorSelector selector = new DoctorSelector(AppointmentDialog.this);
-                selector.setVisible(true);
+                GGCSelectorDialog selector = new GGCSelectorDialog(AppointmentDialog.this,
+                        GGCSelectorConfiguration.DoctorH);
 
                 if (selector.wasAction())
                 {
@@ -147,6 +139,10 @@ public class AppointmentDialog extends StandardDialogForObject
         dtAppointment = new DateTimeComponent(dataAccess, DateTimeComponent.ALIGN_VERTICAL, 10,
                 DateTimeComponent.TIME_MAXIMAL_MINUTE);
         bodyPanel.add(dtAppointment, "3, 3");
+
+        dtAppointment.setDateTimeAsCurrent();
+
+        currentTime = dtAppointment.getDateTime();
 
         createNameLabel("APPOINTMENT_TEXT", bodyPanel, "1, 5");
         tfAppointment = ATSwingUtils.getTextField("", bodyPanel, "3, 5", ATSwingUtils.FONT_NORMAL);
@@ -203,49 +199,72 @@ public class AppointmentDialog extends StandardDialogForObject
     }
 
 
-    private JPanel createPanel(Color color)
-    {
-        JPanel p = new JPanel();
-        p.setBackground(color);
-        return p;
-    }
-
-
     @Override
     public void loadData(Object dataObject)
     {
+        this.doctorAppointmentH = (DoctorAppointmentH) dataObject;
 
+        this.doctorH = this.doctorAppointmentH.getDoctor();
+        displayDoctor();
+
+        this.dtAppointment.setDateTime(this.doctorAppointmentH.getAppointmentDateTime());
+        this.tfAppointment.setText(this.doctorAppointmentH.getAppointmentText());
+        this.taComment.setText(this.doctorAppointmentH.getComment());
     }
 
 
     @Override
     public boolean saveData()
     {
-        return false;
+        if (this.doctorAppointmentH == null)
+        {
+            this.doctorAppointmentH = new DoctorAppointmentH();
+        }
+
+        if (this.doctorH == null)
+        {
+            dataAccess.showMessageDialog(this, ATSwingUtils.DialogType.Error, "SELECT_DOCTOR");
+            return false;
+        }
+
+        if (StringUtils.isBlank(this.tfAppointment.getText()))
+        {
+            dataAccess.showMessageDialog(this, ATSwingUtils.DialogType.Error, "ENTER_APPOINTMENT_TEXT");
+            return false;
+        }
+
+        if (this.dtAppointment.getDateTime() == currentTime)
+        {
+            dataAccess.showMessageDialog(this, ATSwingUtils.DialogType.Error, "ENTER_APPOINTMENT_TIME");
+            return false;
+        }
+
+        this.doctorAppointmentH.setAppointmentText(this.tfAppointment.getText());
+        this.doctorAppointmentH.setDoctor(doctorH);
+        this.doctorAppointmentH.setAppointmentDateTime(this.dtAppointment.getDateTime());
+        this.doctorAppointmentH.setComment(getText(this.taComment));
+        this.doctorAppointmentH.setPersonId((int) this.dataAccess.getCurrentUserId());
+
+        GGCDb db = ((DataAccess) dataAccess).getDb();
+
+        if (this.doctorAppointmentH.getId() > 0)
+        {
+            db.editHibernate(this.doctorAppointmentH);
+        }
+        else
+        {
+            db.addHibernate(this.doctorAppointmentH);
+        }
+
+        return true;
+
     }
 
 
     @Override
     public String getHelpId()
     {
-        return null;
+        return "Appointment_AppointmentDialog";
     }
 
-    /*
-     * public boolean actionSuccesful()
-     * {
-     * return m_actionDone;
-     * }
-     * public String[] getActionResult()
-     * {
-     * String[] res = new String[3];
-     * if (m_actionDone)
-     * res[0] = "1";
-     * else
-     * res[0] = "0";
-     * res[1] = this.tfName.getText();
-     * res[2] = this.cb_template.getSelectedItem().toString();
-     * return res;
-     * }
-     */
 }

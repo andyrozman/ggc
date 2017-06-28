@@ -75,7 +75,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
     {
         super("");
 
-        m_da = DataAccess.getInstance();
+        dataAccess = DataAccess.getInstance();
 
         endDate = new GregorianCalendar();
         startDate = new GregorianCalendar();
@@ -92,7 +92,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         dec_format = new DecimalFormat("#0.00");
 
-        ((TitledBorder) this.getBorder()).setTitle(m_ic.getMessage("STATISTICS_FOR_LAST_WEEK") + " ("
+        ((TitledBorder) this.getBorder()).setTitle(i18nControl.getMessage("STATISTICS_FOR_LAST_WEEK") + " ("
                 + sdf.format(startDate.getTime()) + " - " + sdf.format(endDate.getTime()) + ")");
 
         init();
@@ -104,73 +104,73 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
     {
         JPanel PanelBG = new JPanel(new GridLayout(3, 2));
         PanelBG.setOpaque(false);
-        PanelBG.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BG_STATISTICS") + ":"));
-        PanelBG.add(new JLabel(m_ic.getMessage("AVG_BG") + ":"));
+        PanelBG.setBorder(BorderFactory.createTitledBorder(i18nControl.getMessage("BG_STATISTICS") + ":"));
+        PanelBG.add(new JLabel(i18nControl.getMessage("AVG_BG") + ":"));
         PanelBG.add(lblAvgBG = new JLabel());
         lblAvgBG.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelBG.add(new JLabel(m_ic.getMessage("READINGS") + ":"));
+        PanelBG.add(new JLabel(i18nControl.getMessage("READINGS") + ":"));
         PanelBG.add(lblBGReadings = new JLabel());
         lblBGReadings.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelBG.add(new JLabel(m_ic.getMessage("READINGS_SLASH_DAY") + ":"));
+        PanelBG.add(new JLabel(i18nControl.getMessage("READINGS_SLASH_DAY") + ":"));
         PanelBG.add(lblBGReadingsDay = new JLabel());
         lblBGReadingsDay.setHorizontalAlignment(SwingConstants.CENTER);
 
         JPanel PanelBU = new JPanel(new GridLayout(5, 2));
         PanelBU.setOpaque(false);
-        PanelBU.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage("BU_STATISTICS") + ":"));
-        PanelBU.add(new JLabel(m_ic.getMessage("SUM_BU") + ":"));
+        PanelBU.setBorder(BorderFactory.createTitledBorder(i18nControl.getMessage("BU_STATISTICS") + ":"));
+        PanelBU.add(new JLabel(i18nControl.getMessage("SUM_BU") + ":"));
         PanelBU.add(lblSumBU = new JLabel());
         lblSumBU.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelBU.add(new JLabel(m_ic.getMessage("BU_PER_DAY") + ":"));
+        PanelBU.add(new JLabel(i18nControl.getMessage("BU_PER_DAY") + ":"));
         PanelBU.add(lblBUDay = new JLabel());
         lblBUDay.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelBU.add(new JLabel(m_ic.getMessage("MEALS") + ":"));
+        PanelBU.add(new JLabel(i18nControl.getMessage("MEALS") + ":"));
         PanelBU.add(lblCountBU = new JLabel());
         lblCountBU.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelBU.add(new JLabel(m_ic.getMessage("AVG_MEAL_SIZE") + ":"));
+        PanelBU.add(new JLabel(i18nControl.getMessage("AVG_MEAL_SIZE") + ":"));
         PanelBU.add(lblAvgBU = new JLabel());
         lblAvgBU.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelBU.add(new JLabel(m_ic.getMessage("MEALS_PER_DAY") + ":"));
+        PanelBU.add(new JLabel(i18nControl.getMessage("MEALS_PER_DAY") + ":"));
         PanelBU.add(lblBUCountDay = new JLabel());
         lblBUCountDay.setHorizontalAlignment(SwingConstants.CENTER);
 
         PanelIns1 = new JPanel(new GridLayout(5, 2));
         PanelIns1.setOpaque(false);
         PanelIns1.setBorder(BorderFactory.createTitledBorder(
-            m_ic.getMessage("BOLUS_INSULIN_SHORT") + " " + m_ic.getMessage("STATISTICS") + ":"));
-        PanelIns1.add(lbl_sum_ins1_name = new JLabel(m_ic.getMessage("SUM_INSULIN") + ":"));
+            i18nControl.getMessage("BOLUS_INSULIN_SHORT") + " " + i18nControl.getMessage("STATISTICS") + ":"));
+        PanelIns1.add(lbl_sum_ins1_name = new JLabel(i18nControl.getMessage("SUM_INSULIN") + ":"));
         PanelIns1.add(lblSumIns1 = new JLabel());
         lblSumIns1.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns1.add(lbl_sum_ins1_day_name = new JLabel(m_ic.getMessage("INS_PER_DAY") + ":"));
+        PanelIns1.add(lbl_sum_ins1_day_name = new JLabel(i18nControl.getMessage("INS_PER_DAY") + ":"));
         PanelIns1.add(lblIns1Day = new JLabel());
         lblIns1Day.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns1.add(new JLabel(m_ic.getMessage("DOSE") + ":"));
+        PanelIns1.add(new JLabel(i18nControl.getMessage("DOSE") + ":"));
         PanelIns1.add(lblCountIns1 = new JLabel());
         lblCountIns1.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns1.add(new JLabel(m_ic.getMessage("AVG_DOSE_SIZE") + ":"));
+        PanelIns1.add(new JLabel(i18nControl.getMessage("AVG_DOSE_SIZE") + ":"));
         PanelIns1.add(lblAvgIns1 = new JLabel());
         lblAvgIns1.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns1.add(new JLabel(m_ic.getMessage("DOSES_PER_DAY") + ":"));
+        PanelIns1.add(new JLabel(i18nControl.getMessage("DOSES_PER_DAY") + ":"));
         PanelIns1.add(lblIns1CountDay = new JLabel());
         lblIns1CountDay.setHorizontalAlignment(SwingConstants.CENTER);
 
         PanelIns2 = new JPanel(new GridLayout(5, 2));
         PanelIns2.setOpaque(false);
         PanelIns2.setBorder(BorderFactory.createTitledBorder(
-            m_ic.getMessage("BASAL_INSULIN_SHORT") + " " + m_ic.getMessage("STATISTICS") + ":"));
-        PanelIns2.add(lbl_sum_ins2_name = new JLabel(m_ic.getMessage("SUM_INSULIN") + ":"));
+            i18nControl.getMessage("BASAL_INSULIN_SHORT") + " " + i18nControl.getMessage("STATISTICS") + ":"));
+        PanelIns2.add(lbl_sum_ins2_name = new JLabel(i18nControl.getMessage("SUM_INSULIN") + ":"));
         PanelIns2.add(lblSumIns2 = new JLabel());
         lblSumIns2.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns2.add(lbl_sum_ins2_day_name = new JLabel(m_ic.getMessage("INS_PER_DAY") + ":"));
+        PanelIns2.add(lbl_sum_ins2_day_name = new JLabel(i18nControl.getMessage("INS_PER_DAY") + ":"));
         PanelIns2.add(lblIns2Day = new JLabel());
         lblIns2Day.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns2.add(lblIns2Dose = new JLabel(m_ic.getMessage("DOSE") + ":"));
+        PanelIns2.add(lblIns2Dose = new JLabel(i18nControl.getMessage("DOSE") + ":"));
         PanelIns2.add(lblCountIns2 = new JLabel());
         lblCountIns2.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns2.add(lblIns2AvgDoseSize = new JLabel(m_ic.getMessage("AVG_DOSE_SIZE") + ":"));
+        PanelIns2.add(lblIns2AvgDoseSize = new JLabel(i18nControl.getMessage("AVG_DOSE_SIZE") + ":"));
         PanelIns2.add(lblAvgIns2 = new JLabel());
         lblAvgIns2.setHorizontalAlignment(SwingConstants.CENTER);
-        PanelIns2.add(lblIns2DosePerDay = new JLabel(m_ic.getMessage("DOSES_PER_DAY") + ":"));
+        PanelIns2.add(lblIns2DosePerDay = new JLabel(i18nControl.getMessage("DOSES_PER_DAY") + ":"));
         PanelIns2.add(lblIns2CountDay = new JLabel());
         lblIns2CountDay.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -189,12 +189,12 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
     @Override
     public void doRefresh()
     {
-        if (!m_da.isDatabaseInitialized())
+        if (!dataAccess.isDatabaseInitialized())
             return;
 
         makeVisible();
 
-        if (m_da.getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE)
+        if (dataAccess.getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE)
         {
             LOG.debug("Statistics - Pen/Injection Mode");
 
@@ -202,7 +202,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
 
             lblAvgBG.setText(dec_format.format(sV.getAvgBG()));
             lblBGReadings.setText(sV.getBGCount() + "");
-            lblBGReadingsDay.setText(DataAccess.Decimal2Format.format(sV.getBGCount() / 7.0f));
+            lblBGReadingsDay.setText(dataAccess.getFloatAsString(sV.getBGCount() / 7.0f, 2));
 
             lblSumBU.setText(dec_format.format(sV.getSumCH()));
             lblBUDay.setText(dec_format.format(sV.getSumCHPerDay()));
@@ -230,22 +230,22 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
             gcs[0] = startDate;
             gcs[1] = endDate;
 
-            Object pumpStatistics = m_da.getPlugIn(GGCPluginType.PumpToolPlugin).getReturnObject(100, gcs);
-            Object basalStatistics = m_da.getPlugIn(GGCPluginType.PumpToolPlugin).getReturnObject(101, gcs);
+            Object pumpStatistics = dataAccess.getPlugIn(GGCPluginType.PumpToolPlugin).getReturnObject(100, gcs);
+            Object basalStatistics = dataAccess.getPlugIn(GGCPluginType.PumpToolPlugin).getReturnObject(101, gcs);
 
             if ((pumpStatistics != null) && (pumpStatistics instanceof StatisticsCollection))
             {
                 StatisticsCollection sc = (StatisticsCollection) pumpStatistics;
 
-                lblAvgBG.setText(dec_format.format(m_da.getDisplayedBG(sc.getItemStatisticsValue(13)))); // sV.getAvgBG()));
-                                                                                                         // //
-                                                                                                         // 13
+                lblAvgBG.setText(dec_format.format(dataAccess.getDisplayedBG(sc.getItemStatisticsValue(13)))); // sV.getAvgBG()));
+                // //
+                // 13
                 lblBGReadings.setText(sc.getItemStatisticValueAsStringInt(16)); // sV.getBGCount()
                                                                                 // +
                                                                                 // "");
                                                                                 // //
                                                                                 // 16
-                lblBGReadingsDay.setText(DataAccess.Decimal2Format.format(sc.getItemStatisticsValue(16) / 7.0d)); // (sV.getBGCount()/7.0f)));
+                lblBGReadingsDay.setText(dataAccess.getFloatAsString(sc.getItemStatisticsValue(16) / 7.0f, 2)); // (sV.getBGCount()/7.0f)));
 
                 lblSumBU.setText(dec_format.format(sc.getItemStatisticsValue(10))); // CH_SUM=10
                                                                                     // //sV.getSumCH()));
@@ -298,7 +298,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
 
     private void makeVisible()
     {
-        boolean penInjectionMode = m_da.getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE;
+        boolean penInjectionMode = dataAccess.getSoftwareMode() == GGCSoftwareMode.PEN_INJECTION_MODE;
 
         lblIns2Dose.setVisible(penInjectionMode);
         lblIns2AvgDoseSize.setVisible(penInjectionMode);
@@ -308,7 +308,7 @@ public class StatisticsInfoPanel extends AbstractInfoPanel
         lblIns2CountDay.setVisible(penInjectionMode);
 
         lbl_sum_ins2_day_name.setText(penInjectionMode ? //
-                m_ic.getMessage("INS_PER_DAY") : m_ic.getMessage("AVG_INS_PER_DAY"));
+                i18nControl.getMessage("INS_PER_DAY") : i18nControl.getMessage("AVG_INS_PER_DAY"));
     }
 
 

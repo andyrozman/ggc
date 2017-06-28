@@ -1,0 +1,68 @@
+
+DEVELOPER VIRTUAL BOX IMAGE
+============================
+
+Since we had some complaints from people who are not acquinted with Maven, that they have
+problems getting Development running, I decided to create Developer image, contaning all
+software needed for starting development.
+
+IMAGE CONTENT:
+--------------
+- Lubuntu Image 16.10 (x386)
+- Subversion 1.8
+- Maven 3.0.5
+- Java 1.5 (for compiling GGC)
+- Java 1.8 (for IntelliJ)
+- local maven cache for start working (no download needed)
+- IntelliJ 14 - Community edition (I am still using this version, because it works best, and
+     all later changes are pretty bad)
+- Some Intellij Plugins: Save Actions, Eclipse Formatter.
+- PostgreSQL 9.1 with PgAdmin III. (with empty ggc database)
+
+Read-only repositories of:
+- Atech-Software
+- GGC
+
+
+HOW CAN I START
+---------------
+1. Download image
+2. Start it in your Virtual Box
+3. When box is running install "Virtual Box Guest Additions" (for better resolution)
+
+And that's it. You can try out the GGC. You can run Intellij and start GGC from there. (with latest
+version available in Image)
+
+
+START WITH NEVER VERSION
+------------------------
+
+Image of GGC might be older one, so you should probably go to:  ~/workspaces/ggc
+and run "svn update", same in ~/workspaces/ggc/atech-tools.
+
+After that just run "mvn clean install" in ~/workspaces/ggc
+
+
+START OF DEVELOPMENT
+--------------------
+
+If you want to start contributing you should check out repositories again with your own
+sourceforge.net username and password (so that you can checkin changes made).
+
+
+NOTES
+-----
+We are still supporting Java 1.5, which is why Java 1.5 is installed. Maven 3.0.5 also
+supports Java 1.5 (it might be the last version that does). There is also Java 8 installed,
+but that is only so that we can run IntelliJ. JavaC points to java 1.5. Theoretically
+you can use any version of java you want, but code checked in needs to be in strict 1.5 format.
+While you can set target to 1.5 in maven, it usually doesn't check if you have writen it
+correctly, which in turn means that it won't be compilable with java 1.5.
+
+There is PostgreSQL database installed with ggc_v7 instance and your development environment
+will start with it, so that you can easily go to database and see data there (pgAdminIII is
+installed for browsing database).
+
+You can also run with standard local database (same as with running application), but
+in that case you are limited with one instance of application.
+

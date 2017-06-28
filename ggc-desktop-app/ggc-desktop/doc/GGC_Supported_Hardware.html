@@ -623,7 +623,7 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
             <td>Level 2</td>
             <td>Planned</td>
             <td>-</td>
-            <td>End of 2015</td>
+            <td>4Q/2017</td>
             <td>&nbsp;</td>
             <td></td>
         </tr>
@@ -634,7 +634,7 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
             <td>Level 2</td>
             <td>Planned</td>
             <td>-</td>
-            <td>End of 2015</td>
+            <td>4Q/2017</td>
             <td>&nbsp;</td>
             <td>*1</td>
         </tr>
@@ -645,7 +645,7 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
             <td>Level 2</td>
             <td>Planned</td>
             <td>-</td>
-            <td>End of 2015</td>
+            <td>4Q/2017</td>
             <td>&nbsp;</td>
             <td>*1</td>
         </tr>
@@ -656,7 +656,7 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
             <td>Level 2</td>
             <td>Planned</td>
             <td>-</td>
-            <td>End of 2015</td>
+            <td>4Q/2017</td>
             <td>&nbsp;</td>
             <td>*1</td>
         </tr>
@@ -668,7 +668,7 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
             <td>Level 2</td>
             <td>Planned</td>
             <td>-</td>
-            <td>End of 2015</td>
+            <td>4Q/2017</td>
             <td>&nbsp;</td>
             <td>*1</td>
         </tr>
@@ -679,7 +679,7 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
             <td>Level 2</td>
             <td>Planned</td>
             <td>-</td>
-            <td>End of 2015</td>
+            <td>4Q/2017</td>
             <td>&nbsp;</td>
             <td>*1</td>
         </tr>
@@ -690,7 +690,7 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
             <td>Level 2</td>
             <td>Planned</td>
             <td>-</td>
-            <td>End of 2015</td>
+            <td>4Q/2017</td>
             <td>&nbsp;</td>
             <td>*1</td>
         </tr>
@@ -701,7 +701,7 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
             <td>Level 1</td>
             <td>Not planned for now</td>
             <td>-</td>
-            <td>?</td>
+            <td>4Q/2018</td>
             <td>&nbsp;</td>
             <td>*2. Perhaps export from Carelink</td>
         </tr>
@@ -776,14 +776,15 @@ List of supported devices (9), work in progress (1), not planned for now (3), wo
 
 <br>
 
-*1 - Minimed Pumps currently have 3 interfaces (devices) which can be used to read data from them. <b>ComLink</b> is
-oldest of
-them and is no longer used, so we won't add support for it. Second one is <b>Carelink USB</b>, which is at least for
-most used interface, so we are adding support for this. Third one is <b>Contour Next Link meter</b>. Protocol for
-this one is at this time unknown, so time when this will be supported is undetermined, we hope to get it done by
-end of 2016.<br>
+*1 - Minimed Pumps currently have 3 interfaces (devices) which can be used to read data from them:<br>
+<b>ComLink</b> is oldest of
+them and is no longer used, so we won't add support for it. <br>
+<b>Carelink USB</b> - was most used interface recently, but it stopped working when Linux/Mac stopped using
+USB 2.0 interface. We had support for this, but since it doesn;t work anymore, we have to go with next one<br>
+<b>Contour Next Link meter</b>. Protocol for this one is still mostly unknown, but we are working on decoding it
+and adding support for Medtronic device as soon as we can (probably by end 2017).<br>
 *2 - New Minimed Pump uses different protocol (which is supported through Contour Next Link 2.4 meter ), which means
-that it won't be supported together with all other devices.
+that it won't be supported together with all other devices. Support is planned for 2018.
 
 
 <br><br><br>
@@ -1032,7 +1033,7 @@ the same, if you have one, you can just make another copy of same file or link)<
 <br>
 1. Add your user into group plugdev<br>
 Add your user into group plugdev (this is the group under which USB devices are loaded as default).
-Please google "udev" for your computer, if this sollutions doesn't work for you.<br>
+Please google "udev" for your computer, if this solutions doesn't work for you.<br>
 <br>
 2. Add rule in /etc/udev/rules.d<br>
 Create file 44-ggc-devices.rules and add entry like this:<br>

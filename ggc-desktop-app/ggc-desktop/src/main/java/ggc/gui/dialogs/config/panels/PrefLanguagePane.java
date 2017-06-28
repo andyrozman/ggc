@@ -1,9 +1,10 @@
-package ggc.gui.cfg.panels;
+package ggc.gui.dialogs.config.panels;
 
 import javax.swing.*;
 
 import com.atech.utils.ATSwingUtils;
-import ggc.gui.cfg.PropertiesDialog;
+
+import ggc.gui.dialogs.config.PropertiesDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -131,11 +132,11 @@ public class PrefLanguagePane extends AbstractPrefOptionsPanel
 
         ATSwingUtils.getLabel(i18nControl.getMessage("NOTE_RESTART"), 40, 280, 360, 50, panel,
             ATSwingUtils.FONT_NORMAL);
-            /*
-             * ATSwingUtils.getLabel(i18nControl.getMessage("SELECT_LANGUAGE"),
-             * 40, 345, 340, 25,
-             * panel, ATSwingUtils.FONT_NORMAL_BOLD);
-             */
+        /*
+         * ATSwingUtils.getLabel(i18nControl.getMessage("SELECT_LANGUAGE"),
+         * 40, 345, 340, 25,
+         * panel, ATSwingUtils.FONT_NORMAL_BOLD);
+         */
 
         /*
          * cb_DBs = new JComboBox(langInfo.availableLang);

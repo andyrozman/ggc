@@ -6,8 +6,8 @@ package ggc.gui.main.panels;
 public enum InfoPanelType
 {
     SplitPanelContainer, //
-    Stocks, //
-    Schedule, //
+    Inventory, //
+    Appointments, //
     Plugins, //
     HbA1c, //
     General, //
@@ -17,5 +17,7 @@ public enum InfoPanelType
     // Desktop Little interface
     PluginPump, //
     PluginMeter, //
-    DailyValues, DailyValuesController, //
+    DailyValues, //
+    DailyValuesController, DailyValuesList, DailyValuesStats, //
+    //
 }

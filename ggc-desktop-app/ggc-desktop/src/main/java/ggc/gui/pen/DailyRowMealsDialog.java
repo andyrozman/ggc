@@ -47,7 +47,7 @@ import ggc.core.util.DataAccess;
 
 // DEPRECATED
 
-public class DailyRowMealsDialog extends TransferDialog /* JDialog */implements ActionListener, HelpCapable
+public class DailyRowMealsDialog extends TransferDialog /* JDialog */ implements ActionListener, HelpCapable
 {
 
     private static final long serialVersionUID = 6763016271693781911L;
@@ -269,7 +269,7 @@ public class DailyRowMealsDialog extends TransferDialog /* JDialog */implements 
 
         ATSwingUtils.getLabel(m_ic.getMessage("CH_LONG") + ":", 40, 210, 100, 25, panel);
 
-        this.ftf_ch = ATSwingUtils.getNumericTextField(2, 2, new Float(0.0f), 160, 210, 55, 25, panel);
+        this.ftf_ch = ATSwingUtils.getNumericTextField(2, new Float(0.0f), 160, 210, 55, 25, panel);
 
         ATSwingUtils.getButton(m_ic.getMessage("CALCULATE"), 230, 210, 120, 25, panel, ATSwingUtils.FONT_NORMAL, null,
             "calculate", this, m_da);

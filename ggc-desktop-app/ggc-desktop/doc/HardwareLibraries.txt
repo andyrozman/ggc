@@ -33,7 +33,7 @@ JNA-J15
 =======
 
 Our Version:       4.1.0
-Latest Version:    -
+Latest Version:    Latest of 4.1 branch
 OS:                -
 Own version:       Yes
 Comment:           Dependency of Hid4Java.

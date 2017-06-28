@@ -1,4 +1,4 @@
-package ggc.gui.cfg.panels;
+package ggc.gui.dialogs.config.panels;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +13,8 @@ import javax.swing.filechooser.FileView;
 
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
-import ggc.gui.cfg.PropertiesDialog;
+
+import ggc.gui.dialogs.config.PropertiesDialog;
 
 /**
  * Application: GGC - GNU Gluco Control

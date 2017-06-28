@@ -4,6 +4,41 @@
 ****************************************************************
 
 
+0.8
+===
+
+Doctors: + implemented but hidden (db change and update required)
+Doctors module:
+                + add doctor: + dialog
+                              + working days
+                              + working hours
+                + add scheduling entry: + dialog
+
+
+
+CANCELED 0.7
+=============
+
+Minimed: - comlink: read history data from device -2.1
+
+
+
+
+0.7
+====
+
+(6)
+Graphs (v2):
+        - CGMS Daily Graph V2
+        - CGMS Weekly Graph
+
+Graphs (v1): (make them workable for Pen and add them for Pump)
+
+    Pen:
+    - cleanup code
+
+
+
 
 ===============================================================================
 ===============================================================================
@@ -369,26 +404,7 @@ Deploy: - Local Maven Repository
         - web page
 
 
-CANCELED 0.7
-=============
 
-Minimed: - comlink: read history data from device -2.1
-
-
-
-
-DONE Version 0.7
-=================
-
-(6)
-Graphs (v2):
-        - CGMS Daily Graph V2
-        - CGMS Weekly Graph
-
-Graphs (v1): (make them workable for Pen and add them for Pump)
-
-    Pen:
-    - cleanup code
 
 
 

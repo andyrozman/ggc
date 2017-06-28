@@ -2,6 +2,8 @@ package ggc.gui.dialogs;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.swing.*;
 
@@ -12,6 +14,7 @@ import com.atech.app.data.about.LicenceInfo;
 import com.atech.app.gui.about.AboutCustomPanel;
 import com.atech.app.gui.about.AboutDialog;
 import com.atech.utils.ATSwingUtils;
+
 import ggc.core.util.DataAccess;
 
 /**
@@ -44,10 +47,21 @@ public class AboutGGCDialog extends AboutDialog
 
     private static final long serialVersionUID = -5655078691807335660L;
 
+    private int currentYear;
+    private String titleI18nKey;
+
 
     public AboutGGCDialog(JFrame parent)
     {
+        this(parent, "GGC_TITLE");
+    }
+
+
+    public AboutGGCDialog(JFrame parent, String title)
+    {
         super(parent, true, DataAccess.getInstance().getI18nControlInstance());
+
+        currentYear = (new GregorianCalendar()).get(Calendar.YEAR);
 
         // licence
         this.setLicenceType(LicenceInfo.LICENCE_GPL_v2_0);
@@ -97,7 +111,7 @@ public class AboutGGCDialog extends AboutDialog
                 "www.atech-software.com", //
                 "LGPL", //
                 "Helper Library for Swing/Hibernate/...", //
-                "Copyright (c) 2006-2015 Atech Software Ltd. All rights reserved."));
+                "Copyright (c) 2006-" + currentYear + " Atech Software Ltd. All rights reserved."));
 
         lst_libs.add(new LibraryInfoEntry("SkinLF", //
                 "6.7", //
@@ -192,7 +206,7 @@ public class AboutGGCDialog extends AboutDialog
 
         jEditorPaneAbout.setContentType("text/html");
         jEditorPaneAbout.setText("<HTML><body><font face=\"SansSerif\" size=\"3\"><center><b>"
-                + m_ic.getMessage("GGC_TITLE") + "</b><br>&nbsp;&nbsp;(c) 2002-2015  "
+                + m_ic.getMessage(titleI18nKey) + "</b><br>&nbsp;&nbsp;(c) 2002-" + currentYear + " "
                 + m_ic.getMessage("GGC_DEVELOPMENT_TEAM") + "<br>" + m_ic.getMessage("SEE_CREDITS")
                 + "<br><A HREF=\"http://ggc.sourceforge.net/\">http://ggc.sourceforge.net/</A><br>"
                 + m_ic.getMessage("LICENCE") + " GPL v2.0<br></font></body></html>");

@@ -41,9 +41,9 @@ public abstract class AbstractInfoPanel extends JPanel
 {
 
     private static final long serialVersionUID = -1104646965456304940L;
-    protected DataAccess m_da = DataAccess.getInstance();
-    protected I18nControlAbstract m_ic = m_da.getI18nControlInstance();
-    protected ConfigurationManagerWrapper configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
+    protected DataAccess dataAccess = DataAccess.getInstance();
+    protected I18nControlAbstract i18nControl = dataAccess.getI18nControlInstance();
+    protected ConfigurationManagerWrapper configurationManagerWrapper = dataAccess.getConfigurationManagerWrapper();
     protected boolean first_refresh = true;
 
     protected Map<String, JLabel> valueLabels;
@@ -73,7 +73,7 @@ public abstract class AbstractInfoPanel extends JPanel
 
         if (createBorder)
         {
-            setBorder(BorderFactory.createTitledBorder(this.m_ic.getMessage(title) + ":"));
+            setBorder(BorderFactory.createTitledBorder(this.i18nControl.getMessage(title) + ":"));
         }
 
         setOpaque(false);
@@ -156,7 +156,7 @@ public abstract class AbstractInfoPanel extends JPanel
 
     protected void addDisplayLabelsToPanel(String i18nKey)
     {
-        add(new JLabel(m_ic.getMessage(i18nKey) + ":"), "1, " + currentLine);
+        add(new JLabel(i18nControl.getMessage(i18nKey) + ":"), "1, " + currentLine);
 
         JLabel label = new JLabel("N/A");
 

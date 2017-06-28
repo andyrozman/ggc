@@ -69,7 +69,7 @@ import ggc.core.util.DataAccess;
  */
 
 // fix this
-
+@Deprecated
 public class DoctorsDialog extends JDialog implements ActionListener
 {
 

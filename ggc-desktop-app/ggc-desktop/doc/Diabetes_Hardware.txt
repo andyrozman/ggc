@@ -107,5 +107,10 @@ problems. You need to have librxtxSerial.jnilib and librxtxSerial.dylib present 
 the same, if you have one, you can just make another copy of same file or link) 
 
 
+2.) Linux (when running as non-root user)
+
+Some devices require that you register (add rules) your device, so that you can access it
+(USB devices) directly.
+
 
 

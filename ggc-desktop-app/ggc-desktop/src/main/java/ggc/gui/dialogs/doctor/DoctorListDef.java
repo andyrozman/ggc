@@ -5,21 +5,16 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumnModel;
-
 import org.apache.commons.lang.StringUtils;
 
+import com.atech.db.hibernate.HibernateSelectableObject;
 import com.atech.graphics.dialogs.guilist.ButtonDef;
-import com.atech.graphics.dialogs.guilist.GUIListDefAbstract;
-import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 
-import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.doc.DoctorH;
 import ggc.core.util.DataAccess;
+import ggc.gui.dialogs.GGCListDef;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -45,160 +40,59 @@ import ggc.core.util.DataAccess;
  * 
  *  Author: andyrozman {andy@atech-software.com}  
  */
-
-public class DoctorListDef extends GUIListDefAbstract
+public class DoctorListDef extends GGCListDef
 {
-
-    DataAccess m_da = DataAccess.getInstance();
-    I18nControlAbstract i18nControl = m_da.getI18nControlInstance();
-
-    private List<DoctorH> fullList = null;
-    private List<DoctorH> activeList = null;
-
-    private GGCDb database;
-
 
     /**
      * Constructor
      */
     public DoctorListDef()
     {
-        database = m_da.getDb();
-        init();
+        super(DataAccess.getInstance(), //
+                new DoctorH(), // object listed
+                "DOCTOR_LIST", // title
+                "DoctorListDef", // defintion name
+                "Doc_DocList", // help Id
+                new Rectangle(40, 0, 480, 250), // table bounds
+                new Dimension(700, 500) // size
+        );
     }
 
 
     @Override
-    public void doTableAction(String action)
+    public boolean doCustomTableAction(String action)
     {
-        if (action.equals("add_doctor"))
-        {
-            DoctorDialog d = new DoctorDialog(this.getParentDialog());
-
-            if (d.wasOperationSuccessful())
-            {
-                this.loadData();
-            }
-        }
-        else if (action.equals("edit_doctor"))
-        {
-            this.editTableRow();
-        }
-        else
-        {
-            System.out.println("DoctorListDef: Unknown action: " + action);
-        }
-
-    }
-
-
-    @Override
-    public JTable getJTable()
-    {
-        if (this.table == null)
-        {
-            this.table = new JTable(new AbstractTableModel()
-            {
-
-                private static final long serialVersionUID = -5352934240965073481L;
-
-
-                public int getColumnCount()
-                {
-                    return 2;
-                }
-
-
-                public int getRowCount()
-                {
-                    return activeList.size();
-                }
-
-
-                public Object getValueAt(int row, int column)
-                {
-                    DoctorH doctor = activeList.get(row);
-
-                    switch (column)
-                    {
-                        case 0:
-                            return doctor.getName();
-
-                        case 1:
-                            return i18nControl.getMessage(doctor.getDoctorType().getName());
-
-                        default:
-                            return null;
-                    }
-                }
-            });
-
-            String[] columns = { i18nControl.getMessage("NAME"), i18nControl.getMessage("TYPE") };
-            int[] cwidths = { 100, 100 };
-            int cwidth = 0;
-
-            TableColumnModel cm = table.getColumnModel();
-
-            for (int i = 0; i < columns.length; i++)
-            {
-                cm.getColumn(i).setHeaderValue(ic.getMessage(columns[i]));
-
-                cwidth = cwidths[i];
-
-                if (cwidth > 0)
-                {
-                    cm.getColumn(i).setPreferredWidth(cwidth);
-                }
-            }
-
-            DataAccess.reSkinifyComponent(table);
-        }
-
-        return this.table;
-
-    }
-
-
-    @Override
-    public String getTitle()
-    {
-        return i18nControl.getMessage("DOCTOR_LIST");
+        return false;
     }
 
 
     @Override
     public void init()
     {
-        this.ic = DataAccess.getInstance().getI18nControlInstance();
-        this.translation_root = "DOCTORS";
+        this.i18nControl = DataAccess.getInstance().getI18nControlInstance();
+        this.translationRoot = "DOCTORS";
 
-        this.filter_type = FILTER_COMBO_AND_TEXT;
+        this.filterType = GuiListFilterType.ComboAndText;
 
-        String s1[] = { ic.getMessage("STATUS_USED") + ":", ic.getMessage("DESCRIPTION") + ":" };
-        this.filter_texts = s1;
+        String s1[] = { i18nControl.getMessage("STATUS_USED") + ":", i18nControl.getMessage("DESCRIPTION") + ":" };
+        this.filterDescriptionTexts = s1;
 
-        String s[] = { ic.getMessage("FILTER_ACTIVE"), ic.getMessage("FILTER_INACTIVE"), ic.getMessage("FILTER_ALL") };
+        String s[] = { i18nControl.getMessage("FILTER_ACTIVE"), i18nControl.getMessage("FILTER_INACTIVE"),
+                       i18nControl.getMessage("FILTER_ALL") };
 
-        this.filter_options_combo1 = s;
+        this.filterOptionsCombo1 = s;
 
-        this.button_defs = new ArrayList<ButtonDef>();
+        this.buttonDefintions = new ArrayList<ButtonDef>();
 
-        this.button_defs
-                .add(new ButtonDef(this.ic.getMessage("NEW"), "add_doctor", "DOCTOR_ADD_DESC", "table_add.png"));
-        this.button_defs
-                .add(new ButtonDef(this.ic.getMessage("EDIT"), "edit_doctor", "DOCTOR_EDIT_DESC", "table_edit.png"));
+        this.buttonDefintions.add(
+            new ButtonDef(this.i18nControl.getMessage("NEW"), "add_object", "DOCTOR_ADD_DESC", "table_add.png"));
+        this.buttonDefintions.add(
+            new ButtonDef(this.i18nControl.getMessage("EDIT"), "edit_object", "DOCTOR_EDIT_DESC", "table_edit.png"));
+        this.buttonDefintions.add(new ButtonDef(this.i18nControl.getMessage("DELETE"), "delete_object",
+                "DOCTOR_DELETE_DESC", "table_delete.png"));
 
         this.defaultParameters = new String[1];
-        this.defaultParameters[0] = ic.getMessage("FILTER_ACTIVE");
-
-        loadData();
-    }
-
-
-    public void loadData()
-    {
-        this.fullList = database.getDoctors();
-        filterData();
+        this.defaultParameters[0] = i18nControl.getMessage("FILTER_ACTIVE");
     }
 
 
@@ -207,24 +101,27 @@ public class DoctorListDef extends GUIListDefAbstract
 
         List<DoctorH> list = new ArrayList<DoctorH>();
 
-        if (ic.getMessage("FILTER_ACTIVE").equals(filterComboText))
+        if (i18nControl.getMessage("FILTER_ACTIVE").equals(filterComboText))
         {
             int today = (int) ATechDate.getATDateTimeFromGC(new GregorianCalendar(), ATechDateType.DateOnly);
 
-            for (DoctorH dh : this.fullList)
+            for (HibernateSelectableObject object : this.fullList)
             {
+                DoctorH dh = (DoctorH) object;
                 if ((dh.getActiveFrom() <= today) && ((dh.getActiveTill() == 0 || (dh.getActiveTill() >= today))))
                 {
                     list.add(dh);
                 }
             }
         }
-        else if (ic.getMessage("FILTER_INACTIVE").equals(filterComboText))
+        else if (i18nControl.getMessage("FILTER_INACTIVE").equals(filterComboText))
         {
             int today = (int) ATechDate.getATDateTimeFromGC(new GregorianCalendar(), ATechDateType.DateOnly);
 
-            for (DoctorH dh : this.fullList)
+            for (HibernateSelectableObject object : this.fullList)
             {
+                DoctorH dh = (DoctorH) object;
+
                 if ((dh.getActiveTill() != 0) && (dh.getActiveTill() < today))
                 {
                     list.add(dh);
@@ -233,7 +130,11 @@ public class DoctorListDef extends GUIListDefAbstract
         }
         else
         {
-            list.addAll(this.fullList);
+            for (HibernateSelectableObject object : this.fullList)
+            {
+                DoctorH app = (DoctorH) object;
+                list.add(app);
+            }
         }
 
         if (StringUtils.isBlank(this.filterTextText))
@@ -255,93 +156,6 @@ public class DoctorListDef extends GUIListDefAbstract
             this.activeList = list2;
         }
 
-        System.out.println("Filter Data. List: " + this.activeList.size());
-
-        if ((table != null) && (table.getModel() != null))
-        {
-            ((AbstractTableModel) table.getModel()).fireTableDataChanged();
-        }
-
-    }
-
-
-    @Override
-    public String getDefName()
-    {
-        return "DoctorListDef";
-    }
-
-
-    @Override
-    public Rectangle getTableSize(int pos_y)
-    {
-        return new Rectangle(40, pos_y, 480, 250);
-    }
-
-
-    @Override
-    public Dimension getWindowSize()
-    {
-        return new Dimension(700, 500);
-    }
-
-    String filterComboText = "";
-    String filterTextText = "";
-
-
-    @Override
-    public void setFilterCombo(String val)
-    {
-        this.filterComboText = val;
-        filterData();
-    }
-
-
-    @Override
-    public void setFilterText(String val)
-    {
-        this.filterComboText = val;
-        filterData();
-    }
-
-
-    @Override
-    public void setFilterCombo_2(String val)
-    {
-    }
-
-
-    @Override
-    public JPanel getCustomDisplayHeader()
-    {
-        return null;
-    }
-
-
-    @Override
-    public void editTableRow()
-    {
-        int index = this.getParentDialog().getSelectedObjectIndexFromTable();
-
-        if (index > -1)
-        {
-            DoctorH doctor = this.activeList.get(index);
-
-            DoctorDialog dialog = new DoctorDialog(this.getParentDialog(), doctor, true);
-
-            if (dialog.wasOperationSuccessful())
-            {
-                loadData();
-            }
-        }
-
-    }
-
-
-    @Override
-    public String getHelpId()
-    {
-        return "Doc_DocList";
     }
 
 }

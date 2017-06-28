@@ -57,10 +57,11 @@ import com.atech.utils.ATSwingUtils;
 import ggc.core.data.DailyStatsTableModel;
 import ggc.core.data.DailyValues;
 import ggc.core.data.DailyValuesRow;
+import ggc.core.data.defs.GGCObservableType;
+import ggc.core.data.defs.RefreshInfoType;
 import ggc.core.data.graph.v1.view.GraphViewDaily;
 import ggc.core.db.GGCDb;
 import ggc.core.util.DataAccess;
-import ggc.core.util.RefreshInfo;
 
 /**
  *  Application: GGC - GNU Gluco Control
@@ -169,7 +170,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         DataAccess.getInstance().loadDailySettings(new GregorianCalendar(), true);
         // MainFrame mf = DataAccess.getInstance().getParent();
 
-        m_da.setChangeOnEventSource(DataAccess.OBSERVABLE_PANELS, RefreshInfo.PANEL_GROUP_ALL_DATA);
+        m_da.getObserverManager().setChangeOnEventSource(GGCObservableType.InfoPanels, RefreshInfoType.DeviceDataAll);
 
         // mf.informationPanel.refreshPanels();
         m_da.removeComponent(this);
@@ -314,7 +315,7 @@ public class DailyStatsDialog extends JDialog implements ActionListener, HelpCap
         // JTableUtil.reconfigureTableHeader(table, new Color(102, 178, 255),
         // null, Color.gray);
 
-        DataAccess.reSkinifyComponent(table);
+        DataAccess.getSkinManager().reSkinifyComponent(table);
 
         // MouseListener ml = new MouseListener();
 

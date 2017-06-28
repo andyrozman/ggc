@@ -17,6 +17,7 @@ import ggc.core.util.DataAccess;
 public class StockSelectorDialog extends SelectorAbstractDialog
 {
 
+    private static final long serialVersionUID = -4296343187228067022L;
     DataAccess da_local = null;
     int m_data_type = 0;
 
@@ -42,14 +43,19 @@ public class StockSelectorDialog extends SelectorAbstractDialog
             setSelectorName(i18nControl.getMessage("STOCK_BASE_TYPE_SELECTOR"));
 
             setAllowedActions(
-                SelectorAbstractDialog.SELECTOR_ACTION_SELECT | SelectorAbstractDialog.SELECTOR_ACTION_CANCEL
-                        | SelectorAbstractDialog.SELECTOR_ACTION_NEW | SelectorAbstractDialog.SELECTOR_ACTION_EDIT);
+                SelectorAbstractDialog.SELECTOR_ACTION_SELECT | SelectorAbstractDialog.SELECTOR_ACTION_CANCEL);
+            // setAllowedActions(
+            // SelectorAbstractDialog.SELECTOR_ACTION_SELECT |
+            // SelectorAbstractDialog.SELECTOR_ACTION_CANCEL
+            // | SelectorAbstractDialog.SELECTOR_ACTION_NEW |
+            // SelectorAbstractDialog.SELECTOR_ACTION_EDIT);
+
             this.use_generic_select = true;
 
             // this.se
             this.setColumnSortingEnabled(false);
             this.setFilterType(SelectorAbstractDialog.SELECTOR_FILTER_TEXT);
-            this.setHelpStringId("PumpTool_Profile_Selector");
+            this.setHelpStringId("PumpTool_Profile_Selector"); // TODO
             this.setHelpEnabled(false);
             setNewItemString(i18nControl.getMessage("NEW__STOCK_TYPE"));
 
@@ -71,7 +77,7 @@ public class StockSelectorDialog extends SelectorAbstractDialog
 
         if (this.m_data_type == 1)
         {
-            // this.full.addAll(da_local.getDb().getStockBaseTypes());
+            this.full.addAll(da_local.getDb().getStockTypesForSelector());
         }
 
     }

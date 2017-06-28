@@ -186,7 +186,7 @@ Zip this file and store it. And do the following (choose option A or B):
 
 a.) Visit the bug reporting site for our project and enter the bug by yourself.
    Please attach the zipped log. The site is (data should be entered in English):
-   http://sourceforge.net/tracker/?group_id=49749&atid=457319  
+   http://sourceforge.net/tracker/?groupId=49749&atid=457319
    You don't need to be member at sourceforge to add this information, if you are
    not please, write your email address somewhere in the error report. Describe
    exactly what you were doing when the exception occurred and how the problem
@@ -213,7 +213,7 @@ so well. If you find parts of GGC, which your think could work better, please le
 know. If you find that some functionality is missing, again, let us know. You can
 use either email, or you can use the following form (data should be entered in
 English):
-http://sourceforge.net/tracker/?group_id=49749&atid=457322
+http://sourceforge.net/tracker/?groupId=49749&atid=457322
 
 ---
 

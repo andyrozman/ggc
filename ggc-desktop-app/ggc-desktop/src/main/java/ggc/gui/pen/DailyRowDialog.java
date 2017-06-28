@@ -2,7 +2,6 @@ package ggc.gui.pen;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
@@ -28,8 +27,8 @@ import ggc.core.data.defs.GlucoseUnitType;
 import ggc.core.plugins.GGCPluginType;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
-import ggc.shared.bolushelper.BolusHelper;
-import ggc.shared.fooddesc.FoodDescriptionDialog;
+import ggc.gui.dialogs.bolushelper.BolusHelper;
+import ggc.gui.dialogs.fooddesc.FoodDescriptionDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -65,24 +64,24 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private static final long serialVersionUID = 6763016271693781911L;
 
-    private DataAccess m_da = DataAccess.getInstance();
-    private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
-    private ConfigurationManagerWrapper configurationManagerWrapper = m_da.getConfigurationManagerWrapper();
+    private DataAccess dataAccess = DataAccess.getInstance();
+    private I18nControlAbstract i18nControl = dataAccess.getI18nControlInstance();
+    private ConfigurationManagerWrapper configurationManagerWrapper = dataAccess.getConfigurationManagerWrapper();
 
     private boolean m_actionDone = false;
 
     JTextField ActField, CommentField, UrineField;
     JLabel label_title = new JLabel();
-    JLabel label_food;
+    // JLabel label_food;
     JCheckBox cb_food_set;
     DateTimeComponent dtc;
 
     String sDate = null;
     DailyValues dV = null;
     DailyValuesRow m_dailyValuesRow = null;
-    NumberFormat bg_displayFormat, bg_editFormat;
+    // NumberFormat bg_displayFormat, bg_editFormat;
 
-    JComponent components[] = new JComponent[9];
+    // JComponent components[] = new JComponent[9];
 
     boolean in_process;
     boolean debug = true;
@@ -160,8 +159,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private void initParameters(DailyValues ndV, String nDate)
     {
-        setTitle(m_ic.getMessage("ADD_ROW"));
-        label_title.setText(m_ic.getMessage("ADD_ROW"));
+        setTitle(i18nControl.getMessage("ADD_ROW"));
+        label_title.setText(i18nControl.getMessage("ADD_ROW"));
 
         sDate = nDate;
         dV = ndV;
@@ -180,8 +179,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private void initParameters(DailyValuesRow ndr)
     {
-        setTitle(m_ic.getMessage("EDIT_ROW"));
-        label_title.setText(m_ic.getMessage("EDIT_ROW"));
+        setTitle(i18nControl.getMessage("EDIT_ROW"));
+        label_title.setText(i18nControl.getMessage("EDIT_ROW"));
 
         sDate = ndr.getDateAsString();
         this.m_dailyValuesRow = ndr;
@@ -213,13 +212,13 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         if (sg.equals(sDate))
         {
-            dt = year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2)
+            dt = year + dataAccess.getLeadingZero(month, 2) + dataAccess.getLeadingZero(day, 2)
                     + ATDataAccessAbstract.getLeadingZero(gc.get(Calendar.HOUR_OF_DAY), 2)
                     + ATDataAccessAbstract.getLeadingZero(gc.get(Calendar.MINUTE), 2);
         }
         else
         {
-            dt = year + m_da.getLeadingZero(month, 2) + m_da.getLeadingZero(day, 2) + "0000";
+            dt = year + dataAccess.getLeadingZero(month, 2) + dataAccess.getLeadingZero(day, 2) + "0000";
         }
 
         this.dtc.setDateTime(Long.parseLong(dt));
@@ -246,7 +245,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         if (this.table_ins_pos.containsKey(1))
         {
-            val = this.m_dailyValuesRow.getIns1() + 0.1f * m_da.getFloatValueFromString(
+            val = this.m_dailyValuesRow.getIns1() + 0.1f * dataAccess.getFloatValueFromString(
                 this.m_dailyValuesRow.getExtendedValue(ExtendedDailyValueType.DecimalPartInsulin1), 0.0f);
             this.spinner_arr[this.table_ins_pos.get(1)].setValue(val);
             // this.spinner_arr[0].setValue(val); //new Integer((int)
@@ -255,7 +254,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         if (this.table_ins_pos.containsKey(2))
         {
-            val = this.m_dailyValuesRow.getIns2() + 0.1f * m_da.getFloatValueFromString(
+            val = this.m_dailyValuesRow.getIns2() + 0.1f * dataAccess.getFloatValueFromString(
                 this.m_dailyValuesRow.getExtendedValue(ExtendedDailyValueType.DecimalPartInsulin2), 0.0f);
             this.spinner_arr[this.table_ins_pos.get(2)].setValue(val); // new
                                                                        // Integer((int)
@@ -284,7 +283,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private void init()
     {
-        m_da.addComponent(this);
+        dataAccess.addComponent(this);
 
         int x = 0;
         int y = 0;
@@ -321,14 +320,14 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         label_title.setBounds(0, 15, 400, 35);
         panel.add(label_title);
 
-        addLabel(m_ic.getMessage("DATE") + ":", 78, panel);
-        addLabel(m_ic.getMessage("TIME") + ":", 108, panel);
+        addLabel(i18nControl.getMessage("DATE") + ":", 78, panel);
+        addLabel(i18nControl.getMessage("TIME") + ":", 108, panel);
 
-        this.dtc = new DateTimeComponent(this.m_da, DateTimeComponent.ALIGN_VERTICAL, 5);
+        this.dtc = new DateTimeComponent(this.dataAccess, DateTimeComponent.ALIGN_VERTICAL, 5);
         dtc.setBounds(140, 75, 100, 35);
         panel.add(dtc);
 
-        addLabel(m_ic.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
+        addLabel(i18nControl.getMessage("BLOOD_GLUCOSE") + ":", 138, panel);
         // addLabel(configurationManagerWrapper.getIns1Name() + " (" +
         // configurationManagerWrapper.getIns1Abbr() + ") :",
         // 198, panel);
@@ -376,8 +375,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             table_pos_ins.put(insulin_count, 1);
 
             this.spinner_arr[insulin_count] = ATSwingUtils.getJSpinner(0.0f, 0.0f,
-                m_da.getMaxValues(DataAccess.INSULIN_PEN_INJECTION, ins_type),
-                m_da.getInsulinPrecision(DataAccess.INSULIN_PEN_INJECTION, ins_type), 140, next_y, 55, 25, panel);
+                dataAccess.getMaxValues(DataAccess.INSULIN_PEN_INJECTION, ins_type),
+                dataAccess.getInsulinPrecision(DataAccess.INSULIN_PEN_INJECTION, ins_type), 140, next_y, 55, 25, panel);
 
             next_y += 30;
             insulin_count++;
@@ -395,8 +394,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             table_pos_ins.put(insulin_count, 2);
 
             this.spinner_arr[insulin_count] = ATSwingUtils.getJSpinner(0.0f, 0.0f,
-                m_da.getMaxValues(DataAccess.INSULIN_PEN_INJECTION, ins_type),
-                m_da.getInsulinPrecision(DataAccess.INSULIN_PEN_INJECTION, ins_type), 140, next_y, 55, 25, panel);
+                dataAccess.getMaxValues(DataAccess.INSULIN_PEN_INJECTION, ins_type),
+                dataAccess.getInsulinPrecision(DataAccess.INSULIN_PEN_INJECTION, ins_type), 140, next_y, 55, 25, panel);
 
             next_y += 30;
             insulin_count++;
@@ -414,8 +413,8 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             table_pos_ins.put(insulin_count, 3);
 
             this.spinner_arr[insulin_count] = ATSwingUtils.getJSpinner(0.0f, 0.0f,
-                m_da.getMaxValues(DataAccess.INSULIN_PEN_INJECTION, ins_type),
-                m_da.getInsulinPrecision(DataAccess.INSULIN_PEN_INJECTION, ins_type), 140, next_y, 55, 25, panel);
+                dataAccess.getMaxValues(DataAccess.INSULIN_PEN_INJECTION, ins_type),
+                dataAccess.getInsulinPrecision(DataAccess.INSULIN_PEN_INJECTION, ins_type), 140, next_y, 55, 25, panel);
 
             next_y += 30;
             insulin_count++;
@@ -453,15 +452,16 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         // next_y += insulin_count * 30;
 
-        addLabel(m_ic.getMessage("CH_LONG") + ":", next_y, panel);
-        addLabel(m_ic.getMessage("FOOD") + ":", next_y + 30, panel);
+        addLabel(i18nControl.getMessage("CH_LONG") + ":", next_y, panel);
+        addLabel(i18nControl.getMessage("FOOD") + ":", next_y + 30, panel);
 
         // this.ftf_ch = getTextField(2, 2, new Float(0.0f), 140, next_y, 55,
         // 25, panel);
 
         this.spinner_arr[3] = ATSwingUtils.getJSpinner(0.0f, 0.0f, 250.0f, 1, 140, next_y, 55, 25, panel);
 
-        addComponent(cb_food_set = new JCheckBox(" " + m_ic.getMessage("FOOD_SET")), 90, next_y + 32, 130, panel);
+        addComponent(cb_food_set = new JCheckBox(" " + i18nControl.getMessage("FOOD_SET")), 90, next_y + 32, 130,
+            panel);
         cb_food_set.setMultiClickThreshhold(500);
         cb_food_set.addChangeListener(new ChangeListener()
         {
@@ -495,19 +495,20 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             next_bottom_y = 297;
         }
 
-        addLabel(m_ic.getMessage("URINE") + ":", next_bottom_y, panel);
-        addLabel(m_ic.getMessage("ACTIVITY") + ":", next_bottom_y + 30, panel);
-        addLabel(m_ic.getMessage("COMMENT") + ":", next_bottom_y + 60, panel);
+        addLabel(i18nControl.getMessage("URINE") + ":", next_bottom_y, panel);
+        addLabel(i18nControl.getMessage("ACTIVITY") + ":", next_bottom_y + 30, panel);
+        addLabel(i18nControl.getMessage("COMMENT") + ":", next_bottom_y + 60, panel);
 
         addComponent(UrineField = new JTextField(), 120, next_bottom_y, 240, panel);
         addComponent(ActField = new JTextField(), 120, next_bottom_y + 30, 240, panel);
         addComponent(CommentField = new JTextField(), 120, next_bottom_y + 60, 240, panel);
 
-        String button_command[] = { "bolus_helper", m_ic.getMessage("BOLUS_HELPER"), "update_ch",
-                                    m_ic.getMessage("UPDATE_FROM_FOOD"), "edit_food", m_ic.getMessage("EDIT_FOOD"),
-                                    "ok", m_ic.getMessage("OK"), "cancel", m_ic.getMessage("CANCEL"), "food_desc",
-                                    m_ic.getMessage("FOOD_BY_DESCRIPTION"),
-                // "help", i18nControl.getMessage("HELP")
+        String button_command[] = { "bolus_helper", i18nControl.getMessage("BOLUS_HELPER"), //
+                                    "update_ch", i18nControl.getMessage("UPDATE_FROM_FOOD"), //
+                                    "edit_food", i18nControl.getMessage("EDIT_FOOD"), //
+                                    "ok", i18nControl.getMessage("OK"), //
+                                    "cancel", i18nControl.getMessage("CANCEL"), //
+                                    "food_desc", i18nControl.getMessage("FOOD_BY_DESCRIPTION"), //
         };
 
         String button_icon[] = { null, null, null, "ok.png", "cancel.png", null };
@@ -529,7 +530,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
             if (button_icon[k] != null)
             {
-                button.setIcon(ATSwingUtils.getImageIcon_22x22(button_icon[k], this, m_da));
+                button.setIcon(ATSwingUtils.getImageIcon_22x22(button_icon[k], this, dataAccess));
             }
 
             if (button_coord[i + 3] == 0)
@@ -546,9 +547,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
 
         help_button = ATSwingUtils.createHelpButtonByBounds(260, next_bottom_y + 102, 110, 25, this,
-            ATSwingUtils.FONT_NORMAL, m_da);
+            ATSwingUtils.FONT_NORMAL, dataAccess);
         panel.add(help_button);
-        m_da.enableHelp(this);
+        dataAccess.enableHelp(this);
 
         this.setBounds(x, y, width, next_bottom_y + 175);
 
@@ -614,7 +615,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         {
             if (this.isMealSet())
             {
-                if (m_da.isValueSet(this.m_dailyValuesRow.getMealsIds()))
+                if (dataAccess.isValueSet(this.m_dailyValuesRow.getMealsIds()))
                 {
 
                     PlugInClient pc = DataAccess.getInstance().getPlugIn(GGCPluginType.NutritionToolPlugin);
@@ -632,7 +633,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
                     }
 
                 }
-                else if (m_da.isValueSet(this.m_dailyValuesRow.getFoodDescriptionCH()))
+                else if (dataAccess.isValueSet(this.m_dailyValuesRow.getFoodDescriptionCH()))
                 {
                     updateMealsSet();
                     setCh(this.m_dailyValuesRow.getFoodDescriptionCH());
@@ -641,10 +642,10 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         }
         else if (action.equals("bolus_helper"))
         {
-            BolusHelper bh = new BolusHelper(this, m_da.getFloatValue(this.spinner_arr[5].getValue()),
+            BolusHelper bh = new BolusHelper(this, dataAccess.getFloatValue(this.spinner_arr[5].getValue()),
                     // dataAccess.getJFormatedTextValueFloat(ftf_bg2),
                     // dataAccess.getJFormatedTextValueFloat(this.ftf_ch),
-                    m_da.getFloatValue(this.spinner_arr[3].getValue()), this.dtc.getDateTime(), 1,
+                    dataAccess.getFloatValue(this.spinner_arr[3].getValue()), this.dtc.getDateTime(), 1,
                     DataAccess.INSULIN_PEN_INJECTION);
 
             if (bh.hasResult())
@@ -689,7 +690,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
     private void setCh(String ch_str)
     {
-        if (!m_da.isValueSet(ch_str))
+        if (!dataAccess.isValueSet(ch_str))
         {
             this.spinner_arr[3].setValue(0.0f);
             // this.ftf_ch.setValue(0.0f);
@@ -701,7 +702,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         // ATDataAccessAbstract.real_decimal);
         ch_str = ch_str.replace(",", ".");
         // this.ftf_ch.setValue(dataAccess.getFloatValue(ch_str));
-        this.spinner_arr[3].setValue(m_da.getFloatValue(ch_str));
+        this.spinner_arr[3].setValue(dataAccess.getFloatValue(ch_str));
     }
 
 
@@ -712,12 +713,12 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         if (meals_set == 0)
         {
             this.cb_food_set.setSelected(false);
-            this.cb_food_set.setText("  " + String.format(m_ic.getMessage("FOOD_SET"), "?"));
+            this.cb_food_set.setText("  " + String.format(i18nControl.getMessage("FOOD_SET"), "?"));
         }
         else
         {
             this.cb_food_set.setSelected(true);
-            this.cb_food_set.setText("  " + String.format(m_ic.getMessage("FOOD_SET"), meals_set));
+            this.cb_food_set.setText("  " + String.format(i18nControl.getMessage("FOOD_SET"), meals_set));
         }
 
     }
@@ -728,7 +729,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         this.m_dailyValuesRow.setDateTime(this.dtc.getDateTime());
 
-        float f = m_da.getFloatValue(this.spinner_arr[4].getValue());
+        float f = dataAccess.getFloatValue(this.spinner_arr[4].getValue());
 
         if (f > 0.0)
         {
@@ -737,7 +738,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         setInsulinValues();
 
-        this.m_dailyValuesRow.setCH(m_da.getFloatValue(this.spinner_arr[3].getValue()));
+        this.m_dailyValuesRow.setCH(dataAccess.getFloatValue(this.spinner_arr[3].getValue()));
 
         this.m_dailyValuesRow.setActivity(ActField.getText());
         this.m_dailyValuesRow.setUrine(UrineField.getText());
@@ -751,7 +752,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
         this.m_actionDone = true;
 
-        m_da.removeComponent(this);
+        dataAccess.removeComponent(this);
         this.dispose();
 
         // to-do
@@ -811,7 +812,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         {
             JSpinner sp = this.spinner_arr[i];
 
-            String vd = DataAccess.getFloatAsString(m_da.getFloatValue(sp.getValue()), 1);
+            String vd = dataAccess.getFloatAsString(dataAccess.getFloatValue(sp.getValue()), 1);
             vd = vd.replace(',', '.');
 
             int v_i = Integer.parseInt(vd.substring(0, vd.indexOf(".")));
@@ -980,7 +981,7 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             // this.spinner_arr[4].getCode());
 
             // .ftf_bg1.getText().trim().length()
-            if (this.m_da.getFloatValue(this.spinner_arr[4].getValue()) == 0.0f)
+            if (this.dataAccess.getFloatValue(this.spinner_arr[4].getValue()) == 0.0f)
             {
                 // this.ftf_bg2.setValue(new Float(0.0f));
                 this.spinner_arr[5].setValue(0.0f);
@@ -990,11 +991,11 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
 
             // System.out.println("focus lost: bg1 (spinner[4]). mg/dL: " +
             // this.spinner_arr[4].getCode());
-            float val = this.m_da.getFloatValue(this.spinner_arr[4].getValue());
+            float val = this.dataAccess.getFloatValue(this.spinner_arr[4].getValue());
             // dataAccess.getJFormatedTextValueInt(ftf_bg1);
             // float v_2 = dataAccess.getBGValueDifferent(DataAccess.BG_MGDL,
             // val);
-            float v_2 = m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mg_dL,
+            float v_2 = dataAccess.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mg_dL,
                 Converter_mgdL_mmolL.UNIT_mmol_L, val);
             // this.ftf_bg2.setValue(new Float(v_2));
 
@@ -1008,9 +1009,9 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
         {
             // System.out.println("text2: " + this.ftf_bg2.getText());
 
-            if (this.m_da.getFloatValue(this.spinner_arr[5].getValue()) == 0.0f) // (this.ftf_bg2.getText().trim().length()
-                                                                                 // ==
-                                                                                 // 0)
+            if (this.dataAccess.getFloatValue(this.spinner_arr[5].getValue()) == 0.0f) // (this.ftf_bg2.getText().trim().length()
+            // ==
+            // 0)
             {
                 this.spinner_arr[4].setValue(0);
                 // this.ftf_bg1.setValue(new Integer(0));
@@ -1021,12 +1022,12 @@ public class DailyRowDialog extends JDialog implements ActionListener, KeyListen
             // System.out.println("focus lost: bg2 (spinner[5])");
 
             // System.out.println("focus lost: bg2");
-            float val = this.m_da.getFloatValue(this.spinner_arr[5].getValue());
+            float val = this.dataAccess.getFloatValue(this.spinner_arr[5].getValue());
             // dataAccess.getJFormatedTextValueFloat(ftf_bg2);
             // int v_2 = (int)
             // dataAccess.getBGValueDifferent(DataAccess.BG_MMOL,
             // val);
-            int v_2 = (int) m_da.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mmol_L,
+            int v_2 = (int) dataAccess.getBGConverter().getValueByType(Converter_mgdL_mmolL.UNIT_mmol_L,
                 Converter_mgdL_mmolL.UNIT_mg_dL, val);
             // this.ftf_bg1.setValue(new Integer(v_2));
             this.spinner_arr[4].setValue(v_2);
