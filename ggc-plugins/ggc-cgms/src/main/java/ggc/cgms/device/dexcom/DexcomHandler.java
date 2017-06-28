@@ -10,9 +10,6 @@ import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.v2.DeviceDefinition;
 import ggc.plugin.output.OutputWriter;
 
-/**
- * Created by andy on 15.04.15.
- */
 public class DexcomHandler extends CGMSDeviceHandler
 {
 
@@ -47,7 +44,6 @@ public class DexcomHandler extends CGMSDeviceHandler
 
             outputWriter.endOutput();
         }
-
     }
 
 
@@ -77,7 +73,12 @@ public class DexcomHandler extends CGMSDeviceHandler
 
             outputWriter.endOutput();
         }
+    }
 
+
+    public void closeDevice() throws PlugInBaseException
+    {
+        // not used - is handled internally
     }
 
 

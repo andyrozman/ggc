@@ -54,9 +54,13 @@ public class MinimedCGMSDeviceHandler extends CGMSDeviceHandler implements Minim
 
     private static MinimedSpecialConfig specialConfigPanel;
 
+    public DataAccessCGMS dataAccess;
 
-    public MinimedCGMSDeviceHandler() throws PlugInBaseException
+
+    public MinimedCGMSDeviceHandler(DataAccessCGMS dataAccess)
     {
+        this.dataAccess = dataAccess;
+        this.registerConverters();
     }
 
 
@@ -90,6 +94,12 @@ public class MinimedCGMSDeviceHandler extends CGMSDeviceHandler implements Minim
     }
 
 
+    public void closeDevice() throws PlugInBaseException
+    {
+        // not used - close is handled internally
+    }
+
+
     public List<GGCPlugInFileReaderContext> getFileDownloadContexts(DownloadSupportType downloadSupportType)
     {
         return null;
@@ -107,9 +117,9 @@ public class MinimedCGMSDeviceHandler extends CGMSDeviceHandler implements Minim
         if (!MinimedUtil.isTargetRegistered(MinimedTargetType.CGMS))
         {
             MinimedUtil.registerConverter(MinimedTargetType.CGMS, MinimedConverterType.CGMS522Converter,
-                new Minimed522CGMSDataConverter());
+                new Minimed522CGMSDataConverter(dataAccess));
             MinimedUtil.registerConverter(MinimedTargetType.CGMS, MinimedConverterType.CGMS523Converter,
-                new Minimed523CGMSDataConverter());
+                new Minimed523CGMSDataConverter(dataAccess));
         }
     }
 

@@ -1,12 +1,12 @@
 package ggc.cgms.data.db;
 
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -49,8 +49,8 @@ import ggc.plugin.db.PluginDb;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  * 
- *  Filename:  ###---###  
- *  Description:
+ *  Filename:      GGC_CGMSDb
+ *  Description:   CGMS database handler
  * 
  *  Author: Andy {andy@atech-software.com}
  */
@@ -59,7 +59,6 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(GGC_CGMSDb.class);
-    DataAccessCGMS m_da = DataAccessCGMS.getInstance();
 
 
     /**
@@ -69,8 +68,8 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
      */
     public GGC_CGMSDb(HibernateDb db)
     {
-        super(db);
-        LOG.debug("Created CGMSDb");
+        super(db, DataAccessCGMS.getInstance());
+        // LOG.debug("Created CGMSDb");
         // getAllElementsCount();
     }
 
@@ -88,26 +87,22 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
         long dt = ATechDate.getATDateTimeFromGC(gc, ATechDateType.DateOnly);
         // long dt = 20070323;
 
-        DeviceValuesDay dV = new DeviceValuesDay(m_da);
+        DeviceValuesDay dV = new DeviceValuesDay(dataAccess);
         dV.setDateTimeGC(gc);
 
         String sql = "";
 
         try
         {
-            sql = "SELECT dv from ggc.core.db.hibernate.cgms.CGMSDataH as dv WHERE dv.dt_info =  " + dt
-                    + " ORDER BY dv.dt_info ";
-            // + "000000 AND dv.dt_info <= " + dt +
-            // "235959 ORDER BY dv.dt_info";
+            List<CGMSDataH> dataList = getHibernateData(CGMSDataH.class, //
+                Arrays.asList( //
+                    Restrictions.eq("personId", this.dataAccess.getCurrentUserId()), //
+                    Restrictions.eq("dtInfo", dt)) //
+                , Arrays.asList(Order.asc("dtInfo")));
 
-            Query q = this.db.getSession().createQuery(sql);
-
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
+            for (CGMSDataH cgmsDataH : dataList)
             {
-                CGMSDataH pdh = (CGMSDataH) it.next();
-                CGMSValuesEntry dv = new CGMSValuesEntry(pdh);
+                CGMSValuesEntry dv = new CGMSValuesEntry(cgmsDataH);
 
                 dV.addList(dv.getSubEntryList());
             }
@@ -189,7 +184,9 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
         int sum_all = 0;
 
         Criteria criteria = this.getSession().createCriteria(CGMSDataH.class);
-        criteria.add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()));
+        criteria.add(Restrictions.eq("personId", (int) dataAccess.getCurrentUserId()));
+        criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
+
         criteria.setProjection(Projections.rowCount());
         in = (Integer) criteria.list().get(0);
         sum_all = in.intValue();
@@ -213,21 +210,19 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
         {
             int counter = 0;
 
-            sql = "SELECT dv from ggc.core.db.hibernate.cgms.CGMSDataH as dv WHERE dv.person_id="
-                    + m_da.getCurrentUserId() + " ORDER BY dv.dt_info ";
-
-            Query q = this.db.getSession().createQuery(sql);
-
-            Iterator<?> it = q.list().iterator();
+            List<CGMSDataH> dataList = getHibernateData(CGMSDataH.class, //
+                Arrays.asList( //
+                    Restrictions.eq("personId", this.dataAccess.getCurrentUserId()), //
+                    Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%")) //
+                , Arrays.asList(Order.asc("dtInfo")));
 
             pdr.writeStatus(-1);
-            // id = "PD_%s_%s_%s";
 
-            while (it.hasNext())
+            for (CGMSDataH cgmsDataH : dataList)
             {
                 counter++;
 
-                CGMSValuesEntry pve = new CGMSValuesEntry((CGMSDataH) it.next());
+                CGMSValuesEntry pve = new CGMSValuesEntry(cgmsDataH);
                 dt.put(pve.getSpecialId(), pve);
                 pdr.writeStatus(counter);
             }
@@ -251,17 +246,17 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
 
         GraphTimeDataCollection collection = new GraphTimeDataCollection();
 
-        List<ATechDate> dates = m_da.getDatesList(gcFrom, gcTill, true);
+        List<ATechDate> dates = dataAccess.getDatesList(gcFrom, gcTill, true);
 
         Criteria criteria = null;
 
         try
         {
             criteria = getSession().createCriteria(CGMSDataH.class)
-                    .add(Restrictions.eq("person_id", (int) m_da.getCurrentUserId()))
-                    .add(Restrictions.eq("base_type", 1))
-                    .add(Restrictions.and(Restrictions.ge("dt_info", dates.get(0).getATDateTimeAsLong()),
-                        Restrictions.le("dt_info", dates.get(1).getATDateTimeAsLong())));
+                    .add(Restrictions.eq("personId", (int) dataAccess.getCurrentUserId()))
+                    .add(Restrictions.eq("baseType", 1))
+                    .add(Restrictions.and(Restrictions.ge("dtInfo", dates.get(0).getATDateTimeAsLong()),
+                        Restrictions.le("dtInfo", dates.get(1).getATDateTimeAsLong())));
 
             List listData = criteria.list();
 

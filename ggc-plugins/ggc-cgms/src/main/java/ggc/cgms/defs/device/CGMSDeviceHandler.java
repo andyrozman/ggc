@@ -3,6 +3,7 @@ package ggc.cgms.defs.device;
 import java.util.List;
 
 import ggc.cgms.util.DataAccessCGMS;
+import ggc.core.plugins.GGCPluginType;
 import ggc.plugin.data.GGCPlugInFileReaderContext;
 import ggc.plugin.device.DownloadSupportType;
 import ggc.plugin.device.v2.DeviceDefinition;
@@ -74,6 +75,15 @@ public abstract class CGMSDeviceHandler extends DeviceHandlerAbstract
     protected CGMSDeviceDefinition getDeviceDefinition(DeviceDefinition definition)
     {
         return (CGMSDeviceDefinition) definition;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public GGCPluginType getGGCPluginType()
+    {
+        return GGCPluginType.CGMSToolPlugin;
     }
 
 }

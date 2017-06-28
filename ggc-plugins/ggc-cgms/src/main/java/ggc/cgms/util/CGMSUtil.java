@@ -42,11 +42,19 @@ import ggc.plugin.data.DeviceValuesEntry;
 public class CGMSUtil
 {
 
-    private static DataAccessCGMS dataAccess = DataAccessCGMS.getInstance();
+    private static DataAccessCGMS dataAccess;
 
-    private static GGCI18nControl i18nControl = dataAccess.getI18nControlInstance();
+    private static GGCI18nControl i18nControl;
 
-    private static GlucoseUnitType BGUnit = DataAccess.getInstance().getGlucoseUnitType();
+    private static GlucoseUnitType BGUnit;
+
+
+    public static void setDataAccess(DataAccessCGMS dataAccess_)
+    {
+        dataAccess = dataAccess_;
+        i18nControl = dataAccess.getI18nControlInstance();
+        BGUnit = DataAccess.getInstance().getGlucoseUnitType();
+    }
 
 
     public static GGCI18nControl getI18Control()

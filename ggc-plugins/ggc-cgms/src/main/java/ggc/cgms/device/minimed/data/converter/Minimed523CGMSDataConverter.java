@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.atech.utils.ATDataAccessAbstract;
 
 import ggc.cgms.data.defs.CGMSConfigurationGroup;
+import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
 import ggc.plugin.device.impl.minimed.data.converter.MinimedDataConverterAbstract;
@@ -42,6 +43,12 @@ public class Minimed523CGMSDataConverter extends Minimed522CGMSDataConverter
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(Minimed523CGMSDataConverter.class);
+
+
+    public Minimed523CGMSDataConverter(DataAccessCGMS dataAccess)
+    {
+        super(dataAccess);
+    }
 
 
     @Override
@@ -173,17 +180,13 @@ public class Minimed523CGMSDataConverter extends Minimed522CGMSDataConverter
         // System.out.println("Set Rise Rate Limit: " +
         // DataAccessPump.Decimal3Format.format(rd[1]/1000.0f) + " mmol/L/min");
 
-        writeSetting("CCFG_RATE_OF_CHANGE_ALERTS_RISE_RATE_LIMIT",
-            minimedReply.getRawDataAsInt(1) == 0 ? "OFF"
-                    : DataAccessPlugInBase.Decimal3Format.format(minimedReply.getRawDataAsInt(1) / 1000.0f)
-                            + " mmol/L / min",
-            CGMSConfigurationGroup.Warnings);
+        writeSetting("CCFG_RATE_OF_CHANGE_ALERTS_RISE_RATE_LIMIT", minimedReply.getRawDataAsInt(1) == 0 ? "OFF"
+                : DataAccessPlugInBase.Decimal3Format.format(minimedReply.getRawDataAsInt(1) / 1000.0f)
+                        + " mmol/L / min", CGMSConfigurationGroup.Warnings);
 
-        writeSetting("CCFG_RATE_OF_CHANGE_ALERTS_FALL_RATE_LIMIT",
-            minimedReply.getRawDataAsInt(2) == 0 ? "OFF"
-                    : DataAccessPlugInBase.Decimal3Format.format(minimedReply.getRawDataAsInt(2) / 1000.0f)
-                            + " mmol/L / min",
-            CGMSConfigurationGroup.Warnings);
+        writeSetting("CCFG_RATE_OF_CHANGE_ALERTS_FALL_RATE_LIMIT", minimedReply.getRawDataAsInt(2) == 0 ? "OFF"
+                : DataAccessPlugInBase.Decimal3Format.format(minimedReply.getRawDataAsInt(2) / 1000.0f)
+                        + " mmol/L / min", CGMSConfigurationGroup.Warnings);
 
         // SET FALL RATE LIMIT = 0.250
         // SET RISE RATE LIMIT = 0.275
@@ -199,8 +202,8 @@ public class Minimed523CGMSDataConverter extends Minimed522CGMSDataConverter
         }
         else
         {
-            writeSetting("CCFG_SENSOR_TIME_SENSITIVITY_LOW_PREDICTIVE_ALERT",
-                "00:" + (minimedReply.getRawDataAsInt(4) - 128), CGMSConfigurationGroup.Warnings);
+            writeSetting("CCFG_SENSOR_TIME_SENSITIVITY_LOW_PREDICTIVE_ALERT", "00:"
+                    + (minimedReply.getRawDataAsInt(4) - 128), CGMSConfigurationGroup.Warnings);
         }
 
         if (minimedReply.getRawDataAsInt(3) == 0)
@@ -210,8 +213,8 @@ public class Minimed523CGMSDataConverter extends Minimed522CGMSDataConverter
         }
         else
         {
-            writeSetting("CCFG_SENSOR_TIME_SENSITIVITY_HIGH_PREDICTIVE_ALERT",
-                "00:" + (minimedReply.getRawDataAsInt(3) - 128), CGMSConfigurationGroup.Warnings);
+            writeSetting("CCFG_SENSOR_TIME_SENSITIVITY_HIGH_PREDICTIVE_ALERT", "00:"
+                    + (minimedReply.getRawDataAsInt(3) - 128), CGMSConfigurationGroup.Warnings);
         }
 
         return true;

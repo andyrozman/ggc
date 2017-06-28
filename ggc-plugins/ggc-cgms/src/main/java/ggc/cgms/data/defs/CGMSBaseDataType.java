@@ -4,7 +4,6 @@ import java.util.Hashtable;
 
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
-import ggc.cgms.util.DataAccessCGMS;
 
 /**
  *  Application: GGC - GNU Gluco Control
@@ -76,17 +75,29 @@ public enum CGMSBaseDataType implements CodeEnumWithTranslation
 
     static Hashtable<String, CGMSBaseDataType> translationMapping = new Hashtable<String, CGMSBaseDataType>();
     static Hashtable<Integer, CGMSBaseDataType> codeMapping = new Hashtable<Integer, CGMSBaseDataType>();
+    private static boolean translated;
 
     static
     {
-        I18nControlAbstract ic = DataAccessCGMS.getInstance().getI18nControlInstance();
+        for (CGMSBaseDataType pbt : values())
+        {
+            codeMapping.put(pbt.code, pbt);
+        }
+    }
+
+
+    public static void translateKeywords(I18nControlAbstract ic)
+    {
+        if (translated)
+            return;
 
         for (CGMSBaseDataType pbt : values())
         {
             pbt.setTranslation(ic.getMessage(pbt.i18nKey));
             translationMapping.put(pbt.getTranslation(), pbt);
-            codeMapping.put(pbt.code, pbt);
         }
+
+        translated = true;
     }
 
     int code;
@@ -94,7 +105,7 @@ public enum CGMSBaseDataType implements CodeEnumWithTranslation
     String translation;
 
 
-    private CGMSBaseDataType(int code, String i18nKey)
+    CGMSBaseDataType(int code, String i18nKey)
     {
         this.code = code;
         this.i18nKey = i18nKey;

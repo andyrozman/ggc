@@ -26,6 +26,7 @@ import ggc.cgms.data.graph.CGMSGraphViewDaily;
 import ggc.cgms.util.CGMSUtil;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.data.defs.GlucoseUnitType;
+import ggc.core.util.DataAccess;
 import ggc.plugin.data.DeviceValuesDay;
 
 /**
@@ -59,9 +60,6 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
 
     // private static Log log = LogFactory.getLog(PumpDataDialog.class);
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -3923519587722702685L;
     private DataAccessCGMS m_da = DataAccessCGMS.getInstance();
     private I18nControlAbstract m_ic = m_da.getI18nControlInstance();
@@ -239,63 +237,71 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
 
         /*
          * JPanel BGPanel = new JPanel(new GridLayout(0, 6));
-         * BGPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage(
+         * BGPanel.setBorder(BorderFactory.createTitledBorder(i18nControl.
+         * getMessage(
          * "BLOOD_GLUCOSE_CALIB") + ":"));
-         * BGPanel.add(new JLabel(m_ic.getMessage("AVG_BG") + ":"));
+         * BGPanel.add(new JLabel(i18nControl.getMessage("AVG_BG") + ":"));
          * BGPanel.add(avgBG = new JLabel());
-         * BGPanel.add(new JLabel(m_ic.getMessage("HIGHEST") + ":"));
+         * BGPanel.add(new JLabel(i18nControl.getMessage("HIGHEST") + ":"));
          * BGPanel.add(highestBG = new JLabel());
-         * BGPanel.add(new JLabel(m_ic.getMessage("READINGS") + ":"));
+         * BGPanel.add(new JLabel(i18nControl.getMessage("READINGS") + ":"));
          * BGPanel.add(readings = new JLabel());
-         * BGPanel.add(new JLabel(m_ic.getMessage("STD_DEV") + ":"));
+         * BGPanel.add(new JLabel(i18nControl.getMessage("STD_DEV") + ":"));
          * BGPanel.add(stdDev = new JLabel());
-         * BGPanel.add(new JLabel(m_ic.getMessage("LOWEST") + ":"));
+         * BGPanel.add(new JLabel(i18nControl.getMessage("LOWEST") + ":"));
          * BGPanel.add(lowestBG = new JLabel());
          * InsPanel.add(new JLabel(getIns1Abbr() + ":"));
          * InsPanel.add(sumIns1 = new JLabel());
-         * InsPanel.add(new JLabel(m_ic.getMessage("AVG") + " " + getIns1Abbr()
+         * InsPanel.add(new JLabel(i18nControl.getMessage("AVG") + " " +
+         * getIns1Abbr()
          * + ":"));
          * InsPanel.add(avgIns1 = new JLabel());
-         * InsPanel.add(new JLabel(m_ic.getMessage("DOSE") + " " + getIns1Abbr()
+         * InsPanel.add(new JLabel(i18nControl.getMessage("DOSE") + " " +
+         * getIns1Abbr()
          * + ":"));
          * InsPanel.add(doseIns1 = new JLabel());
          * InsPanel.add(new JLabel(getIns2Abbr() + ":"));
          * InsPanel.add(sumIns2 = new JLabel());
-         * InsPanel.add(new JLabel(m_ic.getMessage("AVG") + " " + getIns2Abbr()
+         * InsPanel.add(new JLabel(i18nControl.getMessage("AVG") + " " +
+         * getIns2Abbr()
          * + ":"));
          * InsPanel.add(avgIns2 = new JLabel());
-         * InsPanel.add(new JLabel(m_ic.getMessage("DOSE") + " " + getIns2Abbr()
+         * InsPanel.add(new JLabel(i18nControl.getMessage("DOSE") + " " +
+         * getIns2Abbr()
          * + ":"));
          * InsPanel.add(doseIns2 = new JLabel());
-         * InsPanel.add(new JLabel(m_ic.getMessage("TOTAL") + ":"));
+         * InsPanel.add(new JLabel(i18nControl.getMessage("TOTAL") + ":"));
          * InsPanel.add(sumIns = new JLabel());
-         * InsPanel.add(new JLabel("")); //m_ic.getMessage("AVG_INS") + ":"));
+         * InsPanel.add(new JLabel("")); //i18nControl.getMessage("AVG_INS") +
+         * ":"));
          * InsPanel.add(avgIns = new JLabel());
-         * InsPanel.add(new JLabel(m_ic.getMessage("DOSE_INS") + ":"));
+         * InsPanel.add(new JLabel(i18nControl.getMessage("DOSE_INS") + ":"));
          * InsPanel.add(doseIns = new JLabel());
          * // Panel for BU Stats
          * JPanel BUPanel = new JPanel(new GridLayout(1, 6));
-         * BUPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage(
+         * BUPanel.setBorder(BorderFactory.createTitledBorder(i18nControl.
+         * getMessage(
          * "BREAD_UNITS") + ":"));
-         * BUPanel.add(new JLabel(m_ic.getMessage("SUM") + ":"));
+         * BUPanel.add(new JLabel(i18nControl.getMessage("SUM") + ":"));
          * BUPanel.add(sumBE = new JLabel());
-         * BUPanel.add(new JLabel(m_ic.getMessage("AVG") + ":"));
+         * BUPanel.add(new JLabel(i18nControl.getMessage("AVG") + ":"));
          * BUPanel.add(avgBE = new JLabel());
-         * BUPanel.add(new JLabel(m_ic.getMessage("MEALS") + ":"));
+         * BUPanel.add(new JLabel(i18nControl.getMessage("MEALS") + ":"));
          * BUPanel.add(meals = new JLabel());
          * // Panel for BG Stats
          * JPanel BGPanel = new JPanel(new GridLayout(0, 6));
-         * BGPanel.setBorder(BorderFactory.createTitledBorder(m_ic.getMessage(
+         * BGPanel.setBorder(BorderFactory.createTitledBorder(i18nControl.
+         * getMessage(
          * "BLOOD_GLUCOSE") + ":"));
-         * BGPanel.add(new JLabel(m_ic.getMessage("AVG_BG") + ":"));
+         * BGPanel.add(new JLabel(i18nControl.getMessage("AVG_BG") + ":"));
          * BGPanel.add(avgBG = new JLabel());
-         * BGPanel.add(new JLabel(m_ic.getMessage("HIGHEST") + ":"));
+         * BGPanel.add(new JLabel(i18nControl.getMessage("HIGHEST") + ":"));
          * BGPanel.add(highestBG = new JLabel());
-         * BGPanel.add(new JLabel(m_ic.getMessage("READINGS") + ":"));
+         * BGPanel.add(new JLabel(i18nControl.getMessage("READINGS") + ":"));
          * BGPanel.add(readings = new JLabel());
-         * BGPanel.add(new JLabel(m_ic.getMessage("STD_DEV") + ":"));
+         * BGPanel.add(new JLabel(i18nControl.getMessage("STD_DEV") + ":"));
          * BGPanel.add(stdDev = new JLabel());
-         * BGPanel.add(new JLabel(m_ic.getMessage("LOWEST") + ":"));
+         * BGPanel.add(new JLabel(i18nControl.getMessage("LOWEST") + ":"));
          * BGPanel.add(lowestBG = new JLabel());
          */
 
@@ -371,6 +377,8 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         };
         table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
+        DataAccess.getSkinManager().reSkinifyComponent(table);
+
         resultsPane = new JScrollPane(table);
         // resultsPane.getViewport().addMouseListener(ma);
         // resultsPane.getViewport().setBackground(table.getBackground());
@@ -414,21 +422,24 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
         // Dimension dim = new Dimension(120, 20);
 
         /*
-         * JButton addButton = new JButton("  " + m_ic.getMessage("ADD"));
+         * JButton addButton = new JButton("  " +
+         * i18nControl.getMessage("ADD"));
          * addButton.setPreferredSize(dim);
          * addButton.setIcon(dataAccess.getImageIcon_22x22("table_add.png",
          * this));
          * addButton.setActionCommand("add_row");
          * addButton.addActionListener(this);
          * EntryBox.add(addButton);
-         * JButton editButton = new JButton("  " + m_ic.getMessage("EDIT"));
+         * JButton editButton = new JButton("  " +
+         * i18nControl.getMessage("EDIT"));
          * editButton.setPreferredSize(dim);
          * editButton.setIcon(dataAccess.getImageIcon_22x22("table_edit.png",
          * this));
          * editButton.setActionCommand("edit_row");
          * editButton.addActionListener(this);
          * EntryBox.add(editButton);
-         * JButton delButton = new JButton("  " + m_ic.getMessage("DELETE"));
+         * JButton delButton = new JButton("  " +
+         * i18nControl.getMessage("DELETE"));
          * delButton.setPreferredSize(dim);
          * delButton.setIcon(dataAccess.getImageIcon_22x22("table_delete.png",
          * this));
@@ -579,11 +590,11 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
     /*
      * private String getIns1Abbr()
      * {
-     * return m_ic.getMessage("BOLUS"); //"Bolus Insulin";
+     * return i18nControl.getMessage("BOLUS"); //"Bolus Insulin";
      * }
      * private String getIns2Abbr()
      * {
-     * return m_ic.getMessage("BASAL");
+     * return i18nControl.getMessage("BASAL");
      * //return "Basal Insulin";
      * }
      */
@@ -615,14 +626,15 @@ public class CGMSDataDialog extends JDialog implements ActionListener, HelpCapab
          * if (table.getSelectedRow() == -1)
          * {
          * JOptionPane.showMessageDialog(this,
-         * m_ic.getMessage("SELECT_ROW_FIRST"), m_ic.getMessage("ERROR"),
+         * i18nControl.getMessage("SELECT_ROW_FIRST"),
+         * i18nControl.getMessage("ERROR"),
          * JOptionPane.ERROR_MESSAGE);
          * return;
          * }
          * //DeviceValuesEntryInterface dei =
          * this.dayData.getRowAt(table.getSelectedRow());
          * int option_selected = JOptionPane.showOptionDialog(this,
-         * m_ic.getMessage("ARE_YOU_SURE_DELETE"), m_ic
+         * i18nControl.getMessage("ARE_YOU_SURE_DELETE"), i18nControl
          * .getMessage("QUESTION"), JOptionPane.YES_NO_OPTION,
          * JOptionPane.QUESTION_MESSAGE, null,
          * dataAccess.options_yes_no, JOptionPane.YES_OPTION);

@@ -46,9 +46,12 @@ public class Minimed522CGMSDataConverter extends MinimedDataConverterAbstract
     private static final Logger LOG = LoggerFactory.getLogger(Minimed522CGMSDataConverter.class);
 
 
-    public Minimed522CGMSDataConverter()
+    // public DataAccessCGMS dataAccess;
+
+    public Minimed522CGMSDataConverter(DataAccessCGMS dataAccess)
     {
-        super(DataAccessCGMS.getInstance());
+        super(dataAccess);
+        // this.dataAccess = dataAccess;
         this.bitUtils = MinimedUtil.getBitUtils();
         this.outputWriter = MinimedUtil.getOutputWriter();
     }
@@ -182,8 +185,7 @@ public class Minimed522CGMSDataConverter extends MinimedDataConverterAbstract
     }
 
 
-    protected void decodeEnableSetting(String key, MinimedCommandReply minimedReply, int bit,
-            CGMSConfigurationGroup pcg)
+    protected void decodeEnableSetting(String key, MinimedCommandReply minimedReply, int bit, CGMSConfigurationGroup pcg)
     {
         writeSetting(key, parseResultEnable(minimedReply.getRawDataAsInt(bit)), pcg);
     }

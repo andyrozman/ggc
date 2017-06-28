@@ -84,11 +84,11 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     {
         this.id = pdh.getId();
 
-        this.datetime = pdh.getDt_info();
+        this.datetime = pdh.getDtInfo();
         this.type = CGMSExtendedDataType.getEnum(pdh.getType());
         this.value = pdh.getValue();
         loadExtended(pdh.getExtended());
-        this.personId = pdh.getPerson_id();
+        this.personId = pdh.getPersonId();
         this.comment = pdh.getComment();
     }
 
@@ -288,11 +288,11 @@ public class CGMSValuesExtendedEntry extends DeviceValuesEntry implements Statis
     {
         this.personId = CGMSUtil.getCurrentUserId();
 
-        ch.setDt_info(this.datetime);
+        ch.setDtInfo(this.datetime);
         ch.setType(this.type.getValue());
         ch.setValue(this.getValue());
         ch.setExtended(extended = this.saveExtended());
-        ch.setPerson_id(this.personId);
+        ch.setPersonId(this.personId);
         ch.setComment(this.comment);
         ch.setChanged(System.currentTimeMillis());
     }

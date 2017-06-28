@@ -88,10 +88,10 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         super();
         list = new ArrayList<CGMSValuesSubEntry>();
         this.id = pdh.getId();
-        this.datetime = pdh.getDt_info();
-        this.type = pdh.getBase_type();
+        this.datetime = pdh.getDtInfo();
+        this.type = pdh.getBaseType();
         loadExtended(pdh.getExtended());
-        this.person_id = pdh.getPerson_id();
+        this.person_id = pdh.getPersonId();
     }
 
 
@@ -310,33 +310,33 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
     {
         switch (index)
         {
-        /*
-         * case 0: // time
-         * {
-         * return this.datetime.getTimeString();
-         * }
-         * case 1: // type
-         * {
-         * return getBaseTypeString();
-         * }
-         * case 2: // subtype
-         * {
-         * return getSubTypeString();
-         * }
-         * case 3: // value
-         * {
-         * //return this.getCode();
-         * return getValuePrint();
-         * }
-         * case 4: // additional
-         * {
-         * return this.getAdditionalDisplay();
-         * }
-         * case 5: // food
-         * {
-         * return this.isFoodSet();
-         * }
-         */
+            /*
+             * case 0: // time
+             * {
+             * return this.datetime.getTimeString();
+             * }
+             * case 1: // type
+             * {
+             * return getBaseTypeString();
+             * }
+             * case 2: // subtype
+             * {
+             * return getSubTypeString();
+             * }
+             * case 3: // value
+             * {
+             * //return this.getCode();
+             * return getValuePrint();
+             * }
+             * case 4: // additional
+             * {
+             * return this.getAdditionalDisplay();
+             * }
+             * case 5: // food
+             * {
+             * return this.isFoodSet();
+             * }
+             */
         }
         return "N/A";
     }
@@ -538,10 +538,10 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         CGMSDataH pdh = new CGMSDataH();
 
         pdh.setId(this.id);
-        pdh.setDt_info(this.datetime);
-        pdh.setBase_type(this.type);
+        pdh.setDtInfo(this.datetime);
+        pdh.setBaseType(this.type);
         pdh.setExtended(extended = this.saveExtended());
-        pdh.setPerson_id(this.person_id);
+        pdh.setPersonId(this.person_id);
         pdh.setChanged(System.currentTimeMillis());
 
         Long _id = (Long) sess.save(pdh);
@@ -573,9 +573,9 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         CGMSDataH pdh = (CGMSDataH) sess.get(CGMSDataH.class, this.id);
 
         pdh.setId(this.id);
-        pdh.setBase_type(this.type);
+        pdh.setBaseType(this.type);
         pdh.setExtended(this.extended = saveExtended());
-        pdh.setPerson_id(this.person_id);
+        pdh.setPersonId(this.person_id);
         pdh.setChanged(System.currentTimeMillis());
 
         sess.update(pdh);
@@ -630,10 +630,10 @@ public class CGMSValuesEntry extends DeviceValuesEntry implements StatisticsItem
         CGMSDataH pdh = (CGMSDataH) sess.get(CGMSDataH.class, this.id);
 
         this.id = pdh.getId();
-        this.datetime = pdh.getDt_info();
-        this.type = pdh.getBase_type();
+        this.datetime = pdh.getDtInfo();
+        this.type = pdh.getBaseType();
         loadExtended(pdh.getExtended());
-        this.person_id = pdh.getPerson_id();
+        this.person_id = pdh.getPersonId();
 
         return true;
     }

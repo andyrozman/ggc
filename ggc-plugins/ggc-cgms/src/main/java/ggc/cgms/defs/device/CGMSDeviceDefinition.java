@@ -153,7 +153,6 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
     static List<DeviceDefinition> allDevices;
     static List<DeviceDefinition> supportedDevices;
 
-
     static
     {
         allDevices = new ArrayList<DeviceDefinition>();
@@ -182,7 +181,7 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
     Object internalDefintion;
     DeviceImplementationStatus implementationStatus;
     DeviceCompanyDefinition companyDefinition;
-    DeviceHandlerType deviceHandlerType;
+    DeviceHandlerType deviceHandlerType = DeviceHandlerType.NullHandler;
     DevicePortParameterType devicePortParameterType;
     DeviceConnectionProtocol deviceConnectionProtocol;
     DeviceProgressStatus deviceProgressStatus;

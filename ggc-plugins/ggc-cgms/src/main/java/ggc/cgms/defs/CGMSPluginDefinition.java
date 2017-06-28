@@ -10,8 +10,7 @@ import com.atech.app.data.about.FeaturesEntry;
 import com.atech.app.data.about.LibraryInfoEntry;
 import com.atech.i18n.mgr.LanguageManager;
 
-import ggc.cgms.device.animas.AnimasCGMSHandler;
-import ggc.cgms.device.dexcom.DexcomHandler;
+import ggc.cgms.device.minimed.MinimedCGMSDeviceHandler;
 import ggc.cgms.graph.CGMSGraphDefintion;
 import ggc.cgms.report.def.CGMSReportDefinition;
 import ggc.cgms.util.DataAccessCGMS;
@@ -52,8 +51,7 @@ import ggc.plugin.report.PluginReportDefinition;
 public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
 {
 
-    String PLUGIN_VERSION = "1.5.1";
-    String PLUGIN_NAME = "GGC CGMS Plugin";
+    private static String PLUGIN_NAME = "GGC CGMS Plugin";
 
     CGMSReportDefinition reportsCGMSDefinition;
     CGMSGraphDefintion graphsCGMSDefintion;
@@ -61,7 +59,12 @@ public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
 
     public CGMSPluginDefinition(LanguageManager languageManager)
     {
-        super(languageManager, new GGC_CGMS_ICRunner());
+        super(languageManager, //
+                new GGC_CGMS_ICRunner(), //
+                PLUGIN_NAME, //
+                GGCPluginType.CGMSToolPlugin, //
+                "cgms_", //
+                "ggc.cgms.defs.Version");
     }
 
 
@@ -155,29 +158,6 @@ public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
     }
 
 
-    public String getPluginVersion()
-    {
-        return this.PLUGIN_VERSION;
-    }
-
-
-    /**
-     * Get Name of Plugin (for internal use)
-     *
-     * @return
-     */
-    public String getPluginName()
-    {
-        return this.PLUGIN_NAME;
-    }
-
-
-    public GGCPluginType getPluginType()
-    {
-        return GGCPluginType.CGMSToolPlugin;
-    }
-
-
     @Override
     public List<BaseListEntry> getWebListerItems()
     {
@@ -190,13 +170,6 @@ public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
         weblister_items.add(new BaseListEntry("Minimed", "/cgms/minimed.html", BaseListEntry.STATUS_PLANNED));
 
         return weblister_items;
-    }
-
-
-    @Override
-    public String getWebListerDescription()
-    {
-        return this.i18nControl.getMessage("DEVICE_LIST_WEB_DESC");
     }
 
 
@@ -225,20 +198,14 @@ public class CGMSPluginDefinition extends DevicePluginDefinitionAbstract
 
 
     @Override
-    public String getPluginActionsPrefix()
-    {
-        return "cgms_";
-    }
-
-
-    @Override
     public void registerDeviceHandlers()
     {
-        // Animas CGMS - Dexcom (Vibe)
-        DeviceHandlerManager.getInstance().addDeviceHandler(new AnimasCGMSHandler());
+        // Minimed CGMS - this one can't be registered Dynamically
+        DeviceHandlerManager.getInstance()
+                .addDeviceHandler(new MinimedCGMSDeviceHandler((DataAccessCGMS) this.dataAccess));
 
-        // Dexcom: G4
-        DeviceHandlerManager.getInstance().addDeviceHandler(new DexcomHandler());
+        // register dynamic handlers
+        DeviceHandlerManager.getInstance().registerDeviceHandlersDynamically(getPluginType());
     }
 
 }

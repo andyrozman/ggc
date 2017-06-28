@@ -72,6 +72,12 @@ public class AnimasCGMSHandler extends CGMSDeviceHandler
     }
 
 
+    public void closeDevice() throws PlugInBaseException
+    {
+        // not used - handled internally
+    }
+
+
     private AnimasDeviceType getAnimasDeviceType(DeviceDefinition definition)
     {
         return (AnimasDeviceType) getDeviceDefinition(definition).getInternalDefintion();

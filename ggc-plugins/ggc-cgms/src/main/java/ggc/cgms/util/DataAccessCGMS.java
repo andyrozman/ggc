@@ -10,6 +10,7 @@ import ggc.cgms.data.CGMSValuesEntry;
 import ggc.cgms.data.ExtendedCGMSValueHandler;
 import ggc.cgms.data.cfg.CGMSConfigurationDefinition;
 import ggc.cgms.data.db.GGC_CGMSDb;
+import ggc.cgms.data.defs.*;
 import ggc.cgms.data.graph.v2.CGMSGraphContext;
 import ggc.cgms.defs.CGMSPluginDefinition;
 import ggc.cgms.manager.CGMSManager;
@@ -98,6 +99,8 @@ public class DataAccessCGMS extends DataAccessPlugInBase
 
         this.prepareTranslationForEnums();
         this.prepareGraphContext();
+
+        CGMSUtil.setDataAccess(this);
     }
 
 
@@ -105,6 +108,11 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     {
         AnimasSoundType.translateKeywords(this.getI18nControlInstance(), this.getPluginType());
         DeviceEntryStatus.translateKeywords(this.getI18nControlInstance());
+        CGMSEvents.translateKeywords(this.getI18nControlInstance());
+        CGMSConfigurationGroup.translateKeywords(this.getI18nControlInstance());
+        CGMSAlarms.translateKeywords(this.getI18nControlInstance());
+        CGMSErrors.translateKeywords(this.getI18nControlInstance());
+        CGMSBaseDataType.translateKeywords(this.getI18nControlInstance());
     }
 
 
@@ -148,10 +156,10 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         m_i18n = null;
     }
 
+
     // ********************************************************
     // ****** Abstract Methods *****
     // ********************************************************
-
 
     // ********************************************************
     // ****** Manager *****
@@ -167,10 +175,10 @@ public class DataAccessCGMS extends DataAccessPlugInBase
         return this.m_cgms_manager;
     }
 
+
     // ********************************************************
     // ****** Parent handling (for UIs) *****
     // ********************************************************
-
 
     // ********************************************************
     // ****** Dates and Times Handling *****
@@ -236,6 +244,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     {
         this.device_config = new DeviceConfiguration(this);
     }
+
 
     // ********************************************************
     // ****** About Methods *****
@@ -317,7 +326,6 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     // ****** Web Lister Methods *****
     // ********************************************************
 
-
     // /**
     // * Create WebLister (for List) Context for plugin
     // */
@@ -388,8 +396,7 @@ public class DataAccessCGMS extends DataAccessPlugInBase
     @Override
     public void loadExtendedHandlers()
     {
-        this.addExtendedHandler(DataAccessCGMS.EXTENDED_HANDLER_CGMSValuesExtendedEntry,
-            new ExtendedCGMSValueHandler());
+        this.addExtendedHandler(DataAccessCGMS.EXTENDED_HANDLER_CGMSValuesExtendedEntry, new ExtendedCGMSValueHandler());
     }
 
 

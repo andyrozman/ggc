@@ -62,4 +62,11 @@ public class AnimasCGMSDeviceReader extends AnimasDeviceReader
         handler.startAction(AnimasTransferType.DownloadCGMSSettings);
     }
 
+
+    @Override
+    public void closeDevice() throws PlugInBaseException
+    {
+        // not used - close is handled internally
+    }
+
 }

@@ -4,6 +4,12 @@ Changes file for GGC CGM Tool
 
 -- We will move to version 2.0, when Minimed is supported (Navigator 1.x or 2.x)
 
+1.5.3 [26.6.2017]
+- changed enums, so that translation are changed from withing DataAccess
+- refactorings
+- changes to Db Objects
+
+
 1.5.2 [25.12.2016] [Andy]
 - Db changes
 - added new Extended Type
