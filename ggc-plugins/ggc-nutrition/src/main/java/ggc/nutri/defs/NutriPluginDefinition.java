@@ -3,12 +3,11 @@ package ggc.nutri.defs;
 import java.util.List;
 
 import com.atech.app.data.about.CreditsGroup;
-import com.atech.i18n.I18nControlRunner;
 import com.atech.i18n.mgr.LanguageManager;
 
 import ggc.core.plugins.GGCPluginType;
 import ggc.nutri.report.def.NutriReportDefinition;
-import ggc.nutri.util.DataAccessNutri;
+import ggc.nutri.util.GGCNutriICRunner;
 import ggc.plugin.defs.DevicePluginDefinitionAbstract;
 import ggc.plugin.graph.PluginGraphDefinition;
 import ggc.plugin.list.BaseListEntry;
@@ -20,19 +19,17 @@ import ggc.plugin.report.PluginReportDefinition;
 public class NutriPluginDefinition extends DevicePluginDefinitionAbstract
 {
 
-    String PLUGIN_VERSION = "1.4.0";
-    String PLUGIN_NAME = "GGC Nutrition Plugin";
+    private static String PLUGIN_NAME = "GGC Nutrition Plugin";
 
 
-    public NutriPluginDefinition(DataAccessNutri dataAccessPump)
+    public NutriPluginDefinition(LanguageManager languageManager)
     {
-        super(dataAccessPump);
-    }
-
-
-    public NutriPluginDefinition(LanguageManager languageManager, I18nControlRunner i18nControlRunner)
-    {
-        super(languageManager, i18nControlRunner);
+        super(languageManager, //
+                new GGCNutriICRunner(), //
+                PLUGIN_NAME, //
+                GGCPluginType.NutritionToolPlugin, //
+                "nutri_", //
+                "ggc.nutri.defs.Version");
     }
 
 
@@ -57,24 +54,6 @@ public class NutriPluginDefinition extends DevicePluginDefinitionAbstract
     public int[] getAboutImageSize()
     {
         return new int[0];
-    }
-
-
-    public String getPluginVersion()
-    {
-        return this.PLUGIN_VERSION;
-    }
-
-
-    public String getPluginName()
-    {
-        return this.PLUGIN_NAME;
-    }
-
-
-    public GGCPluginType getPluginType()
-    {
-        return GGCPluginType.NutritionToolPlugin;
     }
 
 
@@ -115,13 +94,6 @@ public class NutriPluginDefinition extends DevicePluginDefinitionAbstract
     {
         // no graphs
         return null;
-    }
-
-
-    @Override
-    public String getPluginActionsPrefix()
-    {
-        return "nutri_";
     }
 
 }

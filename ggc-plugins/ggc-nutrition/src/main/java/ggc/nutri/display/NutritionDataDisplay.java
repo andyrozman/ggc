@@ -100,8 +100,8 @@ public class NutritionDataDisplay extends ATTableData
         this.id = "" + def.getId();
         this.name = def.getResolvedName(); // .getName();
         // this.value = def.get.getTag();
-        this.weight_unit = def.getWeight_unit();
-        this.decimal_places = def.getDecimal_places();
+        this.weight_unit = def.getWeightUnit();
+        this.decimal_places = def.getDecimalPlaces();
     }
 
 
@@ -209,8 +209,8 @@ public class NutritionDataDisplay extends ATTableData
      */
     public void setAmount(float amount)
     {
-        this.value = DataAccessNutri.getInstance().getDecimalHandler()
-                .getDecimalAsString(amount, Integer.parseInt(this.decimal_places));
+        this.value = DataAccessNutri.getInstance().getDecimalHandler().getDecimalAsString(amount,
+            Integer.parseInt(this.decimal_places));
     }
 
 

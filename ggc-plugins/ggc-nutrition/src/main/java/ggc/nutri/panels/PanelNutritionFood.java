@@ -1,32 +1,25 @@
 package ggc.nutri.panels;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+import javax.swing.*;
+import javax.swing.table.TableColumnModel;
+
+import com.atech.graphics.components.ATTableData;
+import com.atech.graphics.components.ATTableModel;
+import com.atech.graphics.layout.ZeroLayout;
 import com.atech.utils.ATSwingUtils;
+
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.db.datalayer.FoodDescription;
 import ggc.nutri.db.datalayer.FoodGroup;
 import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.nutri.display.HomeWeightDataDisplay;
 import ggc.nutri.display.NutritionDataDisplay;
-
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.table.TableColumnModel;
-
-import com.atech.graphics.components.ATTableData;
-import com.atech.graphics.components.ATTableModel;
-import com.atech.graphics.layout.ZeroLayout;
-import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,7 +46,7 @@ import com.atech.utils.ATDataAccessAbstract;
  *  Author: andyrozman {andy@atech-software.com}  
  */
 
-public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements ActionListener
+public class PanelNutritionFood extends GGCTreePanel /* JPanel */ implements ActionListener
 {
 
     private static final long serialVersionUID = 4046645712360241891L;
@@ -76,6 +69,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
     NutritionDataDisplay ndd = null;
 
     FoodGroup food_group = null;
+
 
     /**
      * Constructor
@@ -100,6 +94,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         createPanel();
 
     }
+
 
     private void createPanel()
     {
@@ -162,7 +157,8 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         this.add(label_name_i18n, null);
 
         /*
-         * label = new JLabel(i18nControlAbstract.getMessage("TRANSLATED_NAME") + ":");
+         * label = new JLabel(i18nControlAbstract.getMessage("TRANSLATED_NAME")
+         * + ":");
          * label.setBounds(30, 140, 300, 60); label.setFont(fnt_14_bold);
          * this.add(label, null);
          * this.label_name_i18n = new JLabel(); // 180
@@ -238,7 +234,8 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         label.setFont(fnt_14_bold);
         this.add(label, null);
 
-        // HomeWeightDataDisplay hwd = new HomeWeightDataDisplay(i18nControlAbstract);
+        // HomeWeightDataDisplay hwd = new
+        // HomeWeightDataDisplay(i18nControlAbstract);
         // System.out.println(hwd.getColumnsCount());
 
         table_2 = new JTable();
@@ -265,6 +262,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         return;
     }
 
+
     /**
      * Set Parent
      * 
@@ -275,6 +273,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
     {
 
     }
+
 
     /**
      * Set Data
@@ -290,7 +289,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
         // this.label_name.setText("<html><body>" + fd.getName() +
         // "</body></html>");
-        // this.label_name_i18n.setText("<html><body>" + fd.getName_i18n()+
+        // this.label_name_i18n.setText("<html><body>" + fd.getNameI18n()+
         // "</body></html>");
 
         this.label_name.setText(fd.getName());
@@ -305,7 +304,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         if (fd.getGroup_id() > 0)
         {
             // this.food_group = dataAccess.tree_roots.get("" +
-            // fd.getFoodType()).m_groups_ht.get("" + fd.getGroup_id());
+            // fd.getFoodType()).m_groups_ht.get("" + fd.getGroupId());
 
             this.food_group = m_da.getDbCache().tree_roots.get("" + fd.getFoodType()).findFoodGroup(fd.getFoodType(),
                 fd.getGroup_id());
@@ -357,6 +356,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
+
     // public static final int MODEL_NUTRITIONS = 1;
     // public static final int MODEL_HOME_WEIGHTS = 2;
 
@@ -377,6 +377,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
 
     }
 
+
     /**
      * Action Listener
      */
@@ -387,6 +388,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         System.out.println("PanelNutritionFood::Unknown command: " + action);
 
     }
+
 
     /**
      * Get Warning string. This method returns warning string for either add or
@@ -402,6 +404,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         return null;
     }
 
+
     /**
      * Was data in this panel changed.
      * 
@@ -413,6 +416,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
         return false;
     }
 
+
     /**
      * Save data in panel
      * 
@@ -423,6 +427,7 @@ public class PanelNutritionFood extends GGCTreePanel /* JPanel */implements Acti
     {
         return false;
     }
+
 
     public String getHelpId()
     {

@@ -114,8 +114,8 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         this.setId(0);
         this.setName("");
         this.setDescription("");
-        this.setName_i18n("");
-        this.setParent_id(-1);
+        this.setNameI18n("");
+        this.setParentId(-1);
     }
 
 
@@ -130,8 +130,8 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         this.setId(ch.getId());
         this.setName(ch.getName());
         this.setDescription(ch.getDescription());
-        this.setName_i18n(ch.getName_i18n());
-        this.setParent_id(ch.getParent_id());
+        this.setNameI18n(ch.getNameI18n());
+        this.setParentId(ch.getParentId());
     }
 
 
@@ -327,7 +327,7 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
      */
     public String getLongDescription()
     {
-        return "MealGroup [id=" + this.getId() + ",name=" + this.getName() + ",parent_id=" + this.getParent_id() + "]";
+        return "MealGroup [id=" + this.getId() + ",name=" + this.getName() + ",parent_id=" + this.getParentId() + "]";
     }
 
 
@@ -367,8 +367,8 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         // ch.setId(this.getId());
         ch.setName(this.getName());
         ch.setDescription(this.getDescription());
-        ch.setParent_id(this.getParent_id());
-        ch.setName_i18n(this.getName_i18n());
+        ch.setParentId(this.getParentId());
+        ch.setNameI18n(this.getNameI18n());
 
         Long id = (Long) sess.save(ch);
 
@@ -397,8 +397,8 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
 
         ch.setName(this.getName());
         ch.setDescription(this.getDescription());
-        ch.setParent_id(this.getParent_id());
-        ch.setName_i18n(this.getName_i18n());
+        ch.setParentId(this.getParentId());
+        ch.setNameI18n(this.getNameI18n());
 
         sess.update(ch);
         tx.commit();
@@ -473,8 +473,8 @@ public class MealGroup extends MealGroupH implements DatabaseObjectHibernate, Ba
         this.setId(ch.getId());
         this.setName(ch.getName());
         this.setDescription(ch.getDescription());
-        this.setParent_id(ch.getParent_id());
-        this.setName_i18n(ch.getName_i18n());
+        this.setParentId(ch.getParentId());
+        this.setNameI18n(ch.getNameI18n());
 
         return true;
     }

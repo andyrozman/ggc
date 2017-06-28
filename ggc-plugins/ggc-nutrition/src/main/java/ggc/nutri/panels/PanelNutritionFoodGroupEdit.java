@@ -1,27 +1,21 @@
 package ggc.nutri.panels;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.nutri.data.GGCTreeRoot;
-import ggc.nutri.db.datalayer.FoodGroup;
-import ggc.nutri.db.datalayer.MealGroup;
-import ggc.nutri.dialogs.NutritionGroupDialog;
-import ggc.nutri.dialogs.NutritionTreeDialog;
-
-import java.awt.Component;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import com.atech.graphics.components.EditableAbstractPanel;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.nutri.data.GGCTreeRoot;
+import ggc.nutri.db.datalayer.FoodGroup;
+import ggc.nutri.db.datalayer.MealGroup;
+import ggc.nutri.dialogs.NutritionGroupDialog;
+import ggc.nutri.dialogs.NutritionTreeDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -70,6 +64,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
     boolean was_saved = true;
 
+
     /**
      * Constructor
      * 
@@ -94,6 +89,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         createPanel();
 
     }
+
 
     private void createPanel()
     {
@@ -135,9 +131,11 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
                 createKeyWord();
             }
 
+
             public void keyPressed(KeyEvent e)
             {
             }
+
 
             public void keyTyped(KeyEvent e)
             {
@@ -213,12 +211,14 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         return;
     }
 
+
     private void createKeyWord()
     {
         String key = m_da.makeI18nKeyword(tf_name.getText());
         tf_name_i18n_key.setText(key);
         tf_name_i18n.setText(ic.getMessage(key));
     }
+
 
     private boolean checkRecursiveGroup(FoodGroup fg, long target)
     {
@@ -236,6 +236,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
             return false;
         }
     }
+
 
     private boolean checkRecursiveGroup(MealGroup fg, long target)
     {
@@ -255,6 +256,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
     }
 
     FoodGroup parent_group;
+
 
     /**
      * Set Parent
@@ -288,6 +290,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
             createKeyWord();
         }
     }
+
 
     /**
      * Set Parent Root
@@ -323,6 +326,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
             createKeyWord();
         }
     }
+
 
     /**
      * Set Data
@@ -369,15 +373,15 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
             this.meal_group = (MealGroup) obj;
 
             tf_name.setText(this.meal_group.getName());
-            tf_name_i18n.setText(this.meal_group.getName_i18n());
+            tf_name_i18n.setText(this.meal_group.getNameI18n());
 
-            if (this.meal_group.getParent_id() > 0)
+            if (this.meal_group.getParentId() > 0)
             {
                 // this.parent_meal_group =
                 // dataAccess.tree_roots.get("3").m_meal_groups_ht.get("" +
-                // this.meal_group.getParent_id());
+                // this.meal_group.getParentId());
                 this.parent_meal_group = m_da.getDbCache().tree_roots.get("3").findMealGroup(3,
-                    this.meal_group.getParent_id());
+                    this.meal_group.getParentId());
                 this.tf_parent.setText(this.parent_meal_group.getName());
             }
             else
@@ -391,12 +395,14 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         }
 
         /*
-         * this.label_title.setText(i18nControlAbstract.getMessage("EDIT_FOOD_GROUP")); FoodGroup
+         * this.label_title.setText(i18nControlAbstract.getMessage(
+         * "EDIT_FOOD_GROUP")); FoodGroup
          * group = (FoodGroup)obj;
          * label_name.setText(group.getName());
-         * label_name_i18n.setText(group.getName_i18n());
+         * label_name_i18n.setText(group.getNameI18n());
          */
     }
+
 
     /**
      * Action Performed
@@ -464,6 +470,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
 
     }
 
+
     /**
      * Get Warning string. This method returns warning string for either add or
      * edit. If value returned is null, then no warning message box will be
@@ -484,6 +491,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
             return ic.getMessage("WISH_TO_SAVE_EDITED_GROUP");
 
     }
+
 
     /**
      * Was data in this panel changed.
@@ -510,9 +518,9 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
             }
             else
             {
-                if (this.getParentId() != this.meal_group.getParent_id()
+                if (this.getParentId() != this.meal_group.getParentId()
                         || !this.meal_group.getName().equals(this.tf_name.getText())
-                        || !this.meal_group.getName_i18n().equals(this.tf_name_i18n_key.getText()))
+                        || !this.meal_group.getNameI18n().equals(this.tf_name_i18n_key.getText()))
                     return true;
             }
 
@@ -520,11 +528,13 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         }
     }
 
+
     private void debug(String msg)
     {
         // System.out.println("PanelNutritionFoodGroupEdit: " + msg);
         System.out.println(msg);
     }
+
 
     /**
      * Save data in panel
@@ -558,9 +568,9 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
             {
                 MealGroup fg = new MealGroup();
 
-                fg.setParent_id(getParentId());
+                fg.setParentId(getParentId());
                 fg.setName(tf_name.getText().trim());
-                fg.setName_i18n(this.tf_name_i18n_key.getText());
+                fg.setNameI18n(this.tf_name_i18n_key.getText());
 
                 this.m_da.getNutriDb().add(fg);
                 this.was_saved = true;
@@ -598,15 +608,15 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
             else
             {
 
-                long prev_parent_id = this.meal_group.getParent_id();
+                long prev_parent_id = this.meal_group.getParentId();
 
-                this.meal_group.setParent_id(getParentId());
+                this.meal_group.setParentId(getParentId());
                 this.meal_group.setName(tf_name.getText().trim());
-                this.meal_group.setName_i18n(this.tf_name_i18n_key.getText());
+                this.meal_group.setNameI18n(this.tf_name_i18n_key.getText());
 
                 this.m_da.getNutriDb().edit(this.meal_group);
 
-                if (prev_parent_id != this.meal_group.getParent_id())
+                if (prev_parent_id != this.meal_group.getParentId())
                 {
                     this.removeMealGroupFromTree(this.meal_group, prev_parent_id);
                     this.addMealGroup2Tree(this.meal_group);
@@ -616,6 +626,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
             return false;
         }
     }
+
 
     private void removeFoodGroupFromTree(FoodGroup fg, long prev_parent_id)
     {
@@ -633,6 +644,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
          */
     }
 
+
     private void removeMealGroupFromTree(MealGroup fg, long prev_parent_id)
     {
         m_da.getDbCache().tree_roots.get("3").removeMealGroupFromTree(3, fg, prev_parent_id);
@@ -649,6 +661,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
          */
     }
 
+
     private void addFoodGroup2Tree(FoodGroup fg)
     {
         m_da.getDbCache().tree_roots.get("2").addFoodGroup2Tree(2, fg);
@@ -656,15 +669,18 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         m_dialog.refreshTree();
 
         /*
-         * if (fg.getParentId()==0) { dataAccess.tree_roots.get("2").addFoodGroup(fg);
+         * if (fg.getParentId()==0) {
+         * dataAccess.tree_roots.get("2").addFoodGroup(fg);
          * m_dialog.refreshTree(); } else {
          * dataAccess.tree_roots.get("2").m_groups_ht.get("" +
          * fg.getParentId()).addChild(fg);
-         * //dataAccess.tree_roots.get("2").m_groups_ht.put("" + fg.getParentId(),
+         * //dataAccess.tree_roots.get("2").m_groups_ht.put("" +
+         * fg.getParentId(),
          * fg);
          * m_dialog.refreshTree(); }
          */
     }
+
 
     private void addMealGroup2Tree(MealGroup fg)
     {
@@ -673,12 +689,14 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         m_dialog.refreshTree();
 
         /*
-         * if (fg.getParent_id()==0) {
-         * dataAccess.tree_roots.get("3").addMealGroup(fg); m_dialog.refreshTree(); }
+         * if (fg.getParentId()==0) {
+         * dataAccess.tree_roots.get("3").addMealGroup(fg);
+         * m_dialog.refreshTree(); }
          * else { dataAccess.tree_roots.get("3").m_meal_groups_ht.get("" +
-         * fg.getParent_id()).addChild(fg); m_dialog.refreshTree(); }
+         * fg.getParentId()).addChild(fg); m_dialog.refreshTree(); }
          */
     }
+
 
     private long getParentId()
     {
@@ -698,6 +716,7 @@ public class PanelNutritionFoodGroupEdit extends GGCTreePanel implements ActionL
         }
 
     }
+
 
     public String getHelpId()
     {

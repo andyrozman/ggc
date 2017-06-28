@@ -1,9 +1,9 @@
 package ggc.nutri.display;
 
-import ggc.nutri.db.datalayer.DailyFoodEntry;
-
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.nutri.db.datalayer.DailyFoodEntry;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -36,6 +36,7 @@ public class DailyFoodEntryDisplay extends ATTableData
     private static String[] weight_type_description = null;
     DailyFoodEntry daily_food_entry = null;
 
+
     /**
      * Constructor
      * 
@@ -46,6 +47,7 @@ public class DailyFoodEntryDisplay extends ATTableData
         super(ic);
         initStatic();
     }
+
 
     /**
      * Constructor
@@ -69,10 +71,11 @@ public class DailyFoodEntryDisplay extends ATTableData
         // String[] col = { "TYPE", "ID", "DESCRIPTION", "AMOUNT" };
     }
 
+
     /*
      * public void setNutritionDefinition(NutritionDefinition def) { this.id =
      * "" + def.getId(); // this.name = def.getName(); //this.value =
-     * def.get.getTag(); // this.weight_unit = def.getWeight_unit(); }
+     * def.get.getTag(); // this.weight_unit = def.getWeightUnit(); }
      */
 
     /**
@@ -90,6 +93,7 @@ public class DailyFoodEntryDisplay extends ATTableData
 
     }
 
+
     /**
      * Init
      * 
@@ -104,6 +108,7 @@ public class DailyFoodEntryDisplay extends ATTableData
         init(col, col_size);
     }
 
+
     /**
      * Get Daily Food Entry
      * 
@@ -114,6 +119,7 @@ public class DailyFoodEntryDisplay extends ATTableData
         return this.daily_food_entry;
     }
 
+
     /**
      * Get String For Db
      * 
@@ -123,6 +129,7 @@ public class DailyFoodEntryDisplay extends ATTableData
     {
         return this.daily_food_entry.getValueString();
     }
+
 
     /**
      * Get Column Value

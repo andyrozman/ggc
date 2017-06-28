@@ -20,6 +20,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 
 import ggc.core.db.GGCDb;
 import ggc.core.db.hibernate.food.*;
+import ggc.core.util.DataAccess;
 import ggc.nutri.data.GGCTreeRoot;
 import ggc.nutri.data.GGCTreeRootDyn;
 import ggc.nutri.db.datalayer.*;
@@ -66,6 +67,8 @@ public class GGCDbNutri extends HibernateDb
      */
     public GGCDbNutri(GGCDb db)
     {
+        super(DataAccess.getInstance(), db);
+
         this.hib_config = db.getHibernateConfiguration();
 
         // System.out.println("hib_Config:" + this.hib_config);
@@ -342,7 +345,7 @@ public class GGCDbNutri extends HibernateDb
      */
     public List<FoodGroup> getUserFoodGroups(long parentId)
     {
-        List<FoodUserGroupH> fgList = getHibernateObjectListByParameter("parent_id", parentId, Order.asc("name"),
+        List<FoodUserGroupH> fgList = getHibernateObjectListByParameter("parentId", parentId, Order.asc("name"),
             FoodUserGroupH.class, 2);
 
         return getDAOGroupList(fgList, FoodGroup.class);
@@ -388,7 +391,7 @@ public class GGCDbNutri extends HibernateDb
      */
     public List<FoodDescription> getFoodsByParent(int type, long parent_id)
     {
-        logInfo("getFoodsByParent(type=" + type + ",parent_id=" + parent_id + ")");
+        logInfo("getFoodsByParent(type=" + type + ",parentId=" + parent_id + ")");
 
         if (type == GGCTreeRoot.TREE_USDA_NUTRITION)
             return this.getUSDAFoodDescriptionsByParent(parent_id);
@@ -421,7 +424,7 @@ public class GGCDbNutri extends HibernateDb
      */
     public List<FoodDescription> getUSDAFoodDescriptionsByParent(long parentId)
     {
-        List<FoodDescriptionH> fgList = getHibernateObjectListByParameter("parent_id", parentId, Order.asc("name"),
+        List<FoodDescriptionH> fgList = getHibernateObjectListByParameter("parentId", parentId, Order.asc("name"),
             FoodDescriptionH.class, 2);
 
         return getDAOGroupList(fgList, FoodDescription.class);
@@ -533,7 +536,7 @@ public class GGCDbNutri extends HibernateDb
         {
 
             Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.food.FoodUserDescriptionH as pst where pst.group_id=" + parent_id
+                "select pst from ggc.core.db.hibernate.food.FoodUserDescriptionH as pst where pst.groupId=" + parent_id
                         + " order by pst.name");
 
             Iterator<?> it = q.iterate();
@@ -572,7 +575,7 @@ public class GGCDbNutri extends HibernateDb
         {
 
             Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.food.FoodUserDescriptionH as pst order by pst.group_id, pst.name");
+                "select pst from ggc.core.db.hibernate.food.FoodUserDescriptionH as pst order by pst.groupId, pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -610,7 +613,7 @@ public class GGCDbNutri extends HibernateDb
         {
 
             Query q = getSession(2).createQuery(
-                "select pst from ggc.core.db.hibernate.food.MealH as pst order by pst.group_id, pst.name");
+                "select pst from ggc.core.db.hibernate.food.MealH as pst order by pst.groupId, pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -665,8 +668,8 @@ public class GGCDbNutri extends HibernateDb
         {
 
             Query q = getSession(2)
-                    .createQuery("select pst from ggc.core.db.hibernate.food.MealH as pst where pst.group_id="
-                            + parent_id + " order by pst.group_id, pst.name");
+                    .createQuery("select pst from ggc.core.db.hibernate.food.MealH as pst where pst.groupId="
+                            + parent_id + " order by pst.groupId, pst.name");
 
             Iterator<?> it = q.iterate();
 
@@ -913,6 +916,27 @@ public class GGCDbNutri extends HibernateDb
     public String getApplicationDbName()
     {
         return "ggc";
+    }
+
+
+    @Override
+    protected void initDataTransformer()
+    {
+
+    }
+
+
+    @Override
+    protected <E extends HibernateObject> void specialFilteringOfCriteria(Class<E> clazz, Criteria criteria)
+    {
+
+    }
+
+
+    @Override
+    protected <E extends HibernateObject> boolean isTypeCached(Class<E> clazz)
+    {
+        return false;
     }
 
 

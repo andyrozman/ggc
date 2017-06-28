@@ -86,8 +86,8 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
     {
         this.setId(0L);
         this.setName("");
-        this.setName_i18n("");
-        this.setGroup_id(0);
+        this.setNameI18n("");
+        this.setGroupId(0);
         this.setDescription("");
         this.setParts("");
         this.setNutritions("");
@@ -112,8 +112,8 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
 
         this.setId(ch.getId());
         this.setName(ch.getName());
-        this.setName_i18n(ch.getName_i18n());
-        this.setGroup_id(ch.getGroup_id());
+        this.setNameI18n(ch.getNameI18n());
+        this.setGroupId(ch.getGroupId());
         this.setDescription(ch.getDescription());
         this.setParts(ch.getParts());
         this.setNutritions(ch.getNutritions());
@@ -186,8 +186,8 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
 
         ch.setId(this.getId());
         ch.setName(this.getName());
-        ch.setName_i18n(this.getName_i18n());
-        ch.setGroup_id(this.getGroup_id());
+        ch.setNameI18n(this.getNameI18n());
+        ch.setGroupId(this.getGroupId());
         ch.setDescription(this.getDescription());
         ch.setParts(this.getParts());
         ch.setNutritions(this.getNutritions());
@@ -218,8 +218,8 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
 
         ch.setId(this.getId());
         ch.setName(this.getName());
-        ch.setName_i18n(this.getName_i18n());
-        ch.setGroup_id(this.getGroup_id());
+        ch.setNameI18n(this.getNameI18n());
+        ch.setGroupId(this.getGroupId());
         ch.setDescription(this.getDescription());
         ch.setParts(this.getParts());
         ch.setNutritions(this.getNutritions());
@@ -285,8 +285,8 @@ public class Meal extends MealH implements DatabaseObjectHibernate, BackupRestor
 
         this.setId(ch.getId());
         this.setName(ch.getName());
-        this.setName_i18n(ch.getName_i18n());
-        this.setGroup_id(ch.getGroup_id());
+        this.setNameI18n(ch.getNameI18n());
+        this.setGroupId(ch.getGroupId());
         this.setDescription(ch.getDescription());
         this.setParts(ch.getParts());
         this.setNutritions(ch.getNutritions());

@@ -103,7 +103,7 @@ public class MealFoodDisplay extends ATTableData
     /*
      * public void setNutritionDefinition(NutritionDefinition def) { this.id =
      * "" + def.getId(); // this.name = def.getName(); //this.value =
-     * def.get.getTag(); // this.weight_unit = def.getWeight_unit(); }
+     * def.get.getTag(); // this.weight_unit = def.getWeightUnit(); }
      */
 
     private void initStatic()

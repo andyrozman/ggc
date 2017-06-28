@@ -118,7 +118,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject, 
         else
         {
             this.group_db2 = new FoodUserGroupH();
-            this.group_db2.setParent_id(-1);
+            this.group_db2.setParentId(-1);
         }
 
     }
@@ -277,9 +277,9 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject, 
     public String getName_i18n()
     {
         if (group_type == 1)
-            return this.group_db1.getName_i18n();
+            return this.group_db1.getNameI18n();
         else
-            return this.group_db2.getName_i18n();
+            return this.group_db2.getNameI18n();
     }
 
 
@@ -292,11 +292,11 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject, 
     {
         if (group_type == 1)
         {
-            this.group_db1.setName_i18n(name);
+            this.group_db1.setNameI18n(name);
         }
         else
         {
-            this.group_db2.setName_i18n(name);
+            this.group_db2.setNameI18n(name);
         }
     }
 
@@ -515,7 +515,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject, 
         if (this.group_type == 1)
             return 0L;
         else
-            return this.group_db2.getParent_id();
+            return this.group_db2.getParentId();
     }
 
 
@@ -528,7 +528,7 @@ public class FoodGroup implements DatabaseObjectHibernate, BackupRestoreObject, 
     {
         if (this.group_type == 2)
         {
-            this.group_db2.setParent_id(parent_id);
+            this.group_db2.setParentId(parent_id);
         }
     }
 

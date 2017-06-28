@@ -58,8 +58,8 @@ public class NutritionDefinition extends NutritionDefinitionH
         this.setId(0);
         this.setTag("");
         this.setName("");
-        this.setWeight_unit("");
-        this.setDecimal_places("");
+        this.setWeightUnit("");
+        this.setDecimalPlaces("");
 
         ic = DataAccessNutri.getInstance().getI18nControlInstance();
 
@@ -77,8 +77,8 @@ public class NutritionDefinition extends NutritionDefinitionH
         this.setId(ch.getId());
         this.setTag(ch.getTag());
         this.setName(ch.getName());
-        this.setWeight_unit(ch.getWeight_unit());
-        this.setDecimal_places(ch.getDecimal_places());
+        this.setWeightUnit(ch.getWeightUnit());
+        this.setDecimalPlaces(ch.getDecimalPlaces());
         ic = DataAccessNutri.getInstance().getI18nControlInstance();
         this.setSearchContext();
     }
@@ -91,7 +91,7 @@ public class NutritionDefinition extends NutritionDefinitionH
      */
     public String getShortDescription()
     {
-        return this.getResolvedName() + " (" + this.getWeight_unit() + ")";
+        return this.getResolvedName() + " (" + this.getWeightUnit() + ")";
     }
 
 
@@ -128,8 +128,8 @@ public class NutritionDefinition extends NutritionDefinitionH
         ch.setId(this.getId());
         ch.setTag(this.getTag());
         ch.setName(this.getName());
-        ch.setWeight_unit(this.getWeight_unit());
-        ch.setDecimal_places(this.getDecimal_places());
+        ch.setWeightUnit(this.getWeightUnit());
+        ch.setDecimalPlaces(this.getDecimalPlaces());
 
         Long id = (Long) sess.save(ch);
 
@@ -157,8 +157,8 @@ public class NutritionDefinition extends NutritionDefinitionH
         ch.setId(this.getId());
         ch.setTag(this.getTag());
         ch.setName(this.getName());
-        ch.setWeight_unit(this.getWeight_unit());
-        ch.setDecimal_places(this.getDecimal_places());
+        ch.setWeightUnit(this.getWeightUnit());
+        ch.setDecimalPlaces(this.getDecimalPlaces());
 
         sess.update(ch);
         tx.commit();
@@ -220,8 +220,8 @@ public class NutritionDefinition extends NutritionDefinitionH
         this.setId(ch.getId());
         this.setTag(ch.getTag());
         this.setName(ch.getName());
-        this.setWeight_unit(ch.getWeight_unit());
-        this.setDecimal_places(ch.getDecimal_places());
+        this.setWeightUnit(ch.getWeightUnit());
+        this.setDecimalPlaces(ch.getDecimalPlaces());
 
         this.setSearchContext();
 
@@ -287,7 +287,7 @@ public class NutritionDefinition extends NutritionDefinitionH
     {
         // this.getId();
         /*
-         * this.getName(); this.getTag(); this.getWeight_unit();
+         * this.getName(); this.getTag(); this.getWeightUnit();
          */
         switch (num)
         {
@@ -319,7 +319,7 @@ public class NutritionDefinition extends NutritionDefinitionH
 
         // this.getId();
         /*
-         * this.getName(); this.getTag(); this.getWeight_unit();
+         * this.getName(); this.getTag(); this.getWeightUnit();
          */
         switch (num)
         {
@@ -327,7 +327,7 @@ public class NutritionDefinition extends NutritionDefinitionH
                 return this.getTag();
 
             case 3:
-                return this.getWeight_unit();
+                return this.getWeightUnit();
 
             case 2:
                 return this.getResolvedName();
@@ -354,7 +354,7 @@ public class NutritionDefinition extends NutritionDefinitionH
                 return this.getTag();
 
             case 3:
-                return this.getWeight_unit();
+                return this.getWeightUnit();
 
             case 2:
                 return this.getResolvedName();

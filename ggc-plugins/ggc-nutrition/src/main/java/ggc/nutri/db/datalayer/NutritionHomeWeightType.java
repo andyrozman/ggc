@@ -292,7 +292,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH
         switch (num)
         {
             case 3:
-                return getYesNo(this.getStatic_entry());
+                return getYesNo(this.getStaticEntry());
 
             case 2:
                 return this.getResolvedName();
@@ -322,7 +322,7 @@ public class NutritionHomeWeightType extends NutritionHomeWeightTypeH
         switch (num)
         {
             case 3:
-                return getYesNo(this.getStatic_entry());
+                return getYesNo(this.getStaticEntry());
 
             case 2:
                 return getResolvedName();

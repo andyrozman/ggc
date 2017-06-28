@@ -6,7 +6,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.plugin.BackupRestorePlugin;
 
 import ggc.core.db.datalayer.DailyValue;
-import ggc.core.db.hibernate.DayValueH;
+import ggc.core.db.hibernate.pen.DayValueH;
 import ggc.core.db.tool.transfer.ExportNutritionDb;
 import ggc.core.db.tool.transfer.ImportNutrition;
 import ggc.nutri.util.DataAccessNutri;
@@ -188,7 +188,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
     @Override
     public BackupRestoreObject getBackupRestoreObject(String class_name)
     {
-        if (class_name.equals("ggc.core.db.hibernate.DayValueH"))
+        if (class_name.equals("ggc.core.db.hibernate.pen.DayValueH"))
             return new DailyValue();
 
         return null;
@@ -202,7 +202,7 @@ public class BackupRestoreNutriHandler extends BackupRestorePlugin
     @Override
     public BackupRestoreObject getBackupRestoreObject(Object obj, BackupRestoreObject bro)
     {
-        if (bro.getBackupClassName().equals("ggc.core.db.hibernate.DayValueH"))
+        if (bro.getBackupClassName().equals("ggc.core.db.hibernate.pen.DayValueH"))
         {
             DayValueH eh = (DayValueH) obj;
             return new DailyValue(eh);

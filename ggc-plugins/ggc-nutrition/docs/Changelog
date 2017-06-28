@@ -6,6 +6,11 @@ Newer entries are on top, older on bottom.
 
 --------------------------------------------------------------------------------------------------
 
+1.4.3 [26.6.2017]
+- refactoring of database objects
+- refactoring of database access class
+
+
 1.4.2 [25.12.2016] [Andy]
 - GGCTreeRootStatic changed
 - datalayer
@@ -18,36 +23,45 @@ Newer entries are on top, older on bottom.
 - db objects refactoring
 - refactorings
 
+
 1.4.0 [24.10.2015]
     * refactoring changing Log to Logger instance
     * refactoring use of BG converter
     * refactoring whole plugin to use DevicePluginDefintionAbstract
     * refactoring DataAccessNutri
 
+
 1.3.7 [10.10.2015]
     * refactoring because of ConfigurationManagerWrapper
 
+
 1.3.6 [2.10.2015]
     * refactoring of ATDataAccess
+
 
 1.3.5 [26.4.2015]
     * changes to atech-tools, which required change here
     * changed data handling a little
 
+
 1.3.4 [21.09.2014]
     * printing changes
 
+
 1.3.3 [26.9.2011]
     * jdk7 changes
+
 
 1.3.1 [16.2.2010]
     * Added help to whole plugin
     * Cosmetic changes mostly
 
+
 1.2.1 (current)
     * Extended Food Selector (with plugin active check)
     * required base plugin is now 0.4.1 (framework v2)
     * this plugin already uses some of v2 features
+
 
 1.2 (10.6.2009) [andy]
     * Given ability to call Food Selector and Recalculation of CH (change in plugin functionality)
@@ -58,8 +72,10 @@ Newer entries are on top, older on bottom.
 1.1.3 (16.4.2009) [andy]
     * Fixed tree loading
 
+
 1.1.2 (11.4.2009) [andy]
     * Fixed data loading for print functions
+
 
 1.1.1 (27.3.2009) [andy]
     * Nutrition is now separate project

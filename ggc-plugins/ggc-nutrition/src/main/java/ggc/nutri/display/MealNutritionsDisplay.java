@@ -1,13 +1,13 @@
 package ggc.nutri.display;
 
-import ggc.nutri.db.datalayer.MealNutrition;
-import ggc.nutri.db.datalayer.NutritionDefinition;
-import ggc.nutri.util.DataAccessNutri;
-
 import java.util.Comparator;
 
 import com.atech.graphics.components.ATTableData;
 import com.atech.i18n.I18nControlAbstract;
+
+import ggc.nutri.db.datalayer.MealNutrition;
+import ggc.nutri.db.datalayer.NutritionDefinition;
+import ggc.nutri.util.DataAccessNutri;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -43,6 +43,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
     private String weight_unit;
     private String decimal_places;
 
+
     // private float calculated_value;
 
     /**
@@ -54,6 +55,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
     {
         super(ic);
     }
+
 
     /**
      * Constructor
@@ -70,6 +72,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
 
     }
 
+
     /**
      * Set Nutrition Definition
      * 
@@ -80,9 +83,10 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
         this.id = "" + def.getId();
         this.name = def.getResolvedName(); // .getName();
         // this.value = def.get.getTag();
-        this.weight_unit = def.getWeight_unit();
-        this.decimal_places = def.getDecimal_places();
+        this.weight_unit = def.getWeightUnit();
+        this.decimal_places = def.getDecimalPlaces();
     }
+
 
     /**
      * Init
@@ -98,6 +102,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
         init(cols, cols_size);
     }
 
+
     /**
      * Get Id
      * @return
@@ -107,6 +112,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
         return this.id;
     }
 
+
     /**
      * Get Value
      * 
@@ -115,9 +121,10 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
     public String getValue()
     {
         float fl = Float.parseFloat(this.value);
-        return DataAccessNutri.getInstance().getDecimalHandler()
-                .getDecimalAsString(fl, Integer.parseInt(this.decimal_places));
+        return DataAccessNutri.getInstance().getDecimalHandler().getDecimalAsString(fl,
+            Integer.parseInt(this.decimal_places));
     }
+
 
     /**
      * Get Column Value
@@ -143,6 +150,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
 
     }
 
+
     /**
      * Compare
      * 
@@ -153,6 +161,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
         return mnd1.name.compareTo(mnd2.name);
     }
 
+
     /**
      * Get Save Data
      * 
@@ -162,6 +171,7 @@ public class MealNutritionsDisplay extends ATTableData implements Comparator<Mea
     {
         return this.id + "=" + this.getValue();
     }
+
 
     /**
      * To String

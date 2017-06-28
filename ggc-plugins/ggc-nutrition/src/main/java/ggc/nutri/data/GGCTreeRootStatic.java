@@ -305,13 +305,13 @@ public class GGCTreeRootStatic extends GGCTreeRoot
             {
                 MealGroup fg = this.import2_grp.get(i);
 
-                if (fg.getParent_id() == 0)
+                if (fg.getParentId() == 0)
                 {
                     rt.add(fg);
                 }
                 else
                 {
-                    this.m_meal_groups_ht.get("" + fg.getParent_id()).addChild(fg);
+                    this.m_meal_groups_ht.get("" + fg.getParentId()).addChild(fg);
                 }
             }
 
@@ -328,7 +328,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
      */
     public void addMealGroup(MealGroup mg)
     {
-        if (mg.getParent_id() == 0)
+        if (mg.getParentId() == 0)
         {
             this.m_meal_groups_ht.put("" + mg.getId(), mg);
             this.m_meal_groups_tree.add(mg);
@@ -336,7 +336,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
         else
         {
             this.m_meal_groups_ht.put("" + mg.getId(), mg);
-            this.m_meal_groups_ht.get("" + mg.getParent_id()).addChild(mg);
+            this.m_meal_groups_ht.get("" + mg.getParentId()).addChild(mg);
         }
     }
 
@@ -388,7 +388,7 @@ public class GGCTreeRootStatic extends GGCTreeRoot
             {
                 Meal fd = it2.next();
                 this.m_meals_ht.put("" + fd.getId(), fd);
-                this.m_meal_groups_ht.get("" + fd.getGroup_id()).addChild(fd);
+                this.m_meal_groups_ht.get("" + fd.getGroupId()).addChild(fd);
             }
 
         }

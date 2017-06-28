@@ -24,7 +24,6 @@ import ggc.nutri.dialogs.NutritionTreeDialog;
 import ggc.nutri.gui.print.PrintFoodDialog;
 import ggc.nutri.panels.PanelMealSelector;
 import ggc.nutri.util.DataAccessNutri;
-import ggc.nutri.util.GGCNutriICRunner;
 import ggc.plugin.DevicePlugInServer;
 import ggc.plugin.util.DataAccessPlugInBase;
 
@@ -97,7 +96,6 @@ public class NutriPlugInServer extends DevicePlugInServer // implements
 
     private I18nControlAbstract ic_local = null;
 
-
     /*
      * private String commands[] = {
      * "MN_NUTRI_READ_DESC",
@@ -106,6 +104,7 @@ public class NutriPlugInServer extends DevicePlugInServer // implements
      * "MN_LOAD_DATABASE_DESC",
      * "MN_NUTRI_ABOUT" };
      */
+
 
     // I18nControl i18nControlAbstract = I18nControl.getInstance();
 
@@ -153,8 +152,8 @@ public class NutriPlugInServer extends DevicePlugInServer // implements
 
     private void init(Container cont)
     {
-        NutriPluginDefinition nutriPluginDefinition = new NutriPluginDefinition(DataAccess.getInstance()
-                .getLanguageManager(), new GGCNutriICRunner());
+        NutriPluginDefinition nutriPluginDefinition = new NutriPluginDefinition(
+                DataAccess.getInstance().getLanguageManager());
         DataAccessNutri.createInstance(nutriPluginDefinition);
         DataAccessNutri.getInstance().addComponent(cont);
     }
@@ -177,44 +176,44 @@ public class NutriPlugInServer extends DevicePlugInServer // implements
                 }
                 break;
 
-        /*
-         * case PumpPlugInServer.COMMAND_CONFIGURATION:
-         * {
-         * new DeviceConfigurationDialog((JFrame)this.parent,
-         * DataAccessPump.getInstance());
-         * //new SimpleConfigurationDialog(this.dataAccess);
-         * return;
-         * }
-         * case PumpPlugInServer.COMMAND_PUMPS_LIST:
-         * {
-         * new BaseListDialog((JFrame)this.parent,
-         * DataAccessPump.getInstance());
-         * return;
-         * }
-         * case PumpPlugInServer.COMMAND_ABOUT:
-         * {
-         * new AboutBaseDialog((JFrame)this.parent,
-         * DataAccessPump.getInstance());
-         * return;
-         * }
-         * case PumpPlugInServer.COMMAND_PROFILES:
-         * {
-         * System.out.println("parent: " + this.parent);
-         * new ProfileSelector(DataAccessPump.getInstance(), this.parent);
-         * return;
-         * }
-         * case PumpPlugInServer.COMMAND_MANUAL_ENTRY:
-         * case PumpPlugInServer.COMMAND_ADDITIONAL_DATA:
-         * {
-         * new PumpDataDialog(DataAccessPump.getInstance(), this.parent);
-         * return;
-         * }
-         * default:
-         * {
-         * this.featureNotImplemented(commands[command]);
-         * return;
-         * }
-         */
+            /*
+             * case PumpPlugInServer.COMMAND_CONFIGURATION:
+             * {
+             * new DeviceConfigurationDialog((JFrame)this.parent,
+             * DataAccessPump.getInstance());
+             * //new SimpleConfigurationDialog(this.dataAccess);
+             * return;
+             * }
+             * case PumpPlugInServer.COMMAND_PUMPS_LIST:
+             * {
+             * new BaseListDialog((JFrame)this.parent,
+             * DataAccessPump.getInstance());
+             * return;
+             * }
+             * case PumpPlugInServer.COMMAND_ABOUT:
+             * {
+             * new AboutBaseDialog((JFrame)this.parent,
+             * DataAccessPump.getInstance());
+             * return;
+             * }
+             * case PumpPlugInServer.COMMAND_PROFILES:
+             * {
+             * System.out.println("parent: " + this.parent);
+             * new ProfileSelector(DataAccessPump.getInstance(), this.parent);
+             * return;
+             * }
+             * case PumpPlugInServer.COMMAND_MANUAL_ENTRY:
+             * case PumpPlugInServer.COMMAND_ADDITIONAL_DATA:
+             * {
+             * new PumpDataDialog(DataAccessPump.getInstance(), this.parent);
+             * return;
+             * }
+             * default:
+             * {
+             * this.featureNotImplemented(commands[command]);
+             * return;
+             * }
+             */
         }
 
     }
@@ -275,7 +274,7 @@ public class NutriPlugInServer extends DevicePlugInServer // implements
         if (dataAccessNutri == null)
         {
             NutriPluginDefinition nutriPluginDefinition = new NutriPluginDefinition(
-                    ((ATDataAccessLMAbstract) dataAccess).getLanguageManager(), new GGCNutriICRunner());
+                    ((ATDataAccessLMAbstract) dataAccess).getLanguageManager());
 
             dataAccessNutri = DataAccessNutri.createInstance(nutriPluginDefinition);
         }
@@ -494,8 +493,8 @@ public class NutriPlugInServer extends DevicePlugInServer // implements
         if (command != NutriPlugInServer.COMMAND_DB_FOOD_SELECTOR
                 && command != NutriPlugInServer.COMMAND_RECALCULATE_CH)
         {
-            System.out.println("ExecuteCommandDialogReturn[" + getName() + "] is not valid for this command: "
-                    + command);
+            System.out
+                    .println("ExecuteCommandDialogReturn[" + getName() + "] is not valid for this command: " + command);
             return null;
         }
         else

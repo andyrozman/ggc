@@ -519,7 +519,7 @@ public class DailyFoodEntry implements DAOObject// implements
 
     private void loadHomeWeight()
     {
-        // System.out.println("HWs: " + this.m_food.getHome_weights());
+        // System.out.println("HWs: " + this.m_food.getHomeWeights());
         // System.out.println("Looking for: " + this.home_weight_id);
 
         if (this.m_food.getHome_weights() == null && this.m_food.getHome_weights().length() == 0)

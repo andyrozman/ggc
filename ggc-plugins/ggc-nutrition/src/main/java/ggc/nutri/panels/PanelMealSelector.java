@@ -1,6 +1,21 @@
 package ggc.nutri.panels;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Hashtable;
+
+import javax.swing.*;
+import javax.swing.table.TableColumnModel;
+
+import com.atech.graphics.components.ATTableData;
+import com.atech.graphics.components.ATTableModel;
+import com.atech.graphics.layout.ZeroLayout;
+import com.atech.help.HelpCapable;
+import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.ATSwingUtils;
+
 import ggc.nutri.db.datalayer.DailyFoodEntries;
 import ggc.nutri.db.datalayer.DailyFoodEntry;
 import ggc.nutri.db.datalayer.MealNutrition;
@@ -9,34 +24,6 @@ import ggc.nutri.dialogs.MealSpecialSelectorDialog;
 import ggc.nutri.display.DailyFoodEntryDisplay;
 import ggc.nutri.display.MealNutritionsDisplay;
 import ggc.nutri.util.DataAccessNutri;
-
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Hashtable;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.table.TableColumnModel;
-
-import com.atech.graphics.components.ATTableData;
-import com.atech.graphics.components.ATTableModel;
-import com.atech.graphics.layout.ZeroLayout;
-import com.atech.help.HelpCapable;
-import com.atech.i18n.I18nControlAbstract;
-import com.atech.utils.ATDataAccessAbstract;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -71,11 +58,11 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
     DataAccessNutri m_da = null;
 
     Font font_big, font_normal, font_normal_b;
-    JLabel label; //, label_refuse, label_name, label_name_i18n;
+    JLabel label; // , label_refuse, label_name, label_name_i18n;
     JLabel label_title;
     JButton button, button_select, help_button;
-    //JTextField tf_name, tf_name_i18n, tf_name_i18n_key, tf_group;
-    //JTextArea jta_desc;
+    // JTextField tf_name, tf_name_i18n, tf_name_i18n_key, tf_group;
+    // JTextArea jta_desc;
     JTable table_1, table_2 = null;
     JScrollPane scroll_1, scroll_2 = null;
     JDialog m_dialog;
@@ -92,6 +79,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     I18nControlAbstract ic = null;
     String meals_ids;
+
 
     /**
      * Constructor
@@ -129,6 +117,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
+
     private void loadFoodParts()
     {
         // System.out.println("Food parts: " + this.meals_ids);
@@ -150,10 +139,12 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
+
     private void addFoodPart(DailyFoodEntryDisplay _dfed)
     {
         this.addFoodPart(_dfed, true);
     }
+
 
     private void addFoodPart(DailyFoodEntryDisplay _dfed, boolean refresh)
     {
@@ -167,6 +158,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
             this.refreshFoodParts();
         }
     }
+
 
     /**
      * Get String For Db 
@@ -191,6 +183,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         return sb.toString();
     }
 
+
     /**
      * Get CH Sum String
      * @return
@@ -213,6 +206,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
         return "0,0";
     }
+
 
     private void createPanel()
     {
@@ -318,13 +312,15 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         button1.addActionListener(this.action_listener);
         this.add(button1);
 
-        this.help_button = ATSwingUtils.createHelpButtonByBounds(380, 410, 110, 25, this, ATSwingUtils.FONT_NORMAL, m_da);
+        this.help_button = ATSwingUtils.createHelpButtonByBounds(380, 410, 110, 25, this, ATSwingUtils.FONT_NORMAL,
+            m_da);
         this.add(this.help_button);
 
         m_da.enableHelp(this);
 
         return;
     }
+
 
     // private static final int MODEL_MEAL_PARTS = 1;
     // private static final int MODEL_MEALS_NUTRITIONS = 2;
@@ -346,9 +342,11 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
+
     /*
      * private void createKeyWord() { String key =
-     * dataAccess.makeI18nKeyword(tf_name.getText()); tf_name_i18n_key.setText(key);
+     * dataAccess.makeI18nKeyword(tf_name.getText());
+     * tf_name_i18n_key.setText(key);
      * tf_name_i18n.setText(i18nControlAbstract.getMessage(key)); }
      */
 
@@ -358,6 +356,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
         this.refreshNutritions();
     }
+
 
     /*
      * private JTable getFoodTable()
@@ -451,7 +450,8 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
          * this.meal.getId());
          * if (msd.wasAction()) { MealPart mp = new
          * MealPart(msd.getSelectedObjectType(), msd.getSelectedObject(),
-         * msd.getAmountValue()); this.list_parts.add(new MealPartsDisplay(i18nControlAbstract,
+         * msd.getAmountValue()); this.list_parts.add(new
+         * MealPartsDisplay(i18nControlAbstract,
          * mp));
          * this.createModel(this.list_parts, this.table_1, this.mpd);
          * refreshNutritions(); }
@@ -459,7 +459,8 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
          * System.out.println("Edit Meal");
          * if (this.table_1.getSelectedRowCount()==0) {
          * JOptionPane.showConfirmDialog(this,
-         * i18nControlAbstract.getMessage("SELECT_ITEM_FIRST"), i18nControlAbstract.getMessage("ERROR"),
+         * i18nControlAbstract.getMessage("SELECT_ITEM_FIRST"),
+         * i18nControlAbstract.getMessage("ERROR"),
          * JOptionPane.CLOSED_OPTION); return; }
          * MealPartsDisplay mnd =
          * this.list_parts.get(this.table_1.getSelectedRow());
@@ -472,10 +473,12 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
          * System.out.println("Remove Meal");
          * if (this.table_1.getSelectedRowCount()==0) {
          * JOptionPane.showConfirmDialog(this,
-         * i18nControlAbstract.getMessage("SELECT_ITEM_FIRST"), i18nControlAbstract.getMessage("ERROR"),
+         * i18nControlAbstract.getMessage("SELECT_ITEM_FIRST"),
+         * i18nControlAbstract.getMessage("ERROR"),
          * JOptionPane.CLOSED_OPTION); return; }
          * int ii = JOptionPane.showConfirmDialog(this,
-         * i18nControlAbstract.getMessage("ARE_YOU_SURE_DELETE"), i18nControlAbstract.getMessage("ERROR"),
+         * i18nControlAbstract.getMessage("ARE_YOU_SURE_DELETE"),
+         * i18nControlAbstract.getMessage("ERROR"),
          * JOptionPane.YES_NO_OPTION);
          * if (ii==JOptionPane.YES_OPTION) { MealPartsDisplay mnd =
          * this.list_parts.get(this.table_1.getSelectedRow()); //PersonContact
@@ -488,10 +491,12 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
+
     private void out(String text)
     {
         System.out.println(text);
     }
+
 
     /*
      * proc v1 private void refreshNutritions() {
@@ -556,7 +561,8 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
      * mnd.setNutritionDefinition(nd);
      * this.list_nutritions.add(mnd); } }
      * java.util.Collections.sort(this.list_nutritions, new
-     * MealNutritionsDisplay(i18nControlAbstract)); this.createModel(this.list_nutritions,
+     * MealNutritionsDisplay(i18nControlAbstract));
+     * this.createModel(this.list_nutritions,
      * this.table_2, this.mnd);
      * }
      */
@@ -612,6 +618,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
+
     // TODO: fix GI/GL handling
     @SuppressWarnings("unused")
     private void loadGI_GL(Hashtable<String, MealNutrition> nutres)
@@ -623,6 +630,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         nutres.put("4004", new MealNutrition(4004, 0.0f, "GL Min"));
         nutres.put("4005", new MealNutrition(4005, 0.0f, "GL Max"));
     }
+
 
     // TODO: fix GI/GL handling
     @SuppressWarnings("unused")
@@ -671,6 +679,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
+
     // TODO: fix GI/GL handling
     @SuppressWarnings("unused")
     private void checkGI_GL_Max(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
@@ -702,6 +711,7 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
         }
 
     }
+
 
     // TODO: fix GI/GL handling
     @SuppressWarnings("unused")
@@ -735,15 +745,18 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
 
     }
 
+
     public Component getComponent()
     {
         return this;
     }
 
+
     public JButton getHelpButton()
     {
         return help_button;
     }
+
 
     public String getHelpId()
     {
@@ -790,14 +803,16 @@ public class PanelMealSelector extends /* GGCTreePanel */JPanel implements Actio
      * setTypeOfAction(EditableAbstractPanel.ACTION_EDIT);
      * this.label_title.setText(i18nControlAbstract.getMessage("MEAL_EDIT"));
      * this.tf_name.setText(this.meal.getName());
-     * this.tf_name_i18n_key.setText(this.meal.getName_i18n());
-     * this.tf_name_i18n.setText(i18nControlAbstract.getMessage(this.meal.getName_i18n()));
+     * this.tf_name_i18n_key.setText(this.meal.getNameI18n());
+     * this.tf_name_i18n.setText(i18nControlAbstract.getMessage(this.meal.
+     * getNameI18n()));
      * this.jta_desc.setText(this.meal.getDescription());
-     * if (this.meal.getGroup_id()>0) { this.meal_group =
+     * if (this.meal.getGroupId()>0) { this.meal_group =
      * dataAccess.tree_roots.get("3").m_meal_groups_ht.get("" +
-     * this.meal.getGroup_id());
+     * this.meal.getGroupId());
      * this.tf_group.setText(this.meal_group.getName()); } else {
-     * this.meal_group = null; this.tf_group.setText(i18nControlAbstract.getMessage("ROOT")); }
+     * this.meal_group = null;
+     * this.tf_group.setText(i18nControlAbstract.getMessage("ROOT")); }
      * this.loadMealsParts(); this.button_select.setEnabled(true);
      * createKeyWord();
      * }

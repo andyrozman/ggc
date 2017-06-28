@@ -1,41 +1,66 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>net.sf.ggc</groupId>
-		<artifactId>ggc-plugins</artifactId>
-		<version>0.8-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.sf.ggc</groupId>
+        <artifactId>ggc-plugins</artifactId>
+        <version>0.8-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
-	<name>GGC Plugins - Nutrition Tool</name>
-	<artifactId>ggc-nutrition-tool</artifactId>
-	<version>${ggc-nutrition-tool.version}</version>
+    <name>GGC Plugins - Nutrition Tool</name>
+    <artifactId>ggc-nutrition-tool</artifactId>
+    <version>${ggc-nutrition-tool.version}</version>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>maven-replacer-plugin</artifactId>
+            </plugin>
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/ggc/nutri/defs/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-	<dependencies>
-		<dependency>
-			<groupId>net.sf.ggc</groupId>
-			<artifactId>ggc-core</artifactId>
-		</dependency>
+        </plugins>
+    </build>
 
-		<dependency>
-			<groupId>net.sf.ggc</groupId>
-			<artifactId>ggc-plugins-base</artifactId>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-core</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>com.atech-software</groupId>
-			<artifactId>atech-tools</artifactId>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-plugins-base</artifactId>
+        </dependency>
 
-	<properties>
+        <dependency>
+            <groupId>com.atech-software</groupId>
+            <artifactId>atech-tools</artifactId>
+        </dependency>
+    </dependencies>
 
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-	</properties>
+    <properties>
+        <version.file>
+            ${project.build.directory}/generated-sources/ggc/nutri/defs/Version.java
+        </version.file>
+    </properties>
 
 </project>

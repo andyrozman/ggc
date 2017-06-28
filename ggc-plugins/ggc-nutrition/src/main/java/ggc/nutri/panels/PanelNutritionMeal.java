@@ -1,37 +1,24 @@
 package ggc.nutri.panels;
 
-import com.atech.utils.ATSwingUtils;
-import ggc.nutri.db.datalayer.DailyFoodEntries;
-import ggc.nutri.db.datalayer.DailyFoodEntry;
-import ggc.nutri.db.datalayer.Meal;
-import ggc.nutri.db.datalayer.MealGroup;
-import ggc.nutri.db.datalayer.MealNutrition;
-import ggc.nutri.db.datalayer.NutritionDefinition;
-import ggc.nutri.dialogs.NutritionTreeDialog;
-import ggc.nutri.display.MealNutritionsDisplay;
-import ggc.nutri.display.MealPartsDisplay;
-
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.StringTokenizer;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 
 import com.atech.graphics.components.ATTableData;
 import com.atech.graphics.components.ATTableModel;
 import com.atech.graphics.layout.ZeroLayout;
-import com.atech.utils.ATDataAccessAbstract;
+import com.atech.utils.ATSwingUtils;
+
+import ggc.nutri.db.datalayer.*;
+import ggc.nutri.dialogs.NutritionTreeDialog;
+import ggc.nutri.display.MealNutritionsDisplay;
+import ggc.nutri.display.MealPartsDisplay;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -89,6 +76,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
     Meal meal;
     MealGroup meal_group;
 
+
     /**
      * Constructor
      * 
@@ -113,6 +101,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
         createPanel();
 
     }
+
 
     private void createPanel()
     {
@@ -238,6 +227,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
         return;
     }
 
+
     // public static final int MODEL_MEAL_PARTS = 1;
     // public static final int MODEL_MEALS_NUTRITIONS = 2;
 
@@ -258,9 +248,11 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
     }
 
+
     /*
      * private void createKeyWord() { String key =
-     * dataAccess.makeI18nKeyword(tf_name.getText()); tf_name_i18n_key.setText(key);
+     * dataAccess.makeI18nKeyword(tf_name.getText());
+     * tf_name_i18n_key.setText(key);
      * tf_name_i18n.setText(i18nControlAbstract.getMessage(key)); }
      */
 
@@ -274,6 +266,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
         System.out.println("PanelNutritionMeal::Unknown command: " + action);
 
     }
+
 
     private void refreshNutritions()
     {
@@ -363,6 +356,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
     }
 
+
     // TODO: fix GI/GL handling
     @SuppressWarnings("unused")
     private void loadGI_GL(Hashtable<String, MealNutrition> nutres)
@@ -374,6 +368,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
         nutres.put("4004", new MealNutrition(4004, 0.0f, "GL Min"));
         nutres.put("4005", new MealNutrition(4005, 0.0f, "GL Max"));
     }
+
 
     // TODO: fix GI/GL handling
     @SuppressWarnings("unused")
@@ -422,6 +417,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
     }
 
+
     // TODO: fix GI/GL handling
     @SuppressWarnings("unused")
     private void checkGI_GL_Max(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
@@ -454,6 +450,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
     }
 
+
     // TODO: fix GI/GL handling
     @SuppressWarnings("unused")
     private void checkGI_GL_Min(Hashtable<String, MealNutrition> nutres, MealNutrition mn, boolean GI)
@@ -485,6 +482,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
         }
 
     }
+
 
     private void loadMealsParts()
     {
@@ -522,6 +520,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
     }
 
+
     /**
      * Set Parent
      * 
@@ -531,6 +530,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
     public void setParent(Object obj)
     {
     }
+
 
     /**
      * Set Data
@@ -547,19 +547,19 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
         // this.label_title.setText(i18nControlAbstract.getMessage("MEAL_EDIT"));
         this.label_name.setText(this.meal.getName());
         this.label_name.setToolTipText(this.meal.getName());
-        this.label_name_i18n_key.setText(this.meal.getName_i18n());
-        this.label_name_i18n_key.setToolTipText(this.meal.getName_i18n());
-        this.label_name_i18n.setText(ic.getMessage(this.meal.getName_i18n()));
-        this.label_name_i18n.setToolTipText(ic.getMessage(this.meal.getName_i18n()));
+        this.label_name_i18n_key.setText(this.meal.getNameI18n());
+        this.label_name_i18n_key.setToolTipText(this.meal.getNameI18n());
+        this.label_name_i18n.setText(ic.getMessage(this.meal.getNameI18n()));
+        this.label_name_i18n.setToolTipText(ic.getMessage(this.meal.getNameI18n()));
 
         this.jta_desc.setText(this.meal.getDescription());
 
-        if (this.meal.getGroup_id() > 0)
+        if (this.meal.getGroupId() > 0)
         {
             // this.meal_group =
             // dataAccess.tree_roots.get("3").m_meal_groups_ht.get("" +
-            // this.meal.getGroup_id());
-            this.meal_group = m_da.getDbCache().tree_roots.get("3").findMealGroup(3, this.meal.getGroup_id());
+            // this.meal.getGroupId());
+            this.meal_group = m_da.getDbCache().tree_roots.get("3").findMealGroup(3, this.meal.getGroupId());
             this.label_group.setText(this.meal_group.getName());
         }
         else
@@ -572,6 +572,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
         // this.button_select.setEnabled(true);
 
     }
+
 
     /**
      * Get Warning string. This method returns warning string for either add or
@@ -587,6 +588,7 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
     {
         return null;
     }
+
 
     /*
      * private String temp_parts; private String temp_nutritions;
@@ -621,15 +623,16 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
          * processData();
          * if (this.isAddAction()) { return true; } else { if
          * ((hasChangedEntry(this.meal.getName(), this.tf_name.getText())) ||
-         * (hasChangedEntry(this.meal.getName_i18n(),
+         * (hasChangedEntry(this.meal.getNameI18n(),
          * this.tf_name_i18n_key.getText())) ||
          * (hasChangedEntry(this.meal.getDescription(),
          * this.jta_desc.getText())) || (hasChangedEntry(this.meal.getParts(),
          * this.temp_parts)) || (hasChangedEntry(this.meal.getNutritions(),
-         * this.temp_nutritions)) || (this.meal.getGroup_id()!=
+         * this.temp_nutritions)) || (this.meal.getGroupId()!=
          * this.meal_group.getId()) ) return true; else return false; }
          */
     }
+
 
     /**
      * Save data in panel
@@ -644,23 +647,23 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
         /*
          * if (this.isAddAction()) { this.meal.setName(this.tf_name.getText());
-         * this.meal.setName_i18n(this.tf_name_i18n_key.getText());
+         * this.meal.setNameI18n(this.tf_name_i18n_key.getText());
          * this.meal.setDescription(this.jta_desc.getText());
          * this.meal.setParts(this.temp_parts);
          * this.meal.setNutritions(this.temp_nutritions);
-         * this.meal.setGroup_id(this.meal_group.getId());
+         * this.meal.setGroupId(this.meal_group.getId());
          * this.dataAccess.getDb().add(this.meal); this.was_saved = true;
          * addMeal2Tree(this.meal);
          * return true; } else {
-         * long prev_group_id = this.meal.getGroup_id();
+         * long prev_group_id = this.meal.getGroupId();
          * this.meal.setName(this.tf_name.getText());
-         * this.meal.setName_i18n(this.tf_name_i18n_key.getText());
+         * this.meal.setNameI18n(this.tf_name_i18n_key.getText());
          * this.meal.setDescription(this.jta_desc.getText());
          * this.meal.setParts(this.temp_parts);
          * this.meal.setNutritions(this.temp_nutritions);
-         * this.meal.setGroup_id(this.meal_group.getId());
+         * this.meal.setGroupId(this.meal_group.getId());
          * this.dataAccess.getDb().edit(this.meal); this.was_saved = true;
-         * if (prev_group_id != this.meal.getGroup_id()) {
+         * if (prev_group_id != this.meal.getGroupId()) {
          * removeMealFromTree(this.meal, prev_group_id);
          * addMeal2Tree(this.meal); }
          * return true; }
@@ -668,10 +671,11 @@ public class PanelNutritionMeal extends GGCTreePanel implements ActionListener
 
     }
 
+
     /*
      * private void addMeal2Tree(Meal meal) {
      * dataAccess.tree_roots.get("3").m_meal_groups_ht.get("" +
-     * meal.getGroup_id()).addChild(meal); }
+     * meal.getGroupId()).addChild(meal); }
      * public void removeMealFromTree(Meal meal, long prev_group_id) {
      * dataAccess.tree_roots.get("3").m_meal_groups_ht.get("" +
      * prev_group_id).removeChild(meal); }

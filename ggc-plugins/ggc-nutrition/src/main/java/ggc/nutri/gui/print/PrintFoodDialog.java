@@ -46,7 +46,7 @@ public class PrintFoodDialog extends PrintDialogRange
 
     private String[] report_types_2 = { ic.getMessage("FOOD_MENU_BASE"), ic.getMessage("FOOD_MENU_EXT_I"),
                                         ic.getMessage("FOOD_MENU_EXT_II"),
-            // m_ic.getMessage("FOOD_MENU_EXT_III")
+            // i18nControl.getMessage("FOOD_MENU_EXT_III")
     };
 
     DataAccessNutri dataAccessNutri;

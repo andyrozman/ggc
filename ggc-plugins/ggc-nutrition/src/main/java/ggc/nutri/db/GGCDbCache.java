@@ -177,7 +177,7 @@ public class GGCDbCache
         this.addMealGroup2Tree(3, mg);
 
         /*
-         * if (mg.getParent_id() == 0)
+         * if (mg.getParentId() == 0)
          * {
          * this.m_meal_groups_ht.put("" + mg.getId(), mg);
          * this.m_meal_groups_tree.add(mg);
@@ -185,7 +185,7 @@ public class GGCDbCache
          * else
          * {
          * this.m_meal_groups_ht.put("" + mg.getId(), mg);
-         * this.m_meal_groups_ht.get("" + mg.getParent_id()).addChild(mg);
+         * this.m_meal_groups_ht.get("" + mg.getParentId()).addChild(mg);
          * }
          */
     }
@@ -228,7 +228,7 @@ public class GGCDbCache
      * {
      * FoodDescription fd = it2.next();
      * this.m_foods_ht.put("" + fd.getId(), fd);
-     * this.m_groups_ht.get("" + fd.getGroup_id()).addChild(fd);
+     * this.m_groups_ht.get("" + fd.getGroupId()).addChild(fd);
      * }
      * }
      * else if (m_type == GGCTreeRoot.TREE_MEALS)
@@ -239,7 +239,7 @@ public class GGCDbCache
      * {
      * Meal fd = it2.next();
      * this.m_meals_ht.put("" + fd.getId(), fd);
-     * this.m_meal_groups_ht.get("" + fd.getGroup_id()).addChild(fd);
+     * this.m_meal_groups_ht.get("" + fd.getGroupId()).addChild(fd);
      * }
      * }
      * }
@@ -286,7 +286,7 @@ public class GGCDbCache
     public void addMeal2Tree(int type, Meal _meal)
     {
         // debug("addMeal2Tree :: Not Implemented Yet !");
-        this.meal_groups.get("" + type).get("" + _meal.getGroup_id()).addChild(_meal);
+        this.meal_groups.get("" + type).get("" + _meal.getGroupId()).addChild(_meal);
         this.meals.get("" + type).put("" + _meal.getId(), _meal);
     }
 
@@ -300,7 +300,7 @@ public class GGCDbCache
     public void addMealGroup2Tree(int type, MealGroup mg)
     {
         // debug("addMealGroup2Tree :: Not Implemented Yet !");
-        this.meal_groups.get("" + type).get("" + mg.getParent_id()).addChild(mg);
+        this.meal_groups.get("" + type).get("" + mg.getParentId()).addChild(mg);
         this.meal_groups.get("" + type).put("" + mg.getId(), mg);
 
     }
