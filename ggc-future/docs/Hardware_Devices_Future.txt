@@ -1,0 +1,65 @@
+DIABETES HARDWARE DEVICES - PLANNING LIST
+==========================================
+
+Meter
+------
+
+NAME                    Status           COMMENT
+-------------------------------------------------------------------------
+Arkray                  TESTING          Need to test with devices
+Menarini                TESTING          Need to test with devices
+Contour Next One        TESTING          Bug found: progress problem
+Wellion/Calla           ANALYSIS         Request for protocols sent (10%)
+
+
+
+Pump
+------
+
+NAME                    Status           COMMENT
+-------------------------------------------------------------------------
+Minimed 5xx            DEVELOPMENT       Working on solution (20%)
+Minimed 6xx            ANALYSIS          Waiting for hardware/have some code that can be used
+Tandem                 ON LIST           ? 2020 (depending if they come in EU)
+Cellnovo               ON LIST           2020
+
+
+
+CGMS
+------
+
+NAME                    Status           COMMENT
+-------------------------------------------------------------------------
+Abbott Libre           DEVELOPMENT       Working on solution (10%)
+Minimed 5xx            ON LIST           2018
+Minimed 6xx            ON LIST           ? 2019
+Tandem (G4)            ON LIST           ? 2020
+Roche Eversense        ON LIST           ?
+
+
+
+TIMELINE
+=========
+
+Project                 Expected               Comment
+--------------------------------------------------------------------------------
+Libre                    30.11.
+Arkray                   30.12.                Test with real device
+Menarini                 30.12.
+
+
+
+
+
+
+
+
+
+
+Legend of phases:
+ON LIST - considered for implementation
+ANALYSIS - gatering information about protocol
+DEVELOPMENT - working on solution
+TESTING - development done
+DONE - development done, but not in release yet
+RELEASED - done and released

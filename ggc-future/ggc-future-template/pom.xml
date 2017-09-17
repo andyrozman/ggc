@@ -1,0 +1,73 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.sf.ggc</groupId>
+        <artifactId>ggc-future</artifactId>
+        <version>0.8-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+
+    <name>GGC Future - XYX (Device)</name>
+    <artifactId>ggc-device-xyz</artifactId>
+    <version>0.1-SNAPSHOT</version>
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-plugins-base</artifactId>
+        </dependency>
+
+        <!-- If device support is for Meters -->
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-meter-tool</artifactId>
+        </dependency>
+
+        <!-- If device support is for Pumps -->
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-pump-tool</artifactId>
+        </dependency>
+
+        <!-- If device support is for CGMS -->
+        <dependency>
+            <groupId>net.sf.ggc</groupId>
+            <artifactId>ggc-cgms-tool</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.atech-software</groupId>
+            <artifactId>atech-tools</artifactId>
+        </dependency>
+
+        <!--
+        Any additional libraries - don't forget to copy them in correct project afterwards
+
+        -->
+
+
+    </dependencies>
+    <!--
+        <repositories>
+            <repository>
+                <id>The Buzz Media Maven Repository</id>
+                <url>http://maven.thebuzzmedia.com</url>
+            </repository>
+        </repositories>
+     -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+
+</project>
