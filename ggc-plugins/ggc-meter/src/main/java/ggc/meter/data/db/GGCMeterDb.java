@@ -2,7 +2,7 @@ package ggc.meter.data.db;
 
 import java.util.*;
 
-import org.hibernate.Query;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -158,21 +158,17 @@ public class GGCMeterDb extends PluginDb
         {
             LOG.debug("getPumpData() - Process");
 
-            // FIXME
-            Query q = this.getSession().createQuery(
-                " SELECT dv FROM ggc.core.db.hibernate.pump.PumpDataExtendedH as dv " + " WHERE dv.person_id="
-                        + m_da.getCurrentUserId() + " AND dv.dt_info IN " + getDataListForSQL(timeMarks)
-                        + " AND dv.type IN " + getDataListForSQL(MeterValuesEntryDataType.getAllowedPumpTypes())
-                        + " ORDER BY dv.dt_info");
+            List<PumpDataExtendedH> pumpDataSource = getHibernateData(PumpDataExtendedH.class,
+                Arrays.asList(getPersonCriterion(), //
+                    getDataListForCriteria("dtInfo", timeMarks.keySet()), //
+                    getDataListForCriteria("type", MeterValuesEntryDataType.getAllowedPumpTypes()) //
+                ), //
+                Arrays.asList(Order.asc("dtInfo")) //
+            );
 
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
+            for (PumpDataExtendedH pde : pumpDataSource)
             {
-                PumpDataExtendedH pde = (PumpDataExtendedH) it.next();
-
-                int time = (int) (pde.getDtInfo() / 100); // same time as in
-                                                          // DailyValueH
+                int time = (int) (pde.getDtInfo() / 100); // same time as in DailyValueH
                 pumpData.put(time + "_" + pde.getType(), pde);
             }
 
@@ -185,49 +181,48 @@ public class GGCMeterDb extends PluginDb
         return pumpData;
     }
 
-
-    /**
-     * Get Meter Data (with help of time marks)
-     * 
-     * @param timeMarks
-     * @return
-     * @deprecated 
-     */
-    public Map<Long, MeterValuesEntry> getMeterData(Hashtable<Long, String> timeMarks)
-    {
-
-        Map<Long, MeterValuesEntry> meter_data = new HashMap<Long, MeterValuesEntry>();
-
-        if (timeMarks.size() == 0)
-            return meter_data;
-
-        try
-        {
-            LOG.debug("getMeterData() - Process");
-
-            Query q = this.getSession().createQuery( //
-                " SELECT dv from ggc.core.db.hibernate.pen.DayValueH as dv " + //
-                        " WHERE person_id=" + m_da.getCurrentUserId() + //
-                        " AND dv.dt_info IN " + getDataListForSQL(timeMarks) + //
-                        " ORDER BY dv.dt_info ASC");
-
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                MeterValuesEntry mve = new MeterValuesEntry((DayValueH) it.next());
-                meter_data.put(mve.getDateTime(), mve);
-            }
-
-        }
-        catch (Exception ex)
-        {
-            LOG.error("Error getting meter data: " + ex, ex);
-        }
-
-        return meter_data;
-
-    }
+    // /**
+    // * Get Meter Data (with help of time marks)
+    // *
+    // * @param timeMarks
+    // * @return
+    // * @deprecated
+    // */
+    // public Map<Long, MeterValuesEntry> getMeterData(Hashtable<Long, String> timeMarks)
+    // {
+    //
+    // Map<Long, MeterValuesEntry> meter_data = new HashMap<Long, MeterValuesEntry>();
+    //
+    // if (timeMarks.size() == 0)
+    // return meter_data;
+    //
+    // try
+    // {
+    // LOG.debug("getMeterData() - Process");
+    //
+    // Query q = this.getSession().createQuery( //
+    // " SELECT dv from ggc.core.db.hibernate.pen.DayValueH as dv " + //
+    // " WHERE person_id=" + m_da.getCurrentUserId() + //
+    // " AND dv.dt_info IN " + getDataListForSQL(timeMarks) + //
+    // " ORDER BY dv.dt_info ASC");
+    //
+    // Iterator<?> it = q.list().iterator();
+    //
+    // while (it.hasNext())
+    // {
+    // MeterValuesEntry mve = new MeterValuesEntry((DayValueH) it.next());
+    // meter_data.put(mve.getDateTime(), mve);
+    // }
+    //
+    // }
+    // catch (Exception ex)
+    // {
+    // LOG.error("Error getting meter data: " + ex, ex);
+    // }
+    //
+    // return meter_data;
+    //
+    // }
 
 
     // private String getDataListForSQL(Map<?, ?> ht)
@@ -254,6 +249,12 @@ public class GGCMeterDb extends PluginDb
         }
 
         return sb.substring(0, sb.length() - 2) + ")";
+    }
+
+
+    private Criterion getDataListForCriteria(String parameterName, Set<?> data)
+    {
+        return Restrictions.in(parameterName, data);
     }
 
 

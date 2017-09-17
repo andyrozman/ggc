@@ -1,6 +1,8 @@
 package ggc.meter.data;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.atech.i18n.I18nControlAbstract;
 
@@ -19,7 +21,7 @@ public enum MeterValuesEntryDataType
 
     String description;
     Integer pumpExtCode;
-    static HashMap<Integer, String> allowedPumpTypes;
+    static Set<Integer> allowedPumpTypes;
     static HashMap<MeterValuesEntryDataType, String> processorTypes;
     boolean isProcessor;
     String translation;
@@ -48,17 +50,17 @@ public enum MeterValuesEntryDataType
     }
 
 
-    public static HashMap<Integer, String> getAllowedPumpTypes()
+    public static Set<Integer> getAllowedPumpTypes()
     {
         if (allowedPumpTypes == null)
         {
-            allowedPumpTypes = new HashMap<Integer, String>();
+            allowedPumpTypes = new HashSet<Integer>();
 
             for (MeterValuesEntryDataType mpid : values())
             {
                 if (mpid.pumpExtCode != null)
                 {
-                    allowedPumpTypes.put(mpid.pumpExtCode, null);
+                    allowedPumpTypes.add(mpid.pumpExtCode);
                 }
             }
         }
