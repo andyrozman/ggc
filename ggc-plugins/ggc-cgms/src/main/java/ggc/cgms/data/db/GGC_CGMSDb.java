@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,6 @@ import com.atech.db.hibernate.HibernateDb;
 import com.atech.graphics.graphs.v2.data.GraphDbDataRetriever;
 import com.atech.graphics.graphs.v2.data.GraphDefinitionDto;
 import com.atech.graphics.graphs.v2.data.GraphTimeDataCollection;
-import com.atech.utils.ATDataAccessAbstract;
 import com.atech.utils.data.ATechDate;
 import com.atech.utils.data.ATechDateType;
 
@@ -26,7 +24,6 @@ import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.db.hibernate.cgms.CGMSDataH;
 import ggc.plugin.data.DeviceValuesDay;
 import ggc.plugin.data.DeviceValuesEntryInterface;
-import ggc.plugin.data.DeviceValuesRange;
 import ggc.plugin.db.PluginDb;
 
 /**
@@ -119,6 +116,8 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
         // return null;
     }
 
+    // getHibernateData
+
 
     /**
      * Get Pump Values Range
@@ -127,51 +126,53 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
      * @param to 
      * @return
      */
-    public DeviceValuesRange getRangePumpValues(GregorianCalendar from, GregorianCalendar to)
-    {
-        ATDataAccessAbstract.notImplemented("GGC_CGMSDb::getRangePumpValues()");
-        return null;
-
-        /*
-         * log.info("getPumpDayStats()");
-         * long dt_from = ATechDate.getATDateTimeFromGC(from,
-         * ATechDate.FORMAT_DATE_ONLY);
-         * long dt_to = ATechDate.getATDateTimeFromGC(to,
-         * ATechDate.FORMAT_DATE_ONLY);
-         * String sql = "";
-         * DeviceValuesRange dvr = new
-         * DeviceValuesRange(DataAccessPump.getInstance(), from, to);
-         * try
-         * {
-         * sql = "SELECT dv from " +
-         * "ggc.core.db.hibernate.pump.PumpDataH as dv " +
-         * "WHERE dv.dt_info >=  " + dt_from
-         * + "000000 AND dv.dt_info <= " + dt_to + "235959 ORDER BY dv.dt_info";
-         * //System.out.println("SQL: " + sql);
-         * Query q = this.db.getSession().createQuery(sql);
-         * Iterator<?> it = q.list().iterator();
-         * while (it.hasNext())
-         * {
-         * PumpDataH pdh = (PumpDataH)it.next();
-         * PumpValuesEntry dv = new PumpValuesEntry(pdh);
-         * dvr.addEntry(dv);
-         * }
-         * ArrayList<PumpValuesEntryExt> lst_ext =
-         * getRangePumpValuesExtended(from, to);
-         * mergeRangePumpData(dvr, lst_ext);
-         * // ArrayList<PumpValuesEntryExt> lst_ext =
-         * getDailyPumpValuesExtended(gc);
-         * // mergeDailyPumpData(dV, lst_ext);
-         * }
-         * catch (Exception ex)
-         * {
-         * log.debug("Sql: " + sql);
-         * log.error("getDayStats(). Exception: " + ex, ex);
-         * }
-         * return dvr;
-         */
-    }
-
+    // public DeviceValuesRange getRangePumpValues(GregorianCalendar from, GregorianCalendar to)
+    // {
+    //
+    //
+    //
+    // ATDataAccessAbstract.notImplemented("GGC_CGMSDb::getRangePumpValues()");
+    // return null;
+    //
+    // /*
+    // * log.info("getPumpDayStats()");
+    // * long dt_from = ATechDate.getATDateTimeFromGC(from,
+    // * ATechDate.FORMAT_DATE_ONLY);
+    // * long dt_to = ATechDate.getATDateTimeFromGC(to,
+    // * ATechDate.FORMAT_DATE_ONLY);
+    // * String sql = "";
+    // * DeviceValuesRange dvr = new
+    // * DeviceValuesRange(DataAccessPump.getInstance(), from, to);
+    // * try
+    // * {
+    // * sql = "SELECT dv from " +
+    // * "ggc.core.db.hibernate.pump.PumpDataH as dv " +
+    // * "WHERE dv.dt_info >= " + dt_from
+    // * + "000000 AND dv.dt_info <= " + dt_to + "235959 ORDER BY dv.dt_info";
+    // * //System.out.println("SQL: " + sql);
+    // * Query q = this.db.getSession().createQuery(sql);
+    // * Iterator<?> it = q.list().iterator();
+    // * while (it.hasNext())
+    // * {
+    // * PumpDataH pdh = (PumpDataH)it.next();
+    // * PumpValuesEntry dv = new PumpValuesEntry(pdh);
+    // * dvr.addEntry(dv);
+    // * }
+    // * ArrayList<PumpValuesEntryExt> lst_ext =
+    // * getRangePumpValuesExtended(from, to);
+    // * mergeRangePumpData(dvr, lst_ext);
+    // * // ArrayList<PumpValuesEntryExt> lst_ext =
+    // * getDailyPumpValuesExtended(gc);
+    // * // mergeDailyPumpData(dV, lst_ext);
+    // * }
+    // * catch (Exception ex)
+    // * {
+    // * log.debug("Sql: " + sql);
+    // * log.error("getDayStats(). Exception: " + ex, ex);
+    // * }
+    // * return dvr;
+    // */
+    // }
 
     /**
      * Get All Elements Count
@@ -180,18 +181,7 @@ public class GGC_CGMSDb extends PluginDb implements GraphDbDataRetriever
      */
     public int getAllElementsCount()
     {
-        Integer in = null;
-        int sum_all = 0;
-
-        Criteria criteria = this.getSession().createCriteria(CGMSDataH.class);
-        criteria.add(Restrictions.eq("personId", (int) dataAccess.getCurrentUserId()));
-        criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
-
-        criteria.setProjection(Projections.rowCount());
-        in = (Integer) criteria.list().get(0);
-        sum_all = in.intValue();
-
-        return sum_all;
+        return getAllElementsCount(CGMSDataH.class, null);
     }
 
 

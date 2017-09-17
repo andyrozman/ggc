@@ -44,22 +44,28 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
 {
     // Abbott
 
-    AbbottFreeStyleNavigatorV1(10001, "Abbott FreeStyle Navigator V1", null, null, //
+    AbbottFreeStyleNavigatorV1(10001, "Abbott FreeStyle Navigator V1", "no_device.gif", null, //
             null, DeviceImplementationStatus.NotAvailable, //
             DeviceCompanyDefinition.Abbott, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
             DeviceProgressStatus.Special, ""), // TODO
 
-    AbbottFreeStyleNavigatorV2(10002, "Abbott FreeStyle Navigator V2", null, null, //
+    AbbottFreeStyleNavigatorV2(10002, "Abbott FreeStyle Navigator V2", "no_device.gif", null, //
             null, DeviceImplementationStatus.NotAvailable, //
             DeviceCompanyDefinition.Abbott, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
             DeviceProgressStatus.Special, ""), // TODO
 
-    AbbottFreeStyleNeo(10003, "Abbott FreeStyle Neo", null, null, //
+    AbbottFreeStyleNeo(10003, "Abbott FreeStyle Neo", "no_device.gif", null, //
             null, DeviceImplementationStatus.NotAvailable, //
             DeviceCompanyDefinition.Abbott, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, ""), // TODO
+
+    AbbottFreeStyleLibre(10004, "Abbott FreeStyle Libre", "no_device.gif", null, //
+            null, DeviceImplementationStatus.InProgress, //
+            DeviceCompanyDefinition.Abbott, DeviceHandlerType.AbbottLibreHandler, //
+            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.USB_Hid, //
             DeviceProgressStatus.Special, ""), // TODO
 
     // Animas
@@ -75,13 +81,13 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
     Dexcom7(20001, "Dexcom 7", null, null, //
             DexcomDevice.Dexcom7, DeviceImplementationStatus.NotAvailable, //
             DeviceCompanyDefinition.Dexcom, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
             DeviceProgressStatus.Special, ""), // TODO
 
     Dexcom7Plus(20002, "Dexcom 7 Plus", null, null, //
             DexcomDevice.Dexcom7, DeviceImplementationStatus.NotAvailable, //
             DeviceCompanyDefinition.Dexcom, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
             DeviceProgressStatus.Special, ""), // TODO
 
     DexcomG4(20003, "Dexcom G4", "dx_dexcomG4.jpg", "DEXCOM_INSTRUCTIONS_DL_SERIAL_USB", //
@@ -93,7 +99,7 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
     DexcomG5(20004, "Dexcom G5", null, null, //
             DexcomDevice.DexcomG5, DeviceImplementationStatus.NotAvailable, //
             DeviceCompanyDefinition.Dexcom, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
             DeviceProgressStatus.Special, ""), // TODO
 
     // Minimed
@@ -102,50 +108,62 @@ public enum CGMSDeviceDefinition implements DeviceDefinition
             MinimedDeviceType.MinimedCGMSGold, DeviceImplementationStatus.Planned, //
             DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler, //
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Multiple, //
-            DeviceProgressStatus.Special, ""), //
+            DeviceProgressStatus.Special, ""), // TODO
 
     MinimedGuradianRealTime(30002, "Minimed Guardian RealTime", "mm_522_722.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.MinimedGuradianRealTime, DeviceImplementationStatus.Planned, //
             DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler, //
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Multiple, //
-            DeviceProgressStatus.Special, ""), //
+            DeviceProgressStatus.Special, ""), // TODO
 
     Minimed_522_722(30003, "Minimed 522/722", "mm_522_722.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.Minimed_522_722, DeviceImplementationStatus.Planned, //
             DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler, //
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Multiple, //
-            DeviceProgressStatus.Special, ""), //
+            DeviceProgressStatus.Special, ""), // TODO
 
     Minimed_523_723(30004, "Minimed 523/723", "mm_522_722.jpg", "INSTRUCTIONS_MINIMED", //
             MinimedDeviceType.Minimed_523_723, DeviceImplementationStatus.Planned, //
             DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler, //
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Multiple, //
-            DeviceProgressStatus.Special, ""), //
+            DeviceProgressStatus.Special, ""), // TODO
 
     Minimed_553_753_Revel(30005, "Minimed 553/753 (Revel)", "mm_554_veo.jpg", "INSTRUCTIONS_MINIMED", //
             MinimedDeviceType.Minimed_553_753_Revel, DeviceImplementationStatus.Planned, //
             DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler, //
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Multiple, //
-            DeviceProgressStatus.Special, ""), //
+            DeviceProgressStatus.Special, ""), // TODO
 
     Minimed_554_754_Veo(30006, "Minimed 554/754 (Veo)", "mm_554_veo.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.Minimed_554_754_Veo, DeviceImplementationStatus.Planned, //
             DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler, //
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Multiple, //
-            DeviceProgressStatus.Special, ""), //
+            DeviceProgressStatus.Special, ""), // TODO
 
-    Minimed_640G(30007, "Minimed 640G", "pic", "INSTRUCTIONS_MINIMED", //
+    // FIXME
+    Minimed_640G(30007, "Minimed 640G", "no_device.gif", "INSTRUCTIONS_MINIMED", //
             MinimedDeviceType.Minimed_640G, DeviceImplementationStatus.Planned, //
             DeviceCompanyDefinition.Minimed, DeviceHandlerType.NoHandler, //
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Multiple, //
-            DeviceProgressStatus.Special, ""), //
+            DeviceProgressStatus.Special, ""), // TODO
 
     // Tandem
-
     TandemTSlimG4(50001, "t:slim G4", "tan_tslimG4.jpg", null, //
             null, DeviceImplementationStatus.NotAvailable, //
             DeviceCompanyDefinition.Tandem, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, ""), // TODO
+
+    TandemTSlimX2(50002, "t:slim X2", "tan_tslimG4.jpg", null, null, //
+            DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Tandem, DeviceHandlerType.NoHandler, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
+            DeviceProgressStatus.Special, ""), //
+
+    // Roche
+    RocheEversense(60001, "Roche Eversense", "ac_eversense.png", null, //
+            null, DeviceImplementationStatus.NotAvailable, //
+            DeviceCompanyDefinition.Roche, DeviceHandlerType.NoHandler, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Multiple, //
             DeviceProgressStatus.Special, ""), // TODO
 
     ;

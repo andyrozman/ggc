@@ -4,6 +4,11 @@ Changes file for GGC CGM Tool
 
 -- We will move to version 2.0, when Minimed is supported (Navigator 1.x or 2.x)
 
+1.6.0 [17.9.2017] Andy
+- base support for Abbott Libre (almost finished, needs integration)
+- DeviceDefinitions added with new definitions
+- added some data converters for Minimed
+
 1.5.3 [26.6.2017]
 - changed enums, so that translation are changed from withing DataAccess
 - refactorings

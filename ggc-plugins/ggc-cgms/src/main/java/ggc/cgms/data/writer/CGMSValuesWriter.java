@@ -39,6 +39,8 @@ public class CGMSValuesWriter extends CGMSDataWriter // Hashtable<String,
 // DeviceTempValues>
 {
 
+    private static final long serialVersionUID = -3259908872077416922L;
+
     static CGMSValuesWriter staticInstance;
     // static CGMSDataWriter cgmsDataWriter;
     boolean debug = false;
@@ -162,7 +164,7 @@ public class CGMSValuesWriter extends CGMSDataWriter // Hashtable<String,
         // addConfiguration("Alarm_GlucoseFallRateTooHigh",
         // CGMSBaseDataType.Alarm,
         // CGMSAlarms.GlucoseFallRateTooHigh);
-        // addConfiguration("Alarm_UnknownAlarm", CGMSBaseDataType.Alarm,
+        // addConfiguration("Alarm_UnknownAlarm", CMSBaseDataType.Alarm,
         // CGMSAlarms.UnknownAlarm);
 
         // Trasmiter Events

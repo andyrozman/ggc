@@ -8,11 +8,8 @@ import com.atech.utils.data.BitUtils;
 import ggc.cgms.data.defs.CGMSConfigurationGroup;
 import ggc.cgms.util.DataAccessCGMS;
 import ggc.core.data.defs.GlucoseUnitType;
-import ggc.plugin.data.DeviceValueConfigEntry;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
-import ggc.plugin.device.impl.minimed.data.converter.MinimedDataConverterAbstract;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
-import ggc.plugin.device.impl.minimed.util.MinimedUtil;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -40,26 +37,22 @@ import ggc.plugin.device.impl.minimed.util.MinimedUtil;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class Minimed522CGMSDataConverter extends MinimedDataConverterAbstract
+public class Minimed522CGMSDataConverter extends MinimedCGMSDataConverterAbstract
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(Minimed522CGMSDataConverter.class);
 
 
-    // public DataAccessCGMS dataAccess;
-
     public Minimed522CGMSDataConverter(DataAccessCGMS dataAccess)
     {
         super(dataAccess);
-        // this.dataAccess = dataAccess;
-        this.bitUtils = MinimedUtil.getBitUtils();
-        this.outputWriter = MinimedUtil.getOutputWriter();
     }
 
 
-    public void convertData(MinimedCommandReply minimedReply)
+    @Override
+    public void convertData(MinimedCommandReply minimedReply, MinimedCommandType commandType)
     {
-        switch (minimedReply.getCommandType())
+        switch (commandType)
         {
 
             case CalibrationFactor: // 156
@@ -82,7 +75,7 @@ public class Minimed522CGMSDataConverter extends MinimedDataConverterAbstract
                 break;
 
             default:
-                LOG.warn("Unknown command type [" + minimedReply.getCommandType().name() + "] for decoding");
+                LOG.warn("Unknown command type [" + commandType.name() + "] for decoding");
         }
     }
 
@@ -96,12 +89,6 @@ public class Minimed522CGMSDataConverter extends MinimedDataConverterAbstract
     private void decodeISIGHistory()
     {
         LOG.error("Decode ISIG History not implemented.");
-    }
-
-
-    public void refreshOutputWriter()
-    {
-        this.outputWriter = MinimedUtil.getOutputWriter();
     }
 
 
@@ -123,7 +110,6 @@ public class Minimed522CGMSDataConverter extends MinimedDataConverterAbstract
     public void decodeSensorSettings(MinimedCommandReply minimedReply)
     {
         BitUtils hu = this.bitUtils;
-        // int data[] = cmd.reply.raw_data;
 
         LOG.warn("VERIFY 522 DEVICE !!!!!!!!!!!!!!!!!!!!!!!!!");
 
@@ -170,39 +156,6 @@ public class Minimed522CGMSDataConverter extends MinimedDataConverterAbstract
         writeSetting("CCFG_SENSOR_WEAK_SIGNAL_TIME", "" + minimedReply.getRawDataBytesAsInt(23, 24),
             CGMSConfigurationGroup.Transmiter);
 
-    }
-
-
-    protected void decodeEnableSetting(String key, MinimedCommandReply minimedReply, CGMSConfigurationGroup pcg)
-    {
-        decodeEnableSetting(key, minimedReply, 0, pcg);
-    }
-
-
-    protected void decodeEnableSetting(String key, int value, CGMSConfigurationGroup pcg)
-    {
-        writeSetting(key, parseResultEnable(value), pcg);
-    }
-
-
-    protected void decodeEnableSetting(String key, MinimedCommandReply minimedReply, int bit, CGMSConfigurationGroup pcg)
-    {
-        writeSetting(key, parseResultEnable(minimedReply.getRawDataAsInt(bit)), pcg);
-    }
-
-
-    protected void writeSetting(String key, String value, Object rawValue, CGMSConfigurationGroup group)
-    {
-        if (rawValue != null)
-        {
-            outputWriter.writeConfigurationData(new DeviceValueConfigEntry(i18nControl.getMessage(key), value, group));
-        }
-    }
-
-
-    protected void writeSetting(String key, String value, CGMSConfigurationGroup group)
-    {
-        outputWriter.writeConfigurationData(new DeviceValueConfigEntry(i18nControl.getMessage(key), value, group));
     }
 
 }
