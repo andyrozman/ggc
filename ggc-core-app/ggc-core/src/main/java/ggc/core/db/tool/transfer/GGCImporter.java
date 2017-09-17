@@ -173,6 +173,10 @@ public class GGCImporter extends ImportTool implements Runnable
             ImportDailyValues idv = new ImportDailyValues(this.file_name, false);
             idv.importDailyValues();
         }
+        else
+        {
+            LOG.error("File was not identified: " + this.selected_class);
+        }
 
         System.out.println();
 
@@ -230,11 +234,18 @@ public class GGCImporter extends ImportTool implements Runnable
         for (Enumeration<String> en = m_da.getPlugins().keys(); en.hasMoreElements();)
         {
             String key = en.nextElement();
+            System.out.println("key: " + key);
             PlugInClient pic = m_da.getPlugIn(key);
 
-            if (pic.getBackupRestoreHandler().doesContainBackupRestoreObject(class_name))
+            System.out.println("PlugInClient: " + pic);
+            System.out.println("pic.getBackupRestoreHandler(): " + pic.getBackupRestoreHandler());
+
+            if (pic.getBackupRestoreHandler() != null
+                    && pic.getBackupRestoreHandler().doesContainBackupRestoreObject(class_name))
                 return pic.getBackupRestoreHandler().getBackupRestoreObject(class_name);
         }
+
+        // FIXME old types, and remove this method, or at least change it
 
         return null;
 
@@ -327,7 +338,7 @@ public class GGCImporter extends ImportTool implements Runnable
                         bro_new.dbImport(bro.getTableVersion(), line);
                 }
 
-                this.hibernate_util.add(bro_new);
+                this.hibernateUtil.add(bro_new);
 
                 count++;
                 this.writeStatus(dot_mark, count);
@@ -400,7 +411,7 @@ public class GGCImporter extends ImportTool implements Runnable
                     newEntry.dbImport(definitionEntry.getTableVersion(), line, headers);
                 }
 
-                this.hibernate_util.add(newEntry);
+                this.hibernateUtil.add(newEntry);
 
                 count++;
                 this.writeStatus(dot_mark, count);

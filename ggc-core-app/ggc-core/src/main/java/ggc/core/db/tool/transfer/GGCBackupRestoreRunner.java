@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.*;
 
 import com.atech.data.mng.DataDefinitionEntry;
+import com.atech.db.hibernate.HibernateBackupObject;
 import com.atech.db.hibernate.HibernateObject;
 import com.atech.db.hibernate.tool.data.DatabaseImportStrategy;
 import com.atech.db.hibernate.tool.data.management.impexp.DbExporter;
@@ -20,6 +21,7 @@ import ggc.core.db.hibernate.doc.DoctorAppointmentH;
 import ggc.core.db.hibernate.doc.DoctorH;
 import ggc.core.db.hibernate.doc.DoctorTypeH;
 import ggc.core.db.hibernate.settings.ColorSchemeH;
+import ggc.core.db.hibernate.settings.SettingsH;
 import ggc.core.db.tool.defs.GGCImportExportContext;
 import ggc.core.db.tool.impexp.GGCDbImporter;
 import ggc.core.util.DataAccess;
@@ -58,11 +60,13 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
     private String lastBackupFile = null;
 
     Class singleBackupRestoreObjects[] = { //
+                                           SettingsH.class, //
                                            ColorSchemeH.class //
     };
 
     Map<String, List<Class<? extends HibernateObject>>> groupedBackupRestoreObjects = null;
     GGCImportExportContext importExportContext = new GGCImportExportContext();
+    Map<String, Class<? extends HibernateBackupObject>> backwardCompatibilityMatrix = null;
 
 
     /**
@@ -75,6 +79,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
     {
         super(objects, giver);
         // this.backupObjects = objects;
+        // initGroups();
     }
 
 
@@ -101,6 +106,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
                 this.restoreWithAppend = false;
             }
         }
+        // initGroups();
 
     }
 
@@ -125,15 +131,16 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             // this.doneBackupElements++;
         }
 
-        if (this.isBackupObjectSelected(ic.getMessage("SETTINGS")))
-        {
-            this.setTask(ic.getMessage("SETTINGS"));
-            ExportSettings edv = new ExportSettings(this);
-            edv.run();
-            this.setStatus(100);
-            // this.doneBackupElements++;
-        }
+        // if (this.isBackupObjectSelected(ic.getMessage("SETTINGS")))
+        // {
+        // this.setTask(ic.getMessage("SETTINGS"));
+        // ExportSettings edv = new ExportSettings(this);
+        // edv.run();
+        // this.setStatus(100);
+        // // this.doneBackupElements++;
+        // }
 
+        // FIXME whats up with this
         // if (this.isBackupObjectSelected(ic.getMessage("COLOR_SCHEMES")))
         // {
         // this.setTask(ic.getMessage("COLOR_SCHEMES"));
@@ -218,6 +225,10 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
                 DoctorTypeH.class, //
                 DoctorH.class, //
                 DoctorAppointmentH.class));
+
+        this.backwardCompatibilityMatrix = new HashMap<String, Class<? extends HibernateBackupObject>>();
+
+        backwardCompatibilityMatrix.put("ggc.core.db.hibernate.SettingsH", SettingsH.class);
 
     }
 
@@ -306,6 +317,7 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
     @Override
     public void executeRestore()
     {
+        initGroups();
 
         if (this.isRestoreObjectSelected("ggc.core.db.hibernate.pen.DayValueH"))
         {
@@ -315,17 +327,53 @@ public class GGCBackupRestoreRunner extends BackupRestoreRunner
             edv.setImportClean(!this.restoreWithAppend);
             edv.run();
             this.setStatus(100);
-            // this.doneBackupElements++;
         }
 
-        if (this.isRestoreObjectSelected("ggc.core.db.hibernate.settings.SettingsH"))
+        // FIXME: Remove sometime in future
+        if (this.isRestoreObjectSelected("ggc.core.db.hibernate.DayValueH"))
         {
-            this.setTask(ic.getMessage("SETTINGS"));
-            ImportSettings edv = new ImportSettings(this,
-                    this.getRestoreObject("ggc.core.db.hibernate.settings.SettingsH"));
+            this.setTask(ic.getMessage("DAILY_VALUES"));
+            ImportDailyValues edv = new ImportDailyValues(this,
+                    this.getRestoreObject("ggc.core.db.hibernate.DayValueH"));
+            edv.setImportClean(!this.restoreWithAppend);
             edv.run();
             this.setStatus(100);
-            // this.doneBackupElements++;
+        }
+
+        // if (this.isRestoreObjectSelected("ggc.core.db.hibernate.settings.SettingsH"))
+        // {
+        // this.setTask(ic.getMessage("SETTINGS"));
+        // ImportSettings edv = new ImportSettings(this,
+        // this.getRestoreObject("ggc.core.db.hibernate.settings.SettingsH"));
+        // edv.run();
+        // this.setStatus(100);
+        // }
+
+        // Backward compatibility item because object class path changed)
+        if (this.isRestoreObjectSelected("ggc.core.db.hibernate.SettingsH"))
+        {
+            this.setTask(ic.getMessage("SETTINGS"));
+            ImportSettings edv = new ImportSettings(this, this.getRestoreObject("ggc.core.db.hibernate.SettingsH"));
+            edv.run();
+            this.setStatus(100);
+        }
+
+        // FIXME Backward compatibility
+
+        for (Map.Entry<String, Class<? extends HibernateBackupObject>> oldClassEntry : backwardCompatibilityMatrix
+                .entrySet())
+        {
+            DataDefinitionEntry entry = dataAccess.getDataDefinitionManager().getEntry(oldClassEntry.getValue());
+
+            if (this.isBackupObjectSelected(ic.getMessage(entry.getBackupTargetName())))
+            {
+                DatabaseImportStrategy importStrategy = determineImportStrategy(entry);
+                this.setTask(ic.getMessage(entry.getBackupTargetName()));
+                GGCDbImporter ge = new GGCDbImporter(this, importExportContext,
+                        this.getRestoreObject(oldClassEntry.getValue()));
+                ge.importData(oldClassEntry.getValue(), entry, importStrategy);
+                this.setStatus(100);
+            }
         }
 
         // if

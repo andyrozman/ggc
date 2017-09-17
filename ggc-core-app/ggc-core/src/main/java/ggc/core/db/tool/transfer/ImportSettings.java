@@ -234,7 +234,7 @@ public class ImportSettings extends ImportTool implements Runnable
                     dvh.setPersonId(person_id);
                 }
 
-                this.hibernate_util.addHibernate(dvh);
+                this.hibernateUtil.addHibernate(dvh);
 
                 count++;
                 this.writeStatus(dot_mark, count);

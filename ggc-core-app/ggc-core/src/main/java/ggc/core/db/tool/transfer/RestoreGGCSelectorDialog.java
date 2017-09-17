@@ -5,6 +5,8 @@ import javax.swing.*;
 import com.atech.db.hibernate.transfer.RestoreSelectorDialog;
 import com.atech.utils.ATDataAccessAbstract;
 
+import ggc.core.util.DataAccess;
+
 /**
  *  Application:   GGC - GNU Gluco Control
  *
@@ -35,6 +37,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
 {
 
     private static final long serialVersionUID = 3536165659702725457L;
+    DataAccess dataAccessLocal = null;
 
 
     /**
@@ -47,6 +50,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
     {
         super(parent, da);
         this.enableHelp("GGC_Tools_Restore_File_Selector");
+        dataAccessLocal = (DataAccess) da;
     }
 
 
@@ -60,6 +64,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
     {
         super(parent, da);
         this.enableHelp("GGC_Tools_Restore_File_Selector");
+        dataAccessLocal = (DataAccess) da;
     }
 
 
@@ -86,7 +91,7 @@ public class RestoreGGCSelectorDialog extends RestoreSelectorDialog
         // System.out.println("Res Coll: " +
         // this.dataAccess.getBackupRestoreCollection());
         RestoreGGCDialog rgd = new RestoreGGCDialog((JFrame) this.my_parent, this.m_da,
-                this.m_da.getBackupRestoreCollection(), this.tf_file.getText());
+                this.dataAccessLocal.getBackupRestoreCollection(true), this.tf_file.getText());
         rgd.enableHelp("GGC_Tools_Restore");
         rgd.showDialog();
     }

@@ -278,7 +278,7 @@ public class StockSubTypeH extends HibernateBackupSelectableObject
     // Backup Object
 
     @Override
-    protected String getColumnNames(int tableVersion)
+    public String getColumnNames(int tableVersion)
     {
         return null;
     }

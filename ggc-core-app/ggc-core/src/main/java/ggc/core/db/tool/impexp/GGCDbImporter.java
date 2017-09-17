@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.data.mng.DataDefinitionEntry;
+import com.atech.db.hibernate.HibernateBackupObject;
 import com.atech.db.hibernate.HibernateObject;
 import com.atech.db.hibernate.tool.data.DatabaseImportStrategy;
 import com.atech.db.hibernate.tool.data.dto.DbTableExportInfoDto;
@@ -16,7 +17,6 @@ import com.atech.db.hibernate.tool.data.management.impexp.ImportTool;
 import com.atech.db.hibernate.transfer.BackupRestoreWorkGiver;
 import com.atech.db.hibernate.transfer.RestoreFileInfo;
 
-import ggc.core.db.hibernate.GGCHibernateBackupSelectableObject;
 import ggc.core.util.DataAccess;
 
 /**
@@ -53,8 +53,8 @@ public class GGCDbImporter extends ImportTool
     }
 
 
-    public void importData(Class<? extends GGCHibernateBackupSelectableObject> clazz,
-            DataDefinitionEntry definitionEntry, DatabaseImportStrategy databaseImportStrategy)
+    public void importData(Class<? extends HibernateBackupObject> clazz, DataDefinitionEntry definitionEntry,
+            DatabaseImportStrategy databaseImportStrategy)
     {
 
         String line = null;

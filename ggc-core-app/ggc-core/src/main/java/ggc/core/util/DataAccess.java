@@ -21,6 +21,7 @@ import com.atech.i18n.I18nControlAbstract;
 import com.atech.i18n.I18nControlLangMgr;
 import com.atech.i18n.I18nControlLangMgrDual;
 import com.atech.i18n.mgr.LanguageManager;
+import com.atech.i18n.tool.simple.data.TranslationToolConfigurationDto;
 import com.atech.plugin.PlugInClient;
 import com.atech.utils.ATDataAccessLMAbstract;
 import com.atech.utils.ATSwingUtils;
@@ -32,12 +33,12 @@ import ggc.core.data.*;
 import ggc.core.data.cfg.ConfigurationManager;
 import ggc.core.data.cfg.ConfigurationManagerWrapper;
 import ggc.core.data.defs.*;
+import ggc.core.data.defs.lang.GGCLanguageModule;
+import ggc.core.data.defs.lang.GGCSupportedLanguages;
 import ggc.core.data.graph.v2.GGCGraphContext;
 import ggc.core.db.GGCDb;
 import ggc.core.db.GGCDbLoader;
-import ggc.core.db.datalayer.DailyValue;
-import ggc.core.db.datalayer.Settings;
-import ggc.core.db.datalayer.SettingsColorScheme;
+import ggc.core.db.datalayer.*;
 import ggc.core.db.hibernate.doc.DoctorAppointmentH;
 import ggc.core.db.hibernate.doc.DoctorH;
 import ggc.core.db.hibernate.doc.DoctorTypeH;
@@ -45,6 +46,7 @@ import ggc.core.db.hibernate.inventory.InventoryH;
 import ggc.core.db.hibernate.inventory.InventoryItemH;
 import ggc.core.db.hibernate.inventory.InventoryItemTypeH;
 import ggc.core.db.hibernate.settings.ColorSchemeH;
+import ggc.core.db.hibernate.settings.SettingsH;
 import ggc.core.db.tool.DbToolApplicationGGC;
 import ggc.core.db.tool.data.GGCDatabaseTableConfiguration;
 import ggc.core.plugins.*;
@@ -224,7 +226,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         loadLanguageIntoContext();
 
-        HelpContext hc = new HelpContext("/" + this.lang_mgr.getHelpSet());
+        HelpContext hc = new HelpContext("/" + this.languageManager.getHelpSet());
         this.setHelpContext(hc);
         this.helpEnabled = true;
 
@@ -302,7 +304,7 @@ public class DataAccess extends ATDataAccessLMAbstract
 
         if (!ctx.isSelectedLanguageDefaultLanguage())
         {
-            I18nControlLangMgr mgr = this.getLanguageManager().getI18nControl(this.m_icr);
+            I18nControlLangMgr mgr = this.getLanguageManager().getI18nControl(this.i18nControlRunner);
 
             if (mgr instanceof I18nControlLangMgrDual)
             {
@@ -664,6 +666,7 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         BackupRestoreCollection brc_full = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
         brc_full.addNodeChild(new DailyValue(this.m_i18n));
+        brc_full.addNodeChild(new DailyValueOld(this.m_i18n));
 
         BackupRestoreCollection brc1 = new BackupRestoreCollection("DOC_APPOINTMENT_BACKUP", this.m_i18n, true);
         brc1.addNodeChild(new DoctorTypeH(this.m_i18n));
@@ -674,6 +677,45 @@ public class DataAccess extends ATDataAccessLMAbstract
         brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
         brc1.addNodeChild(new Settings(this.m_i18n));
         brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
+        brc_full.addNodeChild(brc1);
+
+        for (Enumeration<String> en = this.plugins.keys(); en.hasMoreElements();)
+        {
+            PlugInClient pic = this.plugins.get(en.nextElement());
+
+            if (pic.isBackupRestoreEnabled())
+            {
+                brc_full.addNodeChild(pic.getBackupObjects());
+            }
+        }
+
+        return brc_full;
+    }
+
+
+    public BackupRestoreCollection getBackupRestoreCollection(boolean restore)
+    {
+        BackupRestoreCollection brc_full = new BackupRestoreCollection("GGC_BACKUP", this.m_i18n);
+        brc_full.addNodeChild(new DailyValue(this.m_i18n));
+
+        if (restore)
+            brc_full.addNodeChild(new DailyValueOld(this.m_i18n));
+
+        BackupRestoreCollection brc1 = new BackupRestoreCollection("DOC_APPOINTMENT_BACKUP", this.m_i18n, true);
+        brc1.addNodeChild(new DoctorTypeH(this.m_i18n));
+        brc1.addNodeChild(new DoctorH(this.m_i18n));
+        brc1.addNodeChild(new DoctorAppointmentH(this.m_i18n));
+        brc_full.addNodeChild(brc1);
+
+        brc1 = new BackupRestoreCollection("CONFIGURATION", this.m_i18n);
+        brc1.addNodeChild(new Settings(this.m_i18n));
+        brc1.addNodeChild(new SettingsColorScheme(this.m_i18n));
+        if (restore)
+        {
+            brc1.addNodeChild(new SettingsOld(this.m_i18n));
+            brc1.addNodeChild(new SettingsColorSchemeOld(this.m_i18n));
+        }
+
         brc_full.addNodeChild(brc1);
 
         for (Enumeration<String> en = this.plugins.keys(); en.hasMoreElements();)
@@ -1478,6 +1520,8 @@ public class DataAccess extends ATDataAccessLMAbstract
         // "STOCK_TYPE,NAME,DESCRIPTION", "20,40,40", "", 1, "");
 
         // OK
+        addDisplayManagerEntry(SettingsH.class, //
+            GGCSelectorConfiguration.None, GGCDatabaseTableConfiguration.SettingsH);
 
         addDisplayManagerEntry(ColorSchemeH.class, //
             GGCSelectorConfiguration.None, GGCDatabaseTableConfiguration.ColorSchemeH);
@@ -1492,7 +1536,7 @@ public class DataAccess extends ATDataAccessLMAbstract
         addDisplayManagerEntry(DoctorAppointmentH.class, //
             GGCSelectorConfiguration.DoctorAppointmentH, GGCDatabaseTableConfiguration.DoctorAppointmentH);
 
-        // INVENTORY
+        // FIXME - INVENTORY Work in Progress (no db support yet)
         addDisplayManagerEntry(InventoryH.class, //
             GGCSelectorConfiguration.InventoryH, null);
 
@@ -1531,6 +1575,8 @@ public class DataAccess extends ATDataAccessLMAbstract
     {
         // FIXME
         this.internalSetting.put(InternalSetting.Help_Settings_UserAddEdit, "unknownKey");
+        // TranslationTool
+
     }
 
 
@@ -1879,4 +1925,24 @@ public class DataAccess extends ATDataAccessLMAbstract
         this.user_types[1] = m_i18n.getMessage("USER_NORMAL");
     }
 
+
+    @Override
+    public TranslationToolConfigurationDto getTranslationToolConfiguration()
+    {
+        TranslationToolConfigurationDto translationToolConfigurationDto = new TranslationToolConfigurationDto();
+
+        translationToolConfigurationDto.setMainModule(GGCLanguageModule.Core.getMainModule());
+        translationToolConfigurationDto.setModules(GGCLanguageModule.Core.getAllModules());
+        translationToolConfigurationDto.setMasterLanguage(GGCSupportedLanguages.English.getMasterLanguage());
+        translationToolConfigurationDto.setSupportedLanguages(GGCSupportedLanguages.English.getLanguagesToTranslate());
+
+        return translationToolConfigurationDto;
+    }
+
+
+    @Override
+    public void saveTranslationToolConfiguration(TranslationToolConfigurationDto configuration)
+    {
+
+    }
 }

@@ -222,8 +222,11 @@ public class GGCSelectorDialog extends SelectorAbstractDialog
 
             if (selectedObject.getPredefined() == 1)
             {
-                dataAccess.showConfirmDialog(this, ATSwingUtils.DialogType.Error, //
-                    "DOCTOR_TYPE_CANT_EDIT_PREDEFINED", ATSwingUtils.ConfirmDialogType.ClosedOption);
+                ATSwingUtils.showConfirmDialog(this, //
+                    ATSwingUtils.DialogType.Error, //
+                    "DOCTOR_TYPE_CANT_EDIT_PREDEFINED", //
+                    ATSwingUtils.ConfirmDialogType.ClosedOption, //
+                    i18nControl);
             }
             else
             {

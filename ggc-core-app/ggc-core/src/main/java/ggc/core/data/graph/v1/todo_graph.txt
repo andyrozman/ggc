@@ -1,0 +1,33 @@
+
+Pen Graphs:
+- cleanup code
+- hba1c (start date)
+
+
+Pump:
+ - data retrival: - gluco values
+                  - hba1c
+ - menus
+ - hba1c
+
+
+== DONE
+
+Pen:
++ frequency implement : + other data
+                        + X os
++- move to correct Menu item
++- size load
++- size save (viewer)
++- data retrival (dates check) : + week
+                                + month
+                                + 3 months
+                                + custom
+                                + whole day?
+
++ remove old versions, leave TableLayouts only
+
+Pump:
+
+
+

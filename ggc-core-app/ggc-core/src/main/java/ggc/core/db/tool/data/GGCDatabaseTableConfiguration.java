@@ -9,24 +9,32 @@ import ggc.core.db.hibernate.doc.DoctorH;
 import ggc.core.db.hibernate.doc.DoctorTypeH;
 import ggc.core.db.hibernate.food.*;
 import ggc.core.db.hibernate.settings.ColorSchemeH;
+import ggc.core.db.hibernate.settings.SettingsH;
 
 public enum GGCDatabaseTableConfiguration implements DatabaseTableConfiguration
 {
     // core
+    // FIXME
     DayValueH(), // DailyValue - Pen/Injection data
-    SettingsH(), // Settings
+    SettingsH(SettingsH.class, null, 1, //
+            "id; key; value; type; description; person_id", //
+            "SETTINGS", DatabaseImportStrategy.Clean), // Settings
     ColorSchemeH(ColorSchemeH.class, null, 1, //
             "id; name; custom_type; color_bg; color_bg_avg; color_bg_low; color_bg_high; color_bg_target; color_ins; color_ins1; color_ins2; color_ins_perbu; color_ch", //
-            "COLOR_SCHEMES", DatabaseImportStrategy.Clean), // Color Scheme for
-                                                            // BG Data
+            "COLOR_SCHEMES", DatabaseImportStrategy.Clean), // Color Scheme for BG Data
 
     // pump
+    // FIXME
     PumpDataH(), //
+    // FIXME
     PumpDataExtendedH(), //
+    // FIXME
     PumpProfileH(), //
 
     // cgms
+    // FIXME
     CGMSDataH(), //
+    // FIXME
     CGMSDataExtendedH(), //
 
     // nutrition

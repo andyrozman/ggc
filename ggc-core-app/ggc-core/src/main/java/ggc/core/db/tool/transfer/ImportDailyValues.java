@@ -283,7 +283,7 @@ public class ImportDailyValues extends ImportTool implements Runnable
                  * dvh.setComment(bef); }
                  */
 
-                this.hibernate_util.addHibernate(dvh);
+                this.hibernateUtil.addHibernate(dvh);
 
                 count++;
                 this.writeStatus(dot_mark, count);

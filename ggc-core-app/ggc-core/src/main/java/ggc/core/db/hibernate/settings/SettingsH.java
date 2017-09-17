@@ -1,13 +1,19 @@
 package ggc.core.db.hibernate.settings;
 
+import java.util.Map;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 
-import com.atech.db.hibernate.HibernateObject;
+import com.atech.db.hibernate.HibernateBackupSelectableObject;
+
+import ggc.core.db.hibernate.GGCHibernateBackupObject;
 
 /** @author Hibernate CodeGenerator */
-public class SettingsH extends HibernateObject
+public class SettingsH extends GGCHibernateBackupObject
 {
 
     private static final long serialVersionUID = 2231322090212148293L;
@@ -220,6 +226,39 @@ public class SettingsH extends HibernateObject
     public int hashCode()
     {
         return new HashCodeBuilder().append(getId()).toHashCode();
+    }
+
+
+    @Override
+    public String getColumnNames(int tableVersion)
+    {
+        return null;
+    }
+
+
+    public String dbExport(int table_version) throws Exception
+    {
+        return null;
+    }
+
+
+    public void dbImport(int tableVersion, String valueEntry, Map<String, String> headers) throws Exception
+    {
+
+    }
+
+
+    @Override
+    public String toStringDescriptive()
+    {
+        return null;
+    }
+
+
+    @Override
+    public Criteria getChildrenCriteria(Session session, HibernateBackupSelectableObject object)
+    {
+        return null;
     }
 
 }

@@ -311,7 +311,7 @@ public class ImportNutrition extends ImportTool implements Runnable
                 fud.setNutritions(getString(strtok.nextToken()));
                 fud.setChanged(getLong(strtok.nextToken()));
 
-                this.hibernate_util.addHibernate(fud);
+                this.hibernateUtil.addHibernate(fud);
 
                 count++;
                 this.writeStatus(dot_mark, count);
@@ -389,7 +389,7 @@ public class ImportNutrition extends ImportTool implements Runnable
                 fug.setParentId(parent_id);
                 fug.setChanged(getLong(strtok.nextToken()));
 
-                this.hibernate_util.addHibernate(fug);
+                this.hibernateUtil.addHibernate(fug);
 
                 count++;
                 this.writeStatus(dot_mark, count);
@@ -473,7 +473,7 @@ public class ImportNutrition extends ImportTool implements Runnable
                 ml.setComment(getString(strtok.nextToken()));
                 ml.setChanged(getLong(strtok.nextToken()));
 
-                this.hibernate_util.addHibernate(ml);
+                this.hibernateUtil.addHibernate(ml);
 
                 count++;
                 this.writeStatus(dot_mark, count);
@@ -551,7 +551,7 @@ public class ImportNutrition extends ImportTool implements Runnable
                 mg.setParentId(parent_id);
                 mg.setChanged(getLong(strtok.nextToken()));
 
-                this.hibernate_util.addHibernate(mg);
+                this.hibernateUtil.addHibernate(mg);
 
                 count++;
                 this.writeStatus(dot_mark, count);

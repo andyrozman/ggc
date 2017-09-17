@@ -13,6 +13,10 @@ Newer entries are on top, older on bottom.
 - added classes for DbTool integration
 - refactoring database
 - moved classes to different package (from shared)
+- Translation Tool Integration: GGCLanguageModule, GGCSupportedLanguages
+- data objects Old (for old restore): DailyValue, SettingColorScheme, Settings
+- data objects: SettingsH
+- backup/restore: new version of backup/restore, install (testing)
 
 
 0.7 [18.5.2016] [Andy]
