@@ -105,7 +105,11 @@ public class WorkingTimeDialog extends StandardDialogForObject implements Action
 
         if (selectedDays.size() == 0)
         {
-            dataAccess.showMessageDialog(this, ATSwingUtils.DialogType.Error, "SELECT_DAYS");
+            ATSwingUtils.showMessageDialog(this, //
+                ATSwingUtils.DialogType.Error, //
+                "SELECT_DAYS", //
+                i18nControl);
+
             return false;
         }
 
@@ -113,7 +117,11 @@ public class WorkingTimeDialog extends StandardDialogForObject implements Action
 
         if (timeEntries.size() == 0)
         {
-            dataAccess.showMessageDialog(this, ATSwingUtils.DialogType.Error, "ADD_TIMES");
+            ATSwingUtils.showMessageDialog(this, //
+                ATSwingUtils.DialogType.Error, //
+                "ADD_TIMES", //
+                i18nControl);
+
             return false;
         }
 
@@ -244,7 +252,8 @@ public class WorkingTimeDialog extends StandardDialogForObject implements Action
     // {
     // if (this.listTimes.isSelectionEmpty())
     // {
-    // JOptionPane.showConfirmDialog(this, i18nControl.getMessage("SELECT_ITEM_FIRST"),
+    // JOptionPane.showConfirmDialog(this,
+    // i18nControl.getMessage("SELECT_ITEM_FIRST"),
     // i18nControl.getMessage("ERROR"),
     // JOptionPane.CLOSED_OPTION);
     // return;
@@ -256,7 +265,8 @@ public class WorkingTimeDialog extends StandardDialogForObject implements Action
     // {
     // if (this.m_list_data.isSelectionEmpty())
     // {
-    // JOptionPane.showConfirmDialog(this, i18nControl.getMessage("SELECT_ITEM_FIRST"),
+    // JOptionPane.showConfirmDialog(this,
+    // i18nControl.getMessage("SELECT_ITEM_FIRST"),
     // i18nControl.getMessage("ERROR"),
     // JOptionPane.CLOSED_OPTION);
     // return;

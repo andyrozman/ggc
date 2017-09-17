@@ -223,19 +223,31 @@ public class AppointmentDialog extends StandardDialogForObject
 
         if (this.doctorH == null)
         {
-            dataAccess.showMessageDialog(this, ATSwingUtils.DialogType.Error, "SELECT_DOCTOR");
+            ATSwingUtils.showMessageDialog(this, //
+                ATSwingUtils.DialogType.Error, //
+                "SELECT_DOCTOR", //
+                i18nControl);
+
             return false;
         }
 
         if (StringUtils.isBlank(this.tfAppointment.getText()))
         {
-            dataAccess.showMessageDialog(this, ATSwingUtils.DialogType.Error, "ENTER_APPOINTMENT_TEXT");
+            ATSwingUtils.showMessageDialog(this, //
+                ATSwingUtils.DialogType.Error, //
+                "ENTER_APPOINTMENT_TEXT", //
+                i18nControl);
+
             return false;
         }
 
         if (this.dtAppointment.getDateTime() == currentTime)
         {
-            dataAccess.showMessageDialog(this, ATSwingUtils.DialogType.Error, "ENTER_APPOINTMENT_TIME");
+            ATSwingUtils.showMessageDialog(this, //
+                ATSwingUtils.DialogType.Error, //
+                "ENTER_APPOINTMENT_TIME", //
+                i18nControl);
+
             return false;
         }
 

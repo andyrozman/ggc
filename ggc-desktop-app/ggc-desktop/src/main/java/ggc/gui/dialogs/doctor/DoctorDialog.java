@@ -145,7 +145,10 @@ public class DoctorDialog extends StandardDialogForObject
 
         if (this.doctorType == null)
         {
-            dataAccess.showMessageDialog(this, ATSwingUtils.DialogType.Error, "SELECT_DOCTOR_TYPE");
+            ATSwingUtils.showMessageDialog(this, //
+                ATSwingUtils.DialogType.Error, //
+                "SELECT_DOCTOR_TYPE", //
+                i18nControl);
             return false;
         }
 

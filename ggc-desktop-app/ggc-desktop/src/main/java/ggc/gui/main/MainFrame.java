@@ -232,6 +232,17 @@ public class MainFrame extends JFrame
 
         i18nControl = dataAccess.getI18nControlInstance();
 
+        try
+        {
+            LOG.info("dataAccess.getI18nControlRunner(): " + dataAccess.getI18nControlRunner());
+            // System.out.println("Exported file: " +
+            // dataAccess.getI18nControlRunner().exportLanguageFile("en"));
+        }
+        catch (Exception e)
+        {
+            LOG.error("Problem Test: {}", e.getMessage(), e);
+        }
+
         dataAccess.addComponent(this);
 
         dataAccess.setDeveloperMode(developer_version);

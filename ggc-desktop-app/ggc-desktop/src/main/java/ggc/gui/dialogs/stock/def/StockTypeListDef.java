@@ -117,8 +117,8 @@ public class StockTypeListDef extends GUIListDefAbstract
 
                 if (database.isStockSubTypeUsed(stockType))
                 {
-                    dataAccess.showMessageDialog(this.getParentDialog(), ATSwingUtils.DialogType.Error,
-                        "STOCK_SUB_TYPE_IN_USE");
+                    ATSwingUtils.showMessageDialog(this.getParentDialog(), ATSwingUtils.DialogType.Error,
+                        "STOCK_SUB_TYPE_IN_USE", i18nControl);
                 }
                 else
                 {

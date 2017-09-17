@@ -13,7 +13,7 @@ Newer entries are on top, older on bottom.
 - Stock/Inventory implementation started
 - refactoring a little
 - added DialogCreator
-
+- AppointmentDialog, WorkingTImeDialog, DoctorDialog
 
 
 0.7.0 [2.2.2016] [Andy]

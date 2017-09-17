@@ -62,16 +62,19 @@
 
         <dependency>
             <groupId>net.sf.ggc</groupId>
-            <artifactId>ggc-connect-tool</artifactId>
+            <artifactId>ggc-plugins-connect</artifactId>
         </dependency>
-        
+
+
+
 
         <!-- GGC Temporary Dependecies (testing only) -->
-
+        <!--
         <dependency>
             <groupId>net.sf.ggc</groupId>
             <artifactId>ggc-device-menarini</artifactId>
         </dependency>
+        -->
 
 
         <!-- Support Libraries -->
