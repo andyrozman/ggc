@@ -48,7 +48,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     protected String deviceSourceName;
     protected String connectionParameters = null;
     protected String connectionParametersRaw = null;
-    protected DeviceSpecialConfigPanelInterface special_config = null;
+    protected DeviceSpecialConfigPanelInterface specialConfig = null;
 
     protected boolean canReadData = false;
     protected boolean canReadPartitialData = false;
@@ -57,6 +57,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
     protected GGCI18nControl i18nControlAbstract = null; // DataAccessMeter.getInstance().getI18nControlInstance();
     protected OutputWriter outputWriter;
     protected List<GGCPlugInFileReaderContext> fileContexts;
+    protected String specialConfigKey = null;
 
 
     /**
@@ -594,8 +595,8 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         {
             if (this.hasSpecialConfig())
             {
-                this.special_config.loadConnectionParameters(param);
-                this.connectionParameters = this.special_config.getDefaultParameter();
+                this.specialConfig.loadConnectionParameters(param);
+                this.connectionParameters = this.specialConfig.getDefaultParameter();
             }
             else
             {
@@ -631,7 +632,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
         {
             if (this.hasSpecialConfig())
             {
-                this.special_config.loadConnectionParameters(param);
+                this.specialConfig.loadConnectionParameters(param);
                 return this.getSpecialConfigPanel().areConnectionParametersValid();
             }
             else
@@ -659,7 +660,7 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public boolean hasSpecialConfig()
     {
-        return this.special_config != null;
+        return this.specialConfigKey != null;
     }
 
 
@@ -670,12 +671,12 @@ public abstract class DeviceAbstract implements DeviceInterface, SelectableInter
      */
     public DeviceSpecialConfigPanelInterface getSpecialConfigPanel()
     {
-        return this.special_config;
+        return null;
     }
 
 
     /**
-     * Initialize Special Config
+     * Initialize Special Config (setting specialConfigKey)
      */
     public void initSpecialConfig()
     {

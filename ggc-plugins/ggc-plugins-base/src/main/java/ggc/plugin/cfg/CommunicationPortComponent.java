@@ -147,19 +147,33 @@ public class CommunicationPortComponent extends JPanel implements ActionListener
      */
     public void setProtocol(DeviceConnectionProtocol protocol)
     {
-        if (protocol == null)
+        System.out.println("Protocol: " + protocol);
+
+        if (protocol == null || isNoPortDevice(protocol))
         {
+            System.out.println("NULL Protocol");
             label.setText(m_ic.getMessage("COMMUNICATION_PORT") + ":");
             setCommunicationPort("N/A");
             this.bt_select.setEnabled(false);
+            this.setVisible(false);
             return;
         }
 
+        this.setVisible(true);
         this.portDiscoveryAgent = portDiscoveryManager.getDiscoveryAgent(protocol);
 
         label.setText(m_ic.getMessage(this.portDiscoveryAgent.getPortDeviceName()) + ":");
         setCommunicationPort("");
         this.bt_select.setEnabled(!this.portDiscoveryAgent.isEmptyDiscoveryAgent());
+    }
+
+
+    public boolean isNoPortDevice(DeviceConnectionProtocol protocol)
+    {
+        return protocol == DeviceConnectionProtocol.None;
+        // || //
+        // protocol == DeviceConnectionProtocol.Database || //
+        // protocol == DeviceConnectionProtocol.FileImport;
     }
 
 }

@@ -89,5 +89,4 @@ public interface DeviceHandler
      * @return
      */
     GGCPluginType getGGCPluginType();
-
 }

@@ -1,10 +1,9 @@
 package ggc.plugin.db;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
+import java.security.InvalidParameterException;
+import java.util.*;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,6 +19,7 @@ import com.atech.db.hibernate.HibernateDb;
 import com.atech.db.hibernate.HibernateObject;
 import com.atech.graphics.graphs.v2.data.GraphDbDataRetriever;
 import com.atech.utils.data.ATechDate;
+import com.atech.utils.data.ATechDateType;
 
 import ggc.core.db.hibernate.cgms.CGMSDataH;
 import ggc.plugin.util.DataAccessPlugInBase;
@@ -238,7 +238,86 @@ public abstract class PluginDb implements GraphDbDataRetriever
     }
 
 
-    public List<CGMSDataH> getRangeCGMSValuesRaw(GregorianCalendar from, GregorianCalendar to, String filter)
+    public Criterion getRangeCriteria(GregorianCalendar from, GregorianCalendar to, ATechDateType dateType,
+            String fromParameter, String toParameter)
+    {
+        long dtFrom = ATechDate.getATDateTimeFromGC(from, ATechDateType.DateOnly);
+        long dtTill = ATechDate.getATDateTimeFromGC(to, ATechDateType.DateOnly);
+
+        if (dateType == ATechDateType.DateAndTimeMin)
+        {
+            dtFrom *= 10000;
+            dtTill *= 10000;
+
+            dtTill += 2359L;
+        }
+        else if (dateType == ATechDateType.DateAndTimeSec)
+        {
+            dtFrom *= 1000000;
+            dtTill *= 1000000;
+
+            dtTill += 235959L;
+        }
+        else if (dateType != ATechDateType.DateOnly)
+        {
+            throw new InvalidParameterException();
+        }
+
+        return Restrictions.and(Restrictions.ge("dtInfo", dtFrom), Restrictions.le("dtInfo", dtTill));
+    }
+
+
+    public Criterion getPersonCriterion()
+    {
+        return Restrictions.eq("personId", (int) dataAccess.getCurrentUserId());
+    }
+
+
+    public Criterion getSourceDeviceCriterion()
+    {
+        return Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%");
+    }
+
+
+    public void addPersonAndSourceDevice(Criteria criteria)
+    {
+        criteria.add(getPersonCriterion());
+        criteria.add(getSourceDeviceCriterion());
+    }
+
+
+    public List<CGMSDataH> getRangeCGMSValuesRaw(GregorianCalendar from, GregorianCalendar to,
+            List<? extends Criterion> criterions)
+    {
+        LOG.info(String.format("getRangeCGMSValuesRaw(%s)", CollectionUtils.isEmpty(criterions) ? "" : criterions));
+
+        List<CGMSDataH> listCGMSData = new ArrayList<CGMSDataH>();
+
+        List<Criterion> criteria = new ArrayList<Criterion>();
+
+        criteria.add(getRangeCriteria(from, to, ATechDateType.DateOnly, "dtInfo", "dtInfo"));
+
+        if (CollectionUtils.isNotEmpty(criterions))
+        {
+            criteria.addAll(criterions);
+        }
+
+        try
+        {
+            listCGMSData = getHibernateData(CGMSDataH.class, criteria, Arrays.asList(Order.asc("dtInfo")));
+        }
+        catch (Exception ex)
+        {
+            LOG.error("getRangeCGMSValuesRaw(). Exception: " + ex, ex);
+        }
+
+        LOG.debug("Found " + listCGMSData.size() + " entries.");
+
+        return listCGMSData;
+    }
+
+
+    public List<CGMSDataH> getRangeCGMSValuesRawOld(GregorianCalendar from, GregorianCalendar to, String filter)
     {
         LOG.info(String.format("getRangeCGMSValuesRaw(%s)", filter == null ? "" : filter));
 
@@ -329,12 +408,15 @@ public abstract class PluginDb implements GraphDbDataRetriever
             int sum_all = 0;
 
             Criteria criteria = this.getSession().createCriteria(hibernateClazz);
-            criteria.add(Restrictions.eq("personId", (int) dataAccess.getCurrentUserId()));
+            criteria.add(getPersonCriterion());
             criteria.add(Restrictions.like("extended", "%" + dataAccess.getSourceDevice() + "%"));
 
-            for (Criterion criterion : criterionList)
+            if (CollectionUtils.isNotEmpty(criterionList))
             {
-                criteria.add(criterion);
+                for (Criterion criterion : criterionList)
+                {
+                    criteria.add(criterion);
+                }
             }
 
             criteria.setProjection(Projections.rowCount());

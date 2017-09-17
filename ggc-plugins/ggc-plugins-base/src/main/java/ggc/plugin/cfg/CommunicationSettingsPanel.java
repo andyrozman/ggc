@@ -44,15 +44,17 @@ public class CommunicationSettingsPanel extends JPanel
     private static final long serialVersionUID = 9197820657243699214L;
 
     int x_pos, y_pos;
-    DataAccessPlugInBase m_da;
-    I18nControlAbstract m_ic;
-    CommunicationPortComponent comm_port_comp;
+    DataAccessPlugInBase dataAccess;
+    I18nControlAbstract i18nControl;
+    CommunicationPortComponent communicationPortComponent;
     JDialog parent;
-    DeviceSpecialConfigPanelInterface special_config = null;
+    DeviceSpecialConfigPanelInterface specialConfig = null;
     int element_size = 65;
 
     DeviceInterface currentDeviceV1 = null;
     DeviceInstanceWithHandler currentDeviceV2 = null;
+
+    DeviceConfigurationDialog deviceConfigurationDialog;
 
 
     /**
@@ -61,19 +63,21 @@ public class CommunicationSettingsPanel extends JPanel
      * @param x
      * @param y
      * @param da
-     * @param parent_
+     * @param deviceConfigurationDialog
      */
-    public CommunicationSettingsPanel(int x, int y, DataAccessPlugInBase da, JDialog parent_)
+    public CommunicationSettingsPanel(int x, int y, DataAccessPlugInBase da,
+            DeviceConfigurationDialog deviceConfigurationDialog)
     {
         super();
         this.setLayout(null);
-        this.m_da = da;
-        this.m_ic = da.getI18nControlInstance();
-        this.parent = parent_;
+        this.dataAccess = da;
+        this.i18nControl = da.getI18nControlInstance();
+        this.parent = deviceConfigurationDialog;
+        this.deviceConfigurationDialog = deviceConfigurationDialog;
         this.x_pos = x;
         this.y_pos = y;
 
-        this.setBorder(new TitledBorder(m_ic.getMessage("COMMUNICATION_SETTINGS")));
+        this.setBorder(new TitledBorder(i18nControl.getMessage("COMMUNICATION_SETTINGS")));
 
         init();
 
@@ -87,32 +91,32 @@ public class CommunicationSettingsPanel extends JPanel
     public void init()
     {
 
-        this.comm_port_comp = new CommunicationPortComponent(m_da, this.parent);
-        this.add(this.comm_port_comp);
+        this.communicationPortComponent = new CommunicationPortComponent(dataAccess, this.parent);
+        this.add(this.communicationPortComponent);
     }
 
 
     /**
      * Set Current Device
      * 
-     * @param dev_interface
+     * @param deviceInterface
      */
-    public void setCurrentDevice(DeviceInterface dev_interface)
+    public void setCurrentDevice(DeviceInterface deviceInterface)
     {
         resetDevices(false);
 
-        this.currentDeviceV1 = dev_interface;
+        this.currentDeviceV1 = deviceInterface;
 
         if (this.currentDeviceV1 == null)
         {
-            this.comm_port_comp.setProtocol(DeviceConnectionProtocol.None);
+            this.communicationPortComponent.setProtocol(DeviceConnectionProtocol.None);
         }
         else
         {
-            this.comm_port_comp.setProtocol(this.currentDeviceV1.getConnectionProtocol());
+            this.communicationPortComponent.setProtocol(this.currentDeviceV1.getConnectionProtocol());
         }
 
-        this.special_config = dev_interface.getSpecialConfigPanel();
+        this.specialConfig = deviceInterface.getSpecialConfigPanel();
 
         resetLayout(true);
     }
@@ -121,24 +125,24 @@ public class CommunicationSettingsPanel extends JPanel
     /**
      * Set Current Device
      *
-     * @param dev_interface
+     * @param deviceInterface
      */
-    public void setCurrentDevice(DeviceInstanceWithHandler dev_interface)
+    public void setCurrentDevice(DeviceInstanceWithHandler deviceInterface)
     {
         resetDevices(false);
 
-        this.currentDeviceV2 = dev_interface;
+        this.currentDeviceV2 = deviceInterface;
 
         if (this.currentDeviceV2 == null)
         {
-            this.comm_port_comp.setProtocol(DeviceConnectionProtocol.None);
+            this.communicationPortComponent.setProtocol(DeviceConnectionProtocol.None);
         }
         else
         {
-            this.comm_port_comp.setProtocol(this.currentDeviceV2.getConnectionProtocol());
+            this.communicationPortComponent.setProtocol(this.currentDeviceV2.getConnectionProtocol());
         }
 
-        this.special_config = dev_interface.getSpecialConfigPanel();
+        this.specialConfig = deviceInterface.getSpecialConfigPanel();
 
         resetLayout(true);
     }
@@ -163,36 +167,36 @@ public class CommunicationSettingsPanel extends JPanel
     {
         if (selected)
         {
-            this.special_config = null;
+            this.specialConfig = null;
 
             if (this.currentDeviceV2 != null && this.currentDeviceV2.hasSpecialConfig())
             {
-                this.special_config = this.currentDeviceV2.getSpecialConfigPanel();
+                this.specialConfig = this.currentDeviceV2.getSpecialConfigPanel();
             }
             else if (this.currentDeviceV1 != null && this.currentDeviceV1.hasSpecialConfig())
             {
-                this.special_config = this.currentDeviceV1.getSpecialConfigPanel();
+                this.specialConfig = this.currentDeviceV1.getSpecialConfigPanel();
             }
         }
 
-        // System.out.println("Special config: " + this.special_config);
+        // System.out.println("Special config: " + this.specialConfig);
 
         this.removeAll();
 
-        this.add(this.comm_port_comp);
+        this.add(this.communicationPortComponent);
 
-        if (this.special_config != null)
+        if (this.specialConfig != null)
         {
-            JPanel panel = this.special_config.getPanel();
+            JPanel panel = this.specialConfig.getPanel();
 
             if (panel != null)
             {
-                this.special_config.initPanel();
-                panel.setBounds(5, 55, 400, this.special_config.getHeight());
+                this.specialConfig.initPanel();
+                panel.setBounds(5, 55, 400, this.specialConfig.getHeight());
                 panel.setEnabled(true);
                 this.add(panel);
 
-                this.special_config.loadParametersToGUI();
+                this.specialConfig.loadParametersToGUI();
                 // panel.setBounds(40, 40, 400, 35);
 
             }
@@ -210,7 +214,7 @@ public class CommunicationSettingsPanel extends JPanel
      */
     public void setProtocol(DeviceConnectionProtocol protocol)
     {
-        this.comm_port_comp.setProtocol(protocol);
+        this.communicationPortComponent.setProtocol(protocol);
     }
 
 
@@ -223,26 +227,26 @@ public class CommunicationSettingsPanel extends JPanel
     {
         if (param == null)
         {
-            this.comm_port_comp.setCommunicationPort(m_ic.getMessage("NOT_SET"));
+            this.communicationPortComponent.setCommunicationPort(i18nControl.getMessage("NOT_SET"));
         }
         else
         {
-            if (this.special_config == null)
+            if (this.specialConfig == null)
             {
-                this.comm_port_comp.setCommunicationPort(param);
+                this.communicationPortComponent.setCommunicationPort(param);
             }
             else
             {
-                this.special_config.loadConnectionParameters(param);
-                this.comm_port_comp.setCommunicationPort(this.special_config.getDefaultParameter());
+                this.specialConfig.loadConnectionParameters(param);
+                this.communicationPortComponent.setCommunicationPort(this.specialConfig.getDefaultParameter());
 
                 // System.out.println("Def parameter: " +
-                // this.special_config.getDefaultParameter());
+                // this.specialConfig.getDefaultParameter());
 
             }
         }
 
-        // this.comm_port_comp
+        // this.communicationPortComponent
     }
 
 
@@ -253,12 +257,12 @@ public class CommunicationSettingsPanel extends JPanel
      */
     public String getParameters()
     {
-        if (this.special_config == null)
-            return this.comm_port_comp.getCommunicationPort();
+        if (this.specialConfig == null)
+            return this.communicationPortComponent.getCommunicationPort();
         else
         {
-            this.special_config.setDefaultParameter(this.comm_port_comp.getCommunicationPort());
-            return this.special_config.saveConnectionParameters();
+            this.specialConfig.setDefaultParameter(this.communicationPortComponent.getCommunicationPort());
+            return this.specialConfig.saveConnectionParameters();
         }
     }
 
@@ -270,7 +274,7 @@ public class CommunicationSettingsPanel extends JPanel
      */
     public boolean areParametersSet()
     {
-        if (this.special_config == null)
+        if (this.specialConfig == null)
         {
             if (hasDefaultParameter())
             {
@@ -285,15 +289,29 @@ public class CommunicationSettingsPanel extends JPanel
             {
                 if (checkIfDefaultParameterSet())
                 {
-                    this.special_config.setDefaultParameter(this.comm_port_comp.getCommunicationPort());
-                    return this.special_config.areConnectionParametersValid();
+                    this.specialConfig.setDefaultParameter(this.communicationPortComponent.getCommunicationPort());
+                    return this.specialConfig.areConnectionParametersValid();
                 }
                 else
                     return false;
             }
             else
-                return this.special_config.areConnectionParametersValid();
+                return this.specialConfig.areConnectionParametersValid();
 
+        }
+
+    }
+
+
+    public String getCustomErrorMessage()
+    {
+        if (this.specialConfig == null)
+        {
+            return null;
+        }
+        else
+        {
+            return this.specialConfig.getCustomErrorMessage();
         }
 
     }
@@ -309,10 +327,10 @@ public class CommunicationSettingsPanel extends JPanel
 
     private boolean checkIfDefaultParameterSet()
     {
-        if (m_ic.getMessage("NOT_SET").equals(this.comm_port_comp.getCommunicationPort()))
+        if (i18nControl.getMessage("NOT_SET").equals(this.communicationPortComponent.getCommunicationPort()))
             return false;
 
-        if (this.comm_port_comp.getCommunicationPort().trim().length() == 0)
+        if (this.communicationPortComponent.getCommunicationPort().trim().length() == 0)
             return false;
         else
             return true;
@@ -324,9 +342,9 @@ public class CommunicationSettingsPanel extends JPanel
     {
         int sz = element_size;
 
-        if (this.special_config != null)
+        if (this.specialConfig != null)
         {
-            sz += this.special_config.getHeight();
+            sz += this.specialConfig.getHeight();
         }
 
         return sz;

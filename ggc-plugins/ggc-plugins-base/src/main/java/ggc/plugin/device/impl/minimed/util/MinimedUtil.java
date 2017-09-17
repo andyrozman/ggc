@@ -14,11 +14,16 @@ import ggc.plugin.data.enums.PlugInExceptionType;
 import ggc.plugin.device.PlugInBaseException;
 import ggc.plugin.device.impl.minimed.MinimedDeviceReader;
 import ggc.plugin.device.impl.minimed.comm.MinimedCommunicationInterface;
+import ggc.plugin.device.impl.minimed.comm.usb.contournext.data.MedtronicCnlSession;
+import ggc.plugin.device.impl.minimed.data.MinimedCommandTypeInterface;
 import ggc.plugin.device.impl.minimed.data.converter.MinimedDataConverter;
 import ggc.plugin.device.impl.minimed.data.decoder.HistoryDecoderProcessor;
 import ggc.plugin.device.impl.minimed.data.decoder.MinimedHistoryDecoder;
 import ggc.plugin.device.impl.minimed.data.dto.MinimedConnectionParametersDTO;
-import ggc.plugin.device.impl.minimed.enums.*;
+import ggc.plugin.device.impl.minimed.enums.MinimedCommInterfaceType;
+import ggc.plugin.device.impl.minimed.enums.MinimedConverterType;
+import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
+import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
 import ggc.plugin.output.OutputWriter;
 
 /**
@@ -71,7 +76,7 @@ public class MinimedUtil
     private static Map<MinimedConverterType, MinimedDataConverter> pumpConverterMap = new HashMap<MinimedConverterType, MinimedDataConverter>();
     private static Map<MinimedConverterType, MinimedDataConverter> cgmsConverterMap = new HashMap<MinimedConverterType, MinimedDataConverter>();
     private static Map<MinimedTargetType, MinimedHistoryDecoder> recordsDecoderMap = new HashMap<MinimedTargetType, MinimedHistoryDecoder>();
-    // private static MedtronicCnlSession medtronicCnlSession;
+    private static MedtronicCnlSession medtronicCnlSession;
 
 
     public static OutputWriter getOutputWriter()
@@ -370,8 +375,8 @@ public class MinimedUtil
     }
 
 
-    public static MinimedHistoryDecoder getDecoder(MinimedTargetType targetType, MinimedCommandType commandType)
-            throws PlugInBaseException
+    public static MinimedHistoryDecoder getDecoder(MinimedTargetType targetType,
+            MinimedCommandTypeInterface commandType) throws PlugInBaseException
     {
         if (targetType == MinimedTargetType.Pump)
         {
@@ -411,15 +416,15 @@ public class MinimedUtil
         MinimedUtil.lowLevelDebugData = lowLevelDebugData;
     }
 
-    // public static void setMedtronicCnlSession(
-    // MedtronicCnlSession medtronicCnlSession)
-    // {
-    // MinimedUtil.medtronicCnlSession = medtronicCnlSession;
-    // }
-    //
-    //
-    // public static MedtronicCnlSession getMedtronicCnlSession()
-    // {
-    // return medtronicCnlSession;
-    // }
+
+    public static void setMedtronicCnlSession(MedtronicCnlSession medtronicCnlSession)
+    {
+        MinimedUtil.medtronicCnlSession = medtronicCnlSession;
+    }
+
+
+    public static MedtronicCnlSession getMedtronicCnlSession()
+    {
+        return medtronicCnlSession;
+    }
 }

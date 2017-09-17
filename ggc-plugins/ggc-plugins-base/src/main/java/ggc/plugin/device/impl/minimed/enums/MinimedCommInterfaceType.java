@@ -43,13 +43,13 @@ public enum MinimedCommInterfaceType
     ParadigmLinkCom("ParadigmLink Meter (Serial)", false), //
     ParadigmLinkUSB("ParadigmLink Meter (USB)", false), //
 
-    // Carelink USB and its derivates - MinimedCommunicationCareLinkUSB
-    CareLinkUSB("Medtronic CareLink USB", true), //
+    // Carelink USB and its derivates - MinimedCommunicationCareLinkUSB, not
+    // supported by Linux and Mac anynore
+    CareLinkUSB("Medtronic CareLink USB", false), //
 
     // Contour Next Link
-    ContourNextLink1("Contour Next Link 1", false), //
-    ContourNextLink2("Contour Next Link 2", false), //
-    ContourNextLink24("Contour Next Link 2.4", false), //
+    ContourNextLink2("Contour Next Link 1/2", true), //
+    ContourNextLink24("Contour Next Link 2.4", true), //
     ;
 
     static Map<String, MinimedCommInterfaceType> mapByName;

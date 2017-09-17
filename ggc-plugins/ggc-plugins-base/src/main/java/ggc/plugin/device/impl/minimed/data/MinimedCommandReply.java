@@ -35,17 +35,22 @@ public class MinimedCommandReply
 {
 
     private byte[] rawData = null;
+    private byte[] decryptedPayload = null;
 
-    private MinimedCommandType commandType;
+    private MinimedCommandTypeInterface commandType;
 
     private static BitUtils bitUtils = MinimedUtil.getBitUtils();
 
 
-    public MinimedCommandReply(MinimedCommandType commandType)
+    public MinimedCommandReply(MinimedCommandTypeInterface commandType)
     {
         this.commandType = commandType;
 
-        this.rawData = new byte[this.commandType.getRecordLength()];
+        if (commandType instanceof MinimedCommandType)
+        {
+            MinimedCommandType minimedCommandType = (MinimedCommandType) commandType;
+            this.rawData = new byte[minimedCommandType.getRecordLength()];
+        }
     }
 
 
@@ -67,7 +72,7 @@ public class MinimedCommandReply
     }
 
 
-    public MinimedCommandType getCommandType()
+    public MinimedCommandTypeInterface getCommandType()
     {
         return commandType;
     }
@@ -106,7 +111,22 @@ public class MinimedCommandReply
 
     public void resetData()
     {
-        this.rawData = new byte[this.commandType.getRecordLength()];
+        if (commandType instanceof MinimedCommandType)
+        {
+            MinimedCommandType minimedCommandType = (MinimedCommandType) commandType;
+            this.rawData = new byte[minimedCommandType.getRecordLength()];
+        }
     }
 
+
+    public byte[] getDecryptedPayload()
+    {
+        return decryptedPayload;
+    }
+
+
+    public void setDecryptedPayload(byte[] decryptedPayload)
+    {
+        this.decryptedPayload = decryptedPayload;
+    }
 }

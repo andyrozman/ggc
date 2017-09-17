@@ -1,0 +1,22 @@
+
+ContourNext
+
+| Field                 | Bytes | Data Type  |   Comments   |
+|-----------|:-----:|:----------:|--------------|
+| Header                | 2     | Bytes      | `0x5101`     |
+| Pump Serial Number    | 6     | String     | ASCII numbers |
+| Padding               | 10    | Bytes      | Null Padded  |
+| Operation             | 1     | Byte       | *See table below* |
+| Retries               | 1     | Byte       | (Number of Retries << 4) + 1 |
+| Timeout               | 1     | Byte       | Timeout in seconds |
+| Padding               | 2     | Bytes      | Null Padded  |
+| Expected Bytes        | 2     | UInt16LE   | Expected number of bytes to be returned (0 if not expecting a multi-packet response) |
+| Expected Packets      | 2     | UInt16LE   | Expected number of packets to be returned + 4096 (0 if not expecting a multi-packet response) |
+| NAK Code              | 1     | Byte       | Passthrough NAK Code *See table below*  |
+| Payload Size          | 2     | UInt16LE   | Size of the Payload + 4 (the header of the inner message) |
+| Padding               | 2     | Bytes      | Null Padded  |
+| Checksum              | 1     | UInt8      | Sum of the *entire* message, not including the **Checksum** byte itself  |
+| Payload               | Varia | Bytes      | Size specified by **Payload Size** |
+
+
+18 + 10 + 5 = 33

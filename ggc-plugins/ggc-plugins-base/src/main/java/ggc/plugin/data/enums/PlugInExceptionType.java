@@ -51,11 +51,13 @@ public enum PlugInExceptionType
     DeviceSerialNumberCouldNotBeRead("Serial number was not read from device."), //
 
     DeviceInvalidCommand("Device reported an invalid command error."), //
+    DeviceIsInWrongState("Device is in wrong state [current=%s, expected=%s]"), //
     DeviceInvalidParameterDesc("Device reported an invalid parameter error for parameter %s."), //
     DeviceInvalidParameter("Device reported an invalid parameter error."), //
     DeviceInternalError("Device reported an internal error."), //
     DeviceInvalidResponseCommand("Unknown or invalid response for command: %s (expected: %s)."), //
     DeviceInvalidResponseLength("Device packet response length is %d (expected length is %d)"), //
+    DeviceInvalidResponseDescription("Unknown or invalid response - (%s)."), //
     DeviceFailedToReadResponse("Failed to read contents of device packet"), //
     DeviceModelCouldNotBeIdentified("Device Model could not be identified."), //
     DeviceCouldNotBeContacted("Device could not be contacted."), //
@@ -83,9 +85,10 @@ public enum PlugInExceptionType
     Parsing_BytesParsingError("EXC_BYTES_PARSING_ERROR"), //
     ParsingError("EXC_PARSING_ERROR"), //
     ParsingErrorUnsupportedDataLenth("EXC_PARSING_ERROR_UNSUPP_DATA_LENGTH"), //
-    FailedCRCCheck("EXC_FAILED_CRC_CHECK"), //
+    FailedCRCCheck("Device response failed CRC check. [expected=%s, got=%s]"), // "EXC_FAILED_CRC_CHECK"
     FailedCRCCheckInPacket("Failed CRC check in packet."), //
-    FailedEncryptionDecryption("Failure on encrypt/decrypt of data."), //
+    FailedEncryptionDecryption("Failed encryption/decryption of data."), //
+    FailedEncryptionDecryptionDesc("Failed encryption/decryption of data - (%s)."), //
     UnsupportedTypeOfParametersForCommand("EXC_UNSUPPORTED_TYPE_OF_PARAMS_FOR_CMD"), //
 
     // Handler
@@ -97,6 +100,7 @@ public enum PlugInExceptionType
     DeviceInvalidResponse("Device returned invalid response. Expected: %s, Received: %s"), //
     DeviceCommandInvalidResponse("Device was sent command [%s], but it responded with [%s], instead of [%s]"), //
     DeviceUnexpectedResponse("Device returned unexpected response. Received: %s"), //
+    DeviceUnexpectedResponseCompared("Device returned unexpected response. Expected: %s, Received: %s"), //
 
     DeviceReturnedError("Device returned error [command=%s, errorCode=%s, errorDescription=%s, returnedData=%s]"), //
 
@@ -104,6 +108,7 @@ public enum PlugInExceptionType
     ImportFileCouldNotBeRead("Import file (name=%s) could not be read (%s)"), //
     ErrorCommunicationWithProtocolHandler("Error communicating with specific library [%s]: (%s)"), //
 
+    Hid4JavaAPIError("Error using Hid4Java API: %s\n%s"), //
     ;
 
     // DXC_PARSING_ERROR = Error parsing. Exception: %s

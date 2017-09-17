@@ -2,6 +2,13 @@
 Changes file for GGC Plug-In Base
 ==================================
 
+1.2.5 [17.9.2017]
+- Bug Fix: Configuration
+- Hid4JavaCommunicationHandler
+- Minimed new implementation: series5xx, and series6xx
+- UsbHidDeviceHandler / UsbHidDeviceReader
+
+
 1.2.4 [26.6.2017]
 - extended Hid4Java Communication handler
 - extended IBMCommunicationHandler

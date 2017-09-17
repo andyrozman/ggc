@@ -30,6 +30,7 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
     private USBDevice targetDevice; // FIXME we may need to support serialNumber
                                     // of device in future
     HidServices hidServices;
+    private boolean throwExceptionOnError;
 
 
     public boolean connectAndInitDevice() throws PlugInBaseException
@@ -154,14 +155,11 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
         if (this.hidDevice != null)
         {
             this.hidDevice.close();
-
             this.hidDevice = null;
-
         }
 
         if (this.hidServices != null)
             this.hidServices.shutdown(); // clean shutdown
-
     }
 
 
@@ -185,13 +183,30 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
 
     public int read(byte[] buffer) throws PlugInBaseException
     {
-        return this.hidDevice.read(buffer, timeoutMs);
+        int result = this.hidDevice.read(buffer, timeoutMs);
+
+        return evaluateResult(result);
+    }
+
+
+    private int evaluateResult(int result) throws PlugInBaseException
+    {
+        if ((result == -1) && (throwExceptionOnError))
+        {
+            LOG.debug("evaluateResult: {}", this.getLastErrorMessage());
+            throw new PlugInBaseException(PlugInExceptionType.Hid4JavaAPIError,
+                    new Object[] { this.getLastErrorMessage(), Thread.currentThread().getStackTrace() });
+        }
+
+        return result;
     }
 
 
     public int read(byte[] buffer, int timeout) throws PlugInBaseException
     {
-        return this.hidDevice.read(buffer, timeout);
+        int result = this.hidDevice.read(buffer, timeout);
+
+        return evaluateResult(result);
     }
 
 
@@ -208,13 +223,33 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
 
     public void write(byte[] buffer) throws PlugInBaseException
     {
-        this.hidDevice.write(buffer, buffer.length, this.selectedDevice.getReportId());
+        int result = this.hidDevice.write(buffer, buffer.length, this.selectedDevice.getReportId());
+
+        evaluateResult(result);
     }
 
 
     public int writeWithReturn(byte[] buffer) throws PlugInBaseException
     {
-        return this.hidDevice.write(buffer, buffer.length, this.selectedDevice.getReportId());
+        int result = this.hidDevice.write(buffer, buffer.length, this.selectedDevice.getReportId());
+
+        return evaluateResult(result);
+    }
+
+
+    public int writeToFeatureReport(byte[] buffer) throws PlugInBaseException
+    {
+        int result = this.hidDevice.sendFeatureReport(buffer, this.selectedDevice.getReportId());
+
+        return evaluateResult(result);
+    }
+
+
+    public int readFromFeatureReport(byte[] buffer) throws PlugInBaseException
+    {
+        int result = this.hidDevice.getFeatureReport(buffer, this.selectedDevice.getReportId());
+
+        return evaluateResult(result);
     }
 
 
@@ -323,6 +358,8 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
             USBDevice device = new USBDevice("", Integer.parseInt(address[0], 16), Integer.parseInt(address[1], 16));
             this.targetDevice = device;
             LOG.debug("Target device is: " + targetDevice);
+
+            // FIXME support for serial number
         }
         else
         {
@@ -335,5 +372,11 @@ public class Hid4JavaCommunicationHandler extends SerialCommunicationAbstract
     public USBDevice getSelectedDevice()
     {
         return selectedDevice;
+    }
+
+
+    public void setThrowExceptionOnError(boolean throwExceptionOnError)
+    {
+        this.throwExceptionOnError = throwExceptionOnError;
     }
 }

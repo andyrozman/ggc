@@ -137,7 +137,7 @@ public abstract class AccuChekSmartPix extends XmlProtocol
 
         // System.out.println("Init reader !!!");
 
-        if (this.special_config.getParameter("SMARTPIX_VERSION").equals(AccuChekSmartPixSpecialConfig.SMARTPIX_V2))
+        if (this.specialConfig.getParameter("SMARTPIX_VERSION").equals(AccuChekSmartPixSpecialConfig.SMARTPIX_V2))
         {
             this.reader = new AccuChekSmartPixReaderV2(dataAccess, this.outputWriter, this);
         }
@@ -432,22 +432,30 @@ public abstract class AccuChekSmartPix extends XmlProtocol
     }
 
 
+    // public DeviceSpecialConfigPanelAbstract getSpecialConfig()
+    // {
+    // return this.specialConfig;
+    // }
+
     /**
      * Initialize Special Config
      */
     @Override
     public void initSpecialConfig()
     {
+        this.specialConfigKey = "AccuChekSmartPix";
+
         if (DataAccessPlugInBase.special_configs.containsKey("AccuChekSmartPix"))
         {
-            this.special_config = DataAccessPlugInBase.special_configs.get("AccuChekSmartPix");
+            this.specialConfig = (AccuChekSmartPixSpecialConfig) DataAccessPlugInBase.special_configs
+                    .get("AccuChekSmartPix");
         }
         else
         {
             // System.out.println("!!!!!!!! inti Special config");
-            this.special_config = new AccuChekSmartPixSpecialConfig(dataAccess, this);
+            this.specialConfig = new AccuChekSmartPixSpecialConfig(dataAccess, this);
             DataAccessPlugInBase.special_configs.put("AccuChekSmartPix",
-                (DeviceSpecialConfigPanelAbstract) this.special_config);
+                (DeviceSpecialConfigPanelAbstract) this.specialConfig);
         }
     }
 

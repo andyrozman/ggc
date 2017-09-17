@@ -53,6 +53,7 @@ public enum DeviceHandlerType
     DexcomHandler(DownloadSupportType.Download_Data_Config), //
     Dexcom7Handler(DownloadSupportType.DownloadDataFile), // only for old files
     MinimedCGMSHandler(DownloadSupportType.Download_Data_Config), //
+    AbbottLibreHandler(DownloadSupportType.Download_Data_Config), //
 
     ;
 

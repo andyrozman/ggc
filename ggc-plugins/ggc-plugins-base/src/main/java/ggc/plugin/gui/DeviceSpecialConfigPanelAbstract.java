@@ -263,4 +263,11 @@ public abstract class DeviceSpecialConfigPanelAbstract implements DeviceSpecialC
     {
         this.parameters.put(key, value);
     }
+
+
+    public String getCustomErrorMessage()
+    {
+        return null;
+    }
+
 }

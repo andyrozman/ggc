@@ -112,7 +112,9 @@ public abstract class MinimedDataConverterAbstract implements MinimedDataConvert
 
     public void debugResult(MinimedCommandReply minimedReply)
     {
-        LOG.warn("Decoding of Unsupported Command: {}", minimedReply.getCommandType().name());
+        MinimedCommandType commandType = (MinimedCommandType)minimedReply.getCommandType();
+
+        LOG.warn("Decoding of Unsupported Command: {}", commandType.name());
         LOG.warn("[{}]", bitUtils.getHex(minimedReply.getRawData()));
         LOG.warn("IntArray: {}" + bitUtils.getByteArrayShow(minimedReply.getRawData()));
     }
@@ -120,10 +122,12 @@ public abstract class MinimedDataConverterAbstract implements MinimedDataConvert
 
     public void debugConverterResponse(MinimedCommandReply reply)
     {
+        MinimedCommandType commandType = (MinimedCommandType)reply.getCommandType();
+
         if (dataDebug)
         {
             LOG.debug("*******************************************************************");
-            LOG.debug("     Command:  {}", reply.getCommandType().name());
+            LOG.debug("     Command:  {}", commandType.name());
             LOG.debug("*******************************************************************");
             LOG.debug("  Raw Reply: {}", bitUtils.getHex(reply.getRawData()));
             LOG.debug("*******************************************************************");
@@ -213,5 +217,8 @@ public abstract class MinimedDataConverterAbstract implements MinimedDataConvert
         log.error("History data (" + commandType.name()
                 + ") can't be decoded with this converter. History data is decoded by MinimedHistoryDecoder instance class.");
     }
+
+
+
 
 }

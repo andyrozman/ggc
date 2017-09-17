@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.atech.utils.ATSwingUtils;
 
+import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommInterfaceType;
 import ggc.plugin.device.v2.DeviceInstanceWithHandler;
 import ggc.plugin.gui.DeviceSpecialConfigPanelAbstract;
@@ -40,23 +41,18 @@ import ggc.plugin.util.DataAccessPlugInBase;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class MinimedSpecialConfig extends DeviceSpecialConfigPanelAbstract implements ActionListener // ,
-                                                                                                     // ItemListener,
-                                                                                                     // DocumentListener
+public class MinimedSpecialConfig extends DeviceSpecialConfigPanelAbstract implements ActionListener
 {
 
-    String[] data_versions = null;
+    String[] dataVersions = null;
     JComboBox cbInterface = null;
-
     private JTextField tfSerialNr;
-
     boolean inited = false;
 
 
     public MinimedSpecialConfig(DataAccessPlugInBase da, DeviceInstanceWithHandler deviceInstanceV2)
     {
         super(da, deviceInstanceV2);
-        System.out.println("MinimedSpecialConfig: " + this);
     }
 
 
@@ -66,24 +62,19 @@ public class MinimedSpecialConfig extends DeviceSpecialConfigPanelAbstract imple
         if (inited)
             return;
 
-        System.out.println("Init panel");
-
         this.configPanel = new JPanel();
         this.configPanel.setLayout(null);
         this.configPanel.setSize(400, getHeight());
 
         ATSwingUtils.initLibrary();
 
-        String[] dta = MinimedCommInterfaceType.getSupportedInterfacesArray();
-
-        data_versions = MinimedCommInterfaceType.getSupportedInterfacesArray();
+        dataVersions = MinimedCommInterfaceType.getSupportedInterfacesArray();
 
         ATSwingUtils.getLabel(this.i18nControl.getMessage("MM_CONN_INTERFACE") + ":", 20, 5, 150, 25, this.configPanel,
             ATSwingUtils.FONT_NORMAL_BOLD);
 
-        cbInterface = ATSwingUtils.getComboBox(data_versions, 165, 5, 190, 25, this.configPanel,
+        cbInterface = ATSwingUtils.getComboBox(dataVersions, 165, 5, 190, 25, this.configPanel,
             ATSwingUtils.FONT_NORMAL);
-        // cbInterface.addItemListener(this);
 
         int size[] = { 17, 17 };
 
@@ -91,7 +82,7 @@ public class MinimedSpecialConfig extends DeviceSpecialConfigPanelAbstract imple
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         ATSwingUtils.getButton("", 365, 40, 25, 25, this.configPanel, ATSwingUtils.FONT_NORMAL, "about.png", "get_info",
-            this, dataAccess, size); // , this, dataAccess, size);
+            this, dataAccess, size);
 
         this.tfSerialNr = ATSwingUtils.getTextField(null, 165, 40, 150, 25, this.configPanel, ATSwingUtils.FONT_NORMAL);
         // this.tfSerialNr.getDocument().addDocumentListener(this);
@@ -140,10 +131,10 @@ public class MinimedSpecialConfig extends DeviceSpecialConfigPanelAbstract imple
     {
         if (ae.getActionCommand().contains("get_info"))
         {
-            JOptionPane.showMessageDialog(dataAccess.getCurrentComponentParent(),
-                i18nControl.getMessage("MINIMED_CONFIG_INFO"), //
-                i18nControl.getMessage("INFORMATION"), //
-                JOptionPane.INFORMATION_MESSAGE);
+            ATSwingUtils.showMessageDialog(dataAccess.getDeviceConfigurationDialog(), //
+                ATSwingUtils.DialogType.Info, //
+                i18nControl.getMessage("MM_CONFIG_INFO"), //
+                i18nControl);
         }
     }
 
@@ -152,6 +143,42 @@ public class MinimedSpecialConfig extends DeviceSpecialConfigPanelAbstract imple
     public boolean areCustomParametersValid()
     {
         readParametersFromGUI();
-        return StringUtils.isNotBlank(tfSerialNr.getText());
+
+        if (StringUtils.isBlank(tfSerialNr.getText()))
+            return false;
+
+        // check
+
+        DeviceConfigurationDialog dialog = dataAccess.getDeviceConfigurationDialog();
+
+        String deviceName = dialog.getCurrentDeviceV2().getDeviceDefinitionBase().getDeviceName();
+
+        MinimedCommInterfaceType interfaceType = MinimedCommInterfaceType
+                .getByDescription((String) cbInterface.getSelectedItem());
+
+        if (((interfaceType == MinimedCommInterfaceType.ContourNextLink2) && //
+                (isContourNextLink24Required(deviceName))) //
+                || //
+                ((interfaceType == MinimedCommInterfaceType.ContourNextLink24) && //
+                        (!isContourNextLink24Required(deviceName))))
+        {
+            return false;
+        }
+
+        return true;
     }
+
+
+    private boolean isContourNextLink24Required(String deviceName)
+    {
+        // add new 6xx devices here (name from PumpDevices)
+        return deviceName.equals("Minimed_640G");
+    }
+
+
+    public String getCustomErrorMessage()
+    {
+        return "MM_CUSTOM_ERROR";
+    }
+
 }

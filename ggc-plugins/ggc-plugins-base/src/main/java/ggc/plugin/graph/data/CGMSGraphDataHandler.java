@@ -1,12 +1,11 @@
 package ggc.plugin.graph.data;
 
 import java.awt.*;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.hibernate.criterion.Restrictions;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
@@ -42,7 +41,8 @@ public class CGMSGraphDataHandler
 
         PluginDb db = dataAccess.getPlugInDb();
 
-        List<CGMSDataH> rangeCGMSValuesRaw = db.getRangeCGMSValuesRaw(gcFrom, gcTill, "dv.base_type=1");
+        List<CGMSDataH> rangeCGMSValuesRaw = db.getRangeCGMSValuesRaw(gcFrom, gcTill,
+            Arrays.asList(Restrictions.eq("baseType", 1)));
 
         for (CGMSDataH rawData : rangeCGMSValuesRaw)
         {
@@ -77,7 +77,7 @@ public class CGMSGraphDataHandler
         PluginDb db = dataAccess.getPlugInDb();
 
         List<CGMSDataH> rangeCGMSValuesRaw = db.getRangeCGMSValuesRaw(currentCalendar, currentCalendar,
-            "dv.base_type=1");
+            Arrays.asList(Restrictions.eq("baseType", 1)));
 
         if (CollectionUtils.isNotEmpty(rangeCGMSValuesRaw))
         {

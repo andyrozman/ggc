@@ -153,14 +153,12 @@ public class DeviceInstanceWithHandler implements DeviceInterfaceV2
 
     public boolean hasSpecialConfig()
     {
-        return StringUtils.isNotBlank(this.deviceHandler.getSpecialConfigKey());
+        return this.deviceHandler != null && StringUtils.isNotBlank(this.deviceHandler.getSpecialConfigKey());
     }
 
 
     public DeviceSpecialConfigPanelInterface getSpecialConfigPanel()
     {
-        String specialKey = this.deviceHandler.getSpecialConfigKey();
-
         if (!hasSpecialConfig())
         {
             return null;

@@ -1,6 +1,5 @@
 package ggc.plugin.device.impl.minimed.data;
 
-import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedTargetType;
 
 /**
@@ -33,7 +32,7 @@ public class MinimedDataPage
 {
 
     public byte[] rawDataPage;
-    public MinimedCommandType commandType;
+    public MinimedCommandTypeInterface commandType;
     private MinimedTargetType targetType;
 
 

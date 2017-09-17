@@ -44,6 +44,7 @@ public enum DeviceCompanyDefinition
     Insulet(206, "Insulet", "", DeviceImplementationStatus.Done), //
     Sooil(207, "Sooil", "", DeviceImplementationStatus.Full), //
     Asante(208, "Asante", "", DeviceImplementationStatus.NotAvailable), //
+    Cellnovo(209, "Cellnovo", "", DeviceImplementationStatus.NotAvailable), //
 
     // 3xx = CGMS
     Dexcom(301, "Dexcom", "", DeviceImplementationStatus.Partitial), //
@@ -54,13 +55,12 @@ public enum DeviceCompanyDefinition
     Tandem(403, "Tandem", "", DeviceImplementationStatus.Planned), //
 
     // 5xx = Meter + Pump
-    Roche(202, "AccuChek/Roche", "", DeviceImplementationStatus.Done), // Disetronic(2),
 
     // 6xx = Meter + CGMS
     Abbott(302, "Abbott", "", DeviceImplementationStatus.NotAvailable), //
 
     // 7xx = Meter + Pump + CGMS
-
+    Roche(202, "AccuChek/Roche", "", DeviceImplementationStatus.Done), // Disetronic(2),
     ;
 
     int id;

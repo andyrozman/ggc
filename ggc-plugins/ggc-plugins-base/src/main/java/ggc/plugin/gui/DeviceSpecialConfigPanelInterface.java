@@ -1,6 +1,6 @@
 package ggc.plugin.gui;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -34,78 +34,90 @@ public interface DeviceSpecialConfigPanelInterface
     /**
      * Init Panel
      */
-    public void initPanel();
+    void initPanel();
+
 
     /**
      * Get Panel
      * 
      * @return
      */
-    public JPanel getPanel();
+    JPanel getPanel();
+
 
     /**
      * Get Height
      * 
      * @return
      */
-    public int getHeight();
+    int getHeight();
+
 
     /**
      * Init Parameters
      */
-    public void initParameters();
+    void initParameters();
+
 
     /**
      * Has Default Parameter
      * 
      * @return
      */
-    public boolean hasDefaultParameter();
+    boolean hasDefaultParameter();
+
 
     /**
      * Are Connection Parameters Valid
      * 
      * @return
      */
-    public boolean areConnectionParametersValid();
+    boolean areConnectionParametersValid();
+
 
     /**
      * Load Connection Parameters
      * 
      * @param param
      */
-    public void loadConnectionParameters(String param);
+    void loadConnectionParameters(String param);
+
 
     /**
      * Save Connection Parameters
      * 
      * @return
      */
-    public String saveConnectionParameters();
+    String saveConnectionParameters();
+
 
     /**
      * Load Parameters To GUI
      */
-    public void loadParametersToGUI();
+    void loadParametersToGUI();
+
 
     /**
      * Read Parameters From GUI
      */
-    public void readParametersFromGUI();
+    void readParametersFromGUI();
+
 
     /**
      * Get Default Parameter
      * 
      * @return
      */
-    public String getDefaultParameter();
+    String getDefaultParameter();
+
 
     /**
      * Set Default Parameter
      * 
      * @param par
      */
-    public void setDefaultParameter(String par);
+    void setDefaultParameter(String par);
+
 
     /**
      * Get Parameter
@@ -113,6 +125,13 @@ public interface DeviceSpecialConfigPanelInterface
      * @param key
      * @return
      */
-    public String getParameter(String key);
+    String getParameter(String key);
+
+
+    /**
+     * get Custom Error Message
+     * @return
+     */
+    String getCustomErrorMessage();
 
 }

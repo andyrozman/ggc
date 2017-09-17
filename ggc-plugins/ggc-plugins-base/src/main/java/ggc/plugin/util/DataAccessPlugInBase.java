@@ -19,6 +19,7 @@ import com.atech.graphics.dialogs.selector.SelectableInterface;
 import com.atech.graphics.graphs.v2.data.GraphContext;
 import com.atech.graphics.graphs.v2.data.GraphDbDataRetriever;
 import com.atech.i18n.I18nControlAbstract;
+import com.atech.i18n.tool.simple.data.TranslationToolConfigurationDto;
 import com.atech.plugin.PlugInServer;
 import com.atech.update.startup.os.OSUtil;
 import com.atech.utils.ATDataAccessAPDAbstract;
@@ -33,6 +34,7 @@ import ggc.core.util.GGCI18nControl;
 import ggc.plugin.cfg.DeviceConfigEntry;
 import ggc.plugin.cfg.DeviceConfiguration;
 import ggc.plugin.cfg.DeviceConfigurationDefinition;
+import ggc.plugin.cfg.DeviceConfigurationDialog;
 import ggc.plugin.data.DeviceDataHandler;
 import ggc.plugin.data.DeviceValuesEntry;
 import ggc.plugin.data.enums.DeviceEntryStatus;
@@ -250,6 +252,7 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     private String deviceSource;
     protected GraphContext graphContext;
     protected DevicePluginDefinitionAbstract pluginDefinition;
+    private DeviceConfigurationDialog deviceConfigurationDialog;
 
     // protected DevicePluginDefinitionAbstract devicePluginDefinition;
 
@@ -1425,7 +1428,8 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     {
         if (this.i18n_plugin == null)
         {
-            this.i18n_plugin = new I18nControlPlugin(this.lang_mgr, this.m_icr, this.getPluginType());
+            this.i18n_plugin = new I18nControlPlugin(this.languageManager, this.i18nControlRunner,
+                    this.getPluginType());
         }
 
         return this.i18n_plugin;
@@ -1817,5 +1821,44 @@ public abstract class DataAccessPlugInBase extends ATDataAccessAPDAbstract
     protected void initInternalSettings()
     {
 
+    }
+
+
+    @Override
+    public TranslationToolConfigurationDto getTranslationToolConfiguration()
+    {
+        return null;
+    }
+
+
+    @Override
+    public void saveTranslationToolConfiguration(TranslationToolConfigurationDto configuration)
+    {
+
+    }
+
+
+    public void setDeviceConfigurationDialog(DeviceConfigurationDialog deviceConfigurationDialog)
+    {
+        this.deviceConfigurationDialog = deviceConfigurationDialog;
+    }
+
+
+    public DeviceConfigurationDialog getDeviceConfigurationDialog()
+    {
+        return deviceConfigurationDialog;
+    }
+
+
+    public static void sleep(long delay)
+    {
+        try
+        {
+            Thread.sleep(delay);
+        }
+        catch (InterruptedException e)
+        {
+
+        }
     }
 }
