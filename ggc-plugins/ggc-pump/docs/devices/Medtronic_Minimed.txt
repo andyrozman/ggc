@@ -1,0 +1,50 @@
+
+MEDTRONIC (previously known as Minimed)
+========================================
+
+Medtronic is one of bigest manufacturers of Insulin pumps, but they are keeping their protocols under lock and
+key, so all implementations (here and anywhere else) are merely experimental.
+
+
+HISTORY IN GGC
+---------------
+
+We started with support in 2009, and I think we were one of the first projects having at least some support
+at that time. After that we came to problem how to decode History data... Sometime later first project
+trying to decode that information was born (Bewest's decoding-carelink). About year after I finally came back
+trying to use what was discovered by Bewest...
+
+But I had to start from zero, because at that time supported ComLink, was no longer available (and mine went kaput
+(read dead)), so I had to again go and try to invent hot water...
+
+I was lucky at that time that Nightscout project created Android-uploader, which I used to compare my implementation
+against, so I got it working... So at that time code for History decoding was also implemented and gotten ready for
+testing... Few months past and all OS disable all USB legacy support, which made my support for CareLink USB again
+useless...
+
+Now fast forward to 2017... I came accross Lennart Goedhart implementation of 600SeriesAndroidUploader... I got
+permission to use it, which is now base for next implementation, support for Contour Next Link 1/2
+(CNL for 5xx devices), and will be also base for 6xx implementation, which will probably come in 2018.
+
+
+
+CURRENT STATUS
+---------------
+
+5xx Devices:  Not supported yet, working on support, planned for end 2017 (Core implementation and Pump support).
+              CGMS in 2018, if we get Core and Pump running by end of 2017.
+
+6xx Devices:  Not supported yet. Pump support planned for 2018.
+
+
+CHANGE LOG
+-----------
+
+31.5.2017
+- initial import
+- packages changed from info.nightscout.android.medtronic to ggc.plugin.device.impl.minimed.comm.usb.contournext
+
+
+20.6.2017
+- created message.series5xx and message.series6xx package
+

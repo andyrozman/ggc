@@ -1,5 +1,8 @@
 package ggc.pump.data.defs;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.atech.i18n.I18nControlAbstract;
 import com.atech.utils.data.CodeEnumWithTranslation;
 
@@ -25,14 +28,17 @@ import ggc.plugin.data.enums.ValueType;
  *  this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  *  Place, Suite 330, Boston, MA 02111-1307 USA
  *
- *  Filename:     AnimasSettingSubType
- *  Description:  Animas Settings Sub Type
+ *  Filename:     RatioType
+ *  Description:  Ratio Type
  *
  *  Author: Andy Rozman {andy@atech-software.com}
  */
 
 public enum RatioType implements CodeEnumWithTranslation
 {
+    // Insulin CH Ratio = Carb Ratio
+    // Insulin BG Ratio = Sensitivity Factor, Correction Factor
+
     // simple values
     InsulinCHRatio(1, "PCFG_CH_INS_RATIO", ValueType.Simple), //
     InsulinBGRatio(2, "PCFG_BG_INS_RATIO", ValueType.Simple), //
@@ -123,6 +129,27 @@ public enum RatioType implements CodeEnumWithTranslation
     public boolean isValueDelta()
     {
         return (this.valueType == ValueType.Delta);
+    }
+
+
+    public static List<RatioType> getRatioTypes(PumpSettingsType settingsType)
+    {
+        switch (settingsType)
+        {
+            case InsulinCarbRatio:
+                return Arrays.asList(RatioType.InsulinCHRatio, RatioType.InsulinCHRatioDelta,
+                    RatioType.InsulinCHRatioRange);
+
+            case InsulinBGRatio:
+                return Arrays.asList(RatioType.InsulinBGRatio, RatioType.InsulinBGRatioDelta,
+                    RatioType.InsulinBGRatioRange);
+
+            case BGTargets:
+                return Arrays.asList(RatioType.BGTarget, RatioType.BGTargetDelta, RatioType.BGTargetRange);
+
+            default:
+                return null;
+        }
     }
 
 }

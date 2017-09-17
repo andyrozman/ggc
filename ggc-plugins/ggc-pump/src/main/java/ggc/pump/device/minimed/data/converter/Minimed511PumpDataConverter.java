@@ -11,7 +11,6 @@ import com.atech.utils.data.ATechDateType;
 import ggc.core.data.defs.ClockModeType;
 import ggc.plugin.data.DeviceValueConfigEntry;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
-import ggc.plugin.device.impl.minimed.data.converter.MinimedDataConverterAbstract;
 import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.plugin.device.impl.minimed.enums.MinimedDeviceType;
 import ggc.plugin.device.impl.minimed.util.MinimedUtil;
@@ -45,7 +44,7 @@ import ggc.pump.util.DataAccessPump;
  *  Author: Andy {andy@atech-software.com}
  */
 
-public class Minimed511PumpDataConverter extends MinimedDataConverterAbstract
+public class Minimed511PumpDataConverter extends MinimedPumpDataConverterAbstract
 {
 
     private static final Logger LOG = LoggerFactory.getLogger(Minimed511PumpDataConverter.class);
@@ -59,9 +58,11 @@ public class Minimed511PumpDataConverter extends MinimedDataConverterAbstract
     }
 
 
-    public void convertData(MinimedCommandReply minimedReply)
+    @Override
+    public void convertData(MinimedCommandReply minimedReply, MinimedCommandType commandType)
     {
-        switch (minimedReply.getCommandType())
+
+        switch (commandType)
         {
 
             case FirmwareVersion: // 116
@@ -123,7 +124,7 @@ public class Minimed511PumpDataConverter extends MinimedDataConverterAbstract
                 break;
 
             default:
-                LOG.warn("Unknown command type [" + minimedReply.getCommandType().name() + "] for decoding");
+                LOG.warn("Unknown command type [" + commandType.name() + "] for decoding");
 
         }
     }
@@ -131,7 +132,9 @@ public class Minimed511PumpDataConverter extends MinimedDataConverterAbstract
 
     public Object getReplyValue(MinimedCommandReply minimedReply)
     {
-        switch (minimedReply.getCommandType())
+        MinimedCommandType commandType = (MinimedCommandType) minimedReply.getCommandType();
+
+        switch (commandType)
         {
             case SetSuspend:
             case CancelSuspend:
@@ -327,7 +330,7 @@ public class Minimed511PumpDataConverter extends MinimedDataConverterAbstract
 
     protected String getProfileName(MinimedCommandReply minimedReply)
     {
-        MinimedCommandType commandType = minimedReply.getCommandType();
+        MinimedCommandType commandType = (MinimedCommandType) minimedReply.getCommandType();
 
         String profile;
 

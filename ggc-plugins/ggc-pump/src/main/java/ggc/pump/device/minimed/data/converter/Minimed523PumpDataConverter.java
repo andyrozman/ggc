@@ -1,6 +1,7 @@
 package ggc.pump.device.minimed.data.converter;
 
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
+import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.pump.data.defs.PumpConfigurationGroup;
 import ggc.pump.util.DataAccessPump;
 
@@ -40,9 +41,10 @@ public class Minimed523PumpDataConverter extends Minimed515PumpDataConverter
 
 
     @Override
-    public void convertData(MinimedCommandReply minimedReply)
+    public void convertData(MinimedCommandReply minimedReply, MinimedCommandType commandType)
     {
-        switch (minimedReply.getCommandType())
+
+        switch (commandType)
         {
             case Settings: // 192
                 debugConverterResponse(minimedReply);

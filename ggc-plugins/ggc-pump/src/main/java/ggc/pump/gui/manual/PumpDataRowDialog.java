@@ -3,6 +3,8 @@ package ggc.pump.gui.manual;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.*;
 
 import javax.swing.*;
@@ -281,6 +283,41 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, HelpCa
             ATSwingUtils.FONT_NORMAL_BOLD);
 
         // list
+        this.m_list_data = new JList();
+        this.m_list_data.addMouseListener(new MouseAdapter()
+        {
+
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                if (SwingUtilities.isLeftMouseButton(e) && e.getClickCount() == 2)
+                {
+                    itemEdit();
+                }
+            }
+        });
+
+        this.scr_list = new JScrollPane(this.m_list_data);
+        this.scr_list.setBounds(30, sy + 25, 290, 150);
+        panel.add(this.scr_list);
+
+        bt_item_1 = new JButton(ATSwingUtils.getImageIcon_22x22("folder_add.png", this, m_da));
+        bt_item_1.setActionCommand("item_add");
+        bt_item_1.addActionListener(this);
+        bt_item_1.setBounds(340, sy + 25, 30, 30);
+        panel.add(bt_item_1);
+
+        bt_item_2 = new JButton(ATSwingUtils.getImageIcon_22x22("folder_edit.png", this, m_da));
+        bt_item_2.setActionCommand("item_edit");
+        bt_item_2.addActionListener(this);
+        bt_item_2.setBounds(340, sy + 65, 30, 30);
+        panel.add(bt_item_2);
+
+        bt_item_3 = new JButton(ATSwingUtils.getImageIcon_22x22("folder_delete.png", this, m_da));
+        bt_item_3.setActionCommand("item_delete");
+        bt_item_3.addActionListener(this);
+        bt_item_3.setBounds(340, sy + 105, 30, 30);
+        panel.add(bt_item_3);
 
         bt_ok = new JButton(m_ic.getMessage("OK"), ATSwingUtils.getImageIcon_22x22("ok.png", this, m_da));
         bt_ok.setActionCommand("ok");
@@ -313,11 +350,12 @@ public class PumpDataRowDialog extends JDialog implements ActionListener, HelpCa
 
         lbl_add.setBounds(30, sy, 200, 25);
 
-        this.scr_list.setBounds(30, sy + 25, 290, 150);
+        // FIXME
+        // this.scr_list.setBounds(30, sy + 25, 290, 150);
 
-        this.bt_item_1.setBounds(340, sy + 25, 30, 30);
-        this.bt_item_2.setBounds(340, sy + 65, 30, 30);
-        this.bt_item_3.setBounds(340, sy + 105, 30, 30);
+        // this.bt_item_1.setBounds(340, sy + 25, 30, 30);
+        // this.bt_item_2.setBounds(340, sy + 65, 30, 30);
+        // this.bt_item_3.setBounds(340, sy + 105, 30, 30);
 
         this.bt_ok.setBounds(30, sy + 205, 110, 25);
         this.bt_cancel.setBounds(145, sy + 205, 110, 25);

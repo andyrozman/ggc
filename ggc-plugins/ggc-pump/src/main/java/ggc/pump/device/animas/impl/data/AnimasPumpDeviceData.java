@@ -11,16 +11,15 @@ import com.atech.utils.data.ATechDate;
 
 import ggc.plugin.device.impl.animas.data.AnimasDeviceData;
 import ggc.plugin.device.impl.animas.data.AnimasDevicePacket;
-import ggc.plugin.device.impl.animas.data.dto.SettingEntry;
 import ggc.plugin.device.impl.animas.enums.AnimasDataType;
 import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.SoundValueType;
 import ggc.plugin.device.impl.animas.handler.AnimasDataWriter;
+import ggc.pump.data.dto.BasalPatternEntryDTO;
+import ggc.pump.data.dto.PumpSettingsDTO;
 import ggc.pump.data.dto.RatioDTO;
 import ggc.pump.device.animas.impl.data.dto.BasalLogEntry;
-import ggc.pump.device.animas.impl.data.dto.BasalProfileEntry;
 import ggc.pump.device.animas.impl.data.dto.BolusEntry;
-import ggc.pump.device.animas.impl.data.dto.PumpSettings;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -53,7 +52,7 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
 
     private static final Logger LOG = LoggerFactory.getLogger(AnimasPumpDeviceData.class);
 
-    public PumpSettings pumpSettings;
+    public PumpSettingsDTO pumpSettings;
     // public PumpData pumpData;
     List<BasalLogEntry> basalLogEntries = new ArrayList<BasalLogEntry>();
     public int basalProgramNum;
@@ -65,7 +64,7 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
     {
         super(writer);
 
-        pumpSettings = new PumpSettings();
+        pumpSettings = new PumpSettingsDTO();
 
     }
 
@@ -94,7 +93,7 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
     @Override
     public void debugAllSettings(Logger log)
     {
-        this.pumpSettings.debugAllSettings(LOG);
+        // this.pumpSettings.debugAllSettings(LOG);
     }
 
 
@@ -125,23 +124,17 @@ public class AnimasPumpDeviceData extends AnimasDeviceData
     }
 
 
-    public void addBasalProfileEntry(int basalProfilerNr, BasalProfileEntry basalProfileEntry)
+    public void addBasalPatternEntry(int basalProfilerNr, BasalPatternEntryDTO basalPatternEntry)
     {
-        this.pumpSettings.addBasalProfileEntry(basalProfilerNr, basalProfileEntry);
-        debug("Basal: " + basalProfileEntry.time.getTimeString() + ", value=" + basalProfileEntry.amount);
+        this.pumpSettings.addBasalPatternEntry(basalProfilerNr, basalPatternEntry);
+        debug("Basal: " + basalPatternEntry.getStarTime().getTimeString() + ", value=" + basalPatternEntry.getRate());
     }
 
 
-    public void setActiveBasalProfile(int activeBasalProfile)
+    public void setActiveBasalPattern(int activeBasalPattern)
     {
-        this.pumpSettings.activeBasalProfile = activeBasalProfile;
-        debug("ActiveBasalProfile: " + activeBasalProfile);
-    }
-
-
-    public List<SettingEntry> getAllSettings()
-    {
-        return this.pumpSettings.getAllSettings();
+        this.pumpSettings.activeBasalPattern = activeBasalPattern;
+        debug("ActiveBasalProfile: " + activeBasalPattern);
     }
 
 

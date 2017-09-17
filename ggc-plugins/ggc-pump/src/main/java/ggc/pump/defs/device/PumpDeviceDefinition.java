@@ -21,11 +21,15 @@ import ggc.plugin.protocol.DeviceConnectionProtocol;
 public enum PumpDeviceDefinition implements DeviceDefinition
 {
 
+    // NOTE: Devices with NoParameters, will not have port settings disaplyed, use that for all
+    // dummy devices, or devices
+    // with no implementation
+
     // Animas / One Touch Devices
 
     Animas_IR1000(40001, "Animas IR 1000", "", "", AnimasDeviceType.Animas_IR1000,
             DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Animas, DeviceHandlerType.NoHandler,
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge,
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge,
             DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0, null),
 
     Animas_IR1200(40002, "Animas IR 1200", "an_ir1200.jpg", "INSTRUCTIONS_ANIMAS_V2", AnimasDeviceType.Animas_IR1200,
@@ -62,13 +66,13 @@ public enum PumpDeviceDefinition implements DeviceDefinition
 
     DeltecCosmo1700(50001, "Cosmo 1700", "de_cosmo1700.jpg", "INSTRUCTIONS_DELTEC_COSMO_1700", null,
             DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Deltec, DeviceHandlerType.NoHandler,
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.None, DeviceProgressStatus.Normal, "",
-            0.1f, 0.1f, null, -1, 0, null), //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.None, DeviceProgressStatus.Normal, "", 0.1f,
+            0.1f, null, -1, 0, null), //
 
     DeltecCosmo1800(50002, "Cosmo 1800", "de_cosmo1800.jpg", "INSTRUCTIONS_DELTEC_COSMO_1800", null,
             DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Deltec, DeviceHandlerType.NoHandler,
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.None, DeviceProgressStatus.Normal, "",
-            0.1f, 0.1f, null, -1, 0, null), //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.None, DeviceProgressStatus.Normal, "", 0.1f,
+            0.1f, null, -1, 0, null), //
 
     // Insulet
 
@@ -83,53 +87,53 @@ public enum PumpDeviceDefinition implements DeviceDefinition
             MinimedDeviceType.Minimed_508_508c, DeviceImplementationStatus.NotPlanned, DeviceCompanyDefinition.Minimed,
             DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
             DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
-            PumpProfileDefinition.MinimedProfile), //
+            PumpProfileDefinition.MinimedProfile), // TODO
 
     Minimed_511(10003, "Minimed 511", "mm_515_715.jpg", "INSTRUCTIONS_MINIMED", MinimedDeviceType.Minimed_511,
             DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler,
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Serial_USBBridge,
-            DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0, PumpProfileDefinition.MinimedProfile), //
+            DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0, PumpProfileDefinition.MinimedProfile), // TODO
 
     Minimed_512_712(10004, "Minimed 512/712", "mm_515_715.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.Minimed_512_712, DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed,
             DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
             DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
-            PumpProfileDefinition.MinimedProfile), //
+            PumpProfileDefinition.MinimedProfile), // TODO
 
     Minimed_515_715(10005, "Minimed 515/715", "mm_515_715.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.Minimed_515_715, DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed,
             DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
             DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
-            PumpProfileDefinition.MinimedProfile), //
+            PumpProfileDefinition.MinimedProfile), // TODO
 
     Minimed_522_722(10006, "Minimed 522/722", "mm_522_722.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.Minimed_522_722, DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed,
             DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
             DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
-            PumpProfileDefinition.MinimedProfile), //
+            PumpProfileDefinition.MinimedProfile), // TODO
 
     Minimed_523_723(10007, "Minimed 523/723", "mm_522_722.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.Minimed_523_723, DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed,
             DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
             DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
-            PumpProfileDefinition.MinimedProfile), //
+            PumpProfileDefinition.MinimedProfile), // TODO
 
     Minimed_553_753_Revel(10008, "Minimed 553/753 (Revel)", "mm_554_veo.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.Minimed_553_753_Revel, DeviceImplementationStatus.Planned,
             DeviceCompanyDefinition.Minimed, DeviceHandlerType.MinimedPumpHandler,
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.Serial_USBBridge,
-            DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0, PumpProfileDefinition.MinimedProfile), //
+            DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0, PumpProfileDefinition.MinimedProfile), // TODO
 
     Minimed_554_754_Veo(10009, "Minimed 554/754 (Veo)", "mm_554_veo.jpg", "INSTRUCTIONS_MINIMED",
             MinimedDeviceType.Minimed_554_754_Veo, DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed,
             DeviceHandlerType.MinimedPumpHandler, DevicePortParameterType.PackedParameters,
             DeviceConnectionProtocol.Serial_USBBridge, DeviceProgressStatus.Special, "", 0.1f, 0.1f, null, -1, 0,
-            PumpProfileDefinition.MinimedProfile), //
+            PumpProfileDefinition.MinimedProfile), // TODO
 
     Minimed_640G(10010, "Minimed 640G", "pic", "INSTRUCTIONS_MINIMED", MinimedDeviceType.Minimed_640G,
             DeviceImplementationStatus.Planned, DeviceCompanyDefinition.Minimed, DeviceHandlerType.NoHandler,
             DevicePortParameterType.PackedParameters, DeviceConnectionProtocol.USB_Hid, DeviceProgressStatus.Special,
-            "", 0.1f, 0.1f, null, -1, 0, null),
+            "", 0.1f, 0.1f, null, -1, 0, null), // TODO
 
     // Roche / Accu-Chek (bridged old implementation)
 
@@ -157,17 +161,24 @@ public enum PumpDeviceDefinition implements DeviceDefinition
             DeviceProgressStatus.Normal, "", 0.1f, 0.01f, PumpTBRDefinition.RocheTBR, -1, 2000,
             PumpProfileDefinition.RocheProfile), //
 
+    // FIXME
+    AccuChekInsight(20004, "Insight", "ac_insight.jpg", "INSTRUCTIONS_ACCUCHEK_SPIRIT", null,
+            DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Roche,
+            DeviceHandlerType.AccuChekPumpHandler, DevicePortParameterType.NoParameters,
+            DeviceConnectionProtocol.MassStorageXML, DeviceProgressStatus.Normal, "", 0.1f, 0.01f,
+            PumpTBRDefinition.RocheTBR, -1, 2000, PumpProfileDefinition.RocheProfile), //
+
     // Sooil (Dana) (bridged old implementation)
 
     DanaDiabecare_II(70001, "Diabcare II", "so_danaII.jpg", null, null,
             DeviceImplementationStatus.DoesntSupportDownload, DeviceCompanyDefinition.Sooil,
-            DeviceHandlerType.NoSupportInDevice, DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.None,
+            DeviceHandlerType.NoSupportInDevice, DevicePortParameterType.NoParameters, DeviceConnectionProtocol.None,
             DeviceProgressStatus.Normal, "", 0.1f, 0.1f, PumpTBRDefinition.DanaTBR, -1, -1,
             PumpProfileDefinition.DanaProfile), //
 
     DanaDiabecare_IIS(70002, "Diabcare II S/SG", "so_danaIISG.jpg", null, null,
             DeviceImplementationStatus.DoesntSupportDownload, DeviceCompanyDefinition.Sooil,
-            DeviceHandlerType.NoSupportInDevice, DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.None,
+            DeviceHandlerType.NoSupportInDevice, DevicePortParameterType.NoParameters, DeviceConnectionProtocol.None,
             DeviceProgressStatus.Normal, "", 0.1f, 0.1f, PumpTBRDefinition.DanaTBR, -1, -1,
             PumpProfileDefinition.DanaProfile),
 
@@ -181,7 +192,7 @@ public enum PumpDeviceDefinition implements DeviceDefinition
 
     AsanteSnap(80001, "Asante Snap", null, null, null, //
             DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Asante, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.Serial_USBBridge, //
             0.1f, null, 0.1f, null, //
             PumpTBRDefinition.AsanteTBR, PumpProfileDefinition.AsanteProfile), //
 
@@ -189,21 +200,35 @@ public enum PumpDeviceDefinition implements DeviceDefinition
 
     TandemTSlim(90001, "t:slim", "tan_tslim.jpg", null, null, //
             DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Tandem, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.None, //
             0.1f, 0.05f, 0.05f, 0.05f, //
             PumpTBRDefinition.TandemTBR, PumpProfileDefinition.TandemProfile), //
 
     TandemTFlex(90002, "t:flex", "tan_tflex.jpg", null, null, //
             DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Tandem, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.None, //
             0.1f, 0.05f, 0.05f, 0.05f, //
             PumpTBRDefinition.TandemTBR, PumpProfileDefinition.TandemProfile), //
 
     TandemTSlimG4(90003, "t:slim G4", "tan_tslimG4.jpg", null, null, //
             DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Tandem, DeviceHandlerType.NoHandler, //
-            DevicePortParameterType.SimpleParameter, DeviceConnectionProtocol.Serial_USBBridge, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.None, //
             0.1f, 0.05f, 0.05f, 0.05f, //
             PumpTBRDefinition.TandemTBR, PumpProfileDefinition.TandemProfile), //
+
+    TandemTSlimX2(90003, "t:slim X2", "tan_tslim.jpg", null, null, //
+            DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Tandem, DeviceHandlerType.NoHandler, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.None, //
+            0.1f, 0.05f, 0.05f, 0.05f, //
+            PumpTBRDefinition.TandemTBR, PumpProfileDefinition.TandemProfile), //
+
+    // Cellnovo
+
+    Cellnovo1(100001, "Cellnovo", "cel_cellnovo1.jpg", null, null, //
+            DeviceImplementationStatus.NotAvailable, DeviceCompanyDefinition.Cellnovo, DeviceHandlerType.NoHandler, //
+            DevicePortParameterType.NoParameters, DeviceConnectionProtocol.None, //
+            0.1f, 0.05f, 0.05f, 0.05f, //
+            null, null), //
 
     ;
 

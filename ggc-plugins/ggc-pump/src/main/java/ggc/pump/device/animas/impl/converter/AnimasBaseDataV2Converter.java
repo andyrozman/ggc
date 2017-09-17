@@ -20,12 +20,12 @@ import ggc.plugin.device.impl.animas.enums.AnimasSoundType;
 import ggc.plugin.device.impl.animas.enums.advsett.*;
 import ggc.plugin.device.impl.animas.util.AnimasUtils;
 import ggc.pump.data.defs.RatioType;
+import ggc.pump.data.dto.BasalPatternEntryDTO;
+import ggc.pump.data.dto.PumpSettingsDTO;
 import ggc.pump.data.dto.RatioDTO;
 import ggc.pump.device.animas.impl.data.AnimasPumpDeviceData;
-import ggc.pump.device.animas.impl.data.dto.BasalProfileEntry;
 import ggc.pump.device.animas.impl.data.dto.BolusEntry;
 import ggc.pump.device.animas.impl.data.dto.BolusExtEntry;
-import ggc.pump.device.animas.impl.data.dto.PumpSettings;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -543,7 +543,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
     private void decodeAdvancedSettings(AnimasDeviceReplyPacket packet)
     {
-        PumpSettings pumpSettings = this.data.pumpSettings;
+        PumpSettingsDTO pumpSettings = this.data.pumpSettings;
 
         pumpSettings.audioBolusEnabled = getBooleanValue(packet.getReceivedDataBit(6));
         pumpSettings.audioBolusStepSize = BolusStepSize.getById(packet.getReceivedDataBit(7));
@@ -635,7 +635,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
 
     private void decodeActiveBasal(AnimasDeviceReplyPacket adp)
     {
-        data.setActiveBasalProfile(adp.getReceivedDataBit(6));
+        data.setActiveBasalPattern(adp.getReceivedDataBit(6));
     }
 
 
@@ -653,7 +653,7 @@ public class AnimasBaseDataV2Converter extends AnimasAbstractDataConverter
                         adp.getReceivedDataBit((20 + (p * 2) + 1)))
                     .divide(bigDecimals.get("BIG_DECIMAL_1000f"), 3, BigDecimal.ROUND_CEILING);
 
-            data.addBasalProfileEntry(profileNumber, new BasalProfileEntry(time, amount.floatValue()));
+            data.addBasalPatternEntry(profileNumber, new BasalPatternEntryDTO(time, amount.floatValue()));
         }
     }
 

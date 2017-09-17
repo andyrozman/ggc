@@ -2,6 +2,15 @@
 Changes file for GGC Pump Tool
 ==============================
 
+2.0.4 [17.9.2017]
+- some new DTO's for Pump data
+- added new pump definitions
+- Animas changes to Dto
+- changes to Minimed5xxConverters
+- Fixed: PumpDataRowDialog
+- PrintPumpDataDailyTimeSheet, BackupRestorePumpHandler
+
+
 2.0.3 [26.6.2017]
 - changed enums, so that translation are changed from withing DataAccess
 - refactorings

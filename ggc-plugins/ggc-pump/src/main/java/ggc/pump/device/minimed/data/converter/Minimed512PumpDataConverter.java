@@ -53,9 +53,10 @@ public class Minimed512PumpDataConverter extends Minimed511PumpDataConverter
 
 
     @Override
-    public void convertData(MinimedCommandReply minimedReply)
+    public void convertData(MinimedCommandReply minimedReply, MinimedCommandType commandType)
     {
-        switch (minimedReply.getCommandType())
+
+        switch (commandType)
         {
             case Profile_STD: // 146
             case Profile_A: // 147

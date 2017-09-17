@@ -238,7 +238,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
         List<CGMSDayData> outData = new ArrayList<CGMSDayData>();
 
-        List<CGMSDataH> listCGMSData = getRangeCGMSValuesRaw(from, to, "dv.base_type=1");
+        List<CGMSDataH> listCGMSData = getRangeCGMSValuesRaw(from, to, Arrays.asList(Restrictions.eq("baseType", 1)));
 
         for (CGMSDataH pdh : listCGMSData)
         {
@@ -761,62 +761,7 @@ public class GGCPumpDb extends PluginDb implements PlugInGraphDb
 
     }
 
-
-    /**
-     * Get Profiles
-     *
-     * @return
-     */
-    @Deprecated
-    public List<PumpProfile> getProfilesForRangeOld(GregorianCalendar gcFrom, GregorianCalendar gcTill)
-    {
-        // FIXME this doesn't work like it should, we need to get active
-        // profile, not all profiles active on specific day
-        LOG.info("getProfilesForRange() - Run");
-
-        String sql = "";
-
-        List<PumpProfile> listProfiles = new ArrayList<PumpProfile>();
-
-        long dtFrom = ATechDate.getATDateTimeFromGC(gcFrom, ATechDate.FORMAT_DATE_AND_TIME_S);
-        long dtTill = ATechDate.getATDateTimeFromGC(gcTill, ATechDate.FORMAT_DATE_AND_TIME_S);
-
-        System.out.println("From: " + dtFrom + ", till: " + dtTill);
-
-        try
-        {
-            sql = "SELECT dv " + //
-                    "from ggc.core.db.hibernate.pump.PumpProfileH as dv " + //
-                    "where (dv.active_from > " + dtFrom + //
-                    " and dv.active_from <> 0 )" + //
-                    " or dv.active_till > " + dtFrom + //
-                    // " and dv.active_till < " + dtTill +
-                    // " and dv.active_till > " + dtFrom +
-                    " or (dv.active_till = 0) " + //
-                    " and dv.person_id=" + dataAccess.getCurrentUserId();
-
-            // " and (dv.active_till < " + dtFrom +
-
-            Query q = this.db.getSession().createQuery(sql);
-
-            Iterator<?> it = q.list().iterator();
-
-            while (it.hasNext())
-            {
-                PumpProfileH pdh = (PumpProfileH) it.next();
-                listProfiles.add(new PumpProfile(pdh));
-            }
-
-        }
-        catch (Exception ex)
-        {
-            LOG.debug("Sql: " + sql);
-            LOG.error("getProfilesForRange(). Exception: " + ex, ex);
-        }
-
-        return listProfiles;
-
-    }
+    // getHibernateData
 
 
     /**

@@ -395,10 +395,15 @@ public class PrintPumpDataDailyTimeSheet extends PrintAbstractITextWithDataRead
 
         if (this.pumpValuesHourProcessor.isAdditionalDataForPumpTypeSet(PumpDeviceValueType.COMMENT))
         {
-            tableComment.addCell(this.createNormalTextPhrase(this.i18nControl.getMessage("COMMENT") + ":"));
-            tableComment.addCell(this.createNormalTextPhrase(
-                this.pumpValuesHourProcessor.getAdditionalDataForPumpTypeSet(PumpDeviceValueType.COMMENT)));
-            commentFound = true;
+            String text = this.pumpValuesHourProcessor.getAdditionalDataForPumpTypeSet(PumpDeviceValueType.COMMENT);
+
+            if (StringUtils.isNotBlank(text))
+            {
+                tableComment.addCell(this.createNormalTextPhrase(this.i18nControl.getMessage("COMMENT") + ":"));
+                tableComment.addCell(this.createNormalTextPhrase(
+                    this.pumpValuesHourProcessor.getAdditionalDataForPumpTypeSet(PumpDeviceValueType.COMMENT)));
+                commentFound = true;
+            }
 
         }
 

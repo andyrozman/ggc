@@ -129,11 +129,19 @@ public class PumpValuesHourProcessor
 
             for (String entry : listComms)
             {
+                if ("null".equals(entry))
+                    continue;
+
                 sb.append(entry);
                 sb.append(",");
             }
 
-            return sb.toString().substring(0, sb.length() - 1);
+            if (sb.length() > 0)
+            {
+                return sb.toString().substring(0, sb.length() - 1);
+            }
+            else
+                return "";
         }
         else
             return "";

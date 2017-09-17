@@ -8,6 +8,7 @@ import com.atech.utils.data.ATechDate;
 
 import ggc.core.data.defs.GlucoseUnitType;
 import ggc.plugin.device.impl.minimed.data.MinimedCommandReply;
+import ggc.plugin.device.impl.minimed.enums.MinimedCommandType;
 import ggc.pump.data.defs.PumpConfigurationGroup;
 import ggc.pump.data.defs.RatioType;
 import ggc.pump.data.dto.RatioDTO;
@@ -52,9 +53,10 @@ public class Minimed515PumpDataConverter extends Minimed512PumpDataConverter
 
 
     @Override
-    public void convertData(MinimedCommandReply minimedReply)
+    public void convertData(MinimedCommandReply minimedReply, MinimedCommandType commandType)
     {
-        switch (minimedReply.getCommandType())
+
+        switch (commandType)
         {
             case PumpStatus: // 206
                 debugConverterResponse(minimedReply);
