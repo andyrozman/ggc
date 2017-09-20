@@ -603,7 +603,7 @@
       all texts for check and select elements were displayed to close to control
 
 2006-04-14 (v0.2.1.10) Andy Rozman <andyrozman@users.sourceforge.net>
-    * moved ggc.gui.PropertiesFrame to ggc.gui.cfg.PropertiesDialog, and changed internal
+    * moved ggc.gui.PropertiesFrame to ggc.gui.dialogs.config.PropertiesDialog, and changed internal
       workings, so that after properties are done, we can save all setting and not just the 
       current as it was till now. 
     * changed DailyStatsDialog to display graph and ti display error if no row was selected.

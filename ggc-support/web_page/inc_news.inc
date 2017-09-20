@@ -3,6 +3,72 @@
 <h2 class="head">News</h2>
 
 
+
+
+
+
+
+    <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+        <tr class="newsheader">
+            <td width="150">2017-07-25</td>
+            <td>Translations using Crowdsource Translations - Crowdin</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                Since Crowdsourced Translation are new hit lately, we decided to put our project
+                up on crowdin, so that you could more easily help to translate the project.<br><br>
+
+                We put all files up there, so you can start working on translations if you would
+                like to have application available in your language and are prepared to put in
+                some work. I have enabled some of the languages, and if your language is not one
+                of enabled ones, please contact me, and I will enable your language.<br><br>
+
+                Here is invite link, please click and follow instructions.
+                <a href="https://crowdin.com/project/gnu-gluco-control-core/invite">Crowdin GGC Invite</a><br><br>
+
+                We are also working on integration of our own translation tool into application, but that will have
+                to wait, for few more months.
+                <br><br>
+                Andy<br>
+                Project Manager/Lead Developer
+        </tr>
+    </table>
+
+    <br><br>
+
+
+<!--
+    <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
+        <tr class="newsheader">
+            <td width="150">2016-06-29</td>
+            <td>Release 0.8.0</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                It's been long time again... my "real" life is throwing me for loops lately, so GGC has to suffer
+                because of it.<BR>
+                This release contains mostly bug fixes and we added two new meter families: Menarini and Arkray. There
+                are about 10 new devices there, they are not tested, so please be careful with it and let us know if
+                something doesn't work.<BR>
+                Most of development, was done on Doctor's Appointments and Inventory handling. But since both this
+                changes also require changes to database, some of work was also done on Update functionality, which
+                is requirement for new two functionalities, so you will have to wait for all 3 of them to be there
+                (I hope it will come out in 0.9).<BR>
+
+
+
+
+                If you find some problems please report and I will try to make a fix release if needed.<br>
+                <br>
+                Next release is planned for end of year 2017.
+                <br>
+                Any help from any of you is greatly appreciated... I try to reply to each mail I get...
+        </tr>
+    </table>
+
+    <br><br>
+-->
+
     <table cellpadding="3" cellspacing="0" align="center" width="100%" summary="" class="container">
         <tr class="newsheader">
             <td width="150">2016-06-29</td>

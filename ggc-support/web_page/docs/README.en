@@ -26,31 +26,27 @@ developers.
 2. CURRENT VERSION AND STATUS
 =============================
 
-This is version 0.4 of GGC.
+This is version 0.8 of GGC.
 
-At this point we are at version 0.4, which is second public release. If you have
-installed version 0.3, you can either deinstall and install 0.4 or do updates 
-(you will need to apply two of them (0.3.1 and 0.4): instructions are Update package.
+We are now few years in the "production", which means that most parts of software
+are quite stable, and in last few years we mostly concentrated on adding different
+devices into our numerous plugins.
 
-If you used any of "preview" versions (before 0.3), you will need to uninstall.
-We made a lot of changes in database and application itself, so you can't update 
-old version (if you already have data in old application contact us, and we will 
-help you migrate it to new version). 
+Overall arhitecture changed few years ago, so we now have base (desktop) application
+which calls several plugins (tools), which handle different type of areas (Meter, Pump,
+Nutrition and CGMS).
 
-Updates are now possible, but so far only manual updates. We are working on 
-automatic updates, but we are still far from working model.
+Application is by default limited to internal database, but with little work, you
+can get it working with almost any database on market. We are still working on
+Database Tool, which will help user to create new instance of GGC database in any
+JDBC supported database system, but there are several utilities available even now,
+that you could manually do this (see file 'How_Can_I_Help.txt').
 
-In this public release you can still only use the internal database. If you have 
-little above average computer knowledge (read 'if you like to dabble'), you can 
-try to make it work with any database (see file 'How_Can_I_Help.txt') with just a 
-little work.
+We usually produce 1-2 updates pro year, so you could expect next release at end of
+2017.
 
-New (major) releases are planned to occur in 6 month intervals (we almost managed
-that one). This means that you can expect release 0.5 somewhere in June 2009.
-
-A minor release will be done, when functionality has been changed in such a way
-that it is beneficial to user to be released (major functionality changes and
-bug fixes)
+We also switched to maven build system, which helps our developers, so that they are
+not limited to one editor anymore.
 
 For now you need to update files manually, which means exactly following the
 instructions supplied with the release (there will be a file called
@@ -66,26 +62,42 @@ functions for 1.0 release.
 3. WHAT FUNCTIONALITY IS AVAILABLE
 ==================================
 
-- Adding Daily data about Insulin, BG entries, activity, urine, comments
-- Display graphs for this Pen/Injection therapy (new framework, still work in progress)
+- Adding Daily data about Insulin, BG entries, activity, urine, comments (in Pen/Injection
+  mode)
+- Same functionalities are also available in Pump mode
+- Display graphs
 - Food databases for "Carb Counting": USDA Nutrition DB, User Nutrition DB
   and Meals database or foods and CH as free text
-- Printing reports
+- Printing reports (with several types of data Pen/Injection, Pump data, together with
+  CGMS data
 - Update mechanism (client side only), this means that until the server side
   of update is done, you won't be able to update, but as soon as that works
   you will have the option to update.
 - Backup mechanism (and restore)
 - Bolus Helper and Simple Ratio Settings
-- Meter Tool finished. Now we just have to add more devices.
-- Pump Tool: Framework is work in progress, almost finished. Added is Manual adding of 
-  data which is important pre-step, for actual reading and import from devices
-
+- Meter plugin: all functionalities there, added several families of meters:
+  Ascensia, Accu-chek, One Touch, Menarini, Arkray, Abbott
+- Pump Tool: all functionalities there, added several families of pumps:
+  Accu-Chek, Animas, Dana and Insulet
+- CGMS Tool: all functionalities there, added some families of CGMS:
+  Dexcom G4, Animas Vibe (G4) support
+- and more...
 
 
 4. PLANNED FUNCTIONALITY
 ========================
 
-Version 0.5
+Version 0.9
+------------
+- Db Update
+- Doctors/Appointments functionality integration
+- Crowdsourcing Translation (integration of current TranslationTool into application and
+  implementation of server side tool OR perhaps use of some external crowdsourcing app)
+- Medical inventory - Listing of everything that patient has, and what he needs to
+  get to handle diabetes (and also any other condition)
+- Basic Minimed Pump support via Contour Next Link
+
+Version 0.10
 ------------
 - DB Tool (for using other databases and install of initial data)  (**)
 - Multi person instance
@@ -94,24 +106,19 @@ Version 0.5
 - Update mechanism (server side)   (**)
 - Fully write English help files and add help through application (English version so far) (**)
 - Add some functionality to food databases
-- Extended Ratio Settings, Ratio Helper
-- New Graphs for Pen/Injection theraphy
 
 
-Version 0.6
+
+Version 0.xx
 ------------
-- Automatic DB Update
 - GGC Network (running several instances of GGC on several computers)
 - I18n Help Files
-- CGMS Tool: <Basic CGMS support>
+
 - Synchronization (for GGC network)
 - Links to data about diabetes on internet
-- GGC PPC - the version of the application to be used by the Pocket PC (not all the
+- GGC Android - the version of the application to be used by the Android (not all the
   functionality of the full version will be available)
-- Appointments (adding appointment, adding data from doctor's visit), Doctors
-  management (adding)
-- Medical stock - Listing of everything that patient has, and what he needs to
-  get to handle diabetes (and also any other condition)
+
 - Remote Food database functionality
 
 
@@ -130,28 +137,40 @@ beta phase (all functionalities finished, now we just need to add more devices).
 Currently supported devices:
  - Bayer/Ascensia: whole family
  - Roche/Accu-chek: all devices supported by Accu-Chek Pix device
+ - Menarini,
+ - Arkray,
+ - Abbott
  - LifeScan: OT Ultra/2, OT UltraSmart, OT Ultra Mini/Easy
-Current version of plugin: 1.0.5
+Current version of plugin: 2.4.2
+
 
 PUMP-TOOL
 ----------
 
 This is plug-in for entering, retrieving and handling data from Insulin Pumps.
-We have already started with development and most of framework is ready for Pump
-data. For now we have added Manual adding of Pump Data and next step is retrieval
-of data from Pumps. First supported Pumps will be those of Roche and Minimed (at
-first through CareLink export file) and we have some developers also working on 
-Animas.
-
+Currently supported devices:
+  - Roche/Accu-chek: all devices through Smart Pix
+  - Animas: All newer devices
+  - Minimed: no support yet, but in work
+  - Dana
+Current version of plugin: 2.0.3
 
 
 CGMS-TOOL
 ----------
 
-This is a plug-in for retrieving data from CGMS device and viewing of this data. This
-project is still in the planning phase. The project will move into the development phase
-by end of 2009. The first supported CGMS will be that of Minimed through export file from 
-CareLink.
+This is a plug-in for retrieving data from CGMS device and viewing of this data.
+Currently supported devices:
+  - Dexcom G4
+  - Animas Vibe (G4) Support
+Current version of plugin: 1.5.3
+
+
+NUTRITION TOOL
+--------------
+
+Plugin for Nutrition databases.
+Current version of plugin: 1.4.2
 
 
 6. HOW CAN I HELP AS REGULAR USER
@@ -181,7 +200,7 @@ Zip this file and store it. And do the following (choose option A or B):
 
 a.) Visit the bug reporting site for our project and enter the bug by yourself.
    Please attach the zipped log. The site is (data should be entered in English):
-   http://sourceforge.net/tracker/?group_id=49749&atid=457319  
+   http://sourceforge.net/tracker/?groupId=49749&atid=457319
    You don't need to be member at sourceforge to add this information, if you are
    not please, write your email address somewhere in the error report. Describe
    exactly what you were doing when the exception occurred and how the problem
@@ -208,7 +227,7 @@ so well. If you find parts of GGC, which your think could work better, please le
 know. If you find that some functionality is missing, again, let us know. You can
 use either email, or you can use the following form (data should be entered in
 English):
-http://sourceforge.net/tracker/?group_id=49749&atid=457322
+http://sourceforge.net/tracker/?groupId=49749&atid=457322
 
 ---
 

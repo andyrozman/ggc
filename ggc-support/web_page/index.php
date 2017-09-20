@@ -61,11 +61,11 @@
 	<td align="center" valign="bottom">
 	This site is hosted on:<br>
 
-    <a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=49749&amp;type=4" width="125" height="37" border="0" alt="SourceForge.net Logo" /></a><br>
+    <a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?groupId=49749&amp;type=4" width="125" height="37" border="0" alt="SourceForge.net Logo" /></a><br>
 
 <!--	<a href="http://sourceforge.net">
 
-	<img src="http://sourceforge.net/sflogo.php?group_id=49749&amp;type=5" width="210" height="62" border="0" alt="SourceForge Logo"> -->
+	<img src="http://sourceforge.net/sflogo.php?groupId=49749&amp;type=5" width="210" height="62" border="0" alt="SourceForge Logo"> -->
 	</a>
 	<br>
 	<font size="-2">

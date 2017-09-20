@@ -315,14 +315,14 @@
         compiled files will be stored into ggc-support\bin folder from where you can directly run it.<br>
 
         Here is the link to the Sourceforge SVN Page:<br>
-        <a href="http://sourceforge.net/svn/?group_id=49749">http://sourceforge.net/svn/?group_id=49749</a> <br><br>
+        <a href="http://sourceforge.net/svn/?groupId=49749">http://sourceforge.net/svn/?groupId=49749</a> <br><br>
         For details on how to check out sources see the Sourceforge SVN page.<br><br>
 
         <li>CVS:</li>
         <br>
         CVS system was deprecated (there are still old file there) when Sourceforge installed SVN, which is now the way
         to get sources.<br><br>
-        <a href="http://sourceforge.net/cvs/?group_id=49749">http://sourceforge.net/cvs/?group_id=49749</a> <br><br>
+        <a href="http://sourceforge.net/cvs/?groupId=49749">http://sourceforge.net/cvs/?groupId=49749</a> <br><br>
 
     </ul>
 
@@ -330,7 +330,7 @@
 
     <h2>Link to sourceforge files download area</h2>
 
-    <a href="http://sourceforge.net/project/showfiles.php?group_id=49749">http://sourceforge.net/project/showfiles.php?group_id=49749</a><br>
+    <a href="http://sourceforge.net/project/showfiles.php?groupId=49749">http://sourceforge.net/project/showfiles.php?groupId=49749</a><br>
 
 
     </ul>
