@@ -598,8 +598,10 @@ public class GGCLittle extends JFrame implements ActionListener, EventObserverIn
 
     private void showFunctionalityNotAvailableYet(String functionality)
     {
-        dataAccess.showMessageDialog(this, ATSwingUtils.DialogType.Error,
-            functionality + " is not working in this application yet. Please use full version of GGC instead.");
+        ATSwingUtils.showMessageDialog(this, //
+            ATSwingUtils.DialogType.Error, //
+            functionality + " is not working in this application yet. Please use full version of GGC instead.", //
+            i18nControl);
     }
 
 
@@ -607,8 +609,12 @@ public class GGCLittle extends JFrame implements ActionListener, EventObserverIn
     {
         if (dataAccess.isPumpMode())
         {
-            dataAccess.showMessageDialog(this, ATSwingUtils.DialogType.Error,
-                errorDescriptionTarget + " for Pump is not working in this application yet. Please use GGC instead.");
+            ATSwingUtils.showMessageDialog(this, //
+                ATSwingUtils.DialogType.Error, //
+                errorDescriptionTarget
+                        + " for Pump is not working in this application yet. Please use full version of GGC instead.", //
+                i18nControl);
+
             return true;
         }
 
