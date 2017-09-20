@@ -217,7 +217,7 @@ public class DataAccessDoc extends DataAccess
 
         // Help Context Init
         // HelpContext hc = new HelpContext("../data/help/en/GGC.hs");
-        HelpContext hc = new HelpContext("../data/" + this.lang_mgr.getHelpSet());
+        HelpContext hc = new HelpContext("../data/" + this.languageManager.getHelpSet());
         this.setHelpContext(hc);
         this.helpEnabled = true;
 
