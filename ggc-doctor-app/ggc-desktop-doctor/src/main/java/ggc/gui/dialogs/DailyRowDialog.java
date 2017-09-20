@@ -6,8 +6,8 @@ import ggc.core.data.DailyValuesRow;
 import ggc.core.data.ExtendedDailyValue;
 import ggc.core.plugins.NutriPlugIn;
 import ggc.core.util.DataAccess;
-import ggc.shared.bolushelper.BolusHelper;
-import ggc.shared.fooddesc.FoodDescriptionDialog;
+import ggc.gui.dialogs.bolushelper.BolusHelper;
+import ggc.gui.dialogs.fooddesc.FoodDescriptionDialog;
 
 import java.awt.Component;
 import java.awt.Container;

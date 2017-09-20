@@ -33,9 +33,9 @@ import ggc.core.db.tool.transfer.RestoreGGCSelectorDialog;
 import ggc.core.util.DataAccess;
 import ggc.core.util.RefreshInfo;
 import ggc.gui.dialogs.defs.StockListDef;
+import ggc.gui.dialogs.ratio.RatioBaseDialog;
+import ggc.gui.dialogs.ratio.RatioExtendedDialog;
 import ggc.gui.panels.info.InfoPanel;
-import ggc.shared.ratio.RatioBaseDialog;
-import ggc.shared.ratio.RatioExtendedDialog;
 
 /**
  *  Application:   GGC - GNU Gluco Control
@@ -117,7 +117,6 @@ public class DocMainFrame extends JFrame implements EventObserverInterface
      * Information panels
      */
     public InfoPanel informationPanel;
-
 
     /**
      * Static definitions (Look and Feel)
@@ -1245,8 +1244,8 @@ public class DocMainFrame extends JFrame implements EventObserverInterface
 
             }
             else // if ((command.equals("report_pdf_extended")) ||
-                if ((command.equals("file_login")) || (command.equals("report_foodmenu_ext3"))
-                        || (command.equals("file_logout")))
+            if ((command.equals("file_login")) || (command.equals("report_foodmenu_ext3"))
+                    || (command.equals("file_logout")))
             {
                 featureNotImplemented(command, "0.5");
             }
