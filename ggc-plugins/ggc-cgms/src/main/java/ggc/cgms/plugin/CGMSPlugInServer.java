@@ -125,7 +125,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public String getName()
     {
-        return ic.getMessage("CGMS_PLUGIN");
+        return i18nControl.getMessage("CGMS_PLUGIN");
     }
 
 
@@ -145,7 +145,7 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public void initPlugIn()
     {
-        ic = dataAccess.getI18nControlInstance();
+        i18nControl = dataAccess.getI18nControlInstance();
 
         if (dataAccessCGMS == null)
         {
@@ -226,19 +226,19 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
     @Override
     public JMenu getPlugInMainMenu()
     {
-        JMenu menu_cgms = ATSwingUtils.createMenu("MN_CGMS", null, ic_local);
+        JMenu menu_cgms = ATSwingUtils.createMenu("MN_CGMS", null, i18nControlLocal);
 
         JMenuItem menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ", //
             "MN_CGMS_READ_DESC", "plugin_read_data", //
-            this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+            this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
 
         menus[0] = menu;
-        menus[0].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
-            DownloadSupportType.DownloadData));
+        menus[0].setEnabled(
+            DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(), DownloadSupportType.DownloadData));
 
         menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_CONFIG", //
             "MN_CGMS_READ_CONFIG_DESC", "plugin_read_config", //
-            this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+            this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
 
         menus[1] = menu;
         menus[1].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
@@ -246,34 +246,34 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
 
         menu = ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_READ_FILE", //
             "MN_CGMS_READ_FILE_DESC", "plugin_read_data_file", //
-            this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+            this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
 
         menus[2] = menu;
-        menus[2].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
-            DownloadSupportType.DownloadDataFile));
+        menus[2].setEnabled(
+            DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
 
         menu_cgms.addSeparator();
 
         ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_VIEW_DATA", //
             "MN_CGMS_VIEW_DATA_DESC", "cgms_view_data", //
-            this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+            this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
 
         menu_cgms.addSeparator();
 
         ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_LIST", //
             "MN_CGMS_LIST_DESC", "plugin_list", //
-            this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+            this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
 
         menu_cgms.addSeparator();
 
         ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_CONFIG", //
             "MN_CGMS_CONFIG_DESC", "plugin_config", //
-            this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+            this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
 
         menu_cgms.addSeparator();
 
         ATSwingUtils.createMenuItem(menu_cgms, "MN_CGMS_ABOUT", //
-            "MN_CGMS_ABOUT_DESC", "plugin_about", this, null, ic_local, DataAccessCGMS.getInstance(), parent);
+            "MN_CGMS_ABOUT_DESC", "plugin_about", this, null, i18nControlLocal, DataAccessCGMS.getInstance(), parent);
 
         return menu_cgms;
     }
@@ -284,12 +284,12 @@ public class CGMSPlugInServer extends DevicePlugInServer implements ActionListen
      */
     public void refreshMenusAfterConfig()
     {
-        menus[0].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
-            DownloadSupportType.DownloadData));
-        menus[1].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
-            DownloadSupportType.DownloadConfig));
-        menus[2].setEnabled(DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(),
-            DownloadSupportType.DownloadDataFile));
+        menus[0].setEnabled(
+            DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(), DownloadSupportType.DownloadData));
+        menus[1].setEnabled(
+            DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(), DownloadSupportType.DownloadConfig));
+        menus[2].setEnabled(
+            DownloadSupportType.isOptionSet(dataAccessCGMS.getDownloadStatus(), DownloadSupportType.DownloadDataFile));
     }
 
 

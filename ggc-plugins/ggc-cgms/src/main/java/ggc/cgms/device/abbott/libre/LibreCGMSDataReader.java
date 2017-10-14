@@ -2,6 +2,7 @@ package ggc.cgms.device.abbott.libre;
 
 import java.util.GregorianCalendar;
 
+import ggc.cgms.device.abbott.libre.enums.BaseCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,7 @@ import com.atech.utils.data.BitUtils;
 import ggc.cgms.defs.device.CGMSDeviceDefinition;
 import ggc.cgms.device.abbott.libre.data.LibreDataConverter;
 import ggc.cgms.device.abbott.libre.data.LibreHidReportDto;
-import ggc.cgms.device.abbott.libre.enums.Command;
+
 import ggc.cgms.device.abbott.libre.enums.LibreTextCommand;
 import ggc.cgms.device.abbott.libre.util.LibreUtil;
 import ggc.cgms.util.DataAccessCGMS;
@@ -135,22 +136,23 @@ public class LibreCGMSDataReader extends UsbHidDeviceReader
         drainDevice();
 
         // init 1
-        sendToDeviceAndCheckResponse(Command.INIT_REQUEST_1, new byte[] { 0xc });
+        sendToDeviceAndCheckResponse(
+                BaseCommand.INIT_REQUEST_1, new byte[] { 0xc });
         addToStaticProgress(5);
 
         // init 2 - read serialNumber
-        writeReport(Command.INIT_REQUEST_2, "");
-        serialNumber = readTextResponse(Command.INIT_REQUEST_2).trim();
+        writeReport(BaseCommand.INIT_REQUEST_2, "");
+        serialNumber = readTextResponse(BaseCommand.INIT_REQUEST_2).trim();
         addToStaticProgress(5);
 
         // init 3 - read software version
-        writeReport(Command.INIT_REQUEST_3, "");
-        softwareVersion = readTextResponse(Command.INIT_REQUEST_3).trim();
+        writeReport(BaseCommand.INIT_REQUEST_3, "");
+        softwareVersion = readTextResponse(BaseCommand.INIT_REQUEST_3).trim();
         addToStaticProgress(5);
 
         // System.out.println("Software Version: " + softwareVersion);
 
-        byte[] response = sendToDeviceAndReceiveResponse(Command.INIT_REQUEST_4);
+        byte[] response = sendToDeviceAndReceiveResponse(BaseCommand.INIT_REQUEST_4);
         addToStaticProgress(5);
 
         // System.out.println("Response: " + bitUtils.getDebugByteArray(response));
@@ -186,7 +188,7 @@ public class LibreCGMSDataReader extends UsbHidDeviceReader
     }
 
 
-    public boolean sendToDeviceAndCheckResponse(Command command, byte[] expectedResponse) throws PlugInBaseException
+    public boolean sendToDeviceAndCheckResponse(BaseCommand command, byte[] expectedResponse) throws PlugInBaseException
     {
         writeReport(command, "");
         byte[] response = readByteResponse(command);
@@ -204,7 +206,7 @@ public class LibreCGMSDataReader extends UsbHidDeviceReader
     }
 
 
-    public byte[] sendToDeviceAndReceiveResponse(Command command) throws PlugInBaseException
+    public byte[] sendToDeviceAndReceiveResponse(BaseCommand command) throws PlugInBaseException
     {
         writeReport(command, "");
         byte[] response = readByteResponse(command);
@@ -289,7 +291,7 @@ public class LibreCGMSDataReader extends UsbHidDeviceReader
     }
 
 
-    private void writeReport(Command command, String s) throws PlugInBaseException
+    private void writeReport(BaseCommand command, String s) throws PlugInBaseException
     {
         LOG.debug("writeReport: command={}, value={}", command, s);
 
@@ -337,11 +339,11 @@ public class LibreCGMSDataReader extends UsbHidDeviceReader
 
     private void writeReport(LibreTextCommand libreTextCommand) throws PlugInBaseException
     {
-        writeReport(Command.TEXT_COMMAND, libreTextCommand.getCommandText());
+        writeReport(BaseCommand.TEXT_COMMAND, libreTextCommand.getCommandText());
     }
 
 
-    private byte[] readByteResponse(Command command) throws PlugInBaseException
+    private byte[] readByteResponse(BaseCommand command) throws PlugInBaseException
     {
         LibreHidReportDto report = readReport();
 
@@ -361,7 +363,7 @@ public class LibreCGMSDataReader extends UsbHidDeviceReader
     }
 
 
-    private void checkIfCorrectResponse(Command expectedCommand, Command receivedCommandResponse)
+    private void checkIfCorrectResponse(BaseCommand expectedCommand, BaseCommand receivedCommandResponse)
             throws PlugInBaseException
     {
         if (expectedCommand != receivedCommandResponse)
@@ -372,7 +374,7 @@ public class LibreCGMSDataReader extends UsbHidDeviceReader
     }
 
 
-    private String readTextResponse(Command command) throws PlugInBaseException
+    private String readTextResponse(BaseCommand command) throws PlugInBaseException
     {
         LibreHidReportDto report = readReport();
 
@@ -384,7 +386,7 @@ public class LibreCGMSDataReader extends UsbHidDeviceReader
 
     public String readTextResponse() throws PlugInBaseException
     {
-        return readTextResponse(Command.TEXT_COMMAND);
+        return readTextResponse(BaseCommand.TEXT_COMMAND);
     }
 
 

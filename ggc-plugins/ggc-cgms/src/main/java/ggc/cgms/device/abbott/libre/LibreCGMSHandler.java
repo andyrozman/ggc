@@ -41,7 +41,7 @@ public class LibreCGMSHandler extends CGMSDeviceHandler implements UsbHidDeviceH
 
     public DeviceHandlerType getDeviceHandlerKey()
     {
-        return DeviceHandlerType.ArkrayMeterHandler;
+        return DeviceHandlerType.AbbottLibreHandler;
     }
 
 

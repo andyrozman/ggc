@@ -1,11 +1,12 @@
 package ggc.cgms.device.abbott.libre.data;
 
+import ggc.cgms.device.abbott.libre.enums.BaseCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.atech.utils.data.BitUtils;
 
-import ggc.cgms.device.abbott.libre.enums.Command;
+
 import ggc.cgms.device.abbott.libre.util.LibreUtil;
 import ggc.plugin.device.PlugInBaseException;
 
@@ -49,9 +50,9 @@ public class LibreHidReportDto
     }
 
 
-    public Command getMessageType()
+    public BaseCommand getMessageType()
     {
-        return Command.getByResponseCode(this.messageTypeRaw);
+        return BaseCommand.getByResponseCode(this.messageTypeRaw);
     }
 
 
